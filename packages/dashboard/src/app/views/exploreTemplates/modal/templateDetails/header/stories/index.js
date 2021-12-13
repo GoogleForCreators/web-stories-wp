@@ -37,10 +37,15 @@ const StorybookLayoutContainer = styled.div`
   height: 100vh;
 `;
 
+const templateActions = {
+  createStoryFromTemplate: action('create story from template clicked'),
+  handleDetailsToggle: action('modal was toggled'),
+};
+
 export const _default = () => (
   <Layout.Provider>
     <StorybookLayoutContainer>
-      <Header onHandleCtaClick={action('cta clicked')} />
+      <Header templateActions={templateActions} canCreateStory />
     </StorybookLayoutContainer>
   </Layout.Provider>
 );

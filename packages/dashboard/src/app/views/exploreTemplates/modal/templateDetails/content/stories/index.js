@@ -33,7 +33,7 @@ export const _default = () => (
   <DetailsContent
     activeTemplateIndex={8}
     isRTL={boolean('isRTL')}
-    orderedTemplatesLength={12}
+    filteredTemplatesLength={12}
     switchToTemplateByOffset={action('switch to template by offset clicked')}
     template={formattedTemplatesArray[1]}
   />
