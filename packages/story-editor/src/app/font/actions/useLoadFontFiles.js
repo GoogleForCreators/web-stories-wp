@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { useCallback } from '@web-stories-wp/react';
+import { getGoogleFontURL } from '@web-stories-wp/fonts';
 
 /**
  * Internal dependencies
  */
 import cleanForSlug from '../../../utils/cleanForSlug';
-import getGoogleFontURL from '../../../utils/getGoogleFontURL';
 import loadStylesheet from '../../../utils/loadStylesheet';
 import { ensureFontLoaded, loadInlineStylesheet } from '../utils';
 

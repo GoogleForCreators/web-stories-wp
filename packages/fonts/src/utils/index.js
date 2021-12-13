@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-export * from './constants';
-export * from './utils';
+export { default as getFontCSS } from './getFontCSS';
+export { default as getGoogleFontURL } from './getGoogleFontURL';

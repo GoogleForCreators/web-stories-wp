@@ -15,9 +15,9 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import getFontCSS from '../../utils/getFontCSS';
+import { getFontCSS } from '@web-stories-wp/fonts';
 
 /**
  * Enqueue an inline stylesheet for a given font family and URL.
