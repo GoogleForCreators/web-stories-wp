@@ -148,6 +148,60 @@ const FontPicker = forwardRef(function FontPicker(
     );
   };
 
+  // @todo Remove this and use real custom fonts from API.
+  const customFonts = [
+    {
+      id: 'Overpass Regular',
+      name: 'Overpass Regular',
+      family: 'Overpass Regular',
+      fallbacks: ['sans-serif'],
+      weights: [400],
+      styles: ['regular'],
+      variants: [[0, 400]],
+      url: 'https://overpass-30e2.kxcdn.com/overpass-regular.ttf',
+      service: 'custom',
+      metrics: {
+        upm: 1000,
+        asc: 982,
+        des: -284,
+        tAsc: 750,
+        tDes: -250,
+        tLGap: 266,
+        wAsc: 1062,
+        wDes: 378,
+        xH: 511,
+        capH: 700,
+        yMin: -378,
+        yMax: 1062,
+        hAsc: 982,
+        hDes: -284,
+        lGap: 266,
+      },
+    },
+  ];
+
+  // These option groups will always be shown before others.
+  const priorityOptionGroups = useMemo(() => {
+    return [
+      ...(customFonts?.length
+        ? [
+            {
+              label: __('Your fonts', 'web-stories'),
+              options: customFonts,
+            },
+          ]
+        : []),
+      ...(recentFonts?.length
+        ? [
+            {
+              label: __('Recently used', 'web-stories'),
+              options: recentFonts,
+            },
+          ]
+        : []),
+    ];
+  }, [customFonts, recentFonts]);
+
   return (
     <Datalist.DropDown
       ref={ref}
@@ -157,8 +211,7 @@ const FontPicker = forwardRef(function FontPicker(
       options={fonts}
       primaryOptions={curatedFonts}
       primaryLabel={__('Recommended', 'web-stories')}
-      priorityOptions={recentFonts}
-      priorityLabel={__('Recently used', 'web-stories')}
+      priorityOptionGroups={priorityOptionGroups}
       searchResultsLabel={__('Search results', 'web-stories')}
       selectedId={MULTIPLE_VALUE === fontFamily ? '' : fontFamily}
       placeholder={
