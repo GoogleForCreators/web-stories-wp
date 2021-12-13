@@ -325,10 +325,17 @@ class Font_Controller extends WP_REST_Posts_Controller {
 
 		setup_postdata( $post );
 
+		$fields = $this->get_fields_for_response( $request );
+
 		$data = [];
 
-		$data['id']     = $post->ID;
-		$data['family'] = $post->post_title;
+		if ( rest_is_field_included( 'id', $fields ) ) {
+			$data['id'] = $post->ID;
+		}
+
+		if ( rest_is_field_included( 'family', $fields ) ) {
+			$data['family'] = $post->post_title;
+		}
 
 		/**
 		 * Font data.
@@ -338,7 +345,11 @@ class Font_Controller extends WP_REST_Posts_Controller {
 		$font_data = json_decode( $post->post_content, true );
 
 		if ( $font_data ) {
-			$data = array_merge( $data, $font_data );
+			foreach ( $font_data as $key => $value ) {
+				if ( rest_is_field_included( $key, $fields ) ) {
+					$data[ $key ] = $value;
+				}
+			}
 		}
 
 		/**
