@@ -80,6 +80,8 @@ class Font_Post_Type extends Post_Type_Base implements HasRequirements {
 	protected function get_args(): array {
 		$edit_posts = $this->story_post_type->get_cap_name( 'edit_posts' );
 
+		// Only admins are allowed to modify custom fonts,
+		// but anyone who can create stories should be able to use them.
 		$capabilities = [
 			'edit_post'              => 'manage_options',
 			'read_post'              => $edit_posts,
@@ -98,41 +100,6 @@ class Font_Post_Type extends Post_Type_Base implements HasRequirements {
 		];
 
 		return [
-			'labels'                => [
-				'name'                     => _x( 'Fonts', 'post type general name', 'web-stories' ),
-				'singular_name'            => _x( 'Font', 'post type singular name', 'web-stories' ),
-				'add_new'                  => _x( 'Add New', 'font', 'web-stories' ),
-				'add_new_item'             => __( 'Add New Font', 'web-stories' ),
-				'edit_item'                => __( 'Edit Font', 'web-stories' ),
-				'new_item'                 => __( 'New Font', 'web-stories' ),
-				'view_item'                => __( 'View Font', 'web-stories' ),
-				'view_items'               => __( 'View Fonts', 'web-stories' ),
-				'search_items'             => __( 'Search Fonts', 'web-stories' ),
-				'not_found'                => __( 'No fonts found.', 'web-stories' ),
-				'not_found_in_trash'       => __( 'No fonts found in Trash.', 'web-stories' ),
-				'all_items'                => __( 'All Fonts', 'web-stories' ),
-				'archives'                 => __( 'Font Archives', 'web-stories' ),
-				'attributes'               => __( 'Font Attributes', 'web-stories' ),
-				'insert_into_item'         => __( 'Insert into font', 'web-stories' ),
-				'uploaded_to_this_item'    => __( 'Uploaded to this font', 'web-stories' ),
-				'featured_image'           => _x( 'Featured Image', 'font', 'web-stories' ),
-				'set_featured_image'       => _x( 'Set featured image', 'font', 'web-stories' ),
-				'remove_featured_image'    => _x( 'Remove featured image', 'font', 'web-stories' ),
-				'use_featured_image'       => _x( 'Use as featured image', 'font', 'web-stories' ),
-				'filter_by_date'           => __( 'Filter by date', 'web-stories' ),
-				'filter_items_list'        => __( 'Filter fonts list', 'web-stories' ),
-				'items_list_navigation'    => __( 'Fonts list navigation', 'web-stories' ),
-				'items_list'               => __( 'Fonts list', 'web-stories' ),
-				'item_published'           => __( 'Font published.', 'web-stories' ),
-				'item_published_privately' => __( 'Font published privately.', 'web-stories' ),
-				'item_reverted_to_draft'   => __( 'Font reverted to draft.', 'web-stories' ),
-				'item_scheduled'           => __( 'Font scheduled', 'web-stories' ),
-				'item_updated'             => __( 'Font updated.', 'web-stories' ),
-				'menu_name'                => _x( 'Fonts', 'admin menu', 'web-stories' ),
-				'name_admin_bar'           => _x( 'Font', 'add new on admin bar', 'web-stories' ),
-				'item_link'                => _x( 'Font Link', 'navigation link block title', 'web-stories' ),
-				'item_link_description'    => _x( 'A link to a font.', 'navigation link block description', 'web-stories' ),
-			],
 			'supports'              => [
 				'title',
 			],
