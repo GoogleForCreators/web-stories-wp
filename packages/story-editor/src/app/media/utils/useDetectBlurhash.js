@@ -30,7 +30,7 @@ import getBlurHashFromImage from '../../../utils/getBlurHashFromImage';
 
 function useDetectBlurHash({ updateMediaElement }) {
   const {
-    actions: { updateMedia },
+    actions: { updateMedia, getPosterMediaById },
   } = useAPI();
   const { updateElementsByResourceId } = useStory((state) => ({
     updateElementsByResourceId: state.actions.updateElementsByResourceId,
@@ -79,9 +79,18 @@ function useDetectBlurHash({ updateMediaElement }) {
 
   const updateBlurHash = useCallback(
     async ({ resource }) => {
-      const { type, poster } = resource;
-      const imageSrc =
-        type === 'image' ? getSmallestUrlForWidth(300, resource) : poster;
+      const { type, poster, id, isExternal } = resource;
+      let imageSrc = poster;
+
+      if (type === 'image') {
+        imageSrc = getSmallestUrlForWidth(300, resource);
+      } else if (!isExternal) {
+        const posterResource = await getPosterMediaById(id);
+        if (posterResource) {
+          imageSrc = getSmallestUrlForWidth(300, posterResource);
+        }
+      }
+
       if (!imageSrc) {
         return;
       }
@@ -93,7 +102,7 @@ function useDetectBlurHash({ updateMediaElement }) {
         // Do nothing for now.
       }
     },
-    [getProxiedUrl, saveBlurHash]
+    [getProxiedUrl, getPosterMediaById, saveBlurHash]
   );
 
   return {
