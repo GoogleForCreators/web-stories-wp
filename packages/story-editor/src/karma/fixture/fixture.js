@@ -821,8 +821,8 @@ class APIProviderFixture {
         []
       );
 
-      const getFonts = useCallback(() => {
-        return asyncResponse([
+      const getFonts = useCallback((params) => {
+        let fonts = [
           {
             name: 'Abel',
             value: 'Abel',
@@ -1032,7 +1032,15 @@ class APIProviderFixture {
               lGap: 218,
             },
           },
-        ]);
+        ];
+
+        if (params.search) {
+          fonts = fonts.filter(({ family }) =>
+            family.toLowerCase().includes(params.search)
+          );
+        }
+
+        return asyncResponse(fonts);
       }, []);
 
       const state = {
