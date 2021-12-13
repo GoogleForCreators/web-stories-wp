@@ -46,6 +46,7 @@ import {
   SettingSubheading,
   TextInputHelperText,
 } from '../components';
+import ConfirmationDialog from './confirmationDialog';
 
 export const TEXT = {
   ADD_CONTEXT: __(
@@ -112,13 +113,15 @@ function CustomFontsSettings() {
   const [fontUrl, setFontUrl] = useState('');
   const [inputError, setInputError] = useState('');
   const [addedFonts, setAddedFonts] = useState(null);
+  const [showDialog, setShowDialog] = useState(false);
+  const [toDelete, setToDelete] = useState(null);
   const canSave = !inputError;
 
   const loadFonts = useCallback(() => {
     // @todo Use API call.
     setAddedFonts([
-      { name: 'Font 1', url: 'https://example.com/font1.otf' },
-      { name: 'Font 2', url: 'https://example.com/font2.woff' },
+      { id: 'Font 1', name: 'Font 1', url: 'https://example.com/font1.otf' },
+      { id: 'Font 2', name: 'Font 2', url: 'https://example.com/font2.woff' },
     ]);
   }, []);
 
@@ -140,6 +143,13 @@ function CustomFontsSettings() {
 
     setInputError(TEXT.INPUT_ERROR);
   }, []);
+
+  const handleDelete = useCallback(() => {
+    // @todo Delete font!
+    console.log('Deleted font:', toDelete);
+    setToDelete(null);
+    setShowDialog(false);
+  }, [toDelete]);
 
   const handleOnSave = useCallback(async () => {
     if (canSave) {
@@ -224,7 +234,7 @@ function CustomFontsSettings() {
           <FontsWrapper>
             <ListHeading forwardedAs="span">{TEXT.FONTS_HEADING}</ListHeading>
             <FontsList>
-              {addedFonts.map(({ name, url }) => (
+              {addedFonts.map(({ id, name, url }) => (
                 <FontRow key={name}>
                   <FontData>{`${name} - ${url}`}</FontData>
                   <Tooltip hasTail title={__('Delete font', 'web-stories')}>
@@ -233,7 +243,10 @@ function CustomFontsSettings() {
                       type={BUTTON_TYPES.TERTIARY}
                       size={BUTTON_SIZES.SMALL}
                       variant={BUTTON_VARIANTS.SQUARE}
-                      onClick={() => {}}
+                      onClick={() => {
+                        setToDelete(id);
+                        setShowDialog(true);
+                      }}
                     >
                       <Icons.Trash />
                     </Button>
@@ -249,6 +262,12 @@ function CustomFontsSettings() {
           </FontsWrapper>
         )}
       </InputsWrapper>
+      {showDialog && (
+        <ConfirmationDialog
+          onClose={() => setShowDialog(false)}
+          onPrimary={handleDelete}
+        />
+      )}
     </SettingForm>
   );
 }
