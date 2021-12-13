@@ -21,7 +21,6 @@ import { useMemo } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
-import { useMouseDownOutsideRef } from '../../utils';
 import { SmartPopover, Shadow } from './styled';
 import Menu, { MenuPropTypes } from './menu';
 import AnimationContainer from './animationContainer';
@@ -36,9 +35,6 @@ const ContextMenu = ({
   isInline = false,
   ...props
 }) => {
-  const ref = useMouseDownOutsideRef(() => {
-    props.isOpen && props.onDismiss();
-  });
   const Wrapper = useMemo(
     () => (animate ? AnimationContainer : SmartPopover),
     [animate]
@@ -52,7 +48,7 @@ const ContextMenu = ({
         isOpen={isAlwaysVisible || props.isOpen}
         isRTL={isRTL}
       >
-        <Menu ref={ref} aria-expanded={props.isOpen} {...props}>
+        <Menu aria-expanded={props.isOpen} {...props}>
           {children}
         </Menu>
         {/* <AnimationContainer /> has a <Shadow />. Don't double the shadow. */}
@@ -66,6 +62,7 @@ ContextMenu.propTypes = {
   animate: PropTypes.bool,
   children: PropTypes.node,
   isOpen: PropTypes.bool,
+  onDismiss: PropTypes.func,
   isAlwaysVisible: PropTypes.bool,
   isRTL: PropTypes.bool,
 };

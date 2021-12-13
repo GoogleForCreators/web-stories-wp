@@ -22,6 +22,7 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
+import { useMouseDownOutsideRef } from '../../utils';
 import { useContextMenu } from './provider';
 
 const MenuWrapper = styled.div(
@@ -37,11 +38,16 @@ MenuWrapper.propTypes = {
   isIconMenu: PropTypes.bool,
 };
 
-const Menu = forwardRef(({ children, ...props }, ref) => {
+const Menu = ({ children, isOpen, onDismiss, ...props }) => {
   const isIconMenu = useContextMenu(({ state }) => state.isIconMenu);
+
+  const ref = useMouseDownOutsideRef(() => {
+    isOpen && onDismiss();
+  });
 
   return (
     <MenuWrapper
+      ref={ref}
       data-testid="context-menu-list"
       role="menu"
       $isIconMenu={isIconMenu}
@@ -50,11 +56,13 @@ const Menu = forwardRef(({ children, ...props }, ref) => {
       {children}
     </MenuWrapper>
   );
-});
+};
 
 export const MenuPropTypes = {
   children: PropTypes.node,
   groupLabel: PropTypes.string,
+  isOpen: PropTypes.bool,
+  onDismiss: PropTypes.func,
 };
 
 Menu.propTypes = MenuPropTypes;

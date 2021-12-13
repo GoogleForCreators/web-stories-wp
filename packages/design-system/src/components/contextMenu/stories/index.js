@@ -564,7 +564,9 @@ export const RightClickMenu = () => {
       {/*eslint-disable-next-line styled-components-a11y/no-noninteractive-element-interactions*/}
       <SampleLayout ref={layoutRef} role="region" onKeyDown={() => {}} />
       <RightClickContextMenuContainer position={menuPosition}>
-        <ContextMenu isOpen={isOpen}>{pageMenu}</ContextMenu>
+        <ContextMenu isOpen={isOpen} onDismiss={() => setIsOpen(false)}>
+          {pageMenu}
+        </ContextMenu>
       </RightClickContextMenuContainer>
     </ViewportContainer>
   );
