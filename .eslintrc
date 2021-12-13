@@ -422,7 +422,7 @@
     {
       "files": [
         "packages/commander/**/*.js",
-        "packages/fonts/src/cli.js",
+        "packages/fonts/scripts/cli.js",
         "packages/migration/src/cli.js",
         "packages/templates/src/cli.js",
         "packages/text-sets/src/cli.js"
