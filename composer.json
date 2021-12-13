@@ -1,9 +1,9 @@
 {
   "name": "google/web-stories-wp",
-  "type": "wordpress-plugin",
   "description": "Visual storytelling for WordPress.",
-  "homepage": "https://github.com/google/web-stories-wp",
   "license": "Apache-2.0",
+  "type": "wordpress-plugin",
+  "homepage": "https://github.com/google/web-stories-wp",
   "require": {
     "php": "^7.0 || ^8.0",
     "ext-dom": "*",
@@ -34,6 +34,32 @@
   },
   "suggest": {
     "ext-curl": "Used for modifying cURL requests in CORS proxy"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/ampproject/amp-wp",
+      "no-api": true
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "Google\\Web_Stories\\": "includes",
+      "AmpProject\\": "vendor/ampproject/amp-wp/lib/common/src",
+      "AmpProject\\Optimizer\\": "vendor/ampproject/amp-wp/lib/optimizer/src"
+    },
+    "files": [
+      "includes/polyfills/mbstring.php"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Google\\Web_Stories\\Tests\\Integration\\": "tests/phpunit/integration/includes",
+      "Google\\Web_Stories\\Tests\\Unit\\": "tests/phpunit/unit/includes",
+      "SzepeViktor\\PHPStan\\WordPress\\": "tests/phpstan/src"
+    }
   },
   "config": {
     "discard-changes": true,
@@ -80,32 +106,6 @@
       }
     }
   },
-  "autoload": {
-    "psr-4": {
-      "Google\\Web_Stories\\": "includes",
-      "AmpProject\\": "vendor/ampproject/amp-wp/lib/common/src",
-      "AmpProject\\Optimizer\\": "vendor/ampproject/amp-wp/lib/optimizer/src"
-    },
-    "files": [
-      "includes/polyfills/mbstring.php"
-    ]
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Google\\Web_Stories\\Tests\\Integration\\": "tests/phpunit/integration/includes",
-      "Google\\Web_Stories\\Tests\\Unit\\": "tests/phpunit/unit/includes",
-      "SzepeViktor\\PHPStan\\WordPress\\": "tests/phpstan/src"
-    }
-  },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/ampproject/amp-wp",
-      "no-api": true
-    }
-  ],
-  "minimum-stability": "dev",
-  "prefer-stable": true,
   "scripts": {
     "post-install-cmd": [
       "@prefix-dependencies"
