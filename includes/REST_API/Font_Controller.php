@@ -39,6 +39,20 @@ use WP_REST_Server;
  */
 class Font_Controller extends WP_REST_Posts_Controller {
 	/**
+	 * Constructor.
+	 *
+	 * Overrides the namespace.
+	 *
+	 * @since 1.16.0
+	 *
+	 * @param string $post_type Post type.
+	 */
+	public function __construct( $post_type ) {
+		parent::__construct( $post_type );
+		$this->namespace = 'web-stories/v1';
+	}
+
+	/**
 	 * Registers the routes for posts.
 	 *
 	 * @since 1.16.0
