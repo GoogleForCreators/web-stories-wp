@@ -35,15 +35,15 @@ import {
 /**
  * Internal dependencies
  */
-import { CardGallery, ColorList } from '../../../../../components';
-import { TemplatePropType } from '../../../../../types';
+import { CardGallery, ColorList } from '../../../../../../components';
+import { TemplatePropType } from '../../../../../../types';
 import {
   Container,
   Panel,
   DetailContainer,
   TemplateDetails,
   Inner,
-} from '../../components';
+} from '../components';
 
 const StyledPanel = styled(Panel)`
   padding: 0 0 48px 0;
@@ -88,14 +88,14 @@ const MetadataContainer = styled.div`
   align-items: center;
 `;
 
-function DetailsGallery({
+function DetailsContent({
   activeTemplateIndex,
   isRTL,
   filteredTemplatesLength,
   switchToTemplateByOffset,
   template,
 }) {
-  const { postersByPage, title, description, tags, colors } = template;
+  const { postersByPage, title, description, tags, colors } = template || {};
 
   const galleryPosters = useMemo(
     () =>
@@ -211,7 +211,7 @@ function DetailsGallery({
   );
 }
 
-DetailsGallery.propTypes = {
+DetailsContent.propTypes = {
   activeTemplateIndex: PropTypes.number,
   isRTL: PropTypes.bool,
   filteredTemplatesLength: PropTypes.number,
@@ -219,4 +219,4 @@ DetailsGallery.propTypes = {
   template: TemplatePropType,
 };
 
-export default DetailsGallery;
+export default DetailsContent;

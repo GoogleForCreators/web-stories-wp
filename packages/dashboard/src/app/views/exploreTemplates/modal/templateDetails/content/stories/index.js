@@ -22,15 +22,15 @@ import { boolean } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import { formattedTemplatesArray } from '../../../../../../storybookUtils';
-import DetailsGallery from '..';
+import { formattedTemplatesArray } from '../../../../../../../storybookUtils';
+import DetailsContent from '..';
 
 export default {
-  title: 'Dashboard/Views/TemplateDetails/Content/DetailsGallery',
+  title: 'Dashboard/Views/TemplateDetails/Content/DetailsContent',
 };
 
 export const _default = () => (
-  <DetailsGallery
+  <DetailsContent
     activeTemplateIndex={8}
     isRTL={boolean('isRTL')}
     orderedTemplatesLength={12}

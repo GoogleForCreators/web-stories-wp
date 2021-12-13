@@ -130,16 +130,10 @@ function ExploreTemplates() {
         name: template.title,
         template_id: template.id,
       });
+
       createStoryFromTemplate(template);
     },
     [createStoryFromTemplate, templates]
-  );
-
-  const templateActions = useMemo(
-    () => ({
-      createStoryFromTemplate: handleCreateStoryFromTemplate,
-    }),
-    [handleCreateStoryFromTemplate]
   );
 
   const handleDetailsToggle = useCallback(
@@ -176,6 +170,19 @@ function ExploreTemplates() {
     [setActiveTemplateIndex, setActiveTemplate, orderedTemplates]
   );
 
+  const templateActions = useMemo(
+    () => ({
+      createStoryFromTemplate: handleCreateStoryFromTemplate,
+      handleDetailsToggle,
+      switchToTemplateByOffset,
+    }),
+    [
+      handleCreateStoryFromTemplate,
+      handleDetailsToggle,
+      switchToTemplateByOffset,
+    ]
+  );
+
   useEffect(() => {
     fetchExternalTemplates();
   }, [fetchExternalTemplates]);
@@ -200,7 +207,6 @@ function ExploreTemplates() {
         search={search}
         view={view}
         templateActions={templateActions}
-        handleDetailsToggle={handleDetailsToggle}
       />
       <Layout.Fixed>
         <ScrollToTop />
@@ -208,11 +214,9 @@ function ExploreTemplates() {
       <TemplateDetailsModal
         activeTemplate={activeTemplate}
         activeTemplateIndex={activeTemplateIndex}
-        handleDetailsToggle={handleDetailsToggle}
         isDetailsViewOpen={isDetailsViewOpen}
-        switchToTemplateByOffset={switchToTemplateByOffset}
+        templateActions={templateActions}
         filteredTemplatesLength={orderedTemplates.length}
-        createStoryFromTemplate={createStoryFromTemplate}
       />
     </Layout.Provider>
   );

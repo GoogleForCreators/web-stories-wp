@@ -25,7 +25,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import Header from '..';
-import { Layout } from '../../../../../components';
+import { Layout } from '../../../../../../../components';
 
 export default {
   title: 'Dashboard/Views/TemplateDetails/Header',

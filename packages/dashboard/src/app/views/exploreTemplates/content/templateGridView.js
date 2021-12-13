@@ -18,7 +18,6 @@
  * External dependencies
  */
 import {
-  useCallback,
   useEffect,
   useRef,
   useFocusOut,
@@ -26,9 +25,7 @@ import {
   useState,
 } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
 import { useGridViewKeys } from '@web-stories-wp/design-system';
-import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -46,24 +43,16 @@ function TemplateGridView({
   pageSize,
   templates: filteredTemplates,
   templateActions,
-  handleDetailsToggle,
 }) {
   const { isRTL, apiCallbacks } = useConfig();
   const containerRef = useRef();
   const gridRef = useRef();
   const itemRefs = useRef({});
   const [activeGridItemId, setActiveGridItemId] = useState(null);
+  const { handleDetailsToggle, createStoryFromTemplate } =
+    templateActions || {};
 
-  const handleUseStory = useCallback(
-    ({ id, title }) => {
-      trackEvent('use_template', {
-        name: title,
-        template_id: id,
-      });
-      templateActions.createStoryFromTemplate(id);
-    },
-    [templateActions]
-  );
+  const canCreateStory = Boolean(apiCallbacks?.createStoryFromTemplate);
 
   useGridViewKeys({
     containerRef,
@@ -92,11 +81,11 @@ function TemplateGridView({
       filteredTemplates.map(({ id, slug, status, title, postersByPage }) => {
         const isActive = activeGridItemId === id;
         const posterSrc = postersByPage?.[0];
-        const canCreateStory = Boolean(apiCallbacks?.createStoryFromTemplate);
+
         return (
           <TemplateGridItem
             onCreateStory={
-              canCreateStory ? () => handleUseStory({ id, title }) : null
+              canCreateStory ? () => createStoryFromTemplate(id) : null
             }
             onFocus={() => {
               setActiveGridItemId(id);
@@ -119,11 +108,10 @@ function TemplateGridView({
     [
       filteredTemplates,
       activeGridItemId,
-      pageSize.height,
-      handleUseStory,
-      apiCallbacks,
+      canCreateStory,
       handleDetailsToggle,
-      setActiveGridItemId,
+      pageSize.height,
+      createStoryFromTemplate,
     ]
   );
 
@@ -145,6 +133,5 @@ TemplateGridView.propTypes = {
   pageSize: PageSizePropType,
   templates: TemplatesPropType,
   templateActions: TemplateActionsPropType,
-  handleDetailsToggle: PropTypes.func,
 };
 export default TemplateGridView;

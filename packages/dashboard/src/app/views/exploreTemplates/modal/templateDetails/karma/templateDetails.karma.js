@@ -21,9 +21,9 @@ import { within } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import Fixture from '../../../../karma/fixture';
-import { TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS } from '../../../../constants';
-import useApi from '../../../api/useApi';
+import Fixture from '../../../../../../karma/fixture';
+import { TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS } from '../../../../../../constants';
+import useApi from '../../../../../api/useApi';
 
 describe('CUJ: Creator can browse templates in grid view: See pre-built template details page', () => {
   let fixture;

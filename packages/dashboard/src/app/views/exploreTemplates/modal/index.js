@@ -17,43 +17,32 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
+// import { useCallback } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { Modal } from '@web-stories-wp/design-system';
 import PropTypes from 'prop-types';
-import { trackEvent } from '@web-stories-wp/tracking';
+// import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
 import { useConfig } from '../../../config';
-import { TemplatePropType } from '../../../../types';
-import DetailsGallery from '../../templateDetails/content/detailsGallery';
-import Header from '../../templateDetails/header';
+import { TemplatePropType, TemplateActionsPropType } from '../../../../types';
+import Header from './templateDetails/header';
+import DetailsContent from './templateDetails/content';
 
 function TemplateDetailsModal({
   activeTemplateIndex,
   activeTemplate,
   filteredTemplatesLength,
-  handleDetailsToggle,
   isDetailsViewOpen,
-  switchToTemplateByOffset,
-  createStoryFromTemplate,
+  templateActions,
 }) {
-  const { isRTL } = useConfig();
-  const { apiCallbacks } = useConfig();
-
-  const handleCreateStoryFromTemplate = useCallback(() => {
-    if (activeTemplate) {
-      trackEvent('use_template', {
-        name: activeTemplate.title,
-        template_id: activeTemplate?.id,
-      });
-      createStoryFromTemplate(activeTemplate);
-    }
-  }, [createStoryFromTemplate, activeTemplate]);
-
+  const { isRTL, apiCallbacks } = useConfig();
   const canCreateStory = Boolean(apiCallbacks?.createStoryFromTemplate);
+
+  const { handleDetailsToggle, switchToTemplateByOffset } =
+    templateActions || {};
 
   return (
     <Modal
@@ -71,11 +60,12 @@ function TemplateDetailsModal({
       }}
     >
       <Header
-        handleDetailsToggle={handleDetailsToggle}
         templateTitle={activeTemplate?.title}
-        onHandleCtaClick={canCreateStory ? handleCreateStoryFromTemplate : null}
+        templateId={activeTemplate?.id}
+        templateActions={templateActions}
+        canCreateStory={canCreateStory}
       />
-      <DetailsGallery
+      <DetailsContent
         activeTemplateIndex={activeTemplateIndex}
         isRTL={isRTL}
         filteredTemplatesLength={filteredTemplatesLength}
@@ -89,9 +79,10 @@ TemplateDetailsModal.propTypes = {
   activeTemplateIndex: PropTypes.number,
   activeTemplate: TemplatePropType,
   filteredTemplatesLength: PropTypes.number,
-  handleDetailsToggle: PropTypes.func,
+  // handleDetailsToggle: PropTypes.func,
   isDetailsViewOpen: PropTypes.bool,
-  switchToTemplateByOffset: PropTypes.func,
-  createStoryFromTemplate: PropTypes.func,
+  templateActions: TemplateActionsPropType,
+  // switchToTemplateByOffset: PropTypes.func,
+  // createStoryFromTemplate: PropTypes.func,
 };
 export default TemplateDetailsModal;

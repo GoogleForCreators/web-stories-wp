@@ -57,7 +57,6 @@ function Content({
   totalTemplates,
   search,
   templateActions,
-  handleDetailsToggle,
 }) {
   const { newStoryURL } = useConfig();
 
@@ -75,7 +74,6 @@ function Content({
           templates={templates}
           pageSize={view.pageSize}
           templateActions={templateActions}
-          handleDetailsToggle={handleDetailsToggle}
         />
         <InfiniteScroller
           canLoadMore={!allPagesFetched}
@@ -117,11 +115,10 @@ function Content({
     );
   }, [
     allPagesFetched,
-    handleDetailsToggle,
     isLoading,
     newStoryURL,
     page.requestNextPage,
-    search?.keyword,
+    search.keyword,
     templateActions,
     templates,
     totalTemplates,
@@ -137,7 +134,6 @@ function Content({
 
 Content.propTypes = {
   allPagesFetched: PropTypes.bool,
-  handleDetailsToggle: PropTypes.func,
   isLoading: PropTypes.bool,
   page: PagePropTypes,
   templates: TemplatesPropType,

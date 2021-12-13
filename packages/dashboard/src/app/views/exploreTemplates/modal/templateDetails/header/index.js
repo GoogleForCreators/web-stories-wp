@@ -27,6 +27,10 @@ import {
   Icons,
   themeHelpers,
 } from '@web-stories-wp/design-system';
+/**
+ * Internal dependencies
+ */
+import { TemplateActionsPropType } from '../../../../../../types';
 
 const Nav = styled.nav`
   justify-content: space-between;
@@ -48,7 +52,13 @@ const CTAButton = styled(Button).attrs({
   /* Use Template button should be same height as Close button.*/
   padding: 10px 16px;
 `;
-function Header({ onHandleCtaClick, templateTitle, handleDetailsToggle }) {
+function Header({
+  templateTitle,
+  templateId,
+  templateActions,
+  canCreateStory,
+}) {
+  const { createStoryFromTemplate, handleDetailsToggle } = templateActions;
   return (
     <Nav>
       <HiddenHeading>
@@ -67,9 +77,9 @@ function Header({ onHandleCtaClick, templateTitle, handleDetailsToggle }) {
       >
         <Icons.CrossLarge />
       </Button>
-      {onHandleCtaClick && (
+      {canCreateStory && (
         <CTAButton
-          onClick={onHandleCtaClick}
+          onClick={() => createStoryFromTemplate(templateId)}
           aria-label={sprintf(
             /* translators: %s: template title */
             __('Use %s template to create new story', 'web-stories'),
@@ -84,8 +94,10 @@ function Header({ onHandleCtaClick, templateTitle, handleDetailsToggle }) {
 }
 
 Header.propTypes = {
+  canCreateStory: PropTypes.bool,
   handleDetailsToggle: PropTypes.func,
-  onHandleCtaClick: PropTypes.func,
+  templateActions: TemplateActionsPropType,
+  templateId: PropTypes.number,
   templateTitle: PropTypes.string,
 };
 
