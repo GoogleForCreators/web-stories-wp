@@ -24,7 +24,7 @@ import { useMemo } from '@web-stories-wp/react';
 import { SmartPopover, Shadow } from './styled';
 import Menu, { MenuPropTypes } from './menu';
 import AnimationContainer from './animationContainer';
-import { ContextMenuProvider } from './provider';
+import { ContextMenuProvider } from './contextMenuProvider';
 
 const ContextMenu = ({
   animate,

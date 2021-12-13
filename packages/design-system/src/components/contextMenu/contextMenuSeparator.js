@@ -21,7 +21,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { useContextMenu } from './provider';
+import { useContextMenu } from './contextMenuProvider';
 
 const Separator = styled.div`
   display: block;

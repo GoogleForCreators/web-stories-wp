@@ -32,6 +32,16 @@ const IconWrapper = styled.div`
   height: 32px;
 `;
 
+/**
+ * A styled icon for use in the context menu. To be used within
+ * the styled Button for the context menu.
+ *
+ * @param {Object} props Attributes to pass to the link.
+ * @param {Node} props.children Children to render.
+ * @param {TOOLTIP_PLACEMENT} props.placement The tooltip placement.
+ * @param {string} props.title The text to display in the tooltip.
+ * @return {Node} The react node
+ */
 function Icon({
   children,
   placement = TOOLTIP_PLACEMENT.RIGHT,

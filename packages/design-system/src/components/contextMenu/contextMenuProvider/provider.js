@@ -18,17 +18,28 @@
  */
 
 import PropTypes from 'prop-types';
+import { useCallback, useState } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
 import ContextMenuContext from './context';
 
-export default function ContextMenuProvider({ children, isIconMenu }) {
+export default function ContextMenuProvider({ children, isIconMenu = false }) {
+  const [focusedId, setFocusedId] = useState(-1);
+
+  const handleBlur = useCallback((id) => setFocusedId(id), []);
+  const handleFocus = useCallback(() => setFocusedId(-1), []);
+
   const value = {
     state: {
+      focusedId,
       isIconMenu,
     },
-    actions: {},
+    actions: {
+      onMenuItemBlur: handleBlur,
+      onMenuItemFocus: handleFocus,
+      setFocusedId,
+    },
   };
 
   return (
