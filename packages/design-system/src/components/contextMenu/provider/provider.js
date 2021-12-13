@@ -38,6 +38,6 @@ export default function ContextMenuProvider({ children, isIconMenu }) {
   );
 }
 ContextMenuProvider.propTypes = {
-  children: PropTypes.children,
+  children: PropTypes.node,
   isIconMenu: PropTypes.bool,
 };

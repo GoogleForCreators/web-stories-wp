@@ -214,7 +214,7 @@ MediaPicker.propTypes = {
   ]),
 };
 
-/** @typedef {import('@web-stories-wp/design-system').MenuItemProps} MenuItemProps */
+// /** @typedef {import('@web-stories-wp/design-system').MenuItemProps} MenuItemProps */
 
 /**
  * Determines the quick actions to display in the quick
@@ -223,7 +223,7 @@ MediaPicker.propTypes = {
  * Quick actions should have the same shape as items in
  * the design system's context menu.
  *
- * @return {Array.<MenuItemProps>} an array of quick action objects
+//  * @return {Array.<MenuItemProps>} an array of quick action objects
  */
 const useQuickActions = () => {
   const {

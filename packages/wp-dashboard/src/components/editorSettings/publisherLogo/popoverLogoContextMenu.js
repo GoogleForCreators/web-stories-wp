@@ -23,7 +23,7 @@ import { __, sprintf } from '@web-stories-wp/i18n';
 import {
   Icons,
   ContextMenu,
-  MenuItemProps,
+  // MenuItemProps,
 } from '@web-stories-wp/design-system';
 
 /**
@@ -93,7 +93,7 @@ export const PopoverLogoContextMenuPropTypes = {
   }).isRequired,
   idx: PropTypes.number,
   isActive: PropTypes.bool,
-  items: PropTypes.arrayOf(PropTypes.shape(MenuItemProps)).isRequired,
+  // items: PropTypes.arrayOf(PropTypes.shape(MenuItemProps)).isRequired,
   onMenuItemToggle: PropTypes.func.isRequired,
   publisherLogo: PropTypes.shape({
     url: PropTypes.string,

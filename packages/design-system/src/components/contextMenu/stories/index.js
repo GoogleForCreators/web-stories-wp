@@ -44,7 +44,7 @@ import {
   PictureSwap,
 } from '../../../icons';
 import { Text } from '../../typography';
-import * as MenuItems from '../menuItems';
+import * as MenuItems from '../components';
 import ContextMenuSeparator from '../contextMenuSeparator';
 
 export default {

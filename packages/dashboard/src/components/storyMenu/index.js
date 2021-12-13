@@ -23,7 +23,7 @@ import styled from 'styled-components';
 import { useCallback } from '@web-stories-wp/react';
 import {
   ContextMenu,
-  MenuItemProps,
+  // MenuItemProps,
   themeHelpers,
 } from '@web-stories-wp/design-system';
 
@@ -135,7 +135,7 @@ StoryMenu.propTypes = {
   storyId: PropTypes.number,
   onMoreButtonSelected: PropTypes.func.isRequired,
   contextMenuId: PropTypes.number.isRequired,
-  menuItems: PropTypes.arrayOf(PropTypes.shape(MenuItemProps)).isRequired,
+  // menuItems: PropTypes.arrayOf(PropTypes.shape(MenuItemProps)).isRequired,
   menuLabel: PropTypes.string,
   menuStyleOverrides: PropTypes.array,
   verticalAlign: PropTypes.oneOf(['center', 'flex-start', 'flex-end']),
