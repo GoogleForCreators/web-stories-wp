@@ -64,6 +64,7 @@
     "@web-stories-wp/dashboard": "*",
     "@web-stories-wp/design-system": "*",
     "@web-stories-wp/e2e-tests": "*",
+    "@web-stories-wp/fonts": "*",
     "@web-stories-wp/jest-amp": "*",
     "@web-stories-wp/karma-failed-tests-reporter": "*",
     "@web-stories-wp/karma-puppeteer-client": "*",
