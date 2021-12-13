@@ -34,7 +34,7 @@ import { useConfig } from '../../../../../app/config';
 import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
 import ProviderTab from './providerTab';
 
-const Section = styled.div`
+const Section = styled.div.attrs({ role: 'tablist' })`
   display: flex;
   flex-wrap: wrap;
   margin-top: 16px;
@@ -108,7 +108,7 @@ function ProviderTabList({ providers }) {
   useKeyDownEffect(ref, ['enter', 'space'], selectFocused, [selectFocused]);
 
   return (
-    <Section ref={ref} role="tablist">
+    <Section ref={ref}>
       {providers.map((providerType, index) => (
         <ProviderTab
           key={providerType}
