@@ -227,7 +227,7 @@
     "workflow:build-plugin": "commander build-plugin",
     "workflow:fonts": "npm run update-fonts --workspace packages/fonts",
     "postworkflow:fonts": "npx prettier --write packages/fonts/src/fonts.json",
-    "workflow:render-text-sets": "render-text-sets",
+    "workflow:render-text-sets": "npm run render-text-sets --workspace packages/text-sets",
     "workflow:render-template-posters": "render-template-posters",
     "preworkflow:migrate": "[ -f packages/migration/src/module.js ] || npx rollup --config packages/migration/src/rollup.config.migrate.js",
     "workflow:migrate": "npm-run-all --parallel workflow:migrate:*",

@@ -425,7 +425,7 @@
         "packages/fonts/scripts/cli.js",
         "packages/migration/src/cli.js",
         "packages/templates/src/cli.js",
-        "packages/text-sets/src/cli.js"
+        "packages/text-sets/scripts/cli.js"
       ],
       "rules": {
         "import/no-useless-path-segments": ["error", {
@@ -453,7 +453,7 @@
         "packages/fonts/**/*.js",
         "packages/commander/**/*.js",
         "packages/templates/src/cli.js",
-        "packages/text-sets/src/cli.js"
+        "packages/text-sets/scripts/cli.js"
       ],
       "extends": [
         "plugin:node/recommended",
