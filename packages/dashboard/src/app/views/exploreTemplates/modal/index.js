@@ -50,7 +50,7 @@ function TemplateDetailsModal({
       onClose={handleDetailsToggle}
       contentLabel={__('Details View', 'web-stories')}
       overlayStyles={{
-        backgroundColor: '#00000047',
+        backgroundColor: '#00000032',
       }}
       contentStyles={{
         display: 'block',

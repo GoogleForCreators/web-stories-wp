@@ -81,7 +81,6 @@ function TemplateGridView({
       filteredTemplates.map(({ id, slug, status, title, postersByPage }) => {
         const isActive = activeGridItemId === id;
         const posterSrc = postersByPage?.[0];
-
         return (
           <TemplateGridItem
             onCreateStory={

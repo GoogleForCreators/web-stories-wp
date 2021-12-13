@@ -25,7 +25,7 @@ import Fixture from '../../../../../../karma/fixture';
 import { TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS } from '../../../../../../constants';
 import useApi from '../../../../../api/useApi';
 
-describe('CUJ: Creator can browse templates in grid view: See pre-built template details page', () => {
+describe('See template details modal', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -55,11 +55,11 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
 
     await fixture.events.hover(firstTemplate);
 
-    const view = utils.getByText(
+    const seeDetailsButton = utils.getByText(
       new RegExp(`^${TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS.template}$`)
     );
 
-    await fixture.events.click(view);
+    await fixture.events.click(seeDetailsButton);
   }
 
   function getTemplateElementById(id) {
@@ -90,7 +90,106 @@ describe('CUJ: Creator can browse templates in grid view: See pre-built template
     return templates;
   }
 
-  describe('Action: See pre-built template details page', () => {
+  async function getTemplateTitle(index) {
+    const { templates, templatesOrderById } = await getTemplatesState();
+    return templates[templatesOrderById[index]].title;
+  }
+
+  describe('Action: Navigate template details modal', () => {
+    it('should update current template', async () => {
+      const firstTemplate = await getTemplateTitle(0);
+      const templateTitle = fixture.screen.getByTestId(
+        `template-details-title`
+      );
+
+      await expect(templateTitle).toHaveTextContent(firstTemplate);
+
+      const previousArrow = fixture.screen.getByRole('button', {
+        name: /View previous template/,
+      });
+      const nextArrow = fixture.screen.getByRole('button', {
+        name: /View next template/,
+      });
+
+      await nextArrow.click();
+      await expect(templateTitle).toHaveTextContent(await getTemplateTitle(1));
+      await expect(templateTitle).not.toHaveTextContent(firstTemplate);
+
+      await previousArrow.click();
+      await expect(templateTitle).toHaveTextContent(firstTemplate);
+      await expect(templateTitle).not.toHaveTextContent(
+        await getTemplateTitle(1)
+      );
+    });
+
+    it('should update current template via keyboard', async () => {
+      //close button should be in focus
+      await fixture.events.keyboard.press('tab');
+      const closeBtn = fixture.screen.getByRole('button', {
+        name: /^Close$/,
+      });
+      expect(closeBtn).toEqual(document.activeElement);
+
+      // enter should close modal
+      await fixture.events.keyboard.press('Enter');
+      expect(closeBtn).not.toEqual(document.activeElement);
+
+      // open first template in modal
+      await navigateToFirstTemplate();
+      // escape should close modal
+      await fixture.events.keyboard.press('Escape');
+      expect(closeBtn).not.toEqual(document.activeElement);
+
+      // open first template in modal
+      await navigateToFirstTemplate();
+      // navigate to 'Use Template' button
+      await fixture.events.keyboard.press('tab');
+      await fixture.events.keyboard.press('tab');
+      const useTemplateBtn = fixture.screen.getByRole('button', {
+        name: /to create new story/,
+      });
+      expect(useTemplateBtn).toEqual(document.activeElement);
+
+      // navigate to gallery thumbnail
+      await fixture.events.keyboard.press('tab');
+      const page1 = fixture.screen.getByRole('button', { name: /Page 1/ });
+      expect(page1).toEqual(document.activeElement);
+
+      // Check current template
+      const firstTemplate = await getTemplateTitle(0);
+      const templateTitle = fixture.screen.getByTestId(
+        `template-details-title`
+      );
+      await expect(templateTitle).toHaveTextContent(firstTemplate);
+
+      //navigate to next template arrow
+      await fixture.events.keyboard.press('tab');
+      const nextArrow = fixture.screen.getByRole('button', {
+        name: /View next template/,
+      });
+      expect(nextArrow).toEqual(document.activeElement);
+
+      // navigate to next template
+      await fixture.events.keyboard.press('Enter');
+      await expect(templateTitle).not.toHaveTextContent(firstTemplate);
+      await expect(templateTitle).toHaveTextContent(await getTemplateTitle(1));
+
+      //navigate back to previous template
+      await fixture.events.keyboard.shortcut('shift+tab');
+      await fixture.events.keyboard.shortcut('shift+tab');
+      const previousArrow = fixture.screen.getByRole('button', {
+        name: /View previous template/,
+      });
+      expect(previousArrow).toEqual(document.activeElement);
+      await fixture.events.keyboard.press('Enter');
+      await expect(templateTitle).toHaveTextContent(firstTemplate);
+      await expect(templateTitle).not.toHaveTextContent(
+        await getTemplateTitle(1)
+      );
+    });
+  });
+
+  describe('Action: See template details modal', () => {
     it('should update the "Active Preview Page" when clicking on a "Thumbnail Preview Page"', async () => {
       const firstPage = fixture.screen.getByRole('button', { name: /Page 1/ });
 
