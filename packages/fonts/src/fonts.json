@@ -2925,6 +2925,31 @@
     }
   },
   {
+    "family": "Bakbak One",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 1050,
+      "des": -350,
+      "tAsc": 1050,
+      "tDes": -350,
+      "tLGap": 0,
+      "wAsc": 1100,
+      "wDes": 602,
+      "xH": 500,
+      "capH": 607,
+      "yMin": -602,
+      "yMax": 970,
+      "hAsc": 1050,
+      "hDes": -350,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Ballet",
     "fallbacks": ["cursive"],
     "weights": [400],
