@@ -139,13 +139,13 @@ export async function getOptimizedMediaById(config, mediaId) {
 export async function getPosterMediaById(config, mediaId) {
   const path = addQueryArgs(`${config.api.media}${mediaId}/`, {
     context: 'edit',
-    _fields: 'meta.web_stories_poster_id',
+    _fields: 'featured_media',
   });
 
   const result = await apiFetch({ path });
 
-  if (result?.meta?.web_stories_poster_id) {
-    return getMediaById(config, result.meta.web_stories_poster_id);
+  if (result?.featured_media) {
+    return getMediaById(config, result.featured_media);
   }
 
   return null;
