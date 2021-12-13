@@ -23,7 +23,7 @@ import { resolve } from 'path';
 /**
  * Internal dependencies
  */
-import { CURATED_FONT_NAMES } from '../utils';
+import { CURATED_FONT_NAMES } from '../constants';
 
 describe('Curated fonts', () => {
   const fonts = JSON.parse(
