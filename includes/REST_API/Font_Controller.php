@@ -274,6 +274,28 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	}
 
 	/**
+	 * Checks if a given request has access to read posts.
+	 *
+	 * @since 1.16.0
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
+	 */
+	public function get_items_permissions_check( $request ) {
+		$post_type = get_post_type_object( $this->post_type );
+
+		if ( ! $post_type || ! current_user_can( $post_type->cap->edit_posts ) ) {
+			return new WP_Error(
+				'rest_forbidden_context',
+				__( 'Sorry, you are not allowed to list fonts.', 'web-stories' ),
+				[ 'status' => rest_authorization_required_code() ]
+			);
+		}
+
+		return true;
+	}
+
+	/**
 	 * Prepares a single post output for response.
 	 *
 	 * @since 1.16.0
