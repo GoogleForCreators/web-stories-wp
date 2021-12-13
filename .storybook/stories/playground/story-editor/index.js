@@ -35,14 +35,7 @@ const AppContainer = styled.div`
 `;
 
 // @todo None of these should be required by default, https://github.com/google/web-stories-wp/pull/9569#discussion_r738458801
-const apiCallbacksNames = [
-  'saveStoryById',
-  'getMedia',
-  'getLinkMetadata',
-  'getCustomPageTemplates',
-  'addPageTemplate',
-  'deletePageTemplate',
-];
+const apiCallbacksNames = ['saveStoryById', 'getMedia', 'getLinkMetadata'];
 
 // @todo Should still work with empty object.
 const story = {
