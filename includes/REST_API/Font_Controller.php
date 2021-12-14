@@ -300,7 +300,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	public function get_items_permissions_check( $request ) {
 		$post_type = get_post_type_object( $this->post_type );
 
-		if ( ! $post_type || ! current_user_can( $post_type->cap->edit_posts ) ) {
+		if ( ! $post_type || ! current_user_can( $post_type->cap->read_post ) ) {
 			return new WP_Error(
 				'rest_forbidden',
 				__( 'Sorry, you are not allowed to list fonts.', 'web-stories' ),
