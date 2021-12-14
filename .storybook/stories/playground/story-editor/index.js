@@ -35,35 +35,16 @@ const AppContainer = styled.div`
   height: 100vh;
 `;
 
-const getInitialStory = () => {
-  const defaultStory = {
-    title: { raw: '' },
-    excerpt: { raw: '' },
-    permalink_template: 'https://example.org/web-stories/%pagename%/',
-    style_presets: {
-      color: [],
-      textStyles: [],
-    },
-    date: '2021-10-26T12:38:38', // Publishing field breaks if date is not provided.
-  };
-
+export const _default = () => {
   const content = window.localStorage.getItem(LOCAL_STORAGE_CONTENT_KEY);
+  const story = content ? JSON.parse(content) : {};
+  const apiCallbacks = { saveStoryById, getMedia };
 
-  return content ? JSON.parse(content) : defaultStory;
+  return (
+    <AppContainer>
+      <StoryEditor config={{ apiCallbacks }} initialEdits={{ story }}>
+        <InterfaceSkeleton header={<HeaderLayout />} />
+      </StoryEditor>
+    </AppContainer>
+  );
 };
-
-export const _default = () => (
-  <AppContainer>
-    <StoryEditor
-      config={{
-        apiCallbacks: {
-          saveStoryById,
-          getMedia,
-        },
-      }}
-      initialEdits={{ story: getInitialStory() }}
-    >
-      <InterfaceSkeleton header={<HeaderLayout />} />
-    </StoryEditor>
-  </AppContainer>
-);
