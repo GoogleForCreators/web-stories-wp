@@ -18,16 +18,16 @@ export const rawCustomFonts = [
   {
     id: 1,
     url: 'https://font.test/font-url-1.ttf',
-    title: 'Dummy Font 1',
+    family: 'Dummy Font 1',
   },
   {
     id: 2,
     url: 'https://font.test/font-url-2.otf',
-    title: 'Dummy Font 2',
+    family: 'Dummy Font 2',
   },
   {
     id: 3,
     url: 'https://font.test/font-url-3.woff',
-    title: 'Dummy Font 3',
+    family: 'Dummy Font 3',
   },
 ];

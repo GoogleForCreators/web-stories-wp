@@ -36,13 +36,13 @@ export const _default = () => {
   const demoId = useRef(4);
 
   const handleAddFont = useCallback(
-    (url) => {
+    ({ url }) => {
       action('onSubmit fired')(url);
 
       // For storybook demo only.
       const fontData = {
         id: demoId,
-        family: `Demo font ${demoId}`,
+        family: `Demo font ${demoId.current}`,
         url,
       };
       setAddedFonts([...addedFonts, fontData]);
