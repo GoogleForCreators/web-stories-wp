@@ -208,7 +208,7 @@ function TextSetsPane({ paneRef }) {
     <SectionContainer id={sectionId}>
       <TitleBar>
         <Headline
-          as="h3"
+          as="h2"
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL}
         >
           {PANE_TEXT.TITLE}
