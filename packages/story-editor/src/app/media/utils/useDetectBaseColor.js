@@ -86,7 +86,9 @@ function useDetectBaseColor({ updateMediaElement }) {
       if (type === 'image') {
         imageSrc = getSmallestUrlForWidth(0, resource);
       } else if (!isExternal) {
-        const posterResource = await getPosterMediaById(id);
+        const posterResource = getPosterMediaById
+          ? await getPosterMediaById(id)
+          : '';
         if (posterResource) {
           imageSrc = getSmallestUrlForWidth(0, posterResource);
         }
