@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "122bd60b029bf6b0fceb754f336b6e51",
+    "content-hash": "c65a00fc6b1bceb4a957674fe5fa6d95",
     "packages": [
         {
             "name": "ampproject/amp-toolbox",
@@ -86,12 +86,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ampproject/amp-wp",
-                "reference": "7e67d494771cd74a65615cf3f443c96371b14473"
+                "reference": "85dea505f8014caed032cbad44b69b5548651a8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/7e67d494771cd74a65615cf3f443c96371b14473",
-                "reference": "7e67d494771cd74a65615cf3f443c96371b14473",
+                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/85dea505f8014caed032cbad44b69b5548651a8c",
+                "reference": "85dea505f8014caed032cbad44b69b5548651a8c",
                 "shasum": ""
             },
             "require": {
@@ -194,7 +194,7 @@
             ],
             "description": "WordPress plugin for adding AMP support.",
             "homepage": "https://github.com/ampproject/amp-wp",
-            "time": "2021-12-10T17:12:07+00:00"
+            "time": "2021-12-14T04:46:06+00:00"
         },
         {
             "name": "civicrm/composer-downloads-plugin",
