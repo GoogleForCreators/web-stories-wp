@@ -32,7 +32,10 @@ describe('Template Details <Header />', () => {
   it('should render nav bar for detail template view', () => {
     renderWithProviders(
       <LayoutProvider>
-        <Header onHandleCtaClick={mockHandleCtaClick} />
+        <Header
+          templateActions={{ createStoryFromTemplate: mockHandleCtaClick }}
+          canCreateStory
+        />
       </LayoutProvider>
     );
     const nav = screen.getByRole('navigation');
@@ -43,7 +46,10 @@ describe('Template Details <Header />', () => {
   it('should trigger mockHandleCtaClick when cta is clicked', () => {
     renderWithProviders(
       <LayoutProvider>
-        <Header onHandleCtaClick={mockHandleCtaClick} />
+        <Header
+          templateActions={{ createStoryFromTemplate: mockHandleCtaClick }}
+          canCreateStory
+        />
       </LayoutProvider>
     );
     const cta = screen.getByText('Use template');
