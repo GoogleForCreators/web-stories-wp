@@ -35,6 +35,7 @@ import getFontDataFromUrl from '@web-stories-wp/fonts/src/utils/getFontDataFromU
 /**
  * Internal dependencies
  */
+import PropTypes from 'prop-types';
 import isValidUrl from '../utils/isValidUrl';
 import {
   InlineForm,
@@ -45,7 +46,6 @@ import {
   SettingSubheading,
   TextInputHelperText,
 } from '../components';
-import useEditorSettings from '../useEditorSettings';
 import ConfirmationDialog from './confirmationDialog';
 
 export const TEXT = {
@@ -109,17 +109,7 @@ const FontData = styled.div`
   text-overflow: ellipsis;
 `;
 
-function CustomFontsSettings() {
-  const { getCustomFonts, deleteCustomFont } = useEditorSettings(
-    ({
-      actions: {
-        fontsApi: { getCustomFonts, deleteCustomFont },
-      },
-    }) => ({
-      getCustomFonts,
-      deleteCustomFont,
-    })
-  );
+function CustomFontsSettings({ getCustomFonts, deleteCustomFont }) {
   const [fontUrl, setFontUrl] = useState('');
   const [inputError, setInputError] = useState('');
   const [addedFonts, setAddedFonts] = useState(null);
@@ -289,6 +279,9 @@ function CustomFontsSettings() {
   );
 }
 
-CustomFontsSettings.propTypes = {};
+CustomFontsSettings.propTypes = {
+  getCustomFonts: PropTypes.func.isRequired,
+  deleteCustomFont: PropTypes.func.isRequired,
+};
 
 export default CustomFontsSettings;

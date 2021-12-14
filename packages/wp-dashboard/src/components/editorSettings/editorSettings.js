@@ -61,6 +61,8 @@ function EditorSettings() {
     archivePageId,
     searchPages,
     getPageById,
+    getCustomFonts,
+    deleteCustomFont,
     publisherLogos,
     addPublisherLogo,
     fetchPublisherLogos,
@@ -69,6 +71,7 @@ function EditorSettings() {
   } = useEditorSettings(
     ({
       actions: {
+        fontsApi: { getCustomFonts, deleteCustomFont },
         settingsApi: { fetchSettings, updateSettings },
         pagesApi: { searchPages, getPageById },
         mediaApi: { uploadMedia },
@@ -111,6 +114,8 @@ function EditorSettings() {
       archivePageId,
       searchPages,
       getPageById,
+      getCustomFonts,
+      deleteCustomFont,
       fetchPublisherLogos,
       addPublisherLogo,
       removePublisherLogo,
@@ -322,7 +327,10 @@ function EditorSettings() {
                 />
               </>
             )}
-            <CustomFontsSettings />
+            <CustomFontsSettings
+              getCustomFonts={getCustomFonts}
+              deleteCustomFont={deleteCustomFont}
+            />
             <TelemetrySettings
               disabled={disableOptedIn}
               onCheckboxSelected={toggleWebStoriesTrackingOptIn}
