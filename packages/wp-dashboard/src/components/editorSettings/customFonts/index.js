@@ -202,7 +202,7 @@ function CustomFontsSettings({
         );
       }
     }
-  }, [canSave, fontUrl]);
+  }, [addCustomFont, fetchCustomFonts, canSave, fontUrl]);
 
   const handleOnKeyDown = useCallback(
     (e) => {
