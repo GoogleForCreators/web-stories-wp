@@ -63,7 +63,7 @@ const Container = styled.div`
  * @param {Function} props.onObserve When this is present, observer will detect new options coming into view and trigger the function for these entries.
  * @param {Array} props.primaryOptions Array of options to display by default when not searching
  * @param {string} props.primaryLabel Label to display above the primary options.
- * @param {Array} props.priorityOptionGroups Groups of pptions to display in front of all the other options (will not remove these from the `options`).
+ * @param {Array} props.priorityOptionGroups Groups of options to display in front of all the other options (will not remove these from the `options`).
  * @param {string} props.searchResultsLabel Label to display in front of matching options when searching.
  * @param {Function} props.renderer Option renderer in case a custom renderer is required.
  * @param {Function} props.activeItemRenderer Active item renderer in case a activeItemLabel is not enough.
