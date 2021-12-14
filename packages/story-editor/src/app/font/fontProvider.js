@@ -93,6 +93,11 @@ function FontProvider({ children }) {
 
   const getFontsBySearch = useCallback(
     async (search) => {
+      if (search.length < 2) {
+        setQueriedFonts([]);
+        return;
+      }
+
       const newFonts = await getFonts({
         search,
       });
