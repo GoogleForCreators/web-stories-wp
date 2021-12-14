@@ -31,6 +31,7 @@ import {
 } from '@web-stories-wp/design-system';
 import styled from 'styled-components';
 import getFontDataFromUrl from '@web-stories-wp/fonts/src/utils/getFontDataFromUrl';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -156,6 +157,9 @@ function CustomFontsSettings({
         );
       }
       try {
+        trackEvent('add_custom_font', {
+          url: fontUrl,
+        });
         const fontData = await getFontDataFromUrl(fontUrl);
         if (!fontData.name) {
           setInputError(__('Something went wrong', 'web-stories'));
