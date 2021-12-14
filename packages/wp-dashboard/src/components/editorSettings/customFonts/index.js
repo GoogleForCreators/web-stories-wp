@@ -162,14 +162,13 @@ function CustomFontsSettings({
     setInputError(TEXT.INPUT_ERROR);
   }, []);
 
-  const handleDelete = useCallback(() => {
-    // @todo Delete font using API!
-    // await deleteCustomFont(toDelete);
+  const handleDelete = useCallback(async () => {
+    await deleteCustomFont(toDelete);
     // @todo Should we instead not make a fetch and just remove it from the state only?
-    // await fetchCustomFonts();
+    await fetchCustomFonts();
     setToDelete(null);
     setShowDialog(false);
-  }, [toDelete]);
+  }, [toDelete, deleteCustomFont, fetchCustomFonts]);
 
   const handleOnSave = useCallback(async () => {
     if (canSave) {
@@ -190,9 +189,8 @@ function CustomFontsSettings({
         if (!fontData.family) {
           setInputError(__('Something went wrong', 'web-stories'));
         } else {
-          // @todo Use API to actually add the font as well with ID.
-          // await addCustomFont(fontData);
-          // await fetchCustomFonts();
+          await addCustomFont(fontData);
+          await fetchCustomFonts();
           setFontUrl('');
         }
       } catch (err) {
