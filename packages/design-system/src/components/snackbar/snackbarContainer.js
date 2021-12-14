@@ -147,7 +147,7 @@ export const SnackbarContainer = ({
       }
     });
   }, [notifications, speak]);
-
+  const nodeRef = useRef();
   return (
     <StyledContainer placement={placement}>
       <TransitionGroup>
@@ -169,9 +169,10 @@ export const SnackbarContainer = ({
               key={notification.id || ids[index]}
               timeout={300}
               unmountOnExit
+              nodeRef={nodeRef}
               classNames="react-snackbar-alert__snackbar-container"
             >
-              <ChildContainer placement={placement}>
+              <ChildContainer ref={nodeRef} placement={placement}>
                 <Component
                   {...notificationProps}
                   aria-hidden

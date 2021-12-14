@@ -37,6 +37,26 @@ describe('Help Center integration', () => {
     fixture.restore();
   });
 
+  describe('Help Center aXe tests', () => {
+    it('should have no aXe violations from default view', async () => {
+      await expectAsync(
+        fixture.editor.helpCenter.quickTips
+      ).toHaveNoViolations();
+    });
+
+    it('should have no aXe violations from tip view', async () => {
+      const { quickTips } = await fixture.editor.helpCenter;
+      const { getByRole } = within(quickTips);
+
+      const cropTip = getByRole('button', { name: 'Crop selected element' });
+
+      await fixture.events.click(cropTip);
+      await expectAsync(
+        await fixture.editor.helpCenter.quickTips
+      ).toHaveNoViolations();
+    });
+  });
+
   describe('Help Center default navigation', () => {
     it('should show Help Center by default for a new user with 7 unread tips', async () => {
       const { quickTips, toggleButton } = await fixture.editor.helpCenter;
@@ -90,9 +110,9 @@ describe('Help Center integration', () => {
       const { quickTips, toggleButton } = fixture.editor.helpCenter;
       expect(toggleButton).toHaveTextContent('7');
 
-      const { getByLabelText } = within(quickTips);
+      const { getByTestId } = within(quickTips);
 
-      const mainMenu = getByLabelText('Help Center Main Menu');
+      const mainMenu = getByTestId('help_center_container');
       expect(mainMenu).toBeTruthy();
 
       const { queryAllByRole } = within(mainMenu);
@@ -157,9 +177,9 @@ describe('Help Center integration', () => {
     it('should navigate quick tips with tab and enter', async () => {
       const { quickTips, toggleButton } = fixture.editor.helpCenter;
       expect(quickTips).toBeDefined();
-      const { getByLabelText, getByText } = within(quickTips);
+      const { getByTestId, getByText } = within(quickTips);
 
-      const mainMenu = getByLabelText('Help Center Main Menu');
+      const mainMenu = getByTestId('help_center_container');
       expect(mainMenu).toBeTruthy();
 
       const { queryAllByRole } = within(mainMenu);

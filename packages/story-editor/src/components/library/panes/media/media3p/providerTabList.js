@@ -34,7 +34,7 @@ import { useConfig } from '../../../../../app/config';
 import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
 import ProviderTab from './providerTab';
 
-const Section = styled.div`
+const Section = styled.div.attrs({ role: 'tablist' })`
   display: flex;
   flex-wrap: wrap;
   margin-top: 16px;

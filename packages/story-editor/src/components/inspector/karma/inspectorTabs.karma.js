@@ -37,6 +37,22 @@ describe('Inspector Tabs integration', () => {
     fixture.restore();
   });
 
+  // Disable reason: false positive for aXe violation
+  // TODO: https://github.com/google/web-stories-wp/issues/9943
+  // eslint-disable-next-line jasmine/no-disabled-tests
+  xdescribe('Inspector Tabs aXe tests', () => {
+    it('should have no aXe violations', async () => {
+      const { documentTab } = fixture.editor.inspector;
+
+      // Click document tab
+      await fixture.events.click(documentTab);
+      // actual color contrast of toggle is 7.1 however it's set on a child span absolutely positioned so aXe doesn't pick it up
+      await expectAsync(
+        fixture.editor.inspector.documentPanel.node
+      ).toHaveNoViolations();
+    });
+  });
+
   describe('keyboard navigation', () => {
     it('should return focus to current tab when pressing mod+alt+3', async () => {
       const { documentTab } = fixture.editor.inspector;

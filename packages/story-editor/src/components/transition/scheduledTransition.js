@@ -13,10 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import { useReducer, useEffect, useState } from '@googleforcreators/react';
+import {
+  useReducer,
+  useEffect,
+  useState,
+  useRef,
+  forwardRef,
+  cloneElement,
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 
@@ -43,7 +51,7 @@ const reducer = (state, action) => machine.states[state]?.[action] || state;
 // render of default styles while keeping timeout in sync
 // with state. Fixes issues discussed here:
 // https://github.com/reactjs/react-transition-group/issues/284#issuecomment-771037685
-export function Interpreter({ state, children }) {
+export const Interpreter = forwardRef(({ state, children }, ref) => {
   const [scheduledState, dispatch] = useReducer(
     reducer,
     state === entered ? state : machine.initial
@@ -75,14 +83,17 @@ export function Interpreter({ state, children }) {
   const isPrematureEntrance =
     [exiting].includes(scheduledState) && [entering, entered].includes(state);
   const shouldUseBaseState = isPrematureEntrance || isPrematureExit;
-  return children(shouldUseBaseState ? state : scheduledState);
-}
+  return cloneElement(children(shouldUseBaseState ? state : scheduledState), {
+    ref,
+  });
+});
 
 export function ScheduledTransition({ children, ...props }) {
+  const nodeRef = useRef();
   return (
-    <Transition {...props}>
+    <Transition nodeRef={nodeRef} {...props}>
       {(state) => (
-        <Interpreter state={state}>
+        <Interpreter ref={nodeRef} state={state}>
           {(scheduledState) => children(scheduledState)}
         </Interpreter>
       )}

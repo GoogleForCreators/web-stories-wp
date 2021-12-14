@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /*
  * Copyright 2021 Google LLC
  *
@@ -14,27 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/* eslint-disable no-console */
-
 /**
  * Internal dependencies
  */
-import buildFonts from './utils/buildFonts.js';
+import { getDummyMedia } from '../getDummyMedia';
 
-if (!process.env.GOOGLE_FONTS_API_KEY) {
-  throw new Error('Google Fonts API key missing!');
-}
+export const getMedia = (params) => {
+  const dummyMedia = getDummyMedia();
+  const mediaResponse = {
+    data: dummyMedia,
+    headers: {
+      totalItems: dummyMedia.length,
+      totalPages: 1,
+    },
+  };
 
-const args = process.argv.slice(2);
-const file = args[0] ? args[0] : undefined;
+  if (params.searchTerm) {
+    mediaResponse.data = dummyMedia.filter((media) => {
+      return media.alt.toLowerCase().includes(params.searchTerm.toLowerCase());
+    });
+    mediaResponse.headers.totalItems = mediaResponse.data.length;
+  }
 
-if (!file) {
-  throw new Error('File path was not provided');
-}
-
-await buildFonts(file);
-
-console.log('Web fonts updated!');
-
-/* eslint-enable no-console */
+  return Promise.resolve(mediaResponse);
+};

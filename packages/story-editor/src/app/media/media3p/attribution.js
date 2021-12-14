@@ -94,16 +94,20 @@ const getAriaLabel = (provider) =>
 
 export function UnsplashAttribution() {
   return (
-    <a href={unsplashUrl} target={'_blank'} rel={'noreferrer'}>
-      <AttributionPill>
+    <a
+      href={unsplashUrl}
+      target={'_blank'}
+      rel={'noreferrer'}
+      aria-label={getAriaLabel(MEDIA_PROVIDER.unsplash)}
+    >
+      <AttributionPill aria-hidden>
         <Text
           forwardedAs="span"
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-          aria-label={getAriaLabel(MEDIA_PROVIDER.unsplash)}
         >
           {__('Powered by', 'web-stories')}
         </Text>
-        <UnsplashLogo aria-hidden />
+        <UnsplashLogo />
       </AttributionPill>
     </a>
   );
@@ -111,16 +115,20 @@ export function UnsplashAttribution() {
 
 export function CoverrAttribution() {
   return (
-    <a href={coverrUrl} target={'_blank'} rel={'noreferrer'}>
-      <AttributionPill>
+    <a
+      href={coverrUrl}
+      target={'_blank'}
+      rel={'noreferrer'}
+      aria-label={getAriaLabel(MEDIA_PROVIDER.coverr)}
+    >
+      <AttributionPill aria-hidden>
         <Text
           forwardedAs="span"
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
-          aria-label={getAriaLabel(MEDIA_PROVIDER.coverr)}
         >
           {__('Powered by', 'web-stories')}
         </Text>
-        <CoverrLogo aria-hidden />
+        <CoverrLogo />
       </AttributionPill>
     </a>
   );
@@ -134,8 +142,8 @@ export function TenorAttribution() {
       rel={'noreferrer'}
       aria-label={getAriaLabel(MEDIA_PROVIDER.tenor)}
     >
-      <AttributionPill>
-        <TenorLogo aria-hidden />
+      <AttributionPill aria-hidden>
+        <TenorLogo />
       </AttributionPill>
     </a>
   );

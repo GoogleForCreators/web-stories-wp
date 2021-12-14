@@ -18,7 +18,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { __ } from '@googleforcreators/i18n';
+
 /**
  * Internal dependencies
  */
@@ -42,7 +42,7 @@ const Container = styled.div`
 export function Menu({ onTipSelect = noop, readTips, ...transitionProps }) {
   return (
     <Transitioner {...transitionProps}>
-      <Container aria-label={__('Help Center Main Menu', 'web-stories')}>
+      <Container data-testid="help_center_container">
         <Header />
         <Tips readTips={readTips} onTipSelect={onTipSelect} />
         <Footer />

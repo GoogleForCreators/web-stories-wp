@@ -11,17 +11,17 @@
   },
   "main": "./src/index.js",
   "type": "module",
-  "bin": {
-    "render-template-posters": "./src/cli.js"
-  },
   "dependencies": {
     "@googleforcreators/i18n": "*",
     "@googleforcreators/migration": "*",
     "@googleforcreators/tracking": "*"
   },
   "devDependencies": {
+    "@googleforcreators/date": "*",
     "@googleforcreators/stickers": "*",
-    "puppeteer": "^10.4.0",
-    "@googleforcreators/date": "*"
+    "puppeteer": "^10.4.0"
+  },
+  "scripts": {
+    "render-template-posters": "node ./scripts/cli.js"
   }
 }

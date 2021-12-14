@@ -264,6 +264,21 @@ describe('Media3pPane fetching', () => {
     expect(mediaElements?.length).toBe(expectedCount);
   }
 
+  async function waitForInitialMediaLoad() {
+    await waitFor(
+      () => {
+        const mediaElements = within(
+          fixture.editor.library.media3p.unsplashSection
+        ).queryAllByTestId(/^mediaElement/);
+
+        if (!mediaElements || mediaElements.length === 0) {
+          throw new Error('mediaElements did not load');
+        }
+      },
+      { timeout: 5000 }
+    );
+  }
+
   it('should render no results message', async () => {
     listMediaSpy.and.callFake(() => ({ media: [] }));
     await fixture.events.click(fixture.editor.library.media3pTab);
@@ -280,17 +295,20 @@ describe('Media3pPane fetching', () => {
   it('should render categories and media resources', async () => {
     await fixture.events.click(fixture.editor.library.media3pTab);
 
-    await expectMediaElements(
+    // 3p media fetching can take extra time to load, waiting to prevent flakey tests
+    await waitForInitialMediaLoad();
+
+    expectMediaElements(
       fixture.editor.library.media3p.unsplashSection,
       MEDIA_PER_PAGE
     );
-
     await fixture.snapshot();
   });
 
   it('should arrow navigate between category pills', async () => {
     await fixture.events.click(fixture.editor.library.media3pTab);
-
+    // 3p media fetching can take extra time to load, waiting to prevent flakey tests
+    await waitForInitialMediaLoad();
     await fixture.events.focus(fixture.editor.library.media3p.filters[0]);
     expect(document.activeElement.textContent).toBe('Sustainability');
 
@@ -305,7 +323,8 @@ describe('Media3pPane fetching', () => {
 
   it('should expand category section on arrow down', async () => {
     await fixture.events.click(fixture.editor.library.media3pTab);
-
+    // 3p media fetching can take extra time to load, waiting to prevent flakey tests
+    await waitForInitialMediaLoad();
     await fixture.events.keyboard.press('tab');
     await fixture.events.keyboard.press('tab');
     await fixture.events.keyboard.press('tab');
@@ -321,9 +340,10 @@ describe('Media3pPane fetching', () => {
 
   it('should fetch 2nd page', async () => {
     await fixture.events.click(fixture.editor.library.media3pTab);
+    // 3p media fetching can take extra time to load, waiting to prevent flakey tests
+    await waitForInitialMediaLoad();
 
     const mediaGallery = fixture.editor.library.media3p.mediaGallery;
-
     await expectMediaElements(
       fixture.editor.library.media3p.unsplashSection,
       MEDIA_PER_PAGE
@@ -333,7 +353,7 @@ describe('Media3pPane fetching', () => {
       0,
       mediaGallery.scrollHeight - mediaGallery.clientHeight - ROOT_MARGIN / 2
     );
-
+    // Wait for debounce
     await expectMediaElements(
       fixture.editor.library.media3p.unsplashSection,
       MEDIA_PER_PAGE * 2
@@ -342,25 +362,23 @@ describe('Media3pPane fetching', () => {
 
   it('should render the second media provider', async () => {
     await fixture.events.click(fixture.editor.library.media3pTab);
-
+    // 3p media fetching can take extra time to load, waiting to prevent flakey tests
+    await waitForInitialMediaLoad();
     await fixture.events.click(fixture.editor.library.media3p.coverrTab);
 
-    await expectMediaElements(
-      fixture.editor.library.media3p.coverrSection,
-      MEDIA_PER_PAGE
-    );
     // Wait for the debounce
-    await fixture.events.sleep(700);
     await expectMediaElements(
       fixture.editor.library.media3p.coverrSection,
       // In 1600:1000 the coverr section will fetch again due to screen height
+      // This may fail locally if the viewport is a different size.
       MEDIA_PER_PAGE * 2
     );
   });
 
   it('should scroll to the top when a category is selected', async () => {
     await fixture.events.click(fixture.editor.library.media3pTab);
-
+    // 3p media fetching can take extra time to load, waiting to prevent flakey tests
+    await waitForInitialMediaLoad();
     const mediaGallery = fixture.editor.library.media3p.mediaGallery;
     await expectMediaElements(
       fixture.editor.library.media3p.unsplashSection,
@@ -386,13 +404,14 @@ describe('Media3pPane fetching', () => {
 
   it('should have a delay before autoplaying videos', async () => {
     await fixture.events.click(fixture.editor.library.media3pTab);
-
+    // 3p media fetching can take extra time to load, waiting to prevent flakey tests
+    await waitForInitialMediaLoad();
     await fixture.events.click(fixture.editor.library.media3p.coverrTab);
-    // Wait for the debounce
-    await fixture.events.sleep(700);
+    //  Wait for the debounce
     await expectMediaElements(
       fixture.editor.library.media3p.coverrSection,
       // In 1600:1000 the coverr section will fetch again due to screen height
+      // This may fail locally if the viewport is a different size.
       MEDIA_PER_PAGE * 2
     );
 
@@ -418,7 +437,8 @@ describe('Media3pPane fetching', () => {
   describe('Gallery navigation', () => {
     it('should handle pressing right when focused', async () => {
       await fixture.events.click(fixture.editor.library.media3pTab);
-
+      // 3p media fetching can take extra time to load, waiting to prevent flakey tests
+      await waitForInitialMediaLoad();
       const { mediaElements, unsplashSection } = fixture.editor.library.media3p;
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
@@ -430,11 +450,10 @@ describe('Media3pPane fetching', () => {
       expect(document.activeElement).toBe(mediaElements[1]);
     });
 
-    // TODO: https://github.com/google/web-stories-wp/issues/9928
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should handle pressing right when at the end of a row', async () => {
+    it('should handle pressing right when at the end of a row', async () => {
       await fixture.events.click(fixture.editor.library.media3pTab);
-
+      // 3p media fetching can take extra time to load, waiting to prevent flakey tests
+      await waitForInitialMediaLoad();
       const { mediaElements, unsplashSection } = fixture.editor.library.media3p;
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
@@ -456,7 +475,8 @@ describe('Media3pPane fetching', () => {
       });
 
       await fixture.events.click(fixture.editor.library.media3pTab);
-
+      // 3p media fetching can take extra time to load, waiting to prevent flakey tests
+      await waitForInitialMediaLoad();
       const { mediaElements, unsplashSection } = fixture.editor.library.media3p;
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
@@ -470,11 +490,10 @@ describe('Media3pPane fetching', () => {
       );
     });
 
-    // TODO: https://github.com/google/web-stories-wp/issues/9928
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should handle pressing left when focused', async () => {
+    it('should handle pressing left when focused', async () => {
       await fixture.events.click(fixture.editor.library.media3pTab);
-
+      // 3p media fetching can take extra time to load, waiting to prevent flakey tests
+      await waitForInitialMediaLoad();
       const { mediaElements, unsplashSection } = fixture.editor.library.media3p;
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
@@ -488,7 +507,8 @@ describe('Media3pPane fetching', () => {
 
     it('should handle pressing left at the beginning of a row', async () => {
       await fixture.events.click(fixture.editor.library.media3pTab);
-
+      // 3p media fetching can take extra time to load, waiting to prevent flakey tests
+      await waitForInitialMediaLoad();
       const { mediaElements, unsplashSection } = fixture.editor.library.media3p;
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
@@ -502,7 +522,8 @@ describe('Media3pPane fetching', () => {
 
     it('should handle pressing left when the first element is focused', async () => {
       await fixture.events.click(fixture.editor.library.media3pTab);
-
+      // 3p media fetching can take extra time to load, waiting to prevent flakey tests
+      await waitForInitialMediaLoad();
       const { mediaElements, unsplashSection } = fixture.editor.library.media3p;
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
@@ -516,7 +537,8 @@ describe('Media3pPane fetching', () => {
 
     it('should handle pressing down', async () => {
       await fixture.events.click(fixture.editor.library.media3pTab);
-
+      // 3p media fetching can take extra time to load, waiting to prevent flakey tests
+      await waitForInitialMediaLoad();
       const { mediaElements, unsplashSection } = fixture.editor.library.media3p;
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
@@ -528,11 +550,10 @@ describe('Media3pPane fetching', () => {
       expect(document.activeElement).toBe(mediaElements[3]);
     });
 
-    // TODO: https://github.com/google/web-stories-wp/issues/9928
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should handle pressing up', async () => {
+    it('should handle pressing up', async () => {
       await fixture.events.click(fixture.editor.library.media3pTab);
-
+      // 3p media fetching can take extra time to load, waiting to prevent flakey tests
+      await waitForInitialMediaLoad();
       const { mediaElements, unsplashSection } = fixture.editor.library.media3p;
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
@@ -544,11 +565,11 @@ describe('Media3pPane fetching', () => {
       expect(document.activeElement).toBe(mediaElements[1]);
     });
 
-    // TODO: https://github.com/google/web-stories-wp/issues/9928
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should handle pressing Home', async () => {
+    it('should handle pressing Home', async () => {
       mockListMedia();
       await fixture.events.click(fixture.editor.library.media3pTab);
+      // 3p media fetching can take extra time to load, waiting to prevent flakey tests
+      await waitForInitialMediaLoad();
 
       const { mediaElements, unsplashSection } = fixture.editor.library.media3p;
 
@@ -564,7 +585,8 @@ describe('Media3pPane fetching', () => {
     it('should handle pressing End', async () => {
       mockListMedia();
       await fixture.events.click(fixture.editor.library.media3pTab);
-
+      // 3p media fetching can take extra time to load, waiting to prevent flakey tests
+      await waitForInitialMediaLoad();
       const { mediaElements, unsplashSection } = fixture.editor.library.media3p;
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
@@ -582,7 +604,8 @@ describe('Media3pPane fetching', () => {
   describe('Provider navigation', () => {
     it('should handle pressing Right', async () => {
       await fixture.events.click(fixture.editor.library.media3pTab);
-
+      // 3p media fetching can take extra time to load, waiting to prevent flakey tests
+      await waitForInitialMediaLoad();
       expect(fixture.editor.library.media3p.tabs.length).toBe(3);
 
       // unsplash section should be visible
@@ -607,7 +630,8 @@ describe('Media3pPane fetching', () => {
 
     it('should handle pressing Right when no more providers', async () => {
       await fixture.events.click(fixture.editor.library.media3pTab);
-
+      // 3p media fetching can take extra time to load, waiting to prevent flakey tests
+      await waitForInitialMediaLoad();
       const { tabs } = fixture.editor.library.media3p;
       expect(tabs.length).toBe(3);
 
@@ -627,7 +651,8 @@ describe('Media3pPane fetching', () => {
 
     it('should handle pressing Left', async () => {
       await fixture.events.click(fixture.editor.library.media3pTab);
-
+      // 3p media fetching can take extra time to load, waiting to prevent flakey tests
+      await waitForInitialMediaLoad();
       const { tabs } = fixture.editor.library.media3p;
       expect(tabs.length).toBe(3);
 
@@ -645,7 +670,8 @@ describe('Media3pPane fetching', () => {
 
     it('should handle pressing Left when at the beginning', async () => {
       await fixture.events.click(fixture.editor.library.media3pTab);
-
+      // 3p media fetching can take extra time to load, waiting to prevent flakey tests
+      await waitForInitialMediaLoad();
       const { tabs } = fixture.editor.library.media3p;
       expect(tabs.length).toBe(3);
 

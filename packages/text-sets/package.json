@@ -19,13 +19,13 @@
   },
   "main": "./src/index.js",
   "type": "module",
-  "bin": {
-    "render-text-sets": "./src/cli.js"
-  },
   "dependencies": {
     "@googleforcreators/migration": "*"
   },
   "devDependencies": {
     "puppeteer": "*"
+  },
+  "scripts": {
+    "render-text-sets": "node ./scripts/cli.js"
   }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,10 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './styles';
-export { default as FlipControls } from './flipControls';
-export { default as LinkRelations } from './linkRelations';
-export { default as getCommonValue } from './getCommonValue';
-export { default as getCommonObjectValue } from './getCommonObjectValue';
-export { default as useCommonColorValue } from './useCommonColorValue';
-export { default as useCommonObjectValue } from './useCommonObjectValue';
+
+/* eslint-disable no-console */
+
+/**
+ * Internal dependencies
+ */
+import buildFonts from './utils/buildFonts.js';
+
+if (!process.env.GOOGLE_FONTS_API_KEY) {
+  throw new Error('Google Fonts API key missing!');
+}
+
+const args = process.argv.slice(2);
+const file = args[0] ? args[0] : undefined;
+
+if (!file) {
+  throw new Error('File path was not provided');
+}
+
+await buildFonts(file);
+
+console.log('Web fonts updated!');
+
+/* eslint-enable no-console */

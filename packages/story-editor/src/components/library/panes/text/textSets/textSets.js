@@ -81,7 +81,7 @@ function TextSets({ paneRef, filteredTextSets }) {
           columnWidth={TEXT_SET_SIZE}
           rowHeight={TEXT_SET_SIZE}
           onFocus={handleGridFocus}
-          role="list"
+          role="group"
           aria-label={__('Text Set Options', 'web-stories')}
         >
           {rowVirtualizer.virtualItems.map((virtualRow) =>

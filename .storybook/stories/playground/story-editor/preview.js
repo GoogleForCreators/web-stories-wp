@@ -15,34 +15,34 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useEffect } from 'react';
+
+/**
  * Internal dependencies
  */
-import { Container } from '../container';
+import { LOCAL_STORAGE_PREVIEW_MARKUP_KEY } from './constants';
 
-export default class Text extends Container {
-  constructor(node, path) {
-    super(node, path);
-  }
+export default {
+  title: 'Playground/preview',
+};
 
-  preset(name) {
-    return this.getByRole('button', { name });
-  }
+// This is a hidden story component ( hidden via manager-head.html ), used for previewing the story-editor. Please do not remove.
+function Preview() {
+  useEffect(() => {
+    const content = window.localStorage.getItem(
+      LOCAL_STORAGE_PREVIEW_MARKUP_KEY
+    );
 
-  get textSetList() {
-    return this.getByRole('group', { name: /Text Set Options/ });
-  }
+    if (content) {
+      document.open();
+      document.write(content);
+      document.close();
+    }
+  }, []);
 
-  get textSets() {
-    return this.getAllByRoleIn(this.textSetList, 'button');
-  }
-
-  textSetFilter(name) {
-    return this.getByRole('option', { name });
-  }
-
-  get smartColorToggle() {
-    return this.getByRole('checkbox', {
-      name: 'Adaptive text colors',
-    });
-  }
+  return null;
 }
+
+export const _default = Preview;
