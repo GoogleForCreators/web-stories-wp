@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useCallback, useEffect } from '@web-stories-wp/react';
+import { useState, useCallback } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import {
   Button,
@@ -109,33 +109,17 @@ const FontData = styled.div`
   text-overflow: ellipsis;
 `;
 
-function CustomFontsSettings({ addCustomFont, getCustomFonts, deleteCustomFont }) {
+function CustomFontsSettings({
+  customFonts = [],
+  addCustomFont,
+  fetchCustomFonts,
+  deleteCustomFont,
+}) {
   const [fontUrl, setFontUrl] = useState('');
   const [inputError, setInputError] = useState('');
-  const [addedFonts, setAddedFonts] = useState(null);
   const [showDialog, setShowDialog] = useState(false);
   const [toDelete, setToDelete] = useState(null);
   const canSave = !inputError;
-
-  const loadFonts = useCallback(() => {
-    // @todo Use API call.
-    /*const fonts = await getCustomFonts();
-    if (!fonts) {
-      setAddedFonts([]);
-    } else {
-      setAddedFonts(fonts);
-    }*/
-    setAddedFonts([
-      { id: 1, name: 'Font 1', url: 'https://example.com/font1.otf' },
-      { id: 2, name: 'Font 2', url: 'https://example.com/font2.woff' },
-    ]);
-  }, []);
-
-  useEffect(() => {
-    if (null === addedFonts) {
-      loadFonts();
-    }
-  }, [loadFonts, addedFonts]);
 
   const handleUpdateFontUrl = useCallback((event) => {
     const { value } = event.target;
@@ -153,6 +137,8 @@ function CustomFontsSettings({ addCustomFont, getCustomFonts, deleteCustomFont }
   const handleDelete = useCallback(() => {
     // @todo Delete font using API!
     // await deleteCustomFont(toDelete);
+    // @todo Should we instead not make a fetch and just remove it from the state only?
+    // await fetchCustomFonts();
     console.log('Deleted font:', toDelete);
     setToDelete(null);
     setShowDialog(false);
@@ -175,11 +161,8 @@ function CustomFontsSettings({ addCustomFont, getCustomFonts, deleteCustomFont }
           setInputError(__('Something went wrong', 'web-stories'));
         } else {
           // @todo Use API to actually add the font as well with ID.
-          // const id = await addCustomFont(fontData);
-          setAddedFonts([
-            { name: fontData.name, url: fontUrl },
-            ...(addedFonts || []),
-          ]);
+          // await addCustomFont(fontData);
+          // await fetchCustomFonts();
           setFontUrl('');
         }
       } catch (err) {
@@ -191,7 +174,7 @@ function CustomFontsSettings({ addCustomFont, getCustomFonts, deleteCustomFont }
         );
       }
     }
-  }, [addedFonts, canSave, fontUrl]);
+  }, [canSave, fontUrl]);
 
   const handleOnKeyDown = useCallback(
     (e) => {
@@ -239,11 +222,11 @@ function CustomFontsSettings({ addCustomFont, getCustomFonts, deleteCustomFont }
         >
           {TEXT.INPUT_CONTEXT}
         </TextInputHelperText>
-        {addedFonts?.length && (
+        {customFonts?.length > 0 && (
           <FontsWrapper>
             <ListHeading forwardedAs="span">{TEXT.FONTS_HEADING}</ListHeading>
             <FontsList>
-              {addedFonts.map(({ id, name, url }) => (
+              {customFonts.map(({ id, name, url }) => (
                 <FontRow key={name}>
                   <FontData>{`${name} - ${url}`}</FontData>
                   <Tooltip hasTail title={__('Delete font', 'web-stories')}>
@@ -282,8 +265,9 @@ function CustomFontsSettings({ addCustomFont, getCustomFonts, deleteCustomFont }
 }
 
 CustomFontsSettings.propTypes = {
+  customFonts: PropTypes.array,
   addCustomFont: PropTypes.func.isRequired,
-  getCustomFonts: PropTypes.func.isRequired,
+  fetchCustomFonts: PropTypes.func.isRequired,
   deleteCustomFont: PropTypes.func.isRequired,
 };
 

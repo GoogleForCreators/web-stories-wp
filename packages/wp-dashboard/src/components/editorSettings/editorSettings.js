@@ -61,8 +61,9 @@ function EditorSettings() {
     archivePageId,
     searchPages,
     getPageById,
+    customFonts,
     addCustomFont,
-    getCustomFonts,
+    fetchCustomFonts,
     deleteCustomFont,
     publisherLogos,
     addPublisherLogo,
@@ -72,7 +73,7 @@ function EditorSettings() {
   } = useEditorSettings(
     ({
       actions: {
-        fontsApi: { addCustomFont, getCustomFonts, deleteCustomFont },
+        fontsApi: { addCustomFont, fetchCustomFonts, deleteCustomFont },
         settingsApi: { fetchSettings, updateSettings },
         pagesApi: { searchPages, getPageById },
         mediaApi: { uploadMedia },
@@ -97,6 +98,7 @@ function EditorSettings() {
         },
         media: { isLoading: isMediaLoading, newlyCreatedMediaIds },
         publisherLogos: { publisherLogos },
+        customFonts,
       },
     }) => ({
       fetchSettings,
@@ -115,8 +117,9 @@ function EditorSettings() {
       archivePageId,
       searchPages,
       getPageById,
+      customFonts,
       addCustomFont,
-      getCustomFonts,
+      fetchCustomFonts,
       deleteCustomFont,
       fetchPublisherLogos,
       addPublisherLogo,
@@ -330,8 +333,9 @@ function EditorSettings() {
               </>
             )}
             <CustomFontsSettings
+              customFonts={customFonts}
               addCustomFont={addCustomFont}
-              getCustomFonts={getCustomFonts}
+              fetchCustomFonts={fetchCustomFonts}
               deleteCustomFont={deleteCustomFont}
             />
             <TelemetrySettings

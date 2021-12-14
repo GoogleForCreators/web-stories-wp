@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
+import { useCallback, useEffect, useState } from '@web-stories-wp/react';
 import { useConfig } from '@web-stories-wp/dashboard';
 
 /**
@@ -33,19 +33,39 @@ export default function useFontsApi() {
   const {
     api: { fonts: fontsApiPath },
   } = useConfig();
+  const [customFonts, setCustomFonts] = useState(null);
 
-  const getCustomFonts = useCallback(async () => {
-    try {
-      const response = await getCustomFontsCallback(fontsApiPath);
+  const loadFonts = useCallback(() => {
+    // @todo Use API call.
+    /*const fonts = await getCustomFonts();
+    if (!fonts) {
+      setAddedFonts([]);
+    } else {
+      setAddedFonts(fonts);
+    }*/
+    setCustomFonts([
+      { id: 1, name: 'Font 1', url: 'https://example.com/font1.otf' },
+      { id: 2, name: 'Font 2', url: 'https://example.com/font2.woff' },
+    ]);
+  }, []);
 
-      return response.map(({ id, family, url }) => ({
-        id,
-        family,
-        url,
-      }));
-    } catch (e) {
-      return null;
+  useEffect(() => {
+    if (null === customFonts) {
+      loadFonts();
     }
+  }, [loadFonts, customFonts]);
+
+  const fetchCustomFonts = useCallback(() => {
+    getCustomFontsCallback(fontsApiPath)
+      .then((response) => {
+        const filteredFonts = response.map(({ id, family, url }) => ({
+          id,
+          family,
+          url,
+        }));
+        setCustomFonts(filteredFonts);
+      })
+      .catch(() => null);
   }, [fontsApiPath]);
 
   const deleteCustomFont = useCallback(
@@ -73,6 +93,7 @@ export default function useFontsApi() {
   );
 
   return {
-    api: { addCustomFont, getCustomFonts, deleteCustomFont },
+    customFonts,
+    api: { addCustomFont, fetchCustomFonts, deleteCustomFont },
   };
 }
