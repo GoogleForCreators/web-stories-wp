@@ -221,7 +221,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 		 * @param bool  $enabled Whether the taxonomy check should be applied.
 		 * @param array $args    Existing WP_Query args.
 		 */
-		$enabled = apply_filters( 'web_stories_enable_exclude_query', true, $args );
+		$enabled = apply_filters( 'web_stories_hide_auto_generated_attachments', true, $args );
 		if ( true !== $enabled ) {
 			return $args;
 		}
