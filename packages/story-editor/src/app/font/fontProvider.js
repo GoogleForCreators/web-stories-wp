@@ -42,11 +42,43 @@ function FontProvider({ children }) {
   const [queriedFonts, setQueriedFonts] = useState([]);
   const [visibleOptions, setVisibleOptions] = useState([]);
   const [recentFonts, setRecentFonts] = useState([]);
+  const [customFonts, setCustomFonts] = useState(null);
   const {
     actions: { getFonts },
   } = useAPI();
 
   const fonts = queriedFonts.length > 0 ? queriedFonts : visibleOptions;
+
+  useEffect(() => {
+    let mounted = true;
+    if (!customFonts) {
+      try {
+        (async () => {
+          const _customFonts = await getFonts({
+            service: 'custom',
+          });
+
+          if (!mounted) {
+            return;
+          }
+
+          const formattedFonts = _customFonts.map((font) => ({
+            id: font.family,
+            name: font.family,
+            value: font.family,
+            ...font,
+          }));
+
+          setCustomFonts(formattedFonts);
+        })();
+      } catch (err) {
+        trackError('font_provider', err.message);
+      }
+    }
+    return () => {
+      mounted = false;
+    };
+  });
 
   useEffect(() => {
     let mounted = true;
@@ -190,6 +222,7 @@ function FontProvider({ children }) {
     state: {
       fonts: queriedFonts.length > 0 ? queriedFonts : visibleOptions,
       curatedFonts: visibleOptions,
+      customFonts,
       recentFonts,
     },
     actions: {

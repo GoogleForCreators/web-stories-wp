@@ -52,6 +52,7 @@ const FontPicker = forwardRef(function FontPicker(
     fonts = [],
     recentFonts = [],
     curatedFonts = [],
+    customFonts = [],
     addRecentFont,
     maybeEnqueueFontStyle,
     ensureMenuFontsLoaded,
@@ -66,6 +67,7 @@ const FontPicker = forwardRef(function FontPicker(
     recentFonts: state.recentFonts,
     curatedFonts: state.curatedFonts,
     fonts: state.fonts,
+    customFonts: state.customFonts,
   }));
 
   const handleFontPickerChange = useCallback(
@@ -152,38 +154,6 @@ const FontPicker = forwardRef(function FontPicker(
       </Datalist.Option>
     );
   };
-
-  // @todo Remove this and use real custom fonts from API.
-  const customFonts = [
-    {
-      id: 'Overpass Regular',
-      name: 'Overpass Regular',
-      family: 'Overpass Regular',
-      fallbacks: ['sans-serif'],
-      weights: [400],
-      styles: ['regular'],
-      variants: [[0, 400]],
-      url: 'https://overpass-30e2.kxcdn.com/overpass-regular.ttf',
-      service: 'custom',
-      metrics: {
-        upm: 1000,
-        asc: 982,
-        des: -284,
-        tAsc: 750,
-        tDes: -250,
-        tLGap: 266,
-        wAsc: 1062,
-        wDes: 378,
-        xH: 511,
-        capH: 700,
-        yMin: -378,
-        yMax: 1062,
-        hAsc: 982,
-        hDes: -284,
-        lGap: 266,
-      },
-    },
-  ];
 
   // These option groups will always be shown before others.
   const priorityOptionGroups = useMemo(() => {
