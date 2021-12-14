@@ -45,7 +45,7 @@ export const _default = () => {
         family: `Demo font ${demoId.current}`,
         url,
       };
-      setAddedFonts([...addedFonts, fontData]);
+      setAddedFonts([fontData, ...addedFonts]);
       demoId.current = demoId.current + 1;
     },
     [addedFonts]
