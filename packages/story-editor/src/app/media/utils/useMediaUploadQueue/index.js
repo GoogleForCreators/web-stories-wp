@@ -289,77 +289,43 @@ function useMediaUploadQueue() {
             };
           }
 
-          // Convert animated GIFs to videos if possible.
-          if (
-            isTranscodingEnabled &&
+          const isGifThatNeedsTranscoding =
             resource.mimeType === 'image/gif' &&
-            isAnimatedGif(await file.arrayBuffer())
-          ) {
-            startTranscoding({ id });
+            isAnimatedGif(await file.arrayBuffer());
 
-            try {
-              newFile = await convertGifToVideo(file);
+          const needsTranscoding =
+            isTranscodingEnabled &&
+            (isGifThatNeedsTranscoding || canTranscodeFile(file));
 
-              if (!isMounted.current) {
-                return;
-              }
+          const isAlreadyTranscoding = state.queue.some(
+            (queueItem) =>
+              [
+                ITEM_STATUS.TRANSCODING,
+                ITEM_STATUS.MUTING,
+                ITEM_STATUS.TRIMMING,
+              ].includes(queueItem.state) && queueItem.id !== id
+          );
 
-              finishTranscoding({ id, file: newFile });
-              additionalData.web_stories_media_source = 'gif-conversion';
-              additionalData.web_stories_is_muted = true;
-            } catch (error) {
-              // Cancel uploading if there were any errors.
-              cancelUploading({ id, error });
-
-              trackError('upload_media', error?.message);
-
-              return;
-            }
-
-            try {
-              newPosterFile = await getFirstFrameOfVideo(newFile);
-
-              if (!isMounted.current) {
-                return;
-              }
-            } catch (error) {
-              // Do nothing here.
-            }
+          // Prevent simultaneous transcoding processes.
+          // See https://github.com/google/web-stories-wp/issues/8779
+          if (needsTranscoding && isAlreadyTranscoding) {
+            return;
           }
 
-          if (isTranscodingEnabled && canTranscodeFile(file)) {
-            if (trimData) {
-              startTrimming({ id });
+          if (isTranscodingEnabled) {
+            if (isGifThatNeedsTranscoding) {
+              // Convert animated GIFs to videos if possible.
+              startTranscoding({ id });
+
               try {
-                newFile = await trimVideo(file, trimData.start, trimData.end);
+                newFile = await convertGifToVideo(file);
 
                 if (!isMounted.current) {
                   return;
                 }
 
-                finishTrimming({ id, file: newFile });
-                additionalData.meta = {
-                  ...additionalData.meta,
-                  web_stories_trim_data: trimData,
-                };
-              } catch (error) {
-                // Cancel uploading if there were any errors.
-                cancelUploading({ id, error });
-
-                trackError('upload_media', error?.message);
-
-                return;
-              }
-            } else if (muteVideo) {
-              startMuting({ id });
-              try {
-                newFile = await stripAudioFromVideo(file);
-
-                if (!isMounted.current) {
-                  return;
-                }
-
-                finishMuting({ id, file: newFile });
+                finishTranscoding({ id, file: newFile });
+                additionalData.web_stories_media_source = 'gif-conversion';
                 additionalData.web_stories_is_muted = true;
               } catch (error) {
                 // Cancel uploading if there were any errors.
@@ -369,29 +335,83 @@ function useMediaUploadQueue() {
 
                 return;
               }
-            } else {
-              // Transcode/Optimize videos before upload.
-              // TODO: Only transcode & optimize video if needed (criteria TBD).
-              // Probably need to use FFmpeg first to get more information (dimensions, fps, etc.)
-
-              startTranscoding({ id });
 
               try {
-                newFile = await transcodeVideo(file);
+                newPosterFile = await getFirstFrameOfVideo(newFile);
 
                 if (!isMounted.current) {
                   return;
                 }
-
-                finishTranscoding({ id, file: newFile });
-                additionalData.web_stories_media_source = 'video-optimization';
               } catch (error) {
-                // Cancel uploading if there were any errors.
-                cancelUploading({ id, error });
+                // Do nothing here.
+              }
+            } else if (canTranscodeFile(file)) {
+              if (trimData) {
+                startTrimming({ id });
+                try {
+                  newFile = await trimVideo(file, trimData.start, trimData.end);
 
-                trackError('upload_media', error?.message);
+                  if (!isMounted.current) {
+                    return;
+                  }
 
-                return;
+                  finishTrimming({ id, file: newFile });
+                  additionalData.meta = {
+                    ...additionalData.meta,
+                    web_stories_trim_data: trimData,
+                  };
+                } catch (error) {
+                  // Cancel uploading if there were any errors.
+                  cancelUploading({ id, error });
+
+                  trackError('upload_media', error?.message);
+
+                  return;
+                }
+              } else if (muteVideo) {
+                startMuting({ id });
+                try {
+                  newFile = await stripAudioFromVideo(file);
+
+                  if (!isMounted.current) {
+                    return;
+                  }
+
+                  finishMuting({ id, file: newFile });
+                  additionalData.web_stories_is_muted = true;
+                } catch (error) {
+                  // Cancel uploading if there were any errors.
+                  cancelUploading({ id, error });
+
+                  trackError('upload_media', error?.message);
+
+                  return;
+                }
+              } else {
+                // Transcode/Optimize videos before upload.
+                // TODO: Only transcode & optimize video if needed (criteria TBD).
+                // Probably need to use FFmpeg first to get more information (dimensions, fps, etc.)
+
+                startTranscoding({ id });
+
+                try {
+                  newFile = await transcodeVideo(file);
+
+                  if (!isMounted.current) {
+                    return;
+                  }
+
+                  finishTranscoding({ id, file: newFile });
+                  additionalData.web_stories_media_source =
+                    'video-optimization';
+                } catch (error) {
+                  // Cancel uploading if there were any errors.
+                  cancelUploading({ id, error });
+
+                  trackError('upload_media', error?.message);
+
+                  return;
+                }
               }
             }
           }
