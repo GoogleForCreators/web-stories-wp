@@ -17,6 +17,7 @@
  * External dependencies
  */
 import {
+  ContextMenuComponents,
   prettifyShortcut,
   useGlobalKeyDownEffect,
   useSnackbar,
@@ -740,83 +741,92 @@ function RightClickMenuProvider({ children }) {
     [handleMouseDown]
   );
 
-  const duplicateElementAction = useMemo(
-    () => ({
-      label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(
-        selectedElements?.length
-      ),
-      onClick: handleDuplicateElements,
-      ...menuItemProps,
-    }),
-    [handleDuplicateElements, menuItemProps, selectedElements?.length]
-  );
-
   const layerItems = useMemo(
-    () => [
-      {
-        label: RIGHT_CLICK_MENU_LABELS.SEND_BACKWARD,
-        shortcut: RIGHT_CLICK_MENU_SHORTCUTS.SEND_BACKWARD,
-        disabled: !canElementMoveBackwards,
-        onClick: handleSendBackward,
-        ...menuItemProps,
-      },
-      {
-        label: RIGHT_CLICK_MENU_LABELS.SEND_TO_BACK,
-        shortcut: RIGHT_CLICK_MENU_SHORTCUTS.SEND_TO_BACK,
-        disabled: !canElementMoveBackwards,
-        onClick: handleSendToBack,
-        ...menuItemProps,
-      },
-      {
-        label: RIGHT_CLICK_MENU_LABELS.BRING_FORWARD,
-        shortcut: RIGHT_CLICK_MENU_SHORTCUTS.BRING_FORWARD,
-        disabled: !canElementMoveForwards,
-        onClick: handleBringForward,
-        ...menuItemProps,
-      },
-      {
-        label: RIGHT_CLICK_MENU_LABELS.BRING_TO_FRONT,
-        shortcut: RIGHT_CLICK_MENU_SHORTCUTS.BRING_TO_FRONT,
-        disabled: !canElementMoveForwards,
-        onClick: handleBringToFront,
-        ...menuItemProps,
-      },
-    ],
+    () => (
+      <>
+        <ContextMenuComponents.Button
+          disabled={!canElementMoveBackwards}
+          onClick={handleSendBackward}
+          {...menuItemProps}
+        >
+          {RIGHT_CLICK_MENU_LABELS.SEND_BACKWARD}
+          <ContextMenuComponents.Shortcut>
+            {RIGHT_CLICK_MENU_SHORTCUTS.SEND_BACKWARD.display}
+          </ContextMenuComponents.Shortcut>
+        </ContextMenuComponents.Button>
+        <ContextMenuComponents.Button
+          disabled={!canElementMoveBackwards}
+          onClick={handleSendToBack}
+          {...menuItemProps}
+        >
+          {RIGHT_CLICK_MENU_LABELS.SEND_TO_BACK}
+          <ContextMenuComponents.Shortcut>
+            {RIGHT_CLICK_MENU_SHORTCUTS.SEND_TO_BACK.display}
+          </ContextMenuComponents.Shortcut>
+        </ContextMenuComponents.Button>
+        <ContextMenuComponents.Button
+          disabled={!canElementMoveForwards}
+          onClick={handleBringForward}
+          {...menuItemProps}
+        >
+          {RIGHT_CLICK_MENU_LABELS.BRING_FORWARD}
+          <ContextMenuComponents.Shortcut>
+            {RIGHT_CLICK_MENU_SHORTCUTS.BRING_FORWARD.display}
+          </ContextMenuComponents.Shortcut>
+        </ContextMenuComponents.Button>
+        <ContextMenuComponents.Button
+          disabled={!canElementMoveForwards}
+          onClick={handleBringToFront}
+          {...menuItemProps}
+        >
+          {RIGHT_CLICK_MENU_LABELS.BRING_TO_FRONT}
+          <ContextMenuComponents.Shortcut>
+            {RIGHT_CLICK_MENU_SHORTCUTS.BRING_TO_FRONT.display}
+          </ContextMenuComponents.Shortcut>
+        </ContextMenuComponents.Button>
+      </>
+    ),
     [
       canElementMoveBackwards,
-      handleSendBackward,
-      menuItemProps,
-      handleSendToBack,
-      handleBringForward,
       canElementMoveForwards,
+      handleBringForward,
       handleBringToFront,
+      handleSendBackward,
+      handleSendToBack,
+      menuItemProps,
     ]
   );
 
   const pageManipulationItems = useMemo(
-    () => [
-      {
-        label: RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER,
-        onClick: () => handleAddPageAtPosition(currentPageIndex + 1),
-        ...menuItemProps,
-      },
-      {
-        label: RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_BEFORE,
-        onClick: () => handleAddPageAtPosition(currentPageIndex),
-        ...menuItemProps,
-      },
-      {
-        label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE,
-        onClick: handleDuplicatePage,
-        ...menuItemProps,
-      },
-      {
-        label: RIGHT_CLICK_MENU_LABELS.DELETE_PAGE,
-        onClick: handleDeletePage,
-        disabled: pages.length === 1,
-        ...menuItemProps,
-      },
-    ],
+    () => (
+      <>
+        <ContextMenuComponents.Button
+          onClick={() => handleAddPageAtPosition(currentPageIndex + 1)}
+          {...menuItemProps}
+        >
+          {RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER}
+        </ContextMenuComponents.Button>
+        <ContextMenuComponents.Button
+          onClick={() => handleAddPageAtPosition(currentPageIndex)}
+          {...menuItemProps}
+        >
+          {RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_BEFORE}
+        </ContextMenuComponents.Button>
+        <ContextMenuComponents.Button
+          onClick={handleDuplicatePage}
+          {...menuItemProps}
+        >
+          {RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE}
+        </ContextMenuComponents.Button>
+        <ContextMenuComponents.Button
+          disabled={pages.length === 1}
+          onClick={handleDeletePage}
+          {...menuItemProps}
+        >
+          {RIGHT_CLICK_MENU_LABELS.DELETE_PAGE}
+        </ContextMenuComponents.Button>
+      </>
+    ),
     [
       currentPageIndex,
       handleAddPageAtPosition,
@@ -837,38 +847,42 @@ function RightClickMenuProvider({ children }) {
       ? RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND_VIDEO
       : RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND_IMAGE;
 
-    return [
-      {
-        label: detachLabel,
-        onClick: handleRemoveMediaFromBackground,
-        disabled: disableBackgroundMediaActions,
-        ...menuItemProps,
-      },
-      {
-        label: scaleLabel,
-        onClick: handleOpenScaleAndCrop,
-        disabled: disableBackgroundMediaActions,
-        ...menuItemProps,
-      },
-      ...(isVideo && hasTrimMode
-        ? [
-            {
-              label: RIGHT_CLICK_MENU_LABELS.TRIM_VIDEO,
-              onClick: toggleTrimMode,
-              disabled: !canTranscodeResource(selectedElement?.resource),
-              ...menuItemProps,
-            },
-          ]
-        : []),
-      {
-        label: RIGHT_CLICK_MENU_LABELS.CLEAR_STYLE,
-        onClick: handleClearElementStyles,
-        disabled: disableBackgroundMediaActions,
-        separator: 'bottom',
-        ...menuItemProps,
-      },
-      ...pageManipulationItems,
-    ];
+    return (
+      <>
+        <ContextMenuComponents.Button
+          disabled={disableBackgroundMediaActions}
+          onClick={handleRemoveMediaFromBackground}
+          {...menuItemProps}
+        >
+          {detachLabel}
+        </ContextMenuComponents.Button>
+        <ContextMenuComponents.Button
+          disabled={disableBackgroundMediaActions}
+          onClick={handleOpenScaleAndCrop}
+          {...menuItemProps}
+        >
+          {scaleLabel}
+        </ContextMenuComponents.Button>
+        {isVideo && hasTrimMode && (
+          <ContextMenuComponents.Button
+            disabled={!canTranscodeResource(selectedElement?.resource)}
+            onClick={toggleTrimMode}
+            {...menuItemProps}
+          >
+            {RIGHT_CLICK_MENU_LABELS.TRIM_VIDEO}
+          </ContextMenuComponents.Button>
+        )}
+        <ContextMenuComponents.Button
+          disabled={disableBackgroundMediaActions}
+          onClick={handleClearElementStyles}
+          {...menuItemProps}
+        >
+          {RIGHT_CLICK_MENU_LABELS.CLEAR_STYLE}
+        </ContextMenuComponents.Button>
+        <ContextMenuComponents.Separator />
+        {pageManipulationItems}
+      </>
+    );
   }, [
     handleClearElementStyles,
     handleOpenScaleAndCrop,
@@ -881,44 +895,61 @@ function RightClickMenuProvider({ children }) {
   ]);
 
   const textItems = useMemo(
-    () => [
-      { ...duplicateElementAction, separator: 'bottom' },
-      ...layerItems,
-      {
-        label: RIGHT_CLICK_MENU_LABELS.COPY_STYLES,
-        separator: 'top',
-        shortcut: RIGHT_CLICK_MENU_SHORTCUTS.COPY_STYLES,
-        onClick: handleCopyStyles,
-        ...menuItemProps,
-      },
-      {
-        label: RIGHT_CLICK_MENU_LABELS.PASTE_STYLES,
-        shortcut: RIGHT_CLICK_MENU_SHORTCUTS.PASTE_STYLES,
-        onClick: handlePasteStyles,
-        disabled: copiedElement.type !== selectedElement?.type,
-        ...menuItemProps,
-      },
-      {
-        label: RIGHT_CLICK_MENU_LABELS.ADD_TO_TEXT_PRESETS,
-        onClick: handleAddTextPreset,
-        ...menuItemProps,
-      },
-      {
-        label: RIGHT_CLICK_MENU_LABELS.ADD_TO_COLOR_PRESETS,
-        onClick: handleAddColorPreset,
-        ...menuItemProps,
-      },
-    ],
+    () => (
+      <>
+        <ContextMenuComponents.Button
+          onClick={handleDuplicateElements}
+          {...menuItemProps}
+        >
+          {RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(selectedElements?.length)}
+        </ContextMenuComponents.Button>
+        <ContextMenuComponents.Separator />
+        {layerItems}
+        <ContextMenuComponents.Separator />
+        <ContextMenuComponents.Button
+          onClick={handleCopyStyles}
+          {...menuItemProps}
+        >
+          {RIGHT_CLICK_MENU_LABELS.COPY_STYLES}
+          <ContextMenuComponents.Shortcut>
+            {RIGHT_CLICK_MENU_LABELS.COPY_STYLES.display}
+          </ContextMenuComponents.Shortcut>
+        </ContextMenuComponents.Button>
+        <ContextMenuComponents.Button
+          disabled={copiedElement.type !== selectedElement?.type}
+          onClick={handlePasteStyles}
+          {...menuItemProps}
+        >
+          {RIGHT_CLICK_MENU_LABELS.PASTE_STYLES}
+          <ContextMenuComponents.Shortcut>
+            {RIGHT_CLICK_MENU_LABELS.PASTE_STYLES.display}
+          </ContextMenuComponents.Shortcut>
+        </ContextMenuComponents.Button>
+        <ContextMenuComponents.Button
+          onClick={handleAddTextPreset}
+          {...menuItemProps}
+        >
+          {RIGHT_CLICK_MENU_LABELS.ADD_TO_TEXT_PRESETS}
+        </ContextMenuComponents.Button>
+        <ContextMenuComponents.Button
+          onClick={handleAddColorPreset}
+          {...menuItemProps}
+        >
+          {RIGHT_CLICK_MENU_LABELS.ADD_TO_COLOR_PRESETS}
+        </ContextMenuComponents.Button>
+      </>
+    ),
     [
-      duplicateElementAction,
       layerItems,
       handleAddTextPreset,
+      handleDuplicateElements,
       menuItemProps,
       handleAddColorPreset,
       handleCopyStyles,
       handlePasteStyles,
       copiedElement,
       selectedElement,
+      selectedElements,
     ]
   );
 
@@ -937,54 +968,70 @@ function RightClickMenuProvider({ children }) {
       ? RIGHT_CLICK_MENU_LABELS.CLEAR_VIDEO_STYLES
       : RIGHT_CLICK_MENU_LABELS.CLEAR_IMAGE_STYLES;
 
-    return [
-      { ...duplicateElementAction, separator: 'bottom' },
-      ...layerItems,
-      {
-        label: RIGHT_CLICK_MENU_LABELS.SET_AS_PAGE_BACKGROUND,
-        separator: 'top',
-        onClick: handleSetPageBackground,
-        ...menuItemProps,
-      },
-      {
-        label: scaleLabel,
-        onClick: handleOpenScaleAndCrop,
-        ...menuItemProps,
-      },
-      ...(isVideo && hasTrimMode
-        ? [
-            {
-              label: RIGHT_CLICK_MENU_LABELS.TRIM_VIDEO,
-              onClick: toggleTrimMode,
-              disabled: !canTranscodeResource(selectedElement?.resource),
-              ...menuItemProps,
-            },
-          ]
-        : []),
-      {
-        label: copyLabel,
-        separator: 'top',
-        shortcut: RIGHT_CLICK_MENU_SHORTCUTS.COPY_STYLES,
-        onClick: handleCopyStyles,
-        ...menuItemProps,
-      },
-      {
-        label: pasteLabel,
-        shortcut: RIGHT_CLICK_MENU_SHORTCUTS.PASTE_STYLES,
-        onClick: handlePasteStyles,
-        disabled: copiedElement.type !== selectedElement?.type,
-        ...menuItemProps,
-      },
-      {
-        label: clearLabel,
-        onClick: handleClearElementStyles,
-        ...menuItemProps,
-      },
-    ];
+    return (
+      <>
+        <ContextMenuComponents.Button
+          onClick={handleDuplicateElements}
+          {...menuItemProps}
+        >
+          {RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(selectedElements?.length)}
+        </ContextMenuComponents.Button>
+        <ContextMenuComponents.Separator />
+        {layerItems}
+        <ContextMenuComponents.Separator />
+        <ContextMenuComponents.Button
+          onClick={handleSetPageBackground}
+          {...menuItemProps}
+        >
+          {RIGHT_CLICK_MENU_LABELS.SET_AS_PAGE_BACKGROUND}
+        </ContextMenuComponents.Button>
+        <ContextMenuComponents.Button
+          onClick={handleOpenScaleAndCrop}
+          {...menuItemProps}
+        >
+          {scaleLabel}
+        </ContextMenuComponents.Button>
+        {isVideo && hasTrimMode && (
+          <ContextMenuComponents.Button
+            disabled={!canTranscodeResource(selectedElement?.resource)}
+            onClick={toggleTrimMode}
+            {...menuItemProps}
+          >
+            {RIGHT_CLICK_MENU_LABELS.TRIM_VIDEO}
+          </ContextMenuComponents.Button>
+        )}
+        <ContextMenuComponents.Separator />
+        <ContextMenuComponents.Button
+          onClick={handleCopyStyles}
+          {...menuItemProps}
+        >
+          {copyLabel}
+          <ContextMenuComponents.Shortcut>
+            {RIGHT_CLICK_MENU_SHORTCUTS.COPY_STYLES.display}
+          </ContextMenuComponents.Shortcut>
+        </ContextMenuComponents.Button>
+        <ContextMenuComponents.Button
+          disabled={copiedElement.type !== selectedElement?.type}
+          onClick={handlePasteStyles}
+          {...menuItemProps}
+        >
+          {pasteLabel}
+          <ContextMenuComponents.Shortcut>
+            {RIGHT_CLICK_MENU_SHORTCUTS.PASTE_STYLES.display}
+          </ContextMenuComponents.Shortcut>
+        </ContextMenuComponents.Button>
+        <ContextMenuComponents.Button
+          onClick={handleClearElementStyles}
+          {...menuItemProps}
+        >
+          {clearLabel}
+        </ContextMenuComponents.Button>
+      </>
+    );
   }, [
     copiedElement,
-    duplicateElementAction,
     handleClearElementStyles,
+    handleDuplicateElements,
     handleCopyStyles,
     handleOpenScaleAndCrop,
     handlePasteStyles,
@@ -993,59 +1040,95 @@ function RightClickMenuProvider({ children }) {
     layerItems,
     menuItemProps,
     selectedElement,
+    selectedElements,
     toggleTrimMode,
   ]);
 
   const shapeItems = useMemo(
-    () => [
-      { ...duplicateElementAction, separator: 'bottom' },
-      ...layerItems,
-      {
-        label: RIGHT_CLICK_MENU_LABELS.COPY_SHAPE_STYLES,
-        separator: 'top',
-        shortcut: RIGHT_CLICK_MENU_SHORTCUTS.COPY_STYLES,
-        onClick: handleCopyStyles,
-        ...menuItemProps,
-      },
-      {
-        label: RIGHT_CLICK_MENU_LABELS.PASTE_SHAPE_STYLES,
-        shortcut: RIGHT_CLICK_MENU_SHORTCUTS.PASTE_STYLES,
-        onClick: handlePasteStyles,
-        disabled: copiedElement.type !== selectedElement?.type,
-        ...menuItemProps,
-      },
-      {
-        label: RIGHT_CLICK_MENU_LABELS.CLEAR_SHAPE_STYLES,
-        onClick: handleClearElementStyles,
-        ...menuItemProps,
-      },
-      {
-        label: RIGHT_CLICK_MENU_LABELS.ADD_TO_COLOR_PRESETS,
-        onClick: handleAddColorPreset,
-        ...menuItemProps,
-      },
-    ],
+    () => (
+      <>
+        <ContextMenuComponents.Button
+          onClick={handleDuplicateElements}
+          {...menuItemProps}
+        >
+          {RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(selectedElements?.length)}
+        </ContextMenuComponents.Button>
+        <ContextMenuComponents.Separator />
+        {layerItems}
+        <ContextMenuComponents.Separator />
+        <ContextMenuComponents.Button
+          onClick={handleCopyStyles}
+          {...menuItemProps}
+        >
+          {RIGHT_CLICK_MENU_LABELS.COPY_SHAPE_STYLES}
+          <ContextMenuComponents.Shortcut>
+            {RIGHT_CLICK_MENU_SHORTCUTS.COPY_STYLES.display}
+          </ContextMenuComponents.Shortcut>
+        </ContextMenuComponents.Button>
+        <ContextMenuComponents.Button
+          disabled={copiedElement.type !== selectedElement?.type}
+          onClick={handlePasteStyles}
+          {...menuItemProps}
+        >
+          {RIGHT_CLICK_MENU_LABELS.PASTE_SHAPE_STYLES}
+          <ContextMenuComponents.Shortcut>
+            {RIGHT_CLICK_MENU_SHORTCUTS.PASTE_STYLES.display}
+          </ContextMenuComponents.Shortcut>
+        </ContextMenuComponents.Button>
+        <ContextMenuComponents.Button
+          onClick={handleClearElementStyles}
+          {...menuItemProps}
+        >
+          {RIGHT_CLICK_MENU_LABELS.CLEAR_SHAPE_STYLES}
+        </ContextMenuComponents.Button>
+        <ContextMenuComponents.Button
+          onClick={handleAddColorPreset}
+          {...menuItemProps}
+        >
+          {RIGHT_CLICK_MENU_LABELS.ADD_TO_COLOR_PRESETS}
+        </ContextMenuComponents.Button>
+      </>
+    ),
     [
       copiedElement?.type,
-      duplicateElementAction,
       handleAddColorPreset,
       handleClearElementStyles,
       handleCopyStyles,
+      handleDuplicateElements,
       handlePasteStyles,
       layerItems,
       menuItemProps,
       selectedElement?.type,
+      selectedElements,
     ]
   );
 
   const stickerItems = useMemo(
-    () => [{ ...duplicateElementAction, separator: 'bottom' }, ...layerItems],
-    [duplicateElementAction, layerItems]
+    () => (
+      <>
+        <ContextMenuComponents.Button
+          onClick={handleDuplicateElements}
+          {...menuItemProps}
+        >
+          {RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(selectedElements?.length)}
+        </ContextMenuComponents.Button>
+        <ContextMenuComponents.Separator />
+        {layerItems}
+      </>
+    ),
+    [handleDuplicateElements, layerItems, menuItemProps, selectedElements]
   );
 
   const multipleElementItems = useMemo(
-    () => [duplicateElementAction],
-    [duplicateElementAction]
+    () => (
+      <ContextMenuComponents.Button
+        onClick={handleDuplicateElements}
+        {...menuItemProps}
+      >
+        {RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(selectedElements?.length)}
+      </ContextMenuComponents.Button>
+    ),
+    [handleDuplicateElements, menuItemProps, selectedElements]
   );
 
   const menuItems = useMemo(() => {

@@ -72,7 +72,6 @@ const RightClickMenu = () => {
             data-testid="right-click-context-menu"
             isOpen={isMenuOpen}
             onDismiss={onCloseMenu}
-            items={rightClickMenuItems}
             groupLabel={__(
               'Context Menu for the selected element',
               'web-stories'
@@ -80,7 +79,9 @@ const RightClickMenu = () => {
             maskRef={maskRef}
             onMouseDown={(evt) => evt.stopPropagation()}
             isRTL={isRTL}
-          />
+          >
+            {rightClickMenuItems}
+          </ContextMenu>
         </DirectionAware>
       </RightClickMenuContainer>
     </StyleSheetManager>,

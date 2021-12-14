@@ -143,7 +143,7 @@ StoryMenu.propTypes = {
   isInverted: PropTypes.bool,
   itemActive: PropTypes.bool,
   tabIndex: PropTypes.number,
-  storyId: PropTypes.string.isRequired,
+  storyId: PropTypes.number.isRequired,
   onMoreButtonSelected: PropTypes.func.isRequired,
   contextMenuId: PropTypes.number.isRequired,
   menuItems: PropTypes.arrayOf(
