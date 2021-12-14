@@ -49,6 +49,7 @@ const apiCallbacksNames = [
   'uploadMedia',
   'updateMedia',
   'deleteMedia',
+  'getPosterMediaById',
   'getLinkMetadata',
   'getCustomPageTemplates',
   'addPageTemplate',
@@ -62,6 +63,7 @@ const apiCallbacksNames = [
   'getTaxonomies',
   'getTaxonomyTerm',
   'createTaxonomyTerm',
+  'getFonts',
 ];
 
 const apiCallbacks = apiCallbacksNames.reduce((callbacks, name) => {
