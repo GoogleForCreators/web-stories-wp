@@ -35,85 +35,16 @@ const AppContainer = styled.div`
   height: 100vh;
 `;
 
-// @todo None of these should be required by default, https://github.com/google/web-stories-wp/pull/9569#discussion_r738458801
-const apiCallbacksNames = [
-  'getAuthors',
-  'getStoryById',
-  'getDemoStoryById',
-  'saveStoryById',
-  'autoSaveById',
-  'getMedia',
-  'getMediaById',
-  'getMutedMediaById',
-  'getOptimizedMediaById',
-  'uploadMedia',
-  'updateMedia',
-  'deleteMedia',
-  'getPosterMediaById',
-  'getLinkMetadata',
-  'getCustomPageTemplates',
-  'addPageTemplate',
-  'deletePageTemplate',
-  'getCurrentUser',
-  'updateCurrentUser',
-  'getHotlinkInfo',
-  'getProxyUrl',
-  'getPublisherLogos',
-  'addPublisherLogo',
-  'getTaxonomies',
-  'getTaxonomyTerm',
-  'createTaxonomyTerm',
-  'getFonts',
-];
-
-const apiCallbacks = apiCallbacksNames.reduce((callbacks, name) => {
-  switch (name) {
-    case 'getCurrentUser':
-      callbacks[name] = () => Promise.resolve({ id: 1 });
-      break;
-    case 'getPublisherLogos':
-      callbacks[name] = () => Promise.resolve([{ url: '' }]);
-      break;
-    case 'saveStoryById':
-      callbacks[name] = saveStoryById;
-      break;
-    case 'getMedia':
-      callbacks[name] = getMedia;
-      break;
-    case 'getFonts':
-      callbacks[name] = getFonts;
-      break;
-    default:
-      callbacks[name] = Promise.resolve({});
-  }
-
-  return callbacks;
-}, {});
-
-const getInitialStory = () => {
-  const defaultStory = {
-    title: { raw: '' },
-    excerpt: { raw: '' },
-    permalink_template: 'https://example.org/web-stories/%pagename%/',
-    style_presets: {
-      color: [],
-      textStyles: [],
-    },
-    date: '2021-10-26T12:38:38', // Publishing field breaks if date is not provided.
-  };
-
+export const _default = () => {
   const content = window.localStorage.getItem(LOCAL_STORAGE_CONTENT_KEY);
+  const story = content ? JSON.parse(content) : {};
+  const apiCallbacks = { saveStoryById, getMedia, getFonts };
 
-  return content ? JSON.parse(content) : defaultStory;
+  return (
+    <AppContainer>
+      <StoryEditor config={{ apiCallbacks }} initialEdits={{ story }}>
+        <InterfaceSkeleton header={<HeaderLayout />} />
+      </StoryEditor>
+    </AppContainer>
+  );
 };
-
-export const _default = () => (
-  <AppContainer>
-    <StoryEditor
-      config={{ apiCallbacks }}
-      initialEdits={{ story: getInitialStory() }}
-    >
-      <InterfaceSkeleton header={<HeaderLayout />} />
-    </StoryEditor>
-  </AppContainer>
-);
