@@ -214,7 +214,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 */
 	private function get_exclude_tax_query( array $args ): array {
 		/**
-		 * Filter whether the query should be filtered.
+		 * Filter whether generated attachments should be hidden in the media library.
 		 *
 		 * @since 1.16.0
 		 *
