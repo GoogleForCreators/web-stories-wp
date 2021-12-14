@@ -109,7 +109,7 @@ const FontData = styled.div`
   text-overflow: ellipsis;
 `;
 
-function CustomFontsSettings({ getCustomFonts, deleteCustomFont }) {
+function CustomFontsSettings({ addCustomFont, getCustomFonts, deleteCustomFont }) {
   const [fontUrl, setFontUrl] = useState('');
   const [inputError, setInputError] = useState('');
   const [addedFonts, setAddedFonts] = useState(null);
@@ -174,6 +174,8 @@ function CustomFontsSettings({ getCustomFonts, deleteCustomFont }) {
         if (!fontData.name) {
           setInputError(__('Something went wrong', 'web-stories'));
         } else {
+          // @todo Use API to actually add the font as well with ID.
+          // const id = await addCustomFont(fontData);
           setAddedFonts([
             { name: fontData.name, url: fontUrl },
             ...(addedFonts || []),
@@ -280,6 +282,7 @@ function CustomFontsSettings({ getCustomFonts, deleteCustomFont }) {
 }
 
 CustomFontsSettings.propTypes = {
+  addCustomFont: PropTypes.func.isRequired,
   getCustomFonts: PropTypes.func.isRequired,
   deleteCustomFont: PropTypes.func.isRequired,
 };

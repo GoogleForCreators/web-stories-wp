@@ -24,6 +24,7 @@ import { useConfig } from '@web-stories-wp/dashboard';
  * Internal dependencies
  */
 import {
+  addCustomFont as addCustomFontCallback,
   getCustomFonts as getCustomFontsCallback,
   deleteCustomFont as deleteCustomFontCallback,
 } from '../fonts';
@@ -59,7 +60,19 @@ export default function useFontsApi() {
     [fontsApiPath]
   );
 
+  const addCustomFont = useCallback(
+    async (font) => {
+      try {
+        const response = await addCustomFontCallback(fontsApiPath, font);
+        return response;
+      } catch (e) {
+        return null;
+      }
+    },
+    [fontsApiPath]
+  );
+
   return {
-    api: { getCustomFonts, deleteCustomFont },
+    api: { addCustomFont, getCustomFonts, deleteCustomFont },
   };
 }
