@@ -135,6 +135,9 @@ const ALLOWED_ERROR_MESSAGES_FIREFOX = [
 
   // Some bug in Firefox?
   'Sending message that cannot be cloned. Are you trying to send an XPCOM object?',
+
+  // Not caused by the editor.
+  'This page is in Quirks Mode.',
 ];
 
 /**
