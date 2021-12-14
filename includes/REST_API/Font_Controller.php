@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\REST_API;
 
+use stdClass;
 use WP_Error;
 use WP_Post;
 use WP_Query;
@@ -311,6 +312,20 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	}
 
 	/**
+	 * Force-deletes a single font.
+	 *
+	 * @since 1.16.0
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 */
+	public function delete_item( $request ) {
+		$request->set_param( 'force', true );
+
+		return parent::delete_item( $request );
+	}
+
+	/**
 	 * Prepares a single post output for response.
 	 *
 	 * @since 1.16.0
@@ -336,6 +351,10 @@ class Font_Controller extends WP_REST_Posts_Controller {
 
 		if ( rest_is_field_included( 'family', $fields ) ) {
 			$data['family'] = $post->post_title;
+		}
+
+		if ( rest_is_field_included( 'service', $fields ) ) {
+			$data['service'] = 'custom';
 		}
 
 		/**
@@ -383,6 +402,47 @@ class Font_Controller extends WP_REST_Posts_Controller {
 		}
 
 		return $response;
+	}
+
+	/**
+	 * Prepares a single post for create.
+	 *
+	 * @since 1.16.0
+	 *
+	 * @param WP_REST_Request $request Request object.
+	 * @return stdClass|WP_Error Post object or WP_Error.
+	 */
+	protected function prepare_item_for_database( $request ) {
+		$prepared_post              = new stdClass();
+		$prepared_post->post_status = 'publish';
+
+		$font_data = [];
+
+		$fields = [
+			'family',
+			'fallbacks',
+			'weights',
+			'styles',
+			'variants',
+			'metrics',
+			'url',
+		];
+
+		$schema = $this->get_item_schema();
+
+		foreach ( $fields as $field ) {
+			if ( ! empty( $schema['properties'][ $field ] ) && ! empty( $request[ $field ] ) ) {
+				$font_data[ $field ] = $request[ $field ];
+
+				if ( 'family' === $field ) {
+					$prepared_post->post_title = $request['family'];
+				}
+			}
+		}
+
+		$prepared_post->post_content = wp_json_encode( $font_data );
+
+		return $prepared_post;
 	}
 
 	/**
@@ -461,11 +521,14 @@ class Font_Controller extends WP_REST_Posts_Controller {
 					'context'     => [ 'view', 'edit' ],
 				],
 				'weights'   => [
-					'description' => __( 'Fallback fonts', 'web-stories' ),
+					'description' => __( 'Font weights', 'web-stories' ),
 					'type'        => 'array',
 					'items'       => [
-						'type' => 'string',
+						'type'    => 'integer',
+						'minimum' => 0,
+						'maximum' => 900,
 					],
+					'minimum'     => 1,
 					'context'     => [ 'view', 'edit' ],
 				],
 				'styles'    => [
@@ -474,16 +537,21 @@ class Font_Controller extends WP_REST_Posts_Controller {
 					'items'       => [
 						'type' => 'string',
 					],
+					'minimum'     => 1,
 					'context'     => [ 'view', 'edit' ],
 				],
 				'variants'  => [
 					'description' => __( 'Font variants', 'web-stories' ),
 					'type'        => 'array',
 					'items'       => [
-						'type'  => 'array',
-						'items' => [
-							'type' => 'integer',
+						'type'    => 'array',
+						'items'   => [
+							'type'    => 'integer',
+							'minimum' => 0,
+							'maximum' => 900,
 						],
+						'minimum' => 2,
+						'maximum' => 2,
 					],
 					'context'     => [ 'view', 'edit' ],
 				],
