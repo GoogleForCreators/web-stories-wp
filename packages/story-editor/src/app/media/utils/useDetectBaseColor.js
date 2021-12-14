@@ -93,7 +93,7 @@ function useDetectBaseColor({ updateMediaElement }) {
           imageSrc = getSmallestUrlForWidth(0, posterResource);
         }
       }
-      
+
       if (!imageSrc) {
         return;
       }
