@@ -48,15 +48,10 @@ describe('Background Copy Paste integration', () => {
 
   it('should correctly copy pattern background to page with pattern background', async () => {
     // Arrange the backgrounds
-    //await karmaPause();
     await gotoPage(1);
-    //await karmaPause();
     await setBackgroundColor('FF0000');
-    //await karmaPause();
     await gotoPage(2);
-    //await karmaPause();
     await setBackgroundColor('00FF00');
-    //await karmaPause();
 
     // Verify setup - 1 element on each page in the right color
     await gotoPage(1);
@@ -105,7 +100,6 @@ describe('Background Copy Paste integration', () => {
     expect(await getNumElements()).toBe(1);
     await gotoPage(2);
     expect(await getCanvasBackgroundElement()).not.toBeEmpty();
-
     expect(await getCanvasBackgroundImage()).toHaveProperty(
       'src',
       /blue-marble/
