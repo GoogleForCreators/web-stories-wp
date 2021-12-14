@@ -1040,7 +1040,7 @@ class APIProviderFixture {
 
         if (params.search) {
           fonts = fonts.filter(({ family }) =>
-            family.toLowerCase().includes(params.search)
+            family.toLowerCase().includes(params.search.toLowerCase())
           );
         }
 
