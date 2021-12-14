@@ -74,8 +74,8 @@ async function generateVideoStrip(element, resource, stripWidth, stripHeight) {
   // Calculate the offset between each frame to be grabbed
   const frameDistance = length / (frameCount - 1);
 
-  // Preload video and adjust size
-  const video = await preloadVideo(src);
+  // Preload video and adjust size. Skipping the first ms to prevent blank frames in chrome.
+  const video = await preloadVideo(`${src}#t=0.000001`);
   video.width = videoWidth;
   video.height = videoHeight;
 
