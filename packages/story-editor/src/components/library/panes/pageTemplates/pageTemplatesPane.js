@@ -78,7 +78,7 @@ function PageTemplatesPane(props) {
   const {
     actions: { getCustomPageTemplates },
   } = useAPI();
-  const canShowSaveTemplate = Boolean(getCustomPageTemplates);
+  const supportsCustomTemplates = Boolean(getCustomPageTemplates);
 
   const {
     savedTemplates,
@@ -185,7 +185,7 @@ function PageTemplatesPane(props) {
     },
   ];
 
-  if (canShowSaveTemplate) {
+  if (supportsCustomTemplates) {
     options.push({
       value: SAVED,
       label: __('Saved templates', 'web-stories'),
@@ -203,7 +203,7 @@ function PageTemplatesPane(props) {
     <StyledPane id={paneId} {...props}>
       <PaneInner>
         <>
-          {canShowSaveTemplate && (
+          {supportsCustomTemplates && (
             <ButtonWrapper>
               <TemplateSave
                 setShowDefaultTemplates={setShowDefaultTemplates}
