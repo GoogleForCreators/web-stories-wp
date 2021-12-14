@@ -45,6 +45,77 @@ describe('LibraryTabs integration', () => {
     fixture.restore();
   });
 
+  describe('library Tabs should have no aXe accessibility violations', () => {
+    // Disable reason: aXe violations
+    // TODO: https://github.com/google/web-stories-wp/issues/9954
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('Local Media Panel should have no aXe violations', async () => {
+      const { mediaTab } = fixture.editor.library;
+      expect(mediaTab).toBeDefined();
+      await fixture.events.click(mediaTab);
+      await expectAsync(mediaTab).toHaveNoViolations();
+      await expectAsync(fixture.editor.library.media).toHaveNoViolations();
+    });
+
+    it('Media 3p Panel should have no aXe violations', async () => {
+      // Set local storage to have accepted third party media terms to avoid interruption with dialog
+      localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P}`, true);
+      const { media3pTab } = fixture.editor.library;
+      expect(media3pTab).toBeDefined();
+      // navigate to third party media panel
+      await fixture.events.click(media3pTab);
+      // check tab for violations
+      await expectAsync(media3pTab).toHaveNoViolations();
+      // check panel node for violations
+      await expectAsync(
+        fixture.editor.library.media3p.node
+      ).toHaveNoViolations();
+    });
+
+    it('Text Panel should have no aXe violations', async () => {
+      const { textTab } = fixture.editor.library;
+      expect(textTab).toBeDefined();
+      // navigate to text panel
+      await fixture.events.click(textTab);
+      // TODO fix nested interactions GET ISSUE LINK
+      // await expectAsync(textTab).toHaveNoViolations();
+
+      // check panel for violations
+      await expectAsync(fixture.editor.library.text.node).toHaveNoViolations();
+    });
+
+    it('Shapes Panel should have no aXe violations', async () => {
+      const { shapesTab } = fixture.editor.library;
+      expect(shapesTab).toBeDefined();
+      // navigate to shapes panel
+      await fixture.events.click(shapesTab);
+      // check tab for violations
+      await expectAsync(shapesTab).toHaveNoViolations();
+      // Just grab the shapes library in the shapes pane
+      // there's some issues with clip path id repetition that
+      // are giving false positives to aXe tests in stickers.
+      const shapesLibrary = fixture.container.querySelector(
+        '[data-testid="shapes-library-pane"]'
+      );
+      expect(shapesLibrary).toBeDefined();
+      await expectAsync(shapesLibrary).toHaveNoViolations();
+    });
+
+    it('Page Templates Panel should have no aXe violations', async () => {
+      const { pageTemplatesTab } = fixture.editor.library;
+      expect(pageTemplatesTab).toBeDefined();
+      // navigate to pageTemplates panel
+      await fixture.events.click(pageTemplatesTab);
+      // check tab for violations
+      await expectAsync(pageTemplatesTab).toHaveNoViolations();
+
+      // check pane for violations
+      await expectAsync(
+        fixture.editor.library.pageTemplatesPane.node
+      ).toHaveNoViolations();
+    });
+  });
+
   describe('keyboard navigation', () => {
     beforeEach(async () => {
       localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P}`, true);

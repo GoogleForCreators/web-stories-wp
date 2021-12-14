@@ -20,6 +20,7 @@
 import { CSSTransition } from 'react-transition-group';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
+import { useRef } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -108,7 +109,7 @@ function CarouselLayout() {
       pageThumbHeight,
     })
   );
-
+  const nodeRef = useRef();
   if (numPages <= 0) {
     return null;
   }
@@ -124,9 +125,12 @@ function CarouselLayout() {
     <CSSTransition
       in={isOpenOrOpening}
       classNames="carousel"
+      containerRef
+      nodeRef={nodeRef}
       timeout={CAROUSEL_TRANSITION_DURATION}
     >
       <Wrapper
+        ref={nodeRef}
         aria-label={__('Page Carousel', 'web-stories')}
         isCollapsed={isCollapsed}
         thumbHeight={pageThumbHeight}

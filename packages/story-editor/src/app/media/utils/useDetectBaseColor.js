@@ -30,7 +30,7 @@ import useCORSProxy from '../../../utils/useCORSProxy';
 
 function useDetectBaseColor({ updateMediaElement }) {
   const {
-    actions: { updateMedia },
+    actions: { updateMedia, getPosterMediaById },
   } = useAPI();
   const { updateElementsByResourceId } = useStory((state) => ({
     updateElementsByResourceId: state.actions.updateElementsByResourceId,
@@ -82,9 +82,18 @@ function useDetectBaseColor({ updateMediaElement }) {
 
   const updateBaseColor = useCallback(
     async (resource) => {
-      const { type, poster } = resource;
-      const imageSrc =
-        type === 'image' ? getSmallestUrlForWidth(0, resource) : poster;
+      const { type, poster, id, isExternal } = resource;
+      let imageSrc = poster;
+
+      if (type === 'image') {
+        imageSrc = getSmallestUrlForWidth(0, resource);
+      } else if (!isExternal) {
+        const posterResource = await getPosterMediaById(id);
+        if (posterResource) {
+          imageSrc = getSmallestUrlForWidth(0, posterResource);
+        }
+      }
+      
       if (!imageSrc) {
         return;
       }
@@ -96,7 +105,7 @@ function useDetectBaseColor({ updateMediaElement }) {
         // Do nothing for now.
       }
     },
-    [getProxiedUrl, saveBaseColor]
+    [getProxiedUrl, getPosterMediaById, saveBaseColor]
   );
 
   return {
