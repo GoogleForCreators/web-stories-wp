@@ -25,44 +25,25 @@ import { render, createEvent, fireEvent, screen } from '@testing-library/react';
 import UploadDropTarget from '../dropTarget';
 import useUploadDropTarget from '../use';
 
+const onDropSpy = jest.fn();
+
+function UseUploadDropTargetConsumer() {
+  const { isDragging: isDraggingContext } = useUploadDropTarget();
+  return (
+    <div data-testid="isDragging" data-value={String(isDraggingContext)} />
+  );
+}
+
 describe('UploadDropTarget', () => {
-  let onDropSpy;
   let view;
   let container;
   let content1, isDraggingElement;
   let dataTransfer;
   let transferFile1;
 
-  beforeEach(() => {
-    onDropSpy = jest.fn();
-    view = render(
-      <UploadDropTarget
-        label="drop target"
-        labelledBy="glasspane"
-        onDrop={onDropSpy}
-      >
-        <div data-testid="content1">{'content 1'}</div>
-        <UseUploadDropTargetConsumer />
-      </UploadDropTarget>
-    );
-    // eslint-disable-next-line testing-library/no-node-access
-    container = view.container.firstElementChild;
-    content1 = screen.getByTestId('content1');
-    isDraggingElement = screen.getByTestId('isDragging');
-    transferFile1 = {};
-    dataTransfer = {
-      effectAllowed: 'none',
-      types: ['Files'],
-      files: [transferFile1],
-    };
+  afterEach(() => {
+    onDropSpy.mockClear();
   });
-
-  function UseUploadDropTargetConsumer() {
-    const { isDragging: isDraggingContext } = useUploadDropTarget();
-    return (
-      <div data-testid="isDragging" data-value={String(isDraggingContext)} />
-    );
-  }
 
   function getGlasspane() {
     // eslint-disable-next-line testing-library/no-node-access
@@ -84,12 +65,54 @@ describe('UploadDropTarget', () => {
 
   describe('enter dragging mode', () => {
     it('should start in a non-dragging mode', () => {
+      view = render(
+        <UploadDropTarget
+          label="drop target"
+          labelledBy="glasspane"
+          onDrop={onDropSpy}
+        >
+          <div data-testid="content1">{'content 1'}</div>
+          <UseUploadDropTargetConsumer />
+        </UploadDropTarget>
+      );
+      // eslint-disable-next-line testing-library/no-node-access
+      container = view.container.firstElementChild;
+      content1 = screen.getByTestId('content1');
+      isDraggingElement = screen.getByTestId('isDragging');
+      transferFile1 = {};
+      dataTransfer = {
+        effectAllowed: 'none',
+        types: ['Files'],
+        files: [transferFile1],
+      };
+
       expect(isDragging()).toBe(false);
       expect(getGlasspane()).toBeNull();
       expect(isDraggingElement).toHaveAttribute('data-value', 'false');
     });
 
     it('should start dragging on the container', () => {
+      view = render(
+        <UploadDropTarget
+          label="drop target"
+          labelledBy="glasspane"
+          onDrop={onDropSpy}
+        >
+          <div data-testid="content1">{'content 1'}</div>
+          <UseUploadDropTargetConsumer />
+        </UploadDropTarget>
+      );
+      // eslint-disable-next-line testing-library/no-node-access
+      container = view.container.firstElementChild;
+      content1 = screen.getByTestId('content1');
+      isDraggingElement = screen.getByTestId('isDragging');
+      transferFile1 = {};
+      dataTransfer = {
+        effectAllowed: 'none',
+        types: ['Files'],
+        files: [transferFile1],
+      };
+
       const event = fireDragEvent(container, 'dragEnter');
       expect(event.preventDefault).toHaveBeenCalledWith();
       expect(event.stopPropagation).toHaveBeenCalledWith();
@@ -101,6 +124,27 @@ describe('UploadDropTarget', () => {
     });
 
     it('should start dragging on a child', () => {
+      view = render(
+        <UploadDropTarget
+          label="drop target"
+          labelledBy="glasspane"
+          onDrop={onDropSpy}
+        >
+          <div data-testid="content1">{'content 1'}</div>
+          <UseUploadDropTargetConsumer />
+        </UploadDropTarget>
+      );
+      // eslint-disable-next-line testing-library/no-node-access
+      container = view.container.firstElementChild;
+      content1 = screen.getByTestId('content1');
+      isDraggingElement = screen.getByTestId('isDragging');
+      transferFile1 = {};
+      dataTransfer = {
+        effectAllowed: 'none',
+        types: ['Files'],
+        files: [transferFile1],
+      };
+
       const event = fireDragEvent(content1, 'dragEnter');
       expect(event.preventDefault).toHaveBeenCalledWith();
       expect(event.stopPropagation).toHaveBeenCalledWith();
@@ -108,6 +152,27 @@ describe('UploadDropTarget', () => {
     });
 
     it('should ignore non-file payloads', () => {
+      view = render(
+        <UploadDropTarget
+          label="drop target"
+          labelledBy="glasspane"
+          onDrop={onDropSpy}
+        >
+          <div data-testid="content1">{'content 1'}</div>
+          <UseUploadDropTargetConsumer />
+        </UploadDropTarget>
+      );
+      // eslint-disable-next-line testing-library/no-node-access
+      container = view.container.firstElementChild;
+      content1 = screen.getByTestId('content1');
+      isDraggingElement = screen.getByTestId('isDragging');
+      transferFile1 = {};
+      dataTransfer = {
+        effectAllowed: 'none',
+        types: ['Files'],
+        files: [transferFile1],
+      };
+
       dataTransfer.types = ['text/html'];
       dataTransfer.files = [];
       const event = fireDragEvent(content1, 'dragEnter');
@@ -118,14 +183,31 @@ describe('UploadDropTarget', () => {
   });
 
   describe('in dragging mode', () => {
-    let glasspane;
-
-    beforeEach(() => {
-      fireDragEvent(container, 'dragEnter');
-      glasspane = getGlasspane();
-    });
-
     it('should have the glasspane and the context in dragging mode', () => {
+      view = render(
+        <UploadDropTarget
+          label="drop target"
+          labelledBy="glasspane"
+          onDrop={onDropSpy}
+        >
+          <div data-testid="content1">{'content 1'}</div>
+          <UseUploadDropTargetConsumer />
+        </UploadDropTarget>
+      );
+      // eslint-disable-next-line testing-library/no-node-access
+      container = view.container.firstElementChild;
+      content1 = screen.getByTestId('content1');
+      isDraggingElement = screen.getByTestId('isDragging');
+      transferFile1 = {};
+      dataTransfer = {
+        effectAllowed: 'none',
+        types: ['Files'],
+        files: [transferFile1],
+      };
+
+      fireDragEvent(container, 'dragEnter');
+      const glasspane = getGlasspane();
+
       expect(isDragging()).toBe(true);
       expect(getGlasspane()).not.toBeNull();
       expect(getGlasspane()).toBe(glasspane);
@@ -133,6 +215,29 @@ describe('UploadDropTarget', () => {
     });
 
     it('should continue dragging when the container exits', () => {
+      view = render(
+        <UploadDropTarget
+          label="drop target"
+          labelledBy="glasspane"
+          onDrop={onDropSpy}
+        >
+          <div data-testid="content1">{'content 1'}</div>
+          <UseUploadDropTargetConsumer />
+        </UploadDropTarget>
+      );
+      // eslint-disable-next-line testing-library/no-node-access
+      container = view.container.firstElementChild;
+      content1 = screen.getByTestId('content1');
+      isDraggingElement = screen.getByTestId('isDragging');
+      transferFile1 = {};
+      dataTransfer = {
+        effectAllowed: 'none',
+        types: ['Files'],
+        files: [transferFile1],
+      };
+
+      fireDragEvent(container, 'dragEnter');
+
       const event = fireDragEvent(container, 'dragLeave');
       expect(event.preventDefault).not.toHaveBeenCalledWith();
       expect(event.stopPropagation).not.toHaveBeenCalledWith();
@@ -140,6 +245,29 @@ describe('UploadDropTarget', () => {
     });
 
     it('should continue dragging when a child exits', () => {
+      view = render(
+        <UploadDropTarget
+          label="drop target"
+          labelledBy="glasspane"
+          onDrop={onDropSpy}
+        >
+          <div data-testid="content1">{'content 1'}</div>
+          <UseUploadDropTargetConsumer />
+        </UploadDropTarget>
+      );
+      // eslint-disable-next-line testing-library/no-node-access
+      container = view.container.firstElementChild;
+      content1 = screen.getByTestId('content1');
+      isDraggingElement = screen.getByTestId('isDragging');
+      transferFile1 = {};
+      dataTransfer = {
+        effectAllowed: 'none',
+        types: ['Files'],
+        files: [transferFile1],
+      };
+
+      fireDragEvent(container, 'dragEnter');
+
       const event = fireDragEvent(content1, 'dragLeave');
       expect(event.preventDefault).not.toHaveBeenCalledWith();
       expect(event.stopPropagation).not.toHaveBeenCalledWith();
@@ -147,6 +275,29 @@ describe('UploadDropTarget', () => {
     });
 
     it('should cancel dragging over the container', () => {
+      view = render(
+        <UploadDropTarget
+          label="drop target"
+          labelledBy="glasspane"
+          onDrop={onDropSpy}
+        >
+          <div data-testid="content1">{'content 1'}</div>
+          <UseUploadDropTargetConsumer />
+        </UploadDropTarget>
+      );
+      // eslint-disable-next-line testing-library/no-node-access
+      container = view.container.firstElementChild;
+      content1 = screen.getByTestId('content1');
+      isDraggingElement = screen.getByTestId('isDragging');
+      transferFile1 = {};
+      dataTransfer = {
+        effectAllowed: 'none',
+        types: ['Files'],
+        files: [transferFile1],
+      };
+
+      fireDragEvent(container, 'dragEnter');
+
       const event = fireDragEvent(container, 'dragOver');
       expect(event.preventDefault).toHaveBeenCalledWith();
       expect(event.stopPropagation).toHaveBeenCalledWith();
@@ -154,6 +305,30 @@ describe('UploadDropTarget', () => {
     });
 
     it('should intercept dragging over the glasspane', () => {
+      view = render(
+        <UploadDropTarget
+          label="drop target"
+          labelledBy="glasspane"
+          onDrop={onDropSpy}
+        >
+          <div data-testid="content1">{'content 1'}</div>
+          <UseUploadDropTargetConsumer />
+        </UploadDropTarget>
+      );
+      // eslint-disable-next-line testing-library/no-node-access
+      container = view.container.firstElementChild;
+      content1 = screen.getByTestId('content1');
+      isDraggingElement = screen.getByTestId('isDragging');
+      transferFile1 = {};
+      dataTransfer = {
+        effectAllowed: 'none',
+        types: ['Files'],
+        files: [transferFile1],
+      };
+
+      fireDragEvent(container, 'dragEnter');
+      const glasspane = getGlasspane();
+
       const event = fireDragEvent(glasspane, 'dragOver');
       expect(event.preventDefault).toHaveBeenCalledWith();
       expect(event.stopPropagation).toHaveBeenCalledWith();
@@ -161,6 +336,30 @@ describe('UploadDropTarget', () => {
     });
 
     it('should cancel dragging when the glasspane exits', () => {
+      view = render(
+        <UploadDropTarget
+          label="drop target"
+          labelledBy="glasspane"
+          onDrop={onDropSpy}
+        >
+          <div data-testid="content1">{'content 1'}</div>
+          <UseUploadDropTargetConsumer />
+        </UploadDropTarget>
+      );
+      // eslint-disable-next-line testing-library/no-node-access
+      container = view.container.firstElementChild;
+      content1 = screen.getByTestId('content1');
+      isDraggingElement = screen.getByTestId('isDragging');
+      transferFile1 = {};
+      dataTransfer = {
+        effectAllowed: 'none',
+        types: ['Files'],
+        files: [transferFile1],
+      };
+
+      fireDragEvent(container, 'dragEnter');
+      const glasspane = getGlasspane();
+
       const event = fireDragEvent(glasspane, 'dragLeave');
       expect(event.preventDefault).toHaveBeenCalledWith();
       expect(event.stopPropagation).toHaveBeenCalledWith();
@@ -173,6 +372,30 @@ describe('UploadDropTarget', () => {
     });
 
     it('should drop and exit the dragging mode', () => {
+      view = render(
+        <UploadDropTarget
+          label="drop target"
+          labelledBy="glasspane"
+          onDrop={onDropSpy}
+        >
+          <div data-testid="content1">{'content 1'}</div>
+          <UseUploadDropTargetConsumer />
+        </UploadDropTarget>
+      );
+      // eslint-disable-next-line testing-library/no-node-access
+      container = view.container.firstElementChild;
+      content1 = screen.getByTestId('content1');
+      isDraggingElement = screen.getByTestId('isDragging');
+      transferFile1 = {};
+      dataTransfer = {
+        effectAllowed: 'none',
+        types: ['Files'],
+        files: [transferFile1],
+      };
+
+      fireDragEvent(container, 'dragEnter');
+      const glasspane = getGlasspane();
+
       const event = fireDragEvent(glasspane, 'drop');
       expect(event.preventDefault).toHaveBeenCalledWith();
       expect(event.stopPropagation).toHaveBeenCalledWith();

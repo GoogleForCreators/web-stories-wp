@@ -130,6 +130,28 @@ export async function getOptimizedMediaById(config, mediaId) {
 }
 
 /**
+ * Get the poster of a given media resource.
+ *
+ * @param {Object} config Configuration object.
+ * @param {number} mediaId Media ID.
+ * @return {Promise<import('@web-stories-wp/media').Resource>} Media resource if found, null otherwise.
+ */
+export async function getPosterMediaById(config, mediaId) {
+  const path = addQueryArgs(`${config.api.media}${mediaId}/`, {
+    context: 'edit',
+    _fields: 'featured_media',
+  });
+
+  const result = await apiFetch({ path });
+
+  if (result?.featured_media) {
+    return getMediaById(config, result.featured_media);
+  }
+
+  return null;
+}
+
+/**
  * Upload file to via REST API.
  *
  * @param {Object} config Configuration object.
@@ -152,6 +174,7 @@ export function uploadMedia(config, file, additionalData) {
     method: 'POST',
   }).then((attachment) => getResourceFromAttachment(attachment));
 }
+
 /**
  * Update Existing media.
  *

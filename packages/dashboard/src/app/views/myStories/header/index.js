@@ -59,7 +59,8 @@ const StyledPill = styled(Pill)`
 
   & > span {
     padding-left: 8px;
-    color: ${({ theme }) => theme.colors.fg.tertiary};
+    color: ${({ theme, isActive }) =>
+      isActive ? theme.colors.gray[20] : theme.colors.fg.tertiary};
   }
 `;
 function Header({
@@ -171,7 +172,7 @@ function Header({
         handleSearchChange={debouncedSearchChange}
         showSearch={initialPageReady}
         searchValue={search.keyword}
-        clearSearch={clearSearch}
+        onClear={clearSearch}
       >
         {HeaderToggleButtons}
       </PageHeading>

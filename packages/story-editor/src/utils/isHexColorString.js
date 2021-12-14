@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +14,8 @@
  * limitations under the License.
  */
 
-/* global __dirname */
+function isHexColorString(s) {
+  return /^#(?:[a-f0-9]{3}){1,2}$/i.test(s);
+}
 
-/**
- * External dependencies
- */
-import { resolve as resolvePath } from 'path';
-import resolve from '@rollup/plugin-node-resolve';
-
-export default {
-  input: resolvePath(__dirname, 'index.js'),
-  output: {
-    file: resolvePath(__dirname, 'module.js'),
-    format: 'es',
-  },
-  plugins: [resolve()],
-  external: ['crypto'],
-};
+export default isHexColorString;

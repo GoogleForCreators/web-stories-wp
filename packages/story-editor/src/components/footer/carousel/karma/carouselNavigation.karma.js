@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { createSolid } from '@web-stories-wp/patterns';
+import { waitFor } from '@testing-library/react';
 /**
  * Internal dependencies
  */
@@ -62,6 +63,11 @@ describe('Carousel Navigation', () => {
 
   async function clickOnThumbnail(index) {
     await fixture.editor.footer.carousel.waitReady();
+    await waitFor(() => {
+      if (fixture.editor.footer.carousel.pages.length === 0) {
+        throw new Error('Carousel pages not loaded yet');
+      }
+    });
     const thumb = fixture.editor.footer.carousel.pages[index];
     thumb.node.scrollIntoView();
     await fixture.events.mouse.clickOn(thumb.node, 5, 5);

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { screen, act } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -49,19 +49,13 @@ function arrange({ taxonomies, isCapable }) {
     },
   };
 
-  let view;
-
-  act(() => {
-    view = renderWithTheme(
-      <StoryContext.Provider value={storyContextValue}>
-        <TaxonomyContext.Provider value={taxonomyContextValue}>
-          <TaxonomiesPanel />
-        </TaxonomyContext.Provider>
-      </StoryContext.Provider>
-    );
-  });
-
-  return view;
+  return renderWithTheme(
+    <StoryContext.Provider value={storyContextValue}>
+      <TaxonomyContext.Provider value={taxonomyContextValue}>
+        <TaxonomiesPanel />
+      </TaxonomyContext.Provider>
+    </StoryContext.Provider>
+  );
 }
 
 describe('TaxonomiesPanel', () => {
