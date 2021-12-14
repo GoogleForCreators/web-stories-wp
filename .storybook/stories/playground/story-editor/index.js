@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { getMedia, saveStoryById } from './api';
+import { getMedia, saveStoryById, getFonts } from './api';
 import { HeaderLayout } from './header';
 import { LOCAL_STORAGE_CONTENT_KEY } from './constants';
 
@@ -77,6 +77,9 @@ const apiCallbacks = apiCallbacksNames.reduce((callbacks, name) => {
       break;
     case 'getMedia':
       callbacks[name] = getMedia;
+      break;
+    case 'getFonts':
+      callbacks[name] = getFonts;
       break;
     default:
       callbacks[name] = Promise.resolve({});

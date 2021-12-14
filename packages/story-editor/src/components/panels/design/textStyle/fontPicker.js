@@ -55,19 +55,18 @@ const FontPicker = forwardRef(function FontPicker(
     addRecentFont,
     maybeEnqueueFontStyle,
     ensureMenuFontsLoaded,
-  } = useFont(
-    ({
-      actions: { addRecentFont, ensureMenuFontsLoaded, maybeEnqueueFontStyle },
-      state: { fonts, recentFonts, curatedFonts },
-    }) => ({
-      addRecentFont,
-      ensureMenuFontsLoaded,
-      maybeEnqueueFontStyle,
-      recentFonts,
-      curatedFonts,
-      fonts,
-    })
-  );
+    ensureCustomFontsLoaded,
+    getFontsBySearch,
+  } = useFont(({ actions, state }) => ({
+    getFontsBySearch: actions.getFontsBySearch,
+    addRecentFont: actions.addRecentFont,
+    ensureMenuFontsLoaded: actions.ensureMenuFontsLoaded,
+    ensureCustomFontsLoaded: actions.ensureCustomFontsLoaded,
+    maybeEnqueueFontStyle: actions.maybeEnqueueFontStyle,
+    recentFonts: state.recentFonts,
+    curatedFonts: state.curatedFonts,
+    fonts: state.fonts,
+  }));
 
   const handleFontPickerChange = useCallback(
     async ({ id }) => {
@@ -81,6 +80,7 @@ const FontPicker = forwardRef(function FontPicker(
           'styles',
           'variants',
           'metrics',
+          'url', // For custom fonts.
         ]),
       };
 
@@ -125,6 +125,11 @@ const FontPicker = forwardRef(function FontPicker(
     ensureMenuFontsLoaded(
       observedFonts.filter(
         (fontName) => fontMap.get(fontName)?.service === 'fonts.google.com'
+      )
+    );
+    ensureCustomFontsLoaded(
+      observedFonts.filter(
+        (fontName) => fontMap.get(fontName)?.service === 'custom'
       )
     );
   };
@@ -218,6 +223,7 @@ const FontPicker = forwardRef(function FontPicker(
         MULTIPLE_VALUE === fontFamily ? MULTIPLE_DISPLAY_VALUE : fontFamily
       }
       hasSearch
+      getOptionsByQuery={getFontsBySearch}
       onChange={handleFontPickerChange}
       onObserve={onObserve}
       renderer={forwardRef(renderer)}
