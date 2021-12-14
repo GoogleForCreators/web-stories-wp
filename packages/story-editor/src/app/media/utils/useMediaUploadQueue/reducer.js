@@ -216,9 +216,13 @@ export function startTranscoding(state, { payload: { id } }) {
  * @param {Object} action.payload Action payload.
  * @param {string} action.payload.id Item ID.
  * @param {File} action.payload.file New file object.
+ * @param {Object} action.payload.additionalData Additional data.
  * @return {Object} New state
  */
-export function finishTranscoding(state, { payload: { id, file } }) {
+export function finishTranscoding(
+  state,
+  { payload: { id, file, additionalData = {} } }
+) {
   return {
     ...state,
     queue: state.queue.map((item) =>
@@ -230,6 +234,10 @@ export function finishTranscoding(state, { payload: { id, file } }) {
             resource: {
               ...item.resource,
               isOptimized: true,
+            },
+            additionalData: {
+              ...item.additionalData,
+              ...additionalData,
             },
           }
         : item
@@ -268,9 +276,13 @@ export function startMuting(state, { payload: { id } }) {
  * @param {Object} action.payload Action payload.
  * @param {string} action.payload.id Item ID.
  * @param {File} action.payload.file New file object.
+ * @param {Object} action.payload.additionalData Additional data.
  * @return {Object} New state
  */
-export function finishMuting(state, { payload: { id, file } }) {
+export function finishMuting(
+  state,
+  { payload: { id, file, additionalData = {} } }
+) {
   return {
     ...state,
     queue: state.queue.map((item) =>
@@ -282,6 +294,10 @@ export function finishMuting(state, { payload: { id, file } }) {
             resource: {
               ...item.resource,
               isMuted: true,
+            },
+            additionalData: {
+              ...item.additionalData,
+              ...additionalData,
             },
           }
         : item
@@ -320,9 +336,13 @@ export function startTrimming(state, { payload: { id } }) {
  * @param {Object} action.payload Action payload.
  * @param {string} action.payload.id Item ID.
  * @param {File} action.payload.file New file object.
+ * @param {Object} action.payload.additionalData Additional data.
  * @return {Object} New state
  */
-export function finishTrimming(state, { payload: { id, file } }) {
+export function finishTrimming(
+  state,
+  { payload: { id, file, additionalData = {} } }
+) {
   return {
     ...state,
     queue: state.queue.map((item) =>
@@ -331,6 +351,10 @@ export function finishTrimming(state, { payload: { id, file } }) {
             ...item,
             file,
             state: ITEM_STATUS.TRIMMED,
+            additionalData: {
+              ...item.additionalData,
+              ...additionalData,
+            },
           }
         : item
     ),

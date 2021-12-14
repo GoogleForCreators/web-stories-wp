@@ -103,7 +103,7 @@ function useMediaUploadQueue() {
 
   // Try to update placeholder resources for freshly transcoded file if still missing.
   useEffect(() => {
-    async function updateItems() {
+    (async () => {
       await Promise.all(
         state.queue.map(async (item) => {
           const { id, file, state: itemState, resource } = item;
@@ -137,16 +137,14 @@ function useMediaUploadQueue() {
           }
         })
       );
-    }
-
-    updateItems();
+    })();
   }, [state.queue, replacePlaceholderResource]);
 
   // Try to get dimensions and poster for placeholder resources.
   // This way we can show something more meaningful to the user before transcoding has finished.
   // Since this uses ffmpeg, we're going to limit this to one at a time.
   useEffect(() => {
-    async function updateItems() {
+    (async () => {
       await Promise.all(
         state.queue.map(async (item) => {
           const { id, file, state: itemState, resource } = item;
@@ -196,9 +194,7 @@ function useMediaUploadQueue() {
           }
         })
       );
-    }
-
-    updateItems();
+    })();
   }, [
     state.queue,
     isTranscodingEnabled,
@@ -207,52 +203,216 @@ function useMediaUploadQueue() {
     replacePlaceholderResource,
   ]);
 
-  const processPoster = useCallback(
-    async ({ newResource, posterFileName, newPosterFile, resource, id }) => {
+  // Convert animated GIFs to videos if possible.
+  const convertGifItem = useCallback(
+    async (item) => {
+      const { id, file, additionalData = {} } = item;
+
+      startTranscoding({ id });
+
+      try {
+        const newFile = await convertGifToVideo(file);
+
+        if (!isMounted.current) {
+          return;
+        }
+
+        additionalData.web_stories_media_source = 'gif-conversion';
+        additionalData.web_stories_is_muted = true;
+        finishTranscoding({ id, file: newFile, additionalData });
+      } catch (error) {
+        // Cancel uploading if there were any errors.
+        cancelUploading({ id, error });
+
+        trackError('upload_media', error?.message);
+      } finally {
+        currentTranscodingItem.current = null;
+      }
+    },
+    [startTranscoding, finishTranscoding, convertGifToVideo, cancelUploading]
+  );
+
+  const trimVideoItem = useCallback(
+    async (item) => {
+      const { id, file, additionalData = {}, trimData } = item;
+
+      startTrimming({ id });
+
+      try {
+        const newFile = await trimVideo(file, trimData.start, trimData.end);
+
+        if (!isMounted.current) {
+          return;
+        }
+
+        additionalData.meta = {
+          ...additionalData.meta,
+          web_stories_trim_data: trimData,
+        };
+        finishTrimming({ id, file: newFile, additionalData });
+      } catch (error) {
+        // Cancel uploading if there were any errors.
+        cancelUploading({ id, error });
+
+        trackError('upload_media', error?.message);
+      } finally {
+        currentTranscodingItem.current = null;
+      }
+    },
+    [startTrimming, finishTrimming, trimVideo, cancelUploading]
+  );
+
+  const muteVideoItem = useCallback(
+    async (item) => {
+      const { id, file, additionalData = {} } = item;
+
+      startMuting({ id });
+
+      try {
+        const newFile = await stripAudioFromVideo(file);
+
+        if (!isMounted.current) {
+          return;
+        }
+
+        additionalData.web_stories_is_muted = true;
+        finishMuting({ id, file: newFile, additionalData });
+      } catch (error) {
+        // Cancel uploading if there were any errors.
+        cancelUploading({ id, error });
+
+        trackError('upload_media', error?.message);
+      } finally {
+        currentTranscodingItem.current = null;
+      }
+    },
+    [startMuting, finishMuting, stripAudioFromVideo, cancelUploading]
+  );
+
+  const optimizeVideoItem = useCallback(
+    async (item) => {
+      const { id, file, additionalData = {} } = item;
+
+      startTranscoding({ id });
+
+      try {
+        const newFile = await transcodeVideo(file);
+
+        if (!isMounted.current) {
+          return;
+        }
+
+        additionalData.web_stories_media_source = 'video-optimization';
+        finishTranscoding({ id, file: newFile, additionalData });
+      } catch (error) {
+        // Cancel uploading if there were any errors.
+        cancelUploading({ id, error });
+
+        trackError('upload_media', error?.message);
+      } finally {
+        currentTranscodingItem.current = null;
+      }
+    },
+    [startTranscoding, finishTranscoding, transcodeVideo, cancelUploading]
+  );
+
+  const uploadItem = useCallback(
+    async (item) => {
+      const { id, file, resource, additionalData = {} } = item;
+      let { posterFile } = item;
+
+      let newResource;
+
+      const posterFileName = getFileName(file) + '-poster.jpeg';
+
+      startUploading({ id });
+
+      // If we don't have a poster yet (e.g. after converting a GIF),
+      // try to generate one now.
+      if (!resource.poster && !posterFile) {
+        try {
+          posterFile = await getFirstFrameOfVideo(file);
+        } catch {
+          // Not interested in errors here.
+        }
+      }
+
+      trackEvent('upload_media', {
+        file_size: file?.size,
+        file_type: file?.type,
+      });
+
+      //eslint-disable-next-line @wordpress/no-unused-vars-before-return
+      const trackTiming = getTimeTracker('load_upload_media');
+
+      try {
+        // The newly uploaded file won't have a poster yet.
+        // However, we'll likely still have one on file.
+        // Add it back so we're never without one.
+        // The final poster will be uploaded later by uploadVideoPoster().
+        newResource = await uploadFile(file, additionalData);
+
+        if (!isMounted.current) {
+          return;
+        }
+      } catch (error) {
+        // Cancel uploading if there were any errors.
+        cancelUploading({ id, error });
+
+        trackError('upload_media', error?.message);
+      } finally {
+        trackTiming();
+      }
+
       try {
         const { poster, posterId } = await uploadVideoPoster(
           newResource.id,
           posterFileName,
-          newPosterFile
+          posterFile
         );
 
         if (!isMounted.current) {
           return;
         }
 
-        let newResourceWithPoster = {
+        newResource = {
           ...newResource,
           poster: poster || newResource.poster || resource.poster,
           posterId,
         };
 
         if (resource.mimeType === 'image/gif') {
-          newResourceWithPoster = {
-            ...newResourceWithPoster,
+          newResource = {
+            ...newResource,
+
             output: {
-              ...newResourceWithPoster.output,
+              ...newResource.output,
               poster: poster || newResource.poster || resource.poster,
             },
           };
         }
-
-        finishUploading({
-          id,
-          resource: newResourceWithPoster,
-        });
-      } catch (error) {
-        finishUploading({
-          id,
-          resource: newResource,
-        });
+      } catch {
+        // Not interested in errors here.
       }
+
+      finishUploading({
+        id,
+        resource: newResource,
+      });
     },
-    [finishUploading, uploadVideoPoster]
+    [
+      startUploading,
+      finishUploading,
+      cancelUploading,
+      uploadFile,
+      getFirstFrameOfVideo,
+      uploadVideoPoster,
+    ]
   );
 
   // Upload files to server, optionally first transcoding them.
   useEffect(() => {
-    async function uploadItems() {
+    (async () => {
       await Promise.all(
         /**
          * Uploads a single pending item.
@@ -261,7 +421,6 @@ function useMediaUploadQueue() {
          * @param {File} item.file File object.
          * @return {Promise<void>}
          */
-        // eslint-disable-next-line complexity -- TODO: Reduce complexity in future.
         state.queue.map(async (item) => {
           const {
             id,
@@ -269,19 +428,12 @@ function useMediaUploadQueue() {
             state: itemState,
             resource,
             additionalData = {},
-            posterFile,
             muteVideo,
             trimData,
           } = item;
           if (ITEM_STATUS.PENDING !== itemState) {
             return;
           }
-
-          const posterFileName = getFileName(file) + '-poster.jpeg';
-
-          let newResource;
-          let newFile = file;
-          let newPosterFile = posterFile;
 
           if (
             resource.type === 'video' &&
@@ -325,185 +477,55 @@ function useMediaUploadQueue() {
             currentTranscodingItem.current = id;
 
             if (isGifThatNeedsTranscoding) {
-              // Convert animated GIFs to videos if possible.
-              startTranscoding({ id });
-
-              try {
-                newFile = await convertGifToVideo(file);
-
-                if (!isMounted.current) {
-                  return;
-                }
-
-                finishTranscoding({ id, file: newFile });
-                additionalData.web_stories_media_source = 'gif-conversion';
-                additionalData.web_stories_is_muted = true;
-              } catch (error) {
-                // Cancel uploading if there were any errors.
-                cancelUploading({ id, error });
-
-                trackError('upload_media', error?.message);
-
-                return;
-              } finally {
-                currentTranscodingItem.current = null;
-              }
-
-              try {
-                newPosterFile = await getFirstFrameOfVideo(newFile);
-
-                if (!isMounted.current) {
-                  return;
-                }
-              } catch (error) {
-                // Do nothing here.
-              }
+              convertGifItem(item);
             } else if (canTranscodeFile(file)) {
               if (trimData) {
-                startTrimming({ id });
-                try {
-                  newFile = await trimVideo(file, trimData.start, trimData.end);
-
-                  if (!isMounted.current) {
-                    return;
-                  }
-
-                  finishTrimming({ id, file: newFile });
-                  additionalData.meta = {
-                    ...additionalData.meta,
-                    web_stories_trim_data: trimData,
-                  };
-                } catch (error) {
-                  // Cancel uploading if there were any errors.
-                  cancelUploading({ id, error });
-
-                  trackError('upload_media', error?.message);
-
-                  return;
-                } finally {
-                  currentTranscodingItem.current = null;
-                }
+                trimVideoItem(item);
               } else if (muteVideo) {
-                startMuting({ id });
-                try {
-                  newFile = await stripAudioFromVideo(file);
-
-                  if (!isMounted.current) {
-                    return;
-                  }
-
-                  finishMuting({ id, file: newFile });
-                  additionalData.web_stories_is_muted = true;
-                } catch (error) {
-                  // Cancel uploading if there were any errors.
-                  cancelUploading({ id, error });
-
-                  trackError('upload_media', error?.message);
-
-                  return;
-                } finally {
-                  currentTranscodingItem.current = null;
-                }
+                muteVideoItem(item);
               } else {
                 // Transcode/Optimize videos before upload.
                 // TODO: Only transcode & optimize video if needed (criteria TBD).
                 // Probably need to use FFmpeg first to get more information (dimensions, fps, etc.)
-
-                startTranscoding({ id });
-
-                try {
-                  newFile = await transcodeVideo(file);
-
-                  if (!isMounted.current) {
-                    return;
-                  }
-
-                  finishTranscoding({ id, file: newFile });
-                  additionalData.web_stories_media_source =
-                    'video-optimization';
-                } catch (error) {
-                  // Cancel uploading if there were any errors.
-                  cancelUploading({ id, error });
-
-                  trackError('upload_media', error?.message);
-
-                  return;
-                } finally {
-                  currentTranscodingItem.current = null;
-                }
+                optimizeVideoItem(item);
               }
+            } else {
+              uploadItem(item);
             }
+          } else {
+            uploadItem(item);
           }
-
-          startUploading({ id });
-
-          trackEvent('upload_media', {
-            file_size: newFile?.size,
-            file_type: newFile?.type,
-          });
-
-          //eslint-disable-next-line @wordpress/no-unused-vars-before-return
-          const trackTiming = getTimeTracker('load_upload_media');
-
-          try {
-            // The newly uploaded file won't have a poster yet.
-            // However, we'll likely still have one on file.
-            // Add it back so we're never without one.
-            // The final poster will be uploaded later by uploadVideoPoster().
-            newResource = await uploadFile(newFile, additionalData);
-
-            if (!isMounted.current) {
-              return;
-            }
-          } catch (error) {
-            // Cancel uploading if there were any errors.
-            cancelUploading({ id, error });
-
-            trackError('upload_media', error?.message);
-          } finally {
-            trackTiming();
-          }
-
-          if (newResource?.id && newPosterFile) {
-            await processPoster({
-              newResource,
-              posterFileName,
-              newPosterFile,
-              resource,
-              id,
-            });
-            return;
-          }
-          finishUploading({
-            id,
-            resource: newResource,
-          });
         })
       );
-    }
-
-    uploadItems();
+    })();
   }, [
     state.queue,
-    cancelUploading,
-    uploadFile,
-    startUploading,
-    processPoster,
-    startTranscoding,
-    finishTranscoding,
     isTranscodingEnabled,
-    getFirstFrameOfVideo,
     canTranscodeFile,
-    transcodeVideo,
-    stripAudioFromVideo,
-    convertGifToVideo,
-    startMuting,
-    finishMuting,
-    trimVideo,
-    startTrimming,
-    finishTrimming,
-    finishUploading,
+    convertGifItem,
+    trimVideoItem,
+    muteVideoItem,
+    optimizeVideoItem,
+    uploadItem,
   ]);
+
+  // Upload freshly transcoded files to server.
+  useEffect(() => {
+    state.queue.map((item) => {
+      const { state: itemState } = item;
+      if (
+        ![
+          ITEM_STATUS.TRANSCODED,
+          ITEM_STATUS.MUTED,
+          ITEM_STATUS.TRIMMED,
+        ].includes(itemState)
+      ) {
+        return;
+      }
+
+      uploadItem(item);
+    });
+  }, [state.queue, uploadItem]);
 
   useEffect(() => {
     isMounted.current = true;
