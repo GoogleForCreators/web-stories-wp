@@ -189,7 +189,7 @@ function CustomFontsSettings({
         if (!fontData.family) {
           setInputError(__('Something went wrong', 'web-stories'));
         } else {
-          await addCustomFont(fontData);
+          await addCustomFont({ ...fontData, url: fontUrl });
           await fetchCustomFonts();
           setFontUrl('');
         }

@@ -49,7 +49,7 @@ async function getFontDataFromUrl(fontURL) {
 
   return {
     name: fontInfo.names.fullName.en,
-    family: fontInfo.names.fontFamily.en,
+    family: fontInfo.names.fullName.en,
     weights: [400],
     styles: ['regular'],
     variants: [[0, 400]],

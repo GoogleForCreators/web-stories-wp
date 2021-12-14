@@ -65,14 +65,9 @@ export function deleteCustomFont(apiPath, id) {
  * @return {Promise} Request promise.
  */
 export function addCustomFont(apiPath, font) {
-  // @todo Adjust this based on the actual endpoint.
-  const { family, ...rest } = font;
   return apiFetch({
     path: apiPath,
-    data: {
-      title: family,
-      content: rest,
-    },
+    data: font,
     method: 'POST',
   });
 }
