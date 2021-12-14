@@ -35,6 +35,10 @@ const MenuWrapper = styled.div(
     border-radius: ${theme.borders.radius.small};
     border: 1px solid ${theme.colors.border.disable};
     width: ${({ $isIconMenu }) => ($isIconMenu ? 40 : 210)}px;
+
+    *:last-child {
+      margin-bottom: 0;
+    }
   `
 );
 MenuWrapper.propTypes = {
