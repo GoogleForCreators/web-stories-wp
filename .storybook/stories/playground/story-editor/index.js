@@ -35,23 +35,6 @@ const AppContainer = styled.div`
   height: 100vh;
 `;
 
-const apiCallbacksNames = ['saveStoryById', 'getMedia'];
-
-const apiCallbacks = apiCallbacksNames.reduce((callbacks, name) => {
-  switch (name) {
-    case 'saveStoryById':
-      callbacks[name] = saveStoryById;
-      break;
-    case 'getMedia':
-      callbacks[name] = getMedia;
-      break;
-    default:
-      callbacks[name] = Promise.resolve({});
-  }
-
-  return callbacks;
-}, {});
-
 const getInitialStory = () => {
   const defaultStory = {
     title: { raw: '' },
@@ -72,7 +55,12 @@ const getInitialStory = () => {
 export const _default = () => (
   <AppContainer>
     <StoryEditor
-      config={{ apiCallbacks }}
+      config={{
+        apiCallbacks: {
+          saveStoryById,
+          getMedia,
+        },
+      }}
       initialEdits={{ story: getInitialStory() }}
     >
       <InterfaceSkeleton header={<HeaderLayout />} />
