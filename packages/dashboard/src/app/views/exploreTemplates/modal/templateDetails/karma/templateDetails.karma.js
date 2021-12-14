@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { within } from '@testing-library/react';
+import { within, waitFor } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -95,6 +95,17 @@ describe('See template details modal', () => {
     return templates[templatesOrderById[index]].title;
   }
 
+  async function expectModalClose() {
+    const { templatesOrderById } = await getTemplatesState();
+    const firstTemplate = getTemplateElementById(templatesOrderById[0]);
+    const utils = within(firstTemplate);
+
+    const seeDetailsButton = await utils.findByText(
+      new RegExp(`^${TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS.template}$`)
+    );
+    await expect(seeDetailsButton).toEqual(document.activeElement);
+  }
+
   describe('Action: Navigate template details modal', () => {
     it('should update current template', async () => {
       const firstTemplateTitle = await getTemplateTitle(0);
@@ -123,13 +134,6 @@ describe('See template details modal', () => {
     });
 
     it('should update current template via keyboard', async () => {
-      const { templatesOrderById } = await getTemplatesState();
-      const firstTemplate = getTemplateElementById(templatesOrderById[0]);
-      const utils = within(firstTemplate);
-      const seeDetailsButton = utils.getByText(
-        new RegExp(`^${TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS.template}$`)
-      );
-
       //close button should be in focus
       await fixture.events.keyboard.press('tab');
       const closeBtn = fixture.screen.getByRole('button', {
@@ -138,14 +142,23 @@ describe('See template details modal', () => {
       expect(closeBtn).toEqual(document.activeElement);
 
       // enter should close modal
-      await fixture.events.keyboard.press('Enter');
-      expect(seeDetailsButton).toEqual(document.activeElement);
+      await waitFor(async () => {
+        await fixture.events.keyboard.press('Enter');
+        // let modal close
+        await fixture.events.sleep(500);
+        await expectModalClose();
+      });
 
       // open first template in modal
       await fixture.events.keyboard.press('Enter');
+
       // escape should close modal
-      await fixture.events.keyboard.press('Escape');
-      expect(seeDetailsButton).toEqual(document.activeElement);
+      await waitFor(async () => {
+        await fixture.events.keyboard.press('Escape');
+        // let modal close
+        await fixture.events.sleep(500);
+        await expectModalClose();
+      });
 
       // open first template in modal
       await fixture.events.keyboard.press('Enter');

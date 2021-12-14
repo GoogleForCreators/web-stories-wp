@@ -97,14 +97,15 @@ function DetailsContent({
 }) {
   const { postersByPage, title, description, tags, colors } = template || {};
 
-  const galleryPosters = useMemo(
-    () =>
-      Object.values(postersByPage).map((poster, index) => ({
+  const galleryPosters = useMemo(() => {
+    if (postersByPage) {
+      return Object.values(postersByPage).map((poster, index) => ({
         id: index,
         ...poster,
-      })),
-    [postersByPage]
-  );
+      }));
+    }
+    return undefined;
+  }, [postersByPage]);
 
   const { NextButton, PrevButton } = useMemo(() => {
     const Previous = (
