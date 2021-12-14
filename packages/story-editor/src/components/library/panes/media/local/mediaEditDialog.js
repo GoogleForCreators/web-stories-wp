@@ -28,8 +28,8 @@ import {
   ResourcePropTypes,
 } from '@web-stories-wp/media';
 import {
-  Input,
   Text,
+  TextArea,
   THEME_CONSTANTS,
   useSnackbar,
 } from '@web-stories-wp/design-system';
@@ -73,7 +73,7 @@ const DateText = styled(Text)`
   margin-bottom: 8px;
 `;
 
-const AssistiveTextInput = styled(Input)`
+const AssistiveTextArea = styled(TextArea)`
   margin: 20px 0 4px;
 `;
 
@@ -182,7 +182,7 @@ function MediaEditDialog({ resource, onClose }) {
               height
             )}
           </Text>
-          <AssistiveTextInput
+          <AssistiveTextArea
             value={altText}
             aria-label={isImage ? imageInputTitle : videoInputTitle}
             type="text"
