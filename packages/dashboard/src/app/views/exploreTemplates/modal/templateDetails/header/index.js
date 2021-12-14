@@ -58,7 +58,8 @@ function Header({
   templateActions,
   canCreateStory,
 }) {
-  const { createStoryFromTemplate, handleDetailsToggle } = templateActions;
+  const { createStoryFromTemplate, handleDetailsToggle } =
+    templateActions || {};
   return (
     <Nav>
       <HiddenHeading>
@@ -95,7 +96,6 @@ function Header({
 
 Header.propTypes = {
   canCreateStory: PropTypes.bool,
-  handleDetailsToggle: PropTypes.func,
   templateActions: TemplateActionsPropType,
   templateId: PropTypes.number,
   templateTitle: PropTypes.string,
