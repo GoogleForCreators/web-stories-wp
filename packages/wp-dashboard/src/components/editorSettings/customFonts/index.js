@@ -92,15 +92,20 @@ const ListHeading = styled(Text)`
 `;
 
 const FontsList = styled.div`
-  padding: 12px;
+  padding: 12px 0;
   border: ${({ theme }) => `1px solid ${theme.colors.divider.primary}`};
 `;
 
 const FontRow = styled.div`
+  padding: 0 12px;
   display: flex;
   height: 32px;
   width: 100%;
   justify-content: space-between;
+  &:hover,
+  &:focus {
+    background-color: ${({ theme }) => theme.colors.bg.secondary};
+  }
 `;
 
 const FontData = styled.div`
@@ -108,6 +113,25 @@ const FontData = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: flex;
+  font-size: 14px;
+`;
+
+const StyledText = styled(Text).attrs({
+  as: 'span',
+})``;
+
+const FontUrl = styled(StyledText)`
+  color: ${({ theme }) => theme.colors.fg.tertiary};
+`;
+
+const Divider = styled.div`
+  width: 4px;
+  height: 4px;
+  background-color: ${({ theme }) => theme.colors.standard.black};
+  border-radius: ${({ theme }) => theme.borders.radius.round};
+  margin: 0 6px;
+  align-self: center;
 `;
 
 function CustomFontsSettings({
@@ -140,7 +164,6 @@ function CustomFontsSettings({
     // await deleteCustomFont(toDelete);
     // @todo Should we instead not make a fetch and just remove it from the state only?
     // await fetchCustomFonts();
-    console.log('Deleted font:', toDelete);
     setToDelete(null);
     setShowDialog(false);
   }, [toDelete]);
@@ -153,7 +176,7 @@ function CustomFontsSettings({
         });
       } catch (err) {
         setInputError(
-          __('Please ensure correct CORS settings (TODO!)', 'web-stories')
+          __('Please ensure correct CORS settings (Copy TODO!)', 'web-stories')
         );
       }
       try {
@@ -232,7 +255,11 @@ function CustomFontsSettings({
             <FontsList>
               {customFonts.map(({ id, name, url }) => (
                 <FontRow key={name}>
-                  <FontData>{`${name} - ${url}`}</FontData>
+                  <FontData>
+                    <StyledText>{name}</StyledText>
+                    <Divider />
+                    <FontUrl>{url}</FontUrl>
+                  </FontData>
                   <Tooltip hasTail title={__('Delete font', 'web-stories')}>
                     <Button
                       aria-label={__('Remove file', 'web-stories')}
