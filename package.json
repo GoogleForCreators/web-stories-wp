@@ -31,7 +31,6 @@
   },
   "devDependencies": {
     "@ampproject/toolbox-optimizer": "^2.8.3",
-    "@axe-core/puppeteer": "^4.3.0",
     "@babel/core": "^7.15.8",
     "@babel/eslint-parser": "^7.16.3",
     "@babel/eslint-plugin": "^7.14.5",
@@ -133,7 +132,7 @@
     "postcss-jsx": "^0.36.4",
     "postcss-syntax": "^0.36.2",
     "prettier": "^2.4.1",
-    "puppeteer": "^10.4.0",
+    "puppeteer": "^13.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-test-renderer": "^17.0.2",
