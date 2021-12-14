@@ -196,7 +196,7 @@ describe('Keyboard Shortcuts Menu', () => {
   });
 
   describe('Keyboard Shortcuts Menu should have no aXe accessibility violations', () => {
-    it('should pass accessibility tests with an open menu', async () => {
+    it('should have no aXe violations with an open menu', async () => {
       const { keyboardShortcutsToggle } = fixture.editor.footer;
 
       await fixture.events.click(keyboardShortcutsToggle);
