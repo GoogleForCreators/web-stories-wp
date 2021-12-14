@@ -211,7 +211,7 @@ function InnerElement({
             )
           ) : (
             <source
-              src={getSmallestUrlForWidth(width, resource)}
+              src={getSmallestUrlForWidth(width, resource) + '#t=0.000001'}
               type={mimeType}
             />
           )}
