@@ -56,7 +56,7 @@ describe('useLoadFontFiles', () => {
     expect(document.getElementById('font-css')).toBeNull();
 
     renderHook(async () => {
-      const maybeEnqueueFontStyle = useLoadFontFiles();
+      const { maybeEnqueueFontStyle } = useLoadFontFiles();
 
       await maybeEnqueueFontStyle([DEFAULT_FONT, CUSTOM_FONT]);
     });
@@ -69,7 +69,7 @@ describe('useLoadFontFiles', () => {
     expect(document.getElementById('font-css')).toBeNull();
 
     renderHook(async () => {
-      const maybeEnqueueFontStyle = useLoadFontFiles();
+      const { maybeEnqueueFontStyle } = useLoadFontFiles();
 
       await maybeEnqueueFontStyle([
         { ...DEFAULT_FONT, font: { ...DEFAULT_FONT.font, service: 'abcd' } },
@@ -83,7 +83,7 @@ describe('useLoadFontFiles', () => {
     expect(document.getElementById('font-css')).toBeNull();
 
     renderHook(async () => {
-      const maybeEnqueueFontStyle = useLoadFontFiles();
+      const { maybeEnqueueFontStyle } = useLoadFontFiles();
 
       await maybeEnqueueFontStyle([{}, DEFAULT_FONT]);
     });

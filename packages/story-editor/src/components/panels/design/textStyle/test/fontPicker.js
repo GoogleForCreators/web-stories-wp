@@ -44,6 +44,7 @@ function arrange(options) {
   const fontContextValues = {
     actions: {
       ensureMenuFontsLoaded: () => {},
+      ensureCustomFontsLoaded: () => {},
     },
   };
   const props = {

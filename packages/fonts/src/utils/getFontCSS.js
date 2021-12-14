@@ -48,14 +48,12 @@ function getFontCSS(name, src) {
     return null;
   }
 
-  return `
-  @font-face {
+  return `@font-face {
     font-family: "${name}";
     src: url('${src}') format('${format}');
     font-weight: normal;
     font-display:swap;
-  }
-  `;
+  }`;
 }
 
 export default getFontCSS;

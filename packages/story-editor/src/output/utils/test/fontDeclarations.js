@@ -294,14 +294,12 @@ describe('FontDeclarations', () => {
           rel="stylesheet"
         />
         <style>
-          
-        @font-face {
+          @font-face {
           font-family: "Vazir Regular";
           src: url('https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/Vazir-Regular.ttf') format('truetype');
           font-weight: normal;
           font-display:swap;
         }
-        
         </style>
       </div>
     `);

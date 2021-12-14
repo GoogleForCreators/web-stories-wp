@@ -29,6 +29,7 @@ import { CURATED_FONT_NAMES } from '@web-stories-wp/fonts';
 /**
  * Internal dependencies
  */
+import { trackError } from '@web-stories-wp/tracking';
 import loadStylesheet from '../../utils/loadStylesheet';
 import { FONT_WEIGHT_NAMES } from '../../constants';
 import { useAPI } from '../api';
@@ -40,42 +41,47 @@ export const GOOGLE_MENU_FONT_URL = 'https://fonts.googleapis.com/css';
 function FontProvider({ children }) {
   const [queriedFonts, setQueriedFonts] = useState([]);
   const [visibleOptions, setVisibleOptions] = useState([]);
-  const [fonts, setFonts] = useState([]);
   const [recentFonts, setRecentFonts] = useState([]);
   const {
     actions: { getFonts },
   } = useAPI();
 
+  const fonts = queriedFonts.length > 0 ? queriedFonts : visibleOptions;
+
   useEffect(() => {
     let mounted = true;
 
     if (!visibleOptions.length) {
-      (async () => {
-        const newFonts = await getFonts({
-          include: CURATED_FONT_NAMES.join(','),
-        });
+      try {
+        (async () => {
+          const newFonts = await getFonts({
+            include: CURATED_FONT_NAMES.join(','),
+          });
 
-        if (!mounted) {
-          return;
-        }
+          if (!mounted) {
+            return;
+          }
 
-        const formattedFonts = newFonts.map((font) => ({
-          id: font.family,
-          name: font.family,
-          value: font.family,
-          ...font,
-        }));
+          const formattedFonts = newFonts.map((font) => ({
+            id: font.family,
+            name: font.family,
+            value: font.family,
+            ...font,
+          }));
 
-        setVisibleOptions(formattedFonts);
-      })();
+          setVisibleOptions(formattedFonts);
+        })();
+      } catch (err) {
+        trackError('font_provider', err.message);
+      }
     }
 
     return () => {
       mounted = false;
     };
-  }, [visibleOptions, setFonts, getFonts]);
+  }, [visibleOptions, getFonts]);
 
-  const maybeEnqueueFontStyle = useLoadFontFiles();
+  const { maybeEnqueueFontStyle, maybeLoadFont } = useLoadFontFiles();
 
   const getFontByName = useCallback(
     (name) => {
@@ -146,8 +152,8 @@ function FontProvider({ children }) {
   );
 
   const menuFonts = useRef([]);
-  const ensureMenuFontsLoaded = useCallback((menuFontsRequested) => {
-    const newMenuFonts = menuFontsRequested.filter(
+  const ensureMenuFontsLoaded = useCallback((fontsToLoad) => {
+    const newMenuFonts = fontsToLoad.filter(
       (fontName) => !menuFonts.current.includes(fontName)
     );
     if (!newMenuFonts?.length) {
@@ -158,13 +164,27 @@ function FontProvider({ children }) {
     // Create new <link> in head with ref to new font families
     const families = encodeURIComponent(newMenuFonts.join('|'));
     const url = `${GOOGLE_MENU_FONT_URL}?family=${families}&subset=menu&display=swap`;
-    loadStylesheet(url).catch(() => {
+    loadStylesheet(url, 'web-stories-google-fonts-menu-css').catch(() => {
       // If they failed to load, remove from array again!
       menuFonts.current = menuFonts.current.filter(
         (font) => !newMenuFonts.includes(font)
       );
     });
   }, []);
+
+  const ensureCustomFontsLoaded = useCallback(
+    (fontsToLoad) => {
+      for (const font of fontsToLoad) {
+        const fontObj = fonts.find(({ family }) => family === font);
+        if (!fontObj) {
+          continue;
+        }
+
+        maybeLoadFont(fontObj);
+      }
+    },
+    [fonts, maybeLoadFont]
+  );
 
   const state = {
     state: {
@@ -179,6 +199,7 @@ function FontProvider({ children }) {
       getFontWeight,
       getFontFallback,
       ensureMenuFontsLoaded,
+      ensureCustomFontsLoaded,
       addRecentFont,
     },
   };

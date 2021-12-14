@@ -35,6 +35,7 @@ export function loadInlineStylesheet(id, src, name) {
 
   const style = document.createElement('style');
   style.textContent = css;
+  style.id = id;
   document.head.appendChild(style);
 }
 

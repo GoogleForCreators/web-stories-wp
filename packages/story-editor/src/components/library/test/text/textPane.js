@@ -82,6 +82,7 @@ describe('TextPane', () => {
       },
       actions: {
         ensureMenuFontsLoaded: () => {},
+        ensureCustomFontsLoaded: () => {},
       },
     };
 

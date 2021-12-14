@@ -55,11 +55,13 @@ const FontPicker = forwardRef(function FontPicker(
     addRecentFont,
     maybeEnqueueFontStyle,
     ensureMenuFontsLoaded,
+    ensureCustomFontsLoaded,
     getFontsBySearch,
   } = useFont(({ actions, state }) => ({
     getFontsBySearch: actions.getFontsBySearch,
     addRecentFont: actions.addRecentFont,
     ensureMenuFontsLoaded: actions.ensureMenuFontsLoaded,
+    ensureCustomFontsLoaded: actions.ensureCustomFontsLoaded,
     maybeEnqueueFontStyle: actions.maybeEnqueueFontStyle,
     recentFonts: state.recentFonts,
     curatedFonts: state.curatedFonts,
@@ -119,11 +121,15 @@ const FontPicker = forwardRef(function FontPicker(
     return map;
   }, [fonts]);
 
-  // TODO: Add support for custom fonts as well.
   const onObserve = (observedFonts) => {
     ensureMenuFontsLoaded(
       observedFonts.filter(
         (fontName) => fontMap.get(fontName)?.service === 'fonts.google.com'
+      )
+    );
+    ensureCustomFontsLoaded(
+      observedFonts.filter(
+        (fontName) => fontMap.get(fontName)?.service === 'custom'
       )
     );
   };

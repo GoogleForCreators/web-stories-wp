@@ -32,7 +32,7 @@ function useLoadFontFiles() {
     const { family, service, variants, url } = font;
 
     const handle = cleanForSlug(family);
-    const elementId = `${handle}-css`;
+    const elementId = `web-stories-${handle}-font-css`;
 
     const hasFontLink = () => document.getElementById(elementId);
 
@@ -82,7 +82,10 @@ function useLoadFontFiles() {
     [maybeLoadFont]
   );
 
-  return maybeEnqueueFontStyle;
+  return {
+    maybeEnqueueFontStyle,
+    maybeLoadFont,
+  };
 }
 
 export default useLoadFontFiles;
