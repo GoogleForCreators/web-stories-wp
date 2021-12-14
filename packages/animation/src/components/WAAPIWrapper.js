@@ -27,7 +27,7 @@ import FullSizeAbsolute from './fullSizeAbsolute';
 import { WAAPIAnimationProps } from './types';
 import useStoryAnimationContext from './useStoryAnimationContext';
 
-const WAAPIAnimationWrapper = function ({
+function WAAPIAnimationWrapper({
   children,
   hoistAnimation,
   keyframes,
@@ -58,7 +58,7 @@ const WAAPIAnimationWrapper = function ({
       <FullSizeAbsolute ref={target}>{children}</FullSizeAbsolute>
     </FullSizeAbsolute>
   );
-};
+}
 
 WAAPIAnimationWrapper.propTypes = WAAPIAnimationProps;
 
@@ -66,9 +66,9 @@ function WAAPIWrapper({ children, target }) {
   const hoistWAAPIAnimation = useStoryAnimationContext(
     (v) => v.actions.hoistWAAPIAnimation
   );
-  const animationParts = useStoryAnimationContext((v) =>
-    v.actions.getAnimationParts(target).map((anim) => anim.WAAPIAnimation)
-  );
+  const WAAPIAnimationParts = useStoryAnimationContext((v) =>
+    v.actions.getAnimationParts(target)
+  ).map((anim) => anim.WAAPIAnimation);
 
   const hoistAnimation = useCallback(
     (animation) => hoistWAAPIAnimation({ animation, elementId: target }),
@@ -86,15 +86,15 @@ function WAAPIWrapper({ children, target }) {
   return (
     <WAAPIAnimationWrapper
       hoistAnimation={hoistAnimation}
-      {...animationParts[0]}
+      {...WAAPIAnimationParts[0]}
     >
       <WAAPIAnimationWrapper
         hoistAnimation={hoistAnimation}
-        {...animationParts[1]}
+        {...WAAPIAnimationParts[1]}
       >
         <WAAPIAnimationWrapper
           hoistAnimation={hoistAnimation}
-          {...animationParts[2]}
+          {...WAAPIAnimationParts[2]}
         >
           {children}
         </WAAPIAnimationWrapper>
