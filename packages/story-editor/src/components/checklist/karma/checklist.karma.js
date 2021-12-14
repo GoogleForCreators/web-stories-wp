@@ -131,6 +131,20 @@ describe('Checklist integration', () => {
     });
   });
 
+  describe('Checklist aXe tests', () => {
+    it('should have no aXe violations with empty message on a new story', async () => {
+      await openChecklist();
+      await expectAsync(fixture.editor.checklist.node).toHaveNoViolations();
+    });
+
+    it('should have no aXe violations with checks present', async () => {
+      await addPages(4);
+      await addAccessibilityIssue();
+      await openChecklist();
+      await expectAsync(fixture.editor.checklist.node).toHaveNoViolations();
+    });
+  });
+
   describe('Checklist cursor interaction', () => {
     it('should open the high priority section by default when 4 pages are added to the story', async () => {
       // need to add some pages, the add page button is under the checklist so do this before expanding
@@ -312,17 +326,17 @@ describe('Checklist integration', () => {
   });
 
   describe('checklist should have no aXe accessibility violations', () => {
-    it('should pass accessibility tests with with a closed checklist', async () => {
+    it('should have no aXe violations with with a closed checklist', async () => {
       await expectAsync(fixture.editor.checklist.node).toHaveNoViolations();
     });
 
-    it('should pass accessibility tests with an open empty checklist', async () => {
+    it('should have no aXe violations with an open empty checklist', async () => {
       await openChecklist();
 
       await expectAsync(fixture.editor.checklist.node).toHaveNoViolations();
     });
 
-    it('should pass accessibility tests with a open non-empty checklist', async () => {
+    it('should have no aXe violations with a open non-empty checklist', async () => {
       await addPages(4);
 
       await openChecklist();

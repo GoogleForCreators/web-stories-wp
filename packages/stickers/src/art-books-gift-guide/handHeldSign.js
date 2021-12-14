@@ -36,7 +36,7 @@ function HandHeldSign({ style }) {
         d="M18.94 38.8113L15.4375 36.7549L2.26593 41.6118L0.050293 50.0343L7.19563 49.1513L18.94 38.8113Z"
         fill="#35A0CD"
       />
-      <g clipPath="url(#clip0)">
+      <g clipPath="url(#clip0_handheld)">
         <path
           fillRule="evenodd"
           clipRule="evenodd"
@@ -219,7 +219,7 @@ function HandHeldSign({ style }) {
         fill="#C4C3DC"
       />
       <defs>
-        <clipPath id="clip0">
+        <clipPath id="clip0_handheld">
           <rect
             width="6.32377"
             height="20.4792"
