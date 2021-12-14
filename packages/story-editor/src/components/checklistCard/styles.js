@@ -52,6 +52,9 @@ export const Container = styled.div`
   ${({ gridVariant }) => css`
     grid-template-areas: ${GRID_TEMPLATE_AREA[gridVariant]};
   `}
+
+    grid-template-areas: ${GRID_TEMPLATE_AREA[gridVariant]};
+  `}
 `;
 Container.propTypes = {
   gridVariant: PropTypes.oneOf(Object.values(GRID_VARIANT)),
@@ -112,11 +115,19 @@ export const ThumbnailWrapper = styled.div`
       overflow: hidden;
       grid-auto-flow: column;
     `}
+
+      display: grid;
+      grid-gap: 8px;
+      grid-template-columns: repeat(${$colCount}, 52px);
+      overflow: hidden;
+      grid-auto-flow: column;
+    `}
 `;
 
 export const StyledOverflowThumbnail = styled(OverflowThumbnail)`
   grid-area: thumbnail-overflow;
   width: 52px;
+  cursor: default;
 `;
 
 export const Footer = styled.div`
