@@ -107,6 +107,7 @@ function Link({ id, onBlur, onFocus, openNewTab, ...props }) {
 
 Link.propTypes = {
   id: PropTypes.string,
+  href: PropTypes.string.isRequired,
   onBlur: PropTypes.func,
   onFocus: PropTypes.func,
   openNewTab: PropTypes.bool,

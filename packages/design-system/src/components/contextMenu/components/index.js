@@ -16,11 +16,12 @@
 /**
  * Internal dependencies
  */
+import Button from './button';
 import Group from './group';
 import Icon from './icon';
-import Button from './button';
 import Label from './label';
 import Link from './link';
+import Separator from './separator';
 import Shortcut from './shortcut';
 
-export { Button, Group, Icon, Label, Link, Shortcut };
+export { Button, Group, Icon, Label, Link, Separator, Shortcut };

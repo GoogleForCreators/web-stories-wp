@@ -21,9 +21,9 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { useContextMenu } from './contextMenuProvider';
+import { useContextMenu } from '../contextMenuProvider';
 
-const Separator = styled.div`
+const Line = styled.div`
   display: block;
   height: 1px;
   background-color: ${({ theme }) => theme.colors.divider.primary};
@@ -31,10 +31,16 @@ const Separator = styled.div`
   width: ${({ $isIconMenu }) => ($isIconMenu ? 40 : 100)}%;
 `;
 
-function ContextMenuSeparator() {
+/**
+ * A horizontal line that can be rendered between context menu
+ * items.
+ *
+ * @return {Node} The react node
+ */
+function Separator() {
   const isIconMenu = useContextMenu(({ state }) => state.isIconMenu);
 
-  return <Separator $isIconMenu={isIconMenu} />;
+  return <Line $isIconMenu={isIconMenu} />;
 }
 
-export default ContextMenuSeparator;
+export default Separator;

@@ -37,6 +37,7 @@ export const menuItemStyles = css`
   justify-content: space-between;
   align-items: center;
   padding: 2px 16px;
+  margin-bottom: 6px;
   border: 0;
   color: ${({ theme }) => theme.colors.fg.primary};
   font-weight: 500;

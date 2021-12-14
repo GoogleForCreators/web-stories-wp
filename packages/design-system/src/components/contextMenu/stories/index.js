@@ -45,7 +45,6 @@ import {
 } from '../../../icons';
 import { Text } from '../../typography';
 import * as MenuItems from '../components';
-import ContextMenuSeparator from '../contextMenuSeparator';
 
 export default {
   title: 'DesignSystem/Components/ContextMenu',
@@ -94,9 +93,9 @@ export const _default = () => {
         <MenuItems.Button onClick={action('Clicked on `disabled`')} disabled>
           {'this is disabled'}
         </MenuItems.Button>
-        <ContextMenuSeparator />
+        <MenuItems.Separator />
         <MenuItems.Label>{'i am neither a button nor a link'}</MenuItems.Label>
-        <ContextMenuSeparator />
+        <MenuItems.Separator />
         <MenuItems.Button onClick={action('Clicked on `i am a button`')}>
           {'i am a button!'}
           <MenuItems.Shortcut>{'⌥ ⌘ A'}</MenuItems.Shortcut>
@@ -114,7 +113,7 @@ export const _default = () => {
         <MenuItems.Link href="https://www.google.com/" openNewTab>
           {'i am a link that opens a new tab!'}
         </MenuItems.Link>
-        <ContextMenuSeparator />
+        <MenuItems.Separator />
         <MenuItems.Group label="The oh my section">
           <MenuItems.Button onClick={action('Clicked on `lions`')}>
             {'lions'}
@@ -149,11 +148,11 @@ export const DarkMode = () => {
             >
               {'this is disabled'}
             </MenuItems.Button>
-            <ContextMenuSeparator />
+            <MenuItems.Separator />
             <MenuItems.Label>
               {'i am neither a button nor a link'}
             </MenuItems.Label>
-            <ContextMenuSeparator />
+            <MenuItems.Separator />
             <MenuItems.Button onClick={action('Clicked on `i am a button`')}>
               {'i am a button!'}
               <MenuItems.Shortcut>{'⌥ ⌘ A'}</MenuItems.Shortcut>
@@ -171,7 +170,7 @@ export const DarkMode = () => {
             <MenuItems.Link href="https://www.google.com/" openNewTab>
               {'i am a link that opens a new tab!'}
             </MenuItems.Link>
-            <ContextMenuSeparator />
+            <MenuItems.Separator />
             <MenuItems.Group label="The oh my section">
               <MenuItems.Button onClick={action('Clicked on `lions`')}>
                 {'lions'}
@@ -201,7 +200,7 @@ export const QuickActionMenu = () => {
               <Bucket />
             </MenuItems.Icon>
           </MenuItems.Button>
-          <ContextMenuSeparator />
+          <MenuItems.Separator />
           <MenuItems.Button onClick={action('Clicked on the second action')}>
             <MenuItems.Icon title="Insert media">
               <Media />
@@ -227,7 +226,7 @@ export const QuickActionMenu = () => {
               <CircleSpeed />
             </MenuItems.Icon>
           </MenuItems.Button>
-          <ContextMenuSeparator />
+          <MenuItems.Separator />
           <MenuItems.Button onClick={action('Clicked on the third action')}>
             <MenuItems.Icon title="Clear filters and animation">
               <Eraser />
@@ -253,7 +252,7 @@ export const QuickActionMenu = () => {
               <IconLink />
             </MenuItems.Icon>
           </MenuItems.Button>
-          <ContextMenuSeparator />
+          <MenuItems.Separator />
           <MenuItems.Button onClick={action('Clicked on the fourth action')}>
             <MenuItems.Icon title="Clear filters and animation">
               <Eraser />
@@ -284,7 +283,7 @@ export const QuickActionMenu = () => {
               <Captions />
             </MenuItems.Icon>
           </MenuItems.Button>
-          <ContextMenuSeparator />
+          <MenuItems.Separator />
           <MenuItems.Button onClick={action('Clicked on the fourth action')}>
             <MenuItems.Icon title="Clear filters and animation">
               <Eraser />
@@ -310,7 +309,7 @@ export const QuickActionMenu = () => {
               <IconLink />
             </MenuItems.Icon>
           </MenuItems.Button>
-          <ContextMenuSeparator />
+          <MenuItems.Separator />
           <MenuItems.Button onClick={action('Clicked on the fourth action')}>
             <MenuItems.Icon title="Clear filters and animation">
               <Eraser />
@@ -341,7 +340,7 @@ export const QuickActionMenu = () => {
               <IconLink />
             </MenuItems.Icon>
           </MenuItems.Button>
-          <ContextMenuSeparator />
+          <MenuItems.Separator />
           <MenuItems.Button onClick={action('Clicked on the fourth action')}>
             <MenuItems.Icon title="Clear filters and animation">
               <Eraser />
@@ -432,7 +431,7 @@ const rightClickMenuStyleOptions = (
 const pageMenu = (
   <>
     {rightClickMenuMainOptions}
-    <ContextMenuSeparator />
+    <MenuItems.Separator />
     {rightClickMenuPageAddOptions}
     {rightClickMenuPageDeleteOptions}
   </>
@@ -441,9 +440,9 @@ const pageMenu = (
 const shapeMenu = (
   <>
     {rightClickMenuMainOptions}
-    <ContextMenuSeparator />
+    <MenuItems.Separator />
     {rightClickMenuLayeringOptions}
-    <ContextMenuSeparator />
+    <MenuItems.Separator />
     {rightClickMenuStyleOptions}
     <MenuItems.Button
       onClick={action('Clicked on `Add color to "Saved colors"`')}
@@ -456,16 +455,16 @@ const shapeMenu = (
 const foregroundMediaMenu = (
   <>
     {rightClickMenuMainOptions}
-    <ContextMenuSeparator />
+    <MenuItems.Separator />
     {rightClickMenuLayeringOptions}
-    <ContextMenuSeparator />
+    <MenuItems.Separator />
     <MenuItems.Button onClick={action('Clicked on `Set as page background`')}>
       {'Set as page background'}
     </MenuItems.Button>
     <MenuItems.Button onClick={action('Clicked on `Scale & crop image`')}>
       {'Scale & crop image'}
     </MenuItems.Button>
-    <ContextMenuSeparator />
+    <MenuItems.Separator />
     {rightClickMenuStyleOptions}
   </>
 );
@@ -473,7 +472,7 @@ const foregroundMediaMenu = (
 const backgroundMediaMenu = (
   <>
     {rightClickMenuMainOptions}
-    <ContextMenuSeparator />
+    <MenuItems.Separator />
     <MenuItems.Button
       onClick={action('Clicked on `Detach image from background`')}
     >
@@ -490,7 +489,7 @@ const backgroundMediaMenu = (
     <MenuItems.Button onClick={action('Clicked on `Clear style`')}>
       {'Clear style'}
     </MenuItems.Button>
-    <ContextMenuSeparator />
+    <MenuItems.Separator />
     {rightClickMenuPageAddOptions}
     {rightClickMenuPageDeleteOptions}
   </>
@@ -499,9 +498,9 @@ const backgroundMediaMenu = (
 const textMenu = (
   <>
     {rightClickMenuMainOptions}
-    <ContextMenuSeparator />
+    <MenuItems.Separator />
     {rightClickMenuLayeringOptions}
-    <ContextMenuSeparator />
+    <MenuItems.Separator />
     {rightClickMenuStyleOptions}
     <MenuItems.Button
       onClick={action('Clicked on `Add style to "Saved styles"`')}
