@@ -13,49 +13,54 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
-import { useMemo, useCallback } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
+import { useCallback, useRef, useEffect } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
+import createKeyframeEffect from '../utils/createKeyframeEffect';
+import FullSizeAbsolute from './fullSizeAbsolute';
+import { WAAPIAnimationProps } from './types';
 import useStoryAnimationContext from './useStoryAnimationContext';
 
-function ComposableWrapper({ animationParts, hoistAnimation, children }) {
-  const ComposedWrapper = useMemo(
-    () =>
-      animationParts.reduce(
-        (Composable, animationPart) => {
-          const { WAAPIAnimation } = animationPart;
-          const Composed = function (props) {
-            return (
-              <Composable>
-                <WAAPIAnimation hoistAnimation={hoistAnimation}>
-                  {props.children}
-                </WAAPIAnimation>
-              </Composable>
-            );
-          };
-          Composed.propTypes = { children: PropTypes.node };
-          return Composed;
-        },
-        (props) => props.children
-      ),
-    [animationParts, hoistAnimation]
+const WAAPIAnimationWrapper = function ({
+  children,
+  hoistAnimation,
+  keyframes,
+  timings,
+  targetLeafElement,
+  useClippingContainer,
+}) {
+  const target = useRef(null);
+
+  useEffect(() => {
+    if (!keyframes) {
+      return () => {};
+    }
+
+    const targetEl = targetLeafElement
+      ? target.current?.querySelector('[data-leaf-element="true"]')
+      : target.current;
+
+    if (!targetEl) {
+      return () => {};
+    }
+    const effect = createKeyframeEffect(targetEl, keyframes, timings);
+    return hoistAnimation(new Animation(effect, document.timeline));
+  }, [hoistAnimation, keyframes, targetLeafElement, timings]);
+
+  return (
+    <FullSizeAbsolute overflowHidden={useClippingContainer}>
+      <FullSizeAbsolute ref={target}>{children}</FullSizeAbsolute>
+    </FullSizeAbsolute>
   );
-
-  return <ComposedWrapper>{children}</ComposedWrapper>;
-}
-
-ComposableWrapper.propTypes = {
-  children: PropTypes.node.isRequired,
-  animationParts: PropTypes.arrayOf(PropTypes.object),
-  hoistAnimation: PropTypes.func.isRequired,
 };
+
+WAAPIAnimationWrapper.propTypes = WAAPIAnimationProps;
 
 function WAAPIWrapper({ children, target }) {
   const {
@@ -67,13 +72,33 @@ function WAAPIWrapper({ children, target }) {
     [target, hoistWAAPIAnimation]
   );
 
+  const animationParts = getAnimationParts(target);
+
+  // Parents/Wrappers need to stay consistent here and only have prop changes
+  // to allow react's reconcilliation algorithm to function properly
+  // and not generate a new subtree of DOM nodes:
+  // https://github.com/facebook/react/issues/3965
+  //
+  // To Accomodate for this, we're setting a max of 3 levels deep. All stories built recently should
+  // only have 1 animation per element, however this allows for backward compatibility with old stories
+  // created from legacy templates that use stacked animation parts on single elements
   return (
-    <ComposableWrapper
-      animationParts={getAnimationParts(target)}
+    <WAAPIAnimationWrapper
       hoistAnimation={hoistAnimation}
+      {...animationParts[0]}
     >
-      {children}
-    </ComposableWrapper>
+      <WAAPIAnimationWrapper
+        hoistAnimation={hoistAnimation}
+        {...animationParts[1]}
+      >
+        <WAAPIAnimationWrapper
+          hoistAnimation={hoistAnimation}
+          {...animationParts[2]}
+        >
+          {children}
+        </WAAPIAnimationWrapper>
+      </WAAPIAnimationWrapper>
+    </WAAPIAnimationWrapper>
   );
 }
 
