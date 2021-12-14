@@ -20,11 +20,10 @@
 import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback } from '@web-stories-wp/react';
+import { Fragment, useCallback } from '@web-stories-wp/react';
 import {
   ContextMenu,
   ContextMenuComponents,
-  // MenuItemProps,
   themeHelpers,
 } from '@web-stories-wp/design-system';
 
@@ -128,11 +127,11 @@ export default function StoryMenu({
             : ContextMenuComponents.Button;
 
           return (
-            <>
+            <Fragment key={label}>
               {separator === 'top' && <ContextMenuComponents.Separator />}
               <MenuItem {...props}>{label}</MenuItem>
               {separator === 'bottom' && <ContextMenuComponents.Separator />}
-            </>
+            </Fragment>
           );
         })}
       </ContextMenu>
