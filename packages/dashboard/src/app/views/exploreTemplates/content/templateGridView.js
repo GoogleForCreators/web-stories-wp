@@ -25,7 +25,7 @@ import {
   useState,
 } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
-import { useGridViewKeys } from '@web-stories-wp/design-system';
+import { noop, useGridViewKeys } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -84,7 +84,7 @@ function TemplateGridView({
         return (
           <TemplateGridItem
             onCreateStory={
-              canCreateStory ? () => createStoryFromTemplate(id) : null
+              canCreateStory ? () => createStoryFromTemplate(id) : noop
             }
             onFocus={() => {
               setActiveGridItemId(id);

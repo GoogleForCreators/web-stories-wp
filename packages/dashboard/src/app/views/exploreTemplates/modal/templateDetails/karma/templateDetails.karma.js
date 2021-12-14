@@ -63,9 +63,7 @@ describe('See template details modal', () => {
   }
 
   function getTemplateElementById(id) {
-    const template = fixture.screen.getByTestId(`template-grid-item-${id}`);
-
-    return template;
+    return fixture.screen.getByTestId(`template-grid-item-${id}`);
   }
 
   async function focusOnCardGallery() {

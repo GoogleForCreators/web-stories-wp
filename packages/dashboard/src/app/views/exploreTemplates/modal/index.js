@@ -17,11 +17,9 @@
 /**
  * External dependencies
  */
-// import { useCallback } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
-import { Modal } from '@web-stories-wp/design-system';
+import { Modal, theme } from '@web-stories-wp/design-system';
 import PropTypes from 'prop-types';
-// import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -50,13 +48,13 @@ function TemplateDetailsModal({
       onClose={handleDetailsToggle}
       contentLabel={__('Details View', 'web-stories')}
       overlayStyles={{
-        backgroundColor: '#00000032',
+        backgroundColor: `${theme.colors.opacity.overlayDark}`,
       }}
       contentStyles={{
         display: 'block',
         height: '80vh',
         width: '80vw',
-        backgroundColor: '#fff',
+        backgroundColor: `${theme.colors.standard.white}`,
       }}
     >
       <Header
@@ -79,10 +77,7 @@ TemplateDetailsModal.propTypes = {
   activeTemplateIndex: PropTypes.number,
   activeTemplate: TemplatePropType,
   filteredTemplatesLength: PropTypes.number,
-  // handleDetailsToggle: PropTypes.func,
   isDetailsViewOpen: PropTypes.bool,
   templateActions: TemplateActionsPropType,
-  // switchToTemplateByOffset: PropTypes.func,
-  // createStoryFromTemplate: PropTypes.func,
 };
 export default TemplateDetailsModal;
