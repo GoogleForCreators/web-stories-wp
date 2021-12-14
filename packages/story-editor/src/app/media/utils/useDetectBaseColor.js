@@ -56,7 +56,6 @@ function useDetectBaseColor({ updateMediaElement }) {
           },
         });
         updateElementsByResourceId({ id, properties });
-
         if (!isExternal) {
           updateMediaElement({
             id,
@@ -74,9 +73,9 @@ function useDetectBaseColor({ updateMediaElement }) {
     },
     [
       updateElementsByResourceId,
-      updateMedia,
       updateMediaElement,
       hasUploadMediaAction,
+      updateMedia,
     ]
   );
 
@@ -88,7 +87,9 @@ function useDetectBaseColor({ updateMediaElement }) {
       if (type === 'image') {
         imageSrc = getSmallestUrlForWidth(0, resource);
       } else if (!isExternal) {
-        const posterResource = await getPosterMediaById(id);
+        const posterResource = getPosterMediaById
+          ? await getPosterMediaById(id)
+          : null;
         if (posterResource) {
           imageSrc = getSmallestUrlForWidth(0, posterResource);
         }
