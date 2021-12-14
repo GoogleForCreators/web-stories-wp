@@ -108,13 +108,13 @@ const FontRow = styled.div`
   }
 `;
 
+// 32px is the button width.
 const FontData = styled.div`
   line-height: 32px;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   display: flex;
   font-size: 14px;
+  max-width: calc(100% - 32px);
 `;
 
 const StyledText = styled(Text).attrs({
@@ -123,6 +123,9 @@ const StyledText = styled(Text).attrs({
 
 const FontUrl = styled(StyledText)`
   color: ${({ theme }) => theme.colors.fg.tertiary};
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const Divider = styled.div`
@@ -184,7 +187,7 @@ function CustomFontsSettings({
           url: fontUrl,
         });
         const fontData = await getFontDataFromUrl(fontUrl);
-        if (!fontData.name) {
+        if (!fontData.family) {
           setInputError(__('Something went wrong', 'web-stories'));
         } else {
           // @todo Use API to actually add the font as well with ID.
@@ -253,10 +256,10 @@ function CustomFontsSettings({
           <FontsWrapper>
             <ListHeading forwardedAs="span">{TEXT.FONTS_HEADING}</ListHeading>
             <FontsList>
-              {customFonts.map(({ id, name, url }) => (
-                <FontRow key={name}>
+              {customFonts.map(({ id, family, url }) => (
+                <FontRow key={family}>
                   <FontData>
-                    <StyledText>{name}</StyledText>
+                    <StyledText>{family}</StyledText>
                     <Divider />
                     <FontUrl>{url}</FontUrl>
                   </FontData>

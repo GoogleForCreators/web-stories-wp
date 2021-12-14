@@ -423,6 +423,7 @@ class Dashboard extends Service_Base {
 				'stories'        => trailingslashit( $this->story_post_type->get_rest_url() ),
 				'media'          => '/web-stories/v1/media/',
 				'currentUser'    => '/web-stories/v1/users/me/',
+				'fonts'          => '/web-stories/v1/fonts/',
 				'users'          => '/web-stories/v1/users/',
 				'settings'       => '/web-stories/v1/settings/',
 				'pages'          => '/wp/v2/pages/',

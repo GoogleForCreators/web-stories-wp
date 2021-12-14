@@ -35,26 +35,6 @@ export default function useFontsApi() {
   } = useConfig();
   const [customFonts, setCustomFonts] = useState(null);
 
-  const loadFonts = useCallback(() => {
-    // @todo Use API call.
-    /*const fonts = await getCustomFonts();
-    if (!fonts) {
-      setAddedFonts([]);
-    } else {
-      setAddedFonts(fonts);
-    }*/
-    setCustomFonts([
-      { id: 1, name: 'Font 1', url: 'https://example.com/font1.otf' },
-      { id: 2, name: 'Font 2', url: 'https://example.com/font2.woff' },
-    ]);
-  }, []);
-
-  useEffect(() => {
-    if (null === customFonts) {
-      loadFonts();
-    }
-  }, [loadFonts, customFonts]);
-
   const fetchCustomFonts = useCallback(() => {
     getCustomFontsCallback(fontsApiPath)
       .then((response) => {
@@ -67,6 +47,12 @@ export default function useFontsApi() {
       })
       .catch(() => null);
   }, [fontsApiPath]);
+
+  useEffect(() => {
+    if (null === customFonts) {
+      fetchCustomFonts();
+    }
+  }, [fetchCustomFonts, customFonts]);
 
   const deleteCustomFont = useCallback(
     async (id) => {
