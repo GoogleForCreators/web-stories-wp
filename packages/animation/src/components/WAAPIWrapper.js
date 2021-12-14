@@ -63,16 +63,17 @@ const WAAPIAnimationWrapper = function ({
 WAAPIAnimationWrapper.propTypes = WAAPIAnimationProps;
 
 function WAAPIWrapper({ children, target }) {
-  const {
-    actions: { getAnimationParts, hoistWAAPIAnimation },
-  } = useStoryAnimationContext();
+  const hoistWAAPIAnimation = useStoryAnimationContext(
+    (v) => v.actions.hoistWAAPIAnimation
+  );
+  const animationParts = useStoryAnimationContext((v) =>
+    v.actions.getAnimationParts(target).map((anim) => anim.WAAPIAnimation)
+  );
 
   const hoistAnimation = useCallback(
     (animation) => hoistWAAPIAnimation({ animation, elementId: target }),
     [target, hoistWAAPIAnimation]
   );
-
-  const animationParts = getAnimationParts(target);
 
   // Parents/Wrappers need to stay consistent here and only have prop changes
   // to allow react's reconcilliation algorithm to function properly
