@@ -211,6 +211,7 @@ function InnerElement({
             )
           ) : (
             <source
+              /** Force video to seek, so that safari will render poster image */
               src={getSmallestUrlForWidth(width, resource) + '#t=0.000001'}
               type={mimeType}
             />
