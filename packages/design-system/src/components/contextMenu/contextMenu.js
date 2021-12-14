@@ -33,6 +33,7 @@ const ContextMenu = ({
   isRTL,
   isIconMenu,
   isInline = false,
+  onDismiss,
   ...props
 }) => {
   const Wrapper = useMemo(
@@ -41,7 +42,7 @@ const ContextMenu = ({
   );
 
   return (
-    <ContextMenuProvider isIconMenu={isIconMenu}>
+    <ContextMenuProvider isIconMenu={isIconMenu} onDismiss={onDismiss}>
       <Wrapper
         isInline={isInline}
         role={isAlwaysVisible ? null : 'dialog'}

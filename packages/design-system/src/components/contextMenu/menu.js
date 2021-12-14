@@ -17,23 +17,12 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from '@web-stories-wp/react';
+import { useCallback, useEffect, useMemo, useRef } from '@web-stories-wp/react';
 import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import {
-  KEYS,
-  noop,
-  useComposeRefs,
-  useMouseDownOutsideRef,
-} from '../../utils';
+import { KEYS, useComposeRefs, useMouseDownOutsideRef } from '../../utils';
 import { useKeyDownEffect } from '../keyboard';
 import { useContextMenu } from './contextMenuProvider';
 
@@ -56,13 +45,13 @@ const Menu = ({
   children,
   disableControlledTabNavigation,
   isOpen,
-  onDismiss,
   ...props
 }) => {
-  const { focusedId, isIconMenu, setFocusedId } = useContextMenu(
+  const { focusedId, isIconMenu, onDismiss, setFocusedId } = useContextMenu(
     ({ state, actions }) => ({
       focusedId: state.focusedId,
       isIconMenu: state.isIconMenu,
+      onDismiss: actions.onDismiss,
       setFocusedId: actions.setFocusedId,
     })
   );
@@ -173,7 +162,6 @@ export const MenuPropTypes = {
   disableControlledTabNavigation: PropTypes.bool,
   groupLabel: PropTypes.string,
   isOpen: PropTypes.bool,
-  onDismiss: PropTypes.func,
 };
 
 Menu.propTypes = MenuPropTypes;

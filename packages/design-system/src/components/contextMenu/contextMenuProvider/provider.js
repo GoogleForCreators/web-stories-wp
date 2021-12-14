@@ -24,7 +24,11 @@ import { useCallback, useState } from '@web-stories-wp/react';
  */
 import ContextMenuContext from './context';
 
-export default function ContextMenuProvider({ children, isIconMenu = false }) {
+export default function ContextMenuProvider({
+  children,
+  isIconMenu = false,
+  onDismiss,
+}) {
   const [focusedId, setFocusedId] = useState(-1);
 
   const handleBlur = useCallback((id) => setFocusedId(id), []);
@@ -36,6 +40,7 @@ export default function ContextMenuProvider({ children, isIconMenu = false }) {
       isIconMenu,
     },
     actions: {
+      onDismiss,
       onMenuItemBlur: handleBlur,
       onMenuItemFocus: handleFocus,
       setFocusedId,
@@ -51,4 +56,5 @@ export default function ContextMenuProvider({ children, isIconMenu = false }) {
 ContextMenuProvider.propTypes = {
   children: PropTypes.node,
   isIconMenu: PropTypes.bool,
+  onDismiss: PropTypes.func,
 };
