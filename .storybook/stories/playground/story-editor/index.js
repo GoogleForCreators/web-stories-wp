@@ -35,8 +35,7 @@ const AppContainer = styled.div`
   height: 100vh;
 `;
 
-// @todo None of these should be required by default, https://github.com/google/web-stories-wp/pull/9569#discussion_r738458801
-const apiCallbacksNames = ['saveStoryById', 'getMedia', 'getLinkMetadata'];
+const apiCallbacksNames = ['saveStoryById', 'getMedia'];
 
 const apiCallbacks = apiCallbacksNames.reduce((callbacks, name) => {
   switch (name) {
