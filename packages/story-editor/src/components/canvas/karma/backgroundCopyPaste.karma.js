@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
@@ -29,6 +34,12 @@ describe('Background Copy Paste integration', () => {
     await fixture.collapseHelpCenter();
 
     await addNewPage();
+
+    await waitFor(() => {
+      if (fixture.editor.footer.carousel.pages.length === 0) {
+        throw new Error('Carousel pages not loaded yet');
+      }
+    });
   });
 
   afterEach(() => {
@@ -37,10 +48,15 @@ describe('Background Copy Paste integration', () => {
 
   it('should correctly copy pattern background to page with pattern background', async () => {
     // Arrange the backgrounds
+    //await karmaPause();
     await gotoPage(1);
+    //await karmaPause();
     await setBackgroundColor('FF0000');
+    //await karmaPause();
     await gotoPage(2);
+    //await karmaPause();
     await setBackgroundColor('00FF00');
+    //await karmaPause();
 
     // Verify setup - 1 element on each page in the right color
     await gotoPage(1);
@@ -72,9 +88,7 @@ describe('Background Copy Paste integration', () => {
     expect(await getNumElements()).toBe(1);
   });
 
-  // TODO #9910
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should correctly copy pattern background to page with image', async () => {
+  it('should correctly copy pattern background to page with image', async () => {
     // Arrange the backgrounds
     await gotoPage(1);
     await setBackgroundColor('FF0000');
@@ -91,6 +105,7 @@ describe('Background Copy Paste integration', () => {
     expect(await getNumElements()).toBe(1);
     await gotoPage(2);
     expect(await getCanvasBackgroundElement()).not.toBeEmpty();
+
     expect(await getCanvasBackgroundImage()).toHaveProperty(
       'src',
       /blue-marble/
@@ -114,9 +129,7 @@ describe('Background Copy Paste integration', () => {
     expect(await getNumElements()).toBe(1);
   });
 
-  // TODO #9910
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should correctly copy image to page without image', async () => {
+  it('should correctly copy image to page without image', async () => {
     // Arrange the backgrounds
     await gotoPage(1);
     await setBackgroundColor('FF0000');
@@ -161,9 +174,7 @@ describe('Background Copy Paste integration', () => {
     expect(await getCanvasBackgroundElement()).toBeEmpty();
   });
 
-  // TODO #9910
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should correctly copy image to page with existing image', async () => {
+  it('should correctly copy image to page with existing image', async () => {
     // Arrange the backgrounds
     await gotoPage(1);
     await setBackgroundColor('FF0000');
@@ -234,13 +245,7 @@ describe('Background Copy Paste integration', () => {
     await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
   }
   async function gotoPage(index /* 1-indexed */) {
-    const carousel = getElementByQueryAndMatcher(
-      'div[role="listbox"]',
-      getByAttribute('aria-label', /Pages List/i)
-    );
-    const pageAtIndex = carousel.querySelectorAll('button[role="option"]')[
-      index - 1
-    ];
+    const pageAtIndex = fixture.editor.footer.carousel.pages[index - 1].node;
     await fixture.events.click(pageAtIndex);
   }
   async function setBackgroundColor(hex) {
@@ -255,16 +260,12 @@ describe('Background Copy Paste integration', () => {
     await fixture.events.keyboard.press('tab');
   }
   async function addBackgroundImage(index) {
-    // Drag image to canvas corner to set as background
+    // Add image and click "set as background"
     const image = fixture.editor.library.media.item(index);
-    const canvas = fixture.editor.canvas.framesLayer.fullbleed;
-
-    await fixture.events.mouse.seq(({ down, moveRel, up }) => [
-      moveRel(image, 20, 20),
-      down(),
-      moveRel(canvas, 10, 10),
-      up(),
-    ]);
+    await fixture.events.click(image);
+    await fixture.events.click(
+      fixture.editor.inspector.designPanel.sizePosition.setAsBackground
+    );
   }
   async function getNumElements() {
     const {
