@@ -82,6 +82,10 @@ describe('Carousel integration', () => {
     await fixture.events.mouse.clickOn(thumb.node, 5, 5);
   }
 
+  it('should have no aXe violations', async () => {
+    await expectAsync(fixture.editor.footer.carousel.node).toHaveNoViolations();
+  });
+
   it('should select the current page', async () => {
     expect(await getCurrentPageId()).toEqual('page1');
     expect(await getSelection()).toEqual([element1.id]);
