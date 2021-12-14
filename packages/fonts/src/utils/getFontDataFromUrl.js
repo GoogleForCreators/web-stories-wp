@@ -46,7 +46,6 @@ import { load } from 'opentype.js';
  */
 async function getFontDataFromUrl(fontURL) {
   const fontInfo = await load(fontURL);
-  console.log(fontInfo);
 
   return {
     name: fontInfo.names.fullName.en,
