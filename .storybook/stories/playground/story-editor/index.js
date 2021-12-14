@@ -39,9 +39,6 @@ const apiCallbacksNames = ['saveStoryById', 'getMedia'];
 
 const apiCallbacks = apiCallbacksNames.reduce((callbacks, name) => {
   switch (name) {
-    case 'getPublisherLogos':
-      callbacks[name] = () => Promise.resolve([{ url: '' }]);
-      break;
     case 'saveStoryById':
       callbacks[name] = saveStoryById;
       break;
