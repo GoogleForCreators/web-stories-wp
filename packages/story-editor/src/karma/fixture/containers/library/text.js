@@ -29,7 +29,7 @@ export default class Text extends Container {
   }
 
   get textSetList() {
-    return this.getByRole('list', { name: /Text Set Options/ });
+    return this.getByRole('group', { name: /Text Set Options/ });
   }
 
   get textSets() {

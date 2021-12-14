@@ -78,6 +78,7 @@ function PageTemplatesPane(props) {
   const {
     actions: { getCustomPageTemplates },
   } = useAPI();
+  const supportsCustomTemplates = Boolean(getCustomPageTemplates);
 
   const {
     savedTemplates,
@@ -182,11 +183,14 @@ function PageTemplatesPane(props) {
       value: DEFAULT,
       label: __('Default templates', 'web-stories'),
     },
-    {
+  ];
+
+  if (supportsCustomTemplates) {
+    options.push({
       value: SAVED,
       label: __('Saved templates', 'web-stories'),
-    },
-  ];
+    });
+  }
 
   const pageSize = useMemo(() => {
     const width = PAGE_TEMPLATE_PANE_WIDTH;
@@ -199,12 +203,14 @@ function PageTemplatesPane(props) {
     <StyledPane id={paneId} {...props}>
       <PaneInner>
         <>
-          <ButtonWrapper>
-            <TemplateSave
-              setShowDefaultTemplates={setShowDefaultTemplates}
-              updateList={updateTemplatesList}
-            />
-          </ButtonWrapper>
+          {supportsCustomTemplates && (
+            <ButtonWrapper>
+              <TemplateSave
+                setShowDefaultTemplates={setShowDefaultTemplates}
+                updateList={updateTemplatesList}
+              />
+            </ButtonWrapper>
+          )}
           <DropDownWrapper>
             <Select
               options={options}
