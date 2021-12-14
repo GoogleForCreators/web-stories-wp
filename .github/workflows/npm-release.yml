@@ -65,6 +65,7 @@ jobs:
           TMPDIR=${TMPDIR-/tmp}
           TMPDIR=$(echo $TMPDIR | sed -e "s/\/$//")
           TEST_DIR=${WP_TESTS_DIR-$TMPDIR/packages-test}
+          mkdir $TEST_DIR
           cd $TEST_DIR
           npm --registry=$LOCAL_REGISTRY_URL install $PUBLIC_PACKAGES
 
