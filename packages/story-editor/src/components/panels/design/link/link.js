@@ -131,7 +131,9 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   const populateMetadata = useDebouncedCallback(async (newUrl) => {
     setFetchingMetadata(true);
     try {
-      const { title: newTitle, image: newIcon } = await getLinkMetadata(newUrl);
+      const { title: newTitle, image: newIcon } = getLinkMetadata
+        ? await getLinkMetadata(newUrl)
+        : {};
       const needsProxy = newIcon ? await checkResourceAccess(newIcon) : false;
 
       updateLinkFromMetadataApi({

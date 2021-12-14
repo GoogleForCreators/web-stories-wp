@@ -67,7 +67,7 @@ function useVideoTrimMode() {
       end: null,
     };
 
-    if (trimData?.original) {
+    if (getMediaById && trimData?.original) {
       // First clear any existing data
       setVideoData(null);
       // Load correct video resource

@@ -41,12 +41,6 @@ function useDetectVideoHasAudio({ updateMediaElement }) {
   const {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
-  const setProperties = useCallback(
-    (id, properties) => {
-      updateElementsByResourceId({ id, properties });
-    },
-    [updateElementsByResourceId]
-  );
 
   const updateVideoIsMuted = useCallback(
     /**
@@ -64,13 +58,13 @@ function useDetectVideoHasAudio({ updateMediaElement }) {
         await seekVideo(video);
         const hasAudio = hasVideoGotAudio(video);
 
-        const newState = ({ resource }) => ({
+        const properties = ({ resource }) => ({
           resource: {
             ...resource,
             isMuted: !hasAudio,
           },
         });
-        setProperties(id, newState);
+        updateElementsByResourceId({ id, properties });
         updateMediaElement({
           id,
           data: {
@@ -85,7 +79,12 @@ function useDetectVideoHasAudio({ updateMediaElement }) {
         // Do nothing for now.
       }
     },
-    [setProperties, updateMedia, updateMediaElement, hasUploadMediaAction]
+    [
+      hasUploadMediaAction,
+      updateElementsByResourceId,
+      updateMediaElement,
+      updateMedia,
+    ]
   );
 
   return {
