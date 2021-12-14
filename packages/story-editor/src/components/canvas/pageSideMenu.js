@@ -63,8 +63,6 @@ function PageSideMenu() {
   }));
   const quickActions = useQuickActions();
 
-  const showQuickActions = Boolean(quickActions.length);
-
   const isZoomed = zoomSetting !== ZOOM_SETTING.FIT;
 
   return (
@@ -72,27 +70,25 @@ function PageSideMenu() {
       aria-label={__('Page side menu', 'web-stories')}
       isZoomed={isZoomed}
     >
-      {showQuickActions && (
-        <>
-          <ContextMenu
-            isInline
-            isAlwaysVisible
-            isIconMenu
-            disableControlledTabNavigation
-            groupLabel={__(
-              'Group of available options for selected element',
-              'web-stories'
-            )}
-            items={quickActions}
-            onMouseDown={(e) => {
-              // Stop the event from bubbling if the user clicks in between buttons.
-              // This prevents the selected element in the canvas from losing focus.
-              e.stopPropagation();
-            }}
-          />
-          {isZoomed && <Divider />}
-        </>
-      )}
+      <ContextMenu
+        isInline
+        isAlwaysVisible
+        isIconMenu
+        disableControlledTabNavigation
+        groupLabel={__(
+          'Group of available options for selected element',
+          'web-stories'
+        )}
+        items={quickActions}
+        onMouseDown={(e) => {
+          // Stop the event from bubbling if the user clicks in between buttons.
+          // This prevents the selected element in the canvas from losing focus.
+          e.stopPropagation();
+        }}
+      >
+        {quickActions}
+      </ContextMenu>
+      {isZoomed && <Divider />}
       <PageMenu />
     </MenusWrapper>
   );
