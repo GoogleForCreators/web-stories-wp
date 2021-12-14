@@ -32,6 +32,10 @@ describe('Footer menu', () => {
     fixture.restore();
   });
 
+  it('should have no aXe violations', async () => {
+    await expectAsync(fixture.editor.footer.node).toHaveNoViolations();
+  });
+
   it('should show correct tooltip on hover', async () => {
     const { gridViewToggle } = fixture.editor.footer;
     await fixture.events.mouse.moveRel(gridViewToggle, '50%', '50%', {
