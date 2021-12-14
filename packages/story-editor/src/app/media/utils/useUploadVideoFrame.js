@@ -44,12 +44,6 @@ function useUploadVideoFrame({ updateMediaElement }) {
   const { updateElementsByResourceId } = useStory((state) => ({
     updateElementsByResourceId: state.actions.updateElementsByResourceId,
   }));
-  const setProperties = useCallback(
-    (id, properties) => {
-      updateElementsByResourceId({ id, properties });
-    },
-    [updateElementsByResourceId]
-  );
 
   /**
    * Uploads a poster file.
@@ -135,7 +129,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
               height: posterHeight,
             }) ||
           null;
-        const newState = ({ resource }) => ({
+        const properties = ({ resource }) => ({
           resource: {
             ...resource,
             posterId,
@@ -143,7 +137,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
             ...newSize,
           },
         });
-        setProperties(id, newState);
+        updateElementsByResourceId({ id, properties });
         updateMediaElement({
           id,
           data: {
@@ -159,7 +153,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
         trackTiming();
       }
     },
-    [uploadVideoPoster, updateMediaElement, setProperties]
+    [uploadVideoPoster, updateElementsByResourceId, updateMediaElement]
   );
 
   return {
