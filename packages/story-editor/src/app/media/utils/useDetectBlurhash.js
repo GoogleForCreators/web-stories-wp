@@ -85,7 +85,9 @@ function useDetectBlurHash({ updateMediaElement }) {
       if (type === 'image') {
         imageSrc = getSmallestUrlForWidth(300, resource);
       } else if (!isExternal) {
-        const posterResource = await getPosterMediaById(id);
+        const posterResource = getPosterMediaById
+          ? await getPosterMediaById(id)
+          : null;
         if (posterResource) {
           imageSrc = getSmallestUrlForWidth(300, posterResource);
         }
