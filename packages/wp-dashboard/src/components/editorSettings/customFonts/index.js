@@ -27,16 +27,15 @@ import {
   Icons,
   Text,
   THEME_CONSTANTS,
+  Tooltip,
 } from '@web-stories-wp/design-system';
 import styled from 'styled-components';
 import getFontDataFromUrl from '@web-stories-wp/fonts/src/utils/getFontDataFromUrl';
-// @todo Replace.
-import { isValidUrl } from '@web-stories-wp/story-editor/src/utils/url';
 
 /**
  * Internal dependencies
  */
-import Tooltip from '@web-stories-wp/story-editor/src/components/tooltip';
+import isValidUrl from '../utils/isValidUrl';
 import {
   InlineForm,
   SaveButton,
@@ -46,6 +45,7 @@ import {
   SettingSubheading,
   TextInputHelperText,
 } from '../components';
+import useEditorSettings from '../useEditorSettings';
 import ConfirmationDialog from './confirmationDialog';
 
 export const TEXT = {
@@ -110,6 +110,16 @@ const FontData = styled.div`
 `;
 
 function CustomFontsSettings() {
+  const { getCustomFonts, deleteCustomFont } = useEditorSettings(
+    ({
+      actions: {
+        fontsApi: { getCustomFonts, deleteCustomFont },
+      },
+    }) => ({
+      getCustomFonts,
+      deleteCustomFont,
+    })
+  );
   const [fontUrl, setFontUrl] = useState('');
   const [inputError, setInputError] = useState('');
   const [addedFonts, setAddedFonts] = useState(null);
@@ -119,9 +129,15 @@ function CustomFontsSettings() {
 
   const loadFonts = useCallback(() => {
     // @todo Use API call.
+    /*const fonts = await getCustomFonts();
+    if (!fonts) {
+      setAddedFonts([]);
+    } else {
+      setAddedFonts(fonts);
+    }*/
     setAddedFonts([
-      { id: 'Font 1', name: 'Font 1', url: 'https://example.com/font1.otf' },
-      { id: 'Font 2', name: 'Font 2', url: 'https://example.com/font2.woff' },
+      { id: 1, name: 'Font 1', url: 'https://example.com/font1.otf' },
+      { id: 2, name: 'Font 2', url: 'https://example.com/font2.woff' },
     ]);
   }, []);
 
@@ -145,7 +161,8 @@ function CustomFontsSettings() {
   }, []);
 
   const handleDelete = useCallback(() => {
-    // @todo Delete font!
+    // @todo Delete font using API!
+    // await deleteCustomFont(toDelete);
     console.log('Deleted font:', toDelete);
     setToDelete(null);
     setShowDialog(false);

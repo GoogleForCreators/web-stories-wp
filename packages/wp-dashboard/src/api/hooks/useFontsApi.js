@@ -37,9 +37,10 @@ export default function useFontsApi() {
     try {
       const response = await getCustomFontsCallback(fontsApiPath);
 
-      return response.map(({ id, title }) => ({
+      return response.map(({ id, family, url }) => ({
         id,
-        family: title.rendered,
+        family,
+        url,
       }));
     } catch (e) {
       return null;
