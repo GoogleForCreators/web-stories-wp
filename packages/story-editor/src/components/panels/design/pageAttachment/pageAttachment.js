@@ -131,7 +131,7 @@ function PageAttachmentPanel() {
   const populateUrlData = useDebouncedCallback(async (value) => {
     setFetchingMetadata(true);
     try {
-      const { image } = await getLinkMetadata(value);
+      const { image } = getLinkMetadata ? await getLinkMetadata(value) : {};
       const iconUrl = image ? toAbsoluteUrl(value, image) : '';
       const needsProxy = iconUrl ? await checkResourceAccess(iconUrl) : false;
 
