@@ -33,7 +33,6 @@ use Google\Web_Stories\Infrastructure\Service;
 use WP_Error;
 use WP_REST_Request;
 use WP_REST_Response;
-use WP_Meta_Query;
 use WP_REST_Users_Controller;
 
 /**
@@ -41,15 +40,26 @@ use WP_REST_Users_Controller;
  */
 class Stories_Users_Controller extends WP_REST_Users_Controller implements Service, Delayed, Registerable {
 	/**
+	 * Story_Post_Type instance.
+	 *
+	 * @var Story_Post_Type Story_Post_Type instance.
+	 */
+	private $story_post_type;
+
+	/**
 	 * Constructor.
 	 *
 	 * Override the namespace.
 	 *
 	 * @since 1.2.0
+	 *
+	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
 	 */
-	public function __construct() {
+	public function __construct( Story_Post_Type $story_post_type ) {
 		parent::__construct();
 		$this->namespace = 'web-stories/v1';
+
+		$this->story_post_type = $story_post_type;
 	}
 
 	/**
@@ -102,7 +112,9 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 	}
 
 	/**
-	 * Filter the WP_User_Query args, to remove who param.
+	 * Filter the WP_User_Query args.
+	 *
+	 * Removes the 'who' param in favor of the 'capabilities' param.
 	 *
 	 * @since 1.16.0
 	 *
@@ -111,34 +123,15 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 	 * @return array Filtered args.
 	 */
 	public function filter_user_query( $prepared_args ) {
-		global $wpdb;
+		$registered = $this->get_collection_params();
 
-		$blog_id = get_current_blog_id();
-		if ( isset( $prepared_args['blog_id'] ) ) {
-			$blog_id = absint( $prepared_args['blog_id'] );
-		}
+		// Capability queries were added in 5.9, and the 'who' param was deprecated.
+		if ( isset( $prepared_args['who'], $registered['capabilities'] ) && 'authors' === $prepared_args['who'] ) {
+			$capabilities   = $prepared_args['capabilities'] ?? [];
+			$capabilities[] = $this->story_post_type->get_cap_name( 'edit_posts' );
 
-		if ( isset( $prepared_args['who'] ) && 'authors' === $prepared_args['who'] && $blog_id ) {
-			$who_query = [
-				'key'     => $wpdb->get_blog_prefix( $blog_id ) . 'user_level',
-				'value'   => 0,
-				'compare' => '!=',
-			];
+			$prepared_args['capabilities'] = $capabilities;
 
-			$meta_query = new WP_Meta_Query();
-			$meta_query->parse_query_vars( $prepared_args );
-
-			if ( empty( $meta_query->queries ) ) {
-				$meta_query->queries = [ $who_query ];
-			} else {
-				$new_meta_query      = [
-					'relation' => 'AND',
-					$who_query,
-				];
-				$meta_query->queries = array_merge( $meta_query->queries, $new_meta_query );
-			}
-
-			$prepared_args['meta_query'] = $meta_query->queries; // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
 			unset( $prepared_args['who'] );
 		}
 
