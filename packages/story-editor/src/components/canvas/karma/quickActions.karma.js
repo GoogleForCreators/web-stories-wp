@@ -194,6 +194,7 @@ describe('Quick Actions integration', () => {
 
     it(`clicking the \`${ACTIONS.ADD_LINK.text}\` button should select the link panel and focus the input`, async () => {
       // click quick menu button
+
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.addLinkButton
       );

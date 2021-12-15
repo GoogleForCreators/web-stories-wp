@@ -104,6 +104,7 @@ function PageSideMenu() {
               <Fragment key={label}>
                 {separator === 'top' && <ContextMenuComponents.MenuSeparator />}
                 <ContextMenuComponents.MenuButton
+                  aria-label={label}
                   onClick={(evt) => {
                     onClick(evt);
                     externalOnClick(evt);

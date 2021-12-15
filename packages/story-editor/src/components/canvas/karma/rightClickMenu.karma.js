@@ -47,9 +47,11 @@ describe('Right Click Menu integration', () => {
   });
 
   function rightClickMenu() {
-    return fixture.screen.getByRole('menu', {
-      name: 'Context Menu for the selected element',
-    });
+    return within(
+      fixture.screen.getByRole('dialog', {
+        name: 'Context Menu for the selected element',
+      })
+    ).getByRole('menu');
   }
 
   function sendBackward() {
@@ -409,7 +411,7 @@ describe('Right Click Menu integration', () => {
       await fixture.events.keyboard.shortcut('mod+alt+shift+m');
 
       expect(
-        fixture.screen.queryByRole('menu', {
+        fixture.screen.queryByRole('dialog', {
           name: 'Context Menu for the selected element',
         })
       ).not.toBeNull();
@@ -417,7 +419,7 @@ describe('Right Click Menu integration', () => {
       // close right click menu
       await fixture.events.keyboard.press('esc');
       expect(
-        fixture.screen.queryByRole('menu', {
+        fixture.screen.queryByRole('dialog', {
           name: 'Context Menu for the selected element',
         })
       ).toBeNull();
