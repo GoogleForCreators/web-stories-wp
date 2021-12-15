@@ -26,6 +26,7 @@ import {
   MIN_IMG_HEIGHT,
   useConfig,
 } from '@web-stories-wp/dashboard';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -128,6 +129,8 @@ function EditorSettings() {
       publisherLogos,
     })
   );
+
+  const isCustomFontsEnabled = useFeature('customFonts');
 
   const {
     capabilities: { canUploadFiles, canManageSettings } = {},
@@ -332,12 +335,14 @@ function EditorSettings() {
                 />
               </>
             )}
-            <CustomFontsSettings
-              customFonts={customFonts}
-              addCustomFont={addCustomFont}
-              fetchCustomFonts={fetchCustomFonts}
-              deleteCustomFont={deleteCustomFont}
-            />
+            {isCustomFontsEnabled && (
+              <CustomFontsSettings
+                customFonts={customFonts}
+                addCustomFont={addCustomFont}
+                fetchCustomFonts={fetchCustomFonts}
+                deleteCustomFont={deleteCustomFont}
+              />
+            )}
             <TelemetrySettings
               disabled={disableOptedIn}
               onCheckboxSelected={toggleWebStoriesTrackingOptIn}

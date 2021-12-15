@@ -25,6 +25,7 @@ import {
   useState,
 } from '@web-stories-wp/react';
 import { CURATED_FONT_NAMES } from '@web-stories-wp/fonts';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -39,6 +40,7 @@ import useLoadFontFiles from './actions/useLoadFontFiles';
 export const GOOGLE_MENU_FONT_URL = 'https://fonts.googleapis.com/css';
 
 function FontProvider({ children }) {
+  const isCustomFontsEnabled = useFeature('customFonts');
   const [queriedFonts, setQueriedFonts] = useState([]);
   const [visibleOptions, setVisibleOptions] = useState([]);
   const [recentFonts, setRecentFonts] = useState([]);
@@ -51,7 +53,8 @@ function FontProvider({ children }) {
 
   useEffect(() => {
     let mounted = true;
-    if (!customFonts) {
+    // Don't load custom fonts if not enabled.
+    if (!customFonts && isCustomFontsEnabled) {
       try {
         (async () => {
           const _customFonts = await getFonts({
@@ -125,8 +128,10 @@ function FontProvider({ children }) {
 
   const getFontsBySearch = useCallback(
     async (search) => {
+      // If there are custom fonts in the DB, we should not include those to search when custom fonts are not enabled.
       const newFonts = await getFonts({
         search,
+        service: isCustomFontsEnabled ? null : 'builtin',
       });
 
       const formattedFonts = newFonts.map((font) => ({
@@ -138,7 +143,7 @@ function FontProvider({ children }) {
 
       setQueriedFonts(formattedFonts);
     },
-    [getFonts]
+    [getFonts, isCustomFontsEnabled]
   );
 
   const getFontWeight = useCallback(
