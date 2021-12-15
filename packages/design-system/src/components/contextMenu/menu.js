@@ -48,6 +48,7 @@ MenuWrapper.propTypes = {
 const Menu = ({
   children,
   disableControlledTabNavigation,
+  groupLabel,
   isOpen,
   ...props
 }) => {
@@ -152,6 +153,7 @@ const Menu = ({
     <MenuWrapper
       ref={composedListRef}
       data-testid="context-menu-list"
+      aria-label={groupLabel}
       role="menu"
       $isIconMenu={isIconMenu}
       {...props}

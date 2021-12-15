@@ -94,7 +94,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
     const contextMenuList = contextMenuLists[storyIndex];
 
     // it is focused on the link within the list
-    const contextMenuItem = within(contextMenuList).getByRole('button', {
+    const contextMenuItem = within(contextMenuList).getByRole('menuitem', {
       name: contextMenuText,
     });
 
