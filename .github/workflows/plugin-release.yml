@@ -84,7 +84,7 @@ jobs:
 
   # Get the current CDN assets version.
   # If the static assets on the CDN have changed since the last release,
-  # bump the assets version accordingly in the `static-site` branch.
+  # bump the assets version accordingly in the googleforcreators/wp.stories.google repo.
   assets-version:
     name: Prepare static assets
     runs-on: ubuntu-latest
@@ -125,10 +125,10 @@ jobs:
       #     env:
       #       ASSETS_VERSION_REGEX: "https://wp.stories.google/static/([^']+)"
 
-      - name: Checkout static-site
+      - name: Checkout wp.stories.google
         uses: actions/checkout@v2
         with:
-          ref: static-site
+          repository: googleforcreators/wp.stories.google
           lfs: true
           # Needed so the below commits will trigger a website deployment.
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
@@ -155,7 +155,7 @@ jobs:
             git status
             git commit -m "Bump static assets for plugin release $PLUGIN_VERSION"
             git pull --rebase
-            git push origin static-site
+            git push origin main
           fi
 
           echo "Assets version for this release: $NEW_ASSETS_VERSION"
