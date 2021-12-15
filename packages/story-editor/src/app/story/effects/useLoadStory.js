@@ -30,16 +30,16 @@ import getUniquePresets from '../../../utils/getUniquePresets';
 
 function loadStory(storyId, post, restore, clearHistory) {
   const {
-    title: { raw: title },
+    title: { raw: title = '' } = {},
     status,
     slug,
     date,
     modified,
-    excerpt: { raw: excerpt },
+    excerpt: { raw: excerpt = '' } = {},
     link,
     storyData: storyDataRaw,
     permalinkTemplate,
-    stylePresets: globalStoryStyles,
+    stylePresets: globalStoryStyles = {},
     password,
     previewLink,
     editLink,
@@ -56,7 +56,9 @@ function loadStory(storyId, post, restore, clearHistory) {
     terms,
   } = post;
 
-  const [prefix, suffix] = permalinkTemplate.split(/%(?:postname|pagename)%/);
+  const [prefix, suffix] = permalinkTemplate
+    ? permalinkTemplate.split(/%(?:postname|pagename)%/)
+    : [];
   // If either of these is undefined, the placeholder was not found in settings.
   const foundSettings = prefix !== undefined && suffix !== undefined;
   const permalinkConfig = foundSettings
