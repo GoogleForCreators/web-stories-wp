@@ -13,7 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export default function isValidUrl(url) {
+
+export function isValidUrl(url) {
   try {
     // eslint-disable-next-line no-new
     new URL(url);
@@ -21,4 +22,15 @@ export default function isValidUrl(url) {
   } catch {
     return false;
   }
+}
+
+/**
+ * Prepends a protocol (default https) to a URL that doesn't have one
+ *
+ * @param {string} url URL.
+ * @param {string} [protocol=https] default protocol to prepend
+ * @return {string} the url with the protocol prepended to it
+ */
+export function withProtocol(url, protocol = 'https') {
+  return /^(?:f|ht)tps?:\/\//.test(url) ? url : `${protocol}://${url}`;
 }

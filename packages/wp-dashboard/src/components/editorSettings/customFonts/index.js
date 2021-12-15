@@ -24,6 +24,8 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
+  isValidUrl,
+  withProtocol,
   Icons,
   Text,
   THEME_CONSTANTS,
@@ -37,7 +39,6 @@ import { trackEvent } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 import PropTypes from 'prop-types';
-import isValidUrl from '../utils/isValidUrl';
 import {
   InlineForm,
   SaveButton,
@@ -153,7 +154,7 @@ function CustomFontsSettings({
     const { value } = event.target;
     setFontUrl(value);
 
-    if (value.length === 0 || isValidUrl(value)) {
+    if (value.length === 0 || isValidUrl(withProtocol(value))) {
       setInputError('');
 
       return;
@@ -164,7 +165,6 @@ function CustomFontsSettings({
 
   const handleDelete = useCallback(async () => {
     await deleteCustomFont(toDelete);
-    // @todo Should we instead not make a fetch and just remove it from the state only?
     await fetchCustomFonts();
     setToDelete(null);
     setShowDialog(false);
@@ -172,31 +172,37 @@ function CustomFontsSettings({
 
   const handleOnSave = useCallback(async () => {
     if (canSave) {
+      const urlWithProtocol = withProtocol(fontUrl);
       try {
-        await fetch(fontUrl, {
+        await fetch(urlWithProtocol, {
           method: 'HEAD',
         });
       } catch (err) {
         setInputError(
-          __('Please ensure correct CORS settings (Copy TODO!)', 'web-stories')
+          __(
+            'Please ensure correct CORS settings for allowing font usage on this site.',
+            'web-stories'
+          )
         );
       }
       try {
         trackEvent('add_custom_font', {
-          url: fontUrl,
+          url: urlWithProtocol,
         });
-        const fontData = await getFontDataFromUrl(fontUrl);
+        const fontData = await getFontDataFromUrl(urlWithProtocol);
         if (!fontData.family) {
-          setInputError(__('Something went wrong', 'web-stories'));
+          setInputError(
+            __('Something went wrong, please try again.', 'web-stories')
+          );
         } else {
-          await addCustomFont({ ...fontData, url: fontUrl });
+          await addCustomFont({ ...fontData, url: urlWithProtocol });
           await fetchCustomFonts();
           setFontUrl('');
         }
       } catch (err) {
         setInputError(
           __(
-            'Getting font data failed, please ensure the URL points to a font file',
+            'Getting font data failed, please ensure the URL points directly to a .otf, .ttf or .woff file.',
             'web-stories'
           )
         );

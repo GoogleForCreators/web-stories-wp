@@ -28,14 +28,20 @@ import {
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-import { Input, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import {
+  isValidUrl,
+  withProtocol,
+  Input,
+  Text,
+  THEME_CONSTANTS,
+} from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 
 import { useStory, useAPI, useCanvas } from '../../../../app';
-import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../../utils/url';
+import { toAbsoluteUrl } from '../../../../utils/url';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { Row, LinkInput, LinkIcon } from '../../../form';
