@@ -214,22 +214,13 @@ MediaPicker.propTypes = {
   ]),
 };
 
-const quickActionPropType = {
-  Icon: PropTypes.node.isRequired,
-  label: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
-  separator: PropTypes.oneOf(['top', 'bottom']),
-  tooltipPlacement: PropTypes.oneOf(Object.values(PLACEMENT)),
-  wrapWithMediaPicker: PropTypes.bool,
-};
-
 /**
  * Determines the quick actions to display in the quick
  * actions menu from the selected element.
  *
  * Quick actions should follow the `quickActionPropType` definition.
  *
- * @return {Array.<quickActionPropType>} an array of quick action objects
+ * @return {Array.<{ Icon: Node, label: string, onClick: Function, separator: string, tooltipPlacement: string, wrapWithMediaPicker: boolean }>} an array of quick action objects
  */
 const useQuickActions = () => {
   const {
