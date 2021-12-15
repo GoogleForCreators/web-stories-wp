@@ -14,20 +14,23 @@
  * limitations under the License.
  */
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { INITIAL_STATE as COMMON_INITIAL_STATE } from '../pagination/constants';
+import { encode } from 'blurhash';
 
-export const INITIAL_STATE = {
-  ...COMMON_INITIAL_STATE,
-  audioProcessing: [],
-  audioProcessed: [],
-  blurHashProcessed: [],
-  blurHashProcessing: [],
-  baseColorProcessed: [],
-  baseColorProcessing: [],
-  posterProcessing: [],
-  posterProcessed: [],
-  mediaType: '',
-  searchTerm: '',
+self.onmessage = function (event) {
+  const { image, width, height, compontentX, compontentY } = event.data;
+
+  try {
+    const blurHash = encode(image, width, height, compontentX, compontentY);
+    postMessage({
+      type: 'success',
+      blurHash,
+    });
+  } catch (error) {
+    postMessage({
+      type: 'error',
+      error,
+    });
+  }
 };

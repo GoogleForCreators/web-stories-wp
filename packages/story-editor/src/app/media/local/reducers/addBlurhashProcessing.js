@@ -13,21 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Internal dependencies
- */
-import { INITIAL_STATE as COMMON_INITIAL_STATE } from '../pagination/constants';
+function addBlurhashProcessing(state, { id }) {
+  if (!id || state.blurHashProcessing.includes(id)) {
+    return state;
+  }
+  return {
+    ...state,
+    blurHashProcessing: [...state.blurHashProcessing, id],
+  };
+}
 
-export const INITIAL_STATE = {
-  ...COMMON_INITIAL_STATE,
-  audioProcessing: [],
-  audioProcessed: [],
-  blurHashProcessed: [],
-  blurHashProcessing: [],
-  baseColorProcessed: [],
-  baseColorProcessing: [],
-  posterProcessing: [],
-  posterProcessed: [],
-  mediaType: '',
-  searchTerm: '',
-};
+export default addBlurhashProcessing;
