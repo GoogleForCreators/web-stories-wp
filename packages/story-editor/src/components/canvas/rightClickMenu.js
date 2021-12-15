@@ -80,7 +80,7 @@ const RightClickMenu = () => {
             data-testid="right-click-context-menu"
             isOpen={isMenuOpen}
             onDismiss={onCloseMenu}
-            groupLabel={__(
+            aria-label={__(
               'Context Menu for the selected element',
               'web-stories'
             )}

@@ -18,6 +18,7 @@
  */
 import PropTypes from 'prop-types';
 import { useMemo } from '@web-stories-wp/react';
+import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
@@ -28,7 +29,9 @@ import { ContextMenuProvider } from './contextMenuProvider';
 
 const ContextMenu = ({
   animate,
+  'aria-label': ariaLabel = __('Menu', 'web-stories'),
   children,
+  id,
   isAlwaysVisible,
   isRTL,
   isIconMenu,
@@ -44,6 +47,7 @@ const ContextMenu = ({
   return (
     <ContextMenuProvider isIconMenu={isIconMenu} onDismiss={onDismiss}>
       <Wrapper
+        aria-label={ariaLabel}
         isInline={isInline}
         role={isAlwaysVisible ? null : 'dialog'}
         isOpen={isAlwaysVisible || props.isOpen}
@@ -61,7 +65,9 @@ const ContextMenu = ({
 ContextMenu.propTypes = {
   ...MenuPropTypes,
   animate: PropTypes.bool,
+  'aria-label': PropTypes.string,
   children: PropTypes.node,
+  id: PropTypes.string,
   isOpen: PropTypes.bool,
   onDismiss: PropTypes.func,
   isAlwaysVisible: PropTypes.bool,

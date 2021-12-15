@@ -80,7 +80,7 @@ function PageSideMenu() {
         isAlwaysVisible
         isIconMenu
         disableControlledTabNavigation
-        groupLabel={__(
+        aria-label={__(
           'Group of available options for selected element',
           'web-stories'
         )}
