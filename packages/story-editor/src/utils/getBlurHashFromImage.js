@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { preloadImage } from '@web-stories-wp/media';
-import { getTimeTracker } from '@web-stories-wp/tracking';
+import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -53,14 +53,18 @@ const getBlurHashFromImage = async (src) => {
     });
     worker.addEventListener('message', function (event) {
       worker.terminate();
+      trackTiming();
       if (event.data.type === 'success') {
-        trackTiming();
         resolve(event.data.blurHash);
       } else {
+        trackError('blurhash_generation', event.data.error?.message);
         reject(event.data.error);
       }
     });
     worker.addEventListener('error', (e) => {
+      worker.terminate();
+      trackTiming();
+      trackError('blurhash_generation', e?.message);
       reject(e);
     });
   });
