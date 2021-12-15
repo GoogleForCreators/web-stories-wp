@@ -252,7 +252,7 @@ describe('Text Style Panel', () => {
         expect(updatedFontWeight.value).toBe('Regular');
       });
 
-      it('should display the fonts from curated list and custom fonts by default', async () => {
+      it('should display the fonts from curated list and custom fonts by default', () => {
         const options = getOptions();
         expect(options.length).toBe(
           DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS

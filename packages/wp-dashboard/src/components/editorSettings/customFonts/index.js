@@ -97,15 +97,28 @@ const FontsList = styled.div`
   border: ${({ theme }) => `1px solid ${theme.colors.divider.primary}`};
 `;
 
+// Hidden by default.
+const DeleteButton = styled(Button)`
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity ease-in-out 300ms;
+`;
+
 const FontRow = styled.div`
   padding: 0 12px;
   display: flex;
   height: 32px;
   width: 100%;
   justify-content: space-between;
+  transition: background-color ease-in-out 300ms;
   &:hover,
   &:focus {
     background-color: ${({ theme }) => theme.colors.bg.secondary};
+
+    button {
+      visibility: visible;
+      opacity: 1;
+    }
   }
 `;
 
@@ -268,7 +281,7 @@ function CustomFontsSettings({
                     <FontUrl>{url}</FontUrl>
                   </FontData>
                   <Tooltip hasTail title={__('Delete font', 'web-stories')}>
-                    <Button
+                    <DeleteButton
                       aria-label={__('Remove file', 'web-stories')}
                       type={BUTTON_TYPES.TERTIARY}
                       size={BUTTON_SIZES.SMALL}
@@ -279,7 +292,7 @@ function CustomFontsSettings({
                       }}
                     >
                       <Icons.Trash />
-                    </Button>
+                    </DeleteButton>
                   </Tooltip>
                 </FontRow>
               ))}
