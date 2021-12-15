@@ -18,7 +18,10 @@
  */
 import styled, { StyleSheetManager } from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
-import { ContextMenu } from '@web-stories-wp/design-system';
+import {
+  ContextMenu,
+  ContextMenuComponents,
+} from '@web-stories-wp/design-system';
 import { createPortal, useRef, useEffect } from '@web-stories-wp/react';
 
 /**
@@ -80,7 +83,24 @@ const RightClickMenu = () => {
             onMouseDown={(evt) => evt.stopPropagation()}
             isRTL={isRTL}
           >
-            {rightClickMenuItems}
+            {rightClickMenuItems.map(
+              ({ label, shortcut, separator, ...buttonProps }) => (
+                <>
+                  {separator === 'top' && <ContextMenuComponents.Separator />}
+                  <ContextMenuComponents.Button key={label} {...buttonProps}>
+                    {label}
+                    {shortcut && (
+                      <ContextMenuComponents.Shortcut>
+                        {shortcut.display}
+                      </ContextMenuComponents.Shortcut>
+                    )}
+                  </ContextMenuComponents.Button>
+                  {separator === 'bottom' && (
+                    <ContextMenuComponents.Separator />
+                  )}
+                </>
+              )
+            )}
           </ContextMenu>
         </DirectionAware>
       </RightClickMenuContainer>
