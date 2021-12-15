@@ -91,17 +91,19 @@ const RightClickMenu = () => {
             {rightClickMenuItems.map(
               ({ label, shortcut, separator, ...buttonProps }) => (
                 <Fragment key={label}>
-                  {separator === 'top' && <ContextMenuComponents.Separator />}
-                  <ContextMenuComponents.Button {...buttonProps}>
+                  {separator === 'top' && (
+                    <ContextMenuComponents.MenuSeparator />
+                  )}
+                  <ContextMenuComponents.MenuButton {...buttonProps}>
                     {label}
                     {shortcut && (
-                      <ContextMenuComponents.Shortcut>
+                      <ContextMenuComponents.MenuShortcut>
                         {shortcut.display}
-                      </ContextMenuComponents.Shortcut>
+                      </ContextMenuComponents.MenuShortcut>
                     )}
-                  </ContextMenuComponents.Button>
+                  </ContextMenuComponents.MenuButton>
                   {separator === 'bottom' && (
-                    <ContextMenuComponents.Separator />
+                    <ContextMenuComponents.MenuSeparator />
                   )}
                 </Fragment>
               )

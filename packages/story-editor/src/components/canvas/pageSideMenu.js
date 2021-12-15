@@ -102,22 +102,24 @@ function PageSideMenu() {
           }) => {
             const action = (externalOnClick = noop) => (
               <Fragment key={label}>
-                {separator === 'top' && <ContextMenuComponents.Separator />}
-                <ContextMenuComponents.Button
+                {separator === 'top' && <ContextMenuComponents.MenuSeparator />}
+                <ContextMenuComponents.MenuButton
                   onClick={(evt) => {
                     onClick(evt);
                     externalOnClick(evt);
                   }}
                   {...quickAction}
                 >
-                  <ContextMenuComponents.Icon
+                  <ContextMenuComponents.MenuIcon
                     title={label}
                     placement={tooltipPlacement}
                   >
                     <Icon />
-                  </ContextMenuComponents.Icon>
-                </ContextMenuComponents.Button>
-                {separator === 'bottom' && <ContextMenuComponents.Separator />}
+                  </ContextMenuComponents.MenuIcon>
+                </ContextMenuComponents.MenuButton>
+                {separator === 'bottom' && (
+                  <ContextMenuComponents.MenuSeparator />
+                )}
               </Fragment>
             );
 

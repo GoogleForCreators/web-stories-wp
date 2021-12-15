@@ -36,15 +36,15 @@ describe('ContextMenu', () => {
   it('contextMenu should be invisible', () => {
     renderWithProviders(
       <ContextMenu>
-        <ContextMenuComponents.Button onClick={noop}>
+        <ContextMenuComponents.MenuButton onClick={noop}>
           {'this is a button'}
-        </ContextMenuComponents.Button>
-        <ContextMenuComponents.Link href="/">
+        </ContextMenuComponents.MenuButton>
+        <ContextMenuComponents.MenuLink href="/">
           {'this is a link'}
-        </ContextMenuComponents.Link>
-        <ContextMenuComponents.Label>
+        </ContextMenuComponents.MenuLink>
+        <ContextMenuComponents.MenuLabel>
           {'this is neither a button nor a link'}
-        </ContextMenuComponents.Label>
+        </ContextMenuComponents.MenuLabel>
       </ContextMenu>
     );
 
@@ -55,15 +55,15 @@ describe('ContextMenu', () => {
   it('contextMenu should be visible', () => {
     renderWithProviders(
       <ContextMenu isOpen>
-        <ContextMenuComponents.Button onClick={noop}>
+        <ContextMenuComponents.MenuButton onClick={noop}>
           {'this is a button'}
-        </ContextMenuComponents.Button>
-        <ContextMenuComponents.Link href="/">
+        </ContextMenuComponents.MenuButton>
+        <ContextMenuComponents.MenuLink href="/">
           {'this is a link'}
-        </ContextMenuComponents.Link>
-        <ContextMenuComponents.Label>
+        </ContextMenuComponents.MenuLink>
+        <ContextMenuComponents.MenuLabel>
           {'this is neither a button nor a link'}
-        </ContextMenuComponents.Label>
+        </ContextMenuComponents.MenuLabel>
       </ContextMenu>
     );
 
@@ -78,15 +78,15 @@ describe('ContextMenu', () => {
       <div>
         <div data-testid="some-element" />
         <ContextMenu isOpen onDismiss={onDismiss}>
-          <ContextMenuComponents.Button onClick={noop}>
+          <ContextMenuComponents.MenuButton onClick={noop}>
             {'this is a button'}
-          </ContextMenuComponents.Button>
-          <ContextMenuComponents.Link href="/">
+          </ContextMenuComponents.MenuButton>
+          <ContextMenuComponents.MenuLink href="/">
             {'this is a link'}
-          </ContextMenuComponents.Link>
-          <ContextMenuComponents.Label>
+          </ContextMenuComponents.MenuLink>
+          <ContextMenuComponents.MenuLabel>
             {'this is neither a button nor a link'}
-          </ContextMenuComponents.Label>
+          </ContextMenuComponents.MenuLabel>
         </ContextMenu>
       </div>
     );
@@ -104,15 +104,15 @@ describe('ContextMenu', () => {
       <div>
         <div data-testid="some-element" />
         <ContextMenu isOpen onDismiss={onDismiss}>
-          <ContextMenuComponents.Button onClick={noop}>
+          <ContextMenuComponents.MenuButton onClick={noop}>
             {'this is a button'}
-          </ContextMenuComponents.Button>
-          <ContextMenuComponents.Link href="/">
+          </ContextMenuComponents.MenuButton>
+          <ContextMenuComponents.MenuLink href="/">
             {'this is a link'}
-          </ContextMenuComponents.Link>
-          <ContextMenuComponents.Label>
+          </ContextMenuComponents.MenuLink>
+          <ContextMenuComponents.MenuLabel>
             {'this is neither a button nor a link'}
-          </ContextMenuComponents.Label>
+          </ContextMenuComponents.MenuLabel>
         </ContextMenu>
       </div>
     );
@@ -129,29 +129,29 @@ describe('ContextMenu', () => {
     // when the menu goes from closed -> open
     const { rerender } = renderWithProviders(
       <ContextMenu isOpen={false}>
-        <ContextMenuComponents.Button onClick={noop}>
+        <ContextMenuComponents.MenuButton onClick={noop}>
           {'this is a button'}
-        </ContextMenuComponents.Button>
-        <ContextMenuComponents.Link href="/">
+        </ContextMenuComponents.MenuButton>
+        <ContextMenuComponents.MenuLink href="/">
           {'this is a link'}
-        </ContextMenuComponents.Link>
-        <ContextMenuComponents.Label>
+        </ContextMenuComponents.MenuLink>
+        <ContextMenuComponents.MenuLabel>
           {'this is neither a button nor a link'}
-        </ContextMenuComponents.Label>
+        </ContextMenuComponents.MenuLabel>
       </ContextMenu>
     );
 
     rerender(
       <ContextMenu isOpen>
-        <ContextMenuComponents.Button onClick={noop}>
+        <ContextMenuComponents.MenuButton onClick={noop}>
           {'this is a button'}
-        </ContextMenuComponents.Button>
-        <ContextMenuComponents.Link href="/">
+        </ContextMenuComponents.MenuButton>
+        <ContextMenuComponents.MenuLink href="/">
           {'this is a link'}
-        </ContextMenuComponents.Link>
-        <ContextMenuComponents.Label>
+        </ContextMenuComponents.MenuLink>
+        <ContextMenuComponents.MenuLabel>
           {'this is neither a button nor a link'}
-        </ContextMenuComponents.Label>
+        </ContextMenuComponents.MenuLabel>
       </ContextMenu>
     );
 

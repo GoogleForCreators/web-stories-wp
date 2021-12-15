@@ -16,12 +16,20 @@
 /**
  * Internal dependencies
  */
-import Button from './button';
-import Group from './group';
-import Icon from './icon';
-import Label from './label';
-import Link from './link';
-import Separator from './separator';
-import Shortcut from './shortcut';
+import MenuButton from './button';
+import MenuGroup from './group';
+import MenuIcon from './icon';
+import MenuLabel from './label';
+import MenuLink from './link';
+import MenuSeparator from './separator';
+import MenuShortcut from './shortcut';
 
-export { Button, Group, Icon, Label, Link, Separator, Shortcut };
+export {
+  MenuButton,
+  MenuGroup,
+  MenuIcon,
+  MenuLabel,
+  MenuLink,
+  MenuSeparator,
+  MenuShortcut,
+};

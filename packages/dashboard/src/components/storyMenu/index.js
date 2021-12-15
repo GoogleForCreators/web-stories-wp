@@ -123,14 +123,16 @@ export default function StoryMenu({
           // Disable reason: map is not picking up definition from StoryMenu proptypes.
           // eslint-disable-next-line react/prop-types
           const MenuItem = props.href
-            ? ContextMenuComponents.Link
-            : ContextMenuComponents.Button;
+            ? ContextMenuComponents.MenuLink
+            : ContextMenuComponents.MenuButton;
 
           return (
             <Fragment key={label}>
-              {separator === 'top' && <ContextMenuComponents.Separator />}
+              {separator === 'top' && <ContextMenuComponents.MenuSeparator />}
               <MenuItem {...props}>{label}</MenuItem>
-              {separator === 'bottom' && <ContextMenuComponents.Separator />}
+              {separator === 'bottom' && (
+                <ContextMenuComponents.MenuSeparator />
+              )}
             </Fragment>
           );
         })}
