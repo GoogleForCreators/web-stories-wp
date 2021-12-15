@@ -25,7 +25,6 @@ import { Datalist } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import objectPick from '../../../../utils/objectPick';
 import stripHTML from '../../../../utils/stripHTML';
 import { useFont } from '../../../../app/font';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
@@ -71,21 +70,7 @@ const FontPicker = forwardRef(function FontPicker(
   }));
 
   const handleFontPickerChange = useCallback(
-    async ({ id }) => {
-      const fontObj = fonts.find((item) => item.value === id);
-      const newFont = {
-        family: id,
-        ...objectPick(fontObj, [
-          'service',
-          'fallbacks',
-          'weights',
-          'styles',
-          'variants',
-          'metrics',
-          'url', // For custom fonts.
-        ]),
-      };
-
+    async (newFont) => {
       await maybeEnqueueFontStyle(
         selectedElements.map(({ content }) => {
           return {
@@ -96,17 +81,16 @@ const FontPicker = forwardRef(function FontPicker(
           };
         })
       );
-      addRecentFont(fontObj);
+      addRecentFont(newFont);
       pushUpdate({ font: newFont }, true);
 
-      const newFontWeight = getClosestFontWeight(400, fontObj.weights);
+      const newFontWeight = getClosestFontWeight(400, newFont.weights);
       await handleResetFontWeight(newFontWeight);
     },
     [
       addRecentFont,
       fontStyle,
       fontWeight,
-      fonts,
       maybeEnqueueFontStyle,
       pushUpdate,
       selectedElements,

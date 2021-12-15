@@ -15,16 +15,16 @@
  */
 
 export async function getFonts(params) {
-  let fonts = await import(
+  let { default: fonts } = await import(
     /* webpackChunkName: "chunk-fonts" */ '@web-stories-wp/fonts/src/fonts.json'
-  ).then((newFonts) =>
-    newFonts.default.map((font) => ({
-      id: font.family,
-      name: font.family,
-      value: font.family,
-      ...font,
-    }))
   );
+
+  fonts = fonts.map((font) => ({
+    id: font.family,
+    name: font.family,
+    value: font.family,
+    ...font,
+  }));
 
   if (params.include) {
     const include = params.include.split(',');

@@ -48,4 +48,12 @@ describe('getFontCSS', () => {
       "src: url('https://example.com/font.ttf') format('truetype');"
     );
   });
+
+  it('should return CSS for otf font', () => {
+    const actual = getFontCSS('Foo Regular', 'https://example.com/font.otf');
+    expect(actual).toContain('font-family: "Foo Regular";');
+    expect(actual).toContain(
+      "src: url('https://example.com/font.otf') format('opentype');"
+    );
+  });
 });

@@ -29,6 +29,8 @@ function getFontFormat(src) {
       return fileExtension;
     case 'ttf':
       return 'truetype';
+    case 'otf':
+      return 'opentype';
     default:
       return null;
   }

@@ -42,14 +42,14 @@ export const GOOGLE_MENU_FONT_URL = 'https://fonts.googleapis.com/css';
 function FontProvider({ children }) {
   const isCustomFontsEnabled = useFeature('customFonts');
   const [queriedFonts, setQueriedFonts] = useState([]);
-  const [visibleOptions, setVisibleOptions] = useState([]);
+  const [curatedFonts, setCuratedFonts] = useState([]);
   const [recentFonts, setRecentFonts] = useState([]);
   const [customFonts, setCustomFonts] = useState(null);
   const {
     actions: { getFonts },
   } = useAPI();
 
-  const fonts = queriedFonts.length > 0 ? queriedFonts : visibleOptions;
+  const fonts = queriedFonts.length > 0 ? queriedFonts : curatedFonts;
 
   useEffect(() => {
     let mounted = true;
@@ -86,7 +86,7 @@ function FontProvider({ children }) {
   useEffect(() => {
     let mounted = true;
 
-    if (!visibleOptions.length) {
+    if (!curatedFonts.length) {
       try {
         (async () => {
           const newFonts = await getFonts({
@@ -104,7 +104,7 @@ function FontProvider({ children }) {
             ...font,
           }));
 
-          setVisibleOptions(formattedFonts);
+          setCuratedFonts(formattedFonts);
         })();
       } catch (err) {
         trackError('font_provider', err.message);
@@ -114,7 +114,7 @@ function FontProvider({ children }) {
     return () => {
       mounted = false;
     };
-  }, [visibleOptions, getFonts]);
+  }, [curatedFonts, getFonts]);
 
   const { maybeEnqueueFontStyle, maybeLoadFont } = useLoadFontFiles();
 
@@ -128,6 +128,11 @@ function FontProvider({ children }) {
 
   const getFontsBySearch = useCallback(
     async (search) => {
+      if (search.length < 2) {
+        setQueriedFonts([]);
+        return [];
+      }
+
       // If there are custom fonts in the DB, we should not include those to search when custom fonts are not enabled.
       const newFonts = await getFonts({
         search,
@@ -142,6 +147,7 @@ function FontProvider({ children }) {
       }));
 
       setQueriedFonts(formattedFonts);
+      return formattedFonts;
     },
     [getFonts, isCustomFontsEnabled]
   );
@@ -225,8 +231,8 @@ function FontProvider({ children }) {
 
   const state = {
     state: {
-      fonts: queriedFonts.length > 0 ? queriedFonts : visibleOptions,
-      curatedFonts: visibleOptions,
+      fonts: queriedFonts.length > 0 ? queriedFonts : curatedFonts,
+      curatedFonts,
       customFonts,
       recentFonts,
     },
