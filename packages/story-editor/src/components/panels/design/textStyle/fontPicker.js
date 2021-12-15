@@ -105,37 +105,46 @@ const FontPicker = forwardRef(function FontPicker(
     return map;
   }, [fonts]);
 
-  const onObserve = (observedFonts) => {
-    ensureMenuFontsLoaded(
-      observedFonts.filter(
-        (fontName) => fontMap.get(fontName)?.service === 'fonts.google.com'
-      )
-    );
-    ensureCustomFontsLoaded(
-      observedFonts.filter(
-        (fontName) => fontMap.get(fontName)?.service === 'custom'
-      )
-    );
-  };
+  const onObserve = useCallback(
+    (observedFonts) => {
+      if (!observedFonts.length) {
+        return;
+      }
+      ensureMenuFontsLoaded(
+        observedFonts.filter(
+          (fontName) => fontMap.get(fontName)?.service === 'fonts.google.com'
+        )
+      );
+      ensureCustomFontsLoaded(
+        observedFonts.filter(
+          (fontName) => fontMap.get(fontName)?.service === 'custom'
+        )
+      );
+    },
+    [fontMap, ensureCustomFontsLoaded, ensureMenuFontsLoaded]
+  );
 
-  const renderer = ({ option, ...rest }, _ref) => {
-    return (
-      <Datalist.Option
-        ref={_ref}
-        {...rest}
-        fontFamily={
-          option.service.includes('google')
-            ? `'${option.name}::MENU'`
-            : option.name
-        }
-      >
-        {fontFamily === option.id && (
-          <Datalist.Selected aria-label={__('Selected', 'web-stories')} />
-        )}
-        {option.name}
-      </Datalist.Option>
-    );
-  };
+  const renderer = useCallback(
+    ({ option, ...rest }, _ref) => {
+      return (
+        <Datalist.Option
+          ref={_ref}
+          {...rest}
+          fontFamily={
+            option.service === 'fonts.google.com'
+              ? `'${option.name}::MENU'`
+              : option.name
+          }
+        >
+          {fontFamily === option.id && (
+            <Datalist.Selected aria-label={__('Selected', 'web-stories')} />
+          )}
+          {option.name}
+        </Datalist.Option>
+      );
+    },
+    [fontFamily]
+  );
 
   return (
     <Datalist.DropDown
