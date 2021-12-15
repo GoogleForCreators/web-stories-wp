@@ -258,21 +258,24 @@ class Font_Controller extends WP_REST_Posts_Controller {
 
 			// Filter before doing any sorting.
 			if ( isset( $registered['include'], $request['include'] ) && ! empty( $request['include'] ) ) {
+				/**
+				 * Include list.
+				 *
+				 * @var array{string} $include_list
+				 */
+				$include_list = $request['include'];
+				$include_list = array_map( 'strtolower', $include_list );
+
 				$fonts = array_values(
 					array_filter(
 						$fonts,
-						static function( $font ) use ( $request ) {
+						static function( $font ) use ( $include_list ) {
 							/**
 							 * Font data.
 							 *
 							 * @var array{family: string} $font
 							 */
-							/**
-							 * Request data.
-							 *
-							 * @var array{include: array<string>} $request
-							 */
-							return in_array( $font['family'], $request['include'], true );
+							return in_array( strtolower( $font['family'] ), $include_list, true );
 						}
 					)
 				);
@@ -439,7 +442,22 @@ class Font_Controller extends WP_REST_Posts_Controller {
 				$font_data[ $field ] = $request[ $field ];
 
 				if ( 'family' === $field ) {
-					$prepared_post->post_title = $request['family'];
+					/**
+					 * Request data.
+					 *
+					 * @var array{family: string} $request
+					 */
+					$font_family = trim( $request['family'] );
+
+					$prepared_post->post_title = $font_family;
+
+					if ( $this->font_exists( $font_family ) ) {
+						return new WP_Error(
+							'rest_invalid_field',
+							__( 'A font with this name already exists', 'web-stories' ),
+							[ 'status' => 400 ]
+						);
+					}
 				}
 			}
 		}
@@ -447,6 +465,36 @@ class Font_Controller extends WP_REST_Posts_Controller {
 		$prepared_post->post_content = wp_json_encode( $font_data );
 
 		return $prepared_post;
+	}
+
+	/**
+	 * Determines whether a font with the same name already exists.
+	 *
+	 * Performs a case-insensitive comparison.
+	 *
+	 * @since 1.16.0
+	 *
+	 * @param string $font_family Font family.
+	 *
+	 * @return bool Whether a font with this exact name already exists.
+	 */
+	private function font_exists( string $font_family ): bool {
+		$request = new WP_REST_Request(
+			WP_REST_Server::READABLE,
+			$this->namespace .
+			'/' . $this->rest_base
+		);
+		$request->set_param( 'include', [ $font_family ] );
+		$request->set_param( 'service', 'all' );
+
+		/**
+		 * Response object.
+		 *
+		 * @var WP_REST_Response $response
+		 */
+		$response = $this->get_items( $request );
+
+		return ! empty( $response->get_data() );
 	}
 
 	/**
