@@ -581,7 +581,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			?>
 			<div class="web-stories-list__story-poster">
 				<div class="web-stories-list__story-poster-placeholder">
-					<a href="<?php echo esc_url( $story->get_url() ); ?>">
+					<a href="<?php echo esc_url( $story->get_url() ); ?>" <?php $this->render_attributes(); ?>>
 						<?php echo esc_html( $story->get_title() ); ?>
 					</a>
 				</div>
@@ -590,7 +590,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		} else {
 			?>
 			<div class="web-stories-list__story-poster">
-				<a href="<?php echo esc_url( $story->get_url() ); ?>">
+				<a href="<?php echo esc_url( $story->get_url() ); ?>" <?php $this->render_attributes(); ?>>
 					<?php
 					if ( $this->context->is_amp() ) {
 						// Set the dimensions to '0' so that we can handle image ratio/size by CSS per view type.
@@ -621,6 +621,21 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			$this->generate_lightbox_html( $story );
 		} else {
 			$this->generate_amp_lightbox_html_amp( $story );
+		}
+	}
+
+	/**
+	 * Allows customization of html attributes in the web stories widget anchor tag loop
+	 * Converts array into escaped inline html attributes
+	 *
+	 * @return void
+	 */
+	protected function render_attributes() {
+		$story_render_attributes = apply_filters( 'story_render_attributes', [], $this->current(), $this->position, $this->get_view_type() );
+		if ( ! empty( $story_render_attributes ) ) {
+			foreach ( $story_render_attributes as $attribute => $value ) {
+				echo ' ' . esc_attr( $attribute ) . '="' . esc_attr( $value ) . '"';
+			}
 		}
 	}
 
@@ -692,7 +707,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 		// Collect story links to fill-in non-AMP lightbox 'amp-story-player'.
 		?>
-			<a href="<?php echo esc_url( $story->get_url() ); ?>"><?php echo esc_html( $story->get_title() ); ?></a>
+			<a href="<?php echo esc_url( $story->get_url() ); ?>" <?php $this->render_attributes(); ?>><?php echo esc_html( $story->get_title() ); ?></a>
 		<?php
 
 		$this->lightbox_html .= ob_get_clean();
@@ -734,7 +749,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 					height="6"
 					layout="responsive"
 				>
-					<a href="<?php echo( esc_url( $story->get_url() ) ); ?>"><?php echo esc_html( $story->get_title() ); ?></a>
+					<a href="<?php echo( esc_url( $story->get_url() ) ); ?>" <?php $this->render_attributes(); ?>><?php echo esc_html( $story->get_title() ); ?></a>
 				</amp-story-player>
 			</div>
 		</amp-lightbox>
