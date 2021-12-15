@@ -515,6 +515,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 					'description' => __( 'The font family', 'web-stories' ),
 					'type'        => [ 'string', 'null' ],
 					'context'     => [ 'view', 'edit', 'embed' ],
+					'required'    => true,
 				],
 				'fallbacks' => [
 					'description' => __( 'Fallback fonts', 'web-stories' ),
@@ -523,6 +524,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 						'type' => 'string',
 					],
 					'context'     => [ 'view', 'edit' ],
+					'required'    => true,
 				],
 				'weights'   => [
 					'description' => __( 'Font weights', 'web-stories' ),
@@ -534,6 +536,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 					],
 					'minimum'     => 1,
 					'context'     => [ 'view', 'edit' ],
+					'required'    => true,
 				],
 				'styles'    => [
 					'description' => __( 'Font styles', 'web-stories' ),
@@ -543,6 +546,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 					],
 					'minimum'     => 1,
 					'context'     => [ 'view', 'edit' ],
+					'required'    => true,
 				],
 				'variants'  => [
 					'description' => __( 'Font variants', 'web-stories' ),
@@ -558,16 +562,19 @@ class Font_Controller extends WP_REST_Posts_Controller {
 						'maximum' => 2,
 					],
 					'context'     => [ 'view', 'edit' ],
+					'required'    => true,
 				],
 				'service'   => [
 					'description' => __( 'Font service', 'web-stories' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit' ],
+					'readonly'    => true,
 				],
 				'metrics'   => [
 					'description' => __( 'Font metrics', 'web-stories' ),
 					'type'        => 'object',
 					'context'     => [ 'view', 'edit' ],
+					'required'    => true,
 				],
 				'id'        => [
 					'description' => __( 'Unique identifier for the font.', 'web-stories' ),
@@ -580,7 +587,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 					'type'        => 'string',
 					'format'      => 'uri',
 					'context'     => [ 'view', 'edit', 'embed' ],
-					'readonly'    => true,
+					'required'    => true,
 				],
 			],
 		];
