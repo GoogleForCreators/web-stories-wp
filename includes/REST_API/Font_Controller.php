@@ -50,7 +50,11 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	 */
 	public function __construct( $post_type ) {
 		parent::__construct( $post_type );
-		$this->namespace = 'web-stories/v1';
+
+		$post_type_object = get_post_type_object( $post_type );
+		$this->namespace  = $post_type_object && ! empty( $post_type_object->rest_namespace ) ?
+			$post_type_object->rest_namespace :
+			'web-stories/v1';
 	}
 
 	/**
