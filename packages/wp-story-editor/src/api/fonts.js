@@ -27,7 +27,6 @@ import apiFetch from '@wordpress/api-fetch';
 export function getFonts(config, { include, search }) {
   return apiFetch({
     path: addQueryArgs(`${config.api.fonts}`, {
-      per_page: '100',
       include,
       search,
     }),
