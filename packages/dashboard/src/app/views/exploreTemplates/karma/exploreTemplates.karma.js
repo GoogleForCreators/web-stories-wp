@@ -95,7 +95,7 @@ describe('Grid view', () => {
   });
 
   describe('CUJ: Creator can browse templates in grid view: Browse all templates', () => {
-    it('should display "View" and "Use Template" controls when hovering over a template', async () => {
+    it('should display "See Details" and "Use Template" controls when hovering over a template', async () => {
       const { templatesOrderById } = await getTemplatesState();
       const firstTemplate = getTemplateElementById(templatesOrderById[0]);
 
@@ -103,11 +103,11 @@ describe('Grid view', () => {
 
       await fixture.events.hover(firstTemplate);
 
-      const view = utils.getByText(
+      const seeDetailsButton = utils.getByText(
         new RegExp(`^${TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS.template}$`)
       );
 
-      expect(view).toBeTruthy();
+      expect(seeDetailsButton).toBeTruthy();
 
       const useTemplate = utils.getByText(/^Use template$/);
 
@@ -143,8 +143,8 @@ describe('Grid view', () => {
     });
   });
 
-  describe('CUJ: Creator can browse templates in grid view: See pre-built template details page', () => {
-    it('should navigate to view an individual template', async () => {
+  describe('CUJ: Creator can browse templates in grid view: See template details modal', () => {
+    it('should open modal to view individual template details', async () => {
       const { templatesOrderById } = await getTemplatesState();
       const firstTemplate = getTemplateElementById(templatesOrderById[0]);
 
@@ -152,14 +152,14 @@ describe('Grid view', () => {
 
       await fixture.events.hover(firstTemplate);
 
-      const view = utils.getByText(
+      const seeDetailsButton = utils.getByText(
         new RegExp(`^${TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS.template}$`)
       );
 
-      await fixture.events.click(view);
+      await fixture.events.click(seeDetailsButton);
 
-      const closeBtn = fixture.screen.getByRole('link', {
-        name: /^Go to Explore Templates$/,
+      const closeBtn = fixture.screen.getByRole('button', {
+        name: /^Close$/,
       });
 
       expect(closeBtn).toBeTruthy();
