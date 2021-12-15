@@ -58,9 +58,9 @@ const OptionList = forwardRef(function OptionList(
   {
     keyword = '',
     value = '',
-    onSelect = () => {},
-    onClose = () => {},
-    onExpandedChange = () => {},
+    onSelect = noop,
+    onClose = noop,
+    onExpandedChange = noop,
     focusTrigger = 0,
     options = [],
     primaryOptions,
