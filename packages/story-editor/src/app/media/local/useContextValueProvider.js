@@ -31,6 +31,7 @@ import useProcessMedia from '../utils/useProcessMedia';
 import useUploadMedia from '../useUploadMedia';
 import useDetectVideoHasAudio from '../utils/useDetectVideoHasAudio';
 import useDetectBaseColor from '../utils/useDetectBaseColor';
+import useDetectBlurHash from '../utils/useDetectBlurhash';
 import { LOCAL_MEDIA_TYPE_ALL } from './types';
 
 /**
@@ -66,6 +67,8 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     removePosterProcessing,
     setBaseColorProcessing,
     removeBaseColorProcessing,
+    setBlurhashProcessing,
+    removeBlurhashProcessing,
     updateMediaElement,
     deleteMediaElement,
   } = reducerActions;
@@ -150,6 +153,10 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     updateMediaElement,
   });
 
+  const { updateBlurHash } = useDetectBlurHash({
+    updateMediaElement,
+  });
+
   const {
     allowedMimeTypes: { video: allowedVideoMimeTypes },
   } = useConfig();
@@ -224,7 +231,24 @@ export default function useContextValueProvider(reducerState, reducerActions) {
         removeBaseColorProcessing({ id });
       })();
     },
-    [setBaseColorProcessing, removeBaseColorProcessing, updateBaseColor]
+    [setBaseColorProcessing, updateBaseColor, removeBaseColorProcessing]
+  );
+
+  const processMediaBlurhash = useCallback(
+    (resource) => {
+      const { blurHashProcessed, blurHashProcessing } = stateRef.current;
+      const { id } = resource;
+      (async () => {
+        // Simple way to prevent double-uploading.
+        if (blurHashProcessed.includes(id) || blurHashProcessing.includes(id)) {
+          return;
+        }
+        setBlurhashProcessing({ id });
+        await updateBlurHash({ resource });
+        removeBlurhashProcessing({ id });
+      })();
+    },
+    [stateRef, setBlurhashProcessing, updateBlurHash, removeBlurhashProcessing]
   );
 
   const postProcessingResource = useCallback(
@@ -233,8 +257,17 @@ export default function useContextValueProvider(reducerState, reducerActions) {
         return;
       }
 
-      const { type, isMuted, baseColor, src, id, posterId, mimeType, poster } =
-        resource;
+      const {
+        type,
+        isMuted,
+        baseColor,
+        src,
+        id,
+        posterId,
+        mimeType,
+        poster,
+        blurHash,
+      } = resource;
 
       if (!canTranscodeResource(resource)) {
         return;
@@ -256,11 +289,15 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       if (imageSrc && !baseColor) {
         processMediaBaseColor(resource);
       }
+      if (imageSrc && !blurHash) {
+        processMediaBlurhash(resource);
+      }
     },
     [
       canTranscodeResource,
       allowedVideoMimeTypes,
       processMediaBaseColor,
+      processMediaBlurhash,
       processVideoAudio,
       uploadVideoPoster,
     ]

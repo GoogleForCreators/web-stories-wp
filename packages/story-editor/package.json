@@ -28,6 +28,7 @@
     "@web-stories-wp/text-sets": "*",
     "@web-stories-wp/tracking": "*",
     "@web-stories-wp/units": "*",
+    "blurhash": "^1.1.4",
     "classnames": "^2.3.1",
     "colorthief": "^2.3.2",
     "draft-js": "^0.11.7",
@@ -45,7 +46,7 @@
     "react-moveable": "^0.30.3",
     "react-photo-gallery": "^8.0.0",
     "react-transition-group": "^4.4.2",
-    "react-virtual": "^2.8.2",
+    "react-virtual": "^2.10.0",
     "sat": "^0.9.0",
     "styled-components": "^5.3.3",
     "uuid": "^8.3.2"

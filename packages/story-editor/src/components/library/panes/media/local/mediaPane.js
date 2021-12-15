@@ -287,11 +287,13 @@ function MediaPane(props) {
   };
 
   useEffect(() => {
-    trackEvent('search', {
-      search_type: 'media',
-      search_term: searchTerm,
-      search_filter: mediaType,
-    });
+    if (searchTerm.length > 0) {
+      trackEvent('search', {
+        search_type: 'media',
+        search_term: searchTerm,
+        search_filter: mediaType,
+      });
+    }
   }, [searchTerm, mediaType]);
 
   const incrementalSearchDebounceMedia = useFeature(
