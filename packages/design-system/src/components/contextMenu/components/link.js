@@ -61,8 +61,8 @@ const StyledLink = styled(BaseLink)`
  * @param {string} props.id Element id.
  * @param {boolean} props.openNewTab openNewTab defines whether the link should be opened in a new tab.
  * @param {Function} props.onBlur Blur event handler.
+ * @param {Function} props.onClick Click event handler.
  * @param {Function} props.onFocus Focus event handler.
- * @param props.onClick
  * @return {Node} The react node
  */
 function Link({ id, onBlur, onClick, onFocus, openNewTab, ...props }) {
