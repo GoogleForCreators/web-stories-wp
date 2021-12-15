@@ -581,6 +581,8 @@ class Font_Controller extends WP_REST_Posts_Controller {
 			],
 		];
 
-		return $schema;
+		$this->schema = $schema;
+
+		return $this->add_additional_fields_schema( $this->schema );
 	}
 }
