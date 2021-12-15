@@ -31,6 +31,7 @@ describe('Text Style Panel', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     localStorage.clear();
+    fixture.setFlags({ customFonts: true });
     await fixture.render();
     await fixture.collapseHelpCenter();
   });
@@ -182,6 +183,7 @@ describe('Text Style Panel', () => {
     describe('CUJ: Creator Can Style Text: Use font picker', () => {
       // There are 3 curated fonts included by default even though the total is more.
       const DEFAULT_VISIBLE_FONTS = 3;
+      const DEFAULT_CUSTOM_FONTS = 2;
       // Timeout used for submitting / search update + 50ms (250 + 50).
       const TIMEOUT = 300;
       const openFontPicker = async () => {
@@ -250,9 +252,17 @@ describe('Text Style Panel', () => {
         expect(updatedFontWeight.value).toBe('Regular');
       });
 
-      it('should display only the fonts from curated list by default', () => {
+      it('should display the fonts from curated list and custom fonts by default', async () => {
         const options = getOptions();
-        expect(options.length).toBe(DEFAULT_VISIBLE_FONTS);
+        expect(options.length).toBe(
+          DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS
+        );
+      });
+
+      it('should display custom fonts as the first', () => {
+        const options = getOptions();
+        expect(options[0].textContent).toBe('Overpass Regular');
+        expect(options[1].textContent).toBe('Vazir Regular');
       });
 
       describe('when searching fonts', () => {
@@ -271,6 +281,15 @@ describe('Text Style Panel', () => {
           await fixture.events.sleep(TIMEOUT);
           options = getOptions();
           expect(options.length).toBe(1);
+        });
+
+        it('should include custom fonts in search', async () => {
+          await fixture.events.keyboard.type('Vazir');
+          // Ensure the debounced callback has taken effect.
+          await fixture.events.sleep(TIMEOUT);
+          const options = getOptions();
+          expect(options.length).toBe(1);
+          expect(options[0].textContent).toBe('Vazir Regular');
         });
 
         it('should not search with less than 2 characters', async () => {
