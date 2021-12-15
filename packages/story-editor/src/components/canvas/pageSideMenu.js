@@ -17,7 +17,11 @@
 /**
  * External dependencies
  */
-import { ContextMenu } from '@web-stories-wp/design-system';
+import {
+  ContextMenu,
+  ContextMenuComponents,
+  noop,
+} from '@web-stories-wp/design-system';
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
 import { rgba } from 'polished';
@@ -26,7 +30,7 @@ import { rgba } from 'polished';
  * Internal dependencies
  */
 import { useLayout } from '../../app';
-import { useQuickActions } from '../../app/highlights';
+import { MediaPicker, useQuickActions } from '../../app/highlights';
 import { ZOOM_SETTING } from '../../constants';
 import PageMenu from './pagemenu/pageMenu';
 
@@ -79,14 +83,57 @@ function PageSideMenu() {
           'Group of available options for selected element',
           'web-stories'
         )}
-        items={quickActions}
         onMouseDown={(e) => {
           // Stop the event from bubbling if the user clicks in between buttons.
           // This prevents the selected element in the canvas from losing focus.
           e.stopPropagation();
         }}
       >
-        {quickActions}
+        {quickActions.map(
+          ({
+            Icon,
+            label,
+            onClick,
+            separator,
+            tooltipPlacement,
+            wrapWithMediaPicker,
+            ...quickAction
+          }) => {
+            const action = (externalOnClick = noop) => (
+              <>
+                {separator === 'top' && <ContextMenuComponents.Separator />}
+                <ContextMenuComponents.Button
+                  key={label}
+                  onClick={(evt) => {
+                    onClick(evt);
+                    externalOnClick(evt);
+                  }}
+                  {...quickAction}
+                >
+                  <ContextMenuComponents.Icon
+                    title={label}
+                    placement={tooltipPlacement}
+                  >
+                    <Icon />
+                  </ContextMenuComponents.Icon>
+                </ContextMenuComponents.Button>
+                {separator === 'bottom' && <ContextMenuComponents.Separator />}
+              </>
+            );
+
+            if (wrapWithMediaPicker) {
+              return (
+                <MediaPicker
+                  render={({ onClick: openMediaPicker }) =>
+                    action(openMediaPicker)
+                  }
+                />
+              );
+            }
+
+            return action();
+          }
+        )}
       </ContextMenu>
       {isZoomed && <Divider />}
       <PageMenu />

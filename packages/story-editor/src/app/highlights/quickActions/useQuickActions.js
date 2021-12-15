@@ -25,7 +25,6 @@ import {
   useSnackbar,
   PLACEMENT,
   Icons,
-  ContextMenuComponents,
 } from '@web-stories-wp/design-system';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { canTranscodeResource, resourceList } from '@web-stories-wp/media';
@@ -59,7 +58,7 @@ const {
   Eraser,
   LetterTLargeLetterTSmall,
   LetterTPlus,
-  Link: LinkIcon,
+  Link,
   Media,
   PictureSwap,
   Captions,
@@ -215,13 +214,22 @@ MediaPicker.propTypes = {
   ]),
 };
 
+const quickActionPropType = {
+  Icon: PropTypes.node.isRequired,
+  label: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
+  separator: PropTypes.oneOf(['top', 'bottom']),
+  tooltipPlacement: PropTypes.oneOf(Object.values(PLACEMENT)),
+  wrapWithMediaPicker: PropTypes.bool,
+};
+
 /**
  * Determines the quick actions to display in the quick
  * actions menu from the selected element.
  *
- * Quick actions should be items that can be rendered in the context menu.
+ * Quick actions should follow the `quickActionPropType` definition.
  *
- * @return {Node} the list elements to render
+ * @return {Array.<quickActionPropType>} an array of quick action objects
  */
 const useQuickActions = () => {
   const {
@@ -416,69 +424,57 @@ const useQuickActions = () => {
     [handleMouseDown, isRTL]
   );
 
-  const noElementSelectedActions = useMemo(
-    () => (
-      <>
-        <ContextMenuComponents.Button
-          onClick={(evt) => {
-            handleFocusPageBackground(backgroundElement?.id)(evt);
+  const noElementSelectedActions = useMemo(() => {
+    return [
+      {
+        Icon: Bucket,
+        label: ACTIONS.CHANGE_BACKGROUND_COLOR.text,
+        onClick: (evt) => {
+          handleFocusPageBackground(backgroundElement?.id)(evt);
 
-            trackEvent('quick_action', {
-              name: ACTIONS.CHANGE_BACKGROUND_COLOR.trackingEventName,
-              element: 'none',
-            });
-          }}
-          {...actionMenuProps}
-        >
-          <ContextMenuComponents.Icon
-            title={ACTIONS.CHANGE_BACKGROUND_COLOR.text}
-          >
-            <Bucket />
-          </ContextMenuComponents.Icon>
-        </ContextMenuComponents.Button>
-        <ContextMenuComponents.Separator />
-        <ContextMenuComponents.Button
-          onClick={(evt) => {
-            handleFocusMediaPanel()(evt);
+          trackEvent('quick_action', {
+            name: ACTIONS.CHANGE_BACKGROUND_COLOR.trackingEventName,
+            element: 'none',
+          });
+        },
+        ...actionMenuProps,
+      },
+      {
+        Icon: Media,
+        label: ACTIONS.INSERT_BACKGROUND_MEDIA.text,
+        onClick: (evt) => {
+          handleFocusMediaPanel()(evt);
 
-            trackEvent('quick_action', {
-              name: ACTIONS.INSERT_BACKGROUND_MEDIA.trackingEventName,
-              element: 'none',
-            });
-          }}
-          {...actionMenuProps}
-        >
-          <ContextMenuComponents.Icon
-            title={ACTIONS.INSERT_BACKGROUND_MEDIA.text}
-          >
-            <Media />
-          </ContextMenuComponents.Icon>
-        </ContextMenuComponents.Button>
-        <ContextMenuComponents.Button
-          onClick={(evt) => {
-            handleFocusTextSetsPanel()(evt);
+          trackEvent('quick_action', {
+            name: ACTIONS.INSERT_BACKGROUND_MEDIA.trackingEventName,
+            element: 'none',
+          });
+        },
+        separator: 'top',
+        ...actionMenuProps,
+      },
+      {
+        Icon: LetterTPlus,
+        label: ACTIONS.INSERT_TEXT.text,
+        onClick: (evt) => {
+          handleFocusTextSetsPanel()(evt);
 
-            trackEvent('quick_action', {
-              name: ACTIONS.INSERT_TEXT.trackingEventName,
-              element: 'none',
-            });
-          }}
-          {...actionMenuProps}
-        >
-          <ContextMenuComponents.Icon title={ACTIONS.INSERT_TEXT.text}>
-            <LetterTPlus />
-          </ContextMenuComponents.Icon>
-        </ContextMenuComponents.Button>
-      </>
-    ),
-    [
-      actionMenuProps,
-      backgroundElement,
-      handleFocusMediaPanel,
-      handleFocusPageBackground,
-      handleFocusTextSetsPanel,
-    ]
-  );
+          trackEvent('quick_action', {
+            name: ACTIONS.INSERT_TEXT.trackingEventName,
+            element: 'none',
+          });
+        },
+        onMouseDown: handleMouseDown,
+      },
+    ];
+  }, [
+    actionMenuProps,
+    backgroundElement,
+    handleFocusMediaPanel,
+    handleFocusPageBackground,
+    handleFocusTextSetsPanel,
+    handleMouseDown,
+  ]);
 
   const resetProperties = useMemo(
     () => getResetProperties(selectedElement, selectedElementAnimations),
@@ -486,135 +482,113 @@ const useQuickActions = () => {
   );
   const showClearAction = resetProperties.length > 0;
 
-  const foregroundCommonActions = useMemo(
-    () => (
-      <>
-        <ContextMenuComponents.Button
-          onClick={(evt) => {
-            handleFocusAnimationPanel()(evt);
+  const foregroundCommonActions = useMemo(() => {
+    const baseActions = [
+      {
+        Icon: CircleSpeed,
+        label: ACTIONS.ADD_ANIMATION.text,
+        onClick: (evt) => {
+          handleFocusAnimationPanel()(evt);
 
-            trackEvent('quick_action', {
-              name: ACTIONS.ADD_ANIMATION.trackingEventName,
-              element: selectedElement?.type,
-            });
-          }}
-          {...actionMenuProps}
-        >
-          <ContextMenuComponents.Icon title={ACTIONS.ADD_ANIMATION.text}>
-            <CircleSpeed />
-          </ContextMenuComponents.Icon>
-        </ContextMenuComponents.Button>
-        <ContextMenuComponents.Button
-          onClick={(evt) => {
-            handleFocusLinkPanel()(evt);
+          trackEvent('quick_action', {
+            name: ACTIONS.ADD_ANIMATION.trackingEventName,
+            element: selectedElement?.type,
+          });
+        },
+        ...actionMenuProps,
+      },
+      {
+        Icon: Link,
+        label: ACTIONS.ADD_LINK.text,
+        onClick: (evt) => {
+          handleFocusLinkPanel()(evt);
 
-            trackEvent('quick_action', {
-              name: ACTIONS.ADD_LINK.trackingEventName,
-              element: selectedElement?.type,
-            });
-          }}
-          {...actionMenuProps}
-        >
-          <ContextMenuComponents.Icon title={ACTIONS.ADD_LINK.text}>
-            <LinkIcon />
-          </ContextMenuComponents.Icon>
-        </ContextMenuComponents.Button>
-        {showClearAction && (
-          <>
-            <ContextMenuComponents.Separator />
-            <ContextMenuComponents.Button
-              onClick={() => {
-                handleElementReset({
-                  elementId: selectedElement?.id,
-                  resetProperties,
-                  elementType: selectedElement?.type,
-                });
+          trackEvent('quick_action', {
+            name: ACTIONS.ADD_LINK.trackingEventName,
+            element: selectedElement?.type,
+          });
+        },
+        ...actionMenuProps,
+      },
+    ];
 
-                trackEvent('quick_action', {
-                  name: ACTIONS.RESET_ELEMENT.trackingEventName,
-                  element: selectedElement?.type,
-                });
-              }}
-              {...actionMenuProps}
-            >
-              <ContextMenuComponents.Icon title={ACTIONS.RESET_ELEMENT.text}>
-                <Eraser />
-              </ContextMenuComponents.Icon>
-            </ContextMenuComponents.Button>
-          </>
-        )}
-      </>
-    ),
-    [
-      handleFocusAnimationPanel,
-      selectedElement?.id,
-      selectedElement?.type,
-      actionMenuProps,
-      handleFocusLinkPanel,
-      showClearAction,
-      handleElementReset,
-      resetProperties,
-    ]
-  );
+    const clearAction = {
+      Icon: Eraser,
+      label: ACTIONS.RESET_ELEMENT.text,
+      onClick: () => {
+        handleElementReset({
+          elementId: selectedElement?.id,
+          resetProperties,
+          elementType: selectedElement?.type,
+        });
 
-  const foregroundImageActions = useMemo(
-    () => (
-      <>
-        {hasUploadMediaAction && (
-          <MediaPicker
-            render={({ onClick }) => (
-              <ContextMenuComponents.Button
-                onClick={(evt) => {
-                  dispatchStoryEvent(STORY_EVENTS.onReplaceForegroundMedia);
-                  onClick(evt);
+        trackEvent('quick_action', {
+          name: ACTIONS.RESET_ELEMENT.trackingEventName,
+          element: selectedElement?.type,
+        });
+      },
+      separator: 'top',
+      ...actionMenuProps,
+    };
 
-                  trackEvent('quick_action', {
-                    name: ACTIONS.REPLACE_MEDIA.trackingEventName,
-                    element: selectedElement?.type,
-                  });
-                }}
-                {...actionMenuProps}
-              >
-                <ContextMenuComponents.Icon title={ACTIONS.REPLACE_MEDIA.text}>
-                  <PictureSwap />
-                </ContextMenuComponents.Icon>
-              </ContextMenuComponents.Button>
-            )}
-          />
-        )}
-        {foregroundCommonActions}
-      </>
-    ),
-    [
-      actionMenuProps,
-      foregroundCommonActions,
-      hasUploadMediaAction,
-      dispatchStoryEvent,
-      selectedElement?.type,
-    ]
-  );
+    return showClearAction ? [...baseActions, clearAction] : baseActions;
+  }, [
+    handleFocusAnimationPanel,
+    selectedElement?.id,
+    selectedElement?.type,
+    actionMenuProps,
+    handleFocusLinkPanel,
+    showClearAction,
+    handleElementReset,
+    resetProperties,
+  ]);
+
+  const foregroundImageActions = useMemo(() => {
+    const actions = [];
+
+    if (hasUploadMediaAction) {
+      actions.push({
+        Icon: PictureSwap,
+        label: ACTIONS.REPLACE_MEDIA.text,
+        onClick: () => {
+          dispatchStoryEvent(STORY_EVENTS.onReplaceForegroundMedia);
+
+          trackEvent('quick_action', {
+            name: ACTIONS.REPLACE_MEDIA.trackingEventName,
+            element: selectedElement?.type,
+          });
+        },
+        wrapWithMediaPicker: true,
+        ...actionMenuProps,
+      });
+    }
+
+    return [...actions, ...foregroundCommonActions];
+  }, [
+    actionMenuProps,
+    foregroundCommonActions,
+    hasUploadMediaAction,
+    dispatchStoryEvent,
+    selectedElement?.type,
+  ]);
 
   const shapeActions = useMemo(
-    () => (
-      <>
-        <ContextMenuComponents.Button
-          onClick={(evt) => {
-            handleFocusStylePanel()(evt);
+    () => [
+      {
+        Icon: Bucket,
+        label: ACTIONS.CHANGE_COLOR.text,
+        onClick: (evt) => {
+          handleFocusStylePanel()(evt);
 
-            trackEvent('quick_action', {
-              name: ACTIONS.CHANGE_COLOR.trackingEventName,
-              element: selectedElement?.type,
-            });
-          }}
-          {...actionMenuProps}
-        >
-          <ContextMenuComponents.Icon title={ACTIONS.CHANGE_COLOR.text}>
-            <Bucket />
-          </ContextMenuComponents.Icon>
-        </ContextMenuComponents.Button>
-        {foregroundCommonActions}
-      </>
-    ),
+          trackEvent('quick_action', {
+            name: ACTIONS.CHANGE_COLOR.trackingEventName,
+            element: selectedElement?.type,
+          });
+        },
+        ...actionMenuProps,
+      },
+      ...foregroundCommonActions,
+    ],
     [
       actionMenuProps,
       foregroundCommonActions,
@@ -632,55 +606,47 @@ const useQuickActions = () => {
       })
   );
   const textActions = useMemo(
-    () => (
-      <>
-        <ContextMenuComponents.Button
-          onClick={(evt) => {
-            handleFocusTextColor()(evt);
+    () => [
+      {
+        Icon: Bucket,
+        label: ACTIONS.CHANGE_COLOR.text,
+        onClick: (evt) => {
+          handleFocusTextColor()(evt);
 
-            trackEvent('quick_action', {
-              name: ACTIONS.CHANGE_COLOR.trackingEventName,
-              element: selectedElement?.type,
-            });
-          }}
-          {...actionMenuProps}
-        >
-          <ContextMenuComponents.Icon title={ACTIONS.CHANGE_COLOR.text}>
-            <Bucket />
-          </ContextMenuComponents.Icon>
-        </ContextMenuComponents.Button>
-        <ContextMenuComponents.Button
-          onClick={(evt) => {
-            handleFocusFontPicker()(evt);
+          trackEvent('quick_action', {
+            name: ACTIONS.CHANGE_COLOR.trackingEventName,
+            element: selectedElement?.type,
+          });
+        },
+        ...actionMenuProps,
+      },
+      {
+        Icon: LetterTLargeLetterTSmall,
+        label: ACTIONS.CHANGE_FONT.text,
+        onClick: (evt) => {
+          handleFocusFontPicker()(evt);
 
-            trackEvent('quick_action', {
-              name: ACTIONS.CHANGE_FONT.trackingEventName,
-              element: selectedElement?.type,
-            });
-          }}
-          {...actionMenuProps}
-        >
-          <ContextMenuComponents.Icon title={ACTIONS.CHANGE_FONT.text}>
-            <LetterTLargeLetterTSmall />
-          </ContextMenuComponents.Icon>
-        </ContextMenuComponents.Button>
-        <ContextMenuComponents.Button
-          onClick={() => {
-            applyTextAutoStyle();
-            trackEvent('quick_action', {
-              name: ACTIONS.AUTO_STYLE_TEXT.trackingEventName,
-              element: selectedElement?.type,
-            });
-          }}
-          {...actionMenuProps}
-        >
-          <ContextMenuComponents.Icon title={ACTIONS.AUTO_STYLE_TEXT.text}>
-            <ColorBucket />
-          </ContextMenuComponents.Icon>
-        </ContextMenuComponents.Button>
-        {foregroundCommonActions}
-      </>
-    ),
+          trackEvent('quick_action', {
+            name: ACTIONS.CHANGE_FONT.trackingEventName,
+            element: selectedElement?.type,
+          });
+        },
+        ...actionMenuProps,
+      },
+      {
+        Icon: ColorBucket,
+        label: ACTIONS.AUTO_STYLE_TEXT.text,
+        onClick: () => {
+          applyTextAutoStyle();
+          trackEvent('quick_action', {
+            name: ACTIONS.AUTO_STYLE_TEXT.trackingEventName,
+            element: selectedElement?.type,
+          });
+        },
+        ...actionMenuProps,
+      },
+      ...foregroundCommonActions,
+    ],
     [
       applyTextAutoStyle,
       foregroundCommonActions,
@@ -693,23 +659,25 @@ const useQuickActions = () => {
 
   const videoCommonActions = useMemo(() => {
     const resource = selectedElements?.[0]?.resource;
-
-    return resource && canTranscodeResource(resource) && hasTrimMode ? (
-      <ContextMenuComponents.Button
-        onClick={() => {
-          toggleTrimMode();
-          trackEvent('quick_action', {
-            name: ACTIONS.TRIM_VIDEO.trackingEventName,
-            element: selectedElement.type,
-          });
-        }}
-        {...actionMenuProps}
-      >
-        <ContextMenuComponents.Icon title={ACTIONS.TRIM_VIDEO.text}>
-          <Scissors />
-        </ContextMenuComponents.Icon>
-      </ContextMenuComponents.Button>
-    ) : null;
+    if (!resource) {
+      return [];
+    }
+    return canTranscodeResource(resource) && hasTrimMode
+      ? [
+          {
+            Icon: Scissors,
+            label: ACTIONS.TRIM_VIDEO.text,
+            onClick: () => {
+              toggleTrimMode();
+              trackEvent('quick_action', {
+                name: ACTIONS.TRIM_VIDEO.trackingEventName,
+                element: selectedElement.type,
+              });
+            },
+            ...actionMenuProps,
+          },
+        ]
+      : [];
   }, [
     actionMenuProps,
     hasTrimMode,
@@ -718,193 +686,108 @@ const useQuickActions = () => {
     selectedElements,
   ]);
 
-  const videoActions = useMemo(
-    () => (
-      <>
-        {hasUploadMediaAction && (
-          <MediaPicker
-            render={({ onClick }) => (
-              <ContextMenuComponents.Button
-                onClick={(evt) => {
-                  dispatchStoryEvent(STORY_EVENTS.onReplaceForegroundMedia);
-                  onClick(evt);
+  const videoActions = useMemo(() => {
+    const [baseActions, clearActions] = showClearAction
+      ? [
+          foregroundImageActions.slice(0, foregroundImageActions.length - 1),
+          foregroundImageActions.slice(-1),
+        ]
+      : [foregroundImageActions, []];
 
-                  trackEvent('quick_action', {
-                    name: ACTIONS.REPLACE_MEDIA.trackingEventName,
-                    element: selectedElement?.type,
-                  });
-                }}
-                {...actionMenuProps}
-              >
-                <ContextMenuComponents.Icon title={ACTIONS.REPLACE_MEDIA.text}>
-                  <PictureSwap />
-                </ContextMenuComponents.Icon>
-              </ContextMenuComponents.Button>
-            )}
-          />
-        )}
-        <ContextMenuComponents.Button
-          onClick={(evt) => {
-            handleFocusAnimationPanel()(evt);
+    return [
+      ...baseActions,
+      {
+        Icon: Captions,
+        label: ACTIONS.ADD_CAPTIONS.text,
+        onClick: (evt) => {
+          handleFocusCaptionsPanel()(evt);
 
-            trackEvent('quick_action', {
-              name: ACTIONS.ADD_ANIMATION.trackingEventName,
-              element: selectedElement?.type,
-            });
-          }}
-          {...actionMenuProps}
-        >
-          <ContextMenuComponents.Icon title={ACTIONS.ADD_ANIMATION.text}>
-            <CircleSpeed />
-          </ContextMenuComponents.Icon>
-        </ContextMenuComponents.Button>
-        <ContextMenuComponents.Button
-          onClick={(evt) => {
-            handleFocusLinkPanel()(evt);
+          trackEvent('quick_action', {
+            name: ACTIONS.ADD_CAPTIONS.trackingEventName,
+            element: selectedElement?.type,
+          });
+        },
+        ...actionMenuProps,
+      },
+      ...videoCommonActions,
+      ...clearActions,
+    ];
+  }, [
+    actionMenuProps,
+    foregroundImageActions,
+    handleFocusCaptionsPanel,
+    selectedElement?.type,
+    showClearAction,
+    videoCommonActions,
+  ]);
 
-            trackEvent('quick_action', {
-              name: ACTIONS.ADD_LINK.trackingEventName,
-              element: selectedElement?.type,
-            });
-          }}
-          {...actionMenuProps}
-        >
-          <ContextMenuComponents.Icon title={ACTIONS.ADD_LINK.text}>
-            <LinkIcon />
-          </ContextMenuComponents.Icon>
-        </ContextMenuComponents.Button>
-        <ContextMenuComponents.Button
-          onClick={(evt) => {
-            handleFocusCaptionsPanel()(evt);
+  const backgroundElementMediaActions = useMemo(() => {
+    const baseActions = [
+      {
+        Icon: CircleSpeed,
+        label: ACTIONS.ADD_ANIMATION.text,
+        onClick: (evt) => {
+          handleFocusAnimationPanel()(evt);
 
-            trackEvent('quick_action', {
-              name: ACTIONS.ADD_CAPTIONS.trackingEventName,
-              element: selectedElement?.type,
-            });
-          }}
-          {...actionMenuProps}
-        >
-          <ContextMenuComponents.Icon title={ACTIONS.ADD_CAPTIONS.text}>
-            <Captions />
-          </ContextMenuComponents.Icon>
-        </ContextMenuComponents.Button>
-        {videoCommonActions}
-        {showClearAction && (
-          <>
-            <ContextMenuComponents.Separator />
-            <ContextMenuComponents.Button
-              onClick={() => {
-                handleElementReset({
-                  elementId: selectedElement?.id,
-                  resetProperties,
-                  elementType: selectedElement?.type,
-                });
+          trackEvent('quick_action', {
+            name: ACTIONS.ADD_ANIMATION.trackingEventName,
+            element: selectedElement?.type,
+            isBackground: true,
+          });
+        },
+        ...actionMenuProps,
+      },
+    ];
 
-                trackEvent('quick_action', {
-                  name: ACTIONS.RESET_ELEMENT.trackingEventName,
-                  element: selectedElement?.type,
-                });
-              }}
-              {...actionMenuProps}
-            >
-              <ContextMenuComponents.Icon title={ACTIONS.RESET_ELEMENT.text}>
-                <Eraser />
-              </ContextMenuComponents.Icon>
-            </ContextMenuComponents.Button>
-          </>
-        )}
-      </>
-    ),
-    [
-      actionMenuProps,
-      dispatchStoryEvent,
-      handleElementReset,
-      handleFocusAnimationPanel,
-      handleFocusCaptionsPanel,
-      handleFocusLinkPanel,
-      hasUploadMediaAction,
-      resetProperties,
-      selectedElement,
-      showClearAction,
-      videoCommonActions,
-    ]
-  );
+    if (hasUploadMediaAction) {
+      baseActions.unshift({
+        Icon: PictureSwap,
+        label: ACTIONS.REPLACE_BACKGROUND_MEDIA.text,
+        onClick: () => {
+          dispatchStoryEvent(STORY_EVENTS.onReplaceBackgroundMedia);
 
-  const backgroundElementMediaActions = useMemo(
-    () => (
-      <>
-        <ContextMenuComponents.Button
-          onClick={(evt) => {
-            handleFocusAnimationPanel()(evt);
+          trackEvent('quick_action', {
+            name: ACTIONS.REPLACE_BACKGROUND_MEDIA.trackingEventName,
+            element: selectedElement?.type,
+            isBackground: true,
+          });
+        },
+        wrapWithMediaPicker: true,
+        ...actionMenuProps,
+      });
+    }
 
-            trackEvent('quick_action', {
-              name: ACTIONS.ADD_ANIMATION.trackingEventName,
-              element: selectedElement?.type,
-            });
-          }}
-          {...actionMenuProps}
-        >
-          <ContextMenuComponents.Icon title={ACTIONS.ADD_ANIMATION.text}>
-            <CircleSpeed />
-          </ContextMenuComponents.Icon>
-        </ContextMenuComponents.Button>
-        {hasUploadMediaAction && (
-          <ContextMenuComponents.Button
-            onClick={() => {
-              dispatchStoryEvent(STORY_EVENTS.onReplaceBackgroundMedia);
+    const clearAction = {
+      Icon: Eraser,
+      label: ACTIONS.RESET_ELEMENT.text,
+      onClick: () => {
+        handleElementReset({
+          elementId: selectedElement?.id,
+          resetProperties,
+          elementType: ELEMENT_TYPES.IMAGE,
+        });
 
-              trackEvent('quick_action', {
-                name: ACTIONS.REPLACE_BACKGROUND_MEDIA.trackingEventName,
-                element: selectedElement?.type,
-                isBackground: true,
-              });
-            }}
-            {...actionMenuProps}
-          >
-            <ContextMenuComponents.Icon
-              title={ACTIONS.REPLACE_BACKGROUND_MEDIA.text}
-            >
-              <PictureSwap />
-            </ContextMenuComponents.Icon>
-          </ContextMenuComponents.Button>
-        )}
-        {showClearAction && (
-          <>
-            <ContextMenuComponents.Separator />
-            <ContextMenuComponents.Button
-              onClick={() => {
-                handleElementReset({
-                  elementId: selectedElement?.id,
-                  resetProperties,
-                  elementType: selectedElement?.type,
-                });
+        trackEvent('quick_action', {
+          name: ACTIONS.RESET_ELEMENT.trackingEventName,
+          element: selectedElement?.type,
+          isBackground: true,
+        });
+      },
+      separator: 'top',
+      ...actionMenuProps,
+    };
 
-                trackEvent('quick_action', {
-                  name: ACTIONS.RESET_ELEMENT.trackingEventName,
-                  element: selectedElement?.type,
-                });
-              }}
-              {...actionMenuProps}
-            >
-              <ContextMenuComponents.Icon title={ACTIONS.RESET_ELEMENT.text}>
-                <Eraser />
-              </ContextMenuComponents.Icon>
-            </ContextMenuComponents.Button>
-          </>
-        )}
-      </>
-    ),
-    [
-      actionMenuProps,
-      dispatchStoryEvent,
-      handleElementReset,
-      handleFocusAnimationPanel,
-      hasUploadMediaAction,
-      resetProperties,
-      selectedElement,
-      showClearAction,
-    ]
-  );
+    return showClearAction ? [...baseActions, clearAction] : baseActions;
+  }, [
+    actionMenuProps,
+    dispatchStoryEvent,
+    handleElementReset,
+    handleFocusAnimationPanel,
+    hasUploadMediaAction,
+    resetProperties,
+    selectedElement,
+    showClearAction,
+  ]);
 
   // Hide menu if there are multiple elements selected
   if (selectedElements.length > 1) {
@@ -935,12 +818,7 @@ const useQuickActions = () => {
     const isVideo = selectedElement.type === 'video';
     // In case of video, we're also adding actions that are common for video regardless of bg/not.
     if (isVideo) {
-      return (
-        <>
-          {backgroundElementMediaActions}
-          {videoCommonActions}
-        </>
-      );
+      return [...backgroundElementMediaActions, ...videoCommonActions];
     }
     return backgroundElementMediaActions;
   }
