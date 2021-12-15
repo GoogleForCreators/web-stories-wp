@@ -409,6 +409,7 @@ const formattedTemplatesArray = [
               type: 'rectangle',
             },
             isBackground: true,
+            isDefaultBackground: true,
             type: 'shape',
             id: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
           },
