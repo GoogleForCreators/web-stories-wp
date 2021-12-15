@@ -43,7 +43,7 @@ const getBlurHashFromImage = async (src) => {
 
   const trackTiming = getTimeTracker('load_get_blurhash');
   return new Promise((resolve, reject) => {
-    const worker = new Worker();
+    const worker = new Worker(); // lgtm[js/call-to-non-callable]
     worker.postMessage({
       image: data,
       width,
@@ -52,7 +52,7 @@ const getBlurHashFromImage = async (src) => {
       compontentY: 4,
     });
     worker.addEventListener('message', function (event) {
-      worker.terminate();
+      worker.terminate(); // lgtm [js/property-access-on-non-object]
       trackTiming();
       if (event.data.type === 'success') {
         resolve(event.data.blurHash);
@@ -62,7 +62,7 @@ const getBlurHashFromImage = async (src) => {
       }
     });
     worker.addEventListener('error', (e) => {
-      worker.terminate();
+      worker.terminate(); // lgtm [js/property-access-on-non-object]
       trackTiming();
       trackError('blurhash_generation', e?.message);
       reject(e);
