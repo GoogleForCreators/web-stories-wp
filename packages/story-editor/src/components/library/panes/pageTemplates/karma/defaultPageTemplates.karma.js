@@ -37,7 +37,7 @@ const expectPageTemplateEqual = (currentPage, template) => {
   });
 };
 
-describe('CUJ: Page Templates: Creator can Apply a Default Page Template', () => {
+fdescribe('CUJ: Page Templates: Creator can Apply a Default Page Template', () => {
   let fixture;
   let originalTimeout;
 
@@ -188,10 +188,10 @@ describe('CUJ: Page Templates: Creator can Apply a Default Page Template', () =>
     });
   });
 
-  describe('Keyboard Navigation', () => {
+  fdescribe('Keyboard Navigation', () => {
     // TODO https://github.com/google/web-stories-wp/issues/9912
     // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should navigate templates via keyboard', async () => {
+    fit('should navigate templates via keyboard', async () => {
       // Click templates layout icon
       await fixture.events.click(fixture.editor.library.pageTemplatesTab);
 
