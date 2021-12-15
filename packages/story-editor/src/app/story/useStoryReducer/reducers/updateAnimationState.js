@@ -24,6 +24,10 @@
  * @return {Object} New state
  */
 function updateAnimationState(state, { animationState }) {
+  if (state.animationState === animationState) {
+    return state;
+  }
+
   return {
     ...state,
     animationState,
