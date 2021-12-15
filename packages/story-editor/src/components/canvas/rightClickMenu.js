@@ -22,7 +22,12 @@ import {
   ContextMenu,
   ContextMenuComponents,
 } from '@web-stories-wp/design-system';
-import { createPortal, useRef, useEffect } from '@web-stories-wp/react';
+import {
+  createPortal,
+  Fragment,
+  useRef,
+  useEffect,
+} from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -85,9 +90,9 @@ const RightClickMenu = () => {
           >
             {rightClickMenuItems.map(
               ({ label, shortcut, separator, ...buttonProps }) => (
-                <>
+                <Fragment key={label}>
                   {separator === 'top' && <ContextMenuComponents.Separator />}
-                  <ContextMenuComponents.Button key={label} {...buttonProps}>
+                  <ContextMenuComponents.Button {...buttonProps}>
                     {label}
                     {shortcut && (
                       <ContextMenuComponents.Shortcut>
@@ -98,7 +103,7 @@ const RightClickMenu = () => {
                   {separator === 'bottom' && (
                     <ContextMenuComponents.Separator />
                   )}
-                </>
+                </Fragment>
               )
             )}
           </ContextMenu>

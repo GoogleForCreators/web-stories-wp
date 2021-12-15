@@ -25,6 +25,7 @@ import {
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
 import { rgba } from 'polished';
+import { Fragment } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
@@ -100,10 +101,9 @@ function PageSideMenu() {
             ...quickAction
           }) => {
             const action = (externalOnClick = noop) => (
-              <>
+              <Fragment key={label}>
                 {separator === 'top' && <ContextMenuComponents.Separator />}
                 <ContextMenuComponents.Button
-                  key={label}
                   onClick={(evt) => {
                     onClick(evt);
                     externalOnClick(evt);
@@ -118,12 +118,13 @@ function PageSideMenu() {
                   </ContextMenuComponents.Icon>
                 </ContextMenuComponents.Button>
                 {separator === 'bottom' && <ContextMenuComponents.Separator />}
-              </>
+              </Fragment>
             );
 
             if (wrapWithMediaPicker) {
               return (
                 <MediaPicker
+                  key={label}
                   render={({ onClick: openMediaPicker }) =>
                     action(openMediaPicker)
                   }
