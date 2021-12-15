@@ -295,6 +295,7 @@ function MediaEdit({ element, box, setLocalProperties }) {
       )}
 
       <ScalePanel
+        aria-label={__('Scale media', 'web-stories')}
         data-testid="edit-panel-slider"
         setProperties={updateLocalProperties}
         x={x}
