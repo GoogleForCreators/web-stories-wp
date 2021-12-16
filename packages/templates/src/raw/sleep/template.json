@@ -119,7 +119,8 @@
             "alt": "icon_logo",
             "local": false,
             "sizes": [],
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#ffffff"
           },
           "type": "image",
           "x": 170.5,

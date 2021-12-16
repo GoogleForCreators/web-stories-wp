@@ -88,7 +88,8 @@
             "alt": "page1_logo-generic",
             "local": false,
             "sizes": [],
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#ffffff"
           },
           "type": "image",
           "x": 20,
@@ -176,7 +177,8 @@
             "alt": "page2_figure-formatted",
             "local": false,
             "sizes": [],
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#ab141c"
           },
           "mask": {
             "type": "rectangle",
@@ -311,7 +313,8 @@
             "alt": "page3_bg",
             "local": false,
             "sizes": [],
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#1c1c1c"
           },
           "scale": 150,
           "focalX": 50,
@@ -725,7 +728,8 @@
             "alt": "page5_bg-no-logo",
             "local": false,
             "sizes": [],
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#ca0c20"
           },
           "scale": 100,
           "focalX": 38.367113188634875,

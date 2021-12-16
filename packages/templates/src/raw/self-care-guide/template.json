@@ -477,7 +477,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#dcd4d5"
           }
         },
         {
