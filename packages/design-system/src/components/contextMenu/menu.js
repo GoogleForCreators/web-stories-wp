@@ -57,9 +57,9 @@ MenuWrapper.propTypes = {
  * @param {HTMLElement} element The element to check
  * @return {Array.<HTMLElement>} Array of html elements
  */
-function findFocusableChildren(all = [], element) {
+export function findFocusableChildren(all, element) {
   // if element is group, check children and recurse
-  if (element.attributes.role?.value === 'group' && element.children.length) {
+  if (element.attributes?.role?.value === 'group' && element.children.length) {
     return all.concat(
       Array.from(element.children)
         .map((child) => findFocusableChildren([], child))
