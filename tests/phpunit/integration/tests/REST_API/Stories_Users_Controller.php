@@ -76,58 +76,85 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::filter_user_query
 	 */
-	public function test_filter_user_query() {
-		$results = $this->controller->filter_user_query( [ 'who' => 'authors' ] );
+	public function test_filter_user_query_pre_wp_59() {
+		if ( is_wp_version_compatible( '5.9-beta' ) ) {
+			$this->markTestSkipped( 'This test requires WordPress < 5.9.' );
+		}
+
+		$actual = $this->controller->filter_user_query( [ 'who' => 'authors' ] );
 		$this->assertEqualSets(
 			[
-				'meta_query' => [
-					[
-						'key'     => 'wptests_user_level',
-						'value'   => 0,
-						'compare' => '!=',
-					],
-				],
+				'who' => 'authors',
 			],
-			$results
+			$actual
 		);
 	}
 
 	/**
 	 * @covers ::filter_user_query
 	 */
-	public function test_filter_user_query_meta_query() {
-		$results = $this->controller->filter_user_query(
+	public function test_filter_user_query_wp_59() {
+		if ( ! is_wp_version_compatible( '5.9-beta' ) ) {
+			$this->markTestSkipped( 'This test requires WordPress 5.9.' );
+		}
+
+		$actual = $this->controller->filter_user_query( [ 'who' => 'authors' ] );
+		$this->assertEqualSets(
 			[
-				'who'        => 'authors',
-				'meta_query' => [
-					[
-						'key'     => 'age',
-						'value'   => [ 20, 30 ],
-						'type'    => 'numeric',
-						'compare' => 'BETWEEN',
-					],
-				],
-			]
+				'capabilities' => [ 'edit_web-stories' ],
+			],
+			$actual
 		);
+	}
+
+	/**
+	 * @covers ::filter_user_query
+	 */
+	public function test_filter_user_query_capabilities_query_supported() {
+		add_filter( 'rest_user_collection_params', [ $this, 'filter_rest_user_collection_params' ] );
+
+		$actual = $this->controller->filter_user_query( [ 'who' => 'authors' ] );
+
+		remove_filter( 'rest_user_collection_params', [ $this, 'filter_rest_user_collection_params' ] );
 
 		$this->assertEqualSets(
 			[
-				'meta_query' => [
-					'relation' => 'AND',
-					[
-						'key'     => 'age',
-						'value'   => [ 20, 30 ],
-						'type'    => 'numeric',
-						'compare' => 'BETWEEN',
-					],
-					[
-						'key'     => 'wptests_user_level',
-						'value'   => 0,
-						'compare' => '!=',
-					],
-				],
+				'capabilities' => [ 'edit_web-stories' ],
 			],
-			$results
+			$actual
+		);
+	}
+
+	public function filter_rest_user_collection_params( $query_params ) {
+		$query_params['capabilities'] = [
+			'type'  => 'array',
+			'items' => [
+				'type' => 'string',
+			],
+		];
+
+		return $query_params;
+	}
+
+	/**
+	 * @covers ::filter_user_query
+	 */
+	public function test_filter_user_query_wp_59_existing_query() {
+		if ( version_compare( get_bloginfo( 'version' ), '5.9.0-beta', '<' ) ) {
+			$this->markTestSkipped( 'This test requires WordPress 5.9.' );
+		}
+
+		$actual = $this->controller->filter_user_query(
+			[
+				'who'          => 'authors',
+				'capabilities' => [ 'edit_posts' ],
+			]
+		);
+		$this->assertEqualSets(
+			[
+				'capabilities' => [ 'edit_posts', 'edit_web-stories' ],
+			],
+			$actual
 		);
 	}
 
