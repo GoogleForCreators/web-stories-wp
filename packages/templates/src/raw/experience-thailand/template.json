@@ -303,6 +303,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#11242e",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/experience-thailand/page2_image1.jpg",
             "width": 220,
             "height": 331,
@@ -399,6 +400,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#46382a",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/experience-thailand/page3_image1.jpg",
             "width": 220,
             "height": 275,
@@ -569,6 +571,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#2f342d",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/experience-thailand/page4_bg.jpg",
             "width": 220,
             "height": 147,
@@ -869,6 +872,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#523c30",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/experience-thailand/page6_bg.jpg",
             "width": 220,
             "height": 124,
@@ -1695,6 +1699,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#dbe1e0",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/experience-thailand/page9_image1.jpg",
             "width": 220,
             "height": 165,
@@ -1759,6 +1764,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#314a47",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/experience-thailand/page9_image4.jpg",
             "width": 220,
             "height": 147,

@@ -3108,6 +3108,7 @@
           "resource": {
             "type": "video",
             "mimeType": "video/mp4",
+            "baseColor": "#4c4c4c",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/los-angeles-city-guide/page13_videobg.mp4",
             "width": 1364,
             "height": 720,

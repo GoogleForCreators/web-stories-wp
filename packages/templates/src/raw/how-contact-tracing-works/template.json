@@ -29,6 +29,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#ffffff",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/how-contact-tracing-works/page01_image05.png",
             "width": 1237,
             "height": 294,
@@ -1197,6 +1198,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#317171",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/how-contact-tracing-works/page06_bg.png",
             "width": 1080,
             "height": 1920,

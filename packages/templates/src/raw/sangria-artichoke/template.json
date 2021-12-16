@@ -897,6 +897,7 @@
           "focalY": 50,
           "resource": {
             "type": "image",
+            "baseColor": "#ffffff",
             "mimeType": "image/png",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/sangria-artichoke/page04_bg.png",
             "width": 330,
