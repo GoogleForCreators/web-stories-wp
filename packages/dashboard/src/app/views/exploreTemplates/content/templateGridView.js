@@ -18,52 +18,41 @@
  * External dependencies
  */
 import {
-  useCallback,
   useEffect,
   useRef,
-  useState,
   useFocusOut,
   useMemo,
+  useState,
 } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
-import { useGridViewKeys } from '@web-stories-wp/design-system';
+import { noop, useGridViewKeys } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { CardGrid, useLayoutContext } from '../../../../components';
+import { CardGrid } from '../../../../components';
 import {
   PageSizePropType,
   TemplatesPropType,
   TemplateActionsPropType,
 } from '../../../../types';
 import { useConfig } from '../../../config';
-import { resolveRoute } from '../../../router';
 import TemplateGridItem, { FOCUS_TEMPLATE_CLASS } from './templateGridItem';
 
-function TemplateGridView({ pageSize, templates, templateActions }) {
+function TemplateGridView({
+  pageSize,
+  templates: filteredTemplates,
+  templateActions,
+}) {
   const { isRTL, apiCallbacks } = useConfig();
   const containerRef = useRef();
   const gridRef = useRef();
   const itemRefs = useRef({});
-
-  const {
-    actions: { scrollToTop },
-  } = useLayoutContext();
-
   const [activeGridItemId, setActiveGridItemId] = useState(null);
+  const { handleDetailsToggle, createStoryFromTemplate } =
+    templateActions || {};
 
-  const handleUseStory = useCallback(
-    ({ id, title }) => {
-      trackEvent('use_template', {
-        name: title,
-        template_id: id,
-      });
-      templateActions.createStoryFromTemplate(id);
-    },
-    [templateActions]
-  );
+  const canCreateStory = Boolean(apiCallbacks?.createStoryFromTemplate);
 
   useGridViewKeys({
     containerRef,
@@ -71,7 +60,7 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
     itemRefs,
     isRTL,
     currentItemId: activeGridItemId,
-    items: templates,
+    items: filteredTemplates,
   });
 
   // when keyboard focus changes and updated activeGridItemId
@@ -89,45 +78,42 @@ function TemplateGridView({ pageSize, templates, templateActions }) {
 
   const memoizedTemplateItems = useMemo(
     () =>
-      templates.map(
-        ({ id, centerTargetAction, slug, status, title, postersByPage }) => {
-          const isActive = activeGridItemId === id;
-          const posterSrc = postersByPage?.[0];
-          const canCreateStory = Boolean(apiCallbacks?.createStoryFromTemplate);
-          return (
-            <TemplateGridItem
-              detailLink={resolveRoute(centerTargetAction)}
-              onCreateStory={
-                canCreateStory ? () => handleUseStory({ id, title }) : null
-              }
-              onFocus={() => {
-                setActiveGridItemId(id);
-              }}
-              onSeeDetailsClick={scrollToTop}
-              height={pageSize.height}
-              id={id}
-              isActive={isActive}
-              key={slug}
-              posterSrc={posterSrc}
-              ref={(el) => {
-                itemRefs.current[id] = el;
-              }}
-              slug={slug}
-              status={status}
-              title={title}
-            />
-          );
-        }
-      ),
+      filteredTemplates.map(({ id, slug, status, title, postersByPage }) => {
+        const isActive = activeGridItemId === id;
+        const posterSrc = postersByPage?.[0];
+        return (
+          <TemplateGridItem
+            onCreateStory={
+              canCreateStory ? () => createStoryFromTemplate(id) : noop
+            }
+            onFocus={() => {
+              setActiveGridItemId(id);
+            }}
+            onSeeDetailsClick={handleDetailsToggle}
+            height={pageSize.height}
+            id={id}
+            isActive={isActive}
+            key={slug}
+            posterSrc={posterSrc}
+            ref={(el) => {
+              itemRefs.current[id] = el;
+            }}
+            slug={slug}
+            status={status}
+            title={title}
+          />
+        );
+      }),
     [
-      templates,
+      filteredTemplates,
       activeGridItemId,
+      canCreateStory,
+      handleDetailsToggle,
       pageSize.height,
-      handleUseStory,
-      scrollToTop,
-      apiCallbacks,
+      createStoryFromTemplate,
     ]
   );
+
   return (
     <div ref={containerRef}>
       <CardGrid

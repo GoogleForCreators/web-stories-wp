@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,5 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as MyStoriesView } from './myStories';
-export { default as ExploreTemplatesView } from './exploreTemplates';
+function addBlurhashProcessing(state, { id }) {
+  if (!id || state.blurHashProcessing.includes(id)) {
+    return state;
+  }
+  return {
+    ...state,
+    blurHashProcessing: [...state.blurHashProcessing, id],
+  };
+}
+
+export default addBlurhashProcessing;
