@@ -36,6 +36,7 @@ const expectPageTemplateEqual = (currentPage, template) => {
     ).toEqual(objectWithout(element, ['id', 'basedOn']));
   });
 };
+
 describe('CUJ: Page Templates: Creator can Apply a Default Page Template', () => {
   let fixture;
   let originalTimeout;
@@ -188,7 +189,6 @@ describe('CUJ: Page Templates: Creator can Apply a Default Page Template', () =>
   });
 
   describe('Keyboard Navigation', () => {
-    // TODO https://github.com/google/web-stories-wp/issues/9912
     it('should navigate templates via keyboard', async () => {
       // Click templates layout icon
       await fixture.events.click(fixture.editor.library.pageTemplatesTab);
