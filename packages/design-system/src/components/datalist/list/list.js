@@ -25,6 +25,7 @@ import {
   useLayoutEffect,
   useFocusOut,
   forwardRef,
+  memo,
 } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
@@ -307,4 +308,4 @@ OptionList.propTypes = {
   focusSearch: PropTypes.func,
 };
 
-export default OptionList;
+export default memo(OptionList);
