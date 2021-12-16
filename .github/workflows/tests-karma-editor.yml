@@ -70,6 +70,7 @@ jobs:
         run: npm run test:karma:story-editor -- --headless --snapshots --viewport=1600:1000 --coverage || npm run test:karma:story-editor:retry-failed -- --headless --snapshots --viewport=1600:1000
         env:
           DISABLE_ERROR_BOUNDARIES: true
+          DISABLE_EXPENSIVE_PROCESSES: true
 
       - name: Add files for snapshotting
         run: cp -r __static__ .test_artifacts/karma_snapshots/

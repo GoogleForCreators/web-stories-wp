@@ -218,6 +218,7 @@ const sharedConfig = {
       DISABLE_OPTIMIZED_RENDERING: false,
       DISABLE_ERROR_BOUNDARIES: false,
       DISABLE_QUICK_TIPS: false,
+      DISABLE_EXPENSIVE_PROCESSES: false,
     }),
     new DependencyExtractionWebpackPlugin(),
   ].filter(Boolean),
