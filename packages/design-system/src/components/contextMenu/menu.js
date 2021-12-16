@@ -22,7 +22,12 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import { KEYS, useComposeRefs, useMouseDownOutsideRef } from '../../utils';
+import {
+  KEYS,
+  noop,
+  useComposeRefs,
+  useMouseDownOutsideRef,
+} from '../../utils';
 import { useKeyDownEffect } from '../keyboard';
 import { useContextMenu } from './contextMenuProvider';
 
@@ -45,10 +50,34 @@ MenuWrapper.propTypes = {
   isIconMenu: PropTypes.bool,
 };
 
+/**
+ * Finds all focusable children in an html tree.
+ *
+ * @param {Array.<HTMLElement>} all Array of html elements
+ * @param {HTMLElement} element The element to check
+ * @return {Array.<HTMLElement>} Array of html elements
+ */
+function findFocusableChildren(all = [], element) {
+  // if element is group, check children and recurse
+  if (element.attributes.role?.value === 'group' && element.children.length) {
+    return all.concat(
+      Array.from(element.children)
+        .map((child) => findFocusableChildren([], child))
+        .flat()
+    );
+  }
+  // if element is focusable, return element
+  // if element is not, return all
+  return FOCUSABLE_ELEMENTS.includes(element.tagName) && !element.disabled
+    ? all.concat(element)
+    : all;
+}
+
 const Menu = ({
   children,
   disableControlledTabNavigation,
   isOpen,
+  onFocus = noop,
   ...props
 }) => {
   const { focusedId, isIconMenu, onDismiss, setFocusedId } = useContextMenu(
@@ -65,6 +94,21 @@ const Menu = ({
   const menuRef = useRef(null);
   const composedListRef = useComposeRefs(mouseDownOutsideRef, menuRef);
 
+  const handleFocus = useCallback(
+    (evt) => {
+      onFocus(evt);
+
+      const focusableChildren = Array.from(
+        menuRef.current?.children || []
+      ).reduce(findFocusableChildren, []);
+
+      if (menuRef.current === evt.target) {
+        focusableChildren?.[0]?.focus();
+      }
+    },
+    [onFocus]
+  );
+
   /**
    * Allow navigation of the list using the UP and DOWN arrow keys.
    * Close menu if ESCAPE is pressed.
@@ -80,16 +124,15 @@ const Menu = ({
         return;
       }
 
-      // TODO: deal with groups
-      const focusableChildren = Array.from(menuRef.current.children).filter(
-        (element) =>
-          FOCUSABLE_ELEMENTS.includes(element.tagName) && !element.disabled
-      );
+      const focusableChildren = Array.from(
+        menuRef.current?.children || []
+      ).reduce(findFocusableChildren, []);
+
       const prevIndex = focusableChildren.findIndex(
         (element) => element.id === focusedId
       );
 
-      if (prevIndex === -1) {
+      if (prevIndex === -1 && focusableChildren.length) {
         setFocusedId(focusableChildren[0].id);
         return;
       }
@@ -101,8 +144,8 @@ const Menu = ({
       // If we didn't find a focusable element or get to the start/end
       // of the list then **tabbing should close the menu**
       if (
-        (newIndex > focusableChildren.length - 1 || newIndex === -1) &&
-        key === KEYS.TAB
+        key === KEYS.TAB &&
+        (newIndex > focusableChildren.length - 1 || newIndex === -1)
       ) {
         onDismiss?.(evt);
         return;
@@ -116,8 +159,8 @@ const Menu = ({
       const newSelectedElement =
         focusableChildren[newIndex % focusableChildren.length];
 
-      newSelectedElement.focus();
-      setFocusedId(newSelectedElement.id);
+      newSelectedElement?.focus();
+      setFocusedId(newSelectedElement?.id || -1);
       return;
     },
     [focusedId, onDismiss, setFocusedId]
@@ -126,12 +169,14 @@ const Menu = ({
   // focus first focusable element on open
   useEffect(() => {
     if (isOpen) {
-      const focusableChildren = Array.from(menuRef.current.children).filter(
-        (element) => FOCUSABLE_ELEMENTS.includes(element.tagName)
-      );
+      const focusableChildren = Array.from(
+        menuRef.current?.children || []
+      ).reduce(findFocusableChildren, []);
 
-      focusableChildren?.[0]?.focus();
-      setFocusedId(focusableChildren?.[0].id);
+      if (focusableChildren.length) {
+        focusableChildren?.[0]?.focus();
+        setFocusedId(focusableChildren?.[0]?.id);
+      }
     }
   }, [isOpen, setFocusedId]);
 
@@ -139,7 +184,7 @@ const Menu = ({
     () =>
       disableControlledTabNavigation
         ? { key: ['esc', 'down', 'up', 'left', 'right'] }
-        : { key: ['esc', 'down', 'up', 'left', 'right', 'tab'], shift: true },
+        : { key: ['esc', 'down', 'up', 'left', 'right'], shift: true },
     [disableControlledTabNavigation]
   );
 
@@ -154,6 +199,11 @@ const Menu = ({
       data-testid="context-menu-list"
       role="menu"
       $isIconMenu={isIconMenu}
+      // Tabbing out from the list while using 'shift' would
+      // focus the list element. Should just travel back to the previous
+      // focusable element in the DOM
+      tabIndex={menuRef.current?.contains(document.activeElement) ? -1 : 0}
+      onFocus={handleFocus}
       {...props}
     >
       {children}
@@ -163,6 +213,7 @@ const Menu = ({
 
 export const MenuPropTypes = {
   children: PropTypes.node,
+  onFocus: PropTypes.func,
   disableControlledTabNavigation: PropTypes.bool,
   isOpen: PropTypes.bool,
 };
