@@ -19,10 +19,11 @@
  */
 import { css } from 'styled-components';
 import { generatePatternStyles } from '@web-stories-wp/patterns';
+
 /**
  * Internal dependencies
  */
-import { calcFontMetrics, generateFontFamily } from '../text/util';
+import { generateFontFamily } from '../text/util';
 import { getBorderStyle, getBorderRadius } from '../../utils/elementBorder';
 
 export const elementFillContent = css`
@@ -95,16 +96,13 @@ export const elementWithFont = css`
 `;
 
 // See generateParagraphTextStyle for the full set of properties.
-export const elementWithTextParagraphStyle = ({ element, dataToEditorY }) => {
-  const { marginOffset } = calcFontMetrics(element);
-  return css`
-    margin: ${-dataToEditorY(marginOffset / 2)}px 0;
-    padding: ${({ padding }) => padding || 0};
-    line-height: ${({ lineHeight }) => lineHeight};
-    text-align: ${({ textAlign }) => textAlign};
-    overflow-wrap: break-word;
-  `;
-};
+export const elementWithTextParagraphStyle = css`
+  margin: ${({ margin }) => margin};
+  padding: ${({ padding }) => padding || 0};
+  line-height: ${({ lineHeight }) => lineHeight};
+  text-align: ${({ textAlign }) => textAlign};
+  overflow-wrap: break-word;
+`;
 
 export const elementWithFlip = css`
   transform: ${({ transformFlip }) => transformFlip};

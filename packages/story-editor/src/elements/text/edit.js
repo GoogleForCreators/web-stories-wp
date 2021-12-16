@@ -165,8 +165,7 @@ function TextEdit({
       (styleX) => `${dataToEditorX(styleX)}px`,
       (styleY) => `${dataToEditorY(styleY)}px`,
       dataToEditorY,
-      element,
-      dataToEditorY
+      element
     ),
     font,
     element,
