@@ -42,9 +42,9 @@ class Conditional_Featured_Image extends Service_Base {
 	private $story_post_type;
 
 	/**
-	 * Core theme supports constructor.
+	 * Conditional_Featured_Image constructor.
 	 *
-	 * @since 1.8.0
+	 * @since 1.16.0
 	 *
 	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
 	 */
