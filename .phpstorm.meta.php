@@ -26,6 +26,7 @@ namespace PHPSTORM_META {
 			'integrations.amp'             => \Google\Web_Stories\Integrations\AMP::class,
 			'integrations.jetpack'         => \Google\Web_Stories\Integrations\Jetpack::class,
 			'integrations.nextgen_gallery' => \Google\Web_Stories\Integrations\NextGen_Gallery::class,
+			'integrations.cfi'             => \Google\Web_Stories\Integrations\Conditional_Featured_Image::class,
 			'integrations.sitekit'         => \Google\Web_Stories\Integrations\Site_Kit::class,
 			'integrations.themes_support'  => \Google\Web_Stories\Integrations\Core_Themes_Support::class,
 			'imgareaselect_patch'          => \Google\Web_Stories\Admin\ImgAreaSelect_Patch::class,
