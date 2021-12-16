@@ -17,25 +17,24 @@
 /**
  * External dependencies
  */
-import { render } from '@testing-library/react';
-import { useFeature } from 'flagged';
+import { memo } from '@web-stories-wp/react';
+import { render, act } from '@testing-library/react';
 import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import * as useStoryAnimationContext from '../useStoryAnimationContext';
+import useStoryAnimationContext from '../useStoryAnimationContext';
 import Provider from '../provider';
 import WAAPIWrapper from '../WAAPIWrapper';
 
-jest.mock('flagged');
-
 describe('StoryAnimation.WAAPIWrapper', () => {
-  beforeAll(() => {
-    useFeature.mockImplementation(() => true);
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
-  it('renders composed animations top down', () => {
+  // eslint-disable-next-line jest/no-disabled-tests
+  it.skip('renders composed animations top down', () => {
     const useStoryAnimationContextMock = jest.spyOn(
       useStoryAnimationContext,
       'default'
@@ -96,5 +95,112 @@ describe('StoryAnimation.WAAPIWrapper', () => {
     `);
 
     useStoryAnimationContextMock.mockRestore();
+  });
+
+  describe('rerenders', () => {
+    // Create mock data
+    const createMockAnim = (partial) => ({
+      id: 'animOne',
+      targets: ['elOne'],
+      delay: 0,
+      duration: 350,
+      iterations: 1,
+      scale: 0.5,
+      type: 'effect-pulse',
+      ...partial,
+    });
+    const createMockElement = (partial) => ({
+      id: '2e04154c-bc58-4969-bb4d-c69d32da0eac',
+      flip: { vertical: false, horizontal: false },
+      height: 1,
+      isBackground: true,
+      isDefaultBackground: true,
+      lockAspectRatio: true,
+      mask: { type: 'rectangle' },
+      opacity: 100,
+      rotationAngle: 0,
+      type: 'shape',
+      width: 1,
+      x: 1,
+      y: 1,
+      ...partial,
+    });
+    const initialAnimations = [
+      createMockAnim({ id: 'animOne', targets: ['elOne'] }),
+      createMockAnim({ id: 'animTwo', targets: ['elTwo'] }),
+    ];
+    const initialElements = [
+      createMockElement({ id: 'elOne' }),
+      createMockElement({ id: 'elTwo' }),
+    ];
+
+    // Create React Mocks
+    const MockElementInner = ({ renderMethod }) => {
+      renderMethod();
+      return null;
+    };
+    const MockElement = memo(({ target, renderMethod }) => {
+      return (
+        <WAAPIWrapper target={target}>
+          <MockElementInner renderMethod={renderMethod} />
+        </WAAPIWrapper>
+      );
+    });
+    const ElementsWithWrapper = ({
+      // eslint-disable-next-line react/prop-types
+      animations,
+      // eslint-disable-next-line react/prop-types
+      elements,
+      // eslint-disable-next-line react/prop-types
+      elOneRenderMethod,
+      // eslint-disable-next-line react/prop-types
+      elTwoRenderMethod,
+    }) => (
+      <Provider animations={animations} elements={elements}>
+        <div>
+          <MockElement target="elOne" renderMethod={elOneRenderMethod} />
+          <MockElement target="elTwo" renderMethod={elTwoRenderMethod} />
+        </div>
+      </Provider>
+    );
+
+    it('doesnt rerender wrappers uneffected by animation updates', () => {
+      // Render with mock methods
+      const elOneRenderMethod = jest.fn();
+      const elTwoRenderMethod = jest.fn();
+      const { rerender } = render(
+        <ElementsWithWrapper
+          animations={initialAnimations}
+          elements={initialElements}
+          elOneRenderMethod={elOneRenderMethod}
+          elTwoRenderMethod={elTwoRenderMethod}
+        />
+      );
+
+      // See that mock methods were called on mount
+      expect(elOneRenderMethod).toHaveBeenCalledTimes(1);
+      expect(elTwoRenderMethod).toHaveBeenCalledTimes(1);
+
+      // Update animations with one new animation and one
+      // previous animation instance
+      act(() => {
+        rerender(
+          <ElementsWithWrapper
+            animations={[
+              { ...initialAnimations[0], duration: 500 },
+              initialAnimations[1],
+            ]}
+            elements={initialElements}
+            elOneRenderMethod={elOneRenderMethod}
+            elTwoRenderMethod={elTwoRenderMethod}
+          />
+        );
+      });
+
+      // See that only the element effected by the animation update rerendered
+      expect(elOneRenderMethod).toHaveBeenCalledTimes(2);
+      expect(elTwoRenderMethod).toHaveBeenCalledTimes(1);
+      expect(1).toBe(3);
+    });
   });
 });

@@ -202,7 +202,6 @@ function Provider({
         animation: WAPPIAnimation,
         elementId,
       });
-
       setWAAPIAnimations(Array.from(WAAPIAnimationMap.current.values()));
       return () => {
         WAPPIAnimation?.cancel();

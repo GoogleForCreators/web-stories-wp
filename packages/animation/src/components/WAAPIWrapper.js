@@ -33,7 +33,6 @@ function WAAPIAnimationWrapper({
   keyframes,
   timings,
   targetLeafElement,
-  useClippingContainer,
 }) {
   const target = useRef(null);
 
@@ -53,11 +52,7 @@ function WAAPIAnimationWrapper({
     return hoistAnimation(new Animation(effect, document.timeline));
   }, [hoistAnimation, keyframes, targetLeafElement, timings]);
 
-  return (
-    <FullSizeAbsolute overflowHidden={useClippingContainer}>
-      <FullSizeAbsolute ref={target}>{children}</FullSizeAbsolute>
-    </FullSizeAbsolute>
-  );
+  return <FullSizeAbsolute ref={target}>{children}</FullSizeAbsolute>;
 }
 
 WAAPIAnimationWrapper.propTypes = WAAPIAnimationProps;
@@ -66,9 +61,12 @@ function WAAPIWrapper({ children, target }) {
   const hoistWAAPIAnimation = useStoryAnimationContext(
     (v) => v.actions.hoistWAAPIAnimation
   );
-  const WAAPIAnimationParts = useStoryAnimationContext((v) =>
+  const AnimationParts = useStoryAnimationContext((v) =>
     v.actions.getAnimationParts(target)
-  ).map((anim) => anim.WAAPIAnimation);
+  );
+  const WAAPIAnimationParts = AnimationParts?.map(
+    (anim) => anim.WAAPIAnimation
+  );
 
   const hoistAnimation = useCallback(
     (animation) => hoistWAAPIAnimation({ animation, elementId: target }),

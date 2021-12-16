@@ -21,4 +21,7 @@ import PropTypes from 'prop-types';
 export const WAAPIAnimationProps = {
   children: PropTypes.node.isRequired,
   hoistAnimation: PropTypes.func,
+  keyframes: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  timings: PropTypes.object,
+  targetLeafElement: PropTypes.bool,
 };
