@@ -2068,6 +2068,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#e24e51",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fresh-and-bright/page9_story2.jpg",
             "width": 352,
             "height": 528,
@@ -2098,6 +2099,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#3b2220",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fresh-and-bright/page9_story3.jpg",
             "width": 220,
             "height": 330,

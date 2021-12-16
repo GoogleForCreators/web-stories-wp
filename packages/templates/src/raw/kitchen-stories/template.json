@@ -4497,6 +4497,7 @@
             "type": "video",
             "mimeType": "video/mp4",
             "creationDate": "2021-05-10T12:51:22",
+            "baseColor": "#c5bbab",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/kitchen-stories/page12_bg_video.mp4",
             "width": 608,
             "height": 1038,

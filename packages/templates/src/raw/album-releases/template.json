@@ -155,6 +155,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#101632",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/album-releases/page01_image1.jpg",
             "width": 330,
             "height": 369,
