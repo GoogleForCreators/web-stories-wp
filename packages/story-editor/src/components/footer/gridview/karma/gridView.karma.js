@@ -67,6 +67,10 @@ describe('GridView integration', () => {
     expect(fixture.editor.gridView.node).toBeTruthy();
   });
 
+  it('should have no aXe violations', async () => {
+    await expectAsync(fixture.editor.gridView.node).toHaveNoViolations();
+  });
+
   it('should use tab to jump between the "Back" button, Preview Size control, and page list', async () => {
     // Tab cycle: Back -> Page Size range -> Active/previously focused Page in Page List
 

@@ -151,7 +151,13 @@ function ColorPicker({
     : BasicColorPicker;
 
   return (
-    <CSSTransition in appear classNames="picker" timeout={300}>
+    <CSSTransition
+      nodeRef={containerRef}
+      in
+      appear
+      classNames="picker"
+      timeout={300}
+    >
       <Container
         role="dialog"
         aria-label={__('Color and gradient picker', 'web-stories')}

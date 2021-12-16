@@ -59,24 +59,27 @@ class Single extends Service_Base {
 	 * @return void
 	 */
 	public function register() {
-		// Select the single-web-story.php template for Stories.
+		// This is hooked to both the `template_include` and the `single_template` filters,
+		// as an additional measure to improve compatibility with themes
+		// overriding the template hierarchy in an unusual way, like the Sage theme does.
+		add_filter( 'single_template', [ $this, 'filter_template_include' ], PHP_INT_MAX );
 		add_filter( 'template_include', [ $this, 'filter_template_include' ], PHP_INT_MAX );
 
 		add_filter( 'show_admin_bar', [ $this, 'show_admin_bar' ] ); // phpcs:ignore WordPressVIPMinimum.UserExperience.AdminBarRemoval.RemovalDetected
 	}
 
 	/**
-	 * Set template for web-story post type.
+	 * Filters the path of the queried template for single stories.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string|mixed $template Template.
+	 * @param string|mixed $template Absolute path to template file.
 	 *
-	 * @return string|mixed Template.
+	 * @return string|mixed Filtered template file path.
 	 */
 	public function filter_template_include( $template ) {
 		if ( $this->context->is_web_story() ) {
-			$template = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/frontend/single-web-story.php';
+			return WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/frontend/single-web-story.php';
 		}
 
 		return $template;

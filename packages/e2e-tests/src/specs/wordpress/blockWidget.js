@@ -28,7 +28,6 @@ import {
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Web Stories Widget Block', () => {
-  // eslint-disable-next-line jest/require-hook
   minWPVersionRequired('5.8');
 
   beforeAll(async () => {

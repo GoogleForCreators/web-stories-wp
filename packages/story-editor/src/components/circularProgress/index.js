@@ -20,6 +20,7 @@
 import PropTypes from 'prop-types';
 import styled, { keyframes } from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
+import { useRef } from '@web-stories-wp/react';
 
 const wrapperRotation = keyframes`
     100% { transform: rotate(360deg) }
@@ -58,9 +59,11 @@ const StyledCircle = styled.circle`
 `;
 
 function CircularProgress({ size, thickness }) {
+  const nodeRef = useRef();
+
   return (
-    <CSSTransition in appear timeout={0}>
-      <Wrapper size={size}>
+    <CSSTransition nodeRef={nodeRef} in appear timeout={0}>
+      <Wrapper ref={nodeRef} size={size}>
         <StyledSpinner viewBox={`${size / 2} ${size / 2} ${size} ${size}`}>
           <StyledCircle
             cx={size}

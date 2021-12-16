@@ -209,6 +209,7 @@ function useMediaUploadQueue() {
          * @param {File} item.file File object.
          * @return {Promise<void>}
          */
+        // eslint-disable-next-line complexity
         state.queue.map(async (item) => {
           const {
             id,
@@ -229,6 +230,28 @@ function useMediaUploadQueue() {
           let newResource;
           let newFile = file;
           let newPosterFile = posterFile;
+
+          if (
+            resource.type === 'video' &&
+            resource.isMuted !== null &&
+            additionalData?.web_stories_is_muted === undefined
+          ) {
+            additionalData.web_stories_is_muted = resource.isMuted;
+          }
+
+          if (resource?.baseColor) {
+            additionalData.meta = {
+              ...additionalData.meta,
+              web_stories_base_color: resource.baseColor,
+            };
+          }
+          // Do not copy over blurhash for new trimmed videos, poster might be different.
+          if (resource?.blurHash && !resource?.trimData) {
+            additionalData.meta = {
+              ...additionalData.meta,
+              web_stories_blurhash: resource.blurHash,
+            };
+          }
 
           // Convert animated GIFs to videos if possible.
           if (
@@ -266,6 +289,7 @@ function useMediaUploadQueue() {
                 newFile = await trimVideo(file, trimData.start, trimData.end);
                 finishTrimming({ id, file: newFile });
                 additionalData.meta = {
+                  ...additionalData.meta,
                   web_stories_trim_data: trimData,
                 };
               } catch (error) {

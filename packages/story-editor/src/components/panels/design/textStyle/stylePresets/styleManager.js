@@ -109,7 +109,13 @@ function StyleManager({ styles, onClose, applyStyle }) {
     setToDelete(style);
   };
   return (
-    <CSSTransition in appear classNames="style-manager" timeout={300}>
+    <CSSTransition
+      nodeRef={containerRef}
+      in
+      appear
+      classNames="style-manager"
+      timeout={300}
+    >
       <Container
         role="dialog"
         aria-label={__('Style presets manager', 'web-stories')}

@@ -51,7 +51,9 @@ describe('Autoplay video', () => {
     ).toBeTruthy();
   });
 
-  it('should autoplay on insert and on drop', async () => {
+  // TODO https://github.com/google/web-stories-wp/issues/9931
+  // eslint-disable-next-line jasmine/no-disabled-tests
+  xit('should autoplay on insert and on drop', async () => {
     const video = Array.from(mediaPane.querySelectorAll('video')).filter(
       (el) => el.title === 'ranger9'
     );

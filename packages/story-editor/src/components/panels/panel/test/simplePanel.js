@@ -63,21 +63,25 @@ describe('Panels/Panel/SimplePanel', () => {
     const titleName = 'Selection';
     const contentText = 'Panel Content';
 
-    beforeEach(() => {
+    it('should have a label that matches the title name', () => {
       renderWithTheme(
         <SimplePanel name="simple-panel" title={titleName}>
           <div>{contentText}</div>
         </SimplePanel>
       );
-    });
 
-    it('should have a label that matches the title name', () => {
       const titleElement = screen.getByRole('button', { name: titleName });
       const label = titleElement.getAttribute('aria-label');
       expect(label).toStrictEqual(titleName);
     });
 
     it('should have an expand status by default', () => {
+      renderWithTheme(
+        <SimplePanel name="simple-panel" title={titleName}>
+          <div>{contentText}</div>
+        </SimplePanel>
+      );
+
       const titleElement = screen.getByRole('button', { name: titleName });
       const isExpanded = titleElement.getAttribute('aria-expanded');
       expect(isExpanded).toBeTruthy();

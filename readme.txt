@@ -109,6 +109,16 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/google/web-stories-wp/releases).
 
+= 1.15.0 =
+
+**Release Date:** November 30, 2021.
+
+* New feature: external media hotlinking.
+* New feature: templates search form in the dashboard.
+* New feature: ability to qualify links as "nofollow" or "sponsored".
+* New feature: added support for password protected stories.
+* Bug fixes and performance improvements.
+
 = 1.14.0 =
 
 **Release Date:** November 2, 2021.
@@ -132,17 +142,11 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Fixes an issue with custom page templates that caused the editor to crash.
 * Bug fixes and performance improvements.
 
-= 1.12.0 =
-
-**Release Date:** October 5, 2021.
-
-* New feature: video trimming tool in the editor.
-* New feature: [improved analytics configuration](https://wp.stories.google/docs/seo/#Adding-Analytics) via opt-in on the settings page.
-* Template colors are now available in "Saved Colors" when creating a story from a template.
-* Easier selection of publisher logos in the editor.
-* Bug fixes and performance improvements.
-
 == Upgrade Notice ==
+
+= 1.15.0 =
+
+Media hotlinking, templates search, link qualification, and several bug fixes and performance improvements.
 
 = 1.14.0 =
 
@@ -151,7 +155,3 @@ Archive page customization, improved video captions appearance, layer panel impr
 = 1.13.0 =
 
 Categories and tags support, improved performance in the editor, and several bug fixes.
-
-= 1.12.0 =
-
-Video trimming, improved analytics configuration, publisher logos management, saved template colors, and various bug fixes.

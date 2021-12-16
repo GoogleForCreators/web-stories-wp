@@ -88,6 +88,11 @@ class Editor extends DependencyInjectedTestCase {
 	private $page_template_post_type;
 
 	/**
+	 * @var \Google\Web_Stories\Font_Post_Type
+	 */
+	private $fonts_post_type;
+
+	/**
 	 * @var \Google\Web_Stories\Media\Types
 	 */
 	private $types;
@@ -145,6 +150,7 @@ class Editor extends DependencyInjectedTestCase {
 		$this->assets                  = $this->createMock( \Google\Web_Stories\Assets::class );
 		$this->story_post_type         = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
 		$this->page_template_post_type = $this->injector->make( \Google\Web_Stories\Page_Template_Post_Type::class );
+		$this->fonts_post_type         = $this->injector->make( \Google\Web_Stories\Font_Post_Type::class );
 		$this->context                 = $this->injector->make( \Google\Web_Stories\Context::class );
 		$this->types                   = $this->injector->make( \Google\Web_Stories\Media\Types::class );
 
@@ -157,6 +163,7 @@ class Editor extends DependencyInjectedTestCase {
 			$this->assets,
 			$this->story_post_type,
 			$this->page_template_post_type,
+			$this->fonts_post_type,
 			$this->context,
 			$this->types
 		);
@@ -176,14 +183,22 @@ class Editor extends DependencyInjectedTestCase {
 	 * @covers ::admin_enqueue_scripts
 	 */
 	public function test_admin_enqueue_scripts() {
-		$this->assets->expects( $this->once() )->method( 'enqueue_script_asset' )->with(
-			\Google\Web_Stories\Admin\Editor::SCRIPT_HANDLE
-		);
 		$this->assets->expects( $this->once() )->method( 'remove_admin_style' )->with( [ 'forms' ] );
 
 		$GLOBALS['current_screen'] = convert_to_screen( $this->story_post_type->get_slug() );
 
 		$this->instance->admin_enqueue_scripts( 'post.php' );
+	}
+
+	/**
+	 * @covers ::replace_editor
+	 */
+	public function test_replace_editor() {
+		$this->assets->expects( $this->once() )->method( 'register_script_asset' )->with(
+			\Google\Web_Stories\Admin\Editor::SCRIPT_HANDLE
+		);
+
+		$this->instance->replace_editor( true, get_post( self::$story_id ) );
 	}
 
 	/**
@@ -195,7 +210,7 @@ class Editor extends DependencyInjectedTestCase {
 		$this->experiments->method( 'get_experiment_statuses' )->willReturn( [] );
 
 		$results = $this->instance->get_editor_settings();
-		$this->assertTrue( $results['config']['capabilities']['hasUploadMediaAction'] );
+		$this->assertTrue( $results['capabilities']['hasUploadMediaAction'] );
 	}
 
 	/**
@@ -207,7 +222,7 @@ class Editor extends DependencyInjectedTestCase {
 		$this->experiments->method( 'get_experiment_statuses' )->willReturn( [] );
 
 		$results = $this->instance->get_editor_settings();
-		$this->assertFalse( $results['config']['capabilities']['hasUploadMediaAction'] );
+		$this->assertFalse( $results['capabilities']['hasUploadMediaAction'] );
 	}
 
 	/**

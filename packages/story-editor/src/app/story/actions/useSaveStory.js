@@ -21,7 +21,6 @@ import { __ } from '@web-stories-wp/i18n';
 import { useCallback, useState } from '@web-stories-wp/react';
 import { getTimeTracker } from '@web-stories-wp/tracking';
 import { useSnackbar } from '@web-stories-wp/design-system';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -57,13 +56,11 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
   const { editLink } = story;
   const refreshPostEditURL = useRefreshPostEditURL(storyId, editLink);
 
-  const enableBetterCaptions = useFeature('enableBetterCaptions');
-
   const saveStory = useCallback(
     (props) => {
       setIsSaving(true);
 
-      const isStoryAlreadyPublished = ['publish', 'future'].includes(
+      const isStoryAlreadyPublished = ['publish', 'future', 'private'].includes(
         story.status
       );
 
@@ -75,7 +72,6 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
           story,
           pages,
           metadata,
-          args: { enableBetterCaptions },
         }),
         ...props,
       })
@@ -103,7 +99,9 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
 
           refreshPostEditURL();
 
-          const isStoryPublished = ['publish', 'future'].includes(data.status);
+          const isStoryPublished = ['publish', 'future', 'private'].includes(
+            data.status
+          );
           setIsFreshlyPublished(!isStoryAlreadyPublished && isStoryPublished);
         })
         .catch(() => {
@@ -128,7 +126,6 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
       refreshPostEditURL,
       showSnackbar,
       resetNewChanges,
-      enableBetterCaptions,
     ]
   );
 

@@ -14,24 +14,14 @@
  * limitations under the License.
  */
 /**
- * External dependencies
- */
-import { useCallback } from '@web-stories-wp/react';
-
-/**
  * Internal dependencies
  */
 import { useConfig } from '../config';
 
 function useUsersApi() {
   const {
-    apiCallbacks: { getAuthors: getAuthorsCallback },
+    apiCallbacks: { getAuthors },
   } = useConfig();
-
-  const getAuthors = useCallback(
-    (search) => getAuthorsCallback(search),
-    [getAuthorsCallback]
-  );
 
   return {
     api: {

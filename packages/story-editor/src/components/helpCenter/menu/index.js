@@ -18,12 +18,11 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
 import { noop } from '../../../utils/noop';
-import { GUTTER_WIDTH, ReadTipsType } from '../constants';
+import { GUTTER_WIDTH } from '../constants';
 import { Footer } from './footer';
 import { Header } from './header';
 import { Tips } from './tips';
@@ -42,7 +41,7 @@ const Container = styled.div`
 export function Menu({ onTipSelect = noop, readTips, ...transitionProps }) {
   return (
     <Transitioner {...transitionProps}>
-      <Container aria-label={__('Help Center Main Menu', 'web-stories')}>
+      <Container data-testid="help_center_container">
         <Header />
         <Tips readTips={readTips} onTipSelect={onTipSelect} />
         <Footer />
@@ -51,6 +50,6 @@ export function Menu({ onTipSelect = noop, readTips, ...transitionProps }) {
   );
 }
 Menu.propTypes = {
-  readTips: ReadTipsType,
+  readTips: PropTypes.object,
   onTipSelect: PropTypes.func.isRequired,
 };

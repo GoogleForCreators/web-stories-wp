@@ -32,45 +32,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $post_type, $post_type_object, $post;
 
 $stories_rest_base = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
-$demo              = ( isset( $_GET['web-stories-demo'] ) && (bool) $_GET['web-stories-demo'] ) ? 'true' : 'false'; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+$initial_edits     = [ 'story' => null ];
 
 // Preload common data.
 // Important: keep in sync with usage & definition in React app.
 $preload_paths = [
-	"/web-stories/v1/$stories_rest_base/{$post->ID}/?" . build_query(
-		[
-			'_embed'           => rawurlencode(
-				implode(
-					',',
-					[ 'wp:featuredmedia', 'wp:lockuser', 'author', 'wp:publisherlogo', 'wp:term' ]
-				)
-			),
-			'context'          => 'edit',
-			'web_stories_demo' => $demo,
-			'_fields'          => rawurlencode(
-				implode(
-					',',
-					[
-						'id',
-						'title',
-						'status',
-						'slug',
-						'date',
-						'modified',
-						'excerpt',
-						'link',
-						'story_data',
-						'preview_link',
-						'edit_link',
-						'embed_post_link',
-						'permalink_template',
-						'style_presets',
-						'password',
-					]
-				)
-			),
-		]
-	),
 	'/web-stories/v1/media/?' . build_query(
 		[
 			'context'               => 'edit',
@@ -116,6 +82,49 @@ $preload_paths = [
 	),
 ];
 
+$story_initial_path = "/web-stories/v1/$stories_rest_base/{$post->ID}/?";
+$story_query_params = [
+	'_embed'  => rawurlencode(
+		implode(
+			',',
+			[ 'wp:featuredmedia', 'wp:lockuser', 'author', 'wp:publisherlogo', 'wp:term' ]
+		)
+	),
+	'context' => 'edit',
+	'_fields' => rawurlencode(
+		implode(
+			',',
+			[
+				'id',
+				'title',
+				'status',
+				'slug',
+				'date',
+				'modified',
+				'excerpt',
+				'link',
+				'story_data',
+				'preview_link',
+				'edit_link',
+				'embed_post_link',
+				'permalink_template',
+				'style_presets',
+				'password',
+			]
+		)
+	),
+];
+
+if ( empty( $_GET['web-stories-demo'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$preload_paths[] = $story_initial_path . build_query( $story_query_params );
+} else {
+	$story_query_params['web_stories_demo'] = 'true';
+
+	$story_path             = $story_initial_path . build_query( $story_query_params );
+	$story_data             = \Google\Web_Stories\rest_preload_api_request( [], $story_path );
+	$initial_edits['story'] = ( ! empty( $story_data[ $story_path ]['body'] ) ) ? $story_data[ $story_path ]['body'] : [];
+}
+
 /**
  * Preload common data by specifying an array of REST API paths that will be preloaded.
  *
@@ -142,15 +151,27 @@ $preload_data = array_reduce(
 // Restore the global $post as it was before API preloading.
 $post = $backup_global_post; // phpcs:ignore WordPress.WP.GlobalVariablesOverride.Prohibited
 
+// In order to duplicate classic meta box behaviour, we need to run the classic meta box actions.
+require_once ABSPATH . 'wp-admin/includes/meta-boxes.php';
+register_and_do_post_meta_boxes( $post );
+
+$editor_settings = \Google\Web_Stories\Services::get( 'editor' )->get_editor_settings();
+
 wp_add_inline_script(
 	'wp-api-fetch',
 	sprintf( 'wp.apiFetch.use( wp.apiFetch.createPreloadingMiddleware( %s ) );', wp_json_encode( $preload_data ) ),
 	'after'
 );
 
-// In order to duplicate classic meta box behaviour, we need to run the classic meta box actions.
-require_once ABSPATH . 'wp-admin/includes/meta-boxes.php';
-register_and_do_post_meta_boxes( $post );
+$init_script = <<<JS
+	webStories.domReady( function() {
+	  webStories.initializeStoryEditor( 'web-stories-editor', %s, %s );
+	} );
+JS;
+
+$script = sprintf( $init_script, wp_json_encode( $editor_settings ), wp_json_encode( $initial_edits ) );
+
+wp_add_inline_script( \Google\Web_Stories\Admin\Editor::SCRIPT_HANDLE, $script );
 
 require_once ABSPATH . 'wp-admin/admin-header.php';
 

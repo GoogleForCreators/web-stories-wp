@@ -58,7 +58,7 @@ describe('Quick Actions integration', () => {
   });
 
   describe('quick action menu should have no aXe accessibility violations', () => {
-    it('should pass accessibility tests with the default menu', async () => {
+    it('should have no aXe violations with the default menu', async () => {
       await expectAsync(
         fixture.editor.canvas.quickActionMenu.node
       ).toHaveNoViolations();

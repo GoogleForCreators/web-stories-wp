@@ -48,8 +48,10 @@ const page = {
 
 const templateActions = {
   createStoryFromTemplate: action('create story from template clicked'),
-  handlePreviewTemplate: action('card was clicked to show preview mode'),
+  handleDetailsToggle: action('modal was toggled'),
+  switchToTemplateByOffset: action('switched to prev/next template'),
 };
+
 const defaultProps = {
   allPagesFetched: false,
   isLoading: false,

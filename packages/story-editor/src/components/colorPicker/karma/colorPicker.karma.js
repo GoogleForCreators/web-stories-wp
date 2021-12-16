@@ -56,6 +56,11 @@ describe('ColorPicker', () => {
           expect(bgPanel.backgroundColor.picker).toBeDefined()
         );
 
+        // Verify there are no aXe violations within the color picker.
+        await expectAsync(
+          bgPanel.backgroundColor.picker.node
+        ).toHaveNoViolations();
+
         // Snapshot it
         await fixture.snapshot('Basic color picker');
 
@@ -220,6 +225,9 @@ describe('ColorPicker', () => {
         // Verify being in edit mode.
         expect(picker.exitEditButton).toBeTruthy();
         expect(picker.deleteGlobalColor).toBeTruthy();
+        // Verify edit mode has no aXe violations.
+        await expectAsync(picker.exitEditButton).toHaveNoViolations();
+        await expectAsync(picker.deleteGlobalColor).toHaveNoViolations();
 
         // Delete global preset.
         await fixture.events.click(picker.deleteGlobalColor);
