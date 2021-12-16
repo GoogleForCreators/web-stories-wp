@@ -95,6 +95,7 @@ class Plugin extends ServiceBasedPlugin {
 		'plugin_row_meta'              => Admin\PluginRowMeta::class,
 		'plugin_action_links'          => Admin\PluginActionLinks::class,
 		'media.base_color'             => Media\Base_Color::class,
+		'media.blurhash'               => Media\Blurhash::class,
 		'media.image_sizes'            => Media\Image_Sizes::class,
 		'media.media_source'           => Media\Media_Source_Taxonomy::class,
 		'media.video.captions'         => Media\Video\Captions::class,

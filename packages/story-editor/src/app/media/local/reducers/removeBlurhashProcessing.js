@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,25 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * Update the story animation state to play, pause, scrub or reset
- * active pages animations.
- *
- * @param {Object} state Current state
- * @param {Object} payload Action payload
- * @param {string} payload.animationState STORY_ANIMATION_STATE state to update to.
- * @return {Object} New state
- */
-function updateAnimationState(state, { animationState }) {
-  if (state.animationState === animationState) {
+function removeBlurhashProcessing(state, { id }) {
+  if (!id || !state.blurHashProcessing.includes(id)) {
     return state;
   }
+  const currentProcessing = [...state.blurHashProcessing];
+  const blurHashProcessing = currentProcessing.filter((e) => e !== id);
 
   return {
     ...state,
-    animationState,
+    blurHashProcessing,
+    blurHashProcessed: [...state.blurHashProcessed, id],
   };
 }
 
-export default updateAnimationState;
+export default removeBlurhashProcessing;

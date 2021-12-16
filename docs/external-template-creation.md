@@ -4,7 +4,7 @@
 
 - The **story JSON representation** for each template is stored in [`packages/templates/src/raw/`](https://github.com/google/web-stories-wp/tree/main/packages/templates/src/raw) (in the `main` branch).
 - The **SVGs** used in each template are stored in [`packages/stickers/src/`](https://github.com/google/web-stories-wp/tree/main/packages/stickers/src) (in the `main` branch).
-- The (non-SVG) **image &amp; video files** used in each template are stored in [`public/static/main/images/templates/`](https://github.com/google/web-stories-wp/tree/static-site/public/static/main/images/templates) (in the `static-site` branch, using [Git LFS](https://git-lfs.github.com/)).
+- The (non-SVG) **image &amp; video files** used in each template are stored in [`public/static/main/images/templates/`](https://github.com/googleforcreators/wp.stories.google/tree/main/public/static/main/images/templates) (in the [googleforcreators/wp.stories.google](https://github.com/googleforcreators/wp.stories.google) repo, using [Git LFS](https://git-lfs.github.com/)).
 
 ## Overview
 
@@ -133,7 +133,7 @@ Once you have the story JSON, several code changes are needed to add it to the l
    - If the story JSON is copied from the devTools dialog as mentioned  in [Get The Story JSON](#get-the-story-json), the JSON will have some of the changes already present.
      - The 'Template' checkbox does following:
        - Resets extraneous properties.
-       - Replaces resource URLs with replaceable CDN constant and `static-site` asset path.
+       - Changes resource URLs to use replaceable CDN constant
        - Resets `sizes` property for images to `[]`.
        - Resets all `id` and `posterId` to 0 for image and video type resources.
 

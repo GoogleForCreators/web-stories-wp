@@ -31,11 +31,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import {
-  ExploreTemplatesView,
-  MyStoriesView,
-  TemplateDetailsView,
-} from '../../app/views';
+import { ExploreTemplatesView, MyStoriesView } from '../../app/views';
 import {
   ADMIN_TITLE,
   APP_ROUTES,
@@ -158,10 +154,6 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
             exact
             path={APP_ROUTES.TEMPLATES_GALLERY}
             component={<ExploreTemplatesView />}
-          />
-          <Route
-            path={NESTED_APP_ROUTES.TEMPLATES_GALLERY_DETAIL}
-            component={<TemplateDetailsView />}
           />
           {additionalRoutes &&
             additionalRoutes.map((routeProps) => (

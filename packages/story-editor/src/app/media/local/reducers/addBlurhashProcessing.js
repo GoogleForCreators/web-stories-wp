@@ -13,3 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+function addBlurhashProcessing(state, { id }) {
+  if (!id || state.blurHashProcessing.includes(id)) {
+    return state;
+  }
+  return {
+    ...state,
+    blurHashProcessing: [...state.blurHashProcessing, id],
+  };
+}
+
+export default addBlurhashProcessing;

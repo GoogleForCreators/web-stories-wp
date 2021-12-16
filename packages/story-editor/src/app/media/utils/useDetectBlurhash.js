@@ -25,10 +25,10 @@ import { getSmallestUrlForWidth } from '@web-stories-wp/media';
 import { useAPI } from '../../api';
 import { useStory } from '../../story';
 import { useConfig } from '../../config';
-import { getMediaBaseColor } from '../../../utils/getMediaBaseColor';
 import useCORSProxy from '../../../utils/useCORSProxy';
+import getBlurHashFromImage from '../../../utils/getBlurHashFromImage';
 
-function useDetectBaseColor({ updateMediaElement }) {
+function useDetectBlurHash({ updateMediaElement }) {
   const {
     actions: { updateMedia, getPosterMediaById },
   } = useAPI();
@@ -40,29 +40,29 @@ function useDetectBaseColor({ updateMediaElement }) {
   } = useConfig();
   const { getProxiedUrl } = useCORSProxy();
 
-  const saveBaseColor = useCallback(
+  const saveBlurHash = useCallback(
     /**
      *
      * @param {number} id Video ID.
-     * @param {string} baseColor Base Color.
+     * @param {string} blurHash Base Color.
      * @return {Promise<void>}
      */
-    async (id, baseColor) => {
+    async (id, blurHash) => {
       try {
         const properties = ({ resource }) => ({
           resource: {
             ...resource,
-            baseColor,
+            blurHash,
           },
         });
         updateElementsByResourceId({ id, properties });
         updateMediaElement({
           id,
-          data: { baseColor },
+          data: { blurHash },
         });
         if (hasUploadMediaAction) {
           await updateMedia(id, {
-            meta: { web_stories_base_color: baseColor },
+            meta: { web_stories_blurhash: blurHash },
           });
         }
       } catch (error) {
@@ -77,19 +77,19 @@ function useDetectBaseColor({ updateMediaElement }) {
     ]
   );
 
-  const updateBaseColor = useCallback(
+  const updateBlurHash = useCallback(
     async ({ resource }) => {
       const { type, poster, id, isExternal } = resource;
       let imageSrc = poster;
 
       if (type === 'image') {
-        imageSrc = getSmallestUrlForWidth(0, resource);
+        imageSrc = getSmallestUrlForWidth(300, resource);
       } else if (!isExternal) {
         const posterResource = getPosterMediaById
           ? await getPosterMediaById(id)
           : null;
         if (posterResource) {
-          imageSrc = getSmallestUrlForWidth(0, posterResource);
+          imageSrc = getSmallestUrlForWidth(300, posterResource);
         }
       }
 
@@ -98,18 +98,18 @@ function useDetectBaseColor({ updateMediaElement }) {
       }
       const imageSrcProxied = getProxiedUrl(resource, imageSrc);
       try {
-        const color = await getMediaBaseColor(imageSrcProxied);
-        await saveBaseColor(resource.id, color);
+        const blurHash = await getBlurHashFromImage(imageSrcProxied);
+        await saveBlurHash(resource.id, blurHash);
       } catch (error) {
         // Do nothing for now.
       }
     },
-    [getProxiedUrl, getPosterMediaById, saveBaseColor]
+    [getProxiedUrl, getPosterMediaById, saveBlurHash]
   );
 
   return {
-    updateBaseColor,
+    updateBlurHash,
   };
 }
 
-export default useDetectBaseColor;
+export default useDetectBlurHash;

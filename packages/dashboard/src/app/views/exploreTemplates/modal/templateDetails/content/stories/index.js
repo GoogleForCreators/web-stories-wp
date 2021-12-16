@@ -18,27 +18,23 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-
+import { boolean } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
-import {
-  formattedTemplatesArray,
-  STORYBOOK_PAGE_SIZE,
-} from '../../../../../../storybookUtils';
-import RelatedGrid from '..';
+import { formattedTemplatesArray } from '../../../../../../../storybookUtils';
+import DetailsContent from '..';
 
 export default {
-  title: 'Dashboard/Views/TemplateDetails/Content/RelatedGrid',
+  title: 'Dashboard/Views/TemplateDetails/Content/DetailsContent',
 };
 
 export const _default = () => (
-  <RelatedGrid
-    pageSize={STORYBOOK_PAGE_SIZE}
-    relatedTemplates={formattedTemplatesArray.slice(0, 4)}
-    templateActions={{
-      createStoryFromTemplate: action('create story from template clicked'),
-      handlePreviewTemplate: action('handle preview template clicked'),
-    }}
+  <DetailsContent
+    activeTemplateIndex={8}
+    isRTL={boolean('isRTL')}
+    filteredTemplatesLength={12}
+    switchToTemplateByOffset={action('switch to template by offset clicked')}
+    template={formattedTemplatesArray[1]}
   />
 );

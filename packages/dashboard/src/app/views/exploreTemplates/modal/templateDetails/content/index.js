@@ -19,7 +19,7 @@
 import PropTypes from 'prop-types';
 import { useMemo } from '@web-stories-wp/react';
 import { sprintf, __ } from '@web-stories-wp/i18n';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import {
   Button,
   BUTTON_SIZES,
@@ -35,20 +35,25 @@ import {
 /**
  * Internal dependencies
  */
-import { CardGallery, ColorList } from '../../../../../components';
-import { TemplatePropType } from '../../../../../types';
+import { CardGallery, ColorList } from '../../../../../../components';
+import { TemplatePropType } from '../../../../../../types';
 import {
   Container,
   Panel,
   DetailContainer,
   TemplateDetails,
   Inner,
-} from '../../components';
+} from '../components';
+
+const StyledPanel = styled(Panel)`
+  padding: 0 0 48px 0;
+`;
 
 const ByLineText = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.tertiary};
   margin: 8px 0 24px;
 `;
+
 const DescriptionText = styled(Text)`
   margin-bottom: 24px;
 `;
@@ -58,11 +63,11 @@ const PaginationContainer = styled.div`
   top: ${470 / 2}px;
   ${({ alignLeft }) =>
     alignLeft
-      ? css`
+      ? `
           left: 0;
           transform: translate(-187.5%, -50%);
         `
-      : css`
+      : `
           right: 0;
           transform: translate(187.5%, -50%);
         `}
@@ -83,33 +88,36 @@ const MetadataContainer = styled.div`
   align-items: center;
 `;
 
-function DetailsGallery({
+function DetailsContent({
   activeTemplateIndex,
   isRTL,
-  orderedTemplatesLength,
+  filteredTemplatesLength,
   switchToTemplateByOffset,
   template,
 }) {
-  const galleryPosters = useMemo(
-    () =>
-      Object.values(template.postersByPage).map((poster, index) => ({
+  const { postersByPage, title, description, tags, colors } = template || {};
+
+  const galleryPosters = useMemo(() => {
+    if (postersByPage) {
+      return Object.values(postersByPage).map((poster, index) => ({
         id: index,
         ...poster,
-      })),
-    [template.postersByPage]
-  );
+      }));
+    }
+    return undefined;
+  }, [postersByPage]);
 
   const { NextButton, PrevButton } = useMemo(() => {
     const Previous = (
       <Button
         type={BUTTON_TYPES.TERTIARY}
         size={BUTTON_SIZES.SMALL}
-        variant={BUTTON_VARIANTS.CIRCLE}
+        variant={BUTTON_VARIANTS.SQUARE}
         aria-label={__('View previous template', 'web-stories')}
         onClick={() => {
-          switchToTemplateByOffset(-1);
+          switchToTemplateByOffset(activeTemplateIndex - 1);
         }}
-        disabled={!orderedTemplatesLength || activeTemplateIndex === 0}
+        disabled={!filteredTemplatesLength || activeTemplateIndex === 0}
       >
         <Icons.ArrowLeftLarge height={32} width={32} />
       </Button>
@@ -119,14 +127,14 @@ function DetailsGallery({
       <Button
         type={BUTTON_TYPES.TERTIARY}
         size={BUTTON_SIZES.SMALL}
-        variant={BUTTON_VARIANTS.CIRCLE}
+        variant={BUTTON_VARIANTS.SQUARE}
         aria-label={__('View next template', 'web-stories')}
         onClick={() => {
-          switchToTemplateByOffset(1);
+          switchToTemplateByOffset(activeTemplateIndex + 1);
         }}
         disabled={
-          !orderedTemplatesLength ||
-          activeTemplateIndex === orderedTemplatesLength - 1
+          !filteredTemplatesLength ||
+          activeTemplateIndex === filteredTemplatesLength - 1
         }
       >
         <Icons.ArrowRightLarge height={32} width={32} />
@@ -143,7 +151,7 @@ function DetailsGallery({
           PrevButton: Previous,
         };
   }, [
-    orderedTemplatesLength,
+    filteredTemplatesLength,
     activeTemplateIndex,
     isRTL,
     switchToTemplateByOffset,
@@ -158,7 +166,7 @@ function DetailsGallery({
     : null;
 
   return (
-    <Panel>
+    <StyledPanel>
       <Container>
         <PaginationContainer alignLeft>{PrevButton}</PaginationContainer>
         <Inner>
@@ -170,11 +178,11 @@ function DetailsGallery({
           <TemplateDetails>
             <DetailContainer>
               <Display
-                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}
+                size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                 as="h3"
                 data-testid="template-details-title"
               >
-                {template.title}
+                {title}
               </Display>
               <ByLineText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}>
                 {byLine}
@@ -182,34 +190,34 @@ function DetailsGallery({
               <DescriptionText
                 size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}
               >
-                {template.description}
+                {description}
               </DescriptionText>
 
               <MetadataContainer>
-                {template.tags.map((tag) => (
+                {tags.map((tag) => (
                   <TemplateTag key={tag} disabled>
                     {tag}
                   </TemplateTag>
                 ))}
               </MetadataContainer>
               <MetadataContainer>
-                <ColorList colors={template.colors} size={32} />
+                <ColorList colors={colors} size={32} />
               </MetadataContainer>
             </DetailContainer>
           </TemplateDetails>
         </Inner>
         <PaginationContainer>{NextButton}</PaginationContainer>
       </Container>
-    </Panel>
+    </StyledPanel>
   );
 }
 
-DetailsGallery.propTypes = {
+DetailsContent.propTypes = {
   activeTemplateIndex: PropTypes.number,
   isRTL: PropTypes.bool,
-  orderedTemplatesLength: PropTypes.number,
+  filteredTemplatesLength: PropTypes.number,
   switchToTemplateByOffset: PropTypes.func,
   template: TemplatePropType,
 };
 
-export default DetailsGallery;
+export default DetailsContent;

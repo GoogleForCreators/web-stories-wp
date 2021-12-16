@@ -307,6 +307,51 @@ class Font_Controller extends RestTestCase {
 		);
 	}
 
+
+	/**
+	 * @covers ::create_item
+	 * @covers ::prepare_item_for_database
+	 * @covers ::font_exists
+	 */
+	public function test_create_item_duplicate() {
+		$this->controller->register_routes();
+
+		wp_set_current_user( self::$admin_id );
+
+		$request = new WP_REST_Request( WP_REST_Server::CREATABLE, '/web-stories/v1/fonts' );
+
+		$request->set_param( 'family', 'VaZiR ReGuLaR' );
+		$request->set_param( 'fallbacks', [ 'sans-serif' ] );
+		$request->set_param( 'weights', [ 400 ] );
+		$request->set_param( 'styles', [ 'regular' ] );
+		$request->set_param( 'variants', [ [ 0, 400 ] ] );
+		$request->set_param( 'url', 'https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/Vazir-Regular.ttf' );
+		$request->set_param(
+			'metrics',
+			[
+				'upm'   => 2048,
+				'asc'   => 2200,
+				'des'   => - 1100,
+				'tAsc'  => 2200,
+				'tDes'  => - 1100,
+				'tLGap' => 0,
+				'wAsc'  => 2200,
+				'wDes'  => 1100,
+				'xH'    => 1082,
+				'capH'  => 1638,
+				'yMin'  => - 1116,
+				'yMax'  => 2163,
+				'hAsc'  => 2200,
+				'hDes'  => - 1100,
+				'lGap'  => 0,
+			]
+		);
+
+		$response = rest_get_server()->dispatch( $request );
+
+		$this->assertErrorResponse( 'rest_invalid_field', $response, 400 );
+	}
+
 	/**
 	 * @covers ::delete_item
 	 */

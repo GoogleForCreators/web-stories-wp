@@ -71,6 +71,12 @@ describe('Image Editor', () => {
         await fixture.snapshot();
       });
 
+      it('should have no aXe violations', async () => {
+        await expectAsync(
+          fixture.editor.canvas.editLayer.node
+        ).toHaveNoViolations();
+      });
+
       it('should allow image to be scaled and moved using mouse', async () => {
         const image = fixture.editor.canvas.editLayer.media;
         const originalRect = image.getBoundingClientRect();

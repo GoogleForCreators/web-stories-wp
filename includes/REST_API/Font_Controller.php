@@ -50,7 +50,11 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	 */
 	public function __construct( $post_type ) {
 		parent::__construct( $post_type );
-		$this->namespace = 'web-stories/v1';
+
+		$post_type_object = get_post_type_object( $post_type );
+		$this->namespace  = $post_type_object && ! empty( $post_type_object->rest_namespace ) ?
+			$post_type_object->rest_namespace :
+			'web-stories/v1';
 	}
 
 	/**
@@ -254,21 +258,24 @@ class Font_Controller extends WP_REST_Posts_Controller {
 
 			// Filter before doing any sorting.
 			if ( isset( $registered['include'], $request['include'] ) && ! empty( $request['include'] ) ) {
+				/**
+				 * Include list.
+				 *
+				 * @var array{string} $include_list
+				 */
+				$include_list = $request['include'];
+				$include_list = array_map( 'strtolower', $include_list );
+
 				$fonts = array_values(
 					array_filter(
 						$fonts,
-						static function( $font ) use ( $request ) {
+						static function( $font ) use ( $include_list ) {
 							/**
 							 * Font data.
 							 *
 							 * @var array{family: string} $font
 							 */
-							/**
-							 * Request data.
-							 *
-							 * @var array{include: array<string>} $request
-							 */
-							return in_array( $font['family'], $request['include'], true );
+							return in_array( strtolower( $font['family'] ), $include_list, true );
 						}
 					)
 				);
@@ -435,7 +442,22 @@ class Font_Controller extends WP_REST_Posts_Controller {
 				$font_data[ $field ] = $request[ $field ];
 
 				if ( 'family' === $field ) {
-					$prepared_post->post_title = $request['family'];
+					/**
+					 * Request data.
+					 *
+					 * @var array{family: string} $request
+					 */
+					$font_family = trim( $request['family'] );
+
+					$prepared_post->post_title = $font_family;
+
+					if ( $this->font_exists( $font_family ) ) {
+						return new WP_Error(
+							'rest_invalid_field',
+							__( 'A font with this name already exists', 'web-stories' ),
+							[ 'status' => 400 ]
+						);
+					}
 				}
 			}
 		}
@@ -443,6 +465,36 @@ class Font_Controller extends WP_REST_Posts_Controller {
 		$prepared_post->post_content = wp_json_encode( $font_data );
 
 		return $prepared_post;
+	}
+
+	/**
+	 * Determines whether a font with the same name already exists.
+	 *
+	 * Performs a case-insensitive comparison.
+	 *
+	 * @since 1.16.0
+	 *
+	 * @param string $font_family Font family.
+	 *
+	 * @return bool Whether a font with this exact name already exists.
+	 */
+	private function font_exists( string $font_family ): bool {
+		$request = new WP_REST_Request(
+			WP_REST_Server::READABLE,
+			$this->namespace .
+			'/' . $this->rest_base
+		);
+		$request->set_param( 'include', [ $font_family ] );
+		$request->set_param( 'service', 'all' );
+
+		/**
+		 * Response object.
+		 *
+		 * @var WP_REST_Response $response
+		 */
+		$response = $this->get_items( $request );
+
+		return ! empty( $response->get_data() );
 	}
 
 	/**
@@ -511,6 +563,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 					'description' => __( 'The font family', 'web-stories' ),
 					'type'        => [ 'string', 'null' ],
 					'context'     => [ 'view', 'edit', 'embed' ],
+					'required'    => true,
 				],
 				'fallbacks' => [
 					'description' => __( 'Fallback fonts', 'web-stories' ),
@@ -519,6 +572,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 						'type' => 'string',
 					],
 					'context'     => [ 'view', 'edit' ],
+					'required'    => true,
 				],
 				'weights'   => [
 					'description' => __( 'Font weights', 'web-stories' ),
@@ -530,6 +584,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 					],
 					'minimum'     => 1,
 					'context'     => [ 'view', 'edit' ],
+					'required'    => true,
 				],
 				'styles'    => [
 					'description' => __( 'Font styles', 'web-stories' ),
@@ -539,6 +594,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 					],
 					'minimum'     => 1,
 					'context'     => [ 'view', 'edit' ],
+					'required'    => true,
 				],
 				'variants'  => [
 					'description' => __( 'Font variants', 'web-stories' ),
@@ -554,16 +610,19 @@ class Font_Controller extends WP_REST_Posts_Controller {
 						'maximum' => 2,
 					],
 					'context'     => [ 'view', 'edit' ],
+					'required'    => true,
 				],
 				'service'   => [
 					'description' => __( 'Font service', 'web-stories' ),
 					'type'        => 'string',
 					'context'     => [ 'view', 'edit' ],
+					'readonly'    => true,
 				],
 				'metrics'   => [
 					'description' => __( 'Font metrics', 'web-stories' ),
 					'type'        => 'object',
 					'context'     => [ 'view', 'edit' ],
+					'required'    => true,
 				],
 				'id'        => [
 					'description' => __( 'Unique identifier for the font.', 'web-stories' ),
@@ -576,11 +635,13 @@ class Font_Controller extends WP_REST_Posts_Controller {
 					'type'        => 'string',
 					'format'      => 'uri',
 					'context'     => [ 'view', 'edit', 'embed' ],
-					'readonly'    => true,
+					'required'    => true,
 				],
 			],
 		];
 
-		return $schema;
+		$this->schema = $schema;
+
+		return $this->add_additional_fields_schema( $this->schema );
 	}
 }

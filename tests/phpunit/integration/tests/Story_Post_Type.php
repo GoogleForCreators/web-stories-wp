@@ -127,6 +127,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 			)
 		);
 		$this->assertSame( 10, has_filter( 'wp_insert_post_data', [ $this->instance, 'change_default_title' ] ) );
+		$this->assertSame( 10, has_filter( 'wp_web-story_revisions_to_keep', [ $this->instance, 'revisions_to_keep' ] ) );
 		$this->assertSame(
 			10,
 			has_filter(
@@ -302,5 +303,55 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 		);
 
 		$this->assertTrue( $actual );
+	}
+
+	/**
+	 * Testing the revisions_to_keep() method.
+	 *
+	 * @dataProvider data_test_revisions_to_keep
+	 * @covers ::revisions_to_keep
+	 *
+	 * @param int $num      Number of revisions
+	 * @param int $expected Expected string of CSS rules.
+	 */
+	public function test_revisions_to_keep( $num, $expected ) {
+		$this->assertSame( $expected, $this->instance->revisions_to_keep( $num ) );
+	}
+
+	public function data_test_revisions_to_keep(): array {
+		return [
+			[
+				'num'      => 0,
+				'expected' => 0,
+			],
+			[
+				'num'      => 10,
+				'expected' => 10,
+			],
+			[
+				'num'      => 6,
+				'expected' => 6,
+			],
+			[
+				'num'      => -1,
+				'expected' => 10,
+			],
+			[
+				'num'      => '10',
+				'expected' => 10,
+			],
+			[
+				'num'      => 'ten',
+				'expected' => 0,
+			],
+			[
+				'num'      => true,
+				'expected' => 1,
+			],
+			[
+				'num'      => false,
+				'expected' => 0,
+			],
+		];
 	}
 }
