@@ -773,7 +773,7 @@ class APIProviderFixture {
 
       const getMedia = useCallback(({ mediaType, searchTerm, pagingNum }) => {
         const filterByMediaType = mediaType
-          ? ({ mime_type }) => mime_type.startsWith(mediaType)
+          ? ({ mimeType }) => mimeType.startsWith(mediaType)
           : () => true;
         const filterBySearchTerm = searchTerm
           ? ({ alt_text }) => alt_text.includes(searchTerm)
