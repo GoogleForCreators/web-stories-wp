@@ -21,6 +21,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { VisuallyHidden } from '../../visuallyHidden';
 import { Tooltip, TOOLTIP_PLACEMENT } from '../../tooltip';
 
 const TooltipWrapper = styled.div`
@@ -49,11 +50,14 @@ function Icon({
   ...props
 }) {
   return (
-    <TooltipWrapper>
-      <Tooltip placement={placement} title={title} {...props}>
-        <IconWrapper>{children}</IconWrapper>
-      </Tooltip>
-    </TooltipWrapper>
+    <>
+      <VisuallyHidden>{title}</VisuallyHidden>
+      <TooltipWrapper>
+        <Tooltip placement={placement} title={title} {...props}>
+          <IconWrapper>{children}</IconWrapper>
+        </Tooltip>
+      </TooltipWrapper>
+    </>
   );
 }
 Icon.propTypes = {
