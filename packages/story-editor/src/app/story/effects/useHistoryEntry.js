@@ -27,12 +27,8 @@ import { useHistory } from '../../history';
 import deleteNestedKeys from '../utils/deleteNestedKeys';
 
 // Changes to these properties of elements do not create a new history entry.
-const ELEMENT_PROPS_TO_IGNORE = [
-  'resource.baseColor',
-  'resource.isMuted',
-  'resource.poster',
-  'resource.posterId',
-];
+// Props to be added in
+const ELEMENT_PROPS_TO_IGNORE = [];
 
 // Record any change to core variables in history (history will know if it's a replay)
 function useHistoryEntry({ story, current, pages, selection, capabilities }) {
@@ -68,7 +64,11 @@ function useHistoryEntry({ story, current, pages, selection, capabilities }) {
     // Before adding a new history entry, let's check if the only properties that changed
     // should not influence history. Then we skip adding an entry.
     let skipAddingEntry = false;
-    if (currentHistoryEntryRef.current && pages?.length) {
+    if (
+      ELEMENT_PROPS_TO_IGNORE.length &&
+      currentHistoryEntryRef.current &&
+      pages?.length
+    ) {
       // If story / capabilities change, we should always add a new entry.
       const withoutPages = {
         story,
