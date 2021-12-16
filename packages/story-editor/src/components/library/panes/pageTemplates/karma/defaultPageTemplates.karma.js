@@ -213,6 +213,10 @@ describe('CUJ: Page Templates: Creator can Apply a Default Page Template', () =>
       await fixture.events.keyboard.press('right');
       await fixture.events.keyboard.press('right');
       await fixture.events.keyboard.press('Enter');
+
+      // allow filtered templates to be removed from DOM
+      await fixture.events.sleep(500);
+
       // expect templates titles to not contain "cover", there will still be one filter button containing "cover"
       await waitFor(() => {
         expect(fixture.screen.getAllByText(/cover/i).length).toBe(1);
@@ -266,10 +270,17 @@ describe('CUJ: Page Templates: Creator can Apply a Default Page Template', () =>
       await fixture.events.keyboard.press('left');
       await fixture.events.keyboard.press('Enter');
 
+      // allow time for previous filtered templates to remount
+      await fixture.events.sleep(500);
       // expect template titles to contain "cover"
       expect(
         fixture.screen.getAllByText(/cover/i).length
       ).toBeGreaterThanOrEqual(1);
+
+      // intentional test fail to check rest of test is passing as expected
+      expect(
+        fixture.screen.getAllByText(/poop/i).length
+      ).toBeGreaterThanOrEqual(1000);
     });
   });
 });
