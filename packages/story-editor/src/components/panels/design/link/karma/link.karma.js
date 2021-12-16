@@ -234,16 +234,18 @@ describe('Link Panel', () => {
       await moveElementToBottom(frame, 0);
 
       await closePanel('Selection');
+      await closePanel('Color');
+      await closePanel('Border');
 
       linkPanel = fixture.editor.inspector.designPanel.link;
       await fixture.events.click(linkPanel.address);
 
       await fixture.snapshot('Page Attachment warning & dashed line visible');
 
-      /*const warning = fixture.screen.getByText(
+      const warning = fixture.screen.getByText(
         'Link can not reside below the dashed line when a page attachment is present'
       );
-      expect(warning).toBeDefined();*/
+      expect(warning).toBeDefined();
     });
 
     it('should not allow adding link to multi-selection in Page Attachment area', async () => {
