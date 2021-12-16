@@ -54,9 +54,8 @@ const PROPS_LOCAL = {
         file: 'local_image.jpg',
         width: 1920,
         height: 1080,
-        mime_type: 'image/jpeg',
-        source_url:
-          'http://wp.local/wp-content/uploads/2020/08/local_image.jpg',
+        mimeType: 'image/jpeg',
+        sourceUrl: 'http://wp.local/wp-content/uploads/2020/08/local_image.jpg',
       },
     },
   },
@@ -80,8 +79,8 @@ const PROPS_M3P_WITH_ATTRIBUTION = {
     sizes: {
       full: {
         file: 'media/provider:TZ2tVEJx2aA',
-        source_url: 'https://source_url.com',
-        mime_type: 'image/jpeg',
+        sourceUrl: 'https://sourceUrl.com',
+        mimeType: 'image/jpeg',
         width: 2400,
         height: 3620,
       },
