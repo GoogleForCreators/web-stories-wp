@@ -19,8 +19,8 @@
  */
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { FlagsProvider } from 'flagged';
-import { curatedFontNames } from '@web-stories-wp/fonts';
 import { PAGE_RATIO, UnitsProvider } from '@web-stories-wp/units';
+import { CURATED_FONT_NAMES } from '@web-stories-wp/fonts';
 
 /**
  * Internal dependencies
@@ -71,7 +71,7 @@ describe('TextPane', () => {
 
   it('should insert text with preset text style when clicking Enter', async () => {
     const availableCuratedFonts = fontsListResponse.filter(
-      (font) => curatedFontNames.indexOf(font.name) > 0
+      (font) => CURATED_FONT_NAMES.indexOf(font.name) > 0
     );
 
     const fontContextValues = {
@@ -82,6 +82,7 @@ describe('TextPane', () => {
       },
       actions: {
         ensureMenuFontsLoaded: () => {},
+        ensureCustomFontsLoaded: () => {},
       },
     };
 

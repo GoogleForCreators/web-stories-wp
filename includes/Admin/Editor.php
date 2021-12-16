@@ -29,6 +29,7 @@ namespace Google\Web_Stories\Admin;
 use Google\Web_Stories\Context;
 use Google\Web_Stories\Decoder;
 use Google\Web_Stories\Experiments;
+use Google\Web_Stories\Font_Post_Type;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Locale;
 use Google\Web_Stories\Assets;
@@ -118,6 +119,13 @@ class Editor extends Service_Base implements HasRequirements {
 	private $page_template_post_type;
 
 	/**
+	 * Font_Post_Type instance.
+	 *
+	 * @var Font_Post_Type Font_Post_Type instance.
+	 */
+	private $font_post_type;
+
+	/**
 	 * Context instance.
 	 *
 	 * @var Context Context instance.
@@ -138,16 +146,17 @@ class Editor extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Experiments             $experiments     Experiments instance.
-	 * @param Meta_Boxes              $meta_boxes      Meta_Boxes instance.
-	 * @param Decoder                 $decoder         Decoder instance.
-	 * @param Locale                  $locale          Locale instance.
-	 * @param Google_Fonts            $google_fonts    Google_Fonts instance.
-	 * @param Assets                  $assets          Assets instance.
-	 * @param Story_Post_Type         $story_post_type Story_Post_Type instance.
+	 * @param Experiments             $experiments             Experiments instance.
+	 * @param Meta_Boxes              $meta_boxes              Meta_Boxes instance.
+	 * @param Decoder                 $decoder                 Decoder instance.
+	 * @param Locale                  $locale                  Locale instance.
+	 * @param Google_Fonts            $google_fonts            Google_Fonts instance.
+	 * @param Assets                  $assets                  Assets instance.
+	 * @param Story_Post_Type         $story_post_type         Story_Post_Type instance.
 	 * @param Page_Template_Post_Type $page_template_post_type Page_Template_Post_Type instance.
-	 * @param Context                 $context         Context instance.
-	 * @param Types                   $types           Types instance.
+	 * @param Font_Post_Type          $font_post_type          Font_Post_Type instance.
+	 * @param Context                 $context                 Context instance.
+	 * @param Types                   $types                   Types instance.
 	 */
 	public function __construct(
 		Experiments $experiments,
@@ -158,6 +167,7 @@ class Editor extends Service_Base implements HasRequirements {
 		Assets $assets,
 		Story_Post_Type $story_post_type,
 		Page_Template_Post_Type $page_template_post_type,
+		Font_Post_Type $font_post_type,
 		Context $context,
 		Types $types
 	) {
@@ -169,6 +179,7 @@ class Editor extends Service_Base implements HasRequirements {
 		$this->assets                  = $assets;
 		$this->story_post_type         = $story_post_type;
 		$this->page_template_post_type = $page_template_post_type;
+		$this->font_post_type          = $font_post_type;
 		$this->context                 = $context;
 		$this->types                   = $types;
 	}
@@ -390,6 +401,7 @@ class Editor extends Service_Base implements HasRequirements {
 				'link'           => '/web-stories/v1/link/',
 				'statusCheck'    => '/web-stories/v1/status-check/',
 				'taxonomies'     => '/web-stories/v1/taxonomies/',
+				'fonts'          => trailingslashit( $this->font_post_type->get_rest_url() ),
 				'metaBoxes'      => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
 				'storyLocking'   => rest_url( sprintf( '%s/%s/lock/', $this->story_post_type->get_rest_url(), $story_id ) ),
 			],
