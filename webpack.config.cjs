@@ -106,15 +106,6 @@ const sharedConfig = {
         enforce: 'pre',
       },
       {
-        test: /\.worker\.js$/,
-        use: {
-          loader: 'worker-loader',
-          options: {
-            inline: 'fallback',
-          },
-        },
-      },
-      {
         test: /\.js$/,
         exclude: /node_modules/,
         use: [

@@ -32,7 +32,6 @@ namespace PHPSTORM_META {
 			'imgareaselect_patch'          => \Google\Web_Stories\Admin\ImgAreaSelect_Patch::class,
 			'kses'                         => \Google\Web_Stories\KSES::class,
 			'media.base_color'             => \Google\Web_Stories\Media\Base_Color::class,
-			'media.blurhash'               => \Google\Web_Stories\Media\Blurhash::class,
 			'media.image_sizes'            => \Google\Web_Stories\Media\Image_Sizes::class,
 			'media.media_source'           => \Google\Web_Stories\Media\Media_Source_Taxonomy::class,
 			'media.video.captions'         => \Google\Web_Stories\Media\Video\Captions::class,

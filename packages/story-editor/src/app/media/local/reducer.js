@@ -81,14 +81,6 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
       return reducers.removeBaseColorProcessing(state, payload);
     }
 
-    case types.LOCAL_MEDIA_ADD_BLURHASH_PROCESSING: {
-      return reducers.addBlurhashProcessing(state, payload);
-    }
-
-    case types.LOCAL_MEDIA_REMOVE_BLURHASH_PROCESSING: {
-      return reducers.removeBlurhashProcessing(state, payload);
-    }
-
     case types.LOCAL_MEDIA_ADD_AUDIO_PROCESSING: {
       return reducers.addAudioProcessing(state, payload);
     }

@@ -22,8 +22,6 @@ export const INITIAL_STATE = {
   ...COMMON_INITIAL_STATE,
   audioProcessing: [],
   audioProcessed: [],
-  blurHashProcessed: [],
-  blurHashProcessing: [],
   baseColorProcessed: [],
   baseColorProcessing: [],
   posterProcessing: [],

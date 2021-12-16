@@ -31,7 +31,6 @@ import useProcessMedia from '../utils/useProcessMedia';
 import useUploadMedia from '../useUploadMedia';
 import useDetectVideoHasAudio from '../utils/useDetectVideoHasAudio';
 import useDetectBaseColor from '../utils/useDetectBaseColor';
-import useDetectBlurHash from '../utils/useDetectBlurhash';
 import { LOCAL_MEDIA_TYPE_ALL } from './types';
 
 /**
@@ -67,8 +66,6 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     removePosterProcessing,
     setBaseColorProcessing,
     removeBaseColorProcessing,
-    setBlurhashProcessing,
-    removeBlurhashProcessing,
     updateMediaElement,
     deleteMediaElement,
   } = reducerActions;
@@ -136,10 +133,6 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   });
 
   const { updateBaseColor } = useDetectBaseColor({
-    updateMediaElement,
-  });
-
-  const { updateBlurHash } = useDetectBlurHash({
     updateMediaElement,
   });
 
@@ -217,24 +210,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
         removeBaseColorProcessing({ id });
       })();
     },
-    [setBaseColorProcessing, updateBaseColor, removeBaseColorProcessing]
-  );
-
-  const processMediaBlurhash = useCallback(
-    (resource) => {
-      const { blurHashProcessed, blurHashProcessing } = stateRef.current;
-      const { id } = resource;
-      (async () => {
-        // Simple way to prevent double-uploading.
-        if (blurHashProcessed.includes(id) || blurHashProcessing.includes(id)) {
-          return;
-        }
-        setBlurhashProcessing({ id });
-        await updateBlurHash({ resource });
-        removeBlurhashProcessing({ id });
-      })();
-    },
-    [stateRef, setBlurhashProcessing, updateBlurHash, removeBlurhashProcessing]
+    [setBaseColorProcessing, removeBaseColorProcessing, updateBaseColor]
   );
 
   const postProcessingResource = useCallback(
@@ -249,7 +225,6 @@ export default function useContextValueProvider(reducerState, reducerActions) {
         posterId,
         mimeType,
         poster,
-        blurHash,
       } = resource;
 
       if (local || !id) {
@@ -271,14 +246,10 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       if (imageSrc && !baseColor) {
         processMediaBaseColor(resource);
       }
-      if (imageSrc && !blurHash) {
-        processMediaBlurhash(resource);
-      }
     },
     [
       allowedVideoMimeTypes,
       processMediaBaseColor,
-      processMediaBlurhash,
       processVideoAudio,
       uploadVideoPoster,
     ]
