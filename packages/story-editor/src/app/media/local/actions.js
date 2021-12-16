@@ -109,6 +109,24 @@ export const removeBaseColorProcessing =
     });
   };
 
+export const setBlurhashProcessing =
+  (dispatch) =>
+  ({ id }) => {
+    dispatch({
+      type: types.LOCAL_MEDIA_ADD_BLURHASH_PROCESSING,
+      payload: { id },
+    });
+  };
+
+export const removeBlurhashProcessing =
+  (dispatch) =>
+  ({ id }) => {
+    dispatch({
+      type: types.LOCAL_MEDIA_REMOVE_BLURHASH_PROCESSING,
+      payload: { id },
+    });
+  };
+
 export const setPosterProcessing =
   (dispatch) =>
   ({ id }) => {
