@@ -18,23 +18,34 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-import { boolean } from '@storybook/addon-knobs';
+
+import styled from 'styled-components';
+
 /**
  * Internal dependencies
  */
-import { formattedTemplatesArray } from '../../../../../../storybookUtils';
-import DetailsGallery from '..';
+import Header from '..';
+import { Layout } from '../../../../../../../components';
 
 export default {
-  title: 'Dashboard/Views/TemplateDetails/Content/DetailsGallery',
+  title: 'Dashboard/Views/TemplateDetails/Header',
+  component: Header,
+};
+
+const StorybookLayoutContainer = styled.div`
+  margin-top: 40px;
+  height: 100vh;
+`;
+
+const templateActions = {
+  createStoryFromTemplate: action('create story from template clicked'),
+  handleDetailsToggle: action('modal was toggled'),
 };
 
 export const _default = () => (
-  <DetailsGallery
-    activeTemplateIndex={8}
-    isRTL={boolean('isRTL')}
-    orderedTemplatesLength={12}
-    switchToTemplateByOffset={action('switch to template by offset clicked')}
-    template={formattedTemplatesArray[1]}
-  />
+  <Layout.Provider>
+    <StorybookLayoutContainer>
+      <Header templateActions={templateActions} canCreateStory />
+    </StorybookLayoutContainer>
+  </Layout.Provider>
 );

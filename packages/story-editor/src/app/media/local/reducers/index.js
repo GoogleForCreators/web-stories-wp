@@ -26,3 +26,5 @@ export { default as addPosterProcessing } from './addPosterProcessing';
 export { default as removePosterProcessing } from './removePosterProcessing';
 export { default as addAudioProcessing } from './addAudioProcessing';
 export { default as removeAudioProcessing } from './removeAudioProcessing';
+export { default as addBlurhashProcessing } from './addBlurhashProcessing';
+export { default as removeBlurhashProcessing } from './removeBlurhashProcessing';

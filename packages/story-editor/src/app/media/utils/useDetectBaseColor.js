@@ -39,12 +39,6 @@ function useDetectBaseColor({ updateMediaElement }) {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
   const { getProxiedUrl } = useCORSProxy();
-  const setProperties = useCallback(
-    (id, properties) => {
-      updateElementsByResourceId({ id, properties });
-    },
-    [updateElementsByResourceId]
-  );
 
   const saveBaseColor = useCallback(
     /**
@@ -55,13 +49,13 @@ function useDetectBaseColor({ updateMediaElement }) {
      */
     async (id, baseColor) => {
       try {
-        const newState = ({ resource }) => ({
+        const properties = ({ resource }) => ({
           resource: {
             ...resource,
             baseColor,
           },
         });
-        setProperties(id, newState);
+        updateElementsByResourceId({ id, properties });
         updateMediaElement({
           id,
           data: { baseColor },
@@ -75,7 +69,12 @@ function useDetectBaseColor({ updateMediaElement }) {
         // Do nothing for now.
       }
     },
-    [setProperties, updateMedia, updateMediaElement, hasUploadMediaAction]
+    [
+      updateElementsByResourceId,
+      updateMediaElement,
+      hasUploadMediaAction,
+      updateMedia,
+    ]
   );
 
   const updateBaseColor = useCallback(
@@ -86,7 +85,9 @@ function useDetectBaseColor({ updateMediaElement }) {
       if (type === 'image') {
         imageSrc = getSmallestUrlForWidth(0, resource);
       } else if (!isExternal) {
-        const posterResource = await getPosterMediaById(id);
+        const posterResource = getPosterMediaById
+          ? await getPosterMediaById(id)
+          : null;
         if (posterResource) {
           imageSrc = getSmallestUrlForWidth(0, posterResource);
         }

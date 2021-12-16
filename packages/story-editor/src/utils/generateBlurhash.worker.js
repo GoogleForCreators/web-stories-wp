@@ -13,3 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { encode } from 'blurhash';
+
+self.onmessage = function (event) {
+  const { image, width, height, compontentX, compontentY } = event.data;
+
+  try {
+    const blurHash = encode(image, width, height, compontentX, compontentY);
+    postMessage({
+      type: 'success',
+      blurHash,
+    });
+  } catch (error) {
+    postMessage({
+      type: 'error',
+      error,
+    });
+  }
+};

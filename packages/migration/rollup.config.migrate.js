@@ -23,9 +23,9 @@ import { resolve as resolvePath } from 'path';
 import resolve from '@rollup/plugin-node-resolve';
 
 export default {
-  input: resolvePath(__dirname, 'index.js'),
+  input: resolvePath(__dirname, 'src/index.js'),
   output: {
-    file: resolvePath(__dirname, 'module.js'),
+    file: resolvePath(__dirname, 'src/module.js'),
     format: 'es',
   },
   plugins: [resolve()],

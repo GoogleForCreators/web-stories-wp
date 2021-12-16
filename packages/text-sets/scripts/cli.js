@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /*
  * Copyright 2021 Google LLC
  *
@@ -102,7 +101,7 @@ fs.mkdirSync(screenshotsPath, { recursive: true });
 
   await browser.close();
   console.log(
-    `\nText sets images generated in ${screenshotsPath}, please move and commit them to the static-site branch`
+    `\nText sets images generated in ${screenshotsPath}, please move and commit them to the googleforcreators/wp.stories.google repo.`
   );
 })();
 

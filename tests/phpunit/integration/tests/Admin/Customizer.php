@@ -69,6 +69,13 @@ class Customizer extends DependencyInjectedTestCase {
 	}
 
 	/**
+	 * @covers ::is_needed
+	 */
+	public function test_is_needed() {
+		$this->assertTrue( $this->instance::is_needed() );
+	}
+
+	/**
 	 * Add theme support for web stories.
 	 */
 	private function add_web_stories_theme_support() {
