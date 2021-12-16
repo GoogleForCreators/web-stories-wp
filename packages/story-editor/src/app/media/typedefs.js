@@ -25,7 +25,7 @@
  * @property {number} height height in pixels
  * @property {number} width width in pixels
  * @property {string} mimeType mime type of the file
- * @property {string} source_url the source url
+ * @property {string} sourceUrl the source url
  */
 
 /**

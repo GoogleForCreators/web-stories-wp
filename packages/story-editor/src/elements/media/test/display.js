@@ -61,13 +61,13 @@ describe('MediaDisplay', () => {
         alt: '',
         sizes: {
           medium: {
-            source_url: 'https://example.com/image1-mid.png',
+            sourceUrl: 'https://example.com/image1-mid.png',
             width: 500,
             height: 400,
             mimeType: 'image/png',
           },
           full: {
-            source_url: 'https://example.com/image1.png',
+            sourceUrl: 'https://example.com/image1.png',
             width: 1000,
             height: 800,
             mimeType: 'image/png',
