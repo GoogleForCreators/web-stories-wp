@@ -25,34 +25,34 @@ describe('normalizeResourceSizes', () => {
       size1: {
         width: '300',
         height: '300',
-        source_url: 'image-300x300.jpg',
+        sourceUrl: 'image-300x300.jpg',
       },
       size2: {
         width: '600',
         height: '600',
-        source_url: 'image-600x600.jpg',
+        sourceUrl: 'image-600x600.jpg',
       },
       size3: {
         width: '900',
         height: '900',
-        source_url: 'image-900x900.jpg',
+        sourceUrl: 'image-900x900.jpg',
       },
     };
     const expected = {
       size1: {
         width: 300,
         height: 300,
-        source_url: 'image-300x300.jpg',
+        sourceUrl: 'image-300x300.jpg',
       },
       size2: {
         width: 600,
         height: 600,
-        source_url: 'image-600x600.jpg',
+        sourceUrl: 'image-600x600.jpg',
       },
       size3: {
         width: 900,
         height: 900,
-        source_url: 'image-900x900.jpg',
+        sourceUrl: 'image-900x900.jpg',
       },
     };
 

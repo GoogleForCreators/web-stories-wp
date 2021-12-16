@@ -30,9 +30,9 @@ describe('getSmallestUrlForWidth', () => {
       width: 400,
       height: 200,
       sizes: {
-        img1: { width: 200, height: 100, source_url: 'full-url' },
-        img2: { width: 300, height: 150, source_url: 'med-url' },
-        img3: { width: 400, height: 200, source_url: 'large-url' },
+        img1: { width: 200, height: 100, sourceUrl: 'full-url' },
+        img2: { width: 300, height: 150, sourceUrl: 'med-url' },
+        img3: { width: 400, height: 200, sourceUrl: 'large-url' },
       },
     };
     expect(getSmallestUrlForWidth(210, resource)).toBe('med-url');
@@ -45,9 +45,9 @@ describe('getSmallestUrlForWidth', () => {
       width: 400,
       height: 200,
       sizes: {
-        img1: { width: 200, height: 100, source_url: 'full-url' },
-        img2: { width: 300, height: 150, source_url: 'med-url' },
-        img3: { width: 400, height: 200, source_url: 'large-url' },
+        img1: { width: 200, height: 100, sourceUrl: 'full-url' },
+        img2: { width: 300, height: 150, sourceUrl: 'med-url' },
+        img3: { width: 400, height: 200, sourceUrl: 'large-url' },
       },
     };
     expect(getSmallestUrlForWidth(160, resource)).toBe('large-url');
@@ -59,10 +59,10 @@ describe('getSmallestUrlForWidth', () => {
       width: 400,
       height: 200,
       sizes: {
-        img1: { width: 200, height: 500, source_url: 'portrait-url' },
-        img2: { width: 250, height: 250, source_url: 'square-url' },
-        img3: { width: 300, height: 150, source_url: 'med-url' },
-        img4: { width: 400, height: 200, source_url: 'large-url' },
+        img1: { width: 200, height: 500, sourceUrl: 'portrait-url' },
+        img2: { width: 250, height: 250, sourceUrl: 'square-url' },
+        img3: { width: 300, height: 150, sourceUrl: 'med-url' },
+        img4: { width: 400, height: 200, sourceUrl: 'large-url' },
       },
     };
     expect(getSmallestUrlForWidth(150, resource)).toBe('med-url');
@@ -74,9 +74,9 @@ describe('getSmallestUrlForWidth', () => {
       width: 400,
       height: 200,
       sizes: {
-        img1: { width: 200, height: 1, source_url: 'small-url' },
-        img2: { width: 300, height: 1, source_url: 'med-url' },
-        img3: { width: 400, height: 1, source_url: 'large-url' },
+        img1: { width: 200, height: 1, sourceUrl: 'small-url' },
+        img2: { width: 300, height: 1, sourceUrl: 'med-url' },
+        img3: { width: 400, height: 1, sourceUrl: 'large-url' },
       },
     };
     expect(getSmallestUrlForWidth(440, resource)).toBe('default-url');
