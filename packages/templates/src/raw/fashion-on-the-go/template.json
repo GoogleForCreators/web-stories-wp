@@ -37,7 +37,6 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "baseColor": "#252522",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fashion-on-the-go/page1_hero.jpg",
             "width": 220,
             "height": 297,

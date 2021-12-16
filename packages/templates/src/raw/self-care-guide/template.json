@@ -4885,7 +4885,6 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": "#484944",
             "isExternal": true
           }
         },

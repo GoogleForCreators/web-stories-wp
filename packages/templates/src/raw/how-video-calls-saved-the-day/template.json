@@ -5,14 +5,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
@@ -20,7 +25,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -69,10 +77,20 @@
             }
           },
           "fontSize": 56,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #3a3a3a\">How</span>\n<span style=\"font-weight: 500; color: #3a3a3a\">Video Calls</span>\n<span style=\"font-weight: 500; color: #3a3a3a\">Saved the Day</span>",
           "fontWeight": 400,
@@ -94,7 +112,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -105,12 +126,17 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "videoCallsBrowserIcon" },
+          "sticker": {
+            "type": "videoCallsBrowserIcon"
+          },
           "id": "aecd13c7-4abe-420c-bff8-1723d0adb3e0"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -121,15 +147,26 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "videoCallsBrowserIcon" },
+          "sticker": {
+            "type": "videoCallsBrowserIcon"
+          },
           "id": "35934601-79e9-450b-94f2-72a239dee8ff"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "type": "image",
           "resource": {
             "type": "image",
@@ -154,7 +191,9 @@
           "scale": 142,
           "focalX": 51.87177988223175,
           "focalY": 45.341347848667645,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "id": "d10b538c-f14a-4c98-81c1-29a7d82e687c"
         },
         {
@@ -163,7 +202,10 @@
           "id": "46740eba-44b0-4afb-96d3-d8c645de91b6",
           "basedOn": "fa12a7c8-c985-459f-9c8e-401a76007576",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "HIGHLIGHT",
@@ -212,7 +254,13 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 58, "g": 58, "b": 58 } },
+          "backgroundColor": {
+            "color": {
+              "r": 58,
+              "g": 58,
+              "b": 58
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
           "padding": {
@@ -243,10 +291,19 @@
           "id": "323e1d16-d1b6-4256-beb8-facf11a6a2df",
           "basedOn": "d10b538c-f14a-4c98-81c1-29a7d82e687c",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "type": "image",
           "resource": {
             "type": "image",
@@ -269,11 +326,16 @@
           "scale": 100,
           "focalX": 49.94290127731412,
           "focalY": 43.36426077894482,
-          "mask": { "type": "rectangle" }
+          "mask": {
+            "type": "rectangle"
+          }
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -284,12 +346,17 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "videoCallsTooltip" },
+          "sticker": {
+            "type": "videoCallsTooltip"
+          },
           "id": "40a6f116-13f9-4091-b364-9ae673d43f60"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -332,10 +399,20 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.5,
           "textAlign": "center",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "<span style=\"text-transform: uppercase\">Hey!!!</span>",
           "fontWeight": 400,
@@ -361,7 +438,10 @@
           "id": "587f4a17-7803-45a3-8edf-eb12dd3a704b",
           "basedOn": "e8c24d48-b29d-4948-9cbd-dbc0c9b3fbc3",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -404,10 +484,20 @@
             }
           },
           "fontSize": 20,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.5,
           "textAlign": "center",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "🙂",
           "fontWeight": 400,
@@ -426,7 +516,13 @@
           "marginOffset": 6.5625
         }
       ],
-      "backgroundColor": { "color": { "r": 255, "g": 191, "b": 11 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 191,
+          "b": 11
+        }
+      },
       "type": "page",
       "id": "a2b16ddc-2786-458a-a8e3-8ad0cd34aa31",
       "animations": [
@@ -469,14 +565,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
@@ -484,7 +585,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -533,7 +637,13 @@
             }
           },
           "fontSize": 22,
-          "backgroundColor": { "color": { "r": 58, "g": 58, "b": 58 } },
+          "backgroundColor": {
+            "color": {
+              "r": 58,
+              "g": 58,
+              "b": 58
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
           "padding": {
@@ -568,7 +678,10 @@
           "id": "89645e1e-02df-4a6a-9534-8194a0ddcf3e",
           "basedOn": "29b95b5f-9249-4899-bd3c-491f83973861",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": -8,
           "lockAspectRatio": true,
           "backgroundTextMode": "FILL",
@@ -617,7 +730,13 @@
             }
           },
           "fontSize": 22,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
           "padding": {
@@ -648,7 +767,10 @@
           "id": "fc0ef842-cf31-4532-8c72-fec00cc8e938",
           "basedOn": "29b95b5f-9249-4899-bd3c-491f83973861",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 8,
           "lockAspectRatio": true,
           "backgroundTextMode": "FILL",
@@ -697,7 +819,13 @@
             }
           },
           "fontSize": 22,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
           "padding": {
@@ -728,7 +856,10 @@
           "id": "18861eb7-26b1-4d67-a28f-6660e0b2718a",
           "basedOn": "29b95b5f-9249-4899-bd3c-491f83973861",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": -8,
           "lockAspectRatio": true,
           "backgroundTextMode": "FILL",
@@ -777,7 +908,13 @@
             }
           },
           "fontSize": 22,
-          "backgroundColor": { "color": { "r": 255, "g": 191, "b": 11 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 191,
+              "b": 11
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
           "padding": {
@@ -804,7 +941,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -814,6 +954,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-05-26T12:13:29",
+            "baseColor": "#ffffff",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/how-video-calls-saved-the-day/page02_image01.png",
             "width": 88,
             "height": 46,
@@ -842,7 +983,13 @@
         }
       ],
       "backgroundOverlay": "none",
-      "backgroundColor": { "color": { "r": 58, "g": 58, "b": 58 } },
+      "backgroundColor": {
+        "color": {
+          "r": 58,
+          "g": 58,
+          "b": 58
+        }
+      },
       "type": "page",
       "id": "eafd228f-ca60-4d9a-a0d8-621a0c64f000",
       "animations": [
@@ -882,14 +1029,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
@@ -897,7 +1049,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -908,12 +1063,17 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "videoCallsBrowserIcon" },
+          "sticker": {
+            "type": "videoCallsBrowserIcon"
+          },
           "id": "1020e519-5e8f-4dbc-98c6-2d6cc2ba5b3b"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -962,10 +1122,20 @@
             }
           },
           "fontSize": 56,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #3a3a3a\">Miss the</span>\n<span style=\"font-weight: 500; color: #3a3a3a\">real thing:</span>\n<span style=\"font-weight: 500; color: #3a3a3a\">68</span>",
           "fontWeight": 400,
@@ -992,7 +1162,10 @@
           "id": "c897e972-cb32-476a-8748-18871821aaab",
           "basedOn": "fa12a7c8-c985-459f-9c8e-401a76007576",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1041,10 +1214,20 @@
             }
           },
           "fontSize": 30,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #3a3a3a\">%</span>",
           "fontWeight": 400,
@@ -1063,10 +1246,19 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "type": "image",
           "resource": {
             "type": "image",
@@ -1091,12 +1283,17 @@
           "scale": 104,
           "focalX": 50,
           "focalY": 40.23199023199023,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "id": "9209a9f3-71ec-4f2e-b5fa-80b1a10a56b3"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -1105,7 +1302,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "videoCallsTooltip" },
+          "sticker": {
+            "type": "videoCallsTooltip"
+          },
           "basedOn": "40a6f116-13f9-4091-b364-9ae673d43f60",
           "id": "a01f052e-152a-4f8b-a47b-64142265abff",
           "x": 224,
@@ -1113,7 +1312,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1156,10 +1358,20 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.5,
           "textAlign": "center",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "<span style=\"text-transform: uppercase\">Nooo!!</span>",
           "fontWeight": 400,
@@ -1182,7 +1394,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
@@ -1225,10 +1440,20 @@
             }
           },
           "fontSize": 21,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.5,
           "textAlign": "center",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "🙁",
           "fontWeight": 400,
@@ -1251,7 +1476,13 @@
         }
       ],
       "backgroundOverlay": "none",
-      "backgroundColor": { "color": { "r": 255, "g": 191, "b": 11 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 191,
+          "b": 11
+        }
+      },
       "type": "page",
       "id": "8ce91ead-121e-4e39-a8dd-a0302b660873",
       "animations": [
@@ -1302,14 +1533,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "type": "shape",
@@ -1317,10 +1553,19 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "type": "shape",
           "x": 47,
           "y": 438,
@@ -1329,12 +1574,17 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "id": "7c280353-ec99-4412-96fe-92a2c8e49bae"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1383,7 +1633,13 @@
             }
           },
           "fontSize": 22,
-          "backgroundColor": { "color": { "r": 58, "g": 58, "b": 58 } },
+          "backgroundColor": {
+            "color": {
+              "r": 58,
+              "g": 58,
+              "b": 58
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
           "padding": {
@@ -1418,7 +1674,10 @@
           "id": "960fd66e-51f8-470c-a4ae-b91f55e1c91c",
           "basedOn": "55bcfb5d-944a-40fc-b0f2-f1f8658e6881",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1467,7 +1726,13 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 58, "g": 58, "b": 58 } },
+          "backgroundColor": {
+            "color": {
+              "r": 58,
+              "g": 58,
+              "b": 58
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
           "padding": {
@@ -1494,7 +1759,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -1532,7 +1800,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -1543,15 +1814,26 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "videoCallsBrowserIcon" },
+          "sticker": {
+            "type": "videoCallsBrowserIcon"
+          },
           "id": "8aeb3479-a7c1-4fd4-9d35-516208f07f59"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "type": "image",
           "resource": {
             "type": "image",
@@ -1573,7 +1855,9 @@
           "scale": 137,
           "focalX": 49.844271414312914,
           "focalY": 37.216274150177156,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "basedOn": "188df79a-bb3a-4c94-9faa-4200fe2e5dfe",
           "id": "262d7bbe-7dcf-4776-aef6-d5138c612d8e",
           "x": 96,
@@ -1581,7 +1865,13 @@
         }
       ],
       "backgroundOverlay": "none",
-      "backgroundColor": { "color": { "r": 58, "g": 58, "b": 58 } },
+      "backgroundColor": {
+        "color": {
+          "r": 58,
+          "g": 58,
+          "b": 58
+        }
+      },
       "type": "page",
       "id": "fe31b57a-485e-4584-b7e7-1a0108e865e3",
       "animations": [
@@ -1600,14 +1890,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "38f9046f-73ad-4669-933c-5d6e0de0607e",
@@ -1615,17 +1910,28 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "type": "shape",
           "width": 268,
           "height": 30,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "basedOn": "7c280353-ec99-4412-96fe-92a2c8e49bae",
           "id": "f6009e6a-abcc-4be4-8896-2a1dcd250781",
           "x": 48,
@@ -1633,7 +1939,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1682,7 +1991,13 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 58, "g": 58, "b": 58 } },
+          "backgroundColor": {
+            "color": {
+              "r": 58,
+              "g": 58,
+              "b": 58
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
           "padding": {
@@ -1713,7 +2028,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -1752,7 +2070,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -1763,15 +2084,26 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "videoCallsBrowserIcon" },
+          "sticker": {
+            "type": "videoCallsBrowserIcon"
+          },
           "id": "4e7397b4-8b9d-409b-9ff2-619c7483d5fc"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "type": "image",
           "resource": {
             "type": "image",
@@ -1794,7 +2126,9 @@
           "scale": 155,
           "focalX": 46.554028628380415,
           "focalY": 55.324648535062806,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "basedOn": "188df79a-bb3a-4c94-9faa-4200fe2e5dfe",
           "id": "d7a6a69f-f2d4-4596-bceb-dad85a9cba8d",
           "x": 128,
@@ -1802,7 +2136,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1851,10 +2188,19 @@
             }
           },
           "fontSize": 22,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "initial",
-          "padding": { "locked": true, "hasHiddenPadding": false },
+          "padding": {
+            "locked": true,
+            "hasHiddenPadding": false
+          },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #3a3a3a\">“Enabling remote work. </span><span style=\"font-weight: 500; color: #fff\">One minute I could be in NY, one minute in Italy. </span><span style=\"color: #fff\">✈️✈️✈️ </span><span style=\"font-weight: 500; color: #fff\">Theoretically, anyway.”</span>",
           "fontWeight": 700,
@@ -1886,7 +2232,13 @@
           "delay": 500
         }
       ],
-      "backgroundColor": { "color": { "r": 58, "g": 58, "b": 58 } },
+      "backgroundColor": {
+        "color": {
+          "r": 58,
+          "g": 58,
+          "b": 58
+        }
+      },
       "type": "page",
       "id": "e67b0451-5a65-4802-8308-1341c1bc9a9e",
       "pageTemplateType": "quote"
@@ -1895,14 +2247,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "3554988d-224d-4e73-83e6-58c7d1dd381e",
@@ -1910,7 +2267,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": -4.5,
@@ -1920,13 +2280,18 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "videoCallsBrowserIcon" },
+          "sticker": {
+            "type": "videoCallsBrowserIcon"
+          },
           "id": "7ba63f7e-1ada-4388-9d2d-f599c1e77d21",
           "type": "sticker"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -1975,10 +2340,20 @@
             }
           },
           "fontSize": 56,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "content": "<span style=\"font-weight: 500; color: #3a3a3a\">People</span>\n<span style=\"font-weight: 500; color: #3a3a3a\">use plants</span>\n<span style=\"font-weight: 500; color: #3a3a3a\">89</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -2001,7 +2376,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2050,10 +2428,20 @@
             }
           },
           "fontSize": 30,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "x": 125,
           "y": 254,
           "id": "b6b7be67-5810-4210-b2fd-1daa0c2a010d",
@@ -2076,10 +2464,19 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "type": "image",
           "resource": {
             "type": "image",
@@ -2102,7 +2499,9 @@
           "scale": 130,
           "focalX": 40.51069703243616,
           "focalY": 47.412008281573506,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "basedOn": "9209a9f3-71ec-4f2e-b5fa-80b1a10a56b3",
           "id": "5e8ed5b0-173f-4c71-ade7-fc3c0d0b358e",
           "x": 0,
@@ -2110,7 +2509,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -2119,7 +2521,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "videoCallsTooltip" },
+          "sticker": {
+            "type": "videoCallsTooltip"
+          },
           "basedOn": "a01f052e-152a-4f8b-a47b-64142265abff",
           "id": "c7952817-a99a-4022-b60d-2d63a640939e",
           "x": 224,
@@ -2127,7 +2531,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2170,10 +2577,20 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.5,
           "textAlign": "center",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "<span style=\"text-transform: uppercase\">Aloha!!</span>",
           "fontWeight": 400,
@@ -2196,7 +2613,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
@@ -2239,10 +2659,20 @@
             }
           },
           "fontSize": 19,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.5,
           "textAlign": "center",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "😃",
           "fontWeight": 400,
@@ -2265,7 +2695,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -2275,6 +2708,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-05-26T11:20:06",
+            "baseColor": "#fab911",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/how-video-calls-saved-the-day/page06_image02.png",
             "width": 152,
             "height": 195,
@@ -2353,7 +2787,13 @@
           "delay": 0
         }
       ],
-      "backgroundColor": { "color": { "r": 255, "g": 191, "b": 11 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 191,
+          "b": 11
+        }
+      },
       "type": "page",
       "id": "962fdc9c-994a-4368-afdc-b526e6c4cf5c",
       "pageTemplateType": ""
@@ -2362,14 +2802,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "dc205837-f6f5-46df-84bc-205e74d63e60",
@@ -2377,17 +2822,28 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "type": "shape",
           "width": 79,
           "height": 30,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "basedOn": "f6009e6a-abcc-4be4-8896-2a1dcd250781",
           "id": "a37f8a3e-a953-45d0-9cb1-e00335c66657",
           "x": 47,
@@ -2395,7 +2851,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2444,7 +2903,13 @@
             }
           },
           "fontSize": 22,
-          "backgroundColor": { "color": { "r": 58, "g": 58, "b": 58 } },
+          "backgroundColor": {
+            "color": {
+              "r": 58,
+              "g": 58,
+              "b": 58
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
           "padding": {
@@ -2475,7 +2940,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2524,7 +2992,13 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 58, "g": 58, "b": 58 } },
+          "backgroundColor": {
+            "color": {
+              "r": 58,
+              "g": 58,
+              "b": 58
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
           "padding": {
@@ -2555,7 +3029,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -2593,7 +3070,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -2604,15 +3084,26 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "videoCallsBrowserIcon" },
+          "sticker": {
+            "type": "videoCallsBrowserIcon"
+          },
           "id": "5e1ff880-11f0-4fd1-b04d-2d1ebd6af7cd"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "type": "image",
           "resource": {
             "type": "image",
@@ -2635,7 +3126,9 @@
           "scale": 170,
           "focalX": 55.77992130255349,
           "focalY": 50.127591590182355,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "basedOn": "de91ce5b-8a1b-4603-ad3e-350cb916fc17",
           "id": "188df79a-bb3a-4c94-9faa-4200fe2e5dfe",
           "x": 69,
@@ -2653,7 +3146,13 @@
           "delay": 500
         }
       ],
-      "backgroundColor": { "color": { "r": 58, "g": 58, "b": 58 } },
+      "backgroundColor": {
+        "color": {
+          "r": 58,
+          "g": 58,
+          "b": 58
+        }
+      },
       "type": "page",
       "id": "b593ab98-1efc-4567-9fcc-2e14fc1e10d6",
       "pageTemplateType": ""
@@ -2662,14 +3161,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "6d96520f-8d5f-458e-a168-017bcc515ef4",
@@ -2677,17 +3181,28 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "type": "shape",
           "width": 145,
           "height": 30,
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "basedOn": "f6009e6a-abcc-4be4-8896-2a1dcd250781",
           "id": "73c5174a-1816-4e3b-abe3-1b0434901d1b",
           "x": 48,
@@ -2695,7 +3210,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2744,7 +3262,13 @@
             }
           },
           "fontSize": 16,
-          "backgroundColor": { "color": { "r": 58, "g": 58, "b": 58 } },
+          "backgroundColor": {
+            "color": {
+              "r": 58,
+              "g": 58,
+              "b": 58
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
           "padding": {
@@ -2775,7 +3299,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -2824,10 +3351,20 @@
             }
           },
           "fontSize": 22,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "type": "text",
           "content": "<span style=\"font-weight: 500; color: #3a3a3a\">“Sometimes,</span><span style=\"font-weight: 500; color: #fff\"> I use video calls as a virtual bar to reunite with my friends 🍺🍺🍺.”</span>",
           "fontWeight": 400,
@@ -2849,7 +3386,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -2860,20 +3400,32 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "videoCallsBrowserIcon" },
+          "sticker": {
+            "type": "videoCallsBrowserIcon"
+          },
           "id": "df124319-286a-4426-bd31-76a1a2058dd2"
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "type": "image",
           "resource": {
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-05-26T10:55:49",
+            "baseColor": "#c7b7a8",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/how-video-calls-saved-the-day/page08_image01.png",
             "width": 1080,
             "height": 720,
@@ -2892,7 +3444,9 @@
           "scale": 115,
           "focalX": 53.252667549161046,
           "focalY": 48.23597487592704,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "id": "0363b1f6-4874-4ce8-93fc-8c049b692f37"
         },
         {
@@ -2901,10 +3455,19 @@
           "id": "9a077340-22b0-48ef-b837-35e3a0cfc3c4",
           "basedOn": "0363b1f6-4874-4ce8-93fc-8c049b692f37",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "type": "image",
           "resource": {
             "type": "image",
@@ -2927,7 +3490,9 @@
           "scale": 170,
           "focalX": 40.315526285558704,
           "focalY": 53.99585425836172,
-          "mask": { "type": "rectangle" }
+          "mask": {
+            "type": "rectangle"
+          }
         },
         {
           "x": 208,
@@ -2935,15 +3500,25 @@
           "id": "afe56b0a-19a4-4b3a-8994-56b34f1cb4a2",
           "basedOn": "0363b1f6-4874-4ce8-93fc-8c049b692f37",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "type": "image",
           "resource": {
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-05-26T10:57:56",
+            "baseColor": "#c9ad95",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/how-video-calls-saved-the-day/page08_image02.png",
             "width": 1280,
             "height": 720,
@@ -2960,7 +3535,9 @@
           "scale": 150,
           "focalX": 54.5441175650865,
           "focalY": 56.07565348517123,
-          "mask": { "type": "rectangle" }
+          "mask": {
+            "type": "rectangle"
+          }
         },
         {
           "x": 208,
@@ -2968,10 +3545,19 @@
           "id": "7d9642a4-0f1e-4b10-baba-d45517d0a35f",
           "basedOn": "0363b1f6-4874-4ce8-93fc-8c049b692f37",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "type": "image",
           "resource": {
             "type": "image",
@@ -2994,7 +3580,9 @@
           "scale": 230,
           "focalX": 49.975499710944504,
           "focalY": 48.60620577817605,
-          "mask": { "type": "rectangle" }
+          "mask": {
+            "type": "rectangle"
+          }
         }
       ],
       "backgroundOverlay": "none",
@@ -3007,7 +3595,13 @@
           "delay": 500
         }
       ],
-      "backgroundColor": { "color": { "r": 58, "g": 58, "b": 58 } },
+      "backgroundColor": {
+        "color": {
+          "r": 58,
+          "g": 58,
+          "b": 58
+        }
+      },
       "type": "page",
       "id": "a7fcb1b4-6ddc-4a2c-94b6-43df3674422d",
       "pageTemplateType": ""
@@ -3016,14 +3610,19 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "x": 1,
           "y": 1,
           "width": 1,
           "height": 1,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "isBackground": true,
           "isDefaultBackground": true,
           "id": "897975dc-47d5-457a-964f-adfa87a337e1",
@@ -3031,7 +3630,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "NONE",
@@ -3080,10 +3682,20 @@
             }
           },
           "fontSize": 56,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "lineHeight": 1,
           "textAlign": "left",
-          "padding": { "vertical": 0, "horizontal": 0, "locked": true },
+          "padding": {
+            "vertical": 0,
+            "horizontal": 0,
+            "locked": true
+          },
           "content": "<span style=\"font-weight: 500; color: #3a3a3a\">Other stories</span>",
           "fontWeight": 400,
           "borderRadius": {
@@ -3110,7 +3722,10 @@
           "id": "762e82bf-a5b7-499f-96ba-0163bd782b36",
           "basedOn": "89645e1e-02df-4a6a-9534-8194a0ddcf3e",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "FILL",
@@ -3159,7 +3774,13 @@
             }
           },
           "fontSize": 22,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
           "padding": {
@@ -3186,7 +3807,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundTextMode": "FILL",
@@ -3235,7 +3859,13 @@
             }
           },
           "fontSize": 22,
-          "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
+          "backgroundColor": {
+            "color": {
+              "r": 255,
+              "g": 255,
+              "b": 255
+            }
+          },
           "lineHeight": 1.4,
           "textAlign": "left",
           "padding": {
@@ -3266,7 +3896,10 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -3277,7 +3910,9 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "videoCallsBrowserIcon" },
+          "sticker": {
+            "type": "videoCallsBrowserIcon"
+          },
           "id": "d0d37097-15ae-4a55-b377-60d87b617440"
         },
         {
@@ -3286,7 +3921,10 @@
           "id": "fbd645f5-bac7-40e6-8c24-14af1220eafd",
           "basedOn": "d0d37097-15ae-4a55-b377-60d87b617440",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "type": "sticker",
@@ -3295,11 +3933,16 @@
           "scale": 100,
           "focalX": 50,
           "focalY": 50,
-          "sticker": { "type": "videoCallsBrowserIcon" }
+          "sticker": {
+            "type": "videoCallsBrowserIcon"
+          }
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "scale": 100,
@@ -3338,15 +3981,25 @@
         },
         {
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "type": "image",
           "resource": {
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-05-26T11:23:50",
+            "baseColor": "#4f4b42",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/how-video-calls-saved-the-day/page09_image01.png",
             "width": 1080,
             "height": 720,
@@ -3365,7 +4018,9 @@
           "scale": 110,
           "focalX": 50.14806509174784,
           "focalY": 42.448680320860255,
-          "mask": { "type": "rectangle" },
+          "mask": {
+            "type": "rectangle"
+          },
           "id": "de91ce5b-8a1b-4603-ad3e-350cb916fc17"
         },
         {
@@ -3374,15 +4029,25 @@
           "id": "16c995f7-1bdb-4e70-8ac9-d6fa4a60cb18",
           "basedOn": "de91ce5b-8a1b-4603-ad3e-350cb916fc17",
           "opacity": 100,
-          "flip": { "vertical": false, "horizontal": false },
+          "flip": {
+            "vertical": false,
+            "horizontal": false
+          },
           "rotationAngle": 0,
           "lockAspectRatio": false,
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
+          "backgroundColor": {
+            "color": {
+              "r": 196,
+              "g": 196,
+              "b": 196
+            }
+          },
           "type": "image",
           "resource": {
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-05-26T11:06:37",
+            "baseColor": "#e0e5e4",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/how-video-calls-saved-the-day/page09_image02.png",
             "width": 1280,
             "height": 720,
@@ -3399,7 +4064,9 @@
           "scale": 135,
           "focalX": 47.49654155128561,
           "focalY": 55.08018645780306,
-          "mask": { "type": "rectangle" }
+          "mask": {
+            "type": "rectangle"
+          }
         }
       ],
       "backgroundOverlay": "none",
@@ -3460,7 +4127,13 @@
           "delay": 0
         }
       ],
-      "backgroundColor": { "color": { "r": 255, "g": 191, "b": 11 } },
+      "backgroundColor": {
+        "color": {
+          "r": 255,
+          "g": 191,
+          "b": 11
+        }
+      },
       "type": "page",
       "id": "4f916886-a771-4cf4-a294-62678347399d",
       "pageTemplateType": "list"

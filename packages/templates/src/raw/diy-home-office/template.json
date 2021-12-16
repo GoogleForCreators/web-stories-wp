@@ -281,6 +281,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#c8c3c0",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/diy-home-office/page02_image01.jpg",
             "width": 1280,
             "height": 1920,
@@ -997,6 +998,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#c3c1c0",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/diy-home-office/page06_08_image01.jpg",
             "width": 1280,
             "height": 1920,
@@ -1361,6 +1363,7 @@
             "type": "image",
             "mimeType": "image/jpeg",
             "creationDate": "2021-05-26T15:14:32",
+            "baseColor": "#c3c1c0",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/diy-home-office/page06_08_image01.jpg",
             "width": 1280,
             "height": 1920,
