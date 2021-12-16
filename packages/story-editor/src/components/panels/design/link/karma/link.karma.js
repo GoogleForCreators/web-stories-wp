@@ -238,8 +238,6 @@ describe('Link Panel', () => {
       linkPanel = fixture.editor.inspector.designPanel.link;
       await fixture.events.click(linkPanel.address);
 
-      await fixture.events.sleep(5000);
-
       await fixture.snapshot('Page Attachment warning & dashed line visible');
 
       /*const warning = fixture.screen.getByText(
