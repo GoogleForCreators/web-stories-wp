@@ -164,7 +164,7 @@ const OptionList = forwardRef(function OptionList(
       // clear existing option references before next update to filteredGroup
       optionsRef.current = [];
     };
-  }, [observer, onObserve, filteredListGroups]);
+  }, [observer, onObserve, filteredListGroups, renderer]);
 
   /*
    * KEYBOARD ACCESSIBILITY
