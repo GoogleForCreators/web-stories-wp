@@ -161,7 +161,7 @@ function CustomFontsSettings({
   const [inputError, setInputError] = useState('');
   const [showDialog, setShowDialog] = useState(false);
   const [toDelete, setToDelete] = useState(null);
-  const canSave = !inputError;
+  const canSave = !inputError && fontUrl;
 
   const handleUpdateFontUrl = useCallback((event) => {
     const { value } = event.target;
@@ -258,7 +258,7 @@ function CustomFontsSettings({
           <AddButton
             type={BUTTON_TYPES.PRIMARY}
             size={BUTTON_SIZES.SMALL}
-            disabled={inputError}
+            disabled={!canSave}
             onClick={handleOnSave}
           >
             {TEXT.SUBMIT_BUTTON}

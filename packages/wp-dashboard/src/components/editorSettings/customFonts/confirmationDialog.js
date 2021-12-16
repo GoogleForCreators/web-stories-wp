@@ -18,6 +18,7 @@
  */
 import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
+import { ThemeProvider } from 'styled-components';
 import {
   Text,
   THEME_CONSTANTS,
@@ -25,40 +26,43 @@ import {
   BUTTON_TYPES,
   BUTTON_SIZES,
   Button,
+  theme,
 } from '@web-stories-wp/design-system';
 
 function ConfirmationDialog({ onClose, onPrimary }) {
   return (
-    <Dialog
-      isOpen
-      onClose={onClose}
-      title={__('Delete Font', 'web-stories')}
-      actions={
-        <>
-          <Button
-            type={BUTTON_TYPES.TERTIARY}
-            size={BUTTON_SIZES.SMALL}
-            onClick={() => onClose()}
-          >
-            {__('Cancel', 'web-stories')}
-          </Button>
-          <Button
-            type={BUTTON_TYPES.PRIMARY}
-            size={BUTTON_SIZES.SMALL}
-            onClick={() => onPrimary()}
-          >
-            {__('Delete Font', 'web-stories')}
-          </Button>
-        </>
-      }
-    >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-        {__(
-          'Deleting a font will delete it from every previous story it’s in. Would you like to proceed?',
-          'web-stories'
-        )}
-      </Text>
-    </Dialog>
+    <ThemeProvider theme={theme}>
+      <Dialog
+        isOpen
+        onClose={onClose}
+        title={__('Delete Font', 'web-stories')}
+        actions={
+          <>
+            <Button
+              type={BUTTON_TYPES.TERTIARY}
+              size={BUTTON_SIZES.SMALL}
+              onClick={() => onClose()}
+            >
+              {__('Cancel', 'web-stories')}
+            </Button>
+            <Button
+              type={BUTTON_TYPES.PRIMARY}
+              size={BUTTON_SIZES.SMALL}
+              onClick={() => onPrimary()}
+            >
+              {__('Delete Font', 'web-stories')}
+            </Button>
+          </>
+        }
+      >
+        <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+          {__(
+            'Deleting a font will delete it from every previous story it’s in. Would you like to proceed?',
+            'web-stories'
+          )}
+        </Text>
+      </Dialog>
+    </ThemeProvider>
   );
 }
 
