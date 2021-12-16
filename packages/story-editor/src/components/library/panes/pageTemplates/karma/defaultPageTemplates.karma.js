@@ -276,11 +276,6 @@ describe('CUJ: Page Templates: Creator can Apply a Default Page Template', () =>
       expect(
         fixture.screen.getAllByText(/cover/i).length
       ).toBeGreaterThanOrEqual(1);
-
-      // intentional test fail to check rest of test is passing as expected
-      expect(
-        fixture.screen.getAllByText(/poop/i).length
-      ).toBeGreaterThanOrEqual(1000);
     });
   });
 });
