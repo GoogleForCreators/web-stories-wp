@@ -32,13 +32,8 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { ExploreTemplatesView, MyStoriesView } from '../../app/views';
-import {
-  ADMIN_TITLE,
-  APP_ROUTES,
-  NESTED_APP_ROUTES,
-  ROUTE_TITLES,
-} from '../../constants';
-import { matchPath, Route, useRouteHistory } from '../../app/router';
+import { ADMIN_TITLE, APP_ROUTES, ROUTE_TITLES } from '../../constants';
+import { Route, useRouteHistory } from '../../app/router';
 import { AppFrame, LeftRail, PageContent } from '../pageStructure';
 import useApiAlerts from '../../app/api/useApiAlerts';
 import useApi from '../../app/api/useApi';
@@ -122,11 +117,6 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fullPath, isRedirectComplete]);
 
-  const hideLeftRail = matchPath(
-    currentPath,
-    NESTED_APP_ROUTES.TEMPLATES_GALLERY_DETAIL
-  );
-
   useApiAlerts();
   const { clearSnackbar, removeSnack, placement, currentSnacks } =
     useSnackbar();
@@ -143,8 +133,8 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
   return (
     <>
       <AppFrame>
-        {!hideLeftRail && <LeftRail />}
-        <PageContent fullWidth={hideLeftRail}>
+        <LeftRail />
+        <PageContent>
           <Route
             exact
             path={APP_ROUTES.DASHBOARD}

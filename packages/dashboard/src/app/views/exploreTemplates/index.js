@@ -159,8 +159,7 @@ function ExploreTemplates() {
       if (idRef.current) {
         idRef.current = undefined;
       }
-      //set paramas
-      actions.push(
+      actions.replace(
         `?id=${currentTemplate.id}&isLocal=${currentTemplate.isLocal}`
       );
     },
@@ -177,12 +176,14 @@ function ExploreTemplates() {
           updateTemplateView(id);
         }
 
-        //if !newIsOpen remove params
+        if (!newIsOpen) {
+          actions.replace('');
+        }
 
         return newIsOpen;
       });
     },
-    [updateTemplateView]
+    [actions, updateTemplateView]
   );
 
   const switchToTemplateByOffset = useCallback(
@@ -190,7 +191,7 @@ function ExploreTemplates() {
       const newTemplate = orderedTemplates[offset];
       setActiveTemplate(newTemplate);
       setActiveTemplateIndex(offset);
-      actions.push(`?id=${newTemplate.id}&isLocal=${newTemplate.isLocal}`);
+      actions.replace(`?id=${newTemplate.id}&isLocal=${newTemplate.isLocal}`);
     },
     [orderedTemplates, actions]
   );
