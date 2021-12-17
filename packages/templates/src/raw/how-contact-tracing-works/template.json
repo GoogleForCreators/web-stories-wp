@@ -29,6 +29,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#ffffff",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/how-contact-tracing-works/page01_image05.png",
             "width": 1237,
             "height": 294,
@@ -104,6 +105,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#3ec3bc",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/how-contact-tracing-works/page01_image01.png",
             "width": 180,
             "height": 480,
@@ -1197,6 +1199,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#317171",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/how-contact-tracing-works/page06_bg.png",
             "width": 1080,
             "height": 1920,
@@ -1750,6 +1753,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-06-04T06:57:21",
+            "baseColor": "#204f56",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/how-contact-tracing-works/page09_image01.png",
             "width": 617,
             "height": 833,
@@ -1759,7 +1763,6 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": "#204f56",
             "isExternal": true
           },
           "type": "image",

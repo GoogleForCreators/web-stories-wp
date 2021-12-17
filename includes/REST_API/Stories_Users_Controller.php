@@ -32,6 +32,7 @@ use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
 use WP_Error;
 use WP_REST_Request;
+use WP_REST_Response;
 use WP_REST_Users_Controller;
 
 /**
@@ -39,15 +40,26 @@ use WP_REST_Users_Controller;
  */
 class Stories_Users_Controller extends WP_REST_Users_Controller implements Service, Delayed, Registerable {
 	/**
+	 * Story_Post_Type instance.
+	 *
+	 * @var Story_Post_Type Story_Post_Type instance.
+	 */
+	private $story_post_type;
+
+	/**
 	 * Constructor.
 	 *
 	 * Override the namespace.
 	 *
 	 * @since 1.2.0
+	 *
+	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
 	 */
-	public function __construct() {
+	public function __construct( Story_Post_Type $story_post_type ) {
 		parent::__construct();
 		$this->namespace = 'web-stories/v1';
+
+		$this->story_post_type = $story_post_type;
 	}
 
 	/**
@@ -81,6 +93,49 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 	 */
 	public static function get_registration_action_priority(): int {
 		return 100;
+	}
+	/**
+	 * Retrieves a collection of user
+	 *
+	 * @since 1.16.0
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 *
+	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
+	 */
+	public function get_items( $request ) {
+		add_filter( 'rest_user_query', [ $this, 'filter_user_query' ], 10 );
+		$response = parent::get_items( $request );
+		remove_filter( 'rest_user_query', [ $this, 'filter_user_query' ], 10 );
+
+		return $response;
+	}
+
+	/**
+	 * Filter the WP_User_Query args.
+	 *
+	 * Removes the 'who' param in favor of the 'capabilities' param.
+	 *
+	 * @since 1.16.0
+	 *
+	 * @param array $prepared_args Array of arguments for WP_User_Query.
+	 *
+	 * @return array Filtered args.
+	 */
+	public function filter_user_query( $prepared_args ) {
+		$registered = $this->get_collection_params();
+
+		// Capability queries were added in 5.9, and the 'who' param was deprecated.
+		if ( isset( $prepared_args['who'], $registered['capabilities'] ) && 'authors' === $prepared_args['who'] ) {
+			$capabilities   = $prepared_args['capabilities'] ?? [];
+			$capabilities[] = $this->story_post_type->get_cap_name( 'edit_posts' );
+
+			$prepared_args['capabilities'] = $capabilities;
+
+			unset( $prepared_args['who'] );
+		}
+
+		return $prepared_args;
 	}
 
 	/**

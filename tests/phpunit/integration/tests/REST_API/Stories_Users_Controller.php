@@ -74,6 +74,103 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 	}
 
 	/**
+	 * @covers ::filter_user_query
+	 */
+	public function test_filter_user_query_pre_wp_59() {
+		if ( is_wp_version_compatible( '5.9-beta' ) ) {
+			$this->markTestSkipped( 'This test requires WordPress < 5.9.' );
+		}
+
+		$actual = $this->controller->filter_user_query( [ 'who' => 'authors' ] );
+		$this->assertEqualSets(
+			[
+				'who' => 'authors',
+			],
+			$actual
+		);
+	}
+
+	/**
+	 * @covers ::filter_user_query
+	 */
+	public function test_filter_user_query_wp_59() {
+		if ( ! is_wp_version_compatible( '5.9-beta' ) ) {
+			$this->markTestSkipped( 'This test requires WordPress 5.9.' );
+		}
+
+		$actual = $this->controller->filter_user_query( [ 'who' => 'authors' ] );
+		$this->assertEqualSets(
+			[
+				'capabilities' => [ 'edit_web-stories' ],
+			],
+			$actual
+		);
+	}
+
+	/**
+	 * @covers ::filter_user_query
+	 */
+	public function test_filter_user_query_capabilities_query_supported() {
+		add_filter( 'rest_user_collection_params', [ $this, 'filter_rest_user_collection_params' ] );
+
+		$actual = $this->controller->filter_user_query( [ 'who' => 'authors' ] );
+
+		remove_filter( 'rest_user_collection_params', [ $this, 'filter_rest_user_collection_params' ] );
+
+		$this->assertEqualSets(
+			[
+				'capabilities' => [ 'edit_web-stories' ],
+			],
+			$actual
+		);
+	}
+
+	public function filter_rest_user_collection_params( $query_params ) {
+		$query_params['capabilities'] = [
+			'type'  => 'array',
+			'items' => [
+				'type' => 'string',
+			],
+		];
+
+		return $query_params;
+	}
+
+	/**
+	 * @covers ::filter_user_query
+	 */
+	public function test_filter_user_query_wp_59_existing_query() {
+		if ( version_compare( get_bloginfo( 'version' ), '5.9.0-beta', '<' ) ) {
+			$this->markTestSkipped( 'This test requires WordPress 5.9.' );
+		}
+
+		$actual = $this->controller->filter_user_query(
+			[
+				'who'          => 'authors',
+				'capabilities' => [ 'edit_posts' ],
+			]
+		);
+		$this->assertEqualSets(
+			[
+				'capabilities' => [ 'edit_posts', 'edit_web-stories' ],
+			],
+			$actual
+		);
+	}
+
+	/**
+	 * @covers ::filter_user_query
+	 */
+	public function test_filter_user_query_no_change() {
+		$args    = [
+			'orderby' => 'registered',
+			'order'   => 'ASC',
+		];
+		$results = $this->controller->filter_user_query( $args );
+		$this->assertEqualSets( $args, $results );
+	}
+
+	/**
 	 * @covers ::user_posts_count_public
 	 * @covers \Google\Web_Stories\Story_Post_Type::clear_user_posts_count
 	 */
@@ -139,7 +236,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 			[
 				-1,
 				$post_type->get_slug(),
-			] 
+			]
 		);
 		$this->assertEquals( 0, $result1 );
 

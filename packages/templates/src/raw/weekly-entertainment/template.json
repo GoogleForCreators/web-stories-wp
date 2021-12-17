@@ -46,6 +46,7 @@
             "alt": "page1_bg",
             "local": false,
             "sizes": [],
+            "baseColor": "#311901",
             "isExternal": true
           }
         },
@@ -425,6 +426,7 @@
             "alt": "page2_image1",
             "local": false,
             "sizes": [],
+            "baseColor": "#4f4e3f",
             "isExternal": true
           }
         },
@@ -904,6 +906,7 @@
             "alt": "page4_image1",
             "local": false,
             "sizes": [],
+            "baseColor": "#725a5d",
             "isExternal": true
           }
         },
@@ -1208,6 +1211,7 @@
             "alt": "page5_image1",
             "local": false,
             "sizes": [],
+            "baseColor": "#384d64",
             "isExternal": true
           },
           "basedOn": "7f6f6565-2e46-4ef5-964c-d6c44350416d",
@@ -1950,6 +1954,7 @@
             "alt": "page6_image1",
             "local": false,
             "sizes": [],
+            "baseColor": "#7572d1",
             "isExternal": true
           },
           "basedOn": "7f6f6565-2e46-4ef5-964c-d6c44350416d",
@@ -2105,6 +2110,7 @@
             "alt": "page7_image1",
             "local": false,
             "sizes": [],
+            "baseColor": "#3a626a",
             "isExternal": true
           },
           "basedOn": "9bcf8de4-b888-486b-93cb-f27bc58c637d",
@@ -2348,6 +2354,7 @@
             "alt": "page8_image1",
             "local": false,
             "sizes": [],
+            "baseColor": "#3b4345",
             "isExternal": true
           }
         },
@@ -2380,6 +2387,7 @@
             "alt": "page8_image3",
             "local": false,
             "sizes": [],
+            "baseColor": "#664e4a",
             "isExternal": true
           }
         },
@@ -2411,6 +2419,7 @@
             "alt": "page8_image2",
             "local": false,
             "sizes": [],
+            "baseColor": "#93967e",
             "isExternal": true
           }
         },
@@ -3212,6 +3221,7 @@
             "alt": "page9_image1",
             "local": false,
             "sizes": [],
+            "baseColor": "#453248",
             "isExternal": true
           }
         },
@@ -3243,6 +3253,7 @@
             "alt": "page9_image2",
             "local": false,
             "sizes": [],
+            "baseColor": "#92a6a3",
             "isExternal": true
           }
         },
@@ -3274,6 +3285,7 @@
             "alt": "page9_image3",
             "local": false,
             "sizes": [],
+            "baseColor": "#5c5a4f",
             "isExternal": true
           }
         }

@@ -64,6 +64,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#35554f",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/hawaii-travel-packing-list/page01_image01.png",
             "width": 1080,
             "height": 1920,
@@ -1484,6 +1485,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-06-07T05:18:39",
+            "baseColor": "#4a4634",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/hawaii-travel-packing-list/page04_image01.png",
             "width": 480,
             "height": 480,
@@ -1493,7 +1495,6 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": "#4a4634",
             "isExternal": true
           },
           "type": "image",
@@ -1523,6 +1524,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-06-07T05:18:42",
+            "baseColor": "#332d31",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/hawaii-travel-packing-list/page04_image02.png",
             "width": 480,
             "height": 480,
@@ -1532,7 +1534,6 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": "#332d31",
             "isExternal": true
           },
           "type": "image",

@@ -155,7 +155,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			}
 		}
 
-		/* This filter is documented in wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php */
+		/** This filter is documented in wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php */
 		return apply_filters( "rest_prepare_{$this->post_type}", $response, $post, $request );
 	}
 

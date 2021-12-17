@@ -37,6 +37,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#ccc7c3",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/doers-get-more-done/page1_bg.jpg",
             "width": 220,
             "height": 330,
@@ -180,6 +181,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#bbb7b5",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/doers-get-more-done/page2_bg.jpg",
             "width": 220,
             "height": 330,
@@ -307,6 +309,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#413d3c",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/doers-get-more-done/page3_image1.jpg",
             "width": 220,
             "height": 147,
@@ -513,6 +516,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#141513",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/doers-get-more-done/page4_page5_bg.jpg",
             "width": 220,
             "height": 275,
@@ -637,6 +641,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#141513",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/doers-get-more-done/page4_page5_bg.jpg",
             "width": 220,
             "height": 275,
@@ -836,6 +841,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#292524",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/doers-get-more-done/page6_bg.jpg",
             "width": 220,
             "height": 147,
@@ -1065,6 +1071,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#c8bfb5",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/doers-get-more-done/page7_bg.jpg",
             "width": 330,
             "height": 442,
@@ -1283,6 +1290,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#a29594",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/doers-get-more-done/page8_image1.jpg",
             "width": 220,
             "height": 131,
@@ -1312,6 +1320,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#8d7565",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/doers-get-more-done/page8_image2.jpg",
             "width": 220,
             "height": 147,
@@ -1344,6 +1353,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#3b3635",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/doers-get-more-done/page8_image3.jpg",
             "width": 220,
             "height": 147,
@@ -1681,6 +1691,7 @@
             "type": "image",
             "mimeType": "image/jpeg",
             "creationDate": "2020-06-22T16:42:02",
+            "baseColor": "#c8bfb5",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/doers-get-more-done/page7_bg.jpg",
             "width": 330,
             "height": 442,
@@ -2100,6 +2111,7 @@
             "type": "image",
             "mimeType": "image/jpeg",
             "creationDate": "2020-06-22T17:12:23",
+            "baseColor": "#eee1e3",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/doers-get-more-done/page10_image1.jpg",
             "width": 330,
             "height": 235,
@@ -2132,6 +2144,7 @@
             "type": "image",
             "mimeType": "image/jpeg",
             "creationDate": "2020-06-22T17:12:21",
+            "baseColor": "#303944",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/doers-get-more-done/page10_image2.jpg",
             "width": 330,
             "height": 498,
@@ -2164,6 +2177,7 @@
             "type": "image",
             "mimeType": "image/jpeg",
             "creationDate": "2020-06-22T17:12:19",
+            "baseColor": "#e3dcdc",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/doers-get-more-done/page10_image3.jpg",
             "width": 330,
             "height": 220,
