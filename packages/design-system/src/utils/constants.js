@@ -23,10 +23,10 @@ export const KEYS = {
 };
 
 export const FOCUSABLE_SELECTORS = [
-  'button',
+  'button:not(:disabled)',
   '[href]',
-  'input',
-  'select',
-  'textarea',
+  'input:not(:disabled)',
+  'select:not(:disabled)',
+  'textarea:not(:disabled)',
   '[tabindex]:not([tabindex="-1"])',
 ];
