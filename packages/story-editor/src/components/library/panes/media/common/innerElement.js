@@ -84,10 +84,6 @@ const Duration = styled(Text).attrs({
   display: block;
 `;
 
-const HiddenPosterImage = styled.img`
-  display: none;
-`;
-
 const CloneImg = styled.img`
   opacity: 0;
   width: ${({ width }) => `${width}px`};
@@ -109,6 +105,7 @@ function InnerElement({
   active,
   isMuted,
 }) {
+  const newVideoPosterRef = useRef(null);
   // Track if we have already set the dragging resource.
   const hasSetResourceTracker = useRef(null);
 
@@ -139,6 +136,13 @@ function InnerElement({
     })
   );
 
+  useEffect(() => {
+    // assign display poster for videos
+    if (resource.poster && resource.poster.includes('blob')) {
+      newVideoPosterRef.current = resource.poster;
+    }
+  }, [resource.poster]);
+
   const makeMediaVisible = () => {
     if (mediaElement.current) {
       mediaElement.current.style.opacity = 1;
@@ -148,8 +152,9 @@ function InnerElement({
 
   let media;
   const { lengthFormatted, poster, mimeType } = resource;
-  const thumbnailURL = poster
-    ? poster
+  const displayPoster = poster ?? newVideoPosterRef.current;
+  const thumbnailURL = displayPoster
+    ? displayPoster
     : getSmallestUrlForWidth(width, resource);
 
   const commonProps = {
@@ -182,7 +187,7 @@ function InnerElement({
     loop: type === ContentType.GIF,
     muted: true,
     preload: 'metadata',
-    poster,
+    poster: displayPoster,
     showWithoutDelay: active,
   };
 
