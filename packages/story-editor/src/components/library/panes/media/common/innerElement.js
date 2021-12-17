@@ -109,7 +109,6 @@ function InnerElement({
   active,
   isMuted,
 }) {
-  const newVideoPosterRef = useRef(null);
   // Track if we have already set the dragging resource.
   const hasSetResourceTracker = useRef(null);
 
@@ -140,13 +139,6 @@ function InnerElement({
     })
   );
 
-  useEffect(() => {
-    // assign display poster for videos
-    if (resource.poster && resource.poster.includes('blob')) {
-      newVideoPosterRef.current = resource.poster;
-    }
-  }, [resource.poster]);
-
   const makeMediaVisible = () => {
     if (mediaElement.current) {
       mediaElement.current.style.opacity = 1;
@@ -155,9 +147,10 @@ function InnerElement({
   };
 
   let media;
-  const thumbnailURL = getSmallestUrlForWidth(width, resource);
   const { lengthFormatted, poster, mimeType } = resource;
-  const displayPoster = poster ?? newVideoPosterRef.current;
+  const thumbnailURL = poster
+    ? poster
+    : getSmallestUrlForWidth(width, resource);
 
   const commonProps = {
     width,
@@ -189,8 +182,8 @@ function InnerElement({
     loop: type === ContentType.GIF,
     muted: true,
     preload: 'metadata',
-    poster: displayPoster,
-    showWithoutDelay: !poster || Boolean(newVideoPosterRef.current),
+    poster,
+    showWithoutDelay: active,
   };
 
   if (type === ContentType.IMAGE) {
@@ -200,25 +193,26 @@ function InnerElement({
   } else if ([ContentType.VIDEO, ContentType.GIF].includes(type)) {
     media = (
       <>
-        {/* eslint-disable-next-line styled-components-a11y/media-has-caption,jsx-a11y/media-has-caption -- No captions/tracks because video is muted. */}
-        <Video key={src} {...videoProps} ref={mediaElement}>
-          {type === ContentType.GIF ? (
-            resource.output.src && (
-              <source
-                src={resource.output.src}
-                type={resource.output.mimeType}
-              />
-            )
-          ) : (
-            <source
-              src={getSmallestUrlForWidth(width, resource)}
-              type={mimeType}
-            />
-          )}
-        </Video>
-        {displayPoster && (
+        {poster && !active ? (
           /* eslint-disable-next-line styled-components-a11y/alt-text -- False positive. */
-          <HiddenPosterImage src={poster} {...commonImageProps} />
+          <Image key={src} {...imageProps} ref={mediaElement} />
+        ) : (
+          // eslint-disable-next-line jsx-a11y/media-has-caption,styled-components-a11y/media-has-caption -- No captions/tracks because video is muted.
+          <Video key={src} {...videoProps} ref={mediaElement}>
+            {type === ContentType.GIF ? (
+              resource.output.src && (
+                <source
+                  src={resource.output.src}
+                  type={resource.output.mimeType}
+                />
+              )
+            ) : (
+              <source
+                src={getSmallestUrlForWidth(width, resource)}
+                type={mimeType}
+              />
+            )}
+          </Video>
         )}
         {type === ContentType.VIDEO && showVideoDetail && lengthFormatted && (
           <DurationWrapper>
