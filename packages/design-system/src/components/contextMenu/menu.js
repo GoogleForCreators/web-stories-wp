@@ -95,7 +95,7 @@ const Menu = ({
    */
   const handleKeyboardNav = useCallback(
     (evt) => {
-      const { key, shiftKey } = evt;
+      const { key } = evt;
       if (key === 'Escape') {
         onDismiss?.(evt);
         return;
@@ -112,19 +112,8 @@ const Menu = ({
         return;
       }
 
-      const isAscending =
-        [KEYS.UP, KEYS.LEFT].includes(key) || (key === KEYS.TAB && shiftKey);
+      const isAscending = [KEYS.UP, KEYS.LEFT].includes(key);
       let newIndex = prevIndex + (isAscending ? -1 : 1);
-
-      // If we didn't find a focusable element or get to the start/end
-      // of the list then **tabbing should close the menu**
-      if (
-        key === KEYS.TAB &&
-        (newIndex > focusableChildren.length - 1 || newIndex === -1)
-      ) {
-        onDismiss?.(evt);
-        return;
-      }
 
       if (newIndex === -1) {
         newIndex = focusableChildren.length - 1;
