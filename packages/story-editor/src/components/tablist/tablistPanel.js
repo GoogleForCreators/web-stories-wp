@@ -51,7 +51,6 @@ const TablistPanel = ({
 }) => {
   const backupId = useMemo(uuidv4, []);
   const panelId = id || backupId;
-
   return (
     <PanelWrapper className={className} isExpanded={isExpanded}>
       <TabButtonWrapper>
