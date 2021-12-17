@@ -37,6 +37,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#ccc7c3",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/doers-get-more-done/page1_bg.jpg",
             "width": 220,
             "height": 330,
@@ -515,7 +516,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
-            "baseColor": "141513",
+            "baseColor": "#141513",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/doers-get-more-done/page4_page5_bg.jpg",
             "width": 220,
             "height": 275,
