@@ -186,10 +186,12 @@ function CustomFontsSettings({
   const handleOnSave = useCallback(async () => {
     if (canSave) {
       const urlWithProtocol = withProtocol(fontUrl);
+      let canFetch = false;
       try {
         await fetch(urlWithProtocol, {
           method: 'HEAD',
         });
+        canFetch = true;
       } catch (err) {
         setInputError(
           __(
@@ -198,27 +200,29 @@ function CustomFontsSettings({
           )
         );
       }
-      try {
-        trackEvent('add_custom_font', {
-          url: urlWithProtocol,
-        });
-        const fontData = await getFontDataFromUrl(urlWithProtocol);
-        if (!fontData.family) {
+      if (canFetch) {
+        try {
+          trackEvent('add_custom_font', {
+            url: urlWithProtocol,
+          });
+          const fontData = await getFontDataFromUrl(urlWithProtocol);
+          if (!fontData.family) {
+            setInputError(
+              __('Something went wrong, please try again.', 'web-stories')
+            );
+          } else {
+            await addCustomFont({ ...fontData, url: urlWithProtocol });
+            await fetchCustomFonts();
+            setFontUrl('');
+          }
+        } catch (err) {
           setInputError(
-            __('Something went wrong, please try again.', 'web-stories')
+            __(
+              'Getting font data failed, please ensure the URL points directly to a .otf, .ttf or .woff file.',
+              'web-stories'
+            )
           );
-        } else {
-          await addCustomFont({ ...fontData, url: urlWithProtocol });
-          await fetchCustomFonts();
-          setFontUrl('');
         }
-      } catch (err) {
-        setInputError(
-          __(
-            'Getting font data failed, please ensure the URL points directly to a .otf, .ttf or .woff file.',
-            'web-stories'
-          )
-        );
       }
     }
   }, [addCustomFont, fetchCustomFonts, canSave, fontUrl]);
