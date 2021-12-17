@@ -104,7 +104,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
       limit < 8
     ) {
       // eslint-disable-next-line no-await-in-loop
-      await fixture.events.keyboard.press('tab');
+      await fixture.events.keyboard.press('down');
       limit++;
     }
 
