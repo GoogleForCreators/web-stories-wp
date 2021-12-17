@@ -23,6 +23,7 @@ import styled, { css } from 'styled-components';
  * Internal dependencies
  */
 import {
+  FOCUSABLE_SELECTORS,
   KEYS,
   noop,
   useComposeRefs,
@@ -30,8 +31,6 @@ import {
 } from '../../utils';
 import { useKeyDownEffect } from '../keyboard';
 import { useContextMenu } from './contextMenuProvider';
-
-const FOCUSABLE_ELEMENTS = ['A', 'BUTTON'];
 
 const MenuWrapper = styled.div(
   ({ theme }) => css`
@@ -49,29 +48,6 @@ const MenuWrapper = styled.div(
 MenuWrapper.propTypes = {
   isIconMenu: PropTypes.bool,
 };
-
-/**
- * Finds all focusable children in an html tree.
- *
- * @param {Array.<HTMLElement>} all Array of html elements
- * @param {HTMLElement} element The element to check
- * @return {Array.<HTMLElement>} Array of html elements
- */
-export function findFocusableChildren(all, element) {
-  // if element is group, check children and recurse
-  if (element.attributes?.role?.value === 'group' && element.children.length) {
-    return all.concat(
-      Array.from(element.children)
-        .map((child) => findFocusableChildren([], child))
-        .flat()
-    );
-  }
-  // if element is focusable, return element
-  // if element is not, return all
-  return FOCUSABLE_ELEMENTS.includes(element.tagName) && !element.disabled
-    ? all.concat(element)
-    : all;
-}
 
 const Menu = ({
   children,
@@ -94,13 +70,14 @@ const Menu = ({
   const menuRef = useRef(null);
   const composedListRef = useComposeRefs(mouseDownOutsideRef, menuRef);
 
+  const getFocusableChildren = (parent) =>
+    Array.from(parent.querySelectorAll(FOCUSABLE_SELECTORS.join(', ')));
+
   const handleFocus = useCallback(
     (evt) => {
       onFocus(evt);
 
-      const focusableChildren = Array.from(
-        menuRef.current?.children || []
-      ).reduce(findFocusableChildren, []);
+      const focusableChildren = getFocusableChildren(menuRef.current);
 
       if (menuRef.current === evt.target) {
         focusableChildren?.[0]?.focus();
@@ -124,9 +101,7 @@ const Menu = ({
         return;
       }
 
-      const focusableChildren = Array.from(
-        menuRef.current?.children || []
-      ).reduce(findFocusableChildren, []);
+      const focusableChildren = getFocusableChildren(menuRef.current);
 
       const prevIndex = focusableChildren.findIndex(
         (element) => element.id === focusedId
@@ -169,9 +144,7 @@ const Menu = ({
   // focus first focusable element on open
   useEffect(() => {
     if (isOpen) {
-      const focusableChildren = Array.from(
-        menuRef.current?.children || []
-      ).reduce(findFocusableChildren, []);
+      const focusableChildren = getFocusableChildren(menuRef.current);
 
       if (focusableChildren.length) {
         focusableChildren?.[0]?.focus();

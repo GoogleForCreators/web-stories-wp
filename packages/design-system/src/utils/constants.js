@@ -21,3 +21,12 @@ export const KEYS = {
   UP: 'ArrowUp',
   TAB: 'Tab',
 };
+
+export const FOCUSABLE_SELECTORS = [
+  'button',
+  '[href]',
+  'input',
+  'select',
+  'textarea',
+  '[tabindex]:not([tabindex="-1"])',
+];
