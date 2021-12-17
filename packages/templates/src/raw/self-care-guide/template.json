@@ -185,6 +185,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-05-25T07:17:32",
+            "baseColor": "#ccc5bf",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/self-care-guide/page01_image02.png",
             "width": 480,
             "height": 640,
@@ -476,7 +477,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#dcd4d5"
           }
         },
         {
@@ -808,6 +810,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-05-25T07:20:30",
+            "baseColor": "#979082",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/self-care-guide/page03_image01.png",
             "width": 720,
             "height": 1080,
@@ -1801,6 +1804,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-05-25T07:23:49",
+            "baseColor": "#484944",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/self-care-guide/page05_image01.png",
             "width": 720,
             "height": 1080,
@@ -2403,6 +2407,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-05-25T07:26:38",
+            "baseColor": "#c4ccca",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/self-care-guide/page06_image01.png",
             "width": 480,
             "height": 640,
@@ -3783,6 +3788,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-05-25T07:34:39",
+            "baseColor": "#d4d5d0",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/self-care-guide/page09_image01.png",
             "width": 720,
             "height": 1080,
@@ -4868,6 +4874,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-05-25T07:23:49",
+            "baseColor": "#484944",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/self-care-guide/page05_image01.png",
             "width": 720,
             "height": 1080,
@@ -4878,7 +4885,6 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": "#484944",
             "isExternal": true
           }
         },

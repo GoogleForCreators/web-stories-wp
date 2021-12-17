@@ -1019,6 +1019,7 @@
             "alt": "page04_bg",
             "local": false,
             "isOptimized": false,
+            "baseColor": "#322a22",
             "isExternal": true
           },
           "type": "image",

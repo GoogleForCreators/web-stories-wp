@@ -23,6 +23,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#a9141c",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/no-days-off/page1_bg-red.png",
             "width": 330,
             "height": 586,
@@ -87,7 +88,8 @@
             "alt": "page1_logo-generic",
             "local": false,
             "sizes": [],
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#ffffff"
           },
           "type": "image",
           "x": 20,
@@ -175,7 +177,8 @@
             "alt": "page2_figure-formatted",
             "local": false,
             "sizes": [],
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#ab141c"
           },
           "mask": {
             "type": "rectangle",
@@ -310,7 +313,8 @@
             "alt": "page3_bg",
             "local": false,
             "sizes": [],
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#1c1c1c"
           },
           "scale": 150,
           "focalX": 50,
@@ -496,6 +500,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#c01323",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/no-days-off/page4_bg-red.png",
             "width": 330,
             "height": 308,
@@ -523,6 +528,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#e0dde2",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/no-days-off/page4_bg.jpg",
             "width": 220,
             "height": 288,
@@ -722,7 +728,8 @@
             "alt": "page5_bg-no-logo",
             "local": false,
             "sizes": [],
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#ca0c20"
           },
           "scale": 100,
           "focalX": 38.367113188634875,
@@ -974,6 +981,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#e0ddde",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/no-days-off/page6_bg.jpg",
             "width": 220,
             "height": 165,
@@ -1000,6 +1008,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2020-06-30T20:40:21",
+            "baseColor": "#292929",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/no-days-off/page6_watch.png",
             "width": 330,
             "height": 330,
@@ -1211,6 +1220,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#22131c",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/no-days-off/page7_bg-red.png",
             "width": 330,
             "height": 239,
@@ -1471,6 +1481,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#a2b7cb",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/no-days-off/page8_story3-formatted.png",
             "width": 95,
             "height": 97,
@@ -1505,6 +1516,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#d5d1cf",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/no-days-off/page8_story1-formatted.png",
             "width": 95,
             "height": 97,
@@ -1539,6 +1551,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#ddc7b4",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/no-days-off/page8_story2-formatted.png",
             "width": 188,
             "height": 97,

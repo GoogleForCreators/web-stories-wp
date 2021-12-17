@@ -2798,6 +2798,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
+            "baseColor": "#34292b",
             "isExternal": true
           },
           "overlay": { "color": { "r": 68, "g": 35, "b": 131, "a": 0.6 } }
