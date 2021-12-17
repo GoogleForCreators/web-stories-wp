@@ -85,6 +85,8 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
     if (!isRedirectComplete) {
       return;
     }
+    // backwards compatibility for template details pages,
+    // if templateId is present modal will open to appropriate template
     if (currentPath.includes(NESTED_APP_ROUTES.TEMPLATES_GALLERY_DETAIL)) {
       replace(
         templateId
@@ -106,10 +108,7 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
     );
 
     trackScreenView(dynamicPageTitle);
-
-    // Disable reason: avoid sending duplicate tracking events.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isRedirectComplete]);
+  }, [currentPath, isLocal, isRedirectComplete, replace, templateId]);
 
   useApiAlerts();
   const { clearSnackbar, removeSnack, placement, currentSnacks } =
