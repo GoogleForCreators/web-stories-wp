@@ -280,7 +280,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
               onChange={({ target }) =>
                 handleChange({ desc: target.value }, !target.value /* submit */)
               }
-              value={desc}
+              value={desc || ''}
               aria-label={__('Link description', 'web-stories')}
               isIndeterminate={isMultipleDesc}
               disabled={fetchingMetadata}
