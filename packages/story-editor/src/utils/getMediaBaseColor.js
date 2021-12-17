@@ -47,7 +47,7 @@ function getImgNodeKey(elementId) {
   return `${IMG_NODE}_${elementId}`;
 }
 
-export async function getMediaBaseColor(src) {
+export async function getMediaBaseColor(src, id) {
   if (!src) {
     return Promise.reject(new Error('No source to image'));
   }
@@ -55,6 +55,7 @@ export async function getMediaBaseColor(src) {
   const trackTiming = getTimeTracker('load_get_base_color');
   try {
     color = await setOrCreateImage({
+      id,
       src,
       width: 10,
       height: 'auto',
