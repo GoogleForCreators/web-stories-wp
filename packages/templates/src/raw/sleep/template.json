@@ -53,6 +53,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#1b1c19",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/sleep/page1_image1.jpg",
             "width": 220,
             "height": 147,
@@ -118,7 +119,8 @@
             "alt": "icon_logo",
             "local": false,
             "sizes": [],
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#ffffff"
           },
           "type": "image",
           "x": 170.5,
@@ -448,6 +450,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#ac9e90",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/sleep/page3_bg.jpg",
             "width": 220,
             "height": 147,
@@ -703,6 +706,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#22201c",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/sleep/page4_bg.jpg",
             "width": 220,
             "height": 391,
@@ -943,6 +947,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#262d2d",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/sleep/page5_image1.jpg",
             "width": 220,
             "height": 330,
@@ -1165,6 +1170,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#5b6361",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/sleep/page6_bg.jpg",
             "width": 220,
             "height": 330,
@@ -1377,6 +1383,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#484543",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/sleep/page7_bg.jpg",
             "width": 220,
             "height": 293,
@@ -1590,6 +1597,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#d7d4d9",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/sleep/page8_image1.jpg",
             "width": 220,
             "height": 220,
@@ -2386,6 +2394,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#e2e2e1",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/sleep/page10_image1.jpg",
             "width": 220,
             "height": 330,
@@ -2416,6 +2425,7 @@
             "type": "image",
             "mimeType": "image/jpeg",
             "creationDate": "2020-06-30T20:23:34",
+            "baseColor": "#bbada7",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/sleep/page10_image2.jpg",
             "width": 330,
             "height": 494,
@@ -2447,6 +2457,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#c9a68c",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/sleep/page10_image3.jpg",
             "width": 220,
             "height": 275,
@@ -2480,6 +2491,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2020-06-23T00:45:25",
+            "baseColor": "#d6c3b8",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/sleep/page10_image4.png",
             "width": 54,
             "height": 55,
