@@ -49,6 +49,16 @@ MenuWrapper.propTypes = {
   isIconMenu: PropTypes.bool,
 };
 
+/**
+ * Extracts all focusable children from an html tree.
+ *
+ * @param {HTMLElement} parent The parent to search
+ * @return {Array.<HTMLElement>} List of focusable elements
+ */
+function getFocusableChildren(parent) {
+  return Array.from(parent.querySelectorAll(FOCUSABLE_SELECTORS.join(', ')));
+}
+
 const Menu = ({
   children,
   disableControlledTabNavigation,
@@ -69,9 +79,6 @@ const Menu = ({
   });
   const menuRef = useRef(null);
   const composedListRef = useComposeRefs(mouseDownOutsideRef, menuRef);
-
-  const getFocusableChildren = (parent) =>
-    Array.from(parent.querySelectorAll(FOCUSABLE_SELECTORS.join(', ')));
 
   const handleFocus = useCallback(
     (evt) => {
