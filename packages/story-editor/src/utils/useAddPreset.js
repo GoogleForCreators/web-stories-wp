@@ -29,7 +29,7 @@ import {
   getTextPresets,
 } from './presetUtils';
 
-function useAddPreset({ presetType }) {
+function useAddPreset({ presetType, getBackground }) {
   const {
     currentPage,
     currentStoryStyles = { colors: [] },
@@ -66,7 +66,12 @@ function useAddPreset({ presetType }) {
       if (isText) {
         return {
           ...addedPresets,
-          ...getTextPresets(selectedElements, currentPresets, presetType),
+          ...getTextPresets(
+            selectedElements,
+            currentPresets,
+            presetType,
+            getBackground
+          ),
         };
       } else if (isBackground) {
         return {
@@ -80,7 +85,14 @@ function useAddPreset({ presetType }) {
         };
       }
     },
-    [currentPage, isBackground, isText, presetType, selectedElements]
+    [
+      currentPage,
+      isBackground,
+      isText,
+      presetType,
+      selectedElements,
+      getBackground,
+    ]
   );
 
   const updateLocalPresets = useCallback(

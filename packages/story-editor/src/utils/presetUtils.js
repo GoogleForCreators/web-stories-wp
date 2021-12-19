@@ -133,12 +133,14 @@ function getTextInlineStyles(content) {
   };
 }
 
-export function getTextPresets(elements, storyStyles, type) {
+export function getTextPresets(elements, storyStyles, type, getBackground) {
   const colors =
     PRESET_TYPES.STYLE === type
       ? []
       : elements
-          .map(({ content }) => getHTMLInfo(content).color)
+          .map(({ content, backgroundColor }) =>
+            getBackground ? backgroundColor : getHTMLInfo(content).color
+          )
           .filter((color) => color !== MULTIPLE_VALUE)
           .filter(
             (color) => color && !findMatchingColor(color, storyStyles, true)
