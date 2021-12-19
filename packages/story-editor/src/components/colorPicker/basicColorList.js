@@ -62,9 +62,6 @@ const StyledSwatch = styled(Swatch).attrs(({ isSelected }) => ({
     css`
       border: 2px solid ${theme.colors.border.defaultActive};
     `}
-
-      border: 2px solid ${theme.colors.border.defaultActive};
-    `}
 `;
 
 function getPatternAsString(pattern) {
