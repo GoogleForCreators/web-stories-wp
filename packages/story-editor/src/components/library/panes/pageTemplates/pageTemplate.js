@@ -37,6 +37,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { generatePatternStyles } from '@web-stories-wp/patterns';
 import { fetchRemoteBlob } from '@web-stories-wp/media';
+import { trackError } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -150,7 +151,7 @@ function PageTemplate(
     setIsHover(false);
   }, []);
 
-  const imageUrl = page.image?.url ? page.image.url : pageDataUrl;
+  const imageUrl = page.image?.url || pageDataUrl;
   const shouldPostBlob =
     hasUploadMediaAction && pageDataUrl && !page.image?.url;
   useEffect(() => {
@@ -172,6 +173,7 @@ function PageTemplate(
       } catch (err) {
         // Catch upload errors, e.g. if the file is too large,
         // so that the page template can still be added, albeit without an image.
+        trackError('upload_generated_page_template_image', err?.message);
       }
     })();
   }, [

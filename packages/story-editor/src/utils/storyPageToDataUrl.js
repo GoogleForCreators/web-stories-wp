@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { theme } from '@web-stories-wp/design-system';
+import { theme as ds_theme } from '@web-stories-wp/design-system';
 import {
   forwardRef,
   render,
@@ -55,7 +55,7 @@ const PreviewWrapper = styled.div`
   height: 100%;
   position: relative;
   overflow: hidden;
-  background-color: white;
+  background-color: ${({ theme }) => theme.colors.fg.white};
   border-radius: 4px;
   ${({ background }) => generatePatternStyles(background)}
 `;
@@ -65,7 +65,7 @@ const PageWithDependencies = forwardRef(function PageWithDependencies(
   ref
 ) {
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={ds_theme}>
       <FileProvider>
         <FontProvider>
           <TransformProvider>
