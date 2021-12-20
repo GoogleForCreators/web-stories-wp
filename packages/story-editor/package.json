@@ -59,7 +59,7 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/react-hooks": "^7.0.2",
     "@testing-library/user-event": "^13.5.0",
-    "jest": "^27.4.3",
+    "jest": "^27.4.5",
     "jest-axe": "^5.0.1",
     "jest-matcher-deep-close-to": "^3.0.2",
     "mockdate": "^3.0.5",
