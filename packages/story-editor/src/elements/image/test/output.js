@@ -47,13 +47,13 @@ describe('Image output', () => {
         width: 1920,
         sizes: {
           mid: {
-            sourceUrl: 'https://example.com/image-mid.png',
+            source_url: 'https://example.com/image-mid.png',
             width: 960,
             height: 540,
             mime_type: 'image/png',
           },
           full: {
-            sourceUrl: 'https://example.com/image.png',
+            source_url: 'https://example.com/image.png',
             width: 1920,
             height: 1080,
             mime_type: 'image/png',

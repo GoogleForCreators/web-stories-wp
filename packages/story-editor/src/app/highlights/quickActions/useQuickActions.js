@@ -159,10 +159,10 @@ export const MediaPicker = ({ render, ...props }) => {
             optimizeGif({ resource });
           }
         }
-        // WordPress media picker event, sizes.medium.sourceUrl is the smallest image
+        // WordPress media picker event, sizes.medium.source_url is the smallest image
         insertMediaElement(
           resource,
-          resource.sizes?.medium?.sourceUrl || resource.src
+          resource.sizes?.medium?.source_url || resource.src
         );
 
         postProcessingResource(resource);

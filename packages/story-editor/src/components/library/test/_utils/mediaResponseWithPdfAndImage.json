@@ -42,33 +42,33 @@
           "width": 1058,
           "height": 1497,
           "mime_type": "application/pdf",
-          "sourceUrl": "http://localhost:8899/wp-content/uploads/2020/04/brochure-pdf.jpg"
+          "source_url": "http://localhost:8899/wp-content/uploads/2020/04/brochure-pdf.jpg"
         },
         "medium": {
           "file": "brochure-pdf-212x300.jpg",
           "width": 212,
           "height": 300,
           "mime_type": "image/jpeg",
-          "sourceUrl": "http://localhost:8899/wp-content/uploads/2020/04/brochure-pdf-212x300.jpg"
+          "source_url": "http://localhost:8899/wp-content/uploads/2020/04/brochure-pdf-212x300.jpg"
         },
         "large": {
           "file": "brochure-pdf-724x1024.jpg",
           "width": 724,
           "height": 1024,
           "mime_type": "image/jpeg",
-          "sourceUrl": "http://localhost:8899/wp-content/uploads/2020/04/brochure-pdf-724x1024.jpg"
+          "source_url": "http://localhost:8899/wp-content/uploads/2020/04/brochure-pdf-724x1024.jpg"
         },
         "thumbnail": {
           "file": "brochure-pdf-106x150.jpg",
           "width": 106,
           "height": 150,
           "mime_type": "image/jpeg",
-          "sourceUrl": "http://localhost:8899/wp-content/uploads/2020/04/brochure-pdf-106x150.jpg"
+          "source_url": "http://localhost:8899/wp-content/uploads/2020/04/brochure-pdf-106x150.jpg"
         }
       }
     },
     "post": null,
-    "sourceUrl": "http://localhost:8899/wp-content/uploads/2020/04/brochure.pdf",
+    "source_url": "http://localhost:8899/wp-content/uploads/2020/04/brochure.pdf",
     "missing_image_sizes": []
   },
   {
@@ -117,49 +117,49 @@
           "width": 221,
           "height": 300,
           "mime_type": "image/jpeg",
-          "sourceUrl": "http://localhost:8899/wp-content/uploads/2020/04/testImage-221x300.jpg"
+          "source_url": "http://localhost:8899/wp-content/uploads/2020/04/testImage-221x300.jpg"
         },
         "large": {
           "file": "testImage-754x1024.jpg",
           "width": 754,
           "height": 1024,
           "mime_type": "image/jpeg",
-          "sourceUrl": "http://localhost:8899/wp-content/uploads/2020/04/testImage-754x1024.jpg"
+          "source_url": "http://localhost:8899/wp-content/uploads/2020/04/testImage-754x1024.jpg"
         },
         "thumbnail": {
           "file": "testImage-150x150.jpg",
           "width": 150,
           "height": 150,
           "mime_type": "image/jpeg",
-          "sourceUrl": "http://localhost:8899/wp-content/uploads/2020/04/testImage-150x150.jpg"
+          "source_url": "http://localhost:8899/wp-content/uploads/2020/04/testImage-150x150.jpg"
         },
         "medium_large": {
           "file": "testImage-768x1043.jpg",
           "width": 768,
           "height": 1043,
           "mime_type": "image/jpeg",
-          "sourceUrl": "http://localhost:8899/wp-content/uploads/2020/04/testImage-768x1043.jpg"
+          "source_url": "http://localhost:8899/wp-content/uploads/2020/04/testImage-768x1043.jpg"
         },
         "web-stories-poster-portrait": {
           "file": "testImage-696x928.jpg",
           "width": 696,
           "height": 928,
           "mime_type": "image/jpeg",
-          "sourceUrl": "http://localhost:8899/wp-content/uploads/2020/04/testImage-696x928.jpg"
+          "source_url": "http://localhost:8899/wp-content/uploads/2020/04/testImage-696x928.jpg"
         },
         "web_stories_thumbnail": {
           "file": "testImage-150x204.jpg",
           "width": 150,
           "height": 204,
           "mime_type": "image/jpeg",
-          "sourceUrl": "http://localhost:8899/wp-content/uploads/2020/04/testImage-150x204.jpg"
+          "source_url": "http://localhost:8899/wp-content/uploads/2020/04/testImage-150x204.jpg"
         },
         "full": {
           "file": "testImage.jpg",
           "width": 1080,
           "height": 1467,
           "mime_type": "image/jpeg",
-          "sourceUrl": "http://localhost:8899/wp-content/uploads/2020/04/testImage.jpg"
+          "source_url": "http://localhost:8899/wp-content/uploads/2020/04/testImage.jpg"
         }
       },
       "image_meta": {
@@ -178,7 +178,7 @@
       }
     },
     "post": null,
-    "sourceUrl": "http://localhost:8899/wp-content/uploads/2020/04/testImage.jpg",
+    "source_url": "http://localhost:8899/wp-content/uploads/2020/04/testImage.jpg",
     "missing_image_sizes": []
   }
 ]
