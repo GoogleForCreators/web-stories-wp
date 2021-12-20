@@ -57,7 +57,7 @@
     "@stylelint/postcss-css-in-js": "^0.37.2",
     "@svgr/webpack": "^5.5.0",
     "@testing-library/dom": "^8.10.1",
-    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/react-hooks": "^7.0.2",
     "@testing-library/user-event": "^13.5.0",
