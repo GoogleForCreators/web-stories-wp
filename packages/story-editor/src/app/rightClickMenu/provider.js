@@ -783,6 +783,9 @@ function RightClickMenuProvider({ children }) {
       label: RIGHT_CLICK_MENU_LABELS.CLEAR_TEXT_STYLES(
         selectedElements?.filter(({ type }) => 'text' === type).length
       ),
+      disabled: !selectedElements.filter(({ type }) => {
+        return 'text' === type;
+      }).length,
       onClick: handleClearTextStyles,
       ...menuItemProps,
     }),
