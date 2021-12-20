@@ -150,7 +150,10 @@ const Menu = ({
   }, [isOpen, setFocusedId]);
 
   const keySpec = useMemo(
-    () => (disableControlledTabNavigation ? {} : { key: ['tab'], shift: true }),
+    () =>
+      disableControlledTabNavigation
+        ? { key: [] }
+        : { key: ['tab'], shift: true },
     [disableControlledTabNavigation]
   );
 
