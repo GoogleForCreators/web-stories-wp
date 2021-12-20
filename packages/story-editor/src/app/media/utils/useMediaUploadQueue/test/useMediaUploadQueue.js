@@ -48,7 +48,7 @@ const mockResource = {
     width: 1080,
     height: 720,
   },
-  source_url: 'http://localhost:9876/__static__/asteroid.ogg',
+  sourceUrl: 'http://localhost:9876/__static__/asteroid.ogg',
   title: {
     raw: 'Title',
   },
