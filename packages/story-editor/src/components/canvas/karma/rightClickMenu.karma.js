@@ -136,7 +136,7 @@ describe('Right Click Menu integration', () => {
 
   function clearTextStyles() {
     return fixture.screen.getByRole('button', {
-      name: /^Clear Text Style/i,
+      name: /^Clear Text Styles?/i,
     });
   }
 
@@ -1163,6 +1163,99 @@ describe('Right Click Menu integration', () => {
           },
         },
         lineHeight: 1.5,
+        font: {
+          family: 'Alegreya',
+          id: 'Alegreya',
+          name: 'Alegreya',
+        },
+        fontSize: 60,
+        content: '<span style="color: #00ff00">Another Text Element</span>',
+      });
+    });
+
+    it('it should clear styles from multiple texts', async () => {
+      const text1 = await addText({
+        backgroundColor: {
+          color: {
+            r: 196,
+            g: 196,
+            b: 196,
+          },
+        },
+        lineHeight: 1.5,
+        font: {
+          family: 'Alegreya',
+          id: 'Alegreya',
+          name: 'Alegreya',
+        },
+        fontSize: 60,
+        content: '<span style="color: #00ff00">Another Text Element</span>',
+      });
+      const text2 = await addText({
+        backgroundColor: {
+          color: {
+            r: 200,
+            g: 150,
+            b: 100,
+          },
+        },
+        lineHeight: 2.0,
+        font: {
+          family: 'Alegreya',
+          id: 'Alegreya',
+          name: 'Alegreya',
+        },
+        fontSize: 60,
+        content: '<span style="color: #00ff00">Another Text Element</span>',
+      });
+      const image = await addRangerImage();
+      await fixture.events.focus(fixture.editor.canvas.framesLayer.fullbleed);
+      await fixture.events.keyboard.shortcut('mod+a');
+      await rightClickOnTarget(
+        fixture.editor.canvas.framesLayer.frame(text1.id).node
+      );
+      await fixture.events.click(clearTextStyles());
+      const { elements } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          elements: state.currentPage.elements,
+        }))
+      );
+      const renderedTextElement1 = elements.filter(({ id }) => {
+        return id === text1.id;
+      });
+      const renderedTextElement2 = elements.filter(({ id }) => {
+        return id === text2.id;
+      });
+      await rightClickOnTarget(
+        fixture.editor.canvas.framesLayer.frame(text1.id).node
+      );
+      expect(image).toEqual(image);
+      expect(renderedTextElement1).not.toContain({
+        backgroundColor: {
+          color: {
+            r: 196,
+            g: 196,
+            b: 196,
+          },
+        },
+        lineHeight: 1.5,
+        font: {
+          family: 'Alegreya',
+          id: 'Alegreya',
+          name: 'Alegreya',
+        },
+        fontSize: 60,
+        content: '<span style="color: #00ff00">Another Text Element</span>',
+      });
+      expect(renderedTextElement2).not.toContain({
+        backgroundColor: {
+          color: {
+            r: 200,
+            g: 150,
+            b: 100,
+          },
+        },
+        lineHeight: 2.0,
         font: {
           family: 'Alegreya',
           id: 'Alegreya',
