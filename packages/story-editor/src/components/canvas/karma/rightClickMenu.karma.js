@@ -134,6 +134,12 @@ describe('Right Click Menu integration', () => {
     });
   }
 
+  function clearTextStyles() {
+    return fixture.screen.getByRole('button', {
+      name: /^Clear Text Style/i,
+    });
+  }
+
   function clearImageStyles() {
     return fixture.screen.getByRole('button', {
       name: /^Clear Image Styles/i,
@@ -1115,6 +1121,55 @@ describe('Right Click Menu integration', () => {
         isItalic: false,
         isUnderline: false,
         letterSpacing: 0,
+      });
+    });
+
+    it('it should clear styles', async () => {
+      const text = await addText({
+        backgroundColor: {
+          color: {
+            r: 196,
+            g: 196,
+            b: 196,
+          },
+        },
+        lineHeight: 1.5,
+        font: {
+          family: 'Alegreya',
+          id: 'Alegreya',
+          name: 'Alegreya',
+        },
+        fontSize: 60,
+        content: '<span style="color: #00ff00">Another Text Element</span>',
+      });
+      await rightClickOnTarget(
+        fixture.editor.canvas.framesLayer.frame(text.id).node
+      );
+      await fixture.events.click(clearTextStyles());
+      const { elements } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          elements: state.currentPage.elements,
+        }))
+      );
+      const renderedTextElement = elements.filter(({ id }) => {
+        return id === text.id;
+      });
+      expect(renderedTextElement).not.toContain({
+        backgroundColor: {
+          color: {
+            r: 196,
+            g: 196,
+            b: 196,
+          },
+        },
+        lineHeight: 1.5,
+        font: {
+          family: 'Alegreya',
+          id: 'Alegreya',
+          name: 'Alegreya',
+        },
+        fontSize: 60,
+        content: '<span style="color: #00ff00">Another Text Element</span>',
       });
     });
   });
