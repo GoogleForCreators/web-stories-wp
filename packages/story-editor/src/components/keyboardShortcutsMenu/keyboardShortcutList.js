@@ -365,6 +365,25 @@ const shortcuts = {
             </kbd>
           ),
         },
+        {
+          label: __('Incremental nudge', 'web-stories'),
+          shortcut: (
+            <kbd>
+              <TranslateWithMarkup
+                mapping={{
+                  lkbd: <LargeKey />,
+                  shortcut: <Shortcut shortcut="shift" />,
+                }}
+              >
+                {sprintf(
+                  /* translators: 1: Shift key. */
+                  __('<lkbd>%s</lkbd> <span>+ arrows</span>', 'web-stories'),
+                  prettifyShortcut('shift')
+                )}
+              </TranslateWithMarkup>
+            </kbd>
+          ),
+        },
       ],
     },
   ],
