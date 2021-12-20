@@ -574,9 +574,7 @@ function RightClickMenuProvider({ children }) {
     if (!selectedElement?.id) {
       return;
     }
-
     const resetProperties = getDefaultPropertiesForType(selectedElement.type);
-
     if (resetProperties) {
       updateElementsById({
         elementIds: [selectedElement.id],
@@ -695,7 +693,36 @@ function RightClickMenuProvider({ children }) {
       showSnackbar,
     ]
   );
-
+  const handleClearTextStyles = useCallback(() => {
+    if (!selectedElements.length) {
+      return;
+    }
+    selectedElements
+      .filter(({ type }) => {
+        return 'text' === type;
+      })
+      .map((element) => {
+        const resetProperties = getDefaultPropertiesForType(element.type);
+        updateElementsById({
+          elementIds: [element.id],
+          properties: (currentProperties) =>
+            updateProperties(
+              currentProperties,
+              resetProperties,
+              /* commitValues */ true
+            ),
+        });
+      });
+    showSnackbar({
+      actionLabel: __('Undo', 'web-stories'),
+      dismissible: false,
+      message: __('Cleared style.', 'web-stories'),
+      onAction: () => {
+        undoRef.current();
+      },
+      actionHelpText: UNDO_HELP_TEXT,
+    });
+  }, [selectedElements, showSnackbar, updateElementsById]);
   /**
    * Add color to global presets.
    *
@@ -749,6 +776,17 @@ function RightClickMenuProvider({ children }) {
       ...menuItemProps,
     }),
     [handleDuplicateElements, menuItemProps, selectedElements?.length]
+  );
+
+  const clearTextStylesAction = useMemo(
+    () => ({
+      label: RIGHT_CLICK_MENU_LABELS.CLEAR_TEXT_STYLES(
+        selectedElements?.filter(({ type }) => 'text' === type).length
+      ),
+      onClick: handleClearTextStyles,
+      ...menuItemProps,
+    }),
+    [handleClearTextStyles, menuItemProps, selectedElements]
   );
 
   const layerItems = useMemo(
@@ -898,6 +936,7 @@ function RightClickMenuProvider({ children }) {
         disabled: copiedElement.type !== selectedElement?.type,
         ...menuItemProps,
       },
+      { ...clearTextStylesAction },
       {
         label: RIGHT_CLICK_MENU_LABELS.ADD_TO_TEXT_PRESETS,
         onClick: handleAddTextPreset,
@@ -919,6 +958,7 @@ function RightClickMenuProvider({ children }) {
       handlePasteStyles,
       copiedElement,
       selectedElement,
+      clearTextStylesAction,
     ]
   );
 
@@ -1044,8 +1084,8 @@ function RightClickMenuProvider({ children }) {
   );
 
   const multipleElementItems = useMemo(
-    () => [duplicateElementAction],
-    [duplicateElementAction]
+    () => [duplicateElementAction, clearTextStylesAction],
+    [clearTextStylesAction, duplicateElementAction]
   );
 
   const menuItems = useMemo(() => {
