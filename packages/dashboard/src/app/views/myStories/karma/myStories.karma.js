@@ -519,7 +519,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
         document.activeElement.innerText
       );
 
-      await fixture.events.keyboard.press('tab');
+      await fixture.events.keyboard.press('down');
 
       expect(secondContextMenuItem.innerText).toEqual(
         document.activeElement.innerText
