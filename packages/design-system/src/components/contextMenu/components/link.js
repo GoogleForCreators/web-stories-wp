@@ -83,7 +83,7 @@ function Link({ id, onBlur, onClick, onFocus, openNewTab, ...props }) {
 
   const handleClick = (evt) => {
     onClick?.(evt);
-    onDismiss?.(evt);
+    onDismiss(evt);
   };
 
   const handleFocus = (evt) => {

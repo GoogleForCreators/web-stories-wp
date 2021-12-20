@@ -75,7 +75,7 @@ const Menu = ({
     })
   );
   const mouseDownOutsideRef = useMouseDownOutsideRef(() => {
-    isOpen && onDismiss?.();
+    isOpen && onDismiss();
   });
   const menuRef = useRef(null);
   const composedListRef = useComposeRefs(mouseDownOutsideRef, menuRef);
@@ -104,7 +104,7 @@ const Menu = ({
     (evt) => {
       const { key } = evt;
       if (key === 'Escape') {
-        onDismiss?.(evt);
+        onDismiss(evt);
         return;
       }
 
@@ -150,17 +150,18 @@ const Menu = ({
   }, [isOpen, setFocusedId]);
 
   const keySpec = useMemo(
-    () =>
-      disableControlledTabNavigation
-        ? { key: ['esc', 'down', 'up', 'left', 'right'] }
-        : { key: ['esc', 'down', 'up', 'left', 'right'], shift: true },
+    () => (disableControlledTabNavigation ? {} : { key: ['tab'], shift: true }),
     [disableControlledTabNavigation]
   );
 
-  useKeyDownEffect(menuRef, keySpec, handleKeyboardNav, [
+  useKeyDownEffect(
+    menuRef,
+    { key: ['esc', 'down', 'up', 'left', 'right'] },
     handleKeyboardNav,
-    keySpec,
-  ]);
+    [handleKeyboardNav]
+  );
+
+  useKeyDownEffect(menuRef, keySpec, onDismiss, [keySpec, onDismiss]);
 
   return (
     <MenuWrapper

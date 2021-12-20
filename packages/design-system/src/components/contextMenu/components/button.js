@@ -83,7 +83,7 @@ function Button({ id, onBlur, onClick, onFocus, ...props }) {
 
   const handleClick = (evt) => {
     onClick(evt);
-    onDismiss?.(evt);
+    onDismiss(evt);
   };
 
   const handleFocus = (evt) => {

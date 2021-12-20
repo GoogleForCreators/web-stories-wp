@@ -22,6 +22,7 @@ import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
+import { noop } from '../../utils';
 import { SmartPopover, Shadow } from './styled';
 import Menu, { MenuPropTypes } from './menu';
 import AnimationContainer from './animationContainer';
@@ -36,7 +37,7 @@ const ContextMenu = ({
   isRTL,
   isIconMenu,
   isInline = false,
-  onDismiss,
+  onDismiss = noop,
   ...props
 }) => {
   const Wrapper = useMemo(
