@@ -214,13 +214,17 @@ describe('CUJ: Page Templates: Creator can Apply a Default Page Template', () =>
       await fixture.events.keyboard.press('right');
       await fixture.events.keyboard.press('Enter');
 
-      // allow filtered templates to be removed from DOM
-      await fixture.events.sleep(500);
-
-      // expect templates titles to not contain "cover", there will still be one filter button containing "cover"
-      await waitFor(() => {
-        expect(fixture.screen.getAllByText(/cover/i).length).toBe(1);
-      });
+      await waitFor(
+        () => {
+          // allow filtered templates to be removed from DOM
+          if (fixture.screen.getAllByText(/cover/i).length !== 1) {
+            throw new Error('templates still not filtered');
+          }
+          // expect templates titles to not contain "cover", there will still be one filter button containing "cover"
+          expect(fixture.screen.getAllByText(/cover/i).length).toBe(1);
+        },
+        { timeout: 1000 }
+      );
       // navigate to and add "Fresh & Bright" template
       await fixture.events.keyboard.press('tab');
       await fixture.events.keyboard.press('tab');
@@ -270,12 +274,19 @@ describe('CUJ: Page Templates: Creator can Apply a Default Page Template', () =>
       await fixture.events.keyboard.press('left');
       await fixture.events.keyboard.press('Enter');
 
-      // allow time for previous filtered templates to remount
-      await fixture.events.sleep(500);
-      // expect template titles to contain "cover"
-      expect(
-        fixture.screen.getAllByText(/cover/i).length
-      ).toBeGreaterThanOrEqual(1);
+      await waitFor(
+        () => {
+          // allow time for previous filtered templates to remount
+          if (fixture.screen.getAllByText(/cover/i).length <= 1) {
+            throw new Error('templates filters still not reset');
+          }
+          // expect template titles to contain "cover"
+          expect(
+            fixture.screen.getAllByText(/cover/i).length
+          ).toBeGreaterThanOrEqual(1);
+        },
+        { timeout: 1000 }
+      );
     });
   });
 });
