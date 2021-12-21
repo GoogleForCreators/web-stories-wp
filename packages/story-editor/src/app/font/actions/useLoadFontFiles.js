@@ -29,6 +29,7 @@ import { ensureFontLoaded, loadInlineStylesheet } from '../utils';
 
 function useLoadFontFiles() {
   const maybeLoadFont = useCallback(async (font) => {
+    console.log('maybe load fonts');
     const { family, service, variants, url } = font;
 
     const handle = cleanForSlug(family);
@@ -72,7 +73,7 @@ function useLoadFontFiles() {
           const fontFaceSet = `
               ${fontStyle || ''} ${fontWeight || ''} 0 '${family}'
             `.trim();
-
+          console.log('maybe enqueueFontStyle::: ', JSON.stringify(font));
           await maybeLoadFont(font);
 
           return ensureFontLoaded(fontFaceSet, content);

@@ -87,6 +87,7 @@ function FontProvider({ children }) {
 
   const getFontByName = useCallback(
     (name) => {
+      console.log('get font by name');
       const foundFont = fonts.find((font) => font.family === name);
       return foundFont ? foundFont : {};
     },
@@ -95,6 +96,7 @@ function FontProvider({ children }) {
 
   const getFontsBySearch = useCallback(
     async (search) => {
+      console.log('get fonts by search');
       if (search.length < 2) {
         setQueriedFonts([]);
         return [];
@@ -119,6 +121,7 @@ function FontProvider({ children }) {
 
   const getFontWeight = useCallback(
     (name) => {
+      console.log('get font weight');
       const defaultFontWeights = [{ name: FONT_WEIGHT_NAMES[400], value: 400 }];
 
       const currentFont = getFontByName(name);
@@ -139,6 +142,7 @@ function FontProvider({ children }) {
 
   const getFontFallback = useCallback(
     (name) => {
+      console.log('get font fallback');
       const currentFont = getFontByName(name);
       return currentFont?.fallbacks ? currentFont.fallbacks : [];
     },
@@ -147,6 +151,7 @@ function FontProvider({ children }) {
 
   const addRecentFont = useCallback(
     (recentFont) => {
+      console.log('add recent font');
       const newRecentFonts = [recentFont];
       recentFonts.forEach((font) => {
         if (recentFont.family === font.family) {
@@ -182,12 +187,14 @@ function FontProvider({ children }) {
 
   const ensureCustomFontsLoaded = useCallback(
     (fontsToLoad) => {
+      console.log('ensure custom fonts loaded');
       for (const font of fontsToLoad) {
         const fontObj = fonts.find(({ family }) => family === font);
         if (!fontObj) {
+          console.log('continue');
           continue;
         }
-
+        console.log('maybe load this font: ', JSON.stringify(fontObj));
         maybeLoadFont(fontObj);
       }
     },
