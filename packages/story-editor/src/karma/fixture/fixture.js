@@ -822,6 +822,7 @@ class APIProviderFixture {
       );
 
       const getFonts = useCallback((params) => {
+        console.log('GET FONTS: ', JSON.stringify(params));
         let fonts = [
           {
             name: 'Abel',

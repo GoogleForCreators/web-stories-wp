@@ -57,8 +57,9 @@ function FontProvider({ children }) {
           const newFonts = await getFonts({
             include: CURATED_FONT_NAMES.join(','),
           });
-
+          console.log('get new fonts');
           if (!mounted) {
+            console.log('not mounted');
             return;
           }
 
@@ -68,10 +69,11 @@ function FontProvider({ children }) {
             value: font.family,
             ...font,
           }));
-
+          console.log('set fonts');
           setCuratedFonts(formattedFonts);
         })();
       } catch (err) {
+        console.log('something went wrong fonts ', err.message);
         trackError('font_provider', err.message);
       }
     }
