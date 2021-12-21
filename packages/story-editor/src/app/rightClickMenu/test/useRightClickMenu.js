@@ -276,6 +276,7 @@ describe('useRightClickMenu', () => {
         RIGHT_CLICK_MENU_LABELS.BRING_TO_FRONT,
         RIGHT_CLICK_MENU_LABELS.COPY_STYLES,
         RIGHT_CLICK_MENU_LABELS.PASTE_STYLES,
+        RIGHT_CLICK_MENU_LABELS.CLEAR_TEXT_STYLES(1),
         RIGHT_CLICK_MENU_LABELS.ADD_TO_TEXT_PRESETS,
         RIGHT_CLICK_MENU_LABELS.ADD_TO_COLOR_PRESETS,
       ]);
@@ -717,6 +718,7 @@ describe('useRightClickMenu', () => {
       const labels = result.current.menuItems.map((item) => item.label);
       expect(labels).toStrictEqual([
         RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(2),
+        RIGHT_CLICK_MENU_LABELS.CLEAR_TEXT_STYLES(2),
       ]);
     });
   });
