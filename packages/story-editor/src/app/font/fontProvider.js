@@ -57,7 +57,6 @@ function FontProvider({ children }) {
           const newFonts = await getFonts({
             include: CURATED_FONT_NAMES.join(','),
           });
-          console.log('get new fonts');
           if (!mounted) {
             console.log('not mounted');
             return;
@@ -69,11 +68,9 @@ function FontProvider({ children }) {
             value: font.family,
             ...font,
           }));
-          console.log('set fonts');
           setCuratedFonts(formattedFonts);
         })();
       } catch (err) {
-        console.log('something went wrong fonts ', err.message);
         trackError('font_provider', err.message);
       }
     }
@@ -182,14 +179,11 @@ function FontProvider({ children }) {
 
   const ensureCustomFontsLoaded = useCallback(
     (fontsToLoad) => {
-      console.log('ensure custom fonts loaded');
       for (const font of fontsToLoad) {
         const fontObj = fonts.find(({ family }) => family === font);
         if (!fontObj) {
-          console.log('continue');
           continue;
         }
-        console.log('maybe load this font: ', JSON.stringify(fontObj));
         maybeLoadFont(fontObj);
       }
     },
