@@ -24,7 +24,8 @@ function loadStylesheet(url, id) {
     link.addEventListener('load', resolve);
     link.addEventListener('error', reject);
     document.head.appendChild(link);
-    console.log('my stylesheet to load: ', JSON.stringify(link));
+    console.log('my stylesheet to load: ', JSON.stringify(link), url, id);
+    console.log(JSON.stringify(document.head));
   }).catch((e) => {
     console.log('caught loading stylesheet', JSON.stringify(e));
   });
