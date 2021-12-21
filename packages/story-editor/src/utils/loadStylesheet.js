@@ -20,7 +20,7 @@ function loadStylesheet(url, id) {
     link.id = id;
     link.rel = 'stylesheet';
     link.href = url;
-    link.crossOrigin = 'anonymous';
+    // link.crossOrigin = 'anonymous';
     link.addEventListener('load', resolve);
     link.addEventListener('error', reject);
     document.head.appendChild(link);
