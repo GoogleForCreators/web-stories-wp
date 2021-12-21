@@ -41,12 +41,17 @@ function useLoadFontFiles() {
       return;
     }
 
+    console.log('my service: ', service);
     switch (service) {
       case 'fonts.google.com':
+        console.log('load fonts.google styles');
         await loadStylesheet(getGoogleFontURL([{ family, variants }], 'auto'));
+        console.log('fonts.google styles loaded');
         break;
       case 'custom':
+        console.log('load custom ish');
         await loadInlineStylesheet(elementId, url, family);
+        console.log('custom ish loaded');
         break;
       default:
         return;
