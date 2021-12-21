@@ -45,8 +45,14 @@ function useLoadFontFiles() {
     switch (service) {
       case 'fonts.google.com':
         console.log('load fonts.google styles');
-        await loadStylesheet(getGoogleFontURL([{ family, variants }], 'auto'));
-        console.log('fonts.google styles loaded');
+        try {
+          await loadStylesheet(
+            getGoogleFontURL([{ family, variants }], 'auto')
+          );
+          console.log('fonts.google styles loaded');
+        } catch {
+          console.log('caught while loading styles');
+        }
         break;
       case 'custom':
         console.log('load custom ish');
