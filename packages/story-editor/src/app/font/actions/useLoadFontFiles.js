@@ -46,8 +46,10 @@ function useLoadFontFiles() {
       case 'fonts.google.com':
         console.log('load fonts.google styles');
         try {
-        await loadStylesheet(getGoogleFontURL([{ family, variants }], 'auto'));
-        console.log('fonts.google styles loaded');
+          await loadStylesheet(
+            getGoogleFontURL([{ family, variants }], 'auto')
+          );
+          console.log('fonts.google styles loaded');
         } catch {
           console.log('caught while loading styles');
         }
@@ -82,22 +84,15 @@ function useLoadFontFiles() {
           const fontFaceSet = `
               ${fontStyle || ''} ${fontWeight || ''} 0 '${family}'
             `.trim();
-          try {
-            console.log('maybe enqueueFontStyle::: ', JSON.stringify(font));
-            await maybeLoadFont(font);
-            return ensureFontLoaded(fontFaceSet, content);
-          } catch {
-            console.log('caught in enqueueFontSTyles');
-            return null;
-          }
+
+          console.log('maybe enqueueFontStyle::: ', JSON.stringify(font));
+          await maybeLoadFont(font);
+
+          await ensureFontLoaded(fontFaceSet, content);
         })
-      )
-        .then(() => {
-          console.log('enqueued font styles are settled');
-        })
-        .catch(() => {
-          console.log('enqueued font styles were caught');
-        });
+      ).then((val) => {
+        console.log('font is settled', JSON.stringify(val[0]));
+      });
     },
     [maybeLoadFont]
   );

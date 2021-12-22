@@ -13,20 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { v4 as uuidv4 } from 'uuid';
 
 function loadStylesheet(url, id) {
   return new Promise((resolve, reject) => {
     const link = document.createElement('link');
-    link.id = id;
+    link.id = id ?? uuidv4();
     link.rel = 'stylesheet';
     link.href = url;
     link.crossOrigin = 'anonymous';
     link.addEventListener('load', resolve);
     link.addEventListener('error', reject);
     document.head.appendChild(link);
-    console.log('my stylesheet to load: ', JSON.stringify(link));
-  }).catch((e) => {
-    console.log('caught loading stylesheet', JSON.stringify(e));
+    console.log('stylesheet to load', link);
   });
 }
 
