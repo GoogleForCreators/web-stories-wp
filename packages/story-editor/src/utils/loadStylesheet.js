@@ -23,6 +23,7 @@ function loadStylesheet(url, id) {
     const link = document.createElement('link');
     link.id = id ?? uuidv4();
     link.rel = 'stylesheet';
+    link.type = 'text/css';
     link.href = url;
     link.crossOrigin = 'anonymous';
     link.addEventListener('load', resolve);
