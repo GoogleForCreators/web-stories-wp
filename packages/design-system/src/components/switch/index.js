@@ -45,7 +45,6 @@ const SlidingButton = styled.span`
   width: 50%;
   height: ${SWITCH_HEIGHT}px;
   border-radius: 100px;
-  background-color: ${({ theme }) => theme.colors.interactiveBg.primaryNormal};
   transition: all 0.15s ease-out;
   z-index: 0;
 
@@ -68,6 +67,19 @@ const SwitchContainer = styled.div`
   ${({ disabled, theme }) =>
     disabled
       ? css`
+          cursor: default;
+          background: ${theme.colors.divider.tertiary};
+
+          ${SlidingButton} {
+            background-color: ${theme.colors.interactiveBg.disable};
+          }
+        `
+      : css`
+          :hover ${SlidingButton} {
+            background-color: ${theme.colors.interactiveBg.primaryHover};
+          }
+        `};
+
           cursor: default;
           background: ${theme.colors.divider.tertiary};
 
@@ -111,16 +123,28 @@ const RadioButtonLabel = styled(Text).attrs({
   z-index: 1;
   color: ${({ isActive, theme }) =>
     isActive ? theme.colors.inverted.fg.primary : theme.colors.fg.secondary};
+  background-color: ${({ isActive, theme }) =>
+    isActive && theme.colors.interactiveBg.primaryNormal};
+  border-radius: 100px;
   cursor: pointer;
   overflow: hidden;
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;
-  transition: color 0.15s ease-out;
+  transition: all 0.15s ease-out;
 
   ${({ disabled, theme }) =>
     disabled &&
     css`
+      cursor: default;
+      color: ${theme.colors.fg.disable};
+    `}
+
+  /* add focus styling on the slider when the hidden input is focused */
+  :focus-within ~ span {
+    ${themeHelpers.focusCSS};
+  }
+
       cursor: default;
       color: ${theme.colors.fg.disable};
     `}
