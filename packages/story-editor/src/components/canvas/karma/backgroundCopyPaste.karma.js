@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
 /**
  * Internal dependencies
  */
@@ -216,8 +219,10 @@ describe('Background Copy Paste integration', () => {
       'background-image',
       'linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.7) 100%)'
     );
-    await fixture.events.sleep(10000);
-    expect(await getNumElements()).toBe(1);
+
+    waitFor(async () => {
+      expect(await getNumElements()).toBe(1);
+    });
 
     // Now delete background image and verify that underlying color is still correct
     await clickBackgroundElement();

@@ -186,7 +186,7 @@ module.exports = function (config) {
     browserNoActivityTimeout: 100000,
 
     // Wait a bit longer for browser to reconnect.
-    browserDisconnectTimeout: 10000,
+    browserDisconnectTimeout: 100000,
 
     // Custom context file.
     customClientContextFile:
