@@ -44,8 +44,12 @@ function ExploreTemplates() {
   const [activeTemplate, setActiveTemplate] = useState(null);
   const [activeTemplateIndex, setActiveTemplateIndex] = useState(0);
 
-  const templateIdParam = useRouteHistory(({ state }) => state.queryParams.id);
-  const { actions } = useRouteHistory();
+  const { templateIdParam, replace } = useRouteHistory(
+    ({ actions, state }) => ({
+      templateIdParam: state.queryParams.id,
+      replace: actions.replace,
+    })
+  );
 
   const idRef = useRef(templateIdParam);
 
@@ -155,11 +159,9 @@ function ExploreTemplates() {
       if (idRef.current) {
         idRef.current = undefined;
       }
-      actions.replace(
-        `?id=${currentTemplate.id}&isLocal=${currentTemplate.isLocal}`
-      );
+      replace(`?id=${currentTemplate.id}&isLocal=${currentTemplate.isLocal}`);
     },
-    [actions, orderedTemplates]
+    [replace, orderedTemplates]
   );
 
   const handleDetailsToggle = useCallback(
@@ -173,13 +175,13 @@ function ExploreTemplates() {
         }
 
         if (!newIsOpen) {
-          actions.replace('');
+          replace('');
         }
 
         return newIsOpen;
       });
     },
-    [actions, updateTemplateView]
+    [replace, updateTemplateView]
   );
 
   const switchToTemplateByOffset = useCallback(
@@ -187,9 +189,9 @@ function ExploreTemplates() {
       const newTemplate = orderedTemplates[offset];
       setActiveTemplate(newTemplate);
       setActiveTemplateIndex(offset);
-      actions.replace(`?id=${newTemplate.id}&isLocal=${newTemplate.isLocal}`);
+      replace(`?id=${newTemplate.id}&isLocal=${newTemplate.isLocal}`);
     },
-    [orderedTemplates, actions]
+    [orderedTemplates, replace]
   );
 
   const templateActions = useMemo(
