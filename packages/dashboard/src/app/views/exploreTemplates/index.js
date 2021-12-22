@@ -44,12 +44,8 @@ function ExploreTemplates() {
   const [activeTemplate, setActiveTemplate] = useState(null);
   const [activeTemplateIndex, setActiveTemplateIndex] = useState(0);
 
-  const {
-    state: {
-      queryParams: { id: templateIdParam },
-    },
-    actions,
-  } = useRouteHistory();
+  const templateIdParam = useRouteHistory(({ state }) => state.queryParams.id);
+  const { actions } = useRouteHistory();
 
   const idRef = useRef(templateIdParam);
 
@@ -215,10 +211,17 @@ function ExploreTemplates() {
 
   useEffect(() => {
     if (idRef.current && orderedTemplates.length) {
+      const isValidId = orderedTemplates.some(
+        (template) => template.id === parseInt(idRef.current)
+      );
+      if (!isValidId) {
+        return;
+      }
+
       setIsDetailsViewOpen(true);
       updateTemplateView(parseInt(idRef.current));
     }
-  }, [orderedTemplates.length, updateTemplateView]);
+  }, [orderedTemplates, updateTemplateView]);
 
   return (
     <Layout.Provider>
