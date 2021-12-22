@@ -26,10 +26,12 @@ import { useFont } from './font';
 import { useLocalMedia, useMedia } from './media';
 import {
   useStory,
+  useCurrentPageElementIds,
   useStoryTriggers,
   useStoryTriggerListener,
   useStoryTriggersDispatch,
   STORY_EVENTS,
+  storyReducers,
 } from './story';
 
 import { useCanvas } from './canvas';
@@ -50,6 +52,7 @@ export {
   useStoryTriggersDispatch,
   STORY_EVENTS,
   useConfig,
+  useCurrentPageElementIds,
   useFont,
   useLocalMedia,
   useMedia,
@@ -59,4 +62,5 @@ export {
   useHelpCenter,
   useUserOnboarding,
   useRightClickMenu,
+  storyReducers,
 };

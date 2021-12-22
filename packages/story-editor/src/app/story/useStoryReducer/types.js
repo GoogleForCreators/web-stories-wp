@@ -47,6 +47,9 @@ export const UPDATE_STORY = 'UPDATE_STORY';
 export const UPDATE_ANIMATION_STATE = 'UPDATE_ANIMATION_STATE';
 export const ADD_ANIMATIONS = 'ADD_ANIMATIONS';
 
+// Allows to opt out of root reducer and compose reducers manually
+export const UPDATE_STATE_WITH_REDUCER = 'UPDATE_STATE_WITH_REDUCER';
+
 // Manipulate entire internal state.
 export const RESTORE = 'RESTORE';
 

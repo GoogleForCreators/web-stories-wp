@@ -211,6 +211,11 @@ const addAnimations =
   ({ animations }) =>
     dispatch({ type: types.ADD_ANIMATIONS, payload: { animations } });
 
+const updateStateWithReducer =
+  (dispatch) =>
+  ({ reducer }) =>
+    dispatch({ type: types.UPDATE_STATE_WITH_REDUCER, payload: { reducer } });
+
 export const exposedActions = {
   addPage,
   addPageAt,
@@ -244,6 +249,7 @@ export const exposedActions = {
   updateAnimationState,
   addAnimations,
   updateStory,
+  updateStateWithReducer,
 };
 
 // Internal actions

@@ -15,19 +15,20 @@
  */
 
 /**
- * Internal dependencies
+ * Update story properties.
+ *
+ * No validation is performed and existing values are overwritten.
+ *
+ * @param {Object} state Current state
+ * @param {Object} payload Action payload
+ * @param {Object | Function} payload.reducer reducer to apply to state
+ * @return {Object} New state
  */
-import { useCurrentPageElementIds } from '../../../../app';
-
-function useLayers() {
-  const elementIds = useCurrentPageElementIds();
-
-  const layers = elementIds.map((id, index) => ({
-    id,
-    position: index,
-  }));
-  layers.reverse();
-  return layers;
+function updateStateWithReducer(state, { reducer }) {
+  if (typeof reducer !== 'function') {
+    return state;
+  }
+  return reducer(state);
 }
 
-export default useLayers;
+export default updateStateWithReducer;
