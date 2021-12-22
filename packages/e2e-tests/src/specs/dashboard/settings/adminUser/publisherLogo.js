@@ -152,7 +152,7 @@ describe('Publisher Logo without SVG option enabled', () => {
 
     await page.waitForTimeout(300);
 
-    await expect(logoToDelete).toClick('span', { text: 'Delete' });
+    await expect(logoToDelete).toClick('button', { text: 'Delete' });
 
     await page.waitForTimeout(300);
     const updatedPublisherLogos = await publisherLogosContainer.$$(
