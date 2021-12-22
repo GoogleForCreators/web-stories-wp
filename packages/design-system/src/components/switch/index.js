@@ -79,19 +79,6 @@ const SwitchContainer = styled.div`
             background-color: ${theme.colors.interactiveBg.primaryHover};
           }
         `};
-
-          cursor: default;
-          background: ${theme.colors.divider.tertiary};
-
-          ${SlidingButton} {
-            background-color: ${theme.colors.interactiveBg.disable};
-          }
-        `
-      : css`
-          :hover ${SlidingButton} {
-            background-color: ${theme.colors.interactiveBg.primaryHover};
-          }
-        `};
 `;
 
 const HiddenRadioButton = styled.input.attrs({ type: 'radio' })`
@@ -136,15 +123,6 @@ const RadioButtonLabel = styled(Text).attrs({
   ${({ disabled, theme }) =>
     disabled &&
     css`
-      cursor: default;
-      color: ${theme.colors.fg.disable};
-    `}
-
-  /* add focus styling on the slider when the hidden input is focused */
-  :focus-within ~ span {
-    ${themeHelpers.focusCSS};
-  }
-
       cursor: default;
       color: ${theme.colors.fg.disable};
     `}
