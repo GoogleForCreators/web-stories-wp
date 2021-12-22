@@ -26,7 +26,7 @@ import { useStory } from '../../../app/story';
 import { useInsertElement } from '..';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 
-fdescribe('Carousel integration', () => {
+describe('Carousel integration', () => {
   let fixture;
   let element1;
 
