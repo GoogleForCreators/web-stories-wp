@@ -16,12 +16,10 @@
 /**
  * External dependencies
  */
-import { v4 as uuidv4 } from 'uuid';
-
 function loadStylesheet(url, id) {
   return new Promise((resolve, reject) => {
     const link = document.createElement('link');
-    link.id = id ?? uuidv4();
+    link.id = id;
     link.rel = 'stylesheet';
     link.type = 'text/css';
     link.href = url;
