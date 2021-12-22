@@ -91,7 +91,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
       }
 
       // Preload the full image in the browser to stop jumping around.
-      await preloadImage(poster);
+      await preloadImage(poster).catch(() => {});
 
       return { posterId, poster, posterWidth, posterHeight };
     },

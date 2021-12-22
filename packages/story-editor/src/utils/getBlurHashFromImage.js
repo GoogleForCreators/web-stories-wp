@@ -37,7 +37,7 @@ const getImageData = (image) => {
 };
 
 const getBlurHashFromImage = async (src) => {
-  const image = await preloadImage(src);
+  const image = await preloadImage(src).catch(() => {});
   const imageData = getImageData(image);
   const { data, width, height } = imageData;
 

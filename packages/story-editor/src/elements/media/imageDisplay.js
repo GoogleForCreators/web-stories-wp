@@ -83,7 +83,7 @@ function ImageDisplay({ element, box, previewMode }) {
     if (resourceList.get(resource.id)?.type !== 'fullsize' && resource.src) {
       timeout = setTimeout(async () => {
         const url = getProxiedUrl(resource, resource.src);
-        const preloadedImg = await preloadImage(url, srcSet);
+        const preloadedImg = await preloadImage(url, srcSet).catch(() => {});
         if (mounted) {
           resourceList.set(resource.id, {
             type: 'fullsize',
