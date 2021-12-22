@@ -29,7 +29,6 @@ import { ensureFontLoaded, loadInlineStylesheet } from '../utils';
 
 function useLoadFontFiles() {
   const maybeLoadFont = useCallback(async (font) => {
-    console.log('maybe load fonts');
     const { family, service, variants, url } = font;
 
     const handle = cleanForSlug(family);
@@ -41,23 +40,13 @@ function useLoadFontFiles() {
       return;
     }
 
-    console.log('my service: ', service);
     switch (service) {
       case 'fonts.google.com':
-        console.log('load fonts.google styles');
-        try {
-          await loadStylesheet(
-            getGoogleFontURL([{ family, variants }], 'auto')
-          );
-          console.log('fonts.google styles loaded');
-        } catch {
-          console.log('caught while loading styles');
-        }
+        await loadStylesheet(getGoogleFontURL([{ family, variants }], 'auto'));
+
         break;
       case 'custom':
-        console.log('load custom ish');
         await loadInlineStylesheet(elementId, url, family);
-        console.log('custom ish loaded');
         break;
       default:
         return;
@@ -85,14 +74,11 @@ function useLoadFontFiles() {
               ${fontStyle || ''} ${fontWeight || ''} 0 '${family}'
             `.trim();
 
-          console.log('maybe enqueueFontStyle::: ', JSON.stringify(font));
           await maybeLoadFont(font);
 
-          await ensureFontLoaded(fontFaceSet, content);
+          return ensureFontLoaded(fontFaceSet, content);
         })
-      ).then((val) => {
-        console.log('font is settled', JSON.stringify(val[0]));
-      });
+      );
     },
     [maybeLoadFont]
   );

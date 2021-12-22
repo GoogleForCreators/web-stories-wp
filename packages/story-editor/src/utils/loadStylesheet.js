@@ -28,7 +28,7 @@ function loadStylesheet(url, id) {
     link.addEventListener('load', resolve);
     link.addEventListener('error', reject);
     document.head.appendChild(link);
-    console.log('stylesheet to load', link);
+    console.log('stylesheet to load', url, JSON.stringify(link));
   });
 }
 

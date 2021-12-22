@@ -57,8 +57,8 @@ function FontProvider({ children }) {
           const newFonts = await getFonts({
             include: CURATED_FONT_NAMES.join(','),
           });
+
           if (!mounted) {
-            console.log('not mounted');
             return;
           }
 
