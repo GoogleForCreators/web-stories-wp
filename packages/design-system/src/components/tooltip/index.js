@@ -306,7 +306,7 @@ const TooltipPropTypes = {
   onPointerEnter: PropTypes.func,
   onPointerLeave: PropTypes.func,
   shortcut: PropTypes.string,
-  title: PropTypes.string,
+  title: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   forceAnchorRef: PropTypes.object,
   tooltipProps: PropTypes.object,
   className: PropTypes.string,

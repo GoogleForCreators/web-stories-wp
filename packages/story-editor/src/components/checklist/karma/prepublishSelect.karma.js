@@ -299,11 +299,14 @@ describe('Pre-publish checklist select offending elements onClick', () => {
           y: 0,
           width: 640 / 2,
           height: 529 / 2,
+          alt: 'Video of earth',
           resource: {
             width: 640,
             height: 529,
             type: 'video',
             src: 'http://localhost:9876/__static__/earth.mp4',
+            poster: 'http://localhost:9876/__static__/earth.jpg',
+            alt: 'Earth',
           },
         });
       });
@@ -346,6 +349,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
             height: 529,
             type: 'video',
             src: 'http://localhost:9876/__static__/earth.mp4',
+            poster: 'http://localhost:9876/__static__/earth.jpg',
             alt: 'Planet Earth',
           },
         });

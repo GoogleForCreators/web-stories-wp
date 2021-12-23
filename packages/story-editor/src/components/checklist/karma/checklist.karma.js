@@ -82,6 +82,9 @@ describe('Checklist integration', () => {
           type: 'image',
           mimeType: 'image/jpg',
           src: 'http://localhost:9876/__static__/earth.jpg',
+          alt: 'Earth',
+          width: 640,
+          height: 529,
         },
       })
     );
@@ -464,6 +467,7 @@ describe('Checklist integration - Card visibility', () => {
         resource: {
           type: 'image',
           mimeType: 'image/jpg',
+          alt: 'Earth',
           src: 'http://localhost:9876/__static__/earth.jpg',
           width: 300,
           height: 400,

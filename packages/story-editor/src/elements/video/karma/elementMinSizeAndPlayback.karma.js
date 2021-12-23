@@ -56,6 +56,9 @@ describe('Element min size and playback', () => {
           mimeType: 'video/ogg',
           src: 'http://localhost:9876/__static__/asteroid.ogg',
           poster: 'http://localhost:9876/__static__/asteroid.png',
+          alt: 'Asteroid',
+          width: 260,
+          height: 120,
         },
       };
       video1 = await fixture.act(() => insertElement('video', videoProps));

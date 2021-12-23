@@ -58,7 +58,7 @@ describe('Quick Actions integration', () => {
   });
 
   describe('quick action menu should have no aXe accessibility violations', () => {
-    it('should pass accessibility tests with the default menu', async () => {
+    it('should have no aXe violations with the default menu', async () => {
       await expectAsync(
         fixture.editor.canvas.quickActionMenu.node
       ).toHaveNoViolations();
@@ -135,8 +135,11 @@ describe('Quick Actions integration', () => {
           height: 529 / 2,
           resource: {
             type: 'image',
+            alt: 'Picture of earth',
             mimeType: 'image/jpg',
             src: 'http://localhost:9876/__static__/earth.jpg',
+            width: 640,
+            height: 529,
           },
         })
       );
@@ -184,7 +187,6 @@ describe('Quick Actions integration', () => {
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.addAnimationButton
       );
-
       expect(fixture.editor.inspector.designPanel.animation).not.toBeNull();
 
       expect(document.activeElement).toEqual(

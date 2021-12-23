@@ -253,6 +253,8 @@ describe('Right Click Menu integration', () => {
           mimeType: 'image/jpg',
           src: 'http://localhost:9876/__static__/earth.jpg',
           alt: 'Earth',
+          width: 640,
+          height: 529,
         },
       })
     );
@@ -275,6 +277,8 @@ describe('Right Click Menu integration', () => {
           mimeType: 'image/jpg',
           src: 'http://localhost:9876/__static__/ranger9.png',
           alt: 'Ranger',
+          width: 640,
+          height: 529,
         },
       })
     );
@@ -295,8 +299,11 @@ describe('Right Click Menu integration', () => {
         resource: {
           width: 640,
           height: 529,
-          mimeType: 'image/jpg',
+          mimeType: 'video/mp4',
           src: 'http://localhost:9876/__static__/beach.mp4',
+          poster: 'http://localhost:9876/__static__/beach.jpg',
+          type: 'video',
+          alt: 'Video Content',
         },
       })
     );
