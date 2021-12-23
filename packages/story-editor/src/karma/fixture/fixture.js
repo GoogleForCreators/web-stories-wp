@@ -72,6 +72,10 @@ function MediaUpload({ render: _render, onSelect }) {
     const image = {
       type: 'image',
       src: 'http://localhost:9876/__static__/saturn.jpg',
+      mimeType: 'saturn image',
+      width: 560,
+      height: 320,
+      alt: 'saturn image',
     };
     onSelect(image);
   };

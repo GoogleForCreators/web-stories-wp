@@ -571,9 +571,7 @@ describe('Quick Actions integration', () => {
       // add animation to background image
       const effectChooserToggle =
         fixture.editor.inspector.designPanel.animation.effectChooser;
-
       await fixture.events.click(effectChooserToggle, { clickCount: 1 });
-
       // animation
       const animation = fixture.screen.getByRole('option', {
         name: '"Pan and Zoom" Effect',
@@ -881,7 +879,6 @@ describe('Quick Actions integration', () => {
       const foregroundVideo = await fixture.act(() =>
         insertElement('video', videoElement)
       );
-
       await clickOnTarget(
         fixture.editor.canvas.framesLayer.frame(foregroundVideo.id).node
       );
