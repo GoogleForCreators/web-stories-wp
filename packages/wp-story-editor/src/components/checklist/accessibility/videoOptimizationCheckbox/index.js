@@ -122,12 +122,12 @@ function VideoOptimizationCheckbox() {
             <ButtonContainer>
               <Button
                 variant={BUTTON_VARIANTS.RECTANGLE}
-                type={BUTTON_TYPES.PRIMARY}
+                type={BUTTON_TYPES.SECONDARY}
                 size={BUTTON_SIZES.SMALL}
                 onClick={handleSave}
                 disabled={isSaving}
               >
-                {__('Save and Reload', 'web-stories')}
+                {__('Save & Reload', 'web-stories')}
               </Button>
             </ButtonContainer>
           </>
