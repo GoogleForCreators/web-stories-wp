@@ -23,6 +23,7 @@ import {
   BUTTON_VARIANTS,
   BUTTON_SIZES,
   Icons,
+  themeHelpers,
 } from '@web-stories-wp/design-system';
 import { __ } from '@web-stories-wp/i18n';
 import { useState } from '@web-stories-wp/react';
@@ -39,6 +40,12 @@ const StyledButton = styled(Button).attrs({
   height: 32px;
   width: 100%;
   margin: 4px 0;
+
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.tertiary
+    )};
 `;
 
 const IconContainer = styled.div`
