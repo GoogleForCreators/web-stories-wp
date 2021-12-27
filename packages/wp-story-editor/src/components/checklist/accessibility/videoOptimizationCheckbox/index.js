@@ -34,6 +34,7 @@ import {
   useConfig,
   useCurrentUser,
   useIsChecklistMounted,
+  useStory,
   ChecklistCard,
 } from '@web-stories-wp/story-editor';
 
@@ -83,6 +84,15 @@ function VideoOptimizationCheckbox() {
     toggleWebStoriesMediaOptimization();
   }, [toggleWebStoriesMediaOptimization]);
 
+  const { isSaving, saveStory } = useStory(({ state, actions }) => ({
+    isSaving: state.meta.isSaving,
+    saveStory: actions.saveStory,
+  }));
+  const handleSave = async () => {
+    await saveStory();
+    window.location.reload(true);
+  };
+
   return (showCheckbox || hasOptedIn) && isChecklistMounted ? (
     <ChecklistCard
       title={__(
@@ -96,8 +106,8 @@ function VideoOptimizationCheckbox() {
               variant={BUTTON_VARIANTS.RECTANGLE}
               type={BUTTON_TYPES.PRIMARY}
               size={BUTTON_SIZES.SMALL}
-              // onClick={handleSaveButton}
-              // disabled={isSaving}
+              onClick={handleSave}
+              disabled={isSaving}
             >
               {__('Save and Reload', 'web-stories')}
             </Button>
