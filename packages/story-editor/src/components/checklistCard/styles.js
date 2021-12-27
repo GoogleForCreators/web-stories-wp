@@ -52,9 +52,6 @@ export const Container = styled.div`
   ${({ gridVariant }) => css`
     grid-template-areas: ${GRID_TEMPLATE_AREA[gridVariant]};
   `}
-
-    grid-template-areas: ${GRID_TEMPLATE_AREA[gridVariant]};
-  `}
 `;
 Container.propTypes = {
   gridVariant: PropTypes.oneOf(Object.values(GRID_VARIANT)),
@@ -110,11 +107,6 @@ export const ThumbnailWrapper = styled.div`
   ${({ $isMultiple }) =>
     $isMultiple &&
     css`
-      display: grid;
-      grid-gap: 8px;
-      grid-template-columns: repeat(4, 52px);
-    `}
-
       display: grid;
       grid-gap: 8px;
       grid-template-columns: repeat(4, 52px);
