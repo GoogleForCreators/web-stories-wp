@@ -49,6 +49,11 @@ const ButtonContainer = styled.div`
   justify-content: center;
 `;
 
+const BoldText = styled.span`
+  color: ${({ theme }) => theme.colors.standard.white};
+  font-weight: ${({ theme }) => theme.typography.weight.bold};
+`;
+
 const DescriptionText = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
 })`
@@ -101,17 +106,31 @@ function VideoOptimizationCheckbox() {
       )}
       footer={
         hasOptedIn ? (
-          <ButtonContainer>
-            <Button
-              variant={BUTTON_VARIANTS.RECTANGLE}
-              type={BUTTON_TYPES.PRIMARY}
-              size={BUTTON_SIZES.SMALL}
-              onClick={handleSave}
-              disabled={isSaving}
-            >
-              {__('Save and Reload', 'web-stories')}
-            </Button>
-          </ButtonContainer>
+          <>
+            <p>
+              <TranslateWithMarkup
+                mapping={{
+                  b: <BoldText />,
+                }}
+              >
+                {__(
+                  'Automatic video optimization enabled. <b>Reload the page</b> to apply changes.',
+                  'web-stories'
+                )}
+              </TranslateWithMarkup>
+            </p>
+            <ButtonContainer>
+              <Button
+                variant={BUTTON_VARIANTS.RECTANGLE}
+                type={BUTTON_TYPES.PRIMARY}
+                size={BUTTON_SIZES.SMALL}
+                onClick={handleSave}
+                disabled={isSaving}
+              >
+                {__('Save and Reload', 'web-stories')}
+              </Button>
+            </ButtonContainer>
+          </>
         ) : (
           <CheckboxContainer>
             <Checkbox
