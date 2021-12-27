@@ -42,6 +42,10 @@
   margin: 0;
 }
 
+.web-stories-list__story-poster .web-stories-list__story-poster-placeholder {
+  box-sizing: border-box;
+}
+
 /*
   We want the placeholder to be clickable but hidden from screen readers.
   This improves the no-js experience.

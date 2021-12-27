@@ -56,7 +56,6 @@ const SeeDetailsButton = styled(Button).attrs({
 const TemplateGridItem = forwardRef(
   (
     {
-      detailLink,
       onCreateStory,
       onFocus,
       height,
@@ -110,9 +109,7 @@ const TemplateGridItem = forwardRef(
                     __('Go to detail view of %s', 'web-stories'),
                     title
                   )}
-                  href={detailLink}
-                  onClick={onSeeDetailsClick}
-                  disabled={!detailLink}
+                  onClick={() => onSeeDetailsClick(id, title)}
                   className={FOCUS_TEMPLATE_CLASS}
                   tabIndex={tabIndex}
                 >

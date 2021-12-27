@@ -55,8 +55,7 @@ function TextFrame({ element, element: { id, content, ...rest }, wrapperRef }) {
     (x) => `${dataToEditorX(x)}px`,
     (y) => `${dataToEditorY(y)}px`,
     dataToEditorY,
-    element,
-    dataToEditorY
+    element
   );
   const { selectedElementIds } = useStory((state) => ({
     selectedElementIds: state.state.selectedElementIds,

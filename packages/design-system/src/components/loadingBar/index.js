@@ -19,6 +19,7 @@
 import PropTypes from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
 import styled, { keyframes } from 'styled-components';
+import { useRef } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
@@ -58,16 +59,25 @@ const UploadingIndicator = styled.div`
   }
 `;
 
-export const LoadingBar = ({ loadingMessage, ...rest }) => (
-  <>
-    {loadingMessage && (
-      <AriaOnlyAlert role="status">{loadingMessage}</AriaOnlyAlert>
-    )}
-    <CSSTransition in appear timeout={0} className={LOADING_INDICATOR_CLASS}>
-      <UploadingIndicator {...rest} />
-    </CSSTransition>
-  </>
-);
+export const LoadingBar = ({ loadingMessage, ...rest }) => {
+  const nodeRef = useRef();
+  return (
+    <>
+      {loadingMessage && (
+        <AriaOnlyAlert role="status">{loadingMessage}</AriaOnlyAlert>
+      )}
+      <CSSTransition
+        nodeRef={nodeRef}
+        in
+        appear
+        timeout={0}
+        className={LOADING_INDICATOR_CLASS}
+      >
+        <UploadingIndicator ref={nodeRef} {...rest} />
+      </CSSTransition>
+    </>
+  );
+};
 
 LoadingBar.propTypes = {
   loadingMessage: PropTypes.string,

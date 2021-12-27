@@ -236,10 +236,24 @@ describe('Panels/TextStyle', () => {
   describe('FontControls', () => {
     it('should select font', async () => {
       const { pushUpdate } = arrange([textElement]);
-      await act(() => mockControls.font.onChange({ id: 'Neu Font' }));
+      await act(() =>
+        mockControls.font.onChange({
+          id: 'Neu Font',
+          family: 'Neu Font',
+          service: 'foo.bar.baz',
+          styles: ['italic', 'regular'],
+          weights: [400],
+          variants: [
+            [0, 400],
+            [1, 400],
+          ],
+          fallbacks: ['fallback1'],
+        })
+      );
       expect(pushUpdate).toHaveBeenCalledWith(
         {
           font: {
+            id: 'Neu Font',
             family: 'Neu Font',
             service: 'foo.bar.baz',
             styles: ['italic', 'regular'],

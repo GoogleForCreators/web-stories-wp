@@ -564,7 +564,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#ffffff"
           },
           "x": 0,
           "y": 265,
@@ -1252,7 +1253,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#ffffff"
           },
           "type": "image",
           "x": 0.5,
@@ -1698,7 +1700,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#ffffff"
           },
           "x": 0,
           "y": 285,
@@ -2908,7 +2911,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#ffffff"
           },
           "type": "image",
           "x": 0,
@@ -3388,7 +3392,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#ffffff"
           },
           "x": 0,
           "y": 256,
@@ -3816,7 +3821,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#ffffff"
           },
           "type": "image",
           "x": 0,
@@ -4093,7 +4099,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#ffffff"
           },
           "type": "image",
           "x": 0,
@@ -4509,6 +4516,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#ccd1db",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/12-hours-in-barcelona/polaroids_bg.png",
             "width": 121,
             "height": 160,
@@ -4853,6 +4861,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#ccd1db",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/12-hours-in-barcelona/polaroids_bg.png",
             "width": 121,
             "height": 160,

@@ -1,9 +1,9 @@
 {
   "name": "google/web-stories-wp",
-  "type": "wordpress-plugin",
   "description": "Visual storytelling for WordPress.",
-  "homepage": "https://github.com/google/web-stories-wp",
   "license": "Apache-2.0",
+  "type": "wordpress-plugin",
+  "homepage": "https://github.com/google/web-stories-wp",
   "require": {
     "php": "^7.0 || ^8.0",
     "ext-dom": "*",
@@ -35,51 +35,15 @@
   "suggest": {
     "ext-curl": "Used for modifying cURL requests in CORS proxy"
   },
-  "config": {
-    "discard-changes": true,
-    "platform": {
-      "php": "7.0.21"
-    },
-    "sort-packages": true
-  },
-  "extra": {
-    "downloads": {
-      "composer-normalize": {
-        "path": "vendor/bin/composer-normalize",
-        "type": "phar",
-        "url": "https://github.com/ergebnis/composer-normalize/releases/download/2.15.0/composer-normalize.phar"
-      },
-      "php-scoper": {
-        "path": "vendor/bin/php-scoper",
-        "type": "phar",
-        "url": "https://github.com/humbug/php-scoper/releases/download/0.15.0/php-scoper.phar"
-      },
-      "phpstan": {
-        "path": "vendor/bin/phpstan",
-        "type": "phar",
-        "url": "https://github.com/phpstan/phpstan/releases/download/1.0.0/phpstan.phar"
-      }
-    },
-    "enable-patching": true,
-    "exclude-from-files": [
-      "ampproject/amp-wp/includes/bootstrap.php"
-    ],
-    "patches": {
-      "ampproject/amp-wp": {
-        "Add support for amp-story-captions": "patches/amp-wp-allow-amp-story-captions.patch"
-      },
-      "phpunit/phpunit-mock-objects": {
-        "Fix PHPUnit for PHP 7.4": "patches/phpunit-mock-objects.patch"
-      }
-    },
-    "patches-ignore": {
-      "ampproject/amp-wp": {
-        "phpunit/phpunit-mock-objects": {
-          "We patch this ourselves": "patches/phpunit-mock-objects.patch"
-        }
-      }
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/ampproject/amp-wp",
+      "no-api": true
     }
-  },
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "autoload": {
     "psr-4": {
       "Google\\Web_Stories\\": "includes",
@@ -97,15 +61,48 @@
       "SzepeViktor\\PHPStan\\WordPress\\": "tests/phpstan/src"
     }
   },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/ampproject/amp-wp",
-      "no-api": true
+  "config": {
+    "discard-changes": true,
+    "platform": {
+      "php": "7.0.21"
+    },
+    "sort-packages": true
+  },
+  "extra": {
+    "downloads": {
+      "composer-normalize": {
+        "path": "vendor/bin/composer-normalize",
+        "type": "phar",
+        "url": "https://github.com/ergebnis/composer-normalize/releases/download/2.18.0/composer-normalize.phar"
+      },
+      "php-scoper": {
+        "path": "vendor/bin/php-scoper",
+        "type": "phar",
+        "url": "https://github.com/humbug/php-scoper/releases/download/0.15.0/php-scoper.phar"
+      },
+      "phpstan": {
+        "path": "vendor/bin/phpstan",
+        "type": "phar",
+        "url": "https://github.com/phpstan/phpstan/releases/download/1.2.0/phpstan.phar"
+      }
+    },
+    "enable-patching": true,
+    "exclude-from-files": [
+      "ampproject/amp-wp/includes/bootstrap.php"
+    ],
+    "patches": {
+      "phpunit/phpunit-mock-objects": {
+        "Fix PHPUnit for PHP 7.4": "patches/phpunit-mock-objects.patch"
+      }
+    },
+    "patches-ignore": {
+      "ampproject/amp-wp": {
+        "phpunit/phpunit-mock-objects": {
+          "We patch this ourselves": "patches/phpunit-mock-objects.patch"
+        }
+      }
     }
-  ],
-  "minimum-stability": "dev",
-  "prefer-stable": true,
+  },
   "scripts": {
     "post-install-cmd": [
       "@prefix-dependencies"
