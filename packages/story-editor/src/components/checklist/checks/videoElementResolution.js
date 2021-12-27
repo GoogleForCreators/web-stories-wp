@@ -25,9 +25,10 @@ import { useMemo, useCallback } from '@web-stories-wp/react';
 import { useStory } from '../../../app';
 import { useHighlights } from '../../../app/highlights';
 import { DESIGN_COPY, MIN_VIDEO_HEIGHT, MIN_VIDEO_WIDTH } from '../constants';
-import { filterStoryElements } from '../utils';
+import { filterStoryElements, getVisibleThumbnails } from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
+import { useToggleButton } from '../../checklistCard';
 import VideoChecklistCard from './shared/videoChecklistCard';
 
 export function videoElementResolution(element) {
@@ -45,6 +46,7 @@ export function videoElementResolution(element) {
 const VideoElementResolution = () => {
   const isChecklistMounted = useIsChecklistMounted();
   const pages = useStory(({ state }) => state?.pages);
+  const { isExpanded, onExpand } = useToggleButton();
   const elements = useMemo(
     () => filterStoryElements(pages, videoElementResolution),
     [pages]
@@ -58,6 +60,9 @@ const VideoElementResolution = () => {
       }),
     [setHighlights]
   );
+
+  const visiblePages = isExpanded ? elements : getVisibleThumbnails(elements);
+
   const { footer, title } = DESIGN_COPY.videoResolutionTooLow;
 
   const isRendered = elements.length > 0;
@@ -68,9 +73,11 @@ const VideoElementResolution = () => {
     isChecklistMounted && (
       <VideoChecklistCard
         title={title}
-        elements={elements}
+        elements={visiblePages}
         footer={footer}
-        handleClick={handleClick}
+        onClick={handleClick}
+        onClickOverflowThumbnail={onExpand}
+        showOverflowThumbnails={isExpanded}
       />
     )
   );

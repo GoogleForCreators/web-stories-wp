@@ -25,6 +25,7 @@ import {
   Icons,
 } from '@web-stories-wp/design-system';
 import { __ } from '@web-stories-wp/i18n';
+import { useState } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -33,6 +34,7 @@ const StyledButton = styled(Button).attrs({
   size: BUTTON_SIZES.SMALL,
   type: BUTTON_TYPES.TERTIARY,
 })`
+  grid-area: button;
   justify-content: center;
   height: 32px;
   width: 100%;
@@ -40,7 +42,7 @@ const StyledButton = styled(Button).attrs({
 `;
 
 const IconContainer = styled.div`
-  height: auto;
+  height: 18px;
   width: 20px;
 
   svg {
@@ -48,6 +50,20 @@ const IconContainer = styled.div`
     transition: transform ease-in-out 300ms;
   }
 `;
+
+/**
+ * Small hook that generates an event handler and the state for the toggle button
+ *
+ * @param {boolean} initialExpandedState Initial expanded state..
+ * @return {{ isExpanded: boolean, onExpand: Function }} The state and click event handler.
+ */
+export const useToggleButton = (initialExpandedState = false) => {
+  const [isExpanded, setIsExpanded] = useState(initialExpandedState);
+
+  const handleExpand = () => setIsExpanded((current) => !current);
+
+  return { isExpanded, onExpand: handleExpand };
+};
 
 const ToggleButton = ({ children, isExpanded, ...props }) => (
   <StyledButton {...props}>

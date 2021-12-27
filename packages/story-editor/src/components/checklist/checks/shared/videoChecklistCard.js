@@ -28,13 +28,12 @@ import {
   ChecklistCard,
   DefaultFooterText,
 } from '../../../checklistCard';
-import { getVisibleThumbnails } from '../../utils';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../../thumbnail';
 
-function VideoChecklistCard({ title, elements, footer, handleClick }) {
+function VideoChecklistCard({ elements, footer, onClick, ...props }) {
   return (
     <ChecklistCard
-      title={title}
+      {...props}
       cardType={
         elements.length > 1 ? CARD_TYPE.MULTIPLE_ISSUE : CARD_TYPE.SINGLE_ISSUE
       }
@@ -42,10 +41,10 @@ function VideoChecklistCard({ title, elements, footer, handleClick }) {
       thumbnailCount={elements.length}
       thumbnail={
         <>
-          {getVisibleThumbnails(elements).map((element) => (
+          {elements.map((element) => (
             <Thumbnail
               key={element.id}
-              onClick={() => handleClick(element.id, element.pageId)}
+              onClick={() => onClick(element.id, element.pageId)}
               type={THUMBNAIL_TYPES.VIDEO}
               displayBackground={<LayerThumbnail page={element} />}
               aria-label={__('Go to offending video', 'web-stories')}
@@ -61,7 +60,7 @@ VideoChecklistCard.propTypes = {
   title: PropTypes.string.isRequired,
   elements: PropTypes.arrayOf(PropTypes.object).isRequired,
   footer: PropTypes.string.isRequired,
-  handleClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default VideoChecklistCard;

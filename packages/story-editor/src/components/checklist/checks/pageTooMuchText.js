@@ -30,6 +30,7 @@ import {
   ChecklistCard,
   CARD_TYPE,
   ChecklistCardStyles,
+  useToggleButton,
 } from '../../checklistCard';
 import {
   characterCountForPage,
@@ -56,6 +57,7 @@ export function pageTooMuchText(page) {
 
 const PageTooMuchText = () => {
   const isChecklistMounted = useIsChecklistMounted();
+  const { isExpanded, onExpand } = useToggleButton();
   const pages = useStory(({ state }) => state?.pages);
   const failingPages = useMemo(
     () => filterStoryPages(pages, pageTooMuchText),
@@ -70,6 +72,11 @@ const PageTooMuchText = () => {
       }),
     [setHighlights]
   );
+
+  const visiblePages = isExpanded
+    ? failingPages
+    : getVisibleThumbnails(failingPages);
+
   const { footer, title } = DESIGN_COPY.tooMuchPageText;
 
   const isRendered = failingPages.length > 0;
@@ -92,10 +99,12 @@ const PageTooMuchText = () => {
             </List>
           </ChecklistCardStyles.CardListWrapper>
         }
+        onClickOverflowThumbnail={onExpand}
+        showOverflowThumbnails={isExpanded}
         thumbnailCount={failingPages.length}
         thumbnail={
           <>
-            {getVisibleThumbnails(failingPages).map((page) => (
+            {visiblePages.map((page) => (
               <Thumbnail
                 key={page.id}
                 onClick={() =>

@@ -25,9 +25,10 @@ import { useCallback, useMemo } from '@web-stories-wp/react';
 import { useStory } from '../../../app';
 import { states, useHighlights } from '../../../app/highlights';
 import { ACCESSIBILITY_COPY } from '../constants';
-import { filterStoryElements } from '../utils';
+import { filterStoryElements, getVisibleThumbnails } from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
+import { useToggleButton } from '../../checklistCard';
 import VideoChecklistCard from './shared/videoChecklistCard';
 
 export function videoElementMissingDescription(element) {
@@ -41,6 +42,7 @@ export function videoElementMissingDescription(element) {
 const VideoElementMissingDescription = () => {
   const isChecklistMounted = useIsChecklistMounted();
   const pages = useStory(({ state }) => state?.pages);
+  const { isExpanded, onExpand } = useToggleButton();
   const elements = useMemo(
     () => filterStoryElements(pages, videoElementMissingDescription),
     [pages]
@@ -55,6 +57,9 @@ const VideoElementMissingDescription = () => {
       }),
     [setHighlights]
   );
+
+  const visiblePages = isExpanded ? elements : getVisibleThumbnails(elements);
+
   const { footer, title } = ACCESSIBILITY_COPY.videoMissingTitle;
 
   const isRendered = elements.length > 0;
@@ -64,9 +69,11 @@ const VideoElementMissingDescription = () => {
     isChecklistMounted && (
       <VideoChecklistCard
         title={title}
-        elements={elements}
+        elements={visiblePages}
         footer={footer}
-        handleClick={handleClick}
+        onClick={handleClick}
+        onClickOverflowThumbnail={onExpand}
+        showOverflowThumbnails={isExpanded}
       />
     )
   );

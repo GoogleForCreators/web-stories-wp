@@ -30,6 +30,7 @@ import {
   CARD_TYPE,
   ChecklistCard,
   DefaultFooterText,
+  useToggleButton,
 } from '../../checklistCard';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { filterStoryElements, getVisibleThumbnails } from '../utils';
@@ -47,6 +48,7 @@ export function textElementFontSizeTooSmall(element) {
 const TextElementFontSizeTooSmall = () => {
   const isChecklistMounted = useIsChecklistMounted();
   const pages = useStory(({ state }) => state?.pages);
+  const { isExpanded, onExpand } = useToggleButton();
   const elements = useMemo(
     () => filterStoryElements(pages, textElementFontSizeTooSmall),
     [pages]
@@ -60,6 +62,9 @@ const TextElementFontSizeTooSmall = () => {
       }),
     [setHighlights]
   );
+
+  const visiblePages = isExpanded ? elements : getVisibleThumbnails(elements);
+
   const { footer, title } = ACCESSIBILITY_COPY.fontSizeTooSmall;
 
   const isRendered = elements.length > 0;
@@ -75,10 +80,12 @@ const TextElementFontSizeTooSmall = () => {
             : CARD_TYPE.SINGLE_ISSUE
         }
         footer={<DefaultFooterText>{footer}</DefaultFooterText>}
+        onClickOverflowThumbnail={onExpand}
+        showOverflowThumbnails={isExpanded}
         thumbnailCount={elements.length}
         thumbnail={
           <>
-            {getVisibleThumbnails(elements).map((element) => (
+            {visiblePages.map((element) => (
               <Thumbnail
                 key={element.id}
                 onClick={() => handleClick(element.id, element.pageId)}

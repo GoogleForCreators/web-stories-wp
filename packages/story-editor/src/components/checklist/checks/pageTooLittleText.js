@@ -29,6 +29,7 @@ import {
   ChecklistCard,
   CARD_TYPE,
   DefaultFooterText,
+  useToggleButton,
 } from '../../checklistCard';
 import {
   characterCountForPage,
@@ -46,6 +47,7 @@ export function pageTooLittleText(page) {
 const PageTooLittleText = () => {
   const isChecklistMounted = useIsChecklistMounted();
   const pages = useStory(({ state }) => state?.pages);
+  const { isExpanded, onExpand } = useToggleButton();
   const failingPages = useMemo(
     () => filterStoryPages(pages, pageTooLittleText),
     [pages]
@@ -58,6 +60,11 @@ const PageTooLittleText = () => {
       }),
     [setHighlights]
   );
+
+  const visiblePages = isExpanded
+    ? failingPages
+    : getVisibleThumbnails(failingPages);
+
   const { footer, title } = DESIGN_COPY.tooLittlePageText;
   const isRendered = failingPages.length > 0;
   useRegisterCheck('PageTooLittleText', isRendered);
@@ -72,9 +79,12 @@ const PageTooLittleText = () => {
       }
       footer={<DefaultFooterText>{footer}</DefaultFooterText>}
       thumbnailCount={failingPages.length}
+      onClickOverflowThumbnail={onExpand}
+      showOverflowThumbnails={isExpanded}
       thumbnail={
         <>
-          {getVisibleThumbnails(failingPages).map((page) => (
+          {/* TODO: Should `getVisibleThumbnails` live in the ChecklistCard? */}
+          {visiblePages.map((page) => (
             <Thumbnail
               key={page.id}
               onClick={() => handleClick(page.id)}

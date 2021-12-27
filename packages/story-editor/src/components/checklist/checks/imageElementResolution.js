@@ -31,6 +31,7 @@ import {
   CARD_TYPE,
   ChecklistCard,
   ChecklistCardStyles,
+  useToggleButton,
 } from '../../checklistCard';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { filterStoryElements, getVisibleThumbnails } from '../utils';
@@ -53,6 +54,7 @@ export function imageElementResolution(element) {
 const ImageElementResolution = () => {
   const isChecklistMounted = useIsChecklistMounted();
   const pages = useStory(({ state }) => state?.pages);
+  const { isExpanded, onExpand } = useToggleButton();
   const failingElements = useMemo(
     () => filterStoryElements(pages, imageElementResolution),
     [pages]
@@ -66,6 +68,10 @@ const ImageElementResolution = () => {
       }),
     [setHighlights]
   );
+
+  const visiblePages = isExpanded
+    ? failingElements
+    : getVisibleThumbnails(failingElements);
 
   const { footer, title } = DESIGN_COPY.imageResolutionTooLow;
   const isRendered = failingElements.length > 0;
@@ -88,10 +94,12 @@ const ImageElementResolution = () => {
             </List>
           </ChecklistCardStyles.CardListWrapper>
         }
+        onClickOverflowThumbnail={onExpand}
+        showOverflowThumbnails={isExpanded}
         thumbnailCount={failingElements.length}
         thumbnail={
           <>
-            {getVisibleThumbnails(failingElements).map((element) => (
+            {visiblePages.map((element) => (
               <Thumbnail
                 key={element.id}
                 onClick={() => handleClick(element.id, element.pageId)}

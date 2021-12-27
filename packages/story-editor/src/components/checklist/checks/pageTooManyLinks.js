@@ -29,6 +29,7 @@ import {
   CARD_TYPE,
   ChecklistCard,
   DefaultFooterText,
+  useToggleButton,
 } from '../../checklistCard';
 import { Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import {
@@ -49,6 +50,7 @@ export function pageTooManyLinks(page) {
 
 const PageTooManyLinks = () => {
   const isChecklistMounted = useIsChecklistMounted();
+  const { isExpanded, onExpand } = useToggleButton();
   const pages = useStory(({ state }) => state?.pages);
   const failingPages = useMemo(
     () => filterStoryPages(pages, pageTooManyLinks),
@@ -62,6 +64,11 @@ const PageTooManyLinks = () => {
       }),
     [setHighlights]
   );
+
+  const visiblePages = isExpanded
+    ? failingPages
+    : getVisibleThumbnails(failingPages);
+
   const { footer, title } = DESIGN_COPY.tooManyLinksOnPage;
 
   const isRendered = failingPages.length > 0;
@@ -77,10 +84,12 @@ const PageTooManyLinks = () => {
             : CARD_TYPE.SINGLE_ISSUE
         }
         footer={<DefaultFooterText>{footer}</DefaultFooterText>}
+        onClickOverflowThumbnail={onExpand}
+        showOverflowThumbnails={isExpanded}
         thumbnailCount={failingPages.length}
         thumbnail={
           <>
-            {getVisibleThumbnails(failingPages).map((page) => (
+            {visiblePages.map((page) => (
               <Thumbnail
                 key={page.id}
                 onClick={() => handleClick(page.id)}

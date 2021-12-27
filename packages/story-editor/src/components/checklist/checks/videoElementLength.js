@@ -25,9 +25,10 @@ import { useCallback, useMemo } from '@web-stories-wp/react';
 import { useStory } from '../../../app';
 import { useHighlights } from '../../../app/highlights';
 import { DESIGN_COPY, MAX_VIDEO_LENGTH_SECONDS } from '../constants';
-import { filterStoryElements } from '../utils';
+import { filterStoryElements, getVisibleThumbnails } from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
+import { useToggleButton } from '../../checklistCard';
 import VideoChecklistCard from './shared/videoChecklistCard';
 
 export function videoElementLength(element) {
@@ -40,6 +41,7 @@ export function videoElementLength(element) {
 const VideoElementLength = () => {
   const isChecklistMounted = useIsChecklistMounted();
   const pages = useStory(({ state }) => state?.pages);
+  const { isExpanded, onExpand } = useToggleButton();
 
   const elements = useMemo(
     () => filterStoryElements(pages, videoElementLength),
@@ -54,6 +56,9 @@ const VideoElementLength = () => {
       }),
     [setHighlights]
   );
+
+  const visiblePages = isExpanded ? elements : getVisibleThumbnails(elements);
+
   const { footer, title } = DESIGN_COPY.videoTooLong;
 
   const isRendered = elements.length > 0;
@@ -64,9 +69,11 @@ const VideoElementLength = () => {
     isChecklistMounted && (
       <VideoChecklistCard
         title={title}
-        elements={elements}
+        elements={visiblePages}
         footer={footer}
-        handleClick={handleClick}
+        onClick={handleClick}
+        onClickOverflowThumbnail={onExpand}
+        showOverflowThumbnails={isExpanded}
       />
     )
   );

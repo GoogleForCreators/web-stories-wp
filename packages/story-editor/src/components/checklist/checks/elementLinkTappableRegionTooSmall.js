@@ -30,6 +30,7 @@ import {
   CARD_TYPE,
   ChecklistCard,
   DefaultFooterText,
+  useToggleButton,
 } from '../../checklistCard';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { filterStoryElements, getVisibleThumbnails } from '../utils';
@@ -56,6 +57,7 @@ export function elementLinkTappableRegionTooSmall(element) {
 const ElementLinkTappableRegionTooSmall = () => {
   const isChecklistMounted = useIsChecklistMounted();
   const pages = useStory(({ state }) => state?.pages);
+  const { isExpanded, onExpand } = useToggleButton();
   const elements = useMemo(
     () => filterStoryElements(pages, elementLinkTappableRegionTooSmall),
     [pages]
@@ -69,6 +71,8 @@ const ElementLinkTappableRegionTooSmall = () => {
       }),
     [setHighlights]
   );
+
+  const visiblePages = isExpanded ? elements : getVisibleThumbnails(elements);
 
   const isRendered = elements.length > 0;
   useRegisterCheck('ElementLinkTappableRegionTooSmall', isRendered);
@@ -85,10 +89,12 @@ const ElementLinkTappableRegionTooSmall = () => {
             : CARD_TYPE.SINGLE_ISSUE
         }
         footer={<DefaultFooterText>{footer}</DefaultFooterText>}
+        onClickOverflowThumbnail={onExpand}
+        showOverflowThumbnails={isExpanded}
         thumbnailCount={elements.length}
         thumbnail={
           <>
-            {getVisibleThumbnails(elements).map((element) => (
+            {visiblePages.map((element) => (
               <Thumbnail
                 key={element.id}
                 onClick={() => handleClick(element.id, element.pageId)}
