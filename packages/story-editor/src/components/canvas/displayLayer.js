@@ -125,6 +125,7 @@ function DisplayLayer() {
     };
   });
 
+  const boundingBoxIds = useCanvas((v) => v.state.boundingBoxIds);
   const { editingElement, setPageContainer, setFullbleedContainer } = useCanvas(
     ({
       state: { editingElement },
@@ -162,6 +163,7 @@ function DisplayLayer() {
       >
         <DisplayPageArea
           ref={setPageContainer}
+          id={boundingBoxIds.pageContainer}
           fullbleedRef={setFullbleedContainer}
           background={currentPage?.backgroundColor}
           isBackgroundSelected={isBackgroundSelected}

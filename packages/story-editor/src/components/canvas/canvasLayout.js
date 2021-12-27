@@ -50,6 +50,7 @@ const Background = styled.section.attrs({
 `;
 
 function CanvasLayout({ header, footer }) {
+  const boundingBoxIds = useCanvas((v) => v.state.boundingBoxIds);
   const { setCanvasContainer } = useCanvas((state) => ({
     setCanvasContainer: state.actions.setCanvasContainer,
   }));
@@ -83,7 +84,11 @@ function CanvasLayout({ header, footer }) {
   // See also https://styled-components.com/docs/api#stylesheetmanager for general usage.
   return (
     <StyleSheetManager stylisPlugins={[]}>
-      <Background ref={setBackgroundRef} style={layoutParamsCss}>
+      <Background
+        id={boundingBoxIds.cavasContainer}
+        ref={setBackgroundRef}
+        style={layoutParamsCss}
+      >
         <CanvasUploadDropTarget>
           <CanvasElementDropzone>
             <SelectionCanvas>

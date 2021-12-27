@@ -53,30 +53,20 @@ function SingleSelectionMoveable({
   const moveable = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
 
-  const { nodesById } = useCanvas(({ state: { nodesById } }) => ({
-    nodesById,
-  }));
-  const { getBox } = useUnits(({ actions: { getBox } }) => ({
-    getBox,
-  }));
-  const {
-    actions: { pushTransform },
-  } = useTransform();
-  const { zoomSetting, scrollLeft, scrollTop } = useLayout(
-    ({ state: { zoomSetting, scrollLeft, scrollTop } }) => ({
-      zoomSetting,
-      scrollLeft,
-      scrollTop,
-    })
-  );
+  const nodesById = useCanvas((v) => v.state.nodesById);
+  const getBox = useUnits((v) => v.actions.getBox);
+  const pushTransform = useTransform((v) => v.actions.pushTransform);
+  const zoomSetting = useLayout((v) => v.state.zoomSetting);
+  const scrollLeft = useLayout((v) => v.state.scrollLeft);
+  const scrollTop = useLayout((v) => v.state.scrollTop);
 
   const actionsEnabled = !selectedElement.isBackground;
 
   const latestEvent = useRef();
 
-  const { backgroundElement } = useStory(({ state: { currentPage } }) => ({
-    backgroundElement: currentPage.elements[0] ?? {},
-  }));
+  const backgroundElementId = useStory(
+    (v) => v.state.currentPage?.elements[0]?.id
+  );
 
   useWindowResizeHandler(moveable);
 
@@ -215,7 +205,7 @@ function SingleSelectionMoveable({
 
   // Get a list of all the other non-bg nodes
   const otherNodes = Object.values(
-    objectWithout(nodesById, [selectedElement.id, backgroundElement.id])
+    objectWithout(nodesById, [selectedElement.id, backgroundElementId])
   );
 
   const snapProps = useSnapping({

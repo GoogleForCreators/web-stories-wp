@@ -79,42 +79,31 @@ const EmptyFrame = styled.div`
 const NOOP = () => {};
 
 function FrameElement({ element }) {
-  const { setEditingElement } = useCanvas((state) => ({
-    setEditingElement: state.actions.setEditingElement,
-  }));
+  const setEditingElement = useCanvas((v) => v.actions.setEditingElement);
   const { id, type, flip } = element;
   const { Frame, isMaskable, Controls } = getDefinitionForType(type);
   const elementRef = useRef();
   const [hovering, setHovering] = useState(false);
-  const {
-    state: { isAnythingTransforming },
-  } = useTransform();
+  const isAnythingTransforming = useTransform(
+    (v) => v.state.isAnythingTransforming
+  );
 
   const onPointerEnter = () => setHovering(true);
   const onPointerLeave = () => setHovering(false);
 
-  const { setNodeForElement, handleSelectElement, isEditing } = useCanvas(
-    (state) => ({
-      setNodeForElement: state.actions.setNodeForElement,
-      handleSelectElement: state.actions.handleSelectElement,
-      isEditing: state.state.isEditing,
-    })
+  const setNodeForElement = useCanvas((v) => v.actions.setNodeForElement);
+  const handleSelectElement = useCanvas((v) => v.actions.handleSelectElement);
+  const isEditing = useCanvas((v) => v.state.isEditing);
+  const isSelected = useStory((v) => v.state.selectedElementIds.includes(id));
+  const isSingleElement = useStory(
+    (v) => v.state.selectedElementIds.length === 1
   );
-  const { selectedElementIds, currentPage, isAnimating } = useStory(
-    (state) => ({
-      selectedElementIds: state.state.selectedElementIds,
-      currentPage: state.state.currentPage,
-    })
-  );
-  const { getBox } = useUnits((state) => ({
-    getBox: state.actions.getBox,
-  }));
+  const currentPage = useStory((v) => v.state.currentPage);
+  const getBox = useUnits((v) => v.actions.getBox);
 
   useLayoutEffect(() => {
     setNodeForElement(id, elementRef.current);
   }, [id, setNodeForElement]);
-  const isSelected = selectedElementIds.includes(id);
-  const isSingleElement = selectedElementIds.length === 1;
   const box = getBox(element);
   const isBackground = currentPage?.elements[0].id === id;
 
@@ -200,7 +189,6 @@ function FrameElement({ element }) {
         tabIndex={0}
         aria-labelledby={`layer-${id}`}
         hasMask={isMaskable}
-        isAnimating={isAnimating}
         data-testid="frameElement"
         maskDisabled={maskDisabled}
         {...(maskDisabled ? eventHandlers : null)}

@@ -40,7 +40,13 @@ import createPolygon from './utils/createPolygon';
 
 import Context from './context';
 
+const BOUNDING_BOX_IDS = {
+  canvasContainer: 'canvasContainer',
+  pageContainer: 'pageContainer',
+};
+
 function CanvasProvider({ children }) {
+  const [boundingBoxes, setBoundingBoxes] = useState({});
   const [lastSelectionEvent, setLastSelectionEvent] = useState(null);
   const lastSelectedElementId = useRef(null);
   const [canvasContainer, setCanvasContainer] = useState(null);
@@ -55,6 +61,42 @@ function CanvasProvider({ children }) {
   const [eyedropperCallback, setEyedropperCallback] = useState(null);
   const [pageCanvasData, setPageCanvasData] = useState(null);
   const [pageCanvasPromise, setPageCanvasPromise] = useState(null);
+
+  const resizeObserver = useMemo(
+    () =>
+      new ResizeObserver((entries) => {
+        for (const entry of entries) {
+          if (!entry.target.id) {
+            return;
+          }
+          setBoundingBoxes((boxes) => ({
+            ...boxes,
+            [entry.target.id]: entry.contentRect,
+          }));
+        }
+      }),
+    []
+  );
+
+  useEffect(() => {
+    if (!canvasContainer) {
+      return () => {};
+    }
+    resizeObserver.observe(canvasContainer);
+    return () => {
+      resizeObserver.unobserve(canvasContainer);
+    };
+  }, [canvasContainer, resizeObserver]);
+
+  useEffect(() => {
+    if (!pageContainer) {
+      return () => {};
+    }
+    resizeObserver.observe(pageContainer);
+    return () => {
+      resizeObserver.unobserve(pageContainer);
+    };
+  }, [pageContainer, resizeObserver]);
 
   const pageSize = useLayout(({ state: { pageWidth, pageHeight } }) => ({
     width: pageWidth,
@@ -190,6 +232,8 @@ function CanvasProvider({ children }) {
         eyedropperPixelData,
         pageCanvasData,
         pageCanvasPromise,
+        boundingBoxIds: BOUNDING_BOX_IDS,
+        boundingBoxes,
       },
       actions: {
         setPageContainer,
@@ -248,6 +292,7 @@ function CanvasProvider({ children }) {
       pageCanvasData,
       pageCanvasPromise,
       setPageCanvasPromise,
+      boundingBoxes,
     ]
   );
   return (

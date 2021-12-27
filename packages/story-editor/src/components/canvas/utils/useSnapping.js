@@ -32,13 +32,13 @@ function useSnapping({
   snappingOffsetX = null,
   isDragging,
 }) {
-  const { pageContainer, canvasContainer, designSpaceGuideline } = useCanvas(
-    ({ state: { pageContainer, canvasContainer, designSpaceGuideline } }) => ({
-      pageContainer,
-      canvasContainer,
-      designSpaceGuideline,
-    })
+  const canvasContainerBB = useCanvas(
+    (v) => v.state.boundingBoxes[v.state.boundingBoxIds.canvasContainer]
   );
+  const pageContainerBB = useCanvas(
+    (v) => v.state.boundingBoxes[v.state.boundingBoxIds.pageContainer]
+  );
+  const designSpaceGuideline = useCanvas((v) => v.state.designSpaceGuideline);
   const { pageWidth, pageHeight } = useLayout(
     ({ state: { pageWidth, pageHeight } }) => ({
       pageWidth,
@@ -71,12 +71,12 @@ function useSnapping({
     [isDragging, designSpaceGuideline, triggerOnboarding]
   );
 
-  if (!canvasContainer || !pageContainer) {
+  if (!canvasContainerBB || !pageContainerBB) {
     return {};
   }
 
-  const canvasRect = canvasContainer.getBoundingClientRect();
-  const pageRect = pageContainer.getBoundingClientRect();
+  const canvasRect = canvasContainerBB;
+  const pageRect = pageContainerBB;
 
   const canvasOffsetX = snappingOffsetX ? snappingOffsetX : canvasRect.x;
 
