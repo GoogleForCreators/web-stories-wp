@@ -72,7 +72,7 @@ const filterWAAPIAnimations = ({ animations, selectedElementIds }) =>
     : animations;
 
 const STABLE_ARRAY = [];
-function mapHasReferencialEntry(map, [key, val]) {
+function mapHasReferentialEntry(map, [key, val]) {
   return map?.has(key) && map.get(key) === val;
 }
 
@@ -114,7 +114,7 @@ function Provider({
     const _animationPartsMap = new Map();
     for (const [animationId, animation] of animationsInstanceMap.entries()) {
       // See if animationPart needs an update from last animation update
-      const isAnimationRefenctiallyStable = mapHasReferencialEntry(
+      const isAnimationRefenctiallyStable = mapHasReferentialEntry(
         oldAnimationsInstanceMap,
         [animationId, animation]
       );
@@ -124,7 +124,7 @@ function Provider({
       // really O(1) in actuality)
       const areAnimationTargetElementsReferenciallyStable =
         animation.targets.every((elementId) =>
-          mapHasReferencialEntry(oldElementsInstanceMap, [
+          mapHasReferentialEntry(oldElementsInstanceMap, [
             elementId,
             elementsInstanceMap.get(elementId),
           ])
