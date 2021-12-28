@@ -80,15 +80,14 @@ export const _default = () => {
           }
           cta={<DefaultCtaButton>{'Replace File'}</DefaultCtaButton>}
           thumbnailCount={1}
-          thumbnails={[
+          thumbnails={
             <Thumbnail
-              key={1}
               onClick={() => action('thumbnail action found')()}
               type={THUMBNAIL_TYPES.IMAGE}
               displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
               aria-label="my helper text describing this thumbnail image"
-            />,
-          ]}
+            />
+          }
         />
       </div>
       <div>
@@ -109,15 +108,14 @@ export const _default = () => {
             </DefaultFooterText>
           }
           thumbnailCount={1}
-          thumbnails={[
+          thumbnails={
             <Thumbnail
-              key={1}
               onClick={() => action('thumbnail action found')()}
               type={THUMBNAIL_TYPES.IMAGE}
               displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
               aria-label="my helper text describing this thumbnail image"
-            />,
-          ]}
+            />
+          }
         />
       </div>
       <div>
