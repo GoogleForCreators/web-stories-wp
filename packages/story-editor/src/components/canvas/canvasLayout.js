@@ -18,14 +18,20 @@
  * External dependencies
  */
 import styled, { StyleSheetManager } from 'styled-components';
-import { memo, useRef, useCallback } from '@web-stories-wp/react';
+import { memo, useRef } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { useCanvas, useLayout } from '../../app';
+import { useComposeRefs } from '@web-stories-wp/design-system';
+import {
+  CANVAS_BOUNDING_BOX_IDS,
+  useCanvas,
+  useCanvasBoundingBoxRef,
+  useLayout,
+} from '../../app';
 import EditLayer from './editLayer';
 import DisplayLayer from './displayLayer';
 import FramesLayer from './framesLayer';
@@ -50,19 +56,19 @@ const Background = styled.section.attrs({
 `;
 
 function CanvasLayout({ header, footer }) {
-  const boundingBoxIds = useCanvas((v) => v.state.boundingBoxIds);
+  const boundingBoxTrackingRef = useCanvasBoundingBoxRef(
+    CANVAS_BOUNDING_BOX_IDS.CANVAS_CONTAINER
+  );
   const { setCanvasContainer } = useCanvas((state) => ({
     setCanvasContainer: state.actions.setCanvasContainer,
   }));
 
   const backgroundRef = useRef(null);
 
-  const setBackgroundRef = useCallback(
-    (ref) => {
-      backgroundRef.current = ref;
-      setCanvasContainer(ref);
-    },
-    [setCanvasContainer]
+  const setBackgroundRef = useComposeRefs(
+    backgroundRef,
+    setCanvasContainer,
+    boundingBoxTrackingRef
   );
 
   useLayoutParams(backgroundRef);
@@ -84,11 +90,7 @@ function CanvasLayout({ header, footer }) {
   // See also https://styled-components.com/docs/api#stylesheetmanager for general usage.
   return (
     <StyleSheetManager stylisPlugins={[]}>
-      <Background
-        id={boundingBoxIds.cavasContainer}
-        ref={setBackgroundRef}
-        style={layoutParamsCss}
-      >
+      <Background ref={setBackgroundRef} style={layoutParamsCss}>
         <CanvasUploadDropTarget>
           <CanvasElementDropzone>
             <SelectionCanvas>

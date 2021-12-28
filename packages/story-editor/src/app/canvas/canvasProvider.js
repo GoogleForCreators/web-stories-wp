@@ -39,11 +39,7 @@ import useEditingElement from './useEditingElement';
 import createPolygon from './utils/createPolygon';
 
 import Context from './context';
-
-const BOUNDING_BOX_IDS = {
-  canvasContainer: 'canvasContainer',
-  pageContainer: 'pageContainer',
-};
+import { RESIZE_OBSERVATION_KEY } from './constants';
 
 function CanvasProvider({ children }) {
   const [boundingBoxes, setBoundingBoxes] = useState({});
@@ -71,32 +67,13 @@ function CanvasProvider({ children }) {
           }
           setBoundingBoxes((boxes) => ({
             ...boxes,
-            [entry.target.id]: entry.contentRect,
+            [entry.target.dataset[RESIZE_OBSERVATION_KEY]]: entry.contentRect,
           }));
         }
       }),
     []
   );
-
-  useEffect(() => {
-    if (!canvasContainer) {
-      return () => {};
-    }
-    resizeObserver.observe(canvasContainer);
-    return () => {
-      resizeObserver.unobserve(canvasContainer);
-    };
-  }, [canvasContainer, resizeObserver]);
-
-  useEffect(() => {
-    if (!pageContainer) {
-      return () => {};
-    }
-    resizeObserver.observe(pageContainer);
-    return () => {
-      resizeObserver.unobserve(pageContainer);
-    };
-  }, [pageContainer, resizeObserver]);
+  useEffect(() => resizeObserver.disconnect, [resizeObserver]);
 
   const pageSize = useLayout(({ state: { pageWidth, pageHeight } }) => ({
     width: pageWidth,
@@ -232,8 +209,8 @@ function CanvasProvider({ children }) {
         eyedropperPixelData,
         pageCanvasData,
         pageCanvasPromise,
-        boundingBoxIds: BOUNDING_BOX_IDS,
         boundingBoxes,
+        resizeObserver,
       },
       actions: {
         setPageContainer,
@@ -259,13 +236,23 @@ function CanvasProvider({ children }) {
     }),
     [
       pageContainer,
+      canvasContainer,
       fullbleedContainer,
       nodesById,
       editingElement,
       editingElementState,
       lastSelectionEvent,
-      setPageContainer,
-      setFullbleedContainer,
+      displayLinkGuidelines,
+      pageAttachmentContainer,
+      designSpaceGuideline,
+      isEyedropperActive,
+      eyedropperCallback,
+      eyedropperImg,
+      eyedropperPixelData,
+      pageCanvasData,
+      pageCanvasPromise,
+      boundingBoxes,
+      resizeObserver,
       getNodeForElement,
       setNodeForElement,
       setEditingElementWithoutState,
@@ -273,26 +260,6 @@ function CanvasProvider({ children }) {
       clearEditing,
       handleSelectElement,
       selectIntersection,
-      displayLinkGuidelines,
-      setDisplayLinkGuidelines,
-      pageAttachmentContainer,
-      setPageAttachmentContainer,
-      canvasContainer,
-      setCanvasContainer,
-      designSpaceGuideline,
-      setDesignSpaceGuideline,
-      isEyedropperActive,
-      setIsEyedropperActive,
-      eyedropperCallback,
-      setEyedropperCallback,
-      eyedropperImg,
-      setEyedropperImg,
-      eyedropperPixelData,
-      setEyedropperPixelData,
-      pageCanvasData,
-      pageCanvasPromise,
-      setPageCanvasPromise,
-      boundingBoxes,
     ]
   );
   return (

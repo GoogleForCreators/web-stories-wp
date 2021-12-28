@@ -24,7 +24,13 @@ import { FULLBLEED_RATIO } from '@web-stories-wp/units';
  * Internal dependencies
  */
 import { useDropTargets } from '../../dropTargets';
-import { useCanvas, useLayout, useUserOnboarding } from '../../../app';
+import {
+  useCanvas,
+  useLayout,
+  useUserOnboarding,
+  useCanvasBoundingBox,
+  CANVAS_BOUNDING_BOX_IDS,
+} from '../../../app';
 
 function useSnapping({
   canSnap,
@@ -32,11 +38,11 @@ function useSnapping({
   snappingOffsetX = null,
   isDragging,
 }) {
-  const canvasContainerBB = useCanvas(
-    (v) => v.state.boundingBoxes[v.state.boundingBoxIds.canvasContainer]
+  const canvasContainerBB = useCanvasBoundingBox(
+    CANVAS_BOUNDING_BOX_IDS.CANVAS_CONTAINER
   );
-  const pageContainerBB = useCanvas(
-    (v) => v.state.boundingBoxes[v.state.boundingBoxIds.pageContainer]
+  const pageContainerBB = useCanvasBoundingBox(
+    CANVAS_BOUNDING_BOX_IDS.PAGE_CONTAINER
   );
   const designSpaceGuideline = useCanvas((v) => v.state.designSpaceGuideline);
   const { pageWidth, pageHeight } = useLayout(
