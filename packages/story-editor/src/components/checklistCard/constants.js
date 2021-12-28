@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { __ } from '@web-stories-wp/i18n';
 
 export const CARD_TYPE = {
   SINGLE_ISSUE: 'single_issue',
@@ -47,11 +47,7 @@ export const GRID_TEMPLATE_AREA = {
 };
 
 export const MAX_THUMBNAILS_DISPLAYED = 3;
-export const DEFAULT_OVERFLOW_LABEL = sprintf(
-  /* translators: %s: number of visible thumbnails */
-  __(
-    'Some issues are hidden, fix these first %s and the hidden ones will be visible',
-    'web-stories'
-  ),
-  MAX_THUMBNAILS_DISPLAYED
+export const DEFAULT_OVERFLOW_LABEL = __(
+  'Click to expand hidden issues',
+  'web-stories'
 );
