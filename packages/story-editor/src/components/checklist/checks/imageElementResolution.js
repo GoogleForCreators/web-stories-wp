@@ -36,7 +36,6 @@ import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { filterStoryElements } from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
-import { ThumbnailWrapper } from './shared';
 
 export function imageElementResolution(element) {
   if (!['image', 'gif'].includes(element.type)) {
@@ -99,8 +98,7 @@ const ImageElementResolution = () => {
             </List>
           </ChecklistCardStyles.CardListWrapper>
         }
-        thumbnailCount={failingElements.length}
-        thumbnail={<ThumbnailWrapper thumbnails={thumbnails} />}
+        thumbnails={thumbnails}
       />
     )
   );

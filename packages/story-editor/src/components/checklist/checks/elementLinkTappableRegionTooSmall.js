@@ -35,7 +35,6 @@ import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { filterStoryElements } from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
-import { ThumbnailWrapper } from './shared';
 
 const LINK_TAPPABLE_REGION_MIN_WIDTH = 48;
 const LINK_TAPPABLE_REGION_MIN_HEIGHT = 48;
@@ -96,8 +95,7 @@ const ElementLinkTappableRegionTooSmall = () => {
             : CARD_TYPE.SINGLE_ISSUE
         }
         footer={<DefaultFooterText>{footer}</DefaultFooterText>}
-        thumbnailCount={elements.length}
-        thumbnail={<ThumbnailWrapper thumbnails={thumbnails} />}
+        thumbnails={thumbnails}
       />
     )
   );

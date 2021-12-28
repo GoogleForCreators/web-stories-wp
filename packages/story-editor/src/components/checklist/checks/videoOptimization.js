@@ -46,7 +46,6 @@ import { StyledVideoOptimizationIcon } from '../../checklistCard/styles';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
 import useFFmpeg from '../../../app/media/utils/useFFmpeg';
-import { ThumbnailWrapper } from './shared';
 
 const OptimizeButton = styled(Button)`
   margin-top: 4px;
@@ -242,35 +241,30 @@ const BulkVideoOptimization = () => {
             : CARD_TYPE.SINGLE_ISSUE
         }
         footer={<DefaultFooterText>{footer}</DefaultFooterText>}
-        thumbnailCount={unoptimizedVideos.length}
-        thumbnail={
-          <ThumbnailWrapper
-            thumbnails={unoptimizedVideos.map((element) => (
-              <Thumbnail
-                key={element.resource.id}
-                onClick={handleClickThumbnail(element)}
-                isLoading={element.resource.isTranscoding}
-                type={THUMBNAIL_TYPES.VIDEO}
-                displayBackground={<LayerThumbnail page={element} />}
-                aria-label={__('Go to offending video', 'web-stories')}
-                isError={state[element.resource.id] === actionTypes.cancelled}
-              >
-                {
-                  <Tooltip
-                    title={
-                      state[element.resource.id] === actionTypes.uploading ||
-                      element.resource.isTranscoding
-                        ? __('Video optimization in progress', 'web-stories')
-                        : __('Optimize', 'web-stories')
-                    }
-                  >
-                    <StyledVideoOptimizationIcon />
-                  </Tooltip>
+        thumbnails={unoptimizedVideos.map((element) => (
+          <Thumbnail
+            key={element.resource.id}
+            onClick={handleClickThumbnail(element)}
+            isLoading={element.resource.isTranscoding}
+            type={THUMBNAIL_TYPES.VIDEO}
+            displayBackground={<LayerThumbnail page={element} />}
+            aria-label={__('Go to offending video', 'web-stories')}
+            isError={state[element.resource.id] === actionTypes.cancelled}
+          >
+            {
+              <Tooltip
+                title={
+                  state[element.resource.id] === actionTypes.uploading ||
+                  element.resource.isTranscoding
+                    ? __('Video optimization in progress', 'web-stories')
+                    : __('Optimize', 'web-stories')
                 }
-              </Thumbnail>
-            ))}
-          />
-        }
+              >
+                <StyledVideoOptimizationIcon />
+              </Tooltip>
+            }
+          </Thumbnail>
+        ))}
       />
     )
   );

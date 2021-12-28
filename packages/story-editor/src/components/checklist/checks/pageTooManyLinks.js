@@ -34,7 +34,6 @@ import { Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { filterStoryPages, ThumbnailPagePreview } from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
-import { ThumbnailWrapper } from './shared';
 
 export function pageTooManyLinks(page) {
   const elementsWithLinks = page.elements.filter((element) => {
@@ -86,8 +85,7 @@ const PageTooManyLinks = () => {
             : CARD_TYPE.SINGLE_ISSUE
         }
         footer={<DefaultFooterText>{footer}</DefaultFooterText>}
-        thumbnailCount={failingPages.length}
-        thumbnail={<ThumbnailWrapper thumbnails={thumbnails} />}
+        thumbnails={thumbnails}
       />
     )
   );

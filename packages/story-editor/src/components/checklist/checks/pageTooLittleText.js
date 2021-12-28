@@ -37,7 +37,6 @@ import {
 } from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
-import { ThumbnailWrapper } from './shared';
 
 export function pageTooLittleText(page) {
   return characterCountForPage(page) < MIN_STORY_CHARACTER_COUNT;
@@ -82,8 +81,7 @@ const PageTooLittleText = () => {
           : CARD_TYPE.SINGLE_ISSUE
       }
       footer={<DefaultFooterText>{footer}</DefaultFooterText>}
-      thumbnailCount={failingPages.length}
-      thumbnail={<ThumbnailWrapper thumbnails={thumbnails} />}
+      thumbnails={thumbnails}
     />
   ) : null;
 };

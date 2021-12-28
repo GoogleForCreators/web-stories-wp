@@ -38,7 +38,6 @@ import {
 } from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
-import { ThumbnailWrapper } from './shared';
 
 /**
  * @typedef {import('../../../types').Page} Page
@@ -108,8 +107,7 @@ const PageTooMuchText = () => {
             </List>
           </ChecklistCardStyles.CardListWrapper>
         }
-        thumbnailCount={failingPages.length}
-        thumbnail={<ThumbnailWrapper thumbnails={thumbnails} />}
+        thumbnails={thumbnails}
       />
     )
   );

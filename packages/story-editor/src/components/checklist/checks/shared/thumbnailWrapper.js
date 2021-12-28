@@ -100,26 +100,26 @@ ToggleButton.propTypes = {
 const ThumbnailWrapper = ({
   children,
   overflowLabel = DEFAULT_OVERFLOW_LABEL,
-  thumbnails = [],
   ...props
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  const thumbnailCount = thumbnails.length;
+  const thumbnailCount = Array.isArray(children) ? children.length : 1;
 
   // Find out if there is overflow of thumbnails.
   // When there is overflow we are subtracting 1 thumbnail from the available grid space.
   const hasOverflowThumbnail =
     thumbnailCount > 0 && thumbnailCount > MAX_THUMBNAILS_DISPLAYED + 1;
 
-  const visibleThumbnails = isExpanded
-    ? thumbnails
-    : getVisibleThumbnails(thumbnails);
+  const visibleThumbnails =
+    isExpanded || thumbnailCount < 2
+      ? children
+      : getVisibleThumbnails(children);
 
   const handleExpand = () => setIsExpanded((current) => !current);
 
   return (
-    <Wrapper $isMultiple={thumbnails.length > 1} {...props}>
+    <Wrapper $isMultiple={thumbnailCount > 1} {...props}>
       {visibleThumbnails}
       {hasOverflowThumbnail && (
         <>
@@ -133,15 +133,16 @@ const ThumbnailWrapper = ({
           <ToggleButton isExpanded={isExpanded} onClick={handleExpand} />
         </>
       )}
-      {children}
     </Wrapper>
   );
 };
 ThumbnailWrapper.propTypes = {
-  children: PropTypes.node,
+  children: PropTypes.oneOfType([
+    PropTypes.node,
+    PropTypes.arrayOf(PropTypes.node),
+  ]),
   overflowLabel: PropTypes.string,
   showOverflowThumbnail: PropTypes.bool,
-  thumbnails: PropTypes.arrayOf(PropTypes.node),
 };
 
 export default ThumbnailWrapper;

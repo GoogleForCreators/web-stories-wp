@@ -23,6 +23,7 @@ import { Headline, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
+import { ThumbnailWrapper } from '../checklist/checks/shared';
 import { getGridVariant } from './helpers';
 import { CARD_TYPE } from './constants';
 import { Wrapper, Container, Title, Cta, Footer } from './styles';
@@ -36,8 +37,7 @@ import { Wrapper, Container, Title, Cta, Footer } from './styles';
  * @param {Object}  props.titleProps if an object is passed in it should have an onClick, these are so that issues can have buttons as titles.
  * @param {Node} props.footer will  be rendered in the footer section of a card.
  * @param {Node} props.cta will be rendered as the cta section of a card.
- * @param {Node}  props.thumbnail will be rendered in the thumbnail section of a card.
- * @param  {number} props.thumbnailCount count of how  many thumbnails are getting rendered to use to manipulate grid. Defaults to 0.
+ * @param {Node}  props.thumbnails array of thumbnails to be rendered in the thumbnail section of the card
  * @return {Node} card to display.
  */
 const ChecklistCard = ({
@@ -47,9 +47,13 @@ const ChecklistCard = ({
   titleProps,
   footer,
   cta,
-  thumbnail,
-  thumbnailCount = 0,
+  thumbnails,
 }) => {
+  let thumbnailCount = 0;
+  if (thumbnails) {
+    thumbnailCount = Array.isArray(thumbnails) ? thumbnails.length : 1;
+  }
+
   const gridVariant = getGridVariant({
     cardType,
     thumbnailCount,
@@ -71,7 +75,7 @@ const ChecklistCard = ({
             {title}
           </Headline>
         </Title>
-        {thumbnail}
+        <ThumbnailWrapper>{thumbnails}</ThumbnailWrapper>
         <Cta>{cta}</Cta>
         <Footer>{footer}</Footer>
       </Container>
@@ -92,12 +96,10 @@ ChecklistCard.propTypes = {
     PropTypes.node,
     PropTypes.bool,
   ]),
-  thumbnail: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
+  thumbnails: PropTypes.oneOfType([
     PropTypes.node,
-    PropTypes.bool,
+    PropTypes.arrayOf(PropTypes.node),
   ]),
-  thumbnailCount: PropTypes.number,
   title: PropTypes.string.isRequired,
   titleProps: PropTypes.shape({ onClick: PropTypes.func }),
 };
