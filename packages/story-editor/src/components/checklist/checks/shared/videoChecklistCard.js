@@ -29,7 +29,7 @@ import {
   DefaultFooterText,
 } from '../../../checklistCard';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../../thumbnail';
-import ThumbnailWrapper from '../../../checklistCard/thumbnailWrapper';
+import ThumbnailWrapper from './thumbnailWrapper';
 
 function VideoChecklistCard({ elements, footer, onClick, ...props }) {
   return (

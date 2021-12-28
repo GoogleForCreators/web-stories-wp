@@ -46,7 +46,7 @@ import { StyledVideoOptimizationIcon } from '../../checklistCard/styles';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
 import useFFmpeg from '../../../app/media/utils/useFFmpeg';
-import ThumbnailWrapper from '../../checklistCard/thumbnailWrapper';
+import { ThumbnailWrapper } from './shared';
 
 const OptimizeButton = styled(Button)`
   margin-top: 4px;

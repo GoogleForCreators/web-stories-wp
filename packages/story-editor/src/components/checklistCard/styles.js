@@ -100,19 +100,6 @@ export const CheckboxCtaContainer = styled.div`
   }
 `;
 
-export const ThumbnailWrapper = styled.div`
-  grid-area: thumbnail;
-  transition: height ease-in-out 300ms;
-
-  ${({ $isMultiple }) =>
-    $isMultiple &&
-    css`
-      display: grid;
-      grid-gap: 8px;
-      grid-template-columns: repeat(4, 52px);
-    `}
-`;
-
 export const StyledOverflowThumbnail = styled(OverflowThumbnail)`
   width: 52px;
   cursor: default;

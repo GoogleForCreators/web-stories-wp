@@ -14,13 +14,5 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import * as ChecklistCardStyles from './styles';
-
-export { default as ChecklistCard } from './checklistCard';
-export * from './constants';
-export { ChecklistCardStyles };
-export { DefaultCtaButton } from './defaultCtaButton';
-export { DefaultFooterText } from './defaultFooterText';
+export { default as ThumbnailWrapper } from './thumbnailWrapper';
+export { default as VideoChecklistCard } from './videoChecklistCard';

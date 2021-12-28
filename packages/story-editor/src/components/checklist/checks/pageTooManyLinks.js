@@ -34,7 +34,7 @@ import { Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { filterStoryPages, ThumbnailPagePreview } from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
-import ThumbnailWrapper from '../../checklistCard/thumbnailWrapper';
+import { ThumbnailWrapper } from './shared';
 
 export function pageTooManyLinks(page) {
   const elementsWithLinks = page.elements.filter((element) => {

@@ -36,7 +36,7 @@ import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
 import { filterStoryElements } from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
-import ThumbnailWrapper from '../../checklistCard/thumbnailWrapper';
+import { ThumbnailWrapper } from './shared';
 
 export function imageElementResolution(element) {
   if (!['image', 'gif'].includes(element.type)) {

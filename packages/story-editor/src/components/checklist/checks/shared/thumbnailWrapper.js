@@ -19,15 +19,26 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+  Icons,
+  themeHelpers,
+} from '@web-stories-wp/design-system';
 import { useState } from '@web-stories-wp/react';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
  */
-import { getVisibleThumbnails } from '../checklist/utils';
-import ToggleButton from './toggleButton';
-import { StyledOverflowThumbnail } from './styles';
-import { DEFAULT_OVERFLOW_LABEL, MAX_THUMBNAILS_DISPLAYED } from '.';
+import { getVisibleThumbnails } from '../../utils';
+import { StyledOverflowThumbnail } from '../../../checklistCard/styles';
+import {
+  DEFAULT_OVERFLOW_LABEL,
+  MAX_THUMBNAILS_DISPLAYED,
+} from '../../../checklistCard';
 
 const Wrapper = styled.div`
   grid-area: thumbnail;
@@ -41,13 +52,50 @@ const Wrapper = styled.div`
       grid-template-columns: repeat(4, 52px);
       grid-template-rows: auto;
     `}
-
-      display: grid;
-      grid-gap: 8px;
-      grid-template-columns: repeat(4, 52px);
-      grid-template-rows: auto;
-    `}
 `;
+
+const StyledButton = styled(Button).attrs({
+  variant: BUTTON_VARIANTS.RECTANGLE,
+  size: BUTTON_SIZES.SMALL,
+  type: BUTTON_TYPES.TERTIARY,
+})`
+  grid-column: span 4;
+  justify-content: center;
+  height: 32px;
+  width: 100%;
+  margin: 4px 0;
+
+  ${({ theme }) =>
+    themeHelpers.focusableOutlineCSS(
+      theme.colors.border.focus,
+      theme.colors.bg.tertiary
+    )};
+`;
+
+const IconContainer = styled.div`
+  height: 18px;
+  width: 20px;
+
+  svg {
+    transform: ${({ $isExpanded }) => $isExpanded && 'rotate(-180deg)'};
+    transition: transform ease-in-out 300ms;
+  }
+`;
+
+const ToggleButton = ({ children, isExpanded, ...props }) => (
+  <StyledButton {...props}>
+    {children || isExpanded
+      ? __('Collapse', 'web-stories')
+      : __('Expand', 'web-stories')}
+    <IconContainer $isExpanded={isExpanded}>
+      <Icons.ChevronDown />
+    </IconContainer>
+  </StyledButton>
+);
+ToggleButton.propTypes = {
+  children: PropTypes.node,
+  isExpanded: PropTypes.bool,
+};
 
 const ThumbnailWrapper = ({
   children,

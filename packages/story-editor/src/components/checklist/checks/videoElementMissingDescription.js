@@ -28,7 +28,7 @@ import { ACCESSIBILITY_COPY } from '../constants';
 import { filterStoryElements } from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
-import VideoChecklistCard from './shared/videoChecklistCard';
+import { VideoChecklistCard } from './shared';
 
 export function videoElementMissingDescription(element) {
   return (

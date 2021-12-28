@@ -37,7 +37,7 @@ import {
 } from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
-import ThumbnailWrapper from '../../checklistCard/thumbnailWrapper';
+import { ThumbnailWrapper } from './shared';
 
 export function pageTooLittleText(page) {
   return characterCountForPage(page) < MIN_STORY_CHARACTER_COUNT;
