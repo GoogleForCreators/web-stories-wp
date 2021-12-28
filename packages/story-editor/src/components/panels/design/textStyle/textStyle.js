@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import { useState, useEffect, useCallback } from '@web-stories-wp/react';
+import { useState, useEffect } from '@web-stories-wp/react';
 import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -29,7 +29,7 @@ import PropTypes from 'prop-types';
 import getUpdatedSizeAndPosition from '../../../../utils/getUpdatedSizeAndPosition';
 import { styles, useHighlights, states } from '../../../../app/highlights';
 import { useStory, useLayout } from '../../../../app';
-import { pageBackgroundTextLowContrast } from '../../../checklist/checks/pageBackgroundLowTextContrast';
+import { getFailingPages } from '../../../checklist/checks/pageBackgroundLowTextContrast/utils';
 import { usePresubmitHandler } from '../../../form';
 import PanelContent from '../../panel/shared/content';
 import Panel from '../../panel/panel';
@@ -85,30 +85,11 @@ function StylePanel(props) {
     height: pageHeight,
   }));
 
-  const getFailingPages = useCallback(async () => {
-    const promises = [];
-    (pages || []).forEach((page) => {
-      const maybeTextContrastResult = pageBackgroundTextLowContrast({
-        ...page,
-        pageSize,
-      });
-      if (maybeTextContrastResult instanceof Promise) {
-        promises.push(
-          maybeTextContrastResult.then((result) => ({ result, page }))
-        );
-      } else {
-        promises.push(maybeTextContrastResult);
-      }
-    });
-    const awaitedResult = await Promise.all(promises);
-    return awaitedResult.filter(({ result }) => result).map(({ page }) => page);
-  }, [pages, pageSize]);
-
   useEffect(() => {
-    getFailingPages().then((failures) => {
-      setFailingPages(failures.filter((page) => page.id === currentPage.id));
+    getFailingPages(pages, pageSize, currentPage).then((failures) => {
+      setFailingPages(failures);
     });
-  }, [currentPage.id, getFailingPages]);
+  }, [currentPage, pageSize, pages]);
 
   return (
     <Panel

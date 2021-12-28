@@ -34,7 +34,7 @@ import { getVisibleThumbnails, ThumbnailPagePreview } from '../../utils';
 import { ACCESSIBILITY_COPY } from '../../constants';
 import { useRegisterCheck } from '../../countContext';
 import { useIsChecklistMounted } from '../../popupMountedContext';
-import { pageBackgroundTextLowContrast } from './check';
+import { getFailingPages } from './utils';
 
 const PageBackgroundTextLowContrast = () => {
   const isChecklistMounted = useIsChecklistMounted();
@@ -45,30 +45,11 @@ const PageBackgroundTextLowContrast = () => {
     height: pageHeight,
   }));
 
-  const getFailingPages = useCallback(async () => {
-    const promises = [];
-    (storyPages || []).forEach((page) => {
-      const maybeTextContrastResult = pageBackgroundTextLowContrast({
-        ...page,
-        pageSize,
-      });
-      if (maybeTextContrastResult instanceof Promise) {
-        promises.push(
-          maybeTextContrastResult.then((result) => ({ result, page }))
-        );
-      } else {
-        promises.push(maybeTextContrastResult);
-      }
-    });
-    const awaitedResult = await Promise.all(promises);
-    return awaitedResult.filter(({ result }) => result).map(({ page }) => page);
-  }, [storyPages, pageSize]);
-
   useEffect(() => {
-    getFailingPages().then((failures) => {
+    getFailingPages(storyPages, pageSize).then((failures) => {
       setFailingPages(failures);
     });
-  }, [getFailingPages]);
+  }, [storyPages, pageSize]);
 
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
