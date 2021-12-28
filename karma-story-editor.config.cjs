@@ -47,6 +47,7 @@ module.exports = function (config) {
       'karma-jasmine',
       'karma-sourcemap-loader',
       'karma-webpack',
+      'karma-spec-reporter',
       'karma-coverage-istanbul-reporter',
       require('@web-stories-wp/karma-puppeteer-launcher'),
       require('@web-stories-wp/karma-puppeteer-client'),
@@ -100,7 +101,7 @@ module.exports = function (config) {
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: [
-      'dots',
+      'spec',
       '@web-stories-wp/karma-failed-tests-reporter',
       config.coverage && 'coverage-istanbul',
     ].filter(Boolean),
