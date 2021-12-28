@@ -75,7 +75,12 @@ function StylePanel(props) {
   // Update size and position if relevant values have changed.
   usePresubmitHandler(getUpdatedSizeAndPosition, []);
 
-  const storyPages = useStory(({ state }) => state?.pages);
+  const { pages, currentPage } = useStory(
+    ({ state: { pages, currentPage } }) => ({
+      pages,
+      currentPage,
+    })
+  );
   const pageSize = useLayout(({ state: { pageWidth, pageHeight } }) => ({
     width: pageWidth,
     height: pageHeight,
@@ -83,7 +88,7 @@ function StylePanel(props) {
 
   const getFailingPages = useCallback(async () => {
     const promises = [];
-    (storyPages || []).forEach((page) => {
+    (pages || []).forEach((page) => {
       const maybeTextContrastResult = pageBackgroundTextLowContrast({
         ...page,
         pageSize,
@@ -98,16 +103,13 @@ function StylePanel(props) {
     });
     const awaitedResult = await Promise.all(promises);
     return awaitedResult.filter(({ result }) => result).map(({ page }) => page);
-  }, [storyPages, pageSize]);
+  }, [pages, pageSize]);
 
   useEffect(() => {
     getFailingPages().then((failures) => {
-      // console.log('🤷🏻‍♀️🤦🏻‍♀️', failures);
-      setFailingPages(failures);
+      setFailingPages(failures.filter((page) => page.id === currentPage.id));
     });
-  }, [getFailingPages]);
-
-  // console.log('failing', failingPages);
+  }, [currentPage.id, getFailingPages]);
 
   return (
     <Panel
