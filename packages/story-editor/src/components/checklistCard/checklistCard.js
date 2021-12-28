@@ -18,28 +18,14 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { Headline, noop, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { Headline, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import ToggleButton from './toggleButton';
 import { getGridVariant } from './helpers';
-import {
-  CARD_TYPE,
-  MAX_THUMBNAILS_DISPLAYED,
-  DEFAULT_OVERFLOW_LABEL,
-} from './constants';
-
-import {
-  Wrapper,
-  Container,
-  Title,
-  Cta,
-  ThumbnailWrapper,
-  StyledOverflowThumbnail,
-  Footer,
-} from './styles';
+import { CARD_TYPE } from './constants';
+import { Wrapper, Container, Title, Cta, Footer } from './styles';
 
 /**
  *
@@ -50,9 +36,6 @@ import {
  * @param {Object}  props.titleProps if an object is passed in it should have an onClick, these are so that issues can have buttons as titles.
  * @param {Node} props.footer will  be rendered in the footer section of a card.
  * @param {Node} props.cta will be rendered as the cta section of a card.
- * @param {Function} props.onClickOverflowThumbnail click event handler for overflow thumbnail.
- * @param {string} props.overflowLabel will be used as the aria label for the overflow thumbnail
- * @param {boolean} props.showOverflowThumbnails option to display all thumbnails.
  * @param {Node}  props.thumbnail will be rendered in the thumbnail section of a card.
  * @param  {number} props.thumbnailCount count of how  many thumbnails are getting rendered to use to manipulate grid. Defaults to 0.
  * @return {Node} card to display.
@@ -64,9 +47,6 @@ const ChecklistCard = ({
   titleProps,
   footer,
   cta,
-  onClickOverflowThumbnail = noop,
-  overflowLabel = DEFAULT_OVERFLOW_LABEL,
-  showOverflowThumbnails = false,
   thumbnail,
   thumbnailCount = 0,
 }) => {
@@ -78,8 +58,8 @@ const ChecklistCard = ({
 
   // Find out if there is overflow of thumbnails.
   // When there is overflow we are subtracting 1 thumbnail from the available grid space.
-  const hasOverflowThumbnail =
-    thumbnailCount > 0 && thumbnailCount > MAX_THUMBNAILS_DISPLAYED + 1;
+  // const hasOverflowThumbnail =
+  //   thumbnailCount > 0 && thumbnailCount > MAX_THUMBNAILS_DISPLAYED + 1;
   return (
     <Wrapper className={className}>
       <Container gridVariant={gridVariant}>
@@ -91,22 +71,7 @@ const ChecklistCard = ({
             {title}
           </Headline>
         </Title>
-        <ThumbnailWrapper $isMultiple={thumbnailCount > 1}>
-          {thumbnail}
-          {hasOverflowThumbnail && !showOverflowThumbnails && (
-            <StyledOverflowThumbnail
-              screenReaderText={overflowLabel}
-              overflowCount={thumbnailCount - MAX_THUMBNAILS_DISPLAYED}
-              onClick={onClickOverflowThumbnail}
-            />
-          )}
-        </ThumbnailWrapper>
-        {hasOverflowThumbnail && (
-          <ToggleButton
-            isExpanded={showOverflowThumbnails}
-            onClick={onClickOverflowThumbnail}
-          />
-        )}
+        {thumbnail}
         <Cta>{cta}</Cta>
         <Footer>{footer}</Footer>
       </Container>
@@ -127,9 +92,6 @@ ChecklistCard.propTypes = {
     PropTypes.node,
     PropTypes.bool,
   ]),
-  overflowLabel: PropTypes.string,
-  onClickOverflowThumbnail: PropTypes.func,
-  showOverflowThumbnails: PropTypes.bool,
   thumbnail: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,

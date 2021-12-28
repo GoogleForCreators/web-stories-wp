@@ -29,6 +29,7 @@ import {
   DefaultFooterText,
 } from '../../../checklistCard';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../../thumbnail';
+import ThumbnailWrapper from '../../../checklistCard/thumbnailWrapper';
 
 function VideoChecklistCard({ elements, footer, onClick, ...props }) {
   return (
@@ -40,8 +41,8 @@ function VideoChecklistCard({ elements, footer, onClick, ...props }) {
       footer={<DefaultFooterText>{footer}</DefaultFooterText>}
       thumbnailCount={elements.length}
       thumbnail={
-        <>
-          {elements.map((element) => (
+        <ThumbnailWrapper
+          thumbnails={elements.map((element) => (
             <Thumbnail
               key={element.id}
               onClick={() => onClick(element.id, element.pageId)}
@@ -50,7 +51,7 @@ function VideoChecklistCard({ elements, footer, onClick, ...props }) {
               aria-label={__('Go to offending video', 'web-stories')}
             />
           ))}
-        </>
+        />
       }
     />
   );

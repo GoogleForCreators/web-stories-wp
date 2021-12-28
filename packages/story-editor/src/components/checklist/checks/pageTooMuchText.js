@@ -30,16 +30,15 @@ import {
   ChecklistCard,
   CARD_TYPE,
   ChecklistCardStyles,
-  useToggleButton,
 } from '../../checklistCard';
 import {
   characterCountForPage,
   filterStoryPages,
-  getVisibleThumbnails,
   ThumbnailPagePreview,
 } from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
+import ThumbnailWrapper from '../../checklistCard/thumbnailWrapper';
 
 /**
  * @typedef {import('../../../types').Page} Page
@@ -57,7 +56,6 @@ export function pageTooMuchText(page) {
 
 const PageTooMuchText = () => {
   const isChecklistMounted = useIsChecklistMounted();
-  const { isExpanded, onExpand } = useToggleButton();
   const pages = useStory(({ state }) => state?.pages);
   const failingPages = useMemo(
     () => filterStoryPages(pages, pageTooMuchText),
@@ -73,14 +71,25 @@ const PageTooMuchText = () => {
     [setHighlights]
   );
 
-  const visiblePages = isExpanded
-    ? failingPages
-    : getVisibleThumbnails(failingPages);
-
   const { footer, title } = DESIGN_COPY.tooMuchPageText;
 
   const isRendered = failingPages.length > 0;
   useRegisterCheck('PageTooMuchText', isRendered);
+
+  const thumbnails = failingPages.map((page) => (
+    <Thumbnail
+      key={page.id}
+      onClick={() =>
+        handleClick({
+          pageId: page.id,
+          elements: page.elements.filter(({ type }) => type === 'text'),
+        })
+      }
+      type={THUMBNAIL_TYPES.PAGE}
+      displayBackground={<ThumbnailPagePreview page={page} />}
+      aria-label={__('Go to offending page', 'web-stories')}
+    />
+  ));
 
   return (
     isRendered &&
@@ -99,29 +108,8 @@ const PageTooMuchText = () => {
             </List>
           </ChecklistCardStyles.CardListWrapper>
         }
-        onClickOverflowThumbnail={onExpand}
-        showOverflowThumbnails={isExpanded}
         thumbnailCount={failingPages.length}
-        thumbnail={
-          <>
-            {visiblePages.map((page) => (
-              <Thumbnail
-                key={page.id}
-                onClick={() =>
-                  handleClick({
-                    pageId: page.id,
-                    elements: page.elements.filter(
-                      ({ type }) => type === 'text'
-                    ),
-                  })
-                }
-                type={THUMBNAIL_TYPES.PAGE}
-                displayBackground={<ThumbnailPagePreview page={page} />}
-                aria-label={__('Go to offending page', 'web-stories')}
-              />
-            ))}
-          </>
-        }
+        thumbnail={<ThumbnailWrapper thumbnails={thumbnails} />}
       />
     )
   );

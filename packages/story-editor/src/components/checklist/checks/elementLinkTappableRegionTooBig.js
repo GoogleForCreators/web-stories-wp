@@ -30,12 +30,12 @@ import {
   CARD_TYPE,
   ChecklistCard,
   DefaultFooterText,
-  useToggleButton,
 } from '../../checklistCard';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
-import { filterStoryElements, getVisibleThumbnails } from '../utils';
+import { filterStoryElements } from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
+import ThumbnailWrapper from '../../checklistCard/thumbnailWrapper';
 
 const MAX_LINK_SCREEN_PERCENT = 80;
 
@@ -55,7 +55,6 @@ export function isElementLinkTappableRegionTooBig(element, pageSize) {
 const ElementLinkTappableRegionTooBig = () => {
   const isChecklistMounted = useIsChecklistMounted();
   const pages = useStory(({ state }) => state?.pages);
-  const { isExpanded, onExpand } = useToggleButton();
   const pageSize = useLayout(({ state: { pageWidth, pageHeight } }) => ({
     width: pageWidth,
     height: pageHeight,
@@ -79,12 +78,21 @@ const ElementLinkTappableRegionTooBig = () => {
     [setHighlights]
   );
 
-  const visiblePages = isExpanded ? elements : getVisibleThumbnails(elements);
-
   const isRendered = elements.length > 0;
   useRegisterCheck('ElementLinkTappableRegionTooBig', isRendered);
 
   const { title, footer } = ACCESSIBILITY_COPY.linkTappableRegionTooBig;
+
+  const thumbnails = (elements || []).map((element) => (
+    <Thumbnail
+      key={element.id}
+      onClick={() => handleClick(element.id, element.pageId)}
+      type={THUMBNAIL_TYPES.TEXT}
+      displayBackground={<LayerThumbnail page={element} />}
+      aria-label={__('Go to offending link', 'web-stories')}
+    />
+  ));
+
   return (
     isRendered &&
     isChecklistMounted && (
@@ -96,22 +104,8 @@ const ElementLinkTappableRegionTooBig = () => {
             : CARD_TYPE.SINGLE_ISSUE
         }
         footer={<DefaultFooterText>{footer}</DefaultFooterText>}
-        onClickOverflowThumbnail={onExpand}
-        showOverflowThumbnails={isExpanded}
         thumbnailCount={elements.length}
-        thumbnail={
-          <>
-            {visiblePages.map((element) => (
-              <Thumbnail
-                key={element.id}
-                onClick={() => handleClick(element.id, element.pageId)}
-                type={THUMBNAIL_TYPES.TEXT}
-                displayBackground={<LayerThumbnail page={element} />}
-                aria-label={__('Go to offending link', 'web-stories')}
-              />
-            ))}
-          </>
-        }
+        thumbnail={<ThumbnailWrapper thumbnails={thumbnails} />}
       />
     )
   );

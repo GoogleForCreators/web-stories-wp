@@ -30,12 +30,12 @@ import {
   CARD_TYPE,
   ChecklistCard,
   DefaultFooterText,
-  useToggleButton,
 } from '../../checklistCard';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
-import { filterStoryElements, getVisibleThumbnails } from '../utils';
+import { filterStoryElements } from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
+import ThumbnailWrapper from '../../checklistCard/thumbnailWrapper';
 
 const LINK_TAPPABLE_REGION_MIN_WIDTH = 48;
 const LINK_TAPPABLE_REGION_MIN_HEIGHT = 48;
@@ -57,7 +57,6 @@ export function elementLinkTappableRegionTooSmall(element) {
 const ElementLinkTappableRegionTooSmall = () => {
   const isChecklistMounted = useIsChecklistMounted();
   const pages = useStory(({ state }) => state?.pages);
-  const { isExpanded, onExpand } = useToggleButton();
   const elements = useMemo(
     () => filterStoryElements(pages, elementLinkTappableRegionTooSmall),
     [pages]
@@ -72,7 +71,15 @@ const ElementLinkTappableRegionTooSmall = () => {
     [setHighlights]
   );
 
-  const visiblePages = isExpanded ? elements : getVisibleThumbnails(elements);
+  const thumbnails = elements.map((element) => (
+    <Thumbnail
+      key={element.id}
+      onClick={() => handleClick(element.id, element.pageId)}
+      type={THUMBNAIL_TYPES.TEXT}
+      displayBackground={<LayerThumbnail page={element} />}
+      aria-label={__('Go to offending link', 'web-stories')}
+    />
+  ));
 
   const isRendered = elements.length > 0;
   useRegisterCheck('ElementLinkTappableRegionTooSmall', isRendered);
@@ -89,22 +96,8 @@ const ElementLinkTappableRegionTooSmall = () => {
             : CARD_TYPE.SINGLE_ISSUE
         }
         footer={<DefaultFooterText>{footer}</DefaultFooterText>}
-        onClickOverflowThumbnail={onExpand}
-        showOverflowThumbnails={isExpanded}
         thumbnailCount={elements.length}
-        thumbnail={
-          <>
-            {visiblePages.map((element) => (
-              <Thumbnail
-                key={element.id}
-                onClick={() => handleClick(element.id, element.pageId)}
-                type={THUMBNAIL_TYPES.TEXT}
-                displayBackground={<LayerThumbnail page={element} />}
-                aria-label={__('Go to offending link', 'web-stories')}
-              />
-            ))}
-          </>
-        }
+        thumbnail={<ThumbnailWrapper thumbnails={thumbnails} />}
       />
     )
   );

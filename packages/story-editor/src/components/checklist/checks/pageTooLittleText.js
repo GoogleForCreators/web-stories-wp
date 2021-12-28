@@ -29,16 +29,15 @@ import {
   ChecklistCard,
   CARD_TYPE,
   DefaultFooterText,
-  useToggleButton,
 } from '../../checklistCard';
 import {
   characterCountForPage,
   filterStoryPages,
-  getVisibleThumbnails,
   ThumbnailPagePreview,
 } from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
+import ThumbnailWrapper from '../../checklistCard/thumbnailWrapper';
 
 export function pageTooLittleText(page) {
   return characterCountForPage(page) < MIN_STORY_CHARACTER_COUNT;
@@ -47,7 +46,6 @@ export function pageTooLittleText(page) {
 const PageTooLittleText = () => {
   const isChecklistMounted = useIsChecklistMounted();
   const pages = useStory(({ state }) => state?.pages);
-  const { isExpanded, onExpand } = useToggleButton();
   const failingPages = useMemo(
     () => filterStoryPages(pages, pageTooLittleText),
     [pages]
@@ -61,13 +59,19 @@ const PageTooLittleText = () => {
     [setHighlights]
   );
 
-  const visiblePages = isExpanded
-    ? failingPages
-    : getVisibleThumbnails(failingPages);
-
   const { footer, title } = DESIGN_COPY.tooLittlePageText;
   const isRendered = failingPages.length > 0;
   useRegisterCheck('PageTooLittleText', isRendered);
+
+  const thumbnails = failingPages.map((page) => (
+    <Thumbnail
+      key={page.id}
+      onClick={() => handleClick(page.id)}
+      type={THUMBNAIL_TYPES.PAGE}
+      displayBackground={<ThumbnailPagePreview page={page} />}
+      aria-label={__('Go to offending page', 'web-stories')}
+    />
+  ));
 
   return isRendered && isChecklistMounted ? (
     <ChecklistCard
@@ -79,22 +83,7 @@ const PageTooLittleText = () => {
       }
       footer={<DefaultFooterText>{footer}</DefaultFooterText>}
       thumbnailCount={failingPages.length}
-      onClickOverflowThumbnail={onExpand}
-      showOverflowThumbnails={isExpanded}
-      thumbnail={
-        <>
-          {/* TODO: Should `getVisibleThumbnails` live in the ChecklistCard? */}
-          {visiblePages.map((page) => (
-            <Thumbnail
-              key={page.id}
-              onClick={() => handleClick(page.id)}
-              type={THUMBNAIL_TYPES.PAGE}
-              displayBackground={<ThumbnailPagePreview page={page} />}
-              aria-label={__('Go to offending page', 'web-stories')}
-            />
-          ))}
-        </>
-      }
+      thumbnail={<ThumbnailWrapper thumbnails={thumbnails} />}
     />
   ) : null;
 };

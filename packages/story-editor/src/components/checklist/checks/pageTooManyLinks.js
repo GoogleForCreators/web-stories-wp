@@ -29,16 +29,12 @@ import {
   CARD_TYPE,
   ChecklistCard,
   DefaultFooterText,
-  useToggleButton,
 } from '../../checklistCard';
 import { Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
-import {
-  filterStoryPages,
-  getVisibleThumbnails,
-  ThumbnailPagePreview,
-} from '../utils';
+import { filterStoryPages, ThumbnailPagePreview } from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
+import ThumbnailWrapper from '../../checklistCard/thumbnailWrapper';
 
 export function pageTooManyLinks(page) {
   const elementsWithLinks = page.elements.filter((element) => {
@@ -50,7 +46,6 @@ export function pageTooManyLinks(page) {
 
 const PageTooManyLinks = () => {
   const isChecklistMounted = useIsChecklistMounted();
-  const { isExpanded, onExpand } = useToggleButton();
   const pages = useStory(({ state }) => state?.pages);
   const failingPages = useMemo(
     () => filterStoryPages(pages, pageTooManyLinks),
@@ -65,14 +60,21 @@ const PageTooManyLinks = () => {
     [setHighlights]
   );
 
-  const visiblePages = isExpanded
-    ? failingPages
-    : getVisibleThumbnails(failingPages);
-
   const { footer, title } = DESIGN_COPY.tooManyLinksOnPage;
 
   const isRendered = failingPages.length > 0;
   useRegisterCheck('PageTooManyLinks', isRendered);
+
+  const thumbnails = failingPages.map((page) => (
+    <Thumbnail
+      key={page.id}
+      onClick={() => handleClick(page.id)}
+      type={THUMBNAIL_TYPES.PAGE}
+      displayBackground={<ThumbnailPagePreview page={page} />}
+      aria-label={__('Go to offending page', 'web-stories')}
+    />
+  ));
+
   return (
     isRendered &&
     isChecklistMounted && (
@@ -84,22 +86,8 @@ const PageTooManyLinks = () => {
             : CARD_TYPE.SINGLE_ISSUE
         }
         footer={<DefaultFooterText>{footer}</DefaultFooterText>}
-        onClickOverflowThumbnail={onExpand}
-        showOverflowThumbnails={isExpanded}
         thumbnailCount={failingPages.length}
-        thumbnail={
-          <>
-            {visiblePages.map((page) => (
-              <Thumbnail
-                key={page.id}
-                onClick={() => handleClick(page.id)}
-                type={THUMBNAIL_TYPES.PAGE}
-                displayBackground={<ThumbnailPagePreview page={page} />}
-                aria-label={__('Go to offending page', 'web-stories')}
-              />
-            ))}
-          </>
-        }
+        thumbnail={<ThumbnailWrapper thumbnails={thumbnails} />}
       />
     )
   );

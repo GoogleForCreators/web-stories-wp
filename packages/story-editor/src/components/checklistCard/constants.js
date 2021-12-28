@@ -33,17 +33,17 @@ export const GRID_VARIANT = {
 
 export const GRID_TEMPLATE_AREA = {
   [GRID_VARIANT.SINGLE]:
-    "'title title title title' 'button button button button' 'cta cta cta thumbnail' 'footer footer footer footer'",
+    "'title title title title' 'cta cta cta thumbnail' 'footer footer footer footer'",
   [GRID_VARIANT.SINGLE_WITH_THUMBNAIL]:
-    "'title title title thumbnail' 'button button button button' 'cta cta cta thumbnail' 'footer footer footer footer'",
+    "'title title title thumbnail' 'cta cta cta thumbnail' 'footer footer footer footer'",
   [GRID_VARIANT.MULTIPLE_WITH_THUMBNAIL]:
-    "'title title title title' 'thumbnail thumbnail thumbnail thumbnail' 'button button button button' 'footer footer footer footer'",
+    "'title title title title' 'thumbnail thumbnail thumbnail thumbnail' 'footer footer footer footer'",
   [GRID_VARIANT.MULTIPLE_WITH_THUMBNAIL_WITH_CTA]:
-    "'title title title title' 'thumbnail thumbnail thumbnail thumbnail' 'button button button button' 'cta cta cta cta' 'footer footer footer footer'",
+    "'title title title title' 'thumbnail thumbnail thumbnail thumbnail' 'cta cta cta cta' 'footer footer footer footer'",
   [GRID_VARIANT.MULTIPLE_WITH_THUMBNAIL_WITH_CTA_OVERFLOW]:
-    "'title title title title' 'thumbnail thumbnail thumbnail thumbnail' 'button button button button' 'cta cta cta cta' 'footer footer footer footer'",
+    "'title title title title' 'thumbnail thumbnail thumbnail thumbnail' 'cta cta cta cta' 'footer footer footer footer'",
   [GRID_VARIANT.MULTIPLE_WITH_THUMBNAIL_OVERFLOW]:
-    "'title title title title' 'thumbnail thumbnail thumbnail thumbnail' 'button button button button' 'footer footer footer footer'",
+    "'title title title title' 'thumbnail thumbnail thumbnail thumbnail' 'footer footer footer footer'",
 };
 
 export const MAX_THUMBNAILS_DISPLAYED = 3;

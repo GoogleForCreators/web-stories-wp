@@ -30,12 +30,12 @@ import {
   CARD_TYPE,
   ChecklistCard,
   DefaultFooterText,
-  useToggleButton,
 } from '../../checklistCard';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
-import { filterStoryElements, getVisibleThumbnails } from '../utils';
+import { filterStoryElements } from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
+import ThumbnailWrapper from '../../checklistCard/thumbnailWrapper';
 
 export function imageElementMissingAlt(element) {
   return (
@@ -48,7 +48,6 @@ export function imageElementMissingAlt(element) {
 const ImageElementMissingAlt = () => {
   const isChecklistMounted = useIsChecklistMounted();
   const pages = useStory(({ state }) => state?.pages);
-  const { isExpanded, onExpand } = useToggleButton();
   const elements = useMemo(
     () => filterStoryElements(pages, imageElementMissingAlt),
     [pages]
@@ -64,12 +63,21 @@ const ImageElementMissingAlt = () => {
     [setHighlights]
   );
 
-  const visiblePages = isExpanded ? elements : getVisibleThumbnails(elements);
-
   const { footer, title } = ACCESSIBILITY_COPY.imagesMissingAltText;
 
   const isRendered = elements.length > 0;
   useRegisterCheck('ImageElementMissingAlt', isRendered);
+
+  const thumbnails = elements.map((element) => (
+    <Thumbnail
+      key={element.id}
+      onClick={() => handleClick(element.id, element.pageId)}
+      type={THUMBNAIL_TYPES.IMAGE}
+      displayBackground={<LayerThumbnail page={element} />}
+      aria-label={__('Go to offending video', 'web-stories')}
+    />
+  ));
+
   return (
     isRendered &&
     isChecklistMounted && (
@@ -81,22 +89,8 @@ const ImageElementMissingAlt = () => {
             : CARD_TYPE.SINGLE_ISSUE
         }
         footer={<DefaultFooterText>{footer}</DefaultFooterText>}
-        onClickOverflowThumbnail={onExpand}
-        showOverflowThumbnails={isExpanded}
         thumbnailCount={elements.length}
-        thumbnail={
-          <>
-            {visiblePages.map((element) => (
-              <Thumbnail
-                key={element.id}
-                onClick={() => handleClick(element.id, element.pageId)}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={<LayerThumbnail page={element} />}
-                aria-label={__('Go to offending video', 'web-stories')}
-              />
-            ))}
-          </>
-        }
+        thumbnail={<ThumbnailWrapper thumbnails={thumbnails} />}
       />
     )
   );
