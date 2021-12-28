@@ -84,6 +84,34 @@ const ButtonWrapper = styled.div.attrs({ role: 'button', tabIndex: -1 })`
     opacity: 0;
     transition: opacity 100ms;
   }
+
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    `}
+  cursor: pointer;
+  pointer-events: initial;
+  width: ${PLAY_BUTTON_SIZE}px;
+  height: ${PLAY_BUTTON_SIZE}px;
+  overflow: hidden;
+  opacity: ${({ isAbove }) => (isAbove ? 1 : 0)};
+  &.button-enter {
+    opacity: 0;
+  }
+  &.button-enter-active,
+  &.button-enter-done {
+    opacity: 1;
+    transition: opacity 100ms;
+  }
+  &.button-exit {
+    opacity: 1;
+  }
+  &.button-exit-active,
+  &.button-exit-done {
+    opacity: 0;
+    transition: opacity 100ms;
+  }
 `;
 
 const iconCss = css`
@@ -274,7 +302,7 @@ function PlayPauseButton({
             onMouseDown={handlePlayPause}
             isAbove={isPlayAbove}
           >
-            <Icon dir={isRTL ? 'rtl' : 'ltr'} />
+            <Icon isRTL={isRTL} />
           </ButtonWrapper>
         </TransitionWrapper>
       )}
