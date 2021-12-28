@@ -19,6 +19,6 @@
 import { __ } from '@web-stories-wp/i18n';
 
 export const COLOR_COMBINATION = __(
-  'This color combination may be hard for people to read. Try using a brighter background color and/or a darker text color.',
+  'This color combination may be hard for people to read.',
   'web-stories'
 );

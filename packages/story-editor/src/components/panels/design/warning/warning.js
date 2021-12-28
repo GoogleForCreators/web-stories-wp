@@ -19,24 +19,36 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { Icons } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
 import { Row } from '../../../form';
 
 const WarningContainer = styled.div`
-  margin: 14px 0;
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  margin: 14px auto;
   border: 1px solid ${({ theme }) => theme.colors.border.defaultHover};
   border-radius: ${({ theme }) => theme.borders.radius.small};
   padding: 8px;
   color: ${({ theme }) => theme.colors.fg.primary};
   font-weight: ${({ theme }) => theme.typography.weight.regular};
 `;
+const WarningIcon = styled(Icons.WarningLow)`
+  width: 60px;
+  height: 100%;
+  color: #f4b844;
+`;
 
 function Warning({ children }) {
   return (
     <Row>
-      <WarningContainer>{children}</WarningContainer>
+      <WarningContainer>
+        <WarningIcon />
+        {children}
+      </WarningContainer>
     </Row>
   );
 }
