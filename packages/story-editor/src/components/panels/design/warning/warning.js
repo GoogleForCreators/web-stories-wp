@@ -54,7 +54,7 @@ function Warning({ children }) {
 }
 
 Warning.propTypes = {
-  children: PropTypes.shape,
+  children: PropTypes.node,
 };
 
 export default Warning;

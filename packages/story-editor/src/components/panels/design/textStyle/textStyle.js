@@ -69,7 +69,6 @@ function StylePanel(props) {
     }));
 
   const [fontsFocused, setFontsFocused] = useState(false);
-  // const [hasSufficientContrast, setHasSufficientContrast] = useState(true);
   const [failingPages, setFailingPages] = useState([]);
 
   // Update size and position if relevant values have changed.
