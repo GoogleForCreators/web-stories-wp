@@ -31,6 +31,8 @@ import { styles, useHighlights, states } from '../../../../app/highlights';
 import { usePresubmitHandler } from '../../../form';
 import PanelContent from '../../panel/shared/content';
 import Panel from '../../panel/panel';
+import Warning from '../warning/warning';
+import { COLOR_COMBINATION } from '../warning/constants';
 import StyleControls from './style';
 import ColorControls from './color';
 import FontControls from './font';
@@ -106,6 +108,9 @@ function StylePanel(props) {
             }
           }}
         />
+        <Warning>
+          <Text>{COLOR_COMBINATION}</Text>
+        </Warning>
         <SubSection>
           <SubHeading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
             {__('Text Box', 'web-stories')}
