@@ -374,6 +374,7 @@ export async function pageBackgroundTextLowContrast(page) {
               backgroundColor: getBackgroundColorResult,
               textStyleColors,
               fontSize: element.fontSize,
+              id: element.id,
             }
           );
         };
@@ -390,8 +391,14 @@ export async function pageBackgroundTextLowContrast(page) {
 
   // resolve promises
   const bgColorComparisons = await Promise.all(backgroundColorPromises);
-
-  return bgColorComparisons.some((compareObj) =>
-    textBackgroundHasLowContrast(compareObj)
-  );
+  const results = bgColorComparisons.map((compareObj) => {
+    // add the offending elementId to result
+    return textBackgroundHasLowContrast(compareObj)
+      ? {
+          hasLowContrast: true,
+          id: compareObj.id,
+        }
+      : { hasLowContrast: false };
+  });
+  return results;
 }

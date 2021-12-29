@@ -69,7 +69,8 @@ function StylePanel(props) {
     }));
 
   const [fontsFocused, setFontsFocused] = useState(false);
-  const [failingPages, setFailingPages] = useState([]);
+  const [failedContrast, setFailedContrast] = useState(false);
+  const { selectedElements } = props;
 
   // Update size and position if relevant values have changed.
   usePresubmitHandler(getUpdatedSizeAndPosition, []);
@@ -86,10 +87,25 @@ function StylePanel(props) {
   }));
 
   useEffect(() => {
-    getFailingPages(pages, pageSize, currentPage).then((failures) => {
-      setFailingPages(failures);
+    const selectedElementIds = selectedElements.map(
+      (selectedElement) => selectedElement.id
+    );
+
+    getFailingPages(pages, pageSize, currentPage).then((failedPages) => {
+      // getFailingPages returns an array of pages, since we only care
+      // about currentPage, we can grab the single page result.
+      const failedElements = failedPages[0].result;
+      failedElements.map(
+        ({ hasLowContrast, id }) =>
+          hasLowContrast &&
+          setFailedContrast(
+            selectedElementIds.some(
+              (selectedElementId) => selectedElementId === id
+            )
+          )
+      );
     });
-  }, [currentPage, pageSize, pages]);
+  }, [currentPage, pageSize, pages, selectedElements]);
 
   return (
     <Panel
@@ -128,7 +144,7 @@ function StylePanel(props) {
             }
           }}
         />
-        {failingPages.length && (
+        {failedContrast && (
           <Warning>
             <Text>{COLOR_COMBINATION}</Text>
           </Warning>

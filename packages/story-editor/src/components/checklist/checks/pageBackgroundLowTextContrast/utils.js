@@ -21,6 +21,8 @@ import { pageBackgroundTextLowContrast } from './check';
 export const getFailingPages = async (storyPages, pageSize, currentPage) => {
   const promises = [];
   (storyPages || []).forEach((page) => {
+    // If we only care about checking currentPage bail early
+    // In this case, getFailingPages will return a max of 1 page.
     if (currentPage && currentPage.id !== page.id) {
       return;
     }
@@ -37,5 +39,5 @@ export const getFailingPages = async (storyPages, pageSize, currentPage) => {
     }
   });
   const awaitedResult = await Promise.all(promises);
-  return awaitedResult.filter(({ result }) => result).map(({ page }) => page);
+  return awaitedResult.filter(({ result }) => result).map((page) => page);
 };
