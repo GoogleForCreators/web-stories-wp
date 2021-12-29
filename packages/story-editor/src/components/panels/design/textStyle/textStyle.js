@@ -29,7 +29,7 @@ import PropTypes from 'prop-types';
 import getUpdatedSizeAndPosition from '../../../../utils/getUpdatedSizeAndPosition';
 import { styles, useHighlights, states } from '../../../../app/highlights';
 import { useStory, useLayout } from '../../../../app';
-import { getFailingPages } from '../../../checklist/checks/pageBackgroundLowTextContrast/utils';
+import { getFailingPages } from '../../../checklist/checks/pageBackgroundLowTextContrast/check';
 import { usePresubmitHandler } from '../../../form';
 import PanelContent from '../../panel/shared/content';
 import Panel from '../../panel/panel';
@@ -94,15 +94,9 @@ function StylePanel(props) {
     getFailingPages(pages, pageSize, currentPage).then((failedPages) => {
       // getFailingPages returns an array of pages, since we only care
       // about currentPage, we can grab the single page result.
-      const failedElements = failedPages[0].result;
-      failedElements.map(
-        ({ hasLowContrast, id }) =>
-          hasLowContrast &&
-          setFailedContrast(
-            selectedElementIds.some(
-              (selectedElementId) => selectedElementId === id
-            )
-          )
+      const result = failedPages[0]?.result;
+      setFailedContrast(
+        result?.some((element) => selectedElementIds.includes(element.id))
       );
     });
   }, [currentPage, pageSize, pages, selectedElements]);

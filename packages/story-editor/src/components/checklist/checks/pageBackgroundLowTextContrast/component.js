@@ -34,7 +34,7 @@ import { getVisibleThumbnails, ThumbnailPagePreview } from '../../utils';
 import { ACCESSIBILITY_COPY } from '../../constants';
 import { useRegisterCheck } from '../../countContext';
 import { useIsChecklistMounted } from '../../popupMountedContext';
-import { getFailingPages } from './utils';
+import { getFailingPages } from './check';
 
 const PageBackgroundTextLowContrast = () => {
   const isChecklistMounted = useIsChecklistMounted();
@@ -47,11 +47,7 @@ const PageBackgroundTextLowContrast = () => {
 
   useEffect(() => {
     getFailingPages(storyPages, pageSize).then((failures) => {
-      const failedPages = failures
-        .filter((page) =>
-          page.result.some(({ hasLowContrast }) => hasLowContrast)
-        )
-        .map(({ page }) => page);
+      const failedPages = failures.map(({ page }) => page);
       failedPages.length && setFailingPages(failedPages);
     });
   }, [storyPages, pageSize]);
