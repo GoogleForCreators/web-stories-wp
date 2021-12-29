@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
+import { useCallback, useEffect, useState } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -37,12 +37,15 @@ import { trackEvent } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 import { Color, MediaUploadButton, Row as DefaultRow } from '../../../form';
-import { useConfig, useStory } from '../../../../app';
+import { useConfig, useStory, useLayout } from '../../../../app';
+import { getFailingPages } from '../../../checklist/checks/pageBackgroundLowTextContrast/check';
 import { SimplePanel } from '../../panel';
 import { FlipControls } from '../../shared';
 import { createNewElement, getDefinitionForType } from '../../../../elements';
 import { states, styles, useHighlights } from '../../../../app/highlights';
 import getElementProperties from '../../../canvas/utils/getElementProperties';
+import Warning from '../warning/warning';
+import { COLOR_COMBINATION } from '../warning/constants';
 
 const DEFAULT_FLIP = { horizontal: false, vertical: false };
 
@@ -97,16 +100,25 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
     currentPage,
     clearBackgroundElement,
     updateCurrentPageProperties,
+    pages,
   } = useStory(({ state, actions }) => ({
     currentPage: state.currentPage,
     clearBackgroundElement: actions.clearBackgroundElement,
     combineElements: actions.combineElements,
     updateCurrentPageProperties: actions.updateCurrentPageProperties,
+    pages: state.pages,
   }));
 
   const {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
+
+  const pageSize = useLayout(({ state: { pageWidth, pageHeight } }) => ({
+    width: pageWidth,
+    height: pageHeight,
+  }));
+
+  const [failedContrast, setFailedContrast] = useState(false);
 
   const updateBackgroundColor = useCallback(
     (value) => {
@@ -162,6 +174,15 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
       cancelHighlight: state.cancelEffect,
     })
   );
+
+  useEffect(() => {
+    getFailingPages(pages, pageSize, currentPage).then((failedPages) => {
+      // getFailingPages returns an array of pages, since we only care
+      // about currentPage, we can grab the single page result.
+      const result = failedPages[0]?.result;
+      setFailedContrast(result?.length ? true : false);
+    });
+  }, [currentPage, pageSize, pages]);
 
   const backgroundEl = selectedElements[0];
   if (!backgroundEl || !backgroundEl.isBackground) {
@@ -238,6 +259,11 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
             value={flip}
           />
         </Row>
+      )}
+      {failedContrast && (
+        <Warning>
+          <Text>{COLOR_COMBINATION}</Text>
+        </Warning>
       )}
     </SimplePanel>
   );

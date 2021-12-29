@@ -20,10 +20,6 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Icons } from '@web-stories-wp/design-system';
-/**
- * Internal dependencies
- */
-import { Row } from '../../../form';
 
 const WarningContainer = styled.div`
   display: flex;
@@ -35,21 +31,22 @@ const WarningContainer = styled.div`
   padding: 8px;
   color: ${({ theme }) => theme.colors.fg.primary};
   font-weight: ${({ theme }) => theme.typography.weight.regular};
+  & > p {
+    width: 100%;
+  }
 `;
 const WarningIcon = styled(Icons.WarningLow)`
-  width: 60px;
+  width: 32px;
   height: 100%;
   color: #f4b844;
 `;
 
 function Warning({ children }) {
   return (
-    <Row>
-      <WarningContainer>
-        <WarningIcon />
-        {children}
-      </WarningContainer>
-    </Row>
+    <WarningContainer>
+      <WarningIcon />
+      {children}
+    </WarningContainer>
   );
 }
 
