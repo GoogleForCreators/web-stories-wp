@@ -96,7 +96,7 @@ function StylePanel(props) {
       // about currentPage, we can grab the single page result.
       const result = failedPages[0]?.result;
       setFailedContrast(
-        result?.some((element) => selectedElementIds.includes(element.id))
+        result?.some((elementId) => selectedElementIds.includes(elementId))
       );
     });
   }, [currentPage, pageSize, pages, selectedElements]);
