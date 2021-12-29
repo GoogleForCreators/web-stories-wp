@@ -217,13 +217,14 @@ function ExploreTemplates() {
         (template) => template.id === parseInt(idRef.current)
       );
       if (!isValidId) {
+        replace('');
         return;
       }
 
       setIsDetailsViewOpen(true);
       updateTemplateView(parseInt(idRef.current));
     }
-  }, [orderedTemplates, updateTemplateView]);
+  }, [orderedTemplates, replace, updateTemplateView]);
 
   return (
     <Layout.Provider>
