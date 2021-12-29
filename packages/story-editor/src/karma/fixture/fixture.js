@@ -186,7 +186,7 @@ export class Fixture {
 
     //eslint-disable-next-line jasmine/no-unsafe-spy
     spyOn(BlurHash, 'default').and.callFake(() => ({
-      updateBlurHash: Promise.resolve,
+      updateBlurHash: () => {},
     }));
 
     this.apiProviderFixture_ = new APIProviderFixture({ mocks });
