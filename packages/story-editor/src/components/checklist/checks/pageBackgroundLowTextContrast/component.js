@@ -47,7 +47,12 @@ const PageBackgroundTextLowContrast = () => {
 
   useEffect(() => {
     getFailingPages(storyPages, pageSize).then((failures) => {
-      setFailingPages(failures);
+      const failedPages = failures
+        .filter((page) =>
+          page.result.some(({ hasLowContrast }) => hasLowContrast)
+        )
+        .map(({ page }) => page);
+      failedPages.length && setFailingPages(failedPages);
     });
   }, [storyPages, pageSize]);
 
