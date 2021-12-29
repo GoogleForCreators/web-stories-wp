@@ -42,6 +42,7 @@ import { createPage } from '../../elements';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import formattedTemplatesArray from '../../dataUtils/formattedTemplatesArray';
 import { PRESET_TYPES } from '../../constants';
+import * as BlurHash from '../../app/media/utils/useDetectBlurhash.js';
 import getMediaResponse from './db/getMediaResponse';
 import { Editor as EditorContainer } from './containers';
 import taxonomiesResponse from './db/getTaxonomiesResponse';
@@ -182,6 +183,11 @@ export class Fixture {
       }
       return origCreateElement(type, props, ...children);
     });
+
+    //eslint-disable-next-line jasmine/no-unsafe-spy
+    spyOn(BlurHash, 'default').and.callFake(() => ({
+      updateBlurHash: Promise.resolve,
+    }));
 
     this.apiProviderFixture_ = new APIProviderFixture({ mocks });
     this.stubComponent(APIProvider).callFake(
