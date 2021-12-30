@@ -49,13 +49,11 @@ export const generateStoryMenu = ({
     STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK,
   ];
 
-  const menuItemsFiltered = menuItems
-    .filter(
-      (item) => !item?.capability || story?.capabilities?.[item?.capability]
-    )
-    .filter(
-      ({ value }) => previewLinkActions.includes(value) && story.previewLink
-    );
+  const menuItemsFiltered = menuItems.filter(
+    (item) =>
+      (!item?.capability || story?.capabilities?.[item?.capability]) &&
+      !(previewLinkActions.includes(item?.value) && !story.previewLink)
+  );
 
   return menuItemsFiltered.map(({ value, ...menuItem }) => {
     const extraProperties = {
