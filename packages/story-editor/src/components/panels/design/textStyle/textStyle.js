@@ -138,11 +138,7 @@ function StylePanel(props) {
             }
           }}
         />
-        {failedContrast && (
-          <Warning>
-            <Text>{COLOR_COMBINATION}</Text>
-          </Warning>
-        )}
+        {failedContrast && <Warning message={COLOR_COMBINATION} />}
         <SubSection>
           <SubHeading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
             {__('Text Box', 'web-stories')}

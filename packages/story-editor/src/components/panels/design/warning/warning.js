@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Icons } from '@web-stories-wp/design-system';
+import { Text, Icons, useLiveRegion } from '@web-stories-wp/design-system';
 
 const WarningContainer = styled.div`
   display: flex;
@@ -31,9 +31,6 @@ const WarningContainer = styled.div`
   padding: 8px;
   color: ${({ theme }) => theme.colors.fg.primary};
   font-weight: ${({ theme }) => theme.typography.weight.regular};
-  & > p {
-    width: 100%;
-  }
 `;
 const WarningIcon = styled(Icons.WarningLow)`
   width: 32px;
@@ -41,17 +38,23 @@ const WarningIcon = styled(Icons.WarningLow)`
   color: #f4b844;
 `;
 
-function Warning({ children }) {
+const Message = styled(Text)`
+  width: 100%;
+`;
+
+function Warning({ message }) {
+  const speak = useLiveRegion('assertive');
+  speak(message);
   return (
     <WarningContainer>
       <WarningIcon />
-      {children}
+      <Message>{message}</Message>
     </WarningContainer>
   );
 }
 
 Warning.propTypes = {
-  children: PropTypes.node,
+  message: PropTypes.string,
 };
 
 export default Warning;

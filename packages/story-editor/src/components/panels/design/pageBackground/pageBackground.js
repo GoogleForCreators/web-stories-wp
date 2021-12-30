@@ -260,11 +260,7 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
           />
         </Row>
       )}
-      {failedContrast && (
-        <Warning>
-          <Text>{COLOR_COMBINATION}</Text>
-        </Warning>
-      )}
+      {failedContrast && <Warning message={COLOR_COMBINATION} />}
     </SimplePanel>
   );
 }
