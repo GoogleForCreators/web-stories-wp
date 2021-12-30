@@ -44,10 +44,18 @@ export const generateStoryMenu = ({
   const defaultFn = menuItemActions.default
     ? () => menuItemActions.default(story)
     : noop;
+  const previewLinkActions = [
+    STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK,
+    STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK,
+  ];
 
-  const menuItemsFiltered = menuItems.filter(
-    (item) => !item?.capability || story?.capabilities?.[item?.capability]
-  );
+  const menuItemsFiltered = menuItems
+    .filter(
+      (item) => !item?.capability || story?.capabilities?.[item?.capability]
+    )
+    .filter(
+      ({ value }) => previewLinkActions.includes(value) && story.previewLink
+    );
 
   return menuItemsFiltered.map(({ value, ...menuItem }) => {
     const extraProperties = {
