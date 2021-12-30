@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { __ } from '@web-stories-wp/i18n';
 import { Text, Icons, useLiveRegion } from '@web-stories-wp/design-system';
 
 const WarningContainer = styled.div`
@@ -47,7 +48,7 @@ function Warning({ message }) {
   speak(message);
   return (
     <WarningContainer>
-      <WarningIcon />
+      <WarningIcon title={__('Low Warning', 'web-stories')} />
       <Message>{message}</Message>
     </WarningContainer>
   );

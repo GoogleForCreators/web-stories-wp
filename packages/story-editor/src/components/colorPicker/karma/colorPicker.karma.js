@@ -224,52 +224,71 @@ describe('ColorPicker', () => {
 
         // check if default text fill is saved
         expect(picker.applySavedColor('#c4c4c4')).toBeTruthy();
-      });
-    });
+        it('should show contrast warning', async () => {
+          await fixture.events.click(fixture.editor.library.textAdd);
+          await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+          //change font color to white
+          await fixture.events.click(
+            fixture.editor.inspector.designPanel.textStyle.fontColor.button
+          );
+          await fixture.events.click(
+            fixture.screen.getByRole('option', { name: '#fff' })
+          );
+          //ensure color has changed to match background
+          const [text] = await getSelection();
+          expect(text.content).toEqual(
+            '<span style="color: #fff">Fill in some text</span>'
+          );
 
-    describe('CUJ: Creator can Apply or Save a Color from/to Their Preset Library: Manage Color Presets', () => {
-      it('should allow deleting local and global color presets', async () => {
-        // Add text element and a color preset.
-        await fixture.events.click(fixture.editor.library.textAdd);
-        await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
-        await fixture.events.click(
-          fixture.editor.inspector.designPanel.textStyle.fontColor.button
-        );
-        const picker =
-          fixture.editor.inspector.designPanel.textStyle.fontColor.picker;
-        await fixture.events.click(picker.addSavedColor('global'));
-        await fixture.events.click(picker.addSavedColor('local'));
-
-        await fixture.events.click(picker.editButton);
-
-        await fixture.snapshot('Color presets in edit mode');
-
-        // Verify being in edit mode.
-        expect(picker.exitEditButton).toBeTruthy();
-        expect(picker.deleteGlobalColor).toBeTruthy();
-        // Verify edit mode has no aXe violations.
-        await expectAsync(picker.exitEditButton).toHaveNoViolations();
-        await expectAsync(picker.deleteGlobalColor).toHaveNoViolations();
-
-        // Delete global preset.
-        await fixture.events.click(picker.deleteGlobalColor);
-
-        // Confirm both the color picker and the confirmation dialog are open since it's a global color.
-        await waitFor(() => {
-          expect(fixture.screen.getAllByRole('dialog').length).toBe(2);
+          const warning = await fixture.screen.getByTitle('Low Warning');
+          expect(warning).toBeInTheDocument();
         });
-        await fixture.events.click(
-          fixture.screen.getByRole('button', { name: 'Delete' })
-        );
+      });
 
-        // Delete local preset.
-        await fixture.events.click(picker.deleteStoryColor);
+      describe('CUJ: Creator can Apply or Save a Color from/to Their Preset Library: Manage Color Presets', () => {
+        it('should allow deleting local and global color presets', async () => {
+          // Add text element and a color preset.
+          await fixture.events.click(fixture.editor.library.textAdd);
+          await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+          await fixture.events.click(
+            fixture.editor.inspector.designPanel.textStyle.fontColor.button
+          );
+          const picker =
+            fixture.editor.inspector.designPanel.textStyle.fontColor.picker;
+          await fixture.events.click(picker.addSavedColor('global'));
+          await fixture.events.click(picker.addSavedColor('local'));
 
-        // Verify the edit mode was exited (due to removing all elements).
-        expect(() => picker.exitEditButton).toThrow();
+          await fixture.events.click(picker.editButton);
 
-        // Verify there is no edit button either (since we have no presets left).
-        expect(() => picker.editButton).toThrow();
+          await fixture.snapshot('Color presets in edit mode');
+
+          // Verify being in edit mode.
+          expect(picker.exitEditButton).toBeTruthy();
+          expect(picker.deleteGlobalColor).toBeTruthy();
+          // Verify edit mode has no aXe violations.
+          await expectAsync(picker.exitEditButton).toHaveNoViolations();
+          await expectAsync(picker.deleteGlobalColor).toHaveNoViolations();
+
+          // Delete global preset.
+          await fixture.events.click(picker.deleteGlobalColor);
+
+          // Confirm both the color picker and the confirmation dialog are open since it's a global color.
+          await waitFor(() => {
+            expect(fixture.screen.getAllByRole('dialog').length).toBe(2);
+          });
+          await fixture.events.click(
+            fixture.screen.getByRole('button', { name: 'Delete' })
+          );
+
+          // Delete local preset.
+          await fixture.events.click(picker.deleteStoryColor);
+
+          // Verify the edit mode was exited (due to removing all elements).
+          expect(() => picker.exitEditButton).toThrow();
+
+          // Verify there is no edit button either (since we have no presets left).
+          expect(() => picker.editButton).toThrow();
+        });
       });
     });
   });
