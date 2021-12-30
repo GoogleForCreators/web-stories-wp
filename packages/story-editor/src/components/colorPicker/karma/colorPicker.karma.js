@@ -215,6 +215,29 @@ describe('ColorPicker', () => {
         );
 
         // save default text fill to local palette
+        const warning = await fixture.screen.getByTitle('Low Warning');
+        await expect(warning).toBeInTheDocument();
+        // change font color back to black
+        await fixture.events.click(
+          fixture.editor.inspector.designPanel.textStyle.fontColor.button
+        );
+        await fixture.events.click(
+          fixture.screen.getByRole('option', { name: '#000' })
+        );
+        //ensure color has changed back
+        expect(text.content).toEqual(
+          '<span style="color: #000">Fill in some text</span>'
+        );
+
+        await expect(warning).not.toBeInTheDocument();
+      });
+    });
+
+    describe('CUJ: Creator can Apply or Save a Color from/to Their Preset Library: Manage Color Presets', () => {
+      it('should allow deleting local and global color presets', async () => {
+        // Add text element and a color preset.
+        await fixture.events.click(fixture.editor.library.textAdd);
+        await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
         await fixture.events.click(
           fixture.editor.inspector.designPanel.textStyle.backgroundColor.button
         );
