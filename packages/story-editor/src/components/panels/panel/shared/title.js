@@ -88,6 +88,7 @@ const IconWrapper = styled.div`
   position: relative;
   width: 32px;
   height: 32px;
+
   svg {
     position: relative;
     z-index: 1;
@@ -110,11 +111,14 @@ const Collapse = styled.button`
   cursor: pointer;
   margin-left: -12px;
   transition: ${BUTTON_TRANSITION_TIMING};
+
   &:hover,
   &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR}, &[${ThemeGlobals.FOCUS_VISIBLE_DATA_ATTRIBUTE}] {
     color: ${({ theme }) => theme.colors.fg.primary};
   }
+
   ${focusStyle};
+
   svg {
     width: 32px;
     height: 32px;
@@ -125,6 +129,24 @@ const Collapse = styled.button`
         transform: rotate(-90deg);
       `};
   }
+
+  :hover ${IconWrapper}:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 16px;
+    width: 16px;
+    border-radius: ${({ theme }) => theme.borders.radius.round};
+    background: ${({ theme }) => theme.colors.bg.quaternary};
+  }
+
+        color: ${theme.colors.fg.secondary};
+        transform: rotate(-90deg);
+      `};
+  }
+
   :hover ${IconWrapper}:after {
     content: '';
     position: absolute;

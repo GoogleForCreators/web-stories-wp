@@ -46,9 +46,9 @@ const Line = styled.div`
 function ReorderableSeparator({ position, children = <Line />, ...props }) {
   const separatorRef = useRef(null);
 
-  const isReordering = useReorderable((v) => v.state.isReordering);
+  const isReordering = useReorderable((value) => value.state.isReordering);
   const setCurrentSeparator = useReorderable(
-    (v) => v.actions.setCurrentSeparator
+    (value) => value.actions.setCurrentSeparator
   );
   const handlePointerEnter = useCallback(() => {
     if (!isReordering) {

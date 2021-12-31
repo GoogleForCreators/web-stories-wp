@@ -27,11 +27,11 @@ import useFocusCanvas from '../../../canvas/useFocusCanvas';
 
 function useLayerSelection(layer) {
   const { id: elementId } = layer;
-  const isSelected = useStory((v) =>
-    v.state.selectedElementIds.includes(elementId)
+  const isSelected = useStory((value) =>
+    value.state.selectedElementIds.includes(elementId)
   );
   const updateStateWithReducer = useStory(
-    (v) => v.actions.updateStateWithReducer
+    (value) => value.actions.updateStateWithReducer
   );
 
   const focusCanvas = useFocusCanvas();

@@ -54,7 +54,7 @@ function LayerPanel() {
   const layers = useLayers();
 
   const inspectorContentHeight = useInspector(
-    (v) => v.state.inspectorContentHeight
+    (value) => value.state.inspectorContentHeight
   );
 
   // We want the max height to fill the space underneath the document/design tab bar.

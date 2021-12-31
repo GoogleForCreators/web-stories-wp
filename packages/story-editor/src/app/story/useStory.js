@@ -35,8 +35,8 @@ const DELIMITER = ':::';
  * @return {Array} array of current pages story element ids in order
  */
 export function useCurrentPageElementIds() {
-  const elementIds = useStory((v) => {
-    const elements = v.state.currentPage?.elements || [];
+  const elementIds = useStory((value) => {
+    const elements = value.state.currentPage?.elements || [];
     return elements.map((element) => element.id).join(DELIMITER);
   });
   return elementIds.split(DELIMITER);

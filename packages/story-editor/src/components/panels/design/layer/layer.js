@@ -142,6 +142,37 @@ const LayerButton = styled(Button).attrs({
     --background-color-opaque: ${({ theme }) =>
       rgba(theme.colors.interactiveBg.secondaryPress, 0)};
   }
+
+      background: ${theme.colors.interactiveBg.secondaryPress};
+      + * {
+        --background-color: ${theme.colors.interactiveBg.secondaryPress};
+        --background-color-opaque: ${rgba(
+          theme.colors.interactiveBg.secondaryPress,
+          0
+        )};
+        --selected-hover-color: ${theme.colors.interactiveBg.tertiaryHover};
+      }
+    `}
+
+  :hover {
+    background: ${({ theme }) => theme.colors.interactiveBg.secondaryHover};
+  }
+  :hover + * {
+    --background-color: ${({ theme }) =>
+      theme.colors.interactiveBg.secondaryHover};
+    --background-color-opaque: ${({ theme }) =>
+      rgba(theme.colors.interactiveBg.secondaryHover, 0)};
+  }
+
+  :active {
+    background: ${({ theme }) => theme.colors.interactiveBg.secondaryPress};
+  }
+  :active + * {
+    --background-color: ${({ theme }) =>
+      theme.colors.interactiveBg.secondaryPress};
+    --background-color-opaque: ${({ theme }) =>
+      rgba(theme.colors.interactiveBg.secondaryPress, 0)};
+  }
 `;
 
 const LayerIconWrapper = styled.div`
@@ -255,8 +286,12 @@ function preventReorder(e) {
 function Layer({ element }) {
   const { LayerIcon, LayerContent } = getDefinitionForType(element.type);
   const { isSelected, handleClick } = useLayerSelection(element);
-  const duplicateElementById = useStory((v) => v.actions.duplicateElementById);
-  const deleteElementById = useStory((v) => v.actions.deleteElementById);
+  const duplicateElementById = useStory(
+    (value) => value.actions.duplicateElementById
+  );
+  const deleteElementById = useStory(
+    (value) => value.actions.deleteElementById
+  );
 
   const layerRef = useRef(null);
   usePerformanceTracking({

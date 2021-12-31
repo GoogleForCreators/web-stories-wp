@@ -82,12 +82,12 @@ ReorderableLayer.propTypes = {
 };
 
 function LayerPanel({ layers }) {
-  const arrangeElement = useStory((v) => v.actions.arrangeElement);
+  const arrangeElement = useStory((value) => value.actions.arrangeElement);
   const setSelectedElementsById = useStory(
-    (v) => v.actions.setSelectedElementsById
+    (value) => value.actions.setSelectedElementsById
   );
 
-  const onOpenMenu = useRightClickMenu((v) => v.onOpenMenu);
+  const onOpenMenu = useRightClickMenu((value) => value.onOpenMenu);
 
   const numLayers = layers.length;
 
