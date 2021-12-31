@@ -59,10 +59,10 @@ WAAPIAnimationWrapper.propTypes = WAAPIAnimationProps;
 
 function WAAPIWrapper({ children, target }) {
   const hoistWAAPIAnimation = useStoryAnimationContext(
-    (v) => v.actions.hoistWAAPIAnimation
+    (value) => value.actions.hoistWAAPIAnimation
   );
-  const AnimationParts = useStoryAnimationContext((v) =>
-    v.actions.getAnimationParts(target)
+  const AnimationParts = useStoryAnimationContext((value) =>
+    value.actions.getAnimationParts(target)
   );
   const WAAPIAnimationParts = AnimationParts?.map(
     (anim) => anim.WAAPIAnimation

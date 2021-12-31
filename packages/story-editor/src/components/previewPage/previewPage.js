@@ -65,7 +65,7 @@ const PreviewSafeZone = styled.div`
 
 function PreviewPageAnimationController({ animationState }) {
   const WAAPIAnimationMethods = useStoryAnimationContext(
-    (v) => v.actions.WAAPIAnimationMethods
+    (value) => value.actions.WAAPIAnimationMethods
   );
 
   useEffect(() => {

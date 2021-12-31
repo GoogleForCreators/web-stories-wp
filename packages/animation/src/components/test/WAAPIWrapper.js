@@ -23,9 +23,6 @@ import { render, act } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-/**
- * Internal dependencies
- */
 import Provider from '../provider';
 import WAAPIWrapper from '../WAAPIWrapper';
 
