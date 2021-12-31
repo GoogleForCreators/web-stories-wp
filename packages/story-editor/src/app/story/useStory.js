@@ -36,8 +36,8 @@ const DELIMITER = ':::';
  */
 export function useCurrentPageElementIds() {
   // Joining and splitting with delimiter so that selector returns
-  // a shallow equal result when we have a new id array instance that
-  // is deeply equal. This prevents empty forced re-renders from
+  // a strictly equal result when we have a new id array instance that
+  // is shallowly equal. This prevents empty forced re-renders from
   // useContextSelector
   const elementIds = useStory((value) => {
     const elements = value.state.currentPage?.elements || [];
