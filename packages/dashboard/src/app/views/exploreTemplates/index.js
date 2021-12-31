@@ -19,12 +19,13 @@
  */
 import { useMemo, useEffect, useCallback } from '@web-stories-wp/react';
 import { trackEvent } from '@web-stories-wp/tracking';
+import { uniqueEntriesByKey } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { Layout, ScrollToTop } from '../../../components';
-import { useTemplateView, uniqueEntriesByKey } from '../../../utils';
+import { useTemplateView } from '../../../utils';
 
 import useApi from '../../api/useApi';
 import { getTemplateFilters, composeTemplateFilter } from '../utils';

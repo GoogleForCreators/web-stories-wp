@@ -17,23 +17,21 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import {
-  useState,
-  useCallback,
-  useRef,
-  useLayoutEffect,
-  useEffect,
-} from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
-import {
+  LoadingSpinner,
   Text,
   THEME_CONSTANTS,
   useSnackbar,
-  LoadingSpinner,
 } from '@web-stories-wp/design-system';
-import { getCanvasBlob } from '@web-stories-wp/media';
+import { __ } from '@web-stories-wp/i18n';
+import {
+  useCallback,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from '@web-stories-wp/react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -42,8 +40,6 @@ import { useAPI } from '../../../../app/api';
 import Dialog from '../../../dialog';
 import useLibrary from '../../useLibrary';
 import { LoadingContainer } from '../shared';
-import { useConfig } from '../../../../app';
-import { useUploader } from '../../../../app/uploader';
 import TemplateList from './templateList';
 
 const Wrapper = styled.div`
@@ -56,14 +52,8 @@ const Wrapper = styled.div`
 
 function SavedTemplates({ pageSize, loadTemplates, isLoading, ...rest }) {
   const {
-    actions: { deletePageTemplate, updatePageTemplate },
+    actions: { deletePageTemplate },
   } = useAPI();
-  const {
-    capabilities: { hasUploadMediaAction },
-  } = useConfig();
-  const {
-    actions: { uploadFile },
-  } = useUploader();
 
   const { savedTemplates, setSavedTemplates, nextTemplatesToFetch } =
     useLibrary((state) => ({
@@ -128,71 +118,6 @@ function SavedTemplates({ pageSize, loadTemplates, isLoading, ...rest }) {
       setSavedTemplates,
     ]
   );
-
-  const imageBackFillState = useRef({
-    processed: [],
-    processing: [],
-  });
-
-  // TODO: Maybe use proper reducer here like in useContextValueProvider.
-  const generateMissingImages = useCallback(
-    async (pageTemplate) => {
-      if (pageTemplate?.image?.url) {
-        return;
-      }
-
-      if (
-        imageBackFillState.current.processing.includes(pageTemplate.id) ||
-        imageBackFillState.current.processed.includes(pageTemplate.id)
-      ) {
-        return;
-      }
-
-      imageBackFillState.current.processing.push(pageTemplate.id);
-
-      // TODO: Render page template and then use html-to-image on it.
-      // Maybe extract into reusable function.
-
-      const htmlToImage = await import(
-        /* webpackChunkName: "chunk-html-to-image" */ 'html-to-image'
-      );
-
-      // TODO: This needs to be a ref to an actual rendered node.
-      const TODO_REF = null;
-
-      const imageCanvas = await htmlToImage.toCanvas(TODO_REF);
-      const imageBlob = await getCanvasBlob(imageCanvas);
-
-      try {
-        const resource = await uploadFile(imageBlob, {
-          web_stories_media_source: 'page-template',
-        });
-
-        updatePageTemplate(pageTemplate.id, {
-          featured_media: resource.id,
-        });
-      } catch (err) {
-        // Catch upload errors, e.g. if the file is too large,
-        // so that the page template can still be added, albeit without an image.
-      }
-
-      imageBackFillState.current.processed.push(pageTemplate.id);
-      imageBackFillState.current.processing =
-        imageBackFillState.current.processing.filter(
-          (item) => item !== pageTemplate.id
-        );
-    },
-    [updatePageTemplate, uploadFile]
-  );
-
-  useEffect(() => {
-    if (!hasUploadMediaAction) {
-      return;
-    }
-    savedTemplates?.forEach((pageTemplate) =>
-      generateMissingImages(pageTemplate)
-    );
-  }, [savedTemplates, generateMissingImages, hasUploadMediaAction]);
 
   return (
     // tabIndex is required for FireFox bug when using keyboard to navigate from Chips to Template

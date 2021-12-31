@@ -43,7 +43,7 @@ function transformResponse(template) {
     url: embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
   };
 
-  return { templateId, ...story_data, image };
+  return { ...story_data, templateId, image };
 }
 
 export function getCustomPageTemplates(config, page = 1) {
@@ -94,7 +94,7 @@ export function addPageTemplate(config, data) {
  */
 export function updatePageTemplate(config, id, data) {
   return apiFetch({
-    path: `${config.api.pageTemplates}/${id}/`,
+    path: `${config.api.pageTemplates}${id}/`,
     data: {
       ...data,
     },

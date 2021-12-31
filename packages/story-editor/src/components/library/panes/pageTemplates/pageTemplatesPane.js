@@ -99,11 +99,13 @@ function PageTemplatesPane(props) {
 
   const updateTemplatesList = useCallback(
     (page) => {
-      setSavedTemplates([page, ...(savedTemplates || [])]);
+      setSavedTemplates((_savedTemplates) => {
+        return [page, ...(_savedTemplates || [])];
+      });
       setHighlightedTemplate(page.id);
       localStore.setItemByKey(LOCAL_STORAGE_KEY, false);
     },
-    [setSavedTemplates, savedTemplates]
+    [setSavedTemplates]
   );
 
   const loadTemplates = useCallback(() => {
@@ -133,7 +135,10 @@ function PageTemplatesPane(props) {
             };
           }
         );
-        setSavedTemplates([...(savedTemplates || []), ...updatedTemplates]);
+        setSavedTemplates((_savedTemplates) => [
+          ...(_savedTemplates || []),
+          ...updatedTemplates,
+        ]);
 
         if (!hasMore) {
           setNextTemplatesToFetch(false);
@@ -143,16 +148,13 @@ function PageTemplatesPane(props) {
       })
       .catch(() => {
         setNextTemplatesToFetch(false);
-        if (null === savedTemplates) {
-          setSavedTemplates([]);
-        }
+        setSavedTemplates((_savedTemplates) => _savedTemplates ?? []);
       })
       .finally(() => setIsLoading(false));
   }, [
     getCustomPageTemplates,
     nextTemplatesToFetch,
     setSavedTemplates,
-    savedTemplates,
     setNextTemplatesToFetch,
   ]);
 

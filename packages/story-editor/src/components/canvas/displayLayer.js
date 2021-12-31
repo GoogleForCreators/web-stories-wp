@@ -92,12 +92,7 @@ function DisplayPage({
           return null;
         }
         return (
-          <DisplayElement
-            key={element.id}
-            element={element}
-            page={page}
-            isAnimatable
-          />
+          <DisplayElement key={element.id} element={element} isAnimatable />
         );
       })
     : null;

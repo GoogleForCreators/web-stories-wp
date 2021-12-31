@@ -17,7 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect } from '@web-stories-wp/react';
+import { useEffect, forwardRef } from '@web-stories-wp/react';
 import styled, { StyleSheetManager } from 'styled-components';
 import { generatePatternStyles } from '@web-stories-wp/patterns';
 import {
@@ -63,12 +63,10 @@ const PreviewSafeZone = styled.div`
   margin: 0;
 `;
 
-function PreviewPageController({
-  page,
-  animationState,
-  subscribeGlobalTime,
-  pageSize,
-}) {
+const PreviewPageController = forwardRef(function PreviewPageController(
+  { page, animationState, subscribeGlobalTime, pageSize },
+  ref
+) {
   const {
     actions: { WAAPIAnimationMethods },
   } = useStoryAnimationContext();
@@ -99,6 +97,7 @@ function PreviewPageController({
 
   return (
     <FullBleedPreviewWrapper
+      ref={ref}
       pageSize={pageSize}
       background={page.backgroundColor}
     >
@@ -107,15 +106,18 @@ function PreviewPageController({
       </PreviewSafeZone>
     </FullBleedPreviewWrapper>
   );
-}
+});
 
-function PreviewPage({
-  page,
-  pageSize,
-  animationState = STORY_ANIMATION_STATE.RESET,
-  onAnimationComplete,
-  subscribeGlobalTime,
-}) {
+const PreviewPage = forwardRef(function PreviewPage(
+  {
+    page,
+    pageSize,
+    animationState = STORY_ANIMATION_STATE.RESET,
+    onAnimationComplete,
+    subscribeGlobalTime,
+  },
+  ref
+) {
   // Preview is wrapped in StyleSheetManager w/ stylisPlugins={[]} in order to prevent
   // elements from shifting when in RTL mode since these aren't relevant for story previews
   return (
@@ -126,6 +128,7 @@ function PreviewPage({
         onWAAPIFinish={onAnimationComplete}
       >
         <PreviewPageController
+          ref={ref}
           page={page}
           pageSize={pageSize}
           animationState={animationState}
@@ -135,7 +138,7 @@ function PreviewPage({
       </StoryAnimation.Provider>
     </StyleSheetManager>
   );
-}
+});
 
 PreviewPage.propTypes = {
   page: StoryPropTypes.page.isRequired,
