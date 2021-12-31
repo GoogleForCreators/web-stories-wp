@@ -17,11 +17,11 @@
  * External dependencies
  */
 import { waitFor } from '@testing-library/react';
+
 /**
  * Internal dependencies
  */
 import { Fixture } from '../../../../../karma';
-import { COLOR_COMBINATION } from '../../warning/constants';
 
 describe('Text Panel', () => {
   describe('Text Panel: Contrast Warning', () => {
@@ -44,19 +44,22 @@ describe('Text Panel', () => {
       await fixture.events.click(
         fixture.editor.inspector.designPanel.textStyle.fontColor.button
       );
-      await fixture.events.click(
-        fixture.screen.getByRole('option', { name: '#fff' })
+      await waitFor(() =>
+        fixture.events.click(
+          fixture.screen.getByRole('option', { name: '#fff' })
+        )
       );
-
-      const warningIcon = await fixture.screen.queryByTitle('Low Warning');
-      await expect(warningIcon).toBeDefined();
+      // check that the warning icon is on screen
+      await expect(fixture.screen.queryByTitle('Low Warning')).toBeDefined();
       // change font color back to black
-      await fixture.events.click(
-        fixture.screen.getByRole('option', { name: '#000' })
+      await waitFor(() =>
+        fixture.events.click(
+          fixture.screen.getByRole('option', { name: '#000' })
+        )
       );
-
-      const warningMessage = fixture.screen.queryByText(COLOR_COMBINATION);
-      await expect(warningMessage).toBeNull();
+      // Check that the warning icon has been removed from screen. We cannot check
+      // for the text, since useLiveRegion will leave the message on the dom.
+      await expect(fixture.screen.queryByTitle('Low Warning')).toBeNull();
     });
   });
 });

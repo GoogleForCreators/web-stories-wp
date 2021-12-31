@@ -20,6 +20,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
+import { useEffect } from '@web-stories-wp/react';
 import { Text, Icons, useLiveRegion } from '@web-stories-wp/design-system';
 
 const WarningContainer = styled.div`
@@ -45,7 +46,11 @@ const Message = styled(Text)`
 
 function Warning({ message }) {
   const speak = useLiveRegion('assertive');
-  speak(message);
+
+  useEffect(() => {
+    speak(message);
+  }, [message, speak]);
+
   return (
     <WarningContainer>
       <WarningIcon title={__('Low Warning', 'web-stories')} />
