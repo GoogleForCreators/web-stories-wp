@@ -217,19 +217,24 @@ describe('ColorPicker', () => {
         // save default text fill to local palette
         const warning = await fixture.screen.getByTitle('Low Warning');
         await expect(warning).toBeInTheDocument();
-        // change font color back to black
-        await fixture.events.click(
-          fixture.editor.inspector.designPanel.textStyle.fontColor.button
+
+        // ensure color has changed to match background
+        const [text] = await getSelection();
+        await expect(text.content).toEqual(
+          '<span style="color: #fff">Fill in some text</span>'
         );
+
+        const warningIcon = await fixture.screen.getByTitle('Low Warning');
+        await expect(warningIcon).toHaveTextContent('Low Warning');
+        // change font color back to black
         await fixture.events.click(
           fixture.screen.getByRole('option', { name: '#000' })
         );
-        //ensure color has changed back
-        expect(text.content).toEqual(
-          '<span style="color: #000">Fill in some text</span>'
-        );
 
-        await expect(warning).not.toBeInTheDocument();
+        const warningMessage = fixture.screen.queryByText(
+          'This color combination or font size may be hard for people to read.'
+        );
+        await expect(warningMessage).toBeNull();
       });
     });
 
