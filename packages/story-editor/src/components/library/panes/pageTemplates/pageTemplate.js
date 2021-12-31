@@ -213,7 +213,7 @@ function PageTemplate(
       <PreviewPageWrapper pageSize={pageSize} background={page.backgroundColor}>
         {imageUrl ? (
           <TemplateImage
-            alt={page.image?.alt || page.title}
+            alt={page.image?.alt || __('Saved Page Template', 'web-stories')}
             src={imageUrl}
             height={page.image?.height}
             width={page.image?.height}
