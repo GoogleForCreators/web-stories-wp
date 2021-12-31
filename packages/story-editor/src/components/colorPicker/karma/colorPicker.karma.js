@@ -203,39 +203,6 @@ describe('ColorPicker', () => {
           '<span style="color: #c4c4c4">Fill in some text</span>'
         );
       });
-
-      it('should allow saving text background color', async () => {
-        // Add text element
-        await fixture.events.click(fixture.editor.library.textAdd);
-        await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
-
-        // add fill
-        await fixture.events.click(
-          fixture.editor.inspector.designPanel.textStyle.fill
-        );
-
-        // save default text fill to local palette
-        const warning = await fixture.screen.getByTitle('Low Warning');
-        await expect(warning).toBeInTheDocument();
-
-        // ensure color has changed to match background
-        const [text] = await getSelection();
-        await expect(text.content).toEqual(
-          '<span style="color: #fff">Fill in some text</span>'
-        );
-
-        const warningIcon = await fixture.screen.getByTitle('Low Warning');
-        await expect(warningIcon).toHaveTextContent('Low Warning');
-        // change font color back to black
-        await fixture.events.click(
-          fixture.screen.getByRole('option', { name: '#000' })
-        );
-
-        const warningMessage = fixture.screen.queryByText(
-          'This color combination or font size may be hard for people to read.'
-        );
-        await expect(warningMessage).toBeNull();
-      });
     });
 
     describe('CUJ: Creator can Apply or Save a Color from/to Their Preset Library: Manage Color Presets', () => {
