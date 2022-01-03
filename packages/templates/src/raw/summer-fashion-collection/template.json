@@ -212,6 +212,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
+            "baseColor": "#647285",
             "isExternal": true
           }
         }
@@ -467,6 +468,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
+            "baseColor": "#786b59",
             "isExternal": true
           }
         },
@@ -506,6 +508,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
+            "baseColor": "#978b83",
             "isExternal": true
           }
         }
@@ -685,6 +688,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
+            "baseColor": "#aa8e53",
             "isExternal": true
           },
           "width": 328,
@@ -1023,6 +1027,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
+            "baseColor": "#7f7873",
             "isExternal": true
           },
           "overlay": {
@@ -1369,6 +1374,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
+            "baseColor": "#b95d36",
             "isExternal": true
           },
           "width": 187,
@@ -1409,6 +1415,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
+            "baseColor": "#e07c62",
             "isExternal": true
           },
           "width": 205,
@@ -1728,6 +1735,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
+            "baseColor": "#756e74",
             "isExternal": true
           },
           "width": 328,
@@ -2058,6 +2066,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
+            "baseColor": "#9a8177",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
@@ -2410,6 +2419,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
+            "baseColor": "#977350",
             "isExternal": true
           },
           "x": 225,
@@ -2769,6 +2779,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
+            "baseColor": "#9a9595",
             "isExternal": true
           },
           "x": 45,
@@ -4290,6 +4301,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
+            "baseColor": "#a6a4a0",
             "isExternal": true
           }
         },
@@ -4330,6 +4342,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
+            "baseColor": "#c1b5ad",
             "isExternal": true
           }
         },
@@ -4370,6 +4383,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
+            "baseColor": "#a89087",
             "isExternal": true
           }
         }

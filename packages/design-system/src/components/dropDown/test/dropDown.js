@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -250,137 +250,121 @@ describe('DropDown <DropDown />', () => {
 
     expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
   });
+
+  describe('keyboard interactions', () => {
+    it('should trigger onMenuItemClick when using the down arrow plus enter key and keep menu open when isKeepMenuOpenOnSelection is true', async () => {
+      const onClickMock = jest.fn();
+      await renderWithProviders(
+        <DropDown
+          emptyText={'No options available'}
+          dropDownLabel={'label'}
+          isKeepMenuOpenOnSelection
+          options={basicDropDownOptions}
+          onMenuItemClick={onClickMock}
+          selectedValue={null}
+        />
+      );
+      const selectButton = screen.getByRole('button');
+      fireEvent.click(selectButton);
+
+      // wait for debounced callback to allow a select click handler to process
+      jest.runOnlyPendingTimers();
+
+      const menu = screen.getByRole('listbox');
+      expect(menu).toBeInTheDocument();
+
+      const menuItems = screen.getAllByRole('option');
+      expect(menuItems).toHaveLength(12);
+
+      // first element in menu should have focus
+      expect(menuItems[0]).toHaveFocus();
+
+      // focus second element in menu
+      fireEvent.keyDown(menuItems[1], { key: 'ArrowDown', which: 40 });
+      expect(menuItems[1]).toHaveFocus();
+
+      fireEvent.keyDown(menu, { key: 'Enter', which: 13 });
+
+      // The second item in the menu.
+      // first prop we get back is the event
+      expect(onClickMock).toHaveBeenCalledWith(
+        expect.anything(),
+        basicDropDownOptions[1].value
+      );
+
+      expect(onClickMock).toHaveBeenCalledTimes(1);
+
+      expect(menu).toBeInTheDocument();
+    });
+
+    it('should trigger onMenuItemClick when using the down arrow plus enter key and close menu', async () => {
+      const onClickMock = jest.fn();
+
+      await renderWithProviders(
+        <DropDown
+          emptyText={'No options available'}
+          dropDownLabel={'label'}
+          options={basicDropDownOptions}
+          onMenuItemClick={onClickMock}
+          selectedValue={basicDropDownOptions[0].value}
+        />
+      );
+
+      // menu should not exist yet
+      expect(screen.queryByRole('listbox')).not.toBeInTheDocument();
+
+      // open menu
+      const selectButton = screen.getByRole('button');
+      fireEvent.click(selectButton);
+
+      // wait for debounced callback to allow a select click handler to process
+      jest.runOnlyPendingTimers();
+
+      const menu = screen.getByRole('listbox');
+      expect(menu).toBeInTheDocument();
+
+      // focus first element in menu
+      fireEvent.keyDown(menu, { key: 'ArrowDown', which: 40 });
+
+      // focus second element in menu
+      fireEvent.keyDown(menu, { key: 'ArrowDown', which: 40 });
+
+      // select second entry
+      fireEvent.keyDown(menu, { key: 'Enter', which: 13 });
+
+      // Verify onClick was called with 'Enter'
+      expect(onClickMock).toHaveBeenCalledWith(
+        expect.anything(),
+        basicDropDownOptions[2].value
+      );
+      expect(onClickMock).toHaveBeenCalledTimes(1);
+
+      // menu should be closed
+      await waitFor(() =>
+        expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
+      );
+    });
+
+    it('should trigger onDismissMenu when esc key is pressed', async () => {
+      await renderWithProviders(
+        <DropDown
+          dropDownLabel={'label'}
+          options={basicDropDownOptions}
+          selectedValue={basicDropDownOptions[1].value}
+        />
+      );
+      const select = screen.getByRole('button');
+      fireEvent.click(select);
+
+      const menu = screen.queryByRole('listbox');
+      expect(menu).toBeInTheDocument();
+
+      // wait for debounced callback to allow a select click handler to process
+      jest.runOnlyPendingTimers();
+
+      fireEvent.keyDown(menu, { key: 'Escape', which: 27 });
+
+      await waitFor(() => expect(menu).not.toBeInTheDocument());
+    });
+  });
 });
-
-// TODO: Keyboard events need mock useKeyDownEffect
-// https://github.com/google/web-stories-wp/issues/5764
-
-// eslint-disable-next-line eslint-comments/disable-enable-pair
-/* eslint-disable jest/no-commented-out-tests */
-// it('should trigger onMenuItemClick when using the down arrow plus enter key and keep menu open when isKeepMenuOpenOnSelection is true', async () => {
-//   const onClickMock = jest.fn();
-//   await renderWithProviders(
-//     <DropDown
-//       emptyText={'No options available'}
-//       dropDownLabel={'label'}
-//       isKeepMenuOpenOnSelection={true}
-//       options={basicDropDownOptions}
-//       onMenuItemClick={onClickMock}
-//       selectedValue={null}
-//     />
-//   );
-//   const selectButton = screen.getByRole('button');
-//   fireEvent.click(selectButton);
-
-//   const menu = screen.getByRole('listbox');
-//   expect(menu).toBeInTheDocument();
-
-//   const menuItems = screen.getAllByRole('option');
-//   expect(menuItems).toHaveLength(12);
-
-//   // wait for debounced callback to allow a select click handler to process
-//   jest.runOnlyPendingTimers();
-
-//   // focus first element in menu
-//   act(() => {
-//     fireEvent.keyDown(menu, {
-//       key: 'ArrowDown',
-//     });
-//   });
-
-//   expect(menuItems[0]).toHaveFocus();
-
-//   // focus second element in menu
-//   act(() => {
-//     fireEvent.keyDown(menu, {
-//       key: 'ArrowDown',
-//     });
-//   });
-//   expect(menuItems[1]).toHaveFocus();
-
-//   act(() => {
-//     fireEvent.keyDown(menu, { key: 'Enter' });
-//   });
-
-//   // The second item in the menu.
-//   // first prop we get back is the event
-//   expect(onClickMock).toHaveBeenCalledWith(
-//     expect.anything(),
-//     basicDropDownOptions[1].value
-//   );
-
-//   expect(onClickMock).toHaveBeenCalledTimes(1);
-
-//   expect(menu).toBeInTheDocument();
-// });
-
-// it('should trigger onMenuItemClick when using the down arrow plus enter key and close menu', async () => {
-//   const onClickMock = jest.fn();
-
-//   await renderWithProviders(
-//     <DropDown
-//       emptyText={'No options available'}
-//       dropDownLabel={'label'}
-//       options={basicDropDownOptions}
-//       onMenuItemClick={onClickMock}
-//       selectedValue={basicDropDownOptions[0].value}
-//     />
-//   );
-//   const selectButton = screen.getByRole('button');
-//   fireEvent.click(selectButton);
-
-//   const menu = screen.getByRole('listbox');
-//   expect(menu).toBeInTheDocument();
-
-//   // focus first element in menu
-//   act(() => {
-//     fireEvent.keyDown(menu, {
-//       key: 'ArrowDown',
-//     });
-//   });
-
-//   // focus second element in menu
-//   act(() => {
-//     fireEvent.keyDown(menu, {
-//       key: 'ArrowDown',
-//     });
-//   });
-
-//   act(() => {
-//     fireEvent.keyDown(menu, { key: 'Enter' });
-//   });
-
-//   // The second item in the menu.
-//   // first prop we get back is the event
-//   expect(onClickMock).toHaveBeenCalledWith(
-//     expect.anything(),
-//     basicDropDownOptions[2].value
-//   );
-
-//   expect(onClickMock).toHaveBeenCalledTimes(1);
-
-//   await waitFor(() => expect(menu).not.toBeInTheDocument());
-// });
-
-// it('should trigger onDismissMenu when esc key is pressed', async () => {
-//   const wrapper = await renderWithProviders(
-//     <DropDown
-//       dropDownLabel={'label'}
-//       options={basicDropDownOptions}
-//       selectedValue={basicDropDownOptions[1].value}
-//     />
-//   );
-//   const select = wrapper.getByRole('button');
-//   fireEvent.click(select);
-
-//   const menu = wrapper.queryByRole('listbox');
-//   expect(menu).toBeInTheDocument();
-
-//   act(() => {
-//     fireEvent.keyDown(menu, {
-//       key: 'Escape',
-//     });
-//   });
-
-//   await waitFor(() => expect(menu).not.toBeInTheDocument());
-// });

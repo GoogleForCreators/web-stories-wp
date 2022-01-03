@@ -86,6 +86,7 @@ class Plugin extends ServiceBasedPlugin {
 		'integrations.amp'             => Integrations\AMP::class,
 		'integrations.jetpack'         => Integrations\Jetpack::class,
 		'integrations.nextgen_gallery' => Integrations\NextGen_Gallery::class,
+		'integrations.cfi'             => Integrations\Conditional_Featured_Image::class,
 		'integrations.sitekit'         => Integrations\Site_Kit::class,
 		'integrations.themes_support'  => Integrations\Core_Themes_Support::class,
 		'imgareaselect_patch'          => Admin\ImgAreaSelect_Patch::class,
