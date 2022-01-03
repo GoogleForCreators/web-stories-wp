@@ -166,7 +166,7 @@ function SecondaryMenu({ menu }) {
   return (
     <Wrapper>
       <MenuItems>
-        <HelpCenter />
+        <HelpCenter components={menu?.helpCenter} />
         {menu?.checklist && (
           <ChecklistCountProvider>
             <Checklist items={menu.checklist} />
@@ -180,7 +180,8 @@ function SecondaryMenu({ menu }) {
 
 SecondaryMenu.propTypes = {
   menu: PropTypes.shape({
-    checklist: PropTypes.object,
+    checklist: PropTypes.objectOf(PropTypes.node),
+    helpCenter: PropTypes.objectOf(PropTypes.node),
   }),
 };
 
