@@ -60,10 +60,6 @@ const ChecklistCard = ({
     hasCta: Boolean(cta),
   });
 
-  // Find out if there is overflow of thumbnails.
-  // When there is overflow we are subtracting 1 thumbnail from the available grid space.
-  // const hasOverflowThumbnail =
-  //   thumbnailCount > 0 && thumbnailCount > MAX_THUMBNAILS_DISPLAYED + 1;
   return (
     <Wrapper className={className}>
       <Container gridVariant={gridVariant}>
