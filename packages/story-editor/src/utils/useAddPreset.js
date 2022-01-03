@@ -29,7 +29,7 @@ import {
   getTextPresets,
 } from './presetUtils';
 
-function useAddPreset({ presetType, getBackground }) {
+function useAddPreset({ presetType, isBackgroundColor }) {
   const {
     currentPage,
     currentStoryStyles = { colors: [] },
@@ -70,7 +70,7 @@ function useAddPreset({ presetType, getBackground }) {
             selectedElements,
             currentPresets,
             presetType,
-            getBackground
+            isBackgroundColor
           ),
         };
       } else if (isBackground) {
@@ -91,7 +91,7 @@ function useAddPreset({ presetType, getBackground }) {
       isText,
       presetType,
       selectedElements,
-      getBackground,
+      isBackgroundColor,
     ]
   );
 

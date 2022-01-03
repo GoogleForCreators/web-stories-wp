@@ -59,7 +59,7 @@ function ColorAdd({
 }) {
   const { addGlobalPreset, addLocalPreset } = useAddPreset({
     presetType: PRESET_TYPES.COLOR,
-    getBackground: isBackground,
+    isBackgroundColor: isBackground,
   });
   if (!isLocal && !isGlobal) {
     return null;
