@@ -83,7 +83,7 @@ const IconContainer = styled.div`
 `;
 
 const ToggleButton = ({ children, isExpanded, ...props }) => (
-  <StyledButton {...props}>
+  <StyledButton aria-pressed={isExpanded} {...props}>
     {children || isExpanded
       ? __('Collapse', 'web-stories')
       : __('Expand', 'web-stories')}
@@ -112,7 +112,7 @@ const ThumbnailWrapper = ({
     thumbnailCount > 0 && thumbnailCount > MAX_THUMBNAILS_DISPLAYED + 1;
 
   const visibleThumbnails =
-    isExpanded || thumbnailCount < 2
+    isExpanded || thumbnailCount <= 1
       ? children
       : getVisibleThumbnails(children);
 
