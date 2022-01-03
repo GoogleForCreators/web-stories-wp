@@ -33,6 +33,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
+            "baseColor": "#a2a7ac",
             "isExternal": true
           },
           "overlay": {
@@ -358,6 +359,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
+            "baseColor": "#45403d",
             "isExternal": true
           },
           "overlay": { "color": { "r": 0, "g": 0, "b": 0, "a": 0.2 } }
@@ -2256,6 +2258,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
+            "baseColor": "#979fa2",
             "isExternal": true
           }
         },
@@ -3521,6 +3524,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
+            "baseColor": "#938d8c",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
@@ -3553,6 +3557,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
+            "baseColor": "#7a7a84",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
@@ -4809,6 +4814,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
+            "baseColor": "#beaca5",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
@@ -4841,6 +4847,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
+            "baseColor": "#a59385",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
@@ -5649,6 +5656,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
+            "baseColor": "#6b6662",
             "isExternal": true
           }
         },
@@ -8133,6 +8141,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
+            "baseColor": "#807b77",
             "isExternal": true
           }
         },

@@ -38,6 +38,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
+            "baseColor": "#5a4d3a",
             "isExternal": true
           },
           "type": "image",
