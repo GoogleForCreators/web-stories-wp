@@ -57,5 +57,7 @@ export function Menu({
 Menu.propTypes = {
   readTips: PropTypes.object,
   onTipSelect: PropTypes.func.isRequired,
-  components: PropTypes.objectOf(PropTypes.node),
+  components: PropTypes.shape({
+    Footer: PropTypes.elementType,
+  }),
 };

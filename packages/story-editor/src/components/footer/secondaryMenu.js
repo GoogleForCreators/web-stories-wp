@@ -180,8 +180,8 @@ function SecondaryMenu({ menu }) {
 
 SecondaryMenu.propTypes = {
   menu: PropTypes.shape({
-    checklist: PropTypes.objectOf(PropTypes.node),
-    helpCenter: PropTypes.objectOf(PropTypes.node),
+    checklist: PropTypes.object,
+    helpCenter: PropTypes.object,
   }),
 };
 

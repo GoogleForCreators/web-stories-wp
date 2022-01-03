@@ -113,5 +113,5 @@ export const HelpCenter = ({ components }) => {
 };
 
 HelpCenter.propTypes = {
-  components: PropTypes.objectOf(PropTypes.node),
+  components: PropTypes.object,
 };

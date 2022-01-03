@@ -68,7 +68,7 @@ Companion.propTypes = {
   tipKey: PropTypes.string,
   onTipSelect: PropTypes.func.isRequired,
   isLeftToRightTransition: PropTypes.bool.isRequired,
-  components: PropTypes.objectOf(PropTypes.node),
+  components: PropTypes.object,
 };
 
 export default memo(Companion);
