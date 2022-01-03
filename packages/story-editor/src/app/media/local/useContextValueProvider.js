@@ -255,11 +255,6 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       if (local || !id) {
         return;
       }
-
-      if (process.env.DISABLE_EXPENSIVE_PROCESSES === 'true') {
-        return;
-      }
-
       if (
         (allowedVideoMimeTypes.includes(mimeType) || type === 'gif') &&
         !posterId
