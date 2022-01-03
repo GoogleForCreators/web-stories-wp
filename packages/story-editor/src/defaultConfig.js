@@ -13,6 +13,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * Fallback api callback for get fonts.
+ *
+ * @param {Object} params Parameters.
+ * @return {Promise<*>}
+ */
+const getFonts = async (params) => {
+  let { default: fonts } = await import(
+    /* webpackChunkName: "chunk-fonts" */ '@web-stories-wp/fonts/src/fonts.json'
+  );
+
+  fonts = fonts.map((font) => ({
+    id: font.family,
+    name: font.family,
+    value: font.family,
+    ...font,
+  }));
+
+  if (params.include) {
+    const include = params.include.split(',');
+    fonts = fonts.filter(({ family }) => include.includes(family));
+  }
+
+  if (params.search) {
+    fonts = fonts.filter(({ family }) =>
+      family.toLowerCase().includes(params.search)
+    );
+  }
+
+  return fonts;
+};
+
 const defaultConfig = {
   locale: {
     locale: 'en-US',
@@ -123,7 +156,9 @@ const defaultConfig = {
   encodeMarkup: true,
   ffmpegCoreUrl:
     'https://wp.stories.google/static/main/js/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js',
-  apiCallbacks: {},
+  apiCallbacks: {
+    getFonts,
+  },
   MediaUpload: () => null,
 };
 
