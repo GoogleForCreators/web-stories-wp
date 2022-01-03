@@ -147,7 +147,7 @@ describe('Right Click Menu integration', () => {
   }
 
   function clearStyles() {
-    return fixture.screen.getByRole('button', {
+    return fixture.screen.getByRole('menuitem', {
       name: /^Clear Styles/i,
     });
   }
