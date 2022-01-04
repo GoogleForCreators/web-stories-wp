@@ -139,7 +139,7 @@ export function getTextPresets(elements, storyStyles, type, isBackgroundColor) {
       ? []
       : elements
           .map(({ content, backgroundColor }) =>
-          isBackgroundColor ? backgroundColor : getHTMLInfo(content).color
+            isBackgroundColor ? backgroundColor : getHTMLInfo(content).color
           )
           .filter((color) => color !== MULTIPLE_VALUE)
           .filter(
