@@ -16,12 +16,16 @@
 /**
  * External dependencies
  */
-import { useCallback, useState } from '@web-stories-wp/react';
+import {
+  useCallback,
+  useState,
+  useRef,
+  useEffect,
+} from '@web-stories-wp/react';
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
-  BUTTON_VARIANTS,
   Checkbox,
   Link,
   Text,
@@ -36,6 +40,7 @@ import {
   useIsChecklistMounted,
   useStory,
   ChecklistCard,
+  DefaultFooterText,
 } from '@web-stories-wp/story-editor';
 
 const CheckboxContainer = styled.div`
@@ -47,11 +52,11 @@ const ButtonContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 16px;
 `;
 
-const BoldText = styled.span`
+const BoldText = styled(Text).attrs({ as: 'span', isBold: true })`
   color: ${({ theme }) => theme.colors.standard.white};
-  font-weight: ${({ theme }) => theme.typography.weight.bold};
 `;
 
 const DescriptionText = styled(Text).attrs({
@@ -71,6 +76,7 @@ const CheckboxLabel = styled(DescriptionText)`
 function VideoOptimizationCheckbox() {
   const isChecklistMounted = useIsChecklistMounted();
   const [hasOptedIn, setHasOptedIn] = useState(false);
+  const saveButtonRef = useRef();
   const { capabilities: { hasUploadMediaAction } = {}, dashboardSettingsLink } =
     useConfig();
   const { currentUser, toggleWebStoriesMediaOptimization } = useCurrentUser(
@@ -98,6 +104,10 @@ function VideoOptimizationCheckbox() {
     window.location.reload(true);
   };
 
+  useEffect(() => {
+    hasOptedIn && saveButtonRef.current.focus();
+  }, [hasOptedIn]);
+
   return (showCheckbox || hasOptedIn) && isChecklistMounted ? (
     <ChecklistCard
       title={__(
@@ -107,7 +117,7 @@ function VideoOptimizationCheckbox() {
       footer={
         hasOptedIn ? (
           <>
-            <p>
+            <DefaultFooterText>
               <TranslateWithMarkup
                 mapping={{
                   b: <BoldText />,
@@ -118,14 +128,14 @@ function VideoOptimizationCheckbox() {
                   'web-stories'
                 )}
               </TranslateWithMarkup>
-            </p>
+            </DefaultFooterText>
             <ButtonContainer>
               <Button
-                variant={BUTTON_VARIANTS.RECTANGLE}
                 type={BUTTON_TYPES.SECONDARY}
                 size={BUTTON_SIZES.SMALL}
                 onClick={handleSave}
                 disabled={isSaving}
+                ref={saveButtonRef}
               >
                 {__('Save & Reload', 'web-stories')}
               </Button>
