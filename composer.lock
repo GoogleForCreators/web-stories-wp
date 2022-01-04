@@ -1882,16 +1882,16 @@
         },
         {
             "name": "phpmd/phpmd",
-            "version": "2.11.0",
+            "version": "2.11.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpmd/phpmd.git",
-                "reference": "3637949092e6471aeaeca66bc6c016f45e459e24"
+                "reference": "08b60a2eb7e14c23f46ff8865b510ae08b75d0fd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpmd/phpmd/zipball/3637949092e6471aeaeca66bc6c016f45e459e24",
-                "reference": "3637949092e6471aeaeca66bc6c016f45e459e24",
+                "url": "https://api.github.com/repos/phpmd/phpmd/zipball/08b60a2eb7e14c23f46ff8865b510ae08b75d0fd",
+                "reference": "08b60a2eb7e14c23f46ff8865b510ae08b75d0fd",
                 "shasum": ""
             },
             "require": {
@@ -1953,7 +1953,7 @@
             "support": {
                 "irc": "irc://irc.freenode.org/phpmd",
                 "issues": "https://github.com/phpmd/phpmd/issues",
-                "source": "https://github.com/phpmd/phpmd/tree/2.11.0"
+                "source": "https://github.com/phpmd/phpmd/tree/2.11.1"
             },
             "funding": [
                 {
@@ -1961,7 +1961,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-11-29T14:05:52+00:00"
+            "time": "2021-12-17T11:25:43+00:00"
         },
         {
             "name": "phpspec/prophecy",
