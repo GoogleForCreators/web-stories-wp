@@ -140,6 +140,7 @@ class Dashboard extends Service_Base {
 	 * @param Locale          $locale          Locale instance.
 	 * @param Google_Fonts    $google_fonts    Google_Fonts instance.
 	 * @param Assets          $assets          Assets instance.
+	 * @param Font_Post_Type  $font_post_type  Font_Post_Type instance.
 	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
 	 * @param Context         $context         Context instance.
 	 * @param Types           $types           Types instance.
