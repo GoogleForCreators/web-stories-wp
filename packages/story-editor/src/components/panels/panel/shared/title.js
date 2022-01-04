@@ -111,7 +111,7 @@ const Collapse = styled.button`
   margin-left: -12px;
   transition: ${BUTTON_TRANSITION_TIMING};
   &:hover,
-   &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR}, &[${ThemeGlobals.FOCUS_VISIBLE_DATA_ATTRIBUTE}] {
+  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR}, &[${ThemeGlobals.FOCUS_VISIBLE_DATA_ATTRIBUTE}] {
     color: ${({ theme }) => theme.colors.fg.primary};
   }
 
@@ -123,6 +123,23 @@ const Collapse = styled.button`
     ${({ $isCollapsed, theme }) =>
       $isCollapsed &&
       css`
+        color: ${theme.colors.fg.secondary};
+        transform: rotate(-90deg);
+      `};
+  }
+
+  :hover ${IconWrapper}:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 16px;
+    width: 16px;
+    border-radius: ${({ theme }) => theme.borders.radius.round};
+    background: ${({ theme }) => theme.colors.bg.quaternary};
+  }
+
         color: ${theme.colors.fg.secondary};
         transform: rotate(-90deg);
       `};

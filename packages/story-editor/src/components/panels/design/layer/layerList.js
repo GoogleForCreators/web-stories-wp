@@ -58,8 +58,8 @@ const ReorderableLayer = memo(function ReorderableLayer({
   position,
   handleStartReordering,
 }) {
-  const element = useStory((v) =>
-    v.state.currentPage?.elements.find((el) => el.id === id)
+  const element = useStory(({ state }) =>
+    state.currentPage?.elements.find((el) => el.id === id)
   );
   return element ? (
     <Fragment key={id}>
