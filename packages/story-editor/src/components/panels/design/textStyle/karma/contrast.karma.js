@@ -37,6 +37,23 @@ describe('Text Panel', () => {
       fixture.restore();
     });
 
+    it('should have no aXe violations', async () => {
+      await fixture.events.click(fixture.editor.library.textAdd);
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      //change font color to white
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.textStyle.fontColor.button
+      );
+      await waitFor(() =>
+        fixture.events.click(
+          fixture.screen.getByRole('option', { name: '#fff' })
+        )
+      );
+
+      const contrastWarning = fixture.screen.getByTestId('warningContainer');
+      await expectAsync(contrastWarning).toHaveNoViolations();
+    });
+
     it('should show contrast warning', async () => {
       await fixture.events.click(fixture.editor.library.textAdd);
       await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);

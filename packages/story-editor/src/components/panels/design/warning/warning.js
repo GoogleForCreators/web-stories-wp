@@ -59,7 +59,7 @@ function Warning({ message }) {
     speak(message);
   }, [message, speak]);
   return (
-    <WarningContainer>
+    <WarningContainer data-testid={'warningContainer'}>
       <WarningIcon title={ACCESSIBILITY_COPY.lowContrast.warningIcon} />
       <Message>{message}</Message>
     </WarningContainer>
