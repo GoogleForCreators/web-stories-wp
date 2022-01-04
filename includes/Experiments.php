@@ -364,6 +364,19 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'editor',
 				'default'     => true,
 			],
+
+
+			/**
+			 * Author: @swissspidy
+			 * Issue: #9344
+			 * Creation date: 2021-11-26
+			 */
+			[
+				'name'        => 'customVideoCaptionsInEditor',
+				'label'       => __( 'Video Captions', 'web-stories' ),
+				'description' => __( 'Improve video captions appearance in the editor', 'web-stories' ),
+				'group'       => 'editor',
+			],
 		];
 	}
 

@@ -19,6 +19,7 @@
  */
 import { useEffect, useState } from '@web-stories-wp/react';
 import styled from 'styled-components';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -48,6 +49,8 @@ const CaptionsCanvas = styled.div`
 `;
 
 function VideoCaptionsLayer() {
+  const isFeatureEnabled = useFeature('customVideoCaptionsInEditor');
+
   const { isEditing } = useCanvas(({ state: { isEditing } }) => ({
     isEditing,
   }));
@@ -80,6 +83,10 @@ function VideoCaptionsLayer() {
     const video = document.getElementById(`video-${videoElement.id}`);
     setVideoTrackCount(video.textTracks.length);
   }, [videoElement, setVideoTrackCount, isEditing]);
+
+  if (!isFeatureEnabled) {
+    return null;
+  }
 
   if (isEditing || !videoElement || !videoTrackCount) {
     return null;
