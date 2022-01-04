@@ -110,7 +110,7 @@ function BasicColorList({
     ? __('local', 'web-stories')
     : __('global', 'web-stories');
 
-  const isBackground = changedStyle !== 'color';
+  const isBackground = changedStyle === 'background';
 
   return (
     <>
