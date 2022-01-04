@@ -19,7 +19,6 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
 import { useEffect } from '@web-stories-wp/react';
 import {
   Text,
@@ -27,6 +26,10 @@ import {
   useLiveRegion,
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
+/**
+ * Internal dependencies
+ */
+import { ACCESSIBILITY_COPY } from '../../../checklist/constants';
 
 const WarningContainer = styled.div`
   display: flex;
@@ -57,7 +60,7 @@ function Warning({ message }) {
   }, [message, speak]);
   return (
     <WarningContainer>
-      <WarningIcon title={__('Low Warning', 'web-stories')} />
+      <WarningIcon title={ACCESSIBILITY_COPY.lowContrast.warningIcon} />
       <Message>{message}</Message>
     </WarningContainer>
   );

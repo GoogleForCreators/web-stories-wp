@@ -15,4 +15,3 @@
  */
 
 export { default } from './warning';
-export * from './constants';

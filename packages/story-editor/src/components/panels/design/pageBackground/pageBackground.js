@@ -38,13 +38,16 @@ import { trackEvent } from '@web-stories-wp/tracking';
  */
 import { Color, MediaUploadButton, Row as DefaultRow } from '../../../form';
 import { useConfig, useStory, useLayout } from '../../../../app';
-import { getPagesWithFailedContrast } from '../../../checklist/checks/pageBackgroundLowTextContrast';
+import {
+  getPagesWithFailedContrast,
+  ACCESSIBILITY_COPY,
+} from '../../../checklist';
 import { SimplePanel } from '../../panel';
 import { FlipControls } from '../../shared';
 import { createNewElement, getDefinitionForType } from '../../../../elements';
 import { states, styles, useHighlights } from '../../../../app/highlights';
 import getElementProperties from '../../../canvas/utils/getElementProperties';
-import { default as Warning, COLOR_COMBINATION } from '../warning';
+import Warning from '../warning';
 
 const DEFAULT_FLIP = { horizontal: false, vertical: false };
 
@@ -256,7 +259,9 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
           />
         </Row>
       )}
-      {failedContrast && <Warning message={COLOR_COMBINATION} />}
+      {failedContrast && (
+        <Warning message={ACCESSIBILITY_COPY.lowContrast.panel} />
+      )}
     </SimplePanel>
   );
 }

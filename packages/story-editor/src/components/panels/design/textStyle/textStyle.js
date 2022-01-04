@@ -29,11 +29,14 @@ import PropTypes from 'prop-types';
 import getUpdatedSizeAndPosition from '../../../../utils/getUpdatedSizeAndPosition';
 import { styles, useHighlights, states } from '../../../../app/highlights';
 import { useStory, useLayout } from '../../../../app';
-import { getPagesWithFailedContrast } from '../../../checklist/checks/pageBackgroundLowTextContrast';
+import {
+  getPagesWithFailedContrast,
+  ACCESSIBILITY_COPY,
+} from '../../../checklist';
 import { usePresubmitHandler } from '../../../form';
 import PanelContent from '../../panel/shared/content';
 import Panel from '../../panel/panel';
-import { default as Warning, COLOR_COMBINATION } from '../warning';
+import Warning from '../warning';
 import StyleControls from './style';
 import ColorControls from './color';
 import FontControls from './font';
@@ -134,7 +137,9 @@ function StylePanel(props) {
             }
           }}
         />
-        {showContrastWarning && <Warning message={COLOR_COMBINATION} />}
+        {showContrastWarning && (
+          <Warning message={ACCESSIBILITY_COPY.lowContrast.panel} />
+        )}
         <SubSection>
           <SubHeading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
             {__('Text Box', 'web-stories')}
