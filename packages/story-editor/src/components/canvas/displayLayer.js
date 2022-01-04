@@ -65,7 +65,7 @@ function DisplayPageAnimationController({
   page,
 }) {
   const WAAPIAnimationMethods = useStoryAnimationContext(
-    (value) => value.actions.WAAPIAnimationMethods
+    ({ actions }) => actions.WAAPIAnimationMethods
   );
 
   useEffect(() => {
