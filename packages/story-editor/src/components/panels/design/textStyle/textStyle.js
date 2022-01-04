@@ -29,12 +29,11 @@ import PropTypes from 'prop-types';
 import getUpdatedSizeAndPosition from '../../../../utils/getUpdatedSizeAndPosition';
 import { styles, useHighlights, states } from '../../../../app/highlights';
 import { useStory, useLayout } from '../../../../app';
-import { getFailingPages } from '../../../checklist/checks/pageBackgroundLowTextContrast/check';
+import { getPagesWithFailedContrast } from '../../../checklist/checks/pageBackgroundLowTextContrast';
 import { usePresubmitHandler } from '../../../form';
 import PanelContent from '../../panel/shared/content';
 import Panel from '../../panel/panel';
-import Warning from '../warning/warning';
-import { COLOR_COMBINATION } from '../warning/constants';
+import { default as Warning, COLOR_COMBINATION } from '../warning';
 import StyleControls from './style';
 import ColorControls from './color';
 import FontControls from './font';
@@ -69,37 +68,34 @@ function StylePanel(props) {
     }));
 
   const [fontsFocused, setFontsFocused] = useState(false);
-  const [failedContrast, setFailedContrast] = useState(false);
+  const [failedElementIds, setFailedElementIds] = useState([]);
   const { selectedElements } = props;
 
   // Update size and position if relevant values have changed.
   usePresubmitHandler(getUpdatedSizeAndPosition, []);
 
-  const { pages, currentPage } = useStory(
-    ({ state: { pages, currentPage } }) => ({
-      pages,
-      currentPage,
-    })
-  );
+  const { currentPage } = useStory(({ state: { currentPage } }) => ({
+    currentPage,
+  }));
   const pageSize = useLayout(({ state: { pageWidth, pageHeight } }) => ({
     width: pageWidth,
     height: pageHeight,
   }));
+  const selectedElementIds = selectedElements.map(
+    (selectedElement) => selectedElement.id
+  );
+  const showContrastWarning = failedElementIds?.some((elementId) =>
+    selectedElementIds.includes(elementId)
+  );
 
   useEffect(() => {
-    const selectedElementIds = selectedElements.map(
-      (selectedElement) => selectedElement.id
-    );
-
-    getFailingPages(pages, pageSize, currentPage).then((failedPages) => {
-      // getFailingPages returns an array of pages, since we only care
+    getPagesWithFailedContrast([currentPage], pageSize).then((pages) => {
+      // getPagesWithFailedContrast returns an array of pages, since we only care
       // about currentPage, we can grab the single page result.
-      const result = failedPages[0]?.result;
-      setFailedContrast(
-        result?.some((elementId) => selectedElementIds.includes(elementId))
-      );
+      const elementIds = pages[0]?.result;
+      setFailedElementIds(elementIds);
     });
-  }, [currentPage, pageSize, pages, selectedElements]);
+  }, [currentPage, pageSize]);
 
   return (
     <Panel
@@ -138,7 +134,7 @@ function StylePanel(props) {
             }
           }}
         />
-        {failedContrast && <Warning message={COLOR_COMBINATION} />}
+        {showContrastWarning && <Warning message={COLOR_COMBINATION} />}
         <SubSection>
           <SubHeading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
             {__('Text Box', 'web-stories')}

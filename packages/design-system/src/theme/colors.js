@@ -100,6 +100,10 @@ const standard = {
   white: '#FFF',
 };
 
+const warning = {
+  yellow: '#f4b844',
+};
+
 const gradient = {
   loading: 'linear-gradient(270deg, #4285f4 0%, #0f0bc8 57%, #4285f4 110%)',
   placeholder: 'linear-gradient(180deg, #fff0, #000c)',
@@ -303,6 +307,7 @@ export const dark = {
   accent,
   status,
   opacity,
+  warning,
   ...brand,
   ...darkTheme,
   inverted: { ...lightTheme },
@@ -313,6 +318,7 @@ export const light = {
   accent,
   status,
   opacity,
+  warning,
   ...brand,
   ...lightTheme,
   inverted: { ...darkTheme },

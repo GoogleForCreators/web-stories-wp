@@ -21,27 +21,32 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@web-stories-wp/i18n';
 import { useEffect } from '@web-stories-wp/react';
-import { Text, Icons, useLiveRegion } from '@web-stories-wp/design-system';
+import {
+  Text,
+  Icons,
+  useLiveRegion,
+  THEME_CONSTANTS,
+} from '@web-stories-wp/design-system';
 
 const WarningContainer = styled.div`
   display: flex;
   gap: 8px;
-  width: 100%;
   margin: 14px auto;
   border: 1px solid ${({ theme }) => theme.colors.border.defaultHover};
   border-radius: ${({ theme }) => theme.borders.radius.small};
   padding: 8px;
-  color: ${({ theme }) => theme.colors.fg.primary};
-  font-weight: ${({ theme }) => theme.typography.weight.regular};
-`;
-const WarningIcon = styled(Icons.WarningLow)`
-  width: 32px;
-  height: 100%;
-  color: #f4b844;
 `;
 
-const Message = styled(Text)`
-  width: 100%;
+const WarningIcon = styled(Icons.ExclamationTriangle)`
+  width: 32px;
+  height: 100%;
+  color: ${({ theme }) => theme.colors.warning.yellow};
+`;
+
+const Message = styled(Text).attrs({
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+})`
+  max-width: calc(100% - 40px);
 `;
 
 function Warning({ message }) {
@@ -50,7 +55,6 @@ function Warning({ message }) {
   useEffect(() => {
     speak(message);
   }, [message, speak]);
-
   return (
     <WarningContainer>
       <WarningIcon title={__('Low Warning', 'web-stories')} />

@@ -146,4 +146,3 @@ export { ReactComponent as TurningLine } from './turning_line.svg';
 export { ReactComponent as Union } from './union.svg';
 export { ReactComponent as Video } from './video.svg';
 export { ReactComponent as Launch } from './launch.svg';
-export { ReactComponent as WarningLow } from './warning_low.svg';

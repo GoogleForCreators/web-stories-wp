@@ -336,23 +336,17 @@ function getBackgroundColorByType(element) {
   }
 }
 /**
- * Returns all failing pages as well as the offending elements' id.
+ * Returns all failing pages as well as the offending elements' id(s).
  *
- * @param {Array<Page>}  storyPages The story's page to check for contrast failures
+ * @param {Array<Page>}  storyPages The story's page(s) to check for contrast failures
  * @param {Object} pageSize pageWidth and pageHeight from useLayout state
- * @param {Page} currentPage If we only care about checking a single currentPage
  * @return {Array<Object>} Each object contains the page that failed and the results
  * from `pageBackgroundTextLowContrast`. In `results` you will find the offending
  * elements' id(s).
  */
-export async function getFailingPages(storyPages, pageSize, currentPage) {
+export async function getPagesWithFailedContrast(storyPages, pageSize) {
   const promises = [];
   (storyPages || []).forEach((page) => {
-    // If we only care about checking currentPage bail early
-    // In this case, getFailingPages will return a max of 1 page.
-    if (currentPage && currentPage.id !== page.id) {
-      return;
-    }
     const maybeTextContrastResult = pageBackgroundTextLowContrast({
       ...page,
       pageSize,

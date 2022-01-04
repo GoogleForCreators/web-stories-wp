@@ -38,14 +38,13 @@ import { trackEvent } from '@web-stories-wp/tracking';
  */
 import { Color, MediaUploadButton, Row as DefaultRow } from '../../../form';
 import { useConfig, useStory, useLayout } from '../../../../app';
-import { getFailingPages } from '../../../checklist/checks/pageBackgroundLowTextContrast/check';
+import { getPagesWithFailedContrast } from '../../../checklist/checks/pageBackgroundLowTextContrast';
 import { SimplePanel } from '../../panel';
 import { FlipControls } from '../../shared';
 import { createNewElement, getDefinitionForType } from '../../../../elements';
 import { states, styles, useHighlights } from '../../../../app/highlights';
 import getElementProperties from '../../../canvas/utils/getElementProperties';
-import Warning from '../warning/warning';
-import { COLOR_COMBINATION } from '../warning/constants';
+import { default as Warning, COLOR_COMBINATION } from '../warning';
 
 const DEFAULT_FLIP = { horizontal: false, vertical: false };
 
@@ -100,19 +99,16 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
     currentPage,
     clearBackgroundElement,
     updateCurrentPageProperties,
-    pages,
   } = useStory(({ state, actions }) => ({
     currentPage: state.currentPage,
     clearBackgroundElement: actions.clearBackgroundElement,
     combineElements: actions.combineElements,
     updateCurrentPageProperties: actions.updateCurrentPageProperties,
-    pages: state.pages,
   }));
 
   const {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
-
   const pageSize = useLayout(({ state: { pageWidth, pageHeight } }) => ({
     width: pageWidth,
     height: pageHeight,
@@ -176,13 +172,13 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
   );
 
   useEffect(() => {
-    getFailingPages(pages, pageSize, currentPage).then((failedPages) => {
-      // getFailingPages returns an array of pages, since we only care
+    getPagesWithFailedContrast([currentPage], pageSize).then((failedPages) => {
+      // getPagesWithFailedContrast returns an array of pages, since we only care
       // about currentPage, we can grab the single page result.
       const result = failedPages[0]?.result;
-      setFailedContrast(result?.length ? true : false);
+      setFailedContrast(Boolean(result));
     });
-  }, [currentPage, pageSize, pages]);
+  }, [currentPage, pageSize]);
 
   const backgroundEl = selectedElements[0];
   if (!backgroundEl || !backgroundEl.isBackground) {
