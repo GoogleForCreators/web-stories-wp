@@ -82,9 +82,11 @@ ReorderableLayer.propTypes = {
 };
 
 function LayerPanel({ layers }) {
-  const arrangeElement = useStory((value) => value.actions.arrangeElement);
-  const setSelectedElementsById = useStory(
-    (value) => value.actions.setSelectedElementsById
+  const { arrangeElement, setSelectedElementsById } = useStory(
+    ({ actions }) => ({
+      arrangeElement: actions.arrangeElement,
+      setSelectedElementsById: actions.setSelectedElementsById,
+    })
   );
 
   const onOpenMenu = useRightClickMenu((value) => value.onOpenMenu);

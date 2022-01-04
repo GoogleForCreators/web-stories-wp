@@ -27,23 +27,4 @@ function useStory(selector) {
   return useContextSelector(Context, selector ?? identity);
 }
 
-const DELIMITER = ':::';
-/**
- * Returns an array of current page's story element ids. Only rerenders when there are
- * element reorders, deletions or additions
- *
- * @return {Array} array of current pages story element ids in order
- */
-export function useCurrentPageElementIds() {
-  // Joining and splitting with delimiter so that selector returns
-  // a strictly equal result when we have a new id array instance that
-  // is shallowly equal. This prevents empty forced re-renders from
-  // useContextSelector
-  const elementIds = useStory((value) => {
-    const elements = value.state.currentPage?.elements || [];
-    return elements.map((element) => element.id).join(DELIMITER);
-  });
-  return elementIds.split(DELIMITER);
-}
-
 export default useStory;

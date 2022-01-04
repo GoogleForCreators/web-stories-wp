@@ -26,7 +26,6 @@ import { useFont } from './font';
 import { useLocalMedia, useMedia } from './media';
 import {
   useStory,
-  useCurrentPageElementIds,
   useStoryTriggers,
   useStoryTriggerListener,
   useStoryTriggersDispatch,
@@ -52,7 +51,6 @@ export {
   useStoryTriggersDispatch,
   STORY_EVENTS,
   useConfig,
-  useCurrentPageElementIds,
   useFont,
   useLocalMedia,
   useMedia,

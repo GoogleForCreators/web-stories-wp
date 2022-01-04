@@ -17,10 +17,14 @@
 /**
  * Internal dependencies
  */
-import { useCurrentPageElementIds } from '../../../../app';
+import { useStory } from '../../../../app';
+import { STABLE_ARRAY } from '../../../../constants';
 
 function useLayers() {
-  const elementIds = useCurrentPageElementIds();
+  const elementIds = useStory(
+    ({ state }) =>
+      state.currentPage?.elements?.map((el) => el.id) || STABLE_ARRAY
+  );
 
   const layers = elementIds.map((id, index) => ({
     id,
