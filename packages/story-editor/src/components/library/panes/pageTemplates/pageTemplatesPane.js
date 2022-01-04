@@ -157,9 +157,14 @@ function PageTemplatesPane(props) {
     setNextTemplatesToFetch,
   ]);
 
-  const handleSelect = (event, menuItem) => {
-    setShowDefaultTemplates(DEFAULT === menuItem);
-    localStore.setItemByKey(LOCAL_STORAGE_KEY, DEFAULT === menuItem);
+  const handleSelect = (_, menuItem) => {
+    const shouldSetShowDefaultTemplates =
+      showDefaultTemplates !== (DEFAULT === menuItem);
+
+    if (shouldSetShowDefaultTemplates) {
+      setShowDefaultTemplates(DEFAULT === menuItem);
+      localStore.setItemByKey(LOCAL_STORAGE_KEY, DEFAULT === menuItem);
+    }
   };
 
   useEffect(() => {
