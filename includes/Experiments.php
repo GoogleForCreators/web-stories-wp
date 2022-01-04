@@ -376,6 +376,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Video Captions', 'web-stories' ),
 				'description' => __( 'Improve video captions appearance in the editor', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 		];
 	}
