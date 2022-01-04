@@ -139,23 +139,6 @@ const Collapse = styled.button`
     border-radius: ${({ theme }) => theme.borders.radius.round};
     background: ${({ theme }) => theme.colors.bg.quaternary};
   }
-
-        color: ${theme.colors.fg.secondary};
-        transform: rotate(-90deg);
-      `};
-  }
-
-  :hover ${IconWrapper}:after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: 16px;
-    width: 16px;
-    border-radius: ${({ theme }) => theme.borders.radius.round};
-    background: ${({ theme }) => theme.colors.bg.quaternary};
-  }
 `;
 
 function Toggle({ children, isCollapsed, toggle, ...rest }) {
