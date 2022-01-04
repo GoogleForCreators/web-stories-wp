@@ -78,8 +78,10 @@ describe('Eyedropper', () => {
     // Click the eyedropper icon in the custom view
     await fixture.events.click(bgPanel.backgroundColor.picker.eyedropper);
     await waitFor(() => fixture.screen.getByTestId('eyedropperLayer'), {
-      timeout: 9000,
+      timeout: 4000,
     });
+    // Test: if it's not found this should crash the test still
+    fixture.screen.getByTestId('eyedropperLayer');
     const imageOnCanvas = (await getElements(fixture))[1];
     const imageOnCanvasRect = (
       await getCanvasElementWrapperById(imageOnCanvas.id)
