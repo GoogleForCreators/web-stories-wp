@@ -23,7 +23,7 @@
     "@web-stories-wp/tracking": "*",
     "@wordpress/api-fetch": "^5.2.6",
     "flagged": "^2.0.1",
-    "prop-types": "^15.7.2",
+    "prop-types": "^15.8.0",
     "styled-components": "^5.3.3",
     "uuid": "^8.3.2"
   },

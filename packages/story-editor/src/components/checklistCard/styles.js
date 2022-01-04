@@ -117,6 +117,7 @@ export const ThumbnailWrapper = styled.div`
 export const StyledOverflowThumbnail = styled(OverflowThumbnail)`
   grid-area: thumbnail-overflow;
   width: 52px;
+  cursor: default;
 `;
 
 export const Footer = styled.div`

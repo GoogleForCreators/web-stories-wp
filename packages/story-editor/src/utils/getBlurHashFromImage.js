@@ -48,8 +48,8 @@ const getBlurHashFromImage = async (src) => {
       image: data,
       width,
       height,
-      compontentX: 4,
-      compontentY: 4,
+      componentX: 4,
+      componentY: 4,
     });
     worker.addEventListener('message', function (event) {
       worker.terminate(); // lgtm [js/property-access-on-non-object]

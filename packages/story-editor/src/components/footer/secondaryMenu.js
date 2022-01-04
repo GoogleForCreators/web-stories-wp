@@ -26,7 +26,7 @@ import PropTypes from 'prop-types';
  */
 import KeyboardShortcutsMenu from '../keyboardShortcutsMenu';
 import { HelpCenter } from '../helpCenter';
-import { useHelpCenter } from '../../app';
+import { useCanvas, useHelpCenter } from '../../app';
 import {
   Checklist,
   ChecklistCountProvider,
@@ -102,6 +102,15 @@ function SecondaryMenu({ menu }) {
     })
   );
 
+  const isActiveTrimOrEdit = useCanvas(
+    ({
+      state: {
+        editingElementState: { isTrimMode },
+        isEditing,
+      },
+    }) => isTrimMode || isEditing
+  );
+
   const setPopupRef = useCallback((newPopup = '') => {
     expandedPopupRef.current = newPopup;
   }, []);
@@ -162,6 +171,16 @@ function SecondaryMenu({ menu }) {
     openChecklist,
     setPopupRef,
   ]);
+
+  // The checklist and help center will stay open as user interacts with canvas
+  // we want to collapse either of these if expanded when the trim or cropping mode is selected.
+  useEffect(() => {
+    if (isActiveTrimOrEdit && expandedPopupRef.current) {
+      setPopupRef();
+      closeChecklist();
+      closeHelpCenter();
+    }
+  }, [closeChecklist, closeHelpCenter, isActiveTrimOrEdit, setPopupRef]);
 
   return (
     <Wrapper>
