@@ -43,10 +43,10 @@ function useLoadFontFiles() {
     switch (service) {
       case 'fonts.google.com':
         await loadStylesheet(
-          getGoogleFontURL([{ family, variants }], 'auto')
+          getGoogleFontURL([{ family, variants }], 'auto'),
+          elementId
         ).catch(() => {
-          console.log('CAUGHT!!!');
-          return null;
+          return;
         });
         break;
       case 'custom':
