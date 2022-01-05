@@ -26,12 +26,7 @@ import preloadImage from './preloadImage';
  * @return {Promise} Image dimensions object.
  */
 const getImageDimensions = async (src) => {
-  let img;
-  try {
-    img = await preloadImage(src);
-  } catch (error) {
-    //ignore
-  }
+  const img = await preloadImage(src);
   return {
     width: img.naturalWidth,
     height: img.naturalHeight,

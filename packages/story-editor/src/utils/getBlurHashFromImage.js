@@ -40,8 +40,8 @@ const getBlurHashFromImage = async (src) => {
   let image;
   try {
     image = await preloadImage(src);
-  } catch (error) {
-    //ignore
+  } catch {
+    // Ignore
   }
   const imageData = getImageData(image);
   const { data, width, height } = imageData;

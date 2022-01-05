@@ -86,15 +86,15 @@ function ImageDisplay({ element, box, previewMode }) {
         let preloadedImg;
         try {
           preloadedImg = await preloadImage(url, srcSet);
-        } catch (error) {
-          //ignore
-        }
-        if (mounted) {
-          resourceList.set(resource.id, {
-            type: 'fullsize',
-          });
-          setSrc(preloadedImg.currentSrc);
-          setSrcType('fullsize');
+          if (mounted) {
+            resourceList.set(resource.id, {
+              type: 'fullsize',
+            });
+            setSrc(preloadedImg.currentSrc);
+            setSrcType('fullsize');
+          }
+        } catch {
+          // Ignore
         }
       });
     }
