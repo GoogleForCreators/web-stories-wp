@@ -133,7 +133,7 @@ describe('Text Style Panel', () => {
     });
   });
 
-  describe('Line-height & Padding', () => {
+  xdescribe('Line-height & Padding', () => {
     beforeEach(async () => {
       await fixture.events.click(fixture.editor.library.textAdd);
     });
