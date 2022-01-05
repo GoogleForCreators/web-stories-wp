@@ -230,7 +230,23 @@ export class Fixture {
     });
   }
 
-  restore() {
+  async restore() {
+    const styleSheets = window.document.querySelectorAll(
+      'link[rel=stylesheet]'
+    );
+
+    function clearSheets() {
+      if (styleSheets.length < 2) {
+        return true;
+      }
+      for (let i = 2; i < styleSheets.length; i++) {
+        styleSheets[i].parentNode.removeChild(styleSheets[i]);
+      }
+      return true;
+    }
+
+    await clearSheets();
+
     window.location.hash = '#';
     localStorage.clear();
   }
