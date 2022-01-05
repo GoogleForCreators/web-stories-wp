@@ -92,7 +92,7 @@ export default ({ onChange }) => {
                     setEyedropperImg(canvas.toDataURL());
                     resolve();
                   })
-                  .catch(() => undefined);
+                  .catch(() => resolve());
               });
             });
           });
