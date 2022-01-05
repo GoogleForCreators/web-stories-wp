@@ -25,7 +25,7 @@ import { RESIZE_OBSERVATION_KEY } from './constants';
 
 /**
  * Returns a ref that when applied to an element, stores the elements
- * bounding box info. can retieve the relevant bounding box info like so:
+ * bounding box info. Can retrieve the relevant bounding box info like so:
  * ```js
  * const boundingBox = useCanvasBoundingBox(CANVAS_BOUNDING_BOX_IDS[<some_bounding_box_id>])
  * ```
@@ -34,25 +34,22 @@ import { RESIZE_OBSERVATION_KEY } from './constants';
  * @return {Function} a callback ref
  */
 export function useCanvasBoundingBoxRef(boundingBoxId) {
-  const resizeObserver = useContextSelector(
-    Context,
-    ({ state }) => state.resizeObserver
-  );
+  const observer = useContextSelector(Context, ({ state }) => state.observer);
   const ref = useRef(null);
   return useCallback(
     (node) => {
       if (ref.current) {
-        resizeObserver.unobserve?.(ref.current);
+        observer.unobserve?.(ref.current);
       }
 
       if (node) {
         node.dataset[RESIZE_OBSERVATION_KEY] = boundingBoxId;
-        resizeObserver.observe(node);
+        observer.observe(node);
       }
 
       ref.current = node;
     },
-    [resizeObserver, boundingBoxId]
+    [observer, boundingBoxId]
   );
 }
 

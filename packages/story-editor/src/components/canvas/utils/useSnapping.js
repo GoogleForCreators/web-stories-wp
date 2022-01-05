@@ -38,12 +38,10 @@ function useSnapping({
   snappingOffsetX = null,
   isDragging,
 }) {
-  const canvasContainerRect = useCanvasBoundingBox(
+  const canvasRect = useCanvasBoundingBox(
     CANVAS_BOUNDING_BOX_IDS.CANVAS_CONTAINER
   );
-  const pageContainerRect = useCanvasBoundingBox(
-    CANVAS_BOUNDING_BOX_IDS.PAGE_CONTAINER
-  );
+  const pageRect = useCanvasBoundingBox(CANVAS_BOUNDING_BOX_IDS.PAGE_CONTAINER);
   const designSpaceGuideline = useCanvas(
     ({ state }) => state.designSpaceGuideline
   );
@@ -79,12 +77,9 @@ function useSnapping({
     [isDragging, designSpaceGuideline, triggerOnboarding]
   );
 
-  if (!canvasContainerRect || !pageContainerRect) {
+  if (!canvasRect || !pageRect) {
     return {};
   }
-
-  const canvasRect = canvasContainerRect;
-  const pageRect = pageContainerRect;
 
   const canvasOffsetX = snappingOffsetX ? snappingOffsetX : canvasRect.x;
 

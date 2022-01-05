@@ -58,25 +58,26 @@ function CanvasProvider({ children }) {
   const [pageCanvasData, setPageCanvasData] = useState(null);
   const [pageCanvasPromise, setPageCanvasPromise] = useState(null);
 
-  // Using a custom resize observer approach over useResizeEffect to have
-  // an observer that's extensible to multiple nodes and tracks contentRect
-  // instead of just height and width
-  const resizeObserver = useMemo(
+  // IntersectionObserver tracks clientRects which is what we need here.
+  // different from use case of useIntersectionEffect because this is extensible
+  // to multiple nodes.
+  const observer = useMemo(
     () =>
-      new ResizeObserver((entries) => {
+      new IntersectionObserver((entries) => {
         for (const entry of entries) {
-          if (!entry.target.id) {
+          if (!entry.target.dataset[RESIZE_OBSERVATION_KEY]) {
             return;
           }
           setBoundingBoxes((boxes) => ({
             ...boxes,
-            [entry.target.dataset[RESIZE_OBSERVATION_KEY]]: entry.contentRect,
+            [entry.target.dataset[RESIZE_OBSERVATION_KEY]]:
+              entry.boundingClientRect,
           }));
         }
       }),
     []
   );
-  useEffect(() => resizeObserver.disconnect, [resizeObserver]);
+  useEffect(() => observer.disconnect, [observer]);
 
   const pageSize = useLayout(({ state: { pageWidth, pageHeight } }) => ({
     width: pageWidth,
@@ -213,7 +214,7 @@ function CanvasProvider({ children }) {
         pageCanvasData,
         pageCanvasPromise,
         boundingBoxes,
-        resizeObserver,
+        observer,
       },
       actions: {
         setPageContainer,
@@ -255,7 +256,7 @@ function CanvasProvider({ children }) {
       pageCanvasData,
       pageCanvasPromise,
       boundingBoxes,
-      resizeObserver,
+      observer,
       getNodeForElement,
       setNodeForElement,
       setEditingElementWithoutState,
