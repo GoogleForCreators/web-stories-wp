@@ -45,9 +45,7 @@ function useLoadFontFiles() {
         await loadStylesheet(
           getGoogleFontURL([{ family, variants }], 'auto'),
           elementId
-        ).catch(() => {
-          return;
-        });
+        );
         break;
       case 'custom':
         await loadInlineStylesheet(elementId, url, family);
