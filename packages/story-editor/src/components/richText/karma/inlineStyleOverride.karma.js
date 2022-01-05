@@ -284,7 +284,7 @@ describe('Inline style override', () => {
     });
   });
 
-  it('should have correct formatting deleting text with one formatting, ending up in different formatting', async () => {
+  fit('should have correct formatting deleting text with one formatting, ending up in different formatting', async () => {
     // Toggle bold for entire selection
     await data.fixture.events.keyboard.shortcut('mod+b');
 
