@@ -20,33 +20,6 @@
 import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
 import { getHexFromSolidArray } from '@web-stories-wp/patterns';
 
-const STYLES = {
-  boxSizing: 'border-box',
-  visibility: 'hidden',
-  position: 'fixed',
-  contain: 'layout paint',
-  top: '-9999px',
-  left: '-9999px',
-  zIndex: -1,
-};
-
-const BASE_COLOR_NODE = '__WEB_STORIES_BASE_COLOR__';
-const IMG_NODE = '__WEB_STORIES_IMG_NODE';
-
-export function getImgNodeId(elementId) {
-  if (elementId === undefined) {
-    return '__web-stories-base-color';
-  }
-  return `__web-stories-bg-${elementId}`;
-}
-
-function getImgNodeKey(elementId) {
-  if (elementId === undefined) {
-    return BASE_COLOR_NODE;
-  }
-  return `${IMG_NODE}_${elementId}`;
-}
-
 export async function getMediaBaseColor(src) {
   if (!src) {
     return Promise.reject(new Error('No source to image'));
@@ -71,15 +44,15 @@ export async function getMediaBaseColor(src) {
   return color;
 }
 
-function getDefaultOnloadCallback(nodeKey, resolve, reject) {
+function getDefaultOnloadCallback(imageNode, resolve, reject) {
   return () => {
     import(
       /* webpackPrefetch: true, webpackChunkName: "chunk-colorthief" */ 'colorthief'
     )
       .then(({ default: ColorThief }) => {
-        const node = document.body[nodeKey];
         const thief = new ColorThief();
-        const rgb = thief.getColor(node.firstElementChild);
+        const rgb = thief.getColor(imageNode);
+        imageNode.remove();
         resolve(getHexFromSolidArray(rgb));
       })
       .catch((err) => {
@@ -93,30 +66,18 @@ export function setOrCreateImage(
   imageData,
   getOnloadCallback = getDefaultOnloadCallback
 ) {
-  const { src, id, height, width } = imageData;
+  const { src, height, width } = imageData;
   return new Promise((resolve, reject) => {
-    const NODE_KEY = getImgNodeKey(id);
-    let imgNode = document.body[NODE_KEY];
-    if (!imgNode) {
-      imgNode = document.createElement('div');
-      imgNode.id = getImgNodeId(id);
-      Object.assign(imgNode.style, STYLES);
-      document.body.appendChild(imgNode);
-      document.body[NODE_KEY] = imgNode;
-    }
-    imgNode.innerHTML = '';
-
     const img = new Image();
     // Necessary to avoid tainting canvas with CORS image data.
     img.crossOrigin = 'anonymous';
     img.decoding = 'async';
-    img.addEventListener('load', getOnloadCallback(NODE_KEY, resolve, reject));
+    img.addEventListener('load', getOnloadCallback(img, resolve, reject));
     img.addEventListener('error', (e) => {
       reject(new Error('Set image error: ' + e.message));
     });
     img.width = width;
     img.height = height;
     img.src = src;
-    imgNode.appendChild(img);
   });
 }
