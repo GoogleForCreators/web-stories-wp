@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const RESIZE_OBSERVATION_KEY = 'resizeObservationKey';
+export const RECT_OBSERVATION_KEY = 'rectObservationKey';
 
 export const CANVAS_BOUNDING_BOX_IDS = {
   CANVAS_CONTAINER: 'canvasContainer',

@@ -21,7 +21,7 @@ import { useCallback, useRef, useContextSelector } from '@web-stories-wp/react';
  * Internal dependencies
  */
 import Context from './context';
-import { RESIZE_OBSERVATION_KEY } from './constants';
+import { RECT_OBSERVATION_KEY } from './constants';
 
 /**
  * Returns a ref that when applied to an element, stores the elements
@@ -34,22 +34,25 @@ import { RESIZE_OBSERVATION_KEY } from './constants';
  * @return {Function} a callback ref
  */
 export function useCanvasBoundingBoxRef(boundingBoxId) {
-  const observer = useContextSelector(Context, ({ state }) => state.observer);
+  const clientRectObserver = useContextSelector(
+    Context,
+    ({ state }) => state.clientRectObserver
+  );
   const ref = useRef(null);
   return useCallback(
     (node) => {
       if (ref.current) {
-        observer.unobserve?.(ref.current);
+        clientRectObserver.unobserve?.(ref.current);
       }
 
       if (node) {
-        node.dataset[RESIZE_OBSERVATION_KEY] = boundingBoxId;
-        observer.observe(node);
+        node.dataset[RECT_OBSERVATION_KEY] = boundingBoxId;
+        clientRectObserver.observe(node);
       }
 
       ref.current = node;
     },
-    [observer, boundingBoxId]
+    [clientRectObserver, boundingBoxId]
   );
 }
 

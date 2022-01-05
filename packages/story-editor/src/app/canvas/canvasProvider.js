@@ -39,7 +39,7 @@ import useEditingElement from './useEditingElement';
 import createPolygon from './utils/createPolygon';
 
 import Context from './context';
-import { RESIZE_OBSERVATION_KEY } from './constants';
+import { RECT_OBSERVATION_KEY } from './constants';
 
 function CanvasProvider({ children }) {
   const [boundingBoxes, setBoundingBoxes] = useState({});
@@ -61,23 +61,23 @@ function CanvasProvider({ children }) {
   // IntersectionObserver tracks clientRects which is what we need here.
   // different from use case of useIntersectionEffect because this is extensible
   // to multiple nodes.
-  const observer = useMemo(
+  const clientRectObserver = useMemo(
     () =>
       new IntersectionObserver((entries) => {
         for (const entry of entries) {
-          if (!entry.target.dataset[RESIZE_OBSERVATION_KEY]) {
+          if (!entry.target.dataset[RECT_OBSERVATION_KEY]) {
             return;
           }
           setBoundingBoxes((boxes) => ({
             ...boxes,
-            [entry.target.dataset[RESIZE_OBSERVATION_KEY]]:
+            [entry.target.dataset[RECT_OBSERVATION_KEY]]:
               entry.boundingClientRect,
           }));
         }
       }),
     []
   );
-  useEffect(() => observer.disconnect, [observer]);
+  useEffect(() => clientRectObserver.disconnect, [clientRectObserver]);
 
   const pageSize = useLayout(({ state: { pageWidth, pageHeight } }) => ({
     width: pageWidth,
@@ -214,7 +214,7 @@ function CanvasProvider({ children }) {
         pageCanvasData,
         pageCanvasPromise,
         boundingBoxes,
-        observer,
+        clientRectObserver,
       },
       actions: {
         setPageContainer,
@@ -256,7 +256,7 @@ function CanvasProvider({ children }) {
       pageCanvasData,
       pageCanvasPromise,
       boundingBoxes,
-      observer,
+      clientRectObserver,
       getNodeForElement,
       setNodeForElement,
       setEditingElementWithoutState,
