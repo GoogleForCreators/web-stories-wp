@@ -64,16 +64,16 @@ function StoryEditor({ config, initialEdits, children }) {
           <ErrorBoundary>
             <ConfigProvider config={_config}>
               <APIProvider>
-                <Media3pApiProvider>
-                  <HistoryProvider size={50}>
-                    <SnackbarProvider>
-                      <StoryProvider
-                        storyId={storyId}
-                        initialEdits={initialEdits}
-                      >
-                        <TaxonomyProvider>
-                          <CurrentUserProvider>
-                            <FontProvider>
+                <FontProvider>
+                  <Media3pApiProvider>
+                    <HistoryProvider size={50}>
+                      <SnackbarProvider>
+                        <StoryProvider
+                          storyId={storyId}
+                          initialEdits={initialEdits}
+                        >
+                          <TaxonomyProvider>
+                            <CurrentUserProvider>
                               <MediaProvider>
                                 <AutoSaveHandler />
                                 <TransformProvider>
@@ -91,13 +91,13 @@ function StoryEditor({ config, initialEdits, children }) {
                                   </DropTargetsProvider>
                                 </TransformProvider>
                               </MediaProvider>
-                            </FontProvider>
-                          </CurrentUserProvider>
-                        </TaxonomyProvider>
-                      </StoryProvider>
-                    </SnackbarProvider>
-                  </HistoryProvider>
-                </Media3pApiProvider>
+                            </CurrentUserProvider>
+                          </TaxonomyProvider>
+                        </StoryProvider>
+                      </SnackbarProvider>
+                    </HistoryProvider>
+                  </Media3pApiProvider>
+                </FontProvider>
               </APIProvider>
             </ConfigProvider>
           </ErrorBoundary>

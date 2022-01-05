@@ -103,6 +103,7 @@ function FontDeclarations({ pages }) {
                 key={service}
                 href={getGoogleFontURL(Array.from(serviceMap.values()))}
                 rel="stylesheet"
+                crossOrigin="anonymous"
               />
             );
           case 'custom':

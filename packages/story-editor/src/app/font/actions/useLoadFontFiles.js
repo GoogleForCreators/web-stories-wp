@@ -42,10 +42,15 @@ function useLoadFontFiles() {
 
     switch (service) {
       case 'fonts.google.com':
-        await loadStylesheet(
-          getGoogleFontURL([{ family, variants }], 'auto'),
-          elementId
-        );
+        try {
+          await loadStylesheet(
+            getGoogleFontURL([{ family, variants }], 'auto'),
+            elementId
+          );
+        } catch (error) {
+          console.log('🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉');
+          console.log(error);
+        }
         break;
       case 'custom':
         await loadInlineStylesheet(elementId, url, family);
