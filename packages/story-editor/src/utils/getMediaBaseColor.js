@@ -70,7 +70,7 @@ function getDefaultOnloadCallback(imageNode, resolve, reject) {
  * @param {Object} imageData.height Image height.
  * @param {Object} imageData.width Image width.
  * @param {Function} getOnloadCallback Callback to fire after image is loaded.
- * @return {Promise}
+ * @return {Promise} Yields when the image is loaded.
  */
 export function createImage(
   imageData,
