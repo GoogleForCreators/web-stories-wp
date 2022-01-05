@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useState, useCallback } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
+import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
 import {
   Button,
   BUTTON_SIZES,
@@ -151,6 +151,8 @@ const Divider = styled.div`
   align-self: center;
 `;
 
+const ALLOWED_FONT_TYPES = ['.otf', '.ttf', '.woff'];
+
 function CustomFontsSettings({
   customFonts = [],
   addCustomFont,
@@ -217,9 +219,13 @@ function CustomFontsSettings({
           }
         } catch (err) {
           setInputError(
-            __(
-              'Getting font data failed, please ensure the URL points directly to a .otf, .ttf or .woff file.',
-              'web-stories'
+            sprintf(
+              /* translators: %s: list of allowed font types. */
+              __(
+                'Getting font data failed, please ensure the URL points directly to a %s file.',
+                'web-stories'
+              ),
+              translateToExclusiveList(ALLOWED_FONT_TYPES)
             )
           );
         }
@@ -286,7 +292,7 @@ function CustomFontsSettings({
                   </FontData>
                   <Tooltip hasTail title={__('Delete font', 'web-stories')}>
                     <DeleteButton
-                      aria-label={__('Remove file', 'web-stories')}
+                      aria-label={__('Remove font', 'web-stories')}
                       type={BUTTON_TYPES.TERTIARY}
                       size={BUTTON_SIZES.SMALL}
                       variant={BUTTON_VARIANTS.SQUARE}
