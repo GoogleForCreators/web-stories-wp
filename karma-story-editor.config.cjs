@@ -43,6 +43,7 @@ module.exports = function (config) {
 
   config.set({
     plugins: [
+      'karma-spec-reporter',
       'karma-chrome-launcher',
       'karma-jasmine',
       'karma-sourcemap-loader',
@@ -147,10 +148,25 @@ module.exports = function (config) {
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: [
-      'dots',
+      'spec',
       '@web-stories-wp/karma-failed-tests-reporter',
       config.coverage && 'coverage-istanbul',
     ].filter(Boolean),
+
+    specReporter: {
+      maxLogLines: 5, // limit number of lines logged per test
+      suppressErrorSummary: false, // do not print error summary
+      suppressFailed: false, // do not print information about failed tests
+      suppressPassed: false, // do not print information about passed tests
+      suppressSkipped: false, // do not print information about skipped tests
+      showSpecTiming: false, // print the time elapsed for each spec
+      failFast: false, // test would finish with error when a first fail occurs
+      prefixes: {
+        success: '    OK: ', // override prefix for passed tests, default is '✓ '
+        failure: 'FAILED: ', // override prefix for failed tests, default is '✗ '
+        skipped: 'SKIPPED: ', // override prefix for skipped tests, default is '- '
+      },
+    },
 
     // web server port
     port: 9876,
@@ -160,7 +176,7 @@ module.exports = function (config) {
 
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_DEBUG,
 
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
@@ -214,7 +230,7 @@ module.exports = function (config) {
 
     // Prevent duplicate logging to console
     browserConsoleLogOptions: {
-      terminal: false,
+      terminal: true,
     },
 
     // When a browser crashes,try to relaunch more than just 2 times (which is the default)
