@@ -85,7 +85,7 @@ function ImageDisplay({ element, box, previewMode }) {
         const url = getProxiedUrl(resource, resource.src);
         let preloadedImg;
         try {
-          preloadedImg = await preloadImage(url, srcSet).catch(() => {});
+          preloadedImg = await preloadImage(url, srcSet);
         } catch (error) {
           //ignore
         }
