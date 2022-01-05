@@ -147,7 +147,7 @@ function UpdateButton({ hasUpdates = false, forceIsSaving = false }) {
     <ButtonWithChecklistWarning
       text={text}
       onClick={() => saveStory()}
-      disabled={isSaving || isUploading}
+      disabled={!isEnabled}
       isUploading={isUploading}
       canPublish={canPublish}
     />
