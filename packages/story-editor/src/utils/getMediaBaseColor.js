@@ -27,7 +27,7 @@ export async function getMediaBaseColor(src) {
   let color;
   const trackTiming = getTimeTracker('load_get_base_color');
   try {
-    color = await setOrCreateImage({
+    color = await createImage({
       src,
       width: 10,
       height: 'auto',
@@ -62,7 +62,7 @@ function getDefaultOnloadCallback(imageNode, resolve, reject) {
   };
 }
 
-export function setOrCreateImage(
+export function createImage(
   imageData,
   getOnloadCallback = getDefaultOnloadCallback
 ) {
