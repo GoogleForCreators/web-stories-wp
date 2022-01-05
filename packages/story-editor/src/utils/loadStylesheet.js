@@ -19,6 +19,7 @@ function loadStylesheet(url, id) {
     const link = document.createElement('link');
     link.id = id;
     link.rel = 'stylesheet';
+    link.type = 'text/css';
     link.href = url;
     link.crossOrigin = 'anonymous';
     link.addEventListener('load', resolve);
