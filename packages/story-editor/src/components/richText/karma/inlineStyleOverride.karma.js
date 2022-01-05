@@ -284,9 +284,7 @@ describe('Inline style override', () => {
     });
   });
 
-  // TODO(#9388): Fix flaky test.
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should have correct formatting deleting text with one formatting, ending up in different formatting', async () => {
+  it('should have correct formatting deleting text with one formatting, ending up in different formatting', async () => {
     // Toggle bold for entire selection
     await data.fixture.events.keyboard.shortcut('mod+b');
 
@@ -320,7 +318,7 @@ describe('Inline style override', () => {
     const actual = getTextContent();
     const expected = '<span style="font-weight: 700">Full in some text</span>';
     expect(actual).toBe(expected);
-    await data.fixture.snapshot('"Full in some text" in bold');
+    await data.fixture.snapshot('"Fill in some text" in bold');
   });
 
   it('should keep formatting when all text is replaced', async () => {
