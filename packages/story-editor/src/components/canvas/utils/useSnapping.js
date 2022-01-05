@@ -38,13 +38,15 @@ function useSnapping({
   snappingOffsetX = null,
   isDragging,
 }) {
-  const canvasContainerBB = useCanvasBoundingBox(
+  const canvasContainerRect = useCanvasBoundingBox(
     CANVAS_BOUNDING_BOX_IDS.CANVAS_CONTAINER
   );
-  const pageContainerBB = useCanvasBoundingBox(
+  const pageContainerRect = useCanvasBoundingBox(
     CANVAS_BOUNDING_BOX_IDS.PAGE_CONTAINER
   );
-  const designSpaceGuideline = useCanvas((v) => v.state.designSpaceGuideline);
+  const designSpaceGuideline = useCanvas(
+    ({ state }) => state.designSpaceGuideline
+  );
   const { pageWidth, pageHeight } = useLayout(
     ({ state: { pageWidth, pageHeight } }) => ({
       pageWidth,
@@ -52,9 +54,9 @@ function useSnapping({
     })
   );
   const { activeDropTargetId, isDropTargetingDisabled } = useDropTargets(
-    (state) => ({
-      activeDropTargetId: state.state.activeDropTargetId,
-      isDropTargetingDisabled: state.state.isDropTargetingDisabled,
+    ({ state }) => ({
+      activeDropTargetId: state.activeDropTargetId,
+      isDropTargetingDisabled: state.isDropTargetingDisabled,
     })
   );
 
@@ -77,12 +79,12 @@ function useSnapping({
     [isDragging, designSpaceGuideline, triggerOnboarding]
   );
 
-  if (!canvasContainerBB || !pageContainerBB) {
+  if (!canvasContainerRect || !pageContainerRect) {
     return {};
   }
 
-  const canvasRect = canvasContainerBB;
-  const pageRect = pageContainerBB;
+  const canvasRect = canvasContainerRect;
+  const pageRect = pageContainerRect;
 
   const canvasOffsetX = snappingOffsetX ? snappingOffsetX : canvasRect.x;
 

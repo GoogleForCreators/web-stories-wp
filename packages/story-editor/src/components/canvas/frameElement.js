@@ -79,33 +79,40 @@ const EmptyFrame = styled.div`
 const NOOP = () => {};
 
 function FrameElement({ element }) {
-  const setEditingElement = useCanvas((v) => v.actions.setEditingElement);
+  const setEditingElement = useCanvas(
+    ({ actions }) => actions.setEditingElement
+  );
   const { id, type, flip } = element;
   const { Frame, isMaskable, Controls } = getDefinitionForType(type);
   const elementRef = useRef();
   const [hovering, setHovering] = useState(false);
   const isAnythingTransforming = useTransform(
-    (v) => v.state.isAnythingTransforming
+    ({ state }) => state.isAnythingTransforming
   );
 
   const onPointerEnter = () => setHovering(true);
   const onPointerLeave = () => setHovering(false);
 
-  const setNodeForElement = useCanvas((v) => v.actions.setNodeForElement);
-  const handleSelectElement = useCanvas((v) => v.actions.handleSelectElement);
-  const isEditing = useCanvas((v) => v.state.isEditing);
-  const isSelected = useStory((v) => v.state.selectedElementIds.includes(id));
-  const isSingleElement = useStory(
-    (v) => v.state.selectedElementIds.length === 1
+  const { setNodeForElement, handleSelectElement, isEditing } = useCanvas(
+    ({ state, actions }) => ({
+      setNodeForElement: actions.setNodeForElement,
+      handleSelectElement: actions.handleSelectElement,
+      isEditing: state.isEditing,
+    })
   );
-  const currentPage = useStory((v) => v.state.currentPage);
-  const getBox = useUnits((v) => v.actions.getBox);
+  const { isSelected, isSingleElement, isBackground } = useStory(
+    ({ state }) => ({
+      isSelected: state.selectedElementIds.includes(id),
+      isSingleElement: state.selectedElementIds.length === 1,
+      isBackground: state.currentPage?.elements[0].id === id,
+    })
+  );
+  const getBox = useUnits(({ actions }) => actions.getBox);
 
   useLayoutEffect(() => {
     setNodeForElement(id, elementRef.current);
   }, [id, setNodeForElement]);
   const box = getBox(element);
-  const isBackground = currentPage?.elements[0].id === id;
 
   const [isTransforming, setIsTransforming] = useState(false);
 

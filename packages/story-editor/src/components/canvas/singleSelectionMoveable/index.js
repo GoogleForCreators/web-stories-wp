@@ -53,19 +53,21 @@ function SingleSelectionMoveable({
   const moveable = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
 
-  const nodesById = useCanvas((v) => v.state.nodesById);
-  const getBox = useUnits((v) => v.actions.getBox);
-  const pushTransform = useTransform((v) => v.actions.pushTransform);
-  const zoomSetting = useLayout((v) => v.state.zoomSetting);
-  const scrollLeft = useLayout((v) => v.state.scrollLeft);
-  const scrollTop = useLayout((v) => v.state.scrollTop);
+  const nodesById = useCanvas(({ state }) => state.nodesById);
+  const getBox = useUnits(({ actions }) => actions.getBox);
+  const pushTransform = useTransform(({ actions }) => actions.pushTransform);
+  const { zoomSetting, scrollLeft, scrollTop } = useLayout(({ state }) => ({
+    zoomSetting: state.zoomSetting,
+    scrollLeft: state.scrollLeft,
+    scrollTop: state.scrollTop,
+  }));
 
   const actionsEnabled = !selectedElement.isBackground;
 
   const latestEvent = useRef();
 
   const backgroundElementId = useStory(
-    (v) => v.state.currentPage?.elements[0]?.id
+    ({ state }) => state.currentPage?.elements[0]?.id
   );
 
   useWindowResizeHandler(moveable);

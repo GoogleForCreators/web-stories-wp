@@ -27,9 +27,9 @@ import SingleSelectionMoveable from './singleSelectionMoveable';
 import MultiSelectionMoveable from './multiSelectionMoveable';
 
 function Selection(props) {
-  const isBackground = useStory((v) => {
+  const isBackground = useStory(({ state }) => {
     return (
-      v.state.selectedElements[0]?.id === v.state.currentPage.elements?.[0]?.id
+      state.selectedElements[0]?.id === state.currentPage.elements?.[0]?.id
     );
   });
   const { selectedElements, isAnimating } = useStory((state) => ({

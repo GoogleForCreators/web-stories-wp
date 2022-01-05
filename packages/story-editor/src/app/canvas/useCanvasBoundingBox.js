@@ -36,7 +36,7 @@ import { RESIZE_OBSERVATION_KEY } from './constants';
 export function useCanvasBoundingBoxRef(boundingBoxId) {
   const resizeObserver = useContextSelector(
     Context,
-    (v) => v.state.resizeObserver
+    ({ state }) => state.resizeObserver
   );
   const ref = useRef(null);
   return useCallback(
@@ -65,6 +65,6 @@ export function useCanvasBoundingBoxRef(boundingBoxId) {
 export function useCanvasBoundingBox(boundingBoxId) {
   return useContextSelector(
     Context,
-    (v) => v.state.boundingBoxes[boundingBoxId]
+    ({ state }) => state.boundingBoxes[boundingBoxId]
   );
 }

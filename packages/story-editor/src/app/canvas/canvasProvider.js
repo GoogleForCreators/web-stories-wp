@@ -58,6 +58,9 @@ function CanvasProvider({ children }) {
   const [pageCanvasData, setPageCanvasData] = useState(null);
   const [pageCanvasPromise, setPageCanvasPromise] = useState(null);
 
+  // Using a custom resize observer approach over useResizeEffect to have
+  // an observer that's extensible to multiple nodes and tracks contentRect
+  // instead of just height and width
   const resizeObserver = useMemo(
     () =>
       new ResizeObserver((entries) => {
