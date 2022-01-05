@@ -62,6 +62,16 @@ function getDefaultOnloadCallback(imageNode, resolve, reject) {
   };
 }
 
+/**
+ * Create image and fire callback after loaded.
+ *
+ * @param {Object} imageData Image data.
+ * @param {string} imageData.src Image source.
+ * @param {Object} imageData.height Image height.
+ * @param {Object} imageData.width Image width.
+ * @param {Function} getOnloadCallback Callback to fire after image is loaded.
+ * @return {Promise}
+ */
 export function createImage(
   imageData,
   getOnloadCallback = getDefaultOnloadCallback
