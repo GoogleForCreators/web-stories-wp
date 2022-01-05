@@ -166,9 +166,11 @@ describe('Text Style Panel', () => {
       expect(displayStyle.padding).toContain('px');
 
       // Verify the same things for the frames layer.
-      const frameStyle = window.getComputedStyle(texts[1]);
+      const frameStyle = await waitFor(() => window.getComputedStyle(texts[1]));
       const frameSplits = frameStyle.margin.split('px');
+      console.log(typeof frameSplits[0].trim());
       expect(frameSplits[0].trim()).toBeLessThan(0);
+      console.log(typeof frameSplits[1].trim());
       expect(frameSplits[1].trim()).toBe('0');
       expect(frameStyle.padding).toContain('px');
 

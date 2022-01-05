@@ -92,7 +92,10 @@ export default ({ onChange }) => {
                     setEyedropperImg(canvas.toDataURL());
                     resolve();
                   })
-                  .catch(() => resolve());
+                  .catch(() => {
+                    console.log('caught in eydropper');
+                    resolve();
+                  });
               });
             });
           });
