@@ -17,11 +17,11 @@
 /**
  * External dependencies
  */
+import percySnapshot from '@percy/puppeteer';
 import {
   createNewStory,
   publishStory,
   withPlugin,
-  takeSnapshot,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Custom Meta Boxes', () => {
@@ -64,7 +64,7 @@ describe('Custom Meta Boxes', () => {
         'Meta Box Test Value'
       );
 
-      await takeSnapshot(page, 'Custom Meta Boxes');
+      await percySnapshot(page, 'Custom Meta Boxes');
 
       // Verify that collapsing works via postbox.js from WordPress.
 

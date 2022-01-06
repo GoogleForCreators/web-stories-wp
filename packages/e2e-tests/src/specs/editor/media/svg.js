@@ -17,12 +17,12 @@
 /**
  * External dependencies
  */
+import percySnapshot from '@percy/puppeteer';
 import {
   withExperimentalFeatures,
   createNewStory,
   uploadMedia,
   deleteMedia,
-  takeSnapshot,
 } from '@web-stories-wp/e2e-test-utils';
 
 const MODAL = '.media-modal';
@@ -45,7 +45,7 @@ describe('SVG', () => {
 
     await expect(page).toMatchElement('[data-testid="imageElement"]');
 
-    await takeSnapshot(page, 'Inserting SVG from Dialog');
+    await percySnapshot(page, 'Inserting SVG from Dialog');
   });
 
   it('should upload an SVG file via media dialog', async () => {
@@ -57,7 +57,7 @@ describe('SVG', () => {
 
     await expect(page).toMatchElement('[data-testid="imageElement"]');
 
-    await takeSnapshot(page, 'Uploading SVG to editor');
+    await percySnapshot(page, 'Uploading SVG to editor');
 
     await deleteMedia(filename);
   });
