@@ -48,38 +48,38 @@ function FontProvider({ children }) {
 
   const fonts = queriedFonts.length > 0 ? queriedFonts : curatedFonts;
 
-  useEffect(() => {
-    let mounted = true;
+  // useEffect(() => {
+  //   let mounted = true;
 
-    if (!curatedFonts.length) {
-      try {
-        (async () => {
-          const newFonts = await getFonts({
-            include: CURATED_FONT_NAMES.join(','),
-          });
+  //   if (!curatedFonts.length) {
+  //     try {
+  //       (async () => {
+  //         const newFonts = await getFonts({
+  //           include: CURATED_FONT_NAMES.join(','),
+  //         });
 
-          if (!mounted) {
-            return;
-          }
+  //         if (!mounted) {
+  //           return;
+  //         }
 
-          const formattedFonts = newFonts.map((font) => ({
-            id: font.family,
-            name: font.family,
-            value: font.family,
-            ...font,
-          }));
+  //         const formattedFonts = newFonts.map((font) => ({
+  //           id: font.family,
+  //           name: font.family,
+  //           value: font.family,
+  //           ...font,
+  //         }));
 
-          setCuratedFonts(formattedFonts);
-        })();
-      } catch (err) {
-        trackError('font_provider', err.message);
-      }
-    }
+  //         setCuratedFonts(formattedFonts);
+  //       })();
+  //     } catch (err) {
+  //       trackError('font_provider', err.message);
+  //     }
+  //   }
 
-    return () => {
-      mounted = false;
-    };
-  }, [curatedFonts, getFonts]);
+  //   return () => {
+  //     mounted = false;
+  //   };
+  // }, [curatedFonts, getFonts]);
 
   const { maybeEnqueueFontStyle, maybeLoadFont } = useLoadFontFiles();
 
