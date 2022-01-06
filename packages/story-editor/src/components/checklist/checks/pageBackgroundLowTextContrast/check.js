@@ -225,7 +225,6 @@ async function getOverlapBgColor({ bgImage, bgBox, overlapBox }) {
         }
 
         ctx.drawImage(imageNode, xPos, yPos, bgImage.width, bgImage.height);
-        imageNode.remove();
 
         const imageData = ctx.getImageData(
           overlapBox.x,

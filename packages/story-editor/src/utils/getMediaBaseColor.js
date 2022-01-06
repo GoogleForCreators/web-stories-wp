@@ -57,12 +57,11 @@ async function getMediaBaseColor(src, width = 10, height = 'auto') {
     throw new Error('No source to image');
   }
 
-  let color;
+  let color, image;
   const trackTiming = getTimeTracker('load_get_base_color');
   try {
-    color = await extractColorFromImage(
-      await preloadImage(src, undefined, width, height)
-    );
+    image = await preloadImage(src, undefined, width, height);
+    color = await extractColorFromImage(image);
   } catch (error) {
     // Known error of color thief with white only images.
     if (error?.name !== 'TypeError') {
@@ -70,6 +69,7 @@ async function getMediaBaseColor(src, width = 10, height = 'auto') {
     }
     color = '#ffffff';
   } finally {
+    image?.remove();
     trackTiming();
   }
   return color;
