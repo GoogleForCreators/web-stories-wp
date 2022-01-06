@@ -89,6 +89,13 @@ const ALLOWED_ERROR_MESSAGES = [
 
   // Another Firefox warning.
   'Layout was forced before the page was fully loaded',
+
+  // Expected css error.
+  'Stylesheet twentytwenty-block-editor-styles-css was not properly added.',
+
+  // deprecated notice in 5.9.
+  // @todo fix issue.
+  "select( 'core' ).getAuthors() is deprecated since version 5.9.",
 ];
 
 export function addAllowedErrorMessage(message) {
