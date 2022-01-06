@@ -17,11 +17,11 @@
 /**
  * External dependencies
  */
+import percySnapshot from '@percy/puppeteer';
 import {
   addTextElement,
   clearLocalStorage,
   createNewStory,
-  takeSnapshot,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Page Templates', () => {
@@ -65,6 +65,6 @@ describe('Page Templates', () => {
       '[aria-label="Page Template Options"] [role="listitem"]'
     );
 
-    await takeSnapshot(page, 'Page Templates');
+    await percySnapshot(page, 'Page Templates');
   });
 });

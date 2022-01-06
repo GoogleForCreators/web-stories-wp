@@ -17,12 +17,12 @@
 /**
  * External dependencies
  */
+import percySnapshot from '@percy/puppeteer';
 import {
   createNewStory,
   toggleVideoOptimization,
   previewStory,
   withRTL,
-  takeSnapshot,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Story Editor', () => {
@@ -31,7 +31,7 @@ describe('Story Editor', () => {
 
     await expect(page).toMatchElement('input[placeholder="Add title"]');
 
-    await takeSnapshot(page, 'Empty Editor');
+    await percySnapshot(page, 'Empty Editor');
   });
 
   describe('RTL', () => {
@@ -42,7 +42,7 @@ describe('Story Editor', () => {
 
       await expect(page).toMatchElement('input[placeholder="Add title"]');
 
-      await takeSnapshot(page, 'Empty Editor on RTL');
+      await percySnapshot(page, 'Empty Editor on RTL');
     });
   });
 

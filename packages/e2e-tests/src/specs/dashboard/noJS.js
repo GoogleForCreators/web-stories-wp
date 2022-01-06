@@ -17,7 +17,8 @@
 /**
  * External dependencies
  */
-import { visitDashboard, takeSnapshot } from '@web-stories-wp/e2e-test-utils';
+import percySnapshot from '@percy/puppeteer';
+import { visitDashboard } from '@web-stories-wp/e2e-test-utils';
 
 describe('Stories Dashboard with disabled JavaScript', () => {
   it('should display error message', async () => {
@@ -31,6 +32,6 @@ describe('Stories Dashboard with disabled JavaScript', () => {
     // Re-enable javascript for snapshots.
     await page.setJavaScriptEnabled(true);
 
-    await takeSnapshot(page, 'Dashboard no js');
+    await percySnapshot(page, 'Dashboard no js');
   });
 });

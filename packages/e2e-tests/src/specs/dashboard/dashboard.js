@@ -17,11 +17,8 @@
 /**
  * External dependencies
  */
-import {
-  withRTL,
-  visitDashboard,
-  takeSnapshot,
-} from '@web-stories-wp/e2e-test-utils';
+import percySnapshot from '@percy/puppeteer';
+import { withRTL, visitDashboard } from '@web-stories-wp/e2e-test-utils';
 
 const percyCSS = `.dashboard-grid-item-date { display: none; }`;
 
@@ -31,7 +28,7 @@ describe('Stories Dashboard', () => {
 
     await expect(page).toMatchElement('h2', { text: 'Dashboard' });
 
-    await takeSnapshot(page, 'Stories Dashboard', { percyCSS });
+    await percySnapshot(page, 'Stories Dashboard', { percyCSS });
   });
 
   describe('RTL', () => {
@@ -42,7 +39,7 @@ describe('Stories Dashboard', () => {
 
       await expect(page).toMatchElement('h2', { text: 'Dashboard' });
 
-      await takeSnapshot(page, 'Stories Dashboard on RTL', { percyCSS });
+      await percySnapshot(page, 'Stories Dashboard on RTL', { percyCSS });
     });
   });
 });

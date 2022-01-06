@@ -17,11 +17,8 @@
 /**
  * External dependencies
  */
-import {
-  withPlugin,
-  visitAdminPage,
-  takeSnapshot,
-} from '@web-stories-wp/e2e-test-utils';
+import percySnapshot from '@percy/puppeteer';
+import { withPlugin, visitAdminPage } from '@web-stories-wp/e2e-test-utils';
 
 describe('TinyMCE button', () => {
   withPlugin('classic-editor');
@@ -41,7 +38,7 @@ describe('TinyMCE button', () => {
       visible: true,
     });
 
-    await takeSnapshot(page, 'TinyMCE dialog');
+    await percySnapshot(page, 'TinyMCE dialog');
 
     await expect(page).toMatch('Archive Link Label');
 
