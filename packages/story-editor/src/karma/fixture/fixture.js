@@ -228,20 +228,12 @@ export class Fixture {
         JSON.stringify({ isCollapsed: false })
       );
     });
+    console.log('🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻', window.navigator.userAgent);
   }
 
   restore() {
     window.location.hash = '#';
     localStorage.clear();
-    console.log('🎥🎥🎥🎥🎥🎥🎥🎥🎥🎥🎥🎥🎥🎥🎥🎥🎥🎥🎥🎥🎥🎥🎥🎥🎥🎥🎥🎥🎥');
-    console.log(Array.from(document.getElementsByTagName('video')).length);
-
-    const videos = Array.from(document.getElementsByTagName('video'));
-    if (videos.length) {
-      videos.map((video) => video.parentNode.removeChild(video));
-    }
-    console.log('🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻');
-    console.log(Array.from(document.getElementsByTagName('video')).length);
   }
 
   get container() {
