@@ -68,53 +68,53 @@ module.exports = function (config) {
         served: true,
         nocache: false,
       },
+      // {
+      //   // eslint-disable-next-line prettier/prettier
+      //   pattern: '^https://fonts.googleapis.com/css*',
+      //   type: 'css',
+      //   included: false,
+      //   served: true,
+      //   nocache: false,
+      // },
       {
-        // eslint-disable-next-line prettier/prettier
-        pattern: '^https://fonts.googleapis.com/css*',
+        pattern:
+          'https://fonts.googleapis.com/css2?display=auto&family=Roboto%3Aital%2Cwght%400%2C100%3B0%2C300%3B0%2C400%3B0%2C500%3B0%2C700%3B0%2C900%3B1%2C100%3B1%2C300%3B1%2C400%3B1%2C500%3B1%2C700%3B1%2C900',
         type: 'css',
-        included: false,
+        included: true,
         served: true,
         nocache: false,
       },
-      // {
-      //   pattern:
-      //     'https://fonts.googleapis.com/css2?display=auto&family=Roboto%3Aital%2Cwght%400%2C100%3B0%2C300%3B0%2C400%3B0%2C500%3B0%2C700%3B0%2C900%3B1%2C100%3B1%2C300%3B1%2C400%3B1%2C500%3B1%2C700%3B1%2C900',
-      //   type: 'css',
-      //   included: true,
-      //   served: true,
-      //   nocache: false,
-      // },
-      // {
-      //   pattern: 'https://fonts.googleapis.com/css2?display=auto&family=Bungee',
-      //   type: 'css',
-      //   included: true,
-      //   served: true,
-      //   nocache: false,
-      // },
-      // {
-      //   pattern:
-      //     'https://fonts.googleapis.com/css2?display=auto&family=Bungee+Shade',
-      //   type: 'css',
-      //   included: true,
-      //   served: true,
-      //   nocache: false,
-      // },
-      // {
-      //   pattern:
-      //     'https://fonts.googleapis.com/css2?display=auto&family=Chivo%3Aital%2Cwght%400%2C300%3B0%2C400%3B0%2C700%3B0%2C900%3B1%2C300%3B1%2C400%3B1%2C700%3B1%2C900',
-      //   type: 'css',
-      //   included: true,
-      //   served: true,
-      //   nocache: false,
-      // },
-      // {
-      //   pattern:
-      //     'https://fonts.googleapis.com/css?family=Google+Sans%7CGoogle+Sans:b%7CGoogle+Sans:500&display=swap',
-      //   type: 'css',
-      //   included: true,
-      //   served: true,
-      //   nocache: false,
-      // },
+      {
+        pattern: 'https://fonts.googleapis.com/css2?display=auto&family=Bungee',
+        type: 'css',
+        included: true,
+        served: true,
+        nocache: false,
+      },
+      {
+        pattern:
+          'https://fonts.googleapis.com/css2?display=auto&family=Bungee+Shade',
+        type: 'css',
+        included: true,
+        served: true,
+        nocache: false,
+      },
+      {
+        pattern:
+          'https://fonts.googleapis.com/css2?display=auto&family=Chivo%3Aital%2Cwght%400%2C300%3B0%2C400%3B0%2C700%3B0%2C900%3B1%2C300%3B1%2C400%3B1%2C700%3B1%2C900',
+        type: 'css',
+        included: true,
+        served: true,
+        nocache: false,
+      },
+      {
+        pattern:
+          'https://fonts.googleapis.com/css?family=Google+Sans%7CGoogle+Sans:b%7CGoogle+Sans:500&display=swap',
+        type: 'css',
+        included: true,
+        served: true,
+        nocache: false,
+      },
       'node_modules/axe-core/axe.js',
     ],
 

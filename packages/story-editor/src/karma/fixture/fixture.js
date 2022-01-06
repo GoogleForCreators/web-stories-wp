@@ -230,9 +230,9 @@ export class Fixture {
     });
   }
 
-  restore() {
+  async restore() {
     window.location.hash = '#';
-    localStorage.clear();
+    await localStorage.clear();
   }
 
   get container() {
