@@ -191,14 +191,14 @@ module.exports = function (config) {
 
     // Concurrency level
     // how many browsers should be started simultaneously
-    concurrency: Infinity,
+    concurrency: 3,
 
     // Allow not having any tests
     failOnEmptyTestSuite: false,
 
     // Prevent duplicate logging to console
     browserConsoleLogOptions: {
-      terminal: false,
+      terminal: true,
     },
 
     // When a browser crashes,try to relaunch more than just 2 times (which is the default)
