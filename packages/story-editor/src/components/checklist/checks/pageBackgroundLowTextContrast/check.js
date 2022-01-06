@@ -27,7 +27,7 @@ import { getMediaSizePositionProps } from '@web-stories-wp/media';
 /**
  * Internal dependencies
  */
-import { createImage } from '../../../../utils/getMediaBaseColor';
+import { createImageWithCallback } from '../../../../utils/getMediaBaseColor';
 import {
   calculateLuminanceFromRGB,
   calculateLuminanceFromStyleColor,
@@ -238,7 +238,7 @@ function getOverlapBgColor({ bgImage, bgBox, overlapBox }) {
       }
     };
   }
-  return createImage(
+  return createImageWithCallback(
     { src: bgImage.src, width: bgImage.width, height: bgImage.height },
     getOnloadCallback
   ).then((imgData) => {
@@ -250,7 +250,7 @@ function getOverlapBgColor({ bgImage, bgBox, overlapBox }) {
     cropImage.crossOrigin = 'anonymous';
     cropCtx.putImageData(imgData, 0, 0);
     cropImage.src = cropCanvas.toDataURL();
-    return createImage({
+    return createImageWithCallback({
       src: cropImage.src,
       width: cropCanvas.width,
       height: cropCanvas.height,
