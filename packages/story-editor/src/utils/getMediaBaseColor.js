@@ -27,20 +27,20 @@ import { preloadImage } from '@web-stories-wp/media';
  * @param {Image} img Image.
  * @return {Promise<string>} Hex color.
  */
-function extractColorFromImage(img) {
+async function extractColorFromImage(img) {
+  const { default: ColorThief } = await import(
+    /* webpackPrefetch: true, webpackChunkName: "chunk-colorthief" */ 'colorthief'
+  );
+
   return new Promise((resolve, reject) => {
-    import(
-      /* webpackPrefetch: true, webpackChunkName: "chunk-colorthief" */ 'colorthief'
-    )
-      .then(({ default: ColorThief }) => {
-        const thief = new ColorThief();
-        const rgb = thief.getColor(img);
-        resolve(getHexFromSolidArray(rgb));
-      })
-      .catch((err) => {
-        trackError('image_base_color', err.message);
-        reject(err);
-      });
+    try {
+      const thief = new ColorThief();
+      const rgb = thief.getColor(img);
+      resolve(getHexFromSolidArray(rgb));
+    } catch (err) {
+      trackError('image_base_color', err.message);
+      reject(err);
+    }
   });
 }
 
