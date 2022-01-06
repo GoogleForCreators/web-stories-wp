@@ -27,17 +27,23 @@ async function visitBlockWidgetScreen() {
   await visitAdminPage('widgets.php');
 
   // Disable welcome guide if it is enabled.
-  const isWelcomeGuideActive = await page.evaluate(() =>
+  const isWelcomeGuideActive = await page.evaluate(() => {
+    if (!wp.data.dispatch('core/edit-widgets').__unstableIsFeatureActive) {
+      return;
+    }
     wp.data
       .select('core/edit-widgets')
-      .__unstableIsFeatureActive('welcomeGuide')
-  );
+      .__unstableIsFeatureActive('welcomeGuide');
+  });
   if (isWelcomeGuideActive) {
-    await page.evaluate(() =>
+    await page.evaluate(() => {
+      if (!wp.data.dispatch('core/edit-widgets').__unstableToggleFeature) {
+        return;
+      }
       wp.data
         .dispatch('core/edit-widgets')
-        .__unstableToggleFeature('welcomeGuide')
-    );
+        .__unstableToggleFeature('welcomeGuide');
+    });
   }
 }
 export default visitBlockWidgetScreen;
