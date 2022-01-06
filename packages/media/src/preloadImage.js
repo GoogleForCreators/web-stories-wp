@@ -25,19 +25,13 @@
  */
 const preloadImage = (src, srcset = undefined, width, height) => {
   return new Promise((resolve, reject) => {
-    const image = new window.Image();
+    const image = new window.Image(width, height);
     image.onload = () => resolve(image);
     image.onerror = reject;
     image.decoding = 'async';
     image.crossOrigin = 'anonymous';
     if (srcset) {
       image.srcset = srcset;
-    }
-    if (width) {
-      image.width = width;
-    }
-    if (height) {
-      image.height = height;
     }
     image.src = src;
   });
