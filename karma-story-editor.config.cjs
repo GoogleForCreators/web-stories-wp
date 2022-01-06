@@ -70,7 +70,7 @@ module.exports = function (config) {
       },
       {
         // eslint-disable-next-line prettier/prettier
-        pattern: '^https://fonts.googleapis.com/css2*',
+        pattern: '^https://fonts.googleapis.com/css*',
         type: 'css',
         included: false,
         served: true,
