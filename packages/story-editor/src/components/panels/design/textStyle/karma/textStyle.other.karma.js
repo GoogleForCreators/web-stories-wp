@@ -159,17 +159,17 @@ describe('Text Style Panel', () => {
       // This verifies it includes correct units.
       const splits = displayStyle.margin.split('px');
       // Verify the top-bottom margin is negative.
-      expect(parseInt(splits[0].trim())).toBeLessThan(0);
+      expect(parseInt(splits[0].trim())).toBeLessThanOrEqual(0);
       // Verify the left-right margin is 0.
-      expect(splits[1].trim()).toBe('0');
+      expect(splits[1].trim() || '0').toBe('0');
       // Verify units are correctly added to padding.
       expect(displayStyle.padding).toContain('px');
 
       // Verify the same things for the frames layer.
       const frameStyle = await waitFor(() => window.getComputedStyle(texts[1]));
       const frameSplits = frameStyle.margin.split('px');
-      expect(parseInt(frameSplits[0].trim())).toBeLessThan(0);
-      expect(frameSplits[1].trim()).toBe('0');
+      expect(parseInt(frameSplits[0].trim())).toBeLessThanOrEqual(0);
+      expect(frameSplits[1].trim() || '0').toBe('0');
       expect(frameStyle.padding).toContain('px');
 
       await fixture.snapshot('Applied padding and line-height');
