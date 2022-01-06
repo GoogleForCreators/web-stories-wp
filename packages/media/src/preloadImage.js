@@ -19,9 +19,11 @@
  *
  * @param {string} src Image source.
  * @param {string} [srcset] Image source set.
+ * @param {number|string} [width] Image width.
+ * @param {number|string} [height] Image height.
  * @return {Promise} Image object.
  */
-const preloadImage = (src, srcset = undefined) => {
+const preloadImage = (src, srcset = undefined, width, height) => {
   return new Promise((resolve, reject) => {
     const image = new window.Image();
     image.onload = () => resolve(image);
@@ -30,6 +32,12 @@ const preloadImage = (src, srcset = undefined) => {
     image.crossOrigin = 'anonymous';
     if (srcset) {
       image.srcset = srcset;
+    }
+    if (width) {
+      image.width = width;
+    }
+    if (height) {
+      image.height = height;
     }
     image.src = src;
   });
