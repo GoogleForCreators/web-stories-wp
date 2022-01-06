@@ -32,7 +32,7 @@ import { DEFAULT_MASK } from '../../masks/constants';
 import { ZOOM_SETTING } from '../../constants';
 import useMedia3pApi from '../../app/media/media3p/api/useMedia3pApi';
 import getInsertedElementSize from '../../utils/getInsertedElementSize';
-import { getMediaBaseColor } from '../../utils/getMediaBaseColor';
+import getMediaBaseColor from '../../utils/getMediaBaseColor';
 import useCORSProxy from '../../utils/useCORSProxy';
 import useFocusCanvas from './useFocusCanvas';
 

@@ -25,7 +25,7 @@ import { getSmallestUrlForWidth } from '@web-stories-wp/media';
 import { useAPI } from '../../api';
 import { useStory } from '../../story';
 import { useConfig } from '../../config';
-import { getMediaBaseColor } from '../../../utils/getMediaBaseColor';
+import getMediaBaseColor from '../../../utils/getMediaBaseColor';
 import useCORSProxy from '../../../utils/useCORSProxy';
 
 function useDetectBaseColor({ updateMediaElement }) {
