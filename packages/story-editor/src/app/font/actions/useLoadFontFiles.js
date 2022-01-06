@@ -18,74 +18,95 @@
  * External dependencies
  */
 import { useCallback } from '@web-stories-wp/react';
-import { getGoogleFontURL } from '@web-stories-wp/fonts';
 
 /**
  * Internal dependencies
  */
 import cleanForSlug from '../../../utils/cleanForSlug';
-import loadStylesheet from '../../../utils/loadStylesheet';
-import { ensureFontLoaded, loadInlineStylesheet } from '../utils';
+import getGoogleFontURL from '../../../utils/getGoogleFontURL';
+
+/**
+ * This is a utility ensure that Promise.all return ONLY when all promises are processed.
+ *
+ * @param {Promise} promise Promise to be processed
+ * @return {Promise} Return a rejected or fulfilled Promise
+ */
+const reflect = (promise) => {
+  return promise.then(
+    (v) => ({ v, status: 'fulfilled' }),
+    (e) => ({ e, status: 'rejected' })
+  );
+};
 
 function useLoadFontFiles() {
-  const maybeLoadFont = useCallback(async (font) => {
-    const { family, service, variants, url } = font;
-
-    const handle = cleanForSlug(family);
-    const elementId = `web-stories-${handle}-font-css`;
-
-    const hasFontLink = () => document.getElementById(elementId);
-
-    if (hasFontLink()) {
-      return;
-    }
-
-    switch (service) {
-      case 'fonts.google.com':
-        await loadStylesheet(getGoogleFontURL([{ family, variants }], 'auto'));
-        break;
-      case 'custom':
-        await loadInlineStylesheet(elementId, url, family);
-        break;
-      default:
-        return;
-    }
-  }, []);
-
   /**
-   * Enqueue a list of given fonts by adding <link> or <style> elements.
+   * Adds a <link> element to the <head> for a given font in case there is none yet.
    *
    * Allows dynamically enqueuing font styles when needed.
    *
    * @param {Array} fonts An array of fonts properties to create a valid FontFaceSet to inject and preload a font-face
-   * @return {Promise<boolean>} Returns fonts loaded promise
+   * @return {Promise} Returns fonts loaded promise
    */
-  const maybeEnqueueFontStyle = useCallback(
-    (fonts) => {
-      return Promise.allSettled(
-        fonts.map(async ({ font, fontWeight, fontStyle, content }) => {
-          const { family, service } = font;
-          if (!family || service === 'system') {
-            return null;
-          }
+  const maybeEnqueueFontStyle = useCallback((fonts) => {
+    return Promise.all(
+      fonts
+        .map(
+          async ({
+            font: { family, service, variants },
+            fontWeight,
+            fontStyle,
+            content,
+          }) => {
+            if (!family || service !== 'fonts.google.com') {
+              return null;
+            }
 
-          const fontFaceSet = `
+            const handle = cleanForSlug(family);
+            const elementId = `${handle}-css`;
+            const fontFaceSet = `
               ${fontStyle || ''} ${fontWeight || ''} 0 '${family}'
             `.trim();
 
-          await maybeLoadFont(font);
+            const hasFontLink = () => document.getElementById(elementId);
 
-          return ensureFontLoaded(fontFaceSet, content);
-        })
-      );
-    },
-    [maybeLoadFont]
-  );
+            const appendFontLink = () => {
+              return new Promise((resolve, reject) => {
+                const src = getGoogleFontURL([{ family, variants }], 'auto');
+                const fontStylesheet = document.createElement('link');
+                fontStylesheet.id = elementId;
+                fontStylesheet.href = src;
+                fontStylesheet.rel = 'stylesheet';
+                fontStylesheet.type = 'text/css';
+                fontStylesheet.media = 'all';
+                fontStylesheet.crossOrigin = 'anonymous';
+                fontStylesheet.addEventListener('load', () => resolve());
+                fontStylesheet.addEventListener('error', (e) => reject(e));
+                document.head.appendChild(fontStylesheet);
+              });
+            };
 
-  return {
-    maybeEnqueueFontStyle,
-    maybeLoadFont,
-  };
+            const ensureFontLoaded = () => {
+              if (!document?.fonts) {
+                return Promise.resolve();
+              }
+
+              return document.fonts
+                .load(fontFaceSet, content || '')
+                .then(() => document.fonts.check(fontFaceSet, content || ''));
+            };
+
+            if (!hasFontLink()) {
+              await appendFontLink();
+            }
+
+            return ensureFontLoaded();
+          }
+        )
+        .map(reflect)
+    );
+  }, []);
+
+  return maybeEnqueueFontStyle;
 }
 
 export default useLoadFontFiles;

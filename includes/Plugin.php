@@ -91,7 +91,6 @@ class Plugin extends ServiceBasedPlugin {
 		'integrations.themes_support'  => Integrations\Core_Themes_Support::class,
 		'imgareaselect_patch'          => Admin\ImgAreaSelect_Patch::class,
 		'kses'                         => KSES::class,
-		'font_post_type'               => Font_Post_Type::class,
 		'page_template_post_type'      => Page_Template_Post_Type::class,
 		'plugin_row_meta'              => Admin\PluginRowMeta::class,
 		'plugin_action_links'          => Admin\PluginActionLinks::class,

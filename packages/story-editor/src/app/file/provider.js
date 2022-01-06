@@ -17,28 +17,34 @@
 /**
  * External dependencies
  */
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
+import { useCallback } from '@web-stories-wp/react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { curatedFontNames } from '..';
+import Context from './context';
 
-describe('Curated fonts', () => {
-  const fonts = JSON.parse(
-    readFileSync(
-      resolve(process.cwd(), 'packages/fonts/src/fonts.json'),
-      'utf8'
-    )
+function FileProvider({ children }) {
+  const getFonts = useCallback(
+    () =>
+      import(
+        /* webpackChunkName: "chunk-fonts" */ '@web-stories-wp/fonts/src/fonts.json'
+      ).then((res) => res.default),
+    []
   );
-  const fontNames = fonts.map(({ family }) => family);
+  const state = {
+    state: {},
+    actions: {
+      getFonts,
+    },
+  };
 
-  // @see https://github.com/google/web-stories-wp/issues/3880
-  it.each(curatedFontNames)(
-    '%s font should exist in global fonts list',
-    (fontName) => {
-      expect(fontNames).toContain(fontName);
-    }
-  );
-});
+  return <Context.Provider value={state}>{children}</Context.Provider>;
+}
+
+FileProvider.propTypes = {
+  children: PropTypes.node,
+};
+
+export default FileProvider;

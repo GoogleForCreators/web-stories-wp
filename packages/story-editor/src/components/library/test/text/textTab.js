@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { fireEvent, screen, waitFor } from '@testing-library/react';
-import { CURATED_FONT_NAMES } from '@web-stories-wp/fonts';
+import { curatedFontNames } from '@web-stories-wp/fonts';
 
 /**
  * Internal dependencies
@@ -48,7 +48,7 @@ describe('TextTab', () => {
 
   it('should insert text with default text style on shortcut click', async () => {
     const availableCuratedFonts = fontsListResponse.filter(
-      (font) => CURATED_FONT_NAMES.indexOf(font.name) > 0
+      (font) => curatedFontNames.indexOf(font.name) > 0
     );
 
     const fontContextValues = {

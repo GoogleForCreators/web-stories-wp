@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,18 +17,14 @@
 /**
  * External dependencies
  */
-import { addQueryArgs } from '@web-stories-wp/design-system';
-
+import { identity, useContextSelector } from '@web-stories-wp/react';
 /**
- * WordPress dependencies
+ * Internal dependencies
  */
-import apiFetch from '@wordpress/api-fetch';
+import Context from './context';
 
-export function getFonts(config, { include, search }) {
-  return apiFetch({
-    path: addQueryArgs(`${config.api.fonts}`, {
-      include,
-      search,
-    }),
-  });
+function useFile(selector) {
+  return useContextSelector(Context, selector ?? identity);
 }
+
+export default useFile;

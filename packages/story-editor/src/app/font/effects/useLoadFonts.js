@@ -17,28 +17,34 @@
 /**
  * External dependencies
  */
-import { readFileSync } from 'fs';
-import { resolve } from 'path';
+import { useEffect } from '@web-stories-wp/react';
 
 /**
  * Internal dependencies
  */
-import { curatedFontNames } from '..';
+import { useFile } from '../../file';
 
-describe('Curated fonts', () => {
-  const fonts = JSON.parse(
-    readFileSync(
-      resolve(process.cwd(), 'packages/fonts/src/fonts.json'),
-      'utf8'
-    )
-  );
-  const fontNames = fonts.map(({ family }) => family);
+function useLoadFonts({ fonts, setFonts }) {
+  const fontsLength = fonts.length;
+  const {
+    actions: { getFonts },
+  } = useFile();
+  useEffect(() => {
+    async function loadFonts() {
+      const newFonts = await getFonts();
+      const formattedFonts = newFonts.map((font) => ({
+        id: font.family,
+        name: font.family,
+        value: font.family,
+        ...font,
+      }));
 
-  // @see https://github.com/google/web-stories-wp/issues/3880
-  it.each(curatedFontNames)(
-    '%s font should exist in global fonts list',
-    (fontName) => {
-      expect(fontNames).toContain(fontName);
+      setFonts(formattedFonts);
     }
-  );
-});
+    if (!fontsLength) {
+      loadFonts();
+    }
+  }, [fontsLength, setFonts, getFonts]);
+}
+
+export default useLoadFonts;
