@@ -34,7 +34,6 @@ import { generatePatternStyles } from '@web-stories-wp/patterns';
 /**
  * Internal dependencies
  */
-import { FileProvider } from '../app/file';
 import { FontProvider } from '../app/font';
 import DisplayElement from '../components/canvas/displayElement';
 import { TransformProvider } from '../components/transform';
@@ -66,30 +65,28 @@ const PageWithDependencies = forwardRef(function PageWithDependencies(
 ) {
   return (
     <ThemeProvider theme={ds_theme}>
-      <FileProvider>
-        <FontProvider>
-          <TransformProvider>
-            <UnitsProvider
-              pageSize={{
-                width,
-                height,
-              }}
-            >
-              <Page ref={ref} height={height} width={width}>
-                <PreviewWrapper background={page.backgroundColor}>
-                  {page.elements.map((element) => (
-                    <DisplayElement
-                      key={element.id}
-                      previewMode
-                      element={element}
-                    />
-                  ))}
-                </PreviewWrapper>
-              </Page>
-            </UnitsProvider>
-          </TransformProvider>
-        </FontProvider>
-      </FileProvider>
+      <FontProvider>
+        <TransformProvider>
+          <UnitsProvider
+            pageSize={{
+              width,
+              height,
+            }}
+          >
+            <Page ref={ref} height={height} width={width}>
+              <PreviewWrapper background={page.backgroundColor}>
+                {page.elements.map((element) => (
+                  <DisplayElement
+                    key={element.id}
+                    previewMode
+                    element={element}
+                  />
+                ))}
+              </PreviewWrapper>
+            </Page>
+          </UnitsProvider>
+        </TransformProvider>
+      </FontProvider>
     </ThemeProvider>
   );
 });
