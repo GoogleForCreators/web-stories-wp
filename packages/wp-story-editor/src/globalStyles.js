@@ -13,5 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './tips';
-export * from './wpAdmin.js';
+/**
+ * External dependencies
+ */
+import { createGlobalStyle } from 'styled-components';
+import { OVERLAY_CLASS } from '@web-stories-wp/design-system';
+
+/**
+ * Internal dependencies
+ */
+import { TOOLBAR_HEIGHT, MENU_WIDTH, MENU_FOLDED_WIDTH } from './constants';
+
+const GlobalStyles = createGlobalStyle`
+  .${OVERLAY_CLASS} {
+    top: ${TOOLBAR_HEIGHT}px !important;
+    left: ${MENU_WIDTH}px !important;
+  }
+
+  body.folded .${OVERLAY_CLASS} {
+    left: ${MENU_FOLDED_WIDTH}px !important;
+  }
+`;
+
+export default GlobalStyles;

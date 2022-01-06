@@ -86,7 +86,12 @@ function getNewTemplatesMetaData(metaDataEntries, days) {
 
 function LeftRail() {
   const { state } = useRouteHistory();
-  const { newStoryURL, version, leftRailSecondaryNavigation } = useConfig();
+  const {
+    newStoryURL,
+    version,
+    leftRailSecondaryNavigation,
+    styleConstants: { topOffset },
+  } = useConfig();
   const leftRailRef = useRef(null);
   const upperContentRef = useRef(null);
 
@@ -159,6 +164,7 @@ function LeftRail() {
       onClickCapture={onContainerClickCapture}
       ref={leftRailRef}
       isOpen={sideBarVisible}
+      topOffset={topOffset}
       role="navigation"
       aria-label={__('Main dashboard navigation', 'web-stories')}
     >
