@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,20 +17,13 @@
 /**
  * External dependencies
  */
-import { visitDashboard, takeSnapshot } from '@web-stories-wp/e2e-test-utils';
+import percySnapshot from '@percy/puppeteer';
 
-describe('Stories Dashboard with disabled JavaScript', () => {
-  it('should display error message', async () => {
-    // Disable javascript for test.
-    await page.setJavaScriptEnabled(false);
+async function takeSnapshot(page, name, options) {
+  if (!process.env?.PERCY_TOKEN) {
+    return;
+  }
+  await percySnapshot(page, name, options);
+}
 
-    await visitDashboard();
-
-    await expect(page).toMatchElement('.web-stories-wp-no-js');
-
-    // Re-enable javascript for snapshots.
-    await page.setJavaScriptEnabled(true);
-
-    await takeSnapshot(page, 'Dashboard no js');
-  });
-});
+export default takeSnapshot;
