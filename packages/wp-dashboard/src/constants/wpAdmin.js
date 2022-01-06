@@ -15,3 +15,5 @@
  */
 
 export const TOOLBAR_HEIGHT = 32;
+export const MENU_WIDTH = 160;
+export const MENU_FOLDED_WIDTH = 36;
