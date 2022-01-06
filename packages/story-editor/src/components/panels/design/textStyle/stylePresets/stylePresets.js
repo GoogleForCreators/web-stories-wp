@@ -27,6 +27,7 @@ import {
   Icons,
   Button,
   PLACEMENT,
+  Popup,
 } from '@web-stories-wp/design-system';
 import { __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
@@ -39,7 +40,6 @@ import { useStory } from '../../../../../app';
 import { PRESET_TYPES } from '../../../../../constants';
 import useAddPreset from '../../../../../utils/useAddPreset';
 import { focusStyle } from '../../../shared';
-import Popup from '../../../../popup';
 import useInspector from '../../../../inspector/useInspector';
 import useApplyStyle from './useApplyStyle';
 import StyleGroup from './styleGroup';

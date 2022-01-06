@@ -38,13 +38,12 @@ import {
   THEME_CONSTANTS,
   Swatch,
   PLACEMENT,
+  Popup,
 } from '@web-stories-wp/design-system';
-
 /**
  * Internal dependencies
  */
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../constants';
-import Popup from '../../popup';
 import ColorPicker from '../../colorPicker';
 import useInspector from '../../inspector/useInspector';
 import DefaultTooltip from '../../tooltip';

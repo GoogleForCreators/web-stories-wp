@@ -29,13 +29,12 @@ import {
 import { CSSTransition } from 'react-transition-group';
 import { __ } from '@web-stories-wp/i18n';
 import { rgba } from 'polished';
-import { Icons, useKeyDownEffect } from '@web-stories-wp/design-system';
+import { Icons, useKeyDownEffect, Popup } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import Popup from '../../components/popup';
 import { useConfig } from '../../app/config';
 
 const PLAY_BUTTON_SIZE = 82;

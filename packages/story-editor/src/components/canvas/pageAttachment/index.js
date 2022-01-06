@@ -20,12 +20,11 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
-
+import { Popup } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
 import { useCanvas } from '../../../app';
-import Popup from '../../popup';
 import useElementsWithLinks from '../../../utils/useElementsWithLinks';
 import { OUTLINK_THEME } from '../../../constants';
 import { ReactComponent as DefaultIcon } from './defaultIcon.svg';
