@@ -24,7 +24,7 @@ import { OVERLAY_CLASS } from '@web-stories-wp/design-system';
  */
 import { TOOLBAR_HEIGHT, MENU_WIDTH, MENU_FOLDED_WIDTH } from './constants';
 
-const GlobalStyles = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle`
   .${OVERLAY_CLASS} {
     top: ${TOOLBAR_HEIGHT}px !important;
     left: ${MENU_WIDTH}px !important;
@@ -34,5 +34,3 @@ const GlobalStyles = createGlobalStyle`
     left: ${MENU_FOLDED_WIDTH}px !important;
   }
 `;
-
-export default GlobalStyles;

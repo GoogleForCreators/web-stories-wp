@@ -49,7 +49,7 @@ import {
 import getApiCallbacks from './api/utils/getApiCallbacks';
 import { transformGetStoryResponse } from './api/utils';
 import { TIPS, TOOLBAR_HEIGHT, MENU_WIDTH } from './constants';
-import GlobalStyles from './globalStyles.js';
+import { GlobalStyle } from './theme.js';
 
 window.webStories = window.webStories || {};
 window.webStories.domReady = domReady;
@@ -89,7 +89,7 @@ window.webStories.initializeStoryEditor = (id, config, initialEdits) => {
   render(
     <StrictMode>
       <StoryEditor config={editorConfig} initialEdits={initialEdits}>
-        <GlobalStyles />
+        <GlobalStyle />
         <Layout />
         <PostPublishDialog />
         <StatusCheck />

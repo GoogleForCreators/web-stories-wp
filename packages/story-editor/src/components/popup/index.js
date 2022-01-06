@@ -60,7 +60,7 @@ const Container = styled.div.attrs(
   position: fixed;
   z-index: 2;
   overflow-y: auto;
-  max-height: ${(props) => `calc(100vh - ${props.topOffset}px)`};
+  max-height: ${({ topOffset }) => `calc(100vh - ${topOffset}px)`};
 `;
 
 function Popup({
