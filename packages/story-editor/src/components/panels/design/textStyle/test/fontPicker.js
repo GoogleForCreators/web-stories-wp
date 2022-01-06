@@ -18,12 +18,9 @@
  * External dependencies
  */
 import { fireEvent, waitFor, screen } from '@testing-library/react';
-import { curatedFontNames } from '@web-stories-wp/fonts';
 import { Datalist } from '@web-stories-wp/design-system';
+import { CURATED_FONT_NAMES } from '@web-stories-wp/fonts';
 
-/**
- * Internal dependencies
- */
 /**
  * Internal dependencies
  */
@@ -40,13 +37,14 @@ const fonts = fontsListResponse.map((font) => {
   return { ...font, id: font.name };
 });
 const availableCuratedFonts = fonts.filter(
-  (font) => curatedFontNames.indexOf(font.name) > 0
+  (font) => CURATED_FONT_NAMES.indexOf(font.name) > 0
 );
 
 function arrange(options) {
   const fontContextValues = {
     actions: {
       ensureMenuFontsLoaded: () => {},
+      ensureCustomFontsLoaded: () => {},
     },
   };
   const props = {

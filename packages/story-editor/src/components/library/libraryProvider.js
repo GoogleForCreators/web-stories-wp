@@ -35,7 +35,7 @@ import { uniqueEntriesByKey } from '@web-stories-wp/design-system';
  */
 import { useInsertElement, useInsertTextSet } from '../canvas';
 import { useHighlights } from '../../app/highlights';
-import { useConfig } from '../../app';
+import { useConfig, useAPI } from '../../app';
 import Context from './context';
 import {
   ELEMS,
@@ -51,7 +51,11 @@ const LIBRARY_TAB_IDS = new Set(
 );
 
 function LibraryProvider({ children }) {
-  const [tab, setTab] = useState(MEDIA.id);
+  const { showMedia3p } = useConfig();
+  const {
+    actions: { getMedia },
+  } = useAPI();
+  const showMedia = Boolean(getMedia); // Do not show media tab if getMedia api callback is not provided.
   const [textSets, setTextSets] = useState({});
   const [areTextSetsLoading, setAreTextSetsLoading] = useState({});
   const [savedTemplates, _setSavedTemplates] = useState(null);
@@ -72,12 +76,27 @@ function LibraryProvider({ children }) {
     []
   );
 
+  const { showElementsTab } = useFeatures();
+
+  const tabs = useMemo(
+    // Order here is important, as it denotes the actual visual order of elements.
+    () =>
+      [
+        showMedia && MEDIA,
+        showMedia3p && MEDIA3P,
+        TEXT,
+        SHAPES,
+        showElementsTab && ELEMS,
+        PAGE_TEMPLATES,
+      ].filter(Boolean),
+    [showMedia3p, showElementsTab, showMedia]
+  );
+
+  const [tab, setTab] = useState(tabs[0].id);
+
   const insertElement = useInsertElement();
   const { insertTextSet, insertTextSetByOffset } =
     useInsertTextSet(shouldUseSmartColor);
-
-  const { showElementsTab } = useFeatures();
-  const { showMedia3p } = useConfig();
 
   const { highlightedTab } = useHighlights(({ tab: highlightedTab }) => ({
     highlightedTab,
@@ -109,20 +128,6 @@ function LibraryProvider({ children }) {
       [PAGE_TEMPLATES.id]: pageTemplatesTabRef,
     }),
     []
-  );
-
-  const tabs = useMemo(
-    // Order here is important, as it denotes the actual visual order of elements.
-    () =>
-      [
-        MEDIA,
-        showMedia3p && MEDIA3P,
-        TEXT,
-        SHAPES,
-        showElementsTab && ELEMS,
-        PAGE_TEMPLATES,
-      ].filter(Boolean),
-    [showMedia3p, showElementsTab]
   );
 
   const state = useMemo(

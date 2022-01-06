@@ -37,6 +37,19 @@ describe('Inspector Tabs integration', () => {
     fixture.restore();
   });
 
+  describe('Inspector Tabs aXe tests', () => {
+    it('should have no aXe violations', async () => {
+      const { documentTab } = fixture.editor.inspector;
+
+      // Click document tab
+      await fixture.events.click(documentTab);
+      // actual color contrast of toggle is 7.1 however it's set on a child span absolutely positioned so aXe doesn't pick it up
+      await expectAsync(
+        fixture.editor.inspector.documentPanel.node
+      ).toHaveNoViolations();
+    });
+  });
+
   describe('keyboard navigation', () => {
     it('should return focus to current tab when pressing mod+alt+3', async () => {
       const { documentTab } = fixture.editor.inspector;

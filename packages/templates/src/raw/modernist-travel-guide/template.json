@@ -29,6 +29,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#d3cdc7",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/modernist-travel-guide/page01_image01.png",
             "width": 720,
             "height": 720,

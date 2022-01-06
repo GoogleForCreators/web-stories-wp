@@ -215,7 +215,7 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller implemen
 			}
 		}
 
-		/* This filter is documented in wp-includes/rest-api/endpoints/class-wp-rest-autosaves-controller.php */
+		/** This filter is documented in wp-includes/rest-api/endpoints/class-wp-rest-autosaves-controller.php */
 		return apply_filters( 'rest_prepare_autosave', $response, $post, $request );
 	}
 

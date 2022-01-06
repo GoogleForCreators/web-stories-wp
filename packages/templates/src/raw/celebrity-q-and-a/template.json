@@ -278,6 +278,7 @@
             "type": "image",
             "mimeType": "image/jpeg",
             "creationDate": "2021-07-21T11:00:52",
+            "baseColor": "#ceb4b5",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/celebrity-q-and-a/page2_img1.jpg",
             "width": 1080,
             "height": 1620,

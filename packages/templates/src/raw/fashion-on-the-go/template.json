@@ -37,6 +37,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#252521",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fashion-on-the-go/page1_hero.jpg",
             "width": 220,
             "height": 297,
@@ -86,6 +87,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#040404",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fashion-on-the-go/page1_logo-generic.png",
             "width": 32,
             "height": 10,
@@ -369,6 +371,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#6e472e",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fashion-on-the-go/page3_bg.jpg",
             "width": 220,
             "height": 261,
@@ -1233,6 +1236,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#dd4546",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fashion-on-the-go/page5_handbag-alt.png",
             "width": 272,
             "height": 251,
@@ -2054,6 +2058,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#b38c81",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fashion-on-the-go/page7_hero.jpg",
             "width": 220,
             "height": 274,
@@ -2287,6 +2292,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#dbd4cd",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fashion-on-the-go/page8_bg.jpg",
             "width": 220,
             "height": 291,
@@ -2876,6 +2882,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#4b5c68",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fashion-on-the-go/page9_item1-cropped.png",
             "width": 43,
             "height": 43,
@@ -2907,6 +2914,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#bbb8b7",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fashion-on-the-go/page9_item2.jpg",
             "width": 220,
             "height": 331,
@@ -2938,6 +2946,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#959188",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fashion-on-the-go/page9_item3.jpg",
             "width": 229,
             "height": 157,
@@ -2966,6 +2975,7 @@
             "type": "image",
             "mimeType": "image/jpeg",
             "creationDate": "2020-06-29T20:54:29",
+            "baseColor": "#bdb8af",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fashion-on-the-go/page9_item4.jpg",
             "width": 330,
             "height": 494,

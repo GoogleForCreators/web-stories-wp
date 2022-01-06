@@ -148,6 +148,21 @@ describe('raw template files', () => {
       }
     });
 
+    it('images and videos should have baseColor', () => {
+      for (const { elements } of templateData.pages) {
+        for (const element of elements) {
+          // eslint-disable-next-line jest/no-if
+          if (!['image', 'video', 'gif'].includes(element?.type)) {
+            continue;
+          }
+
+          expect(element?.resource?.baseColor).toStrictEqual(
+            expect.stringMatching(/^#(?:[0-9a-fA-F]{3}){1,2}$/)
+          );
+        }
+      }
+    });
+
     it('should contain only valid stickers', () => {
       for (const { elements } of templateData.pages) {
         for (const element of elements) {

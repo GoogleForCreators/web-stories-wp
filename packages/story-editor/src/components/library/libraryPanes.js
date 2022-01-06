@@ -17,6 +17,7 @@
  * Internal dependencies
  */
 import { styles, useHighlights } from '../../app/highlights';
+import { useAPI } from '../../app';
 import useLibrary from './useLibrary';
 import { Pane, getTabId } from './panes/shared';
 import {
@@ -39,6 +40,10 @@ function LibraryPanes() {
     tab: state.state.tab,
     tabs: state.data.tabs,
   }));
+  const {
+    actions: { getMedia },
+  } = useAPI();
+  const showMediaPane = Boolean(getMedia);
 
   const highlighted = useHighlights(({ ...highlighted }) => highlighted);
 
@@ -60,12 +65,12 @@ function LibraryPanes() {
 
     switch (id) {
       case MEDIA.id:
-        return (
+        return showMediaPane ? (
           <MediaPane
             css={mediaHighlights?.showEffect && styles.FLASH}
             {...paneProps}
           />
-        );
+        ) : null;
       case MEDIA3P.id:
         return (
           <Media3pPane

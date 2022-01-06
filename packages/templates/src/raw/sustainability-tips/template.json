@@ -39,6 +39,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
+            "baseColor": "#ede6cc",
             "isExternal": true
           },
           "type": "image",
@@ -355,6 +356,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
+            "baseColor": "#dfd2ae",
             "isExternal": true
           },
           "type": "image",
@@ -577,6 +579,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
+            "baseColor": "#5d6063",
             "isExternal": true
           }
         },
@@ -740,6 +743,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
+            "baseColor": "#efd0b5",
             "isExternal": true
           },
           "type": "image",
@@ -962,6 +966,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
+            "baseColor": "#9ea199",
             "isExternal": true
           }
         },
@@ -1126,6 +1131,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
+            "baseColor": "#c5c69b",
             "isExternal": true
           },
           "type": "image",
@@ -1350,6 +1356,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
+            "baseColor": "#a4998d",
             "isExternal": true
           }
         },
@@ -1514,6 +1521,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
+            "baseColor": "#e7cda3",
             "isExternal": true
           },
           "type": "image",
@@ -1736,6 +1744,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
+            "baseColor": "#bfb3b1",
             "isExternal": true
           }
         },
@@ -1900,6 +1909,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
+            "baseColor": "#ebd6b4",
             "isExternal": true
           },
           "type": "image",
@@ -2114,6 +2124,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
+            "baseColor": "#6e5a46",
             "isExternal": true
           }
         },
@@ -2503,6 +2514,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
+            "baseColor": "#47443f",
             "isExternal": true
           },
           "type": "image",
