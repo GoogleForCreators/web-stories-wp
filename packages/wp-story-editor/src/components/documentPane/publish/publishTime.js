@@ -29,11 +29,11 @@ import {
   DropDownSelect,
   PLACEMENT,
   useKeyDownEffect,
+  Popup,
 } from '@web-stories-wp/design-system';
 import {
   DateTime,
   Row,
-  Popup,
   useStory,
   focusStyle,
 } from '@web-stories-wp/story-editor';
