@@ -252,13 +252,10 @@ async function getOverlapBgColor({ bgImage, bgBox, overlapBox }) {
   cropCanvas.width = overlapBox.width; // size of the new image / text container
   cropCanvas.height = overlapBox.height;
   const cropCtx = cropCanvas.getContext('2d');
-  const cropImage = new Image();
-  cropImage.crossOrigin = 'anonymous';
   cropCtx.putImageData(imgData, 0, 0);
-  cropImage.src = cropCanvas.toDataURL();
 
   const hexColor = await getMediaBaseColor(
-    cropImage.src,
+    cropCanvas.toDataURL(),
     cropCanvas.width,
     cropCanvas.height
   );
