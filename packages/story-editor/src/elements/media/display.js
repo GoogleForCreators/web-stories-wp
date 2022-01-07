@@ -60,6 +60,7 @@ function MediaDisplay({
   previewMode,
   showPlaceholder = false,
 }) {
+  console.log('media display has children? ', Boolean(children));
   const {
     id,
     resource,
