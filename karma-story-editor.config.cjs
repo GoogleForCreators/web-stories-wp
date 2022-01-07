@@ -48,6 +48,7 @@ module.exports = function (config) {
       'karma-sourcemap-loader',
       'karma-webpack',
       'karma-coverage-istanbul-reporter',
+      'karma-verbose-reporter',
       require('@web-stories-wp/karma-puppeteer-launcher'),
       require('@web-stories-wp/karma-puppeteer-client'),
       require('@web-stories-wp/karma-failed-tests-reporter'),
@@ -100,7 +101,8 @@ module.exports = function (config) {
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
     reporters: [
-      'dots',
+      'progress',
+      // 'verbose',
       '@web-stories-wp/karma-failed-tests-reporter',
       config.coverage && 'coverage-istanbul',
     ].filter(Boolean),
@@ -167,7 +169,7 @@ module.exports = function (config) {
 
     // Prevent duplicate logging to console
     browserConsoleLogOptions: {
-      terminal: false,
+      terminal: true,
     },
 
     // When a browser crashes,try to relaunch more than just 2 times (which is the default)

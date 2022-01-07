@@ -40,6 +40,7 @@ describe('Carousel integration', () => {
     ]);
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log('🍉🍉🍉🍉🍉🍉 Carousel integration');
 
     const insertElement = await fixture.renderHook(() => useInsertElement());
     element1 = await fixture.act(() =>

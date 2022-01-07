@@ -29,7 +29,7 @@ describe('Image Editor', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
-
+    console.log('🍉🍉🍉🍉🍉🍉 Image Editor');
     // Add first image to canvas
     await fixture.events.click(fixture.editor.library.media.item(0));
 

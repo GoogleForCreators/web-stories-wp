@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-describe('CUJ: Creator can Add and Write Text: Delete textbox', () => {
-  describe('when a textbox is selected', () => {
-    it('should be removed when pressing backspace', () => {
+xdescribe('CUJ: Creator can Add and Write Text: Delete textbox', () => {
+  xdescribe('when a textbox is selected', () => {
+    xit('should be removed when pressing backspace', () => {
       // Implementation goes here
     });
 
-    it('should be removed when pressing delete', () => {
+    xit('should be removed when pressing delete', () => {
       // Implementation goes here
     });
   });

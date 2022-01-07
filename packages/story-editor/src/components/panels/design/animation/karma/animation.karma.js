@@ -33,6 +33,7 @@ describe('Animation Panel', function () {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log('🍉🍉🍉🍉🍉🍉 Animation Panel');
   });
 
   afterEach(() => {

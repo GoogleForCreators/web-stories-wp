@@ -33,6 +33,7 @@ describe('Multi-selection Moveable integration', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log('🍉🍉🍉🍉🍉🍉 Multi-selection Moveable integration');
   });
 
   afterEach(() => {

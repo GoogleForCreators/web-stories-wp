@@ -31,6 +31,7 @@ describe('Image resource loading integration', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log('🍉🍉🍉🍉🍉🍉 Image resource loading integration');
   });
 
   afterEach(() => {

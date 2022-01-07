@@ -33,6 +33,7 @@ describe('RTL support', () => {
     fixture.setConfig({ isRTL: true });
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log('🍉🍉🍉🍉🍉🍉 RTL support');
   });
 
   afterEach(() => {

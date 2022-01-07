@@ -36,6 +36,9 @@ describe('Pre-publish checklist select offending elements onClick', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log(
+      '🍉🍉🍉🍉🍉🍉 Pre-publish checklist select offending elements onClick'
+    );
     insertElement = await fixture.renderHook(() => useInsertElement());
   });
 

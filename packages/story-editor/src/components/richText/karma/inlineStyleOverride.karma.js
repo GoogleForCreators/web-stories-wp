@@ -30,7 +30,7 @@ describe('Inline style override', () => {
     data.fixture = new Fixture();
     await data.fixture.render();
     await data.fixture.collapseHelpCenter();
-
+    console.log('🍉🍉🍉🍉🍉🍉 Inline style override');
     // Add a text box
     await addInitialText();
 

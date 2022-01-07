@@ -35,6 +35,7 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log('🍉🍉🍉🍉🍉🍉 CUJ: Page Templates: Custom Saved Templates');
   });
 
   afterEach(() => {

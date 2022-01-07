@@ -30,7 +30,7 @@ describe('Lasso integration', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
-
+    console.log('🍉🍉🍉🍉🍉🍉 Lasso integration');
     const insertElement = await fixture.renderHook(() => useInsertElement());
     element1 = await fixture.act(() =>
       insertElement('text', {

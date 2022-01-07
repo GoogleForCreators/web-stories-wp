@@ -41,7 +41,7 @@ describe('Right Click Menu integration', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
-
+    console.log('🍉🍉🍉🍉🍉🍉 Right Click Menu integration');
     insertElement = await fixture.renderHook(() => useInsertElement());
   });
 

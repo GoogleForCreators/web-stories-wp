@@ -42,6 +42,9 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
     data.fixture = new Fixture();
     await data.fixture.render();
     await data.fixture.collapseHelpCenter();
+    console.log(
+      '🍉🍉🍉🍉🍉🍉 CUJ: Creator can Add and Write Text: Select an individual word to edit'
+    );
 
     // Add a text box
     await addInitialText();

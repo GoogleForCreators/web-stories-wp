@@ -34,6 +34,7 @@ describe('Layer Panel', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log('🍉🍉🍉🍉🍉🍉 Layer Panel');
     layerPanel = fixture.editor.inspector.designPanel.layerPanel;
 
     insertElement = await fixture.renderHook(() => useInsertElement());

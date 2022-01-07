@@ -28,6 +28,7 @@ describe('Canvas Keyboard Shortcuts', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log('🍉🍉🍉🍉🍉🍉 Canvas Keyboard Shortcuts');
 
     // Let's insert three images
     await fixture.events.click(fixture.editor.library.media.item(0));

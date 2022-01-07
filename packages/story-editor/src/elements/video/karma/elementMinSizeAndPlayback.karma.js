@@ -27,6 +27,7 @@ describe('Element min size and playback', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log('🍉🍉🍉🍉🍉🍉 Element min size and playback');
   });
 
   afterEach(() => {

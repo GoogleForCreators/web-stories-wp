@@ -31,6 +31,7 @@ describe('Video Accessibility Panel', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log('🍉🍉🍉🍉🍉🍉 Video Accessibility Panel');
   });
 
   afterEach(() => {

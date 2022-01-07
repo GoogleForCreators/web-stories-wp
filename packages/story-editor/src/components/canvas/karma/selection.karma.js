@@ -33,7 +33,9 @@ describe('CUJ: Creator can Transform an Element: Selection integration', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
-
+    console.log(
+      '🍉🍉🍉🍉🍉🍉 CUJ: Creator can Transform an Element: Selection integration'
+    );
     fullbleed = fixture.container.querySelector('[data-testid="fullbleed"]');
   });
 

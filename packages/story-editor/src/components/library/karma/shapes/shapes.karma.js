@@ -33,6 +33,7 @@ describe('Shape library integration', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log('🍉🍉🍉🍉🍉🍉 Shape library integration');
   });
 
   afterEach(() => {
@@ -102,6 +103,7 @@ describe('Sticker library integration', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log('🍉🍉🍉🍉🍉🍉 Sticker library integration');
   });
 
   afterEach(() => {

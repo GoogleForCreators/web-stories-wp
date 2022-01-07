@@ -32,6 +32,7 @@ describe('Background Copy Paste integration', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log('🍉🍉🍉🍉🍉🍉Background Copy Paste integration');
 
     await addNewPage();
 

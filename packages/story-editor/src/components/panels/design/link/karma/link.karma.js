@@ -35,6 +35,7 @@ describe('Link Panel', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log('🍉🍉🍉🍉🍉🍉 Link Panel');
   });
 
   afterEach(() => {

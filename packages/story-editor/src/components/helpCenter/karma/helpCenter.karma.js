@@ -31,6 +31,7 @@ describe('Help Center integration', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    console.log('🍉🍉🍉🍉🍉🍉 Help Center integration');
   });
 
   afterEach(() => {

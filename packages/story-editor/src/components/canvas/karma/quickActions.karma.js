@@ -38,6 +38,7 @@ describe('Quick Actions integration', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log('🍉🍉🍉🍉🍉🍉 Quick Actions integration');
   });
 
   afterEach(() => {

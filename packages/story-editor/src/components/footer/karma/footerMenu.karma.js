@@ -26,6 +26,7 @@ describe('Footer menu', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log('🍉🍉🍉🍉🍉🍉 Footer menu');
   });
 
   afterEach(() => {
