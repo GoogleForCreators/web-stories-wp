@@ -90,7 +90,7 @@ const ALLOWED_ERROR_MESSAGES = [
   // Another Firefox warning.
   'Layout was forced before the page was fully loaded',
 
-  // Upsteam issue in gutenberg and twentytwenty theme. 
+  // Upsteam issue in gutenberg and twentytwenty theme.
   'Stylesheet twentytwenty-block-editor-styles-css was not properly added.',
 
   // deprecated notice in 5.9.
