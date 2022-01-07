@@ -26,7 +26,6 @@ import {
   act,
   screen,
   waitFor,
-  cleanup,
 } from '@testing-library/react';
 import { setAppElement } from '@web-stories-wp/design-system';
 import { FixtureEvents } from '@web-stories-wp/karma-fixture';
@@ -234,8 +233,6 @@ export class Fixture {
   restore() {
     window.location.hash = '#';
     localStorage.clear();
-    cleanup();
-    window.location.reload();
   }
 
   get container() {
@@ -679,6 +676,11 @@ class APIProviderFixture {
         []
       );
 
+      const getPosterMediaById = useCallback(
+        () => jasmine.createSpy('getPosterMediaById').and.returnValue(null),
+        []
+      );
+
       const getLinkMetadata = useCallback(
         () =>
           asyncResponse({
@@ -1069,6 +1071,7 @@ class APIProviderFixture {
           deletePageTemplate,
           getPageTemplates,
           getCurrentUser,
+          getPosterMediaById,
           updateCurrentUser,
           getTaxonomyTerm,
           createTaxonomyTerm,
