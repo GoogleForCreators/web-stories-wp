@@ -92,6 +92,7 @@ beforeAll(() => {
   jasmine.getEnv().addReporter({
     specStarted(result) {
       currentSpec = result;
+      console.info(currentSpec.fullName);
     },
     specDone() {
       currentSpec = null;
