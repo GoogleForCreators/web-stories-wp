@@ -17,14 +17,6 @@
 /**
  * External dependencies
  */
-import { identity, useContextSelector } from '@web-stories-wp/react';
-/**
- * Internal dependencies
- */
-import Context from './context';
+import { createContext } from '@web-stories-wp/react';
 
-function useFile(selector) {
-  return useContextSelector(Context, selector ?? identity);
-}
-
-export default useFile;
+export default createContext({ state: {}, actions: {} });

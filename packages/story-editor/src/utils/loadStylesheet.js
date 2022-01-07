@@ -14,13 +14,11 @@
  * limitations under the License.
  */
 
-function loadStylesheet(url, id) {
+function loadStylesheet(url) {
   return new Promise((resolve, reject) => {
     const link = document.createElement('link');
-    link.id = id;
     link.rel = 'stylesheet';
     link.href = url;
-    link.crossOrigin = 'anonymous';
     link.addEventListener('load', resolve);
     link.addEventListener('error', reject);
     document.head.appendChild(link);

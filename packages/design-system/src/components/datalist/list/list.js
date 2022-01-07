@@ -25,7 +25,6 @@ import {
   useLayoutEffect,
   useFocusOut,
   forwardRef,
-  memo,
 } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
@@ -59,9 +58,9 @@ const OptionList = forwardRef(function OptionList(
   {
     keyword = '',
     value = '',
-    onSelect = noop,
-    onClose = noop,
-    onExpandedChange = noop,
+    onSelect = () => {},
+    onClose = () => {},
+    onExpandedChange = () => {},
     focusTrigger = 0,
     options = [],
     primaryOptions,
@@ -164,7 +163,7 @@ const OptionList = forwardRef(function OptionList(
       // clear existing option references before next update to filteredGroup
       optionsRef.current = [];
     };
-  }, [observer, onObserve, filteredListGroups, renderer]);
+  }, [observer, onObserve, filteredListGroups]);
 
   /*
    * KEYBOARD ACCESSIBILITY
@@ -308,4 +307,4 @@ OptionList.propTypes = {
   focusSearch: PropTypes.func,
 };
 
-export default memo(OptionList);
+export default OptionList;

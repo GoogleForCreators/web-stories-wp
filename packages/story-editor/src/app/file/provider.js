@@ -17,14 +17,34 @@
 /**
  * External dependencies
  */
-import { identity, useContextSelector } from '@web-stories-wp/react';
+import { useCallback } from '@web-stories-wp/react';
+import PropTypes from 'prop-types';
+
 /**
  * Internal dependencies
  */
 import Context from './context';
 
-function useFile(selector) {
-  return useContextSelector(Context, selector ?? identity);
+function FileProvider({ children }) {
+  const getFonts = useCallback(
+    () =>
+      import(
+        /* webpackChunkName: "chunk-fonts" */ '@web-stories-wp/fonts/src/fonts.json'
+      ).then((res) => res.default),
+    []
+  );
+  const state = {
+    state: {},
+    actions: {
+      getFonts,
+    },
+  };
+
+  return <Context.Provider value={state}>{children}</Context.Provider>;
 }
 
-export default useFile;
+FileProvider.propTypes = {
+  children: PropTypes.node,
+};
+
+export default FileProvider;

@@ -17,14 +17,34 @@
 /**
  * External dependencies
  */
-import { identity, useContextSelector } from '@web-stories-wp/react';
+import { useEffect } from '@web-stories-wp/react';
+
 /**
  * Internal dependencies
  */
-import Context from './context';
+import { useFile } from '../../file';
 
-function useFile(selector) {
-  return useContextSelector(Context, selector ?? identity);
+function useLoadFonts({ fonts, setFonts }) {
+  const fontsLength = fonts.length;
+  const {
+    actions: { getFonts },
+  } = useFile();
+  useEffect(() => {
+    async function loadFonts() {
+      const newFonts = await getFonts();
+      const formattedFonts = newFonts.map((font) => ({
+        id: font.family,
+        name: font.family,
+        value: font.family,
+        ...font,
+      }));
+
+      setFonts(formattedFonts);
+    }
+    if (!fontsLength) {
+      loadFonts();
+    }
+  }, [fontsLength, setFonts, getFonts]);
 }
 
-export default useFile;
+export default useLoadFonts;
