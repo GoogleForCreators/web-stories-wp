@@ -34,33 +34,42 @@ const DEFAULT_FONT = {
   content: 'Fill in some text',
 };
 
+const CUSTOM_FONT = {
+  font: {
+    family: 'Bar Regular',
+    service: 'custom',
+    url: 'https://fonts.example.com/bar.ttf',
+  },
+  fontWeight: 400,
+  fontStyle: 'normal',
+  content: 'Fill in some text',
+};
+
 /* eslint-disable testing-library/no-node-access */
 
 describe('useLoadFontFiles', () => {
-  beforeEach(() => {
-    const el = document.getElementById('font-css');
-    if (el) {
-      el.remove();
-    }
+  afterEach(() => {
+    document.querySelectorAll('link,style').forEach((el) => el.remove());
   });
 
-  it('maybeEnqueueFontStyle', () => {
+  it('should enqueue fonts', () => {
     expect(document.getElementById('font-css')).toBeNull();
 
     renderHook(async () => {
-      const maybeEnqueueFontStyle = useLoadFontFiles();
+      const { maybeEnqueueFontStyle } = useLoadFontFiles();
 
-      await maybeEnqueueFontStyle([DEFAULT_FONT]);
+      await maybeEnqueueFontStyle([DEFAULT_FONT, CUSTOM_FONT]);
     });
 
     expect(document.getElementById('font-css')).toBeDefined();
+    expect(document.getElementById('bar-regular-css')).toBeDefined();
   });
 
-  it('maybeEnqueueFontStyle skip', () => {
+  it('should skip font with unknown service', () => {
     expect(document.getElementById('font-css')).toBeNull();
 
     renderHook(async () => {
-      const maybeEnqueueFontStyle = useLoadFontFiles();
+      const { maybeEnqueueFontStyle } = useLoadFontFiles();
 
       await maybeEnqueueFontStyle([
         { ...DEFAULT_FONT, font: { ...DEFAULT_FONT.font, service: 'abcd' } },
@@ -70,11 +79,11 @@ describe('useLoadFontFiles', () => {
     expect(document.getElementById('font-css')).toBeNull();
   });
 
-  it('maybeEnqueueFontStyle reflect', () => {
+  it('waits for all promises to be settled', () => {
     expect(document.getElementById('font-css')).toBeNull();
 
     renderHook(async () => {
-      const maybeEnqueueFontStyle = useLoadFontFiles();
+      const { maybeEnqueueFontStyle } = useLoadFontFiles();
 
       await maybeEnqueueFontStyle([{}, DEFAULT_FONT]);
     });
