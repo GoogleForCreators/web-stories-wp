@@ -228,7 +228,6 @@ export class Fixture {
         JSON.stringify({ isCollapsed: false })
       );
     });
-    console.log('🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻🕵🏻', window.navigator.userAgent);
   }
 
   restore() {

@@ -48,8 +48,7 @@ function useLoadFontFiles() {
             elementId
           );
         } catch (error) {
-          console.log('🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉');
-          console.log(error);
+          console.error(error);
         }
         break;
       case 'custom':

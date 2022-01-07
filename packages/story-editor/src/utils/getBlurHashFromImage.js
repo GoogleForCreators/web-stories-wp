@@ -38,7 +38,6 @@ const getImageData = (image) => {
 
 const getBlurHashFromImage = async (src) => {
   let image;
-  console.log('getBlurHashFromImage, 🍟🍟🍟🍟🍟🍟🍟🍟🍟🍟🍟🍟🍟');
   try {
     image = await preloadImage(src);
   } catch {

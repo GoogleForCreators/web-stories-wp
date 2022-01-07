@@ -29,7 +29,6 @@ import useCORSProxy from '../../../utils/useCORSProxy';
 import getBlurHashFromImage from '../../../utils/getBlurHashFromImage';
 
 function useDetectBlurHash({ updateMediaElement }) {
-  // console.log('useDetectBlurHash, 🤷🏻‍♀️🤷🏻‍♀️🤷🏻‍♀️🤷🏻‍♀️🤷🏻‍♀️🤷🏻‍♀️🤷🏻‍♀️🤷🏻‍♀️🤷🏻‍♀️🤷🏻‍♀️🤷🏻‍♀️🤷🏻‍♀️');
   const {
     actions: { updateMedia, getPosterMediaById },
   } = useAPI();
@@ -50,7 +49,6 @@ function useDetectBlurHash({ updateMediaElement }) {
      */
     async (id, blurHash) => {
       try {
-        console.log('saveBlurHash callback 🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈🌈');
         const properties = ({ resource }) => ({
           resource: {
             ...resource,
@@ -81,7 +79,6 @@ function useDetectBlurHash({ updateMediaElement }) {
 
   const updateBlurHash = useCallback(
     async ({ resource }) => {
-      console.log('updateBlurHash 🌚🌚🌚🌚🌚🌚🌚🌚🌚🌚🌚🌚🌚🌚');
       const { type, poster, id, isExternal } = resource;
       let imageSrc = poster;
 

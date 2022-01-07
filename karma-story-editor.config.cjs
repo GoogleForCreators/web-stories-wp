@@ -176,8 +176,6 @@ module.exports = function (config) {
       runInParent: true,
     },
 
-    crossOriginAttribute: false,
-
     coverageIstanbulReporter: {
       dir: 'build/logs/karma-coverage/story-editor',
       reports: ['text-summary', 'lcovonly'],

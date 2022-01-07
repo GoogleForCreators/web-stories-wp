@@ -261,8 +261,6 @@ function formatVideoLength(length) {
 
 function getImageResourceFromMedia3p(m) {
   const imageUrls = getImageUrls(m);
-  console.log('getImageResourceFromMedia3p, 🚂🚂🚂🚂🚂🚂🚂🚂');
-  !m.blurHash && console.log(m);
   return createResource({
     id: m.name,
     baseColor: m.color,

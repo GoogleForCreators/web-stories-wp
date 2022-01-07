@@ -112,7 +112,6 @@ export const removeBaseColorProcessing =
 export const setBlurhashProcessing =
   (dispatch) =>
   ({ id }) => {
-    console.log('setBlurHash 🧜🏻‍♀️🧜🏻‍♀️🧜🏻‍♀️🧜🏻‍♀️🧜🏻‍♀️🧜🏻‍♀️🧜🏻‍♀️🧜🏻‍♀️🧜🏻‍♀️🧜🏻‍♀️🧜🏻‍♀️🧜🏻‍♀️🧜🏻‍♀️🧜🏻‍♀️🧜🏻‍♀️');
     dispatch({
       type: types.LOCAL_MEDIA_ADD_BLURHASH_PROCESSING,
       payload: { id },
@@ -122,10 +121,6 @@ export const setBlurhashProcessing =
 export const removeBlurhashProcessing =
   (dispatch) =>
   ({ id }) => {
-    console.log(
-      'removeBlurHash 🧑🏻‍🍳🧑🏻‍🍳🧑🏻‍🍳🧑🏻‍🍳🧑🏻‍🍳🧑🏻‍🍳🧑🏻‍🍳🧑🏻‍🍳🧑🏻‍🍳🧑🏻‍🍳🧑🏻‍🍳'
-    );
-
     dispatch({
       type: types.LOCAL_MEDIA_REMOVE_BLURHASH_PROCESSING,
       payload: { id },

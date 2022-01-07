@@ -196,9 +196,6 @@ const categories = [
 ];
 
 describe('Media3pPane fetching', () => {
-  console.log(
-    "describe('Media3pPane fetching' 🍑🍑🍑🍑🍑🍑🍑🍑🍑🍑🍑🍑🍑🍑🍑🍑🍑🍑🍑"
-  );
   let fixture;
   let listMediaSpy;
   let listCategoriesSpy;

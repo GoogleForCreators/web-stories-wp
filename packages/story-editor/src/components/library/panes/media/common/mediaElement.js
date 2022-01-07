@@ -203,7 +203,6 @@ function Element({
     handleKeyDown,
     [handleKeyDown]
   );
-  // blurHash && console.log('blurHashContianer, 🥨🥨🥨🥨🥨🥨🥨🥨🥨🥨');
 
   return (
     <Container
