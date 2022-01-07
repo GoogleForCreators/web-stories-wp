@@ -84,7 +84,7 @@ function arrange({
 }
 
 describe('UpdateButton', () => {
-  const FUTURE_DATE = '2022-01-01T20:20:20Z';
+  const FUTURE_DATE = '2022-01-10T20:20:20Z';
 
   beforeAll(() => {
     MockDate.set('2020-07-15T12:00:00+00:00');
@@ -210,11 +210,15 @@ describe('UpdateButton', () => {
         status: 'publish',
         date: FUTURE_DATE,
       },
+      history: {
+        hasNewChanges: true,
+      },
     });
     const scheduleButton = screen.getByRole('button', { name: 'Schedule' });
 
     expect(scheduleButton).toBeInTheDocument();
     fireEvent.click(scheduleButton);
+    expect(scheduleButton).toBeEnabled();
     expect(saveStory).toHaveBeenCalledTimes(1);
   });
 
@@ -224,6 +228,9 @@ describe('UpdateButton', () => {
         title: 'Some title',
         status: 'private',
         date: FUTURE_DATE,
+      },
+      history: {
+        hasNewChanges: true,
       },
     });
     const updateButton = screen.getByRole('button', { name: 'Update' });
