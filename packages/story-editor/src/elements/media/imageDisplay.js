@@ -83,13 +83,17 @@ function ImageDisplay({ element, box, previewMode }) {
     if (resourceList.get(resource.id)?.type !== 'fullsize' && resource.src) {
       timeout = setTimeout(async () => {
         const url = getProxiedUrl(resource, resource.src);
-        const preloadedImg = await preloadImage(url, srcSet);
-        if (mounted) {
-          resourceList.set(resource.id, {
-            type: 'fullsize',
-          });
-          setSrc(preloadedImg.currentSrc);
-          setSrcType('fullsize');
+        try {
+          const preloadedImg = await preloadImage(url, srcSet);
+          if (mounted) {
+            resourceList.set(resource.id, {
+              type: 'fullsize',
+            });
+            setSrc(preloadedImg.currentSrc);
+            setSrcType('fullsize');
+          }
+        } catch {
+          // Ignore
         }
       });
     }
