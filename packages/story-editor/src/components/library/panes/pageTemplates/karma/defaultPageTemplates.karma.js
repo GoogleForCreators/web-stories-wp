@@ -47,6 +47,9 @@ describe('CUJ: Page Templates: Creator can Apply a Default Page Template', () =>
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log(
+      '🍉🍉🍉🍉🍉🍉 CUJ: Page Templates: Creator can Apply a Default Page Template'
+    );
   });
 
   afterEach(() => {

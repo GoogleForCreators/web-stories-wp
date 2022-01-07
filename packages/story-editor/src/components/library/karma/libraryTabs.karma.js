@@ -36,6 +36,7 @@ describe('LibraryTabs integration', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log('🍉🍉🍉🍉🍉🍉 LibraryTabs integration');
     libraryLayout = fixture.container.querySelector(
       '[data-testid="libraryLayout"]'
     );

@@ -40,7 +40,7 @@ describe('Styling multiple text fields', () => {
     data.fixture = new Fixture();
     await data.fixture.render();
     await data.fixture.collapseHelpCenter();
-
+    console.log('🍉🍉🍉🍉🍉🍉 Styling multiple text fields');
     // Add text box + extra
     await addInitialText(true);
   });

@@ -33,6 +33,7 @@ describe('Text Style Panel', () => {
     localStorage.clear();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log('🍉🍉🍉🍉🍉🍉 Text Style Panel');
   });
 
   afterEach(() => {

@@ -37,6 +37,7 @@ describe('Keyboard Shortcuts Menu', () => {
 
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log('🍉🍉🍉🍉🍉🍉 Keyboard Shortcuts Menu');
   });
 
   afterEach(() => {

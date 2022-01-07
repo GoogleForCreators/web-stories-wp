@@ -33,6 +33,7 @@ describe('TextEdit integration', () => {
 
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log('🍉🍉🍉🍉🍉🍉 TextEdit integration');
   });
 
   afterEach(() => {

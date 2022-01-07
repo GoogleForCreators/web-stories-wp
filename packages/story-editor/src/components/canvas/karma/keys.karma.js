@@ -35,7 +35,7 @@ describe('Canvas keys integration', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
-
+    console.log('🍉🍉🍉🍉🍉🍉 Canvas keys integration');
     const insertElement = await fixture.renderHook(() => useInsertElement());
     element1 = await fixture.act(() =>
       insertElement('text', {

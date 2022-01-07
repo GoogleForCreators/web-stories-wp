@@ -34,6 +34,7 @@ xdescribe('Embedding hotlinked media', () => {
     fixture.setFlags({ enableHotlinking: true, enableCORSProxy: true });
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log('🍉🍉🍉🍉🍉🍉 Embedding hotlinked media');
   });
 
   afterEach(() => {

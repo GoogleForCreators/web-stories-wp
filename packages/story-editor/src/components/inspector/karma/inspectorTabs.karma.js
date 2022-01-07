@@ -31,6 +31,7 @@ describe('Inspector Tabs integration', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log('🍉🍉🍉🍉🍉🍉 Inspector Tabs integration');
   });
 
   afterEach(() => {

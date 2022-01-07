@@ -26,7 +26,7 @@ describe('Zoom selector', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
-
+    console.log('🍉🍉🍉🍉🍉🍉 Zoom selector');
     // Add an image to the canvas to make it more visual when things move
     await fixture.events.click(fixture.editor.library.media.item(0));
 

@@ -32,6 +32,7 @@ describe('Drop-Target order', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log('🍉🍉🍉🍉🍉🍉 Drop-Target order');
   });
 
   afterEach(() => {

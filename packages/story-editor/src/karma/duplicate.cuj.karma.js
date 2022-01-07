@@ -27,7 +27,7 @@ describe('Duplicate Page', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
-
+    console.log('🍉🍉🍉🍉🍉🍉 Duplicate Page');
     // Insert selected element to perform operations on.
     const insertElement = await fixture.renderHook(() => useInsertElement());
     await fixture.act(() =>

@@ -31,6 +31,7 @@ describe('Taxonomies Panel', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    console.log('🍉🍉🍉🍉🍉🍉 Taxonomies Panel');
   });
 
   afterEach(() => {

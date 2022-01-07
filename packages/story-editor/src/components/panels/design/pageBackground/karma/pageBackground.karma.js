@@ -27,6 +27,7 @@ describe('Page background panel', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log('🍉🍉🍉🍉🍉🍉 Page background Panel');
   });
 
   afterEach(() => {

@@ -32,6 +32,7 @@ describe('Checklist integration', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log('🍉🍉🍉🍉🍉🍉 Checklist integration');
   });
 
   afterEach(() => {
@@ -367,7 +368,7 @@ describe('Checklist integration', () => {
 
 describe('Checklist integration - Card visibility', () => {
   let fixture;
-
+  console.log('🍉🍉🍉🍉🍉🍉 Checklist integration - Card visibility');
   const priorityIssuesRequiringMediaUploadPermissions = [
     PRIORITY_COPY.storyMissingPoster.title,
     PRIORITY_COPY.videoMissingPoster.title,

@@ -30,6 +30,7 @@ describe('Border Radius', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log('🍉🍉🍉🍉🍉🍉 Border Radius');
   });
 
   afterEach(() => {

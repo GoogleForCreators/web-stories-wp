@@ -34,6 +34,7 @@ describe('Alignment Panel', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log('🍉🍉🍉🍉🍉🍉 Alignment Panel');
     textA = (await getElements())[0].id;
   });
 

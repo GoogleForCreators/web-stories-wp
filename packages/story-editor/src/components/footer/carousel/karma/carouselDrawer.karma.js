@@ -33,6 +33,7 @@ describe('Carousel Drawer', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log('🍉🍉🍉🍉🍉🍉 Carousel Drawer');
     // We add some content to the first page to make the thumbnail more interesting
     await fixture.events.click(fixture.editor.library.media.item(0));
 

@@ -28,7 +28,7 @@ describe('Clone element integration', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
-
+    console.log('🍉🍉🍉🍉🍉🍉 Clone element integration');
     bg = await getElementByIndex(1);
     bgRect = (await getCanvasElementWrapperById(bg.id)).getBoundingClientRect();
   });

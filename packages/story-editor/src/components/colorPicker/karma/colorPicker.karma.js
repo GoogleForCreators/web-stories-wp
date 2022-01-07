@@ -35,6 +35,7 @@ describe('ColorPicker', () => {
         fixture.setConfig({ isRTL: direction === 'RTL' });
         await fixture.render();
         await fixture.collapseHelpCenter();
+        console.log('🍉🍉🍉🍉🍉🍉 ColorPicker');
       });
 
       afterEach(() => {
@@ -73,7 +74,7 @@ describe('ColorPicker', () => {
 
   describe('Color Picker: Saved colors', () => {
     let fixture;
-
+    console.log('🍉🍉🍉🍉🍉🍉 ColorPicker: Saved colors');
     beforeEach(async () => {
       fixture = new Fixture();
       await fixture.render();

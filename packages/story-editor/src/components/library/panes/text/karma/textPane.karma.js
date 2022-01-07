@@ -39,6 +39,9 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log(
+      '🍉🍉🍉🍉🍉🍉 CUJ: Creator can Add and Write Text: Consecutive text presets'
+    );
   });
 
   afterEach(() => {

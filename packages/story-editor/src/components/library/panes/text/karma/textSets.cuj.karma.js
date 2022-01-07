@@ -35,6 +35,9 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    console.log(
+      '🍉🍉🍉🍉🍉🍉 CUJ: Text Sets (Text and Shape Combinations): Using Text Sets'
+    );
     await fixture.editor.library.textTab.click();
   });
 

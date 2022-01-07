@@ -71,6 +71,7 @@ function sequencedForEach(htmlCollection, op) {
       fixture = new Fixture();
       await fixture.render();
       await fixture.collapseHelpCenter();
+      console.log('🍉🍉🍉🍉🍉🍉 ?', title);
 
       // Insert selected element to perform operations on.
       const insertElement = await fixture.renderHook(() => useInsertElement());
@@ -226,7 +227,7 @@ describe('Background Copy & Paste', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
-
+    console.log('🍉🍉🍉🍉🍉🍉 Background Copy & Paste');
     await fixture.events.click(fixture.editor.canvas.pageActions.addPage, {
       clickCount: 1,
     });
