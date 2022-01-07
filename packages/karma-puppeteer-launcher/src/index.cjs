@@ -50,12 +50,17 @@ function puppeteerBrowser(baseBrowserDecorator, config) {
         // See http://crbug.com/715363
         // We use this flag to work-around this issue.
         '--disable-dev-shm-usage',
+        '--source-map=false',
+        //  set memory allocated for browse https://github.com/karma-runner/karma-chrome-launcher/issues/154#issuecomment-569698577
+        '--max-old-space-size=8192',
       ],
     };
     const puppeteerOptions = {
       ...defaultPuppeteerOptions,
       ...(config && config.puppeteer),
     };
+
+    console.log('options: ', puppeteerOptions);
 
     // See https://github.com/puppeteer/puppeteer/blob/v3.0.4/docs/api.md#puppeteerlaunchoptions.
     browser = await puppeteer.launch({
@@ -65,6 +70,7 @@ function puppeteerBrowser(baseBrowserDecorator, config) {
       headless: puppeteerOptions.headless,
       devtools: puppeteerOptions.devtools,
       defaultViewport: puppeteerOptions.defaultViewport,
+      waitForInitialPage: true,
     });
 
     const page = await (async () => {
@@ -86,6 +92,7 @@ function puppeteerBrowser(baseBrowserDecorator, config) {
       const newPage = await target.page();
       if (newPage === page) {
         // An already handled page.
+        console.log('**** page already exists');
         return;
       }
       await exposeFunctions(newPage, puppeteerOptions);
@@ -96,6 +103,7 @@ function puppeteerBrowser(baseBrowserDecorator, config) {
 
   this.on('kill', async (done) => {
     if (browser != null) {
+      console.log('******KILL')
       await browser.close();
     }
     done();
