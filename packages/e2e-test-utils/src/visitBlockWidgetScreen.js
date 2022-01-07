@@ -24,30 +24,33 @@ import visitAdminPage from './visitAdminPage';
  * @return {Promise<void>}
  */
 async function visitBlockWidgetScreen() {
+  const WPVersion = process.env?.WP_VERSION;
   await visitAdminPage('widgets.php');
 
   // Disable welcome guide if it is enabled.
   const isWelcomeGuideActive = await page.evaluate(() => {
-    if (wp.data.dispatch('core/edit-widgets').__unstableIsFeatureActive) {
+    // TODO Change after 5.9 release.
+    if ('latest' === WPVersion) {
       return wp.data
         .select('core/edit-widgets')
         .__unstableIsFeatureActive('welcomeGuide');
     }
     return wp.data
-      .select( 'core/interface' )
-      .isFeatureActive( 'core/edit-widgets', 'welcomeGuide' );
+      .select('core/interface')
+      .isFeatureActive('core/edit-widgets', 'welcomeGuide');
   });
   if (isWelcomeGuideActive) {
     await page.evaluate(() => {
-      if (wp.data.dispatch('core/edit-widgets').__unstableToggleFeature) {
+      // TODO Change after 5.9 release.
+      if ('latest' === WPVersion) {
         wp.data
           .dispatch('core/edit-widgets')
           .__unstableToggleFeature('welcomeGuide');
         return;
       }
       wp.data
-        .dispatch( 'core/interface' )
-        .toggleFeature( 'core/edit-widgets', 'welcomeGuide' )
+        .dispatch('core/interface')
+        .toggleFeature('core/edit-widgets', 'welcomeGuide');
     });
   }
 }
