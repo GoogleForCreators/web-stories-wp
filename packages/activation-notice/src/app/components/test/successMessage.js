@@ -44,7 +44,7 @@ describe('SuccessMessage', () => {
   it('should render', () => {
     render();
 
-    expect(screen.queryByText(/Tell some stories/i)).toBeInTheDocument();
-    expect(screen.queryByText(/Go to Stories Dashboard/i)).toBeInTheDocument();
+    expect(screen.getByText(/Tell some stories/i)).toBeInTheDocument();
+    expect(screen.getByText(/Go to Stories Dashboard/i)).toBeInTheDocument();
   });
 });

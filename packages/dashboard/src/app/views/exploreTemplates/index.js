@@ -17,8 +17,13 @@
 /**
  * External dependencies
  */
-import { useMemo, useEffect, useCallback } from '@web-stories-wp/react';
-import { trackEvent } from '@web-stories-wp/tracking';
+import {
+  useMemo,
+  useEffect,
+  useCallback,
+  useState,
+} from '@web-stories-wp/react';
+import { trackEvent, trackScreenView } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -30,8 +35,13 @@ import useApi from '../../api/useApi';
 import { getTemplateFilters, composeTemplateFilter } from '../utils';
 import Content from './content';
 import Header from './header';
+import TemplateDetailsModal from './modal';
 
 function ExploreTemplates() {
+  const [isDetailsViewOpen, setIsDetailsViewOpen] = useState(false);
+  const [activeTemplate, setActiveTemplate] = useState(null);
+  const [activeTemplateIndex, setActiveTemplateIndex] = useState(0);
+
   const {
     allPagesFetched,
     isLoading,
@@ -73,10 +83,6 @@ function ExploreTemplates() {
     totalPages,
   });
 
-  useEffect(() => {
-    fetchExternalTemplates();
-  }, [fetchExternalTemplates]);
-
   // extract templateFilters from template meta data
   const templateFilters = useMemo(
     () => getTemplateFilters(templates),
@@ -101,6 +107,14 @@ function ExploreTemplates() {
       .filter(composeTemplateFilter(selectFilters));
   }, [templatesOrderById, templates, selectFilters]);
 
+  const totalVisibleTemplates = useMemo(
+    () =>
+      totalTemplates !== orderedTemplates.length
+        ? orderedTemplates.length
+        : totalTemplates,
+    [orderedTemplates, totalTemplates]
+  );
+
   // Although we may want to filter templates based on
   // repeat meta data of differing types, we only want
   // the auto-complete to show unique labels
@@ -116,17 +130,62 @@ function ExploreTemplates() {
         name: template.title,
         template_id: template.id,
       });
+
       createStoryFromTemplate(template);
     },
     [createStoryFromTemplate, templates]
   );
 
+  const handleDetailsToggle = useCallback(
+    (id, title) => {
+      setIsDetailsViewOpen((prevIsOpen) => {
+        const newIsOpen = !prevIsOpen;
+        title && trackScreenView(title);
+
+        if (newIsOpen && id) {
+          setActiveTemplate(
+            orderedTemplates.find((templateItem) => templateItem.id === id)
+          );
+          setActiveTemplateIndex(
+            orderedTemplates.findIndex((template) => template.id === id)
+          );
+        }
+
+        return newIsOpen;
+      });
+    },
+    [
+      setIsDetailsViewOpen,
+      setActiveTemplate,
+      setActiveTemplateIndex,
+      orderedTemplates,
+    ]
+  );
+
+  const switchToTemplateByOffset = useCallback(
+    (offset) => {
+      setActiveTemplate(orderedTemplates[offset]);
+      setActiveTemplateIndex(offset);
+    },
+    [setActiveTemplateIndex, setActiveTemplate, orderedTemplates]
+  );
+
   const templateActions = useMemo(
     () => ({
       createStoryFromTemplate: handleCreateStoryFromTemplate,
+      handleDetailsToggle,
+      switchToTemplateByOffset,
     }),
-    [handleCreateStoryFromTemplate]
+    [
+      handleCreateStoryFromTemplate,
+      handleDetailsToggle,
+      switchToTemplateByOffset,
+    ]
   );
+
+  useEffect(() => {
+    fetchExternalTemplates();
+  }, [fetchExternalTemplates]);
 
   return (
     <Layout.Provider>
@@ -134,7 +193,7 @@ function ExploreTemplates() {
         isLoading={isLoading && !totalTemplates}
         filter={filter}
         sort={sort}
-        totalTemplates={totalTemplates}
+        totalTemplates={totalVisibleTemplates}
         search={search}
         searchOptions={searchOptions}
         view={view}
@@ -144,7 +203,7 @@ function ExploreTemplates() {
         allPagesFetched={allPagesFetched}
         page={page}
         templates={orderedTemplates}
-        totalTemplates={totalTemplates}
+        totalTemplates={totalVisibleTemplates}
         search={search}
         view={view}
         templateActions={templateActions}
@@ -152,6 +211,13 @@ function ExploreTemplates() {
       <Layout.Fixed>
         <ScrollToTop />
       </Layout.Fixed>
+      <TemplateDetailsModal
+        activeTemplate={activeTemplate}
+        activeTemplateIndex={activeTemplateIndex}
+        isDetailsViewOpen={isDetailsViewOpen}
+        templateActions={templateActions}
+        filteredTemplatesLength={orderedTemplates.length}
+      />
     </Layout.Provider>
   );
 }

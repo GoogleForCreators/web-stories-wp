@@ -31,8 +31,16 @@ export default {
     _x('Blue', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Mariner Blue', 'color', 'web-stories'), color: '#d4e3fc' },
-    { label: _x('Hawkes Blue', 'color', 'web-stories'), color: '#215fce' },
+    {
+      label: _x('Mariner Blue', 'color', 'web-stories'),
+      color: '#d4e3fc',
+      family: _x('Blue', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Hawkes Blue', 'color', 'web-stories'),
+      color: '#215fce',
+      family: _x('Blue', 'color', 'web-stories'),
+    },
   ],
   description: __(
     'The Kitchen Stories template puts the spotlight on you by keeping the text minimal and letting you tell your story through video. Increase your audience by linking your social profile and website at the end.',

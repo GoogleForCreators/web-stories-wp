@@ -19,6 +19,8 @@
  */
 import PropTypes from 'prop-types';
 import { useState, useMemo, useCallback } from '@web-stories-wp/react';
+import { noop, useGlobalIsKeyPressed } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
@@ -26,7 +28,6 @@ import { useStory } from '../../app/story';
 import { useTransform } from '../transform';
 import { getElementProperties } from '../canvas/useInsertElement';
 import { getDefinitionForType } from '../../elements';
-import { getMediaBaseColor } from '../../utils/getMediaBaseColor';
 import Context from './context';
 
 const DROP_SOURCE_ALLOWED_TYPES = ['image', 'gif', 'video'];
@@ -176,58 +177,53 @@ function DropTargetsProvider({ children }) {
           resource,
         });
       }
-      const finalizeDrop = (baseColor = null) => {
-        if (baseColor) {
-          combineArgs.firstElement.resource.baseColor = baseColor;
-        }
-        combineElements(combineArgs);
 
-        // Reset styles on visible elements
-        elements
-          .filter(({ id }) => dropTargets[id] && id !== selfId)
-          .forEach((el) => {
-            pushTransform(el.id, {
-              dropTargets: {
-                active: false,
-                replacement: null,
-              },
-            });
-            pushTransform(el.id, null);
+      combineElements(combineArgs);
+
+      // Reset styles on visible elements
+      elements
+        .filter(({ id }) => dropTargets[id] && id !== selfId)
+        .forEach((el) => {
+          pushTransform(el.id, {
+            dropTargets: {
+              active: false,
+              replacement: null,
+            },
           });
+          pushTransform(el.id, null);
+        });
 
-        setActiveDropTargetId(null);
+      setActiveDropTargetId(null);
 
-        const { onDropHandler } = getDefinitionForType(resource.type);
-        // onDropHandler will play the video, but we don't want that for videos
-        // that don't have a src because they are still uploading.
-        if (onDropHandler && resource.src && !resource.isPlaceholder) {
-          onDropHandler(activeDropTargetId);
-        }
-      };
-      // Skip if we already have the color.
-      if (firstElement?.resource?.baseColor) {
-        finalizeDrop();
-      } else {
-        getMediaBaseColor(resource, finalizeDrop);
+      const { onDropHandler } = getDefinitionForType(resource.type);
+      // onDropHandler will play the video, but we don't want that for videos
+      // that don't have a src because they are still uploading.
+      if (onDropHandler && resource.src && !resource.isPlaceholder) {
+        onDropHandler(activeDropTargetId);
       }
     },
     [activeDropTargetId, combineElements, elements, dropTargets, pushTransform]
   );
+
+  // ⌘ key disables drop-targeting.
+  const isDropTargetingDisabled = useGlobalIsKeyPressed('meta');
 
   const state = {
     state: {
       dropTargets,
       activeDropTargetId,
       draggingResource,
+      isDropTargetingDisabled,
     },
+    // If drop-targeting is disabled, all the related actions are ignored.
     actions: {
-      registerDropTarget,
+      registerDropTarget: isDropTargetingDisabled ? noop : registerDropTarget,
       unregisterDropTarget,
-      isDropSource,
-      isDropTarget,
-      handleDrag,
-      handleDrop,
-      setDraggingResource,
+      isDropSource: isDropTargetingDisabled ? () => false : isDropSource,
+      isDropTarget: isDropTargetingDisabled ? () => false : isDropTarget,
+      handleDrag: isDropTargetingDisabled ? noop : handleDrag,
+      handleDrop: isDropTargetingDisabled ? noop : handleDrop,
+      setDraggingResource: isDropTargetingDisabled ? noop : setDraggingResource,
     },
   };
 

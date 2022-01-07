@@ -23,8 +23,9 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { getDummyMedia } from './getDummyMedia';
+import { getMedia, saveStoryById, getFonts } from './api';
 import { HeaderLayout } from './header';
+import { LOCAL_STORAGE_CONTENT_KEY } from './constants';
 
 export default {
   title: 'Playground/Stories Editor',
@@ -34,94 +35,16 @@ const AppContainer = styled.div`
   height: 100vh;
 `;
 
-// @todo None of these should be required by default, https://github.com/google/web-stories-wp/pull/9569#discussion_r738458801
-const apiCallbacksNames = [
-  'getAuthors',
-  'getStoryById',
-  'getDemoStoryById',
-  'saveStoryById',
-  'autoSaveById',
-  'getMedia',
-  'getMediaById',
-  'getMutedMediaById',
-  'getOptimizedMediaById',
-  'uploadMedia',
-  'updateMedia',
-  'deleteMedia',
-  'getLinkMetadata',
-  'getCustomPageTemplates',
-  'addPageTemplate',
-  'deletePageTemplate',
-  'getCurrentUser',
-  'updateCurrentUser',
-  'getHotlinkInfo',
-  'getProxyUrl',
-  'getPublisherLogos',
-  'addPublisherLogo',
-  'getTaxonomies',
-  'getTaxonomyTerm',
-  'createTaxonomyTerm',
-];
+export const _default = () => {
+  const content = window.localStorage.getItem(LOCAL_STORAGE_CONTENT_KEY);
+  const story = content ? JSON.parse(content) : {};
+  const apiCallbacks = { saveStoryById, getMedia, getFonts };
 
-const apiCallbacks = apiCallbacksNames.reduce((callbacks, name) => {
-  let response;
-
-  const dummyMedia = getDummyMedia();
-  const storyResponse = {
-    title: { raw: '' },
-    excerpt: { raw: '' },
-    permalink_template: 'https://example.org/web-stories/%pagename%/',
-    style_presets: {
-      color: [],
-      textStyles: [],
-    },
-    date: '2021-10-26T12:38:38', // Publishing field breaks if date is not provided.
-  };
-
-  switch (name) {
-    case 'getCurrentUser':
-      response = { id: 1 };
-      break;
-    case 'getStoryById':
-    case 'getDemoStoryById': // @todo https://github.com/google/web-stories-wp/pull/9569#discussion_r739076535
-      response = storyResponse;
-      break;
-    case 'getMedia':
-      response = {
-        data: dummyMedia,
-        headers: {
-          totalItems: dummyMedia.length,
-          totalPages: 1,
-        },
-      };
-      break;
-    case 'getPublisherLogos':
-      response = [{ url: '' }];
-      break;
-    default:
-      response = {};
-  }
-
-  if ('saveStoryById' === name) {
-    callbacks[name] = (story) => {
-      window.localStorage.setItem('preview_markup', story?.content);
-      return Promise.resolve(storyResponse);
-    };
-  } else {
-    callbacks[name] = () => Promise.resolve(response);
-  }
-
-  return callbacks;
-}, {});
-
-const config = {
-  apiCallbacks,
+  return (
+    <AppContainer>
+      <StoryEditor config={{ apiCallbacks }} initialEdits={{ story }}>
+        <InterfaceSkeleton header={<HeaderLayout />} />
+      </StoryEditor>
+    </AppContainer>
+  );
 };
-
-export const _default = () => (
-  <AppContainer>
-    <StoryEditor config={config}>
-      <InterfaceSkeleton header={<HeaderLayout />} />
-    </StoryEditor>
-  </AppContainer>
-);

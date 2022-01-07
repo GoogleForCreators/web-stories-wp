@@ -66,6 +66,6 @@ describe('Modal', () => {
     };
 
     render(<WebStoriesModal {...props} />);
-    expect(screen.queryByText(/Archive Link Label/i)).toBeInTheDocument();
+    expect(screen.getByText(/Archive Link Label/i)).toBeInTheDocument();
   });
 });

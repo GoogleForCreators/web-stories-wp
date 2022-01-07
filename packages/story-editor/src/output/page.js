@@ -34,26 +34,24 @@ import getLongestMediaElement from './utils/getLongestMediaElement';
 
 const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 
-function OutputPage({
-  page,
-  autoAdvance = true,
-  defaultPageDuration = 7,
-  args = {},
-}) {
-  const { id, animations, elements, backgroundColor, backgroundAudio } = page;
+function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
+  const {
+    id,
+    animations,
+    elements,
+    backgroundColor,
+    backgroundAudio,
+    pageAttachment,
+  } = page;
+  const { ctaText, url, icon, theme, rel = [] } = pageAttachment || {};
 
   const [backgroundElement, ...regularElements] = elements;
 
   // If the background element has base color set, it's media, use that.
   const baseColor = backgroundElement?.resource?.baseColor;
   const backgroundStyles = baseColor
-    ? {
-        backgroundColor: `rgb(${baseColor[0]},${baseColor[1]},${baseColor[2]})`,
-      }
-    : {
-        backgroundColor: 'white',
-        ...generatePatternStyles(backgroundColor),
-      };
+    ? { backgroundColor: baseColor }
+    : { backgroundColor: 'white', ...generatePatternStyles(backgroundColor) };
 
   const animationDuration = getTotalDuration({ animations }) / 1000;
   // If the page doesn't have media, take either the animations time or the configured default duration time.
@@ -71,11 +69,9 @@ function OutputPage({
     ? `el-${longestMediaElement?.id}-media`
     : `${nonMediaPageDuration}s`;
 
-  const hasPageAttachment = page.pageAttachment?.url?.length > 0;
-
   // Remove invalid links, @todo this should come from the pre-publish checklist in the future.
   const validElements = regularElements.map((element) =>
-    !hasPageAttachment || !isElementBelowLimit(element)
+    !url || !isElementBelowLimit(element)
       ? element
       : {
           ...element,
@@ -106,7 +102,7 @@ function OutputPage({
           >
             <div className="page-fullbleed-area" style={backgroundStyles}>
               <div className="page-safe-area">
-                <OutputElement element={backgroundElement} args={args} />
+                <OutputElement element={backgroundElement} />
                 {backgroundElement.overlay && (
                   <div
                     className="page-background-overlay-area"
@@ -126,45 +122,39 @@ function OutputPage({
           <div className="page-fullbleed-area">
             <div className="page-safe-area">
               {validElements.map((element) => (
-                <OutputElement key={element.id} element={element} args={args} />
+                <OutputElement key={element.id} element={element} />
               ))}
             </div>
           </div>
         </amp-story-grid-layer>
       </StoryAnimation.Provider>
-      {args.enableBetterCaptions && videoCaptions.length > 0 && (
+      {videoCaptions.length > 0 && (
         <amp-story-grid-layer
           template="vertical"
           aspect-ratio={ASPECT_RATIO}
-          class="grid-layer"
+          class="grid-layer align-bottom"
         >
-          <div className="page-fullbleed-area">
-            <div className="page-safe-area">
-              <div className="captions-area">
-                <div className="captions-wrap">
-                  {videoCaptions.map((captionId) => (
-                    <amp-story-captions
-                      key={captionId}
-                      id={captionId}
-                      layout="fixed-height"
-                      height="100"
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
+          <div className="captions-area">
+            {videoCaptions.map((captionId) => (
+              <amp-story-captions
+                key={captionId}
+                id={captionId}
+                layout="fixed-height"
+                height="100"
+              />
+            ))}
           </div>
         </amp-story-grid-layer>
       )}
       {/* <amp-story-page-outlink> needs to be the last child element */}
-      {hasPageAttachment && (
+      {url && (
         <amp-story-page-outlink
           layout="nodisplay"
-          cta-image={page.pageAttachment.icon || undefined}
-          theme={page.pageAttachment.theme}
+          cta-image={icon || undefined}
+          theme={theme}
         >
-          <a href={page.pageAttachment.url}>
-            {page.pageAttachment.ctaText || __('Learn more', 'web-stories')}
+          <a href={url} rel={rel.join(' ')}>
+            {ctaText || __('Learn more', 'web-stories')}
           </a>
         </amp-story-page-outlink>
       )}
@@ -176,9 +166,6 @@ OutputPage.propTypes = {
   page: StoryPropTypes.page.isRequired,
   autoAdvance: PropTypes.bool,
   defaultPageDuration: PropTypes.number,
-  args: PropTypes.shape({
-    enableBetterCaptions: PropTypes.bool,
-  }),
 };
 
 export default OutputPage;

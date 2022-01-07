@@ -38,6 +38,7 @@ import CarouselContext from './carouselContext';
 import useCarouselSizing from './useCarouselSizing';
 import useCarouselScroll from './useCarouselScroll';
 import useCarouselKeys from './useCarouselKeys';
+import useCarouselCache from './useCarouselCache';
 
 function CarouselProvider({ availableSpace, children }) {
   const { pages, currentPageId, setCurrentPage, arrangePage } = useStory(
@@ -84,6 +85,8 @@ function CarouselProvider({ availableSpace, children }) {
 
   useCarouselKeys({ listElement, pageRefs });
 
+  const { cachedImages, setCachedImage } = useCarouselCache();
+
   const setPageRef = useCallback((page, el) => {
     pageRefs.current[page.id] = el;
   }, []);
@@ -116,6 +119,7 @@ function CarouselProvider({ availableSpace, children }) {
       canScrollBack,
       canScrollForward,
       showSkeleton,
+      cachedImages,
     },
     actions: {
       scrollBack,
@@ -124,6 +128,7 @@ function CarouselProvider({ availableSpace, children }) {
       rearrangePages,
       setListRef: setListElement,
       setPageRef,
+      setCachedImage,
     },
   };
 

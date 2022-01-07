@@ -124,14 +124,25 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	public function prepare_item_for_response( $post, $request ) {
 		$response = parent::prepare_item_for_response( $post, $request );
 		$fields   = $this->get_fields_for_response( $request );
-		$data     = $response->get_data();
 		$schema   = $this->get_item_schema();
+
+		/**
+		 * Response data.
+		 *
+		 * @var array $data
+		 */
+		$data = $response->get_data();
 
 		if ( rest_is_field_included( 'story_data', $fields ) ) {
 			$post_story_data    = json_decode( $post->post_content_filtered, true );
 			$data['story_data'] = rest_sanitize_value_from_schema( $post_story_data, $schema['properties']['story_data'] );
 		}
 
+		/**
+		 * Request context.
+		 *
+		 * @var string $context
+		 */
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->filter_response_by_context( $data, $context );
 		$links   = $response->get_links();
@@ -144,7 +155,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			}
 		}
 
-		/* This filter is documented in wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php */
+		/** This filter is documented in wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php */
 		return apply_filters( "rest_prepare_{$this->post_type}", $response, $post, $request );
 	}
 
@@ -159,12 +170,17 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 * @return WP_REST_Response|WP_Error Response object on success, WP_Error object on failure.
 	 */
 	public function create_item( $request ) {
-		$original_id = ! empty( $request['original_id'] ) ? (int) $request['original_id'] : null;
+		/**
+		 * Original post ID.
+		 *
+		 * @var int $original_id
+		 */
+		$original_id = ! empty( $request['original_id'] ) ? $request['original_id'] : null;
 		if ( ! $original_id ) {
 			return parent::create_item( $request );
 		}
 
-		$original_post = $this->get_post( (int) $original_id );
+		$original_post = $this->get_post( $original_id );
 		if ( is_wp_error( $original_post ) ) {
 			return $original_post;
 		}

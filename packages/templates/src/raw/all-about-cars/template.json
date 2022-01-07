@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -34,7 +34,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [63, 62, 59],
+            "baseColor": "#3f3e3b",
             "isExternal": true
           },
           "overlay": {
@@ -276,7 +276,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [189, 184, 183],
+            "baseColor": "#bdb8b7",
             "isExternal": true
           },
           "overlay": {
@@ -921,6 +921,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-07-22T09:49:57",
+            "baseColor": "#343f42",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/all-about-cars/page3_4_5_11_12_13_img1.png",
             "width": 468,
             "height": 444,
@@ -1282,6 +1283,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-07-22T09:49:57",
+            "baseColor": "#343f42",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/all-about-cars/page3_4_5_11_12_13_img1.png",
             "width": 468,
             "height": 444,
@@ -1339,6 +1341,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-07-22T09:49:57",
+            "baseColor": "#343f42",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/all-about-cars/page3_4_5_11_12_13_img1.png",
             "width": 468,
             "height": 444,
@@ -1396,6 +1399,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-07-22T09:49:57",
+            "baseColor": "#343f42",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/all-about-cars/page3_4_5_11_12_13_img1.png",
             "width": 468,
             "height": 444,
@@ -1866,6 +1870,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-07-22T09:49:57",
+            "baseColor": "#343f42",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/all-about-cars/page3_4_5_11_12_13_img1.png",
             "width": 468,
             "height": 444,
@@ -1906,6 +1911,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-07-22T09:49:57",
+            "baseColor": "#343f42",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/all-about-cars/page3_4_5_11_12_13_img1.png",
             "width": 468,
             "height": 444,
@@ -1946,6 +1952,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-07-22T09:49:57",
+            "baseColor": "#343f42",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/all-about-cars/page3_4_5_11_12_13_img1.png",
             "width": 468,
             "height": 444,
@@ -1986,6 +1993,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-07-22T09:49:57",
+            "baseColor": "#343f42",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/all-about-cars/page3_4_5_11_12_13_img1.png",
             "width": 468,
             "height": 444,
@@ -2026,6 +2034,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-07-22T09:49:57",
+            "baseColor": "#343f42",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/all-about-cars/page3_4_5_11_12_13_img1.png",
             "width": 468,
             "height": 444,
@@ -2066,6 +2075,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-07-22T09:49:57",
+            "baseColor": "#343f42",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/all-about-cars/page3_4_5_11_12_13_img1.png",
             "width": 468,
             "height": 444,
@@ -2106,6 +2116,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-07-22T09:49:57",
+            "baseColor": "#343f42",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/all-about-cars/page3_4_5_11_12_13_img1.png",
             "width": 468,
             "height": 444,
@@ -2146,6 +2157,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-07-22T09:49:57",
+            "baseColor": "#343f42",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/all-about-cars/page3_4_5_11_12_13_img1.png",
             "width": 468,
             "height": 444,
@@ -2186,6 +2198,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-07-22T09:49:57",
+            "baseColor": "#343f42",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/all-about-cars/page3_4_5_11_12_13_img1.png",
             "width": 468,
             "height": 444,
@@ -2226,6 +2239,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-07-22T09:49:57",
+            "baseColor": "#343f42",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/all-about-cars/page3_4_5_11_12_13_img1.png",
             "width": 468,
             "height": 444,
@@ -2266,6 +2280,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-07-22T09:49:57",
+            "baseColor": "#343f42",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/all-about-cars/page3_4_5_11_12_13_img1.png",
             "width": 468,
             "height": 444,
@@ -2439,7 +2454,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [32, 42, 46],
+            "baseColor": "#202a2e",
             "isExternal": true
           },
           "overlay": {
@@ -2737,7 +2752,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [57, 54, 56],
+            "baseColor": "#393638",
             "isExternal": true
           },
           "overlay": {
@@ -3043,7 +3058,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [185, 194, 208],
+            "baseColor": "#b9c2d0",
             "isExternal": true
           },
           "overlay": {
@@ -3338,6 +3353,7 @@
             "type": "video",
             "mimeType": "video/mp4",
             "creationDate": "2021-07-16T06:54:53",
+            "baseColor": "#3f463f",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/all-about-cars/page9_vid1.mp4",
             "width": 720,
             "height": 406,
@@ -3656,7 +3672,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [102, 86, 75],
+            "baseColor": "#66564b",
             "isExternal": true
           },
           "overlay": {
@@ -4342,6 +4358,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-07-22T09:49:57",
+            "baseColor": "#343f42",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/all-about-cars/page3_4_5_11_12_13_img1.png",
             "width": 468,
             "height": 444,
@@ -4800,6 +4817,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-07-22T09:49:57",
+            "baseColor": "#343f42",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/all-about-cars/page3_4_5_11_12_13_img1.png",
             "width": 468,
             "height": 444,
@@ -5258,6 +5276,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-07-22T09:49:57",
+            "baseColor": "#343f42",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/all-about-cars/page3_4_5_11_12_13_img1.png",
             "width": 468,
             "height": 444,
@@ -5409,7 +5428,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [199, 199, 193],
+            "baseColor": "#c7c7c1",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
@@ -5443,7 +5462,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [204, 209, 207],
+            "baseColor": "#ccd1cf",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },

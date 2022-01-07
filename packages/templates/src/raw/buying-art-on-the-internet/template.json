@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -37,7 +37,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [23, 131, 181],
+            "baseColor": "#1783b5",
             "isExternal": true
           },
           "x": 0,
@@ -255,6 +255,7 @@
             "type": "video",
             "mimeType": "video/mp4",
             "creationDate": "2021-06-09T09:44:31",
+            "baseColor": "#907a6d",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/buying-art-on-the-internet/page2_bg.mp4",
             "width": 720,
             "height": 480,
@@ -449,6 +450,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-06-09T09:22:10",
+            "baseColor": "#20415d",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/buying-art-on-the-internet/page3_bg.png",
             "width": 1080,
             "height": 1920,
@@ -616,7 +618,7 @@
             "local": false,
             "isOptimized": true,
             "isMuted": true,
-            "baseColor": [229, 227, 224],
+            "baseColor": "#e5e3e0",
             "isExternal": true
           },
           "tracks": []
@@ -675,7 +677,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [252, 252, 252],
+            "baseColor": "#fcfcfc",
             "isExternal": true
           }
         },
@@ -882,7 +884,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [24, 36, 36],
+            "baseColor": "#182424",
             "isExternal": true
           },
           "x": 75,
@@ -949,7 +951,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [252, 252, 252],
+            "baseColor": "#fcfcfc",
             "isExternal": true
           }
         },
@@ -1157,6 +1159,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-06-09T09:23:22",
+            "baseColor": "#7b5b54",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/buying-art-on-the-internet/page5_image1.png",
             "width": 720,
             "height": 1225,
@@ -1226,7 +1229,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [65, 61, 60],
+            "baseColor": "#413d3c",
             "isExternal": true
           },
           "x": 47,
@@ -1501,7 +1504,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [24, 28, 28],
+            "baseColor": "#181c1c",
             "isExternal": true
           },
           "width": 318,
@@ -1705,6 +1708,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-06-09T09:25:48",
+            "baseColor": "#c0bdba",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/buying-art-on-the-internet/page6_image3.png",
             "width": 640,
             "height": 480,
@@ -1957,6 +1961,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-06-09T09:26:24",
+            "baseColor": "#1e5e5c",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/buying-art-on-the-internet/page7_bg.png",
             "width": 1080,
             "height": 1920,
@@ -2124,7 +2129,7 @@
             "local": false,
             "isOptimized": true,
             "isMuted": true,
-            "baseColor": [229, 227, 224],
+            "baseColor": "#e5e3e0",
             "isExternal": true
           },
           "tracks": []
@@ -2393,7 +2398,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [248, 232, 224],
+            "baseColor": "#f8e8e0",
             "isExternal": true
           }
         },
@@ -2778,6 +2783,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-06-09T09:32:44",
+            "baseColor": "#cfd3ce",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/buying-art-on-the-internet/page9_image1.png",
             "width": 640,
             "height": 480,
@@ -3172,7 +3178,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [248, 232, 224],
+            "baseColor": "#f8e8e0",
             "isExternal": true
           }
         },
@@ -3347,6 +3353,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-06-09T09:34:18",
+            "baseColor": "#2f434f",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/buying-art-on-the-internet/page11_bg.png",
             "width": 1080,
             "height": 1920,
@@ -4352,7 +4359,7 @@
             "local": false,
             "isOptimized": true,
             "isMuted": true,
-            "baseColor": [229, 227, 224],
+            "baseColor": "#e5e3e0",
             "isExternal": true
           },
           "tracks": [],

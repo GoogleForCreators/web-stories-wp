@@ -20,7 +20,6 @@
 import { createNewStory, withUser } from '@web-stories-wp/e2e-test-utils';
 
 describe('Pre-Publish Checklist : Contributor User', () => {
-  // eslint-disable-next-line jest/require-hook
   withUser('contributor', 'password');
 
   it('should not show messages user does not have permission for anyway', async () => {

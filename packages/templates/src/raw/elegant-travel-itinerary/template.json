@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -29,6 +29,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#2f353b",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/elegant-travel-itinerary/page01_image01.png",
             "width": 636,
             "height": 720,
@@ -347,7 +348,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [54, 56, 48],
+            "baseColor": "#363830",
             "isExternal": true
           }
         },
@@ -615,7 +616,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [218, 225, 223],
+            "baseColor": "#dae1df",
             "isExternal": true
           }
         },
@@ -803,7 +804,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [27, 38, 44],
+            "baseColor": "#1b262c",
             "isExternal": true
           }
         },
@@ -986,7 +987,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [195, 162, 125],
+            "baseColor": "#c3a27d",
             "isExternal": true
           }
         },
@@ -1175,7 +1176,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255],
+            "baseColor": "#ffffff",
             "isExternal": true
           },
           "type": "image",
@@ -1303,7 +1304,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255],
+            "baseColor": "#ffffff",
             "isExternal": true
           },
           "type": "image",
@@ -2322,7 +2323,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255],
+            "baseColor": "#ffffff",
             "isExternal": true
           },
           "type": "image",
@@ -2361,7 +2362,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255],
+            "baseColor": "#ffffff",
             "isExternal": true
           },
           "type": "image",
@@ -2400,7 +2401,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [58, 54, 63],
+            "baseColor": "#3a363f",
             "isExternal": true
           },
           "type": "image",
@@ -2713,7 +2714,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [219, 188, 170],
+            "baseColor": "#dbbcaa",
             "isExternal": true
           }
         },
@@ -2902,7 +2903,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255],
+            "baseColor": "#ffffff",
             "isExternal": true
           },
           "type": "image",
@@ -2941,7 +2942,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255],
+            "baseColor": "#ffffff",
             "isExternal": true
           },
           "type": "image",
@@ -2980,7 +2981,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [146, 129, 161],
+            "baseColor": "#9281a1",
             "isExternal": true
           },
           "type": "image",
@@ -3316,7 +3317,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [88, 99, 100],
+            "baseColor": "#586364",
             "isExternal": true
           },
           "type": "image",
@@ -3353,7 +3354,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [20, 28, 36],
+            "baseColor": "#141c24",
             "isExternal": true
           },
           "type": "image",
@@ -3657,7 +3658,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255],
+            "baseColor": "#ffffff",
             "isExternal": true
           },
           "type": "image",
@@ -3696,7 +3697,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [212, 211, 209],
+            "baseColor": "#d4d3d1",
             "isExternal": true
           },
           "type": "image",
@@ -3983,7 +3984,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255],
+            "baseColor": "#ffffff",
             "isExternal": true
           },
           "type": "image",
@@ -4067,7 +4068,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [45, 39, 39],
+            "baseColor": "#2d2727",
             "isExternal": true
           }
         },
@@ -4429,7 +4430,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [215, 213, 210],
+            "baseColor": "#d7d5d2",
             "isExternal": true
           },
           "type": "image",
@@ -4458,6 +4459,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#3b4335",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/elegant-travel-itinerary/page13_image02.png",
             "width": 720,
             "height": 498,

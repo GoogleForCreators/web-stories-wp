@@ -27,6 +27,7 @@
 namespace Google\Web_Stories\Media\Video;
 
 use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Infrastructure\HasMeta;
 use WP_Error;
 
 /**
@@ -34,7 +35,7 @@ use WP_Error;
  *
  * @package Google\Web_Stories\Media\Video
  */
-class Muting extends Service_Base {
+class Muting extends Service_Base implements HasMeta {
 
 	/**
 	 * Is muted.
@@ -78,7 +79,7 @@ class Muting extends Service_Base {
 	 *
 	 * @return void
 	 */
-	protected function register_meta() {
+	public function register_meta() {
 		register_meta(
 			'post',
 			self::IS_MUTED_POST_META_KEY,
@@ -163,9 +164,20 @@ class Muting extends Service_Base {
 	 * @return bool|null
 	 */
 	public function get_callback_is_muted( $prepared ) {
+		/**
+		 * Attachment ID.
+		 *
+		 * @var int $id
+		 */
 		$id = $prepared['id'];
 
+		/**
+		 * Muted value.
+		 *
+		 * @var bool|null $value
+		 */
 		$value = get_metadata_raw( 'post', $id, self::IS_MUTED_POST_META_KEY, true );
+
 		if ( null === $value ) {
 			return $value;
 		}

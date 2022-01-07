@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -31,7 +31,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [111, 114, 125],
+            "baseColor": "#6f727d",
             "isExternal": true
           }
         },
@@ -259,7 +259,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [31, 47, 42],
+            "baseColor": "#1f2f2a",
             "isExternal": true
           },
           "type": "image",
@@ -478,7 +478,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [211, 210, 208],
+            "baseColor": "#d3d2d0",
             "isExternal": true
           },
           "type": "image",
@@ -771,7 +771,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [33, 22, 24],
+            "baseColor": "#211618",
             "isExternal": true
           },
           "type": "image",
@@ -950,7 +950,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [209, 195, 186],
+            "baseColor": "#d1c3ba",
             "isExternal": true
           },
           "type": "image",
@@ -989,7 +989,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [61, 58, 59],
+            "baseColor": "#3d3a3b",
             "isExternal": true
           },
           "type": "image",
@@ -1162,7 +1162,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [193, 193, 193],
+            "baseColor": "#c1c1c1",
             "isExternal": true
           }
         },
@@ -1968,7 +1968,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [26, 13, 8],
+            "baseColor": "#1a0d08",
             "isExternal": true
           },
           "type": "image",
@@ -2261,7 +2261,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [43, 41, 45],
+            "baseColor": "#2b292d",
             "isExternal": true
           },
           "type": "image",
@@ -2440,7 +2440,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [39, 39, 39],
+            "baseColor": "#272727",
             "isExternal": true
           },
           "type": "image",
@@ -2480,7 +2480,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [39, 32, 18],
+            "baseColor": "#272012",
             "isExternal": true
           },
           "x": -8,
@@ -2642,7 +2642,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [33, 39, 48],
+            "baseColor": "#212730",
             "isExternal": true
           },
           "type": "image",
@@ -2929,7 +2929,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [99, 100, 70],
+            "baseColor": "#636446",
             "isExternal": true
           }
         },
@@ -3108,6 +3108,7 @@
           "resource": {
             "type": "video",
             "mimeType": "video/mp4",
+            "baseColor": "#4c4c4c",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/los-angeles-city-guide/page13_videobg.mp4",
             "width": 1364,
             "height": 720,
@@ -3670,7 +3671,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [69, 73, 59],
+            "baseColor": "#45493b",
             "isExternal": true
           },
           "type": "image",
@@ -3709,7 +3710,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [198, 158, 153],
+            "baseColor": "#c69e99",
             "isExternal": true
           },
           "type": "image",

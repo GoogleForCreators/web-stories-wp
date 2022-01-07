@@ -32,6 +32,7 @@ describe('TextEdit integration', () => {
     fixture = new Fixture();
 
     await fixture.render();
+    await fixture.collapseHelpCenter();
   });
 
   afterEach(() => {
@@ -81,13 +82,17 @@ describe('TextEdit integration', () => {
         boldToggle = fixture.editor.inspector.designPanel.textStyle.bold;
       });
 
-      it('should mount editor', async () => {
+      // TODO https://github.com/google/web-stories-wp/issues/9930
+      // eslint-disable-next-line jasmine/no-disabled-tests
+      xit('should mount editor', async () => {
         expect(editor).toBeTruthy();
         expect(editLayer).toBeTruthy();
         await fixture.snapshot();
       });
 
-      it('should handle a command, exit and save', async () => {
+      // TODO https://github.com/google/web-stories-wp/issues/9930
+      // eslint-disable-next-line jasmine/no-disabled-tests
+      xit('should handle a command, exit and save', async () => {
         // Increase the font size for ensuring the clicks to be in correct places.
         await fixture.events.click(
           fixture.editor.inspector.designPanel.textStyle.fontSize,

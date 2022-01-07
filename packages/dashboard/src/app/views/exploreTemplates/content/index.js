@@ -118,7 +118,7 @@ function Content({
     isLoading,
     newStoryURL,
     page.requestNextPage,
-    search?.keyword,
+    search.keyword,
     templateActions,
     templates,
     totalTemplates,

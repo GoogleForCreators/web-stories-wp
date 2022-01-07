@@ -17,18 +17,23 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import { useEffect, useRef } from '@web-stories-wp/react';
+import { useEffect, useRef, memo } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import {
   getSmallestUrlForWidth,
   resourceList,
   ResourcePropTypes,
 } from '@web-stories-wp/media';
-import { Icons, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import {
+  Icons,
+  Text,
+  THEME_CONSTANTS,
+  noop,
+} from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
-import useAverageColor from '../../../../../elements/media/useAverageColor';
 import LibraryMoveable from '../../shared/libraryMoveable';
 import { useDropTargets } from '../../../../dropTargets';
 import { ContentType } from '../../../../../app/media';
@@ -98,31 +103,41 @@ function InnerElement({
   width,
   height,
   onClick,
+  onLoad = noop,
   showVideoDetail,
   mediaElement,
   active,
   isMuted,
 }) {
   const newVideoPosterRef = useRef(null);
-  const hiddenPoster = useRef(null);
-  const mediaBaseColor = useRef(null);
+  // Track if we have already set the dragging resource.
+  const hasSetResourceTracker = useRef(null);
 
-  const {
-    state: { draggingResource },
-    actions: { handleDrag, handleDrop, setDraggingResource },
-  } = useDropTargets();
+  // Note: This `useDropTargets` is purposefully separated from the one below since it
+  // uses a custom function for checking for equality and is meant for `handleDrag` and `handleDrop` only.
+  const { handleDrag, handleDrop } = useDropTargets(
+    ({ actions: { handleDrag, handleDrop } }) => ({
+      handleDrag,
+      handleDrop,
+    }),
+    () => {
+      // If we're dragging this element, always update the actions.
+      if (hasSetResourceTracker.current) {
+        return false;
+        // If we're rendering the first time, init `handleDrag` and `handleDrop`.
+      } else if (hasSetResourceTracker.current === null) {
+        hasSetResourceTracker.current = false;
+        return false;
+      }
+      // Otherwise ignore the changes in the actions.
+      return true;
+    }
+  );
 
-  // Get the base color of the media for using when adding a new image,
-  // needed for example when droptargeting to bg.
-  const setAverageColor = (color) => {
-    mediaBaseColor.current = color;
-  };
-
-  useAverageColor(
-    [ContentType.VIDEO, ContentType.GIF].includes(type)
-      ? hiddenPoster
-      : mediaElement,
-    setAverageColor
+  const { setDraggingResource } = useDropTargets(
+    ({ actions: { setDraggingResource } }) => ({
+      setDraggingResource,
+    })
   );
 
   useEffect(() => {
@@ -136,6 +151,7 @@ function InnerElement({
     if (mediaElement.current) {
       mediaElement.current.style.opacity = 1;
     }
+    onLoad();
   };
 
   let media;
@@ -203,11 +219,7 @@ function InnerElement({
         </Video>
         {displayPoster && (
           /* eslint-disable-next-line styled-components-a11y/alt-text -- False positive. */
-          <HiddenPosterImage
-            ref={hiddenPoster}
-            src={poster}
-            {...commonImageProps}
-          />
+          <HiddenPosterImage src={poster} {...commonImageProps} />
         )}
         {type === ContentType.VIDEO && showVideoDetail && lengthFormatted && (
           <DurationWrapper>
@@ -223,6 +235,7 @@ function InnerElement({
     );
     cloneProps.src = poster;
   }
+
   if (!media) {
     throw new Error('Invalid media element type.');
   }
@@ -234,16 +247,19 @@ function InnerElement({
     ) {
       mediaElement.current?.pause();
     }
-    if (!draggingResource) {
+    if (!hasSetResourceTracker.current) {
       // Drop-targets handling.
       resourceList.set(resource.id, {
         url: thumbnailURL,
         type: 'cached',
       });
       setDraggingResource(resource);
+      hasSetResourceTracker.current = true;
     }
     handleDrag(resource, event.clientX, event.clientY);
   };
+
+  const imageURL = type === ContentType.IMAGE ? thumbnailURL : poster;
 
   return (
     <>
@@ -252,22 +268,12 @@ function InnerElement({
         active={active}
         handleDrag={dragHandler}
         handleDragEnd={() => {
-          handleDrop({
-            ...resource,
-            baseColor: mediaBaseColor.current,
-          });
+          handleDrop(resource);
+          hasSetResourceTracker.current = false;
         }}
         type={resource.type}
-        elementProps={{
-          resource: {
-            ...resource,
-            baseColor: mediaBaseColor.current,
-          },
-        }}
-        onClick={onClick(
-          type === ContentType.IMAGE ? thumbnailURL : poster,
-          mediaBaseColor.current
-        )}
+        elementProps={{ resource }}
+        onClick={onClick(imageURL)}
         cloneElement={CloneImg}
         cloneProps={cloneProps}
       />
@@ -284,9 +290,10 @@ InnerElement.propTypes = {
   height: PropTypes.number,
   isMuted: PropTypes.bool,
   onClick: PropTypes.func.isRequired,
+  onLoad: PropTypes.func,
   showVideoDetail: PropTypes.bool,
   mediaElement: PropTypes.object,
   active: PropTypes.bool.isRequired,
 };
 
-export default InnerElement;
+export default memo(InnerElement);

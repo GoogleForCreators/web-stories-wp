@@ -30,6 +30,7 @@ import {
   localStore,
   LOCAL_STORAGE_PREFIX,
 } from '@web-stories-wp/design-system';
+import { DATA_VERSION, migrate } from '@web-stories-wp/migration';
 
 /**
  * Internal dependencies
@@ -77,6 +78,7 @@ function PageTemplatesPane(props) {
   const {
     actions: { getCustomPageTemplates },
   } = useAPI();
+  const supportsCustomTemplates = Boolean(getCustomPageTemplates);
 
   const {
     savedTemplates,
@@ -115,7 +117,25 @@ function PageTemplatesPane(props) {
     setIsLoading(true);
     getCustomPageTemplates(nextTemplatesToFetch)
       .then(({ templates, hasMore }) => {
-        setSavedTemplates([...(savedTemplates || []), ...templates]);
+        const updatedTemplates = templates.map(
+          ({ version, templateId, ...page }) => {
+            const template = {
+              pages: [page],
+            };
+
+            // Older page templates unfortunately don't have a version.
+            // This is just a reasonable fallback, as 25 was the data version
+            // when custom page templates were first introduced.
+            const migratedTemplate = migrate(template, version || 25);
+            return {
+              templateId,
+              version: DATA_VERSION,
+              ...migratedTemplate.pages[0],
+            };
+          }
+        );
+        setSavedTemplates([...(savedTemplates || []), ...updatedTemplates]);
+
         if (!hasMore) {
           setNextTemplatesToFetch(false);
         } else {
@@ -163,11 +183,14 @@ function PageTemplatesPane(props) {
       value: DEFAULT,
       label: __('Default templates', 'web-stories'),
     },
-    {
+  ];
+
+  if (supportsCustomTemplates) {
+    options.push({
       value: SAVED,
       label: __('Saved templates', 'web-stories'),
-    },
-  ];
+    });
+  }
 
   const pageSize = useMemo(() => {
     const width = PAGE_TEMPLATE_PANE_WIDTH;
@@ -180,12 +203,14 @@ function PageTemplatesPane(props) {
     <StyledPane id={paneId} {...props}>
       <PaneInner>
         <>
-          <ButtonWrapper>
-            <TemplateSave
-              setShowDefaultTemplates={setShowDefaultTemplates}
-              updateList={updateTemplatesList}
-            />
-          </ButtonWrapper>
+          {supportsCustomTemplates && (
+            <ButtonWrapper>
+              <TemplateSave
+                setShowDefaultTemplates={setShowDefaultTemplates}
+                updateList={updateTemplatesList}
+              />
+            </ButtonWrapper>
+          )}
           <DropDownWrapper>
             <Select
               options={options}

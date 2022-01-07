@@ -18,7 +18,12 @@
  * External dependencies
  */
 import { useCallback } from '@web-stories-wp/react';
-import { hasVideoGotAudio } from '@web-stories-wp/media';
+import {
+  hasVideoGotAudio,
+  preloadVideo,
+  seekVideo,
+} from '@web-stories-wp/media';
+
 /**
  * Internal dependencies
  */
@@ -36,12 +41,6 @@ function useDetectVideoHasAudio({ updateMediaElement }) {
   const {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
-  const setProperties = useCallback(
-    (id, properties) => {
-      updateElementsByResourceId({ id, properties });
-    },
-    [updateElementsByResourceId]
-  );
 
   const updateVideoIsMuted = useCallback(
     /**
@@ -55,15 +54,17 @@ function useDetectVideoHasAudio({ updateMediaElement }) {
         return;
       }
       try {
-        const hasAudio = await hasVideoGotAudio(src);
+        const video = await preloadVideo(src);
+        await seekVideo(video);
+        const hasAudio = hasVideoGotAudio(video);
 
-        const newState = ({ resource }) => ({
+        const properties = ({ resource }) => ({
           resource: {
             ...resource,
             isMuted: !hasAudio,
           },
         });
-        setProperties(id, newState);
+        updateElementsByResourceId({ id, properties });
         updateMediaElement({
           id,
           data: {
@@ -78,7 +79,12 @@ function useDetectVideoHasAudio({ updateMediaElement }) {
         // Do nothing for now.
       }
     },
-    [setProperties, updateMedia, updateMediaElement, hasUploadMediaAction]
+    [
+      hasUploadMediaAction,
+      updateElementsByResourceId,
+      updateMediaElement,
+      updateMedia,
+    ]
   );
 
   return {

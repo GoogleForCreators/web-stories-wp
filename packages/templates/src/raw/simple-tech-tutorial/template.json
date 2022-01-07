@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -186,7 +186,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [6, 145, 204],
+            "baseColor": "#0691cc",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
@@ -253,7 +253,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [15, 147, 207],
+            "baseColor": "#0f93cf",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
@@ -609,6 +609,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#dfe0e1",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/simple-tech-tutorial/page3_img1.png",
             "width": 824,
             "height": 976,
@@ -974,6 +975,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#cecece",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/simple-tech-tutorial/page4_img1.png",
             "width": 824,
             "height": 976,
@@ -1053,7 +1055,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [8, 147, 204],
+            "baseColor": "#0893cc",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
@@ -1400,6 +1402,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#c8c9c9",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/simple-tech-tutorial/page6_img1.png",
             "width": 824,
             "height": 1098,
@@ -1695,6 +1698,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#c9cacc",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/simple-tech-tutorial/page7_img1.png",
             "width": 824,
             "height": 952,
@@ -1982,7 +1986,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [227, 124, 77],
+            "baseColor": "#e37c4d",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
@@ -2023,7 +2027,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [4, 178, 162],
+            "baseColor": "#04b2a2",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },

@@ -67,4 +67,10 @@ export class SizePosition extends AbstractPanel {
       name: /Toggle consistent corner radius/,
     });
   }
+
+  get setAsBackground() {
+    return this.getByRole('button', {
+      name: /Set as background/i,
+    });
+  }
 }

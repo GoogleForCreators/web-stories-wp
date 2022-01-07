@@ -31,12 +31,36 @@ export default {
     _x('Green', 'template keyword', 'web-stories'),
   ],
   colors: [
-    { label: _x('Plankton Green', 'color', 'web-stories'), color: '#19584d' },
-    { label: _x('Black', 'color', 'web-stories'), color: '#000' },
-    { label: _x('Rhino Gray-Blue', 'color', 'web-stories'), color: '#374456' },
-    { label: _x('White', 'color', 'web-stories'), color: '#fff' },
-    { label: _x('Dawn Gray', 'color', 'web-stories'), color: '#b7bfc9' },
-    { label: _x('Blueberry Gray', 'color', 'web-stories'), color: '#6f7f94' },
+    {
+      label: _x('Plankton Green', 'color', 'web-stories'),
+      color: '#19584d',
+      family: _x('Green', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Black', 'color', 'web-stories'),
+      color: '#000',
+      family: _x('Black', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Rhino Gray-Blue', 'color', 'web-stories'),
+      color: '#374456',
+      family: _x('Blue', 'color', 'web-stories'),
+    },
+    {
+      label: _x('White', 'color', 'web-stories'),
+      color: '#fff',
+      family: _x('White', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Dawn Gray', 'color', 'web-stories'),
+      color: '#b7bfc9',
+      family: _x('Gray', 'color', 'web-stories'),
+    },
+    {
+      label: _x('Blueberry Gray', 'color', 'web-stories'),
+      color: '#6f7f94',
+      family: _x('Gray', 'color', 'web-stories'),
+    },
   ],
   description: __(
     'With its plain font and boxy design, this template has an industrial and authoritative look. Use photos and videos to create compelling hotel reviews that inspire trust and confidence.',

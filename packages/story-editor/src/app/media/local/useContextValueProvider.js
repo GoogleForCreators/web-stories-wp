@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useEffect, useCallback, useRef } from '@web-stories-wp/react';
+import { getSmallestUrlForWidth } from '@web-stories-wp/media';
 import { getTimeTracker } from '@web-stories-wp/tracking';
 
 /**
@@ -29,6 +30,8 @@ import useUploadVideoFrame from '../utils/useUploadVideoFrame';
 import useProcessMedia from '../utils/useProcessMedia';
 import useUploadMedia from '../useUploadMedia';
 import useDetectVideoHasAudio from '../utils/useDetectVideoHasAudio';
+import useDetectBaseColor from '../utils/useDetectBaseColor';
+import useDetectBlurHash from '../utils/useDetectBlurhash';
 import { LOCAL_MEDIA_TYPE_ALL } from './types';
 
 /**
@@ -62,6 +65,10 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     removeAudioProcessing,
     setPosterProcessing,
     removePosterProcessing,
+    setBaseColorProcessing,
+    removeBaseColorProcessing,
+    setBlurhashProcessing,
+    removeBlurhashProcessing,
     updateMediaElement,
     deleteMediaElement,
   } = reducerActions;
@@ -79,9 +86,13 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       } = {},
       callback
     ) => {
+      if (!getMedia) {
+        return null;
+      }
+
       fetchMediaStart({ pageToken: p });
       const trackTiming = getTimeTracker('load_media');
-      getMedia({
+      return getMedia({
         mediaType:
           currentMediaType === LOCAL_MEDIA_TYPE_ALL ? '' : currentMediaType,
         searchTerm: currentSearchTerm,
@@ -124,6 +135,14 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     updateMediaElement,
   });
 
+  const { updateBaseColor } = useDetectBaseColor({
+    updateMediaElement,
+  });
+
+  const { updateBlurHash } = useDetectBlurHash({
+    updateMediaElement,
+  });
+
   const {
     allowedMimeTypes: { video: allowedVideoMimeTypes },
   } = useConfig();
@@ -150,7 +169,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     (id, src) => {
       const { posterProcessed, posterProcessing } = stateRef.current;
 
-      const process = async () => {
+      (async () => {
         // Simple way to prevent double-uploading.
         if (posterProcessed.includes(id) || posterProcessing.includes(id)) {
           return;
@@ -158,8 +177,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
         setPosterProcessing({ id });
         await uploadVideoFrame(id, src);
         removePosterProcessing({ id });
-      };
-      process();
+      })();
     },
     [setPosterProcessing, uploadVideoFrame, removePosterProcessing]
   );
@@ -168,7 +186,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     (id, src) => {
       const { audioProcessed, audioProcessing } = stateRef.current;
 
-      const process = async () => {
+      (async () => {
         // Simple way to prevent double-uploading.
         if (audioProcessed.includes(id) || audioProcessing.includes(id)) {
           return;
@@ -176,58 +194,109 @@ export default function useContextValueProvider(reducerState, reducerActions) {
         setAudioProcessing({ id });
         await updateVideoIsMuted(id, src);
         removeAudioProcessing({ id });
-      };
-      process();
+      })();
     },
     [setAudioProcessing, updateVideoIsMuted, removeAudioProcessing]
   );
 
+  const processMediaBaseColor = useCallback(
+    (resource) => {
+      const { baseColorProcessed, baseColorProcessing } = stateRef.current;
+      const { id } = resource;
+
+      (async () => {
+        // Simple way to prevent double-uploading.
+        if (
+          baseColorProcessed.includes(id) ||
+          baseColorProcessing.includes(id)
+        ) {
+          return;
+        }
+        setBaseColorProcessing({ id });
+        await updateBaseColor({ resource });
+        removeBaseColorProcessing({ id });
+      })();
+    },
+    [setBaseColorProcessing, updateBaseColor, removeBaseColorProcessing]
+  );
+
+  const processMediaBlurhash = useCallback(
+    (resource) => {
+      const { blurHashProcessed, blurHashProcessing } = stateRef.current;
+      const { id } = resource;
+      (async () => {
+        // Simple way to prevent double-uploading.
+        if (blurHashProcessed.includes(id) || blurHashProcessing.includes(id)) {
+          return;
+        }
+        setBlurhashProcessing({ id });
+        await updateBlurHash({ resource });
+        removeBlurhashProcessing({ id });
+      })();
+    },
+    [stateRef, setBlurhashProcessing, updateBlurHash, removeBlurhashProcessing]
+  );
+
+  const postProcessingResource = useCallback(
+    (resource) => {
+      const {
+        local,
+        type,
+        isMuted,
+        baseColor,
+        src,
+        id,
+        posterId,
+        mimeType,
+        poster,
+        blurHash,
+      } = resource;
+
+      if (local || !id) {
+        return;
+      }
+      if (
+        (allowedVideoMimeTypes.includes(mimeType) || type === 'gif') &&
+        !posterId
+      ) {
+        uploadVideoPoster(id, src);
+      }
+
+      if (allowedVideoMimeTypes.includes(mimeType) && isMuted === null) {
+        processVideoAudio(id, src);
+      }
+
+      const imageSrc =
+        type === 'image' ? getSmallestUrlForWidth(0, resource) : poster;
+      if (imageSrc && !baseColor) {
+        processMediaBaseColor(resource);
+      }
+      if (imageSrc && !blurHash) {
+        processMediaBlurhash(resource);
+      }
+    },
+    [
+      allowedVideoMimeTypes,
+      processMediaBaseColor,
+      processMediaBlurhash,
+      processVideoAudio,
+      uploadVideoPoster,
+    ]
+  );
+
   const { optimizeVideo, optimizeGif, muteExistingVideo, trimExistingVideo } =
     useProcessMedia({
-      uploadVideoPoster,
-      updateVideoIsMuted,
+      postProcessingResource,
       uploadMedia,
       updateMedia,
       deleteMediaElement,
     });
 
-  const generateMissingPosters = useCallback(
-    ({ mimeType, posterId, id, src, local, type }) => {
-      if (
-        (allowedVideoMimeTypes.includes(mimeType) || type === 'gif') &&
-        !local &&
-        !posterId &&
-        id
-      ) {
-        uploadVideoPoster(id, src);
-      }
-    },
-    [allowedVideoMimeTypes, uploadVideoPoster]
-  );
-
-  const backfillHasAudio = useCallback(
-    ({ mimeType, isMuted, id, src, local }) => {
-      if (
-        allowedVideoMimeTypes.includes(mimeType) &&
-        !local &&
-        isMuted === null &&
-        id
-      ) {
-        processVideoAudio(id, src);
-      }
-    },
-    [allowedVideoMimeTypes, processVideoAudio]
-  );
-
   // Whenever media items in the library change,
-  // generate missing posters if needed.
+  // generate missing posters / has audio / base color if needed.
   useEffect(() => {
-    media?.forEach((mediaElement) => generateMissingPosters(mediaElement));
-  }, [media, mediaType, searchTerm, generateMissingPosters]);
-
-  useEffect(() => {
-    media?.forEach((mediaElement) => backfillHasAudio(mediaElement));
-  }, [media, mediaType, searchTerm, backfillHasAudio]);
+    media?.forEach((mediaElement) => postProcessingResource(mediaElement));
+  }, [media, mediaType, searchTerm, postProcessingResource]);
 
   const isGeneratingPosterImages = Boolean(
     stateRef.current?.posterProcessing?.length
@@ -247,7 +316,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       uploadMedia,
       resetWithFetch,
       uploadVideoPoster,
-      updateVideoIsMuted,
+      postProcessingResource,
       deleteMediaElement,
       updateMediaElement,
       optimizeVideo,

@@ -27,68 +27,16 @@ import apiFetch from '@wordpress/api-fetch';
  * Internal dependencies
  */
 import { STORY_EMBED, STORY_FIELDS } from './constants';
-import { base64Encode } from './utils';
+import { base64Encode, transformGetStoryResponse } from './utils';
 
-// Add custom fields and prepare story response.
-const transformGetStoryResponse = (post) => {
-  const { _embedded: embedded = {}, _links: links = {} } = post;
-
-  post.author = {
-    id: embedded?.author?.[0].id || 0,
-    name: embedded?.author?.[0].name || '',
-  };
-
-  post.capabilities = {};
-
-  for (const link of Object.keys(links)) {
-    if (!link.startsWith('wp:action-')) {
-      continue;
-    }
-
-    // Turn 'wp:action-assign-author' into 'assign-author'
-    const capability = link.replace('wp:action-', '');
-    post.capabilities[capability] = true;
-  }
-
-  post.lock_user = {
-    id: embedded?.['wp:lockuser']?.[0].id || 0,
-    name: embedded?.['wp:lockuser']?.[0].name || '',
-    avatar: embedded?.['wp:lockuser']?.[0].avatar_urls?.['96'] || '',
-  };
-
-  post.featured_media = {
-    id: embedded?.['wp:featuredmedia']?.[0].id || 0,
-    height: embedded?.['wp:featuredmedia']?.[0]?.media_details?.height || 0,
-    width: embedded?.['wp:featuredmedia']?.[0]?.media_details?.width || 0,
-    url: embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
-  };
-
-  post.publisher_logo = {
-    id: embedded?.['wp:publisherlogo']?.[0].id || 0,
-    height: embedded?.['wp:publisherlogo']?.[0]?.media_details?.height || 0,
-    width: embedded?.['wp:publisherlogo']?.[0]?.media_details?.width || 0,
-    url: embedded?.['wp:publisherlogo']?.[0]?.source_url || '',
-  };
-
-  post.taxonomies = links?.['wp:term']?.map(({ taxonomy }) => taxonomy) || [];
-  post.terms = embedded?.['wp:term'] || [];
-
-  return post;
-};
-
-export function getStoryById(config, storyId, isDemo = false) {
+export function getStoryById(config, storyId) {
   const path = addQueryArgs(`${config.api.stories}${storyId}/`, {
     context: 'edit',
     _embed: STORY_EMBED,
-    web_stories_demo: isDemo,
     _fields: STORY_FIELDS,
   });
 
   return apiFetch({ path }).then(transformGetStoryResponse);
-}
-
-export function getDemoStoryById(config, storyId) {
-  return getStoryById(config, storyId, true);
 }
 
 const getStorySaveData = (

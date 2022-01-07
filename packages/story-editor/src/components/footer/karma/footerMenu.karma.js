@@ -25,10 +25,15 @@ describe('Footer menu', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
   });
 
   afterEach(() => {
     fixture.restore();
+  });
+
+  it('should have no aXe violations', async () => {
+    await expectAsync(fixture.editor.footer.node).toHaveNoViolations();
   });
 
   it('should show correct tooltip on hover', async () => {

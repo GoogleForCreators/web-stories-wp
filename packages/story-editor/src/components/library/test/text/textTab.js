@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { act, fireEvent, screen, waitFor } from '@testing-library/react';
-import { curatedFontNames } from '@web-stories-wp/fonts';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { CURATED_FONT_NAMES } from '@web-stories-wp/fonts';
 
 /**
  * Internal dependencies
@@ -48,7 +48,7 @@ describe('TextTab', () => {
 
   it('should insert text with default text style on shortcut click', async () => {
     const availableCuratedFonts = fontsListResponse.filter(
-      (font) => curatedFontNames.indexOf(font.name) > 0
+      (font) => CURATED_FONT_NAMES.indexOf(font.name) > 0
     );
 
     const fontContextValues = {
@@ -68,9 +68,7 @@ describe('TextTab', () => {
       </FontContext.Provider>
     );
 
-    act(() => {
-      fireEvent.click(screen.getByTitle('Add new text element'));
-    });
+    fireEvent.click(screen.getByTitle('Add new text element'));
 
     await waitFor(() => expect(insertElement).toHaveBeenCalledTimes(1));
     await waitFor(() =>

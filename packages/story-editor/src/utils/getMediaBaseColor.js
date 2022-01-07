@@ -17,7 +17,8 @@
 /**
  * External dependencies
  */
-import { trackError } from '@web-stories-wp/tracking';
+import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
+import { getHexFromSolidArray } from '@web-stories-wp/patterns';
 
 const STYLES = {
   boxSizing: 'border-box',
@@ -46,16 +47,28 @@ function getImgNodeKey(elementId) {
   return `${IMG_NODE}_${elementId}`;
 }
 
-export function getMediaBaseColor(resource, onBaseColor) {
-  const { type, src, poster } = resource;
-  setOrCreateImage({
-    src: type === 'video' ? poster : src,
-    width: 10,
-    height: 'auto',
-  }).then(
-    (color) => onBaseColor(color),
-    () => onBaseColor([255, 255, 255]) // Fallback color is white.
-  );
+export async function getMediaBaseColor(src) {
+  if (!src) {
+    return Promise.reject(new Error('No source to image'));
+  }
+  let color;
+  const trackTiming = getTimeTracker('load_get_base_color');
+  try {
+    color = await setOrCreateImage({
+      src,
+      width: 10,
+      height: 'auto',
+    });
+  } catch (error) {
+    // Known error of color thief with white only images.
+    if (error?.name !== 'TypeError') {
+      throw error;
+    }
+    color = '#ffffff';
+  } finally {
+    trackTiming();
+  }
+  return color;
 }
 
 function getDefaultOnloadCallback(nodeKey, resolve, reject) {
@@ -66,7 +79,8 @@ function getDefaultOnloadCallback(nodeKey, resolve, reject) {
       .then(({ default: ColorThief }) => {
         const node = document.body[nodeKey];
         const thief = new ColorThief();
-        resolve(thief.getColor(node.firstElementChild));
+        const rgb = thief.getColor(node.firstElementChild);
+        resolve(getHexFromSolidArray(rgb));
       })
       .catch((err) => {
         trackError('image_base_color', err.message);
@@ -95,6 +109,7 @@ export function setOrCreateImage(
     const img = new Image();
     // Necessary to avoid tainting canvas with CORS image data.
     img.crossOrigin = 'anonymous';
+    img.decoding = 'async';
     img.addEventListener('load', getOnloadCallback(NODE_KEY, resolve, reject));
     img.addEventListener('error', (e) => {
       reject(new Error('Set image error: ' + e.message));

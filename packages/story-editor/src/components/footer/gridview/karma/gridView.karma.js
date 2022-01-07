@@ -39,6 +39,7 @@ describe('GridView integration', () => {
     ]);
 
     await fixture.render();
+    await fixture.collapseHelpCenter();
 
     await fixture.events.click(fixture.editor.footer.gridViewToggle);
   });
@@ -64,6 +65,10 @@ describe('GridView integration', () => {
 
   it('should open grid view', () => {
     expect(fixture.editor.gridView.node).toBeTruthy();
+  });
+
+  it('should have no aXe violations', async () => {
+    await expectAsync(fixture.editor.gridView.node).toHaveNoViolations();
   });
 
   it('should use tab to jump between the "Back" button, Preview Size control, and page list', async () => {

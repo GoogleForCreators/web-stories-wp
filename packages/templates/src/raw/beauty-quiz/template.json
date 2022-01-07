@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -31,7 +31,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [153, 104, 76],
+            "baseColor": "#99684c",
             "isExternal": true
           }
         },
@@ -254,7 +254,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [218, 169, 146],
+            "baseColor": "#daa992",
             "isExternal": true
           }
         },
@@ -1471,7 +1471,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [207, 206, 204],
+            "baseColor": "#cfcecc",
             "isExternal": true
           },
           "x": 86.5,
@@ -1495,6 +1495,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#bab19e",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/beauty-quiz/page05_07_frame.png",
             "width": 629,
             "height": 772,
@@ -2157,7 +2158,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [194, 178, 164],
+            "baseColor": "#c2b2a4",
             "isExternal": true
           },
           "x": 94.5,
@@ -2191,7 +2192,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [64, 94, 80],
+            "baseColor": "#405e50",
             "isExternal": true
           },
           "type": "image",
@@ -3366,7 +3367,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [165, 118, 93],
+            "baseColor": "#a5765d",
             "isExternal": true
           },
           "type": "image",
@@ -3608,7 +3609,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [251, 199, 203],
+            "baseColor": "#fbc7cb",
             "isExternal": true
           },
           "type": "image",
@@ -4164,7 +4165,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [235, 209, 191],
+            "baseColor": "#ebd1bf",
             "isExternal": true
           },
           "type": "image",
@@ -4203,7 +4204,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [224, 173, 162],
+            "baseColor": "#e0ada2",
             "isExternal": true
           },
           "type": "image",
@@ -4242,7 +4243,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [213, 175, 145],
+            "baseColor": "#d5af91",
             "isExternal": true
           },
           "type": "image",

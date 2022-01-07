@@ -34,6 +34,7 @@ describe('Link Panel', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
   });
 
   afterEach(() => {
@@ -233,11 +234,11 @@ describe('Link Panel', () => {
       await moveElementToBottom(frame, 0);
 
       await closePanel('Selection');
+      await closePanel('Color');
+      await closePanel('Border');
 
       linkPanel = fixture.editor.inspector.designPanel.link;
       await fixture.events.click(linkPanel.address);
-
-      await fixture.events.sleep(5000);
 
       await fixture.snapshot('Page Attachment warning & dashed line visible');
 

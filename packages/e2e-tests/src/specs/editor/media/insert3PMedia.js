@@ -17,17 +17,31 @@
 /**
  * External dependencies
  */
-import { createNewStory, withPlugin } from '@web-stories-wp/e2e-test-utils';
+import {
+  createNewStory,
+  withPlugin,
+  clearLocalStorage,
+} from '@web-stories-wp/e2e-test-utils';
 
 const media3pSelector = '#library-tab-media3p';
 
 describe('Inserting 3P Media', () => {
-  it('should dismiss message', async () => {
+  beforeAll(async () => {
+    await clearLocalStorage();
+  });
+
+  it('should dismiss TOS dialog', async () => {
     await createNewStory();
 
     await expect(page).toMatchElement(media3pSelector);
     await expect(page).toClick(media3pSelector);
+
+    await expect(page).toMatch(
+      'Your use of stock content is subject to third party terms'
+    );
+
     await expect(page).toClick('button', { text: 'Dismiss' });
+
     await expect(page).not.toMatch(
       'Your use of stock content is subject to third party terms'
     );
@@ -56,7 +70,7 @@ describe('Inserting 3P Media', () => {
 
   // Skipped for https://github.com/google/web-stories-wp/issues/7481
   // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should insert an coverr video', async () => {
+  it.skip('should insert a Coverr video', async () => {
     await createNewStory();
 
     await expect(page).toMatchElement(media3pSelector);
@@ -79,7 +93,7 @@ describe('Inserting 3P Media', () => {
 
   // Skipped for https://github.com/google/web-stories-wp/issues/7481
   // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should insert an tenor gif', async () => {
+  it.skip('should insert a Tenor GIF', async () => {
     await createNewStory();
 
     await expect(page).toMatchElement(media3pSelector);
@@ -101,7 +115,6 @@ describe('Inserting 3P Media', () => {
   });
 
   describe('Disabled', () => {
-    // eslint-disable-next-line jest/require-hook
     withPlugin('e2e-tests-disable-3p-media');
 
     it('should not render 3p media tab', async () => {

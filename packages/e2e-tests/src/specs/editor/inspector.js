@@ -27,7 +27,6 @@ describe('Inspector', () => {
       await expect(page).toMatchElement('[aria-label="Publisher Logo"]');
     });
     describe('Contributor User', () => {
-      // eslint-disable-next-line jest/require-hook
       withUser('contributor', 'password');
 
       it('should not display publisher logo upload', async () => {

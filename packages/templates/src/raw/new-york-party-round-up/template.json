@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -24,6 +24,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-06-23T12:43:20",
+            "baseColor": "#131618",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/new-york-party-round-up/page1_bg.png",
             "width": 1080,
             "height": 1920,
@@ -70,7 +71,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [47, 36, 35],
+            "baseColor": "#2f2423",
             "isExternal": true
           },
           "x": 84,
@@ -310,6 +311,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-06-23T12:43:47",
+            "baseColor": "#1927d5",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/new-york-party-round-up/page2_bg.png",
             "width": 1080,
             "height": 1920,
@@ -456,6 +458,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-06-23T12:46:26",
+            "baseColor": "#141414",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/new-york-party-round-up/page3_bg.png",
             "width": 1080,
             "height": 1920,
@@ -566,7 +569,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [49, 36, 35],
+            "baseColor": "#312423",
             "isExternal": true
           },
           "x": 35,
@@ -752,7 +755,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [219, 175, 141],
+            "baseColor": "#dbaf8d",
             "isExternal": true
           },
           "width": 325,
@@ -967,7 +970,7 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [172, 60, 60],
+            "baseColor": "#ac3c3c",
             "isExternal": true
           }
         },
@@ -1069,7 +1072,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [211, 29, 120],
+            "baseColor": "#d31d78",
             "isExternal": true
           },
           "x": 35,
@@ -1255,7 +1258,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [250, 106, 208],
+            "baseColor": "#fa6ad0",
             "isExternal": true
           },
           "width": 325,
@@ -1462,6 +1465,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-06-23T13:30:12",
+            "baseColor": "#1f1817",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/new-york-party-round-up/page5_bg.png",
             "width": 1080,
             "height": 1920,
@@ -1787,6 +1791,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-06-25T08:01:05",
+            "baseColor": "#de0949",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/new-york-party-round-up/page6_bg.png",
             "width": 1080,
             "height": 1920,
@@ -2760,6 +2765,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-06-25T07:59:37",
+            "baseColor": "#19110d",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/new-york-party-round-up/page7_bg.png",
             "width": 1080,
             "height": 1920,
@@ -3079,6 +3085,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-06-23T12:48:11",
+            "baseColor": "#041425",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/new-york-party-round-up/page8_bg.png",
             "width": 1080,
             "height": 1920,
@@ -4063,6 +4070,7 @@
             "mimeType": "image/png",
             "creationDate": "2021-06-23T12:48:43",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/new-york-party-round-up/page9_bg.png",
+            "baseColor": "#28051d",
             "width": 1080,
             "height": 1920,
             "id": 0,
@@ -4380,6 +4388,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-06-25T08:00:21",
+            "baseColor": "#775756",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/new-york-party-round-up/page10_bg.png",
             "width": 1080,
             "height": 1920,
@@ -5365,6 +5374,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-06-23T12:49:21",
+            "baseColor": "#a0295d",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/new-york-party-round-up/page11_bg.png",
             "width": 1080,
             "height": 1920,
@@ -5683,6 +5693,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-06-23T12:49:38",
+            "baseColor": "#4c623f",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/new-york-party-round-up/page12_bg.png",
             "width": 1080,
             "height": 1920,
@@ -6668,7 +6679,7 @@
             "local": false,
             "isOptimized": false,
             "provider": "local",
-            "baseColor": [172, 60, 60],
+            "baseColor": "#ac3c3c",
             "isExternal": true
           }
         },
@@ -6770,7 +6781,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [18, 21, 15],
+            "baseColor": "#12150f",
             "isExternal": true
           },
           "x": 35,
@@ -6881,7 +6892,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [17, 4, 39],
+            "baseColor": "#110427",
             "isExternal": true
           },
           "width": 325,

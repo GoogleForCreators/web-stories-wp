@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -40,7 +40,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [40, 34, 28],
+            "baseColor": "#28221c",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 254, "g": 49, "b": 49 } },
@@ -278,6 +278,7 @@
             "type": "image",
             "mimeType": "image/jpeg",
             "creationDate": "2021-07-21T11:00:52",
+            "baseColor": "#ceb4b5",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/celebrity-q-and-a/page2_img1.jpg",
             "width": 1080,
             "height": 1620,
@@ -438,7 +439,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [51, 37, 30],
+            "baseColor": "#33251e",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 254, "g": 49, "b": 49 } },
@@ -683,7 +684,7 @@
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
-            "baseColor": [95, 95, 96],
+            "baseColor": "#5f5f60",
             "isExternal": true
           },
           "tracks": [],
@@ -814,7 +815,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [207, 194, 190],
+            "baseColor": "#cfc2be",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 254, "g": 49, "b": 49 } },
@@ -1125,7 +1126,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [58, 33, 19],
+            "baseColor": "#3a2113",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 254, "g": 49, "b": 49 } },
@@ -1207,7 +1208,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [216, 217, 212],
+            "baseColor": "#d8d9d4",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 254, "g": 49, "b": 49 } },
@@ -1242,7 +1243,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [60, 51, 54],
+            "baseColor": "#3c3336",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 254, "g": 49, "b": 49 } },
@@ -1566,7 +1567,7 @@
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
-            "baseColor": [57, 57, 57],
+            "baseColor": "#393939",
             "isExternal": true
           },
           "tracks": [],
@@ -1696,7 +1697,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [192, 184, 179],
+            "baseColor": "#c0b8b3",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 254, "g": 49, "b": 49 } },
@@ -2007,7 +2008,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [52, 36, 32],
+            "baseColor": "#342420",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 254, "g": 49, "b": 49 } },
@@ -2088,7 +2089,7 @@
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
-            "baseColor": [114, 114, 115],
+            "baseColor": "#727273",
             "isExternal": true
           },
           "tracks": [],
@@ -2277,7 +2278,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [51, 33, 31],
+            "baseColor": "#33211f",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 254, "g": 49, "b": 49 } },
@@ -2312,7 +2313,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [218, 196, 174],
+            "baseColor": "#dac4ae",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 254, "g": 49, "b": 49 } },

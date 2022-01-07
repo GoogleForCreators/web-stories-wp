@@ -122,7 +122,13 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function parse_link( $request ) {
-		$url = untrailingslashit( $request['url'] );
+		/**
+		 * Requested URL.
+		 *
+		 * @var string $url
+		 */
+		$url = $request['url'];
+		$url = untrailingslashit( $url );
 
 		/**
 		 * Filters the link data TTL value.
@@ -136,10 +142,18 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 		$cache_key = 'web_stories_link_data_' . md5( $url );
 
 		$data = get_transient( $cache_key );
-		if ( ! empty( $data ) ) {
-			$response = $this->prepare_item_for_response( json_decode( $data, true ), $request );
+		if ( is_string( $data ) && ! empty( $data ) ) {
+			/**
+			 * Decoded cached link data.
+			 *
+			 * @var array|null $link
+			 */
+			$link = json_decode( $data, true );
 
-			return rest_ensure_response( $response );
+			if ( $link ) {
+				$response = $this->prepare_item_for_response( $link, $request );
+				return rest_ensure_response( $response );
+			}
 		}
 
 		$data = [
@@ -288,6 +302,11 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 			}
 		}
 
+		/**
+		 * Request context.
+		 *
+		 * @var string $context
+		 */
 		$context = ! empty( $request['context'] ) ? $request['context'] : 'view';
 		$data    = $this->add_additional_fields_to_object( $data, $request );
 		$data    = $this->filter_response_by_context( $data, $context );
@@ -357,7 +376,7 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @since 1.11.0
 	 *
-	 * @param mixed $value Value to be validated.
+	 * @param string $value Value to be validated.
 	 *
 	 * @return true|WP_Error
 	 */

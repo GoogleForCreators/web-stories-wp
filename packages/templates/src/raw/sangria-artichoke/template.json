@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -56,6 +56,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#183a15",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/sangria-artichoke/page01_bg.png",
             "width": 330,
             "height": 586,
@@ -399,7 +400,7 @@
             "local": false,
             "isMuted": true,
             "isOptimized": true,
-            "baseColor": [181, 178, 179],
+            "baseColor": "#b5b2b3",
             "isExternal": true
           },
           "tracks": [],
@@ -636,7 +637,7 @@
             "alt": "page03_bg",
             "local": false,
             "isOptimized": false,
-            "baseColor": [228, 224, 218],
+            "baseColor": "#e4e0da",
             "isExternal": true
           }
         },
@@ -896,6 +897,7 @@
           "focalY": 50,
           "resource": {
             "type": "image",
+            "baseColor": "#ffffff",
             "mimeType": "image/png",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/sangria-artichoke/page04_bg.png",
             "width": 330,
@@ -1649,7 +1651,7 @@
             "alt": "page06_07_bg",
             "local": false,
             "isOptimized": false,
-            "baseColor": [55, 58, 49],
+            "baseColor": "#373a31",
             "isExternal": true
           }
         },
@@ -1929,7 +1931,7 @@
             "alt": "page06_07_bg",
             "local": false,
             "isOptimized": false,
-            "baseColor": [55, 58, 49],
+            "baseColor": "#373a31",
             "isExternal": true
           }
         },
@@ -2374,7 +2376,7 @@
             "alt": "page08_image01",
             "local": false,
             "isOptimized": false,
-            "baseColor": [180, 158, 129],
+            "baseColor": "#b49e81",
             "isExternal": true
           },
           "type": "image",
@@ -2776,7 +2778,7 @@
             "alt": "page09_image01",
             "local": false,
             "isOptimized": false,
-            "baseColor": [76, 83, 56],
+            "baseColor": "#4c5338",
             "isExternal": true
           },
           "type": "image",
@@ -3017,6 +3019,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#dcd3c6",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/sangria-artichoke/page10_image01.png",
             "width": 330,
             "height": 220,
@@ -3273,7 +3276,7 @@
             "alt": "apage11_image01",
             "local": false,
             "isOptimized": false,
-            "baseColor": [201, 196, 182],
+            "baseColor": "#c9c4b6",
             "isExternal": true
           },
           "type": "image",
@@ -3707,7 +3710,7 @@
             "alt": "page12_image01",
             "local": false,
             "isOptimized": false,
-            "baseColor": [70, 64, 55],
+            "baseColor": "#464037",
             "isExternal": true
           }
         },
@@ -3747,7 +3750,7 @@
             "alt": "page12_image02",
             "local": false,
             "isOptimized": false,
-            "baseColor": [213, 207, 195],
+            "baseColor": "#d5cfc3",
             "isExternal": true
           }
         },
@@ -3787,7 +3790,7 @@
             "alt": "page12_image03",
             "local": false,
             "isOptimized": false,
-            "baseColor": [195, 204, 175],
+            "baseColor": "#c3ccaf",
             "isExternal": true
           }
         }

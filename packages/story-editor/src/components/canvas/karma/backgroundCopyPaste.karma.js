@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
@@ -26,8 +31,15 @@ describe('Background Copy Paste integration', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
 
     await addNewPage();
+
+    await waitFor(() => {
+      if (fixture.editor.footer.carousel.pages.length === 0) {
+        throw new Error('Carousel pages not loaded yet');
+      }
+    });
   });
 
   afterEach(() => {
@@ -227,13 +239,7 @@ describe('Background Copy Paste integration', () => {
     await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
   }
   async function gotoPage(index /* 1-indexed */) {
-    const carousel = getElementByQueryAndMatcher(
-      'div[role="listbox"]',
-      getByAttribute('aria-label', /Pages List/i)
-    );
-    const pageAtIndex = carousel.querySelectorAll('button[role="option"]')[
-      index - 1
-    ];
+    const pageAtIndex = fixture.editor.footer.carousel.pages[index - 1].node;
     await fixture.events.click(pageAtIndex);
   }
   async function setBackgroundColor(hex) {
@@ -248,16 +254,12 @@ describe('Background Copy Paste integration', () => {
     await fixture.events.keyboard.press('tab');
   }
   async function addBackgroundImage(index) {
-    // Drag image to canvas corner to set as background
+    // Add image and click "set as background"
     const image = fixture.editor.library.media.item(index);
-    const canvas = fixture.editor.canvas.framesLayer.fullbleed;
-
-    await fixture.events.mouse.seq(({ down, moveRel, up }) => [
-      moveRel(image, 20, 20),
-      down(),
-      moveRel(canvas, 10, 10),
-      up(),
-    ]);
+    await fixture.events.click(image);
+    await fixture.events.click(
+      fixture.editor.inspector.designPanel.sizePosition.setAsBackground
+    );
   }
   async function getNumElements() {
     const {

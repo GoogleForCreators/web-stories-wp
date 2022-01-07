@@ -27,18 +27,22 @@ import { withProtocol } from '../../utils/url';
 import { getLinkFromElement } from '.';
 
 function WithLink({ element, children, ...rest }) {
-  const link = getLinkFromElement(element);
-  if (!link?.url?.length) {
+  const link = getLinkFromElement(element) || {};
+  const { url, icon, desc, rel = [] } = link;
+  if (!url) {
     return children;
   }
-  const urlWithProtocol = withProtocol(link.url);
+  rel.push('noreferrer');
+  const urlWithProtocol = withProtocol(url);
   return (
+    // False positive.
+    // eslint-disable-next-line react/jsx-no-target-blank
     <a
       href={urlWithProtocol}
-      data-tooltip-icon={link.icon}
-      data-tooltip-text={link.desc}
+      data-tooltip-icon={icon || undefined}
+      data-tooltip-text={desc}
       target="_blank"
-      rel="noreferrer"
+      rel={rel.join(' ')}
       {...rest}
     >
       {children}

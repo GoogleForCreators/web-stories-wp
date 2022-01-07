@@ -136,6 +136,8 @@ export { ResourcePropTypes };
  * Attachment object.
  *
  * @typedef {Attachment} Attachment
+ * @property {string|null} baseColor Attachment base color.
+ * @property {string|null} blurHash Attachment blur hash.
  * @property {string} [type] Attachment type, e.g. video or image.
  * @property {string} mimeType The MIME type.
  * @property {string|null} creationDate When the attachment was created.
@@ -173,7 +175,8 @@ export { ResourcePropTypes };
  * Resource object.
  *
  * @typedef {Resource} Resource
- * @property {?Array.<number>} baseColor An optional attribution to detect the base color of a resource (an image or video). Value looks like [115, 71, 39].
+ * @property {string|null} baseColor An optional attribution to detect the base color of a resource (an image or video). Value looks like #ff00ff.
+ * @property {string|null} blurHash An optional attribution to detect the blurhash of a resource (an image or video).
  * @property {string|null} type Resource type. Currently only "image" and "video" values are allowed. If not specified, will be calculated from the mime-type.
  * @property {string} mimeType The MIME type.
  * @property {string|null} creationDate When resource was created.

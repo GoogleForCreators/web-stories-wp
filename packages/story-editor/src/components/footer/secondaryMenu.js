@@ -19,13 +19,14 @@
  */
 import styled from 'styled-components';
 import { useCallback, useEffect, useRef } from '@web-stories-wp/react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
 import KeyboardShortcutsMenu from '../keyboardShortcutsMenu';
 import { HelpCenter } from '../helpCenter';
-import { useHelpCenter } from '../../app';
+import { useCanvas, useHelpCenter } from '../../app';
 import {
   Checklist,
   ChecklistCountProvider,
@@ -33,6 +34,7 @@ import {
   useCheckpoint,
 } from '../checklist';
 import { useKeyboardShortcutsMenu } from '../keyboardShortcutsMenu/keyboardShortcutsMenuContext';
+import { FOOTER_MENU_GAP, FOOTER_MARGIN } from './constants';
 
 const Wrapper = styled.div`
   display: flex;
@@ -47,11 +49,8 @@ const MenuItems = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin: 0 16px 16px;
-`;
-
-const Space = styled.span`
-  width: 8px;
+  margin-left: ${FOOTER_MARGIN}px;
+  gap: ${FOOTER_MENU_GAP}px;
 `;
 
 const POPUPS = {
@@ -60,7 +59,7 @@ const POPUPS = {
   KEYBOARD_SHORTCUTS: 'keyboard_shortcuts',
 };
 
-function SecondaryMenu() {
+function SecondaryMenu({ menu }) {
   const expandedPopupRef = useRef('');
 
   const { close: closeHelpCenter, isHelpCenterOpen } = useHelpCenter(
@@ -101,6 +100,15 @@ function SecondaryMenu() {
       reviewDialogRequested,
       onResetReviewDialogRequest,
     })
+  );
+
+  const isActiveTrimOrEdit = useCanvas(
+    ({
+      state: {
+        editingElementState: { isTrimMode },
+        isEditing,
+      },
+    }) => isTrimMode || isEditing
   );
 
   const setPopupRef = useCallback((newPopup = '') => {
@@ -164,19 +172,35 @@ function SecondaryMenu() {
     setPopupRef,
   ]);
 
+  // The checklist and help center will stay open as user interacts with canvas
+  // we want to collapse either of these if expanded when the trim or cropping mode is selected.
+  useEffect(() => {
+    if (isActiveTrimOrEdit && expandedPopupRef.current) {
+      setPopupRef();
+      closeChecklist();
+      closeHelpCenter();
+    }
+  }, [closeChecklist, closeHelpCenter, isActiveTrimOrEdit, setPopupRef]);
+
   return (
     <Wrapper>
       <MenuItems>
         <HelpCenter />
-        <Space />
-        <ChecklistCountProvider>
-          <Checklist />
-        </ChecklistCountProvider>
-        <Space />
+        {menu?.checklist && (
+          <ChecklistCountProvider>
+            <Checklist items={menu.checklist} />
+          </ChecklistCountProvider>
+        )}
         <KeyboardShortcutsMenu />
       </MenuItems>
     </Wrapper>
   );
 }
+
+SecondaryMenu.propTypes = {
+  menu: PropTypes.shape({
+    checklist: PropTypes.object,
+  }),
+};
 
 export default SecondaryMenu;

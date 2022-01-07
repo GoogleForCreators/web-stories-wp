@@ -82,19 +82,19 @@ export const MediaPicker = ({ render, ...props }) => {
       updateElementsById,
     })
   );
-  const { resetWithFetch, updateVideoIsMuted, optimizeVideo, optimizeGif } =
+  const { resetWithFetch, postProcessingResource, optimizeVideo, optimizeGif } =
     useLocalMedia(
       ({
         actions: {
           resetWithFetch,
-          updateVideoIsMuted,
+          postProcessingResource,
           optimizeVideo,
           optimizeGif,
         },
       }) => {
         return {
           resetWithFetch,
-          updateVideoIsMuted,
+          postProcessingResource,
           optimizeVideo,
           optimizeGif,
         };
@@ -165,13 +165,7 @@ export const MediaPicker = ({ render, ...props }) => {
           resource.sizes?.medium?.source_url || resource.src
         );
 
-        if (
-          !resource.local &&
-          allowedVideoMimeTypes.includes(resource.mimeType) &&
-          resource.isMuted === null
-        ) {
-          updateVideoIsMuted(resource.id, resource.src);
-        }
+        postProcessingResource(resource);
       } catch (e) {
         showSnackbar({
           message: e.message,
@@ -180,20 +174,19 @@ export const MediaPicker = ({ render, ...props }) => {
       }
     },
     [
-      allowedVideoMimeTypes,
       insertMediaElement,
       isTranscodingEnabled,
       optimizeGif,
       optimizeVideo,
       showSnackbar,
       transcodableMimeTypes,
-      updateVideoIsMuted,
+      postProcessingResource,
     ]
   );
   return (
     <MediaUpload
       title={__('Replace media', 'web-stories')}
-      buttonInsertText={__('Insert media', 'web-stories')}
+      buttonInsertText={__('Replace media', 'web-stories')}
       onSelect={handleMediaSelect}
       onClose={resetWithFetch}
       type={allowedMimeTypes}

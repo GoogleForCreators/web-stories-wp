@@ -81,7 +81,6 @@ class Jetpack extends DependencyInjectedTestCase {
 
 	/**
 	 * @covers ::filter_rest_api_response
-	 * @covers ::add_extra_data
 	 */
 	public function test_filter_rest_api_response() {
 		$video_attachment_id = self::factory()->attachment->create_object(
@@ -98,6 +97,7 @@ class Jetpack extends DependencyInjectedTestCase {
 		$data = [
 			'source_url'         => self::ATTACHMENT_URL,
 			'featured_media_src' => [],
+			'media_details'      => [],
 		];
 
 		$response = rest_ensure_response( $data );
@@ -153,7 +153,6 @@ class Jetpack extends DependencyInjectedTestCase {
 
 	/**
 	 * @covers ::filter_admin_ajax_response
-	 * @covers ::add_extra_data
 	 */
 	public function test_filter_admin_ajax_response() {
 		$video_attachment_id = self::factory()->attachment->create_object(

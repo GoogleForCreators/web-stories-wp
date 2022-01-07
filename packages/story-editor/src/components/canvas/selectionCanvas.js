@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useEffect, useRef, useMemo } from '@web-stories-wp/react';
+import { useEffect, useRef, useMemo, useCallback } from '@web-stories-wp/react';
 import { PAGE_RATIO, useUnits } from '@web-stories-wp/units';
 
 /**
@@ -54,6 +54,8 @@ const Lasso = styled.div`
   border: 1px dotted ${({ theme }) => theme.colors.border.selection};
   z-index: 1;
 `;
+
+const EMPTY_ARR = [];
 
 function SelectionCanvas({ children }) {
   const { selectedElements, currentPage, clearSelection } = useStory(
@@ -104,7 +106,7 @@ function SelectionCanvas({ children }) {
   const endRef = useRef([0, 0]);
   const lassoModeRef = useRef(LassoMode.OFF);
 
-  const getLassoBox = () => {
+  const getLassoBox = useCallback(() => {
     const [x1, y1] = startRef.current;
     const [x2, y2] = endRef.current;
     const x = Math.min(x1, x2);
@@ -112,9 +114,9 @@ function SelectionCanvas({ children }) {
     const w = Math.abs(x1 - x2);
     const h = Math.abs(y1 - y2);
     return [x, y, w, h];
-  };
+  }, []);
 
-  const updateLasso = () => {
+  const updateLasso = useCallback(() => {
     const lasso = lassoRef.current;
     if (!lasso) {
       return;
@@ -126,56 +128,71 @@ function SelectionCanvas({ children }) {
     lasso.style.width = `${w}px`;
     lasso.style.height = `${h}px`;
     lasso.style.display = lassoMode === LassoMode.ON ? 'block' : 'none';
-  };
+  }, [getLassoBox]);
 
-  const onMouseDown = (evt) => {
-    // Selecting the background element should be handled at the frameElement level
-    if (!nodesById[currentPage.elements[0].id].contains(evt.target)) {
-      if (selectedElements.length) {
-        clearSelection();
+  const currentPageElements = currentPage?.elements || EMPTY_ARR;
+  const onMouseDown = useCallback(
+    (evt) => {
+      // Selecting the background element should be handled at the frameElement level
+      if (!nodesById[currentPageElements[0].id].contains(evt.target)) {
+        if (selectedElements.length) {
+          clearSelection();
+        }
+        if (isEditing) {
+          clearEditing();
+        }
       }
-      if (isEditing) {
-        clearEditing();
+      const overlay = overlayRef.current;
+      let offsetX = 0,
+        offsetY = 0;
+      for (
+        let offsetNode = overlay;
+        offsetNode;
+        offsetNode = offsetNode.offsetParent
+      ) {
+        offsetX += offsetNode.offsetLeft;
+        offsetY += offsetNode.offsetTop;
       }
-    }
-    const overlay = overlayRef.current;
-    let offsetX = 0,
-      offsetY = 0;
-    for (
-      let offsetNode = overlay;
-      offsetNode;
-      offsetNode = offsetNode.offsetParent
-    ) {
-      offsetX += offsetNode.offsetLeft;
-      offsetY += offsetNode.offsetTop;
-    }
-    const x = evt.pageX - offsetX;
-    const y = evt.pageY - offsetY;
-    offsetRef.current = [offsetX, offsetY];
-    startRef.current = [x, y];
-    endRef.current = [x, y];
-    lassoModeRef.current = LassoMode.MAYBE;
-    updateLasso();
-  };
+      const x = evt.pageX - offsetX;
+      const y = evt.pageY - offsetY;
+      offsetRef.current = [offsetX, offsetY];
+      startRef.current = [x, y];
+      endRef.current = [x, y];
+      lassoModeRef.current = LassoMode.MAYBE;
+      updateLasso();
+    },
+    [
+      clearEditing,
+      clearSelection,
+      currentPageElements,
+      isEditing,
+      nodesById,
+      selectedElements.length,
+      updateLasso,
+    ]
+  );
 
-  const onMouseMove = (evt) => {
-    if (lassoModeRef.current === LassoMode.OFF) {
-      return;
-    }
-    const [x1, y1] = startRef.current;
-    const [offsetX, offsetY] = offsetRef.current;
-    const x2 = evt.pageX - offsetX;
-    const y2 = evt.pageY - offsetY;
-    endRef.current[0] = x2;
-    endRef.current[1] = y2;
-    updateLasso();
-    // Ignore clicks and unintentional selections
-    if (Math.abs(x1 - x2) + Math.abs(y1 - y2) > LASSO_ACTIVE_THRESHOLD) {
-      lassoModeRef.current = LassoMode.ON;
-    }
-  };
+  const onMouseMove = useCallback(
+    (evt) => {
+      if (lassoModeRef.current === LassoMode.OFF) {
+        return;
+      }
+      const [x1, y1] = startRef.current;
+      const [offsetX, offsetY] = offsetRef.current;
+      const x2 = evt.pageX - offsetX;
+      const y2 = evt.pageY - offsetY;
+      endRef.current[0] = x2;
+      endRef.current[1] = y2;
+      updateLasso();
+      // Ignore clicks and unintentional selections
+      if (Math.abs(x1 - x2) + Math.abs(y1 - y2) > LASSO_ACTIVE_THRESHOLD) {
+        lassoModeRef.current = LassoMode.ON;
+      }
+    },
+    [updateLasso]
+  );
 
-  const onMouseUp = () => {
+  const onMouseUp = useCallback(() => {
     if (lassoModeRef.current === LassoMode.ON) {
       const [lx, ly, lwidth, lheight] = getLassoBox();
       const { offsetLeft, offsetTop, offsetHeight, offsetWidth } =
@@ -195,7 +212,24 @@ function SelectionCanvas({ children }) {
     }
     lassoModeRef.current = LassoMode.OFF;
     updateLasso();
-  };
+  }, [
+    clearEditing,
+    clearSelection,
+    editorToDataX,
+    editorToDataY,
+    fullbleedContainer,
+    getLassoBox,
+    scrollContainer,
+    selectIntersection,
+    updateLasso,
+  ]);
+
+  useEffect(() => {
+    document.addEventListener('mouseup', onMouseUp);
+    return () => {
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+  }, [onMouseUp]);
 
   useEffect(updateLasso);
 
@@ -205,7 +239,6 @@ function SelectionCanvas({ children }) {
     <Container
       onMouseDown={onMouseDown}
       onMouseMove={onMouseMove}
-      onMouseUp={onMouseUp}
       data-fix-caret
     >
       {children}

@@ -15,8 +15,8 @@
     "@web-stories-wp/react": "*",
     "@web-stories-wp/tracking": "*",
     "@web-stories-wp/units": "*",
-    "mime": "^2.5.2",
-    "prop-types": "^15.7.2"
+    "mime": "^3.0.0",
+    "prop-types": "^15.8.0"
   },
   "devDependencies": {}
 }

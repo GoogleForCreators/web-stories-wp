@@ -26,12 +26,15 @@ import DragHandle from '../handle';
 import { renderWithTheme } from '../../../../../testUtils';
 import { noop } from '../../../../../utils/noop';
 
+const handleHeightChange = jest.fn();
+
 describe('DragHandle', () => {
   describe('should raise handleHeightChange when up or down key is pressed', () => {
-    const handleHeightChange = jest.fn();
-
-    beforeEach(() => {
+    afterEach(() => {
       handleHeightChange.mockReset();
+    });
+
+    it('when up key is pressed', () => {
       renderWithTheme(
         <DragHandle
           handleHeightChange={handleHeightChange}
@@ -42,21 +45,32 @@ describe('DragHandle', () => {
           minHeight={50}
         />
       );
-    });
 
-    it('when up key is pressed', () => {
       fireEvent.keyDown(screen.getByRole('slider'), {
         key: 'ArrowUp',
         which: 38,
       });
+
       expect(handleHeightChange).toHaveBeenCalledWith(20);
     });
 
     it('when down key is pressed', () => {
+      renderWithTheme(
+        <DragHandle
+          handleHeightChange={handleHeightChange}
+          handleExpandToHeightChange={noop}
+          handleDoubleClick={noop}
+          height={100}
+          maxHeight={200}
+          minHeight={50}
+        />
+      );
+
       fireEvent.keyDown(screen.getByRole('slider'), {
         key: 'ArrowDown',
         which: 40,
       });
+
       expect(handleHeightChange).toHaveBeenCalledWith(-20);
     });
   });

@@ -43,9 +43,11 @@ import { createLink } from '../../../elementLink';
 import { SimplePanel } from '../../panel';
 import {
   inputContainerStyleOverride,
+  LinkRelations,
   useCommonObjectValue,
 } from '../../shared';
 import { states, styles, useHighlights } from '../../../../app/highlights';
+import useCORSProxy from '../../../../utils/useCORSProxy';
 
 const IconInfo = styled.div`
   display: flex;
@@ -88,12 +90,11 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     getElementsInAttachmentArea(selectedElements).length > 0 &&
     currentPage?.pageAttachment?.url?.length > 0;
 
-  const defaultLink = useMemo(
-    () => createLink({ url: '', icon: null, desc: null }),
-    []
-  );
+  const defaultLink = useMemo(() => createLink({ icon: null, desc: null }), []);
 
-  const link = useCommonObjectValue(selectedElements, 'link', defaultLink);
+  const linkRaw = useCommonObjectValue(selectedElements, 'link', defaultLink);
+  const link = createLink(linkRaw);
+  const { url = '', desc = '', icon, rel = [] } = link;
 
   const [fetchingMetadata, setFetchingMetadata] = useState(false);
   const [isLinkFocused, setIsLinkFocused] = useState(false);
@@ -102,17 +103,20 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     actions: { getLinkMetadata },
   } = useAPI();
 
+  const { getProxiedUrl, checkResourceAccess } = useCORSProxy();
+
   const updateLinkFromMetadataApi = useBatchingCallback(
-    ({ url, title, icon }) =>
+    ({ newUrl, newTitle, newIcon, needsProxy }) =>
       pushUpdateForObject(
         'link',
         () =>
-          url
-            ? {
-                url,
-                desc: title ? title : '',
-                icon: icon ? toAbsoluteUrl(url, icon) : '',
-              }
+          newUrl
+            ? createLink({
+                url: newUrl,
+                needsProxy,
+                desc: newTitle ? newTitle : '',
+                icon: newIcon ? toAbsoluteUrl(newUrl, newIcon) : '',
+              })
             : null,
         defaultLink,
         true
@@ -121,21 +125,28 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   );
 
   const [isInvalidUrl, setIsInvalidUrl] = useState(
-    !isValidUrl(withProtocol(link.url || ''))
+    !isValidUrl(withProtocol(url))
   );
 
-  const populateMetadata = useDebouncedCallback((url) => {
+  const populateMetadata = useDebouncedCallback(async (newUrl) => {
     setFetchingMetadata(true);
-    getLinkMetadata(url)
-      .then(({ title, image }) => {
-        updateLinkFromMetadataApi({ url, title, icon: image });
-      })
-      .catch(() => {
-        setIsInvalidUrl(true);
-      })
-      .finally(() => {
-        setFetchingMetadata(false);
+    try {
+      const { title: newTitle, image: newIcon } = getLinkMetadata
+        ? await getLinkMetadata(newUrl)
+        : {};
+      const needsProxy = newIcon ? await checkResourceAccess(newIcon) : false;
+
+      updateLinkFromMetadataApi({
+        newUrl,
+        newTitle,
+        newIcon,
+        needsProxy,
       });
+    } catch (e) {
+      setIsInvalidUrl(true);
+    } finally {
+      setFetchingMetadata(false);
+    }
   }, 1200);
 
   const handleChange = useCallback(
@@ -181,7 +192,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     [handleChange]
   );
 
-  const hasLinkSet = Boolean(link.url?.length);
+  const hasLinkSet = Boolean(url?.length);
   const displayMetaFields = hasLinkSet && !isInvalidUrl;
 
   // If we're focusing on the link input and any of the relevant values changes,
@@ -189,7 +200,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
   useEffect(() => {
     if (isLinkFocused) {
       // Display the guidelines if there's no link / if it's multiple value.
-      const hasLink = hasLinkSet && link.url !== MULTIPLE_VALUE;
+      const hasLink = hasLinkSet && url !== MULTIPLE_VALUE;
       setDisplayLinkGuidelines(hasElementsInAttachmentArea && !hasLink);
     }
   }, [
@@ -198,11 +209,20 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     hasElementsInAttachmentArea,
     hasLinkSet,
     setDisplayLinkGuidelines,
-    link.url,
+    url,
   ]);
 
-  const isMultipleUrl = MULTIPLE_VALUE === link.url;
-  const isMultipleDesc = MULTIPLE_VALUE === link.desc;
+  const linkIcon = icon ? getProxiedUrl(link, icon) : null;
+
+  const isMultipleUrl = MULTIPLE_VALUE === url;
+  const isMultipleDesc = MULTIPLE_VALUE === desc;
+  const isMultipleRel = MULTIPLE_VALUE === rel;
+
+  const onChangeRel = useCallback(
+    (newRel) => handleChange({ rel: newRel }, true),
+    [handleChange]
+  );
+
   return (
     <SimplePanel
       name="link"
@@ -229,7 +249,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
         onFocus={() => {
           setIsLinkFocused(true);
         }}
-        value={link.url || ''}
+        value={url}
         placeholder={
           isMultipleUrl
             ? MULTIPLE_DISPLAY_VALUE
@@ -262,7 +282,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
               onChange={({ target }) =>
                 handleChange({ desc: target.value }, !target.value /* submit */)
               }
-              value={link.desc || ''}
+              value={desc}
               aria-label={__('Link description', 'web-stories')}
               isIndeterminate={isMultipleDesc}
               disabled={fetchingMetadata}
@@ -272,7 +292,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
           <Row spaceBetween={false}>
             <LinkIcon
               handleChange={handleChangeIcon}
-              icon={link.icon}
+              icon={linkIcon}
               isLoading={fetchingMetadata}
               disabled={fetchingMetadata}
             />
@@ -282,6 +302,9 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
               </IconText>
             </IconInfo>
           </Row>
+          {!isMultipleRel && (
+            <LinkRelations onChangeRel={onChangeRel} rel={rel} />
+          )}
         </>
       )}
     </SimplePanel>

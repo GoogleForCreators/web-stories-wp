@@ -31,8 +31,7 @@ import useStory from '../../story/useStory';
 
 function useProcessMedia({
   uploadMedia,
-  uploadVideoPoster,
-  updateVideoIsMuted,
+  postProcessingResource,
   updateMedia,
   deleteMediaElement,
 }) {
@@ -125,20 +124,7 @@ function useProcessMedia({
         copyResourceData({ oldResource, resource });
         updateOldTranscodedObject(resourceId, resource.id, 'source-video');
         deleteMediaElement({ id: resourceId });
-        if (
-          ['video', 'gif'].includes(resource.type) &&
-          !resource.local &&
-          !resource.posterId
-        ) {
-          uploadVideoPoster(resource.id, resource.src);
-        }
-        if (
-          'video' === resource.type &&
-          !resource.local &&
-          resource.isMuted === null
-        ) {
-          updateVideoIsMuted(resource.id, resource.src);
-        }
+        postProcessingResource(resource);
       };
 
       // TODO: Confirm which properties exactly need to be updated.
@@ -165,6 +151,7 @@ function useProcessMedia({
           // Ignore for now.
           return;
         }
+
         await uploadMedia([file], {
           onUploadSuccess,
           onUploadStart,
@@ -178,14 +165,13 @@ function useProcessMedia({
       })();
     },
     [
+      updateExistingElements,
       copyResourceData,
-      getOptimizedMediaById,
-      uploadMedia,
-      uploadVideoPoster,
-      updateVideoIsMuted,
       updateOldTranscodedObject,
       deleteMediaElement,
-      updateExistingElements,
+      postProcessingResource,
+      getOptimizedMediaById,
+      uploadMedia,
     ]
   );
 
@@ -217,14 +203,7 @@ function useProcessMedia({
 
       const onUploadSuccess = ({ resource }) => {
         copyResourceData({ oldResource, resource });
-        if ('video' === resource.type && !resource.local) {
-          if (!resource.posterId) {
-            uploadVideoPoster(resource.id, resource.src);
-          }
-          if (resource.isMuted === null) {
-            updateVideoIsMuted(resource.id, resource.src);
-          }
-        }
+        postProcessingResource(resource);
       };
 
       const onUploadProgress = ({ resource }) => {
@@ -257,7 +236,6 @@ function useProcessMedia({
           onUploadError,
           onUploadProgress,
           additionalData: {
-            web_stories_is_muted: oldResource.isMuted,
             original_id: oldResource.id,
             web_stories_media_source: oldResource?.isOptimized
               ? 'video-optimization'
@@ -274,11 +252,10 @@ function useProcessMedia({
       return process();
     },
     [
-      copyResourceData,
-      uploadMedia,
-      uploadVideoPoster,
       updateExistingElements,
-      updateVideoIsMuted,
+      copyResourceData,
+      postProcessingResource,
+      uploadMedia,
     ]
   );
 
@@ -308,13 +285,7 @@ function useProcessMedia({
       const onUploadSuccess = ({ resource }) => {
         copyResourceData({ oldResource, resource });
         updateOldMutedObject(oldResource.id, resource.id);
-        if (
-          ['video', 'gif'].includes(resource.type) &&
-          !resource.local &&
-          !resource.posterId
-        ) {
-          uploadVideoPoster(resource.id, resource.src);
-        }
+        postProcessingResource(resource);
       };
 
       // TODO: Confirm which properties exactly need to be updated.
@@ -371,12 +342,12 @@ function useProcessMedia({
       })();
     },
     [
-      copyResourceData,
-      getMutedMediaById,
       updateExistingElements,
+      copyResourceData,
       updateOldMutedObject,
+      postProcessingResource,
+      getMutedMediaById,
       uploadMedia,
-      uploadVideoPoster,
     ]
   );
 
@@ -393,14 +364,7 @@ function useProcessMedia({
         copyResourceData({ oldResource, resource });
         updateOldTranscodedObject(oldResource.id, resource.id, 'source-image');
         deleteMediaElement({ id: oldResource.id });
-
-        if (
-          ['video', 'gif'].includes(resource.type) &&
-          !resource.local &&
-          !resource.posterId
-        ) {
-          uploadVideoPoster(resource.id, resource.src);
-        }
+        postProcessingResource(resource);
       };
 
       // TODO: Confirm which properties exactly need to be updated.
@@ -437,11 +401,11 @@ function useProcessMedia({
     },
     [
       copyResourceData,
-      uploadMedia,
-      uploadVideoPoster,
       updateOldTranscodedObject,
       deleteMediaElement,
+      postProcessingResource,
       updateExistingElements,
+      uploadMedia,
     ]
   );
 

@@ -23,70 +23,63 @@ import { waitFor, within } from '@testing-library/react';
  * Internal dependencies
  */
 
-import { Fixture, MEDIA_PER_PAGE } from '../../../../../../karma/fixture';
+import { Fixture, LOCAL_MEDIA_PER_PAGE } from '../../../../../../karma/fixture';
 import { ROOT_MARGIN } from '../mediaPane';
 
-// Disable reason: tests are out of date.
-// TODO: https://github.com/google/web-stories-wp/issues/7606
-// eslint-disable-next-line jasmine/no-disabled-tests
-xdescribe('MediaPane fetching', () => {
+describe('MediaPane fetching', () => {
   let fixture;
 
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
   });
 
   afterEach(() => {
     fixture.restore();
   });
 
-  it('should fetch 2nd page', async () => {
+  it('should fetch additional pages', async () => {
     const localPane = await waitFor(() =>
       fixture.querySelector('#library-pane-media')
     );
-    const mediaGallery = await within(localPane).getByTestId(
+    const mediaGallery = await within(localPane).findByTestId(
       'media-gallery-container'
     );
 
-    const initialElements =
-      within(mediaGallery).queryAllByTestId(/^mediaElement-/);
-    expect(initialElements.length).toBe(MEDIA_PER_PAGE);
+    const initialElementsLength =
+      fixture.screen.queryAllByTestId(/^mediaElement-/).length;
 
+    // ensure fixture.screen has loaded before calling expect to prevent immediate failure
+    // Wait for the debounce
+    await fixture.events.sleep(1000);
+    await waitFor(() => {
+      if (initialElementsLength !== LOCAL_MEDIA_PER_PAGE) {
+        throw new Error(
+          `wait for initial fetch ${initialElementsLength} != ${LOCAL_MEDIA_PER_PAGE}`
+        );
+      }
+      expect(initialElementsLength).toEqual(LOCAL_MEDIA_PER_PAGE);
+    });
+
+    // Scroll all the way down.
     await mediaGallery.scrollTo(
       0,
       mediaGallery.scrollHeight - mediaGallery.clientHeight - ROOT_MARGIN / 2
     );
 
-    await waitFor(() =>
+    // ensure fixture.screen has loaded before calling expect to prevent immediate failure
+    await waitFor(() => {
+      if (
+        fixture.screen.queryAllByTestId(/^mediaElement-/).length <
+        initialElementsLength + LOCAL_MEDIA_PER_PAGE
+      ) {
+        throw new Error('Not loaded yet');
+      }
+
       expect(
         fixture.screen.queryAllByTestId(/^mediaElement-/).length
-      ).toBeGreaterThanOrEqual(MEDIA_PER_PAGE * 2)
-    );
-  });
-
-  it('should not load results on resize if tab is hidden', async () => {
-    const nonMediaTab = await waitFor(() =>
-      fixture.querySelector('#library-tab-shapes')
-    );
-
-    await waitFor(() =>
-      expect(fixture.screen.queryAllByTestId(/mediaElement/).length).toBe(
-        MEDIA_PER_PAGE
-      )
-    );
-
-    await fixture.events.click(nonMediaTab);
-
-    // Simulate a browser window resize, and complete the event debounce cycle.
-    window.dispatchEvent(new Event('resize'));
-    await fixture.events.sleep(500);
-
-    // Expect no additional results to be loaded.
-    await waitFor(() =>
-      expect(fixture.screen.queryAllByTestId(/mediaElement/).length).toBe(
-        MEDIA_PER_PAGE
-      )
-    );
+      ).toBeGreaterThanOrEqual(initialElementsLength + LOCAL_MEDIA_PER_PAGE);
+    });
   });
 });

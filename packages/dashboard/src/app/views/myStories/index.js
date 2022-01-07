@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useEffect, useMemo, useCallback } from '@web-stories-wp/react';
+import { noop } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -26,6 +27,7 @@ import { ScrollToTop, Layout } from '../../../components';
 import { STORY_STATUSES } from '../../../constants';
 import { useStoryView } from '../../../utils';
 import useApi from '../../api/useApi';
+import { useConfig } from '../../config';
 import Content from './content';
 import Header from './header';
 
@@ -72,33 +74,46 @@ function MyStories() {
       getAuthors,
     })
   );
+  const { apiCallbacks } = useConfig();
 
-  const { filter, page, search, sort, view, showStoriesWhileLoading, author } =
-    useStoryView({
-      filters: STORY_STATUSES,
-      isLoading,
-      totalPages,
-    });
+  const {
+    filter,
+    page,
+    search,
+    sort,
+    view,
+    showStoriesWhileLoading,
+    initialPageReady,
+    author,
+  } = useStoryView({
+    filters: STORY_STATUSES,
+    isLoading,
+    totalPages,
+  });
 
   const { setQueriedAuthors } = author;
-  const queryAuthorsBySearch = useCallback(
+  let queryAuthorsBySearch = useCallback(
     (authorSearchTerm) => {
       return getAuthors(authorSearchTerm).then((data) => {
         const userData = data.map(({ id, name }) => ({
           id,
           name,
         }));
-        setQueriedAuthors((exisitingUsers) => {
-          const exisitingUsersIds = exisitingUsers.map(({ id }) => id);
+        setQueriedAuthors((existingUsers) => {
+          const existingUsersIds = existingUsers.map(({ id }) => id);
           const newUsers = userData.filter(
-            (newUser) => !exisitingUsersIds.includes(newUser.id)
+            (newUser) => !existingUsersIds.includes(newUser.id)
           );
-          return [...exisitingUsers, ...newUsers];
+          return [...existingUsers, ...newUsers];
         });
       });
     },
     [getAuthors, setQueriedAuthors]
   );
+
+  if (!getAuthors) {
+    queryAuthorsBySearch = noop;
+  }
 
   useEffect(() => {
     queryAuthorsBySearch();
@@ -121,6 +136,7 @@ function MyStories() {
     sort.direction,
     sort.value,
     author.filterId,
+    apiCallbacks,
   ]);
 
   const orderedStories = useMemo(() => {
@@ -129,10 +145,12 @@ function MyStories() {
     });
   }, [stories, storiesOrderById]);
 
+  const showAuthorDropdown = typeof getAuthors === 'function';
+
   return (
     <Layout.Provider>
       <Header
-        isLoading={isLoading && !orderedStories.length}
+        initialPageReady={initialPageReady}
         filter={filter}
         search={search}
         sort={sort}
@@ -141,12 +159,13 @@ function MyStories() {
         view={view}
         author={author}
         queryAuthorsBySearch={queryAuthorsBySearch}
+        showAuthorDropdown={showAuthorDropdown}
       />
 
       <Content
         allPagesFetched={allPagesFetched}
         filter={filter}
-        isLoading={isLoading}
+        loading={{ isLoading, showStoriesWhileLoading }}
         page={page}
         search={search}
         sort={sort}
@@ -157,7 +176,6 @@ function MyStories() {
           updateStory,
         }}
         view={view}
-        showStoriesWhileLoading={showStoriesWhileLoading}
       />
 
       <Layout.Fixed>

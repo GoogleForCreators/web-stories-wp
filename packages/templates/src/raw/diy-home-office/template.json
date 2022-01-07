@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -45,7 +45,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [200, 199, 196],
+            "baseColor": "#c8c7c4",
             "isExternal": true
           },
           "overlay": null
@@ -61,6 +61,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#3c3434",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/diy-home-office/page01_image02.png",
             "width": 133,
             "height": 132,
@@ -280,6 +281,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#c8c3c0",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/diy-home-office/page02_image01.jpg",
             "width": 1280,
             "height": 1920,
@@ -443,7 +445,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [196, 194, 193],
+            "baseColor": "#c4c2c1",
             "isExternal": true
           },
           "x": 48,
@@ -476,7 +478,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [204, 194, 186],
+            "baseColor": "#ccc2ba",
             "isExternal": true
           },
           "x": 245,
@@ -603,7 +605,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [172, 185, 184],
+            "baseColor": "#acb9b8",
             "isExternal": true
           }
         },
@@ -838,7 +840,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [210, 213, 214],
+            "baseColor": "#d2d5d6",
             "isExternal": true
           }
         },
@@ -860,7 +862,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [225, 224, 220],
+            "baseColor": "#e1e0dc",
             "isExternal": true
           },
           "x": 51,
@@ -996,6 +998,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#c3c1c0",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/diy-home-office/page06_08_image01.jpg",
             "width": 1280,
             "height": 1920,
@@ -1081,7 +1084,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [212, 210, 204],
+            "baseColor": "#d4d2cc",
             "isExternal": true
           },
           "x": 0,
@@ -1360,6 +1363,7 @@
             "type": "image",
             "mimeType": "image/jpeg",
             "creationDate": "2021-05-26T15:14:32",
+            "baseColor": "#bfbdb9",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/diy-home-office/page06_08_image01.jpg",
             "width": 1280,
             "height": 1920,
@@ -1369,7 +1373,6 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [191, 189, 185],
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
@@ -1520,7 +1523,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [152, 143, 133],
+            "baseColor": "#988f85",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
@@ -1805,7 +1808,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [191, 200, 201],
+            "baseColor": "#bfc8c9",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
@@ -1956,7 +1959,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [202, 194, 187],
+            "baseColor": "#cac2bb",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
@@ -2170,7 +2173,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [201, 201, 199],
+            "baseColor": "#c9c9c7",
             "isExternal": true
           }
         },
@@ -2533,7 +2536,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [124, 111, 96],
+            "baseColor": "#7c6f60",
             "isExternal": true
           },
           "x": 44,
@@ -2574,7 +2577,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [196, 190, 184],
+            "baseColor": "#c4beb8",
             "isExternal": true
           }
         },

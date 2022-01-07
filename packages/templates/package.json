@@ -10,17 +10,17 @@
   },
   "main": "./src/index.js",
   "type": "module",
-  "bin": {
-    "render-template-posters": "./src/cli.js"
-  },
   "dependencies": {
     "@web-stories-wp/i18n": "*",
     "@web-stories-wp/migration": "*",
     "@web-stories-wp/tracking": "*"
   },
   "devDependencies": {
+    "@web-stories-wp/date": "*",
     "@web-stories-wp/stickers": "*",
-    "puppeteer": "^10.4.0",
-    "@web-stories-wp/date": "*"
+    "puppeteer": "^10.4.0"
+  },
+  "scripts": {
+    "render-template-posters": "node ./scripts/cli.js"
   }
 }

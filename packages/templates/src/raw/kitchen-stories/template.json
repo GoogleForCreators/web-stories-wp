@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -32,7 +32,8 @@
             "alt": "page01_bg",
             "local": false,
             "isOptimized": false,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#292e39"
           }
         },
         {
@@ -271,7 +272,7 @@
             "id": 0,
             "alt": "page01_logo",
             "local": false,
-            "baseColor": [255, 255, 255],
+            "baseColor": "#ffffff",
             "isExternal": true
           },
           "type": "image",
@@ -358,7 +359,7 @@
             "provider": "local",
             "isTranscoding": false,
             "isMuted": true,
-            "baseColor": [255, 255, 255],
+            "baseColor": "#ffffff",
             "isExternal": true
           },
           "tracks": [
@@ -1099,7 +1100,8 @@
             "local": false,
             "isMuted": false,
             "isOptimized": true,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#a88582"
           },
           "tracks": []
         },
@@ -2175,7 +2177,8 @@
             "local": false,
             "isMuted": false,
             "isOptimized": true,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#b5afac"
           },
           "tracks": []
         },
@@ -3154,7 +3157,8 @@
             "local": false,
             "isMuted": false,
             "isOptimized": true,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#c1b4a8"
           },
           "tracks": [
             {
@@ -3380,7 +3384,8 @@
             "local": false,
             "isMuted": false,
             "isOptimized": true,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#cfc0ad"
           },
           "tracks": [
             {
@@ -3606,7 +3611,8 @@
             "local": false,
             "isMuted": false,
             "isOptimized": true,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#c6ced1"
           },
           "tracks": [
             {
@@ -3832,7 +3838,8 @@
             "local": false,
             "isMuted": false,
             "isOptimized": true,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#cdb08f"
           },
           "tracks": [
             {
@@ -4058,7 +4065,8 @@
             "local": false,
             "isMuted": false,
             "isOptimized": true,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#0f0d0e"
           },
           "tracks": [
             {
@@ -4284,7 +4292,8 @@
             "local": false,
             "isMuted": false,
             "isOptimized": true,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#c9b9a9"
           },
           "tracks": [
             {
@@ -4497,6 +4506,7 @@
             "type": "video",
             "mimeType": "video/mp4",
             "creationDate": "2021-05-10T12:51:22",
+            "baseColor": "#c5bbab",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/kitchen-stories/page12_bg_video.mp4",
             "width": 608,
             "height": 1038,
@@ -4584,7 +4594,7 @@
             "id": 0,
             "alt": "page14_bg",
             "local": false,
-            "baseColor": [37, 93, 203],
+            "baseColor": "#255dcb",
             "isExternal": true
           },
           "type": "image",
@@ -4949,7 +4959,7 @@
             "alt": "page14_profileimage",
             "sizes": [],
             "local": false,
-            "baseColor": [194, 194, 194],
+            "baseColor": "#c2c2c2",
             "isExternal": true
           }
         },

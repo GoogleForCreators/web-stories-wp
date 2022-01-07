@@ -250,7 +250,7 @@
       "PrimaryLink",
       "SecondaryLink",
       "ExternalLink",
-      "ScrimAnchor",
+      "ScrimAnchor"
     ],
     "testing-library/custom-renders": [
       "arrange",
@@ -296,7 +296,7 @@
         ],
         "jsdoc/require-jsdoc": "off",
         "testing-library/no-await-sync-events": "error",
-        "testing-library/no-debug": "error",
+        "testing-library/no-debugging-utils": "error",
         "testing-library/no-dom-import": "error"
       }
     },
@@ -326,7 +326,7 @@
         "jasmine": true
       },
       "rules": {
-        "testing-library/no-debug": "error",
+        "testing-library/no-debugging-utils": "error",
         "testing-library/no-dom-import": "error",
         "jasmine/new-line-before-expect": "off",
         "jasmine/no-disabled-tests": "error",
@@ -376,6 +376,19 @@
           {
             "ignore": ["describe"]
           }
+        ],
+        "jest/require-hook": [
+          "error",
+          {
+            "allowedFunctionCalls": [
+              "minWPVersionRequired",
+              "withDisabledToolbarOnFrontend",
+              "withExperimentalFeatures",
+              "withPlugin",
+              "withRTL",
+              "withUser"
+            ]
+          }
         ]
       },
       "globals": {
@@ -389,7 +402,9 @@
         "packages/e2e-test-utils/**/*.js"
       ],
       "rules": {
-        "jest/expect-expect": "off"
+        "jest/expect-expect": "off",
+        "jest/no-export": "off",
+        "jest/require-top-level-describe": "off"
       }
     },
     {
@@ -399,12 +414,18 @@
       }
     },
     {
+      "files": ["packages/e2e-tests/src/config/**/*.js"],
+      "rules": {
+        "jest/require-hook": "off"
+      }
+    },
+    {
       "files": [
         "packages/commander/**/*.js",
-        "packages/fonts/src/cli.js",
+        "packages/fonts/scripts/cli.js",
         "packages/migration/src/cli.js",
-        "packages/templates/src/cli.js",
-        "packages/text-sets/src/cli.js"
+        "packages/templates/scripts/cli.js",
+        "packages/text-sets/scripts/cli.js"
       ],
       "rules": {
         "import/no-useless-path-segments": ["error", {
@@ -431,8 +452,8 @@
         "packages/migration/src/**/*.js",
         "packages/fonts/**/*.js",
         "packages/commander/**/*.js",
-        "packages/templates/src/cli.js",
-        "packages/text-sets/src/cli.js"
+        "packages/templates/scripts/cli.js",
+        "packages/text-sets/scripts/cli.js"
       ],
       "extends": [
         "plugin:node/recommended",

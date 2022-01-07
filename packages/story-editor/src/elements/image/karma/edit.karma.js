@@ -28,6 +28,7 @@ describe('Image Editor', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
 
     // Add first image to canvas
     await fixture.events.click(fixture.editor.library.media.item(0));
@@ -68,6 +69,12 @@ describe('Image Editor', () => {
       it('should mount editor', async () => {
         expect(fixture.editor.canvas.editLayer.media).toBeTruthy();
         await fixture.snapshot();
+      });
+
+      it('should have no aXe violations', async () => {
+        await expectAsync(
+          fixture.editor.canvas.editLayer.node
+        ).toHaveNoViolations();
       });
 
       it('should allow image to be scaled and moved using mouse', async () => {

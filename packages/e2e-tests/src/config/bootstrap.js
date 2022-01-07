@@ -26,9 +26,9 @@ import {
   trashAllPosts,
   deleteAllMedia,
   trashAllTerms,
+  clearLocalStorage,
 } from '@web-stories-wp/e2e-test-utils';
 
-// eslint-disable-next-line jest/require-hook
 expect.extend({
   toBeValidAMP,
 });
@@ -115,7 +115,6 @@ if ('true' === process.env.CI) {
 }
 
 // Set default timeout for individual expect-puppeteer assertions. (Default: 500)
-// eslint-disable-next-line jest/require-hook
 setDefaultOptions({ timeout: EXPECT_PUPPETEER_TIMEOUT || 1000 });
 
 /**
@@ -248,12 +247,15 @@ beforeAll(async () => {
   await trashAllTerms('web_story_category');
   await trashAllTerms('web_story_tag');
   await deleteAllMedia();
+
+  await clearLocalStorage();
 });
 
 // eslint-disable-next-line jest/require-top-level-describe
 afterEach(async () => {
   await runAxeTestsForStoriesEditor();
   await setupBrowser();
+  await clearLocalStorage();
 });
 
 // eslint-disable-next-line jest/require-top-level-describe

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import {
   forwardRef,
@@ -30,12 +30,15 @@ import { __ } from '@web-stories-wp/i18n';
 import { generatePatternStyles } from '@web-stories-wp/patterns';
 import { FULLBLEED_RATIO } from '@web-stories-wp/units';
 import { THEME_CONSTANTS, themeHelpers } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
 import { HEADER_HEIGHT } from '../../constants';
 import pointerEventsCss from '../../utils/pointerEventsCss';
 import { useLayout } from '../../app';
+import useFooterHeight from '../footer/useFooterHeight';
+import { FOOTER_BOTTOM_MARGIN } from '../footer/constants';
 import usePinchToZoom from './usePinchToZoom';
 
 /**
@@ -50,14 +53,10 @@ export const Z_INDEX = {
 
 const HEADER_GAP = 16;
 // 8px extra is for the focus outline to display.
-const MENU_HEIGHT = THEME_CONSTANTS.ICON_SIZE + 8;
-const MENU_GAP = 12;
-const FOOTER_HEIGHT = 104;
-// 8px extra is for the focus outline to display.
 const PAGE_NAV_WIDTH = THEME_CONSTANTS.LARGE_BUTTON_SIZE + 8;
 const PAGE_NAV_GAP = 20;
 
-const Layer = styled.section`
+const LayerGrid = styled.section`
   ${pointerEventsCss}
 
   position: absolute;
@@ -88,10 +87,9 @@ const Layer = styled.section`
     'h h h h h h h' ${HEADER_HEIGHT}px
     '. . . . . . .' minmax(16px, 1fr)
     '. b . p . f .' var(--viewport-height-px)
-    '. . . . . . .' ${MENU_GAP}px
-    'm m m m m m m' ${MENU_HEIGHT}px
     '. . . . . . .' 1fr
-    'w w w w w w w' ${FOOTER_HEIGHT}px
+    'w w w w w w w' ${({ footerHeight }) => footerHeight}px
+    '. . . . . . .' ${FOOTER_BOTTOM_MARGIN}px
     /
     1fr
     var(--page-nav-width)
@@ -130,7 +128,7 @@ const PageAreaContainer = styled(Area).attrs({
 
   ${({ isControlled, hasVerticalOverflow, hasHorizontalOverflow }) =>
     isControlled &&
-    css`
+    `
       overflow: ${({ showOverflow }) => (showOverflow ? 'visible' : 'hidden')};
       width: calc(
         100% - ${hasVerticalOverflow ? themeHelpers.SCROLLBAR_WIDTH : 0}px
@@ -141,6 +139,19 @@ const PageAreaContainer = styled(Area).attrs({
     `}
 `;
 
+const Layer = forwardRef(function Layer({ children, ...rest }, ref) {
+  const footerHeight = useFooterHeight();
+  return (
+    <LayerGrid ref={ref} footerHeight={footerHeight} {...rest}>
+      {children}
+    </LayerGrid>
+  );
+});
+
+Layer.propTypes = {
+  children: PropTypes.node,
+};
+
 const PaddedPage = styled.div`
   padding: calc(0.5 * var(--page-padding-px));
 `;
@@ -150,17 +161,23 @@ const PaddedPage = styled.div`
 const PageClip = styled.div`
   ${({ hasHorizontalOverflow, hasVerticalOverflow }) =>
     (hasHorizontalOverflow || hasVerticalOverflow) &&
-    css`
+    `
       overflow: hidden;
-      width: ${hasHorizontalOverflow
-        ? 'calc(var(--page-width-px) + var(--page-padding-px))'
-        : `calc(var(--viewport-width-px) - ${themeHelpers.SCROLLBAR_WIDTH}px)`};
-      flex-basis: ${hasHorizontalOverflow
-        ? 'calc(var(--page-width-px) + var(--page-padding-px))'
-        : `calc(var(--viewport-width-px) - ${themeHelpers.SCROLLBAR_WIDTH}px)`};
-      height: ${hasVerticalOverflow
-        ? 'calc(var(--fullbleed-height-px) + var(--page-padding-px))'
-        : `calc(var(--viewport-height-px) - ${themeHelpers.SCROLLBAR_WIDTH}px)`};
+      width: ${
+        hasHorizontalOverflow
+          ? 'calc(var(--page-width-px) + var(--page-padding-px))'
+          : `calc(var(--viewport-width-px) - ${themeHelpers.SCROLLBAR_WIDTH}px)`
+      };
+      flex-basis: ${
+        hasHorizontalOverflow
+          ? 'calc(var(--page-width-px) + var(--page-padding-px))'
+          : `calc(var(--viewport-width-px) - ${themeHelpers.SCROLLBAR_WIDTH}px)`
+      };
+      height: ${
+        hasVerticalOverflow
+          ? 'calc(var(--fullbleed-height-px) + var(--page-padding-px))'
+          : `calc(var(--viewport-height-px) - ${themeHelpers.SCROLLBAR_WIDTH}px)`
+      };
       flex-shrink: 0;
       flex-grow: 0;
       display: flex;
@@ -182,14 +199,14 @@ const FullbleedContainer = styled.div`
 
   ${({ isControlled }) =>
     isControlled &&
-    css`
+    `
       left: var(--scroll-left-px);
       top: var(--scroll-top-px);
     `};
 
   ${({ isBackgroundSelected, theme }) =>
     isBackgroundSelected &&
-    css`
+    `
       &:before {
         content: '';
         position: absolute;
@@ -262,20 +279,25 @@ function useLayoutParams(containerRef) {
     })
   );
 
-  useResizeEffect(containerRef, ({ width, height }) => {
-    // See Layer's `grid` CSS above. Per the layout, the maximum available
-    // space for the page is:
-    const maxWidth = width;
-    const maxHeight =
-      height -
-      HEADER_HEIGHT -
-      HEADER_GAP -
-      MENU_HEIGHT -
-      MENU_GAP -
-      FOOTER_HEIGHT;
+  const footerHeight = useFooterHeight();
 
-    setWorkspaceSize({ width: maxWidth, height: maxHeight });
-  });
+  useResizeEffect(
+    containerRef,
+    ({ width, height }) => {
+      // See Layer's `grid` CSS above. Per the layout, the maximum available
+      // space for the page is:
+      const maxWidth = width;
+      const maxHeight =
+        height -
+        HEADER_HEIGHT -
+        HEADER_GAP -
+        footerHeight -
+        FOOTER_BOTTOM_MARGIN;
+
+      setWorkspaceSize({ width: maxWidth, height: maxHeight });
+    },
+    [setWorkspaceSize, footerHeight]
+  );
 }
 
 function useLayoutParamsCssVars() {
@@ -424,11 +446,11 @@ const PageArea = forwardRef(function PageArea(
               ) : (
                 children
               )}
+              {overlay}
             </PageAreaWithoutOverflow>
           </FullbleedContainer>
         </PaddedPage>
       </PageClip>
-      {overlay}
     </PageAreaContainer>
   );
 });
