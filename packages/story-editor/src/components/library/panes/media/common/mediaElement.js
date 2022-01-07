@@ -100,8 +100,11 @@ function Element({
 
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
-  const width = requestedWidth || requestedHeight / oRatio;
-  const height = requestedHeight || width / oRatio;
+  const rawWidth = requestedWidth || requestedHeight / oRatio;
+  const rawHeight = requestedHeight || rawWidth / oRatio;
+
+  const width = parseInt(rawWidth);
+  const height = parseInt(rawHeight);
 
   const mediaElement = useRef();
   const [showVideoDetail, setShowVideoDetail] = useState(true);
