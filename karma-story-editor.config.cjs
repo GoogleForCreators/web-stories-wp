@@ -115,11 +115,10 @@ module.exports = function (config) {
         served: true,
         nocache: false,
       },
+      // eslint-disable-next-line prettier/prettier
+      '^https:\/\/fonts.googleapis.com\/css*',
       'node_modules/axe-core/axe.js',
     ],
-
-    // ^https:\/\/fonts.googleapis.com\/css*
-
     // list of files / patterns to exclude
     exclude: ['**/test/**/*.js', '**/*.test.js'],
 
@@ -179,6 +178,7 @@ module.exports = function (config) {
         snapshots: config.snapshots || false,
         snapshotsDir: '.test_artifacts/karma_snapshots',
         defaultViewport: getViewport(config.viewport),
+        waitForInitialPage: true,
       },
     },
 

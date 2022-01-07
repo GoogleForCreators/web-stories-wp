@@ -40,6 +40,7 @@ function puppeteerBrowser(baseBrowserDecorator, config) {
       devtools: false,
       defaultViewport: null,
       snapshots: false,
+      waitForInitialPage: true,
       // See https://peter.sh/experiments/chromium-command-line-switches/
       args: [
         // Disables GPU hardware acceleration.
@@ -51,7 +52,9 @@ function puppeteerBrowser(baseBrowserDecorator, config) {
         // We use this flag to work-around this issue.
         '--disable-dev-shm-usage',
         '--source-map=false',
+        '--force-gpu-mem-discardable-limit-mb',
         //  set memory allocated for browse https://github.com/karma-runner/karma-chrome-launcher/issues/154#issuecomment-569698577
+        //  no super sure this is current anymore
         '--max-old-space-size=8192',
       ],
     };
@@ -63,15 +66,7 @@ function puppeteerBrowser(baseBrowserDecorator, config) {
     console.log('options: ', puppeteerOptions);
 
     // See https://github.com/puppeteer/puppeteer/blob/v3.0.4/docs/api.md#puppeteerlaunchoptions.
-    browser = await puppeteer.launch({
-      product: puppeteerOptions.product,
-      slowMo: puppeteerOptions.slowMo,
-      dumpio: puppeteerOptions.dumpio,
-      headless: puppeteerOptions.headless,
-      devtools: puppeteerOptions.devtools,
-      defaultViewport: puppeteerOptions.defaultViewport,
-      waitForInitialPage: true,
-    });
+    browser = await puppeteer.launch(puppeteerOptions);
 
     const page = await (async () => {
       const pages = await browser.pages();
