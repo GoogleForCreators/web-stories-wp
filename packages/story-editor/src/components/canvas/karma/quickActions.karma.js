@@ -137,6 +137,7 @@ describe('Quick Actions integration', () => {
             type: 'image',
             mimeType: 'image/jpg',
             src: 'http://localhost:9876/__static__/earth.jpg',
+            blurHash: 'insertImageB',
           },
         })
       );
@@ -863,6 +864,7 @@ describe('Quick Actions integration', () => {
           local: false,
           isOptimized: false,
           baseColor: '#734727',
+          blurHash: 'insertVideoB',
         },
         controls: false,
         loop: false,

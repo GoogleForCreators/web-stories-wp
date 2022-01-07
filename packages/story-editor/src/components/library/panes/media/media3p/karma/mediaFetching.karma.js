@@ -61,6 +61,7 @@ const RESOURCE_BUILDERS = {
     type: 'IMAGE',
     createTime: '1234',
     updateTime: '5678',
+    blurHash: 'ACatImageBlu',
   }),
   coverr: (name) => ({
     name,
@@ -100,6 +101,7 @@ const RESOURCE_BUILDERS = {
     },
     createTime: '1234',
     updateTime: '5678',
+    blurHash: 'ABeachVideoB',
   }),
 };
 
@@ -194,6 +196,9 @@ const categories = [
 ];
 
 describe('Media3pPane fetching', () => {
+  console.log(
+    "describe('Media3pPane fetching' 🍑🍑🍑🍑🍑🍑🍑🍑🍑🍑🍑🍑🍑🍑🍑🍑🍑🍑🍑"
+  );
   let fixture;
   let listMediaSpy;
   let listCategoriesSpy;

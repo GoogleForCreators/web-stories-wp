@@ -224,7 +224,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     (resource) => {
       const { blurHashProcessed, blurHashProcessing } = stateRef.current;
       const { id } = resource;
-      (async () => {
+      console.log('blurHash callback 🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔')(async () => {
         // Simple way to prevent double-uploading.
         if (blurHashProcessed.includes(id) || blurHashProcessing.includes(id)) {
           return;
@@ -272,6 +272,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
         processMediaBaseColor(resource);
       }
       if (imageSrc && !blurHash) {
+        console.log('no blur hash go process 🕺🏻🕺🏻🕺🏻🕺🏻🕺🏻🕺🏻🕺🏻🕺🏻🕺🏻🕺🏻🕺🏻🕺🏻🕺🏻');
         processMediaBlurhash(resource);
       }
     },

@@ -26,7 +26,7 @@ import { screen, waitFor } from '@testing-library/react';
 import { Fixture } from '../../../../../../karma/fixture';
 import { useStory } from '../../../../../../app/story';
 
-describe('Embedding hotlinked media', () => {
+xdescribe('Embedding hotlinked media', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -45,7 +45,7 @@ describe('Embedding hotlinked media', () => {
     return storyContext.state.currentPage.elements;
   }
 
-  it('should not allow embedding media from an invalid link', async () => {
+  xit('should not allow embedding media from an invalid link', async () => {
     const button = await fixture.screen.getByRole('button', {
       name: 'Insert by link',
     });
@@ -79,7 +79,7 @@ describe('Embedding hotlinked media', () => {
     });
   });
 
-  it('should insert a new media element from valid url', async () => {
+  xit('should insert a new media element from valid url', async () => {
     spyOn(window, 'fetch').and.callFake(() => {
       return true;
     });
@@ -104,7 +104,7 @@ describe('Embedding hotlinked media', () => {
     expect(elements[1].resource.src).toBe(img.src);
   });
 
-  it('should insert a new media element from valid url using proxy', async () => {
+  xit('should insert a new media element from valid url using proxy', async () => {
     // Let's throw an error when checking for HEAD, forcing to use the CORS proxy.
     spyOn(window, 'fetch').and.callFake(() => {
       throw new Error();

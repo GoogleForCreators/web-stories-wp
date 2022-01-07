@@ -22,6 +22,7 @@ self.onmessage = function (event) {
   const { image, width, height, componentX, componentY } = event.data;
 
   try {
+    console.log('try encode 🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅🍅');
     const blurHash = encode(image, width, height, componentX, componentY);
     postMessage({
       type: 'success',

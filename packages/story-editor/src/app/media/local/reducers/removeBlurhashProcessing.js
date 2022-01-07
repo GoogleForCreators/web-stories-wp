@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 function removeBlurhashProcessing(state, { id }) {
+  console.log('removeBlurHashProcessing, 🧛🏻‍♂️🧛🏻‍♂️🧛🏻‍♂️🧛🏻‍♂️🧛🏻‍♂️🧛🏻‍♂️🧛🏻‍♂️🧛🏻‍♂️🧛🏻‍♂️🧛🏻‍♂️🧛🏻‍♂️🧛🏻‍♂️');
   if (!id || !state.blurHashProcessing.includes(id)) {
     return state;
   }

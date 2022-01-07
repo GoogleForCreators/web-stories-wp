@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 function addBlurhashProcessing(state, { id }) {
+  console.log('assBlurHashProcessing, 🦃🦃🦃🦃🦃🦃🦃🦃🦃🦃🦃🦃🦃🦃');
   if (!id || state.blurHashProcessing.includes(id)) {
     return state;
   }
