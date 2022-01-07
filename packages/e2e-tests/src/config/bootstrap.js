@@ -93,8 +93,7 @@ const ALLOWED_ERROR_MESSAGES = [
   // Upsteam issue in gutenberg and twentytwenty theme.
   'Stylesheet twentytwenty-block-editor-styles-css was not properly added.',
 
-  // deprecated notice in 5.9.
-  // @todo fix issue.
+  // TODO(#9240): Fix usage in the web stories block.
   "select( 'core' ).getAuthors() is deprecated since version 5.9.",
 ];
 
