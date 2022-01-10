@@ -56,7 +56,6 @@ export const GET_MEDIA_RESPONSE_BODY = [
     length: undefined,
     lengthFormatted: undefined,
     alt: 'IMAGE',
-    local: false,
     isPlaceholder: false,
     isMuted: false,
     isOptimized: false,

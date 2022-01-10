@@ -28,10 +28,12 @@ import useUpdateElementDimensions from '../../app/media/utils/useUpdateElementDi
 import useInsertElement from './useInsertElement';
 
 function useUploadWithPreview() {
-  const { uploadMedia, postProcessingResource } = useLocalMedia((state) => ({
-    uploadMedia: state.actions.uploadMedia,
-    postProcessingResource: state.actions.postProcessingResource,
-  }));
+  const { uploadMedia, postProcessingResource } = useLocalMedia(
+    ({ actions: { uploadMedia, postProcessingResource } }) => ({
+      uploadMedia,
+      postProcessingResource,
+    })
+  );
   const insertElement = useInsertElement();
   const { updateElementDimensions } = useUpdateElementDimensions();
   const { deleteElementsByResourceId } = useStory((state) => ({

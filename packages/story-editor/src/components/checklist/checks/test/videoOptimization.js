@@ -25,11 +25,9 @@ describe('videoOptimization (pre-publish checklist card)', () => {
       id: 202,
       type: 'video',
       resource: {
-        isTranscoding: true,
         isOptimized: false,
         height: 2160,
         width: 3840,
-        local: false,
       },
     };
 
@@ -45,7 +43,21 @@ describe('videoOptimization (pre-publish checklist card)', () => {
         isOptimized: false,
         height: 2160,
         width: 3840,
-        local: false,
+      },
+    };
+
+    const result = videoElementsNotOptimized(largeUnoptimizedVideo);
+    expect(result).toBe(true);
+  });
+
+  it('should return false if the video element is larger than 1080x1920 and is optimizing', () => {
+    const largeUnoptimizedVideo = {
+      id: 202,
+      type: 'video',
+      resource: {
+        isOptimized: false,
+        height: 2160,
+        width: 3840,
       },
     };
 
@@ -61,7 +73,22 @@ describe('videoOptimization (pre-publish checklist card)', () => {
         isOptimized: true,
         height: 2160,
         width: 3840,
-        local: false,
+      },
+    };
+
+    const result = videoElementsNotOptimized(largeUnoptimizedVideo);
+    expect(result).toBe(false);
+  });
+
+  it('should return false if the video element is larger than 1080x1920 and isExternal', () => {
+    const largeUnoptimizedVideo = {
+      id: 202,
+      type: 'video',
+      resource: {
+        isExternal: true,
+        isOptimized: true,
+        height: 2160,
+        width: 3840,
       },
     };
 
@@ -77,7 +104,6 @@ describe('videoOptimization (pre-publish checklist card)', () => {
         isOptimized: false,
         height: 300,
         width: 400,
-        local: false,
       },
     };
     const smallOptimizedVideo = {
@@ -87,7 +113,6 @@ describe('videoOptimization (pre-publish checklist card)', () => {
         isOptimized: true,
         height: 300,
         width: 400,
-        local: false,
       },
     };
 
@@ -103,7 +128,6 @@ describe('videoOptimization (pre-publish checklist card)', () => {
         isOptimized: false,
         height: 720,
         width: 1280,
-        local: false,
       },
     };
     const portraitVideo = {
@@ -113,7 +137,6 @@ describe('videoOptimization (pre-publish checklist card)', () => {
         isOptimized: false,
         height: 1280,
         width: 720,
-        local: false,
       },
     };
 
