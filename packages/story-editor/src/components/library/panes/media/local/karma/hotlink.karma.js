@@ -25,8 +25,8 @@ import { screen, waitFor } from '@testing-library/react';
 
 import { Fixture } from '../../../../../../karma/fixture';
 import { useStory } from '../../../../../../app/story';
-
-describe('Embedding hotlinked media', () => {
+// eslint-disable-next-line jasmine/no-disabled-tests
+xdescribe('Embedding hotlinked media', () => {
   let fixture;
 
   beforeEach(async () => {

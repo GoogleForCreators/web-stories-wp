@@ -91,7 +91,8 @@ export default ({ onChange }) => {
                     setEyedropperPixelData(pixelData);
                     setEyedropperImg(canvas.toDataURL());
                     resolve();
-                  });
+                  })
+                  .catch(() => resolve());
               });
             });
           });

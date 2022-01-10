@@ -92,6 +92,8 @@ beforeAll(() => {
   jasmine.getEnv().addReporter({
     specStarted(result) {
       currentSpec = result;
+      //eslint-disable-next-line no-console
+      console.info(currentSpec.fullName);
     },
     specDone() {
       currentSpec = null;
