@@ -185,7 +185,7 @@ class Page_Template_Post_Type extends Post_Type_Base implements HasRequirements 
 	 * @return void
 	 */
 	public function delete_poster_image( int $post_id ) {
-		if ( get_post_Type( ( $post_id ) ) !== $this->get_slug() ) {
+		if ( get_post_type( $post_id ) !== $this->get_slug() ) {
 			return;
 		}
 
