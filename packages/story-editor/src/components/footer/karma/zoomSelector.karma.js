@@ -109,6 +109,7 @@ describe('Zoom selector', () => {
     // 100% is actually smaller than FIT because we are using such a large browser window
     expect(scrollContainer).not.toBeVerticallyScrollable();
     expect(scrollContainer).not.toBeHorizontallyScrollable();
+
     expect(fullbleed).toHaveSize(408, 725);
 
     await fixture.snapshot();
