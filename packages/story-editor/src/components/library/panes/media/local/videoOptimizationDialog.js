@@ -35,8 +35,8 @@ import Dialog from '../../../../dialog';
 const storageKey = LOCAL_STORAGE_PREFIX.VIDEO_OPTIMIZATION_DIALOG_DISMISSED;
 
 function VideoOptimizationDialog() {
-  const { isTranscoding } = useLocalMedia((state) => ({
-    isTranscoding: state.state.isTranscoding,
+  const { isTranscoding } = useLocalMedia(({ state: { isTranscoding } }) => ({
+    isTranscoding,
   }));
 
   const [isDialogDismissed, setIsDialogDismissed] = useState(
