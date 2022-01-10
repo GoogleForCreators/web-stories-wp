@@ -142,7 +142,7 @@ function InnerElement({
 
   useEffect(() => {
     // assign display poster for videos
-    if (resource.poster && resource.poster.includes('blob')) {
+    if (resource.poster) {
       newVideoPosterRef.current = resource.poster;
     }
   }, [resource.poster]);

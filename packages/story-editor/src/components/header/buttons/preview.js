@@ -49,8 +49,8 @@ function PreviewButton({ forceIsSaving = false }) {
       actions: { autoSave, saveStory },
     }) => ({ isSaving, status, previewLink, autoSave, saveStory })
   );
-  const { isUploading } = useLocalMedia((state) => ({
-    isUploading: state.state.isUploading,
+  const { isUploading } = useLocalMedia(({ state: { isUploading } }) => ({
+    isUploading,
   }));
 
   const [previewLinkToOpenViaDialog, setPreviewLinkToOpenViaDialog] =

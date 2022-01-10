@@ -37,7 +37,6 @@ const resource = {
   src: 'image-url',
   width: 910,
   height: 675,
-  local: false,
   alt: 'my image alt text',
   sizes: {},
 };

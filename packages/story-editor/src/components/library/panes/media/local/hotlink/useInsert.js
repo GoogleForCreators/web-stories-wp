@@ -41,6 +41,7 @@ import {
 import { useConfig } from '../../../../../../app/config';
 import { useAPI } from '../../../../../../app/api';
 import useCORSProxy from '../../../../../../utils/useCORSProxy';
+import useDetectBaseColor from '../../../../../../app/media/utils/useDetectBaseColor';
 import { isValidUrlForHotlinking } from './utils';
 
 function getErrorMessage(code, description) {
@@ -73,6 +74,7 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
   const {
     actions: { getHotlinkInfo },
   } = useAPI();
+  const { updateBaseColor } = useDetectBaseColor({});
 
   const [isInserting, setIsInserting] = useState(false);
 
@@ -158,6 +160,8 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
           resource,
         });
 
+        updateBaseColor(resource);
+
         setErrorMsg(null);
         setLink('');
         onClose();
@@ -176,6 +180,7 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
       setLink,
       uploadVideoPoster,
       getProxiedUrl,
+      updateBaseColor,
     ]
   );
 
