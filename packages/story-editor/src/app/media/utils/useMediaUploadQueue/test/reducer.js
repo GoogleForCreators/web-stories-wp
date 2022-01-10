@@ -18,12 +18,14 @@
  * External dependencies
  */
 import { revokeBlob } from '@web-stories-wp/media';
+
 /**
  * Internal dependencies
  */
 import {
   addItem,
   cancelUploading,
+  finishItem,
   finishMuting,
   finishTranscoding,
   finishTrimming,
@@ -34,6 +36,7 @@ import {
   startTrimming,
   startUploading,
 } from '../reducer';
+import { ITEM_STATUS } from '../constants';
 
 jest.mock('@web-stories-wp/media', () => ({
   revokeBlob: jest.fn(),
@@ -48,8 +51,10 @@ describe('useMediaUploadQueue', () => {
         payload: {
           file: {},
           resource: {
+            id: 456,
             foo: 'bar',
           },
+          originalResourceId: 789,
         },
       });
 
@@ -57,10 +62,11 @@ describe('useMediaUploadQueue', () => {
         queue: [
           expect.objectContaining({
             id: expect.any(String),
-            state: 'PENDING',
+            state: ITEM_STATUS.PENDING,
             file: {},
+            originalResourceId: 789,
             resource: expect.objectContaining({
-              id: expect.any(String),
+              id: 456,
               foo: 'bar',
             }),
           }),
@@ -77,7 +83,7 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {},
-            state: 'PENDING',
+            state: ITEM_STATUS.PENDING,
           },
         ],
       };
@@ -97,7 +103,7 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {},
-            state: 'UPLOADING',
+            state: ITEM_STATUS.UPLOADING,
           },
         ],
       });
@@ -112,9 +118,11 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {
+              id: 456,
               src: 'foo',
             },
-            state: 'UPLOADING',
+            originalResourceId: 111,
+            state: ITEM_STATUS.UPLOADING,
             posterFile: {},
           },
         ],
@@ -124,6 +132,7 @@ describe('useMediaUploadQueue', () => {
         payload: {
           id: 123,
           resource: {
+            id: 789,
             src: 'bar',
           },
         },
@@ -135,10 +144,13 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             posterFile: null,
+            originalResourceId: null,
             resource: {
+              id: 789,
               src: 'bar',
             },
-            state: 'UPLOADED',
+            previousResourceId: 456,
+            state: ITEM_STATUS.UPLOADED,
           },
         ],
       });
@@ -151,7 +163,7 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {},
-            state: 'UPLOADING',
+            state: ITEM_STATUS.UPLOADING,
           },
         ],
       };
@@ -172,9 +184,10 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {
+              id: 456,
               foo: 'bar',
             },
-            state: 'PENDING',
+            state: ITEM_STATUS.PENDING,
           },
         ],
       };
@@ -183,11 +196,75 @@ describe('useMediaUploadQueue', () => {
         payload: {
           id: 123,
           resource: {
+            id: 456,
             bar: 'baz',
           },
         },
       });
       expect(revokeBlob).toHaveBeenCalledTimes(2);
+    });
+  });
+
+  describe('finishItem', () => {
+    it('changes state of finished item', () => {
+      const initialState = {
+        queue: [
+          {
+            id: 123,
+            file: {},
+            resource: {
+              id: 456,
+              src: 'foo',
+            },
+            originalResourceId: 111,
+            state: ITEM_STATUS.UPLOADED,
+            posterFile: {},
+          },
+        ],
+      };
+
+      const result = finishItem(initialState, {
+        payload: {
+          id: 123,
+        },
+      });
+
+      expect(result).toStrictEqual({
+        queue: [
+          {
+            id: 123,
+            file: {},
+            posterFile: {},
+            resource: {
+              id: 456,
+              src: 'foo',
+            },
+            originalResourceId: 111,
+            state: ITEM_STATUS.FINISHED,
+          },
+        ],
+      });
+    });
+
+    it('leaves state unchanged if item is not in queue', () => {
+      const initialState = {
+        queue: [
+          {
+            id: 123,
+            file: {},
+            resource: {},
+            state: ITEM_STATUS.UPLOADED,
+          },
+        ],
+      };
+
+      const result = finishItem(initialState, {
+        payload: {
+          id: 456,
+        },
+      });
+
+      expect(result).toStrictEqual(initialState);
     });
   });
 
@@ -199,7 +276,7 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {},
-            state: 'UPLOADING',
+            state: ITEM_STATUS.UPLOADING,
           },
         ],
       };
@@ -216,7 +293,7 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {},
-            state: 'CANCELLED',
+            state: ITEM_STATUS.CANCELLED,
           },
         ],
       });
@@ -231,9 +308,10 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {
+              id: 456,
               foo: 'bar',
             },
-            state: 'PENDING',
+            state: ITEM_STATUS.PENDING,
           },
         ],
       };
@@ -250,10 +328,10 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {
+              id: 456,
               foo: 'bar',
-              isMuting: true,
             },
-            state: 'MUTING',
+            state: ITEM_STATUS.MUTING,
           },
         ],
       });
@@ -270,10 +348,10 @@ describe('useMediaUploadQueue', () => {
               bar: 'baz',
             },
             resource: {
+              id: 456,
               foo: 'bar',
-              isMuting: true,
             },
-            state: 'MUTING',
+            state: ITEM_STATUS.MUTING,
           },
         ],
       };
@@ -296,10 +374,10 @@ describe('useMediaUploadQueue', () => {
             },
             resource: {
               foo: 'bar',
-              isMuting: false,
+              id: 456,
               isMuted: true,
             },
-            state: 'MUTED',
+            state: ITEM_STATUS.MUTED,
           },
         ],
       });
@@ -314,9 +392,10 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {
+              id: 456,
               foo: 'bar',
             },
-            state: 'PENDING',
+            state: ITEM_STATUS.PENDING,
           },
         ],
       };
@@ -333,10 +412,10 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {
+              id: 456,
               foo: 'bar',
-              isTrimming: true,
             },
-            state: 'TRIMMING',
+            state: ITEM_STATUS.TRIMMING,
           },
         ],
       });
@@ -353,10 +432,10 @@ describe('useMediaUploadQueue', () => {
               bar: 'baz',
             },
             resource: {
+              id: 456,
               foo: 'bar',
-              isTrimming: true,
             },
-            state: 'TRIMMING',
+            state: ITEM_STATUS.TRIMMING,
           },
         ],
       };
@@ -378,10 +457,10 @@ describe('useMediaUploadQueue', () => {
               bar: 'foobar',
             },
             resource: {
+              id: 456,
               foo: 'bar',
-              isTrimming: false,
             },
-            state: 'TRIMMED',
+            state: ITEM_STATUS.TRIMMED,
           },
         ],
       });
@@ -396,9 +475,10 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {
+              id: 456,
               foo: 'bar',
             },
-            state: 'PENDING',
+            state: ITEM_STATUS.PENDING,
           },
         ],
       };
@@ -415,10 +495,10 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {
+              id: 456,
               foo: 'bar',
-              isTranscoding: true,
             },
-            state: 'TRANSCODING',
+            state: ITEM_STATUS.TRANSCODING,
           },
         ],
       });
@@ -435,10 +515,10 @@ describe('useMediaUploadQueue', () => {
               bar: 'baz',
             },
             resource: {
+              id: 456,
               foo: 'bar',
-              isTranscoding: true,
             },
-            state: 'TRANSCODING',
+            state: ITEM_STATUS.TRANSCODING,
           },
         ],
       };
@@ -460,11 +540,11 @@ describe('useMediaUploadQueue', () => {
               bar: 'foobar',
             },
             resource: {
+              id: 456,
               foo: 'bar',
-              isTranscoding: false,
               isOptimized: true,
             },
-            state: 'TRANSCODED',
+            state: ITEM_STATUS.TRANSCODED,
           },
         ],
       });
@@ -479,9 +559,10 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {
+              id: 456,
               foo: 'bar',
             },
-            state: 'UPLOADING',
+            state: ITEM_STATUS.UPLOADING,
           },
         ],
       };
@@ -490,6 +571,7 @@ describe('useMediaUploadQueue', () => {
         payload: {
           id: 456,
           resource: {
+            id: 456,
             foo: 'baz',
           },
         },
@@ -505,10 +587,11 @@ describe('useMediaUploadQueue', () => {
             id: 123,
             file: {},
             resource: {
+              id: 456,
               foo: 'bar',
               isPlaceholder: false,
             },
-            state: 'UPLOADING',
+            state: ITEM_STATUS.UPLOADING,
           },
         ],
       };
@@ -517,6 +600,7 @@ describe('useMediaUploadQueue', () => {
         payload: {
           id: 456,
           resource: {
+            id: 456,
             foo: 'baz',
           },
         },

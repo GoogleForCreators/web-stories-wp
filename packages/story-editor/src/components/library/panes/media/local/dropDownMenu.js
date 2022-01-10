@@ -33,6 +33,7 @@ import {
 /**
  * Internal dependencies
  */
+import { useLocalMedia } from '../../../../../app';
 import DeleteDialog from './deleteDialog';
 import MediaEditDialog from './mediaEditDialog';
 
@@ -103,6 +104,12 @@ function DropDownMenu({
   const [showEditDialog, setShowEditDialog] = useState(false);
   const moreButtonRef = useRef();
 
+  const { canTranscodeResource } = useLocalMedia(
+    ({ state: { canTranscodeResource } }) => ({
+      canTranscodeResource,
+    })
+  );
+
   const handleCurrentValue = (evt, value) => {
     onMenuSelected();
     switch (value) {
@@ -134,7 +141,7 @@ function DropDownMenu({
 
   // Keep icon and menu displayed if menu is open (even if user's mouse leaves the area).
   return (
-    !resource.local && ( // Don't show menu if resource not uploaded to server yet.
+    canTranscodeResource(resource) && ( // Don't show menu if resource is being processed.
       <MenuContainer>
         {(display || isMenuOpen) && (
           <>
