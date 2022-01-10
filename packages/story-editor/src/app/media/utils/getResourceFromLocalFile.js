@@ -29,7 +29,6 @@ import {
   hasVideoGotAudio,
   getImageFromVideo,
   seekVideo,
-  preloadVideoMetadata,
 } from '@web-stories-wp/media';
 import { v4 as uuidv4 } from 'uuid';
 
