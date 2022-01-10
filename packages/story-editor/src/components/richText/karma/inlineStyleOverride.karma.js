@@ -318,7 +318,7 @@ describe('Inline style override', () => {
     const actual = getTextContent();
     const expected = '<span style="font-weight: 700">Full in some text</span>';
     expect(actual).toBe(expected);
-    await data.fixture.snapshot('"Fill in some text" in bold');
+    await data.fixture.snapshot('"Full in some text" in bold');
   });
 
   it('should keep formatting when all text is replaced', async () => {
