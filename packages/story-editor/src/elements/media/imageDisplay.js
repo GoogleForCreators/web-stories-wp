@@ -96,7 +96,7 @@ function ImageDisplay({ element, box, previewMode }) {
       timeout = setTimeout(async () => {
         const url = getProxiedUrl(resource, resource.src);
         try {
-          const preloadedImg = await preloadImage(url, srcSet);
+          const preloadedImg = await preloadImage({ src: url, srcset: srcSet });
           if (mounted) {
             resourceList.set(resource.id, {
               type: 'fullsize',

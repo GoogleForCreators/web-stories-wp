@@ -240,12 +240,11 @@ async function getOverlapBgColor({ bgImage, bgBox, overlapBox }) {
     });
   }
 
-  const image = await preloadImage(
-    bgImage.src,
-    undefined,
-    bgImage.width,
-    bgImage.height
-  );
+  const image = await preloadImage({
+    src: bgImage.src,
+    width: bgImage.width,
+    height: bgImage.height,
+  });
   const imgData = await getImageData(image);
 
   const cropCanvas = document.createElement('canvas');

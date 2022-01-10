@@ -92,7 +92,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
 
       // Preload the full image in the browser to stop jumping around.
       try {
-        await preloadImage(poster);
+        await preloadImage({ src: poster });
       } catch {
         // Ignore
       }

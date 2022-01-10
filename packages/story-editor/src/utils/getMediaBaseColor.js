@@ -60,7 +60,7 @@ async function getMediaBaseColor(src, width = 10, height = 'auto') {
   let color, image;
   const trackTiming = getTimeTracker('load_get_base_color');
   try {
-    image = await preloadImage(src, undefined, width, height);
+    image = await preloadImage({ src, width, height });
     color = await extractColorFromImage(image);
   } catch (error) {
     // Known error of color thief with white only images.
