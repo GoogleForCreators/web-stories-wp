@@ -61,6 +61,7 @@ const RESOURCE_BUILDERS = {
     type: 'IMAGE',
     createTime: '1234',
     updateTime: '5678',
+    blurHash: 'L4CD_PIU00%MD%M{j[xu00%M~qM{',
   }),
   coverr: (name) => ({
     name,
@@ -100,6 +101,7 @@ const RESOURCE_BUILDERS = {
     },
     createTime: '1234',
     updateTime: '5678',
+    blurHash: 'D3DM_PIU00%MD%M{j[xu00%M~qM{',
   }),
 };
 
@@ -415,7 +417,9 @@ describe('Media3pPane fetching', () => {
       MEDIA_PER_PAGE * 2
     );
 
-    const firstMediaElement = fixture.editor.library.media3p.mediaElements[0];
+    const firstMediaElement = waitFor(
+      () => fixture.editor.library.media3p.mediaElements[0]
+    );
 
     expect(firstMediaElement.querySelector('video').paused).toBe(true);
 
