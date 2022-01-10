@@ -50,3 +50,4 @@ export { default as hasVideoGotAudio } from './hasVideoGotAudio';
 export { default as canTranscodeResource } from './canTranscodeResource';
 export { default as getCanvasBlob } from './getCanvasBlob';
 export { default as getImageFromVideo } from './getImageFromVideo';
+export { default as blobToFile } from './blobToFile';

@@ -13,8 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * Create a new File from a Blob instance.
+ *
+ * @param {Blob} blob Blob object.
+ * @param {string} filename File name.
+ * @param {string} type Mime type.
+ * @return {File} File object.
+ */
 function blobToFile(blob, filename, type) {
-  return new File([blob], filename, { type, lastModified: new Date() });
+  return new File([blob], filename, { type });
 }
 
 export default blobToFile;

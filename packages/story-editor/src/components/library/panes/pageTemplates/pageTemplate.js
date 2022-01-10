@@ -36,7 +36,7 @@ import {
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { generatePatternStyles } from '@web-stories-wp/patterns';
-import { fetchRemoteBlob } from '@web-stories-wp/media';
+import { fetchRemoteBlob, blobToFile } from '@web-stories-wp/media';
 import { trackError } from '@web-stories-wp/tracking';
 
 /**
@@ -47,7 +47,6 @@ import { useConfig } from '../../../../app/config';
 import { usePageDataUrls } from '../../../../app/pageDataUrls';
 import { useUploader } from '../../../../app/uploader';
 import { PageSizePropType } from '../../../../types';
-import blobToFile from '../../../../utils/blobToFile';
 import { focusStyle } from '../../../panels/shared';
 import DisplayElement from '../../../canvas/displayElement';
 
