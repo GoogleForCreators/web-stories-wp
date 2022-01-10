@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
+import { useCallback, useMemo } from '@web-stories-wp/react';
+import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
@@ -29,17 +29,20 @@ import {
   Icons,
   Text as DefaultText,
   THEME_CONSTANTS,
+  useSnackbar,
 } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import { Color, Row as DefaultRow } from '../../../form';
-import { useStory } from '../../../../app';
+import { useConfig, useLocalMedia, useStory } from '../../../../app';
 import { SimplePanel } from '../../panel';
 import { FlipControls } from '../../shared';
-import { getDefinitionForType } from '../../../../elements';
+import { createNewElement, getDefinitionForType } from '../../../../elements';
 import { states, styles, useHighlights } from '../../../../app/highlights';
+import useFFmpeg from '../../../../app/media/utils/useFFmpeg';
+import getElementProperties from '../../../canvas/utils/getElementProperties';
 
 const DEFAULT_FLIP = { horizontal: false, vertical: false };
 
@@ -75,18 +78,84 @@ const RemoveButton = styled(Button)`
   align-self: center;
 `;
 
+const ReplaceButton = styled(Button).attrs({
+  type: BUTTON_TYPES.SECONDARY,
+  size: BUTTON_SIZES.SMALL,
+  variant: BUTTON_VARIANTS.RECTANGLE,
+})``;
+
 const Text = styled(DefaultText)`
   align-self: center;
   width: 55px;
 `;
 
 function PageBackgroundPanel({ selectedElements, pushUpdate }) {
-  const { currentPage, clearBackgroundElement, updateCurrentPageProperties } =
-    useStory(({ state, actions }) => ({
-      currentPage: state.currentPage,
-      clearBackgroundElement: actions.clearBackgroundElement,
-      updateCurrentPageProperties: actions.updateCurrentPageProperties,
-    }));
+  const {
+    combineElements,
+    currentPage,
+    clearBackgroundElement,
+    updateCurrentPageProperties,
+  } = useStory(({ state, actions }) => ({
+    currentPage: state.currentPage,
+    clearBackgroundElement: actions.clearBackgroundElement,
+    combineElements: actions.combineElements,
+    updateCurrentPageProperties: actions.updateCurrentPageProperties,
+  }));
+
+  const {
+    allowedTranscodableMimeTypes,
+    allowedFileTypes,
+    allowedMimeTypes: {
+      image: allowedImageMimeTypes,
+      video: allowedVideoMimeTypes,
+    },
+    capabilities: { hasUploadMediaAction },
+    MediaUpload,
+  } = useConfig();
+
+  const {
+    canTranscodeResource,
+    resetWithFetch,
+    postProcessingResource,
+    optimizeVideo,
+    optimizeGif,
+  } = useLocalMedia(
+    ({
+      state: { canTranscodeResource },
+      actions: {
+        resetWithFetch,
+        postProcessingResource,
+        optimizeVideo,
+        optimizeGif,
+      },
+    }) => {
+      return {
+        canTranscodeResource,
+        resetWithFetch,
+        postProcessingResource,
+        optimizeVideo,
+        optimizeGif,
+      };
+    }
+  );
+  const { isTranscodingEnabled } = useFFmpeg();
+  const { showSnackbar } = useSnackbar();
+
+  const allowedMimeTypes = useMemo(() => {
+    if (isTranscodingEnabled) {
+      return [
+        ...allowedTranscodableMimeTypes,
+        ...allowedImageMimeTypes,
+        ...allowedVideoMimeTypes,
+      ];
+    }
+    return [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
+  }, [
+    allowedImageMimeTypes,
+    allowedVideoMimeTypes,
+    isTranscodingEnabled,
+    allowedTranscodableMimeTypes,
+  ]);
 
   const updateBackgroundColor = useCallback(
     (value) => {
@@ -105,6 +174,81 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
     );
     clearBackgroundElement();
   }, [pushUpdate, clearBackgroundElement]);
+
+  const transcodableMimeTypes = useMemo(() => {
+    return allowedTranscodableMimeTypes.filter(
+      (x) => !allowedVideoMimeTypes.includes(x)
+    );
+  }, [allowedTranscodableMimeTypes, allowedVideoMimeTypes]);
+
+  /**
+   * Callback of select in media picker to replace background media.
+   *
+   * @param {Object} resource Object coming from backbone media picker.
+   */
+  const onSelect = useCallback(
+    (resource) => {
+      try {
+        if (isTranscodingEnabled && canTranscodeResource(resource)) {
+          if (transcodableMimeTypes.includes(resource.mimeType)) {
+            optimizeVideo({ resource });
+          }
+
+          if (resource.mimeType === 'image/gif') {
+            optimizeGif({ resource });
+          }
+        }
+        // WordPress media picker event, sizes.medium.source_url is the smallest image
+        const element = createNewElement(
+          resource.type,
+          getElementProperties(resource.type, { resource })
+        );
+        combineElements({
+          firstElement: element,
+          secondId: selectedElements[0].id,
+        });
+
+        postProcessingResource(resource);
+      } catch (e) {
+        showSnackbar({
+          message: e.message,
+          dismissible: true,
+        });
+      }
+    },
+    [
+      isTranscodingEnabled,
+      canTranscodeResource,
+      combineElements,
+      optimizeGif,
+      optimizeVideo,
+      postProcessingResource,
+      selectedElements,
+      showSnackbar,
+      transcodableMimeTypes,
+    ]
+  );
+
+  const renderReplaceButton = useCallback(
+    (open) => (
+      <ReplaceButton onClick={open}>
+        {__('Replace', 'web-stories')}
+      </ReplaceButton>
+    ),
+    []
+  );
+
+  let onSelectErrorMessage = __(
+    'No file types are currently supported.',
+    'web-stories'
+  );
+  if (allowedFileTypes.length) {
+    onSelectErrorMessage = sprintf(
+      /* translators: %s: list of allowed file types. */
+      __('Please choose only %s to insert into page.', 'web-stories'),
+      translateToExclusiveList(allowedFileTypes)
+    );
+  }
 
   const { highlight, resetHighlight, cancelHighlight } = useHighlights(
     (state) => ({
@@ -175,6 +319,16 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
               <Icons.Cross />
             </RemoveButton>
           </SelectedMedia>
+          {hasUploadMediaAction && (
+            <MediaUpload
+              onSelect={onSelect}
+              onSelectErrorMessage={onSelectErrorMessage}
+              onClose={resetWithFetch}
+              type={allowedMimeTypes}
+              render={renderReplaceButton}
+              buttonInsertText={__('Add as background', 'web-stories')}
+            />
+          )}
           <FlipControls
             onChange={(value) => pushUpdate({ flip: value }, true)}
             value={flip}
