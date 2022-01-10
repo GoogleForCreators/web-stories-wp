@@ -93,7 +93,6 @@ export default ({ onChange }) => {
                     resolve();
                   })
                   .catch(() => {
-                    console.log('caught in eydropper');
                     resolve();
                   });
               });

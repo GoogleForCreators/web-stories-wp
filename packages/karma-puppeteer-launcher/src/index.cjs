@@ -63,8 +63,6 @@ function puppeteerBrowser(baseBrowserDecorator, config) {
       ...(config && config.puppeteer),
     };
 
-    console.log('options: ', puppeteerOptions);
-
     // See https://github.com/puppeteer/puppeteer/blob/v3.0.4/docs/api.md#puppeteerlaunchoptions.
     browser = await puppeteer.launch(puppeteerOptions);
 
@@ -87,7 +85,6 @@ function puppeteerBrowser(baseBrowserDecorator, config) {
       const newPage = await target.page();
       if (newPage === page) {
         // An already handled page.
-        console.log('**** page already exists');
         return;
       }
       await exposeFunctions(newPage, puppeteerOptions);
@@ -98,7 +95,6 @@ function puppeteerBrowser(baseBrowserDecorator, config) {
 
   this.on('kill', async (done) => {
     if (browser != null) {
-      console.log('******KILL')
       await browser.close();
     }
     done();

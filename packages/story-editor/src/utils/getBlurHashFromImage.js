@@ -33,10 +33,6 @@ const getImageData = (image) => {
 
   const ctx = canvas.getContext('2d');
   ctx.drawImage(image, 0, 0);
-  console.log(
-    'return ctx from getImageData ',
-    ctx.getImageData(0, 0, width, height)
-  );
   return ctx.getImageData(0, 0, width, height);
 };
 
@@ -44,7 +40,6 @@ const getBlurHashFromImage = async (src) => {
   let image;
   try {
     image = await preloadImage(src);
-    console.log('have awaited to preload image: ', src);
   } catch {
     return Promise.reject(new Error('Failed to get blurhash from image'));
   }
@@ -65,16 +60,13 @@ const getBlurHashFromImage = async (src) => {
       worker.terminate(); // lgtm [js/property-access-on-non-object]
       trackTiming();
       if (event.data.type === 'success') {
-        console.log('success worker');
         resolve(event.data.blurHash);
       } else {
-        console.log('reject worker');
         trackError('blurhash_generation', event.data.error?.message);
         reject(event.data.error);
       }
     });
     worker.addEventListener('error', (e) => {
-      console.log('ERROR TERMINATE');
       worker.terminate(); // lgtm [js/property-access-on-non-object]
       trackTiming();
       trackError('blurhash_generation', e?.message);
