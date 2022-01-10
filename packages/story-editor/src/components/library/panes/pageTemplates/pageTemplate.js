@@ -162,8 +162,13 @@ function PageTemplate(
     (async () => {
       try {
         const blob = await fetchRemoteBlob(pageDataUrl);
-        const file = blobToFile(blob, `${page.templateId}.jpg`, 'image/jpeg');
+        const file = blobToFile(
+          blob,
+          `web-stories-page-template-${page.templateId}.jpg`,
+          'image/jpeg'
+        );
         const resource = await uploadFile(file, {
+          post: page.templateId,
           web_stories_media_source: 'page-template',
         });
 
