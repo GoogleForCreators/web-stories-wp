@@ -41,7 +41,7 @@
     "@babel/preset-env": "^7.15.8",
     "@babel/preset-react": "^7.16.0",
     "@jsdevtools/coverage-istanbul-loader": "^3.0.5",
-    "@prettier/plugin-xml": "^1.1.0",
+    "@prettier/plugin-xml": "^1.2.0",
     "@storybook/addon-a11y": "^6.3.6",
     "@storybook/addon-actions": "^6.3.6",
     "@storybook/addon-backgrounds": "^6.3.6",
