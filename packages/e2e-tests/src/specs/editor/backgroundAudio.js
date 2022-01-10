@@ -21,8 +21,8 @@ import {
   createNewStory,
   uploadFile,
   deleteMedia,
+  takeSnapshot,
 } from '@web-stories-wp/e2e-test-utils';
-import percySnapshot from '@percy/puppeteer';
 
 describe('Background Audio', () => {
   let uploadedFiles;
@@ -71,7 +71,7 @@ describe('Background Audio', () => {
 
       await expect(page).toMatchElement('button[aria-label="Play"]');
 
-      await percySnapshot(page, 'Story Background Audio');
+      await takeSnapshot(page, 'Story Background Audio');
     });
   });
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,24 +17,13 @@
 /**
  * External dependencies
  */
-import { toUTCDate, toDate, getOptions } from '@web-stories-wp/date';
+import percySnapshot from '@percy/puppeteer';
 
-export default function reshapeTemplateObject(
-  originalTemplateData,
-  isLocal = false
-) {
-  const { id, slug, modified, creationDate } = originalTemplateData;
-  if (!id || !slug) {
-    return null;
+async function takeSnapshot(page, name, options) {
+  if (!process.env?.PERCY_TOKEN) {
+    return;
   }
-
-  return {
-    ...originalTemplateData,
-    id,
-    slug,
-    creationDate: toDate(creationDate, getOptions()),
-    status: 'template',
-    modified: toUTCDate(modified),
-    isLocal,
-  };
+  await percySnapshot(page, name, options);
 }
+
+export default takeSnapshot;

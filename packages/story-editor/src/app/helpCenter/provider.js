@@ -38,6 +38,7 @@ import {
 import { useCurrentUser } from '../currentUser';
 import { TIPS } from '../../components/helpCenter/constants';
 import { useConfig } from '../config';
+import { useAPI } from '../api';
 import Context from './context';
 import {
   composeEffects,
@@ -213,6 +214,10 @@ const createBooleanMapFromKey = (key) =>
 
 function HelpCenterProvider({ children }) {
   const { additionalTips = {} } = useConfig();
+  const {
+    actions: { updateCurrentUser: _updateCurrentUser },
+  } = useAPI();
+  const canUpdateCurrentUser = Boolean(_updateCurrentUser);
   const [store, dispatch] = useReducer(reducer, getInitial({ additionalTips }));
   const { currentUser, updateCurrentUser } = useCurrentUser(
     ({ state, actions }) => ({
@@ -265,7 +270,7 @@ function HelpCenterProvider({ children }) {
   const persistenceKey = createKeyFromBooleanMap(store.state.readTips);
   const isInitialHydrationUpdate = useRef(false);
   useEffect(() => {
-    if (!persistenceKey && !isHydrated) {
+    if ((!persistenceKey && !isHydrated) || !canUpdateCurrentUser) {
       return;
     }
 
@@ -280,7 +285,13 @@ function HelpCenterProvider({ children }) {
         web_stories_onboarding: createBooleanMapFromKey(persistenceKey),
       },
     }).catch(actions.persistingReadTipsError);
-  }, [actions, updateCurrentUser, persistenceKey, isHydrated]);
+  }, [
+    actions,
+    updateCurrentUser,
+    canUpdateCurrentUser,
+    persistenceKey,
+    isHydrated,
+  ]);
 
   // Components wrapped in a Transition no longer receive
   // prop updates once they start exiting. To work around

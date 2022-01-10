@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,27 +14,31 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import { toUTCDate, toDate, getOptions } from '@web-stories-wp/date';
-
-export default function reshapeTemplateObject(
-  originalTemplateData,
-  isLocal = false
-) {
-  const { id, slug, modified, creationDate } = originalTemplateData;
-  if (!id || !slug) {
-    return null;
-  }
-
+function removeTransientMediaProperties({ pages, ...rest }) {
   return {
-    ...originalTemplateData,
-    id,
-    slug,
-    creationDate: toDate(creationDate, getOptions()),
-    status: 'template',
-    modified: toUTCDate(modified),
-    isLocal,
+    pages: pages.map(reducePage),
+    ...rest,
   };
 }
+
+function reducePage({ elements, ...rest }) {
+  return {
+    elements: elements.map(updateElement),
+    ...rest,
+  };
+}
+
+function updateElement(element) {
+  if (!element.resource) {
+    return element;
+  }
+
+  delete element.resource.local;
+  delete element.resource.isTrimming;
+  delete element.resource.isTranscoding;
+  delete element.resource.isMuting;
+
+  return element;
+}
+
+export default removeTransientMediaProperties;
