@@ -38,6 +38,7 @@ import {
   useConfig,
   useCurrentUser,
   useIsChecklistMounted,
+  useRegisterCheck,
   useStory,
   ChecklistCard,
   DefaultFooterText,
@@ -77,8 +78,7 @@ function VideoOptimizationCheckbox() {
   const isChecklistMounted = useIsChecklistMounted();
   const [hasOptedIn, setHasOptedIn] = useState(false);
   const saveButtonRef = useRef();
-  const { capabilities: { hasUploadMediaAction } = {}, dashboardSettingsLink } =
-    useConfig();
+  const { dashboardSettingsLink } = useConfig();
   const { currentUser, toggleWebStoriesMediaOptimization } = useCurrentUser(
     ({ state, actions }) => ({
       currentUser: state.currentUser,
@@ -88,7 +88,7 @@ function VideoOptimizationCheckbox() {
   );
 
   const checked = currentUser?.meta?.web_stories_media_optimization;
-  const showCheckbox = !checked && hasUploadMediaAction;
+  useRegisterCheck('VideoOptimizationCheckbox', isChecklistMounted && !checked);
 
   const handleToggle = useCallback(() => {
     setHasOptedIn(true);
@@ -108,7 +108,7 @@ function VideoOptimizationCheckbox() {
     hasOptedIn && saveButtonRef.current.focus();
   }, [hasOptedIn]);
 
-  return (showCheckbox || hasOptedIn) && isChecklistMounted ? (
+  return (!checked || hasOptedIn) && isChecklistMounted ? (
     <ChecklistCard
       title={__(
         'Optimize all videos in the Story to ensure smooth playback.',
