@@ -74,12 +74,15 @@ const getVideoResource = async (file) => {
   // Here we are potentially dealing with an unsupported file type (e.g. MOV)
   // that cannot be *played* by the browser, but could still be used for generating a poster.
 
-  const videoEl = await preloadVideoMetadata(src);
+  const videoEl = document.createElement('video');
+  videoEl.muted = true;
+  videoEl.src = src;
+
+  await seekVideo(videoEl);
+
   const canPlayVideo = '' !== videoEl.canPlayType(mimeType);
 
   const { length, lengthFormatted } = getVideoLength(videoEl);
-
-  await seekVideo(videoEl);
   const hasAudio = hasVideoGotAudio(videoEl);
   const posterFile = await getImageFromVideo(videoEl);
   const poster = createBlob(posterFile);
