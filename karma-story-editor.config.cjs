@@ -131,7 +131,6 @@ module.exports = function (config) {
         snapshots: config.snapshots || false,
         snapshotsDir: '.test_artifacts/karma_snapshots',
         defaultViewport: getViewport(config.viewport),
-        waitForInitialPage: true,
       },
     },
 

@@ -51,9 +51,8 @@ function puppeteerBrowser(baseBrowserDecorator, config) {
         // See http://crbug.com/715363
         // We use this flag to work-around this issue.
         '--disable-dev-shm-usage',
+        // Added to prevent disconnect timeouts: sets the maximum GPU memory to use for discardable caches.
         '--force-gpu-mem-discardable-limit-mb',
-        //  set memory allocated for browse https://github.com/karma-runner/karma-chrome-launcher/issues/154#issuecomment-569698577
-        // '--js-flags=--max-old-space-size=8192',
         // https://stackoverflow.com/questions/67501093/passthrough-is-not-supported-gl-is-disabled
         '--disable-software-rasterizer',
       ],
