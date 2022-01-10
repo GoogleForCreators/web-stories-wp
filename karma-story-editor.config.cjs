@@ -191,7 +191,7 @@ module.exports = function (config) {
 
     // Concurrency level
     // how many browsers should be started simultaneously
-    concurrency: 2,
+    concurrency: Infinity,
 
     // Allow not having any tests
     failOnEmptyTestSuite: false,
