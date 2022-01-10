@@ -404,7 +404,7 @@ describe('Media3pPane fetching', () => {
     });
   });
 
-  it('should have a delay before autoplaying videos', async () => {
+  xit('should have a delay before autoplaying videos', async () => {
     await fixture.events.click(fixture.editor.library.media3pTab);
     // 3p media fetching can take extra time to load, waiting to prevent flakey tests
     await waitForInitialMediaLoad();
