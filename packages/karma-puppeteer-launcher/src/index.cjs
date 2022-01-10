@@ -52,6 +52,8 @@ function puppeteerBrowser(baseBrowserDecorator, config) {
         '--disable-dev-shm-usage',
         // Remove: Blocked attempt to create a WebMediaPlayer as there are too many WebMediaPlayers already in existence. See crbug.com/1144736#c27
         '--max-web-media-player-count=5000',
+        // Little more RAM ;) GH hosted runner should have 7GB (-512MB for other stuff).
+        '--max-old-space-size=6656',
       ],
     };
     const puppeteerOptions = {
