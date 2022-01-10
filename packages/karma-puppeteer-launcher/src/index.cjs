@@ -52,8 +52,10 @@ function puppeteerBrowser(baseBrowserDecorator, config) {
         // We use this flag to work-around this issue.
         '--disable-dev-shm-usage',
         '--force-gpu-mem-discardable-limit-mb',
+        //  set memory allocated for browse https://github.com/karma-runner/karma-chrome-launcher/issues/154#issuecomment-569698577
+        'js-flags=--max-old-space-size=8192',
         // https://stackoverflow.com/questions/67501093/passthrough-is-not-supported-gl-is-disabled
-        // '--disable-software-rasterizer',
+        '--disable-software-rasterizer',
       ],
     };
     const puppeteerOptions = {
