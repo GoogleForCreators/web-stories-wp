@@ -18,14 +18,9 @@
  * External dependencies
  */
 import { useFeature } from 'flagged';
-import { useCallback, useEffect, useMemo } from '@web-stories-wp/react';
+import { useCallback, useEffect } from '@web-stories-wp/react';
 import styled from 'styled-components';
-import {
-  __,
-  _n,
-  sprintf,
-  translateToExclusiveList,
-} from '@web-stories-wp/i18n';
+import { __, _n, sprintf } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { resourceList } from '@web-stories-wp/media';
 import {
@@ -35,7 +30,6 @@ import {
   BUTTON_VARIANTS,
   Text,
   THEME_CONSTANTS,
-  useSnackbar,
   Icons,
 } from '@web-stories-wp/design-system';
 
@@ -46,7 +40,7 @@ import { useConfig } from '../../../../../app/config';
 import { useLocalMedia } from '../../../../../app/media';
 import { SearchInput } from '../../../common';
 import useLibrary from '../../../useLibrary';
-import { Select } from '../../../../form';
+import { MediaUploadButton, Select } from '../../../../form';
 import {
   MediaGalleryMessage,
   PaneHeader,
@@ -60,7 +54,6 @@ import { Placement } from '../../../../popup/constants';
 import { PANE_PADDING } from '../../shared';
 import { LOCAL_MEDIA_TYPE_ALL } from '../../../../../app/media/local/types';
 import { focusStyle } from '../../../../panels/shared';
-import useFFmpeg from '../../../../../app/media/utils/useFFmpeg';
 import Tooltip from '../../../../tooltip';
 import paneId from './paneId';
 import VideoOptimizationDialog from './videoOptimizationDialog';
@@ -110,14 +103,9 @@ function MediaPane(props) {
     mediaType,
     searchTerm,
     setNextPage,
-    resetWithFetch,
     setMediaType,
     setSearchTerm,
-    postProcessingResource,
     totalItems,
-    optimizeVideo,
-    optimizeGif,
-    canTranscodeResource,
   } = useLocalMedia(
     ({
       state: {
@@ -128,17 +116,8 @@ function MediaPane(props) {
         mediaType,
         searchTerm,
         totalItems,
-        canTranscodeResource,
       },
-      actions: {
-        setNextPage,
-        resetWithFetch,
-        setMediaType,
-        setSearchTerm,
-        postProcessingResource,
-        optimizeVideo,
-        optimizeGif,
-      },
+      actions: { setNextPage, setMediaType, setSearchTerm },
     }) => {
       return {
         hasMore,
@@ -149,105 +128,23 @@ function MediaPane(props) {
         searchTerm,
         totalItems,
         setNextPage,
-        resetWithFetch,
         setMediaType,
         setSearchTerm,
-        postProcessingResource,
-        optimizeVideo,
-        optimizeGif,
-        canTranscodeResource,
       };
     }
   );
 
-  const { showSnackbar } = useSnackbar();
   const enableHotlinking = useFeature('enableHotlinking');
 
   const {
-    allowedTranscodableMimeTypes,
-    allowedFileTypes,
-    allowedMimeTypes: {
-      image: allowedImageMimeTypes,
-      video: allowedVideoMimeTypes,
-    },
     capabilities: { hasUploadMediaAction },
-    MediaUpload,
   } = useConfig();
-
-  const { isTranscodingEnabled } = useFFmpeg();
-
-  const allowedMimeTypes = useMemo(() => {
-    if (isTranscodingEnabled) {
-      return [
-        ...allowedTranscodableMimeTypes,
-        ...allowedImageMimeTypes,
-        ...allowedVideoMimeTypes,
-      ];
-    }
-    return [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
-  }, [
-    allowedImageMimeTypes,
-    allowedVideoMimeTypes,
-    isTranscodingEnabled,
-    allowedTranscodableMimeTypes,
-  ]);
-
-  const transcodableMimeTypes = useMemo(() => {
-    return allowedTranscodableMimeTypes.filter(
-      (x) => !allowedVideoMimeTypes.includes(x)
-    );
-  }, [allowedTranscodableMimeTypes, allowedVideoMimeTypes]);
 
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
 
   const isSearching = searchTerm.length > 0;
-
-  const onClose = resetWithFetch;
-
-  /**
-   * Callback of select in media picker to insert media element.
-   *
-   * @param {Object} resource Object coming from backbone media picker.
-   */
-  const onSelect = (resource) => {
-    try {
-      if (isTranscodingEnabled && canTranscodeResource(resource)) {
-        if (transcodableMimeTypes.includes(resource.mimeType)) {
-          optimizeVideo({ resource });
-        }
-
-        if (resource.mimeType === 'image/gif') {
-          optimizeGif({ resource });
-        }
-      }
-      // WordPress media picker event, sizes.medium.source_url is the smallest image
-      insertMediaElement(
-        resource,
-        resource.sizes?.medium?.source_url || resource.src
-      );
-
-      postProcessingResource(resource);
-    } catch (e) {
-      showSnackbar({
-        message: e.message,
-        dismissible: true,
-      });
-    }
-  };
-
-  let onSelectErrorMessage = __(
-    'No file types are currently supported.',
-    'web-stories'
-  );
-  if (allowedFileTypes.length) {
-    onSelectErrorMessage = sprintf(
-      /* translators: %s: list of allowed file types. */
-      __('Please choose only %s to insert into page.', 'web-stories'),
-      translateToExclusiveList(allowedFileTypes)
-    );
-  }
 
   /**
    * Filter REST API calls and re-request API.
@@ -277,6 +174,22 @@ function MediaPane(props) {
       insertElement(resource.type, { resource });
     },
     [insertElement]
+  );
+
+  /**
+   * Callback of select in media picker to insert media element.
+   *
+   * @param {Object} resource Object coming from backbone media picker.
+   */
+  const onSelect = useCallback(
+    (resource) => {
+      // WordPress media picker event, sizes.medium.source_url is the smallest image
+      insertMediaElement(
+        resource,
+        resource.sizes?.medium?.source_url || resource.src
+      );
+    },
+    [insertMediaElement]
   );
 
   const onSearch = (value) => {
@@ -367,24 +280,18 @@ function MediaPane(props) {
                 <LinkInsertion />
                 {hasUploadMediaAction && (
                   <Tooltip title={__('Upload', 'web-stories')}>
-                    <MediaUpload
-                      onSelect={onSelect}
-                      onSelectErrorMessage={onSelectErrorMessage}
-                      onClose={onClose}
-                      type={allowedMimeTypes}
-                      render={renderUploadButtonIcon}
+                    <MediaUploadButton
+                      renderButton={renderUploadButtonIcon}
+                      onInsert={onSelect}
                     />
                   </Tooltip>
                 )}
               </ButtonsWrapper>
             )}
             {!isSearching && !enableHotlinking && hasUploadMediaAction && (
-              <MediaUpload
-                onSelect={onSelect}
-                onSelectErrorMessage={onSelectErrorMessage}
-                onClose={onClose}
-                type={allowedMimeTypes}
-                render={renderUploadButton}
+              <MediaUploadButton
+                renderButton={renderUploadButton}
+                onInsert={onSelect}
               />
             )}
           </FilterArea>

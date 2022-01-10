@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from '@web-stories-wp/react';
-import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
+import { useCallback } from '@web-stories-wp/react';
+import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
@@ -30,19 +30,17 @@ import {
   Text as DefaultText,
   THEME_CONSTANTS,
   Tooltip,
-  useSnackbar,
 } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { Color, Row as DefaultRow } from '../../../form';
-import { useConfig, useLocalMedia, useStory } from '../../../../app';
+import { Color, MediaUploadButton, Row as DefaultRow } from '../../../form';
+import { useConfig, useStory } from '../../../../app';
 import { SimplePanel } from '../../panel';
 import { FlipControls } from '../../shared';
 import { createNewElement, getDefinitionForType } from '../../../../elements';
 import { states, styles, useHighlights } from '../../../../app/highlights';
-import useFFmpeg from '../../../../app/media/utils/useFFmpeg';
 import getElementProperties from '../../../canvas/utils/getElementProperties';
 
 const DEFAULT_FLIP = { horizontal: false, vertical: false };
@@ -106,59 +104,8 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
   }));
 
   const {
-    allowedTranscodableMimeTypes,
-    allowedFileTypes,
-    allowedMimeTypes: {
-      image: allowedImageMimeTypes,
-      video: allowedVideoMimeTypes,
-    },
     capabilities: { hasUploadMediaAction },
-    MediaUpload,
   } = useConfig();
-
-  const {
-    canTranscodeResource,
-    resetWithFetch,
-    postProcessingResource,
-    optimizeVideo,
-    optimizeGif,
-  } = useLocalMedia(
-    ({
-      state: { canTranscodeResource },
-      actions: {
-        resetWithFetch,
-        postProcessingResource,
-        optimizeVideo,
-        optimizeGif,
-      },
-    }) => {
-      return {
-        canTranscodeResource,
-        resetWithFetch,
-        postProcessingResource,
-        optimizeVideo,
-        optimizeGif,
-      };
-    }
-  );
-  const { isTranscodingEnabled } = useFFmpeg();
-  const { showSnackbar } = useSnackbar();
-
-  const allowedMimeTypes = useMemo(() => {
-    if (isTranscodingEnabled) {
-      return [
-        ...allowedTranscodableMimeTypes,
-        ...allowedImageMimeTypes,
-        ...allowedVideoMimeTypes,
-      ];
-    }
-    return [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
-  }, [
-    allowedImageMimeTypes,
-    allowedVideoMimeTypes,
-    isTranscodingEnabled,
-    allowedTranscodableMimeTypes,
-  ]);
 
   const updateBackgroundColor = useCallback(
     (value) => {
@@ -178,12 +125,6 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
     clearBackgroundElement();
   }, [pushUpdate, clearBackgroundElement]);
 
-  const transcodableMimeTypes = useMemo(() => {
-    return allowedTranscodableMimeTypes.filter(
-      (x) => !allowedVideoMimeTypes.includes(x)
-    );
-  }, [allowedTranscodableMimeTypes, allowedVideoMimeTypes]);
-
   /**
    * Callback of select in media picker to replace background media.
    *
@@ -191,45 +132,16 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
    */
   const onSelect = useCallback(
     (resource) => {
-      try {
-        if (isTranscodingEnabled && canTranscodeResource(resource)) {
-          if (transcodableMimeTypes.includes(resource.mimeType)) {
-            optimizeVideo({ resource });
-          }
-
-          if (resource.mimeType === 'image/gif') {
-            optimizeGif({ resource });
-          }
-        }
-        // WordPress media picker event, sizes.medium.source_url is the smallest image
-        const element = createNewElement(
-          resource.type,
-          getElementProperties(resource.type, { resource })
-        );
-        combineElements({
-          firstElement: element,
-          secondId: selectedElements[0].id,
-        });
-
-        postProcessingResource(resource);
-      } catch (e) {
-        showSnackbar({
-          message: e.message,
-          dismissible: true,
-        });
-      }
+      const element = createNewElement(
+        resource.type,
+        getElementProperties(resource.type, { resource })
+      );
+      combineElements({
+        firstElement: element,
+        secondId: selectedElements[0].id,
+      });
     },
-    [
-      isTranscodingEnabled,
-      canTranscodeResource,
-      combineElements,
-      optimizeGif,
-      optimizeVideo,
-      postProcessingResource,
-      selectedElements,
-      showSnackbar,
-      transcodableMimeTypes,
-    ]
+    [combineElements, selectedElements]
   );
 
   const renderReplaceButton = useCallback(
@@ -240,18 +152,6 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
     ),
     []
   );
-
-  let onSelectErrorMessage = __(
-    'No file types are currently supported.',
-    'web-stories'
-  );
-  if (allowedFileTypes.length) {
-    onSelectErrorMessage = sprintf(
-      /* translators: %s: list of allowed file types. */
-      __('Please choose only %s to insert into page.', 'web-stories'),
-      translateToExclusiveList(allowedFileTypes)
-    );
-  }
 
   const { highlight, resetHighlight, cancelHighlight } = useHighlights(
     (state) => ({
@@ -324,13 +224,10 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
           </SelectedMedia>
           {hasUploadMediaAction && (
             <Tooltip title={__('Replace', 'web-stories')}>
-              <MediaUpload
-                onSelect={onSelect}
-                onSelectErrorMessage={onSelectErrorMessage}
-                onClose={resetWithFetch}
-                type={allowedMimeTypes}
-                render={renderReplaceButton}
-                buttonInsertText={__('Add as background', 'web-stories')}
+              <MediaUploadButton
+                buttonInsertText={__('Use as background', 'web-stories')}
+                onInsert={onSelect}
+                renderButton={renderReplaceButton}
               />
             </Tooltip>
           )}
