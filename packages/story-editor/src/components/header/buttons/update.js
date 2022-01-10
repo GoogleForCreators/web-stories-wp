@@ -85,8 +85,8 @@ function UpdateButton({ hasUpdates = false, forceIsSaving = false }) {
 
   const isSaving = _isSaving || forceIsSaving;
 
-  const { isUploading } = useLocalMedia((state) => ({
-    isUploading: state.state.isUploading,
+  const { isUploading } = useLocalMedia(({ state: { isUploading } }) => ({
+    isUploading,
   }));
   const {
     state: { hasNewChanges },

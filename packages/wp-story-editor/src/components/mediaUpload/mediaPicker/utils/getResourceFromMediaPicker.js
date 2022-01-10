@@ -50,11 +50,13 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     web_stories_media_source: mediaSource,
     web_stories_is_muted: isMuted,
     web_stories_base_color: baseColor,
+    web_stories_blurhash: blurHash,
     trim_data: trimData,
   } = mediaPickerEl;
 
   return createResource({
     baseColor,
+    blurHash,
     mimeType,
     creationDate: date,
     src: url || src,

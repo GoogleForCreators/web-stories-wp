@@ -27,7 +27,7 @@ import {
   translateToExclusiveList,
 } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { resourceList, canTranscodeResource } from '@web-stories-wp/media';
+import { resourceList } from '@web-stories-wp/media';
 import {
   Button as DefaultButton,
   BUTTON_SIZES,
@@ -117,6 +117,7 @@ function MediaPane(props) {
     totalItems,
     optimizeVideo,
     optimizeGif,
+    canTranscodeResource,
   } = useLocalMedia(
     ({
       state: {
@@ -127,6 +128,7 @@ function MediaPane(props) {
         mediaType,
         searchTerm,
         totalItems,
+        canTranscodeResource,
       },
       actions: {
         setNextPage,
@@ -153,6 +155,7 @@ function MediaPane(props) {
         postProcessingResource,
         optimizeVideo,
         optimizeGif,
+        canTranscodeResource,
       };
     }
   );
@@ -284,11 +287,13 @@ function MediaPane(props) {
   };
 
   useEffect(() => {
-    trackEvent('search', {
-      search_type: 'media',
-      search_term: searchTerm,
-      search_filter: mediaType,
-    });
+    if (searchTerm.length > 0) {
+      trackEvent('search', {
+        search_type: 'media',
+        search_term: searchTerm,
+        search_filter: mediaType,
+      });
+    }
   }, [searchTerm, mediaType]);
 
   const incrementalSearchDebounceMedia = useFeature(

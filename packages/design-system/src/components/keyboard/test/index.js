@@ -66,7 +66,7 @@ describe('keyboard/index.js', () => {
   afterEach(cleanup);
 
   describe('useIsKeyPressed', () => {
-    it('should initialise and then register key up and down events', () => {
+    it('should initialize and then register key up and down events', () => {
       const container = document.createElement('div');
 
       const { result } = renderHook(() => useIsKeyPressed(container, 'a'));
@@ -90,7 +90,7 @@ describe('keyboard/index.js', () => {
   });
 
   describe('useGlobalIsKeyPressed', () => {
-    it('should initialise and then register key up and down events', () => {
+    it('should initialize and then register key up and down events', () => {
       const { result } = renderHook(() => useGlobalIsKeyPressed('a'));
       testIsKeyPressed(result, document.documentElement, keys.a);
     });

@@ -84,10 +84,6 @@ const Duration = styled(Text).attrs({
   display: block;
 `;
 
-const HiddenPosterImage = styled.img`
-  display: none;
-`;
-
 const CloneImg = styled.img`
   opacity: 0;
   width: ${({ width }) => `${width}px`};
@@ -142,7 +138,7 @@ function InnerElement({
 
   useEffect(() => {
     // assign display poster for videos
-    if (resource.poster && resource.poster.includes('blob')) {
+    if (resource.poster) {
       newVideoPosterRef.current = resource.poster;
     }
   }, [resource.poster]);
@@ -155,9 +151,11 @@ function InnerElement({
   };
 
   let media;
-  const thumbnailURL = getSmallestUrlForWidth(width, resource);
   const { lengthFormatted, poster, mimeType } = resource;
   const displayPoster = poster ?? newVideoPosterRef.current;
+  const thumbnailURL = displayPoster
+    ? displayPoster
+    : getSmallestUrlForWidth(width, resource);
 
   const commonProps = {
     width,
@@ -190,7 +188,7 @@ function InnerElement({
     muted: true,
     preload: 'metadata',
     poster: displayPoster,
-    showWithoutDelay: !poster || Boolean(newVideoPosterRef.current),
+    showWithoutDelay: active,
   };
 
   if (type === ContentType.IMAGE) {
@@ -200,25 +198,26 @@ function InnerElement({
   } else if ([ContentType.VIDEO, ContentType.GIF].includes(type)) {
     media = (
       <>
-        {/* eslint-disable-next-line styled-components-a11y/media-has-caption,jsx-a11y/media-has-caption -- No captions/tracks because video is muted. */}
-        <Video key={src} {...videoProps} ref={mediaElement}>
-          {type === ContentType.GIF ? (
-            resource.output.src && (
-              <source
-                src={resource.output.src}
-                type={resource.output.mimeType}
-              />
-            )
-          ) : (
-            <source
-              src={getSmallestUrlForWidth(width, resource)}
-              type={mimeType}
-            />
-          )}
-        </Video>
-        {displayPoster && (
+        {poster && !active ? (
           /* eslint-disable-next-line styled-components-a11y/alt-text -- False positive. */
-          <HiddenPosterImage src={poster} {...commonImageProps} />
+          <Image key={src} {...imageProps} ref={mediaElement} />
+        ) : (
+          // eslint-disable-next-line jsx-a11y/media-has-caption,styled-components-a11y/media-has-caption -- No captions/tracks because video is muted.
+          <Video key={src} {...videoProps} ref={mediaElement}>
+            {type === ContentType.GIF ? (
+              resource.output.src && (
+                <source
+                  src={resource.output.src}
+                  type={resource.output.mimeType}
+                />
+              )
+            ) : (
+              <source
+                src={getSmallestUrlForWidth(width, resource)}
+                type={mimeType}
+              />
+            )}
+          </Video>
         )}
         {type === ContentType.VIDEO && showVideoDetail && lengthFormatted && (
           <DurationWrapper>

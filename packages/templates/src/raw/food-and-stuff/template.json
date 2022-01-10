@@ -29,6 +29,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#ffffff",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/food-and-stuff/icon_logo.png",
             "width": 75,
             "height": 23,
@@ -69,6 +70,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#0d2c2b",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/food-and-stuff/page1_bg.jpg",
             "width": 220,
             "height": 330,
@@ -925,6 +927,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#cd5c20",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/food-and-stuff/page5_bg.jpg",
             "width": 220,
             "height": 391,
@@ -1098,6 +1101,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#cd5c20",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/food-and-stuff/page5_bg.jpg",
             "width": 220,
             "height": 391,
@@ -1875,6 +1879,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#d3d0ce",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/food-and-stuff/page7_bg.jpg",
             "width": 220,
             "height": 330,
@@ -2445,6 +2450,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#ec8f13",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/food-and-stuff/page8_image1.jpg",
             "width": 330,
             "height": 220,
@@ -2717,6 +2723,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#b8a581",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/food-and-stuff/page9_image1.jpg",
             "width": 220,
             "height": 294,
@@ -2750,6 +2757,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#2c2622",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/food-and-stuff/page9_image4.jpg",
             "width": 220,
             "height": 284,
@@ -2781,6 +2789,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#d7ced6",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/food-and-stuff/page9_image3.jpg",
             "width": 220,
             "height": 275,
@@ -2812,6 +2821,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#cdc3b9",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/food-and-stuff/page9_image2.jpg",
             "width": 220,
             "height": 330,
@@ -2844,6 +2854,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#b8a581",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/food-and-stuff/page9_image1.jpg",
             "width": 220,
             "height": 294,

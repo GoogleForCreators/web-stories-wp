@@ -40,8 +40,8 @@ function AutoSaveHandler() {
       saveStory,
     })
   );
-  const { isUploading } = useLocalMedia((state) => ({
-    isUploading: state.state.isUploading,
+  const { isUploading } = useLocalMedia(({ state: { isUploading } }) => ({
+    isUploading,
   }));
 
   const isDraft = 'draft' === status || !status;
