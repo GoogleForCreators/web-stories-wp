@@ -403,7 +403,8 @@ describe('Media3pPane fetching', () => {
       expect(mediaGallery.scrollTop).toBe(0);
     });
   });
-
+  // TODO: https://github.com/google/web-stories-wp/issues/10144
+  // eslint-disable-next-line jasmine/no-disabled-tests
   xit('should have a delay before autoplaying videos', async () => {
     await fixture.events.click(fixture.editor.library.media3pTab);
     // 3p media fetching can take extra time to load, waiting to prevent flakey tests
