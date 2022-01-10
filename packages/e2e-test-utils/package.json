@@ -13,5 +13,9 @@
   "dependencies": {
     "@wordpress/e2e-test-utils": "^5.4.8",
     "@wordpress/url": "^3.2.1"
+  },
+  "devDependencies": {
+    "@percy/cli": "^1.0.0-beta.71",
+    "@percy/puppeteer": "^2.0.0"
   }
 }

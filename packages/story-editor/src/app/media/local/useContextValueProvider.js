@@ -121,7 +121,21 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     [fetchMediaError, fetchMediaStart, getMedia]
   );
 
-  const { uploadMedia, isUploading, isTranscoding } = useUploadMedia({
+  const {
+    uploadMedia,
+    isUploading,
+    isTranscoding,
+    isNewResourceProcessing,
+    isCurrentResourceProcessing,
+    isNewResourceTranscoding,
+    isNewResourceMuting,
+    isResourceTrimming,
+    isCurrentResourceUploading,
+    isCurrentResourceTranscoding,
+    isCurrentResourceMuting,
+    isCurrentResourceTrimming,
+    canTranscodeResource,
+  } = useUploadMedia({
     media,
     prependMedia,
     updateMediaElement,
@@ -214,7 +228,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
           return;
         }
         setBaseColorProcessing({ id });
-        await updateBaseColor({ resource });
+        await updateBaseColor(resource);
         removeBaseColorProcessing({ id });
       })();
     },
@@ -240,8 +254,11 @@ export default function useContextValueProvider(reducerState, reducerActions) {
 
   const postProcessingResource = useCallback(
     (resource) => {
+      if (!resource) {
+        return;
+      }
+
       const {
-        local,
         type,
         isMuted,
         baseColor,
@@ -253,7 +270,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
         blurHash,
       } = resource;
 
-      if (local || !id) {
+      if (!canTranscodeResource(resource)) {
         return;
       }
 
@@ -280,6 +297,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       }
     },
     [
+      canTranscodeResource,
       allowedVideoMimeTypes,
       processMediaBaseColor,
       processMediaBlurhash,
@@ -312,6 +330,16 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       ...reducerState,
       isUploading: isUploading || isGeneratingPosterImages,
       isTranscoding,
+      isNewResourceProcessing,
+      isCurrentResourceProcessing,
+      isNewResourceTranscoding,
+      isNewResourceMuting,
+      isResourceTrimming,
+      isCurrentResourceUploading,
+      isCurrentResourceTranscoding,
+      isCurrentResourceMuting,
+      isCurrentResourceTrimming,
+      canTranscodeResource,
     },
     actions: {
       setNextPage,

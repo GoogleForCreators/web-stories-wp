@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * Ascertain if a resource can be transcoded in it's current state.
- *
- * @param {import('@web-stories-wp/media').Resource} resource The resource.
- * @return {boolean} If the current resource can be transcoded.
- */
-function canTranscodeResource(resource) {
-  const { isTranscoding, isMuting, isTrimming, isExternal, local } =
-    resource || {};
-  return !local && !isExternal && !isTranscoding && !isTrimming && !isMuting;
-}
-export default canTranscodeResource;
+export const ITEM_STATUS = {
+  PENDING: 'PENDING',
+  CANCELLED: 'CANCELLED',
+  UPLOADED: 'UPLOADED',
+  UPLOADING: 'UPLOADING',
+  TRANSCODED: 'TRANSCODED',
+  TRANSCODING: 'TRANSCODING',
+  MUTING: 'MUTING',
+  MUTED: 'MUTED',
+  TRIMMING: 'TRIMMING',
+  TRIMMED: 'TRIMMED',
+  FINISHED: 'FINISHED',
+};
