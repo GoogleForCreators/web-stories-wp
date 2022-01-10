@@ -50,6 +50,7 @@ function puppeteerBrowser(baseBrowserDecorator, config) {
         // See http://crbug.com/715363
         // We use this flag to work-around this issue.
         '--disable-dev-shm-usage',
+        '--js-flags=--max-old-space-size=8192',
       ],
     };
     const puppeteerOptions = {

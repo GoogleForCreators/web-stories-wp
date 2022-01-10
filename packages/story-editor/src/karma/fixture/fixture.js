@@ -26,6 +26,7 @@ import {
   act,
   screen,
   waitFor,
+  cleanup,
 } from '@testing-library/react';
 import { setAppElement } from '@web-stories-wp/design-system';
 import { FixtureEvents } from '@web-stories-wp/karma-fixture';
@@ -233,6 +234,10 @@ export class Fixture {
   restore() {
     window.location.hash = '#';
     localStorage.clear();
+    cleanup();
+    this._container = null;
+    this._screen = null;
+    this._editor = null;
   }
 
   get container() {
@@ -330,7 +335,7 @@ export class Fixture {
     setAppElement(root);
 
     const { container, getByRole } = render(
-      <StoryEditor key={Math.random()} config={this._config}>
+      <StoryEditor config={this._config}>
         <Layout
           header={<HeaderLayout />}
           footer={{
@@ -354,6 +359,7 @@ export class Fixture {
         container: root,
       }
     );
+
     // The editor should always be given 100%:100% size. The testing-library
     // renders an extra container so it should be given the same size.
     container.style.width = '100%';
@@ -398,8 +404,16 @@ export class Fixture {
       });
     });
 
-    // @todo: find a stable way to wait for the story to fully render. Can be
-    // implemented via `waitFor`.
+    await waitFor(() => {
+      if (
+        this._editor?.canvas?.displayLayer?.node &&
+        this._editor?.canvas?.framesLayer?.node
+      ) {
+        return;
+      }
+
+      throw new Error('Not Ready: Story not fully rendered');
+    });
   }
 
   /**
