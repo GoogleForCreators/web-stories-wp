@@ -21,7 +21,6 @@ import { toDate } from '@web-stories-wp/date';
 /**
  * Internal dependencies
  */
-import { APP_ROUTES } from '../../../constants';
 import reshapeTemplateObject from '../templates';
 
 describe('reshapeTemplateObject', () => {
@@ -40,7 +39,6 @@ describe('reshapeTemplateObject', () => {
     expect(reshapedObj).toMatchObject({
       id: 1,
       slug: 'template-1-slug',
-      centerTargetAction: `${APP_ROUTES.TEMPLATE_DETAIL}?id=1&isLocal=false`,
       creationDate: toDate('2020-03-26T20:57:24.000Z'),
       status: 'template',
       modified: toDate('2020-03-26T20:57:24.000Z'),
