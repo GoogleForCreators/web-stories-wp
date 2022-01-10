@@ -22,8 +22,8 @@ import {
   publishStory,
   triggerHighPriorityChecklistSection,
   uploadPublisherLogoEditor,
+  takeSnapshot,
 } from '@web-stories-wp/e2e-test-utils';
-import percySnapshot from '@percy/puppeteer';
 
 describe('Pre-Publish Checklist : Admin User', () => {
   const addNewTextElement = async () => {
@@ -66,7 +66,7 @@ describe('Pre-Publish Checklist : Admin User', () => {
       '#pre-publish-checklist[data-isexpanded="true"]'
     );
     await expect(page).toMatch('Add poster image');
-    await percySnapshot(page, 'Prepublish checklist');
+    await takeSnapshot(page, 'Prepublish checklist');
   });
 
   it('should show cards related to poster image issues', async () => {
