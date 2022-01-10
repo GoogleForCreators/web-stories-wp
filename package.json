@@ -55,7 +55,7 @@
     "@storybook/csf": "^0.0.1",
     "@storybook/react": "^6.3.6",
     "@stylelint/postcss-css-in-js": "^0.37.2",
-    "@svgr/webpack": "^5.5.0",
+    "@svgr/webpack": "^6.2.0",
     "@testing-library/dom": "^8.10.1",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
