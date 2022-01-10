@@ -37,7 +37,6 @@ const fakeTemplates = [
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus consectetur mauris sodales magna elementum maximus.',
     status: 'template',
-    centerTargetAction: '#/subroute-details?id=1',
     bottomTargetAction: () => {},
   },
   {
@@ -48,7 +47,6 @@ const fakeTemplates = [
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus consectetur mauris sodales magna elementum maximus.',
     status: 'template',
-    centerTargetAction: '#/subroute-details?id=2',
     bottomTargetAction: () => {},
   },
   {
@@ -59,7 +57,6 @@ const fakeTemplates = [
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus consectetur mauris sodales magna elementum maximus.',
     status: 'template',
-    centerTargetAction: '#/subroute-details?id=3',
     bottomTargetAction: () => {},
   },
 ];

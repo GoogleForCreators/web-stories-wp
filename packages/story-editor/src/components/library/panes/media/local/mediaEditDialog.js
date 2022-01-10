@@ -104,9 +104,11 @@ function MediaEditDialog({ resource, onClose }) {
   const {
     actions: { updateMedia },
   } = useAPI();
-  const { updateMediaElement } = useLocalMedia((state) => ({
-    updateMediaElement: state.actions.updateMediaElement,
-  }));
+  const { updateMediaElement } = useLocalMedia(
+    ({ actions: { updateMediaElement } }) => ({
+      updateMediaElement,
+    })
+  );
   const { showSnackbar } = useSnackbar();
   const [altText, setAltText] = useState(alt);
   const parsedDate = toDate(creationDate);

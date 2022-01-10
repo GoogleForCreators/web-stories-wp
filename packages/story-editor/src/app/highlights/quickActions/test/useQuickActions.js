@@ -86,7 +86,6 @@ jest.mock('@web-stories-wp/tracking');
 
 jest.mock('@web-stories-wp/media', () => ({
   ...jest.requireActual('@web-stories-wp/media'),
-  canTranscodeResource: jest.fn(() => true),
   resourceList: {
     set: jest.fn(),
   },
@@ -321,7 +320,6 @@ const MockMediaPicker = ({ onSelect, onClose }) => (
       onClick={() =>
         onSelect({
           ...videoResource,
-          local: false,
           isMuted: null,
         })
       }
@@ -375,6 +373,7 @@ describe('useQuickActions', () => {
       postProcessingResource: noop,
       optimizeVideo: noop,
       optimizeGif: noop,
+      canTranscodeResource: noop,
     });
   });
 
@@ -981,6 +980,7 @@ describe('MediaPicker', () => {
       postProcessingResource: mockPostProcessingResource,
       optimizeVideo: mockOptimizeVideo,
       optimizeGif: mockOptimizeGif,
+      canTranscodeResource: () => true,
     });
 
     mockUseFFmpeg.mockReturnValue({ isTranscodingEnabled: true });
@@ -1033,7 +1033,6 @@ describe('MediaPicker', () => {
 
     expect(mockPostProcessingResource).toHaveBeenCalledWith({
       ...videoResource,
-      local: false,
       mimeType: 'videoMimeType',
       isMuted: null,
     });
@@ -1043,7 +1042,6 @@ describe('MediaPicker', () => {
         type: videoResource.id,
         resource: {
           ...videoResource,
-          local: false,
           isMuted: null,
         },
       },

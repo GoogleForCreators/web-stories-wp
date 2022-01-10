@@ -84,7 +84,6 @@ const GIF_ELEMENT = {
     width: 281,
     height: 223,
     alt: '',
-    local: false,
     attribution: {
       author: [],
       registerUsageUrl:

@@ -110,13 +110,8 @@ function useProcessMedia({
     ({ resource: oldResource }) => {
       const { id: resourceId, src: url, mimeType } = oldResource;
 
-      // TODO: Already covered by onUploadProgress?
-      const onUploadStart = () =>
-        updateExistingElements(resourceId, { isTranscoding: true });
-
       const onUploadError = () =>
         updateExistingElements(resourceId, {
-          isTranscoding: false,
           isOptimized: false,
         });
 
@@ -154,13 +149,13 @@ function useProcessMedia({
 
         await uploadMedia([file], {
           onUploadSuccess,
-          onUploadStart,
           onUploadError,
           onUploadProgress,
           additionalData: {
             original_id: oldResource.id,
             web_stories_is_muted: oldResource.isMuted,
           },
+          originalResourceId: oldResource.id,
         });
       })();
     },
@@ -184,7 +179,8 @@ function useProcessMedia({
    */
   const trimExistingVideo = useCallback(
     ({ resource: oldResource, canvasResourceId, start, end }) => {
-      const { id: resourceId, src: url, mimeType, poster } = oldResource;
+      const { id: resourceId, ...oldResourceWithoutId } = oldResource;
+      const { src: url, mimeType, poster, isMuted, isOptimized } = oldResource;
 
       const trimData = {
         original: resourceId,
@@ -193,16 +189,21 @@ function useProcessMedia({
       };
 
       const onUploadStart = () =>
-        updateExistingElements(resourceId, {
+        updateExistingElements(canvasResourceId, {
           trimData,
-          isTrimming: true,
         });
 
       const onUploadError = () =>
-        updateExistingElements(resourceId, { isTrimming: false });
+        updateExistingElements(canvasResourceId, {
+          trimData: oldResource.trimData || {},
+        });
 
       const onUploadSuccess = ({ resource }) => {
-        copyResourceData({ oldResource, resource });
+        const oldCanvasResource = {
+          alt: oldResource.alt,
+          id: canvasResourceId,
+        };
+        copyResourceData({ oldResource: oldCanvasResource, resource });
         postProcessingResource(resource);
       };
 
@@ -236,16 +237,18 @@ function useProcessMedia({
           onUploadError,
           onUploadProgress,
           additionalData: {
-            original_id: oldResource.id,
-            web_stories_media_source: oldResource?.isOptimized
+            original_id: resourceId,
+            web_stories_is_muted: isMuted,
+            web_stories_media_source: isOptimized
               ? 'video-optimization'
               : 'editor',
           },
           trimData,
           resource: {
-            ...oldResource,
+            ...oldResourceWithoutId,
             trimData,
           },
+          originalResourceId: canvasResourceId,
           posterFile,
         });
       };
@@ -266,18 +269,11 @@ function useProcessMedia({
    */
   const muteExistingVideo = useCallback(
     ({ resource: oldResource }) => {
-      const { id: resourceId, src: url, mimeType, poster } = oldResource;
-
-      // TODO: Already covered by onUploadProgress?
-      const onUploadStart = () => {
-        updateExistingElements(resourceId, {
-          isMuting: true,
-        });
-      };
+      const { id: resourceId, ...oldResourceWithoutId } = oldResource;
+      const { src: url, mimeType, poster, isOptimized } = oldResource;
 
       const onUploadError = () => {
         updateExistingElements(resourceId, {
-          isMuting: false,
           isMuted: false,
         });
       };
@@ -323,20 +319,20 @@ function useProcessMedia({
 
         await uploadMedia([file], {
           onUploadSuccess,
-          onUploadStart,
           onUploadError,
           onUploadProgress,
           additionalData: {
-            original_id: oldResource.id,
-            web_stories_media_source: oldResource?.isOptimized
+            original_id: resourceId,
+            web_stories_media_source: isOptimized
               ? 'video-optimization'
               : 'editor',
           },
           muteVideo: true,
           resource: {
-            ...oldResource,
+            ...oldResourceWithoutId,
             isMuted: true,
           },
+          originalResourceId: resourceId,
           posterFile,
         });
       })();
@@ -393,8 +389,9 @@ function useProcessMedia({
           onUploadSuccess,
           onUploadProgress,
           additionalData: {
-            original_id: oldResource.id,
+            original_id: resourceId,
           },
+          originalResourceId: resourceId,
         });
       };
       return process();
