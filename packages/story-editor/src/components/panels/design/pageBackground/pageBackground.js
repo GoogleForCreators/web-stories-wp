@@ -29,6 +29,7 @@ import {
   Icons,
   Text as DefaultText,
   THEME_CONSTANTS,
+  Tooltip,
   useSnackbar,
 } from '@web-stories-wp/design-system';
 
@@ -57,7 +58,7 @@ const SelectedMedia = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
   display: flex;
   justify-content: space-between;
-  margin-right: 20px;
+  margin-right: 12px;
 `;
 
 const MediaWrapper = styled.div`
@@ -79,10 +80,12 @@ const RemoveButton = styled(Button)`
 `;
 
 const ReplaceButton = styled(Button).attrs({
-  type: BUTTON_TYPES.SECONDARY,
   size: BUTTON_SIZES.SMALL,
-  variant: BUTTON_VARIANTS.RECTANGLE,
-})``;
+  variant: BUTTON_VARIANTS.SQUARE,
+  type: BUTTON_TYPES.TERTIARY,
+})`
+  margin-right: 8px;
+`;
 
 const Text = styled(DefaultText)`
   align-self: center;
@@ -231,8 +234,8 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
 
   const renderReplaceButton = useCallback(
     (open) => (
-      <ReplaceButton onClick={open}>
-        {__('Replace', 'web-stories')}
+      <ReplaceButton onClick={open} aria-label={__('Replace', 'web-stories')}>
+        <Icons.ArrowCloud />
       </ReplaceButton>
     ),
     []
@@ -320,14 +323,16 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
             </RemoveButton>
           </SelectedMedia>
           {hasUploadMediaAction && (
-            <MediaUpload
-              onSelect={onSelect}
-              onSelectErrorMessage={onSelectErrorMessage}
-              onClose={resetWithFetch}
-              type={allowedMimeTypes}
-              render={renderReplaceButton}
-              buttonInsertText={__('Add as background', 'web-stories')}
-            />
+            <Tooltip title={__('Replace', 'web-stories')}>
+              <MediaUpload
+                onSelect={onSelect}
+                onSelectErrorMessage={onSelectErrorMessage}
+                onClose={resetWithFetch}
+                type={allowedMimeTypes}
+                render={renderReplaceButton}
+                buttonInsertText={__('Add as background', 'web-stories')}
+              />
+            </Tooltip>
           )}
           <FlipControls
             onChange={(value) => pushUpdate({ flip: value }, true)}
