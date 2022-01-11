@@ -40,7 +40,6 @@ function puppeteerBrowser(baseBrowserDecorator, config) {
       devtools: false,
       defaultViewport: null,
       snapshots: false,
-      waitForInitialPage: true,
       // See https://peter.sh/experiments/chromium-command-line-switches/
       args: [
         // Disables GPU hardware acceleration.

@@ -28,7 +28,7 @@ const Video = styled.video`
   object-fit: cover;
 `;
 
-function VideoImage({ attrs }) {
+function VideoImage({ alt, ...attrs }) {
   return (
     <Video
       controls={false}
@@ -36,17 +36,15 @@ function VideoImage({ attrs }) {
       disablePictureInPicture
       muted
       noControls
-      title={attrs?.alt}
+      title={alt}
       {...attrs}
     />
   );
 }
 
 VideoImage.propTypes = {
-  attrs: PropTypes.shape({
-    src: PropTypes.string.isRequired,
-    alt: PropTypes.string.isRequired,
-  }),
+  src: PropTypes.string.isRequired,
+  alt: PropTypes.string.isRequired,
 };
 
 export default VideoImage;
