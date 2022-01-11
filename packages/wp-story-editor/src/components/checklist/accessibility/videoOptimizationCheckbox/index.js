@@ -38,7 +38,6 @@ import {
   useConfig,
   useCurrentUser,
   useIsChecklistMounted,
-  useRegisterCheck,
   useStory,
   ChecklistCard,
   DefaultFooterText,
@@ -88,7 +87,6 @@ function VideoOptimizationCheckbox() {
   );
 
   const checked = currentUser?.meta?.web_stories_media_optimization;
-  useRegisterCheck('VideoOptimizationCheckbox', isChecklistMounted && !checked);
 
   const handleToggle = useCallback(() => {
     setHasOptedIn(true);
