@@ -69,7 +69,6 @@ jobs:
       - name: Run integration tests
         run: npm run test:karma:story-editor -- --headless --snapshots --viewport=1600:1000 --coverage || npm run test:karma:story-editor:retry-failed -- --headless --snapshots --viewport=1600:1000
         env:
-          NODE_OPTIONS: '--max-old-space-size=6656'
           DISABLE_ERROR_BOUNDARIES: true
 
       - name: Add files for snapshotting
