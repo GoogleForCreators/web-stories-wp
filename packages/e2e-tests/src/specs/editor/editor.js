@@ -18,11 +18,11 @@
  * External dependencies
  */
 import {
+  takeSnapshot,
   createNewStory,
   toggleVideoOptimization,
   previewStory,
   withRTL,
-  takeSnapshot,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Story Editor', () => {

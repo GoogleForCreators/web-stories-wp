@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { createNewStory, takeSnapshot } from '@web-stories-wp/e2e-test-utils';
+import { takeSnapshot, createNewStory } from '@web-stories-wp/e2e-test-utils';
 
 describe('Story Editor with disabled JavaScript', () => {
   it('should display error message', async () => {

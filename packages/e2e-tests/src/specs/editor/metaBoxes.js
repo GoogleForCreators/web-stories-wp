@@ -18,10 +18,10 @@
  * External dependencies
  */
 import {
+  takeSnapshot,
   createNewStory,
   publishStory,
   withPlugin,
-  takeSnapshot,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Custom Meta Boxes', () => {

@@ -18,9 +18,9 @@
  * External dependencies
  */
 import {
+  takeSnapshot,
   withPlugin,
   visitAdminPage,
-  takeSnapshot,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('TinyMCE button', () => {

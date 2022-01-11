@@ -26,7 +26,7 @@ import { noop, useGlobalIsKeyPressed } from '@web-stories-wp/design-system';
  */
 import { useStory } from '../../app/story';
 import { useTransform } from '../transform';
-import { getElementProperties } from '../canvas/useInsertElement';
+import getElementProperties from '../canvas/utils/getElementProperties';
 import { getDefinitionForType } from '../../elements';
 import Context from './context';
 

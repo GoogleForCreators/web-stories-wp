@@ -18,9 +18,9 @@
  * External dependencies
  */
 import {
+  takeSnapshot,
   withUser,
   visitAdminPage,
-  takeSnapshot,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Get Started Story', () => {

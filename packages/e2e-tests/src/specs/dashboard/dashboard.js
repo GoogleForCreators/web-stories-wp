@@ -18,9 +18,9 @@
  * External dependencies
  */
 import {
+  takeSnapshot,
   withRTL,
   visitDashboard,
-  takeSnapshot,
 } from '@web-stories-wp/e2e-test-utils';
 
 const percyCSS = `.dashboard-grid-item-date { display: none; }`;

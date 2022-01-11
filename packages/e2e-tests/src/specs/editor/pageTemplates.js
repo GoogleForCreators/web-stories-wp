@@ -18,10 +18,10 @@
  * External dependencies
  */
 import {
+  takeSnapshot,
   addTextElement,
   clearLocalStorage,
   createNewStory,
-  takeSnapshot,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Page Templates', () => {

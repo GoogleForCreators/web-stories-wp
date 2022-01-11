@@ -18,11 +18,11 @@
  * External dependencies
  */
 import {
+  takeSnapshot,
   withExperimentalFeatures,
   createNewStory,
   uploadMedia,
   deleteMedia,
-  takeSnapshot,
 } from '@web-stories-wp/e2e-test-utils';
 
 const MODAL = '.media-modal';

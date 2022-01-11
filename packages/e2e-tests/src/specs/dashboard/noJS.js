@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { visitDashboard, takeSnapshot } from '@web-stories-wp/e2e-test-utils';
+import { takeSnapshot, visitDashboard } from '@web-stories-wp/e2e-test-utils';
 
 describe('Stories Dashboard with disabled JavaScript', () => {
   it('should display error message', async () => {
