@@ -133,8 +133,10 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     await fixture.events.click(
       fixture.editor.library.text.textSetFilter('Editorial')
     );
-    let textSets = fixture.editor.library.text.textSets;
-    await fixture.events.click(textSets[0]);
+    const editorialTextSets = await waitFor(
+      () => fixture.editor.library.text.textSets
+    );
+    await fixture.events.click(editorialTextSets[0]);
     await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
     await fixture.snapshot('Editorial text set positioning');
 
@@ -142,8 +144,11 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     await fixture.events.click(
       fixture.editor.library.text.textSetFilter('Header')
     );
-    textSets = fixture.editor.library.text.textSets;
-    await fixture.events.click(textSets[0]);
+    const headerTextSets = await waitFor(
+      () => fixture.editor.library.text.textSets
+    );
+
+    await fixture.events.click(headerTextSets[0]);
     await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
     await fixture.snapshot('List text set positioning');
 
@@ -151,8 +156,10 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     await fixture.events.click(
       fixture.editor.library.text.textSetFilter('Steps')
     );
-    textSets = fixture.editor.library.text.textSets;
-    await fixture.events.click(textSets[0]);
+    const stepsTextSets = await waitFor(
+      () => fixture.editor.library.text.textSets
+    );
+    await fixture.events.click(stepsTextSets[0]);
     await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
     await fixture.snapshot('Steps text set positioning');
   });
@@ -172,7 +179,9 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
         () => expect(fixture.editor.library.text.textSets.length).toBeTruthy(),
         { timeout: 2000 }
       );
-      const textSets = fixture.editor.library.text.textSets;
+      const textSets = await waitFor(
+        () => fixture.editor.library.text.textSets
+      );
       // First hover text set to trigger image generation
       await fixture.events.mouse.moveRel(textSets[1], 10, 10);
 
