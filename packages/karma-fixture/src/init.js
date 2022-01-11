@@ -396,20 +396,5 @@ beforeEach(async () => {
 });
 
 afterEach(() => {
-  // Try to clean up any lingering media elements.
-  // Prevents "Blocked attempt to create a WebMediaPlayer" warnings in Chrome.
-  // See crbug.com/1144736#c27
-  document.querySelectorAll('video,audio').forEach(
-    /**
-     *
-     * @param {HTMLMediaElement} element Video or audio element.
-     */
-    (element) => {
-      element.currentSrc = null;
-      element.src = '';
-      element.srcObject = null;
-      element.remove();
-    }
-  );
   rootEl.remove();
 });
