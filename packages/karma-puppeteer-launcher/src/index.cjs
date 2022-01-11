@@ -51,6 +51,7 @@ function puppeteerBrowser(baseBrowserDecorator, config) {
         // We use this flag to work-around this issue.
         '--disable-dev-shm-usage',
         '--force-gpu-mem-discardable-limit-mb',
+        '--disable-software-rasterizer',
       ],
     };
     const puppeteerOptions = {
