@@ -85,6 +85,7 @@ function useMediaUploadQueue() {
   });
 
   const isMounted = useRef(false);
+  const currentTranscodingItem = useRef(null);
 
   const {
     startUploading,
@@ -297,14 +298,7 @@ function useMediaUploadQueue() {
             isTranscodingEnabled &&
             (isGifThatNeedsTranscoding || canTranscodeFile(file));
 
-          const isAlreadyTranscoding = state.queue.some(
-            (queueItem) =>
-              [
-                ITEM_STATUS.TRANSCODING,
-                ITEM_STATUS.MUTING,
-                ITEM_STATUS.TRIMMING,
-              ].includes(queueItem.state) && queueItem.id !== id
-          );
+          const isAlreadyTranscoding = currentTranscodingItem.current !== null;
 
           // Prevent simultaneous transcoding processes.
           // See https://github.com/google/web-stories-wp/issues/8779
@@ -313,6 +307,8 @@ function useMediaUploadQueue() {
           }
 
           if (isTranscodingEnabled) {
+            currentTranscodingItem.current = id;
+
             if (isGifThatNeedsTranscoding) {
               // Convert animated GIFs to videos if possible.
               startTranscoding({ id });
@@ -334,6 +330,8 @@ function useMediaUploadQueue() {
                 trackError('upload_media', error?.message);
 
                 return;
+              } finally {
+                currentTranscodingItem.current = null;
               }
 
               try {
@@ -367,6 +365,8 @@ function useMediaUploadQueue() {
                   trackError('upload_media', error?.message);
 
                   return;
+                } finally {
+                  currentTranscodingItem.current = null;
                 }
               } else if (muteVideo) {
                 startMuting({ id });
@@ -386,6 +386,8 @@ function useMediaUploadQueue() {
                   trackError('upload_media', error?.message);
 
                   return;
+                } finally {
+                  currentTranscodingItem.current = null;
                 }
               } else {
                 // Transcode/Optimize videos before upload.
@@ -411,6 +413,8 @@ function useMediaUploadQueue() {
                   trackError('upload_media', error?.message);
 
                   return;
+                } finally {
+                  currentTranscodingItem.current = null;
                 }
               }
             }
