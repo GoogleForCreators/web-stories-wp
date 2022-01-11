@@ -70,7 +70,7 @@ const sharedConfig = {
         enforce: 'pre',
         resolve: {
           fullySpecified: false,
-        }
+        },
       },
       {
         test: /\.m?js$/,
