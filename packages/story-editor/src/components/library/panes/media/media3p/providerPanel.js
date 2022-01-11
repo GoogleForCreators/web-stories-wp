@@ -29,8 +29,10 @@ import { Headline, THEME_CONSTANTS } from '@web-stories-wp/design-system';
  */
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import useMedia from '../../../../../app/media/useMedia';
-import useLibrary from '../../../useLibrary';
 import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
+import useMedia3pApi from '../../../../../app/media/media3p/api/useMedia3pApi';
+import useDetectBaseColor from '../../../../../app/media/utils/useDetectBaseColor';
+import useLibrary from '../../../useLibrary';
 import { ChipGroup } from '../../shared';
 
 const MediaSubheading = styled(Headline).attrs(() => ({
@@ -64,6 +66,29 @@ function ProviderPanel({ providerType, isActive, searchTerm, ...rest }) {
     insertElement: state.actions.insertElement,
   }));
 
+  const {
+    actions: { registerUsage },
+  } = useMedia3pApi();
+
+  const { updateBaseColor } = useDetectBaseColor({});
+
+  /**
+   * If the resource has a register usage url then the fact that it's been
+   * inserted needs to be registered as per API provider policies.
+   *
+   * @param {Object} resource The resource to attempt to register usage.
+   */
+  const handleRegisterUsage = useCallback(
+    (resource) => {
+      if (resource?.attribution?.registerUsageUrl) {
+        registerUsage({
+          registerUsageUrl: resource.attribution.registerUsageUrl,
+        });
+      }
+    },
+    [registerUsage]
+  );
+
   /**
    * Insert element such image, video and audio into the editor.
    *
@@ -77,8 +102,13 @@ function ProviderPanel({ providerType, isActive, searchTerm, ...rest }) {
         type: 'cached',
       });
       insertElement(resource.type, { resource });
+      handleRegisterUsage(resource);
+
+      if (!resource.baseColor) {
+        updateBaseColor(resource);
+      }
     },
-    [insertElement]
+    [insertElement, handleRegisterUsage, updateBaseColor]
   );
 
   const { media3p } = useMedia(({ media3p }) => ({ media3p }));

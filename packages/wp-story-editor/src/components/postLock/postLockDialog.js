@@ -95,6 +95,7 @@ function PostLockDialog({ isOpen, onClose, user, dashboardLink, previewLink }) {
             height={48}
             width={48}
             crossOrigin="anonymous"
+            decoding="async"
           />
         )}
         {dialogContent}

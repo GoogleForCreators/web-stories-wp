@@ -18,97 +18,34 @@
  * External dependencies
  */
 import { useCallback } from '@web-stories-wp/react';
-import STICKERS from '@web-stories-wp/stickers';
-import { dataPixels } from '@web-stories-wp/units';
 
 /**
  * Internal dependencies
  */
-import { createNewElement, getDefinitionForType } from '../../elements';
-import { useLocalMedia } from '../../app/media';
+import { createNewElement } from '../../elements';
 import { useStory } from '../../app/story';
 import { useLayout } from '../../app/layout';
-import { DEFAULT_MASK } from '../../masks/constants';
 import { ZOOM_SETTING } from '../../constants';
-import useMedia3pApi from '../../app/media/media3p/api/useMedia3pApi';
-import getInsertedElementSize from '../../utils/getInsertedElementSize';
-import { getMediaBaseColor } from '../../utils/getMediaBaseColor';
-import useCORSProxy from '../../utils/useCORSProxy';
 import useFocusCanvas from './useFocusCanvas';
+import getElementProperties from './utils/getElementProperties';
+
+/**
+ * @param {string} type Element type.
+ * @param {!Object} props The element's properties.
+ * @return {Object} The new element.
+ */
+function createElementForCanvas(type, props) {
+  return createNewElement(type, getElementProperties(type, props));
+}
 
 function useInsertElement() {
-  const { addElement, updateElementById } = useStory((state) => ({
-    addElement: state.actions.addElement,
-    updateElementById: state.actions.updateElementById,
+  const { addElement } = useStory(({ actions }) => ({
+    addElement: actions.addElement,
   }));
-  const { postProcessingResource } = useLocalMedia((state) => ({
-    postProcessingResource: state.actions.postProcessingResource,
-  }));
-  const {
-    actions: { registerUsage },
-  } = useMedia3pApi();
-  const { getProxiedUrl, checkResourceAccess } = useCORSProxy();
 
   const { setZoomSetting } = useLayout(({ actions: { setZoomSetting } }) => ({
     setZoomSetting,
   }));
-
-  const generateBaseColor = useCallback(
-    async (element) => {
-      const { id, resource } = element;
-      const {
-        isExternal,
-        local,
-        baseColor: currentBaseColor,
-        src,
-        poster,
-        type,
-      } = resource;
-
-      const imageSrc = type === 'image' ? src : poster;
-      if (local || !imageSrc || currentBaseColor || !isExternal) {
-        return;
-      }
-
-      try {
-        const needsProxy =
-          type === 'image'
-            ? resource?.needsProxy
-            : await checkResourceAccess(imageSrc);
-        const imageSrcProxied = getProxiedUrl({ needsProxy }, imageSrc);
-        const baseColor = await getMediaBaseColor(imageSrcProxied);
-        updateElementById({
-          elementId: id,
-          properties: {
-            resource: {
-              ...resource,
-              baseColor,
-            },
-          },
-        });
-      } catch (error) {
-        // Do nothing for now.
-      }
-    },
-    [getProxiedUrl, checkResourceAccess, updateElementById]
-  );
-
-  /**
-   * If the resource has a register usage url then the fact that it's been
-   * inserted needs to be registered as per API provider policies.
-   *
-   * @param {Object} resource The resource to attempt to register usage.
-   */
-  const handleRegisterUsage = useCallback(
-    (resource) => {
-      if (!resource.local && resource?.attribution?.registerUsageUrl) {
-        registerUsage({
-          registerUsageUrl: resource.attribution.registerUsageUrl,
-        });
-      }
-    },
-    [registerUsage]
-  );
 
   const focusCanvas = useFocusCanvas();
 
@@ -122,11 +59,7 @@ function useInsertElement() {
       const element = createElementForCanvas(type, props);
       const { id, resource } = element;
       addElement({ element });
-      if (resource) {
-        postProcessingResource(resource);
-        handleRegisterUsage(resource);
-        generateBaseColor(element);
-      }
+
       // Auto-play on insert.
       if (type === 'video' && resource?.src && !resource.isPlaceholder) {
         setTimeout(() => {
@@ -139,113 +72,10 @@ function useInsertElement() {
       focusCanvas();
       return element;
     },
-    [
-      addElement,
-      postProcessingResource,
-      generateBaseColor,
-      focusCanvas,
-      handleRegisterUsage,
-      setZoomSetting,
-    ]
+    [addElement, focusCanvas, setZoomSetting]
   );
 
   return insertElement;
 }
 
-/**
- * @param {string} type Element type.
- * @param {!Object} props The element's properties.
- * @param {number} props.width The element's width.
- * @param {number} props.height The element's height.
- * @param {?Object} props.mask The element's mask.
- * @return {Object} The element properties.
- */
-function getElementProperties(
-  type,
-  {
-    resource,
-    x,
-    y,
-    width,
-    height,
-    mask,
-    rotationAngle = 0,
-    scale = 100,
-    focalX = 50,
-    focalY = 50,
-    sticker,
-    ...rest
-  }
-) {
-  const { isMaskable } = getDefinitionForType(type);
-
-  const attrs = { type, ...rest };
-
-  const stickerRatio = sticker && STICKERS?.[sticker?.type]?.aspectRatio;
-
-  // Width and height defaults. Width takes precedence.
-  const ratio =
-    resource && isNum(resource.width) && isNum(resource.height)
-      ? resource.width / resource.height
-      : 1;
-  const size = getInsertedElementSize(
-    type,
-    width,
-    height,
-    attrs,
-    stickerRatio || ratio,
-    resource
-  );
-  width = size.width;
-  height = size.height;
-
-  // X and y defaults: in the top corner of the page.
-  if (!isNum(x)) {
-    x = 48;
-  }
-  if (!isNum(y)) {
-    y = 0;
-  }
-
-  x = dataPixels(x);
-  y = dataPixels(y);
-
-  return {
-    ...attrs,
-    resource,
-    x,
-    y,
-    width,
-    height,
-    rotationAngle,
-    scale,
-    focalX,
-    focalY,
-    ...(isMaskable
-      ? {
-          mask: mask || DEFAULT_MASK,
-        }
-      : {}),
-    ...(sticker ? { sticker } : {}),
-  };
-}
-
-/**
- * @param {string} type Element type.
- * @param {!Object} props The element's properties.
- * @return {Object} The new element.
- */
-function createElementForCanvas(type, props) {
-  return createNewElement(type, getElementProperties(type, props));
-}
-
-/**
- * @param {?number|undefined} value The value.
- * @return {boolean} Whether the value has been set.
- */
-function isNum(value) {
-  return typeof value === 'number';
-}
-
 export default useInsertElement;
-export { getElementProperties };
