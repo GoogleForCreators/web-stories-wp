@@ -82,7 +82,7 @@ describe('Checklist integration', () => {
           type: 'image',
           mimeType: 'image/jpg',
           src: 'http://localhost:9876/__static__/earth.jpg',
-          alt: 'earth',
+          alt: '',
           width: 640,
           height: 529,
           baseColor: '#734727',
