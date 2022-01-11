@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useMemo, useCallback } from '@web-stories-wp/react';
+import { useEffect, useMemo, useCallback, useRef } from '@web-stories-wp/react';
 import { noop } from '@web-stories-wp/design-system';
 
 /**
@@ -76,6 +76,16 @@ function MyStories() {
   );
   const { apiCallbacks } = useConfig();
 
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    isMounted.current = true;
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
   const {
     filter,
     page,
@@ -95,6 +105,10 @@ function MyStories() {
   let queryAuthorsBySearch = useCallback(
     (authorSearchTerm) => {
       return getAuthors(authorSearchTerm).then((data) => {
+        if (!isMounted.current) {
+          return;
+        }
+
         const userData = data.map(({ id, name }) => ({
           id,
           name,
