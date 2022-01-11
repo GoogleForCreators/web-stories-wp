@@ -21,24 +21,17 @@ import {
   createBlob,
   getTypeFromMime,
   getResourceSize,
-  getFirstFrameOfVideo,
   createResource,
   getFileName,
   getImageDimensions,
   createFileReader,
   getVideoLength,
   hasVideoGotAudio,
+  getImageFromVideo,
+  seekVideo,
+  preloadVideo,
 } from '@web-stories-wp/media';
-
-/**
- * Create a local resource object.
- *
- * @param {Object} properties The resource properties.
- * @return {import('@web-stories-wp/media').Resource} The local resource object.
- */
-const createLocalResource = (properties) => {
-  return createResource({ ...properties, local: true, isExternal: false });
-};
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Generates a image resource object from a local File object.
@@ -55,7 +48,7 @@ const getImageResource = async (file) => {
   const src = createBlob(new window.Blob([reader.result], { type: mimeType }));
   const { width, height } = await getImageDimensions(src);
 
-  return createLocalResource({
+  return createResource({
     type: 'image',
     mimeType,
     src,
@@ -74,27 +67,25 @@ const getVideoResource = async (file) => {
   const alt = getFileName(file);
   const mimeType = file.type;
 
-  let length = 0;
-  let lengthFormatted = '';
-
   const reader = await createFileReader(file);
 
   const src = createBlob(new Blob([reader.result], { type: mimeType }));
 
-  const videoEl = document.createElement('video');
+  // Here we are potentially dealing with an unsupported file type (e.g. MOV)
+  // that cannot be *played* by the browser, but could still be used for generating a poster.
+
+  const videoEl = await preloadVideo(src);
   const canPlayVideo = '' !== videoEl.canPlayType(mimeType);
-  if (canPlayVideo) {
-    videoEl.src = src;
-    const videoLength = await getVideoLength(src);
-    length = videoLength.length;
-    lengthFormatted = videoLength.lengthFormatted;
-  }
-  const posterFile = await getFirstFrameOfVideo(src);
-  const hasAudio = await hasVideoGotAudio(src);
+
+  const { length, lengthFormatted } = getVideoLength(videoEl);
+
+  await seekVideo(videoEl);
+  const hasAudio = hasVideoGotAudio(videoEl);
+  const posterFile = await getImageFromVideo(videoEl);
   const poster = createBlob(posterFile);
   const { width, height } = await getImageDimensions(poster);
 
-  const resource = createLocalResource({
+  const resource = createResource({
     type: 'video',
     mimeType,
     src: canPlayVideo ? src : '',
@@ -110,7 +101,7 @@ const getVideoResource = async (file) => {
 };
 
 const createPlaceholderResource = (properties) => {
-  return createLocalResource({ ...properties, isPlaceholder: true });
+  return createResource({ ...properties, isPlaceholder: true });
 };
 
 const getPlaceholderResource = (file) => {
@@ -152,7 +143,10 @@ const getResourceFromLocalFile = async (file) => {
     }
   } catch {
     // Not interested in the error here.
+    // We simply fall back to the placeholder resource.
   }
+
+  resource.id = uuidv4();
 
   return { resource, posterFile };
 };

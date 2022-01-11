@@ -24,15 +24,11 @@ import { render } from '@testing-library/react';
  */
 import useHandlers from '../useHandlers';
 
+const handler1 = jest.fn();
+const handler2 = jest.fn();
+
 describe('useHandlers', () => {
   let handlers, registerHandler;
-  let handler1, handler2;
-
-  beforeEach(() => {
-    handler1 = jest.fn();
-    handler2 = jest.fn();
-    render(<Comp />);
-  });
 
   function Comp() {
     const result = useHandlers();
@@ -42,6 +38,8 @@ describe('useHandlers', () => {
   }
 
   it('should add/remove any number of handlers and remain invariant', () => {
+    render(<Comp />);
+
     expect(handlers).toStrictEqual([]);
 
     const cleanup1 = registerHandler(handler1);

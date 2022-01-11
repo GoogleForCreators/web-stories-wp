@@ -41,6 +41,7 @@ function StatusPanel() {
     status = '',
     password,
     updateStory,
+    saveStory,
     capabilities,
     editLink,
     title,
@@ -51,11 +52,12 @@ function StatusPanel() {
         story: { status, password, editLink, title, storyId },
         capabilities,
       },
-      actions: { updateStory },
+      actions: { updateStory, saveStory },
     }) => ({
       status,
       password,
       updateStory,
+      saveStory,
       capabilities,
       editLink,
       title,
@@ -131,14 +133,16 @@ function StatusPanel() {
     });
     refreshPostEditURL();
 
-    updateStory({ properties });
-  }, [setHasPassword, title.length, refreshPostEditURL, updateStory]);
+    saveStory(properties);
+  }, [setHasPassword, title.length, refreshPostEditURL, saveStory]);
+
+  const isAlreadyPublished = ['publish', 'future', 'private'].includes(status);
 
   const handleChangeVisibility = useCallback(
     (evt) => {
       const newVisibility = evt.target.value;
 
-      if ('private' === newVisibility) {
+      if ('private' === newVisibility && !isAlreadyPublished) {
         if (
           !window.confirm(
             __(
@@ -161,7 +165,7 @@ function StatusPanel() {
           break;
 
         case 'private':
-          if (shouldReviewDialogBeSeen) {
+          if (shouldReviewDialogBeSeen && !isAlreadyPublished) {
             setShowReviewDialog(true);
           } else {
             publishPrivately();
@@ -188,6 +192,7 @@ function StatusPanel() {
       updateStory,
       publishPrivately,
       shouldReviewDialogBeSeen,
+      isAlreadyPublished,
     ]
   );
 

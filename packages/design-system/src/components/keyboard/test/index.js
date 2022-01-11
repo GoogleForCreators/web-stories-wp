@@ -19,8 +19,8 @@
 /**
  * External dependencies
  */
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
-import { renderHook, act } from '@testing-library/react-hooks';
+import { fireEvent } from '@testing-library/react';
+import { renderHook, cleanup, act } from '@testing-library/react-hooks';
 
 /**
  * Internal dependencies
@@ -47,12 +47,14 @@ const keys = {
 function testIsKeyPressed(result, node, { key, which }, shouldRegister = true) {
   expect(result.current).toBe(false);
 
+  // eslint-disable-next-line testing-library/no-unnecessary-act
   act(() => {
     fireEvent.keyDown(node, { key, which });
   });
 
   expect(result.current).toBe(shouldRegister);
 
+  // eslint-disable-next-line testing-library/no-unnecessary-act
   act(() => {
     fireEvent.keyUp(node, { key, which });
   });
@@ -64,31 +66,23 @@ describe('keyboard/index.js', () => {
   afterEach(cleanup);
 
   describe('useIsKeyPressed', () => {
-    it('should initialise and then register key up and down events', () => {
-      const { container } = render(<div />);
+    it('should initialize and then register key up and down events', () => {
+      const container = document.createElement('div');
 
       const { result } = renderHook(() => useIsKeyPressed(container, 'a'));
       testIsKeyPressed(result, container, keys.a);
     });
 
     it('should not register when other keys are pressed', () => {
-      const { container } = render(<div />);
+      const container = document.createElement('div');
       const { result } = renderHook(() => useIsKeyPressed(container, 'a'));
       testIsKeyPressed(result, container, keys.b, false);
     });
 
-    it('should not register key presses on other elements', async () => {
-      render(
-        <div>
-          <div>{'ElemWithHook'}</div>
-          <div>{'ElemWhereKeyPressIsFired'}</div>
-        </div>
-      );
+    it('should not register key presses on other elements', () => {
+      const elemWithHook = document.createElement('div');
+      const elemWhereKeyPressIsFired = document.createElement('div');
 
-      const elemWithHook = await screen.findByText('ElemWithHook');
-      const elemWhereKeyPressIsFired = await screen.findByText(
-        'ElemWhereKeyPressIsFired'
-      );
       const { result } = renderHook(() => useIsKeyPressed(elemWithHook, 'a'));
 
       testIsKeyPressed(result, elemWhereKeyPressIsFired, keys.a, false);
@@ -96,7 +90,7 @@ describe('keyboard/index.js', () => {
   });
 
   describe('useGlobalIsKeyPressed', () => {
-    it('should initialise and then register key up and down events', () => {
+    it('should initialize and then register key up and down events', () => {
       const { result } = renderHook(() => useGlobalIsKeyPressed('a'));
       testIsKeyPressed(result, document.documentElement, keys.a);
     });
@@ -107,15 +101,13 @@ describe('keyboard/index.js', () => {
     });
 
     it('should register key presses on any part of the document', () => {
-      const { container } = render(
-        <div>
-          <div>{'elem1'}</div>
-          <div>{'elem2'}</div>
-          <div>{'elem3'}</div>
-        </div>
-      );
+      const elements = [
+        document.createElement('div'),
+        document.createElement('div'),
+        document.createElement('div'),
+      ];
 
-      const elements = container.childNodes;
+      document.body.append(...elements);
 
       const { result } = renderHook(() => useGlobalIsKeyPressed('a'));
 

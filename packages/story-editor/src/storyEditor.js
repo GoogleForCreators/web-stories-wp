@@ -24,6 +24,7 @@ import PropTypes from 'prop-types';
 import {
   SnackbarProvider,
   ModalGlobalStyle,
+  deepMerge,
 } from '@web-stories-wp/design-system';
 import { useMemo } from '@web-stories-wp/react';
 import { FlagsProvider } from 'flagged';
@@ -35,7 +36,6 @@ import theme, { GlobalStyle } from './theme';
 import ErrorBoundary from './components/errorBoundary';
 import { ConfigProvider } from './app/config';
 import { APIProvider } from './app/api';
-import { FileProvider } from './app/file';
 import { Media3pApiProvider } from './app/media/media3p/api';
 import { HistoryProvider } from './app/history';
 import { StoryProvider } from './app/story';
@@ -52,10 +52,9 @@ import { GlobalStyle as DefaultMoveableGlobalStyle } from './components/moveable
 import { GlobalStyle as CropMoveableGlobalStyle } from './components/moveable/cropStyle';
 import { GlobalStyle as CalendarStyle } from './components/form/dateTime/calendarStyle';
 import KeyboardOnlyOutlines from './utils/keyboardOnlyOutline';
-import deepMerge from './utils/deepMerge';
 import defaultConfig from './defaultConfig';
 
-function StoryEditor({ config, children }) {
+function StoryEditor({ config, initialEdits, children }) {
   const _config = useMemo(() => deepMerge(defaultConfig, config), [config]);
   const { storyId, isRTL, flags } = _config;
 
@@ -66,39 +65,40 @@ function StoryEditor({ config, children }) {
           <ErrorBoundary>
             <ConfigProvider config={_config}>
               <APIProvider>
-                <FileProvider>
-                  <Media3pApiProvider>
-                    <HistoryProvider size={50}>
-                      <SnackbarProvider>
-                        <StoryProvider storyId={storyId}>
-                          <TaxonomyProvider>
-                            <CurrentUserProvider>
-                              <FontProvider>
-                                <MediaProvider>
-                                  <AutoSaveHandler />
-                                  <TransformProvider>
-                                    <DropTargetsProvider>
-                                      <HelpCenterProvider>
-                                        <GlobalStyle />
-                                        <DevTools />
-                                        <DefaultMoveableGlobalStyle />
-                                        <CropMoveableGlobalStyle />
-                                        <ModalGlobalStyle />
-                                        <CalendarStyle />
-                                        <KeyboardOnlyOutlines />
-                                        {children}
-                                      </HelpCenterProvider>
-                                    </DropTargetsProvider>
-                                  </TransformProvider>
-                                </MediaProvider>
-                              </FontProvider>
-                            </CurrentUserProvider>
-                          </TaxonomyProvider>
-                        </StoryProvider>
-                      </SnackbarProvider>
-                    </HistoryProvider>
-                  </Media3pApiProvider>
-                </FileProvider>
+                <Media3pApiProvider>
+                  <HistoryProvider size={50}>
+                    <SnackbarProvider>
+                      <StoryProvider
+                        storyId={storyId}
+                        initialEdits={initialEdits}
+                      >
+                        <TaxonomyProvider>
+                          <CurrentUserProvider>
+                            <FontProvider>
+                              <MediaProvider>
+                                <AutoSaveHandler />
+                                <TransformProvider>
+                                  <DropTargetsProvider>
+                                    <HelpCenterProvider>
+                                      <GlobalStyle />
+                                      <DevTools />
+                                      <DefaultMoveableGlobalStyle />
+                                      <CropMoveableGlobalStyle />
+                                      <ModalGlobalStyle />
+                                      <CalendarStyle />
+                                      <KeyboardOnlyOutlines />
+                                      {children}
+                                    </HelpCenterProvider>
+                                  </DropTargetsProvider>
+                                </TransformProvider>
+                              </MediaProvider>
+                            </FontProvider>
+                          </CurrentUserProvider>
+                        </TaxonomyProvider>
+                      </StoryProvider>
+                    </SnackbarProvider>
+                  </HistoryProvider>
+                </Media3pApiProvider>
               </APIProvider>
             </ConfigProvider>
           </ErrorBoundary>
@@ -110,6 +110,7 @@ function StoryEditor({ config, children }) {
 
 StoryEditor.propTypes = {
   config: PropTypes.object.isRequired,
+  initialEdits: PropTypes.object,
   children: PropTypes.node,
 };
 

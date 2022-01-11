@@ -87,6 +87,7 @@ const DefaultPageTemplate = forwardRef(
                 page.title
               )}
               crossOrigin="anonymous"
+              decoding="async"
               draggable={false}
             />
           )}

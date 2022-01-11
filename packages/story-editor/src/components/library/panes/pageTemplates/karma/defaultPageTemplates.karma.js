@@ -46,6 +46,7 @@ describe('CUJ: Page Templates: Creator can Apply a Default Page Template', () =>
     jasmine.DEFAULT_TIMEOUT_INTERVAL = 300000;
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
   });
 
   afterEach(() => {
@@ -188,7 +189,9 @@ describe('CUJ: Page Templates: Creator can Apply a Default Page Template', () =>
   });
 
   describe('Keyboard Navigation', () => {
-    it('should navigate templates via keyboard', async () => {
+    // TODO https://github.com/google/web-stories-wp/issues/9912
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should navigate templates via keyboard', async () => {
       // Click templates layout icon
       await fixture.events.click(fixture.editor.library.pageTemplatesTab);
 

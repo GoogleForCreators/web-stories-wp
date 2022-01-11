@@ -39,6 +39,7 @@ describe('GridView integration', () => {
     ]);
 
     await fixture.render();
+    await fixture.collapseHelpCenter();
 
     await fixture.events.click(fixture.editor.footer.gridViewToggle);
   });
@@ -64,6 +65,10 @@ describe('GridView integration', () => {
 
   it('should open grid view', () => {
     expect(fixture.editor.gridView.node).toBeTruthy();
+  });
+
+  it('should have no aXe violations', async () => {
+    await expectAsync(fixture.editor.gridView.node).toHaveNoViolations();
   });
 
   it('should use tab to jump between the "Back" button, Preview Size control, and page list', async () => {
@@ -196,7 +201,9 @@ describe('GridView integration', () => {
     expect(fixture.editor.gridView.close).toHaveFocus();
   });
 
-  it('should use "Esc" to exit the dialog', async () => {
+  // TODO: https://github.com/google/web-stories-wp/issues/10146
+  // eslint-disable-next-line jasmine/no-disabled-tests
+  xit('should use "Esc" to exit the dialog', async () => {
     const { gridView } = fixture.editor;
     expect(gridView.node).toBeTruthy();
     await fixture.events.keyboard.press('Esc');

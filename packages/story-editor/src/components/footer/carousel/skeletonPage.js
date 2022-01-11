@@ -19,11 +19,15 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { generatePatternStyles } from '@web-stories-wp/patterns';
+import {
+  generatePatternStyles,
+  getSolidFromHex,
+} from '@web-stories-wp/patterns';
 
 /**
  * Internal dependencies
  */
+import isHexColorString from '../../../utils/isHexColorString';
 import { getDefinitionForType } from '../../../elements';
 import useCarousel from './useCarousel';
 
@@ -35,10 +39,6 @@ const EmptyPage = styled.li.attrs({ role: 'presentation' })`
   padding: 0;
   border-radius: 4px;
 `;
-
-function getPatternFromArray([r, g, b]) {
-  return { color: { r, g, b } };
-}
 
 function SkeletonPage({ pageId, index }) {
   const { pageThumbWidth, pageThumbHeight, pageThumbMargin, page } =
@@ -59,11 +59,12 @@ function SkeletonPage({ pageId, index }) {
 
   const bgElement = page.elements[0];
   const { isMedia } = getDefinitionForType(bgElement.type);
+  // Using isHexColorString for extra hardening.
+  // See https://github.com/google/web-stories-wp/issues/9888.
   const bgColor =
-    isMedia && bgElement.resource?.baseColor
-      ? getPatternFromArray(bgElement.resource.baseColor)
+    isMedia && isHexColorString(bgElement.resource?.baseColor)
+      ? getSolidFromHex(bgElement.resource.baseColor.replace('#', ''))
       : page.backgroundColor;
-
   return (
     <EmptyPage
       style={{

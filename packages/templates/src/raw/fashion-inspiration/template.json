@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -421,7 +421,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [65, 58, 51],
+            "baseColor": "#413a33",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
@@ -609,7 +609,7 @@
             "isOptimized": false,
             "isMuted": false,
             "provider": "local",
-            "baseColor": [126, 149, 152],
+            "baseColor": "#7e9598",
             "isExternal": true
           },
           "overlay": {
@@ -776,7 +776,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [197, 193, 193],
+            "baseColor": "#c5c1c1",
             "isExternal": true
           },
           "overlay": {
@@ -1020,6 +1020,7 @@
             "type": "image",
             "mimeType": "image/jpeg",
             "creationDate": "2021-07-21T07:46:08",
+            "baseColor": "#2b363e",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fashion-inspiration/page4_img1.jpg",
             "width": 1631,
             "height": 1080,
@@ -1193,7 +1194,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [15, 21, 34],
+            "baseColor": "#0f1522",
             "isExternal": true
           },
           "overlay": {
@@ -1380,7 +1381,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [27, 27, 27],
+            "baseColor": "#1b1b1b",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
@@ -1708,7 +1709,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [63, 48, 46],
+            "baseColor": "#3f302e",
             "isExternal": true
           },
           "overlay": {
@@ -1954,6 +1955,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-07-21T07:50:01",
+            "baseColor": "#0d0d0d",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fashion-inspiration/page8_img1.png",
             "width": 1080,
             "height": 1440,
@@ -2150,7 +2152,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [195, 192, 195],
+            "baseColor": "#c3c0c3",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
@@ -2468,6 +2470,7 @@
             "type": "image",
             "mimeType": "image/jpeg",
             "creationDate": "2021-07-21T07:52:16",
+            "baseColor": "#1f2014",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fashion-inspiration/page10_img1.jpg",
             "width": 1080,
             "height": 1620,
@@ -2740,7 +2743,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [67, 51, 45],
+            "baseColor": "#43332d",
             "isExternal": true
           },
           "overlay": {
@@ -3205,7 +3208,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [52, 55, 55],
+            "baseColor": "#343737",
             "isExternal": true
           },
           "x": 63,
@@ -3391,7 +3394,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [201, 195, 190],
+            "baseColor": "#c9c3be",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
@@ -3588,7 +3591,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [169, 217, 216],
+            "baseColor": "#a9d9d8",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
@@ -3787,7 +3790,7 @@
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
-            "baseColor": [197, 183, 176],
+            "baseColor": "#c5b7b0",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },

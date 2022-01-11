@@ -26,9 +26,9 @@ import {
   trashAllPosts,
   deleteAllMedia,
   trashAllTerms,
+  clearLocalStorage,
 } from '@web-stories-wp/e2e-test-utils';
 
-// eslint-disable-next-line jest/require-hook
 expect.extend({
   toBeValidAMP,
 });
@@ -89,6 +89,12 @@ const ALLOWED_ERROR_MESSAGES = [
 
   // Another Firefox warning.
   'Layout was forced before the page was fully loaded',
+
+  // Upsteam issue in gutenberg and twentytwenty theme.
+  'Stylesheet twentytwenty-block-editor-styles-css was not properly added.',
+
+  // TODO(#9240): Fix usage in the web stories block.
+  "select( 'core' ).getAuthors() is deprecated since version 5.9.",
 ];
 
 export function addAllowedErrorMessage(message) {
@@ -115,7 +121,6 @@ if ('true' === process.env.CI) {
 }
 
 // Set default timeout for individual expect-puppeteer assertions. (Default: 500)
-// eslint-disable-next-line jest/require-hook
 setDefaultOptions({ timeout: EXPECT_PUPPETEER_TIMEOUT || 1000 });
 
 /**
@@ -248,12 +253,15 @@ beforeAll(async () => {
   await trashAllTerms('web_story_category');
   await trashAllTerms('web_story_tag');
   await deleteAllMedia();
+
+  await clearLocalStorage();
 });
 
 // eslint-disable-next-line jest/require-top-level-describe
 afterEach(async () => {
   await runAxeTestsForStoriesEditor();
   await setupBrowser();
+  await clearLocalStorage();
 });
 
 // eslint-disable-next-line jest/require-top-level-describe

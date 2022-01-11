@@ -27,7 +27,7 @@ import {
   translateToExclusiveList,
 } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { resourceList, canTranscodeResource } from '@web-stories-wp/media';
+import { resourceList } from '@web-stories-wp/media';
 import {
   Button as DefaultButton,
   BUTTON_SIZES,
@@ -85,6 +85,7 @@ const SearchCount = styled(Text).attrs({
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 `;
 
 const ButtonsWrapper = styled.div`
@@ -112,11 +113,11 @@ function MediaPane(props) {
     resetWithFetch,
     setMediaType,
     setSearchTerm,
-    uploadVideoPoster,
-    updateVideoIsMuted,
+    postProcessingResource,
     totalItems,
     optimizeVideo,
     optimizeGif,
+    canTranscodeResource,
   } = useLocalMedia(
     ({
       state: {
@@ -127,14 +128,14 @@ function MediaPane(props) {
         mediaType,
         searchTerm,
         totalItems,
+        canTranscodeResource,
       },
       actions: {
         setNextPage,
         resetWithFetch,
         setMediaType,
         setSearchTerm,
-        uploadVideoPoster,
-        updateVideoIsMuted,
+        postProcessingResource,
         optimizeVideo,
         optimizeGif,
       },
@@ -151,10 +152,10 @@ function MediaPane(props) {
         resetWithFetch,
         setMediaType,
         setSearchTerm,
-        uploadVideoPoster,
-        updateVideoIsMuted,
+        postProcessingResource,
         optimizeVideo,
         optimizeGif,
+        canTranscodeResource,
       };
     }
   );
@@ -227,24 +228,7 @@ function MediaPane(props) {
         resource.sizes?.medium?.source_url || resource.src
       );
 
-      if (
-        !resource.posterId &&
-        !resource.local &&
-        (allowedVideoMimeTypes.includes(resource.mimeType) ||
-          resource.type === 'gif')
-      ) {
-        // Upload video poster and update media element afterwards, so that the
-        // poster will correctly show up in places like the Accessibility panel.
-        uploadVideoPoster(resource.id, resource.src);
-      }
-
-      if (
-        !resource.local &&
-        allowedVideoMimeTypes.includes(resource.mimeType) &&
-        resource.isMuted === null
-      ) {
-        updateVideoIsMuted(resource.id, resource.src);
-      }
+      postProcessingResource(resource);
     } catch (e) {
       showSnackbar({
         message: e.message,
@@ -303,11 +287,13 @@ function MediaPane(props) {
   };
 
   useEffect(() => {
-    trackEvent('search', {
-      search_type: 'media',
-      search_term: searchTerm,
-      search_filter: mediaType,
-    });
+    if (searchTerm.length > 0) {
+      trackEvent('search', {
+        search_type: 'media',
+        search_term: searchTerm,
+        search_filter: mediaType,
+      });
+    }
   }, [searchTerm, mediaType]);
 
   const incrementalSearchDebounceMedia = useFeature(

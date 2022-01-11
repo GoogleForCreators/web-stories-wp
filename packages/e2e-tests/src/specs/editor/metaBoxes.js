@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import percySnapshot from '@percy/puppeteer';
 import {
+  takeSnapshot,
   createNewStory,
   publishStory,
   withPlugin,
@@ -36,7 +36,6 @@ describe('Custom Meta Boxes', () => {
   });
 
   describe('Available', () => {
-    // eslint-disable-next-line jest/require-hook
     withPlugin('web-stories-test-plugin-meta-box');
 
     it('should display meta boxes and save their content', async () => {
@@ -65,7 +64,7 @@ describe('Custom Meta Boxes', () => {
         'Meta Box Test Value'
       );
 
-      await percySnapshot(page, 'Custom Meta Boxes');
+      await takeSnapshot(page, 'Custom Meta Boxes');
 
       // Verify that collapsing works via postbox.js from WordPress.
 

@@ -14,10 +14,18 @@
  * limitations under the License.
  */
 
-export { isWebUri as isValidUrl } from 'valid-url';
+export function isValidUrl(url) {
+  try {
+    // eslint-disable-next-line no-new
+    new URL(url);
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 /**
- * Prepends a protocol (default http) to a URL that doesn't have one
+ * Prepends a protocol (default https) to a URL that doesn't have one
  *
  * @param {string} url URL.
  * @param {string} [protocol=https] default protocol to prepend

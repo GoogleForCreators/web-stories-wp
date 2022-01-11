@@ -26,15 +26,14 @@ import {
   visitAdminPage,
   activatePlugin,
   deactivatePlugin,
+  takeSnapshot,
 } from '@web-stories-wp/e2e-test-utils';
-import percySnapshot from '@percy/puppeteer';
 
 const percyCSS = `.dashboard-grid-item-date { display: none; }`;
 
 const storyTitle = 'Test post lock';
 
 describe('Post Locking', () => {
-  // eslint-disable-next-line jest/require-hook
   withExperimentalFeatures(['enablePostLocking']);
 
   beforeAll(async () => {
@@ -57,7 +56,7 @@ describe('Post Locking', () => {
     await expect(page).toMatch('Test post lock');
     await page.hover('[data-test-id="lock-user-avatar"]');
     await expect(page).toMatch('test_locker is currently editing this story');
-    await percySnapshot(page, 'Stories Dashboard with lock', { percyCSS });
+    await takeSnapshot(page, 'Stories Dashboard with lock', { percyCSS });
   });
 
   it('should be able to open the editor with locked story', async () => {
@@ -74,6 +73,6 @@ describe('Post Locking', () => {
 
     await expect(page).toMatch('Story is locked');
 
-    await percySnapshot(page, 'Stories editor with lock dialog');
+    await takeSnapshot(page, 'Stories editor with lock dialog');
   });
 });

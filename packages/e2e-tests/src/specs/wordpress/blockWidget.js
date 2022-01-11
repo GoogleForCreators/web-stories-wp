@@ -28,7 +28,6 @@ import {
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Web Stories Widget Block', () => {
-  // eslint-disable-next-line jest/require-hook
   minWPVersionRequired('5.8');
 
   beforeAll(async () => {
@@ -41,7 +40,7 @@ describe('Web Stories Widget Block', () => {
   it('should insert a new web stories block', async () => {
     await visitBlockWidgetScreen();
     await expect(page).toClick('button[aria-label="Add block"]');
-    await page.type('.block-editor-inserter__search-input', 'Web Stories');
+    await page.type('input[placeholder="Search"]', 'Web Stories');
     await expect(page).toClick('button span', { text: 'Web Stories' });
 
     await page.waitForSelector('.web-stories-block-configuration-panel');

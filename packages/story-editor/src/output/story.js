@@ -26,7 +26,7 @@ import StoryPropTypes, { BackgroundAudioPropType } from '../types';
 import getUsedAmpExtensions from './utils/getUsedAmpExtensions';
 import Boilerplate from './utils/ampBoilerplate';
 import CustomCSS from './utils/styles';
-import getFontDeclarations from './utils/getFontDeclarations';
+import FontDeclarations from './utils/fontDeclarations';
 import OutputPage from './page';
 import getPreloadResources from './utils/getPreloadResources';
 
@@ -42,10 +42,8 @@ function OutputStory({
   },
   pages,
   metadata: { publisher },
-  args = {},
 }) {
-  const ampExtensions = getUsedAmpExtensions(pages, args);
-  const fontDeclarations = getFontDeclarations(pages);
+  const ampExtensions = getUsedAmpExtensions(pages);
   const preloadResources = getPreloadResources(pages);
 
   const featuredMediaUrl = featuredMedia?.url || '';
@@ -62,9 +60,7 @@ function OutputStory({
         {ampExtensions.map(({ name, src }) => (
           <script key={src} async="async" src={src} custom-element={name} />
         ))}
-        {fontDeclarations.map((url) => (
-          <link key={url} href={url} rel="stylesheet" />
-        ))}
+        <FontDeclarations pages={pages} />
         {preloadResources.map(({ url, type }) => (
           <link key={url} href={url} rel="preload" as={type} />
         ))}
@@ -91,7 +87,6 @@ function OutputStory({
               page={page}
               autoAdvance={autoAdvance}
               defaultPageDuration={defaultPageDuration}
-              args={args}
             />
           ))}
         </amp-story>
@@ -118,9 +113,6 @@ OutputStory.propTypes = {
   metadata: PropTypes.shape({
     publisher: PropTypes.string.isRequired,
   }).isRequired,
-  args: PropTypes.shape({
-    enableBetterCaptions: PropTypes.bool,
-  }),
 };
 
 export default OutputStory;

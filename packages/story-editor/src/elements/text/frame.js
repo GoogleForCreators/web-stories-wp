@@ -52,9 +52,9 @@ function TextFrame({ element, element: { id, content, ...rest }, wrapperRef }) {
   }));
   const props = generateParagraphTextStyle(
     rest,
-    dataToEditorX,
+    (x) => `${dataToEditorX(x)}px`,
+    (y) => `${dataToEditorY(y)}px`,
     dataToEditorY,
-    undefined,
     element
   );
   const { selectedElementIds } = useStory((state) => ({

@@ -191,7 +191,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param mixed   $value Value to update.
+	 * @param string  $value  Value to update.
 	 * @param WP_Post $object Object to update on.
 	 *
 	 * @return true|\WP_Error
@@ -213,6 +213,19 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 * @return array  Tax query arg.
 	 */
 	private function get_exclude_tax_query( array $args ): array {
+		/**
+		 * Filter whether generated attachments should be hidden in the media library.
+		 *
+		 * @since 1.16.0
+		 *
+		 * @param bool  $enabled Whether the taxonomy check should be applied.
+		 * @param array $args    Existing WP_Query args.
+		 */
+		$enabled = apply_filters( 'web_stories_hide_auto_generated_attachments', true, $args );
+		if ( true !== $enabled ) {
+			return $args;
+		}
+
 		$tax_query = [
 			[
 				'taxonomy' => $this->taxonomy_slug,

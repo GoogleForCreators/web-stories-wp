@@ -33,13 +33,14 @@ function CurrentUserProvider({ children }) {
   } = useAPI();
 
   useEffect(() => {
-    if (!Object.keys(currentUser).length) {
+    if (getCurrentUser && !Object.keys(currentUser).length) {
       getCurrentUser().then(setCurrentUser);
     }
   }, [currentUser, getCurrentUser]);
 
   const updateCurrentUser = useCallback(
-    (data) => _updateCurrentUser(data).then(setCurrentUser),
+    (data) =>
+      _updateCurrentUser ? _updateCurrentUser(data).then(setCurrentUser) : null,
     [_updateCurrentUser]
   );
 

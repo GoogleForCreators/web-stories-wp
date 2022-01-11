@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import percySnapshot from '@percy/puppeteer';
 import {
+  takeSnapshot,
   createNewStory,
   toggleVideoOptimization,
   previewStory,
@@ -31,11 +31,10 @@ describe('Story Editor', () => {
 
     await expect(page).toMatchElement('input[placeholder="Add title"]');
 
-    await percySnapshot(page, 'Empty Editor');
+    await takeSnapshot(page, 'Empty Editor');
   });
 
   describe('RTL', () => {
-    // eslint-disable-next-line jest/require-hook
     withRTL();
 
     it('should be able to create a blank story on RTL', async () => {
@@ -43,7 +42,7 @@ describe('Story Editor', () => {
 
       await expect(page).toMatchElement('input[placeholder="Add title"]');
 
-      await percySnapshot(page, 'Empty Editor on RTL');
+      await takeSnapshot(page, 'Empty Editor on RTL');
     });
   });
 

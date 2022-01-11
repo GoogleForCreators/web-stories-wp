@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -29,6 +29,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#d3cdc7",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/modernist-travel-guide/page01_image01.png",
             "width": 720,
             "height": 720,
@@ -364,7 +365,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [196, 181, 172],
+            "baseColor": "#c4b5ac",
             "isExternal": true
           },
           "type": "image",
@@ -403,7 +404,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [96, 85, 83],
+            "baseColor": "#605553",
             "isExternal": true
           },
           "type": "image",
@@ -442,7 +443,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [218, 150, 136],
+            "baseColor": "#da9688",
             "isExternal": true
           },
           "type": "image",
@@ -674,7 +675,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [195, 195, 195],
+            "baseColor": "#c3c3c3",
             "isExternal": true
           }
         },
@@ -845,7 +846,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [218, 150, 136],
+            "baseColor": "#da9688",
             "isExternal": true
           },
           "type": "image",
@@ -1236,7 +1237,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [34, 129, 157],
+            "baseColor": "#22819d",
             "isExternal": true
           },
           "type": "image",
@@ -1275,7 +1276,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [120, 172, 206],
+            "baseColor": "#78acce",
             "isExternal": true
           },
           "type": "image",
@@ -1314,7 +1315,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [189, 193, 196],
+            "baseColor": "#bdc1c4",
             "isExternal": true
           },
           "type": "image",
@@ -1452,7 +1453,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [175, 183, 183],
+            "baseColor": "#afb7b7",
             "isExternal": true
           },
           "type": "image",
@@ -1796,7 +1797,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [52, 44, 39],
+            "baseColor": "#342c27",
             "isExternal": true
           }
         },
@@ -1966,7 +1967,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [196, 181, 172],
+            "baseColor": "#c4b5ac",
             "isExternal": true
           },
           "x": 47,
@@ -2433,7 +2434,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [52, 25, 13],
+            "baseColor": "#34190d",
             "isExternal": true
           },
           "type": "image",
@@ -2472,7 +2473,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [73, 37, 19],
+            "baseColor": "#492513",
             "isExternal": true
           },
           "type": "image",
@@ -2511,7 +2512,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [203, 114, 61],
+            "baseColor": "#cb723d",
             "isExternal": true
           },
           "type": "image",
@@ -2724,7 +2725,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [50, 40, 34],
+            "baseColor": "#322822",
             "isExternal": true
           },
           "type": "image",
@@ -2917,7 +2918,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [83, 59, 48],
+            "baseColor": "#533b30",
             "isExternal": true
           }
         },
@@ -3087,7 +3088,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [96, 85, 83],
+            "baseColor": "#605553",
             "isExternal": true
           },
           "x": 47,
@@ -3554,7 +3555,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [199, 201, 192],
+            "baseColor": "#c7c9c0",
             "isExternal": true
           },
           "type": "image",
@@ -3593,7 +3594,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [128, 105, 83],
+            "baseColor": "#806953",
             "isExternal": true
           },
           "type": "image",
@@ -3632,7 +3633,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [117, 92, 71],
+            "baseColor": "#755c47",
             "isExternal": true
           },
           "type": "image",
@@ -3695,7 +3696,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [73, 51, 41],
+            "baseColor": "#493329",
             "isExternal": true
           },
           "type": "image",
@@ -4422,7 +4423,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [196, 183, 172],
+            "baseColor": "#c4b7ac",
             "isExternal": true
           },
           "type": "image",
@@ -4461,7 +4462,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [48, 46, 45],
+            "baseColor": "#302e2d",
             "isExternal": true
           },
           "type": "image",

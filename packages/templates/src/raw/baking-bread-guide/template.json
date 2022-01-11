@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -47,7 +47,8 @@
             "alt": "page01_image1",
             "local": false,
             "isOptimized": false,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#b09b88"
           }
         },
         {
@@ -315,7 +316,8 @@
             "alt": "page02_image1",
             "local": false,
             "isOptimized": false,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#372e25"
           }
         },
         {
@@ -513,7 +515,8 @@
             "local": false,
             "isOptimized": true,
             "isMuted": true,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#928e86"
           },
           "tracks": [],
           "overlay": {
@@ -1295,7 +1298,8 @@
             "alt": "page05_image1",
             "local": false,
             "isOptimized": false,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#9b8988"
           }
         },
         {
@@ -1538,7 +1542,8 @@
             "alt": "page06_image1",
             "local": false,
             "isOptimized": false,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#6e5f4f"
           }
         },
         {
@@ -1797,7 +1802,8 @@
             "alt": "page07_image1",
             "local": false,
             "isOptimized": false,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#a09ea6"
           }
         },
         {
@@ -2045,7 +2051,7 @@
             "alt": "page08_image1",
             "local": false,
             "isOptimized": false,
-            "baseColor": [235, 231, 221],
+            "baseColor": "#ebe7dd",
             "isExternal": true
           }
         },
@@ -2305,7 +2311,7 @@
             "alt": "page09_image1",
             "local": false,
             "isOptimized": false,
-            "baseColor": [206, 197, 191],
+            "baseColor": "#cec5bf",
             "isExternal": true
           }
         },
@@ -2549,7 +2555,8 @@
             "alt": "page10_image1",
             "local": false,
             "isOptimized": false,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#c4c5c2"
           }
         },
         {
@@ -3029,7 +3036,7 @@
             "alt": "page13_image1",
             "local": false,
             "isOptimized": false,
-            "baseColor": [105, 76, 61],
+            "baseColor": "#694c3d",
             "isExternal": true
           }
         },
@@ -3062,7 +3069,7 @@
             "alt": "page11_image2",
             "local": false,
             "isOptimized": false,
-            "baseColor": [153, 141, 120],
+            "baseColor": "#998d78",
             "isExternal": true
           }
         },
@@ -3235,7 +3242,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [145, 108, 82],
+            "baseColor": "#916c52",
             "isExternal": true
           }
         }

@@ -31,6 +31,7 @@ describe('Checklist integration', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
   });
 
   afterEach(() => {
@@ -127,6 +128,20 @@ describe('Checklist integration', () => {
 
       await fixture.events.click(fixture.editor.checklist.closeButton);
       await fixture.events.sleep(500);
+    });
+  });
+
+  describe('Checklist aXe tests', () => {
+    it('should have no aXe violations with empty message on a new story', async () => {
+      await openChecklist();
+      await expectAsync(fixture.editor.checklist.node).toHaveNoViolations();
+    });
+
+    it('should have no aXe violations with checks present', async () => {
+      await addPages(4);
+      await addAccessibilityIssue();
+      await openChecklist();
+      await expectAsync(fixture.editor.checklist.node).toHaveNoViolations();
     });
   });
 
@@ -311,17 +326,17 @@ describe('Checklist integration', () => {
   });
 
   describe('checklist should have no aXe accessibility violations', () => {
-    it('should pass accessibility tests with with a closed checklist', async () => {
+    it('should have no aXe violations with with a closed checklist', async () => {
       await expectAsync(fixture.editor.checklist.node).toHaveNoViolations();
     });
 
-    it('should pass accessibility tests with an open empty checklist', async () => {
+    it('should have no aXe violations with an open empty checklist', async () => {
       await openChecklist();
 
       await expectAsync(fixture.editor.checklist.node).toHaveNoViolations();
     });
 
-    it('should pass accessibility tests with a open non-empty checklist', async () => {
+    it('should have no aXe violations with a open non-empty checklist', async () => {
       await addPages(4);
 
       await openChecklist();
@@ -499,9 +514,8 @@ describe('Checklist integration - Card visibility', () => {
           lengthFormatted: '0:06',
           title: 'small-video',
           alt: 'small-video',
-          local: false,
           isOptimized: false,
-          baseColor: [115, 71, 39],
+          baseColor: '#734727',
         },
         controls: false,
         loop: false,
@@ -565,7 +579,9 @@ describe('Checklist integration - Card visibility', () => {
       expect(card).toBeNull();
     };
 
-    it(`should not show cards that require the \`hasUploadMediaAction\` permission`, async () => {
+    // TODO: https://github.com/google/web-stories-wp/issues/10147
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit(`should not show cards that require the \`hasUploadMediaAction\` permission`, async () => {
       // add issues to checklist that need to be resolved by uploading media
       await addImageWithIssues();
       await addVideoWithIssues();

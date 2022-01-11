@@ -263,7 +263,8 @@ function getImageResourceFromMedia3p(m) {
   const imageUrls = getImageUrls(m);
   return createResource({
     id: m.name,
-    baseColor: m.baseColor,
+    baseColor: m.color,
+    blurHash: m.blurHash,
     type: m.type.toLowerCase(),
     mimeType: imageUrls.full.mime_type,
     creationDate: m.createTime,
@@ -271,7 +272,6 @@ function getImageResourceFromMedia3p(m) {
     width: imageUrls.full.width,
     height: imageUrls.full.height,
     alt: m.description || m.title || m.name,
-    local: false,
     isExternal: true,
     isPlaceholder: false,
     sizes: imageUrls,
@@ -284,7 +284,7 @@ function getVideoResourceFromMedia3p(m) {
   const length = parseInt(m.videoMetadata.duration.trimEnd('s'));
   return createResource({
     id: m.name,
-    baseColor: m.baseColor,
+    baseColor: m.color,
     posterId: m.name,
     type: m.type.toLowerCase(),
     mimeType: videoUrls.full.mime_type,
@@ -296,7 +296,6 @@ function getVideoResourceFromMedia3p(m) {
     length,
     lengthFormatted: formatVideoLength(length),
     alt: m.description || m.title || m.name,
-    local: false,
     isExternal: true,
     isPlaceholder: false,
     isOptimized: true,
@@ -310,7 +309,7 @@ function getGifResourceFromMedia3p(m) {
   const { imageUrls, videoUrls, previewUrl } = getGifUrls(m);
   return createResource({
     id: m.name,
-    baseColor: m.baseColor,
+    baseColor: m.color,
     posterId: m.name,
     type: m.type.toLowerCase(),
     mimeType: imageUrls.full.mime_type,
@@ -320,7 +319,6 @@ function getGifResourceFromMedia3p(m) {
     height: imageUrls.full.height,
     poster: previewUrl,
     alt: m.description || m.title || m.name,
-    local: false,
     isPlaceholder: false,
     isOptimized: true,
     isExternal: true,

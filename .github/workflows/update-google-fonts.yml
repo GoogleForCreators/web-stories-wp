@@ -8,20 +8,18 @@ jobs:
   update-fonts:
     name: Update Google Fonts
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 5
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
-      - name: Read .nvmrc
-        run: echo "::set-output name=NVMRC::$(cat .nvmrc)"
-        id: nvm
+        with:
+          token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       - name: Setup Node
-        uses: actions/setup-node@v2.4.1
+        uses: actions/setup-node@v2.5.1
         with:
-          node-version: ${{ steps.nvm.outputs.NVMRC }}
+          node-version-file: '.nvmrc'
           cache: npm
 
       - name: Install dependencies
@@ -37,7 +35,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
           commit-message: Update list of Google Fonts
           title: Update list of Google Fonts
           body: Fetched the currently available fonts on Google Fonts to update them in the project.

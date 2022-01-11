@@ -273,7 +273,8 @@ function Slider({
           max={max}
           thumbSize={thumbSize}
           width={widthTracker}
-          aria-valuenow={printValue}
+          aria-valuenow={value}
+          aria-valuetext={printValue}
           {...rest}
         />
         <FakeThumb

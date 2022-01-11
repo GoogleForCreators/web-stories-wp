@@ -71,7 +71,7 @@ describe('videoOptimizationDialog', () => {
     setup();
 
     expect(
-      screen.queryByText('Video optimization in progress')
+      screen.getByText('Video optimization in progress')
     ).toBeInTheDocument();
     expect(
       screen.getByRole('button', { name: /Disable/i })

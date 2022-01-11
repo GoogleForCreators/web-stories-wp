@@ -26,6 +26,7 @@ import {
 } from '@web-stories-wp/design-system';
 import { forwardRef } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -45,10 +46,16 @@ import {
 
 export const FOCUS_TEMPLATE_CLASS = 'focus_template';
 
+const SeeDetailsButton = styled(Button).attrs({
+  type: BUTTON_TYPES.TERTIARY,
+  size: BUTTON_SIZES.SMALL,
+})`
+  background-color: ${({ theme }) => theme.colors.standard.white};
+`;
+
 const TemplateGridItem = forwardRef(
   (
     {
-      detailLink,
       onCreateStory,
       onFocus,
       height,
@@ -68,6 +75,7 @@ const TemplateGridItem = forwardRef(
       __('First page of %s template', 'web-stories'),
       title
     );
+
     return (
       <CardGridItem
         ref={ref}
@@ -85,6 +93,7 @@ const TemplateGridItem = forwardRef(
               <img
                 src={posterSrc?.png}
                 alt={posterAltText}
+                decoding="async"
                 width={DEFAULT_GRID_IMG_WIDTH}
                 height={DEFAULT_GRID_IMG_HEIGHT}
               />
@@ -95,38 +104,34 @@ const TemplateGridItem = forwardRef(
               data-template-slug={slug}
             >
               <TemplateDisplayContent>
-                <Button
-                  size={BUTTON_SIZES.SMALL}
-                  type={BUTTON_TYPES.SECONDARY}
-                  as="a"
+                <SeeDetailsButton
                   ariaLabel={sprintf(
                     /* translators: %s: template title.*/
                     __('Go to detail view of %s', 'web-stories'),
                     title
                   )}
-                  href={detailLink}
-                  onClick={onSeeDetailsClick}
-                  disabled={!detailLink}
+                  onClick={() => onSeeDetailsClick(id, title)}
                   className={FOCUS_TEMPLATE_CLASS}
                   tabIndex={tabIndex}
                 >
                   {TEMPLATES_GALLERY_ITEM_CENTER_ACTION_LABELS[status]}
-                </Button>
+                </SeeDetailsButton>
 
-                <Button
-                  size={BUTTON_SIZES.SMALL}
-                  type={BUTTON_TYPES.PRIMARY}
-                  onClick={onCreateStory}
-                  disabled={!onCreateStory}
-                  tabIndex={tabIndex}
-                  ariaLabel={sprintf(
-                    /* translators: %s: template title.*/
-                    __('Create new story from %s', 'web-stories'),
-                    title
-                  )}
-                >
-                  {__('Use template', 'web-stories')}
-                </Button>
+                {onCreateStory && (
+                  <Button
+                    size={BUTTON_SIZES.SMALL}
+                    type={BUTTON_TYPES.PRIMARY}
+                    onClick={onCreateStory}
+                    tabIndex={tabIndex}
+                    ariaLabel={sprintf(
+                      /* translators: %s: template title.*/
+                      __('Create new story from %s', 'web-stories'),
+                      title
+                    )}
+                  >
+                    {__('Use template', 'web-stories')}
+                  </Button>
+                )}
               </TemplateDisplayContent>
             </Scrim>
           </CardWrapper>

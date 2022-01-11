@@ -32,6 +32,7 @@ describe('CUJ: Creator can Transform an Element: Selection integration', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
 
     fullbleed = fixture.container.querySelector('[data-testid="fullbleed"]');
   });
@@ -116,29 +117,6 @@ describe('CUJ: Creator can Transform an Element: Selection integration', () => {
 
     expect(await getSelection()).toEqual([frame1.dataset.elementId]);
     await fixture.snapshot();
-  });
-
-  it('should show the selection on top of page menu', async () => {
-    await fixture.events.click(fixture.editor.library.textAdd);
-    await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
-    await setFontSize('30');
-    const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
-    const fbcr = frame1.getBoundingClientRect();
-    await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
-      moveRel(frame1, 15, 15),
-      down(),
-      moveBy(
-        0,
-        fullbleed.getBoundingClientRect().bottom -
-          fbcr.bottom +
-          fbcr.height -
-          5,
-        { steps: 5 }
-      ),
-      up(),
-    ]);
-    expect(await getSelection()).toEqual([frame1.dataset.elementId]);
-    await fixture.snapshot('selection and page menu');
   });
 
   it('should show the selection on top of page navigation arrows', async () => {

@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -33,7 +33,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [160, 161, 171],
+            "baseColor": "#a0a1ab",
             "isExternal": true
           },
           "overlay": {
@@ -375,7 +375,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [77, 77, 71],
+            "baseColor": "#4d4d47",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
@@ -564,7 +564,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#ffffff"
           },
           "x": 0,
           "y": 265,
@@ -903,7 +904,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [197, 204, 215],
+            "baseColor": "#c5ccd7",
             "isExternal": true
           }
         },
@@ -1252,7 +1253,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#ffffff"
           },
           "type": "image",
           "x": 0.5,
@@ -1526,7 +1528,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [131, 90, 52],
+            "baseColor": "#835a34",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
@@ -1698,7 +1700,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#ffffff"
           },
           "x": 0,
           "y": 285,
@@ -1959,7 +1962,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [134, 177, 214],
+            "baseColor": "#86b1d6",
             "isExternal": true
           },
           "overlay": {
@@ -2124,7 +2127,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255],
+            "baseColor": "#ffffff",
             "isExternal": true
           },
           "type": "image",
@@ -2378,7 +2381,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [40, 33, 29],
+            "baseColor": "#28211d",
             "isExternal": true
           },
           "overlay": {
@@ -2546,7 +2549,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255],
+            "baseColor": "#ffffff",
             "isExternal": true
           },
           "type": "image",
@@ -2808,7 +2811,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [39, 36, 34],
+            "baseColor": "#272422",
             "isExternal": true
           },
           "overlay": {
@@ -2908,7 +2911,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#ffffff"
           },
           "type": "image",
           "x": 0,
@@ -3216,7 +3220,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [31, 31, 27],
+            "baseColor": "#1f1f1b",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
@@ -3388,7 +3392,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#ffffff"
           },
           "x": 0,
           "y": 256,
@@ -3650,7 +3655,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [139, 95, 73],
+            "baseColor": "#8b5f49",
             "isExternal": true
           },
           "overlay": {
@@ -3816,7 +3821,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#ffffff"
           },
           "type": "image",
           "x": 0,
@@ -4070,7 +4076,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [203, 208, 222],
+            "baseColor": "#cbd0de",
             "isExternal": true
           }
         },
@@ -4093,7 +4099,8 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "isExternal": true
+            "isExternal": true,
+            "baseColor": "#ffffff"
           },
           "type": "image",
           "x": 0,
@@ -4361,7 +4368,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [255, 255, 255],
+            "baseColor": "#ffffff",
             "isExternal": true
           },
           "overlay": null
@@ -4509,6 +4516,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#ccd1db",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/12-hours-in-barcelona/polaroids_bg.png",
             "width": 121,
             "height": 160,
@@ -4562,7 +4570,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [205, 217, 211],
+            "baseColor": "#cdd9d3",
             "isExternal": true
           }
         },
@@ -4853,6 +4861,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#ccd1db",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/12-hours-in-barcelona/polaroids_bg.png",
             "width": 121,
             "height": 160,
@@ -4906,7 +4915,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [186, 186, 182],
+            "baseColor": "#babab6",
             "isExternal": true
           }
         }

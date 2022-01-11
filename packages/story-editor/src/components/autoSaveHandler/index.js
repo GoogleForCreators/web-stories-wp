@@ -40,11 +40,11 @@ function AutoSaveHandler() {
       saveStory,
     })
   );
-  const { isUploading } = useLocalMedia((state) => ({
-    isUploading: state.state.isUploading,
+  const { isUploading } = useLocalMedia(({ state: { isUploading } }) => ({
+    isUploading,
   }));
 
-  const isDraft = 'draft' === status;
+  const isDraft = 'draft' === status || !status;
 
   // Cache it to make it stable in terms of the below timeout
   const cachedSaveStory = useRef(saveStory);

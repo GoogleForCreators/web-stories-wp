@@ -78,6 +78,10 @@ export class TextStyle extends AbstractPanel {
     return this.getByRole('textbox', { name: /Line-height/ });
   }
 
+  get padding() {
+    return this.getByRole('textbox', { name: /Padding/ });
+  }
+
   get fontColor() {
     const color = this._get(
       this.getByRole('region', { name: /Color input: Text/ }),

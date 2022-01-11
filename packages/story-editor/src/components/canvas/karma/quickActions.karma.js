@@ -37,6 +37,7 @@ describe('Quick Actions integration', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
   });
 
   afterEach(() => {
@@ -57,7 +58,7 @@ describe('Quick Actions integration', () => {
   });
 
   describe('quick action menu should have no aXe accessibility violations', () => {
-    it('should pass accessibility tests with the default menu', async () => {
+    it('should have no aXe violations with the default menu', async () => {
       await expectAsync(
         fixture.editor.canvas.quickActionMenu.node
       ).toHaveNoViolations();
@@ -859,9 +860,8 @@ describe('Quick Actions integration', () => {
           lengthFormatted: '0:06',
           alt: 'small-video',
           sizes: {},
-          local: false,
           isOptimized: false,
-          baseColor: [115, 71, 39],
+          baseColor: '#734727',
         },
         controls: false,
         loop: false,

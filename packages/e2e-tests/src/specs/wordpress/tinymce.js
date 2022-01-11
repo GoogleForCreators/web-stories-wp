@@ -17,11 +17,13 @@
 /**
  * External dependencies
  */
-import percySnapshot from '@percy/puppeteer';
-import { withPlugin, visitAdminPage } from '@web-stories-wp/e2e-test-utils';
+import {
+  takeSnapshot,
+  withPlugin,
+  visitAdminPage,
+} from '@web-stories-wp/e2e-test-utils';
 
 describe('TinyMCE button', () => {
-  // eslint-disable-next-line jest/require-hook
   withPlugin('classic-editor');
 
   it('should allow inserting shortcode via modal', async () => {
@@ -39,7 +41,7 @@ describe('TinyMCE button', () => {
       visible: true,
     });
 
-    await percySnapshot(page, 'TinyMCE dialog');
+    await takeSnapshot(page, 'TinyMCE dialog');
 
     await expect(page).toMatch('Archive Link Label');
 

@@ -34,8 +34,7 @@ $ git lfs install
 
 First, add the new assets to the CDN by following these steps:
 
-1. Switch to the `static-site` branch.  
-  `git checkout static-site`
+1. Clone the [googleforcreators/wp.stories.google](https://github.com/googleforcreators/wp.stories.google) repo.
 2. Modify/add assets as desired in the `public/static/main` folder.
 3. Create a new pull request with these changes.
 

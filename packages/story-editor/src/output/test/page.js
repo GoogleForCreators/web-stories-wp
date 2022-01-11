@@ -26,7 +26,12 @@ import { PAGE_WIDTH, PAGE_HEIGHT } from '@web-stories-wp/units';
  * Internal dependencies
  */
 import PageOutput from '../page';
-import { queryByAutoAdvanceAfter, queryById } from '../../testUtils';
+import {
+  queryByAutoAdvanceAfter,
+  getByAutoAdvanceAfter,
+  queryById,
+  getById,
+} from '../../testUtils';
 import { MaskTypes } from '../../masks/constants';
 
 jest.mock('flagged');
@@ -270,9 +275,7 @@ describe('Page output', () => {
       };
 
       const { container } = render(<PageOutput {...props} />);
-      await expect(
-        queryByAutoAdvanceAfter(container, '7s')
-      ).toBeInTheDocument();
+      await expect(getByAutoAdvanceAfter(container, '7s')).toBeInTheDocument();
     });
 
     it('should use default duration for images', async () => {
@@ -311,9 +314,7 @@ describe('Page output', () => {
       };
 
       const { container } = render(<PageOutput {...props} />);
-      await expect(
-        queryByAutoAdvanceAfter(container, '7s')
-      ).toBeInTheDocument();
+      await expect(getByAutoAdvanceAfter(container, '7s')).toBeInTheDocument();
     });
 
     it('should use video element ID for auto-advance-after', async () => {
@@ -370,7 +371,7 @@ describe('Page output', () => {
         </amp-video>
       `);
       await expect(
-        queryByAutoAdvanceAfter(container, 'el-baz-media')
+        getByAutoAdvanceAfter(container, 'el-baz-media')
       ).toBeInTheDocument();
     });
 
@@ -411,7 +412,7 @@ describe('Page output', () => {
       };
 
       const { container } = render(<PageOutput {...props} />);
-      const video = queryById(container, 'el-baz-media');
+      const video = getById(container, 'el-baz-media');
       await expect(video).toBeInTheDocument();
       expect(video).toMatchInlineSnapshot(`
         <amp-video
@@ -428,7 +429,7 @@ describe('Page output', () => {
         </amp-video>
       `);
       await expect(
-        queryByAutoAdvanceAfter(container, 'el-baz-media')
+        getByAutoAdvanceAfter(container, 'el-baz-media')
       ).toBeInTheDocument();
     });
 
@@ -469,9 +470,7 @@ describe('Page output', () => {
       };
 
       const { container } = render(<PageOutput {...props} />);
-      await expect(
-        queryByAutoAdvanceAfter(container, '7s')
-      ).toBeInTheDocument();
+      await expect(getByAutoAdvanceAfter(container, '7s')).toBeInTheDocument();
     });
   });
 
@@ -604,6 +603,36 @@ describe('Page output', () => {
       await expect(pageOutlink).toHaveTextContent('Click me!');
       await expect(pageOutlink).not.toHaveAttribute('cta-image');
       await expect(pageOutlink).toBeInTheDocument();
+    });
+
+    it('should output rel', async () => {
+      const props = {
+        id: '123',
+        backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          elements: [],
+          pageAttachment: {
+            url: 'https://example.test',
+            ctaText: 'Click me!',
+            theme: 'dark',
+            icon: '',
+            rel: ['nofollow'],
+          },
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const { container } = render(<PageOutput {...props} />);
+      const pageOutlink = container.querySelector('amp-story-page-outlink');
+      await expect(pageOutlink).toBeInTheDocument();
+      await expect(pageOutlink).toHaveTextContent('Click me!');
+      await expect(pageOutlink).not.toHaveAttribute('cta-image');
+
+      const pageOutATag = pageOutlink.querySelector('a');
+      await expect(pageOutATag).toBeInTheDocument();
+      await expect(pageOutATag).toHaveAttribute('rel', 'nofollow');
     });
 
     it('should not output a link in page attachment area', () => {
@@ -742,9 +771,6 @@ describe('Page output', () => {
         },
         autoAdvance: true,
         defaultPageDuration: 11,
-        args: {
-          enableBetterCaptions: true,
-        },
       };
 
       const { container } = render(<PageOutput {...props} />);
@@ -775,7 +801,7 @@ describe('Page output', () => {
         poster: 'https://example.com/poster.png',
         height: 1,
         width: 1,
-        baseColor: [0, 55, 155],
+        baseColor: '#00379b',
       },
     };
 
@@ -783,7 +809,7 @@ describe('Page output', () => {
       const props = {
         id: '123',
         page: {
-          backgroundColor: { color: { r: 255, g: 255, b: 255 } },
+          backgroundColor: { color: '#00379b' },
           id: '123',
           elements: [BACKGROUND_ELEMENT],
         },
@@ -792,7 +818,7 @@ describe('Page output', () => {
       };
 
       const content = renderToStaticMarkup(<PageOutput {...props} />);
-      expect(content).toContain('background-color:rgb(0,55,155)');
+      expect(content).toContain('background-color:#00379b');
     });
 
     it('should output the page background color in case of default background element', () => {
@@ -1265,9 +1291,6 @@ describe('Page output', () => {
         },
         autoAdvance: true,
         defaultPageDuration: 7,
-        args: {
-          enableBetterCaptions: true,
-        },
       };
 
       const { container } = render(<PageOutput {...props} />);

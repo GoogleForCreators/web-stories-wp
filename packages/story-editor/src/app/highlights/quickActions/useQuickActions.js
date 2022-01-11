@@ -27,7 +27,7 @@ import {
   Icons,
 } from '@web-stories-wp/design-system';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { canTranscodeResource, resourceList } from '@web-stories-wp/media';
+import { resourceList } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -82,24 +82,29 @@ export const MediaPicker = ({ render, ...props }) => {
       updateElementsById,
     })
   );
-  const { resetWithFetch, updateVideoIsMuted, optimizeVideo, optimizeGif } =
-    useLocalMedia(
-      ({
-        actions: {
-          resetWithFetch,
-          updateVideoIsMuted,
-          optimizeVideo,
-          optimizeGif,
-        },
-      }) => {
-        return {
-          resetWithFetch,
-          updateVideoIsMuted,
-          optimizeVideo,
-          optimizeGif,
-        };
-      }
-    );
+  const {
+    resetWithFetch,
+    postProcessingResource,
+    optimizeVideo,
+    optimizeGif,
+    canTranscodeResource,
+  } = useLocalMedia(
+    ({
+      state: { canTranscodeResource },
+      actions: {
+        resetWithFetch,
+        postProcessingResource,
+        optimizeVideo,
+        optimizeGif,
+      },
+    }) => ({
+      canTranscodeResource,
+      resetWithFetch,
+      postProcessingResource,
+      optimizeVideo,
+      optimizeGif,
+    })
+  );
 
   const { isTranscodingEnabled } = useFFmpeg();
   const { showSnackbar } = useSnackbar();
@@ -165,13 +170,7 @@ export const MediaPicker = ({ render, ...props }) => {
           resource.sizes?.medium?.source_url || resource.src
         );
 
-        if (
-          !resource.local &&
-          allowedVideoMimeTypes.includes(resource.mimeType) &&
-          resource.isMuted === null
-        ) {
-          updateVideoIsMuted(resource.id, resource.src);
-        }
+        postProcessingResource(resource);
       } catch (e) {
         showSnackbar({
           message: e.message,
@@ -180,20 +179,20 @@ export const MediaPicker = ({ render, ...props }) => {
       }
     },
     [
-      allowedVideoMimeTypes,
-      insertMediaElement,
       isTranscodingEnabled,
-      optimizeGif,
-      optimizeVideo,
-      showSnackbar,
+      canTranscodeResource,
+      insertMediaElement,
+      postProcessingResource,
       transcodableMimeTypes,
-      updateVideoIsMuted,
+      optimizeVideo,
+      optimizeGif,
+      showSnackbar,
     ]
   );
   return (
     <MediaUpload
       title={__('Replace media', 'web-stories')}
-      buttonInsertText={__('Insert media', 'web-stories')}
+      buttonInsertText={__('Replace media', 'web-stories')}
       onSelect={handleMediaSelect}
       onClose={resetWithFetch}
       type={allowedMimeTypes}
@@ -265,6 +264,12 @@ const useQuickActions = () => {
     ({ state: { hasTrimMode }, actions: { toggleTrimMode } }) => ({
       hasTrimMode,
       toggleTrimMode,
+    })
+  );
+
+  const { canTranscodeResource } = useLocalMedia(
+    ({ state: { canTranscodeResource } }) => ({
+      canTranscodeResource,
     })
   );
 
@@ -680,11 +685,12 @@ const useQuickActions = () => {
         ]
       : [];
   }, [
-    actionMenuProps,
-    hasTrimMode,
-    selectedElement,
-    toggleTrimMode,
     selectedElements,
+    selectedElement,
+    canTranscodeResource,
+    hasTrimMode,
+    actionMenuProps,
+    toggleTrimMode,
   ]);
 
   const videoActions = useMemo(() => {

@@ -29,6 +29,7 @@ namespace Google\Web_Stories\Admin;
 use Google\Web_Stories\Context;
 use Google\Web_Stories\Decoder;
 use Google\Web_Stories\Experiments;
+use Google\Web_Stories\Font_Post_Type;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Locale;
 use Google\Web_Stories\Assets;
@@ -118,6 +119,13 @@ class Editor extends Service_Base implements HasRequirements {
 	private $page_template_post_type;
 
 	/**
+	 * Font_Post_Type instance.
+	 *
+	 * @var Font_Post_Type Font_Post_Type instance.
+	 */
+	private $font_post_type;
+
+	/**
 	 * Context instance.
 	 *
 	 * @var Context Context instance.
@@ -138,16 +146,17 @@ class Editor extends Service_Base implements HasRequirements {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Experiments             $experiments     Experiments instance.
-	 * @param Meta_Boxes              $meta_boxes      Meta_Boxes instance.
-	 * @param Decoder                 $decoder         Decoder instance.
-	 * @param Locale                  $locale          Locale instance.
-	 * @param Google_Fonts            $google_fonts    Google_Fonts instance.
-	 * @param Assets                  $assets          Assets instance.
-	 * @param Story_Post_Type         $story_post_type Story_Post_Type instance.
+	 * @param Experiments             $experiments             Experiments instance.
+	 * @param Meta_Boxes              $meta_boxes              Meta_Boxes instance.
+	 * @param Decoder                 $decoder                 Decoder instance.
+	 * @param Locale                  $locale                  Locale instance.
+	 * @param Google_Fonts            $google_fonts            Google_Fonts instance.
+	 * @param Assets                  $assets                  Assets instance.
+	 * @param Story_Post_Type         $story_post_type         Story_Post_Type instance.
 	 * @param Page_Template_Post_Type $page_template_post_type Page_Template_Post_Type instance.
-	 * @param Context                 $context         Context instance.
-	 * @param Types                   $types           Types instance.
+	 * @param Font_Post_Type          $font_post_type          Font_Post_Type instance.
+	 * @param Context                 $context                 Context instance.
+	 * @param Types                   $types                   Types instance.
 	 */
 	public function __construct(
 		Experiments $experiments,
@@ -158,6 +167,7 @@ class Editor extends Service_Base implements HasRequirements {
 		Assets $assets,
 		Story_Post_Type $story_post_type,
 		Page_Template_Post_Type $page_template_post_type,
+		Font_Post_Type $font_post_type,
 		Context $context,
 		Types $types
 	) {
@@ -169,6 +179,7 @@ class Editor extends Service_Base implements HasRequirements {
 		$this->assets                  = $assets;
 		$this->story_post_type         = $story_post_type;
 		$this->page_template_post_type = $page_template_post_type;
+		$this->font_post_type          = $font_post_type;
 		$this->context                 = $context;
 		$this->types                   = $types;
 	}
@@ -213,6 +224,11 @@ class Editor extends Service_Base implements HasRequirements {
 	 */
 	public function replace_editor( $replace, $post ) {
 		if ( $this->story_post_type->get_slug() === get_post_type( $post ) ) {
+
+			$script_dependencies = [ Tracking::SCRIPT_HANDLE, 'postbox', self::AMP_VALIDATOR_SCRIPT_HANDLE ];
+
+			// Registering here because the script handle is required for wp_add_inline_script in edit-story.php.
+			$this->assets->register_script_asset( self::SCRIPT_HANDLE, $script_dependencies, false );
 
 			// Since the 'replace_editor' filter can be run multiple times, only load the
 			// custom editor after the 'current_screen' action and when we can be certain the
@@ -279,15 +295,16 @@ class Editor extends Service_Base implements HasRequirements {
 			true
 		);
 
-		$script_dependencies = [ Tracking::SCRIPT_HANDLE, 'postbox', self::AMP_VALIDATOR_SCRIPT_HANDLE ];
-
-		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE, $script_dependencies, false );
+		wp_enqueue_script( self::SCRIPT_HANDLE );
 		$this->assets->enqueue_style_asset( self::SCRIPT_HANDLE, [ $this->google_fonts::SCRIPT_HANDLE ] );
 
 		wp_localize_script(
 			self::SCRIPT_HANDLE,
-			'webStoriesEditorSettings',
-			$this->get_editor_settings()
+			'webStories',
+			[
+				'publicPath' => $this->assets->get_base_url( 'assets/js/' ), // Required before the editor script is enqueued.
+				'localeData' => $this->assets->get_translations( self::SCRIPT_HANDLE ), // Required for i18n setLocaleData.
+			]
 		);
 
 		// Dequeue forms.css, see https://github.com/google/web-stories-wp/issues/349 .
@@ -350,65 +367,61 @@ class Editor extends Service_Base implements HasRequirements {
 		$story->load_from_post( $post );
 
 		$settings = [
-			'id'         => 'web-stories-editor',
-			'config'     => [
-				'autoSaveInterval'             => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
-				'isRTL'                        => is_rtl(),
-				'locale'                       => $this->locale->get_locale_settings(),
-				'allowedFileTypes'             => $this->types->get_allowed_file_types(),
-				'allowedTranscodableMimeTypes' => $this->types->get_allowed_transcodable_mime_types(),
-				'allowedImageFileTypes'        => $this->types->get_file_type_exts( $image_mime_types ),
-				'allowedImageMimeTypes'        => $image_mime_types,
-				'allowedAudioFileTypes'        => $this->types->get_file_type_exts( $audio_mime_types ),
-				'allowedAudioMimeTypes'        => $audio_mime_types,
-				'allowedMimeTypes'             => $mime_types,
-				'postType'                     => $this->story_post_type->get_slug(),
-				'storyId'                      => $story_id,
-				'dashboardLink'                => $dashboard_url,
-				'dashboardSettingsLink'        => $dashboard_settings_url,
-				'generalSettingsLink'          => $general_settings_url,
-				'cdnURL'                       => trailingslashit( WEBSTORIES_CDN_URL ),
-				'maxUpload'                    => $max_upload_size,
-				'isDemo'                       => $is_demo,
-				'capabilities'                 => [
-					'hasUploadMediaAction' => current_user_can( 'upload_files' ),
-					'canManageSettings'    => current_user_can( 'manage_options' ),
-				],
-				'api'                          => [
-					'users'          => '/web-stories/v1/users/',
-					'currentUser'    => '/web-stories/v1/users/me/',
-					'stories'        => trailingslashit( $this->story_post_type->get_rest_url() ),
-					'pageTemplates'  => trailingslashit( $this->page_template_post_type->get_rest_url() ),
-					'media'          => '/web-stories/v1/media/',
-					'hotlink'        => '/web-stories/v1/hotlink/validate/',
-					'publisherLogos' => '/web-stories/v1/publisher-logos/',
-					'proxy'          => rest_url( '/web-stories/v1/hotlink/proxy/' ),
-					'link'           => '/web-stories/v1/link/',
-					'statusCheck'    => '/web-stories/v1/status-check/',
-					'taxonomies'     => '/web-stories/v1/taxonomies/',
-					'metaBoxes'      => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
-					'storyLocking'   => rest_url( sprintf( '%s/%s/lock/', $this->story_post_type->get_rest_url(), $story_id ) ),
-				],
-				'metadata'                     => [
-					'publisher' => $story->get_publisher_name(),
-				],
-				'postLock'                     => [
-					'interval'         => $time_window,
-					'showLockedDialog' => $show_locked_dialog,
-				],
-				'version'                      => WEBSTORIES_VERSION,
-				'nonce'                        => $nonce,
-				'showMedia3p'                  => true,
-				'encodeMarkup'                 => $this->decoder->supports_decoding(),
-				'metaBoxes'                    => $this->meta_boxes->get_meta_boxes_per_location(),
-				'ffmpegCoreUrl'                => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js',
-				'localeData'                   => $this->assets->get_translations( self::SCRIPT_HANDLE ),
-				'flags'                        => array_merge(
-					$this->experiments->get_experiment_statuses( 'general' ),
-					$this->experiments->get_experiment_statuses( 'editor' )
-				),
+			'autoSaveInterval'             => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
+			'isRTL'                        => is_rtl(),
+			'locale'                       => $this->locale->get_locale_settings(),
+			'allowedFileTypes'             => $this->types->get_allowed_file_types(),
+			'allowedTranscodableMimeTypes' => $this->types->get_allowed_transcodable_mime_types(),
+			'allowedImageFileTypes'        => $this->types->get_file_type_exts( $image_mime_types ),
+			'allowedImageMimeTypes'        => $image_mime_types,
+			'allowedAudioFileTypes'        => $this->types->get_file_type_exts( $audio_mime_types ),
+			'allowedAudioMimeTypes'        => $audio_mime_types,
+			'allowedMimeTypes'             => $mime_types,
+			'postType'                     => $this->story_post_type->get_slug(),
+			'storyId'                      => $story_id,
+			'dashboardLink'                => $dashboard_url,
+			'dashboardSettingsLink'        => $dashboard_settings_url,
+			'generalSettingsLink'          => $general_settings_url,
+			'cdnURL'                       => trailingslashit( WEBSTORIES_CDN_URL ),
+			'maxUpload'                    => $max_upload_size,
+			'isDemo'                       => $is_demo,
+			'capabilities'                 => [
+				'hasUploadMediaAction' => current_user_can( 'upload_files' ),
+				'canManageSettings'    => current_user_can( 'manage_options' ),
 			],
-			'publicPath' => $this->assets->get_base_url( 'assets/js/' ),
+			'api'                          => [
+				'users'          => '/web-stories/v1/users/',
+				'currentUser'    => '/web-stories/v1/users/me/',
+				'stories'        => trailingslashit( $this->story_post_type->get_rest_url() ),
+				'pageTemplates'  => trailingslashit( $this->page_template_post_type->get_rest_url() ),
+				'media'          => '/web-stories/v1/media/',
+				'hotlink'        => '/web-stories/v1/hotlink/validate/',
+				'publisherLogos' => '/web-stories/v1/publisher-logos/',
+				'proxy'          => rest_url( '/web-stories/v1/hotlink/proxy/' ),
+				'link'           => '/web-stories/v1/link/',
+				'statusCheck'    => '/web-stories/v1/status-check/',
+				'taxonomies'     => '/web-stories/v1/taxonomies/',
+				'fonts'          => trailingslashit( $this->font_post_type->get_rest_url() ),
+				'metaBoxes'      => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
+				'storyLocking'   => rest_url( sprintf( '%s/%s/lock/', $this->story_post_type->get_rest_url(), $story_id ) ),
+			],
+			'metadata'                     => [
+				'publisher' => $story->get_publisher_name(),
+			],
+			'postLock'                     => [
+				'interval'         => $time_window,
+				'showLockedDialog' => $show_locked_dialog,
+			],
+			'version'                      => WEBSTORIES_VERSION,
+			'nonce'                        => $nonce,
+			'showMedia3p'                  => true,
+			'encodeMarkup'                 => $this->decoder->supports_decoding(),
+			'metaBoxes'                    => $this->meta_boxes->get_meta_boxes_per_location(),
+			'ffmpegCoreUrl'                => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js',
+			'flags'                        => array_merge(
+				$this->experiments->get_experiment_statuses( 'general' ),
+				$this->experiments->get_experiment_statuses( 'editor' )
+			),
 		];
 
 		/**

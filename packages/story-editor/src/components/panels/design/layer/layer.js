@@ -198,7 +198,7 @@ const LayerAction = styled(Button).attrs({
   /*
    * all of our Icons right now have an embedded padding,
    * however the new designs just disregard this embedded
-   * padding, so to accomodate, we'll make the icon its
+   * padding, so to accommodate, we'll make the icon its
    * intended size and manually center it within the button.
    */
   svg {

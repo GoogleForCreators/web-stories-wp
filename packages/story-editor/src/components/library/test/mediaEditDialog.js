@@ -37,7 +37,6 @@ const resource = {
   src: 'image-url',
   width: 910,
   height: 675,
-  local: false,
   alt: 'my image alt text',
   sizes: {},
 };
@@ -90,8 +89,8 @@ describe('MediaEditDialog', () => {
   it('should render', () => {
     setup();
 
-    expect(screen.queryByText('Edit Image')).toBeInTheDocument();
-    expect(screen.queryByText('910 x 675 pixels')).toBeInTheDocument();
+    expect(screen.getByText('Edit Image')).toBeInTheDocument();
+    expect(screen.getByText('910 x 675 pixels')).toBeInTheDocument();
     expect(screen.getByLabelText('Assistive text').value).toContain(
       'my image alt text'
     );

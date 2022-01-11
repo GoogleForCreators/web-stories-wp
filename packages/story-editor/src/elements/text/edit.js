@@ -162,9 +162,9 @@ function TextEdit({
   const textProps = {
     ...generateParagraphTextStyle(
       rest,
-      dataToEditorX,
+      (styleX) => `${dataToEditorX(styleX)}px`,
+      (styleY) => `${dataToEditorY(styleY)}px`,
       dataToEditorY,
-      undefined,
       element
     ),
     font,

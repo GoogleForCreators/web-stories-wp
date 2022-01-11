@@ -49,13 +49,13 @@ function PreviewButton({ forceIsSaving = false }) {
       actions: { autoSave, saveStory },
     }) => ({ isSaving, status, previewLink, autoSave, saveStory })
   );
-  const { isUploading } = useLocalMedia((state) => ({
-    isUploading: state.state.isUploading,
+  const { isUploading } = useLocalMedia(({ state: { isUploading } }) => ({
+    isUploading,
   }));
 
   const [previewLinkToOpenViaDialog, setPreviewLinkToOpenViaDialog] =
     useState(null);
-  const isDraft = 'draft' === status;
+  const isDraft = 'draft' === status || !status;
 
   /**
    * Applies any local transforms (e.g. AMP development mode) to the stored preview link.

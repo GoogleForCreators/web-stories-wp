@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -33,7 +33,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [214, 205, 180],
+            "baseColor": "#d6cdb4",
             "isExternal": true
           },
           "overlay": {
@@ -372,7 +372,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [180, 184, 190],
+            "baseColor": "#b4b8be",
             "isExternal": true
           },
           "overlay": { "color": { "r": 34, "g": 43, "b": 73, "a": 0.1 } }
@@ -529,7 +529,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [128, 149, 179],
+            "baseColor": "#8095b3",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
@@ -662,7 +662,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [51, 50, 57],
+            "baseColor": "#333239",
             "isExternal": true
           },
           "x": 114,
@@ -691,6 +691,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#0d0d0d",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fitness-apps-ranked/mobile_frame.png",
             "width": 213,
             "height": 413,
@@ -699,7 +700,6 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [13, 13, 13],
             "isExternal": true
           },
           "x": 99.5,
@@ -987,7 +987,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [27, 18, 16],
+            "baseColor": "#1b1210",
             "isExternal": true
           },
           "overlay": {
@@ -1160,7 +1160,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [128, 149, 179],
+            "baseColor": "#8095b3",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
@@ -1283,6 +1283,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#b49b7c",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fitness-apps-ranked/page5_img2.png",
             "width": 177,
             "height": 381,
@@ -1319,6 +1320,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#0d0d0d",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fitness-apps-ranked/mobile_frame.png",
             "width": 213,
             "height": 413,
@@ -1614,7 +1616,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [177, 158, 143],
+            "baseColor": "#b19e8f",
             "isExternal": true
           },
           "overlay": {
@@ -1784,7 +1786,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [128, 149, 179],
+            "baseColor": "#8095b3",
             "isExternal": true
           },
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
@@ -1907,6 +1909,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#212121",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fitness-apps-ranked/page7_img2.png",
             "width": 184,
             "height": 383,
@@ -1943,6 +1946,7 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#0d0d0d",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/fitness-apps-ranked/mobile_frame.png",
             "width": 213,
             "height": 413,
@@ -2230,7 +2234,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [216, 225, 225],
+            "baseColor": "#d8e1e1",
             "isExternal": true
           },
           "overlay": {
@@ -3375,7 +3379,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [29, 18, 11],
+            "baseColor": "#1d120b",
             "isExternal": true
           }
         },
@@ -3491,7 +3495,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [209, 217, 214],
+            "baseColor": "#d1d9d6",
             "isExternal": true
           }
         },
@@ -3607,7 +3611,7 @@
             "sizes": [],
             "local": false,
             "isOptimized": false,
-            "baseColor": [190, 170, 164],
+            "baseColor": "#beaaa4",
             "isExternal": true
           }
         },

@@ -14,7 +14,6 @@
     "@web-stories-wp/animation": "*",
     "@web-stories-wp/date": "*",
     "@web-stories-wp/design-system": "*",
-    "@web-stories-wp/fonts": "*",
     "@web-stories-wp/i18n": "*",
     "@web-stories-wp/karma-fixture": "*",
     "@web-stories-wp/media": "*",
@@ -25,8 +24,8 @@
     "@web-stories-wp/tracking": "*",
     "@web-stories-wp/units": "*",
     "flagged": "^2.0.1",
-    "history": "^5.0.1",
-    "prop-types": "^15.7.2",
+    "history": "^5.1.0",
+    "prop-types": "^15.8.0",
     "query-string": "^7.0.1",
     "styled-components": "^5.3.3"
   },
@@ -36,7 +35,7 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/react-hooks": "^7.0.2",
     "@testing-library/user-event": "^13.5.0",
-    "jest": "^27.3.1",
+    "jest": "^27.4.5",
     "react": "^17.0.2",
     "stylis-plugin-rtl": "^1.0.0"
   }

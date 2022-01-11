@@ -86,7 +86,6 @@ jest.mock('@web-stories-wp/tracking');
 
 jest.mock('@web-stories-wp/media', () => ({
   ...jest.requireActual('@web-stories-wp/media'),
-  canTranscodeResource: jest.fn(() => true),
   resourceList: {
     set: jest.fn(),
   },
@@ -305,7 +304,7 @@ const mockUseApplyTextAutoStyle = useApplyTextAutoStyle;
 const mockUseConfig = useConfig;
 const mockUseLocalMedia = useLocalMedia;
 const mockResetWithFetch = jest.fn();
-const mockUpdateVideoIsMuted = jest.fn();
+const mockPostProcessingResource = jest.fn();
 const mockOptimizeVideo = jest.fn();
 const mockOptimizeGif = jest.fn();
 const mockUseFFmpeg = useFFmpeg;
@@ -321,8 +320,6 @@ const MockMediaPicker = ({ onSelect, onClose }) => (
       onClick={() =>
         onSelect({
           ...videoResource,
-          local: false,
-          mimeType: 'muted',
           isMuted: null,
         })
       }
@@ -373,9 +370,10 @@ describe('useQuickActions', () => {
 
     mockUseLocalMedia.mockReturnValue({
       resetWithFetch: noop,
-      updateVideoIsMuted: noop,
+      postProcessingResource: noop,
       optimizeVideo: noop,
       optimizeGif: noop,
+      canTranscodeResource: noop,
     });
   });
 
@@ -979,9 +977,10 @@ describe('MediaPicker', () => {
 
     mockUseLocalMedia.mockReturnValue({
       resetWithFetch: mockResetWithFetch,
-      updateVideoIsMuted: mockUpdateVideoIsMuted,
+      postProcessingResource: mockPostProcessingResource,
       optimizeVideo: mockOptimizeVideo,
       optimizeGif: mockOptimizeGif,
+      canTranscodeResource: () => true,
     });
 
     mockUseFFmpeg.mockReturnValue({ isTranscodingEnabled: true });
@@ -1027,23 +1026,22 @@ describe('MediaPicker', () => {
     });
   });
 
-  it('should call updateVideoIsMuted for a video that is muted', () => {
+  it('should call postProcessingResource for a video that is muted', () => {
     render(<MediaPicker render={noop} />);
 
     fireEvent.click(screen.getByText('onSelect muted video'));
 
-    expect(mockUpdateVideoIsMuted).toHaveBeenCalledWith(
-      videoResource.id,
-      videoResource.src
-    );
+    expect(mockPostProcessingResource).toHaveBeenCalledWith({
+      ...videoResource,
+      mimeType: 'videoMimeType',
+      isMuted: null,
+    });
     expect(mockUpdateElementsById).toHaveBeenCalledWith({
       elementIds: [IMAGE_ELEMENT.id],
       properties: {
         type: videoResource.id,
         resource: {
           ...videoResource,
-          local: false,
-          mimeType: 'muted',
           isMuted: null,
         },
       },

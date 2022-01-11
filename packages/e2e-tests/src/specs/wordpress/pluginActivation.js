@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import percySnapshot from '@percy/puppeteer';
 import {
+  takeSnapshot,
   visitAdminPage,
   withRTL,
   activatePlugin,
@@ -37,11 +37,10 @@ describe('Plugin Activation', () => {
     await expect(page).toMatch("You're all set!");
     await expect(page).toMatch('Tell some stories.');
 
-    await percySnapshot(page, 'Plugin Activation', { percyCSS });
+    await takeSnapshot(page, 'Plugin Activation', { percyCSS });
   });
 
   describe('RTL', () => {
-    // eslint-disable-next-line jest/require-hook
     withRTL();
 
     it('should display a custom message after plugin activation', async () => {
@@ -50,7 +49,7 @@ describe('Plugin Activation', () => {
       await expect(page).toMatch("You're all set!");
       await expect(page).toMatch('Tell some stories.');
 
-      await percySnapshot(page, 'Plugin Activation on RTL', { percyCSS });
+      await takeSnapshot(page, 'Plugin Activation on RTL', { percyCSS });
     });
   });
 

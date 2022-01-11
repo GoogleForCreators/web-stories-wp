@@ -79,9 +79,14 @@ export function TextOutputWithUnits({
     dataToPaddingY = dataToStyleY;
   }
   const paddingStyles = {
-    vertical: dataToPaddingY(padding.vertical),
-    horizontal: dataToPaddingX(padding.horizontal),
+    vertical: padding.vertical ? dataToPaddingY(padding.vertical) : 0,
+    horizontal: padding.horizontal ? dataToPaddingX(padding.horizontal) : 0,
   };
+
+  const hasPadding = paddingStyles.vertical || paddingStyles.horizontal;
+  const paddingStyle = hasPadding
+    ? `${paddingStyles.vertical} ${paddingStyles.horizontal}`
+    : 0;
 
   const bgColor =
     backgroundTextMode !== BACKGROUND_TEXT_MODE.NONE
@@ -103,11 +108,13 @@ export function TextOutputWithUnits({
   const fillStyle = {
     ...styles,
     color: '#000000',
-    padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
-    overflowWrap: 'break-word',
+    // Overrides styles.padding.
+    padding: paddingStyle,
   };
 
-  const unitlessPaddingVertical = parseFloat(dataToStyleY(padding.vertical));
+  const unitlessPaddingVertical = padding.vertical
+    ? parseFloat(dataToStyleY(padding.vertical))
+    : 0;
   const unitlessFontSize = parseFloat(dataToStyleY(rest.fontSize));
 
   const lineHeight = getHighlightLineheight(
@@ -154,7 +161,7 @@ export function TextOutputWithUnits({
     WebkitBoxDecorationBreak: 'clone',
     boxDecorationBreak: 'clone',
     position: 'relative',
-    padding: `${paddingStyles.vertical} ${paddingStyles.horizontal}`,
+    padding: paddingStyle,
     textAlign: styles.textAlign,
     borderRadius: `${borderRadius?.topLeft || 0}px ${
       borderRadius?.topRight || 0

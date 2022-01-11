@@ -34,6 +34,7 @@ describe('Filter Panel', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
+    await fixture.collapseHelpCenter();
   });
 
   afterEach(() => {
@@ -123,9 +124,7 @@ describe('Filter Panel', () => {
         expect(overlay).toHaveStyle('background-color', 'rgba(0, 0, 0, 0.5)');
       });
 
-      // TODO(#9389): Fix flaky test.
-      // eslint-disable-next-line jasmine/no-disabled-tests
-      xit('should render correct overlay when clicking "linear"', async () => {
+      it('should render correct overlay when clicking "linear"', async () => {
         await fixture.events.click(filterPanel.linear);
 
         const overlay = await waitFor(getBackgroundElementOverlay);

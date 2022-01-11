@@ -22,7 +22,6 @@ import { toUTCDate } from '@web-stories-wp/date';
 const formattedTemplatesArray = [
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=10&isLocal=false',
     slug: 'template-slug-1',
     createdBy: 'Google',
     description:
@@ -1268,11 +1267,11 @@ const formattedTemplatesArray = [
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook', 'Test Tag'],
     colors: [
-      { label: 'Pink', color: '#f3d9e1' },
-      { label: 'Green', color: '#d8ddcc' },
-      { label: 'Black', color: '#28292b' },
-      { label: 'White', color: '#fff' },
-      { label: 'Brown', color: '#eadfd6' },
+      { label: 'Pink', color: '#f3d9e1', family: 'Pink' },
+      { label: 'Green', color: '#d8ddcc', family: 'Green' },
+      { label: 'Black', color: '#28292b', family: 'Black' },
+      { label: 'White', color: '#fff', family: 'White' },
+      { label: 'Brown', color: '#eadfd6', family: 'Brown' },
     ],
     vertical: 'Fitness',
     title: 'Filterable By Tag',
@@ -1297,7 +1296,6 @@ const formattedTemplatesArray = [
   },
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=9&isLocal=false',
     slug: 'template-slug-2',
     createdBy: 'Google',
     description:
@@ -1486,12 +1484,12 @@ const formattedTemplatesArray = [
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
-      { label: 'Pink', color: '#f3d9e1' },
-      { label: 'Green', color: '#d8ddcc' },
-      { label: 'Black', color: '#28292b' },
-      { label: 'White', color: '#fff' },
-      { label: 'Brown', color: '#eadfd6' },
-      { label: 'Test Color', color: '#eadfd6' },
+      { label: 'Pink', color: '#f3d9e1', family: 'Pink' },
+      { label: 'Green', color: '#d8ddcc', family: 'Green' },
+      { label: 'Black', color: '#28292b', family: 'Black' },
+      { label: 'White', color: '#fff', family: 'White' },
+      { label: 'Brown', color: '#eadfd6', family: 'Brown' },
+      { label: 'Test Color', color: '#eadfd6', family: 'Test Color' },
     ],
     vertical: 'Fitness',
     title: 'Filterable By Color',
@@ -1516,7 +1514,6 @@ const formattedTemplatesArray = [
   },
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=3&isLocal=false',
     slug: 'template-slug-3',
     createdBy: 'Google',
     description:
@@ -1705,11 +1702,11 @@ const formattedTemplatesArray = [
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
-      { label: 'Pink', color: '#f3d9e1' },
-      { label: 'Green', color: '#d8ddcc' },
-      { label: 'Black', color: '#28292b' },
-      { label: 'White', color: '#fff' },
-      { label: 'Brown', color: '#eadfd6' },
+      { label: 'Pink', color: '#f3d9e1', family: 'Pink' },
+      { label: 'Green', color: '#d8ddcc', family: 'Green' },
+      { label: 'Black', color: '#28292b', family: 'Black' },
+      { label: 'White', color: '#fff', family: 'White' },
+      { label: 'Brown', color: '#eadfd6', family: 'Brown' },
     ],
     vertical: 'Entertainment',
     title: 'Entertainment',
@@ -1734,7 +1731,6 @@ const formattedTemplatesArray = [
   },
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=4&isLocal=false',
     slug: 'template-slug-4',
     createdBy: 'Google',
     description:
@@ -1923,11 +1919,11 @@ const formattedTemplatesArray = [
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
-      { label: 'Pink', color: '#f3d9e1' },
-      { label: 'Green', color: '#d8ddcc' },
-      { label: 'Black', color: '#28292b' },
-      { label: 'White', color: '#fff' },
-      { label: 'Brown', color: '#eadfd6' },
+      { label: 'Pink', color: '#f3d9e1', family: 'Pink' },
+      { label: 'Green', color: '#d8ddcc', family: 'Green' },
+      { label: 'Black', color: '#28292b', family: 'Black' },
+      { label: 'White', color: '#fff', family: 'White' },
+      { label: 'Brown', color: '#eadfd6', family: 'Brown' },
     ],
     vertical: 'Test Vertical',
     title: 'Filterable By Vertical',
@@ -1952,7 +1948,6 @@ const formattedTemplatesArray = [
   },
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=5&isLocal=false',
     slug: 'template-slug-5',
     createdBy: 'Google',
     description:
@@ -2141,11 +2136,11 @@ const formattedTemplatesArray = [
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
-      { label: 'Pink', color: '#f3d9e1' },
-      { label: 'Green', color: '#d8ddcc' },
-      { label: 'Black', color: '#28292b' },
-      { label: 'White', color: '#fff' },
-      { label: 'Brown', color: '#eadfd6' },
+      { label: 'Pink', color: '#f3d9e1', family: 'Pink' },
+      { label: 'Green', color: '#d8ddcc', family: 'Green' },
+      { label: 'Black', color: '#28292b', family: 'Black' },
+      { label: 'White', color: '#fff', family: 'White' },
+      { label: 'Brown', color: '#eadfd6', family: 'Brown' },
     ],
     vertical: 'Fitness',
     title: 'Fitness',
@@ -2170,7 +2165,6 @@ const formattedTemplatesArray = [
   },
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=6&isLocal=false',
     slug: 'template-slug-6',
     createdBy: 'Google',
     description:
@@ -2359,11 +2353,11 @@ const formattedTemplatesArray = [
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
-      { label: 'Pink', color: '#f3d9e1' },
-      { label: 'Green', color: '#d8ddcc' },
-      { label: 'Black', color: '#28292b' },
-      { label: 'White', color: '#fff' },
-      { label: 'Brown', color: '#eadfd6' },
+      { label: 'Pink', color: '#f3d9e1', family: 'Pink' },
+      { label: 'Green', color: '#d8ddcc', family: 'Green' },
+      { label: 'Black', color: '#28292b', family: 'Black' },
+      { label: 'White', color: '#fff', family: 'White' },
+      { label: 'Brown', color: '#eadfd6', family: 'Brown' },
     ],
     vertical: 'Travel',
     title: 'Travel',
@@ -2388,7 +2382,6 @@ const formattedTemplatesArray = [
   },
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=7&isLocal=false',
     slug: 'template-slug-7',
     createdBy: 'Google',
     description:
@@ -2577,11 +2570,11 @@ const formattedTemplatesArray = [
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
-      { label: 'Pink', color: '#f3d9e1' },
-      { label: 'Green', color: '#d8ddcc' },
-      { label: 'Black', color: '#28292b' },
-      { label: 'White', color: '#fff' },
-      { label: 'Brown', color: '#eadfd6' },
+      { label: 'Pink', color: '#f3d9e1', family: 'Pink' },
+      { label: 'Green', color: '#d8ddcc', family: 'Green' },
+      { label: 'Black', color: '#28292b', family: 'Black' },
+      { label: 'White', color: '#fff', family: 'White' },
+      { label: 'Brown', color: '#eadfd6', family: 'Brown' },
     ],
     vertical: 'Wellbeing',
     title: 'Wellbeing',
@@ -2606,7 +2599,6 @@ const formattedTemplatesArray = [
   },
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=8&isLocal=false',
     slug: 'template-slug-8',
     createdBy: 'Google',
     description:
@@ -2795,11 +2787,11 @@ const formattedTemplatesArray = [
     status: 'template',
     tags: ['Delicious', 'Baker', 'Cook'],
     colors: [
-      { label: 'Pink', color: '#f3d9e1' },
-      { label: 'Green', color: '#d8ddcc' },
-      { label: 'Black', color: '#28292b' },
-      { label: 'White', color: '#fff' },
-      { label: 'Brown', color: '#eadfd6' },
+      { label: 'Pink', color: '#f3d9e1', family: 'Pink' },
+      { label: 'Green', color: '#d8ddcc', family: 'Green' },
+      { label: 'Black', color: '#28292b', family: 'Black' },
+      { label: 'White', color: '#fff', family: 'White' },
+      { label: 'Brown', color: '#eadfd6', family: 'Brown' },
     ],
     vertical: 'Beauty',
     title: 'Beauty',

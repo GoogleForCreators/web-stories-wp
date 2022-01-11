@@ -17,8 +17,11 @@
 /**
  * External dependencies
  */
-import percySnapshot from '@percy/puppeteer';
-import { withRTL, visitDashboard } from '@web-stories-wp/e2e-test-utils';
+import {
+  takeSnapshot,
+  withRTL,
+  visitDashboard,
+} from '@web-stories-wp/e2e-test-utils';
 
 const percyCSS = `.dashboard-grid-item-date { display: none; }`;
 
@@ -28,11 +31,10 @@ describe('Stories Dashboard', () => {
 
     await expect(page).toMatchElement('h2', { text: 'Dashboard' });
 
-    await percySnapshot(page, 'Stories Dashboard', { percyCSS });
+    await takeSnapshot(page, 'Stories Dashboard', { percyCSS });
   });
 
   describe('RTL', () => {
-    // eslint-disable-next-line jest/require-hook
     withRTL();
 
     it('should be able to open the dashboard', async () => {
@@ -40,7 +42,7 @@ describe('Stories Dashboard', () => {
 
       await expect(page).toMatchElement('h2', { text: 'Dashboard' });
 
-      await percySnapshot(page, 'Stories Dashboard on RTL', { percyCSS });
+      await takeSnapshot(page, 'Stories Dashboard on RTL', { percyCSS });
     });
   });
 });

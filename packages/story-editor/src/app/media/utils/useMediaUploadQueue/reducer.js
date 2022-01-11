@@ -21,6 +21,11 @@ import { v4 as uuidv4 } from 'uuid';
 import { revokeBlob } from '@web-stories-wp/media';
 
 /**
+ * Internal dependencies
+ */
+import { ITEM_STATUS } from './constants';
+
+/**
  * Add an item to the upload queue.
  *
  * @param {Object} state Current state.
@@ -36,6 +41,7 @@ import { revokeBlob } from '@web-stories-wp/media';
  * @param {File} action.payload.posterFile File object.
  * @param {boolean} action.payload.muteVideo Whether the video being uploaded should be muted.
  * @param {import('@web-stories-wp/media').TrimData} action.payload.trimData Trim data.
+ * @param {number} action.payload.originalResourceId Original resource id.
  * @return {Object} New state
  */
 export function addItem(
@@ -52,18 +58,21 @@ export function addItem(
       posterFile,
       muteVideo,
       trimData,
+      originalResourceId,
     },
   }
 ) {
   const id = uuidv4();
+
+  if (!resource.id) {
+    resource.id = uuidv4();
+  }
+
   const newItem = {
     id,
     file,
-    state: 'PENDING',
-    resource: {
-      ...resource,
-      id,
-    },
+    state: ITEM_STATUS.PENDING,
+    resource,
     onUploadStart,
     onUploadProgress,
     onUploadError,
@@ -72,6 +81,7 @@ export function addItem(
     posterFile,
     muteVideo,
     trimData,
+    originalResourceId,
   };
 
   return {
@@ -96,7 +106,7 @@ export function startUploading(state, { payload: { id } }) {
       item.id === id
         ? {
             ...item,
-            state: 'UPLOADING',
+            state: ITEM_STATUS.UPLOADING,
           }
         : item
     ),
@@ -131,8 +141,10 @@ export function finishUploading(state, { payload: { id, resource } }) {
         ? {
             ...item,
             resource,
+            previousResourceId: item.resource.id,
             posterFile: null,
-            state: 'UPLOADED',
+            originalResourceId: null,
+            state: ITEM_STATUS.UPLOADED,
           }
         : item
     ),
@@ -155,7 +167,7 @@ export function cancelUploading(state, { payload: { id } }) {
       item.id === id
         ? {
             ...item,
-            state: 'CANCELLED',
+            state: ITEM_STATUS.CANCELLED,
           }
         : item
     ),
@@ -178,11 +190,7 @@ export function startTranscoding(state, { payload: { id } }) {
       item.id === id
         ? {
             ...item,
-            state: 'TRANSCODING',
-            resource: {
-              ...item.resource,
-              isTranscoding: true,
-            },
+            state: ITEM_STATUS.TRANSCODING,
           }
         : item
     ),
@@ -207,10 +215,9 @@ export function finishTranscoding(state, { payload: { id, file } }) {
         ? {
             ...item,
             file,
-            state: 'TRANSCODED',
+            state: ITEM_STATUS.TRANSCODED,
             resource: {
               ...item.resource,
-              isTranscoding: false,
               isOptimized: true,
             },
           }
@@ -235,11 +242,7 @@ export function startMuting(state, { payload: { id } }) {
       item.id === id
         ? {
             ...item,
-            state: 'MUTING',
-            resource: {
-              ...item.resource,
-              isMuting: true,
-            },
+            state: ITEM_STATUS.MUTING,
           }
         : item
     ),
@@ -264,10 +267,9 @@ export function finishMuting(state, { payload: { id, file } }) {
         ? {
             ...item,
             file,
-            state: 'MUTED',
+            state: ITEM_STATUS.MUTED,
             resource: {
               ...item.resource,
-              isMuting: false,
               isMuted: true,
             },
           }
@@ -292,11 +294,7 @@ export function startTrimming(state, { payload: { id } }) {
       item.id === id
         ? {
             ...item,
-            state: 'TRIMMING',
-            resource: {
-              ...item.resource,
-              isTrimming: true,
-            },
+            state: ITEM_STATUS.TRIMMING,
           }
         : item
     ),
@@ -321,11 +319,7 @@ export function finishTrimming(state, { payload: { id, file } }) {
         ? {
             ...item,
             file,
-            state: 'TRIMMED',
-            resource: {
-              ...item.resource,
-              isTrimming: false,
-            },
+            state: ITEM_STATUS.TRIMMED,
           }
         : item
     ),
@@ -367,10 +361,35 @@ export function replacePlaceholderResource(
             ...item,
             resource: {
               ...resource,
-              id,
+              // Keep the existing resource's ID (which at this point is a random uuid)
+              // instead of overriding it with another random uuid.
+              id: item.resource.id,
               isPlaceholder: false,
             },
             posterFile,
+          }
+        : item
+    ),
+  };
+}
+
+/**
+ * Mark an item upload as fully finished.
+ *
+ * @param {Object} state Current state.
+ * @param {Object} action Action object.
+ * @param {Object} action.payload Action payload.
+ * @param {string} action.payload.id Item ID.
+ * @return {Object} New state
+ */
+export function finishItem(state, { payload: { id } }) {
+  return {
+    ...state,
+    queue: state.queue.map((item) =>
+      item.id === id
+        ? {
+            ...item,
+            state: ITEM_STATUS.FINISHED,
           }
         : item
     ),

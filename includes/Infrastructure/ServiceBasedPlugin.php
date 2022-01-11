@@ -275,7 +275,13 @@ abstract class ServiceBasedPlugin implements Plugin {
 		}
 
 		while ( null !== key( $services ) ) {
-			$id    = $this->maybe_resolve( key( $services ) );
+			$id = $this->maybe_resolve( key( $services ) );
+
+			/**
+			 * Class name.
+			 *
+			 * @var class-string $class
+			 */
 			$class = $this->maybe_resolve( current( $services ) );
 
 			// Delay registering the service until all requirements are met.
@@ -665,7 +671,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 			 *                                implementation bindings. Both
 			 *                                should be FQCNs.
 			 */
-			$bindings = (array) apply_filters(
+			$bindings = apply_filters(
 				static::HOOK_PREFIX . static::BINDINGS_FILTER,
 				$bindings
 			);
@@ -681,7 +687,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 			 *                                array maps argument names to
 			 *                                values.
 			 */
-			$arguments = (array) apply_filters(
+			$arguments = apply_filters(
 				static::HOOK_PREFIX . static::ARGUMENTS_FILTER,
 				$arguments
 			);
@@ -695,7 +701,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 			 * @param array<string> $shared_instances Array of FQCNs to turn
 			 *                                        into shared objects.
 			 */
-			$shared_instances = (array) apply_filters(
+			$shared_instances = apply_filters(
 				static::HOOK_PREFIX . static::SHARED_INSTANCES_FILTER,
 				$shared_instances
 			);
@@ -706,10 +712,10 @@ abstract class ServiceBasedPlugin implements Plugin {
 			 * This can be used to turn objects that were added externally into
 			 * shared instances.
 			 *
-			 * @param array<string> $delegations Associative array of class =>
+			 * @param array<string, callable> $delegations Associative array of class =>
 			 *                                   callable mappings.
 			 */
-			$delegations = (array) apply_filters(
+			$delegations = apply_filters(
 				static::HOOK_PREFIX . static::DELEGATIONS_FILTER,
 				$delegations
 			);
@@ -740,6 +746,11 @@ abstract class ServiceBasedPlugin implements Plugin {
 			$injector = $injector->share( $shared_instance );
 		}
 
+		/**
+		 * Callable.
+		 *
+		 * @var callable $callable
+		 */
 		foreach ( $delegations as $class => $callable ) {
 			// We don't try to resolve the $callable here, as we want to pass it
 			// on as-is.
@@ -831,8 +842,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param mixed $value Value to potentially resolve.
-	 * @return mixed Resolved or unchanged value.
+	 * @param string|callable|class-string $value Value to potentially resolve.
+	 * @return string|class-string Resolved or unchanged value.
 	 */
 	protected function maybe_resolve( $value ) {
 		if ( is_callable( $value ) && ! ( is_string( $value ) && function_exists( $value ) ) ) {

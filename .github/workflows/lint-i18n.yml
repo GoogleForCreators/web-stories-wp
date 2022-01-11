@@ -31,7 +31,7 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 5
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -48,19 +48,15 @@ jobs:
         run: wp cli info
 
       - name: Install latest version of i18n-command
-        run: wp package install wp-cli/i18n-command
+        run: wp package install wp-cli/i18n-command:dev-main
 
       - name: List packages
         run: wp package list
 
-      - name: Read .nvmrc
-        run: echo "::set-output name=NVMRC::$(cat .nvmrc)"
-        id: nvm
-
       - name: Setup Node
-        uses: actions/setup-node@v2.4.1
+        uses: actions/setup-node@v2.5.1
         with:
-          node-version: ${{ steps.nvm.outputs.NVMRC }}
+          node-version-file: '.nvmrc'
           cache: npm
 
       - name: Setup PHP

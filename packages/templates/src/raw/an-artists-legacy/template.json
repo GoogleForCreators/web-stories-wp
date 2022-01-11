@@ -1,5 +1,5 @@
 {
-  "version": 35,
+  "version": 36,
   "pages": [
     {
       "elements": [
@@ -56,7 +56,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [10, 96, 191],
+            "baseColor": "#0a60bf",
             "isExternal": true
           }
         },
@@ -370,6 +370,7 @@
             "type": "video",
             "mimeType": "video/mp4",
             "creationDate": "2021-08-05T11:07:18",
+            "baseColor": "#453e39",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/an-artists-legacy/page2_bg.mp4",
             "width": 768,
             "height": 406,
@@ -629,7 +630,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [6, 61, 129],
+            "baseColor": "#063d81",
             "isExternal": true
           }
         },
@@ -852,7 +853,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [204, 197, 216],
+            "baseColor": "#ccc5d8",
             "isExternal": true
           }
         },
@@ -1027,7 +1028,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [5, 110, 221],
+            "baseColor": "#056edd",
             "isExternal": true
           }
         }
@@ -1070,6 +1071,7 @@
             "type": "video",
             "mimeType": "video/mp4",
             "creationDate": "2021-08-05T11:07:40",
+            "baseColor": "#393635",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/an-artists-legacy/page5_bg.mp4",
             "width": 720,
             "height": 720,
@@ -1173,6 +1175,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-07-14T11:44:21",
+            "baseColor": "#16252d",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/an-artists-legacy/page6_image2.png",
             "width": 717,
             "height": 480,
@@ -1223,7 +1226,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [35, 75, 121],
+            "baseColor": "#234b79",
             "isExternal": true
           }
         },
@@ -1454,7 +1457,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [218, 205, 197],
+            "baseColor": "#dacdc5",
             "isExternal": true
           }
         },
@@ -1629,7 +1632,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [158, 176, 209],
+            "baseColor": "#9eb0d1",
             "isExternal": true
           }
         }
@@ -1794,7 +1797,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [205, 211, 211],
+            "baseColor": "#cdd3d3",
             "isExternal": true
           }
         }
@@ -1876,6 +1879,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-07-14T11:50:52",
+            "baseColor": "#e0c2a1",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/an-artists-legacy/page9_image1.png",
             "width": 720,
             "height": 1054,
@@ -2001,6 +2005,7 @@
             "type": "video",
             "mimeType": "video/mp4",
             "creationDate": "2021-08-05T11:07:43",
+            "baseColor": "#433f3c",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/an-artists-legacy/page10_bg.mp4",
             "width": 720,
             "height": 720,
@@ -2104,6 +2109,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-07-14T11:52:26",
+            "baseColor": "#cc9b92",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/an-artists-legacy/page11_image2.png",
             "width": 640,
             "height": 480,
@@ -2287,7 +2293,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [202, 177, 98],
+            "baseColor": "#cab162",
             "isExternal": true
           }
         }
@@ -2376,7 +2382,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [17, 57, 139],
+            "baseColor": "#11398b",
             "isExternal": true
           }
         },
@@ -2551,7 +2557,7 @@
             "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
-            "baseColor": [43, 88, 129],
+            "baseColor": "#2b5881",
             "isExternal": true
           }
         }
@@ -2692,6 +2698,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-07-14T11:56:26",
+            "baseColor": "#7b6a60",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/an-artists-legacy/page13_image1.png",
             "width": 640,
             "height": 480,

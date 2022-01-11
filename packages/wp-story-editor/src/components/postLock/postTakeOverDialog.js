@@ -78,6 +78,7 @@ function PostTakeOverDialog({ isOpen, user, dashboardLink, onClose }) {
             height={48}
             width={48}
             crossOrigin="anonymous"
+            decoding="async"
           />
         )}
         {dialogContent}

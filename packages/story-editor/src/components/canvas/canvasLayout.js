@@ -25,7 +25,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { useCanvas } from '../../app';
+import { useCanvas, useLayout } from '../../app';
 import EditLayer from './editLayer';
 import DisplayLayer from './displayLayer';
 import FramesLayer from './framesLayer';
@@ -49,7 +49,7 @@ const Background = styled.section.attrs({
   user-select: none;
 `;
 
-function CanvasLayout({ header }) {
+function CanvasLayout({ header, footer }) {
   const { setCanvasContainer } = useCanvas((state) => ({
     setCanvasContainer: state.actions.setCanvasContainer,
   }));
@@ -67,6 +67,16 @@ function CanvasLayout({ header }) {
   useLayoutParams(backgroundRef);
   const layoutParamsCss = useLayoutParamsCssVars();
 
+  const { pageWidth, pageHeight } = useLayout(
+    ({ state: { pageWidth, pageHeight } }) => ({
+      pageWidth,
+      pageHeight,
+    })
+  );
+
+  // If we don't have proper canvas dimensions yet, don't bother rendering element layers.
+  const hasDimensions = pageWidth !== 0 && pageHeight !== 0;
+
   // Elsewhere we use stylisRTLPlugin in case of RTL, however, since we're
   // forcing the canvas to always be LTR due to problems that otherwise come up
   // with Moveable and left-right direction, for this subtree, we are not using any plugin.
@@ -77,9 +87,9 @@ function CanvasLayout({ header }) {
         <CanvasUploadDropTarget>
           <CanvasElementDropzone>
             <SelectionCanvas>
-              <DisplayLayer />
-              <FramesLayer />
-              <NavLayer header={header} />
+              {hasDimensions && <DisplayLayer />}
+              {hasDimensions && <FramesLayer />}
+              <NavLayer header={header} footer={footer} />
             </SelectionCanvas>
             <EditLayer />
             <EyedropperLayer />
@@ -92,6 +102,7 @@ function CanvasLayout({ header }) {
 
 CanvasLayout.propTypes = {
   header: PropTypes.node,
+  footer: PropTypes.object,
 };
 
 export default memo(CanvasLayout);

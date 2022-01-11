@@ -28,6 +28,7 @@ import normalizeResourceSizes from './normalizeResourceSizes';
  */
 function createResource({
   baseColor,
+  blurHash,
   type,
   mimeType,
   creationDate,
@@ -43,7 +44,6 @@ function createResource({
   sizes,
   attribution,
   output,
-  local = false,
   isPlaceholder = false,
   isOptimized = false,
   isMuted = false,
@@ -53,6 +53,7 @@ function createResource({
 }) {
   return {
     baseColor,
+    blurHash,
     type: type || getTypeFromMime(mimeType),
     mimeType,
     creationDate,
@@ -68,7 +69,6 @@ function createResource({
     sizes: normalizeResourceSizes(sizes),
     attribution,
     output,
-    local,
     isPlaceholder,
     isOptimized,
     isMuted,

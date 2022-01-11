@@ -119,8 +119,6 @@ class Factory implements FieldStateFactory {
 				 * @param FieldState $default_field_state Field state object.
 				 */
 				$field_state = apply_filters( 'web_stories_default_field_state', $default_field_state );
-
-				$field_state = $field_state instanceof FieldState ? $field_state : $default_field_state;
 		}
 
 		return $field_state;

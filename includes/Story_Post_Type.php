@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories;
 
+use Google\Web_Stories\Infrastructure\HasMeta;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\REST_API\Stories_Controller;
 use WP_Post;
@@ -33,7 +34,7 @@ use WP_Post;
 /**
  * Class Story_Post_Type.
  */
-class Story_Post_Type extends Post_Type_Base implements HasRequirements {
+class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta {
 
 	/**
 	 * The slug of the stories post type.
@@ -70,26 +71,18 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements {
 	 */
 	private $settings;
 
-	/**
-	 * Experiments instance.
-	 *
-	 * @var Experiments Experiments instance.
-	 */
-	private $experiments;
 
 	/**
-	 * Analytics constructor.
+	 * Story post type constructor.
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param Settings    $settings     Settings instance.
-	 * @param Experiments $experiments  Experiments instance.
+	 * @param Settings $settings Settings instance.
 	 *
 	 * @return void
 	 */
-	public function __construct( Settings $settings, Experiments $experiments ) {
-		$this->settings    = $settings;
-		$this->experiments = $experiments;
+	public function __construct( Settings $settings ) {
+		$this->settings = $settings;
 	}
 
 	/**
@@ -109,6 +102,9 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements {
 		add_filter( 'wp_insert_post_data', [ $this, 'change_default_title' ] );
 		add_filter( 'bulk_post_updated_messages', [ $this, 'bulk_post_updated_messages' ], 10, 2 );
 		add_action( 'clean_post_cache', [ $this, 'clear_user_posts_count' ], 10, 2 );
+
+		$post_type = $this->get_slug();
+		add_action( "wp_{$post_type}_revisions_to_keep", [ $this, 'revisions_to_keep' ] );
 	}
 
 	/**
@@ -213,7 +209,7 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements {
 	 *
 	 * @return void
 	 */
-	protected function register_meta() {
+	public function register_meta() {
 		$active_publisher_logo_id = absint( $this->settings->get_setting( $this->settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, 0 ) );
 
 		register_post_meta(
@@ -344,9 +340,6 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements {
 	 * @return bool|string Whether the post type should have an archive, or archive slug.
 	 */
 	public function get_has_archive() {
-		if ( ! $this->experiments->is_experiment_enabled( 'archivePageCustomization' ) ) {
-			return true;
-		}
 
 		$archive_page_option    = $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE );
 		$custom_archive_page_id = (int) $this->settings->get_setting( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID );
@@ -366,5 +359,19 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements {
 		}
 
 		return $has_archive;
+	}
+
+	/**
+	 * Force WordPress to only keep 10 revisions for the web stories post type.
+	 *
+	 * @since 1.16.0
+	 *
+	 * @param int $num Number of revisions to store.
+	 *
+	 * @return int  Number of revisions to store.
+	 */
+	public function revisions_to_keep( $num ) {
+		$num = (int) $num;
+		return ( $num >= 0 && $num < 10 ) ? $num : 10;
 	}
 }

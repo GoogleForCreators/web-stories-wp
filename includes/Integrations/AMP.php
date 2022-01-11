@@ -195,6 +195,10 @@ class AMP extends Service_Base implements HasRequirements {
 		$story = new Story();
 		$story->load_from_post( $post );
 
+		$poster_images = [
+			'poster-portrait-src' => esc_url_raw( $story->get_poster_portrait() ),
+		];
+
 		if ( isset( $sanitizers['AMP_Style_Sanitizer'] ) ) {
 			if ( ! isset( $sanitizers['AMP_Style_Sanitizer']['dynamic_element_selectors'] ) ) {
 				$sanitizers['AMP_Style_Sanitizer']['dynamic_element_selectors'] = [];
@@ -206,9 +210,7 @@ class AMP extends Service_Base implements HasRequirements {
 		$sanitizers[ AMP_Story_Sanitizer::class ] = [
 			'publisher_logo' => $story->get_publisher_logo_url(),
 			'publisher'      => $story->get_publisher_name(),
-			'poster_images'  => [
-				'poster-portrait-src' => $story->get_poster_portrait(),
-			],
+			'poster_images'  => array_filter( $poster_images ),
 			'video_cache'    => $video_cache_enabled,
 		];
 
@@ -380,7 +382,7 @@ class AMP extends Service_Base implements HasRequirements {
 		}
 
 		$post = get_post( $post_id );
-		if ( ! ( $post instanceof WP_Post ) ) {
+		if ( ! $post instanceof WP_Post ) {
 			return null;
 		}
 
@@ -388,13 +390,31 @@ class AMP extends Service_Base implements HasRequirements {
 			return null;
 		}
 
+		/**
+		 * AMP queried object.
+		 *
+		 * @var array|string $queried_object
+		 */
 		$queried_object = get_post_meta( $post->ID, '_amp_queried_object', true );
+
+		if ( ! is_array( $queried_object ) ) {
+			return null;
+		}
+
 		if ( isset( $queried_object['id'], $queried_object['type'] ) && 'post' === $queried_object['type'] ) {
-			$post_type = get_post_type( $queried_object['id'] );
+			/**
+			 * Post ID.
+			 *
+			 * @var int|string $post_id
+			 */
+			$post_id = $queried_object['id'];
+
+			$post_type = get_post_type( (int) $post_id );
 			if ( $post_type ) {
 				return $post_type;
 			}
 		}
+
 		return null;
 	}
 }

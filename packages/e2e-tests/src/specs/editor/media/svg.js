@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import percySnapshot from '@percy/puppeteer';
 import {
+  takeSnapshot,
   withExperimentalFeatures,
   createNewStory,
   uploadMedia,
@@ -28,13 +28,12 @@ import {
 const MODAL = '.media-modal';
 
 describe('SVG', () => {
-  // eslint-disable-next-line jest/require-hook
   withExperimentalFeatures(['enableSVG']);
 
   it('should insert an existing SVG from media dialog', async () => {
     await createNewStory();
 
-    await expect(page).toClick('button', { text: 'Upload' });
+    await expect(page).toClick('button[aria-label="Upload"]');
     await expect(page).toMatch('Upload to Story');
     await expect(page).toClick('button', { text: 'Media Library' });
 
@@ -46,7 +45,7 @@ describe('SVG', () => {
 
     await expect(page).toMatchElement('[data-testid="imageElement"]');
 
-    await percySnapshot(page, 'Inserting SVG from Dialog');
+    await takeSnapshot(page, 'Inserting SVG from Dialog');
   });
 
   it('should upload an SVG file via media dialog', async () => {
@@ -58,7 +57,7 @@ describe('SVG', () => {
 
     await expect(page).toMatchElement('[data-testid="imageElement"]');
 
-    await percySnapshot(page, 'Uploading SVG to editor');
+    await takeSnapshot(page, 'Uploading SVG to editor');
 
     await deleteMedia(filename);
   });
