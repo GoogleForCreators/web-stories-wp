@@ -861,7 +861,6 @@ describe('Quick Actions integration', () => {
           lengthFormatted: '0:06',
           alt: 'small-video',
           sizes: {},
-          local: false,
           isOptimized: false,
           baseColor: '#734727',
         },

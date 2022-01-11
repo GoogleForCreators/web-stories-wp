@@ -107,7 +107,9 @@ describe('Drop-Target integration', () => {
       expect(bgElement.resource.baseColor).toEqual('#734727');
     });
 
-    it('should correctly handle image dragged from library straight to edge (no cached base color)', async () => {
+    // TODO: https://github.com/google/web-stories-wp/issues/10145
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit('should correctly handle image dragged from library straight to edge (no cached base color)', async () => {
       const backgroundId = (await getElements(fixture))[0].id;
 
       // Verify that bg replacement is empty

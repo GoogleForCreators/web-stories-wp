@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { sprintf, _n, __ } from '@web-stories-wp/i18n';
-import { canTranscodeResource } from '@web-stories-wp/media';
 import styled from 'styled-components';
 
 /**
@@ -31,7 +30,8 @@ import {
   BUTTON_TYPES,
   Tooltip,
 } from '@web-stories-wp/design-system';
-import { useLocalMedia, useStory } from '../../../app';
+import { useStory } from '../../../app/story';
+import { useLocalMedia } from '../../../app/media';
 import { MEDIA_VIDEO_DIMENSIONS_THRESHOLD } from '../../../constants';
 import { PRIORITY_COPY } from '../constants';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
@@ -52,24 +52,13 @@ const OptimizeButton = styled(Button)`
 `;
 
 export function videoElementsNotOptimized(element = {}) {
-  if (!element.resource) {
+  const { resource } = element;
+  if (!resource) {
     return false;
   }
-  const {
-    isTranscoding,
-    isOptimized,
-    height = 0,
-    width = 0,
-  } = element.resource;
-  if (isTranscoding) {
-    return true;
-  }
 
-  if (
-    element.type !== 'video' ||
-    isOptimized ||
-    !canTranscodeResource(element.resource)
-  ) {
+  const { isOptimized, height = 0, width = 0 } = resource;
+  if (element.type !== 'video' || isOptimized) {
     return false;
   }
 
@@ -115,6 +104,28 @@ const BulkVideoOptimization = () => {
   const isChecklistMounted = useIsChecklistMounted();
   const [state, dispatch] = useReducer(reducer, initialState);
   const pages = useStory(({ state: storyState }) => storyState?.pages);
+
+  const {
+    optimizeVideo,
+    isNewResourceTranscoding,
+    isCurrentResourceTranscoding,
+    canTranscodeResource,
+  } = useLocalMedia(
+    ({
+      actions: { optimizeVideo },
+      state: {
+        isNewResourceTranscoding,
+        canTranscodeResource,
+        isCurrentResourceTranscoding,
+      },
+    }) => ({
+      optimizeVideo,
+      isNewResourceTranscoding,
+      canTranscodeResource,
+      isCurrentResourceTranscoding,
+    })
+  );
+
   const unoptimizedElements = useMemo(
     () => filterStoryElements(pages, videoElementsNotOptimized),
     [pages]
@@ -127,10 +138,6 @@ const BulkVideoOptimization = () => {
   );
 
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
-
-  const { optimizeVideo } = useLocalMedia(({ actions }) => ({
-    optimizeVideo: actions.optimizeVideo,
-  }));
 
   const processVideoElement = useCallback(
     async (element) => {
@@ -148,13 +155,15 @@ const BulkVideoOptimization = () => {
         dispatch({ type: actionTypes.uploaded, element });
       }
     },
-    [optimizeVideo, state]
+    [canTranscodeResource, optimizeVideo, state]
   );
 
   const sequencedVideoOptimization = useCallback(() => {
     // only attempt to optimize videos that are not currently being transcoded
     const optimizingResources = unoptimizedVideos.filter(
-      ({ resource }) => !resource?.isTranscoding
+      ({ resource }) =>
+        !isNewResourceTranscoding(resource?.id) &&
+        !isCurrentResourceTranscoding(resource?.id)
     );
     return new Promise((resolve) => {
       optimizingResources
@@ -164,7 +173,12 @@ const BulkVideoOptimization = () => {
         .reduce((p, fn) => p.then(fn), Promise.resolve())
         .then(resolve);
     });
-  }, [processVideoElement, unoptimizedVideos]);
+  }, [
+    isNewResourceTranscoding,
+    isCurrentResourceTranscoding,
+    processVideoElement,
+    unoptimizedVideos,
+  ]);
 
   const handleUpdateVideos = useCallback(async () => {
     await sequencedVideoOptimization();
@@ -191,8 +205,17 @@ const BulkVideoOptimization = () => {
   const isTranscoding = useMemo(
     () =>
       currentlyUploading.length > 0 ||
-      unoptimizedVideos.some((video) => video.resource?.isTranscoding),
-    [currentlyUploading, unoptimizedVideos]
+      unoptimizedVideos.some(
+        (video) =>
+          isNewResourceTranscoding(video.resource.id) ||
+          isCurrentResourceTranscoding(video.resource.id)
+      ),
+    [
+      currentlyUploading,
+      unoptimizedVideos,
+      isNewResourceTranscoding,
+      isCurrentResourceTranscoding,
+    ]
   );
 
   const isRendered = unoptimizedVideos.length > 0;
@@ -206,7 +229,11 @@ const BulkVideoOptimization = () => {
   if (isTranscoding) {
     const numTranscoding =
       currentlyUploading.length +
-      unoptimizedVideos.filter((video) => video.resource?.isTranscoding).length;
+      unoptimizedVideos.filter(
+        (video) =>
+          isNewResourceTranscoding(video.resource.id) ||
+          isCurrentResourceTranscoding(video.resource.id)
+      ).length;
     optimizeButtonCopy = sprintf(
       /* translators: 1: number of videos currently transcoding. 2: total number of videos in list. */
       _n(
@@ -246,7 +273,10 @@ const BulkVideoOptimization = () => {
           <Thumbnail
             key={element.resource.id}
             onClick={handleClickThumbnail(element)}
-            isLoading={element.resource.isTranscoding}
+            isLoading={
+              isNewResourceTranscoding(element.resource.id) ||
+              isCurrentResourceTranscoding(element.resource.id)
+            }
             type={THUMBNAIL_TYPES.VIDEO}
             displayBackground={<LayerThumbnail page={element} />}
             aria-label={__('Go to offending video', 'web-stories')}
@@ -256,7 +286,8 @@ const BulkVideoOptimization = () => {
               <Tooltip
                 title={
                   state[element.resource.id] === actionTypes.uploading ||
-                  element.resource.isTranscoding
+                  isNewResourceTranscoding(element.resource.id) ||
+                  isCurrentResourceTranscoding(element.resource.id)
                     ? __('Video optimization in progress', 'web-stories')
                     : __('Optimize', 'web-stories')
                 }

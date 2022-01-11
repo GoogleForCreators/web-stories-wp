@@ -27,7 +27,7 @@ import {
   Icons,
 } from '@web-stories-wp/design-system';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { canTranscodeResource, resourceList } from '@web-stories-wp/media';
+import { resourceList } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
@@ -82,24 +82,29 @@ export const MediaPicker = ({ render, ...props }) => {
       updateElementsById,
     })
   );
-  const { resetWithFetch, postProcessingResource, optimizeVideo, optimizeGif } =
-    useLocalMedia(
-      ({
-        actions: {
-          resetWithFetch,
-          postProcessingResource,
-          optimizeVideo,
-          optimizeGif,
-        },
-      }) => {
-        return {
-          resetWithFetch,
-          postProcessingResource,
-          optimizeVideo,
-          optimizeGif,
-        };
-      }
-    );
+  const {
+    resetWithFetch,
+    postProcessingResource,
+    optimizeVideo,
+    optimizeGif,
+    canTranscodeResource,
+  } = useLocalMedia(
+    ({
+      state: { canTranscodeResource },
+      actions: {
+        resetWithFetch,
+        postProcessingResource,
+        optimizeVideo,
+        optimizeGif,
+      },
+    }) => ({
+      canTranscodeResource,
+      resetWithFetch,
+      postProcessingResource,
+      optimizeVideo,
+      optimizeGif,
+    })
+  );
 
   const { isTranscodingEnabled } = useFFmpeg();
   const { showSnackbar } = useSnackbar();
@@ -174,13 +179,14 @@ export const MediaPicker = ({ render, ...props }) => {
       }
     },
     [
-      insertMediaElement,
       isTranscodingEnabled,
-      optimizeGif,
-      optimizeVideo,
-      showSnackbar,
-      transcodableMimeTypes,
+      canTranscodeResource,
+      insertMediaElement,
       postProcessingResource,
+      transcodableMimeTypes,
+      optimizeVideo,
+      optimizeGif,
+      showSnackbar,
     ]
   );
   return (
@@ -255,6 +261,12 @@ const useQuickActions = () => {
     ({ state: { hasTrimMode }, actions: { toggleTrimMode } }) => ({
       hasTrimMode,
       toggleTrimMode,
+    })
+  );
+
+  const { canTranscodeResource } = useLocalMedia(
+    ({ state: { canTranscodeResource } }) => ({
+      canTranscodeResource,
     })
   );
 
@@ -670,11 +682,12 @@ const useQuickActions = () => {
         ]
       : [];
   }, [
-    actionMenuProps,
-    hasTrimMode,
-    selectedElement,
-    toggleTrimMode,
     selectedElements,
+    selectedElement,
+    canTranscodeResource,
+    hasTrimMode,
+    actionMenuProps,
+    toggleTrimMode,
   ]);
 
   const videoActions = useMemo(() => {
