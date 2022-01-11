@@ -24,34 +24,31 @@ import visitAdminPage from './visitAdminPage';
  * @return {Promise<void>}
  */
 async function visitBlockWidgetScreen() {
-  const WPVersion = process.env?.WP_VERSION;
   await visitAdminPage('widgets.php');
 
   // Disable welcome guide if it is enabled.
-  const isWelcomeGuideActive = await page.evaluate((version) => {
-    // TODO Change after 5.9 release.
-    if ('latest' === version) {
-      return wp.data
+  // The former selector is for WP < 5.9
+  const isWelcomeGuideActive = await page.evaluate(() => {
+    return (
+      wp.data
         .select('core/edit-widgets')
-        .__unstableIsFeatureActive('welcomeGuide');
-    }
-    return wp.data
-      .select('core/interface')
-      .isFeatureActive('core/edit-widgets', 'welcomeGuide');
-  }, WPVersion);
+        ?.__unstableIsFeatureActive?.('welcomeGuide') ||
+      wp.data
+        .select('core/interface')
+        ?.isFeatureActive?.('core/edit-widgets', 'welcomeGuide')
+    );
+  });
+
   if (isWelcomeGuideActive) {
-    await page.evaluate((version) => {
-      // TODO Change after 5.9 release.
-      if ('latest' === version) {
-        wp.data
-          .dispatch('core/edit-widgets')
-          .__unstableToggleFeature('welcomeGuide');
-        return;
-      }
+    // The former action is for WP < 5.9
+    await page.evaluate(() => {
+      wp.data
+        .dispatch('core/edit-widgets')
+        ?.__unstableToggleFeature?.('welcomeGuide');
       wp.data
         .dispatch('core/interface')
-        .toggleFeature('core/edit-widgets', 'welcomeGuide');
-    }, WPVersion);
+        ?.toggleFeature?.('core/edit-widgets', 'welcomeGuide');
+    });
   }
 }
 export default visitBlockWidgetScreen;
