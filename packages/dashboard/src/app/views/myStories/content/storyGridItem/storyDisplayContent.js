@@ -101,6 +101,7 @@ const StoryDisplayContent = ({
           <LockAvatar
             src={avatar}
             alt={name}
+            decoding="async"
             height={24}
             width={24}
             data-test-id="lock-user-avatar"

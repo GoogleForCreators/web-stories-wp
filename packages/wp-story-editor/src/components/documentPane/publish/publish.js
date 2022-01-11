@@ -239,7 +239,12 @@ function PublishPanel() {
       }
       return (
         <Datalist.Option value={option.id} ref={ref} {...rest}>
-          <LogoImg src={option.url} alt="" />
+          <LogoImg
+            src={option.url}
+            alt=""
+            decoding="async"
+            crossOrigin="anonymous"
+          />
         </Datalist.Option>
       );
     }

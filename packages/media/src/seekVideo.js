@@ -29,19 +29,15 @@ function seekVideo(video, offset = 0.99) {
   }
 
   return new Promise((resolve, reject) => {
-    // The "suspend" event can be fired multiple times, even before the browser
-    // has started seeking in the first place. Because of that, it's not
-    // desired to reject on "suspend" straight away.
-    // Instead, delay rejection in the hopes that the "canplay" event fires
-    // in the meantime.
-    video.addEventListener('suspend', (evt) => {
+    // If the seek takes longer 3 seconds, guess it timed out and error out.
+    video.addEventListener('seeking', (evt) => {
       const wait = setTimeout(() => {
         clearTimeout(wait);
         reject(evt);
       }, THREE_SECONDS);
     });
     video.addEventListener('error', reject);
-    video.addEventListener('canplay', () => resolve(video), { once: true });
+    video.addEventListener('seeked', () => resolve(video), { once: true });
 
     video.currentTime = offset;
   });
