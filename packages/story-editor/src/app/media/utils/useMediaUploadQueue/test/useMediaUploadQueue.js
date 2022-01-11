@@ -26,7 +26,7 @@ import { isAnimatedGif } from '@web-stories-wp/media';
 import createResource from '@web-stories-wp/media/src/createResource';
 import useMediaUploadQueue from '..';
 import useFFmpeg from '../../useFFmpeg';
-import { ITEM_STATUS } from "../constants";
+import { ITEM_STATUS } from '../constants';
 
 const canTranscodeFile = (file) => {
   return ['video/mp4'].includes(file.type);
