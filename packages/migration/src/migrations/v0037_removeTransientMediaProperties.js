@@ -14,23 +14,31 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import preloadImage from './preloadImage';
-
-/**
- * Get image dimensions from an image.
- *
- * @param {string} src Image source.
- * @return {Promise} Image dimensions object.
- */
-const getImageDimensions = async (src) => {
-  const img = await preloadImage({ src });
+function removeTransientMediaProperties({ pages, ...rest }) {
   return {
-    width: img.naturalWidth,
-    height: img.naturalHeight,
+    pages: pages.map(reducePage),
+    ...rest,
   };
-};
+}
 
-export default getImageDimensions;
+function reducePage({ elements, ...rest }) {
+  return {
+    elements: elements.map(updateElement),
+    ...rest,
+  };
+}
+
+function updateElement(element) {
+  if (!element.resource) {
+    return element;
+  }
+
+  delete element.resource.local;
+  delete element.resource.isTrimming;
+  delete element.resource.isTranscoding;
+  delete element.resource.isMuting;
+
+  return element;
+}
+
+export default removeTransientMediaProperties;

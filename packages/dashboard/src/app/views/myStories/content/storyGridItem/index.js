@@ -154,6 +154,7 @@ const StoryGridItem = forwardRef(
                     ),
                     as: 'img',
                     src: story.featuredMediaUrl,
+                    decoding: 'async',
                   }
                 : null)}
               width={DEFAULT_GRID_IMG_WIDTH}
