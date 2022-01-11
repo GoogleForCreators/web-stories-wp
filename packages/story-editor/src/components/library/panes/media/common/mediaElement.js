@@ -154,7 +154,7 @@ function Element({
       } else {
         setShowVideoDetail(true);
         resetHoverTime();
-        if (mediaElement.current && src) {
+        if (mediaElement.current && mediaElement.current?.pause && src) {
           // Stop video and reset position.
           mediaElement.current.pause();
           mediaElement.current.currentTime = 0;
