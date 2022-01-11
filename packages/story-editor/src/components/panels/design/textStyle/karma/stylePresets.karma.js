@@ -147,14 +147,16 @@ describe('Panel: Style Presets', () => {
     it('should apply text style to multiple text elements', async () => {
       await fixture.editor.library.textTab.click();
       // Add a paragraph.
-      await fixture.events.click(
+      const paragraphButton = await waitFor(() =>
         fixture.editor.library.text.preset('Paragraph')
       );
+      await fixture.events.click(paragraphButton);
       // Add a heading.
       await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
       panel = fixture.editor.inspector.designPanel.textStyle;
       await fixture.events.click(panel.addStyle);
 
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       // Select both.
       await selectTarget(fixture.editor.canvas.framesLayer.frames[1].node);
 

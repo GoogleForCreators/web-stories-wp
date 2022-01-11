@@ -89,6 +89,12 @@ const ALLOWED_ERROR_MESSAGES = [
 
   // Another Firefox warning.
   'Layout was forced before the page was fully loaded',
+
+  // Upsteam issue in gutenberg and twentytwenty theme.
+  'Stylesheet twentytwenty-block-editor-styles-css was not properly added.',
+
+  // TODO(#9240): Fix usage in the web stories block.
+  "select( 'core' ).getAuthors() is deprecated since version 5.9.",
 ];
 
 export function addAllowedErrorMessage(message) {
