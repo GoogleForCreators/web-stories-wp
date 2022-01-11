@@ -30,7 +30,7 @@ const Image = styled.img`
 
 function VisibleImage({ ...attrs }) {
   // eslint-disable-next-line styled-components-a11y/alt-text
-  return <Image {...attrs} crossOrigin="anonymous" />;
+  return <Image {...attrs} decoding="async" crossOrigin="anonymous" />;
 }
 
 VisibleImage.propTypes = {
