@@ -25,6 +25,7 @@ namespace PHPSTORM_META {
 			'experiments'                  => \Google\Web_Stories\Experiments::class,
 			'integrations.amp'             => \Google\Web_Stories\Integrations\AMP::class,
 			'integrations.jetpack'         => \Google\Web_Stories\Integrations\Jetpack::class,
+			'integrations.newrelic'        => \Google\Web_Stories\Integrations\New_Relic::class,
 			'integrations.nextgen_gallery' => \Google\Web_Stories\Integrations\NextGen_Gallery::class,
 			'integrations.cfi'             => \Google\Web_Stories\Integrations\Conditional_Featured_Image::class,
 			'integrations.sitekit'         => \Google\Web_Stories\Integrations\Site_Kit::class,
