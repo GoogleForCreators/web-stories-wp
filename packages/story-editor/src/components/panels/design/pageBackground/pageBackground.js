@@ -31,6 +31,7 @@ import {
   THEME_CONSTANTS,
   Tooltip,
 } from '@web-stories-wp/design-system';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -140,6 +141,7 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
         firstElement: element,
         secondId: selectedElements[0].id,
       });
+      trackEvent('replace_background_media');
     },
     [combineElements, selectedElements]
   );
