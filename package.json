@@ -54,7 +54,7 @@
     "@storybook/builder-webpack5": "^6.4.12",
     "@storybook/client-api": "^6.4.12",
     "@storybook/client-logger": "^6.4.12",
-    "@storybook/csf": "^6.4.12",
+    "@storybook/csf": "^0.0.1",
     "@storybook/manager-webpack5": "^6.4.12",
     "@storybook/react": "^6.4.12",
     "@stylelint/postcss-css-in-js": "^0.37.2",
