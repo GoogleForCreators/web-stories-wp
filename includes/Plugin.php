@@ -85,6 +85,7 @@ class Plugin extends ServiceBasedPlugin {
 		'experiments'                  => Experiments::class,
 		'integrations.amp'             => Integrations\AMP::class,
 		'integrations.jetpack'         => Integrations\Jetpack::class,
+		'integrations.newrelic'        => Integrations\New_Relic::class,
 		'integrations.nextgen_gallery' => Integrations\NextGen_Gallery::class,
 		'integrations.cfi'             => Integrations\Conditional_Featured_Image::class,
 		'integrations.sitekit'         => Integrations\Site_Kit::class,
