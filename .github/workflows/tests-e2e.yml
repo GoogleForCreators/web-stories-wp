@@ -75,6 +75,10 @@ jobs:
             wp: 'latest'
             snapshots: true
           - browser: 'chrome'
+            wp: '5.9-RC1'
+            experimental: true
+            snapshots: false
+          - browser: 'chrome'
             wp: '5.5'
             snapshots: false
 
