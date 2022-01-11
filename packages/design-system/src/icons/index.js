@@ -146,3 +146,6 @@ export { ReactComponent as TurningLine } from './turning_line.svg';
 export { ReactComponent as Union } from './union.svg';
 export { ReactComponent as Video } from './video.svg';
 export { ReactComponent as Launch } from './launch.svg';
+
+// This icon is also needed as a raw SVG for CSS
+export { default as ArrowCircleSVG } from './arrow_circle.svg';
