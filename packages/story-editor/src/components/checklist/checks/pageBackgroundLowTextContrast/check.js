@@ -27,7 +27,7 @@ import { getMediaSizePositionProps, preloadImage } from '@web-stories-wp/media';
 /**
  * Internal dependencies
  */
-import createSolidFromString from '@web-stories-wp/patterns/src/createSolidFromString';
+import { createSolidFromString } from '@web-stories-wp/patterns';
 import {
   calculateLuminanceFromRGB,
   calculateLuminanceFromStyleColor,
