@@ -84,7 +84,7 @@ function arrange({
 }
 
 describe('UpdateButton', () => {
-  const FUTURE_DATE = '2022-01-10T20:20:20Z';
+  const FUTURE_DATE = '2022-01-01T20:20:20Z';
 
   beforeAll(() => {
     MockDate.set('2020-07-15T12:00:00+00:00');
