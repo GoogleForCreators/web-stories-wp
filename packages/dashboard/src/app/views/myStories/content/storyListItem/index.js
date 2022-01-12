@@ -121,6 +121,7 @@ export const StoryListItem = ({
                     src: story.featuredMediaUrl,
                     alt: formattedTitle,
                     as: 'img',
+                    decoding: 'async',
                   }
                 : null)}
             />

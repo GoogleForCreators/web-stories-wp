@@ -30235,31 +30235,6 @@
     }
   },
   {
-    "family": "Pushster",
-    "fallbacks": ["cursive"],
-    "weights": [400],
-    "styles": ["regular"],
-    "variants": [[0, 400]],
-    "service": "fonts.google.com",
-    "metrics": {
-      "upm": 1000,
-      "asc": 1000,
-      "des": -250,
-      "tAsc": 1000,
-      "tDes": -250,
-      "tLGap": 0,
-      "wAsc": 1000,
-      "wDes": 490,
-      "xH": 500,
-      "capH": 748,
-      "yMin": -490,
-      "yMax": 1000,
-      "hAsc": 1000,
-      "hDes": -250,
-      "lGap": 0
-    }
-  },
-  {
     "family": "Qahiri",
     "fallbacks": ["sans-serif"],
     "weights": [400],

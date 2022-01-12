@@ -39,7 +39,8 @@ function CurrentUserProvider({ children }) {
   }, [currentUser, getCurrentUser]);
 
   const updateCurrentUser = useCallback(
-    (data) => _updateCurrentUser(data).then(setCurrentUser),
+    (data) =>
+      _updateCurrentUser ? _updateCurrentUser(data).then(setCurrentUser) : null,
     [_updateCurrentUser]
   );
 

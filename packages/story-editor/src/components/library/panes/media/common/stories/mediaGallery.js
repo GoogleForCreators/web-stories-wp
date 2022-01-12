@@ -34,7 +34,6 @@ const resources = [
   {
     id: 1,
     type: 'image',
-    local: false,
     alt: 'image alt',
     mimeType: 'image/jpeg',
     baseColor: '#ffffff',
@@ -45,7 +44,6 @@ const resources = [
   {
     id: 1,
     type: 'image',
-    local: false,
     alt: 'image alt',
     mimeType: 'image/jpeg',
     baseColor: '#ffffff',
@@ -56,7 +54,6 @@ const resources = [
   {
     id: 1,
     type: 'image',
-    local: false,
     alt: 'image alt',
     mimeType: 'image/jpeg',
     baseColor: '#ffffff',
@@ -67,7 +64,6 @@ const resources = [
   {
     id: 1,
     type: 'image',
-    local: false,
     alt: 'image alt',
     mimeType: 'image/jpeg',
     baseColor: '#ffffff',
@@ -78,7 +74,6 @@ const resources = [
   {
     id: 1,
     type: 'image',
-    local: false,
     alt: 'image alt',
     mimeType: 'image/jpeg',
     baseColor: '#ffffff',
@@ -89,7 +84,6 @@ const resources = [
   {
     id: 1,
     type: 'image',
-    local: false,
     alt: 'image alt',
     mimeType: 'image/jpeg',
     baseColor: '#ffffff',
@@ -100,7 +94,6 @@ const resources = [
   {
     id: 1,
     type: 'image',
-    local: false,
     alt: 'image alt',
     mimeType: 'image/jpeg',
     baseColor: '#ffffff',
@@ -111,7 +104,6 @@ const resources = [
   {
     id: 1,
     type: 'image',
-    local: false,
     alt: 'image alt',
     mimeType: 'image/jpeg',
     baseColor: '#ffffff',
@@ -122,7 +114,6 @@ const resources = [
   {
     id: 1,
     type: 'image',
-    local: false,
     alt: 'image alt',
     mimeType: 'image/jpeg',
     baseColor: '#ffffff',
@@ -133,7 +124,6 @@ const resources = [
   {
     id: 1,
     type: 'image',
-    local: false,
     alt: 'image alt',
     mimeType: 'image/jpeg',
     baseColor: '#ffffff',
@@ -144,7 +134,6 @@ const resources = [
   {
     id: 1,
     type: 'image',
-    local: false,
     alt: 'image alt',
     mimeType: 'image/jpeg',
     baseColor: '#ffffff',
@@ -155,7 +144,6 @@ const resources = [
   {
     id: 1,
     type: 'image',
-    local: false,
     alt: 'image alt',
     mimeType: 'image/jpeg',
     baseColor: '#ffffff',
@@ -166,7 +154,6 @@ const resources = [
   {
     id: 1,
     type: 'image',
-    local: false,
     alt: 'image alt',
     mimeType: 'image/jpeg',
     baseColor: '#ffffff',
@@ -177,7 +164,6 @@ const resources = [
   {
     id: 1,
     type: 'image',
-    local: false,
     alt: 'image alt',
     mimeType: 'image/jpeg',
     baseColor: '#ffffff',
@@ -188,7 +174,6 @@ const resources = [
   {
     id: 1,
     type: 'image',
-    local: false,
     alt: 'image alt',
     mimeType: 'image/jpeg',
     baseColor: '#ffffff',
@@ -199,7 +184,6 @@ const resources = [
   {
     id: 1,
     type: 'image',
-    local: false,
     alt: 'image alt',
     mimeType: 'image/jpeg',
     baseColor: '#ffffff',
@@ -210,7 +194,6 @@ const resources = [
   {
     id: 1,
     type: 'image',
-    local: false,
     alt: 'image alt',
     mimeType: 'image/jpeg',
     baseColor: '#ffffff',
@@ -221,7 +204,6 @@ const resources = [
   {
     id: 1,
     type: 'image',
-    local: false,
     alt: 'image alt',
     mimeType: 'image/jpeg',
     baseColor: '#ffffff',
@@ -232,7 +214,6 @@ const resources = [
   {
     id: 1,
     type: 'image',
-    local: false,
     alt: 'image alt',
     mimeType: 'image/jpeg',
     baseColor: '#ffffff',
@@ -243,7 +224,6 @@ const resources = [
   {
     id: 1,
     type: 'image',
-    local: false,
     alt: 'image alt',
     mimeType: 'image/jpeg',
     baseColor: '#ffffff',
@@ -254,7 +234,6 @@ const resources = [
   {
     id: 1,
     type: 'image',
-    local: false,
     alt: 'image alt',
     mimeType: 'image/jpeg',
     baseColor: '#ffffff',
@@ -265,7 +244,6 @@ const resources = [
   {
     id: 1,
     type: 'image',
-    local: false,
     alt: 'image alt',
     mimeType: 'image/jpeg',
     baseColor: '#ffffff',
@@ -276,7 +254,6 @@ const resources = [
   {
     id: 1,
     type: 'image',
-    local: false,
     alt: 'image alt',
     mimeType: 'image/jpeg',
     baseColor: '#ffffff',
@@ -287,7 +264,6 @@ const resources = [
   {
     id: 1,
     type: 'image',
-    local: false,
     alt: 'image alt',
     mimeType: 'image/jpeg',
     baseColor: '#ffffff',
@@ -298,7 +274,6 @@ const resources = [
   {
     id: 1,
     type: 'image',
-    local: false,
     alt: 'image alt',
     mimeType: 'image/jpeg',
     baseColor: '#ffffff',

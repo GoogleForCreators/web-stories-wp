@@ -66,7 +66,6 @@ export const _Image = () => {
     src: testImage,
     width: 910,
     height: 675,
-    local: false,
     alt: 'my image',
     sizes: {},
   });
@@ -100,7 +99,6 @@ export const _Image_With_Attribution = () => {
     src: testImage,
     width: 910,
     height: 675,
-    local: false,
     alt: 'my image',
     sizes: {},
     attribution: {
@@ -143,7 +141,6 @@ export const _Video = () => {
     height: 480,
     poster: testPoster,
     lengthFormatted: '0:26',
-    local: false,
     alt: 'my video',
     sizes: {},
   });
@@ -180,7 +177,6 @@ export const _Video_With_Attribution = () => {
     height: 480,
     poster: testPoster,
     lengthFormatted: '0:26',
-    local: false,
     alt: 'my video',
     sizes: {},
     attribution: {
