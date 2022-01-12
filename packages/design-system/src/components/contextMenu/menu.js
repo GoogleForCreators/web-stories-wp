@@ -24,6 +24,7 @@ import {
   useRef,
   useState,
   forwardRef,
+  useCombinedRefs,
 } from '@web-stories-wp/react';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
@@ -33,7 +34,7 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { BUTTON_TRANSITION_TIMING } from '../button/constants';
 import { useKeyDownEffect } from '../keyboard';
-import { KEYS, noop, useComposeRefs } from '../../utils';
+import { KEYS, noop } from '../../utils';
 import { MenuItem, MenuItemProps } from './menuItem';
 
 const FOCUSABLE_ELEMENTS = ['A', 'BUTTON'];
@@ -205,7 +206,7 @@ const Menu = forwardRef(
     const menuWasAlreadyOpen = useRef(false);
     const ids = useMemo(() => items.map(() => uuidv4()), [items]);
 
-    const composedWrapperRef = useComposeRefs(wrapperRef, ref);
+    const composedWrapperRef = useCombinedRefs(wrapperRef, ref);
 
     // Need ref so that `items.length` changes do not trigger the effect
     // that focuses an item in the menu when it is first opened.

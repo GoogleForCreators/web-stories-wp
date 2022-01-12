@@ -20,6 +20,7 @@
     "use-debounce": "^7.0.1"
   },
   "devDependencies": {
-    "@testing-library/react": "^12.1.2"
+    "@testing-library/react": "^12.1.2",
+    "@testing-library/react-hooks": "^7.0.2"
   }
 }
