@@ -13,6 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as ContextMenu } from './contextMenu';
-export * as ContextMenuComponents from './components';
-export { MenuPropTypes } from './menu';
+/**
+ * Internal dependencies
+ */
+import MenuButton from './button';
+import MenuGroup from './group';
+import MenuIcon from './icon';
+import MenuLabel from './label';
+import MenuLink from './link';
+import MenuSeparator from './separator';
+import MenuShortcut from './shortcut';
+
+export {
+  MenuButton,
+  MenuGroup,
+  MenuIcon,
+  MenuLabel,
+  MenuLink,
+  MenuSeparator,
+  MenuShortcut,
+};

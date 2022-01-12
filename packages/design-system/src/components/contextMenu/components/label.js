@@ -13,6 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as ContextMenu } from './contextMenu';
-export * as ContextMenuComponents from './components';
-export { MenuPropTypes } from './menu';
+/**
+ * External dependencies
+ */
+import styled from 'styled-components';
+
+/**
+ * Internal dependencies
+ */
+import { menuItemStyles } from './styles';
+
+const Label = styled.div`
+  ${menuItemStyles};
+`;
+
+export default Label;

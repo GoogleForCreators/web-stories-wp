@@ -220,16 +220,13 @@ MediaPicker.propTypes = {
   ]),
 };
 
-/** @typedef {import('@web-stories-wp/design-system').MenuItemProps} MenuItemProps */
-
 /**
  * Determines the quick actions to display in the quick
  * actions menu from the selected element.
  *
- * Quick actions should have the same shape as items in
- * the design system's context menu.
+ * Quick actions should follow the `quickActionPropType` definition.
  *
- * @return {Array.<MenuItemProps>} an array of quick action objects
+ * @return {Array.<{ Icon: Node, label: string, onClick: Function, separator: string, tooltipPlacement: string, wrapWithMediaPicker: boolean }>} an array of quick action objects
  */
 const useQuickActions = () => {
   const {
@@ -564,7 +561,7 @@ const useQuickActions = () => {
             element: selectedElement?.type,
           });
         },
-        ItemWrapper: MediaPicker,
+        wrapWithMediaPicker: true,
         ...actionMenuProps,
       });
     }
@@ -759,7 +756,7 @@ const useQuickActions = () => {
             isBackground: true,
           });
         },
-        ItemWrapper: MediaPicker,
+        wrapWithMediaPicker: true,
         ...actionMenuProps,
       });
     }
