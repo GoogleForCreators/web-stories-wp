@@ -126,10 +126,15 @@ const PageAreaContainer = styled(Area).attrs({
   overflow: ${({ showOverflow }) =>
     showOverflow ? 'visible' : 'var(--overflow-x) var(--overflow-y)'};
 
-  ${({ isControlled, hasVerticalOverflow, hasHorizontalOverflow }) =>
+  ${({
+    isControlled,
+    hasVerticalOverflow,
+    hasHorizontalOverflow,
+    showOverflow,
+  }) =>
     isControlled &&
     `
-      overflow: ${({ showOverflow }) => (showOverflow ? 'visible' : 'hidden')};
+      overflow: ${showOverflow ? 'visible' : 'hidden'};
       width: calc(
         100% - ${hasVerticalOverflow ? themeHelpers.SCROLLBAR_WIDTH : 0}px
       );
