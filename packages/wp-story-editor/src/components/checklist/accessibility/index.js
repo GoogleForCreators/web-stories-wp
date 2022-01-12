@@ -46,7 +46,7 @@ function Accessibility() {
       <ElementLinkTappableRegionTooSmall />
       <ElementLinkTappableRegionTooBig />
       <ImageElementMissingAlt />
-      {hasUploadMediaAction && <VideoOptimizationCheckbox />}
+      <VideoOptimizationCheckbox />
     </>
   );
 }
