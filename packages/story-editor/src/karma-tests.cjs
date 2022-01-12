@@ -15,5 +15,5 @@
  */
 
 // Collect all Karma tests together for the test webpack config.
-const testsContext = require.context('.', true, /\.karma\.js$/);
+const testsContext = require.context('.', true, /\.karmax\.js$/);
 testsContext.keys().forEach(testsContext);

@@ -104,6 +104,11 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
     updateCurrentPageProperties: actions.updateCurrentPageProperties,
   }));
 
+  for (let i = 0; i < 10000000; i++) {
+    // eslint-disable-next-line no-console
+    console.log(JSON.stringify(currentPage));
+  }
+
   const {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
