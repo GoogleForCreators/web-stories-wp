@@ -21,7 +21,13 @@ import { useCallback, useRef, useContextSelector } from '@web-stories-wp/react';
  * Internal dependencies
  */
 import Context from './context';
-import { RECT_OBSERVATION_KEY } from './constants';
+
+export const RECT_OBSERVATION_KEY = 'rectObservationKey';
+
+export const CANVAS_BOUNDING_BOX_IDS = {
+  CANVAS_CONTAINER: 'canvasContainer',
+  PAGE_CONTAINER: 'pageContainer',
+};
 
 /**
  * Returns a ref that when applied to an element, stores the elements
@@ -65,6 +71,6 @@ export function useCanvasBoundingBoxRef(boundingBoxId) {
 export function useCanvasBoundingBox(boundingBoxId) {
   return useContextSelector(
     Context,
-    ({ state }) => state.boundingBoxes[boundingBoxId]
+    ({ state }) => state.boundingBoxes?.[boundingBoxId]
   );
 }

@@ -57,6 +57,7 @@ describe('ShapePreview', () => {
         pageContainer: document.body,
         canvasContainer: document.body,
         designSpaceGuideline: {},
+        boundingBoxes: {},
       },
       actions: {},
     };
