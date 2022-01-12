@@ -31,6 +31,27 @@ body.js.edit-story #wpbody-content {
   padding: 0;
 }
 
+/* WordPress navigation sizes to give allotment accordingly to Editor. */
+body.edit-story {
+  --top-bar: 32px;
+  --side-nav-open: 56px;
+  --side-nav-collapsed: 36px;
+}
+
+/* Positioning overrides needed for centering in Web Stories Editor when used in WordPress */
+body.edit-story [data-wpstyle='editor-popup'] {
+  max-height: calc(100vh - var(--top-bar)) !important;
+}
+
+body.edit-story .WebStories_ReactModal__Overlay {
+  top: var(--top-bar) !important;
+  left: var(--side-nav-open) !important;
+}
+
+body.folded.edit-story .WebStories_ReactModal__Overlay {
+  left: var(--side-nav-collapsed) !important;
+}
+
 body.edit-story .web-stories-wp {
   position: relative;
 }
@@ -38,10 +59,11 @@ body.edit-story .web-stories-wp {
 body.js.edit-story #web-stories-editor {
   background-color: #131516; /* theme.colors.bg.primary */
   position: relative;
-  height: calc(100vh - 32px); /* ADMIN_TOOLBAR_HEIGHT = 32 */
+  height: calc(100vh - var(--top-bar));
   overflow: hidden;
 }
 
+/* Loading Spinner */
 body.js.edit-story #web-stories-editor .loading-message {
   position: absolute;
   left: 0;

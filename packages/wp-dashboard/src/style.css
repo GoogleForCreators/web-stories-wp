@@ -30,11 +30,6 @@ body.js {
   display: none;
 }
 
-body.web-story_page_stories-dashboard {
-  position: relative;
-  overflow: scroll;
-}
-
 #adminmenuback {
   z-index: 4;
 }
@@ -54,6 +49,37 @@ body.web-story_page_stories-dashboard #wpbody {
   height: 100%;
 }
 
+/* WordPress navigation sizes to give allotment accordingly to Editor. */
+body.web-story_page_stories-dashboard {
+  --top-bar: 32px;
+  --side-nav-open: 160px;
+  --side-nav-collapsed: 36px;
+
+  position: relative;
+  overflow: scroll;
+}
+
+/* Positioning overrides needed for centering and sticking in Web Stories Dashboard when used in WordPress */
+body.web-story_page_stories-dashboard [data-wpstyle='dashboard-left-rail'] {
+  top: var(--top-bar) !important;
+}
+
+body.web-story_page_stories-dashboard
+  [data-wpstyle='dashboard-sticky-table']
+  th {
+  top: var(--top-bar) !important;
+}
+
+body.web-story_page_stories-dashboard .WebStories_ReactModal__Overlay {
+  top: var(--top-bar) !important;
+  left: var(--side-nav-open) !important;
+}
+
+body.folded.web-story_page_stories-dashboard .WebStories_ReactModal__Overlay {
+  left: var(--side-nav-collapsed) !important;
+}
+
+/* Loading Spinner */
 body.web-story_page_stories-dashboard #web-stories-dashboard .loading-message {
   position: absolute;
   left: 0;
@@ -142,28 +168,3 @@ body.web-story_page_stories-dashboard #wpfooter {
 button {
   font-size: inherit;
 }
-
-
-body.web-story_page_stories-dashboard {
-  --top-bar: 32px;
-  --side-nav-open: 160px;
-  --side-nav-collapsed: 36px;
-}
-
-body.web-story_page_stories-dashboard [data-wpstyle='dashboard-left-rail'] {
-  top: var(--top-bar) !important;
-}
-
-body.web-story_page_stories-dashboard [data-wpstyle='dashboard-sticky-table'] th {
-  top: var(--top-bar) !important;
-}
-
-body.web-story_page_stories-dashboard .WebStories_ReactModal__Overlay {
-  top: var(--top-bar) !important;
-  left: var(--side-nav-open) !important;
-}
-
-body.folded.web-story_page_stories-dashboard .WebStories_ReactModal__Overlay {
-  left: var(--side-nav-collapsed) !important;
-}
-
