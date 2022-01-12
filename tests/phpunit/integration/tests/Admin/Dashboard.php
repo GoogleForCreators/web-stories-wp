@@ -26,6 +26,7 @@ use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\Locale;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Font_Post_Type;
 use Google\Web_Stories\Tests\Integration\Capabilities_Setup;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 
@@ -174,7 +175,8 @@ class Dashboard extends DependencyInjectedTestCase {
 				]
 			);
 
-		$post_type = new Story_Post_Type( new Settings(), $experiments );
+		$post_type      = new Story_Post_Type( new Settings(), $experiments );
+		$font_post_type = new Font_Post_Type( $post_type );
 
 		$this->instance = new \Google\Web_Stories\Admin\Dashboard(
 			$experiments,
@@ -183,6 +185,7 @@ class Dashboard extends DependencyInjectedTestCase {
 			$this->createMock( Locale::class ),
 			( new Google_Fonts() ),
 			$assets,
+			$font_post_type,
 			$post_type,
 			new Context( $post_type ),
 			$this->createMock( \Google\Web_Stories\Media\Types::class )

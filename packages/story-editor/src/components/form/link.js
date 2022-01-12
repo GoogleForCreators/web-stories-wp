@@ -20,12 +20,11 @@
 import PropTypes from 'prop-types';
 import { forwardRef } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
-import { Input } from '@web-stories-wp/design-system';
+import { isValidUrl, withProtocol, Input } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import { isValidUrl, withProtocol } from '../../utils/url';
 import { inputContainerStyleOverride } from '../panels/shared';
 import Row from './row';
 

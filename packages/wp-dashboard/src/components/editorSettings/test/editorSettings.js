@@ -55,6 +55,12 @@ jest.mock('../../../api/publisherLogo', () => ({
   setPublisherLogoAsDefault: () => mockedPromise,
 }));
 
+jest.mock('../../../api/fonts', () => ({
+  addCustomFont: () => mockedPromise,
+  fetchCustomFonts: () => mockedPromise,
+  deleteCustomFont: () => mockedPromise,
+}));
+
 jest.mock('../../../api/user', () => ({
   getUser: () => {
     return Promise.resolve({
@@ -85,6 +91,9 @@ const mockFetchPublisherLogos = jest.fn();
 const mockAddPublisherLogo = jest.fn();
 const mockRemovePublisherLogo = jest.fn();
 const mockSetPublisherLogoAsDefault = jest.fn();
+const mockAddCustomFont = jest.fn();
+const mockFetchCustomFonts = jest.fn();
+const mockDeleteCustomFont = jest.fn();
 
 function createProviderValues({
   canUploadFiles,
@@ -109,6 +118,7 @@ function createProviderValues({
       archiveURL: 'https://example.com/archive',
       api: {
         currentUser: '/web-stories/v1/users/me/',
+        fonts: 'web-stories/v1/fonts',
         users: '/web-stories/v1/users/',
         settings: '/web-stories/v1/settings/',
         pages: '/wp/v2/pages/',
@@ -145,6 +155,7 @@ function createProviderValues({
         publisherLogos: {
           publisherLogos,
         },
+        customFonts: [],
       },
       actions: {
         settingsApi: {
@@ -164,6 +175,11 @@ function createProviderValues({
           addPublisherLogo: mockAddPublisherLogo,
           removePublisherLogo: mockRemovePublisherLogo,
           setPublisherLogoAsDefault: mockSetPublisherLogoAsDefault,
+        },
+        fontsApi: {
+          addCustomFont: mockAddCustomFont,
+          fetchCustomFonts: mockFetchCustomFonts,
+          deleteCustomFont: mockDeleteCustomFont,
         },
       },
     },
@@ -197,7 +213,9 @@ describe('Editor Settings: <Editor Settings />', function () {
     const googleAnalyticsHeading = screen.getByText(GA_TEXT.SECTION_HEADING);
     expect(googleAnalyticsHeading).toBeInTheDocument();
 
-    const input = screen.getByRole('textbox');
+    const input = screen.getByRole('textbox', {
+      name: 'Enter your Google Analytics Tracking ID',
+    });
     expect(input).toBeInTheDocument();
 
     expect(input).toHaveValue('UA-098909-05');

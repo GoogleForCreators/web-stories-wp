@@ -30,6 +30,7 @@
     "@web-stories-wp/units": "*",
     "blurhash": "^1.1.4",
     "classnames": "^2.3.1",
+    "clone-deep": "^4.0.1",
     "colorthief": "^2.3.2",
     "draft-js": "^0.11.7",
     "draft-js-export-html": "^1.4.1",
