@@ -13,6 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as ContextMenu } from './contextMenu';
-export * as ContextMenuComponents from './components';
-export { MenuPropTypes } from './menu';
+/**
+ * External dependencies
+ */
+import styled from 'styled-components';
+
+/**
+ * Internal dependencies
+ */
+import { Text } from '../../typography/text';
+import { THEME_CONSTANTS } from '../../../theme';
+
+const StyledText = styled(Text).attrs({
+  forwardedAs: 'kbd',
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
+})`
+  color: ${({ theme }) => theme.colors.fg.secondary};
+`;
+
+function Shortcut(props) {
+  return <StyledText {...props} />;
+}
+
+export default Shortcut;

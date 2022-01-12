@@ -13,6 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as ContextMenu } from './contextMenu';
-export * as ContextMenuComponents from './components';
-export { MenuPropTypes } from './menu';
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+/**
+ * A wrapping div with `role="group"` for use in the context menu.
+ *
+ * @param {Object} props Attributes to pass to the div.
+ * @param {string} props.label Accessible label for the group.
+ * @return {Node} The react node
+ */
+function Group({ label, ...props }) {
+  return <div role="group" aria-label={label} {...props} />;
+}
+Group.propTypes = {
+  label: PropTypes.string.isRequired,
+};
+
+export default Group;

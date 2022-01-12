@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, screen, within } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
@@ -76,9 +76,8 @@ describe('StoryMenu', () => {
     );
 
     const menuItem = screen.getAllByRole('menuitem')[0];
-    const menuItemButton = within(menuItem).getByRole('button');
 
-    fireEvent.click(menuItemButton);
+    fireEvent.click(menuItem);
 
     expect(mockMenuItemSelected).toHaveBeenCalledTimes(1);
     expect(mockMenuItemSelected).toHaveBeenCalledWith(
