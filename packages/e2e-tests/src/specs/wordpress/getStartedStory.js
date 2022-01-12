@@ -17,8 +17,11 @@
 /**
  * External dependencies
  */
-import percySnapshot from '@percy/puppeteer';
-import { withUser, visitAdminPage } from '@web-stories-wp/e2e-test-utils';
+import {
+  takeSnapshot,
+  withUser,
+  visitAdminPage,
+} from '@web-stories-wp/e2e-test-utils';
 
 describe('Get Started Story', () => {
   describe('Admin User', () => {
@@ -44,7 +47,7 @@ describe('Get Started Story', () => {
           ),
         { timeout: 5000 } // requestIdleCallback in the carousel kicks in after 5s the latest.
       );
-      await percySnapshot(page, 'Get Started Story');
+      await takeSnapshot(page, 'Get Started Story');
     });
   });
 
@@ -65,7 +68,7 @@ describe('Get Started Story', () => {
           ),
         { timeout: 5000 } // requestIdleCallback in the carousel kicks in after 5s the latest.
       );
-      await percySnapshot(page, 'Get Started Story (Author)');
+      await takeSnapshot(page, 'Get Started Story (Author)');
 
       await expect(page).toMatchElement('input[placeholder="Add title"]');
       await expect(page).toMatch(

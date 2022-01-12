@@ -30,8 +30,8 @@ import { useLocalMedia } from '../../app/media';
 const MESSAGE_ID = 'edit-story-library-upload-message';
 
 function LibraryUploadDropTarget({ children }) {
-  const { uploadMedia } = useLocalMedia((state) => ({
-    uploadMedia: state.actions.uploadMedia,
+  const { uploadMedia } = useLocalMedia(({ actions: { uploadMedia } }) => ({
+    uploadMedia,
   }));
   const onDropHandler = useCallback(
     (files) => {

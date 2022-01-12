@@ -37,8 +37,4 @@ export class ShapeStyle extends AbstractPanel {
     color.label = 'Background color';
     return color;
   }
-
-  get opacity() {
-    return this.getByRole('textbox', { name: /Opacity/i });
-  }
 }

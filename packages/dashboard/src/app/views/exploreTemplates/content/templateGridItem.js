@@ -93,6 +93,7 @@ const TemplateGridItem = forwardRef(
               <img
                 src={posterSrc?.png}
                 alt={posterAltText}
+                decoding="async"
                 width={DEFAULT_GRID_IMG_WIDTH}
                 height={DEFAULT_GRID_IMG_HEIGHT}
               />

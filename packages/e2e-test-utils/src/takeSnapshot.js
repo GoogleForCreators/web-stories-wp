@@ -15,22 +15,15 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import preloadImage from './preloadImage';
+import percySnapshot from '@percy/puppeteer';
 
-/**
- * Get image dimensions from an image.
- *
- * @param {string} src Image source.
- * @return {Promise} Image dimensions object.
- */
-const getImageDimensions = async (src) => {
-  const img = await preloadImage({ src });
-  return {
-    width: img.naturalWidth,
-    height: img.naturalHeight,
-  };
-};
+async function takeSnapshot(page, name, options) {
+  if (!process.env?.PERCY_TOKEN) {
+    return;
+  }
+  await percySnapshot(page, name, options);
+}
 
-export default getImageDimensions;
+export default takeSnapshot;
