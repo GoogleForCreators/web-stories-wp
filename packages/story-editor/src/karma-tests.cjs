@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 
+const start = process.env.KARMA_START;
+const count = process.env.KARMA_COUNT;
+
 // Collect all Karma tests together for the test webpack config.
 const testsContext = require.context('.', true, /\.karma\.js$/);
-testsContext.keys().forEach(testsContext);
+testsContext
+  .keys()
+  .slice(start, start + count)
+  .forEach(testsContext);

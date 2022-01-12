@@ -49,6 +49,10 @@ function requestToExternal(request) {
 }
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+// eslint-disable-next-line radix
+process.env.KARMA_START = parseInt(process.env.KARMA_START, 10) || 0;
+// eslint-disable-next-line radix
+process.env.KARMA_COUNT = parseInt(process.env.KARMA_COUNT, 10) || Infinity;
 const isProduction = process.env.NODE_ENV === 'production';
 const mode = isProduction ? 'production' : 'development';
 
@@ -218,6 +222,8 @@ const sharedConfig = {
       DISABLE_OPTIMIZED_RENDERING: false,
       DISABLE_ERROR_BOUNDARIES: false,
       DISABLE_QUICK_TIPS: false,
+      KARMA_START: 5,
+      KARMA_COUNT: 99,
     }),
     new DependencyExtractionWebpackPlugin(),
   ].filter(Boolean),

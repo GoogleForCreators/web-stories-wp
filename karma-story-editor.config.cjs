@@ -75,6 +75,33 @@ module.exports = function (config) {
     // list of files / patterns to exclude
     exclude: ['**/test/**/*.js', '**/*.test.js'],
 
+    // sharding: {
+    //   specMatcher: /karma\.js$/g,
+    //   base: 'http://localhost:' + config.port,
+    //   getSets: function (shardingConfig, basePath, files) {
+    //     console.log({
+    //       served: files.served.map((f) => f.path),
+    //       included: files.included.map((f) => f.path),
+    //     });
+
+    //     function isSpecFile(url, matcher) {
+    //       return (
+    //         url.indexOf('/bower_components/') === -1 &&
+    //         url.indexOf('/node_modules/') === -1 &&
+    //         matcher.test(url)
+    //       );
+    //     }
+    //     const specs = files.served
+    //       .map((f) => shardingConfig.base + f.path.replace(basePath, ''))
+    //       .filter((p) => isSpecFile(p, shardingConfig.specMatcher));
+
+    //     // console.log('🙋‍♀️🙋‍♀️🙋‍♀️🙋‍♀️🙋‍♀️', files);
+    //     console.log('🙋‍♀️🙋‍♀️🙋‍♀️🙋‍♀️🙋‍♀️', specs);
+
+    //     return [specs.slice(config.start, config.count)];
+    //   },
+    // },
+
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
@@ -114,7 +141,8 @@ module.exports = function (config) {
 
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_DEBUG,
+    captureConsole: true,
 
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
