@@ -76,7 +76,11 @@ export default function useTelemetryOptIn() {
     toggleWebStoriesTrackingOptIn();
     localStore.setItemByKey(LOCAL_STORAGE_KEY, true);
     setOptInCheckboxClicked(true);
-    showSnackbar({ message: SUCCESS.SETTINGS.UPDATED, dismissible: true });
+    showSnackbar({
+      'aria-label': SUCCESS.SETTINGS.UPDATED,
+      message: SUCCESS.SETTINGS.UPDATED,
+      dismissible: true,
+    });
   }, [showSnackbar, toggleWebStoriesTrackingOptIn]);
 
   const closeBanner = useCallback(() => {

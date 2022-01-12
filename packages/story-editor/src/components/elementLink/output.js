@@ -18,12 +18,12 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { withProtocol } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import { withProtocol } from '../../utils/url';
 import { getLinkFromElement } from '.';
 
 function WithLink({ element, children, ...rest }) {

@@ -58,13 +58,13 @@ describe('generateStoryMenu', () => {
       expect.objectContaining({
         href: 'bottom-target-action',
         label: 'Open in editor',
-        newTab: false,
+        openNewTab: false,
         onClick: expect.any(Function),
       }),
       expect.objectContaining({
         href: 'preview-link',
         label: 'Open in new tab',
-        newTab: true,
+        openNewTab: true,
         onClick: expect.any(Function),
       }),
       expect.objectContaining({

@@ -22,7 +22,7 @@ export { default as useHighlights } from './useHighlights';
 export { default as HighlightsProvider } from './provider';
 export { default as states } from './states';
 export { ACTIONS } from './quickActions/constants';
-export { useQuickActions } from './quickActions';
+export { MediaPicker, useQuickActions } from './quickActions';
 
 export const styles = {
   OUTLINE,

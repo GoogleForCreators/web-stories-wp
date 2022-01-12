@@ -139,6 +139,16 @@ describe('UpdateButton', () => {
     expect(saveStory).toHaveBeenCalledTimes(1);
   });
 
+  it('should not be able to save if there are no new changes', () => {
+    arrange({
+      history: { hasNewChanges: false },
+      story: { status: 'publish' },
+    });
+
+    const updateButton = screen.getByRole('button', { name: 'Update' });
+    expect(updateButton).toBeDisabled();
+  });
+
   it('should allow forcing isSaving state', () => {
     arrange({
       history: { hasNewChanges: true },
@@ -200,11 +210,15 @@ describe('UpdateButton', () => {
         status: 'publish',
         date: FUTURE_DATE,
       },
+      history: {
+        hasNewChanges: true,
+      },
     });
     const scheduleButton = screen.getByRole('button', { name: 'Schedule' });
 
     expect(scheduleButton).toBeInTheDocument();
     fireEvent.click(scheduleButton);
+    expect(scheduleButton).toBeEnabled();
     expect(saveStory).toHaveBeenCalledTimes(1);
   });
 
@@ -214,6 +228,9 @@ describe('UpdateButton', () => {
         title: 'Some title',
         status: 'private',
         date: FUTURE_DATE,
+      },
+      history: {
+        hasNewChanges: true,
       },
     });
     const updateButton = screen.getByRole('button', { name: 'Update' });
