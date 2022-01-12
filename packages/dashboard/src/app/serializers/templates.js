@@ -18,10 +18,6 @@
  * External dependencies
  */
 import { toUTCDate, toDate, getOptions } from '@web-stories-wp/date';
-/**
- * Internal dependencies
- */
-import { APP_ROUTES } from '../../constants';
 
 export default function reshapeTemplateObject(
   originalTemplateData,
@@ -36,7 +32,6 @@ export default function reshapeTemplateObject(
     ...originalTemplateData,
     id,
     slug,
-    centerTargetAction: `${APP_ROUTES.TEMPLATE_DETAIL}?id=${id}&isLocal=${isLocal}`,
     creationDate: toDate(creationDate, getOptions()),
     status: 'template',
     modified: toUTCDate(modified),

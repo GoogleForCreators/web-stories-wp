@@ -68,9 +68,10 @@ module.exports = function (config) {
         served: true,
         nocache: false,
       },
+      // eslint-disable-next-line prettier/prettier, no-useless-escape
+      '^https:\/\/fonts.googleapis.com\/css*',
       'node_modules/axe-core/axe.js',
     ],
-
     // list of files / patterns to exclude
     exclude: ['**/test/**/*.js', '**/*.test.js'],
 

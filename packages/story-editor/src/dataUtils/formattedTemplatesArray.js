@@ -24,7 +24,6 @@ import { toUTCDate } from '@web-stories-wp/date';
 const formattedTemplatesArray = [
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=10&isLocal=false',
     createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
@@ -1289,7 +1288,6 @@ const formattedTemplatesArray = [
   },
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=9&isLocal=false',
     createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
@@ -1489,7 +1487,6 @@ const formattedTemplatesArray = [
   },
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=3&isLocal=false',
     createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
@@ -1689,7 +1686,6 @@ const formattedTemplatesArray = [
   },
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=4&isLocal=false',
     createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
@@ -1891,7 +1887,6 @@ const formattedTemplatesArray = [
   },
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=5&isLocal=false',
     createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
@@ -2091,7 +2086,6 @@ const formattedTemplatesArray = [
   },
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=6&isLocal=false',
     createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
@@ -2291,7 +2285,6 @@ const formattedTemplatesArray = [
   },
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=7&isLocal=false',
     createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
@@ -2491,7 +2484,6 @@ const formattedTemplatesArray = [
   },
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=8&isLocal=false',
     createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
