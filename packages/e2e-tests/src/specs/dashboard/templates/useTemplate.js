@@ -17,8 +17,7 @@
 /**
  * External dependencies
  */
-import percySnapshot from '@percy/puppeteer';
-import { visitDashboard } from '@web-stories-wp/e2e-test-utils';
+import { takeSnapshot, visitDashboard } from '@web-stories-wp/e2e-test-utils';
 
 describe('Template', () => {
   it('should be able to use existing template for new story', async () => {
@@ -74,7 +73,7 @@ describe('Template', () => {
         ),
       { timeout: 5000 } // requestIdleCallback in the carousel kicks in after 5s the latest.
     );
-    await percySnapshot(page, 'Story From Template');
+    await takeSnapshot(page, 'Story From Template');
 
     // Select a text layer so 'Saved Colors' panel is present
     await expect(page).toClick('div[data-testid="layer-option"] button', {

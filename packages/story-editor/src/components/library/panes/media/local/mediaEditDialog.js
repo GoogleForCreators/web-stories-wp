@@ -151,6 +151,7 @@ function MediaEditDialog({ resource, onClose }) {
             alt={alt}
             loading={'lazy'}
             crossOrigin="anonymous"
+            decoding="async"
           />
         ) : (
           <Video

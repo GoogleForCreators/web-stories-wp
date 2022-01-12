@@ -39,7 +39,7 @@ const getImageData = (image) => {
 const getBlurHashFromImage = async (src) => {
   let image;
   try {
-    image = await preloadImage(src);
+    image = await preloadImage({ src });
   } catch {
     return Promise.reject(new Error('Failed to get blurhash from image'));
   }

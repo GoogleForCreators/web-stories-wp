@@ -32,10 +32,14 @@ async function trashAllTerms(taxonomy) {
 
   await visitAdminPage('edit-tags.php', `taxonomy=${taxonomy}`);
 
-  await page.waitForSelector('[id^=cb-select-all-]');
-  await page.click('[id^=cb-select-all-]');
-  await page.select('#bulk-action-selector-top', 'delete');
-  await Promise.all([page.waitForNavigation(), page.click('#doaction')]);
+  // If this selector doesn't exist there are no terms for us to delete.
+  const bulkSelector = await page.$('#bulk-action-selector-top');
+  if (bulkSelector) {
+    await page.waitForSelector('[id^=cb-select-all-]');
+    await page.click('[id^=cb-select-all-]');
+    await page.select('#bulk-action-selector-top', 'delete');
+    await Promise.all([page.waitForNavigation(), page.click('#doaction')]);
+  }
 
   await setCurrentUser(currentUser.username, currentUser.password);
 }

@@ -242,8 +242,10 @@ describe('Link Panel', () => {
 
       await fixture.snapshot('Page Attachment warning & dashed line visible');
 
-      const warning = fixture.screen.getByText(
-        'Link can not reside below the dashed line when a page attachment is present'
+      const warning = await waitFor(() =>
+        fixture.screen.getByText(
+          'Link can not reside below the dashed line when a page attachment is present'
+        )
       );
       expect(warning).toBeDefined();
     });
