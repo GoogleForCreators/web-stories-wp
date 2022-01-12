@@ -75,7 +75,7 @@ jobs:
             wp: 'latest'
             snapshots: true
           - browser: 'chrome'
-            wp: '5.9-RC1'
+            wp: '5.9-RC2'
             experimental: true
             snapshots: false
           - browser: 'chrome'
