@@ -17,7 +17,13 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useEffect, useMemo, useRef } from '@web-stories-wp/react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useCombinedRefs,
+} from '@web-stories-wp/react';
 import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
@@ -26,7 +32,6 @@ import {
   FOCUSABLE_SELECTORS,
   KEYS,
   noop,
-  useComposeRefs,
   useMouseDownOutsideRef,
 } from '../../utils';
 import { useKeyDownEffect } from '../keyboard';
@@ -78,7 +83,7 @@ const Menu = ({
     isOpen && onDismiss();
   });
   const menuRef = useRef(null);
-  const composedListRef = useComposeRefs(mouseDownOutsideRef, menuRef);
+  const composedListRef = useCombinedRefs(mouseDownOutsideRef, menuRef);
 
   const handleFocus = useCallback(
     (evt) => {
