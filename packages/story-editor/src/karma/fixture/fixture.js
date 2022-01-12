@@ -882,6 +882,34 @@ class APIProviderFixture {
             },
           },
           {
+            value: 'Overpass Regular',
+            name: 'Overpass Regular',
+            family: 'Overpass Regular',
+            fallbacks: ['sans-serif'],
+            weights: [400],
+            styles: ['regular'],
+            variants: [[0, 400]],
+            url: 'https://overpass-30e2.kxcdn.com/overpass-regular.ttf',
+            service: 'custom',
+            metrics: {
+              upm: 1000,
+              asc: 982,
+              des: -284,
+              tAsc: 750,
+              tDes: -250,
+              tLGap: 266,
+              wAsc: 1062,
+              wDes: 378,
+              xH: 511,
+              capH: 700,
+              yMin: -378,
+              yMax: 1062,
+              hAsc: 982,
+              hDes: -284,
+              lGap: 266,
+            },
+          },
+          {
             ...TEXT_ELEMENT_DEFAULT_FONT,
             name: TEXT_ELEMENT_DEFAULT_FONT.family,
             value: TEXT_ELEMENT_DEFAULT_FONT.family,
@@ -995,6 +1023,34 @@ class APIProviderFixture {
             },
           },
           {
+            name: 'Vazir Regular',
+            value: 'Vazir Regular',
+            family: 'Vazir Regular',
+            fallbacks: ['sans-serif'],
+            weights: [400],
+            styles: ['regular'],
+            variants: [[0, 400]],
+            url: 'https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/Vazir-Regular.ttf',
+            service: 'custom',
+            metrics: {
+              upm: 2048,
+              asc: 2200,
+              des: -1100,
+              tAsc: 2200,
+              tDes: -1100,
+              tLGap: 0,
+              wAsc: 2200,
+              wDes: 1100,
+              xH: 1082,
+              capH: 1638,
+              yMin: -1116,
+              yMax: 2163,
+              hAsc: 2200,
+              hDes: -1100,
+              lGap: 0,
+            },
+          },
+          {
             name: 'Yrsa',
             value: 'Yrsa',
             family: 'Yrsa',
@@ -1042,6 +1098,19 @@ class APIProviderFixture {
           fonts = fonts.filter(({ family }) =>
             family.toLowerCase().includes(params.search.toLowerCase())
           );
+        }
+
+        // If we're getting custom fonts, return custom only.
+        if (params.service) {
+          fonts = fonts.filter(({ service }) => {
+            if ('custom' === params.service) {
+              return service === params.service;
+            }
+            if ('builtin' === params.service) {
+              return 'fonts.google.com' === params.service;
+            }
+            return [];
+          });
         }
 
         return asyncResponse(fonts);

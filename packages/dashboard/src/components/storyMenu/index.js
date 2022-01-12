@@ -20,10 +20,10 @@
 import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useCallback } from '@web-stories-wp/react';
+import { Fragment, useCallback } from '@web-stories-wp/react';
 import {
   ContextMenu,
-  MenuItemProps,
+  ContextMenuComponents,
   themeHelpers,
 } from '@web-stories-wp/design-system';
 
@@ -118,12 +118,25 @@ export default function StoryMenu({
       >
         <MoreVerticalSvg />
       </MoreVerticalButton>
-      <ContextMenu
-        animate
-        isOpen={isPopoverMenuOpen}
-        items={menuItems}
-        onDismiss={handleDismiss}
-      />
+      <ContextMenu animate isOpen={isPopoverMenuOpen} onDismiss={handleDismiss}>
+        {menuItems.map(({ label, separator, ...props }) => {
+          // Disable reason: map is not picking up definition from StoryMenu proptypes.
+          // eslint-disable-next-line react/prop-types
+          const MenuItem = props.href
+            ? ContextMenuComponents.MenuLink
+            : ContextMenuComponents.MenuButton;
+
+          return (
+            <Fragment key={label}>
+              {separator === 'top' && <ContextMenuComponents.MenuSeparator />}
+              <MenuItem {...props}>{label}</MenuItem>
+              {separator === 'bottom' && (
+                <ContextMenuComponents.MenuSeparator />
+              )}
+            </Fragment>
+          );
+        })}
+      </ContextMenu>
     </MenuContainer>
   );
 }
@@ -132,10 +145,19 @@ StoryMenu.propTypes = {
   isInverted: PropTypes.bool,
   itemActive: PropTypes.bool,
   tabIndex: PropTypes.number,
-  storyId: PropTypes.number,
+  storyId: PropTypes.number.isRequired,
   onMoreButtonSelected: PropTypes.func.isRequired,
   contextMenuId: PropTypes.number.isRequired,
-  menuItems: PropTypes.arrayOf(PropTypes.shape(MenuItemProps)).isRequired,
+  menuItems: PropTypes.arrayOf(
+    PropTypes.shape({
+      disabled: PropTypes.bool,
+      href: PropTypes.string,
+      label: PropTypes.string.isRequired,
+      openNewTab: PropTypes.bool,
+      onClick: PropTypes.func,
+      onFocus: PropTypes.func,
+    })
+  ).isRequired,
   menuLabel: PropTypes.string,
   menuStyleOverrides: PropTypes.array,
   verticalAlign: PropTypes.oneOf(['center', 'flex-start', 'flex-end']),

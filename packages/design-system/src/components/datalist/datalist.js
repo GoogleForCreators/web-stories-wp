@@ -63,8 +63,7 @@ const Container = styled.div`
  * @param {Function} props.onObserve When this is present, observer will detect new options coming into view and trigger the function for these entries.
  * @param {Array} props.primaryOptions Array of options to display by default when not searching
  * @param {string} props.primaryLabel Label to display above the primary options.
- * @param {Array} props.priorityOptions Options to display in front of all the other options in a separate group (will not remove these from the `options`).
- * @param {string} props.priorityLabel Label to display in front of the priority options.
+ * @param {Array} props.priorityOptionGroups Groups of options to display in front of all the other options (will not remove these from the `options`).
  * @param {string} props.searchResultsLabel Label to display in front of matching options when searching.
  * @param {Function} props.renderer Option renderer in case a custom renderer is required.
  * @param {Function} props.activeItemRenderer Active item renderer in case a activeItemLabel is not enough.
@@ -83,8 +82,7 @@ const Datalist = forwardRef(function Datalist(
     onObserve,
     primaryOptions,
     primaryLabel,
-    priorityOptions,
-    priorityLabel,
+    priorityOptionGroups,
     searchResultsLabel,
     renderer,
     activeItemRenderer,
@@ -164,8 +162,7 @@ const Datalist = forwardRef(function Datalist(
           options={options || queriedOptions}
           primaryOptions={primaryOptions}
           primaryLabel={primaryLabel}
-          priorityOptions={priorityOptions}
-          priorityLabel={priorityLabel}
+          priorityOptionGroups={priorityOptionGroups}
           searchResultsLabel={searchResultsLabel}
           focusSearch={focusSearch}
           renderer={renderer}
@@ -225,8 +222,7 @@ Datalist.propTypes = {
   onObserve: PropTypes.func,
   primaryOptions: PropTypes.array,
   primaryLabel: PropTypes.string,
-  priorityOptions: PropTypes.array,
-  priorityLabel: PropTypes.string,
+  priorityOptionGroups: PropTypes.array,
   searchResultsLabel: PropTypes.string,
   renderer: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   activeItemRenderer: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),

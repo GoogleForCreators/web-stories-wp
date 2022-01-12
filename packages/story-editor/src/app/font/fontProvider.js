@@ -25,6 +25,7 @@ import {
   useState,
 } from '@web-stories-wp/react';
 import { CURATED_FONT_NAMES } from '@web-stories-wp/fonts';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -39,14 +40,48 @@ import useLoadFontFiles from './actions/useLoadFontFiles';
 export const GOOGLE_MENU_FONT_URL = 'https://fonts.googleapis.com/css';
 
 function FontProvider({ children }) {
+  const isCustomFontsEnabled = useFeature('customFonts');
   const [queriedFonts, setQueriedFonts] = useState([]);
   const [curatedFonts, setCuratedFonts] = useState([]);
   const [recentFonts, setRecentFonts] = useState([]);
+  const [customFonts, setCustomFonts] = useState(null);
   const {
     actions: { getFonts },
   } = useAPI();
 
   const fonts = queriedFonts.length > 0 ? queriedFonts : curatedFonts;
+
+  useEffect(() => {
+    let mounted = true;
+    // Don't load custom fonts if not enabled.
+    if (!customFonts && isCustomFontsEnabled) {
+      try {
+        (async () => {
+          const _customFonts = await getFonts({
+            service: 'custom',
+          });
+
+          if (!mounted) {
+            return;
+          }
+
+          const formattedFonts = _customFonts.map((font) => ({
+            id: font.family,
+            name: font.family,
+            value: font.family,
+            ...font,
+          }));
+
+          setCustomFonts(formattedFonts);
+        })();
+      } catch (err) {
+        trackError('font_provider', err.message);
+      }
+    }
+    return () => {
+      mounted = false;
+    };
+  });
 
   useEffect(() => {
     let mounted = true;
@@ -98,8 +133,10 @@ function FontProvider({ children }) {
         return [];
       }
 
+      // If there are custom fonts in the DB, we should not include those to search when custom fonts are not enabled.
       const newFonts = await getFonts({
         search,
+        service: isCustomFontsEnabled ? null : 'builtin',
       });
 
       const formattedFonts = newFonts.map((font) => ({
@@ -112,7 +149,7 @@ function FontProvider({ children }) {
       setQueriedFonts(formattedFonts);
       return formattedFonts;
     },
-    [getFonts]
+    [getFonts, isCustomFontsEnabled]
   );
 
   const getFontWeight = useCallback(
@@ -196,6 +233,7 @@ function FontProvider({ children }) {
     state: {
       fonts: queriedFonts.length > 0 ? queriedFonts : curatedFonts,
       curatedFonts,
+      customFonts,
       recentFonts,
     },
     actions: {
