@@ -123,6 +123,7 @@ function CardGallery({ galleryPosters, isRTL, galleryLabel }) {
               <source srcSet={poster.png} type="image/png" />
               <img
                 src={poster.png}
+                decoding="async"
                 alt={getPosterAltCopy(pageNumber)}
                 width={DEFAULT_GRID_IMG_WIDTH}
                 height={DEFAULT_GRID_IMG_HEIGHT}
@@ -168,6 +169,7 @@ function CardGallery({ galleryPosters, isRTL, galleryLabel }) {
             />
             <img
               src={galleryPosters[selectedGridItemIndex].png}
+              decoding="async"
               alt={getPosterAltCopy(selectedGridItemIndex + 1)}
               width={DEFAULT_GRID_IMG_WIDTH}
               height={DEFAULT_GRID_IMG_HEIGHT}

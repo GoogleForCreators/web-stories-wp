@@ -36,7 +36,7 @@ import { Blurhash } from 'react-blurhash';
 import DropDownMenu from '../local/dropDownMenu';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
-import { ContentType } from '../../../../../app/media';
+import { ContentType, useLocalMedia } from '../../../../../app/media';
 import Tooltip from '../../../../tooltip';
 import Attribution from './attribution';
 import InnerElement from './innerElement';
@@ -88,15 +88,17 @@ function Element({
     type,
     width: originalWidth,
     height: originalHeight,
-    local,
     alt,
     isMuted,
-    isTranscoding,
-    isMuting,
-    isTrimming,
     baseColor,
     blurHash,
   } = resource;
+
+  const { isCurrentResourceProcessing, isCurrentResourceUploading } =
+    useLocalMedia(({ state }) => ({
+      isCurrentResourceProcessing: state.isCurrentResourceProcessing,
+      isCurrentResourceUploading: state.isCurrentResourceUploading,
+    }));
 
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
@@ -152,7 +154,7 @@ function Element({
       } else {
         setShowVideoDetail(true);
         resetHoverTime();
-        if (mediaElement.current && src) {
+        if (mediaElement.current && mediaElement.current?.pause && src) {
           // Stop video and reset position.
           mediaElement.current.pause();
           mediaElement.current.currentTime = 0;
@@ -243,7 +245,9 @@ function Element({
             punch={1}
           />
         )}
-        {(local || isTranscoding || isMuting || isTrimming) && (
+        {(!src ||
+          isCurrentResourceProcessing(resourceId) ||
+          isCurrentResourceUploading(resourceId)) && (
           <LoadingBar loadingMessage={__('Uploading media', 'web-stories')} />
         )}
         {providerType === 'local' && canEditMedia && (
@@ -286,9 +290,30 @@ Element.propTypes = {
  * @return {null|*} Element or null if does not map to video/image.
  */
 function MediaElement(props) {
-  const { isTranscoding, isMuting, isTrimming } = props.resource;
+  const {
+    isCurrentResourceTrimming,
+    isCurrentResourceMuting,
+    isCurrentResourceTranscoding,
+  } = useLocalMedia(
+    ({
+      state: {
+        isCurrentResourceMuting,
+        isCurrentResourceTrimming,
+        isCurrentResourceTranscoding,
+      },
+    }) => ({
+      isCurrentResourceMuting,
+      isCurrentResourceTrimming,
+      isCurrentResourceTranscoding,
+    })
+  );
+  const { id } = props.resource;
 
-  if (isTranscoding || isMuting || isTrimming) {
+  if (
+    isCurrentResourceTrimming(id) ||
+    isCurrentResourceMuting(id) ||
+    isCurrentResourceTranscoding(id)
+  ) {
     return (
       <Tooltip title={__('Video is being processed', 'web-stories')}>
         <Element {...props} />

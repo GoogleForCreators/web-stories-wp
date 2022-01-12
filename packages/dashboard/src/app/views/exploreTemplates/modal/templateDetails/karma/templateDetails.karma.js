@@ -131,6 +131,30 @@ describe('See template details modal', () => {
       );
     });
 
+    it('should update url param for template id', async () => {
+      const { templatesOrderById } = await getTemplatesState();
+
+      const firstTemplateId = templatesOrderById[0];
+      // Parse the current template id from the id query param
+      let urlHashParams = window.location.hash;
+      expect(urlHashParams).toBe(
+        `#/templates-gallery?id=${firstTemplateId}&isLocal=false`
+      );
+
+      // Click the view next button to cycle to the next template
+      const viewNextBtn = fixture.screen.getByRole('button', {
+        name: /View next template/,
+      });
+      await fixture.events.click(viewNextBtn);
+
+      const nextTemplateId = templatesOrderById[1];
+      // Re-parse the current template id from the id query param and assert it's different
+      urlHashParams = window.location.hash;
+      await expect(urlHashParams).toBe(
+        `#/templates-gallery?id=${nextTemplateId}&isLocal=false`
+      );
+    });
+
     it('should update current template via keyboard', async () => {
       //close button should be in focus
       await fixture.events.keyboard.press('tab');

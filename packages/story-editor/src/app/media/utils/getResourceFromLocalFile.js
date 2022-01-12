@@ -31,16 +31,7 @@ import {
   seekVideo,
   preloadVideo,
 } from '@web-stories-wp/media';
-
-/**
- * Create a local resource object.
- *
- * @param {Object} properties The resource properties.
- * @return {import('@web-stories-wp/media').Resource} The local resource object.
- */
-const createLocalResource = (properties) => {
-  return createResource({ ...properties, local: true, isExternal: false });
-};
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Generates a image resource object from a local File object.
@@ -57,7 +48,7 @@ const getImageResource = async (file) => {
   const src = createBlob(new window.Blob([reader.result], { type: mimeType }));
   const { width, height } = await getImageDimensions(src);
 
-  return createLocalResource({
+  return createResource({
     type: 'image',
     mimeType,
     src,
@@ -94,7 +85,7 @@ const getVideoResource = async (file) => {
   const poster = createBlob(posterFile);
   const { width, height } = await getImageDimensions(poster);
 
-  const resource = createLocalResource({
+  const resource = createResource({
     type: 'video',
     mimeType,
     src: canPlayVideo ? src : '',
@@ -110,7 +101,7 @@ const getVideoResource = async (file) => {
 };
 
 const createPlaceholderResource = (properties) => {
-  return createLocalResource({ ...properties, isPlaceholder: true });
+  return createResource({ ...properties, isPlaceholder: true });
 };
 
 const getPlaceholderResource = (file) => {
@@ -154,6 +145,8 @@ const getResourceFromLocalFile = async (file) => {
     // Not interested in the error here.
     // We simply fall back to the placeholder resource.
   }
+
+  resource.id = uuidv4();
 
   return { resource, posterFile };
 };

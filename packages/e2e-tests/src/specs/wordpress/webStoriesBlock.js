@@ -25,8 +25,8 @@ import {
   withPlugin,
   createNewPost,
   setPostContent,
+  takeSnapshot,
 } from '@web-stories-wp/e2e-test-utils';
-import percySnapshot from '@percy/puppeteer';
 
 /**
  * Internal dependencies
@@ -129,7 +129,7 @@ describe('Web Stories Block', () => {
       () => !document.querySelector('.components-spinner')
     );
 
-    await percySnapshot(page, 'Story select modal');
+    await takeSnapshot(page, 'Story select modal');
   });
 
   // Disable for https://github.com/google/web-stories-wp/issues/6237
