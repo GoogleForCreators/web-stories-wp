@@ -21,13 +21,7 @@ import { useCallback, useRef, useContextSelector } from '@web-stories-wp/react';
  * Internal dependencies
  */
 import Context from './context';
-
-export const RECT_OBSERVATION_KEY = 'rectObservationKey';
-
-export const CANVAS_BOUNDING_BOX_IDS = {
-  CANVAS_CONTAINER: 'canvasContainer',
-  PAGE_CONTAINER: 'pageContainer',
-};
+import { RECT_OBSERVATION_KEY } from './constants';
 
 /**
  * Returns a ref that when applied to an element, stores the elements

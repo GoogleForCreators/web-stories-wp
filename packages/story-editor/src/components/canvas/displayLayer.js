@@ -18,7 +18,13 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { memo, useCallback, useEffect, useMemo } from '@web-stories-wp/react';
+import {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useCombinedRefs,
+} from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { _x, __ } from '@web-stories-wp/i18n';
 import {
@@ -26,7 +32,6 @@ import {
   STORY_ANIMATION_STATE,
   useStoryAnimationContext,
 } from '@web-stories-wp/animation';
-import { useComposeRefs } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -170,7 +175,7 @@ function DisplayLayer() {
         aria-label={_x('Display layer', 'compound noun', 'web-stories')}
       >
         <DisplayPageArea
-          ref={useComposeRefs(setPageContainer, boundingBoxTrackingRef)}
+          ref={useCombinedRefs(setPageContainer, boundingBoxTrackingRef)}
           fullbleedRef={setFullbleedContainer}
           background={currentPage?.backgroundColor}
           isBackgroundSelected={isBackgroundSelected}

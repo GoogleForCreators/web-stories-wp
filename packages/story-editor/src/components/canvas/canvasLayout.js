@@ -18,14 +18,13 @@
  * External dependencies
  */
 import styled, { StyleSheetManager } from 'styled-components';
-import { memo, useRef } from '@web-stories-wp/react';
+import { memo, useRef, useCombinedRefs } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { useComposeRefs } from '@web-stories-wp/design-system';
 import {
   CANVAS_BOUNDING_BOX_IDS,
   useCanvas,
@@ -65,7 +64,7 @@ function CanvasLayout({ header, footer }) {
 
   const backgroundRef = useRef(null);
 
-  const setBackgroundRef = useComposeRefs(
+  const setBackgroundRef = useCombinedRefs(
     backgroundRef,
     setCanvasContainer,
     boundingBoxTrackingRef
