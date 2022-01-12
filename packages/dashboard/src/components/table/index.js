@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { themeHelpers, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { themeHelpers } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -41,7 +41,9 @@ export const TableHeader = styled.thead`
   background: ${({ theme }) => theme.colors.bg.secondary};
 `;
 
-export const StickyTableHeader = styled(TableHeader)`
+export const StickyTableHeader = styled(TableHeader).attrs({
+  'data-wpstyle': 'dashboard-sticky-table',
+})`
   width: 100%;
   border-top: 0;
   border-bottom: 0;
@@ -51,7 +53,7 @@ export const StickyTableHeader = styled(TableHeader)`
     background: ${({ theme }) => theme.colors.bg.secondary};
     position: sticky;
     z-index: 2;
-    top: ${THEME_CONSTANTS.WP_ADMIN.TOOLBAR_HEIGHT}px;
+    top: 0;
 
     :first-child {
       border-top-left-radius: ${({ theme }) => theme.borders.radius.small};

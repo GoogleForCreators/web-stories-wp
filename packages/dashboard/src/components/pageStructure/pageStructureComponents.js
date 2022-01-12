@@ -17,7 +17,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { BEZIER, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { BEZIER } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -51,12 +51,13 @@ export const PageContent = styled.div`
 
 export const LeftRailContainer = styled.nav.attrs({
   ['data-testid']: 'dashboard-left-rail',
+  ['data-wpstyle']: 'dashboard-left-rail',
 })`
   position: fixed;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  top: ${THEME_CONSTANTS.WP_ADMIN.TOOLBAR_HEIGHT}px;
+  top: 0;
   bottom: 0;
   width: ${DASHBOARD_LEFT_NAV_WIDTH}px;
   background: ${({ theme }) => theme.colors.bg.primary};

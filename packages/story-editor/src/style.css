@@ -132,3 +132,28 @@ body.edit-story #wpfooter {
 button {
   font-size: inherit;
 }
+
+body.js.edit-story {
+  --top-bar: 32px;
+  --side-nav-open: 160px;
+  --side-nav-collapsed: 36px;
+}
+
+body.js.edit-story #web-stories-editor {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+}
+
+body.js.edit-story #web-stories-editor [data-wpstyle='editor-popup'] {
+  max-height: calc(100vh - var(--top-bar)) !important;
+}
+
+body.js.edit-story #web-stories-editor .WebStories_ReactModal__Overlay {
+  top: var(--top-bar) !important;
+  left: var(--side-nav-open) !important;
+}
+
+body.js.folded.edit-story #web-stories-editor .WebStories_ReactModal__Overlay {
+  left: var(--side-nav-collapsed) !important;
+}

@@ -19,7 +19,6 @@
  */
 import { BREAKPOINTS } from './breakpoints';
 import * as TYPOGRAPHY from './typography';
-import * as WP_ADMIN from './wpAdmin';
 
 const ICON_SIZE = 32;
 const LARGE_BUTTON_SIZE = 56;
@@ -27,7 +26,6 @@ const LARGE_BUTTON_SIZE = 56;
 export const THEME_CONSTANTS = {
   BREAKPOINTS,
   TYPOGRAPHY,
-  WP_ADMIN,
   ICON_SIZE,
   LARGE_BUTTON_SIZE,
 };
