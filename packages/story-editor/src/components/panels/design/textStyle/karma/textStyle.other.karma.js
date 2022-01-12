@@ -472,7 +472,7 @@ describe('Text Style Panel', () => {
           // Ensure there are only 5 extra options added.
           await waitFor(() => {
             expect(options.length).toBe(
-              DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 6
+              DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 5
             );
             // Ensure the first one is the last chosen.
             expect(options[DEFAULT_CUSTOM_FONTS].textContent).toBe('Yrsa');
