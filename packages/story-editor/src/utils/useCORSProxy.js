@@ -58,6 +58,13 @@ function useCORSProxy() {
     return shouldProxy;
   }, []);
 
+  /**
+   * Get proxied url.
+   *
+   * @param {Object} resource Resource object
+   * @param {string} src The thumbnail's url
+   * @return {null|string} Return proxied source or null.
+   */
   const getProxiedUrl = useCallback(
     (resource, src) => {
       const { needsProxy } = resource;

@@ -19,10 +19,10 @@
 import { encode } from 'blurhash';
 
 self.onmessage = function (event) {
-  const { image, width, height, compontentX, compontentY } = event.data;
+  const { image, width, height, componentX, componentY } = event.data;
 
   try {
-    const blurHash = encode(image, width, height, compontentX, compontentY);
+    const blurHash = encode(image, width, height, componentX, componentY);
     postMessage({
       type: 'success',
       blurHash,

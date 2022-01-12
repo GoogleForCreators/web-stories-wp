@@ -50,6 +50,10 @@ function puppeteerBrowser(baseBrowserDecorator, config) {
         // See http://crbug.com/715363
         // We use this flag to work-around this issue.
         '--disable-dev-shm-usage',
+        // Added to prevent disconnect timeouts: sets the maximum GPU memory to use for discardable caches.
+        '--force-gpu-mem-discardable-limit-mb',
+        // https://stackoverflow.com/questions/67501093/passthrough-is-not-supported-gl-is-disabled
+        '--disable-software-rasterizer',
       ],
     };
     const puppeteerOptions = {
@@ -58,14 +62,7 @@ function puppeteerBrowser(baseBrowserDecorator, config) {
     };
 
     // See https://github.com/puppeteer/puppeteer/blob/v3.0.4/docs/api.md#puppeteerlaunchoptions.
-    browser = await puppeteer.launch({
-      product: puppeteerOptions.product,
-      slowMo: puppeteerOptions.slowMo,
-      dumpio: puppeteerOptions.dumpio,
-      headless: puppeteerOptions.headless,
-      devtools: puppeteerOptions.devtools,
-      defaultViewport: puppeteerOptions.defaultViewport,
-    });
+    browser = await puppeteer.launch(puppeteerOptions);
 
     const page = await (async () => {
       const pages = await browser.pages();

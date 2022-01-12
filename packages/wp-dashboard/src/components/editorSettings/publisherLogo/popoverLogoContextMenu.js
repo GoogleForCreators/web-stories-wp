@@ -18,12 +18,12 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback } from '@web-stories-wp/react';
+import { Fragment, useCallback } from '@web-stories-wp/react';
 import { __, sprintf } from '@web-stories-wp/i18n';
 import {
   Icons,
   ContextMenu,
-  MenuItemProps,
+  ContextMenuComponents,
 } from '@web-stories-wp/design-system';
 
 /**
@@ -79,9 +79,26 @@ function PopoverLogoContextMenu({
         animate
         isOpen={isPopoverMenuOpen}
         data-testid={`publisher-logo-context-menu-${idx}`}
-        items={items}
         onDismiss={handleDismiss}
-      />
+      >
+        {items.map(({ label, separator, ...props }) => {
+          // Disable reason: map is not picking up definition from StoryMenu proptypes.
+          // eslint-disable-next-line react/prop-types
+          const MenuItem = props.href
+            ? ContextMenuComponents.MenuLink
+            : ContextMenuComponents.MenuButton;
+
+          return (
+            <Fragment key={label}>
+              {separator === 'top' && <ContextMenuComponents.MenuSeparator />}
+              <MenuItem {...props}>{label}</MenuItem>
+              {separator === 'bottom' && (
+                <ContextMenuComponents.MenuSeparator />
+              )}
+            </Fragment>
+          );
+        })}
+      </ContextMenu>
     </MenuContainer>
   );
 }
@@ -93,7 +110,16 @@ export const PopoverLogoContextMenuPropTypes = {
   }).isRequired,
   idx: PropTypes.number,
   isActive: PropTypes.bool,
-  items: PropTypes.arrayOf(PropTypes.shape(MenuItemProps)).isRequired,
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      disabled: PropTypes.bool,
+      href: PropTypes.string,
+      label: PropTypes.string.isRequired,
+      openNewTab: PropTypes.bool,
+      onClick: PropTypes.func,
+      onFocus: PropTypes.func,
+    })
+  ).isRequired,
   onMenuItemToggle: PropTypes.func.isRequired,
   publisherLogo: PropTypes.shape({
     url: PropTypes.string,

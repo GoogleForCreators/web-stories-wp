@@ -108,6 +108,7 @@ function BackgroundControls({ selectedElements, pushUpdate }) {
             }
             label={__('Background color', 'web-stories')}
             labelId="background-color-label"
+            changedStyle="background"
             hasEyedropper
           />
         </Row>

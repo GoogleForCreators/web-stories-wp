@@ -27,6 +27,9 @@ import CanvasContext from '../../../app/canvas/context';
 import APIContext from '../../../app/api/context';
 import StoryContext from '../../../app/story/context';
 import useVideoTrimMode from '../useVideoTrimMode';
+import { useLocalMedia } from '../../../app/media';
+
+jest.mock('../../../app/media');
 
 const mockTranscodingEnabled = jest.fn().mockImplementation(() => true);
 
@@ -63,7 +66,7 @@ function setup({
           type: 'video',
           id: 'video123',
           ...element,
-          resource: { local: false, isExternal: false, ...element?.resource },
+          resource: { isExternal: false, src: 'bar', ...element?.resource },
         },
         ...extraElements,
       ],
@@ -90,6 +93,14 @@ function setup({
 }
 
 describe('useVideoTrimMode', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+
+    useLocalMedia.mockReturnValue({
+      canTranscodeResource: jest.fn(() => true),
+      isCurrentResourceUploading: jest.fn(() => false),
+    });
+  });
   it('should allow trim mode for single video element', () => {
     const { result } = setup();
 
@@ -103,13 +114,20 @@ describe('useVideoTrimMode', () => {
     expect(result.current.hasTrimMode).toBe(false);
   });
 
-  it('should not allow trim mode for filesystem local video', () => {
-    const { result } = setup({ element: { resource: { local: true } } });
+  it('should not allow trim mode for resource that is currently being uploaded', () => {
+    useLocalMedia.mockReturnValue({
+      isCurrentResourceUploading: jest.fn(() => true),
+    });
+    const { result } = setup({ element: { resource: { id: 123 } } });
 
     expect(result.current.hasTrimMode).toBe(false);
   });
 
   it('should not allow trim mode for third-party video', () => {
+    useLocalMedia.mockReturnValue({
+      canTranscodeResource: jest.fn(),
+    });
+
     const { result } = setup({ element: { resource: { isExternal: true } } });
 
     expect(result.current.hasTrimMode).toBe(false);

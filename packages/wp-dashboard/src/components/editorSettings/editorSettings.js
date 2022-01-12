@@ -26,6 +26,7 @@ import {
   MIN_IMG_HEIGHT,
   useConfig,
 } from '@web-stories-wp/dashboard';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -41,6 +42,7 @@ import ArchiveSettings from './archive';
 import GoogleAnalyticsSettings from './googleAnalytics';
 import { Wrapper, Main } from './components';
 import useEditorSettings from './useEditorSettings';
+import CustomFontsSettings from './customFonts';
 
 function EditorSettings() {
   const {
@@ -60,6 +62,10 @@ function EditorSettings() {
     archivePageId,
     searchPages,
     getPageById,
+    customFonts,
+    addCustomFont,
+    fetchCustomFonts,
+    deleteCustomFont,
     publisherLogos,
     addPublisherLogo,
     fetchPublisherLogos,
@@ -68,6 +74,7 @@ function EditorSettings() {
   } = useEditorSettings(
     ({
       actions: {
+        fontsApi: { addCustomFont, fetchCustomFonts, deleteCustomFont },
         settingsApi: { fetchSettings, updateSettings },
         pagesApi: { searchPages, getPageById },
         mediaApi: { uploadMedia },
@@ -92,6 +99,7 @@ function EditorSettings() {
         },
         media: { isLoading: isMediaLoading, newlyCreatedMediaIds },
         publisherLogos: { publisherLogos },
+        customFonts,
       },
     }) => ({
       fetchSettings,
@@ -110,6 +118,10 @@ function EditorSettings() {
       archivePageId,
       searchPages,
       getPageById,
+      customFonts,
+      addCustomFont,
+      fetchCustomFonts,
+      deleteCustomFont,
       fetchPublisherLogos,
       addPublisherLogo,
       removePublisherLogo,
@@ -117,6 +129,8 @@ function EditorSettings() {
       publisherLogos,
     })
   );
+
+  const isCustomFontsEnabled = useFeature('customFonts');
 
   const {
     capabilities: { canUploadFiles, canManageSettings } = {},
@@ -320,6 +334,14 @@ function EditorSettings() {
                   uploadError={mediaError}
                 />
               </>
+            )}
+            {isCustomFontsEnabled && (
+              <CustomFontsSettings
+                customFonts={customFonts}
+                addCustomFont={addCustomFont}
+                fetchCustomFonts={fetchCustomFonts}
+                deleteCustomFont={deleteCustomFont}
+              />
             )}
             <TelemetrySettings
               disabled={disableOptedIn}

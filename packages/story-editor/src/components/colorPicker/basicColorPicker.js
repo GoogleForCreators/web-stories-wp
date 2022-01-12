@@ -102,6 +102,7 @@ function BasicColorPicker({
   handleClose,
   showDialog,
   setShowDialog,
+  changedStyle,
 }) {
   const { savedColors, storyColors } = useStory((state) => ({
     savedColors: state.state.story?.globalStoryStyles?.colors || [],
@@ -188,6 +189,7 @@ function BasicColorPicker({
                 aria-labelledby="colorpicker-story-colors-title"
                 isEditMode={isEditMode}
                 data-testid="saved-story-colors"
+                changedStyle={changedStyle}
               />
               <Label id="colorpicker-saved-colors-title">
                 {__('Saved colors', 'web-stories')}
@@ -201,6 +203,7 @@ function BasicColorPicker({
                 allowsGradient={allowsGradient}
                 aria-labelledby="colorpicker-saved-colors-title"
                 isEditMode={isEditMode}
+                changedStyle={changedStyle}
               />
             </>
           )}
@@ -256,6 +259,7 @@ BasicColorPicker.propTypes = {
   color: PatternPropType,
   showDialog: PropTypes.bool,
   setShowDialog: PropTypes.func,
+  changedStyle: PropTypes.string,
 };
 
 export default BasicColorPicker;
