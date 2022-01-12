@@ -22,17 +22,15 @@ import { useCallback } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
-import { useStory, storyReducers } from '../../../../app';
+import { useStory } from '../../../../app';
 import useFocusCanvas from '../../../canvas/useFocusCanvas';
 
 function useLayerSelection(layer) {
   const { id: elementId } = layer;
-  const { isSelected, updateStateWithReducer } = useStory(
-    ({ state, actions }) => ({
-      isSelected: state.selectedElementIds.includes(elementId),
-      updateStateWithReducer: actions.updateStateWithReducer,
-    })
-  );
+  const { isSelected, toggleLayer } = useStory(({ state, actions }) => ({
+    isSelected: state.selectedElementIds.includes(elementId),
+    toggleLayer: actions.toggleLayer,
+  }));
 
   const focusCanvas = useFocusCanvas();
 
@@ -40,49 +38,16 @@ function useLayerSelection(layer) {
     (evt) => {
       evt.preventDefault();
       evt.stopPropagation();
-      updateStateWithReducer({
-        reducer: (state) => {
-          // Meta pressed. Toggle this layer in the selection.
-          if (evt.metaKey) {
-            return storyReducers.toggleElement(state, { elementId });
-          }
-
-          // No special key pressed - just selected this layer and nothing else.
-          if (state.selection.length <= 0 || !evt.shiftKey) {
-            return storyReducers.setSelectedElementsById(state, {
-              elementIds: [elementId],
-            });
-          }
-
-          // Shift key pressed with any element selected:
-          // select everything between this layer and the first selected layer
-          const firstId = state.selection[0];
-          const currentPage = state.pages.find(
-            ({ id }) => id === state.current
-          );
-          const pageElementIds = currentPage.elements.map((el) => el.id);
-          const firstIndex = pageElementIds.findIndex((id) => id === firstId);
-          const clickedIndex = pageElementIds.findIndex(
-            (id) => id === elementId
-          );
-          const lowerIndex = Math.min(firstIndex, clickedIndex);
-          const higherIndex = Math.max(firstIndex, clickedIndex);
-          const elementIds = pageElementIds.slice(lowerIndex, higherIndex + 1);
-          // reverse selection if firstId isn't first anymore
-          if (firstId !== elementIds[0]) {
-            elementIds.reverse();
-          }
-
-          return storyReducers.setSelectedElementsById(state, {
-            elementIds,
-          });
-        },
+      toggleLayer({
+        elementId,
+        metaKey: evt.metaKey,
+        shiftKey: evt.shiftKey,
       });
 
       // In any case, revert focus to selected element(s)
       focusCanvas();
     },
-    [updateStateWithReducer, elementId, focusCanvas]
+    [toggleLayer, elementId, focusCanvas]
   );
 
   return { isSelected, handleClick };

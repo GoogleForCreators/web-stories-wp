@@ -39,6 +39,7 @@ export const SET_SELECTED_ELEMENTS = 'SET_SELECTED_ELEMENTS';
 export const SELECT_ELEMENT = 'SELECT_ELEMENT';
 export const UNSELECT_ELEMENT = 'UNSELECT_ELEMENT';
 export const TOGGLE_ELEMENT_IN_SELECTION = 'TOGGLE_ELEMENT_IN_SELECTION';
+export const TOGGLE_LAYER = 'TOGGLE_LAYER';
 
 // Manipulate story-global state.
 export const UPDATE_STORY = 'UPDATE_STORY';
@@ -46,9 +47,6 @@ export const UPDATE_STORY = 'UPDATE_STORY';
 // Manipulate animation state.
 export const UPDATE_ANIMATION_STATE = 'UPDATE_ANIMATION_STATE';
 export const ADD_ANIMATIONS = 'ADD_ANIMATIONS';
-
-// Allows to opt out of root reducer and compose reducers manually
-export const UPDATE_STATE_WITH_REDUCER = 'UPDATE_STATE_WITH_REDUCER';
 
 // Manipulate entire internal state.
 export const RESTORE = 'RESTORE';

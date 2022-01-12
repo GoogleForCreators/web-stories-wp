@@ -211,10 +211,13 @@ const addAnimations =
   ({ animations }) =>
     dispatch({ type: types.ADD_ANIMATIONS, payload: { animations } });
 
-const updateStateWithReducer =
+const toggleLayer =
   (dispatch) =>
-  ({ reducer }) =>
-    dispatch({ type: types.UPDATE_STATE_WITH_REDUCER, payload: { reducer } });
+  ({ metaKey, shiftKey, elementId }) =>
+    dispatch({
+      type: types.TOGGLE_LAYER,
+      payload: { metaKey, shiftKey, elementId },
+    });
 
 export const exposedActions = {
   addPage,
@@ -249,7 +252,7 @@ export const exposedActions = {
   updateAnimationState,
   addAnimations,
   updateStory,
-  updateStateWithReducer,
+  toggleLayer,
 };
 
 // Internal actions
