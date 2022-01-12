@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
-import { Input } from '@web-stories-wp/design-system';
+import { Input, withProtocol } from '@web-stories-wp/design-system';
 import {
   useState,
   useRef,
@@ -32,7 +32,6 @@ import PropTypes from 'prop-types';
  */
 import { useConfig } from '../../../../../../app';
 import Dialog from '../../../../../dialog';
-import { withProtocol } from '../../../../../../utils/url';
 import useInsert from './useInsert';
 import { isValidUrlForHotlinking } from './utils';
 

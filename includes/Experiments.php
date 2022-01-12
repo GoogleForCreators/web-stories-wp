@@ -378,6 +378,18 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'editor',
 				'default'     => true,
 			],
+
+			/**
+			 * Author: @miina
+			 * Issue: #9880
+			 * Creation date: 2021-12-15
+			 */
+			[
+				'name'        => 'customFonts',
+				'label'       => __( 'Custom Fonts', 'web-stories' ),
+				'description' => __( 'Enable adding custom fonts', 'web-stories' ),
+				'group'       => 'general',
+			],
 		];
 	}
 
