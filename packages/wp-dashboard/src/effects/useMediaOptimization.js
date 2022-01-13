@@ -51,7 +51,11 @@ export default function useMediaOptimization() {
     trackEvent('video_optimization_optin', {
       status: mediaOptimization ? 'off' : 'on',
     });
-    showSnackbar({ message: SUCCESS.SETTINGS.UPDATED, dismissible: true });
+    showSnackbar({
+      'aria-label': SUCCESS.SETTINGS.UPDATED,
+      message: SUCCESS.SETTINGS.UPDATED,
+      dismissible: true,
+    });
   }, [mediaOptimization, showSnackbar, toggleWebStoriesMediaOptimization]);
 
   return {

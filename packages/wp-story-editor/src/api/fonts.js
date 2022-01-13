@@ -24,11 +24,12 @@ import { addQueryArgs } from '@web-stories-wp/design-system';
  */
 import apiFetch from '@wordpress/api-fetch';
 
-export function getFonts(config, { include, search }) {
+export function getFonts(config, { include, search, service }) {
   return apiFetch({
     path: addQueryArgs(`${config.api.fonts}`, {
       include,
       search,
+      service,
     }),
   });
 }
