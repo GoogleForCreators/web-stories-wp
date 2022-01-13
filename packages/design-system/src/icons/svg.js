@@ -15,24 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import Modal from 'react-modal';
-
-/**
  * Internal dependencies
  */
-import localStore, { LOCAL_STORAGE_PREFIX } from './utils/localStore';
-import * as Icons from './icons';
-import * as SVGIcons from './icons/svg';
-
-const { setAppElement } = Modal;
-
-export { Icons, SVGIcons };
-export { localStore, LOCAL_STORAGE_PREFIX };
-export * from './components';
-export * from './contexts';
-export * from './images';
-export * from './theme';
-export * from './utils';
-export { setAppElement };
+export { default as arrowCircle } from './arrow_circle.svg';

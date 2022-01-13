@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { createGlobalStyle } from 'styled-components';
-import { Icons } from '@web-stories-wp/design-system';
+import { SVGIcons } from '@web-stories-wp/design-system';
 
 export const GlobalStyle = createGlobalStyle`
   .default-moveable .moveable-control,
@@ -124,7 +124,7 @@ export const GlobalStyle = createGlobalStyle`
     height: 28px;
     left: -1px;
     top: -1px;
-    background-image: url('${Icons.ArrowCircleSVG}');
+    background-image: url('${SVGIcons.arrowCircle}');
     background-size: 100%;
     /* The icon is black and we can't use color because it's not inline so invert it is */
     filter: invert(100%);
