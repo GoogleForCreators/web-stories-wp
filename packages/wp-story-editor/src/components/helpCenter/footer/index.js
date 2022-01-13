@@ -79,7 +79,7 @@ const YOUTUBE_URL = __(
 
 const DOCS_URL = 'https://wp.stories.google/docs/';
 
-export function Footer() {
+export default function Footer() {
   const onSupportClick = useCallback((evt) => {
     trackClick(evt, 'click_support_page');
   }, []);
