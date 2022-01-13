@@ -94,14 +94,11 @@ const accent = {
 const status = {
   negative: '#D93025',
   positive: '#188038',
+  warning: '#f4b844',
 };
 const standard = {
   black: '#000',
   white: '#FFF',
-};
-
-const warning = {
-  yellow: '#f4b844',
 };
 
 const gradient = {
@@ -307,7 +304,6 @@ export const dark = {
   accent,
   status,
   opacity,
-  warning,
   ...brand,
   ...darkTheme,
   inverted: { ...lightTheme },
@@ -318,7 +314,6 @@ export const light = {
   accent,
   status,
   opacity,
-  warning,
   ...brand,
   ...lightTheme,
   inverted: { ...darkTheme },

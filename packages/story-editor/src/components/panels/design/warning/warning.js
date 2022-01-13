@@ -43,7 +43,7 @@ const WarningContainer = styled.div`
 const WarningIcon = styled(Icons.ExclamationTriangle)`
   width: 32px;
   height: 100%;
-  color: ${({ theme }) => theme.colors.warning.yellow};
+  color: ${({ theme }) => theme.colors.status.warning};
 `;
 
 const Message = styled(Text).attrs({
