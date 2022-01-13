@@ -1044,7 +1044,7 @@ function RightClickMenuProvider({ children }) {
     toggleTrimMode,
   ]);
 
-  const layerSelectItem = useLayerSelect({ menuItemProps });
+  const layerSelectItem = useLayerSelect({ menuItemProps, menuPosition });
 
   const shapeItems = useMemo(
     () => [
@@ -1091,6 +1091,7 @@ function RightClickMenuProvider({ children }) {
       handleDuplicateElements,
       handlePasteStyles,
       layerItems,
+      layerSelectItem,
       menuItemProps,
       selectedElement?.type,
       selectedElements.length,

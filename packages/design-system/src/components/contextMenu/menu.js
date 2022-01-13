@@ -69,6 +69,7 @@ const Menu = ({
   disableControlledTabNavigation,
   isOpen,
   onFocus = noop,
+  isSubmenu,
   ...props
 }) => {
   const { focusedId, isIconMenu, onDismiss, setFocusedId } = useContextMenu(
@@ -80,7 +81,7 @@ const Menu = ({
     })
   );
   const mouseDownOutsideRef = useMouseDownOutsideRef(() => {
-    isOpen && onDismiss();
+    isOpen && !isSubmenu && onDismiss();
   });
   const menuRef = useRef(null);
   const composedListRef = useCombinedRefs(mouseDownOutsideRef, menuRef);
