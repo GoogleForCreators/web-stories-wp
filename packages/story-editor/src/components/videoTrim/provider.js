@@ -31,9 +31,11 @@ import useVideoTrimMode from './useVideoTrimMode';
 import useVideoNode from './useVideoNode';
 
 function VideoTrimProvider({ children }) {
-  const { trimExistingVideo } = useLocalMedia((state) => ({
-    trimExistingVideo: state.actions.trimExistingVideo,
-  }));
+  const { trimExistingVideo } = useLocalMedia(
+    ({ actions: { trimExistingVideo } }) => ({
+      trimExistingVideo,
+    })
+  );
   const { isTrimMode, hasTrimMode, toggleTrimMode, videoData } =
     useVideoTrimMode();
   const {

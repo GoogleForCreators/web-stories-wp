@@ -56,26 +56,33 @@ function StoryProvider({ storyId, initialEdits, children }) {
   useEffect(() => setHashPageId(current), [current, setHashPageId]);
 
   // Generate current page info.
-  const { currentPageId, currentPageIndex, currentPageNumber, currentPage } =
-    useMemo(() => {
-      if (!current) {
-        return {
-          currentPageId: null,
-          currentPageIndex: null,
-          currentPageNumber: null,
-          currentPage: null,
-        };
-      }
-      const index = pages.findIndex(({ id }) => id === current);
-      const number = index + 1;
-      const page = pages[index];
+  const {
+    currentPageId,
+    currentPageIndex,
+    currentPageNumber,
+    currentPage,
+    currentPageHash,
+  } = useMemo(() => {
+    if (!current) {
       return {
-        currentPageId: current,
-        currentPageIndex: index,
-        currentPageNumber: number,
-        currentPage: page,
+        currentPageId: null,
+        currentPageIndex: null,
+        currentPageNumber: null,
+        currentPage: null,
+        currentPageHash: null,
       };
-    }, [pages, current]);
+    }
+    const index = pages.findIndex(({ id }) => id === current);
+    const number = index + 1;
+    const page = pages[index];
+    return {
+      currentPageId: current,
+      currentPageIndex: index,
+      currentPageNumber: number,
+      currentPage: page,
+      currentPageHash: JSON.stringify(page),
+    };
+  }, [pages, current]);
 
   // Generate selection info
   const {
@@ -142,10 +149,11 @@ function StoryProvider({ storyId, initialEdits, children }) {
   const fullStory = useMemo(
     () => ({
       pages,
+      currentPage,
+      currentPageHash,
       currentPageId,
       currentPageIndex,
       currentPageNumber,
-      currentPage,
       selectedElementIds,
       selectedElements,
       selectedElementAnimations,
@@ -162,10 +170,11 @@ function StoryProvider({ storyId, initialEdits, children }) {
     }),
     [
       pages,
+      currentPage,
+      currentPageHash,
       currentPageId,
       currentPageIndex,
       currentPageNumber,
-      currentPage,
       selectedElementIds,
       selectedElements,
       selectedElementAnimations,

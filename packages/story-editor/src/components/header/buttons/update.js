@@ -85,8 +85,8 @@ function UpdateButton({ hasUpdates = false, forceIsSaving = false }) {
 
   const isSaving = _isSaving || forceIsSaving;
 
-  const { isUploading } = useLocalMedia((state) => ({
-    isUploading: state.state.isUploading,
+  const { isUploading } = useLocalMedia(({ state: { isUploading } }) => ({
+    isUploading,
   }));
   const {
     state: { hasNewChanges },
@@ -147,7 +147,7 @@ function UpdateButton({ hasUpdates = false, forceIsSaving = false }) {
     <ButtonWithChecklistWarning
       text={text}
       onClick={() => saveStory()}
-      disabled={isSaving || isUploading}
+      disabled={!isEnabled}
       isUploading={isUploading}
       canPublish={canPublish}
     />

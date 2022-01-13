@@ -66,8 +66,7 @@ const OptionList = forwardRef(function OptionList(
     options = [],
     primaryOptions,
     primaryLabel,
-    priorityOptions = [],
-    priorityLabel,
+    priorityOptionGroups = [],
     searchResultsLabel,
     renderer = DefaultRenderer,
     onObserve,
@@ -96,16 +95,9 @@ const OptionList = forwardRef(function OptionList(
       ];
     }
     // Otherwise return primary options in one group possibly preceded
-    // by an optional list of priority options if such exist.
+    // by an optional groups of priority options if such exist.
     return [
-      ...(priorityOptions?.length
-        ? [
-            {
-              label: priorityLabel,
-              options: priorityOptions,
-            },
-          ]
-        : []),
+      ...(priorityOptionGroups?.length ? priorityOptionGroups : []),
       {
         label: primaryLabel,
         options: primaryOptions,
@@ -114,9 +106,8 @@ const OptionList = forwardRef(function OptionList(
   }, [
     keyword,
     options,
-    priorityOptions,
+    priorityOptionGroups,
     primaryOptions,
-    priorityLabel,
     primaryLabel,
     searchResultsLabel,
   ]);
@@ -299,8 +290,7 @@ OptionList.propTypes = {
   options: PropTypes.array,
   primaryOptions: PropTypes.array.isRequired,
   primaryLabel: PropTypes.string,
-  priorityOptions: PropTypes.array,
-  priorityLabel: PropTypes.string,
+  priorityOptionGroups: PropTypes.array,
   searchResultsLabel: PropTypes.string,
   renderer: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   onObserve: PropTypes.func,
