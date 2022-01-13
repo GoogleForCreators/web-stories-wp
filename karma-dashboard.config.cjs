@@ -48,6 +48,7 @@ module.exports = function (config) {
       'karma-sourcemap-loader',
       'karma-webpack',
       'karma-coverage-istanbul-reporter',
+      require('karma-parallel'),
       require('@web-stories-wp/karma-puppeteer-launcher'),
       require('@web-stories-wp/karma-puppeteer-client'),
       require('@web-stories-wp/karma-failed-tests-reporter'),
@@ -55,7 +56,7 @@ module.exports = function (config) {
 
     // Frameworks to use.
     // Available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine', '@web-stories-wp/karma-puppeteer-client'],
+    frameworks: ['parallel', 'jasmine', '@web-stories-wp/karma-puppeteer-client'],
 
     // list of files / patterns to load in the browser
     files: [
@@ -160,6 +161,25 @@ module.exports = function (config) {
     // Concurrency level
     // how many browsers should be started simultaneously
     concurrency: Infinity,
+
+    // Sharding.
+    parallelOptions: {
+      shardStrategy: typeof config.shardIndex !== 'undefined' && typeof config.executors !== 'undefined' ? 'custom' : 'round-robin',
+      // If we're using custom sharding, just spin up 1 browser,
+      // but do the splitting in the custom strategy below.
+      executors: typeof config.shardIndex !== 'undefined' ? 1 : undefined, // Default is cpu cores - 1.
+      shardIndex: typeof config.shardIndex !== 'undefined' ? Number(config.shardIndex) : undefined,
+      // Re-implements a round-robin strategy, but with a custom shardIndex.
+      // Need to use the Function constructor here so we have access to config.shardIndex,
+      // because karma-parallel serializes this function.
+      customShardStrategy: new Function('parallelOptions', `
+        window.parallelDescribeCount = window.parallelDescribeCount || 0;
+        window.parallelDescribeCount++;
+        const shouldRunThisTest = (window.parallelDescribeCount % ${Number(config.executors)} === ${Number(config.shardIndex)});
+        console.log( "[SHARDING DEBUG]", "Count:", window.parallelDescribeCount, "Executors:", ${Number(config.executors)}, "Current shardIndex:", ${Number(config.shardIndex)}, "Should run test?", shouldRunThisTest);
+        return shouldRunThisTest;
+      `),
+    },
 
     // Allow not having any tests
     failOnEmptyTestSuite: false,
