@@ -63,7 +63,7 @@ function CanvasProvider({ children }) {
   // to multiple nodes.
   const clientRectObserver = useMemo(
     () =>
-      new IntersectionObserver((entries) => {
+      new window.IntersectionObserver((entries) => {
         for (const entry of entries) {
           if (!entry.target.dataset[RECT_OBSERVATION_KEY]) {
             return;
@@ -77,7 +77,7 @@ function CanvasProvider({ children }) {
       }),
     []
   );
-  useEffect(() => clientRectObserver.disconnect, [clientRectObserver]);
+  useEffect(() => () => clientRectObserver.disconnect(), [clientRectObserver]);
 
   const pageSize = useLayout(({ state: { pageWidth, pageHeight } }) => ({
     width: pageWidth,
