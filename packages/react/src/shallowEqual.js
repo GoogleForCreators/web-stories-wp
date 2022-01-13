@@ -13,15 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { shallowEqualArrays, shallowEqualObjects } from 'shallow-equal';
 
-export { default as isNullOrUndefinedOrEmptyString } from './isNullOrUndefinedOrEmptyString';
-export { noop } from './noop';
-export { default as addQueryArgs } from './addQueryArgs';
-export { default as labelAccessibilityValidator } from './labelAccessibilityValidator';
-export { default as useLiveRegion } from './useLiveRegion';
-export { default as domReady } from './domReady';
-export { default as deepMerge } from './deepMerge';
-export { default as useMouseDownOutsideRef } from './useMouseDownOutsideRef';
-export * from './constants';
-export * from './directions';
-export * from './url';
+function shallowEqual(a, b) {
+  if (a === b) {
+    return true;
+  }
+
+  if (Array.isArray(a) && Array.isArray(b)) {
+    return shallowEqualArrays(a, b);
+  }
+
+  if (typeof a === 'object' && typeof b === 'object') {
+    return shallowEqualObjects(a, b);
+  }
+
+  return false;
+}
+
+export default shallowEqual;
