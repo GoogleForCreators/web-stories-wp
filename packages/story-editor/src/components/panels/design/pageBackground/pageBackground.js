@@ -175,12 +175,14 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
   );
 
   useEffect(() => {
-    getPagesWithFailedContrast([currentPage], pageSize).then((failedPages) => {
-      // getPagesWithFailedContrast returns an array of pages, since we only care
-      // about currentPage, we can grab the single page result.
-      const result = failedPages[0]?.result;
-      setFailedContrast(Boolean(result));
-    });
+    getPagesWithFailedContrast([currentPage], pageSize)
+      .then((failedPages) => {
+        // getPagesWithFailedContrast returns an array of pages, since we only care
+        // about currentPage, we can grab the single page result.
+        const result = failedPages[0]?.result;
+        setFailedContrast(Boolean(result));
+      })
+      .catch(() => {});
   }, [currentPage, pageSize]);
 
   const backgroundEl = selectedElements[0];

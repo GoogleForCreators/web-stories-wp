@@ -162,6 +162,7 @@ describe('ColorPicker', () => {
           if (!fixture.editor.canvas.framesLayer.frames[1].node) {
             throw new Error('node not ready');
           }
+          expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
         });
         await fixture.events.click(
           fixture.editor.inspector.designPanel.textStyle.fontColor.button
@@ -197,6 +198,7 @@ describe('ColorPicker', () => {
           if (!fixture.editor.canvas.framesLayer.frames[1].node) {
             throw new Error('node not ready');
           }
+          expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
         });
         await fixture.events.click(
           fixture.editor.inspector.designPanel.textStyle.fontColor.button
@@ -219,6 +221,7 @@ describe('ColorPicker', () => {
           if (!fixture.editor.canvas.framesLayer.frames[1].node) {
             throw new Error('node not ready');
           }
+          expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
         });
         // add fill
         await fixture.events.click(
@@ -246,6 +249,7 @@ describe('ColorPicker', () => {
           if (!fixture.editor.canvas.framesLayer.frames[1].node) {
             throw new Error('node not ready');
           }
+          expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
         });
         await fixture.events.click(
           fixture.editor.inspector.designPanel.textStyle.fontColor.button

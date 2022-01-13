@@ -92,12 +92,14 @@ function StylePanel(props) {
   );
 
   useEffect(() => {
-    getPagesWithFailedContrast([currentPage], pageSize).then((pages) => {
-      // getPagesWithFailedContrast returns an array of pages, since we only care
-      // about currentPage, we can grab the single page result.
-      const elementIds = pages[0]?.result;
-      setFailedElementIds(elementIds);
-    });
+    getPagesWithFailedContrast([currentPage], pageSize)
+      .then((pages) => {
+        // getPagesWithFailedContrast returns an array of pages, since we only care
+        // about currentPage, we can grab the single page result.
+        const elementIds = pages[0]?.result;
+        setFailedElementIds(elementIds);
+      })
+      .catch(() => {});
   }, [currentPage, pageSize]);
 
   return (
