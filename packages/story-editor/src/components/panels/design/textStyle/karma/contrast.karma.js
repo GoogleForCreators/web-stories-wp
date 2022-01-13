@@ -23,60 +23,58 @@ import { waitFor } from '@testing-library/react';
  */
 import { Fixture } from '../../../../../karma';
 
-describe('Text Panel', () => {
-  describe('Text Panel: Contrast Warning', () => {
-    let fixture;
+describe('Text Panel: Contrast Warning', () => {
+  let fixture;
 
-    beforeEach(async () => {
-      fixture = new Fixture();
-      await fixture.render();
-      await fixture.collapseHelpCenter();
-    });
+  beforeEach(async () => {
+    fixture = new Fixture();
+    await fixture.render();
+    await fixture.collapseHelpCenter();
+  });
 
-    afterEach(() => {
-      fixture.restore();
-    });
+  afterEach(() => {
+    fixture.restore();
+  });
 
-    it('should have no aXe violations', async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
-      //change font color to white
-      await fixture.events.click(
-        fixture.editor.inspector.designPanel.textStyle.fontColor.button
-      );
-      await waitFor(() =>
-        fixture.events.click(
-          fixture.screen.getByRole('option', { name: '#fff' })
-        )
-      );
+  it('should have no aXe violations', async () => {
+    await fixture.events.click(fixture.editor.library.textAdd);
+    await waitFor(() => {
+      if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+        throw new Error('node not ready');
+      }
+    }); //change font color to white
+    await fixture.events.click(
+      fixture.editor.inspector.designPanel.textStyle.fontColor.button
+    );
+    await waitFor(() =>
+      fixture.events.click(fixture.screen.getByRole('option', { name: '#fff' }))
+    );
 
-      const contrastWarning = fixture.screen.getByTestId('warningContainer');
-      await expectAsync(contrastWarning).toHaveNoViolations();
-    });
+    const contrastWarning = fixture.screen.getByTestId('warningContainer');
+    await expectAsync(contrastWarning).toHaveNoViolations();
+  });
 
-    it('should show contrast warning', async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
-      //change font color to white
-      await fixture.events.click(
-        fixture.editor.inspector.designPanel.textStyle.fontColor.button
-      );
-      await waitFor(() =>
-        fixture.events.click(
-          fixture.screen.getByRole('option', { name: '#fff' })
-        )
-      );
-      // check that the warning icon is on screen
-      await expect(fixture.screen.queryByTitle('Low Warning')).toBeDefined();
-      // change font color back to black
-      await waitFor(() =>
-        fixture.events.click(
-          fixture.screen.getByRole('option', { name: '#000' })
-        )
-      );
-      // Check that the warning icon has been removed from screen. We cannot check
-      // for the text, since useLiveRegion will leave the message on the dom.
-      await expect(fixture.screen.queryByTitle('Low Warning')).toBeNull();
-    });
+  it('should show contrast warning', async () => {
+    await fixture.events.click(fixture.editor.library.textAdd);
+    await waitFor(() => {
+      if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+        throw new Error('node not ready');
+      }
+    }); //change font color to white
+    await fixture.events.click(
+      fixture.editor.inspector.designPanel.textStyle.fontColor.button
+    );
+    await fixture.events.click(
+      fixture.screen.getByRole('option', { name: '#fff' })
+    );
+    // check that the warning icon is on screen
+    await expect(fixture.screen.queryByTitle('Low Warning')).toBeDefined();
+    // change font color back to black
+    await fixture.events.click(
+      fixture.screen.getByRole('option', { name: '#000' })
+    );
+    // Check that the warning icon has been removed from screen. We cannot check
+    // for the text, since useLiveRegion will leave the message on the dom.
+    await expect(fixture.screen.queryByTitle('Low Warning')).toBeNull();
   });
 });
