@@ -36,7 +36,7 @@ concurrency:
 
 jobs:
   karma:
-    name: Karma (${{ matrix.shardIndex + 1 }}/4)
+    name: Karma (${{ matrix.shardIndex }}/3)
     runs-on: ubuntu-latest
     timeout-minutes: 30
     strategy:
