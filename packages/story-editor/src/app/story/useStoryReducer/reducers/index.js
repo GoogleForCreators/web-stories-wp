@@ -39,6 +39,7 @@ export { default as setSelectedElements } from './setSelectedElements';
 export { default as selectElement } from './selectElement';
 export { default as unselectElement } from './unselectElement';
 export { default as toggleElement } from './toggleElement';
+export { default as toggleLayer } from './toggleLayer';
 
 // Manipulate animation state
 export { default as updateAnimationState } from './updateAnimationState';

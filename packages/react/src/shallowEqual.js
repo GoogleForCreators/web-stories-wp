@@ -13,24 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  forwardRef,
-  lazy,
-  memo,
-  useLayoutEffect,
-  useReducer,
-  createRef,
-  Fragment,
-  Component,
-  StrictMode,
-  Suspense,
-  cloneElement,
-  createElement,
-  useImperativeHandle,
-  useContext as useContextReact,
-} from 'react';
+/**
+ * External dependencies
+ */
+import { shallowEqualArrays, shallowEqualObjects } from 'shallow-equal';
+
+function shallowEqual(a, b) {
+  if (a === b) {
+    return true;
+  }
+
+  if (Array.isArray(a) && Array.isArray(b)) {
+    return shallowEqualArrays(a, b);
+  }
+
+  if (typeof a === 'object' && typeof b === 'object') {
+    return shallowEqualObjects(a, b);
+  }
+
+  return false;
+}
+
+export default shallowEqual;

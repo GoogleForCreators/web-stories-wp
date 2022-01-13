@@ -30,6 +30,7 @@ import {
   useStoryTriggerListener,
   useStoryTriggersDispatch,
   STORY_EVENTS,
+  storyReducers,
 } from './story';
 
 import { useCanvas } from './canvas';
@@ -59,4 +60,5 @@ export {
   useHelpCenter,
   useUserOnboarding,
   useRightClickMenu,
+  storyReducers,
 };
