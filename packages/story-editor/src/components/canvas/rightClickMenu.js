@@ -42,6 +42,10 @@ const RightClickMenuContainer = styled.div`
   z-index: 9999;
 `;
 
+const ButtonWrapper = styled.div`
+  position: relative;
+`;
+
 const RightClickMenu = () => {
   const { isRTL } = useConfig();
   const {
@@ -89,19 +93,22 @@ const RightClickMenu = () => {
             isRTL={isRTL}
           >
             {rightClickMenuItems.map(
-              ({ label, shortcut, separator, ...buttonProps }) => (
+              ({ label, shortcut, separator, SubMenu, ...buttonProps }) => (
                 <Fragment key={label}>
                   {separator === 'top' && (
                     <ContextMenuComponents.MenuSeparator />
                   )}
-                  <ContextMenuComponents.MenuButton {...buttonProps}>
-                    {label}
-                    {shortcut && (
-                      <ContextMenuComponents.MenuShortcut>
-                        {shortcut.display}
-                      </ContextMenuComponents.MenuShortcut>
-                    )}
-                  </ContextMenuComponents.MenuButton>
+                  <ButtonWrapper>
+                    <ContextMenuComponents.MenuButton {...buttonProps}>
+                      {label}
+                      {shortcut && (
+                        <ContextMenuComponents.MenuShortcut>
+                          {shortcut.display}
+                        </ContextMenuComponents.MenuShortcut>
+                      )}
+                    </ContextMenuComponents.MenuButton>
+                    {SubMenu && <SubMenu />}
+                  </ButtonWrapper>
                   {separator === 'bottom' && (
                     <ContextMenuComponents.MenuSeparator />
                   )}

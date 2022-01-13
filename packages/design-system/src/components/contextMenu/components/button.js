@@ -61,10 +61,18 @@ const StyledButton = styled(BaseButton)`
  * @param {string} props.id id attribute for the element
  * @param {Function} props.onBlur Blur event handler.
  * @param {Function} props.onClick Click event handler.
+ * @param {boolean} props.dismissOnClick If to call onDismiss when clicking.
  * @param {Function} props.onFocus Focus event handler.
  * @return {Node} The react node
  */
-function Button({ id, onBlur, onClick, onFocus, ...props }) {
+function Button({
+  id,
+  onBlur,
+  onClick,
+  onFocus,
+  dismissOnClick = true,
+  ...props
+}) {
   const { focusedId, isIconMenu, onDismiss, onMenuItemBlur, onMenuItemFocus } =
     useContextMenu(({ state, actions }) => ({
       focusedId: state.focusedId,
@@ -83,7 +91,7 @@ function Button({ id, onBlur, onClick, onFocus, ...props }) {
 
   const handleClick = (evt) => {
     onClick(evt);
-    onDismiss(evt);
+    dismissOnClick && onDismiss(evt);
   };
 
   const handleFocus = (evt) => {
@@ -110,6 +118,7 @@ Button.propTypes = {
   onBlur: PropTypes.func,
   onClick: PropTypes.func.isRequired,
   onFocus: PropTypes.func,
+  dismissOnClick: PropTypes.bool,
 };
 
 export default Button;

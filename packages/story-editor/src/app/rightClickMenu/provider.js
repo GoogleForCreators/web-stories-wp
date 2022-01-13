@@ -62,6 +62,7 @@ import rightClickMenuReducer, {
   DEFAULT_RIGHT_CLICK_MENU_STATE,
 } from './reducer';
 import { getDefaultPropertiesForType, getElementStyles } from './utils';
+import useLayerSelect from './useLayerSelect';
 
 const UNDO_HELP_TEXT = sprintf(
   /* translators: %s: Ctrl/Cmd + Z keyboard shortcut */
@@ -1043,8 +1044,11 @@ function RightClickMenuProvider({ children }) {
     toggleTrimMode,
   ]);
 
+  const layerSelectItem = useLayerSelect({ menuItemProps });
+
   const shapeItems = useMemo(
     () => [
+      layerSelectItem,
       {
         label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(
           selectedElements.length
