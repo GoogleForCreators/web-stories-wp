@@ -168,7 +168,7 @@ describe('Background Copy Paste integration', () => {
     expect(await getCanvasBackgroundElement()).toBeEmpty();
   });
 
-  it('should correctly copy image to page with existing image', async () => {
+  it.skip('should correctly copy image to page with existing image', async () => {
     // Arrange the backgrounds
     await gotoPage(1);
     await setBackgroundColor('FF0000');

@@ -38,7 +38,7 @@ describe('Drop-Target order', () => {
     fixture.restore();
   });
 
-  it('should replace top image when bg image is set and another one is on top', async () => {
+  it.skip('should replace top image when bg image is set and another one is on top', async () => {
     // Drag first media element straight to canvas edge to set as background
     const bgMedia = fixture.editor.library.media.item(0);
     const canvas = fixture.editor.canvas.framesLayer.fullbleed;
@@ -103,7 +103,7 @@ describe('Drop-Target order', () => {
     });
   });
 
-  it('should replace the top image when two images are in the same place on canvas', async () => {
+  it.skip('should replace the top image when two images are in the same place on canvas', async () => {
     // Add three images - will be added on top of each other
     await fixture.events.click(fixture.editor.library.media.item(0));
     await fixture.events.click(fixture.editor.library.media.item(1));

@@ -223,7 +223,7 @@ describe('Drop-Target integration', () => {
       bgImageData = (await getElements(fixture))[0];
     });
 
-    it('should correctly handle image dragged from library straight to edge replacing old image', async () => {
+    it.skip('should correctly handle image dragged from library straight to edge replacing old image', async () => {
       // Verify that background element has the correct image before doing anything
       const bg1 = fixture.editor.canvas.displayLayer.display(
         bgImageData.id
@@ -280,7 +280,7 @@ describe('Drop-Target integration', () => {
         imageData = (await getElements(fixture))[1];
       });
 
-      it('should correctly handle image dropped on edge replacing old image', async () => {
+      it.skip('should correctly handle image dropped on edge replacing old image', async () => {
         // Verify that background element has the correct image before doing anything
         const bg1 = fixture.editor.canvas.displayLayer.display(
           bgImageData.id
