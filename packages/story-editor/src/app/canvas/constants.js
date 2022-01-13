@@ -13,8 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+export const RECT_OBSERVATION_KEY = 'rectObservationKey';
 
-export { default as CanvasProvider } from './canvasProvider';
-export { default as useCanvas } from './useCanvas';
-export * from './constants';
-export * from './useCanvasBoundingBox';
+export const CANVAS_BOUNDING_BOX_IDS = {
+  CANVAS_CONTAINER: 'canvasContainer',
+  PAGE_CONTAINER: 'pageContainer',
+};

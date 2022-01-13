@@ -259,17 +259,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'dashboard',
 			],
 			/**
-			 * Author: @dmmulroy
-			 * Issue: #2098
-			 * Creation date: 2020-06-04
-			 */
-			[
-				'name'        => 'showTextAndShapesSearchInput',
-				'label'       => __( 'Library search', 'web-stories' ),
-				'description' => __( 'Enable search input on text and shapes tabs', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
 			 * Author: @diegovar
 			 * Issue: #2616
 			 * Creation date: 2020-06-23
