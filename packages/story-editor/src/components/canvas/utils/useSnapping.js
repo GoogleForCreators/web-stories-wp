@@ -31,7 +31,6 @@ import {
   CANVAS_BOUNDING_BOX_IDS,
   useCanvasBoundingBox,
 } from '../../../app';
-import {} from '../../../app/canvas';
 
 function useSnapping({
   canSnap,
