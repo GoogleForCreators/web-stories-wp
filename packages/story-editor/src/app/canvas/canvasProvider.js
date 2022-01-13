@@ -138,7 +138,6 @@ function CanvasProvider({ children }) {
       }
 
       if ('mousedown' === evt.type) {
-        evt.persist();
         setLastSelectionEvent(evt);
 
         // Clear this selection event as soon as mouse is released
