@@ -21,7 +21,7 @@ import { axe } from 'jest-axe';
 /**
  * Internal dependencies
  */
-import { useCanvas } from '../../../../../../app';
+import { useCanvas, useCanvasBoundingBox } from '../../../../../../app';
 import { renderWithTheme } from '../../../../../../testUtils';
 import Attribution from '../attribution';
 import MediaElement from '../mediaElement';
@@ -30,7 +30,9 @@ import { useLocalMedia } from '../../../../../../app/media';
 jest.mock('../../../../../../app/media');
 
 jest.mock('../../../../../../app/canvas', () => ({
+  ...jest.requireActual('../../../../../../app/canvas'),
   useCanvas: jest.fn(),
+  useCanvasBoundingBox: jest.fn(),
 }));
 
 const RESOURCE = {
@@ -72,9 +74,11 @@ const mockCanvasContext = {
 
 describe('automated accessibility tests', () => {
   const mockUseCanvas = useCanvas;
+  const mockUseCanvasBoundingBox = useCanvasBoundingBox;
 
   beforeEach(() => {
     mockUseCanvas.mockReturnValue(mockCanvasContext);
+    mockUseCanvasBoundingBox.mockReturnValue({ x: 0, y: 0 });
     useLocalMedia.mockReturnValue({
       isCurrentResourceTrimming: jest.fn(),
       isCurrentResourceMuting: jest.fn(),

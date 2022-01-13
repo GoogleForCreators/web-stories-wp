@@ -33,7 +33,12 @@ import {
   storyReducers,
 } from './story';
 
-import { useCanvas } from './canvas';
+import {
+  useCanvas,
+  useCanvasBoundingBox,
+  useCanvasBoundingBoxRef,
+  CANVAS_BOUNDING_BOX_IDS,
+} from './canvas';
 import { useLayout } from './layout';
 import { useCurrentUser } from './currentUser';
 import { useHelpCenter } from './helpCenter';
@@ -55,6 +60,9 @@ export {
   useLocalMedia,
   useMedia,
   useCanvas,
+  useCanvasBoundingBox,
+  useCanvasBoundingBoxRef,
+  CANVAS_BOUNDING_BOX_IDS,
   useLayout,
   useCurrentUser,
   useHelpCenter,
