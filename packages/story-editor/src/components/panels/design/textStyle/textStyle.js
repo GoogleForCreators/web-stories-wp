@@ -138,7 +138,7 @@ function StylePanel(props) {
           }}
         />
         {showContrastWarning && (
-          <Warning message={ACCESSIBILITY_COPY.lowContrast.panel} />
+          <Warning message={ACCESSIBILITY_COPY.lowContrast.textPanel} />
         )}
         <SubSection>
           <SubHeading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>

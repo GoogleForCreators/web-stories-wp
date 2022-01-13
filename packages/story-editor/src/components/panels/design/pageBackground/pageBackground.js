@@ -260,7 +260,7 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
         </Row>
       )}
       {failedContrast && (
-        <Warning message={ACCESSIBILITY_COPY.lowContrast.panel} />
+        <Warning message={ACCESSIBILITY_COPY.lowContrast.backgroundPanel} />
       )}
     </SimplePanel>
   );

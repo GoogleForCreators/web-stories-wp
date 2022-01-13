@@ -120,8 +120,12 @@ export const ACCESSIBILITY_COPY = {
       'Ensure legibility of text and ease of reading by increasing color contrast',
       'web-stories'
     ),
-    panel: __(
-      'This color combination may be hard for people to read.',
+    textPanel: __(
+      'This color or font size combination may be hard for some people to read.',
+      'web-stories'
+    ),
+    backgroundPanel: __(
+      'This background color may make some text hard to read.',
       'web-stories'
     ),
     warningIcon: __('Low Warning', 'web-stories'),
