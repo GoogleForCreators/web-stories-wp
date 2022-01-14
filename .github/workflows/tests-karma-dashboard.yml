@@ -42,7 +42,7 @@ jobs:
     strategy:
       matrix:
         # We want to split up the tests into 2 parts running in parallel.
-        shard: [ '1/2', '2/2' ]
+        shard: ['1/2', '2/2']
     steps:
       - name: Checkout
         uses: actions/checkout@v2
