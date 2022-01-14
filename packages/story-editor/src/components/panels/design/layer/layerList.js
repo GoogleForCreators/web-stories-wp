@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { Fragment, useCallback } from '@web-stories-wp/react';
+import { Fragment, useCallback, memo } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { __ } from '@web-stories-wp/i18n';
 
@@ -53,15 +53,45 @@ const LayerSeparator = styled(ReorderableSeparator)`
   padding: ${LAYER_HEIGHT / 2}px 0;
 `;
 
+const ReorderableLayer = memo(function ReorderableLayer({
+  id,
+  position,
+  handleStartReordering,
+}) {
+  const element = useStory(({ state }) =>
+    state.currentPage?.elements.find((el) => el.id === id)
+  );
+  return element ? (
+    <Fragment key={id}>
+      <LayerSeparator position={position + 1} />
+      <ReorderableItem
+        position={position}
+        onStartReordering={handleStartReordering(id)}
+        disabled={element.isBackground}
+      >
+        <Layer element={element} />
+      </ReorderableItem>
+    </Fragment>
+  ) : null;
+});
+
+ReorderableLayer.propTypes = {
+  id: PropTypes.string.isRequired,
+  position: PropTypes.number.isRequired,
+  handleStartReordering: PropTypes.func.isRequired,
+};
+
 function LayerPanel({ layers }) {
-  const { arrangeElement, setSelectedElementsById } = useStory((state) => ({
-    arrangeElement: state.actions.arrangeElement,
-    setSelectedElementsById: state.actions.setSelectedElementsById,
-  }));
+  const { arrangeElement, setSelectedElementsById } = useStory(
+    ({ actions }) => ({
+      arrangeElement: actions.arrangeElement,
+      setSelectedElementsById: actions.setSelectedElementsById,
+    })
+  );
 
-  const { onOpenMenu } = useRightClickMenu();
+  const onOpenMenu = useRightClickMenu((value) => value.onOpenMenu);
 
-  const numLayers = layers && layers.length;
+  const numLayers = layers.length;
 
   const focusCanvas = useFocusCanvas();
   const handleStartReordering = useCallback(
@@ -89,16 +119,12 @@ function LayerPanel({ layers }) {
       getItemSize={() => LAYER_HEIGHT}
     >
       {layers.map((layer) => (
-        <Fragment key={layer.id}>
-          <LayerSeparator position={layer.position + 1} />
-          <ReorderableItem
-            position={layer.position}
-            onStartReordering={handleStartReordering(layer.id)}
-            disabled={layer.isBackground}
-          >
-            <Layer layer={layer} />
-          </ReorderableItem>
-        </Fragment>
+        <ReorderableLayer
+          key={layer.id}
+          id={layer.id}
+          position={layer.position}
+          handleStartReordering={handleStartReordering}
+        />
       ))}
     </LayerList>
   );

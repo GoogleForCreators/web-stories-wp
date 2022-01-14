@@ -58,17 +58,16 @@ export function EffectZoom({
     easing,
   });
 
+  const keyframes = {
+    transform: ZoomWAAPIAnimation.keyframes.transform,
+    opacity: FadeWAAPIAnimation.keyframes.opacity,
+  };
+
   return {
     id,
-    // eslint-disable-next-line react/prop-types
-    WAAPIAnimation: function WAAPIAnimation({ children, hoistAnimation }) {
-      return (
-        <FadeWAAPIAnimation hoistAnimation={hoistAnimation}>
-          <ZoomWAAPIAnimation hoistAnimation={hoistAnimation}>
-            {children}
-          </ZoomWAAPIAnimation>
-        </FadeWAAPIAnimation>
-      );
+    WAAPIAnimation: {
+      ...ZoomWAAPIAnimation,
+      keyframes,
     },
     // eslint-disable-next-line react/prop-types
     AMPTarget: function AMPTarget({ children, style }) {

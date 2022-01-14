@@ -13,12 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-import { render, screen } from '@testing-library/react';
-
 /**
  * Internal dependencies
  */
@@ -51,20 +45,17 @@ describe('AnimationPart', () => {
 
   /**
    * Ensures every animation type resolves
-   * to a react component as new animations
+   * to a object as new animations
    * are created
    */
   it.each(Object.values(ANIMATION_TYPES))(
-    'type: %s returns a react component',
+    'type: %s returns a valid object with keyframes and timings for a WAAPIAnimation',
     (type) => {
       const args = {};
       const { WAAPIAnimation } = AnimationPart(type, args);
-      render(
-        <WAAPIAnimation hoistAnimation={() => {}}>
-          <div data-testid="child-rendered" />
-        </WAAPIAnimation>
-      );
-      expect(screen.getByTestId('child-rendered')).toBeInTheDocument();
+      expect(typeof WAAPIAnimation).toBe('object');
+      expect(WAAPIAnimation.keyframes).toBeDefined();
+      expect(WAAPIAnimation.timings).toBeDefined();
     }
   );
 

@@ -1489,7 +1489,7 @@ const formattedTemplatesArray = [
       { label: 'Black', color: '#28292b', family: 'Black' },
       { label: 'White', color: '#fff', family: 'White' },
       { label: 'Brown', color: '#eadfd6', family: 'Brown' },
-      { label: 'Test Color', color: '#eadfd6', family: 'Test Color' },
+      { label: 'Test Color', color: '#fff000', family: 'Test Color' },
     ],
     vertical: 'Fitness',
     title: 'Filterable By Color',

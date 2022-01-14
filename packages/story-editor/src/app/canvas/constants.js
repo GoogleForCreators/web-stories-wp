@@ -13,15 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+export const RECT_OBSERVATION_KEY = 'rectObservationKey';
 
-export { default as isNullOrUndefinedOrEmptyString } from './isNullOrUndefinedOrEmptyString';
-export { noop } from './noop';
-export { default as addQueryArgs } from './addQueryArgs';
-export { default as labelAccessibilityValidator } from './labelAccessibilityValidator';
-export { default as useLiveRegion } from './useLiveRegion';
-export { default as domReady } from './domReady';
-export { default as deepMerge } from './deepMerge';
-export { default as useMouseDownOutsideRef } from './useMouseDownOutsideRef';
-export * from './constants';
-export * from './directions';
-export * from './url';
+export const CANVAS_BOUNDING_BOX_IDS = {
+  CANVAS_CONTAINER: 'canvasContainer',
+  PAGE_CONTAINER: 'pageContainer',
+};
