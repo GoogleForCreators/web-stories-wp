@@ -30,7 +30,7 @@ import {
 } from '../../../checklistCard';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../../thumbnail';
 
-function VideoChecklistCard({ elements, footer, onClick, ...props }) {
+function VideoChecklistCard({ elements, footer, onThumbnailClick, ...props }) {
   return (
     <ChecklistCard
       {...props}
@@ -41,7 +41,7 @@ function VideoChecklistCard({ elements, footer, onClick, ...props }) {
       thumbnails={elements.map((element) => (
         <Thumbnail
           key={element.id}
-          onClick={() => onClick(element.id, element.pageId)}
+          onClick={() => onThumbnailClick(element.id, element.pageId)}
           type={THUMBNAIL_TYPES.VIDEO}
           displayBackground={<LayerThumbnail page={element} />}
           aria-label={__('Go to offending video', 'web-stories')}
@@ -55,7 +55,7 @@ VideoChecklistCard.propTypes = {
   title: PropTypes.string.isRequired,
   elements: PropTypes.arrayOf(PropTypes.object).isRequired,
   footer: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
+  onThumbnailClick: PropTypes.func.isRequired,
 };
 
 export default VideoChecklistCard;

@@ -66,7 +66,7 @@ const VideoElementLength = () => {
         title={title}
         elements={elements}
         footer={footer}
-        onClick={handleClick}
+        onThumbnailClick={handleClick}
       />
     )
   );
