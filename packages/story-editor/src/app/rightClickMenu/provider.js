@@ -1047,6 +1047,7 @@ function RightClickMenuProvider({ children }) {
   const layerSelectItem = useLayerSelect({
     menuItemProps,
     menuPosition,
+    isMenuOpen,
   });
 
   const shapeItems = useMemo(

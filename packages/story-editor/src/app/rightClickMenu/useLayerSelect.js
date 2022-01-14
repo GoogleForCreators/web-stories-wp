@@ -17,7 +17,12 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useState } from '@web-stories-wp/react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from '@web-stories-wp/react';
 import SAT from 'sat';
 import { __ } from '@web-stories-wp/i18n';
 
@@ -29,7 +34,7 @@ import createPolygon from '../canvas/utils/createPolygon';
 import { useCanvas } from '../canvas';
 import { getDefinitionForType } from '../../elements';
 
-function useLayerSelect({ menuItemProps, menuPosition }) {
+function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
   const [isSubmenuOpen, setIsSubmenuOpen] = useState(false);
   const { nodesById } = useCanvas(({ state: { nodesById } }) => ({
     nodesById,
@@ -40,6 +45,13 @@ function useLayerSelect({ menuItemProps, menuPosition }) {
       setSelectedElementsById,
     })
   );
+
+  useEffect(() => {
+    // Close submenu if the menu itself also closes.
+    if (!isMenuOpen) {
+      setIsSubmenuOpen(false);
+    }
+  }, [isMenuOpen]);
 
   const { x, y } = menuPosition;
   const getIntersectingElements = useCallback(() => {
