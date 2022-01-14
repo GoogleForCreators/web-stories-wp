@@ -17,7 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect } from '@web-stories-wp/react';
+import { useEffect, memo } from '@web-stories-wp/react';
 import styled, { StyleSheetManager } from 'styled-components';
 import { generatePatternStyles } from '@web-stories-wp/patterns';
 import {
@@ -63,15 +63,10 @@ const PreviewSafeZone = styled.div`
   margin: 0;
 `;
 
-function PreviewPageController({
-  page,
-  animationState,
-  subscribeGlobalTime,
-  pageSize,
-}) {
-  const {
-    actions: { WAAPIAnimationMethods },
-  } = useStoryAnimationContext();
+function PreviewPageAnimationController({ animationState }) {
+  const WAAPIAnimationMethods = useStoryAnimationContext(
+    ({ actions }) => actions.WAAPIAnimationMethods
+  );
 
   useEffect(() => {
     switch (animationState) {
@@ -82,21 +77,26 @@ function PreviewPageController({
         WAAPIAnimationMethods.reset();
         return () => {};
       case STORY_ANIMATION_STATE.SCRUBBING:
-        WAAPIAnimationMethods.pause();
-        return subscribeGlobalTime?.(WAAPIAnimationMethods.setCurrentTime);
       case STORY_ANIMATION_STATE.PAUSED:
         WAAPIAnimationMethods.pause();
         return () => {};
       default:
         return () => {};
     }
-  }, [animationState, WAAPIAnimationMethods, subscribeGlobalTime]);
+  }, [animationState, WAAPIAnimationMethods]);
 
   /**
    * Reset everything on unmount;
    */
   useEffect(() => () => WAAPIAnimationMethods.reset(), [WAAPIAnimationMethods]);
 
+  return null;
+}
+
+const PreviewPageDisplay = memo(function PreviewPageDisplay({
+  page,
+  pageSize,
+}) {
   return (
     <FullBleedPreviewWrapper
       pageSize={pageSize}
@@ -107,14 +107,13 @@ function PreviewPageController({
       </PreviewSafeZone>
     </FullBleedPreviewWrapper>
   );
-}
+});
 
 function PreviewPage({
   page,
   pageSize,
   animationState = STORY_ANIMATION_STATE.RESET,
   onAnimationComplete,
-  subscribeGlobalTime,
 }) {
   // Preview is wrapped in StyleSheetManager w/ stylisPlugins={[]} in order to prevent
   // elements from shifting when in RTL mode since these aren't relevant for story previews
@@ -125,13 +124,8 @@ function PreviewPage({
         elements={page.elements}
         onWAAPIFinish={onAnimationComplete}
       >
-        <PreviewPageController
-          page={page}
-          pageSize={pageSize}
-          animationState={animationState}
-          onAnimationComplete={onAnimationComplete}
-          subscribeGlobalTime={subscribeGlobalTime}
-        />
+        <PreviewPageDisplay page={page} pageSize={pageSize} />
+        <PreviewPageAnimationController animationState={animationState} />
       </StoryAnimation.Provider>
     </StyleSheetManager>
   );
@@ -142,14 +136,15 @@ PreviewPage.propTypes = {
   pageSize: PageSizePropType.isRequired,
   animationState: PropTypes.oneOf(Object.values(STORY_ANIMATION_STATE)),
   onAnimationComplete: PropTypes.func,
-  subscribeGlobalTime: PropTypes.func,
 };
 
-PreviewPageController.propTypes = {
+PreviewPageDisplay.propTypes = {
   page: StoryPropTypes.page.isRequired,
   pageSize: PageSizePropType.isRequired,
+};
+
+PreviewPageAnimationController.propTypes = {
   animationState: PropTypes.oneOf(Object.values(STORY_ANIMATION_STATE)),
-  subscribeGlobalTime: PropTypes.func,
 };
 
 export default PreviewPage;

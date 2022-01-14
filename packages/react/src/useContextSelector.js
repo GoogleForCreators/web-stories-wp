@@ -22,7 +22,8 @@ import { useContextSelector as useContextSelectorOrig } from 'use-context-select
 /**
  * Internal dependencies
  */
-import { useRef, shallowEqual } from './react';
+import { useRef } from './react';
+import shallowEqual from './shallowEqual';
 
 /**
  * This hook returns a part of the context value by selector.

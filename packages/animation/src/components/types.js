@@ -13,24 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  forwardRef,
-  lazy,
-  memo,
-  useLayoutEffect,
-  useReducer,
-  createRef,
-  Fragment,
-  Component,
-  StrictMode,
-  Suspense,
-  cloneElement,
-  createElement,
-  useImperativeHandle,
-  useContext as useContextReact,
-} from 'react';
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+export const WAAPIAnimationProps = {
+  children: PropTypes.node.isRequired,
+  hoistAnimation: PropTypes.func,
+  keyframes: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  timings: PropTypes.object,
+  targetLeafElement: PropTypes.bool,
+};

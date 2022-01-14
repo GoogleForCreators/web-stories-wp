@@ -67,7 +67,6 @@ const useDoubleClick = (onSingleClick, onDoubleClick, ms = null) => {
           onSingleClick(evt, target);
         }
         setTarget(newTarget);
-        evt.persist();
         setLastEvent(evt);
         return;
       }

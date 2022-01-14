@@ -39,8 +39,10 @@ import useEditingElement from './useEditingElement';
 import createPolygon from './utils/createPolygon';
 
 import Context from './context';
+import { RECT_OBSERVATION_KEY } from './constants';
 
 function CanvasProvider({ children }) {
+  const [boundingBoxes, setBoundingBoxes] = useState({});
   const [lastSelectionEvent, setLastSelectionEvent] = useState(null);
   const lastSelectedElementId = useRef(null);
   const [canvasContainer, setCanvasContainer] = useState(null);
@@ -55,6 +57,27 @@ function CanvasProvider({ children }) {
   const [eyedropperCallback, setEyedropperCallback] = useState(null);
   const [pageCanvasData, setPageCanvasData] = useState(null);
   const [pageCanvasPromise, setPageCanvasPromise] = useState(null);
+
+  // IntersectionObserver tracks clientRects which is what we need here.
+  // different from use case of useIntersectionEffect because this is extensible
+  // to multiple nodes.
+  const clientRectObserver = useMemo(
+    () =>
+      new window.IntersectionObserver((entries) => {
+        for (const entry of entries) {
+          if (!entry.target.dataset[RECT_OBSERVATION_KEY]) {
+            return;
+          }
+          setBoundingBoxes((boxes) => ({
+            ...boxes,
+            [entry.target.dataset[RECT_OBSERVATION_KEY]]:
+              entry.boundingClientRect,
+          }));
+        }
+      }),
+    []
+  );
+  useEffect(() => () => clientRectObserver.disconnect(), [clientRectObserver]);
 
   const pageSize = useLayout(({ state: { pageWidth, pageHeight } }) => ({
     width: pageWidth,
@@ -115,7 +138,6 @@ function CanvasProvider({ children }) {
       }
 
       if ('mousedown' === evt.type) {
-        evt.persist();
         setLastSelectionEvent(evt);
 
         // Clear this selection event as soon as mouse is released
@@ -190,6 +212,8 @@ function CanvasProvider({ children }) {
         eyedropperPixelData,
         pageCanvasData,
         pageCanvasPromise,
+        boundingBoxes,
+        clientRectObserver,
       },
       actions: {
         setPageContainer,
@@ -215,13 +239,23 @@ function CanvasProvider({ children }) {
     }),
     [
       pageContainer,
+      canvasContainer,
       fullbleedContainer,
       nodesById,
       editingElement,
       editingElementState,
       lastSelectionEvent,
-      setPageContainer,
-      setFullbleedContainer,
+      displayLinkGuidelines,
+      pageAttachmentContainer,
+      designSpaceGuideline,
+      isEyedropperActive,
+      eyedropperCallback,
+      eyedropperImg,
+      eyedropperPixelData,
+      pageCanvasData,
+      pageCanvasPromise,
+      boundingBoxes,
+      clientRectObserver,
       getNodeForElement,
       setNodeForElement,
       setEditingElementWithoutState,
@@ -229,25 +263,6 @@ function CanvasProvider({ children }) {
       clearEditing,
       handleSelectElement,
       selectIntersection,
-      displayLinkGuidelines,
-      setDisplayLinkGuidelines,
-      pageAttachmentContainer,
-      setPageAttachmentContainer,
-      canvasContainer,
-      setCanvasContainer,
-      designSpaceGuideline,
-      setDesignSpaceGuideline,
-      isEyedropperActive,
-      setIsEyedropperActive,
-      eyedropperCallback,
-      setEyedropperCallback,
-      eyedropperImg,
-      setEyedropperImg,
-      eyedropperPixelData,
-      setEyedropperPixelData,
-      pageCanvasData,
-      pageCanvasPromise,
-      setPageCanvasPromise,
     ]
   );
   return (

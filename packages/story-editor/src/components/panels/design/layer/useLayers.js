@@ -18,18 +18,16 @@
  * Internal dependencies
  */
 import { useStory } from '../../../../app';
+import { STABLE_ARRAY } from '../../../../constants';
 
 function useLayers() {
-  const { currentPage } = useStory((state) => ({
-    currentPage: state.state.currentPage,
-  }));
+  const elementIds = useStory(
+    ({ state }) =>
+      state.currentPage?.elements?.map((el) => el.id) || STABLE_ARRAY
+  );
 
-  if (!currentPage) {
-    return [];
-  }
-
-  const layers = currentPage.elements.map((layer, index) => ({
-    ...layer,
+  const layers = elementIds.map((id, index) => ({
+    id,
     position: index,
   }));
   layers.reverse();

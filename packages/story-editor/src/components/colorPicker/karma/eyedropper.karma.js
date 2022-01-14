@@ -60,9 +60,13 @@ describe('Eyedropper', () => {
       up(),
     ]);
 
+    await fixture.collapseHelpCenter();
+
     // Click the background element
-    await fixture.events.click(
-      fixture.editor.canvas.framesLayer.frames[0].node
+    await fixture.events.mouse.clickOn(
+      fixture.editor.canvas.framesLayer.frames[0].node,
+      10,
+      10
     );
 
     // Use eyedropper to select the color

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-import { useMemo } from '@web-stories-wp/react';
+import { useMemo, memo } from '@web-stories-wp/react';
 import styled from 'styled-components';
 
 /**
@@ -53,9 +53,9 @@ const Divider = styled.div`
 function LayerPanel() {
   const layers = useLayers();
 
-  const {
-    state: { inspectorContentHeight },
-  } = useInspector();
+  const inspectorContentHeight = useInspector(
+    ({ state }) => state.inspectorContentHeight
+  );
 
   // We want the max height to fill the space underneath the document/design tab bar.
   // Since the document/design tab bar has top and bottom margin in addition to a static
@@ -97,4 +97,4 @@ function LayerPanel() {
   );
 }
 
-export default LayerPanel;
+export default memo(LayerPanel);

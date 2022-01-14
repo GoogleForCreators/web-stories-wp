@@ -71,6 +71,11 @@ const filterWAAPIAnimations = ({ animations, selectedElementIds }) =>
       )
     : animations;
 
+const STABLE_ARRAY = [];
+function mapHasReferentialEntry(map, [key, val]) {
+  return map?.has(key) && map.get(key) === val;
+}
+
 function Provider({
   animations,
   elements,
@@ -78,30 +83,84 @@ function Provider({
   onWAAPIFinish,
   selectedElementIds = [],
 }) {
-  const elementsMap = useMemo(() => {
-    return (elements || []).reduce((map, element) => {
-      map.set(element.id, element);
-      return map;
-    }, new Map());
-  }, [elements]);
+  const elementsInstanceMapRef = useRef(null);
+  const elementsInstanceMap = useMemo(
+    () =>
+      (elements || []).reduce((map, element) => {
+        map.set(element.id, element);
+        return map;
+      }, new Map()),
+    [elements]
+  );
 
+  const animationsInstanceMapRef = useRef(null);
+  const animationsInstanceMap = useMemo(
+    () =>
+      (animations || []).reduce((map, animation) => {
+        map.set(animation.id, animation);
+        return map;
+      }, new Map()),
+    [animations]
+  );
+
+  const animationPartsMapRef = useRef(null);
   const animationPartsMap = useMemo(() => {
-    return (animations || []).reduce((map, animation) => {
-      const { id, targets, type, ...args } = animation;
+    // Keeping track of maps from previous renders to be able to persist
+    // referentially stable generated animations that need no update.
+    const { current: oldAnimationsInstanceMap } = animationsInstanceMapRef;
+    const { current: oldElementsInstanceMap } = elementsInstanceMapRef;
+    const { current: oldAnimationPartsMap } = animationPartsMapRef;
 
-      (targets || []).forEach((t) => {
-        const generatedParts = map.get(t) || [];
-        const element = elementsMap.get(t);
+    const _animationPartsMap = new Map();
+    for (const [animationId, animation] of animationsInstanceMap.entries()) {
+      // See if animationPart needs an update from last animation update
+      const isAnimationRefenctiallyStable = mapHasReferentialEntry(
+        oldAnimationsInstanceMap,
+        [animationId, animation]
+      );
 
-        map.set(t, [
-          ...generatedParts,
-          AnimationPart(type, { ...args, element }),
-        ]);
-      });
+      // See if animationPart needs an update from any target elements updating
+      // (animations only have 1 target element, so this may look O(n) but it's
+      // really O(1) in actuality)
+      const areAnimationTargetElementsReferenciallyStable =
+        animation.targets.every((elementId) =>
+          mapHasReferentialEntry(oldElementsInstanceMap, [
+            elementId,
+            elementsInstanceMap.get(elementId),
+          ])
+        );
 
-      return map;
-    }, new Map());
-  }, [animations, elementsMap]);
+      // Persist last generated animation if neither animation nor targets have updated
+      if (
+        isAnimationRefenctiallyStable &&
+        areAnimationTargetElementsReferenciallyStable
+      ) {
+        animation.targets.forEach((elementId) =>
+          _animationPartsMap.set(elementId, oldAnimationPartsMap.get(elementId))
+        );
+      } else {
+        // Generate new animationPart if input has changed.
+        const { id, targets, type, ...args } = animation;
+
+        (targets || []).forEach((elementId) => {
+          const generatedParts = _animationPartsMap.get(elementId) || [];
+          const element = elementsInstanceMap.get(elementId);
+
+          _animationPartsMap.set(elementId, [
+            ...generatedParts,
+            AnimationPart(type, { ...args, element }),
+          ]);
+        });
+      }
+    }
+
+    // Sync up map refs to reference on next generation of animationPartsMap
+    animationsInstanceMapRef.current = animationsInstanceMap;
+    elementsInstanceMapRef.current = elementsInstanceMap;
+    animationPartsMapRef.current = _animationPartsMap;
+
+    return _animationPartsMap;
+  }, [animationsInstanceMap, elementsInstanceMap]);
 
   const providerId = useMemo(() => uuidv4(), []);
 
@@ -112,7 +171,7 @@ function Provider({
 
   const getAnimationParts = useCallback(
     (target) => {
-      return animationPartsMap.get(target) || [];
+      return animationPartsMap.get(target) || STABLE_ARRAY;
     },
     [animationPartsMap]
   );
@@ -143,7 +202,6 @@ function Provider({
         animation: WAPPIAnimation,
         elementId,
       });
-
       setWAAPIAnimations(Array.from(WAAPIAnimationMap.current.values()));
       return () => {
         WAPPIAnimation?.cancel();
