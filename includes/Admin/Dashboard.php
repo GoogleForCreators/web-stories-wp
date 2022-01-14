@@ -221,7 +221,7 @@ class Dashboard extends Service_Base {
 			0
 		);
 
-		if( isset($settings['canViewDefaultTemplates']) && $settings['canViewDefaultTemplates']) {
+		if ( isset( $settings['canViewDefaultTemplates'] ) && $settings['canViewDefaultTemplates'] ) {
 			$this->hook_suffix['stories-dashboard-explore'] = add_submenu_page(
 				$parent,
 				__( 'Explore Templates', 'web-stories' ),

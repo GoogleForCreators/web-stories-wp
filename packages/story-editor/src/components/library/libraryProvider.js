@@ -74,7 +74,7 @@ function LibraryProvider({ children }) {
         showElementsTab && ELEMS,
         showPageTemplates && PAGE_TEMPLATES,
       ].filter(Boolean),
-    [showMedia3p, showElementsTab, showMedia]
+    [showMedia3p, showElementsTab, showMedia, showPageTemplates]
   );
 
   const [tab, setTab] = useState(tabs[0].id);
