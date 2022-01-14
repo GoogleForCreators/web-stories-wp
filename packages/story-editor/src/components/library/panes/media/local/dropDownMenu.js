@@ -33,7 +33,7 @@ import {
 /**
  * Internal dependencies
  */
-import { useLocalMedia } from '../../../../../app';
+import { useConfig, useLocalMedia } from '../../../../../app';
 import DeleteDialog from './deleteDialog';
 import MediaEditDialog from './mediaEditDialog';
 
@@ -129,7 +129,7 @@ function DropDownMenu({
     () => setShowDeleteDialog(false),
     [setShowDeleteDialog]
   );
-
+  const { isRTL } = useConfig();
   // On Edit dialog closing.
   const onEditDialogClose = useCallback(
     () => setShowEditDialog(false),
@@ -160,6 +160,7 @@ function DropDownMenu({
               </IconContainer>
             </MoreButton>
             <Popup
+              isRTL={isRTL}
               anchor={moreButtonRef}
               placement={PLACEMENT.BOTTOM_START}
               isOpen={isMenuOpen}

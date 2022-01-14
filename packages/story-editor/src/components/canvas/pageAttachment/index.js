@@ -24,7 +24,7 @@ import { Popup } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import { useCanvas } from '../../../app';
+import { useCanvas, useConfig } from '../../../app';
 import useElementsWithLinks from '../../../utils/useElementsWithLinks';
 import { OUTLINK_THEME } from '../../../constants';
 import { ReactComponent as DefaultIcon } from './defaultIcon.svg';
@@ -143,7 +143,7 @@ function PageAttachment({ pageAttachment = {} }) {
     icon,
     theme,
   } = pageAttachment;
-
+  const { isRTL } = useConfig();
   const bgColor = theme === OUTLINK_THEME.DARK ? DARK_COLOR : LIGHT_COLOR;
   const fgColor = theme === OUTLINK_THEME.DARK ? LIGHT_COLOR : DARK_COLOR;
   return (
@@ -163,6 +163,7 @@ function PageAttachment({ pageAttachment = {} }) {
             </OutlinkChip>
             {pageAttachmentContainer && hasInvalidLinkSelected && (
               <Popup
+                isRTL={isRTL}
                 anchor={{ current: pageAttachmentContainer }}
                 isOpen
                 placement={'left'}

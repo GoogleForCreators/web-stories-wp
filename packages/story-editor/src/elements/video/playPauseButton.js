@@ -244,6 +244,7 @@ function PlayPauseButton({
   const TransitionWrapper = isPlayAbove
     ? ({ children }) => (
         <Popup
+          isRTL={isRTL}
           anchor={elementRef}
           isOpen
           placement="top"

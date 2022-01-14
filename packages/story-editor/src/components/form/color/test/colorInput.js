@@ -32,11 +32,6 @@ import ColorInput from '../colorInput';
 import getPreviewStyleMock from '../getPreviewStyle';
 import { StoryContext } from '../../../../app/story';
 
-jest.mock('@web-stories-wp/design-system', () => ({
-  ...jest.requireActual('@web-stories-wp/design-system'),
-  Popup: ({ children, isOpen }) => (isOpen ? children : null),
-}));
-
 jest.mock('../getPreviewStyle', () => jest.fn());
 jest.mock('@web-stories-wp/patterns', () => {
   return {

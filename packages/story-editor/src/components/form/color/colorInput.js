@@ -48,7 +48,7 @@ import ColorPicker from '../../colorPicker';
 import useInspector from '../../inspector/useInspector';
 import DefaultTooltip from '../../tooltip';
 import { focusStyle, inputContainerStyleOverride } from '../../panels/shared';
-import { useCanvas } from '../../../app';
+import { useCanvas, useConfig } from '../../../app';
 
 const Preview = styled.div`
   height: 36px;
@@ -151,13 +151,12 @@ const ColorInput = forwardRef(function ColorInput(
 
   const [pickerOpen, setPickerOpen] = useState(false);
   const previewRef = useRef(null);
-
   const { isEyedropperActive } = useCanvas(
     ({ state: { isEyedropperActive } }) => ({
       isEyedropperActive,
     })
   );
-
+  const { isRTL } = useConfig();
   const {
     refs: { inspector },
   } = useInspector();
@@ -222,6 +221,7 @@ const ColorInput = forwardRef(function ColorInput(
         </Tooltip>
       )}
       <Popup
+        isRTL={isRTL}
         anchor={previewRef}
         dock={inspector}
         isOpen={pickerOpen}
