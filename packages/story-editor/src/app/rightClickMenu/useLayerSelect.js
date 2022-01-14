@@ -91,7 +91,7 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
   }, [getIntersectingElements, menuItemProps, setSelectedElementsById]);
 
   return {
-    label: 'Select Layer',
+    label: __('Select Layer', 'web-stories'),
     separator: 'bottom',
     onClick: () => setIsSubmenuOpen(!isSubmenuOpen),
     subMenuItems: isSubmenuOpen ? subMenuItems : [],

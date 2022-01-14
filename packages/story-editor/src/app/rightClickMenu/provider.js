@@ -856,6 +856,12 @@ function RightClickMenuProvider({ children }) {
     ]
   );
 
+  const layerSelectItem = useLayerSelect({
+    menuItemProps,
+    menuPosition,
+    isMenuOpen,
+  });
+
   const pageItems = useMemo(() => {
     const disableBackgroundMediaActions = selectedElement?.isDefaultBackground;
     const isVideo = selectedElement?.type === 'video';
@@ -867,6 +873,7 @@ function RightClickMenuProvider({ children }) {
       : RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND_IMAGE;
 
     return [
+      layerSelectItem,
       {
         label: detachLabel,
         onClick: handleRemoveMediaFromBackground,
@@ -904,6 +911,7 @@ function RightClickMenuProvider({ children }) {
     handleOpenScaleAndCrop,
     handleRemoveMediaFromBackground,
     hasTrimMode,
+    layerSelectItem,
     menuItemProps,
     pageManipulationItems,
     selectedElement,
@@ -913,6 +921,7 @@ function RightClickMenuProvider({ children }) {
 
   const textItems = useMemo(
     () => [
+      layerSelectItem,
       {
         label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(
           selectedElements.length
@@ -949,6 +958,7 @@ function RightClickMenuProvider({ children }) {
     ],
     [
       layerItems,
+      layerSelectItem,
       handleAddTextPreset,
       handleDuplicateElements,
       menuItemProps,
@@ -977,6 +987,7 @@ function RightClickMenuProvider({ children }) {
       : RIGHT_CLICK_MENU_LABELS.CLEAR_IMAGE_STYLES;
 
     return [
+      layerSelectItem,
       {
         label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(
           selectedElements.length
@@ -1038,17 +1049,12 @@ function RightClickMenuProvider({ children }) {
     handleSetPageBackground,
     hasTrimMode,
     layerItems,
+    layerSelectItem,
     menuItemProps,
     selectedElement,
     selectedElements.length,
     toggleTrimMode,
   ]);
-
-  const layerSelectItem = useLayerSelect({
-    menuItemProps,
-    menuPosition,
-    isMenuOpen,
-  });
 
   const shapeItems = useMemo(
     () => [
@@ -1104,6 +1110,7 @@ function RightClickMenuProvider({ children }) {
 
   const stickerItems = useMemo(
     () => [
+      layerSelectItem,
       {
         label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(
           selectedElements.length
@@ -1117,6 +1124,7 @@ function RightClickMenuProvider({ children }) {
     [
       handleDuplicateElements,
       layerItems,
+      layerSelectItem,
       menuItemProps,
       selectedElements.length,
     ]
