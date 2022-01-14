@@ -25,6 +25,7 @@ import {
 } from '@web-stories-wp/react';
 import SAT from 'sat';
 import { __ } from '@web-stories-wp/i18n';
+import { Icons } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -39,9 +40,13 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
   const { nodesById } = useCanvas(({ state: { nodesById } }) => ({
     nodesById,
   }));
-  const { currentPage, setSelectedElementsById } = useStory(
-    ({ state: { currentPage }, actions: { setSelectedElementsById } }) => ({
+  const { currentPage, selectedElements, setSelectedElementsById } = useStory(
+    ({
+      state: { currentPage, selectedElements },
+      actions: { setSelectedElementsById },
+    }) => ({
       currentPage,
+      selectedElements,
       setSelectedElementsById,
     })
   );
@@ -80,8 +85,10 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
       const { LayerContent } = getDefinitionForType(type);
       return {
         key: id,
+        supportsIcon: true,
+        icon: selectedElements[0].id === id ? <Icons.CheckmarkSmall /> : null,
         label: isBackground ? (
-          __('Background', 'web-stories')
+          <span>{__('Background', 'web-stories')}</span>
         ) : (
           <LayerContent element={element} />
         ),

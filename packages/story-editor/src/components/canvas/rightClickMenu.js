@@ -53,6 +53,26 @@ const SubMenuWrapper = styled(ContextMenuComponents.Menu)`
   top: -9px;
 `;
 
+const LabelWrapper = styled.span`
+  width: calc(100% + 14px);
+  display: inline-block;
+  position: relative;
+  margin-left: -14px;
+  svg {
+    width: 32px;
+    position: absolute;
+    top: -25%;
+  }
+  span {
+    padding-left: 32px;
+    font-size: 12px;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+`;
+
 const RightClickMenu = () => {
   const { isRTL } = useConfig();
   const {
@@ -83,9 +103,21 @@ const RightClickMenu = () => {
     };
   }, [ref]);
 
-  const menuButtonRenderer = ({ label, shortcut, ...buttonProps }) => (
+  const menuButtonRenderer = ({
+    label,
+    shortcut,
+    icon,
+    supportsIcon,
+    ...buttonProps
+  }) => (
     <ContextMenuComponents.MenuButton {...buttonProps}>
-      {label}
+      {supportsIcon && (
+        <LabelWrapper>
+          {icon}
+          {label}
+        </LabelWrapper>
+      )}
+      {!supportsIcon && label}
       {shortcut && (
         <ContextMenuComponents.MenuShortcut>
           {shortcut.display}
