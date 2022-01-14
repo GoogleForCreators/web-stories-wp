@@ -70,19 +70,39 @@ jobs:
     strategy:
       matrix:
         # TODO: add back Firefox once support is more mature.
+        browser: ['chrome']
+        wp: ['latest', '5.5']
+        snapshots: [false]
         # We want to split up the tests into 2 parts running in parallel.
         shard: ['1/2', '2/2']
         include:
           - browser: 'chrome'
             wp: 'latest'
             snapshots: true
+            shard: '1/2'
+          - browser: 'chrome'
+            wp: 'latest'
+            snapshots: true
+            shard: '2/2'
           - browser: 'chrome'
             wp: '5.9-RC2'
             experimental: true
             snapshots: false
+            shard: '1/2'
           - browser: 'chrome'
-            wp: '5.5'
+            wp: '5.9-RC2'
+            experimental: true
             snapshots: false
+            shard: '2/2'
+        exclude:
+          - browser: 'chrome'
+            wp: 'latest'
+            snapshots: false
+            shard: '1/2'
+          - browser: 'chrome'
+            wp: 'latest'
+            snapshots: false
+            shard: '2/2'
 
     steps:
       - name: Checkout
