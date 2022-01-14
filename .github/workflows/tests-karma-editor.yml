@@ -74,7 +74,7 @@ jobs:
         run: npm run test:karma:story-editor -- --headless --snapshots --viewport=1600:1000 --coverage --shard=$SHARD || npm run test:karma:story-editor:retry-failed -- --headless --snapshots --viewport=1600:1000 --shard=$SHARD
         env:
           DISABLE_ERROR_BOUNDARIES: true
-          SHARD: ${{ matrix.shards }}
+          SHARD: ${{ matrix.shard }}
 
       - name: Add files for snapshotting
         run: cp -r __static__ .test_artifacts/karma_snapshots/
