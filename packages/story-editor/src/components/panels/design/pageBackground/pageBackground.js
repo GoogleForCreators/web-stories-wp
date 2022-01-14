@@ -29,17 +29,20 @@ import {
   Icons,
   Text as DefaultText,
   THEME_CONSTANTS,
+  Tooltip,
 } from '@web-stories-wp/design-system';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
-import { Color, Row as DefaultRow } from '../../../form';
-import { useStory } from '../../../../app';
+import { Color, MediaUploadButton, Row as DefaultRow } from '../../../form';
+import { useConfig, useStory } from '../../../../app';
 import { SimplePanel } from '../../panel';
 import { FlipControls } from '../../shared';
-import { getDefinitionForType } from '../../../../elements';
+import { createNewElement, getDefinitionForType } from '../../../../elements';
 import { states, styles, useHighlights } from '../../../../app/highlights';
+import getElementProperties from '../../../canvas/utils/getElementProperties';
 
 const DEFAULT_FLIP = { horizontal: false, vertical: false };
 
@@ -54,7 +57,7 @@ const SelectedMedia = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
   display: flex;
   justify-content: space-between;
-  margin-right: 20px;
+  margin-right: 12px;
 `;
 
 const MediaWrapper = styled.div`
@@ -75,18 +78,35 @@ const RemoveButton = styled(Button)`
   align-self: center;
 `;
 
+const ReplaceButton = styled(Button).attrs({
+  size: BUTTON_SIZES.SMALL,
+  variant: BUTTON_VARIANTS.SQUARE,
+  type: BUTTON_TYPES.TERTIARY,
+})`
+  margin-right: 8px;
+`;
+
 const Text = styled(DefaultText)`
   align-self: center;
   width: 55px;
 `;
 
 function PageBackgroundPanel({ selectedElements, pushUpdate }) {
-  const { currentPage, clearBackgroundElement, updateCurrentPageProperties } =
-    useStory(({ state, actions }) => ({
-      currentPage: state.currentPage,
-      clearBackgroundElement: actions.clearBackgroundElement,
-      updateCurrentPageProperties: actions.updateCurrentPageProperties,
-    }));
+  const {
+    combineElements,
+    currentPage,
+    clearBackgroundElement,
+    updateCurrentPageProperties,
+  } = useStory(({ state, actions }) => ({
+    currentPage: state.currentPage,
+    clearBackgroundElement: actions.clearBackgroundElement,
+    combineElements: actions.combineElements,
+    updateCurrentPageProperties: actions.updateCurrentPageProperties,
+  }));
+
+  const {
+    capabilities: { hasUploadMediaAction },
+  } = useConfig();
 
   const updateBackgroundColor = useCallback(
     (value) => {
@@ -105,6 +125,35 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
     );
     clearBackgroundElement();
   }, [pushUpdate, clearBackgroundElement]);
+
+  /**
+   * Callback of select in media picker to replace background media.
+   *
+   * @param {Object} resource Object coming from backbone media picker.
+   */
+  const onSelect = useCallback(
+    (resource) => {
+      const element = createNewElement(
+        resource.type,
+        getElementProperties(resource.type, { resource })
+      );
+      combineElements({
+        firstElement: element,
+        secondId: selectedElements[0].id,
+      });
+      trackEvent('replace_background_media');
+    },
+    [combineElements, selectedElements]
+  );
+
+  const renderReplaceButton = useCallback(
+    (open) => (
+      <ReplaceButton onClick={open} aria-label={__('Replace', 'web-stories')}>
+        <Icons.ArrowCloud />
+      </ReplaceButton>
+    ),
+    []
+  );
 
   const { highlight, resetHighlight, cancelHighlight } = useHighlights(
     (state) => ({
@@ -175,6 +224,15 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
               <Icons.Cross />
             </RemoveButton>
           </SelectedMedia>
+          {hasUploadMediaAction && (
+            <Tooltip title={__('Replace', 'web-stories')}>
+              <MediaUploadButton
+                buttonInsertText={__('Use as background', 'web-stories')}
+                onInsert={onSelect}
+                renderButton={renderReplaceButton}
+              />
+            </Tooltip>
+          )}
           <FlipControls
             onChange={(value) => pushUpdate({ flip: value }, true)}
             value={flip}

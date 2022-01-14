@@ -92,6 +92,16 @@ export class TextStyle extends AbstractPanel {
     return color;
   }
 
+  get backgroundColor() {
+    const bgColor = this._get(
+      this.getByRole('region', { name: /Color input: Background color/ }),
+      'backgroundColor',
+      Color
+    );
+    bgColor.label = 'Background color';
+    return bgColor;
+  }
+
   get fontSize() {
     return this.getByRole('textbox', { name: /Font size/ });
   }

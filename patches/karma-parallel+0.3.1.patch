@@ -1,0 +1,17 @@
+diff --git a/node_modules/karma-parallel/lib/karma-parallelizer.js b/node_modules/karma-parallel/lib/karma-parallelizer.js
+index 81ac9df..2989063 100644
+--- a/node_modules/karma-parallel/lib/karma-parallelizer.js
++++ b/node_modules/karma-parallel/lib/karma-parallelizer.js
+@@ -120,9 +120,11 @@ function createFakeTestContext(ctx, shouldUseDescription) {
+       hasFocusedWithoutFaking =
+         hasFocusedWithoutFaking || (isFocus && !isFaking);
+ 
++      const isTopLevelSetupOrTeardown = typeof name === 'function' && !isFocus && !isDescription && !isSpec && depth === 0;
++
+       if (isDescription) def = wrapDescription(def);
+ 
+-      if (!isFaking || forceDescribe) {
++      if (!isFaking || forceDescribe || isTopLevelSetupOrTeardown) {
+         // Call through to framework and return the result
+         return fn.call(this, name, def);
+       } else if (isDescription) {

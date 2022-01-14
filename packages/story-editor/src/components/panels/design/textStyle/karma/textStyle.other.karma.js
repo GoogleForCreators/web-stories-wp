@@ -31,6 +31,7 @@ describe('Text Style Panel', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     localStorage.clear();
+    fixture.setFlags({ customFonts: true });
     await fixture.render();
     await fixture.collapseHelpCenter();
   });
@@ -231,8 +232,9 @@ describe('Text Style Panel', () => {
     describe('CUJ: Creator Can Style Text: Use font picker', () => {
       // There are 3 curated fonts included by default even though the total is more.
       const DEFAULT_VISIBLE_FONTS = 3;
-      // Timeout used for submitting / search update + 50ms (250 + 50).
-      const TIMEOUT = 300;
+      const DEFAULT_CUSTOM_FONTS = 2;
+      // Timeout used for submitting / search update + 250ms (250 + 250).
+      const TIMEOUT = 500;
       const openFontPicker = async () => {
         const input = await fixture.screen.getByLabelText('Font family');
         await fixture.events.click(input);
@@ -299,9 +301,17 @@ describe('Text Style Panel', () => {
         expect(updatedFontWeight.value).toBe('Regular');
       });
 
-      it('should display only the fonts from curated list by default', () => {
+      it('should display the fonts from curated list and custom fonts by default', () => {
         const options = getOptions();
-        expect(options.length).toBe(DEFAULT_VISIBLE_FONTS);
+        expect(options.length).toBe(
+          DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS
+        );
+      });
+
+      it('should display custom fonts as the first', () => {
+        const options = getOptions();
+        expect(options[0].textContent).toBe('Overpass Regular');
+        expect(options[1].textContent).toBe('Vazir Regular');
       });
 
       describe('when searching fonts', () => {
@@ -322,12 +332,23 @@ describe('Text Style Panel', () => {
           expect(options.length).toBe(1);
         });
 
+        it('should include custom fonts in search', async () => {
+          await fixture.events.keyboard.type('Vazir');
+          // Ensure the debounced callback has taken effect.
+          await fixture.events.sleep(TIMEOUT);
+          const options = getOptions();
+          expect(options.length).toBe(1);
+          expect(options[0].textContent).toBe('Vazir Regular');
+        });
+
         it('should not search with less than 2 characters', async () => {
           await fixture.events.keyboard.type('A');
           // Ensure the debounced callback has taken effect.
           await fixture.events.sleep(TIMEOUT);
           const options = getOptions();
-          expect(options.length).toBe(DEFAULT_VISIBLE_FONTS);
+          expect(options.length).toBe(
+            DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS
+          );
         });
 
         it('should restore default fonts list when emptying search', async () => {
@@ -342,7 +363,9 @@ describe('Text Style Panel', () => {
           await fixture.events.sleep(TIMEOUT);
           const defaultOptions = getOptions();
           // Back to all options.
-          expect(defaultOptions.length).toBe(DEFAULT_VISIBLE_FONTS);
+          expect(defaultOptions.length).toBe(
+            DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS
+          );
         });
 
         it('should show empty list in case of no results', async () => {
@@ -356,10 +379,12 @@ describe('Text Style Panel', () => {
       describe('with recent fonts', () => {
         it('should not display any recent fonts by default', () => {
           const options = getOptions();
-          expect(options.length).toBe(DEFAULT_VISIBLE_FONTS);
+          expect(options.length).toBe(
+            DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS
+          );
         });
 
-        it('should add up to 5 recent fonts, displaying the most recent first', async () => {
+        it('should add up to 5 recent fonts, displaying the most recent after the custom fonts', async () => {
           await fixture.events.keyboard.type('Space Mono');
           // Ensure the debounced callback has taken effect.
           await fixture.events.sleep(TIMEOUT);
@@ -369,8 +394,14 @@ describe('Text Style Panel', () => {
           await openFontPicker();
 
           let options = getOptions();
-          expect(options.length).toBe(DEFAULT_VISIBLE_FONTS + 1);
-          expect(options[0].textContent).toBe('Space Mono');
+          await waitFor(() => {
+            expect(options.length).toBe(
+              DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 1
+            );
+            expect(options[DEFAULT_CUSTOM_FONTS].textContent).toBe(
+              'Space Mono'
+            );
+          });
 
           await fixture.events.keyboard.type('Abel');
           // Ensure the debounced callback has taken effect.
@@ -380,7 +411,11 @@ describe('Text Style Panel', () => {
           await fixture.events.sleep(TIMEOUT);
           await openFontPicker();
           options = getOptions();
-          expect(options.length).toBe(DEFAULT_VISIBLE_FONTS + 2);
+          await waitFor(() => {
+            expect(options.length).toBe(
+              DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 2
+            );
+          });
 
           await fixture.events.keyboard.type('Abhaya Libre');
           // Ensure the debounced callback has taken effect.
@@ -390,7 +425,11 @@ describe('Text Style Panel', () => {
           await fixture.events.sleep(TIMEOUT);
           await openFontPicker();
           options = getOptions();
-          expect(options.length).toBe(DEFAULT_VISIBLE_FONTS + 3);
+          await waitFor(() => {
+            expect(options.length).toBe(
+              DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 3
+            );
+          });
 
           await fixture.events.keyboard.type('Source Serif Pro');
           // Ensure the debounced callback has taken effect.
@@ -400,7 +439,11 @@ describe('Text Style Panel', () => {
           await fixture.events.sleep(TIMEOUT);
           await openFontPicker();
           options = getOptions();
-          expect(options.length).toBe(DEFAULT_VISIBLE_FONTS + 4);
+          await waitFor(() => {
+            expect(options.length).toBe(
+              DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 4
+            );
+          });
 
           await fixture.events.keyboard.type('Roboto');
           // Ensure the debounced callback has taken effect.
@@ -410,7 +453,11 @@ describe('Text Style Panel', () => {
           await fixture.events.sleep(TIMEOUT);
           await openFontPicker();
           options = getOptions();
-          expect(options.length).toBe(DEFAULT_VISIBLE_FONTS + 5);
+          await waitFor(() => {
+            expect(options.length).toBe(
+              DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 5
+            );
+          });
 
           await fixture.events.keyboard.type('Yrsa');
           // Ensure the debounced callback has taken effect.
@@ -423,9 +470,13 @@ describe('Text Style Panel', () => {
           options = getOptions();
 
           // Ensure there are only 5 extra options added.
-          expect(options.length).toBe(DEFAULT_VISIBLE_FONTS + 5);
-          // Ensure the first one is the last chosen.
-          expect(options[0].textContent).toBe('Yrsa');
+          await waitFor(() => {
+            expect(options.length).toBe(
+              DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 5
+            );
+            // Ensure the first one is the last chosen.
+            expect(options[DEFAULT_CUSTOM_FONTS].textContent).toBe('Yrsa');
+          });
         });
 
         it('should display the selected recent font with a tick', async () => {
@@ -460,8 +511,10 @@ describe('Text Style Panel', () => {
 
       describe('using keyboard only', () => {
         it('should allow selecting a font with arrow keys and Enter', async () => {
-          // Select the third item in the already opened fontpicker,
+          // Select the fifth item in the already opened fontpicker,
           // which happens to be Ubuntu
+          await fixture.events.keyboard.press('down');
+          await fixture.events.keyboard.press('down');
           await fixture.events.keyboard.press('down');
           await fixture.events.keyboard.press('down');
           await fixture.events.keyboard.press('down');

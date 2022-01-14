@@ -38,6 +38,7 @@ function HistoryProvider({ children, size }) {
     requestedState,
     stateToHistory,
     clearHistory,
+    currentEntry,
     offset,
     historyLength,
     undo,
@@ -67,6 +68,7 @@ function HistoryProvider({ children, size }) {
 
   const state = {
     state: {
+      currentEntry,
       hasNewChanges,
       requestedState,
       canUndo: offset < historyLength - 1,

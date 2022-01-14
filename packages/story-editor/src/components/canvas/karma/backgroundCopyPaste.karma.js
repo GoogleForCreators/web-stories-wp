@@ -168,7 +168,9 @@ describe('Background Copy Paste integration', () => {
     expect(await getCanvasBackgroundElement()).toBeEmpty();
   });
 
-  it('should correctly copy image to page with existing image', async () => {
+  // TODO https://github.com/google/web-stories-wp/issues/10192
+  // eslint-disable-next-line jasmine/no-disabled-tests
+  xit('should correctly copy image to page with existing image', async () => {
     // Arrange the backgrounds
     await gotoPage(1);
     await setBackgroundColor('FF0000');

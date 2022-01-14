@@ -14,6 +14,7 @@
     "@web-stories-wp/dashboard": "*",
     "@web-stories-wp/date": "*",
     "@web-stories-wp/design-system": "*",
+    "@web-stories-wp/fonts": "*",
     "@web-stories-wp/i18n": "*",
     "@web-stories-wp/media": "*",
     "@web-stories-wp/patterns": "*",

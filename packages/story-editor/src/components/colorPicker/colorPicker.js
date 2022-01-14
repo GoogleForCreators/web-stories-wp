@@ -174,6 +174,7 @@ function ColorPicker({
           allowsSavedColors={allowsSavedColors}
           showDialog={showDialog}
           setShowDialog={setShowDialog}
+          changedStyle={changedStyle}
         />
       </Container>
     </CSSTransition>
