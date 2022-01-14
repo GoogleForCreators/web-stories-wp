@@ -67,7 +67,7 @@ function DisplayPage({ page, editingElement }) {
 
 DisplayPage.propTypes = {
   page: StoryPropTypes.page,
-  editingElement: StoryPropTypes.element,
+  editingElement: StoryPropTypes.string,
 };
 
 function DisplayPageAnimationController({
