@@ -21,13 +21,18 @@ import { axe } from 'jest-axe';
 /**
  * Internal dependencies
  */
-import { useCanvas } from '../../../../../../app';
+import { useCanvas, useCanvasBoundingBox } from '../../../../../../app';
 import { renderWithTheme } from '../../../../../../testUtils';
 import Attribution from '../attribution';
 import MediaElement from '../mediaElement';
+import { useLocalMedia } from '../../../../../../app/media';
+
+jest.mock('../../../../../../app/media');
 
 jest.mock('../../../../../../app/canvas', () => ({
+  ...jest.requireActual('../../../../../../app/canvas'),
   useCanvas: jest.fn(),
+  useCanvasBoundingBox: jest.fn(),
 }));
 
 const RESOURCE = {
@@ -44,7 +49,6 @@ const RESOURCE = {
   id: undefined,
   length: null,
   lengthFormatted: null,
-  local: false,
   mimeType: 'image/jpeg',
   poster: null,
   posterId: null,
@@ -70,9 +74,19 @@ const mockCanvasContext = {
 
 describe('automated accessibility tests', () => {
   const mockUseCanvas = useCanvas;
+  const mockUseCanvasBoundingBox = useCanvasBoundingBox;
 
   beforeEach(() => {
     mockUseCanvas.mockReturnValue(mockCanvasContext);
+    mockUseCanvasBoundingBox.mockReturnValue({ x: 0, y: 0 });
+    useLocalMedia.mockReturnValue({
+      isCurrentResourceTrimming: jest.fn(),
+      isCurrentResourceMuting: jest.fn(),
+      isCurrentResourceTranscoding: jest.fn(),
+      isCurrentResourceProcessing: jest.fn(),
+      isCurrentResourceUploading: jest.fn(),
+      isNewResourceProcessing: jest.fn(),
+    });
   });
 
   it('should render MediaElement without accessibility violations', async () => {
@@ -87,12 +101,22 @@ describe('automated accessibility tests', () => {
 
     const results = await axe(container);
     expect(results).toHaveNoViolations();
+  });
 
+  it('should render transcoding MediaElement without accessibility violations', async () => {
+    useLocalMedia.mockReturnValue({
+      isCurrentResourceTrimming: jest.fn(),
+      isCurrentResourceMuting: jest.fn(),
+      isCurrentResourceTranscoding: () => true,
+      isCurrentResourceProcessing: jest.fn(),
+      isNewResourceProcessing: jest.fn(),
+      isCurrentResourceUploading: jest.fn(),
+    });
     // transcoding
     const { container: container2 } = renderWithTheme(
       <MediaElement
         index={0}
-        resource={{ ...RESOURCE, isTranscoding: true }}
+        resource={RESOURCE}
         width={RESOURCE.width}
         height={RESOURCE.height}
       />

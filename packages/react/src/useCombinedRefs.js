@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { useCallback } from './react';
+import { useCallback, useRef } from './react';
 
 /**
  * Synchronize multiple refs to a single ref
@@ -25,29 +25,24 @@ import { useCallback } from './react';
  * This is used when receiving a forwarded ref, but also needing an internal one.
  *
  * @param {Array} refs  List of refs to synchronize
- * @return {Function} A callback to be used as `ref` for element.
+ * @return {(node:HTMLElement) => void} A callback to be used as `ref` for element.
  */
 function useCombinedRefs(...refs) {
-  const setRef = useCallback(
-    (node) => {
-      refs.forEach((ref) => {
-        if (!ref) {
-          // Ignore non-existing refs
-          return;
-        }
+  const refsRef = useRef(refs);
+  refsRef.current = refs;
+  return useCallback((node) => {
+    refsRef.current.forEach((ref) => {
+      if (typeof ref === 'function') {
+        ref(node);
+        return;
+      }
 
-        // Set ref value correctly
-        if (typeof ref === 'function') {
-          ref(node);
-        } else {
-          ref.current = node;
-        }
-      });
-    },
-    [refs]
-  );
-
-  return setRef;
+      if (ref) {
+        ref.current = node;
+        return;
+      }
+    });
+  }, []);
 }
 
 export default useCombinedRefs;

@@ -52,7 +52,6 @@ export const _default = () => {
     src: testImage,
     width: 910,
     height: 675,
-    local: false,
     alt: 'my image',
     sizes: {},
   });

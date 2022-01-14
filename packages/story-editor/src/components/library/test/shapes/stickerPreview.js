@@ -51,6 +51,7 @@ describe('StickerPreview', () => {
         pageContainer: document.body,
         canvasContainer: document.body,
         designSpaceGuideline: {},
+        boundingBoxes: {},
       },
       actions: {},
     };

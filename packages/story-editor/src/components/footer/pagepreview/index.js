@@ -178,6 +178,7 @@ function PagePreview({
                 width={width}
                 height={height}
                 alt={label}
+                decoding="async"
               />
             ) : (
               page.elements.map((element) => (

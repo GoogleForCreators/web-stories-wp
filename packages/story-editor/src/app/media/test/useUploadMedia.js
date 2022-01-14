@@ -52,6 +52,7 @@ jest.mock('../utils/useMediaUploadQueue', () => ({
       progress: [],
       uploaded: [],
       failures: [],
+      finished: [],
     },
   })),
 }));

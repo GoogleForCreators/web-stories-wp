@@ -27,8 +27,12 @@ import SingleSelectionMoveable from './singleSelectionMoveable';
 import MultiSelectionMoveable from './multiSelectionMoveable';
 
 function Selection(props) {
-  const { currentPage, selectedElements, isAnimating } = useStory((state) => ({
-    currentPage: state.state.currentPage,
+  const isBackground = useStory(({ state }) => {
+    return (
+      state.selectedElements[0]?.id === state.currentPage.elements?.[0]?.id
+    );
+  });
+  const { selectedElements, isAnimating } = useStory((state) => ({
     selectedElements: state.state.selectedElements,
     isAnimating: [
       STORY_ANIMATION_STATE.PLAYING,
@@ -50,7 +54,6 @@ function Selection(props) {
   }
 
   // No need for displaying non-functional frame for selected background.
-  const isBackground = selectedElements[0].id === currentPage.elements?.[0]?.id;
   if (isBackground) {
     return null;
   }

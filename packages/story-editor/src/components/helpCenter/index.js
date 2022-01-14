@@ -20,6 +20,7 @@ import { __ } from '@web-stories-wp/i18n';
 import { useRef, useEffect, useCallback } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { ThemeGlobals } from '@web-stories-wp/design-system';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -44,7 +45,7 @@ const Wrapper = styled.div`
   z-index: ${Z_INDEX.EDIT + 1};
 `;
 
-export const HelpCenter = () => {
+export const HelpCenter = ({ components }) => {
   const ref = useRef(null);
   const { state, actions } = useHelpCenter();
 
@@ -95,6 +96,7 @@ export const HelpCenter = () => {
                 tipKey={state.navigationFlow[state.navigationIndex]}
                 onTipSelect={actions.goToTip}
                 isLeftToRightTransition={state.isLeftToRightTransition}
+                components={components}
               />
             </Navigator>
           </Popup>
@@ -108,4 +110,8 @@ export const HelpCenter = () => {
       </>
     </DirectionAware>
   );
+};
+
+HelpCenter.propTypes = {
+  components: PropTypes.object,
 };

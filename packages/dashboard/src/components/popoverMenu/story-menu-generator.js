@@ -49,7 +49,7 @@ export const generateStoryMenu = ({
     (item) => !item?.capability || story?.capabilities?.[item?.capability]
   );
 
-  return menuItemsFiltered.map(({ value, ...menuItem }) => {
+  return menuItemsFiltered.map(({ capability, value, ...menuItem }) => {
     const extraProperties = {
       onClick: menuItemActions[value]
         ? () => menuItemActions[value](story)
@@ -59,11 +59,11 @@ export const generateStoryMenu = ({
     switch (value) {
       case STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR:
         extraProperties.href = story.bottomTargetAction;
-        extraProperties.newTab = false;
+        extraProperties.openNewTab = false;
         break;
       case STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK:
         extraProperties.href = story.previewLink;
-        extraProperties.newTab = true;
+        extraProperties.openNewTab = true;
         break;
       case STORY_CONTEXT_MENU_ACTIONS.RENAME:
         extraProperties.disabled = isLocked;

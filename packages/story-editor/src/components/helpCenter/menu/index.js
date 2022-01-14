@@ -23,7 +23,6 @@ import styled from 'styled-components';
  */
 import { noop } from '../../../utils/noop';
 import { GUTTER_WIDTH } from '../constants';
-import { Footer } from './footer';
 import { Header } from './header';
 import { Tips } from './tips';
 import { Transitioner } from './transitioner';
@@ -38,13 +37,19 @@ const Container = styled.div`
   }
 `;
 
-export function Menu({ onTipSelect = noop, readTips, ...transitionProps }) {
+export function Menu({
+  onTipSelect = noop,
+  readTips,
+  components,
+  ...transitionProps
+}) {
+  const Footer = components?.Footer;
   return (
     <Transitioner {...transitionProps}>
       <Container data-testid="help_center_container">
         <Header />
         <Tips readTips={readTips} onTipSelect={onTipSelect} />
-        <Footer />
+        {Footer && <Footer />}
       </Container>
     </Transitioner>
   );
@@ -52,4 +57,7 @@ export function Menu({ onTipSelect = noop, readTips, ...transitionProps }) {
 Menu.propTypes = {
   readTips: PropTypes.object,
   onTipSelect: PropTypes.func.isRequired,
+  components: PropTypes.shape({
+    Footer: PropTypes.elementType,
+  }),
 };

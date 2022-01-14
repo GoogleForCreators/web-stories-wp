@@ -22,6 +22,7 @@ import {
   useEffect,
   useCallback,
   useState,
+  useRef,
 } from '@web-stories-wp/react';
 import { trackEvent, trackScreenView } from '@web-stories-wp/tracking';
 
@@ -32,6 +33,7 @@ import { Layout, ScrollToTop } from '../../../components';
 import { useTemplateView, uniqueEntriesByKey } from '../../../utils';
 
 import useApi from '../../api/useApi';
+import useRouteHistory from '../../router/useRouteHistory';
 import { getTemplateFilters, composeTemplateFilter } from '../utils';
 import Content from './content';
 import Header from './header';
@@ -41,6 +43,15 @@ function ExploreTemplates() {
   const [isDetailsViewOpen, setIsDetailsViewOpen] = useState(false);
   const [activeTemplate, setActiveTemplate] = useState(null);
   const [activeTemplateIndex, setActiveTemplateIndex] = useState(0);
+
+  const { templateIdParam, replace } = useRouteHistory(
+    ({ actions, state }) => ({
+      templateIdParam: state.queryParams.id,
+      replace: actions.replace,
+    })
+  );
+
+  const idRef = useRef(templateIdParam);
 
   const {
     allPagesFetched,
@@ -136,6 +147,23 @@ function ExploreTemplates() {
     [createStoryFromTemplate, templates]
   );
 
+  const updateTemplateView = useCallback(
+    (id) => {
+      const currentTemplate = orderedTemplates.find(
+        (templateItem) => templateItem.id === id
+      );
+      setActiveTemplate(currentTemplate);
+      setActiveTemplateIndex(
+        orderedTemplates.findIndex((template) => template.id === id)
+      );
+      if (idRef.current) {
+        idRef.current = undefined;
+      }
+      replace(`?id=${currentTemplate.id}&isLocal=${currentTemplate.isLocal}`);
+    },
+    [replace, orderedTemplates]
+  );
+
   const handleDetailsToggle = useCallback(
     (id, title) => {
       setIsDetailsViewOpen((prevIsOpen) => {
@@ -143,31 +171,27 @@ function ExploreTemplates() {
         title && trackScreenView(title);
 
         if (newIsOpen && id) {
-          setActiveTemplate(
-            orderedTemplates.find((templateItem) => templateItem.id === id)
-          );
-          setActiveTemplateIndex(
-            orderedTemplates.findIndex((template) => template.id === id)
-          );
+          updateTemplateView(id);
+        }
+
+        if (!newIsOpen) {
+          replace('');
         }
 
         return newIsOpen;
       });
     },
-    [
-      setIsDetailsViewOpen,
-      setActiveTemplate,
-      setActiveTemplateIndex,
-      orderedTemplates,
-    ]
+    [replace, updateTemplateView]
   );
 
   const switchToTemplateByOffset = useCallback(
     (offset) => {
-      setActiveTemplate(orderedTemplates[offset]);
+      const newTemplate = orderedTemplates[offset];
+      setActiveTemplate(newTemplate);
       setActiveTemplateIndex(offset);
+      replace(`?id=${newTemplate.id}&isLocal=${newTemplate.isLocal}`);
     },
-    [setActiveTemplateIndex, setActiveTemplate, orderedTemplates]
+    [orderedTemplates, replace]
   );
 
   const templateActions = useMemo(
@@ -186,6 +210,21 @@ function ExploreTemplates() {
   useEffect(() => {
     fetchExternalTemplates();
   }, [fetchExternalTemplates]);
+
+  useEffect(() => {
+    if (idRef.current && orderedTemplates.length) {
+      const isValidId = orderedTemplates.some(
+        (template) => template.id === parseInt(idRef.current)
+      );
+      if (!isValidId) {
+        replace('');
+        return;
+      }
+
+      setIsDetailsViewOpen(true);
+      updateTemplateView(parseInt(idRef.current));
+    }
+  }, [orderedTemplates, replace, updateTemplateView]);
 
   return (
     <Layout.Provider>
