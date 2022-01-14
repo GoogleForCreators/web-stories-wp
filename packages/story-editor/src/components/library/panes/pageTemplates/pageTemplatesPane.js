@@ -39,6 +39,7 @@ import { Pane } from '../shared';
 import { Select } from '../../../form';
 import { useAPI } from '../../../../app/api';
 import useLibrary from '../../useLibrary';
+import { useConfig } from '../../../../app/config';
 import paneId from './paneId';
 import DefaultTemplates from './defaultTemplates';
 import SavedTemplates from './savedTemplates';
@@ -78,6 +79,8 @@ function PageTemplatesPane(props) {
   const {
     actions: { getCustomPageTemplates },
   } = useAPI();
+
+  const { canViewDefaultTemplates } = useConfig();
   const supportsCustomTemplates = Boolean(getCustomPageTemplates);
 
   const {
@@ -93,8 +96,11 @@ function PageTemplatesPane(props) {
   }));
 
   const [showDefaultTemplates, setShowDefaultTemplates] = useState(
-    DEFAULT_TEMPLATE_VIEW === null ? true : DEFAULT_TEMPLATE_VIEW
+    DEFAULT_TEMPLATE_VIEW === null
+      ? canViewDefaultTemplates
+      : canViewDefaultTemplates && DEFAULT_TEMPLATE_VIEW
   );
+
   const [highlightedTemplate, setHighlightedTemplate] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -157,9 +163,10 @@ function PageTemplatesPane(props) {
     setNextTemplatesToFetch,
   ]);
 
-  const handleToggle = () => {
-    setShowDefaultTemplates(!showDefaultTemplates);
-    localStore.setItemByKey(LOCAL_STORAGE_KEY, !showDefaultTemplates);
+  const handleToggle = (event, menuItem) => {
+    const value = menuItem === 'default';
+    setShowDefaultTemplates(value);
+    localStore.setItemByKey(LOCAL_STORAGE_KEY, value);
   };
 
   useEffect(() => {
@@ -178,12 +185,14 @@ function PageTemplatesPane(props) {
     return () => clearTimeout(timeout);
   }, [highlightedTemplate]);
 
-  const options = [
-    {
+  const options = [];
+
+  if (canViewDefaultTemplates) {
+    options.push({
       value: DEFAULT,
       label: __('Default templates', 'web-stories'),
-    },
-  ];
+    });
+  }
 
   if (supportsCustomTemplates) {
     options.push({

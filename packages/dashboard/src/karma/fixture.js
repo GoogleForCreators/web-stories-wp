@@ -59,6 +59,7 @@ const defaultConfig = {
     siteKitPluginStatus: false,
   },
   allowedImageMimeTypes: ['image/png', 'image/jpeg', 'image/gif'],
+  canViewDefaultTemplates: true,
   siteKitStatus: {
     installed: false,
     active: false,

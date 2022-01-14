@@ -86,7 +86,12 @@ function getNewTemplatesMetaData(metaDataEntries, days) {
 
 function LeftRail() {
   const { state } = useRouteHistory();
-  const { newStoryURL, version, leftRailSecondaryNavigation } = useConfig();
+  const {
+    newStoryURL,
+    version,
+    leftRailSecondaryNavigation,
+    canViewDefaultTemplates,
+  } = useConfig();
   const leftRailRef = useRef(null);
   const upperContentRef = useRef(null);
 
@@ -193,6 +198,13 @@ function LeftRail() {
                       numNewTemplates
                     )
                   : label;
+
+              const isTemplatesEnabled =
+                path.value === APP_ROUTES.TEMPLATES_GALLERY &&
+                !canViewDefaultTemplates;
+              if (isTemplatesEnabled) {
+                return null;
+              }
               return (
                 <NavListItem key={path.value}>
                   <NavLink
