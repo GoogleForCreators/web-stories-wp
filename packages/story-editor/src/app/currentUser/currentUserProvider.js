@@ -33,9 +33,19 @@ function CurrentUserProvider({ children }) {
   } = useAPI();
 
   useEffect(() => {
+    let isMounted = true;
     if (getCurrentUser && !Object.keys(currentUser).length) {
-      getCurrentUser().then(setCurrentUser);
+      getCurrentUser().then((user) => {
+        if (!isMounted) {
+          return;
+        }
+        setCurrentUser(user);
+      });
     }
+
+    return () => {
+      isMounted = false;
+    };
   }, [currentUser, getCurrentUser]);
 
   const updateCurrentUser = useCallback(
