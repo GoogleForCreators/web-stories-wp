@@ -52,7 +52,7 @@ export function EffectRotateIn({
     generatedKeyframes: moveKeyframes,
   } = AnimationMove({
     offsetX,
-    duration: duration * 0.87,
+    duration,
     delay,
     easing,
     element,
@@ -76,17 +76,22 @@ export function EffectRotateIn({
     element,
   });
 
+  const [moveTransformStart, moveTransformEnd] =
+    MoveWAAPIAnimation.keyframes.transform;
+  const [spinTransformStart, spinTransformEnd] =
+    SpinWAAPIAnimation.keyframes.transform;
+  const keyframes = {
+    transform: [
+      `${moveTransformStart} ${spinTransformStart}`,
+      `${moveTransformEnd} ${spinTransformEnd}`,
+    ],
+  };
+
   return {
     id,
-    // eslint-disable-next-line react/prop-types
-    WAAPIAnimation: function WAAPIAnimation({ children, hoistAnimation }) {
-      return (
-        <MoveWAAPIAnimation hoistAnimation={hoistAnimation}>
-          <SpinWAAPIAnimation hoistAnimation={hoistAnimation}>
-            {children}
-          </SpinWAAPIAnimation>
-        </MoveWAAPIAnimation>
-      );
+    WAAPIAnimation: {
+      ...SpinWAAPIAnimation,
+      keyframes,
     },
     // eslint-disable-next-line react/prop-types
     AMPTarget: function AMPTarget({ children, style }) {
