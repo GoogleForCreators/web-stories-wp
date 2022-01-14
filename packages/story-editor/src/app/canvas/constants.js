@@ -13,24 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  forwardRef,
-  lazy,
-  memo,
-  useLayoutEffect,
-  useReducer,
-  createRef,
-  Fragment,
-  Component,
-  StrictMode,
-  Suspense,
-  cloneElement,
-  createElement,
-  useImperativeHandle,
-  useContext as useContextReact,
-} from 'react';
+export const RECT_OBSERVATION_KEY = 'rectObservationKey';
+
+export const CANVAS_BOUNDING_BOX_IDS = {
+  CANVAS_CONTAINER: 'canvasContainer',
+  PAGE_CONTAINER: 'pageContainer',
+};

@@ -13,24 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  forwardRef,
-  lazy,
-  memo,
-  useLayoutEffect,
-  useReducer,
-  createRef,
-  Fragment,
-  Component,
-  StrictMode,
-  Suspense,
-  cloneElement,
-  createElement,
-  useImperativeHandle,
-  useContext as useContextReact,
-} from 'react';
+export { default as Footer } from './footer';

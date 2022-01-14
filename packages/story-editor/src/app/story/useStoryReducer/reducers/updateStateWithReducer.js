@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,24 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  forwardRef,
-  lazy,
-  memo,
-  useLayoutEffect,
-  useReducer,
-  createRef,
-  Fragment,
-  Component,
-  StrictMode,
-  Suspense,
-  cloneElement,
-  createElement,
-  useImperativeHandle,
-  useContext as useContextReact,
-} from 'react';
+
+/**
+ * Update story properties.
+ *
+ * No validation is performed and existing values are overwritten.
+ *
+ * @param {Object} state Current state
+ * @param {Object} payload Action payload
+ * @param {Object | Function} payload.reducer reducer to apply to state
+ * @return {Object} New state
+ */
+function updateStateWithReducer(state, { reducer }) {
+  if (typeof reducer !== 'function') {
+    return state;
+  }
+  return reducer(state);
+}
+
+export default updateStateWithReducer;

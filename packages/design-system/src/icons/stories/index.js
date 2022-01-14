@@ -17,7 +17,10 @@
 /**
  * External dependencies
  */
+import { useState, useMemo } from '@web-stories-wp/react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+
 /**
  * Internal dependencies
  */
@@ -27,6 +30,13 @@ import * as Icons from '..';
 export default {
   title: 'DesignSystem/Icons',
 };
+
+const Page = styled.main`
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+`;
 
 const IconsList = styled.ul`
   color: ${({ theme }) => theme.colors.fg.primary};
@@ -48,49 +58,57 @@ const IconsList = styled.ul`
   }
 `;
 
-export const AllIcons = () => {
+// eslint-disable-next-line import/namespace
+const allIcons = Object.keys(Icons).map((key) => ({ key, Icon: Icons[key] }));
+
+function IconDisplay({ getStyle = () => {} }) {
+  const [query, setQuery] = useState('');
+  const matchingIcons = useMemo(() => {
+    if (!query) {
+      return allIcons;
+    }
+    return allIcons.filter(({ key }) => key.match(new RegExp(query, 'i')));
+  }, [query]);
+
   return (
-    <>
-      <Text>{`Total Icons: ${Object.values(Icons).length}`}</Text>
+    <Page>
+      <Text as="label">
+        <span>{'Filter: '}</span>
+        <input
+          type="search"
+          value={query}
+          onChange={(evt) => setQuery(evt.target.value)}
+        />
+      </Text>
+      <Text>{`Matching: ${matchingIcons.length}`}</Text>
 
       <IconsList>
-        {Object.keys(Icons).map((iconName) => {
-          // eslint-disable-next-line import/namespace
-          const Icon = Icons[iconName];
+        {matchingIcons.map(({ key, Icon }, index) => {
           return (
-            <li key={iconName}>
-              <Icon />
+            <li key={key}>
+              <Icon style={getStyle(index, key)} />
               <Text as="span" isBold>
-                {iconName}
+                {key}
               </Text>
             </li>
           );
         })}
       </IconsList>
-    </>
+    </Page>
   );
+}
+
+IconDisplay.propTypes = {
+  getStyle: PropTypes.func,
 };
+
+export const AllIcons = IconDisplay;
 
 export const ColorfulIcons = () => {
   const colors = ['blue', 'hotpink', 'rebeccapurple', 'lightgreen', 'red'];
   return (
-    <>
-      <Text>{`Total Icons: ${Object.values(Icons).length}`}</Text>
-
-      <IconsList>
-        {Object.keys(Icons).map((iconName, index) => {
-          // eslint-disable-next-line import/namespace
-          const Icon = Icons[iconName];
-          return (
-            <li key={iconName}>
-              <Icon style={{ color: colors[index % colors.length] }} />
-              <Text as="span" isBold>
-                {iconName}
-              </Text>
-            </li>
-          );
-        })}
-      </IconsList>
-    </>
+    <IconDisplay
+      getStyle={(index) => ({ color: colors[index % colors.length] })}
+    />
   );
 };

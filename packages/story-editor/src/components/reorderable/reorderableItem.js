@@ -36,9 +36,9 @@ function ReorderableItem({
   disabled,
   ...props
 }) {
-  const {
-    actions: { handleStartReordering },
-  } = useReorderable();
+  const handleStartReordering = useReorderable(
+    ({ actions }) => actions.handleStartReordering
+  );
 
   return (
     <Container

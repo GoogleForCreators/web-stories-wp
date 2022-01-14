@@ -27,70 +27,27 @@ import useFocusCanvas from '../../../canvas/useFocusCanvas';
 
 function useLayerSelection(layer) {
   const { id: elementId } = layer;
-
-  const {
-    currentPage,
-    selectedElementIds,
-    setSelectedElementsById,
-    toggleElementInSelection,
-  } = useStory(
-    ({
-      state: { currentPage, selectedElementIds },
-      actions: { setSelectedElementsById, toggleElementInSelection },
-    }) => {
-      return {
-        currentPage,
-        selectedElementIds,
-        setSelectedElementsById,
-        toggleElementInSelection,
-      };
-    }
-  );
+  const { isSelected, toggleLayer } = useStory(({ state, actions }) => ({
+    isSelected: state.selectedElementIds.includes(elementId),
+    toggleLayer: actions.toggleLayer,
+  }));
 
   const focusCanvas = useFocusCanvas();
 
-  const isSelected = selectedElementIds.includes(elementId);
-  const pageElementIds = currentPage.elements.map(({ id }) => id);
-
   const handleClick = useCallback(
     (evt) => {
-      const hasSelection = selectedElementIds.length > 0;
-
       evt.preventDefault();
       evt.stopPropagation();
-      if (evt.shiftKey && hasSelection) {
-        // Shift key pressed with any element selected:
-        // select everything between this layer and the first selected layer
-        const firstId = selectedElementIds[0];
-        const firstIndex = pageElementIds.findIndex((id) => id === firstId);
-        const clickedIndex = pageElementIds.findIndex((id) => id === elementId);
-        const lowerIndex = Math.min(firstIndex, clickedIndex);
-        const higherIndex = Math.max(firstIndex, clickedIndex);
-        const elementIds = pageElementIds.slice(lowerIndex, higherIndex + 1);
-        // reverse selection if firstId isn't first anymore
-        if (firstId !== elementIds[0]) {
-          elementIds.reverse();
-        }
-        setSelectedElementsById({ elementIds });
-      } else if (evt.metaKey) {
-        // Meta pressed. Toggle this layer in the selection.
-        toggleElementInSelection({ elementId });
-      } else {
-        // No special key pressed - just selected this layer and nothing else.
-        setSelectedElementsById({ elementIds: [elementId] });
-      }
+      toggleLayer({
+        elementId,
+        metaKey: evt.metaKey,
+        shiftKey: evt.shiftKey,
+      });
 
       // In any case, revert focus to selected element(s)
       focusCanvas();
     },
-    [
-      pageElementIds,
-      selectedElementIds,
-      setSelectedElementsById,
-      toggleElementInSelection,
-      elementId,
-      focusCanvas,
-    ]
+    [toggleLayer, elementId, focusCanvas]
   );
 
   return { isSelected, handleClick };
