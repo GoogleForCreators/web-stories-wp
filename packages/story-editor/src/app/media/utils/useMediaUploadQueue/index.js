@@ -86,6 +86,7 @@ function useMediaUploadQueue() {
 
   const isMounted = useRef(false);
   const currentTranscodingItem = useRef(null);
+  const currentPosterGenerationItem = useRef(null);
 
   const {
     startUploading,
@@ -143,6 +144,7 @@ function useMediaUploadQueue() {
 
   // Try to get dimensions and poster for placeholder resources.
   // This way we can show something more meaningful to the user before transcoding has finished.
+  // Since this uses ffmpeg, we're going to limit this to one at a time.
   useEffect(() => {
     async function updateItems() {
       await Promise.all(
@@ -155,6 +157,17 @@ function useMediaUploadQueue() {
           if (!isTranscodingEnabled || !canTranscodeFile(file)) {
             return;
           }
+
+          const isAlreadyGeneratingPoster =
+            currentPosterGenerationItem.current !== null;
+
+          // Prevent simultaneous ffmpeg poster generation processes.
+          // See https://github.com/google/web-stories-wp/issues/8779
+          if (isAlreadyGeneratingPoster) {
+            return;
+          }
+
+          currentPosterGenerationItem.current = id;
 
           try {
             const videoFrame = await getFirstFrameOfVideo(file);
@@ -178,6 +191,8 @@ function useMediaUploadQueue() {
             });
           } catch {
             // Not interested in errors here.
+          } finally {
+            currentPosterGenerationItem.current = null;
           }
         })
       );
