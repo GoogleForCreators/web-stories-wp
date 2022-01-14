@@ -20,6 +20,7 @@
 import styled from 'styled-components';
 import {
   useLayoutEffect,
+  useEffect,
   useCallback,
   useState,
   useRef,
@@ -31,7 +32,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { themeHelpers } from '../../theme';
+import { THEME_CONSTANTS } from '../../theme';
 import { noop } from '../../utils';
 import { getTransforms, getOffset } from './utils';
 import { PLACEMENT } from './constants';
@@ -45,12 +46,15 @@ const Container = styled.div.attrs(
     fillWidth,
     fillHeight,
     placement,
+    isRTL,
+    invisible,
     zIndex,
   }) => ({
     style: {
-      transform: `translate(${x}px, ${y}px) ${getTransforms(placement)}`,
+      transform: `translate(${x}px, ${y}px) ${getTransforms(placement, isRTL)}`,
       ...(fillWidth ? { width: `${width}px` } : {}),
       ...(fillHeight ? { height: `${height}px` } : {}),
+      ...(invisible ? { visibility: `hidden` } : {}),
       zIndex,
     },
   })
@@ -59,11 +63,13 @@ const Container = styled.div.attrs(
   left: 0px;
   top: 0px;
   position: fixed;
-
-  ${themeHelpers.scrollbarCSS};
+  z-index: 2;
+  overflow-y: auto;
+  max-height: calc(100vh - ${THEME_CONSTANTS.WP_ADMIN.TOOLBAR_HEIGHT}px);
 `;
 
 function Popup({
+  isRTL = false,
   anchor,
   dock,
   children,
@@ -72,6 +78,7 @@ function Popup({
   zIndex = DEFAULT_POPUP_Z_INDEX,
   spacing,
   isOpen,
+  invisible,
   fillWidth = false,
   fillHeight = false,
   onPositionUpdate = noop,
@@ -80,31 +87,39 @@ function Popup({
   const [popupState, setPopupState] = useState(null);
   const [mounted, setMounted] = useState(false);
   const popup = useRef(null);
-
   const positionPopup = useCallback(
-    async (evt) => {
+    (evt) => {
       if (!mounted) {
         return;
       }
-
       // If scrolling within the popup, ignore.
       if (evt?.target?.nodeType && popup.current?.contains(evt.target)) {
         return;
       }
-
-      await setPopupState({
+      setPopupState({
         offset:
-          anchor?.current && getOffset(placement, spacing, anchor, dock, popup),
+          anchor?.current &&
+          getOffset(placement, spacing, anchor, dock, popup, isRTL),
+        height: popup.current?.getBoundingClientRect()?.height,
       });
     },
-    [anchor, dock, placement, spacing, mounted]
+    [anchor, dock, placement, spacing, mounted, isRTL]
   );
+  useEffect(() => {
+    // If the popup height changes meanwhile, let's update the popup, too.
+    if (
+      popupState?.height &&
+      popupState.height !== popup.current?.getBoundingClientRect()?.height
+    ) {
+      positionPopup();
+    }
+  }, [popupState?.height, positionPopup]);
 
   useLayoutEffect(() => {
-    if (!isOpen) {
-      return () => {};
-    }
     setMounted(true);
+    if (!isOpen) {
+      return undefined;
+    }
     positionPopup();
     // Adjust the position when scrolling.
     document.addEventListener('scroll', positionPopup, true);
@@ -129,6 +144,7 @@ function Popup({
           placement={placement}
           zIndex={zIndex}
           $offset={popupState.offset}
+          invisible={invisible}
         >
           {renderContents
             ? renderContents({ propagateDimensionChange: positionPopup })
