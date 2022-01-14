@@ -46,6 +46,13 @@ const ButtonWrapper = styled.div`
   position: relative;
 `;
 
+const SubMenuWrapper = styled(ContextMenuComponents.Menu)`
+  width: 230px;
+  position: absolute;
+  left: calc(100% + 2px);
+  top: -9px;
+`;
+
 const RightClickMenu = () => {
   const { isRTL } = useConfig();
   const {
@@ -93,7 +100,13 @@ const RightClickMenu = () => {
             isRTL={isRTL}
           >
             {rightClickMenuItems.map(
-              ({ label, shortcut, separator, SubMenu, ...buttonProps }) => (
+              ({
+                label,
+                shortcut,
+                separator,
+                subMenuItems,
+                ...buttonProps
+              }) => (
                 <Fragment key={label}>
                   {separator === 'top' && (
                     <ContextMenuComponents.MenuSeparator />
@@ -107,7 +120,15 @@ const RightClickMenu = () => {
                         </ContextMenuComponents.MenuShortcut>
                       )}
                     </ContextMenuComponents.MenuButton>
-                    {SubMenu && <SubMenu />}
+                    {Boolean(subMenuItems?.length) && (
+                      <SubMenuWrapper aria-expanded isOpen isSubmenu>
+                        {subMenuItems.map(({ label: itemLabel, ...itemProps }, i) => (
+                          <ContextMenuComponents.MenuButton key={i} {...itemProps}>
+                            {itemLabel}
+                          </ContextMenuComponents.MenuButton>
+                        ))}
+                      </SubMenuWrapper>
+                    )}
                   </ButtonWrapper>
                   {separator === 'bottom' && (
                     <ContextMenuComponents.MenuSeparator />

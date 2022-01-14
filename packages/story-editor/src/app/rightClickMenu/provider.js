@@ -1044,7 +1044,11 @@ function RightClickMenuProvider({ children }) {
     toggleTrimMode,
   ]);
 
-  const layerSelectItem = useLayerSelect({ menuItemProps, menuPosition });
+  const layerSelectItem = useLayerSelect({
+    menuItemProps,
+    menuPosition,
+    isMenuOpen,
+  });
 
   const shapeItems = useMemo(
     () => [

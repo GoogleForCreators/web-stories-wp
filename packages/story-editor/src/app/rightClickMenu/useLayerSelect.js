@@ -17,10 +17,11 @@
 /**
  * External dependencies
  */
-import { useCallback, useState } from '@web-stories-wp/react';
+import { useCallback, useMemo, useState } from '@web-stories-wp/react';
 import { ContextMenuComponents } from '@web-stories-wp/design-system';
 import styled from 'styled-components';
 import SAT from 'sat';
+import { __ } from '@web-stories-wp/i18n';
 
 /**
  * Internal dependencies
@@ -28,6 +29,7 @@ import SAT from 'sat';
 import useStory from '../story/useStory';
 import createPolygon from '../canvas/utils/createPolygon';
 import { useCanvas } from '../canvas';
+import { getDefinitionForType } from '../../elements';
 
 const SubMenuWrapper = styled(ContextMenuComponents.Menu)`
   width: 230px;
@@ -36,7 +38,7 @@ const SubMenuWrapper = styled(ContextMenuComponents.Menu)`
   top: -9px;
 `;
 
-function useLayerSelect({ menuItemProps, menuPosition }) {
+function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
   const [isSubmenuOpen, setIsSubmenuOpen] = useState(false);
   const { nodesById } = useCanvas(({ state: { nodesById } }) => ({
     nodesById,
@@ -47,36 +49,46 @@ function useLayerSelect({ menuItemProps, menuPosition }) {
 
   const { x, y } = menuPosition;
   const getIntersectingElements = useCallback(() => {
+    if (!currentPage?.elements?.length || !Object.keys(nodesById)?.length) {
+      return [];
+    }
     const clickedPoint = new SAT.Vector(x, y);
     return currentPage.elements
-      .map(({ id, rotationAngle, ...rest }) => {
+      .map((element) => {
+        const { id, rotationAngle } = element;
         const node = nodesById[id];
+        if (!node) {
+          return null;
+        }
         const { x: elX, y: elY, width, height } = node.getBoundingClientRect();
         const elementP = createPolygon(rotationAngle, elX, elY, width, height);
-        return SAT.pointInPolygon(clickedPoint, elementP) ? rest : null;
+        return SAT.pointInPolygon(clickedPoint, elementP) ? element : null;
       })
       .filter((el) => el);
   }, [currentPage, x, y, nodesById]);
 
-  if (currentPage?.elements?.length && x && y) {
-    console.log(getIntersectingElements());
-  }
-
-  const SubMenu = () => {
-    return (
-      <SubMenuWrapper aria-expanded isOpen isSubmenu>
-        <ContextMenuComponents.MenuButton>{'Layer 1'}</ContextMenuComponents.MenuButton>
-        <ContextMenuComponents.MenuButton>{'Layer 2'}</ContextMenuComponents.MenuButton>
-        <ContextMenuComponents.MenuButton>{'Layer 3'}</ContextMenuComponents.MenuButton>
-      </SubMenuWrapper>
-    );
-  };
+  const subMenuItems = useMemo(() => {
+    const intersectingElements = getIntersectingElements();
+    return intersectingElements.map((element) => {
+      const { isBackground, type } = element;
+      const { LayerContent } = getDefinitionForType(type);
+      return {
+        label: isBackground ? (
+          __('Background', 'web-stories')
+        ) : (
+          <LayerContent element={element} />
+        ),
+        onClick: () => {},
+        ...menuItemProps,
+      };
+    });
+  }, [getIntersectingElements, menuItemProps]);
 
   return {
     label: 'Select Layer',
     separator: 'bottom',
     onClick: () => setIsSubmenuOpen(!isSubmenuOpen),
-    SubMenu: isSubmenuOpen ? SubMenu : null,
+    subMenuItems: isSubmenuOpen ? subMenuItems : [],
     dismissOnClick: false,
     ...menuItemProps,
   };
