@@ -30,6 +30,11 @@ import { Fixture } from '../../../karma';
 import objectPick from '../../../utils/objectPick';
 import useInsertElement from '../useInsertElement';
 
+const { content: _, ...textAttributeDefaultsWithoutContent } =
+  textAttributeDefaults;
+const clearableTextProperties = Object.keys(
+  textAttributeDefaultsWithoutContent
+);
 const clearableImageProperties = Object.keys(imageAttributeDefaults);
 const clearableShapeProperties = Object.keys(shapeAttributeDefaults);
 
@@ -143,6 +148,12 @@ describe('Right Click Menu integration', () => {
   function clearImageStyles() {
     return fixture.screen.getByRole('menuitem', {
       name: /^Clear Image Styles/i,
+    });
+  }
+
+  function clearTextStyles() {
+    return fixture.screen.getByRole('menuitem', {
+      name: /^Clear Text Styles/i,
     });
   }
 
@@ -916,12 +927,6 @@ describe('Right Click Menu integration', () => {
   });
 
   describe('right click menu: text', () => {
-    const { content: _, ...textAttributeDefaultsWithoutContent } =
-      textAttributeDefaults;
-    const clearableTextProperties = Object.keys(
-      textAttributeDefaultsWithoutContent
-    );
-
     it('should duplicate the element', async () => {
       const text = await addText({
         backgroundColor: {
@@ -1044,6 +1049,93 @@ describe('Right Click Menu integration', () => {
       expect(copiedProperties).toEqual(pastedProperties);
       // should update bounding box size when updating fontSize
       expect(textB.height).not.toBe(textElements[1].height);
+    });
+
+    it('should reset styles to defaults', async () => {
+      // add text element and styles
+      const text = await addText({
+        fontSize: 24,
+        content: '<span style="color: #ff0110">Some Text Element</span>',
+        backgroundColor: { r: 10, g: 0, b: 200 },
+        lineHeight: 1.4,
+        textAlign: 'center',
+        border: {
+          left: 1,
+          right: 1,
+          top: 1,
+          bottom: 1,
+          lockedWidth: true,
+          color: {
+            color: {
+              r: 0,
+              g: 0,
+              b: 0,
+            },
+          },
+        },
+        padding: {
+          vertical: 0,
+          horizontal: 20,
+          locked: true,
+        },
+        y: 300,
+      });
+
+      const textFrame = fixture.editor.canvas.framesLayer.frame(text.id).node;
+
+      // text element should be selected
+      const { initialElements, selectedElements } = await fixture.renderHook(
+        () =>
+          useStory(({ state }) => ({
+            selectedElements: state.selectedElements,
+            initialElements: state.currentPage.elements,
+          }))
+      );
+
+      expect(selectedElements.length).toBe(1);
+      expect(initialElements.length).toBe(2);
+
+      // track initial state for comparison
+      const initialText = initialElements.find(
+        (element) => element.type === 'text'
+      );
+
+      // open right click menu
+      await rightClickOnTarget(textFrame);
+
+      // clear text styles
+      await fixture.events.click(clearTextStyles());
+
+      // verify text styles were reset to default styles
+      const { elements } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          elements: state.currentPage.elements,
+        }))
+      );
+
+      const resetText = elements.find((element) => element.type === 'text');
+
+      expect(objectPick(resetText, clearableTextProperties)).toEqual(
+        textAttributeDefaultsWithoutContent
+      );
+
+      // undo should revert all reset styles at once
+      await fixture.events.click(
+        fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true })
+      );
+
+      // Verify that everything is back to normal
+      const { finalElements } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          finalElements: state.currentPage.elements,
+        }))
+      );
+
+      const finalText = finalElements.find(
+        (element) => element.type === 'text'
+      );
+
+      expect(finalText).toEqual(initialText);
     });
 
     it('should add color to "Saved Colors"', async () => {
@@ -1283,159 +1375,158 @@ describe('Right Click Menu integration', () => {
       expect(shapeElements.length).toBe(2);
       verifyElementDuplicated(shapeElements[0], shapeElements[1]);
     });
-  });
 
-  it('should clear styles for all foreground elements', async () => {
-    const clearableTextProperties = Object.keys(textAttributeDefaults);
-
-    // add text element and styles
-    const text = await addText({
-      fontSize: 24,
-      content: '<span style="color: #ff0110">Some Text Element</span>',
-      backgroundColor: { r: 10, g: 0, b: 200 },
-      lineHeight: 1.4,
-      textAlign: 'center',
-      border: {
-        left: 1,
-        right: 1,
-        top: 1,
-        bottom: 1,
-        lockedWidth: true,
-        color: {
+    it('should clear styles for all foreground elements', async () => {
+      // add text element and styles
+      const text = await addText({
+        fontSize: 24,
+        content: '<span style="color: #ff0110">Some Text Element</span>',
+        backgroundColor: { r: 10, g: 0, b: 200 },
+        lineHeight: 1.4,
+        textAlign: 'center',
+        border: {
+          left: 1,
+          right: 1,
+          top: 1,
+          bottom: 1,
+          lockedWidth: true,
           color: {
-            r: 0,
-            g: 0,
-            b: 0,
+            color: {
+              r: 0,
+              g: 0,
+              b: 0,
+            },
           },
         },
-      },
-      padding: {
-        vertical: 0,
-        horizontal: 20,
-        locked: true,
-      },
-      y: 300,
-    });
-
-    // add earth image and styles
-    const image = await addEarthImage();
-    await fixture.events.click(
-      fixture.editor.canvas.framesLayer.frame(image.id).node
-    );
-    await fixture.events.click(
-      fixture.editor.inspector.designPanel.border.width()
-    );
-    await fixture.events.keyboard.type('20');
-    await fixture.events.click(
-      fixture.editor.inspector.designPanel.sizePosition.radius()
-    );
-    await fixture.events.keyboard.type('50');
-    await fixture.events.click(
-      fixture.editor.inspector.designPanel.filters.solid
-    );
-    await fixture.events.click(
-      fixture.editor.inspector.designPanel.sizePosition.opacity
-    );
-    await fixture.events.keyboard.type('40');
-
-    // add shape and styles
-    const shape = await addShape({
-      backgroundColor: {
-        color: {
-          r: 201,
-          g: 24,
-          b: 74,
-          a: 0.75,
+        padding: {
+          vertical: 0,
+          horizontal: 20,
+          locked: true,
         },
-      },
-      x: 50,
-      y: 400,
+        y: 300,
+      });
+
+      // add earth image and styles
+      const image = await addEarthImage();
+      await fixture.events.click(
+        fixture.editor.canvas.framesLayer.frame(image.id).node
+      );
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.border.width()
+      );
+      await fixture.events.keyboard.type('20');
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.sizePosition.radius()
+      );
+      await fixture.events.keyboard.type('50');
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.filters.solid
+      );
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.sizePosition.opacity
+      );
+      await fixture.events.keyboard.type('40');
+
+      // add shape and styles
+      const shape = await addShape({
+        backgroundColor: {
+          color: {
+            r: 201,
+            g: 24,
+            b: 74,
+            a: 0.75,
+          },
+        },
+        x: 50,
+        y: 400,
+      });
+
+      // select all elements and reset styles
+      const textFrame = fixture.editor.canvas.framesLayer.frame(text.id).node;
+      const imageFrame = fixture.editor.canvas.framesLayer.frame(image.id).node;
+      const shapeFrame = fixture.editor.canvas.framesLayer.frame(shape.id).node;
+      await clickOnTarget(textFrame);
+      await clickOnTarget(imageFrame, 'Shift');
+      await clickOnTarget(shapeFrame, 'Shift');
+
+      // multiple elements should be selected
+      const { initialElements, selectedElements } = await fixture.renderHook(
+        () =>
+          useStory(({ state }) => ({
+            selectedElements: state.selectedElements,
+            initialElements: state.currentPage.elements,
+          }))
+      );
+
+      expect(selectedElements.length).toBe(3);
+      expect(initialElements.length).toBe(4);
+
+      // track initial state for comparison
+      const initialText = initialElements.find(
+        (element) => element.type === 'text'
+      );
+      const initialImage = initialElements.find(
+        (element) => element.type === 'image'
+      );
+      const initialShape = initialElements.find(
+        (element) => element.type === 'shape' && !element.isBackground
+      );
+
+      // open right click menu
+      await rightClickOnTarget(imageFrame);
+
+      // clear element styles
+      await fixture.events.click(clearStyles());
+
+      // verify image and shape styles were reset to default styles
+      const { elements } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          elements: state.currentPage.elements,
+        }))
+      );
+
+      const resetText = elements.find((element) => element.type === 'text');
+      const resetImage = elements.find((element) => element.type === 'image');
+      const resetShape = elements.find(
+        (element) => element.type === 'shape' && !element.isBackground
+      );
+
+      // styles should have been reset
+      expect(objectPick(resetText, clearableTextProperties)).toEqual(
+        textAttributeDefaultsWithoutContent
+      );
+      expect(objectPick(resetImage, clearableImageProperties)).toEqual(
+        imageAttributeDefaults
+      );
+      expect(objectPick(resetShape, clearableShapeProperties)).toEqual(
+        shapeAttributeDefaults
+      );
+
+      // undo should revert all reset styles at once
+      await fixture.events.click(
+        fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true })
+      );
+
+      // Verify that everything is back to normal
+      const { finalElements } = await fixture.renderHook(() =>
+        useStory(({ state }) => ({
+          finalElements: state.currentPage.elements,
+        }))
+      );
+
+      const finalText = finalElements.find(
+        (element) => element.type === 'text'
+      );
+      const finalImage = finalElements.find(
+        (element) => element.type === 'image'
+      );
+      const finalShape = finalElements.find(
+        (element) => element.type === 'shape' && !element.isBackground
+      );
+
+      expect(finalText).toEqual(initialText);
+      expect(finalImage).toEqual(initialImage);
+      expect(finalShape).toEqual(initialShape);
     });
-
-    // select all elements and reset styles
-    const textFrame = fixture.editor.canvas.framesLayer.frame(text.id).node;
-    const imageFrame = fixture.editor.canvas.framesLayer.frame(image.id).node;
-    const shapeFrame = fixture.editor.canvas.framesLayer.frame(shape.id).node;
-    await clickOnTarget(textFrame);
-    await clickOnTarget(imageFrame, 'Shift');
-    await clickOnTarget(shapeFrame, 'Shift');
-
-    // multiple elements should be selected
-    const { initialElements, selectedElements } = await fixture.renderHook(() =>
-      useStory(({ state }) => ({
-        selectedElements: state.selectedElements,
-        initialElements: state.currentPage.elements,
-      }))
-    );
-
-    expect(selectedElements.length).toBe(3);
-    expect(initialElements.length).toBe(4);
-
-    // track initial state for comparison
-    const initialText = initialElements.find(
-      (element) => element.type === 'text'
-    );
-    const initialImage = initialElements.find(
-      (element) => element.type === 'image'
-    );
-    const initialShape = initialElements.find(
-      (element) => element.type === 'shape' && !element.isBackground
-    );
-
-    // open right click menu
-    await rightClickOnTarget(imageFrame);
-
-    // clear element styles
-    await fixture.events.click(clearStyles());
-
-    // verify image and shape styles were reset to default styles
-    const { elements } = await fixture.renderHook(() =>
-      useStory(({ state }) => ({
-        elements: state.currentPage.elements,
-      }))
-    );
-
-    const resetText = elements.find((element) => element.type === 'text');
-    const resetImage = elements.find((element) => element.type === 'image');
-    const resetShape = elements.find(
-      (element) => element.type === 'shape' && !element.isBackground
-    );
-
-    // text styles should not be reset to the default styles
-    expect(objectPick(resetText, clearableTextProperties)).toEqual(
-      textAttributeDefaults
-    );
-
-    // image and shape styles should have been reset
-    expect(objectPick(resetImage, clearableImageProperties)).toEqual(
-      imageAttributeDefaults
-    );
-    expect(objectPick(resetShape, clearableShapeProperties)).toEqual(
-      shapeAttributeDefaults
-    );
-
-    // undo should revert all reset styles at once
-    await fixture.events.click(
-      fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true })
-    );
-
-    // Verify that everything is back to normal
-    const { finalElements } = await fixture.renderHook(() =>
-      useStory(({ state }) => ({
-        finalElements: state.currentPage.elements,
-      }))
-    );
-
-    const finalText = finalElements.find((element) => element.type === 'text');
-    const finalImage = finalElements.find(
-      (element) => element.type === 'image'
-    );
-    const finalShape = finalElements.find(
-      (element) => element.type === 'shape' && !element.isBackground
-    );
-
-    expect(finalText).toEqual(initialText);
-    expect(finalImage).toEqual(initialImage);
-    expect(finalShape).toEqual(initialShape);
   });
 });
