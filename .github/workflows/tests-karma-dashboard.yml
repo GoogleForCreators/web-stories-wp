@@ -36,13 +36,13 @@ concurrency:
 
 jobs:
   karma:
-    name: Karma (${{ matrix.shardIndex }}/3)
+    name: Karma (${{ matrix.shard }})
     runs-on: ubuntu-latest
     timeout-minutes: 30
     strategy:
       matrix:
-        # We want to split up the tests into 4 parts running in parallel.
-        shardIndex: [ 0, 1, 2, 3 ]
+        # We want to split up the tests into 2 parts running in parallel.
+        shard: [ '1/2', '2/2' ]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -66,11 +66,11 @@ jobs:
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
       - name: Run integration tests
-        run: npm run test:karma:dashboard -- --headless --viewport=1600:1000 --coverage --executors=$NUMBER_OF_SHARDS --shardIndex=$SHARD_INDEX || npm run test:karma:dashboard:retry-failed -- --headless --viewport=1600:1000 --executors=$NUMBER_OF_SHARDS --shardIndex=$SHARD_INDEX
+        run: npm run test:karma:dashboard -- --headless --viewport=1600:1000 --coverage --shard=$SHARD || npm run test:karma:dashboard:retry-failed -- --headless --viewport=1600:1000 --shard=$SHARD
         env:
           DISABLE_ERROR_BOUNDARIES: true
-          SHARD_INDEX: ${{ matrix.shardIndex }}
-          NUMBER_OF_SHARDS: 4
+          SHARD: ${{ matrix.shard }}
+          NUMBER_OF_SHARDS: 2
 
       - name: Upload code coverage report
         uses: codecov/codecov-action@v2.1.0

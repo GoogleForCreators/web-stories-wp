@@ -41,6 +41,13 @@ module.exports = function (config) {
       .join('|');
   }
 
+  let totalShards = 1;
+  let shardNumber = 1;
+  if (config.shard) {
+    [shardNumber, totalShards] = config.shard.split('/');
+  }
+  const shardIndex = shardNumber - 1;
+
   config.set({
     plugins: [
       'karma-chrome-launcher',
@@ -48,7 +55,7 @@ module.exports = function (config) {
       'karma-sourcemap-loader',
       'karma-webpack',
       'karma-coverage-istanbul-reporter',
-      require('karma-parallel'),
+      'karma-parallel',
       require('@web-stories-wp/karma-puppeteer-launcher'),
       require('@web-stories-wp/karma-puppeteer-client'),
       require('@web-stories-wp/karma-failed-tests-reporter'),
@@ -162,21 +169,23 @@ module.exports = function (config) {
     // how many browsers should be started simultaneously
     concurrency: Infinity,
 
-    // Sharding.
+    // Sharding configuration for CI.
+    // We trick karma-parallel into using only 1 browser (parallelOptions.executors === 1)
+    // while using a custom strategy that splits up the tests into multiple shards (config.executors > 1).
+    // This allows us to run ony a subset of the tests like so:
+    // npm run test:karma:dashboard -- --headless --shard=1/3 # Run the first of 3 desired shards.
     parallelOptions: {
-      shardStrategy: typeof config.shardIndex !== 'undefined' && typeof config.executors !== 'undefined' ? 'custom' : 'round-robin',
+      shardStrategy: config.shard ? 'custom' : 'round-robin',
       // If we're using custom sharding, just spin up 1 browser,
       // but do the splitting in the custom strategy below.
-      executors: typeof config.shardIndex !== 'undefined' ? 1 : undefined, // Default is cpu cores - 1.
-      shardIndex: typeof config.shardIndex !== 'undefined' ? Number(config.shardIndex) : undefined,
+      executors: config.shard ? 1 : undefined, // Default is cpu cores - 1.
       // Re-implements a round-robin strategy, but with a custom shardIndex.
-      // Need to use the Function constructor here so we have access to config.shardIndex,
+      // Need to use the Function constructor here so we have access to the outer shardIndex and totalShards vars,
       // because karma-parallel serializes this function.
       customShardStrategy: new Function('parallelOptions', `
         window.parallelDescribeCount = window.parallelDescribeCount || 0;
         window.parallelDescribeCount++;
-        const shouldRunThisTest = (window.parallelDescribeCount % ${Number(config.executors)} === ${Number(config.shardIndex)});
-        console.log( "[SHARDING DEBUG]", "Count:", window.parallelDescribeCount, "Executors:", ${Number(config.executors)}, "Current shardIndex:", ${Number(config.shardIndex)}, "Should run test?", shouldRunThisTest);
+        const shouldRunThisTest = (window.parallelDescribeCount % ${totalShards} === ${shardIndex});
         return shouldRunThisTest;
       `),
     },
