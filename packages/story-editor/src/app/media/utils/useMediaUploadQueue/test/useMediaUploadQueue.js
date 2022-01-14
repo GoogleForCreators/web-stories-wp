@@ -18,12 +18,11 @@
  * External dependencies
  */
 import { renderHook, act } from '@testing-library/react-hooks';
-import { isAnimatedGif } from '@web-stories-wp/media';
+import { isAnimatedGif, createResource } from '@web-stories-wp/media';
 
 /**
  * Internal dependencies
  */
-import createResource from '@web-stories-wp/media/src/createResource';
 import useMediaUploadQueue from '..';
 import useFFmpeg from '../../useFFmpeg';
 import { ITEM_STATUS } from '../constants';
