@@ -24,11 +24,11 @@ import {
   useCallback,
   forwardRef,
 } from '@web-stories-wp/react';
+import { FOCUSABLE_SELECTORS } from '@web-stories-wp/design-system';
 import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { FOCUSABLE_SELECTORS } from '../../constants';
 import DirectionAware from '../directionAware';
 import Popup, { NavigationWrapper, TopNavigation } from '../secondaryPopup';
 import { Z_INDEX } from '../canvas/layout';

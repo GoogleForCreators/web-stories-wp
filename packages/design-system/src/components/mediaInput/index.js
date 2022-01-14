@@ -189,6 +189,7 @@ export const MediaInput = forwardRef(function Media(
             src={value}
             alt={alt}
             crossOrigin="anonymous"
+            decoding="async"
             width={imgProps?.width || null}
             height={imgProps?.height || null}
           />

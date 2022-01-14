@@ -18,7 +18,13 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { memo, useCallback, useEffect, useMemo } from '@web-stories-wp/react';
+import {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useCombinedRefs,
+} from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { _x, __ } from '@web-stories-wp/i18n';
 import {
@@ -30,7 +36,12 @@ import {
 /**
  * Internal dependencies
  */
-import { useStory, useCanvas } from '../../app';
+import {
+  useStory,
+  useCanvas,
+  useCanvasBoundingBoxRef,
+  CANVAS_BOUNDING_BOX_IDS,
+} from '../../app';
 import StoryPropTypes from '../../types';
 import DisplayElement from './displayElement';
 import { Layer, PageArea } from './layout';
@@ -125,6 +136,9 @@ function DisplayLayer() {
     };
   });
 
+  const boundingBoxTrackingRef = useCanvasBoundingBoxRef(
+    CANVAS_BOUNDING_BOX_IDS.PAGE_CONTAINER
+  );
   const { editingElement, setPageContainer, setFullbleedContainer } = useCanvas(
     ({
       state: { editingElement },
@@ -161,7 +175,7 @@ function DisplayLayer() {
         aria-label={_x('Display layer', 'compound noun', 'web-stories')}
       >
         <DisplayPageArea
-          ref={setPageContainer}
+          ref={useCombinedRefs(setPageContainer, boundingBoxTrackingRef)}
           fullbleedRef={setFullbleedContainer}
           background={currentPage?.backgroundColor}
           isBackgroundSelected={isBackgroundSelected}

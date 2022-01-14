@@ -19,6 +19,7 @@ module.exports = {
     './stories/**/*.js',
     '../packages/dashboard/src/**/stories/*.@(js|mdx)',
     '../packages/story-editor/src/**/stories/*.@(js|mdx)',
+    '../packages/wp-dashboard/src/**/stories/*.@(js|mdx)',
     '../packages/wp-story-editor/src/**/stories/*.@(js|mdx)',
     '../packages/activation-notice/src/**/stories/*.@(js|mdx)',
     '../packages/design-system/src/**/stories/*.@(js|mdx)',

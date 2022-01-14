@@ -89,7 +89,9 @@ describe('Publisher Logo without SVG option enabled', () => {
 
     await page.waitForTimeout(300);
 
-    await expect(logoToMakeDefault).toClick('span', { text: 'Set as Default' });
+    await expect(logoToMakeDefault).toClick('button', {
+      text: 'Set as Default',
+    });
 
     await page.waitForTimeout(300);
     await expect(page).toMatch('Setting saved.');
@@ -150,7 +152,7 @@ describe('Publisher Logo without SVG option enabled', () => {
 
     await page.waitForTimeout(300);
 
-    await expect(logoToDelete).toClick('span', { text: 'Delete' });
+    await expect(logoToDelete).toClick('button', { text: 'Delete' });
 
     await page.waitForTimeout(300);
     const updatedPublisherLogos = await publisherLogosContainer.$$(

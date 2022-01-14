@@ -514,7 +514,6 @@ describe('Checklist integration - Card visibility', () => {
           lengthFormatted: '0:06',
           title: 'small-video',
           alt: 'small-video',
-          local: false,
           isOptimized: false,
           baseColor: '#734727',
         },
@@ -580,7 +579,9 @@ describe('Checklist integration - Card visibility', () => {
       expect(card).toBeNull();
     };
 
-    it(`should not show cards that require the \`hasUploadMediaAction\` permission`, async () => {
+    // TODO: https://github.com/google/web-stories-wp/issues/10147
+    // eslint-disable-next-line jasmine/no-disabled-tests
+    xit(`should not show cards that require the \`hasUploadMediaAction\` permission`, async () => {
       // add issues to checklist that need to be resolved by uploading media
       await addImageWithIssues();
       await addVideoWithIssues();

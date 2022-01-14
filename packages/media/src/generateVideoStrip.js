@@ -79,6 +79,9 @@ async function generateVideoStrip(element, resource, stripWidth, stripHeight) {
   video.width = videoWidth;
   video.height = videoHeight;
 
+  // Skipping the first fraction of a millisecond to prevent blank frames in chrome
+  await seekVideo(video, 0.000001);
+
   // Create the target canvas
   const canvas = document.createElement('canvas');
   canvas.width = stripWidth;
