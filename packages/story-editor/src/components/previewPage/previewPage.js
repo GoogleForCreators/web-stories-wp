@@ -17,7 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, forwardRef } from '@web-stories-wp/react';
+import { useEffect, memo, forwardRef } from '@web-stories-wp/react';
 import styled, { StyleSheetManager } from 'styled-components';
 import { generatePatternStyles } from '@web-stories-wp/patterns';
 import {
@@ -63,13 +63,10 @@ const PreviewSafeZone = styled.div`
   margin: 0;
 `;
 
-const PreviewPageController = forwardRef(function PreviewPageController(
-  { page, animationState, subscribeGlobalTime, pageSize },
-  ref
-) {
-  const {
-    actions: { WAAPIAnimationMethods },
-  } = useStoryAnimationContext();
+function PreviewPageAnimationController({ animationState }) {
+  const WAAPIAnimationMethods = useStoryAnimationContext(
+    ({ actions }) => actions.WAAPIAnimationMethods
+  );
 
   useEffect(() => {
     switch (animationState) {
@@ -80,33 +77,37 @@ const PreviewPageController = forwardRef(function PreviewPageController(
         WAAPIAnimationMethods.reset();
         return () => {};
       case STORY_ANIMATION_STATE.SCRUBBING:
-        WAAPIAnimationMethods.pause();
-        return subscribeGlobalTime?.(WAAPIAnimationMethods.setCurrentTime);
       case STORY_ANIMATION_STATE.PAUSED:
         WAAPIAnimationMethods.pause();
         return () => {};
       default:
         return () => {};
     }
-  }, [animationState, WAAPIAnimationMethods, subscribeGlobalTime]);
+  }, [animationState, WAAPIAnimationMethods]);
 
   /**
    * Reset everything on unmount;
    */
   useEffect(() => () => WAAPIAnimationMethods.reset(), [WAAPIAnimationMethods]);
 
-  return (
-    <FullBleedPreviewWrapper
-      ref={ref}
-      pageSize={pageSize}
-      background={page.backgroundColor}
-    >
-      <PreviewSafeZone pageSize={pageSize}>
-        <PagePreviewElements page={page} />
-      </PreviewSafeZone>
-    </FullBleedPreviewWrapper>
-  );
-});
+  return null;
+}
+
+const PreviewPageDisplay = memo(
+  forwardRef(function PreviewPageDisplay({ page, pageSize }, ref) {
+    return (
+      <FullBleedPreviewWrapper
+        ref={ref}
+        pageSize={pageSize}
+        background={page.backgroundColor}
+      >
+        <PreviewSafeZone pageSize={pageSize}>
+          <PagePreviewElements page={page} />
+        </PreviewSafeZone>
+      </FullBleedPreviewWrapper>
+    );
+  })
+);
 
 const PreviewPage = forwardRef(function PreviewPage(
   {
@@ -114,7 +115,6 @@ const PreviewPage = forwardRef(function PreviewPage(
     pageSize,
     animationState = STORY_ANIMATION_STATE.RESET,
     onAnimationComplete,
-    subscribeGlobalTime,
   },
   ref
 ) {
@@ -127,14 +127,8 @@ const PreviewPage = forwardRef(function PreviewPage(
         elements={page.elements}
         onWAAPIFinish={onAnimationComplete}
       >
-        <PreviewPageController
-          ref={ref}
-          page={page}
-          pageSize={pageSize}
-          animationState={animationState}
-          onAnimationComplete={onAnimationComplete}
-          subscribeGlobalTime={subscribeGlobalTime}
-        />
+        <PreviewPageDisplay ref={ref} page={page} pageSize={pageSize} />
+        <PreviewPageAnimationController animationState={animationState} />
       </StoryAnimation.Provider>
     </StyleSheetManager>
   );
@@ -145,14 +139,15 @@ PreviewPage.propTypes = {
   pageSize: PageSizePropType.isRequired,
   animationState: PropTypes.oneOf(Object.values(STORY_ANIMATION_STATE)),
   onAnimationComplete: PropTypes.func,
-  subscribeGlobalTime: PropTypes.func,
 };
 
-PreviewPageController.propTypes = {
+PreviewPageDisplay.propTypes = {
   page: StoryPropTypes.page.isRequired,
   pageSize: PageSizePropType.isRequired,
+};
+
+PreviewPageAnimationController.propTypes = {
   animationState: PropTypes.oneOf(Object.values(STORY_ANIMATION_STATE)),
-  subscribeGlobalTime: PropTypes.func,
 };
 
 export default PreviewPage;

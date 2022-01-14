@@ -25,6 +25,7 @@ import styled from 'styled-components';
 import { getMaskByType } from '../../masks';
 import { elementWithBackgroundColor } from '../shared';
 import StoryPropTypes from '../../types';
+import { useStory } from '../../app';
 
 const Container = styled.div`
   display: flex;
@@ -57,13 +58,15 @@ https://caniuse.com/css-clip-path
 
 function ShapeLayerIcon({
   element: { id, mask, backgroundColor, isDefaultBackground },
-  currentPage,
 }) {
   const maskDef = getMaskByType(mask.type);
+  const currentPageBackgroundColor = useStory(
+    (v) => !isDefaultBackground || v.state.currentPage?.backgroundColor
+  );
 
   const maskId = `mask-${maskDef.type}-${id}-layer-preview`;
   if (isDefaultBackground) {
-    backgroundColor = currentPage.backgroundColor;
+    backgroundColor = currentPageBackgroundColor;
   }
 
   return (
@@ -90,7 +93,6 @@ function ShapeLayerIcon({
 
 ShapeLayerIcon.propTypes = {
   element: StoryPropTypes.element.isRequired,
-  currentPage: StoryPropTypes.page,
 };
 
 export default ShapeLayerIcon;

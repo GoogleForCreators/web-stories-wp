@@ -41,11 +41,14 @@ import { intersect } from './utils';
  * @return {Object} New state
  */
 function setSelectedElements(state, { elementIds }) {
-  if (!Array.isArray(elementIds)) {
+  const newElementIds =
+    typeof elementIds === 'function' ? elementIds(state.selection) : elementIds;
+
+  if (!Array.isArray(newElementIds)) {
     return state;
   }
 
-  const uniqueElementIds = [...new Set(elementIds)];
+  const uniqueElementIds = [...new Set(newElementIds)];
 
   // They can only be similar if they have the same length
   if (state.selection.length === uniqueElementIds.length) {
