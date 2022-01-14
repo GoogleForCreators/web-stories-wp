@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { cleanup, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import { theme as dsTheme } from '@web-stories-wp/design-system';
 /**
@@ -31,8 +31,6 @@ const Wrapper = ({ children }) => (
 );
 
 describe('ThumbnailWrapper', () => {
-  afterEach(cleanup);
-
   it('should not show the `expand` when there are zero children', () => {
     render(<ThumbnailWrapper />, { wrapper: Wrapper });
 
