@@ -63,7 +63,11 @@ module.exports = function (config) {
 
     // Frameworks to use.
     // Available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['parallel', 'jasmine', '@web-stories-wp/karma-puppeteer-client'],
+    frameworks: [
+      'parallel',
+      'jasmine',
+      '@web-stories-wp/karma-puppeteer-client',
+    ],
 
     // list of files / patterns to load in the browser
     files: [
@@ -184,12 +188,15 @@ module.exports = function (config) {
       // Re-implements a round-robin strategy, but with a custom shardIndex.
       // Need to use the Function constructor here so we have access to the outer shardIndex and totalShards vars,
       // because karma-parallel serializes this function.
-      customShardStrategy: new Function('parallelOptions', `
+      customShardStrategy: new Function(
+        'parallelOptions',
+        `
         window.parallelDescribeCount = window.parallelDescribeCount || 0;
         window.parallelDescribeCount++;
         const shouldRunThisTest = (window.parallelDescribeCount % ${totalShards} === ${shardIndex});
         return shouldRunThisTest;
-      `),
+      `
+      ),
     },
 
     // Allow not having any tests
