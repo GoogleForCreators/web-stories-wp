@@ -248,7 +248,7 @@ function Element({
         {(!src ||
           isCurrentResourceProcessing(resourceId) ||
           isCurrentResourceUploading(resourceId)) && (
-          <LoadingBar loadingMessage={__('Uploading media', 'web-stories')} />
+          <LoadingBar loadingMessage={__('Uploading media…', 'web-stories')} />
         )}
         {providerType === 'local' && canEditMedia && (
           <DropDownMenu
@@ -290,32 +290,20 @@ Element.propTypes = {
  * @return {null|*} Element or null if does not map to video/image.
  */
 function MediaElement(props) {
-  const {
-    isCurrentResourceTrimming,
-    isCurrentResourceMuting,
-    isCurrentResourceTranscoding,
-  } = useLocalMedia(
-    ({
-      state: {
-        isCurrentResourceMuting,
-        isCurrentResourceTrimming,
-        isCurrentResourceTranscoding,
-      },
-    }) => ({
-      isCurrentResourceMuting,
-      isCurrentResourceTrimming,
-      isCurrentResourceTranscoding,
-    })
-  );
-  const { id } = props.resource;
+  const { isCurrentResourceProcessing, isCurrentResourceUploading } =
+    useLocalMedia(({ state }) => ({
+      isCurrentResourceProcessing: state.isCurrentResourceProcessing,
+      isCurrentResourceUploading: state.isCurrentResourceUploading,
+    }));
+
+  const { id: resourceId } = props.resource;
 
   if (
-    isCurrentResourceTrimming(id) ||
-    isCurrentResourceMuting(id) ||
-    isCurrentResourceTranscoding(id)
+    isCurrentResourceProcessing(resourceId) ||
+    isCurrentResourceUploading(resourceId)
   ) {
     return (
-      <Tooltip title={__('Video is being processed', 'web-stories')}>
+      <Tooltip title={__('Uploading media…', 'web-stories')}>
         <Element {...props} />
       </Tooltip>
     );
