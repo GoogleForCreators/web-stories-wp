@@ -1285,7 +1285,7 @@ describe('Right Click Menu integration', () => {
     });
   });
 
-  it('should only clear styles for foreground media and shapes', async () => {
+  it('should clear styles for all foreground elements', async () => {
     const clearableTextProperties = Object.keys(textAttributeDefaults);
 
     // add text element and styles
@@ -1402,7 +1402,7 @@ describe('Right Click Menu integration', () => {
     );
 
     // text styles should not be reset to the default styles
-    expect(objectPick(resetText, clearableTextProperties)).not.toEqual(
+    expect(objectPick(resetText, clearableTextProperties)).toEqual(
       textAttributeDefaults
     );
 

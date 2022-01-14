@@ -69,8 +69,6 @@ const UNDO_HELP_TEXT = sprintf(
   prettifyShortcut('mod+z')
 );
 
-const CLEARABLE_ELEMENT_TYPES = ['image', 'video', 'gif', 'shape'];
-
 /**
  * Determines the items displayed in the right click menu
  * based off of the right-clicked element.
@@ -613,20 +611,15 @@ function RightClickMenuProvider({ children }) {
     }
 
     const stylesReset = selectedElements
-      .map(
-        (element) =>
-          // only clear element styles for certain element types
-          CLEARABLE_ELEMENT_TYPES.includes(element.type) &&
-          clearElementStyles(element)
-      )
-      .some((styles) => Boolean(styles));
+      .map((element) => clearElementStyles(element))
+      .some(Boolean);
 
     // only show snackbar if any elements had styles reset
     if (stylesReset) {
       showSnackbar({
         actionLabel: __('Undo', 'web-stories'),
         dismissible: false,
-        message: __('Cleared style.', 'web-stories'),
+        message: __('Cleared styles.', 'web-stories'),
         // don't pass a stale reference for undo
         // need history updates to run so `undo` works correctly.
         onAction: () => {
@@ -936,6 +929,11 @@ function RightClickMenuProvider({ children }) {
         ...menuItemProps,
       },
       {
+        label: RIGHT_CLICK_MENU_LABELS.CLEAR_TEXT_STYLES,
+        onClick: handleClearElementStyles,
+        ...menuItemProps,
+      },
+      {
         label: RIGHT_CLICK_MENU_LABELS.ADD_TO_TEXT_PRESETS,
         onClick: handleAddTextPreset,
         ...menuItemProps,
@@ -949,6 +947,7 @@ function RightClickMenuProvider({ children }) {
     [
       layerItems,
       handleAddTextPreset,
+      handleClearElementStyles,
       handleDuplicateElements,
       menuItemProps,
       handleAddColorPreset,
