@@ -188,6 +188,7 @@ module.exports = function (config) {
       // Re-implements a round-robin strategy, but with a custom shardIndex.
       // Need to use the Function constructor here so we have access to the outer shardIndex and totalShards vars,
       // because karma-parallel serializes this function.
+      // eslint-disable-next-line no-new-func
       customShardStrategy: new Function(
         'parallelOptions',
         `
