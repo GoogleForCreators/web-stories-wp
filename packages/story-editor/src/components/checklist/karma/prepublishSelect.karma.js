@@ -307,8 +307,8 @@ describe('Pre-publish checklist select offending elements onClick', () => {
             height: 529,
             type: 'video',
             mimeType: 'video/mp4',
-            src: 'http://localhost:9876/__static__/earth.mp4',
-            alt: 'Planet Earth',
+            src: 'http://localhost:9876/__static__/beach.mp4',
+            alt: 'Beach',
           },
         });
       });
@@ -351,8 +351,8 @@ describe('Pre-publish checklist select offending elements onClick', () => {
             height: 529,
             type: 'video',
             mimeType: 'video/mp4',
-            src: 'http://localhost:9876/__static__/earth.mp4',
-            alt: 'Planet Earth',
+            src: 'http://localhost:9876/__static__/beach.mp4',
+            alt: 'Beach',
           },
         });
       });
