@@ -79,6 +79,7 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
       const { id, isBackground, type } = element;
       const { LayerContent } = getDefinitionForType(type);
       return {
+        key: id,
         label: isBackground ? (
           __('Background', 'web-stories')
         ) : (

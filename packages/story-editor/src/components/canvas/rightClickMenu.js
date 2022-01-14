@@ -83,6 +83,17 @@ const RightClickMenu = () => {
     };
   }, [ref]);
 
+  const menuButtonRenderer = ({ label, shortcut, ...buttonProps }) => (
+    <ContextMenuComponents.MenuButton {...buttonProps}>
+      {label}
+      {shortcut && (
+        <ContextMenuComponents.MenuShortcut>
+          {shortcut.display}
+        </ContextMenuComponents.MenuShortcut>
+      )}
+    </ContextMenuComponents.MenuButton>
+  );
+
   return createPortal(
     <StyleSheetManager stylisPlugins={[]}>
       <RightClickMenuContainer position={menuPosition} ref={ref}>
@@ -112,21 +123,10 @@ const RightClickMenu = () => {
                     <ContextMenuComponents.MenuSeparator />
                   )}
                   <ButtonWrapper>
-                    <ContextMenuComponents.MenuButton {...buttonProps}>
-                      {label}
-                      {shortcut && (
-                        <ContextMenuComponents.MenuShortcut>
-                          {shortcut.display}
-                        </ContextMenuComponents.MenuShortcut>
-                      )}
-                    </ContextMenuComponents.MenuButton>
+                    {menuButtonRenderer({ label, shortcut, ...buttonProps })}
                     {Boolean(subMenuItems?.length) && (
                       <SubMenuWrapper aria-expanded isOpen isSubmenu>
-                        {subMenuItems.map(({ label: itemLabel, ...itemProps }, i) => (
-                          <ContextMenuComponents.MenuButton key={i} {...itemProps}>
-                            {itemLabel}
-                          </ContextMenuComponents.MenuButton>
-                        ))}
+                        {subMenuItems.map((item) => menuButtonRenderer(item))}
                       </SubMenuWrapper>
                     )}
                   </ButtonWrapper>
