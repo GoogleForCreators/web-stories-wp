@@ -18,8 +18,6 @@
  * External dependencies
  */
 import { useCallback, useMemo, useState } from '@web-stories-wp/react';
-import { ContextMenuComponents } from '@web-stories-wp/design-system';
-import styled from 'styled-components';
 import SAT from 'sat';
 import { __ } from '@web-stories-wp/i18n';
 
@@ -31,21 +29,17 @@ import createPolygon from '../canvas/utils/createPolygon';
 import { useCanvas } from '../canvas';
 import { getDefinitionForType } from '../../elements';
 
-const SubMenuWrapper = styled(ContextMenuComponents.Menu)`
-  width: 230px;
-  position: absolute;
-  left: calc(100% + 2px);
-  top: -9px;
-`;
-
-function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
+function useLayerSelect({ menuItemProps, menuPosition }) {
   const [isSubmenuOpen, setIsSubmenuOpen] = useState(false);
   const { nodesById } = useCanvas(({ state: { nodesById } }) => ({
     nodesById,
   }));
-  const { currentPage } = useStory(({ state: { currentPage } }) => ({
-    currentPage,
-  }));
+  const { currentPage, setSelectedElementsById } = useStory(
+    ({ state: { currentPage }, actions: { setSelectedElementsById } }) => ({
+      currentPage,
+      setSelectedElementsById,
+    })
+  );
 
   const { x, y } = menuPosition;
   const getIntersectingElements = useCallback(() => {
@@ -70,7 +64,7 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
   const subMenuItems = useMemo(() => {
     const intersectingElements = getIntersectingElements();
     return intersectingElements.map((element) => {
-      const { isBackground, type } = element;
+      const { id, isBackground, type } = element;
       const { LayerContent } = getDefinitionForType(type);
       return {
         label: isBackground ? (
@@ -78,11 +72,11 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
         ) : (
           <LayerContent element={element} />
         ),
-        onClick: () => {},
+        onClick: () => setSelectedElementsById({ elementIds: [id] }),
         ...menuItemProps,
       };
     });
-  }, [getIntersectingElements, menuItemProps]);
+  }, [getIntersectingElements, menuItemProps, setSelectedElementsById]);
 
   return {
     label: 'Select Layer',
