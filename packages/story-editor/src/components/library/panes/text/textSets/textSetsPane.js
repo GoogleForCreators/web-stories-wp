@@ -22,6 +22,7 @@ import {
   useMemo,
   useCallback,
   useEffect,
+  useRef,
 } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -89,6 +90,7 @@ function TextSetsPane({ paneRef }) {
     })
   );
   const [showInUse, setShowInUse] = useState(false);
+  const trackChange = useRef(false);
 
   const allTextSets = useMemo(() => Object.values(textSets).flat(), [textSets]);
   const storyPages = useStory(({ state: { pages } }) => pages);
@@ -172,22 +174,25 @@ function TextSetsPane({ paneRef }) {
       localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`, {
         selectedCategory,
       });
+      trackChange.current = true;
     },
     [speak]
   );
 
-  const onChangeShowInUse = useCallback(
-    () => requestAnimationFrame(() => setShowInUse((prevVal) => !prevVal)),
-    [setShowInUse]
-  );
+  const onChangeShowInUse = useCallback(() => {
+    requestAnimationFrame(() => setShowInUse((prevVal) => !prevVal));
+    trackChange.current = true;
+  }, [setShowInUse]);
 
   useEffect(() => {
-    trackEvent('search', {
-      search_type: 'textsets',
-      search_term: '',
-      search_category: selectedCat,
-      search_filter: showInUse ? 'show_in_use' : undefined,
-    });
+    if (selectedCat || showInUse || trackChange.current) {
+      trackEvent('search', {
+        search_type: 'textsets',
+        search_term: '',
+        search_category: selectedCat,
+        search_filter: showInUse ? 'show_in_use' : undefined,
+      });
+    }
   }, [selectedCat, showInUse]);
 
   const sectionId = useMemo(() => `section-${uuidv4()}`, []);

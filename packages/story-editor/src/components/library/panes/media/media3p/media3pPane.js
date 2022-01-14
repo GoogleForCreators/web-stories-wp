@@ -89,13 +89,16 @@ function Media3pPane(props) {
 
   const selectedCategoryId =
     media3p[selectedProvider]?.state?.categories?.selectedCategoryId;
+
   useEffect(() => {
-    trackEvent('search', {
-      search_type: 'media3p',
-      search_term: searchTerm,
-      search_filter: selectedProvider,
-      search_category: selectedCategoryId,
-    });
+    if (searchTerm.length) {
+      trackEvent('search', {
+        search_type: 'media3p',
+        search_term: searchTerm,
+        search_filter: selectedProvider,
+        search_category: selectedCategoryId,
+      });
+    }
   }, [selectedProvider, searchTerm, selectedCategoryId]);
 
   const onSearch = useCallback(
