@@ -619,7 +619,12 @@ function RightClickMenuProvider({ children }) {
       showSnackbar({
         actionLabel: __('Undo', 'web-stories'),
         dismissible: false,
-        message: __('Cleared styles.', 'web-stories'),
+        message: _n(
+          'Cleared style.',
+          'Cleared styles.',
+          selectedElements.length,
+          'web-stories'
+        ),
         // don't pass a stale reference for undo
         // need history updates to run so `undo` works correctly.
         onAction: () => {
