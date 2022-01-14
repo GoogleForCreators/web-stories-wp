@@ -102,7 +102,7 @@ export const CheckboxCtaContainer = styled.div`
 
 export const StyledOverflowThumbnail = styled(OverflowThumbnail)`
   width: 52px;
-  cursor: default;
+  cursor: pointer;
 `;
 
 export const Footer = styled.div`
