@@ -366,7 +366,7 @@ const shortcuts = {
           ),
         },
         {
-          label: __('Incremental nudge', 'web-stories'),
+          label: __('Move element 1px', 'web-stories'),
           shortcut: (
             <kbd>
               <TranslateWithMarkup
