@@ -35,10 +35,7 @@ import { __ } from '@web-stories-wp/i18n';
  */
 import { getVisibleThumbnails } from '../../utils';
 import { StyledOverflowThumbnail } from '../../../checklistCard/styles';
-import {
-  DEFAULT_OVERFLOW_LABEL,
-  MAX_THUMBNAILS_DISPLAYED,
-} from '../../../checklistCard';
+import { MAX_THUMBNAILS_DISPLAYED } from '../../../checklistCard';
 
 const Wrapper = styled.div`
   grid-area: thumbnail;
@@ -97,11 +94,7 @@ ToggleButton.propTypes = {
   isExpanded: PropTypes.bool,
 };
 
-const ThumbnailWrapper = ({
-  children,
-  overflowLabel = DEFAULT_OVERFLOW_LABEL,
-  ...props
-}) => {
+const ThumbnailWrapper = ({ children, ...props }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const thumbnailCount = Array.isArray(children) ? children.length : 1;
@@ -125,7 +118,6 @@ const ThumbnailWrapper = ({
         <>
           {!isExpanded && (
             <StyledOverflowThumbnail
-              screenReaderText={overflowLabel}
               overflowCount={thumbnailCount - MAX_THUMBNAILS_DISPLAYED}
               onClick={handleExpand}
             />

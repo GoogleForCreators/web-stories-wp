@@ -13,10 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { __ } from '@web-stories-wp/i18n';
 
 export const CARD_TYPE = {
   SINGLE_ISSUE: 'single_issue',
@@ -47,7 +43,3 @@ export const GRID_TEMPLATE_AREA = {
 };
 
 export const MAX_THUMBNAILS_DISPLAYED = 3;
-export const DEFAULT_OVERFLOW_LABEL = __(
-  'Click to expand hidden issues',
-  'web-stories'
-);
