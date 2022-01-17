@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -182,7 +182,6 @@
             "id": 0,
             "alt": "sliced avocado on brown wooden chopping board",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#252019",
             "isExternal": true
@@ -295,7 +294,6 @@
             "id": 0,
             "alt": "woman holding leafed plant",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#9a765a",
             "isExternal": true
@@ -894,7 +892,6 @@
             "id": 0,
             "alt": "sliced avocado on plate",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#b1afa7",
             "isExternal": true
@@ -1175,7 +1172,6 @@
             "id": 0,
             "alt": "Person in Brown Long Sleeve Shirt Holding White Paper",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#b8b5ad",
             "isExternal": true
@@ -1493,7 +1489,6 @@
             "id": 0,
             "alt": "Top view of halved tasty avocado with seed placed on white marble table",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d9d3c8",
             "isExternal": true
@@ -1812,7 +1807,6 @@
             "id": 0,
             "alt": "Woman in White and Red Floral Shirt Holding Stainless Steel Bowl and Whisk",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#b19476",
             "isExternal": true
@@ -2131,7 +2125,6 @@
             "id": 0,
             "alt": "vegetable grind in mortar and pestle",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#57605c",
             "isExternal": true
@@ -2471,7 +2464,6 @@
             "id": 0,
             "alt": "Stainless Steel Cookware on Stove",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#cfb19e",
             "isExternal": true
@@ -2790,7 +2782,6 @@
             "id": 0,
             "alt": "Gray Textile Closeup Photo",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#e7ccc4",
             "isExternal": true
@@ -3109,7 +3100,6 @@
             "id": 0,
             "alt": "White and Pink Striped Textile",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#9f9b98",
             "isExternal": true
@@ -3378,7 +3368,6 @@
             "id": 0,
             "alt": "Photo of Woman Wearing Pink Dress",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ebc5b4",
             "isExternal": true
@@ -3812,7 +3801,6 @@
             "id": 0,
             "alt": "Photography of a Woman Holding Green Leaves",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d6c9bd",
             "isExternal": true
@@ -3851,7 +3839,6 @@
             "id": 0,
             "alt": "cookware set on floating shelves",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#335668",
             "isExternal": true

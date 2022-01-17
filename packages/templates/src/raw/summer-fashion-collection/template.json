@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -210,7 +210,6 @@
             "id": 0,
             "alt": "Woman holding her black hat",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#647285",
             "isExternal": true
@@ -466,7 +465,6 @@
             "id": 0,
             "alt": "Woman in yellow crew-neck t-shirt and blue denim bottoms",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#786b59",
             "isExternal": true
@@ -506,7 +504,6 @@
             "id": 0,
             "alt": "Woman in black off-shoulder shirt sitting on brown wooden stairs",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#978b83",
             "isExternal": true
@@ -686,7 +683,6 @@
             "id": 0,
             "alt": "Woman in blue bralette holding sunglasses putting on her eyes",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#aa8e53",
             "isExternal": true
@@ -1025,7 +1021,6 @@
             "id": 0,
             "alt": "Woman in white and black crop top and blue denim shorts standing near red car",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#7f7873",
             "isExternal": true
@@ -1287,7 +1282,6 @@
             "id": 0,
             "alt": "Woman in black crew neck t-shirt wearing brown framed sunglasses standing on beach during daytime",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#cfb7ab",
             "isExternal": true
@@ -1331,7 +1325,6 @@
             "id": 0,
             "alt": "Woman in beige jacket wearing black sunglasses standing on beach during day",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#a07f69",
             "isExternal": true
@@ -1372,7 +1365,6 @@
             "id": 0,
             "alt": "Woman leaning beside orange wall",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#b95d36",
             "isExternal": true
@@ -1413,7 +1405,6 @@
             "id": 0,
             "alt": "Woman raising right hand",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#e07c62",
             "isExternal": true
@@ -1733,7 +1724,6 @@
             "id": 0,
             "alt": "Woman in pink suit walking near garden",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#756e74",
             "isExternal": true
@@ -2064,7 +2054,6 @@
             "id": 0,
             "alt": "Woman wearing orange v-neck overall dress sitting on chair",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#9a8177",
             "isExternal": true
@@ -2336,7 +2325,6 @@
             "id": 0,
             "alt": "Woman in white crew neck t-shirt wearing red and white floral headdress standing beside blue",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#2c3a38",
             "isExternal": true
@@ -2376,7 +2364,6 @@
             "id": 0,
             "alt": "Photo of woman standing on seashore",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ddd4d0",
             "isExternal": true
@@ -2417,7 +2404,6 @@
             "id": 0,
             "alt": "Celebrity sitting beside yellow flower fields",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#977350",
             "isExternal": true
@@ -2458,7 +2444,6 @@
             "id": 0,
             "alt": "Woman wearing black and white polka dot shirt with black shorts holding black leather tote bag",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c6b8ad",
             "isExternal": true
@@ -2777,7 +2762,6 @@
             "id": 0,
             "alt": "Walking woman wearing red and white floral half-sleeved dress near the building during daytime",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#9a9595",
             "isExternal": true
@@ -3121,7 +3105,6 @@
             "id": 0,
             "alt": "Woman with surfboard",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#96886e",
             "isExternal": true
@@ -3383,7 +3366,6 @@
             "id": 0,
             "alt": "Photo of woman standing on seashore",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ded4cf",
             "isExternal": true
@@ -3424,7 +3406,6 @@
             "id": 0,
             "alt": "Woman in red and white floral dress standing on water",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c3bcaa",
             "isExternal": true
@@ -3466,7 +3447,6 @@
             "id": 0,
             "alt": "Woman wearing sun hat and yellow dress in front of brown concrete building",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c0a890",
             "isExternal": true
@@ -3508,7 +3488,6 @@
             "id": 0,
             "alt": "Woman in white dress sitting on blue car during daytime",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d1c2ab",
             "isExternal": true
@@ -3859,7 +3838,6 @@
             "id": 0,
             "alt": "Woman in red spaghetti strap top standing beside brown concrete wall during daytime",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#dfd6cb",
             "isExternal": true
@@ -3901,7 +3879,6 @@
             "id": 0,
             "alt": "Woman in green and blue tube dress holding blue textile",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#2f3028",
             "isExternal": true
@@ -4299,7 +4276,6 @@
             "id": 0,
             "alt": "Selective focus photography of woman standing beside rail during daytime",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#a6a4a0",
             "isExternal": true
@@ -4340,7 +4316,6 @@
             "id": 0,
             "alt": "Woman wearing black shirt standing in front of wall",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c1b5ad",
             "isExternal": true
@@ -4381,7 +4356,6 @@
             "id": 0,
             "alt": "Woman in yellow dress sitting on sand during daytime",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#a89087",
             "isExternal": true

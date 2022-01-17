@@ -76,6 +76,8 @@ ignore:
   - includes/polyfills
   - includes/templates
   - packages/migration/src/cli.js
+  - packages/e2e-tests
+  - packages/e2e-test-utils
   - packages/karma-fixture
   - packages/fonts/src/cli.js
   - packages/templates/src/cli.js
