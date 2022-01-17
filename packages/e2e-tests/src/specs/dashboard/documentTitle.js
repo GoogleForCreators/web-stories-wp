@@ -30,7 +30,7 @@ describe('Document Title', () => {
     );
 
     await expect(page).toMatchElement('h2', { text: 'Dashboard' });
-    await await expect(page.title()).resolves.toStartWith('Dashboard');
+    await expect(page.title()).resolves.toStartWith('Dashboard');
 
     await expect(dashboardNavigation).toClick('a', {
       text: 'Explore Templates',
@@ -39,19 +39,19 @@ describe('Document Title', () => {
 
     await expect(page).toMatch('Viewing all');
     await expect(page).toMatch('templates');
-    await await expect(page.title()).resolves.toStartWith('Explore Templates');
+    await expect(page.title()).resolves.toStartWith('Explore Templates');
 
     const firstTemplate = await expect(page).toMatchElement(
       '[data-testid="template-grid-item-1"]'
     );
     await expect(firstTemplate).toClick('a', { text: 'See details' });
     await page.waitForTimeout(100);
-    await await expect(page.title()).resolves.toStartWith('Template: Beauty');
+    await expect(page.title()).resolves.toStartWith('Template: Beauty');
 
     await expect(page).toClick('a[aria-label="Go to Explore Templates"]');
     await page.waitForTimeout(100);
     await expect(page).toMatch('Viewing all');
     await expect(page).toMatch('templates');
-    await await expect(page.title()).resolves.toStartWith('Explore Templates');
+    await expect(page.title()).resolves.toStartWith('Explore Templates');
   });
 });

@@ -240,12 +240,6 @@ function InnerElement({
   }
 
   const dragHandler = (event) => {
-    if (
-      [ContentType.VIDEO, ContentType.GIF].includes(type) &&
-      !mediaElement.current?.paused
-    ) {
-      mediaElement.current?.pause();
-    }
     if (!hasSetResourceTracker.current) {
       // Drop-targets handling.
       resourceList.set(resource.id, {

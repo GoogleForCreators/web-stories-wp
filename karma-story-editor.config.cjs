@@ -48,6 +48,13 @@ module.exports = function (config) {
   }
   const shardIndex = shardNumber - 1;
 
+  const enableParallelRuns = config.shard || config.parallel;
+  // Default is number of CPU cores minus 1.
+  const parallelExecutors =
+    config.parallel && true !== config.parallel
+      ? Number(config.parallel)
+      : undefined;
+
   config.set({
     plugins: [
       'karma-chrome-launcher',
@@ -64,10 +71,10 @@ module.exports = function (config) {
     // Frameworks to use.
     // Available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: [
-      'parallel',
+      enableParallelRuns && 'parallel',
       'jasmine',
       '@web-stories-wp/karma-puppeteer-client',
-    ],
+    ].filter(Boolean),
 
     // list of files / patterns to load in the browser
     files: [
@@ -184,7 +191,7 @@ module.exports = function (config) {
       shardStrategy: config.shard ? 'custom' : 'round-robin',
       // If we're using custom sharding, just spin up 1 browser,
       // but do the splitting in the custom strategy below.
-      executors: config.shard ? 1 : undefined, // Default is cpu cores - 1.
+      executors: config.shard ? 1 : parallelExecutors,
       // Re-implements a round-robin strategy, but with a custom shardIndex.
       // Need to use the Function constructor here so we have access to the outer shardIndex and totalShards vars,
       // because karma-parallel serializes this function.
