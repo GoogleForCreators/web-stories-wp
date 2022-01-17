@@ -36,7 +36,7 @@ import { useCanvas } from '../canvas';
 import { getDefinitionForType } from '../../elements';
 
 function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
-  const [isSubmenuOpen, setIsSubmenuOpen] = useState(false);
+  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const { nodesById } = useCanvas(({ state: { nodesById } }) => ({
     nodesById,
   }));
@@ -54,7 +54,7 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
   useEffect(() => {
     // Close submenu if the menu itself also closes.
     if (!isMenuOpen) {
-      setIsSubmenuOpen(false);
+      setIsSubMenuOpen(false);
     }
   }, [isMenuOpen]);
 
@@ -106,10 +106,11 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
   return {
     label: __('Select Layer', 'web-stories'),
     separator: 'bottom',
-    onClick: () => setIsSubmenuOpen(!isSubmenuOpen),
-    subMenuItems: isSubmenuOpen ? subMenuItems : [],
+    onClick: () => setIsSubMenuOpen(!isSubMenuOpen),
+    subMenuItems: isSubMenuOpen ? subMenuItems : [],
     dismissOnClick: false,
     'aria-haspopup': 'menu',
+    'aria-pressed': isSubMenuOpen,
     ...menuItemProps,
   };
 }
