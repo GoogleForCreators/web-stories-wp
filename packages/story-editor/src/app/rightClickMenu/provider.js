@@ -872,8 +872,7 @@ function RightClickMenuProvider({ children }) {
       ? RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND_VIDEO
       : RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND_IMAGE;
 
-    return [
-      layerSelectItem,
+    const items = [
       {
         label: detachLabel,
         onClick: handleRemoveMediaFromBackground,
@@ -905,6 +904,10 @@ function RightClickMenuProvider({ children }) {
       },
       ...pageManipulationItems,
     ];
+    if (layerSelectItem) {
+      return [layerSelectItem, ...items];
+    }
+    return items;
   }, [
     canTranscodeResource,
     handleClearElementStyles,
@@ -919,9 +922,8 @@ function RightClickMenuProvider({ children }) {
     toggleTrimMode,
   ]);
 
-  const textItems = useMemo(
-    () => [
-      layerSelectItem,
+  const textItems = useMemo(() => {
+    const items = [
       {
         label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(
           selectedElements.length
@@ -955,21 +957,24 @@ function RightClickMenuProvider({ children }) {
         onClick: handleAddColorPreset,
         ...menuItemProps,
       },
-    ],
-    [
-      layerItems,
-      layerSelectItem,
-      handleAddTextPreset,
-      handleDuplicateElements,
-      menuItemProps,
-      handleAddColorPreset,
-      handleCopyStyles,
-      handlePasteStyles,
-      copiedElement,
-      selectedElement,
-      selectedElements.length,
-    ]
-  );
+    ];
+    if (layerSelectItem) {
+      return [layerSelectItem, ...items];
+    }
+    return items;
+  }, [
+    layerItems,
+    layerSelectItem,
+    handleAddTextPreset,
+    handleDuplicateElements,
+    menuItemProps,
+    handleAddColorPreset,
+    handleCopyStyles,
+    handlePasteStyles,
+    copiedElement,
+    selectedElement,
+    selectedElements.length,
+  ]);
 
   const foregroundMediaItems = useMemo(() => {
     const isVideo = selectedElement?.type === 'video';
@@ -986,8 +991,7 @@ function RightClickMenuProvider({ children }) {
       ? RIGHT_CLICK_MENU_LABELS.CLEAR_VIDEO_STYLES
       : RIGHT_CLICK_MENU_LABELS.CLEAR_IMAGE_STYLES;
 
-    return [
-      layerSelectItem,
+    const items = [
       {
         label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(
           selectedElements.length
@@ -1038,6 +1042,10 @@ function RightClickMenuProvider({ children }) {
         ...menuItemProps,
       },
     ];
+    if (layerSelectItem) {
+      return [layerSelectItem, ...items];
+    }
+    return items;
   }, [
     canTranscodeResource,
     copiedElement,
@@ -1056,9 +1064,8 @@ function RightClickMenuProvider({ children }) {
     toggleTrimMode,
   ]);
 
-  const shapeItems = useMemo(
-    () => [
-      layerSelectItem,
+  const shapeItems = useMemo(() => {
+    const items = [
       {
         label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(
           selectedElements.length
@@ -1092,25 +1099,27 @@ function RightClickMenuProvider({ children }) {
         onClick: handleAddColorPreset,
         ...menuItemProps,
       },
-    ],
-    [
-      copiedElement?.type,
-      handleAddColorPreset,
-      handleClearElementStyles,
-      handleCopyStyles,
-      handleDuplicateElements,
-      handlePasteStyles,
-      layerItems,
-      layerSelectItem,
-      menuItemProps,
-      selectedElement?.type,
-      selectedElements.length,
-    ]
-  );
+    ];
+    if (layerSelectItem) {
+      return [layerSelectItem, ...items];
+    }
+    return items;
+  }, [
+    copiedElement?.type,
+    handleAddColorPreset,
+    handleClearElementStyles,
+    handleCopyStyles,
+    handleDuplicateElements,
+    handlePasteStyles,
+    layerItems,
+    layerSelectItem,
+    menuItemProps,
+    selectedElement?.type,
+    selectedElements.length,
+  ]);
 
-  const stickerItems = useMemo(
-    () => [
-      layerSelectItem,
+  const stickerItems = useMemo(() => {
+    const items = [
       {
         label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(
           selectedElements.length
@@ -1120,15 +1129,18 @@ function RightClickMenuProvider({ children }) {
         ...menuItemProps,
       },
       ...layerItems,
-    ],
-    [
-      handleDuplicateElements,
-      layerItems,
-      layerSelectItem,
-      menuItemProps,
-      selectedElements.length,
-    ]
-  );
+    ];
+    if (layerSelectItem) {
+      return [layerSelectItem, ...items];
+    }
+    return items;
+  }, [
+    handleDuplicateElements,
+    layerItems,
+    layerSelectItem,
+    menuItemProps,
+    selectedElements.length,
+  ]);
 
   const multipleElementItems = useMemo(
     () => [

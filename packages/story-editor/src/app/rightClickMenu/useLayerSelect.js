@@ -103,16 +103,19 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
     selectedElements,
   ]);
 
-  return {
-    label: __('Select Layer', 'web-stories'),
-    separator: 'bottom',
-    onClick: () => setIsSubMenuOpen(!isSubMenuOpen),
-    subMenuItems: isSubMenuOpen ? subMenuItems : [],
-    dismissOnClick: false,
-    'aria-haspopup': 'menu',
-    'aria-pressed': isSubMenuOpen,
-    ...menuItemProps,
-  };
+  // Only display if submenu has any items.
+  return subMenuItems.length > 0
+    ? {
+        label: __('Select Layer', 'web-stories'),
+        separator: 'bottom',
+        onClick: () => setIsSubMenuOpen(!isSubMenuOpen),
+        subMenuItems: isSubMenuOpen ? subMenuItems : [],
+        dismissOnClick: false,
+        'aria-haspopup': 'menu',
+        'aria-pressed': isSubMenuOpen,
+        ...menuItemProps,
+      }
+    : null;
 }
 
 export default useLayerSelect;
