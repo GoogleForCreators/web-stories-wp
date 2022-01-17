@@ -26,6 +26,7 @@ import {
 import SAT from 'sat';
 import { __ } from '@web-stories-wp/i18n';
 import { Icons } from '@web-stories-wp/design-system';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
@@ -92,7 +93,14 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
         ) : (
           <LayerContent element={element} />
         ),
-        onClick: () => setSelectedElementsById({ elementIds: [id] }),
+        onClick: () => {
+          setSelectedElementsById({ elementIds: [id] });
+          trackEvent('context_menu_action', {
+            name: 'layer_selected',
+            element: type,
+            isBackground: isBackground,
+          });
+        },
         ...menuItemProps,
       };
     });
