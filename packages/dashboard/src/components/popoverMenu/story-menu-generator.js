@@ -24,9 +24,7 @@ import { noop } from '@web-stories-wp/design-system';
 import { STORY_CONTEXT_MENU_ACTIONS } from '../../constants';
 
 /**
- * Generate story enu.
- *
- * For menuItemActions, The `key` is any property in `STORY_CONTEXT_MENU_ACTIONS` found in {@module packages/dashboard/src/types.js}.
+ * Generate story menu.
  *
  * @param {Object} arguments The arguments
  * @param {Array} arguments.menuItems The menu items to build out
