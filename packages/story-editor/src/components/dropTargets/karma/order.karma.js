@@ -38,9 +38,7 @@ describe('Drop-Target order', () => {
     fixture.restore();
   });
 
-  // TODO https://github.com/google/web-stories-wp/issues/10192
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should replace top image when bg image is set and another one is on top', async () => {
+  it('should replace top image when bg image is set and another one is on top', async () => {
     // Drag first media element straight to canvas edge to set as background
     const bgMedia = fixture.editor.library.media.item(0);
     const canvas = fixture.editor.canvas.framesLayer.fullbleed;
@@ -105,9 +103,7 @@ describe('Drop-Target order', () => {
     });
   });
 
-  // TODO https://github.com/google/web-stories-wp/issues/10192
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('should replace the top image when two images are in the same place on canvas', async () => {
+  it('should replace the top image when two images are in the same place on canvas', async () => {
     // Add three images - will be added on top of each other
     await fixture.events.click(fixture.editor.library.media.item(0));
     await fixture.events.click(fixture.editor.library.media.item(1));

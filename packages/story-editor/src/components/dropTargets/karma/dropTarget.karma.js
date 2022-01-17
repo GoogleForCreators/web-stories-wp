@@ -223,9 +223,7 @@ describe('Drop-Target integration', () => {
       bgImageData = (await getElements(fixture))[0];
     });
 
-    // TODO https://github.com/google/web-stories-wp/issues/10192
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should correctly handle image dragged from library straight to edge replacing old image', async () => {
+    it('should correctly handle image dragged from library straight to edge replacing old image', async () => {
       // Verify that background element has the correct image before doing anything
       const bg1 = fixture.editor.canvas.displayLayer.display(
         bgImageData.id
@@ -282,9 +280,7 @@ describe('Drop-Target integration', () => {
         imageData = (await getElements(fixture))[1];
       });
 
-      // TODO https://github.com/google/web-stories-wp/issues/10192
-      // eslint-disable-next-line jasmine/no-disabled-tests
-      xit('should correctly handle image dropped on edge replacing old image', async () => {
+      it('should correctly handle image dropped on edge replacing old image', async () => {
         // Verify that background element has the correct image before doing anything
         const bg1 = fixture.editor.canvas.displayLayer.display(
           bgImageData.id
