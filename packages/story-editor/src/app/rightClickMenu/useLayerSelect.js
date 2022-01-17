@@ -96,7 +96,12 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
         ...menuItemProps,
       };
     });
-  }, [getIntersectingElements, menuItemProps, setSelectedElementsById]);
+  }, [
+    getIntersectingElements,
+    menuItemProps,
+    setSelectedElementsById,
+    selectedElements,
+  ]);
 
   return {
     label: __('Select Layer', 'web-stories'),
@@ -104,6 +109,7 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
     onClick: () => setIsSubmenuOpen(!isSubmenuOpen),
     subMenuItems: isSubmenuOpen ? subMenuItems : [],
     dismissOnClick: false,
+    'aria-haspopup': 'menu',
     ...menuItemProps,
   };
 }
