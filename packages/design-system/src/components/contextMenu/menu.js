@@ -55,13 +55,23 @@ MenuWrapper.propTypes = {
 };
 
 /**
- * Extracts all focusable children from an html tree.
+ * Extracts all focusable children from an html tree, optionally ignoring items from submenu.
  *
  * @param {HTMLElement} parent The parent to search
+ * @param {boolean} isSubMenu If we're searching from submenu.
  * @return {Array.<HTMLElement>} List of focusable elements
  */
-function getFocusableChildren(parent) {
-  return Array.from(parent.querySelectorAll(FOCUSABLE_SELECTORS.join(', ')));
+function getFocusableChildren(parent, isSubMenu) {
+  const allButtons = Array.from(
+    parent.querySelectorAll(FOCUSABLE_SELECTORS.join(', '))
+  );
+  if (isSubMenu) {
+    return allButtons;
+  }
+  // Skip considering the submenu, and the submenu items.
+  return allButtons.filter(
+    (elem) => !elem.matches('[role="menu"], [role="menu"] [role="menu"] *')
+  );
 }
 
 const Menu = ({
@@ -72,6 +82,7 @@ const Menu = ({
   isSubMenu = false,
   ...props
 }) => {
+  const { isRTL } = props;
   const { focusedId, isIconMenu, onDismiss, setFocusedId } = useContextMenu(
     ({ state, actions }) => ({
       focusedId: state.focusedId,
@@ -101,6 +112,7 @@ const Menu = ({
 
   /**
    * Allow navigation of the list using the UP and DOWN arrow keys.
+   * Allow navigation between the parent menu and submenu with LEFT and RIGHT arrow keys.
    * Close menu if ESCAPE is pressed.
    *
    * @param {Event} event The synthetic event
@@ -114,33 +126,64 @@ const Menu = ({
         return;
       }
 
-      const focusableChildren = getFocusableChildren(menuRef.current);
+      const focusableChildren = getFocusableChildren(
+        menuRef.current,
+        isSubMenu
+      );
 
-      const prevIndex = focusableChildren.findIndex(
+      let prevIndex = focusableChildren.findIndex(
         (element) => element.id === focusedId
       );
 
       if (prevIndex === -1 && focusableChildren.length) {
         setFocusedId(focusableChildren[0].id);
+        prevIndex = 0;
+      }
+
+      const prevItemHasSubMenuOpen =
+        focusableChildren[prevIndex]?.hasAttribute('aria-haspopup') &&
+        focusableChildren[prevIndex]?.getAttribute('aria-pressed');
+
+      // If we're moving up-down.
+      if ([KEYS.UP, KEYS.DOWN].includes(key)) {
+        const isAscending = KEYS.UP === key;
+        let newIndex = prevIndex + (isAscending ? -1 : 1);
+
+        if (newIndex === -1) {
+          newIndex = focusableChildren.length - 1;
+        }
+
+        // Otherwise move to the next element or loop around the list.
+        const newSelectedElement =
+          focusableChildren[newIndex % focusableChildren.length];
+
+        newSelectedElement?.focus();
+        setFocusedId(newSelectedElement?.id || -1);
         return;
       }
-
-      const isAscending = [KEYS.UP, KEYS.LEFT].includes(key);
-      let newIndex = prevIndex + (isAscending ? -1 : 1);
-
-      if (newIndex === -1) {
-        newIndex = focusableChildren.length - 1;
+      // Maybe move from submenu to parent menu.
+      if (isSubMenu && (KEYS.LEFT === key || (isRTL && KEYS.RIGHT === key))) {
+        // Get the toggled button sharing the same parent.
+        const parentButton = menuRef.current.parentElement.querySelector(
+          'button[aria-pressed="true"][aria-haspopup="menu"]'
+        );
+        parentButton?.focus();
+        return;
       }
-
-      // Otherwise move to the next element or loop around the list.
-      const newSelectedElement =
-        focusableChildren[newIndex % focusableChildren.length];
-
-      newSelectedElement?.focus();
-      setFocusedId(newSelectedElement?.id || -1);
-      return;
+      // Maybe move into submenu.
+      if (
+        !isSubMenu &&
+        (KEYS.RIGHT === key || (isRTL && KEYS.LEFT === key)) &&
+        prevItemHasSubMenuOpen
+      ) {
+        const subMenu = menuRef.current.querySelector('[role="menu"]');
+        if (subMenu) {
+          const subMenuItems = getFocusableChildren(subMenu, true);
+          subMenuItems[0]?.focus();
+        }
+      }
     },
-    [focusedId, onDismiss, setFocusedId]
+    [focusedId, onDismiss, setFocusedId, isRTL, isSubMenu]
   );
 
   // focus first focusable element on open
@@ -196,6 +239,7 @@ export const MenuPropTypes = {
   disableControlledTabNavigation: PropTypes.bool,
   isOpen: PropTypes.bool,
   isSubMenu: PropTypes.bool,
+  isRTL: PropTypes.bool,
 };
 
 Menu.propTypes = MenuPropTypes;

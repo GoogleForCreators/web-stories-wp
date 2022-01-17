@@ -46,7 +46,7 @@ const ButtonWrapper = styled.div`
   position: relative;
 `;
 
-const SubMenuWrapper = styled(ContextMenuComponents.Menu)`
+const SubMenuWrapper = styled(ContextMenuComponents.PlainMenu)`
   width: 230px;
   position: absolute;
   left: calc(100% + 2px);
@@ -157,7 +157,7 @@ const RightClickMenu = () => {
                   <ButtonWrapper>
                     {menuButtonRenderer({ label, shortcut, ...buttonProps })}
                     {Boolean(subMenuItems?.length) && (
-                      <SubMenuWrapper aria-expanded isOpen isSubmenu>
+                      <SubMenuWrapper aria-expanded isOpen isSubMenu>
                         {subMenuItems.map((item) => menuButtonRenderer(item))}
                       </SubMenuWrapper>
                     )}
