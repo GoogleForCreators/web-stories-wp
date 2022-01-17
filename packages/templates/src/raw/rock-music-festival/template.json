@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -31,7 +31,6 @@
             "id": 0,
             "alt": "People watching band on the stage",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -333,7 +332,6 @@
             "lengthFormatted": "0:36",
             "alt": "Aerial view of people watching a concert",
             "sizes": [],
-            "local": false,
             "isOptimized": true,
             "isMuted": true,
             "isExternal": true
@@ -510,7 +508,6 @@
             "lengthFormatted": "0:18",
             "alt": "Rock Band Concert",
             "sizes": [],
-            "local": false,
             "isOptimized": true,
             "isMuted": true,
             "baseColor": "#1c111d",
@@ -678,7 +675,6 @@
             "id": 0,
             "alt": "Black metal guitar stand with turned-on stage light",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -962,7 +958,6 @@
             "id": 0,
             "alt": "People in a concert",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -1128,7 +1123,6 @@
             "id": 0,
             "alt": "People having a concert",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -1270,7 +1264,6 @@
             "id": 0,
             "alt": "Gray roll up door opened",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -1446,7 +1439,6 @@
             "id": 0,
             "alt": "Black background with white dusty corners",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ffffff",
             "isExternal": true
@@ -1540,7 +1532,6 @@
             "id": 0,
             "alt": "Labels with three stages, stage 1 at the top, stage 2 and 3 at the bottom",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -1621,7 +1612,6 @@
             "id": 0,
             "alt": "Person holding drinking glass",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -1844,7 +1834,6 @@
             "id": 0,
             "alt": "Burger with stick",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -1980,7 +1969,6 @@
             "id": 0,
             "alt": "Woman touching head of topless man holding cup with beer",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -2116,7 +2104,6 @@
             "id": 0,
             "alt": "Selective focus photography of man playing drum",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -2257,7 +2244,6 @@
             "id": 0,
             "alt": "Man in gray zip up jacket holding red and black smartphone",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },

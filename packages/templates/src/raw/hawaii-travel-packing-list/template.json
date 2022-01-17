@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -71,7 +71,6 @@
             "id": 0,
             "alt": "Aerial photography of green mountain beside body of water under white sky",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -310,7 +309,6 @@
             "id": 0,
             "alt": "Satellite view of hawaiian islands",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#1c2c5c",
             "isExternal": true
@@ -1145,7 +1143,6 @@
             "id": 0,
             "alt": "Man standing on hill",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#353521",
             "isExternal": true
@@ -1493,7 +1490,6 @@
             "id": 0,
             "alt": "Person sitting on rocky mountain during day",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -1532,7 +1528,6 @@
             "id": 0,
             "alt": "Person holding Canon DSLR camera",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -1570,7 +1565,6 @@
             "id": 0,
             "alt": "Man facing mountain covered with snow",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#353933",
             "isExternal": true
@@ -2064,7 +2058,6 @@
             "id": 0,
             "alt": "Person sitting on rocky mountain during day",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#35332c",
             "isExternal": true
@@ -2542,7 +2535,6 @@
             "id": 0,
             "alt": "Person holding Canon DSLR camera",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#322e37",
             "isExternal": true
@@ -3021,7 +3013,6 @@
             "id": 0,
             "alt": "Man facing mountain covered with snow",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#202722",
             "isExternal": true
@@ -3495,7 +3486,6 @@
             "id": 0,
             "alt": "Woman snorkeling underwater",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#4781a1",
             "isExternal": true
@@ -3842,7 +3832,6 @@
             "id": 0,
             "alt": "Underwater photography of person diving",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#90afa5",
             "isExternal": true
@@ -3881,7 +3870,6 @@
             "id": 0,
             "alt": "Black Ray-Ban Wayfarer sunglasses on beach sand",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c8cbc6",
             "isExternal": true
@@ -3920,7 +3908,6 @@
             "id": 0,
             "alt": "Person holding action camera in underwater",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#059fae",
             "isExternal": true
@@ -4414,7 +4401,6 @@
             "id": 0,
             "alt": "Underwater photography of person diving",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#8aa294",
             "isExternal": true
@@ -4893,7 +4879,6 @@
             "id": 0,
             "alt": "Black Ray-Ban Wayfarer sunglasses on beach sand",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c1c9c9",
             "isExternal": true
@@ -5372,7 +5357,6 @@
             "id": 0,
             "alt": "Person holding action camera in underwater",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#0b8f9d",
             "isExternal": true
@@ -6009,7 +5993,6 @@
             "id": 0,
             "alt": "Woman swimming underwater",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#1d715b",
             "isExternal": true
@@ -6046,7 +6029,6 @@
             "id": 0,
             "alt": "Aerial photography of mountain range",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#394f3b",
             "isExternal": true

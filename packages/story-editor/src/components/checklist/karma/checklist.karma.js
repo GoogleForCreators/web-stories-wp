@@ -51,6 +51,9 @@ describe('Checklist integration', () => {
       await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
       // eslint-disable-next-line no-await-in-loop, no-loop-func
       await waitFor(() => {
+        if (!fixture.editor.footer.carousel.pages.length) {
+          throw new Error('page not yet added');
+        }
         expect(fixture.editor.footer.carousel.pages.length).toBe(
           clickCount + 1
         );
@@ -445,6 +448,9 @@ describe('Checklist integration - Card visibility', () => {
       await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
       // eslint-disable-next-line no-await-in-loop, no-loop-func
       await waitFor(() => {
+        if (!fixture.editor.footer.carousel.pages.length) {
+          throw new Error('page not yet added');
+        }
         expect(fixture.editor.footer.carousel.pages.length).toBe(
           clickCount + 1
         );
@@ -579,9 +585,7 @@ describe('Checklist integration - Card visibility', () => {
       expect(card).toBeNull();
     };
 
-    // TODO: https://github.com/google/web-stories-wp/issues/10147
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit(`should not show cards that require the \`hasUploadMediaAction\` permission`, async () => {
+    it(`should not show cards that require the \`hasUploadMediaAction\` permission`, async () => {
       // add issues to checklist that need to be resolved by uploading media
       await addImageWithIssues();
       await addVideoWithIssues();

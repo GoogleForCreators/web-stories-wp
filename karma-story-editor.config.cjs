@@ -41,6 +41,20 @@ module.exports = function (config) {
       .join('|');
   }
 
+  let totalShards = 1;
+  let shardNumber = 1;
+  if (config.shard) {
+    [shardNumber, totalShards] = config.shard.split('/');
+  }
+  const shardIndex = shardNumber - 1;
+
+  const enableParallelRuns = config.shard || config.parallel;
+  // Default is number of CPU cores minus 1.
+  const parallelExecutors =
+    config.parallel && true !== config.parallel
+      ? Number(config.parallel)
+      : undefined;
+
   config.set({
     plugins: [
       'karma-chrome-launcher',
@@ -48,6 +62,7 @@ module.exports = function (config) {
       'karma-sourcemap-loader',
       'karma-webpack',
       'karma-coverage-istanbul-reporter',
+      'karma-parallel',
       require('@web-stories-wp/karma-puppeteer-launcher'),
       require('@web-stories-wp/karma-puppeteer-client'),
       require('@web-stories-wp/karma-failed-tests-reporter'),
@@ -55,7 +70,11 @@ module.exports = function (config) {
 
     // Frameworks to use.
     // Available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine', '@web-stories-wp/karma-puppeteer-client'],
+    frameworks: [
+      enableParallelRuns && 'parallel',
+      'jasmine',
+      '@web-stories-wp/karma-puppeteer-client',
+    ].filter(Boolean),
 
     // list of files / patterns to load in the browser
     files: [
@@ -162,6 +181,31 @@ module.exports = function (config) {
     // Concurrency level
     // how many browsers should be started simultaneously
     concurrency: Infinity,
+
+    // Sharding configuration for CI.
+    // We trick karma-parallel into using only 1 browser (parallelOptions.executors === 1)
+    // while using a custom strategy that splits up the tests into multiple shards (config.executors > 1).
+    // This allows us to run ony a subset of the tests like so:
+    // npm run test:karma:story-editor -- --headless --shard=1/3 # Run the first of 3 desired shards.
+    parallelOptions: {
+      shardStrategy: config.shard ? 'custom' : 'round-robin',
+      // If we're using custom sharding, just spin up 1 browser,
+      // but do the splitting in the custom strategy below.
+      executors: config.shard ? 1 : parallelExecutors,
+      // Re-implements a round-robin strategy, but with a custom shardIndex.
+      // Need to use the Function constructor here so we have access to the outer shardIndex and totalShards vars,
+      // because karma-parallel serializes this function.
+      // eslint-disable-next-line no-new-func
+      customShardStrategy: new Function(
+        'parallelOptions',
+        `
+        window.parallelDescribeCount = window.parallelDescribeCount || 0;
+        window.parallelDescribeCount++;
+        const shouldRunThisTest = (window.parallelDescribeCount % ${totalShards} === ${shardIndex});
+        return shouldRunThisTest;
+      `
+      ),
+    },
 
     // Allow not having any tests
     failOnEmptyTestSuite: false,

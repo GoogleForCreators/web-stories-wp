@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -44,7 +44,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page1_bg",
-            "local": false,
             "sizes": [],
             "baseColor": "#311901",
             "isExternal": true
@@ -424,7 +423,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page2_image1",
-            "local": false,
             "sizes": [],
             "baseColor": "#4f4e3f",
             "isExternal": true
@@ -904,7 +902,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page4_image1",
-            "local": false,
             "sizes": [],
             "baseColor": "#725a5d",
             "isExternal": true
@@ -1209,7 +1206,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page5_image1",
-            "local": false,
             "sizes": [],
             "baseColor": "#384d64",
             "isExternal": true
@@ -1952,7 +1948,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page6_image1",
-            "local": false,
             "sizes": [],
             "baseColor": "#7572d1",
             "isExternal": true
@@ -2108,7 +2103,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page7_image1",
-            "local": false,
             "sizes": [],
             "baseColor": "#3a626a",
             "isExternal": true
@@ -2352,7 +2346,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page8_image1",
-            "local": false,
             "sizes": [],
             "baseColor": "#3b4345",
             "isExternal": true
@@ -2385,7 +2378,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page8_image3",
-            "local": false,
             "sizes": [],
             "baseColor": "#664e4a",
             "isExternal": true
@@ -2417,7 +2409,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page8_image2",
-            "local": false,
             "sizes": [],
             "baseColor": "#93967e",
             "isExternal": true
@@ -3219,7 +3210,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page9_image1",
-            "local": false,
             "sizes": [],
             "baseColor": "#453248",
             "isExternal": true
@@ -3251,7 +3241,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page9_image2",
-            "local": false,
             "sizes": [],
             "baseColor": "#92a6a3",
             "isExternal": true
@@ -3283,7 +3272,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page9_image3",
-            "local": false,
             "sizes": [],
             "baseColor": "#5c5a4f",
             "isExternal": true

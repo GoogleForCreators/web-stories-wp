@@ -1,0 +1,16 @@
+{
+  "name": "@web-stories-wp/jest-parallel-sequencer",
+  "private": true,
+  "engines": {
+    "node": ">= 16",
+    "npm": ">= 7.3"
+  },
+  "type": "module",
+  "exports": {
+    "default": "./src/index.js"
+  },
+  "main": "./src/index.js",
+  "dependencies": {
+    "@jest/test-sequencer": "^27.4.6"
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -31,7 +31,6 @@
             "id": 0,
             "alt": "Person surfing with high-rise building in background",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#a0a1ab",
             "isExternal": true
@@ -373,7 +372,6 @@
             "id": 0,
             "alt": "Man in black formal suit wearing eyeglasses",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#4d4d47",
             "isExternal": true
@@ -562,7 +560,6 @@
             "id": 0,
             "alt": "Dashed border line",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true,
             "baseColor": "#ffffff"
@@ -902,7 +899,6 @@
             "id": 0,
             "alt": "Aerial view of city",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c5ccd7",
             "isExternal": true
@@ -1251,7 +1247,6 @@
             "id": 0,
             "alt": "Dashed border line",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true,
             "baseColor": "#ffffff"
@@ -1526,7 +1521,6 @@
             "id": 0,
             "alt": "Two gray and brown concrete bricks",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#835a34",
             "isExternal": true
@@ -1698,7 +1692,6 @@
             "id": 0,
             "alt": "Dashed border line",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true,
             "baseColor": "#ffffff"
@@ -1960,7 +1953,6 @@
             "id": 0,
             "alt": "Brown concrete statue under blue sky during daytime",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#86b1d6",
             "isExternal": true
@@ -2125,7 +2117,6 @@
             "id": 0,
             "alt": "Dashed border line",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ffffff",
             "isExternal": true
@@ -2379,7 +2370,6 @@
             "id": 0,
             "alt": "Brown concrete building during daytime",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#28211d",
             "isExternal": true
@@ -2547,7 +2537,6 @@
             "id": 0,
             "alt": "Dashed border line",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ffffff",
             "isExternal": true
@@ -2809,7 +2798,6 @@
             "id": 0,
             "alt": "Brwon and black cathedrla",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#272422",
             "isExternal": true
@@ -2909,7 +2897,6 @@
             "id": 0,
             "alt": "Dashed border line",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true,
             "baseColor": "#ffffff"
@@ -3218,7 +3205,6 @@
             "id": 0,
             "alt": "Interior of a railway staion like building",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#1f1f1b",
             "isExternal": true
@@ -3390,7 +3376,6 @@
             "id": 0,
             "alt": "Dashed border line",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true,
             "baseColor": "#ffffff"
@@ -3653,7 +3638,6 @@
             "id": 0,
             "alt": "Fried food with sauce",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#8b5f49",
             "isExternal": true
@@ -3819,7 +3803,6 @@
             "id": 0,
             "alt": "Dashed border line",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true,
             "baseColor": "#ffffff"
@@ -4074,7 +4057,6 @@
             "id": 0,
             "alt": "People on beach during daytime",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#cbd0de",
             "isExternal": true
@@ -4097,7 +4079,6 @@
             "id": 0,
             "alt": "Dashed border line",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true,
             "baseColor": "#ffffff"
@@ -4366,7 +4347,6 @@
             "id": 0,
             "alt": "Dashed border line",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ffffff",
             "isExternal": true
@@ -4523,7 +4503,6 @@
             "id": 0,
             "alt": "Polaroids photo frames",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -4568,7 +4547,6 @@
             "id": 0,
             "alt": "low-angle photography of Berlin Cathedral, Berlin, Germany during daytime",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#cdd9d3",
             "isExternal": true
@@ -4868,7 +4846,6 @@
             "id": 0,
             "alt": "Polaroids photo frames",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -4913,7 +4890,6 @@
             "id": 0,
             "alt": "Boat docked near building",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#babab6",
             "isExternal": true

@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -32,7 +32,6 @@
             "id": 0,
             "alt": "Person standing and about to slice pizza",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -232,7 +231,6 @@
             "lengthFormatted": "0:18",
             "alt": "Friends filming / doing a video chat on barbecue party at beach house",
             "sizes": [],
-            "local": false,
             "isOptimized": true,
             "isMuted": true,
             "isExternal": true
@@ -729,7 +727,6 @@
             "id": 0,
             "alt": "Pizza on brown wooden table",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -936,7 +933,6 @@
             "id": 0,
             "alt": "Person holding dough",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -1142,7 +1138,6 @@
             "id": 0,
             "alt": "Man adding  pizza topings",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#3c383a",
             "isExternal": true
@@ -1341,7 +1336,6 @@
             "id": 0,
             "alt": "Pizzeria with Black fabric stool",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -1557,7 +1551,6 @@
             "id": 0,
             "alt": "Group of people inside the restaurant",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -1883,7 +1876,6 @@
             "id": 0,
             "alt": "Group of people inside cafeteria",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -2226,7 +2218,6 @@
             "id": 0,
             "alt": "Man Standing Outside Trattoria Pizzeria Store",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -2560,7 +2551,6 @@
             "id": 0,
             "alt": "Man near pizza",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -2972,7 +2962,6 @@
             "id": 0,
             "alt": "Group of people sitting inside a cafeteria",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
