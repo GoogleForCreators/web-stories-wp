@@ -72,7 +72,6 @@ const StoryGridItem = forwardRef(
     const generatedMenuItems = useMemo(
       () =>
         generateStoryMenu({
-          menuItemActions: storyMenu.menuItemActions,
           menuItems: storyMenu.menuItems,
           story,
           isLocked,
