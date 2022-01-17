@@ -69,7 +69,7 @@ const Menu = ({
   disableControlledTabNavigation,
   isOpen,
   onFocus = noop,
-  isSubmenu,
+  isSubMenu = false,
   ...props
 }) => {
   const { focusedId, isIconMenu, onDismiss, setFocusedId } = useContextMenu(
@@ -81,7 +81,7 @@ const Menu = ({
     })
   );
   const mouseDownOutsideRef = useMouseDownOutsideRef(() => {
-    isOpen && !isSubmenu && onDismiss();
+    isOpen && !isSubMenu && onDismiss();
   });
   const menuRef = useRef(null);
   const composedListRef = useCombinedRefs(mouseDownOutsideRef, menuRef);
@@ -195,6 +195,7 @@ export const MenuPropTypes = {
   onFocus: PropTypes.func,
   disableControlledTabNavigation: PropTypes.bool,
   isOpen: PropTypes.bool,
+  isSubMenu: PropTypes.bool,
 };
 
 Menu.propTypes = MenuPropTypes;
