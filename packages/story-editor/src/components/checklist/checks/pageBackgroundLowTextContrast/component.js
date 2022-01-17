@@ -30,7 +30,7 @@ import {
   DefaultFooterText,
 } from '../../../checklistCard';
 import { Thumbnail, THUMBNAIL_TYPES } from '../../../thumbnail';
-import { getVisibleThumbnails, ThumbnailPagePreview } from '../../utils';
+import { ThumbnailPagePreview } from '../../utils';
 import { ACCESSIBILITY_COPY } from '../../constants';
 import { useRegisterCheck } from '../../countContext';
 import { useIsChecklistMounted } from '../../popupMountedContext';
@@ -92,20 +92,15 @@ const PageBackgroundTextLowContrast = () => {
           : CARD_TYPE.SINGLE_ISSUE
       }
       footer={<DefaultFooterText>{footer}</DefaultFooterText>}
-      thumbnailCount={failingPages.length}
-      thumbnail={
-        <>
-          {getVisibleThumbnails(failingPages).map((page) => (
-            <Thumbnail
-              key={page.id}
-              onClick={() => handleClick(page.id)}
-              type={THUMBNAIL_TYPES.PAGE}
-              displayBackground={<ThumbnailPagePreview page={page} />}
-              aria-label={__('Go to offending page', 'web-stories')}
-            />
-          ))}
-        </>
-      }
+      thumbnails={failingPages.map((page) => (
+        <Thumbnail
+          key={page.id}
+          onClick={() => handleClick(page.id)}
+          type={THUMBNAIL_TYPES.PAGE}
+          displayBackground={<ThumbnailPagePreview page={page} />}
+          aria-label={__('Go to offending page', 'web-stories')}
+        />
+      ))}
     />
   ) : null;
 };
