@@ -220,14 +220,16 @@ function PageTemplatesPane(props) {
               />
             </ButtonWrapper>
           )}
-          <DropDownWrapper>
-            <Select
-              options={options}
-              selectedValue={showDefaultTemplates ? DEFAULT : SAVED}
-              onMenuItemClick={handleToggle}
-              aria-label={__('Select templates type', 'web-stories')}
-            />
-          </DropDownWrapper>
+          {options.length > 1 && (
+            <DropDownWrapper>
+              <Select
+                options={options}
+                selectedValue={showDefaultTemplates ? DEFAULT : SAVED}
+                onMenuItemClick={handleToggle}
+                aria-label={__('Select templates type', 'web-stories')}
+              />
+            </DropDownWrapper>
+          )}
         </>
         {showDefaultTemplates ? (
           <DefaultTemplates pageSize={pageSize} />
