@@ -77,7 +77,7 @@ const SuffixIconWrapper = styled.div`
   svg {
     width: 32px;
     color: ${({ theme }) => theme.colors.fg.secondary};
-    margin: -12px 0;
+    margin: -12px 0 !important;
   }
 `;
 
