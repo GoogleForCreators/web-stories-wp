@@ -73,6 +73,14 @@ const LabelWrapper = styled.span`
   }
 `;
 
+const SuffixIconWrapper = styled.div`
+  svg {
+    width: 32px;
+    color: ${({ theme }) => theme.colors.fg.secondary};
+    margin: -12px 0;
+  }
+`;
+
 const RightClickMenu = () => {
   const { isRTL } = useConfig();
   const {
@@ -108,6 +116,7 @@ const RightClickMenu = () => {
     shortcut,
     icon,
     supportsIcon,
+    SuffixIcon,
     ...buttonProps
   }) => (
     <ContextMenuComponents.MenuButton {...buttonProps}>
@@ -123,6 +132,7 @@ const RightClickMenu = () => {
           {shortcut.display}
         </ContextMenuComponents.MenuShortcut>
       )}
+      {SuffixIcon && <SuffixIconWrapper><SuffixIcon /></SuffixIconWrapper>}
     </ContextMenuComponents.MenuButton>
   );
 

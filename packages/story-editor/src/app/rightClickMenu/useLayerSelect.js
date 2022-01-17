@@ -111,6 +111,7 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
         onClick: () => setIsSubMenuOpen(!isSubMenuOpen),
         subMenuItems: isSubMenuOpen ? subMenuItems : [],
         dismissOnClick: false,
+        SuffixIcon: Icons.ChevronRightSmall,
         'aria-haspopup': 'menu',
         'aria-pressed': isSubMenuOpen,
         ...menuItemProps,
