@@ -20,7 +20,6 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { addDecorator, addParameters } from '@storybook/react';
-import { withKnobs } from '@storybook/addon-knobs';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import { useDirection } from 'storybook-rtl-addon';
 import {
@@ -79,8 +78,6 @@ addParameters({
     ],
   },
 });
-
-addDecorator(withKnobs);
 
 addDecorator((story, context) => {
   const { id } = context;
