@@ -452,7 +452,7 @@ class Dashboard extends Service_Base {
 				'canManageSettings' => current_user_can( 'manage_options' ),
 				'canUploadFiles'    => current_user_can( 'upload_files' ),
 			],
-			'canViewDefaultTemplates' => false,
+			'canViewDefaultTemplates' => true,
 			'siteKitStatus'           => $this->site_kit->get_plugin_status(),
 			'flags'                   => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),
