@@ -47,4 +47,6 @@ export { default as seekVideo } from './seekVideo';
 export { default as resourceList } from './resourceList';
 export { default as isAnimatedGif } from './isAnimatedGif';
 export { default as hasVideoGotAudio } from './hasVideoGotAudio';
+export { default as getCanvasBlob } from './getCanvasBlob';
 export { default as getImageFromVideo } from './getImageFromVideo';
+export { default as blobToFile } from './blobToFile';

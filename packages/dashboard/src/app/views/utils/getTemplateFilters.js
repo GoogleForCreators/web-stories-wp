@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { uniqueEntriesByKey } from '@web-stories-wp/design-system';
+/**
  * Internal dependencies
  */
-import { uniqueEntriesByKey } from '../../../utils';
 import { TEMPLATE_META_DATA_TYPES } from '../constants';
 
 /**

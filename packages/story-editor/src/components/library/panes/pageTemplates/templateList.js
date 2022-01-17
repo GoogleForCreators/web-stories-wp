@@ -24,6 +24,7 @@ import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { UnitsProvider } from '@web-stories-wp/units';
 import { useSnackbar } from '@web-stories-wp/design-system';
+
 /**
  * Internal dependencies
  */
@@ -80,8 +81,8 @@ function TemplateList({
     size: rowsTotal,
     parentRef,
     estimateSize: useCallback(
-      () => pageSize.containerHeight + PANEL_GRID_ROW_GAP,
-      [pageSize.containerHeight]
+      () => pageSize.height + PANEL_GRID_ROW_GAP,
+      [pageSize.height]
     ),
     overscan: 4,
   });
@@ -146,7 +147,7 @@ function TemplateList({
           height={rowVirtualizer.totalSize}
           ref={containerRef}
           columnWidth={pageSize.width}
-          rowHeight={pageSize.containerHeight}
+          rowHeight={pageSize.height}
           paneLeft={PANE_PADDING}
           onFocus={handleGridFocus}
           role="list"
@@ -196,6 +197,9 @@ TemplateList.propTypes = {
   pages: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
+      image: PropTypes.shape({
+        url: PropTypes.string,
+      }),
     })
   ),
   pageSize: PropTypes.object.isRequired,

@@ -18,10 +18,17 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useRef, useMemo, useState } from '@web-stories-wp/react';
+import {
+  useEffect,
+  useRef,
+  useMemo,
+  useState,
+  useCallback,
+} from '@web-stories-wp/react';
 import { useFeatures } from 'flagged';
 import { getTimeTracker, trackEvent } from '@web-stories-wp/tracking';
 import { loadTextSets } from '@web-stories-wp/text-sets';
+import { uniqueEntriesByKey } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -51,11 +58,23 @@ function LibraryProvider({ children }) {
   const showMedia = Boolean(getMedia); // Do not show media tab if getMedia api callback is not provided.
   const [textSets, setTextSets] = useState({});
   const [areTextSetsLoading, setAreTextSetsLoading] = useState({});
-  const [savedTemplates, setSavedTemplates] = useState(null);
+  const [savedTemplates, _setSavedTemplates] = useState(null);
+
   // The first page of templates to fetch is 1.
   const [nextTemplatesToFetch, setNextTemplatesToFetch] = useState(1);
   // If to use smart colors with text and text sets.
   const [shouldUseSmartColor, setShouldUseSmartColor] = useState(false);
+
+  const setSavedTemplates = useCallback(
+    (t) =>
+      _setSavedTemplates((_savedTemplates) =>
+        uniqueEntriesByKey(
+          typeof t === 'function' ? t(_savedTemplates) : t,
+          'templateId'
+        )
+      ),
+    []
+  );
 
   const { showElementsTab } = useFeatures();
 
@@ -148,6 +167,7 @@ function LibraryProvider({ children }) {
       nextTemplatesToFetch,
       setNextTemplatesToFetch,
       shouldUseSmartColor,
+      setSavedTemplates,
     ]
   );
   useEffect(() => {

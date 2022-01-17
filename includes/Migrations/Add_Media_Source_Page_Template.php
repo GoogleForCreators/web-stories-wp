@@ -1,4 +1,14 @@
-/*
+<?php
+/**
+ * Class Add_Media_Source_Page_Template
+ *
+ * @package   Google\Web_Stories
+ * @copyright 2021 Google LLC
+ * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
+ * @link      https://github.com/google/web-stories-wp
+ */
+
+/**
  * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,25 +24,23 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import getCanvasBlob from './getCanvasBlob';
+
+namespace Google\Web_Stories\Migrations;
 
 /**
- * Returns a still image from a given video element.
+ * Class Add_Media_Source_Page_Template
  *
- * @param {HTMLVideoElement} video Video element.
- * @return {Promise<Blob>} JPEG image blob.
+ * @package Google\Web_Stories\Migrations
  */
-function getImageFromVideo(video) {
-  const canvas = document.createElement('canvas');
-  canvas.width = video.videoWidth;
-  canvas.height = video.videoHeight;
-
-  const ctx = canvas.getContext('2d');
-  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-  return getCanvasBlob(canvas);
+class Add_Media_Source_Page_Template extends Add_Media_Source {
+	/**
+	 * Term name.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @return string
+	 */
+	protected function get_term(): string {
+		return 'page-template';
+	}
 }
-
-export default getImageFromVideo;
