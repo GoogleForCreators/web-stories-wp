@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { text } from '@storybook/addon-knobs';
-
-/**
  * Internal dependencies
  */
 import App from '../app';
@@ -29,13 +24,13 @@ export default {
 };
 
 // TODO: Support RTL using something like @pxblue/storybook-rtl-addon;
-export const _default = () => {
-  const config = {
-    cdnURL: text('CDN URL', 'https://wp.stories.google/static/main/'),
-    demoStoryURL: text('Demo Story URL', 'https://example:com'),
-    dashboardURL: text('Dashboard URL', 'https://example:com'),
-    isRTL: false,
-  };
+export const _default = (args) => {
+  return <App config={args} {...args} />;
+};
 
-  return <App config={config} />;
+_default.args = {
+  cdnURL: 'https://wp.stories.google/static/main/',
+  demoStoryURL: 'https://example:com',
+  dashboardURL: 'https://example:com',
+  isRTL: false,
 };

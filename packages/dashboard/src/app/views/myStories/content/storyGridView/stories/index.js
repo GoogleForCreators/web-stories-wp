@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
 /**
@@ -36,11 +35,11 @@ export default {
   component: StoryGridView,
 };
 
-export const _default = () => {
+export const _default = (args) => {
   return (
     <StoryGridView
       stories={formattedStoriesArray}
-      bottomActionLabel={text('bottomActionLabel', 'MY CTA')}
+      bottomActionLabel={args.bottomActionLabel}
       storyMenu={{
         handleMenuToggle: action('handleMenuToggle'),
         contextMenuId: -1,
@@ -50,4 +49,7 @@ export const _default = () => {
       pageSize={STORYBOOK_PAGE_SIZE}
     />
   );
+};
+_default.args = {
+  bottomActionLabel: 'MY CTA',
 };

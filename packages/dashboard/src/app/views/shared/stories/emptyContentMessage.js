@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { text } from '@storybook/addon-knobs';
-
-/**
  * Internal dependencies
  */
 import { EmptyContentMessage } from '..';
@@ -28,7 +23,9 @@ export default {
   title: 'Dashboard/Views/Shared/EmptyContentMessage',
 };
 
-export const _default = () => {
-  const message = text('display message', 'default content to display');
-  return <EmptyContentMessage>{message}</EmptyContentMessage>;
+export const _default = (args) => {
+  return <EmptyContentMessage>{args.message}</EmptyContentMessage>;
+};
+_default.args = {
+  message: 'default content to display',
 };

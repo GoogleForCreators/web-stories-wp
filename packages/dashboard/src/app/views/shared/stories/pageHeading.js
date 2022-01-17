@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { boolean, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 
@@ -38,20 +37,24 @@ const InnerContent = styled.div`
   height: 50%;
 `;
 
-export const _default = () => {
+export const _default = (args) => {
   return (
     <NavProvider>
       <LeftRail />
       <PageHeading
-        showSearch={boolean('Show Search', false)}
         searchOptions={[]}
-        searchValue={text('Search Value', '')}
         handleSearchChange={(value) => action('Search with value: ', value)}
-        heading={text('Heading', 'Dashboard')}
-        searchPlaceholder={text('Search Placeholder', 'Find Stories')}
+        {...args}
       >
         <InnerContent />
       </PageHeading>
     </NavProvider>
   );
+};
+
+_default.args = {
+  showSearch: false,
+  searchValue: 'value',
+  heading: 'Dashboard',
+  searchPlaceholder: 'Find Stories',
 };
