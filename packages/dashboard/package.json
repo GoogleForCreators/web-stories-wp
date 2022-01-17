@@ -24,7 +24,7 @@
     "@web-stories-wp/tracking": "*",
     "@web-stories-wp/units": "*",
     "flagged": "^2.0.1",
-    "history": "^5.1.0",
+    "history": "^5.2.0",
     "prop-types": "^15.8.0",
     "query-string": "^7.0.1",
     "styled-components": "^5.3.3"
