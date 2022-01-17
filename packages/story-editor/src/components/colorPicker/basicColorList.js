@@ -93,6 +93,7 @@ function BasicColorList({
   isLocal = false,
   isGlobal = false,
   isEditMode,
+  changedStyle,
   ...rest
 }) {
   const colorAsBackground = getPatternAsString(color);
@@ -108,6 +109,9 @@ function BasicColorList({
   const colorType = isLocal
     ? __('local', 'web-stories')
     : __('global', 'web-stories');
+
+  const isBackground = changedStyle === 'background';
+
   return (
     <>
       {colors.length > 0 && (
@@ -163,13 +167,21 @@ function BasicColorList({
             );
           })}
           {(isLocal || isGlobal) && (
-            <ColorAdd isLocal={isLocal} isGlobal={isGlobal} />
+            <ColorAdd
+              isLocal={isLocal}
+              isGlobal={isGlobal}
+              isBackground={isBackground}
+            />
           )}
         </SwatchList>
       )}
       {/* The `ColorAdd` button can only live in the listbox if there is at least one element with `role="option"` */}
       {!colors.length && (isLocal || isGlobal) && (
-        <ColorAdd isLocal={isLocal} isGlobal={isGlobal} />
+        <ColorAdd
+          isLocal={isLocal}
+          isGlobal={isGlobal}
+          isBackground={isBackground}
+        />
       )}
     </>
   );
@@ -184,6 +196,7 @@ BasicColorList.propTypes = {
   isLocal: PropTypes.bool,
   isGlobal: PropTypes.bool,
   isEditMode: PropTypes.bool.isRequired,
+  changedStyle: PropTypes.string,
 };
 
 export default BasicColorList;

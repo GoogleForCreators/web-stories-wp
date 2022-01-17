@@ -131,6 +131,7 @@ function TextSet({ id, elements, translateY, translateX, ...rest }, ref) {
           src={`${cdnURL}images/text-sets/${id}.png`}
           alt=""
           crossOrigin="anonymous"
+          decoding="async"
         />
       ) : (
         <TextSetElements isForDisplay elements={elements} />

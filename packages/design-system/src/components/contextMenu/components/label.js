@@ -13,16 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import styled from 'styled-components';
 
 /**
- * Ascertain if a resource can be transcoded in it's current state.
- *
- * @param {import('@web-stories-wp/media').Resource} resource The resource.
- * @return {boolean} If the current resource can be transcoded.
+ * Internal dependencies
  */
-function canTranscodeResource(resource) {
-  const { isTranscoding, isMuting, isTrimming, isExternal, local } =
-    resource || {};
-  return !local && !isExternal && !isTranscoding && !isTrimming && !isMuting;
-}
-export default canTranscodeResource;
+import { menuItemStyles } from './styles';
+
+const Label = styled.div`
+  ${menuItemStyles};
+`;
+
+export default Label;

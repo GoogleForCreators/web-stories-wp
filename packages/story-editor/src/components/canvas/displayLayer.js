@@ -18,7 +18,13 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { memo, useCallback, useEffect, useMemo } from '@web-stories-wp/react';
+import {
+  memo,
+  useCallback,
+  useEffect,
+  useMemo,
+  useCombinedRefs,
+} from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { _x, __ } from '@web-stories-wp/i18n';
 import {
@@ -30,7 +36,12 @@ import {
 /**
  * Internal dependencies
  */
-import { useStory, useCanvas } from '../../app';
+import {
+  useStory,
+  useCanvas,
+  useCanvasBoundingBoxRef,
+  CANVAS_BOUNDING_BOX_IDS,
+} from '../../app';
 import StoryPropTypes from '../../types';
 import DisplayElement from './displayElement';
 import { Layer, PageArea } from './layout';
@@ -41,15 +52,32 @@ const DisplayPageArea = styled(PageArea)`
   position: absolute;
 `;
 
-function DisplayPage({
-  page,
+function DisplayPage({ page, editingElement }) {
+  return page
+    ? page.elements.map((element) => {
+        if (editingElement === element.id) {
+          return null;
+        }
+        return (
+          <DisplayElement key={element.id} element={element} isAnimatable />
+        );
+      })
+    : null;
+}
+
+DisplayPage.propTypes = {
+  page: StoryPropTypes.page,
+  editingElement: StoryPropTypes.element,
+};
+
+function DisplayPageAnimationController({
   animationState,
-  editingElement,
   resetAnimationState,
+  page,
 }) {
-  const {
-    actions: { WAAPIAnimationMethods },
-  } = useStoryAnimationContext();
+  const WAAPIAnimationMethods = useStoryAnimationContext(
+    ({ actions }) => actions.WAAPIAnimationMethods
+  );
 
   useEffect(() => {
     switch (animationState) {
@@ -63,16 +91,6 @@ function DisplayPage({
         return;
 
       case STORY_ANIMATION_STATE.SCRUBBING:
-        /*
-         * See `../../../dashboard/components/previewPage: 82` for reference
-         *
-         * @todo
-         * - have WAAPIAnimationMethods.setCurrentTime(time) subscribe to time setter
-         * - return an unsubscribe function when state changes.
-         */
-        WAAPIAnimationMethods.pause();
-        return;
-
       case STORY_ANIMATION_STATE.PAUSED:
         WAAPIAnimationMethods.pause();
         return;
@@ -86,27 +104,12 @@ function DisplayPage({
    */
   useEffect(() => resetAnimationState, [resetAnimationState, page]);
 
-  return page
-    ? page.elements.map((element) => {
-        if (editingElement === element.id) {
-          return null;
-        }
-        return (
-          <DisplayElement
-            key={element.id}
-            element={element}
-            page={page}
-            isAnimatable
-          />
-        );
-      })
-    : null;
+  return null;
 }
 
-DisplayPage.propTypes = {
+DisplayPageAnimationController.propTypes = {
   page: StoryPropTypes.page,
   animationState: PropTypes.oneOf(Object.values(STORY_ANIMATION_STATE)),
-  editingElement: StoryPropTypes.element,
   resetAnimationState: PropTypes.func,
 };
 
@@ -125,6 +128,9 @@ function DisplayLayer() {
     };
   });
 
+  const boundingBoxTrackingRef = useCanvasBoundingBoxRef(
+    CANVAS_BOUNDING_BOX_IDS.PAGE_CONTAINER
+  );
   const { editingElement, setPageContainer, setFullbleedContainer } = useCanvas(
     ({
       state: { editingElement },
@@ -155,13 +161,18 @@ function DisplayLayer() {
           : []
       }
     >
+      <DisplayPageAnimationController
+        page={currentPage}
+        animationState={animationState}
+        resetAnimationState={resetAnimationState}
+      />
       <Layer
         data-testid="DisplayLayer"
         pointerEvents="none"
         aria-label={_x('Display layer', 'compound noun', 'web-stories')}
       >
         <DisplayPageArea
-          ref={setPageContainer}
+          ref={useCombinedRefs(setPageContainer, boundingBoxTrackingRef)}
           fullbleedRef={setFullbleedContainer}
           background={currentPage?.backgroundColor}
           isBackgroundSelected={isBackgroundSelected}
@@ -176,12 +187,7 @@ function DisplayLayer() {
           }
           isControlled
         >
-          <DisplayPage
-            page={currentPage}
-            editingElement={editingElement}
-            animationState={animationState}
-            resetAnimationState={resetAnimationState}
-          />
+          <DisplayPage page={currentPage} editingElement={editingElement} />
         </DisplayPageArea>
         <VideoCaptionsLayer />
       </Layer>

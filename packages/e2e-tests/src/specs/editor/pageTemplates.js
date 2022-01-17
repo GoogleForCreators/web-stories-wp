@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import percySnapshot from '@percy/puppeteer';
 import {
+  takeSnapshot,
   addTextElement,
   clearLocalStorage,
   createNewStory,
@@ -65,6 +65,6 @@ describe('Page Templates', () => {
       '[aria-label="Page Template Options"] [role="listitem"]'
     );
 
-    await percySnapshot(page, 'Page Templates');
+    await takeSnapshot(page, 'Page Templates');
   });
 });

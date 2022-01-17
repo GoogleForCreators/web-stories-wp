@@ -17,84 +17,157 @@
 /**
  * External dependencies
  */
-import { render } from '@testing-library/react';
-import { useFeature } from 'flagged';
-import PropTypes from 'prop-types';
+import { memo } from '@web-stories-wp/react';
+import { render, act } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
-import * as useStoryAnimationContext from '../useStoryAnimationContext';
 import Provider from '../provider';
 import WAAPIWrapper from '../WAAPIWrapper';
 
-jest.mock('flagged');
-
 describe('StoryAnimation.WAAPIWrapper', () => {
-  beforeAll(() => {
-    useFeature.mockImplementation(() => true);
-  });
+  describe('tracking necessary rerenders', () => {
+    // Create mock data
+    const createMockAnim = (partial) => ({
+      id: 'animOne',
+      targets: ['elOne'],
+      delay: 0,
+      duration: 350,
+      iterations: 1,
+      scale: 0.5,
+      type: 'effect-pulse',
+      ...partial,
+    });
+    const createMockElement = (partial) => ({
+      id: '2e04154c-bc58-4969-bb4d-c69d32da0eac',
+      flip: { vertical: false, horizontal: false },
+      height: 1,
+      isBackground: true,
+      isDefaultBackground: true,
+      lockAspectRatio: true,
+      mask: { type: 'rectangle' },
+      opacity: 100,
+      rotationAngle: 0,
+      type: 'shape',
+      width: 1,
+      x: 1,
+      y: 1,
+      ...partial,
+    });
+    const initialAnimations = [
+      createMockAnim({ id: 'animOne', targets: ['elOne'] }),
+      createMockAnim({ id: 'animTwo', targets: ['elTwo'] }),
+    ];
+    const initialElements = [
+      createMockElement({ id: 'elOne' }),
+      createMockElement({ id: 'elTwo' }),
+    ];
 
-  it('renders composed animations top down', () => {
-    const useStoryAnimationContextMock = jest.spyOn(
-      useStoryAnimationContext,
-      'default'
-    );
-
-    const mock = (type) => {
-      const MockComponent = ({ children }) => (
-        <div data-testid={type}>{children}</div>
-      );
-      MockComponent.propTypes = {
-        children: PropTypes.node.isRequired,
-      };
-      return MockComponent;
-    };
-
-    useStoryAnimationContextMock.mockImplementation(() => ({
-      actions: {
-        hoistWAAPIAnimation: () => () => {},
-        getAnimationParts: () => [
-          { WAAPIAnimation: mock('anim-1') },
-          { WAAPIAnimation: mock('anim-2') },
-          { WAAPIAnimation: mock('anim-3') },
-        ],
-      },
-    }));
-
-    const { container } = render(
-      <Provider animations={[]}>
-        <div data-testid="story-element-wrapper">
-          <WAAPIWrapper target="_">
-            <div data-testid="inner-content" />
-          </WAAPIWrapper>
+    // Create React Mocks
+    const MemoizedInner = memo(
+      ({ ElOneWAAPIInvocationTracker, ElTwoWAAPIInvocationTracker }) => (
+        <div>
+          <ElOneWAAPIInvocationTracker target={'elOne'}>
+            <div />
+          </ElOneWAAPIInvocationTracker>
+          <ElTwoWAAPIInvocationTracker target={'elTwo'}>
+            <div />
+          </ElTwoWAAPIInvocationTracker>
         </div>
+      )
+    );
+    const ElementsWithWrapper = ({
+      // eslint-disable-next-line react/prop-types
+      animations,
+      // eslint-disable-next-line react/prop-types
+      elements,
+      // eslint-disable-next-line react/prop-types
+      ElOneWAAPIInvocationTracker,
+      // eslint-disable-next-line react/prop-types
+      ElTwoWAAPIInvocationTracker,
+    }) => (
+      <Provider animations={animations} elements={elements}>
+        <MemoizedInner
+          ElOneWAAPIInvocationTracker={ElOneWAAPIInvocationTracker}
+          ElTwoWAAPIInvocationTracker={ElTwoWAAPIInvocationTracker}
+        />
       </Provider>
     );
 
-    // eslint-disable-next-line testing-library/no-node-access
-    expect(container.firstChild).toMatchInlineSnapshot(`
-      <div
-        data-testid="story-element-wrapper"
-      >
-        <div
-          data-testid="anim-1"
-        >
-          <div
-            data-testid="anim-2"
-          >
-            <div
-              data-testid="anim-3"
-            >
-              <div
-                data-testid="inner-content"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    `);
+    it('doesnt rerender wrappers uneffected by animation updates', () => {
+      // Render with mock methods
+      const ElOneWAAPIInvocationTracker = jest.fn(WAAPIWrapper);
+      const ElTwoWAAPIInvocationTracker = jest.fn(WAAPIWrapper);
+      const { rerender } = render(
+        <ElementsWithWrapper
+          animations={initialAnimations}
+          elements={initialElements}
+          ElOneWAAPIInvocationTracker={ElOneWAAPIInvocationTracker}
+          ElTwoWAAPIInvocationTracker={ElTwoWAAPIInvocationTracker}
+        />
+      );
 
-    useStoryAnimationContextMock.mockRestore();
+      // See that mock methods were called on mount
+      expect(ElOneWAAPIInvocationTracker).toHaveBeenCalledTimes(1);
+      expect(ElTwoWAAPIInvocationTracker).toHaveBeenCalledTimes(1);
+
+      // Update animations with one new animation and one
+      // previous animation instance
+      act(() => {
+        rerender(
+          <ElementsWithWrapper
+            animations={[
+              { ...initialAnimations[0], duration: 500 },
+              initialAnimations[1],
+            ]}
+            elements={initialElements}
+            ElOneWAAPIInvocationTracker={ElOneWAAPIInvocationTracker}
+            ElTwoWAAPIInvocationTracker={ElTwoWAAPIInvocationTracker}
+          />
+        );
+      });
+
+      // See that only the element effected by the animation update rerendered
+      // See that mock methods were called on mount
+      expect(ElOneWAAPIInvocationTracker).toHaveBeenCalledTimes(2);
+      expect(ElTwoWAAPIInvocationTracker).toHaveBeenCalledTimes(1);
+    });
+
+    it('doesnt rerender wrappers uneffected by element updates', () => {
+      // Render with mock methods
+      const ElOneWAAPIInvocationTracker = jest.fn(WAAPIWrapper);
+      const ElTwoWAAPIInvocationTracker = jest.fn(WAAPIWrapper);
+      const { rerender } = render(
+        <ElementsWithWrapper
+          animations={initialAnimations}
+          elements={initialElements}
+          ElOneWAAPIInvocationTracker={ElOneWAAPIInvocationTracker}
+          ElTwoWAAPIInvocationTracker={ElTwoWAAPIInvocationTracker}
+        />
+      );
+
+      // See that mock methods were called on mount
+      expect(ElOneWAAPIInvocationTracker).toHaveBeenCalledTimes(1);
+      expect(ElTwoWAAPIInvocationTracker).toHaveBeenCalledTimes(1);
+
+      // Update animations with one new animation and one
+      // previous animation instance
+      act(() => {
+        rerender(
+          <ElementsWithWrapper
+            animations={initialAnimations}
+            elements={[{ ...initialElements[0], x: 10 }, initialElements[1]]}
+            ElOneWAAPIInvocationTracker={ElOneWAAPIInvocationTracker}
+            ElTwoWAAPIInvocationTracker={ElTwoWAAPIInvocationTracker}
+          />
+        );
+      });
+
+      // See that only the element effected by the animation update rerendered
+      // See that mock methods were called on mount
+      expect(ElOneWAAPIInvocationTracker).toHaveBeenCalledTimes(2);
+      expect(ElTwoWAAPIInvocationTracker).toHaveBeenCalledTimes(1);
+    });
   });
 });

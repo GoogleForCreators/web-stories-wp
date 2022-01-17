@@ -27,9 +27,11 @@ import useMediaApi from '../../api/hooks/useMediaApi';
 import useSettingsApi from '../../api/hooks/useSettingsApi';
 import usePagesApi from '../../api/hooks/usePagesApi';
 import usePublisherLogosApi from '../../api/hooks/usePublisherLogosApi';
+import useFontsApi from '../../api/hooks/useFontsApi';
 import Context from './context';
 
 function EditorSettingsProvider({ children }) {
+  const { customFonts, api: fontsApi } = useFontsApi();
   const { currentUser, api: usersApi } = useUsersApi();
   const { media, api: mediaApi } = useMediaApi();
   const { settings, api: settingsApi } = useSettingsApi();
@@ -41,9 +43,11 @@ function EditorSettingsProvider({ children }) {
       media,
       settings,
       currentUser,
+      customFonts,
       publisherLogos,
     },
     actions: {
+      fontsApi,
       mediaApi,
       settingsApi,
       usersApi,

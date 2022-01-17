@@ -22,6 +22,7 @@ import {
   useCallback,
   useMemo,
   useReduction,
+  useRef,
 } from '@web-stories-wp/react';
 import {
   trackError,
@@ -44,11 +45,26 @@ import useUploadVideoFrame from '../useUploadVideoFrame';
 import useFFmpeg from '../useFFmpeg';
 import getResourceFromLocalFile from '../getResourceFromLocalFile';
 import * as reducer from './reducer';
+import { ITEM_STATUS } from './constants';
 
 const initialState = {
   queue: [],
 };
 
+/**
+ * Media upload queue implementation.
+ *
+ * Items added to the queue will start with PENDING state
+ * and end up in FINISHED state eventually.
+ * Uploading is only considered to be 100% done once
+ * a finished item is removed from the queue.
+ *
+ * A path through the queue could look like this:
+ *
+ * PENDING -> TRANSCODING -> TRANSCODED -> TRIMMING -> TRIMMED -> MUTING -> MUTED -> UPLOADING -> UPLOADED -> FINISHED
+ *
+ * @return {{state: {Object}, actions: {Object}}} Media queue state.
+ */
 function useMediaUploadQueue() {
   const {
     actions: { uploadFile },
@@ -67,6 +83,9 @@ function useMediaUploadQueue() {
   const { uploadVideoPoster } = useUploadVideoFrame({
     updateMediaElement: noop,
   });
+
+  const isMounted = useRef(false);
+
   const {
     startUploading,
     finishUploading,
@@ -87,7 +106,11 @@ function useMediaUploadQueue() {
         state.queue.map(async (item) => {
           const { id, file, state: itemState, resource } = item;
           if (
-            itemState !== 'TRANSCODED' ||
+            ![
+              ITEM_STATUS.TRIMMED,
+              ITEM_STATUS.MUTED,
+              ITEM_STATUS.TRANSCODED,
+            ].includes(itemState) ||
             !resource.isPlaceholder ||
             resource.poster
           ) {
@@ -97,6 +120,10 @@ function useMediaUploadQueue() {
           try {
             const { resource: newResource, posterFile } =
               await getResourceFromLocalFile(file);
+
+            if (!isMounted.current) {
+              return;
+            }
 
             replacePlaceholderResource({
               id,
@@ -120,7 +147,7 @@ function useMediaUploadQueue() {
       await Promise.all(
         state.queue.map(async (item) => {
           const { id, file, state: itemState, resource } = item;
-          if ('PENDING' !== itemState || !resource.isPlaceholder) {
+          if (ITEM_STATUS.PENDING !== itemState || !resource.isPlaceholder) {
             return;
           }
 
@@ -138,6 +165,11 @@ function useMediaUploadQueue() {
               width,
               height,
             };
+
+            if (!isMounted.current) {
+              return;
+            }
+
             replacePlaceholderResource({
               id,
               resource: newResource,
@@ -167,6 +199,10 @@ function useMediaUploadQueue() {
           posterFileName,
           newPosterFile
         );
+
+        if (!isMounted.current) {
+          return;
+        }
 
         let newResourceWithPoster = {
           ...newResource,
@@ -209,7 +245,7 @@ function useMediaUploadQueue() {
          * @param {File} item.file File object.
          * @return {Promise<void>}
          */
-        // eslint-disable-next-line complexity
+        // eslint-disable-next-line complexity -- TODO: Reduce complexity in future.
         state.queue.map(async (item) => {
           const {
             id,
@@ -221,7 +257,7 @@ function useMediaUploadQueue() {
             muteVideo,
             trimData,
           } = item;
-          if ('PENDING' !== itemState) {
+          if (ITEM_STATUS.PENDING !== itemState) {
             return;
           }
 
@@ -263,6 +299,11 @@ function useMediaUploadQueue() {
 
             try {
               newFile = await convertGifToVideo(file);
+
+              if (!isMounted.current) {
+                return;
+              }
+
               finishTranscoding({ id, file: newFile });
               additionalData.web_stories_media_source = 'gif-conversion';
               additionalData.web_stories_is_muted = true;
@@ -277,6 +318,10 @@ function useMediaUploadQueue() {
 
             try {
               newPosterFile = await getFirstFrameOfVideo(newFile);
+
+              if (!isMounted.current) {
+                return;
+              }
             } catch (error) {
               // Do nothing here.
             }
@@ -287,6 +332,11 @@ function useMediaUploadQueue() {
               startTrimming({ id });
               try {
                 newFile = await trimVideo(file, trimData.start, trimData.end);
+
+                if (!isMounted.current) {
+                  return;
+                }
+
                 finishTrimming({ id, file: newFile });
                 additionalData.meta = {
                   ...additionalData.meta,
@@ -304,6 +354,11 @@ function useMediaUploadQueue() {
               startMuting({ id });
               try {
                 newFile = await stripAudioFromVideo(file);
+
+                if (!isMounted.current) {
+                  return;
+                }
+
                 finishMuting({ id, file: newFile });
                 additionalData.web_stories_is_muted = true;
               } catch (error) {
@@ -323,6 +378,11 @@ function useMediaUploadQueue() {
 
               try {
                 newFile = await transcodeVideo(file);
+
+                if (!isMounted.current) {
+                  return;
+                }
+
                 finishTranscoding({ id, file: newFile });
                 additionalData.web_stories_media_source = 'video-optimization';
               } catch (error) {
@@ -339,10 +399,11 @@ function useMediaUploadQueue() {
           startUploading({ id });
 
           trackEvent('upload_media', {
-            file_size: newFile.size,
-            file_type: newFile.type,
+            file_size: newFile?.size,
+            file_type: newFile?.type,
           });
 
+          //eslint-disable-next-line @wordpress/no-unused-vars-before-return
           const trackTiming = getTimeTracker('load_upload_media');
 
           try {
@@ -351,6 +412,10 @@ function useMediaUploadQueue() {
             // Add it back so we're never without one.
             // The final poster will be uploaded later by uploadVideoPoster().
             newResource = await uploadFile(newFile, additionalData);
+
+            if (!isMounted.current) {
+              return;
+            }
           } catch (error) {
             // Cancel uploading if there were any errors.
             cancelUploading({ id, error });
@@ -360,7 +425,7 @@ function useMediaUploadQueue() {
             trackTiming();
           }
 
-          if (newResource?.id) {
+          if (newResource?.id && newPosterFile) {
             await processPoster({
               newResource,
               posterFileName,
@@ -368,7 +433,12 @@ function useMediaUploadQueue() {
               resource,
               id,
             });
+            return;
           }
+          finishUploading({
+            id,
+            resource: newResource,
+          });
         })
       );
     }
@@ -393,31 +463,338 @@ function useMediaUploadQueue() {
     trimVideo,
     startTrimming,
     finishTrimming,
+    finishUploading,
   ]);
 
-  return useMemo(
-    () => ({
+  useEffect(() => {
+    isMounted.current = true;
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
+  return useMemo(() => {
+    /**
+     * A list of all in-progress items.
+     *
+     * @type {Array} In-progress items.
+     */
+    const progress = state.queue.filter(
+      (item) =>
+        ![
+          ITEM_STATUS.PENDING,
+          ITEM_STATUS.CANCELLED,
+          ITEM_STATUS.UPLOADED,
+          ITEM_STATUS.FINISHED,
+        ].includes(item.state)
+    );
+
+    /**
+     * A list of all pending items that still have to be uploaded.
+     *
+     * @type {Array} Pending items.
+     */
+    const pending = state.queue.filter(
+      (item) => item.state === ITEM_STATUS.PENDING
+    );
+
+    /**
+     * A list of all items that just finished uploading.
+     *
+     * @type {Array} Uploaded items.
+     */
+    const uploaded = state.queue.filter(
+      (item) => item.state === ITEM_STATUS.UPLOADED
+    );
+
+    /**
+     * A list of all items that just finished completely.
+     *
+     * Nothing further is happening.
+     *
+     * @type {Array} Uploaded items.
+     */
+    const finished = state.queue.filter(
+      (item) => item.state === ITEM_STATUS.FINISHED
+    );
+
+    /**
+     * A list of all items that failed to upload.
+     *
+     * @type {Array} Failed items.
+     */
+    const failures = state.queue.filter(
+      (item) => item.state === ITEM_STATUS.CANCELLED
+    );
+
+    /**
+     * Whether any upload is currently in progress.
+     *
+     * This includes any transcoding/trimming/muting
+     * happening before the actual file upload.
+     *
+     * @type {boolean} Whether we're uploading.
+     */
+    const isUploading = state.queue.some(
+      (item) =>
+        ![
+          ITEM_STATUS.FINISHED,
+          ITEM_STATUS.CANCELLED,
+          ITEM_STATUS.PENDING,
+        ].includes(item.state)
+    );
+
+    /**
+     * Whether any video transcoding is currently in progress.
+     *
+     * @type {boolean} Whether we're transcoding.
+     */
+    const isTranscoding = state.queue.some(
+      (item) => item.state === ITEM_STATUS.TRANSCODING
+    );
+
+    /**
+     * Whether any video muting is currently in progress.
+     *
+     * @type {boolean} Whether we're muting.
+     */
+    const isMuting = state.queue.some(
+      (item) => item.state === ITEM_STATUS.MUTING
+    );
+
+    /**
+     * Whether any video trimming is currently in progress.
+     *
+     * @type {boolean} Whether we're trimming.
+     */
+    const isTrimming = state.queue.some(
+      (item) => item.state === ITEM_STATUS.TRIMMING
+    );
+
+    /**
+     * Determine whether a new resource is being processed.
+     *
+     * This is the case when an existing video in a story
+     * is being optimized/muted/trimmed, which will cause
+     * a new resource to be created and uploaded.
+     *
+     * @param {number} resourceId Resource ID.
+     * @return {boolean} Whether the resource is processing.
+     */
+    const isNewResourceProcessing = (resourceId) =>
+      state.queue.some(
+        (item) =>
+          [
+            ITEM_STATUS.TRANSCODING,
+            ITEM_STATUS.TRIMMING,
+            ITEM_STATUS.MUTING,
+          ].includes(item.state) && item.originalResourceId === resourceId
+      );
+
+    /**
+     * Determine whether the current resource is being processed.
+     *
+     * This is the case when uploading a new media item that first
+     * needs to be transcoded/muted/trimmed.
+     *
+     * @param {number} resourceId Resource ID.
+     * @return {boolean} Whether the resource is processing.
+     */
+    const isCurrentResourceProcessing = (resourceId) =>
+      state.queue.some(
+        (item) =>
+          [
+            ITEM_STATUS.TRANSCODING,
+            ITEM_STATUS.TRIMMING,
+            ITEM_STATUS.MUTING,
+          ].includes(item.state) && item.resource.id === resourceId
+      );
+
+    /**
+     * Determine whether the current resource is being uploaded.
+     *
+     * This is the case when uploading a new media item after any initial
+     * transcoding/muting/trimming has already happened, or when it is
+     * still pending to be processed.
+     *
+     * Checks for both `resource.id` as well as `previousResourceId`,
+     * since after upload to the backend, the resource's temporary uuid
+     * will be replaced by the permanent ID from the backend.
+     *
+     * @param {number} resourceId Resource ID.
+     * @return {boolean} Whether the resource is uploading.
+     */
+    const isCurrentResourceUploading = (resourceId) =>
+      state.queue.some(
+        (item) =>
+          [
+            ITEM_STATUS.PENDING,
+            ITEM_STATUS.UPLOADING,
+            ITEM_STATUS.UPLOADED,
+            ITEM_STATUS.FINISHED,
+          ].includes(item.state) &&
+          (item.resource.id === resourceId ||
+            item.previousResourceId === resourceId)
+      );
+
+    /**
+     * Determine whether the current resource is being transcoded.
+     *
+     * This is the case when uploading a new media item that first
+     * needs to be transcoded.
+     * This is also the case when optimizing an existing video ("A") in the story,
+     * which will cause a new resource ("B") to be uploaded.
+     *
+     * Example:
+     *
+     * isNewResourceTranscoding(A) -> true
+     * isCurrentResourceTranscoding(B) -> true
+     * isNewResourceTranscoding(B) -> false
+     * isCurrentResourceTranscoding(A) -> false
+     *
+     * @param {number} resourceId Resource ID.
+     * @return {boolean} Whether the resource is transcoding.
+     */
+    const isCurrentResourceTranscoding = (resourceId) =>
+      state.queue.some(
+        (item) =>
+          item.state === ITEM_STATUS.TRANSCODING &&
+          item.resource.id === resourceId
+      );
+
+    /**
+     * Determine whether the current resource is being muted.
+     *
+     * This is the case when uploading a new media item that first
+     * needs to be muted.
+     * This is also the case when muting an existing video in the story,
+     * which will cause a new resource to be uploaded (the "current" one).
+     *
+     * @param {number} resourceId Resource ID.
+     * @return {boolean} Whether the resource is muting.
+     */
+    const isCurrentResourceMuting = (resourceId) =>
+      state.queue.some(
+        (item) =>
+          item.state === ITEM_STATUS.MUTING && item.resource.id === resourceId
+      );
+
+    /**
+     * Determine whether the current resource is being trimmed.
+     *
+     * This is the case when trimming an existing video in the story,
+     * which will cause a new resource to be uploaded (the "current" one).
+     *
+     * @param {number} resourceId Resource ID.
+     * @return {boolean} Whether the resource is trimming.
+     */
+    const isCurrentResourceTrimming = (resourceId) =>
+      state.queue.some(
+        (item) =>
+          item.state === ITEM_STATUS.TRIMMING && item.resource.id === resourceId
+      );
+
+    /**
+     * Determine whether a resource is being transcoded.
+     *
+     * When optimizing an existing video in the story,
+     * which will cause a new resource to be uploaded,
+     * this returns the state of this new resource.
+     *
+     * @param {number} resourceId Resource ID.
+     * @return {boolean} Whether the resource is transcoding.
+     */
+    const isNewResourceTranscoding = (resourceId) =>
+      state.queue.some(
+        (item) =>
+          item.state === ITEM_STATUS.TRANSCODING &&
+          item.originalResourceId === resourceId
+      );
+
+    /**
+     * Determine whether a resource is being muted.
+     *
+     * When muting an existing video in the story,
+     * which will cause a new resource to be uploaded,
+     * this returns the state of this new resource.
+     *
+     * @param {number} resourceId Resource ID.
+     * @return {boolean} Whether the resource is muting.
+     */
+    const isNewResourceMuting = (resourceId) =>
+      state.queue.some(
+        (item) =>
+          item.state === ITEM_STATUS.MUTING &&
+          item.originalResourceId === resourceId
+      );
+
+    /**
+     * Whether a given resource can be transcoded.
+     *
+     * Checks whether the resource is not external and
+     * not already uploading.
+     *
+     * @param {import('@web-stories-wp/media').Resource} resource Resource object.
+     * @return {boolean} Whether a given resource can be transcoded.
+     */
+    const canTranscodeResource = (resource) => {
+      const { isExternal, id, src } = resource || {};
+
+      return (
+        !isExternal &&
+        src &&
+        !state.queue.some(
+          (item) =>
+            item.resource.id === id ||
+            item.previousResourceId === id ||
+            item.originalResourceId === id
+        )
+      );
+    };
+
+    /**
+     * Is a new resource trimming.
+     *
+     * @param {number} resourceId Resource ID.
+     * @return {boolean} if resource with id is found.
+     */
+    const isResourceTrimming = (resourceId) =>
+      state.queue.some(
+        (item) =>
+          item.state === ITEM_STATUS.TRIMMING &&
+          item.originalResourceId === resourceId
+      );
+
+    return {
       state: {
-        progress: state.queue.filter(
-          (item) => !['UPLOADED', 'CANCELLED', 'PENDING'].includes(item.state)
-        ),
-        pending: state.queue.filter((item) => item.state === 'PENDING'),
-        uploaded: state.queue.filter((item) => item.state === 'UPLOADED'),
-        failures: state.queue.filter((item) => item.state === 'CANCELLED'),
-        isUploading: state.queue.some(
-          (item) => !['UPLOADED', 'CANCELLED', 'PENDING'].includes(item.state)
-        ),
-        isTranscoding: state.queue.some((item) => item.state === 'TRANSCODING'),
-        isMuting: state.queue.some((item) => item.state === 'MUTING'),
-        isTrimming: state.queue.some((item) => item.state === 'TRIMMING'),
+        progress,
+        pending,
+        uploaded,
+        failures,
+        finished,
+        isUploading,
+        isTranscoding,
+        isMuting,
+        isTrimming,
+        isCurrentResourceMuting,
+        isCurrentResourceProcessing,
+        isCurrentResourceUploading,
+        isCurrentResourceTranscoding,
+        isCurrentResourceTrimming,
+        isNewResourceMuting,
+        isNewResourceProcessing,
+        isNewResourceTranscoding,
+        isResourceTrimming,
+        canTranscodeResource,
       },
       actions: {
         addItem: actions.addItem,
         removeItem: actions.removeItem,
+        finishItem: actions.finishItem,
       },
-    }),
-    [state, actions]
-  );
+    };
+  }, [state, actions]);
 }
 
 export default useMediaUploadQueue;

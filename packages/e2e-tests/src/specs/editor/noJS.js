@@ -17,8 +17,7 @@
 /**
  * External dependencies
  */
-import percySnapshot from '@percy/puppeteer';
-import { createNewStory } from '@web-stories-wp/e2e-test-utils';
+import { takeSnapshot, createNewStory } from '@web-stories-wp/e2e-test-utils';
 
 describe('Story Editor with disabled JavaScript', () => {
   it('should display error message', async () => {
@@ -32,6 +31,6 @@ describe('Story Editor with disabled JavaScript', () => {
     // Re-enable javascript for snapshots.
     await page.setJavaScriptEnabled(true);
 
-    await percySnapshot(page, 'Editor no js');
+    await takeSnapshot(page, 'Editor no js');
   });
 });

@@ -19,46 +19,49 @@
  */
 import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
 import { getHexFromSolidArray } from '@web-stories-wp/patterns';
+import { preloadImage } from '@web-stories-wp/media';
 
-const STYLES = {
-  boxSizing: 'border-box',
-  visibility: 'hidden',
-  position: 'fixed',
-  contain: 'layout paint',
-  top: '-9999px',
-  left: '-9999px',
-  zIndex: -1,
-};
+/**
+ * Extracts the base color from an image element.
+ *
+ * @param {Image} img Image.
+ * @return {Promise<string>} Hex color.
+ */
+async function extractColorFromImage(img) {
+  const { default: ColorThief } = await import(
+    /* webpackPrefetch: true, webpackChunkName: "chunk-colorthief" */ 'colorthief'
+  );
 
-const BASE_COLOR_NODE = '__WEB_STORIES_BASE_COLOR__';
-const IMG_NODE = '__WEB_STORIES_IMG_NODE';
-
-export function getImgNodeId(elementId) {
-  if (elementId === undefined) {
-    return '__web-stories-base-color';
-  }
-  return `__web-stories-bg-${elementId}`;
+  return new Promise((resolve, reject) => {
+    try {
+      const thief = new ColorThief();
+      const rgb = thief.getColor(img);
+      resolve(getHexFromSolidArray(rgb));
+    } catch (err) {
+      trackError('image_base_color', err.message);
+      reject(err);
+    }
+  });
 }
 
-function getImgNodeKey(elementId) {
-  if (elementId === undefined) {
-    return BASE_COLOR_NODE;
-  }
-  return `${IMG_NODE}_${elementId}`;
-}
-
-export async function getMediaBaseColor(src) {
+/**
+ * Returns an images media base color as a hex string.
+ *
+ * @param {string} src Image src.
+ * @param {number|string} [width] Image width.
+ * @param {number|string} [height] Image height.
+ * @return {Promise<string>} Hex color.
+ */
+async function getMediaBaseColor(src, width = 10, height = 'auto') {
   if (!src) {
-    return Promise.reject(new Error('No source to image'));
+    throw new Error('No source to image');
   }
-  let color;
+
+  let color, image;
   const trackTiming = getTimeTracker('load_get_base_color');
   try {
-    color = await setOrCreateImage({
-      src,
-      width: 10,
-      height: 'auto',
-    });
+    image = await preloadImage({ src, width, height });
+    color = await extractColorFromImage(image);
   } catch (error) {
     // Known error of color thief with white only images.
     if (error?.name !== 'TypeError') {
@@ -66,57 +69,10 @@ export async function getMediaBaseColor(src) {
     }
     color = '#ffffff';
   } finally {
+    image?.remove();
     trackTiming();
   }
   return color;
 }
 
-function getDefaultOnloadCallback(nodeKey, resolve, reject) {
-  return () => {
-    import(
-      /* webpackPrefetch: true, webpackChunkName: "chunk-colorthief" */ 'colorthief'
-    )
-      .then(({ default: ColorThief }) => {
-        const node = document.body[nodeKey];
-        const thief = new ColorThief();
-        const rgb = thief.getColor(node.firstElementChild);
-        resolve(getHexFromSolidArray(rgb));
-      })
-      .catch((err) => {
-        trackError('image_base_color', err.message);
-        reject(err);
-      });
-  };
-}
-
-export function setOrCreateImage(
-  imageData,
-  getOnloadCallback = getDefaultOnloadCallback
-) {
-  const { src, id, height, width } = imageData;
-  return new Promise((resolve, reject) => {
-    const NODE_KEY = getImgNodeKey(id);
-    let imgNode = document.body[NODE_KEY];
-    if (!imgNode) {
-      imgNode = document.createElement('div');
-      imgNode.id = getImgNodeId(id);
-      Object.assign(imgNode.style, STYLES);
-      document.body.appendChild(imgNode);
-      document.body[NODE_KEY] = imgNode;
-    }
-    imgNode.innerHTML = '';
-
-    const img = new Image();
-    // Necessary to avoid tainting canvas with CORS image data.
-    img.crossOrigin = 'anonymous';
-    img.decoding = 'async';
-    img.addEventListener('load', getOnloadCallback(NODE_KEY, resolve, reject));
-    img.addEventListener('error', (e) => {
-      reject(new Error('Set image error: ' + e.message));
-    });
-    img.width = width;
-    img.height = height;
-    img.src = src;
-    imgNode.appendChild(img);
-  });
-}
+export default getMediaBaseColor;

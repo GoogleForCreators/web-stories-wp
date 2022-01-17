@@ -13,34 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import { useCallback, useRef } from '@web-stories-wp/react';
+import styled from 'styled-components';
+/**
+ * Internal dependencies
+ */
+import { useContextMenu } from '../contextMenuProvider';
+
+const Line = styled.div`
+  display: block;
+  height: 1px;
+  background-color: ${({ theme }) => theme.colors.divider.primary};
+  margin: 8px auto;
+  width: ${({ $isIconMenu }) => ($isIconMenu ? 40 : 100)}%;
+`;
 
 /**
- * Takes refs as a series of arguments and composes them to
- * return a single callback ref.
+ * A horizontal line that can be rendered between context menu
+ * items.
  *
- * @param  {...*} refs - ref arguments
- * @return {(node:HTMLElement) => void} composed callback ref
+ * @return {Node} The react node
  */
-function useComposeRefs(...refs) {
-  const refsRef = useRef(refs);
-  refsRef.current = refs;
-  return useCallback((node) => {
-    refsRef.current.forEach((ref) => {
-      if (typeof ref === 'function') {
-        ref(node);
-        return;
-      }
+function Separator() {
+  const isIconMenu = useContextMenu(({ state }) => state.isIconMenu);
 
-      if (ref) {
-        ref.current = node;
-        return;
-      }
-    });
-  }, []);
+  return <Line $isIconMenu={isIconMenu} />;
 }
 
-export default useComposeRefs;
+export default Separator;

@@ -25,7 +25,6 @@ import {
   useCallback,
 } from '@web-stories-wp/react';
 import styled from 'styled-components';
-import { useFeatures } from 'flagged';
 import { __ } from '@web-stories-wp/i18n';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -33,7 +32,6 @@ import { v4 as uuidv4 } from 'uuid';
  * Internal dependencies
  */
 import { Text, THEME_CONSTANTS, Toggle } from '@web-stories-wp/design-system';
-import { SearchInput } from '../../common';
 import { Container as SectionContainer } from '../../common/section';
 import { Pane as SharedPane } from '../shared';
 import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
@@ -72,8 +70,6 @@ function TextPane(props) {
   const paneRef = useRef();
   const [, forceUpdate] = useState();
 
-  const { showTextAndShapesSearchInput } = useFeatures();
-
   const { shouldUseSmartColor, setShouldUseSmartColor } = useLibrary(
     (state) => ({
       shouldUseSmartColor: state.state.shouldUseSmartColor,
@@ -102,14 +98,6 @@ function TextPane(props) {
   const toggleId = useMemo(() => `toggle_auto_color_${uuidv4()}`, []);
   return (
     <Pane id={paneId} {...props} ref={paneRef}>
-      {showTextAndShapesSearchInput && (
-        <SearchInput
-          initialValue={''}
-          placeholder={__('Search', 'web-stories')}
-          onSearch={() => {}}
-          disabled
-        />
-      )}
       <SmartColorToggle>
         <Text
           as="label"

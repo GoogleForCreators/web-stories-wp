@@ -51,6 +51,7 @@ const FontPicker = forwardRef(function FontPicker(
     fonts = [],
     recentFonts = [],
     curatedFonts = [],
+    customFonts = [],
     addRecentFont,
     maybeEnqueueFontStyle,
     ensureMenuFontsLoaded,
@@ -65,6 +66,7 @@ const FontPicker = forwardRef(function FontPicker(
     recentFonts: state.recentFonts,
     curatedFonts: state.curatedFonts,
     fonts: state.fonts,
+    customFonts: state.customFonts,
   }));
 
   const handleFontPickerChange = useCallback(
@@ -146,6 +148,28 @@ const FontPicker = forwardRef(function FontPicker(
     [fontFamily]
   );
 
+  // These option groups will always be shown before others.
+  const priorityOptionGroups = useMemo(() => {
+    return [
+      ...(customFonts?.length
+        ? [
+            {
+              label: __('Your fonts', 'web-stories'),
+              options: customFonts,
+            },
+          ]
+        : []),
+      ...(recentFonts?.length
+        ? [
+            {
+              label: __('Recently used', 'web-stories'),
+              options: recentFonts,
+            },
+          ]
+        : []),
+    ];
+  }, [customFonts, recentFonts]);
+
   return (
     <Datalist.DropDown
       ref={ref}
@@ -155,8 +179,7 @@ const FontPicker = forwardRef(function FontPicker(
       options={fonts}
       primaryOptions={curatedFonts}
       primaryLabel={__('Recommended', 'web-stories')}
-      priorityOptions={recentFonts}
-      priorityLabel={__('Recently used', 'web-stories')}
+      priorityOptionGroups={priorityOptionGroups}
       searchResultsLabel={__('Search results', 'web-stories')}
       selectedId={MULTIPLE_VALUE === fontFamily ? '' : fontFamily}
       placeholder={

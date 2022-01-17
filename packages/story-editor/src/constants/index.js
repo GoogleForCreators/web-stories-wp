@@ -88,15 +88,6 @@ export const HIDDEN_PADDING = {
 export const SAVED_COLOR_SIZE = 32;
 export const SAVED_STYLE_HEIGHT = 64;
 
-export const FOCUSABLE_SELECTORS = [
-  'button',
-  '[href]',
-  'input',
-  'select',
-  'textarea',
-  '[tabindex]:not([tabindex="-1"])',
-];
-
 export const OUTLINK_THEME = {
   DARK: 'dark',
   LIGHT: 'light',
@@ -107,3 +98,5 @@ export const PRESET_TYPES = {
   STYLE: 'style',
   COLOR: 'colors',
 };
+
+export const STABLE_ARRAY = [];

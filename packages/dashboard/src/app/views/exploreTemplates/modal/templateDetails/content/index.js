@@ -108,6 +108,21 @@ function DetailsContent({
   }, [postersByPage]);
 
   const { NextButton, PrevButton } = useMemo(() => {
+    const nextIndex = isRTL ? activeTemplateIndex - 1 : activeTemplateIndex + 1;
+    const previousIndex = isRTL
+      ? activeTemplateIndex + 1
+      : activeTemplateIndex - 1;
+
+    const disablePrevious = isRTL
+      ? !filteredTemplatesLength ||
+        activeTemplateIndex === filteredTemplatesLength - 1
+      : !filteredTemplatesLength || activeTemplateIndex === 0;
+
+    const disableNext = isRTL
+      ? !filteredTemplatesLength || activeTemplateIndex === 0
+      : !filteredTemplatesLength ||
+        activeTemplateIndex === filteredTemplatesLength - 1;
+
     const Previous = (
       <Button
         type={BUTTON_TYPES.TERTIARY}
@@ -115,9 +130,9 @@ function DetailsContent({
         variant={BUTTON_VARIANTS.SQUARE}
         aria-label={__('View previous template', 'web-stories')}
         onClick={() => {
-          switchToTemplateByOffset(activeTemplateIndex - 1);
+          switchToTemplateByOffset(previousIndex);
         }}
-        disabled={!filteredTemplatesLength || activeTemplateIndex === 0}
+        disabled={disablePrevious}
       >
         <Icons.ArrowLeftLarge height={32} width={32} />
       </Button>
@@ -130,12 +145,9 @@ function DetailsContent({
         variant={BUTTON_VARIANTS.SQUARE}
         aria-label={__('View next template', 'web-stories')}
         onClick={() => {
-          switchToTemplateByOffset(activeTemplateIndex + 1);
+          switchToTemplateByOffset(nextIndex);
         }}
-        disabled={
-          !filteredTemplatesLength ||
-          activeTemplateIndex === filteredTemplatesLength - 1
-        }
+        disabled={disableNext}
       >
         <Icons.ArrowRightLarge height={32} width={32} />
       </Button>
