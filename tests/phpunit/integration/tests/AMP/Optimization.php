@@ -22,6 +22,7 @@ use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Configuration;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpBoilerplate;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpBoilerplateErrorHandler;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpRuntimePreloads;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpStoryCssOptimizer;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\MinifyHtml;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\OptimizeViewport;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\ReorderHead;
@@ -106,6 +107,7 @@ class Optimization extends TestCase {
 			MinifyHtml::class,
 			OptimizeViewport::class,
 			ReorderHead::class,
+			AmpStoryCssOptimizer::class,
 		];
 
 		$this->assertCount( 1, $config_array );
