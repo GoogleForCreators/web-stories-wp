@@ -37,9 +37,6 @@ import { noop } from '../../utils';
 import { getTransforms, getOffset } from './utils';
 import { PLACEMENT } from './constants';
 
-// TODO scrollbar update, commented out until design updates are done
-const DEFAULT_POPUP_Z_INDEX = 11;
-
 const Container = styled.div.attrs(
   ({
     $offset: { x, y, width, height },
@@ -48,14 +45,12 @@ const Container = styled.div.attrs(
     placement,
     isRTL,
     invisible,
-    zIndex,
   }) => ({
     style: {
       transform: `translate(${x}px, ${y}px) ${getTransforms(placement, isRTL)}`,
       ...(fillWidth ? { width: `${width}px` } : {}),
       ...(fillHeight ? { height: `${height}px` } : {}),
       ...(invisible ? { visibility: `hidden` } : {}),
-      zIndex,
     },
   })
 )`
@@ -75,7 +70,6 @@ function Popup({
   children,
   renderContents,
   placement = PLACEMENT.BOTTOM,
-  zIndex = DEFAULT_POPUP_Z_INDEX,
   spacing,
   isOpen,
   invisible,
@@ -142,7 +136,6 @@ function Popup({
           fillWidth={fillWidth}
           fillHeight={fillHeight}
           placement={placement}
-          zIndex={zIndex}
           $offset={popupState.offset}
           invisible={invisible}
         >
