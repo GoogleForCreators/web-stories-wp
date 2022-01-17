@@ -41,6 +41,11 @@ export default {
     '**/test/**/*.[jt]s',
     '**/?(*.)test.[jt]s',
   ],
+  // @jest/test-sequencer is the default.
+  testSequencer:
+    'true' === process.env.CI
+      ? '@web-stories-wp/jest-parallel-sequencer'
+      : undefined,
   setupFilesAfterEnv: ['jest-extended/all', '<rootDir>/tests/js/jest.setup'],
   testPathIgnorePatterns: [
     '<rootDir>/.git',
