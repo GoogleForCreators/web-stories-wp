@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -43,7 +43,6 @@
             "id": 0,
             "alt": "Dancing Man in White Room",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#aeb4bb",
             "isExternal": true
@@ -75,7 +74,6 @@
             "id": 0,
             "alt": "Woman in White Crew Neck T-shirt Holding Teal Ceramic Bowl",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#bbb3bb",
             "isExternal": true
@@ -107,7 +105,6 @@
             "id": 0,
             "alt": "Man in White Long Sleeve Shirt Sitting on Brown Chair",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#433429",
             "isExternal": true
@@ -391,7 +388,6 @@
             "id": 0,
             "alt": "Man in White Button Up Shirt Sitting on White Couch",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#241c16",
             "isExternal": true
@@ -438,7 +434,6 @@
             "id": 0,
             "alt": "Grayscale Photo of Boy Standing Behind Wooden Fence",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#868686",
             "isExternal": true
@@ -479,7 +474,6 @@
             "id": 0,
             "alt": "Blue haired woman on window on white concrete building during daytime",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#f1f0ee",
             "isExternal": true
@@ -667,7 +661,6 @@
             "id": 0,
             "alt": "Grayscale Photo of Boy Sitting on Stair",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#5f6565",
             "isExternal": true
@@ -928,7 +921,6 @@
             "id": 0,
             "alt": "Woman in white long sleeve shirt",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#a5a49f",
             "isExternal": true
@@ -1200,7 +1192,6 @@
             "id": 0,
             "alt": "Woman in white long sleeve shirt with pink manicure",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#b3b2b4",
             "isExternal": true
@@ -1232,7 +1223,6 @@
             "id": 0,
             "alt": "Woman in Blue Denim Jeans Standing",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#645f5a",
             "isExternal": true
@@ -1422,7 +1412,6 @@
             "id": 0,
             "alt": "Man Standing in the Middle of Road",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#262921",
             "isExternal": true
@@ -1680,7 +1669,6 @@
             "id": 0,
             "alt": "Woman in White Crew Neck T-shirt Sitting on Brown Wooden Chair",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d5c8c2",
             "isExternal": true
@@ -1956,7 +1944,6 @@
             "lengthFormatted": "0:20",
             "alt": "A Woman Having Coffee On A Veranda",
             "sizes": [],
-            "local": false,
             "isOptimized": true,
             "isMuted": true,
             "length": 20,
@@ -2096,7 +2083,6 @@
             "id": 0,
             "alt": "Woman in Red Jacket Standing Near Glass Door",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#50291b",
             "isExternal": true
@@ -2128,7 +2114,6 @@
             "id": 0,
             "alt": "Man With Raised Fist in a Protest",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c4bdba",
             "isExternal": true
@@ -2316,7 +2301,6 @@
             "id": 0,
             "alt": "Woman in Red Crew Neck Shirt",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#342626",
             "isExternal": true
@@ -2575,7 +2559,6 @@
             "id": 0,
             "alt": "Photo of Woman Raising Her Right Hand",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#9f9895",
             "isExternal": true
@@ -2905,7 +2888,6 @@
             "id": 0,
             "alt": "Man holding pistol wearing black bulletproof vest",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#101b1f",
             "isExternal": true
@@ -3068,7 +3050,6 @@
             "id": 0,
             "alt": "Two women smiling during daytime",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#271510",
             "isExternal": true

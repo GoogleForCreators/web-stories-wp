@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -35,7 +35,6 @@
             "id": 0,
             "alt": "Multicolored abstract painting",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#1783b5",
             "isExternal": true
@@ -266,7 +265,6 @@
             "lengthFormatted": "0:08",
             "alt": "Man Explaining His Self",
             "sizes": [],
-            "local": false,
             "isOptimized": true,
             "isMuted": true,
             "isExternal": true
@@ -457,7 +455,6 @@
             "id": 0,
             "alt": "Abstract painting",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -615,7 +612,6 @@
             "lengthFormatted": "0:08",
             "alt": "Man Talking with His Friends",
             "sizes": [],
-            "local": false,
             "isOptimized": true,
             "isMuted": true,
             "baseColor": "#e5e3e0",
@@ -675,7 +671,6 @@
             "id": 0,
             "alt": "Square pattern",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#fcfcfc",
             "isExternal": true
@@ -882,7 +877,6 @@
             "id": 0,
             "alt": "Closeup photo of torn papers",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#182424",
             "isExternal": true
@@ -949,7 +943,6 @@
             "id": 0,
             "alt": "Square pattern",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#fcfcfc",
             "isExternal": true
@@ -1166,7 +1159,6 @@
             "id": 0,
             "alt": "Multicolored abstract painting",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -1227,7 +1219,6 @@
             "id": 0,
             "alt": "Woman in black long sleeve shirt sitting on floor",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#413d3c",
             "isExternal": true
@@ -1502,7 +1493,6 @@
             "id": 0,
             "alt": "Art Gallery",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#181c1c",
             "isExternal": true
@@ -1715,7 +1705,6 @@
             "id": 0,
             "alt": "Art gallery interior",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -1968,7 +1957,6 @@
             "id": 0,
             "alt": "Multicolored abstract painting",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -2126,7 +2114,6 @@
             "lengthFormatted": "0:08",
             "alt": "Man Talking with His Friends",
             "sizes": [],
-            "local": false,
             "isOptimized": true,
             "isMuted": true,
             "baseColor": "#e5e3e0",
@@ -2396,7 +2383,6 @@
             "id": 0,
             "alt": "Woman in blue denim jeans standing in front of white wall with 3 black wooden picture",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#f8e8e0",
             "isExternal": true
@@ -2790,7 +2776,6 @@
             "id": 0,
             "alt": "Assorted-color wall arts",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -3176,7 +3161,6 @@
             "id": 0,
             "alt": "Two abstract paintings",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#f8e8e0",
             "isExternal": true
@@ -3360,7 +3344,6 @@
             "id": 0,
             "alt": "Multicolored abstract painting",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -4356,7 +4339,6 @@
             "lengthFormatted": "0:08",
             "alt": "Man Talking with His Friends",
             "sizes": [],
-            "local": false,
             "isOptimized": true,
             "isMuted": true,
             "baseColor": "#e5e3e0",
