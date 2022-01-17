@@ -28,7 +28,13 @@ import { QuickTip } from '../quickTip';
 import { DONE_TIP_ENTRY } from '../constants';
 import { useHelpCenter } from '../../../app';
 
-function Companion({ tipKey, onTipSelect, isLeftToRightTransition, readTips }) {
+function Companion({
+  tipKey,
+  onTipSelect,
+  isLeftToRightTransition,
+  readTips,
+  components,
+}) {
   const {
     state: { tips },
   } = useHelpCenter();
@@ -46,7 +52,12 @@ function Companion({ tipKey, onTipSelect, isLeftToRightTransition, readTips }) {
           {...tip}
         />
       ) : (
-        <Menu key="menu" readTips={readTips} onTipSelect={onTipSelect} />
+        <Menu
+          key="menu"
+          readTips={readTips}
+          onTipSelect={onTipSelect}
+          components={components}
+        />
       )}
     </TransitionGroup>
   );
@@ -57,6 +68,7 @@ Companion.propTypes = {
   tipKey: PropTypes.string,
   onTipSelect: PropTypes.func.isRequired,
   isLeftToRightTransition: PropTypes.bool.isRequired,
+  components: PropTypes.object,
 };
 
 export default memo(Companion);

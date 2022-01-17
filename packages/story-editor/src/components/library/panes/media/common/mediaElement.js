@@ -134,12 +134,7 @@ function Element({
         setHoverTimer(null);
       }
     };
-    if (isMenuOpen) {
-      if (mediaElement.current && !mediaElement.current.paused) {
-        // If it's a video, pause the preview while the dropdown menu is open.
-        mediaElement.current.pause();
-      }
-    } else {
+    if (!isMenuOpen) {
       if (active) {
         setShowVideoDetail(false);
         if (mediaElement.current && hoverTimer == null) {

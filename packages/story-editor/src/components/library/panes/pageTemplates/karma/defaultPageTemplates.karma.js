@@ -189,9 +189,7 @@ describe('CUJ: Page Templates: Creator can Apply a Default Page Template', () =>
   });
 
   describe('Keyboard Navigation', () => {
-    // TODO https://github.com/google/web-stories-wp/issues/9912
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should navigate templates via keyboard', async () => {
+    it('should navigate templates via keyboard', async () => {
       // Click templates layout icon
       await fixture.events.click(fixture.editor.library.pageTemplatesTab);
 
@@ -215,10 +213,18 @@ describe('CUJ: Page Templates: Creator can Apply a Default Page Template', () =>
       await fixture.events.keyboard.press('right');
       await fixture.events.keyboard.press('right');
       await fixture.events.keyboard.press('Enter');
-      // expect templates titles to not contain "cover", there will still be one filter button containing "cover"
-      await waitFor(() => {
-        expect(fixture.screen.getAllByText(/cover/i).length).toBe(1);
-      });
+
+      await waitFor(
+        () => {
+          // allow filtered templates to be removed from DOM
+          if (fixture.screen.getAllByText(/cover/i).length !== 1) {
+            throw new Error('templates still not filtered');
+          }
+          // expect templates titles to not contain "cover", there will still be one filter button containing "cover"
+          expect(fixture.screen.getAllByText(/cover/i).length).toBe(1);
+        },
+        { timeout: 1000 }
+      );
       // navigate to and add "Fresh & Bright" template
       await fixture.events.keyboard.press('tab');
       await fixture.events.keyboard.press('tab');
@@ -268,10 +274,19 @@ describe('CUJ: Page Templates: Creator can Apply a Default Page Template', () =>
       await fixture.events.keyboard.press('left');
       await fixture.events.keyboard.press('Enter');
 
-      // expect template titles to contain "cover"
-      expect(
-        fixture.screen.getAllByText(/cover/i).length
-      ).toBeGreaterThanOrEqual(1);
+      await waitFor(
+        () => {
+          // allow time for previous filtered templates to remount
+          if (fixture.screen.getAllByText(/cover/i).length <= 1) {
+            throw new Error('templates filters still not reset');
+          }
+          // expect template titles to contain "cover"
+          expect(
+            fixture.screen.getAllByText(/cover/i).length
+          ).toBeGreaterThanOrEqual(1);
+        },
+        { timeout: 1000 }
+      );
     });
   });
 });

@@ -16,31 +16,15 @@
 /**
  * External dependencies
  */
-import { useCallback, useRef } from '@web-stories-wp/react';
+import { useContextSelector, identity } from '@web-stories-wp/react';
 
 /**
- * Takes refs as a series of arguments and composes them to
- * return a single callback ref.
- *
- * @param  {...*} refs - ref arguments
- * @return {(node:HTMLElement) => void} composed callback ref
+ * Internal dependencies
  */
-function useComposeRefs(...refs) {
-  const refsRef = useRef(refs);
-  refsRef.current = refs;
-  return useCallback((node) => {
-    refsRef.current.forEach((ref) => {
-      if (typeof ref === 'function') {
-        ref(node);
-        return;
-      }
+import Context from './context';
 
-      if (ref) {
-        ref.current = node;
-        return;
-      }
-    });
-  }, []);
+function usePageDataUrls(selector) {
+  return useContextSelector(Context, selector ?? identity);
 }
 
-export default useComposeRefs;
+export default usePageDataUrls;

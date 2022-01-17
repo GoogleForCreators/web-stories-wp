@@ -40,7 +40,7 @@ describe('StoryMenu', () => {
         onMoreButtonSelected={jest.fn}
         contextMenuId={1}
         menuItems={menuItems}
-        story={{ id: 1, status: 'publish', title: 'Sample Story' }}
+        storyId={1}
       />
     );
 
@@ -56,7 +56,7 @@ describe('StoryMenu', () => {
         onMoreButtonSelected={mockOnMoreButtonSelected}
         contextMenuId={1}
         menuItems={menuItems}
-        story={{ id: 1, status: 'publish', title: 'Sample Story' }}
+        storyId={1}
       />
     );
 

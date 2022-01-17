@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -31,7 +31,6 @@
             "id": 0,
             "alt": "space gray aluminum case Apple watch",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d6cdb4",
             "isExternal": true
@@ -370,7 +369,6 @@
             "id": 0,
             "alt": "woman holding brown ropes",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#b4b8be",
             "isExternal": true
@@ -527,7 +525,6 @@
             "id": 0,
             "alt": "woman tying her right shoe",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#8095b3",
             "isExternal": true
@@ -660,7 +657,6 @@
             "id": 0,
             "alt": "mobile app showing woman doing cardio",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#333239",
             "isExternal": true
@@ -698,7 +694,6 @@
             "id": 0,
             "alt": "smart phone frame",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -985,7 +980,6 @@
             "id": 0,
             "alt": "person using smartphone",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#1b1210",
             "isExternal": true
@@ -1158,7 +1152,6 @@
             "id": 0,
             "alt": "woman tying her right shoe",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#8095b3",
             "isExternal": true
@@ -1290,7 +1283,6 @@
             "id": 0,
             "alt": "fitness app screen showing 3 jump series with woman jumping above gray sand",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -1327,7 +1319,6 @@
             "id": 0,
             "alt": "smart phone frame",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -1614,7 +1605,6 @@
             "id": 0,
             "alt": "person using iPhone X",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#b19e8f",
             "isExternal": true
@@ -1784,7 +1774,6 @@
             "id": 0,
             "alt": "woman tying her right shoe",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#8095b3",
             "isExternal": true
@@ -1916,7 +1905,6 @@
             "id": 0,
             "alt": "fitness app screen to start the weekly routine",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -1953,7 +1941,6 @@
             "id": 0,
             "alt": "smart phone frame",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -2232,7 +2219,6 @@
             "id": 0,
             "alt": "man in black crew-neck top using smartphone",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d8e1e1",
             "isExternal": true
@@ -3377,7 +3363,6 @@
             "id": 0,
             "alt": "woman wearing gray shirt and orange leggings",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#1d120b",
             "isExternal": true
@@ -3493,7 +3478,6 @@
             "id": 0,
             "alt": "woman wearing black sports bra and white legging lifting dumbbells",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d1d9d6",
             "isExternal": true
@@ -3609,7 +3593,6 @@
             "id": 0,
             "alt": "topless man in black shorts carrying black dumbbell",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#beaaa4",
             "isExternal": true

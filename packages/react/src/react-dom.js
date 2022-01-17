@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export { createPortal, render } from 'react-dom';
+export { createPortal, render, unmountComponentAtNode } from 'react-dom';

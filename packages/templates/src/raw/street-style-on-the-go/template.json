@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -37,7 +37,6 @@
             "id": 0,
             "alt": "woman in white shirt and black pants standing on sidewalk during daytime",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#344043",
             "isExternal": true
@@ -308,7 +307,6 @@
             "id": 0,
             "alt": "man and woman standing in front of building wearing jackets",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#212f3f",
             "isExternal": true
@@ -447,7 +445,6 @@
             "id": 0,
             "alt": "woman wearing green top standing near Flatiron building",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#4e4c47",
             "isExternal": true
@@ -695,7 +692,6 @@
             "id": 0,
             "alt": "man in white long sleeve shirt and black pants standing on road during daytime",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#9d8b7f",
             "isExternal": true
@@ -1028,7 +1024,6 @@
             "id": 0,
             "alt": "woman in blue and white polka dot shirt and white skirt",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ceccd3",
             "isExternal": true
@@ -1067,7 +1062,6 @@
             "id": 0,
             "alt": "two women in teal romper pants",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c1b6b9",
             "isExternal": true
@@ -1508,7 +1502,6 @@
             "id": 0,
             "alt": "man and woman walking on street",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#bbc5be",
             "isExternal": true
@@ -1756,7 +1749,6 @@
             "id": 0,
             "alt": "woman in red and white sweater wearing pink knit cap",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#163741",
             "isExternal": true
@@ -2071,7 +2063,6 @@
             "id": 0,
             "alt": "man walking on the street while carrying bag",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#26393d",
             "isExternal": true
@@ -2355,7 +2346,6 @@
             "id": 0,
             "alt": "woman looking at Eiffel Tower",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#bbc5da",
             "isExternal": true
@@ -2603,7 +2593,6 @@
             "id": 0,
             "alt": "woman in black leather jacket standing on sidewalk during daytime",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#807f7e",
             "isExternal": true
@@ -2918,7 +2907,6 @@
             "id": 0,
             "alt": "woman sitting on brown concrete surface wearing brown boots beside brown leather handbag",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#534441",
             "isExternal": true
@@ -3363,7 +3351,6 @@
             "id": 0,
             "alt": "woman standing in the middle of the road",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#2f312e",
             "isExternal": true
@@ -3459,7 +3446,6 @@
             "id": 0,
             "alt": "woman wearing white spaghetti strap jumpsuit",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#acb9bb",
             "isExternal": true
@@ -3555,7 +3541,6 @@
             "id": 0,
             "alt": "woman wearing green top standing near Flatiron building",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d0cdce",
             "isExternal": true
