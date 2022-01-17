@@ -132,7 +132,11 @@ const RightClickMenu = () => {
           {shortcut.display}
         </ContextMenuComponents.MenuShortcut>
       )}
-      {SuffixIcon && <SuffixIconWrapper><SuffixIcon /></SuffixIconWrapper>}
+      {SuffixIcon && (
+        <SuffixIconWrapper>
+          <SuffixIcon />
+        </SuffixIconWrapper>
+      )}
     </ContextMenuComponents.MenuButton>
   );
 
