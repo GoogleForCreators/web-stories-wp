@@ -14,10 +14,6 @@
  * limitations under the License.
  */
 /**
-/**
- * Internal dependencies
- */
-/**
  * Internal dependencies
  */
 import { STORY_CONTEXT_MENU_ITEMS } from '../../../constants';
