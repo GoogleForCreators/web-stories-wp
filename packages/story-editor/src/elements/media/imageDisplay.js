@@ -108,6 +108,8 @@ function ImageDisplay({ element, box, previewMode }) {
           // Ignore
         }
       });
+    } else {
+      setSrc(resource.src);
     }
     return () => {
       mounted = false;
