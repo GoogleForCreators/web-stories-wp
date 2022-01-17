@@ -29,31 +29,24 @@ import { STORY_CONTEXT_MENU_ACTIONS } from '../../constants';
  * For menuItemActions, The `key` is any property in `STORY_CONTEXT_MENU_ACTIONS` found in {@module packages/dashboard/src/types.js}.
  *
  * @param {Object} arguments The arguments
- * @param {Object.<string, Function>} arguments.menuItemActions An object of actions that could be added as event handlers.
  * @param {Array} arguments.menuItems The menu items to build out
  * @param {Object} arguments.story The story used to generate the menu items
  * @param {boolean} arguments.isLocked Communicates if the story is locked by another user so we can disable any actions necessary
  * @return {Array} Array of menu items
  */
-export const generateStoryMenu = ({
-  menuItemActions = {},
-  menuItems,
-  story,
-  isLocked,
-}) => {
-  const defaultFn = menuItemActions.default
-    ? () => menuItemActions.default(story)
-    : noop;
+export const generateStoryMenu = ({ menuItems, story, isLocked }) => {
+  const defaultFn = menuItems.default ? () => menuItems.default(story) : noop;
+  const getMenuItem = (value) =>
+    menuItems.find((item) => item?.value === value);
 
   const menuItemsFiltered = menuItems.filter(
-    (item) => !item?.capability || story?.capabilities?.[item?.capability]
+    (item) => typeof item.isEnabled === undefined || item.isEnabled(story)
   );
 
   return menuItemsFiltered.map(({ capability, value, ...menuItem }) => {
+    const menu = getMenuItem(value);
     const extraProperties = {
-      onClick: menuItemActions[value]
-        ? () => menuItemActions[value](story)
-        : defaultFn,
+      onClick: menu ? () => menu['action'](story) : defaultFn,
     };
 
     switch (value) {
