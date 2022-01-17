@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -149,7 +149,6 @@
             "height": 249,
             "id": 0,
             "alt": "page01_image02",
-            "local": false,
             "isOptimized": false,
             "baseColor": "#cbb492",
             "isExternal": true
@@ -179,7 +178,6 @@
             "height": 248,
             "id": 0,
             "alt": "page01_image01",
-            "local": false,
             "isOptimized": false,
             "baseColor": "#e5e5d8",
             "isExternal": true
@@ -524,7 +522,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page02_bg",
-            "local": false,
             "isOptimized": false,
             "baseColor": "#19161f",
             "isExternal": true
@@ -783,7 +780,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page03_bg",
-            "local": false,
             "isOptimized": false,
             "baseColor": "#9e8e63",
             "isExternal": true
@@ -1017,7 +1013,6 @@
             "height": 586,
             "id": 0,
             "alt": "page04_bg",
-            "local": false,
             "isOptimized": false,
             "baseColor": "#322a22",
             "isExternal": true
@@ -1692,7 +1687,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page05_image01",
-            "local": false,
             "isOptimized": false,
             "baseColor": "#736d66",
             "isExternal": true
@@ -1782,7 +1776,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page06_bg",
-            "local": false,
             "isOptimized": false,
             "baseColor": "#cdceca",
             "isExternal": true
@@ -2044,7 +2037,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page07_bg",
-            "local": false,
             "isOptimized": false,
             "baseColor": "#e7e6da",
             "isExternal": true
@@ -2306,7 +2298,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page08_bg",
-            "local": false,
             "isOptimized": false,
             "baseColor": "#989e3e",
             "isExternal": true
@@ -2668,7 +2659,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page09_image01",
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c5ab8c",
             "isExternal": true
@@ -3071,7 +3061,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page10_bg",
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c49e6a",
             "isExternal": true
@@ -3343,7 +3332,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page11_bg",
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ccd0cf",
             "isExternal": true
@@ -3607,7 +3595,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page12_bg",
-            "local": false,
             "isOptimized": false,
             "baseColor": "#dcd9cd",
             "isExternal": true
@@ -4032,7 +4019,6 @@
             "height": 240,
             "id": 0,
             "alt": "page13_image1",
-            "local": false,
             "isOptimized": false,
             "baseColor": "#a97756",
             "isExternal": true

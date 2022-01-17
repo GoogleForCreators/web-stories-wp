@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -44,7 +44,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page1_hero",
-            "local": false,
             "sizes": [],
             "isExternal": true
           }
@@ -93,7 +92,6 @@
             "height": 10,
             "id": 0,
             "alt": "page1_logo-generic",
-            "local": false,
             "sizes": [],
             "isExternal": true
           },
@@ -378,7 +376,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page3_bg",
-            "local": false,
             "sizes": [],
             "isExternal": true
           }
@@ -1242,7 +1239,6 @@
             "height": 251,
             "id": 0,
             "alt": "page5_handbag-alt",
-            "local": false,
             "sizes": [],
             "isExternal": true
           },
@@ -2065,7 +2061,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page7_hero",
-            "local": false,
             "sizes": [],
             "isExternal": true
           }
@@ -2299,7 +2294,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page8_bg",
-            "local": false,
             "sizes": [],
             "isExternal": true
           },
@@ -2889,7 +2883,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page9_item1-cropped",
-            "local": false,
             "sizes": [],
             "isExternal": true
           }
@@ -2921,7 +2914,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page9_item2",
-            "local": false,
             "sizes": [],
             "isExternal": true
           }
@@ -2953,7 +2945,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page9_item3",
-            "local": false,
             "sizes": [],
             "isExternal": true
           }
@@ -2982,7 +2973,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page9_item4",
-            "local": false,
             "sizes": [],
             "isExternal": true
           },

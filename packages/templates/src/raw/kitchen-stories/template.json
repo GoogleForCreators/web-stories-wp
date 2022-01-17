@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -30,7 +30,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page01_bg",
-            "local": false,
             "isOptimized": false,
             "isExternal": true,
             "baseColor": "#292e39"
@@ -271,7 +270,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page01_logo",
-            "local": false,
             "baseColor": "#ffffff",
             "isExternal": true
           },
@@ -354,10 +352,8 @@
             "lengthFormatted": "0:26",
             "alt": "page02_bg_video",
             "sizes": [],
-            "local": false,
             "isOptimized": true,
             "provider": "local",
-            "isTranscoding": false,
             "isMuted": true,
             "baseColor": "#ffffff",
             "isExternal": true
@@ -1097,7 +1093,6 @@
             "lengthFormatted": "0:11",
             "alt": "page03_bg_video",
             "sizes": [],
-            "local": false,
             "isMuted": false,
             "isOptimized": true,
             "isExternal": true,
@@ -2174,7 +2169,6 @@
             "lengthFormatted": "0:08",
             "alt": "page04_bg_video",
             "sizes": [],
-            "local": false,
             "isMuted": false,
             "isOptimized": true,
             "isExternal": true,
@@ -3154,7 +3148,6 @@
             "lengthFormatted": "0:43",
             "alt": "page06_bg_video",
             "sizes": [],
-            "local": false,
             "isMuted": false,
             "isOptimized": true,
             "isExternal": true,
@@ -3381,7 +3374,6 @@
             "lengthFormatted": "0:22",
             "alt": "page07_bg_video",
             "sizes": [],
-            "local": false,
             "isMuted": false,
             "isOptimized": true,
             "isExternal": true,
@@ -3608,7 +3600,6 @@
             "lengthFormatted": "0:35",
             "alt": "page08_bg_video",
             "sizes": [],
-            "local": false,
             "isMuted": false,
             "isOptimized": true,
             "isExternal": true,
@@ -3835,7 +3826,6 @@
             "lengthFormatted": "0:57",
             "alt": "page09_bg_video",
             "sizes": [],
-            "local": false,
             "isMuted": false,
             "isOptimized": true,
             "isExternal": true,
@@ -4062,7 +4052,6 @@
             "lengthFormatted": "0:55",
             "alt": "page10_bg_video",
             "sizes": [],
-            "local": false,
             "isMuted": false,
             "isOptimized": true,
             "isExternal": true,
@@ -4289,7 +4278,6 @@
             "lengthFormatted": "0:37",
             "alt": "page11_bg_video",
             "sizes": [],
-            "local": false,
             "isMuted": false,
             "isOptimized": true,
             "isExternal": true,
@@ -4517,7 +4505,6 @@
             "lengthFormatted": "0:11",
             "alt": "page12_bg_video",
             "sizes": [],
-            "local": false,
             "isMuted": false,
             "isOptimized": true,
             "isExternal": true
@@ -4593,7 +4580,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page14_bg",
-            "local": false,
             "baseColor": "#255dcb",
             "isExternal": true
           },
@@ -4958,7 +4944,6 @@
             "id": 0,
             "alt": "page14_profileimage",
             "sizes": [],
-            "local": false,
             "baseColor": "#c2c2c2",
             "isExternal": true
           }

@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -29,7 +29,6 @@
             "id": 0,
             "alt": "Vehicles on road",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#6f727d",
             "isExternal": true
@@ -257,7 +256,6 @@
             "id": 0,
             "alt": "Cars parked on gray concrete near trees",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#1f2f2a",
             "isExternal": true
@@ -476,7 +474,6 @@
             "id": 0,
             "alt": "Poeple crossing the street",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d3d2d0",
             "isExternal": true
@@ -769,7 +766,6 @@
             "id": 0,
             "alt": "Palace building",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#211618",
             "isExternal": true
@@ -948,7 +944,6 @@
             "id": 0,
             "alt": "Landscape of road near city buildings",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d1c3ba",
             "isExternal": true
@@ -987,7 +982,6 @@
             "id": 0,
             "alt": "Hollywood, California",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#3d3a3b",
             "isExternal": true
@@ -1160,7 +1154,6 @@
             "id": 0,
             "alt": "Birds eye view of buildings",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c1c1c1",
             "isExternal": true
@@ -1966,7 +1959,6 @@
             "id": 0,
             "alt": "Turned-on filament bulb lights at bar counter",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#1a0d08",
             "isExternal": true
@@ -2259,7 +2251,6 @@
             "id": 0,
             "alt": "People talking near building on road",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#2b292d",
             "isExternal": true
@@ -2438,7 +2429,6 @@
             "id": 0,
             "alt": "Represantational map of Los Angeles",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#272727",
             "isExternal": true
@@ -2478,7 +2468,6 @@
             "id": 0,
             "alt": "Bartender standing beside table",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#272012",
             "isExternal": true
@@ -2640,7 +2629,6 @@
             "id": 0,
             "alt": "People sitting on stadium chairs during golden hour",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#212730",
             "isExternal": true
@@ -2927,7 +2915,6 @@
             "id": 0,
             "alt": "Free stock photo of vintage photograph",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#636446",
             "isExternal": true
@@ -3119,7 +3106,6 @@
             "lengthFormatted": "0:13",
             "alt": "AERIAL Downtown Los Angeles with Dodger Stadium in the front - stock video",
             "sizes": [],
-            "local": false,
             "isOptimized": true,
             "isMuted": true,
             "isExternal": true
@@ -3669,7 +3655,6 @@
             "id": 0,
             "alt": "Green palm tree near swimming pool during daytime",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#45493b",
             "isExternal": true
@@ -3708,7 +3693,6 @@
             "id": 0,
             "alt": "Silhouette of airplane flying during daytime",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c69e99",
             "isExternal": true
