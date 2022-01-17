@@ -101,7 +101,7 @@ const PageWithDependencies = forwardRef(function PageWithDependencies(
  * @param {Page} page Page object.
  * @param {Object} options options to pass to htmlToImage.toJpeg
  * @param {number} options.width desired width of image. Dictates height and container height
- * @return {string} jpeg dataUrl
+ * @return {Promise<string>} jpeg dataUrl
  */
 async function storyPageToDataUrl(page, { width = 400, ...options }) {
   const htmlToImage = await import(
