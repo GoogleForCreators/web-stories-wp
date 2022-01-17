@@ -82,7 +82,8 @@ class Optimization extends TestCase {
 		$configuration = $this->call_private_method( $optimization, 'get_optimizer_configuration' );
 		$config_array  = $this->get_private_property( $configuration, 'configuration' );
 
-		$transformers = Configuration::DEFAULT_TRANSFORMERS;
+		$transformers   = Configuration::DEFAULT_TRANSFORMERS;
+		$transformers[] = AmpStoryCssOptimizer::class;
 
 		$this->assertCount( 2, $config_array );
 		$this->assertArrayHasKey( 'transformers', $config_array );
@@ -107,7 +108,6 @@ class Optimization extends TestCase {
 			MinifyHtml::class,
 			OptimizeViewport::class,
 			ReorderHead::class,
-			AmpStoryCssOptimizer::class,
 		];
 
 		$this->assertCount( 2, $config_array );
