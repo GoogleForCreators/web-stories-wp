@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -43,7 +43,6 @@
             "id": 0,
             "alt": "White steel chair in front round table on white rug",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c8c7c4",
             "isExternal": true
@@ -68,7 +67,6 @@
             "id": 0,
             "alt": "House Symbol in circle.",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -288,7 +286,6 @@
             "id": 0,
             "alt": "Female Remote Worker Typing On Laptop At Home",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -443,7 +440,6 @@
             "id": 0,
             "alt": "Photo Of White Couch On Wooden Floor",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c4c2c1",
             "isExternal": true
@@ -476,7 +472,6 @@
             "id": 0,
             "alt": "White ceramic vase in creative shape of ring placed on white marble stand against beige wall as home decoration element or art object",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ccc2ba",
             "isExternal": true
@@ -603,7 +598,6 @@
             "id": 0,
             "alt": "Beige Wooden Bar Stool",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#acb9b8",
             "isExternal": true
@@ -838,7 +832,6 @@
             "id": 0,
             "alt": "White Armless Chair Near White Wall",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d2d5d6",
             "isExternal": true
@@ -860,7 +853,6 @@
             "id": 0,
             "alt": "Two White Flower Vases",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#e1e0dc",
             "isExternal": true
@@ -1005,7 +997,6 @@
             "id": 0,
             "alt": "Positive Young Woman Using Laptop In Modern Living Room With Wooden Staircase",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -1082,7 +1073,6 @@
             "id": 0,
             "alt": "Person Holding White Ceramic Mug",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d4d2cc",
             "isExternal": true
@@ -1371,7 +1361,6 @@
             "id": 0,
             "alt": "Positive Young Woman Using Laptop In Modern Living Room With Wooden Staircase",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -1521,7 +1510,6 @@
             "id": 0,
             "alt": "Wooden Bench And Stools In A Cozy Room",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#988f85",
             "isExternal": true
@@ -1806,7 +1794,6 @@
             "id": 0,
             "alt": "Brown Wooden Table",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#bfc8c9",
             "isExternal": true
@@ -1957,7 +1944,6 @@
             "id": 0,
             "alt": "Decorative golden leaves in unique formed white vase placed on marble table against beige background",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#cac2bb",
             "isExternal": true
@@ -2171,7 +2157,6 @@
             "id": 0,
             "alt": "White steel chair in front round table on white rug",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c9c9c7",
             "isExternal": true
@@ -2534,7 +2519,6 @@
             "id": 0,
             "alt": "A Romantic Setting In The Bathroom",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#7c6f60",
             "isExternal": true
@@ -2575,7 +2559,6 @@
             "id": 0,
             "alt": "Green cactus plant near wall",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c4beb8",
             "isExternal": true

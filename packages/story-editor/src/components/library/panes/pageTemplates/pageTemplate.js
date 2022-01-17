@@ -17,35 +17,48 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
-import {
-  useState,
-  useCallback,
-  forwardRef,
-  useFocusOut,
-} from '@web-stories-wp/react';
-import styled from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
-  themeHelpers,
   Icons,
+  themeHelpers,
 } from '@web-stories-wp/design-system';
-import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
+import { __ } from '@web-stories-wp/i18n';
+import {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useFocusOut,
+  useState,
+} from '@web-stories-wp/react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { generatePatternStyles } from '@web-stories-wp/patterns';
+import { fetchRemoteBlob, blobToFile } from '@web-stories-wp/media';
+import { trackError } from '@web-stories-wp/tracking';
+
 /**
  * Internal dependencies
  */
+import { useAPI } from '../../../../app/api';
+import { useConfig } from '../../../../app/config';
+import { usePageDataUrls } from '../../../../app/pageDataUrls';
+import { useUploader } from '../../../../app/uploader';
 import { PageSizePropType } from '../../../../types';
-import { PreviewPage, PreviewErrorBoundary } from '../../../previewPage';
 import { focusStyle } from '../../../panels/shared';
+import DisplayElement from '../../../canvas/displayElement';
+
+const TemplateImage = styled.img`
+  width: 100%;
+  height: auto;
+`;
 
 const PageTemplateWrapper = styled.div`
   position: absolute;
   top: 0;
-  height: ${({ pageSize }) => pageSize.containerHeight}px;
+  height: ${({ pageSize }) => pageSize.height}px;
   width: ${({ pageSize }) => pageSize.width}px;
   display: flex;
   flex-direction: column;
@@ -64,12 +77,14 @@ PageTemplateWrapper.propTypes = {
 };
 
 const PreviewPageWrapper = styled.div`
-  height: ${({ pageSize }) => pageSize.containerHeight}px;
+  position: relative;
+  height: ${({ pageSize }) => pageSize.height}px;
   width: ${({ pageSize }) => pageSize.width}px;
   z-index: -1;
   background-color: ${({ theme }) => theme.colors.interactiveBg.secondary};
   border-radius: ${({ theme }) => theme.borders.radius.small};
   overflow: hidden;
+  ${({ background }) => generatePatternStyles(background)}
 `;
 PreviewPageWrapper.propTypes = {
   pageSize: PageSizePropType.isRequired,
@@ -107,6 +122,21 @@ function PageTemplate(
   { page, pageSize, translateY, translateX, isActive, handleDelete, ...rest },
   ref
 ) {
+  const queuePageImageGeneration = usePageDataUrls(
+    ({ actions }) => actions.queuePageImageGeneration
+  );
+  const pageDataUrl = usePageDataUrls(
+    ({ state: { dataUrls } }) => dataUrls[page.id]
+  );
+  const {
+    capabilities: { hasUploadMediaAction },
+  } = useConfig();
+  const {
+    actions: { updatePageTemplate },
+  } = useAPI();
+  const {
+    actions: { uploadFile },
+  } = useUploader();
   const [isHover, setIsHover] = useState(false);
   const isActivePage = isHover || isActive;
 
@@ -119,6 +149,54 @@ function PageTemplate(
   const handleSetHoverFalse = useCallback(() => {
     setIsHover(false);
   }, []);
+
+  const imageUrl = page.image?.url || pageDataUrl;
+  const shouldPostBlob =
+    hasUploadMediaAction && pageDataUrl && !page.image?.url;
+  useEffect(() => {
+    if (!shouldPostBlob) {
+      return;
+    }
+
+    (async () => {
+      try {
+        const blob = await fetchRemoteBlob(pageDataUrl);
+        const file = blobToFile(
+          blob,
+          `web-stories-page-template-${page.templateId}.jpg`,
+          'image/jpeg'
+        );
+        const resource = await uploadFile(file, {
+          post: page.templateId,
+          web_stories_media_source: 'page-template',
+        });
+
+        updatePageTemplate(page.templateId, {
+          featured_media: resource.id,
+        });
+      } catch (err) {
+        // Catch upload errors, e.g. if the file is too large,
+        // so that the page template can still be added, albeit without an image.
+        trackError('upload_generated_page_template_image', err?.message);
+      }
+    })();
+  }, [
+    pageDataUrl,
+    uploadFile,
+    updatePageTemplate,
+    page.templateId,
+    shouldPostBlob,
+  ]);
+
+  useEffect(() => {
+    // We don't want to go through the work of generating a blob if the user
+    // can't upload it because their machine will have to regenerate it everytime
+    // the page refreshes.
+    if (imageUrl || !hasUploadMediaAction) {
+      return;
+    }
+    queuePageImageGeneration(page);
+  }, [imageUrl, queuePageImageGeneration, page, hasUploadMediaAction]);
 
   return (
     <PageTemplateWrapper
@@ -136,18 +214,20 @@ function PageTemplate(
       isHighlighted={page.id === highlightedTemplate}
       {...rest}
     >
-      <PreviewPageWrapper pageSize={pageSize}>
-        <PreviewErrorBoundary>
-          <PreviewPage
-            pageSize={pageSize}
-            page={page}
-            animationState={
-              isActivePage
-                ? STORY_ANIMATION_STATE.PLAYING
-                : STORY_ANIMATION_STATE.RESET
-            }
+      <PreviewPageWrapper pageSize={pageSize} background={page.backgroundColor}>
+        {imageUrl ? (
+          <TemplateImage
+            alt={page.image?.alt || __('Saved Page Template', 'web-stories')}
+            src={imageUrl}
+            height={page.image?.height}
+            width={page.image?.height}
+            draggable={false}
           />
-        </PreviewErrorBoundary>
+        ) : (
+          page.elements.map((element) => (
+            <DisplayElement key={element.id} previewMode element={element} />
+          ))
+        )}
         {isActivePage && handleDelete && (
           <ButtonWrapper>
             <Button

@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -36,7 +36,6 @@
             "id": 0,
             "alt": "Rover near road and buildings",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -363,7 +362,6 @@
             "id": 0,
             "alt": "Man wearing green polo shirt",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c4b5ac",
             "isExternal": true
@@ -402,7 +400,6 @@
             "id": 0,
             "alt": "Men's gray crew-neck long-sleeve shirt",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#605553",
             "isExternal": true
@@ -441,7 +438,6 @@
             "id": 0,
             "alt": "Woman wearing black shirt standing in front of red wall",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#da9688",
             "isExternal": true
@@ -673,7 +669,6 @@
             "id": 0,
             "alt": "People inside building",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c3c3c3",
             "isExternal": true
@@ -844,7 +839,6 @@
             "id": 0,
             "alt": "Woman wearing black shirt standing in front of red wall",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#da9688",
             "isExternal": true
@@ -1235,7 +1229,6 @@
             "id": 0,
             "alt": "Low angle photography of a building at daytime",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#22819d",
             "isExternal": true
@@ -1274,7 +1267,6 @@
             "id": 0,
             "alt": "White concrete building during daytime",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#78acce",
             "isExternal": true
@@ -1313,7 +1305,6 @@
             "id": 0,
             "alt": "White concrete building with chairs",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#bdc1c4",
             "isExternal": true
@@ -1451,7 +1442,6 @@
             "id": 0,
             "alt": "Aerial photography of cityscape during daytime",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#afb7b7",
             "isExternal": true
@@ -1795,7 +1785,6 @@
             "id": 0,
             "alt": "Aerial photography of city buildings",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#342c27",
             "isExternal": true
@@ -1965,7 +1954,6 @@
             "id": 0,
             "alt": "Man wearing green polo shirt",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c4b5ac",
             "isExternal": true
@@ -2432,7 +2420,6 @@
             "id": 0,
             "alt": "Lighted brown and black uplight chandelier",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#34190d",
             "isExternal": true
@@ -2471,7 +2458,6 @@
             "id": 0,
             "alt": "Woman holding candelabra statue",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#492513",
             "isExternal": true
@@ -2510,7 +2496,6 @@
             "id": 0,
             "alt": "Person holding candlelabara statue",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#cb723d",
             "isExternal": true
@@ -2723,7 +2708,6 @@
             "id": 0,
             "alt": "Aerial photography of city buildings",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#322822",
             "isExternal": true
@@ -2916,7 +2900,6 @@
             "id": 0,
             "alt": "Photography of bike near store facade",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#533b30",
             "isExternal": true
@@ -3086,7 +3069,6 @@
             "id": 0,
             "alt": "Men's gray crew-neck long-sleeve shirt",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#605553",
             "isExternal": true
@@ -3553,7 +3535,6 @@
             "id": 0,
             "alt": "Woman in white off shoulder dress standing near glass wall",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c7c9c0",
             "isExternal": true
@@ -3592,7 +3573,6 @@
             "id": 0,
             "alt": "Assorted title book lot on table",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#806953",
             "isExternal": true
@@ -3631,7 +3611,6 @@
             "id": 0,
             "alt": "Woman inside library looking at books",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#755c47",
             "isExternal": true
@@ -3694,7 +3673,6 @@
             "id": 0,
             "alt": "Photography of bike near store facade",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#493329",
             "isExternal": true
@@ -4421,7 +4399,6 @@
             "id": 0,
             "alt": "Red and white concrete building",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c4b7ac",
             "isExternal": true
@@ -4460,7 +4437,6 @@
             "id": 0,
             "alt": "People inside building",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#302e2d",
             "isExternal": true

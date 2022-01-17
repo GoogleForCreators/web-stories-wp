@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -37,7 +37,6 @@
             "id": 0,
             "alt": "Woman wearing off-shoulder dress",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#211715",
             "isExternal": true
@@ -74,7 +73,6 @@
             "id": 0,
             "alt": "Photograph of Man in White Shirt With Round Black Analog Watch",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d3c5c4",
             "isExternal": true
@@ -319,7 +317,6 @@
             "id": 0,
             "alt": "Man wearing brown blazer",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#e8e1df",
             "isExternal": true
@@ -494,7 +491,6 @@
             "id": 0,
             "alt": "Woman in yellow off-shoulder dress sitting on bench",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c5b7a6",
             "isExternal": true
@@ -821,7 +817,6 @@
             "id": 0,
             "alt": "Man in black shirt kissing woman in white shirt",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d4c0b1",
             "isExternal": true
@@ -1050,7 +1045,6 @@
             "id": 0,
             "alt": "Woman in black leather jacket riding brown horse during daytime",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#3a241b",
             "isExternal": true
@@ -2207,7 +2201,6 @@
             "id": 0,
             "alt": "Man in White Crew Neck Shirt Holding His Face",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#271514",
             "isExternal": true
@@ -2246,7 +2239,6 @@
             "id": 0,
             "alt": "Businessman in his Office Looking at the Camera",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#191614",
             "isExternal": true
@@ -2592,7 +2584,6 @@
             "id": 0,
             "alt": "Man lying on brown dried grass",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#412a1e",
             "isExternal": true
@@ -2922,7 +2913,6 @@
             "id": 0,
             "alt": "Business People Talking",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#1b1919",
             "isExternal": true
@@ -3276,7 +3266,6 @@
             "id": 0,
             "alt": "Woman in red tube top in swimming in water",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#374049",
             "isExternal": true
@@ -3383,7 +3372,6 @@
             "id": 0,
             "alt": "Man in brown overcoat",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c0b39f",
             "isExternal": true
@@ -3490,7 +3478,6 @@
             "id": 0,
             "alt": "Man wearing black notched lapel blazer",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#716864",
             "isExternal": true
@@ -3597,7 +3584,6 @@
             "id": 0,
             "alt": "Woman in black tank top and blue denim jeans sitting on white bed",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#8e8681",
             "isExternal": true
@@ -3758,7 +3744,6 @@
             "id": 0,
             "alt": "White clouds hovering above grey castle",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#dfe2dd",
             "isExternal": true
@@ -4075,7 +4060,6 @@
             "id": 0,
             "alt": "Man standing on white snow covered ground beside mountain",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#e3e5e7",
             "isExternal": true
@@ -4182,7 +4166,6 @@
             "id": 0,
             "alt": "Man holding basketball",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#b8b8b8",
             "isExternal": true

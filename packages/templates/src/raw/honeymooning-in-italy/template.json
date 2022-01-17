@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -198,7 +198,6 @@
             "id": 0,
             "alt": "Man and woman sitting on concrete surface",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -350,7 +349,6 @@
             "id": 0,
             "alt": "Brown concrete building under evening sky",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "provider": "local",
             "baseColor": "#101111",
@@ -677,7 +675,6 @@
             "id": 0,
             "alt": "Brown concrete building under blue sky during daytime",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#a8b0b6",
             "isExternal": true
@@ -902,7 +899,6 @@
             "id": 0,
             "alt": "Brown Painted Buildings Across Body of Water",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#43454b",
             "isExternal": true
@@ -1171,7 +1167,6 @@
             "id": 0,
             "alt": "Black pendant lamp turned on near glass window",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -1540,7 +1535,6 @@
             "id": 0,
             "alt": "Clean Coffee Shop",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#232d2f",
             "isExternal": true
@@ -1603,7 +1597,6 @@
             "id": 0,
             "alt": "Representation of a map",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -1760,7 +1753,6 @@
             "id": 0,
             "alt": "Clean Coffee Shop",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "provider": "local",
             "baseColor": "#fce3e0",
@@ -1928,7 +1920,6 @@
             "id": 0,
             "alt": "Brown concrete building under evening sky",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "provider": "local",
             "baseColor": "#2fa5d2",
@@ -1971,7 +1962,6 @@
             "id": 0,
             "alt": "Black pendant lamp turned on near glass window",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "provider": "local",
             "isExternal": true
@@ -2128,7 +2118,6 @@
             "id": 0,
             "alt": "From above of appetizing piece of cake decorated chocolate powder and mint leaves served near ceramic creamer and forks with light pink chrysanthemum on top placed on wooden board",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -2462,7 +2451,6 @@
             "id": 0,
             "alt": "Aerial view of city buildings near body of water",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -2503,7 +2491,6 @@
             "id": 0,
             "alt": "Trevi Fountain",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
