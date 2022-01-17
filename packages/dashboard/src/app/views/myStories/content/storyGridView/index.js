@@ -140,7 +140,8 @@ const StoryGridView = ({
     return {
       ...storyMenu,
       handleMenuToggle,
-      menuItemActions: { // @todo Handle manuallySetFocusOut for new menuItems changes.
+      menuItemActions: {
+        // @todo Handle manuallySetFocusOut for new menuItems changes.
         ...storyMenu.menuItemActions,
         [STORY_CONTEXT_MENU_ACTIONS.DELETE]: (story) => {
           manuallySetFocusOut();
@@ -161,8 +162,6 @@ const StoryGridView = ({
       },
     };
   }, [handleMenuToggle, manuallySetFocusOut, storyMenu]);
-
-  console.log( modifiedStoryMenu );
 
   const memoizedStoryGrid = useMemo(
     () =>
