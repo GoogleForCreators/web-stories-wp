@@ -185,7 +185,7 @@ function TextSetsPane({ paneRef }) {
   }, [setShowInUse]);
 
   useEffect(() => {
-    if (selectedCat || showInUse || trackChange.current) {
+    if (trackChange.current) {
       trackEvent('search', {
         search_type: 'textsets',
         search_term: '',
