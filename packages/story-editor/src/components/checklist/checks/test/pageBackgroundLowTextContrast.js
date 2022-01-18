@@ -69,7 +69,28 @@ describe('pageBackgroundTextLowContrast', () => {
 
   it('should return an array of ids if the default font (no spans, no colors added) does not have high enough contrast with the page', async () => {
     const check = await pageBackgroundTextLowContrast(page);
-    await expect(check).toContain(textEl.id);
+    await expect(check[0].id).toBe(textEl.id);
+  });
+  it('should return an array containing isBackground if the default font does not have high enough contrast with the background element', async () => {
+    const check = await pageBackgroundTextLowContrast(page);
+    await expect(check[0].isBackground).toBeTrue();
+  });
+  it('should return an array containing isBackground = false if the contrast issue is cause by an overlapped element', async () => {
+    const overlappedElement = {
+      ...bgEl,
+      isBackground: false,
+    };
+
+    const smallGreyTextEl = {
+      ...textEl,
+      content: '<span style="color:#777777">I woke up like this</span>',
+    };
+
+    const check = await pageBackgroundTextLowContrast({
+      ...page,
+      elements: [overlappedElement, smallGreyTextEl],
+    });
+    await expect(check[0].isBackground).toBeFalse();
   });
   it('should return an empty array if the text size is large enough', async () => {
     const largeGreyTextEl = {
@@ -101,7 +122,7 @@ describe('pageBackgroundTextLowContrast', () => {
       ...whiteBgPage,
       elements: [bgEl, smallGreyTextEl],
     });
-    expect(fail).toContain(textEl.id);
+    expect(fail[0].id).toContain(textEl.id);
   });
 
   it('should return an empty array if the contrast is great enough', async () => {
