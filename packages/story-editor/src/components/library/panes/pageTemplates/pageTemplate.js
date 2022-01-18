@@ -132,8 +132,9 @@ function PageTemplate(
     capabilities: { hasUploadMediaAction },
   } = useConfig();
   const {
-    actions: { updatePageTemplate },
+    actions: { updatePageTemplate, deletePageTemplate },
   } = useAPI();
+  const canDeletePageTemplate = Boolean(deletePageTemplate);
   const {
     actions: { uploadFile },
   } = useUploader();
@@ -228,7 +229,7 @@ function PageTemplate(
             <DisplayElement key={element.id} previewMode element={element} />
           ))
         )}
-        {isActivePage && handleDelete && (
+        {isActivePage && handleDelete && canDeletePageTemplate && (
           <ButtonWrapper>
             <Button
               variant={BUTTON_VARIANTS.CIRCLE}
