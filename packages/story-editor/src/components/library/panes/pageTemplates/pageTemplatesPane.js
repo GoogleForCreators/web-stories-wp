@@ -59,7 +59,6 @@ export const PaneInner = styled.div`
 
 const DropDownWrapper = styled.div`
   text-align: left;
-  height: 36px;
   margin: 28px 16px 17px;
 `;
 
@@ -220,16 +219,16 @@ function PageTemplatesPane(props) {
               />
             </ButtonWrapper>
           )}
-          {options.length > 1 && (
-            <DropDownWrapper>
+          <DropDownWrapper>
+            {options.length > 1 && (
               <Select
                 options={options}
                 selectedValue={showDefaultTemplates ? DEFAULT : SAVED}
                 onMenuItemClick={handleSelect}
                 aria-label={__('Select templates type', 'web-stories')}
               />
-            </DropDownWrapper>
-          )}
+            )}
+          </DropDownWrapper>
         </>
         {showDefaultTemplates ? (
           <DefaultTemplates pageSize={pageSize} />
