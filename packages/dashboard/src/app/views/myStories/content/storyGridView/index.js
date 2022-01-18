@@ -138,16 +138,17 @@ const StoryGridView = ({
 
   const getModifiedMenuItem = useCallback(
     (value) => {
-      const menuItem = storyMenu.menuItems.find(
+      const { action, ...rest } = storyMenu.menuItems.find(
         (item) => item?.value === value
       );
 
-      Object.assign(menuItem.action, (story) => {
-        manuallySetFocusOut();
-        menuItem.action(story);
-      });
-
-      return menuItem;
+      return {
+        action: (story) => {
+          manuallySetFocusOut();
+          action(story);
+        },
+        ...rest,
+      };
     },
     [manuallySetFocusOut, storyMenu.menuItems]
   );
