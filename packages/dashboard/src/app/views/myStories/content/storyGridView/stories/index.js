@@ -36,6 +36,11 @@ export default {
   args: {
     bottomActionLabel: 'MY CTA',
   },
+  parameters: {
+    controls: {
+      include: ['bottomActionLabel'],
+    },
+  },
 };
 
 export const _default = (args) => {

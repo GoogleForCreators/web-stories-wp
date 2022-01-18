@@ -37,7 +37,7 @@ export default {
   },
   parameters: {
     controls: {
-      exclude: ['searchOptions', 'children', 'onClear'],
+      exclude: ['searchOptions', 'handleSearchChange', 'children', 'onClear'],
     },
   },
 };
