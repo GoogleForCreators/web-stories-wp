@@ -180,7 +180,11 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
         // getPagesWithFailedContrast returns an array of pages, since we only care
         // about currentPage, we can grab the single page result.
         const result = failedPages[0]?.result;
-        setFailedContrast(Boolean(result));
+        // We only want to show the warning if the text is on the background element
+        const isBackgroundElement = result?.some(
+          ({ isBackground }) => isBackground
+        );
+        setFailedContrast(Boolean(isBackgroundElement));
       })
       .catch(() => {});
   }, [currentPage, pageSize]);

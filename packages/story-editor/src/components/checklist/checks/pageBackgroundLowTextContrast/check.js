@@ -362,7 +362,7 @@ export async function getPagesWithFailedContrast(storyPages, pageSize) {
   const awaitedPageResult = await Promise.all(promises);
   // if any element fails, return the page
   return awaitedPageResult
-    .filter((results) => results.result.some((elementId) => elementId))
+    .filter((results) => results.result.some(({ id }) => id))
     .map((page) => page);
 }
 
@@ -405,6 +405,7 @@ export async function pageBackgroundTextLowContrast(page) {
               textStyleColors,
               fontSize: element.fontSize,
               id: element.id,
+              isBackgroundElement: backgroundElement.isBackground,
             }
           );
         };
@@ -422,8 +423,14 @@ export async function pageBackgroundTextLowContrast(page) {
   // resolve promises
   const bgColorComparisons = await Promise.all(backgroundColorPromises);
   const results = bgColorComparisons.map((compareObj) => {
-    // add the offending elementId to result
-    return textBackgroundHasLowContrast(compareObj) && compareObj.id;
+    // add the offending elementId and isBackground to result
+    // isBackground tells us whether the actual background element is part of the contrast issue
+    return (
+      textBackgroundHasLowContrast(compareObj) && {
+        id: compareObj.id,
+        isBackground: compareObj.isBackgroundElement,
+      }
+    );
   });
-  return results.filter((elementId) => elementId);
+  return results.filter(({ id }) => id);
 }

@@ -87,8 +87,8 @@ function StylePanel(props) {
   const selectedElementIds = selectedElements.map(
     (selectedElement) => selectedElement.id
   );
-  const showContrastWarning = failedElementIds?.some((elementId) =>
-    selectedElementIds.includes(elementId)
+  const showContrastWarning = failedElementIds?.some(({ id }) =>
+    selectedElementIds.includes(id)
   );
 
   useEffect(() => {
