@@ -58,3 +58,8 @@ _default.args = {
   heading: 'Dashboard',
   searchPlaceholder: 'Find Stories',
 };
+_default.parameters = {
+  controls: {
+    exclude: ['searchOptions', 'children', 'onClear'],
+  },
+};
