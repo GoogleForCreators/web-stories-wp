@@ -165,11 +165,7 @@ function VideoTrimmer() {
       <RailWrapper>
         <Rail
           width={railWidth}
-          style={{
-            backgroundImage: railBackgroundImage
-              ? `url(${railBackgroundImage})`
-              : undefined,
-          }}
+          style={{ backgroundImage: `url(${railBackgroundImage})` }}
         >
           <Scrim isLeftAligned width={(startOffset / maxOffset) * railWidth} />
           <Scrim width={((maxOffset - endOffset) / maxOffset) * railWidth} />
