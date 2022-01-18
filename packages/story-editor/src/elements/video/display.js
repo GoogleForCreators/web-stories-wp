@@ -112,7 +112,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
           poster={poster || resource.poster}
           style={style}
           {...videoProps}
-          preload="metadata"
+          preload="all"
           loop={loop}
           muted={muted}
           ref={ref}
