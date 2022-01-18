@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { boolean } from '@storybook/addon-knobs';
-
-/**
  * Internal dependencies
  */
 import NavProvider, { useNavContext } from '../../navProvider';
@@ -27,19 +22,20 @@ import NavMenuButton from '../menuButton';
 
 export default {
   title: 'Dashboard/Components/NavMenuButton',
+  args: {
+    showOnlyOnSmallViewport: true,
+  },
 };
 
 const Status = () => {
   const { state } = useNavContext();
-  return <span>{String(state.sideBarVisible)}</span>;
+  return <span>{`Sidebar Visible: ${String(state.sideBarVisible)}`}</span>;
 };
 
-export const _default = () => {
+export const _default = (args) => {
   return (
     <NavProvider>
-      <NavMenuButton
-        showOnlyOnSmallViewport={boolean('showOnlyOnSmallViewport')}
-      />
+      <NavMenuButton {...args} />
       <br />
       <Status />
     </NavProvider>

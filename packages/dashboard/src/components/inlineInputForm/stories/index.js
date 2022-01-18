@@ -18,8 +18,6 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-import { text } from '@storybook/addon-knobs';
-
 /**
  * Internal dependencies
  */
@@ -28,15 +26,23 @@ import InlineInputForm from '..';
 export default {
   title: 'Dashboard/Components/InlineInputForm',
   component: InlineInputForm,
+  args: {
+    error: 'error',
+  },
+  parameters: {
+    controls: {
+      include: ['error'],
+    },
+  },
 };
 
-export const _default = () => (
+export const _default = (args) => (
   <InlineInputForm
     onEditComplete={(newValue) => action('onEditComplete')(newValue)}
     onEditCancel={action('onEditCancel')}
     value={'some input value'}
     id={'898989'}
     label="my hidden input label"
-    error={text('error', '')}
+    {...args}
   />
 );

@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { text } from '@storybook/addon-knobs';
-
-/**
  * Internal dependencies
  */
 import {
@@ -34,6 +29,11 @@ import {
 export default {
   title: 'Dashboard/Components/Table',
   component: Table,
+  args: {
+    tableHeaderPrimary: 'Title',
+    tableHeaderSecondary: 'Author',
+    tableHeaderTertiary: 'Date',
+  },
 };
 
 const tableData = [
@@ -58,20 +58,14 @@ const tableData = [
   },
 ];
 
-export const _default = () => {
+export const _default = (args) => {
   return (
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHeaderCell>
-            {text('tableHeaderPrimary', 'Title')}
-          </TableHeaderCell>
-          <TableHeaderCell>
-            {text('tableHeaderSecondary', 'Author')}
-          </TableHeaderCell>
-          <TableHeaderCell>
-            {text('tableHeaderTertiary', 'Date')}
-          </TableHeaderCell>
+          <TableHeaderCell>{args.tableHeaderPrimary}</TableHeaderCell>
+          <TableHeaderCell>{args.tableHeaderSecondary}</TableHeaderCell>
+          <TableHeaderCell>{args.tableHeaderTertiary}</TableHeaderCell>
         </TableRow>
       </TableHeader>
 

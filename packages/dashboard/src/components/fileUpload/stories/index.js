@@ -18,7 +18,6 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { text, boolean } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
 /**
@@ -32,23 +31,29 @@ const Container = styled.div`
 export default {
   title: 'Dashboard/Components/FileUpload',
   component: FileUpload,
+  args: {
+    label: 'Upload',
+    isLoading: false,
+    isMultiple: true,
+    instructionalText:
+      'Drag a jpg, png, or static gif in this box. Or click “Upload logo” below.',
+  },
+  parameters: {
+    controls: {
+      exclude: ['id', 'ariaLabel', 'onSubmit', 'acceptableFormats'],
+    },
+  },
 };
 
-export const _default = () => {
+export const _default = (args) => {
   return (
     <Container>
       <FileUpload
         acceptableFormats={['.jpg', '.jpeg', '.png', '.gif']}
         onSubmit={action('files uploaded')}
         id={'898989'}
-        label={text('label', 'Upload')}
-        isLoading={boolean('isLoading', false)}
-        isMultiple={boolean('isMultiple', true)}
         ariaLabel={'Click to upload a file'}
-        instructionalText={text(
-          'instructionalText',
-          'Drag a jpg, png, or static gif in this box. Or click “Upload logo” below.'
-        )}
+        {...args}
       />
     </Container>
   );
