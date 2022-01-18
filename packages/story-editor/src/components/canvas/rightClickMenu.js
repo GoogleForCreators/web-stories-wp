@@ -171,7 +171,12 @@ const RightClickMenu = () => {
                   <ButtonWrapper>
                     {menuButtonRenderer({ label, shortcut, ...buttonProps })}
                     {Boolean(subMenuItems?.length) && (
-                      <SubMenuWrapper aria-expanded isOpen isSubMenu>
+                      <SubMenuWrapper
+                        isRTL={isRTL}
+                        aria-expanded
+                        isOpen
+                        isSubMenu
+                      >
                         {subMenuItems.map((item) => menuButtonRenderer(item))}
                       </SubMenuWrapper>
                     )}
