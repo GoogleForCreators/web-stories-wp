@@ -29,6 +29,17 @@ import { NavProvider, LeftRail } from '../../../../components';
 export default {
   title: 'Dashboard/Views/Shared/PageHeading',
   component: PageHeading,
+  args: {
+    showSearch: false,
+    searchValue: 'value',
+    heading: 'Dashboard',
+    searchPlaceholder: 'Find Stories',
+  },
+  parameters: {
+    controls: {
+      exclude: ['searchOptions', 'children', 'onClear'],
+    },
+  },
 };
 
 const InnerContent = styled.div`
@@ -50,16 +61,4 @@ export const _default = (args) => {
       </PageHeading>
     </NavProvider>
   );
-};
-
-_default.args = {
-  showSearch: false,
-  searchValue: 'value',
-  heading: 'Dashboard',
-  searchPlaceholder: 'Find Stories',
-};
-_default.parameters = {
-  controls: {
-    exclude: ['searchOptions', 'children', 'onClear'],
-  },
 };

@@ -33,13 +33,15 @@ import StoryGridView from '..';
 export default {
   title: 'Dashboard/Views/MyStories/Content/GridView',
   component: StoryGridView,
+  args: {
+    bottomActionLabel: 'MY CTA',
+  },
 };
 
 export const _default = (args) => {
   return (
     <StoryGridView
       stories={formattedStoriesArray}
-      bottomActionLabel={args.bottomActionLabel}
       storyMenu={{
         handleMenuToggle: action('handleMenuToggle'),
         contextMenuId: -1,
@@ -47,9 +49,7 @@ export const _default = (args) => {
         handleMenuItemSelected: action('handleMenuItemSelected'),
       }}
       pageSize={STORYBOOK_PAGE_SIZE}
+      {...args}
     />
   );
-};
-_default.args = {
-  bottomActionLabel: 'MY CTA',
 };

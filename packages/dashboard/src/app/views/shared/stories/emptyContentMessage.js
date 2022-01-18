@@ -21,11 +21,11 @@ import { EmptyContentMessage } from '..';
 
 export default {
   title: 'Dashboard/Views/Shared/EmptyContentMessage',
+  args: {
+    message: 'default content to display',
+  },
 };
 
 export const _default = (args) => {
   return <EmptyContentMessage>{args.message}</EmptyContentMessage>;
-};
-_default.args = {
-  message: 'default content to display',
 };

@@ -21,16 +21,15 @@ import App from '../app';
 
 export default {
   title: 'WordPress/Plugin Activation',
+  args: {
+    cdnURL: 'https://wp.stories.google/static/main/',
+    demoStoryURL: 'https://example:com',
+    dashboardURL: 'https://example:com',
+    isRTL: false,
+  },
 };
 
 // TODO: Support RTL using something like @pxblue/storybook-rtl-addon;
 export const _default = (args) => {
   return <App config={args} {...args} />;
-};
-
-_default.args = {
-  cdnURL: 'https://wp.stories.google/static/main/',
-  demoStoryURL: 'https://example:com',
-  dashboardURL: 'https://example:com',
-  isRTL: false,
 };

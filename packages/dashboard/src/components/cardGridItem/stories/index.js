@@ -18,7 +18,6 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
@@ -29,6 +28,9 @@ import { CardGrid, CardGridItem } from '../..';
 export default {
   title: 'Dashboard/Components/CardGridItem',
   component: CardGridItem,
+  args: {
+    message: 'Sample grid item - anything can go here',
+  },
 };
 
 const Card = styled.div`
@@ -39,13 +41,11 @@ const Card = styled.div`
   background-color: orange;
 `;
 
-export const _default = () => {
+export const _default = (args) => {
   return (
     <CardGrid pageSize={STORYBOOK_PAGE_SIZE}>
       <CardGridItem>
-        <Card>
-          {text('Sample grid item - anything can go here', 'Sample Story')}
-        </Card>
+        <Card>{args.message}</Card>
       </CardGridItem>
     </CardGrid>
   );

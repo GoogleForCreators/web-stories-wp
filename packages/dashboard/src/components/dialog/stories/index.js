@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-import { boolean, text } from '@storybook/addon-knobs';
 import {
   Button,
   BUTTON_SIZES,
@@ -35,17 +34,25 @@ import Dialog from '../dialog';
 export default {
   title: 'Dashboard/Components/Dialog/Base',
   component: Dialog,
+  args: {
+    isOpen: true,
+    title: 'my dialog title',
+    secondaryText: 'cancel action',
+    primaryText: 'confirm action',
+  },
+  parameters: {
+    controls: {
+      include: ['isOpen', 'title', 'secondaryText', 'primaryText'],
+    },
+  },
 };
 
-export const _default = () => {
+export const _default = (args) => {
   return (
     <Dialog
-      isOpen={boolean('isOpen', true)}
       onClose={action('closed')}
-      title={text('title', 'my dialog title')}
       onPrimary={action('confirmed')}
-      secondaryText={text('secondaryText', 'cancel action')}
-      primaryText={text('primaryText', 'confirm action')}
+      {...args}
     >
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {
@@ -56,12 +63,10 @@ export const _default = () => {
   );
 };
 
-export const WithCustomAction = () => {
+export const WithCustomAction = (args) => {
   return (
     <Dialog
-      isOpen={boolean('isOpen', true)}
       onClose={action('closed')}
-      title={text('title', 'my dialog title')}
       actions={
         <>
           <Button
@@ -74,13 +79,14 @@ export const WithCustomAction = () => {
           <Button
             type={BUTTON_TYPES.PRIMARY}
             size={BUTTON_SIZES.SMALL}
-            href={text('Confirmation as Link', 'https://example.com')}
+            href={args.href}
             onClick={action('confirmed')}
           >
             {'Add to new post'}
           </Button>
         </>
       }
+      {...args}
     >
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {
@@ -89,4 +95,14 @@ export const WithCustomAction = () => {
       </Text>
     </Dialog>
   );
+};
+WithCustomAction.args = {
+  isOpen: true,
+  title: 'my dialog title',
+  href: 'https://example.com',
+};
+WithCustomAction.parameters = {
+  controls: {
+    include: ['isOpen', 'title', 'href'],
+  },
 };

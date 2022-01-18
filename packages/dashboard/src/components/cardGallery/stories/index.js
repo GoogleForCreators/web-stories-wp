@@ -18,7 +18,6 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { boolean, text } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
@@ -49,19 +48,24 @@ const demoPosterGroup = [
 export default {
   title: 'Dashboard/Components/CardGallery',
   component: CardGallery,
+  args: {
+    isRTL: false,
+    galleryLabel: 'my aria label text',
+  },
+  parameters: {
+    controls: {
+      exclude: ['galleryPosters'],
+    },
+  },
 };
 
 const CardGalleryContainer = styled.div`
   padding: 20px;
 `;
-export const _default = () => {
+export const _default = (args) => {
   return (
     <CardGalleryContainer>
-      <CardGallery
-        galleryPosters={demoPosterGroup}
-        isRTL={boolean('isRTL')}
-        galleryLabel={text('galleryLabel', 'my aria label text')}
-      />
+      <CardGallery galleryPosters={demoPosterGroup} {...args} />
     </CardGalleryContainer>
   );
 };
