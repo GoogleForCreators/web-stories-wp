@@ -163,8 +163,8 @@ function PageTemplatesPane(props) {
     setNextTemplatesToFetch,
   ]);
 
-  const handleToggle = (event, menuItem) => {
-    const value = menuItem === 'default';
+  const handleSelect = (event, menuItem) => {
+    const value = menuItem === DEFAULT;
     setShowDefaultTemplates(value);
     localStore.setItemByKey(LOCAL_STORAGE_KEY, value);
   };
@@ -225,7 +225,7 @@ function PageTemplatesPane(props) {
               <Select
                 options={options}
                 selectedValue={showDefaultTemplates ? DEFAULT : SAVED}
-                onMenuItemClick={handleToggle}
+                onMenuItemClick={handleSelect}
                 aria-label={__('Select templates type', 'web-stories')}
               />
             </DropDownWrapper>

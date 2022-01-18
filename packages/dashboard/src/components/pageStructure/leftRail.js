@@ -186,6 +186,12 @@ function LeftRail() {
         <Content>
           <NavList>
             {PRIMARY_PATHS.map(({ Icon, ...path }) => {
+              const isTemplatesDisabled =
+                path.value === APP_ROUTES.TEMPLATES_GALLERY &&
+                !canViewDefaultTemplates;
+              if (isTemplatesDisabled) {
+                return null;
+              }
               const isNotificationBubbleEnabled =
                 path.value === APP_ROUTES.TEMPLATES_GALLERY &&
                 state.currentPath !== APP_ROUTES.TEMPLATES_GALLERY;
@@ -199,12 +205,6 @@ function LeftRail() {
                     )
                   : label;
 
-              const isTemplatesEnabled =
-                path.value === APP_ROUTES.TEMPLATES_GALLERY &&
-                !canViewDefaultTemplates;
-              if (isTemplatesEnabled) {
-                return null;
-              }
               return (
                 <NavListItem key={path.value}>
                   <NavLink
