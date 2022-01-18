@@ -17,4 +17,4 @@
 /**
  * Internal dependencies
  */
-export { default as arrowCircle } from './arrow_circle.svg';
+export { default as ArrowCircle } from './arrow_circle.svg';
