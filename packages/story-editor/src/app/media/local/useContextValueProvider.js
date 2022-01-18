@@ -159,6 +159,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
 
   const {
     allowedMimeTypes: { video: allowedVideoMimeTypes },
+    capabilities: { hasUploadMediaAction },
   } = useConfig();
 
   const stateRef = useRef();
@@ -273,15 +274,17 @@ export default function useContextValueProvider(reducerState, reducerActions) {
         return;
       }
 
-      if (
-        (allowedVideoMimeTypes.includes(mimeType) || type === 'gif') &&
-        !posterId
-      ) {
-        uploadVideoPoster(id, src);
-      }
+      if (hasUploadMediaAction) {
+        if (
+          (allowedVideoMimeTypes.includes(mimeType) || type === 'gif') &&
+          !posterId
+        ) {
+          uploadVideoPoster(id, src);
+        }
 
-      if (allowedVideoMimeTypes.includes(mimeType) && isMuted === null) {
-        processVideoAudio(id, src);
+        if (allowedVideoMimeTypes.includes(mimeType) && isMuted === null) {
+          processVideoAudio(id, src);
+        }
       }
 
       const imageSrc =
@@ -300,6 +303,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       processMediaBlurhash,
       processVideoAudio,
       uploadVideoPoster,
+      hasUploadMediaAction,
     ]
   );
 

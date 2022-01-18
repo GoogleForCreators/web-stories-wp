@@ -29,7 +29,15 @@ describe('Stories Dashboard', () => {
   it('should be able to open the dashboard', async () => {
     await visitDashboard();
 
-    await expect(page).toMatchElement('h2', { text: 'Dashboard' });
+    // If there are no existing stories, the app goes to the templates page instead.
+    // Account for both here, but then force-visit the dashboard.
+    await expect(page).toMatchElement('h2', {
+      text: /(Dashboard|Explore Templates)/,
+    });
+
+    await expect(page).toClick('[aria-label="Main dashboard navigation"] a', {
+      text: 'Dashboard',
+    });
 
     await takeSnapshot(page, 'Stories Dashboard', { percyCSS });
   });
@@ -40,7 +48,13 @@ describe('Stories Dashboard', () => {
     it('should be able to open the dashboard', async () => {
       await visitDashboard();
 
-      await expect(page).toMatchElement('h2', { text: 'Dashboard' });
+      await expect(page).toMatchElement('h2', {
+        text: /(Dashboard|Explore Templates)/,
+      });
+
+      await expect(page).toClick('[aria-label="Main dashboard navigation"] a', {
+        text: 'Dashboard',
+      });
 
       await takeSnapshot(page, 'Stories Dashboard on RTL', { percyCSS });
     });

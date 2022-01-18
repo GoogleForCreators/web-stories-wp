@@ -16,14 +16,14 @@
 /**
  * External dependencies
  */
-import { useRef } from '@web-stories-wp/react';
 import { renderHook } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-import useComposeRefs from '../useComposeRefs';
+import { useRef } from '..';
+import useCombinedRefs from '../useCombinedRefs';
 
-describe('useComposeRefs', () => {
+describe('useCombinedRefs', () => {
   it('composes all refs into one callback ref', () => {
     const testNode = 'value';
     const testCallbackRef = jest.fn();
@@ -34,7 +34,7 @@ describe('useComposeRefs', () => {
       const ref1 = useRef();
       const ref2 = useRef();
       const ref3 = testCallbackRef;
-      const composedCallbackRef = useComposeRefs(ref1, ref2, ref3);
+      const composedCallbackRef = useCombinedRefs(ref1, ref2, ref3);
       return {
         ref1,
         ref2,

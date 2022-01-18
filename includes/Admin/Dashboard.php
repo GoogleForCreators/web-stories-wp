@@ -34,6 +34,7 @@ use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Locale;
 use Google\Web_Stories\Tracking;
 use Google\Web_Stories\Media\Types;
+use Google\Web_Stories\Font_Post_Type;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Integrations\Site_Kit;
@@ -108,6 +109,13 @@ class Dashboard extends Service_Base {
 	private $story_post_type;
 
 	/**
+	 * Font_Post_Type instance.
+	 *
+	 * @var Font_Post_Type Font_Post_Type instance.
+	 */
+	private $font_post_type;
+
+	/**
 	 * Context instance.
 	 *
 	 * @var Context Context instance.
@@ -124,6 +132,8 @@ class Dashboard extends Service_Base {
 	/**
 	 * Dashboard constructor.
 	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+	 *
 	 * @since 1.0.0
 	 *
 	 * @param Experiments     $experiments     Experiments instance.
@@ -132,6 +142,7 @@ class Dashboard extends Service_Base {
 	 * @param Locale          $locale          Locale instance.
 	 * @param Google_Fonts    $google_fonts    Google_Fonts instance.
 	 * @param Assets          $assets          Assets instance.
+	 * @param Font_Post_Type  $font_post_type  Font_Post_Type instance.
 	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
 	 * @param Context         $context         Context instance.
 	 * @param Types           $types           Types instance.
@@ -143,6 +154,7 @@ class Dashboard extends Service_Base {
 		Locale $locale,
 		Google_Fonts $google_fonts,
 		Assets $assets,
+		Font_Post_Type $font_post_type,
 		Story_Post_Type $story_post_type,
 		Context $context,
 		Types $types
@@ -153,6 +165,7 @@ class Dashboard extends Service_Base {
 		$this->locale          = $locale;
 		$this->google_fonts    = $google_fonts;
 		$this->assets          = $assets;
+		$this->font_post_type  = $font_post_type;
 		$this->story_post_type = $story_post_type;
 		$this->context         = $context;
 		$this->types           = $types;
@@ -423,6 +436,7 @@ class Dashboard extends Service_Base {
 				'stories'        => trailingslashit( $this->story_post_type->get_rest_url() ),
 				'media'          => '/web-stories/v1/media/',
 				'currentUser'    => '/web-stories/v1/users/me/',
+				'fonts'          => trailingslashit( $this->font_post_type->get_rest_url() ),
 				'users'          => '/web-stories/v1/users/',
 				'settings'       => '/web-stories/v1/settings/',
 				'pages'          => '/wp/v2/pages/',

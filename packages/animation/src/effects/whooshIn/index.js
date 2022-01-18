@@ -81,20 +81,23 @@ export function EffectWhooshIn({
     delay,
     easing,
   });
+  const [moveTransformStart, moveTransformEnd] =
+    MoveWAAPIAnimation.keyframes.transform;
+  const [zoomTransformStart, zoomTransformEnd] =
+    ZoomWAAPIAnimation.keyframes.transform;
+  const keyframes = {
+    transform: [
+      `${moveTransformStart} ${zoomTransformStart}`,
+      `${moveTransformEnd} ${zoomTransformEnd}`,
+    ],
+    opacity: FadeWAAPIAnimation.keyframes.opacity,
+  };
 
   return {
     id,
-    // eslint-disable-next-line react/prop-types
-    WAAPIAnimation: function WAAPIAnimation({ children, hoistAnimation }) {
-      return (
-        <MoveWAAPIAnimation hoistAnimation={hoistAnimation}>
-          <FadeWAAPIAnimation hoistAnimation={hoistAnimation}>
-            <ZoomWAAPIAnimation hoistAnimation={hoistAnimation}>
-              {children}
-            </ZoomWAAPIAnimation>
-          </FadeWAAPIAnimation>
-        </MoveWAAPIAnimation>
-      );
+    WAAPIAnimation: {
+      ...ZoomWAAPIAnimation,
+      keyframes,
     },
     // eslint-disable-next-line react/prop-types
     AMPTarget: function AMPTarget({ children, style }) {

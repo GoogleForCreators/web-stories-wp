@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from '@web-stories-wp/react';
+import { useCallback } from '@web-stories-wp/react';
 import { FULLBLEED_RATIO, getBox, PAGE_RATIO } from '@web-stories-wp/units';
 
 /**
@@ -34,20 +34,22 @@ function usePageAsCanvas(skipSelectedElement) {
     pageCanvasPromise,
     setPageCanvasPromise,
     fullbleedContainer,
-  } = useCanvas((state) => ({
-    pageCanvasData: state.state.pageCanvasData,
-    pageCanvasPromise: state.state.pageCanvasPromise,
-    setPageCanvasData: state.actions.setPageCanvasData,
-    setPageCanvasPromise: state.actions.setPageCanvasPromise,
-    fullbleedContainer: state.state.fullbleedContainer,
+  } = useCanvas(({ actions, state }) => ({
+    pageCanvasData: state.pageCanvasData,
+    pageCanvasPromise: state.pageCanvasPromise,
+    setPageCanvasData: actions.setPageCanvasData,
+    setPageCanvasPromise: actions.setPageCanvasPromise,
+    fullbleedContainer: state.fullbleedContainer,
   }));
 
-  const { currentPage, selectedElementIds } = useStory(({ state }) => {
-    return {
-      currentPage: state.currentPage,
-      selectedElementIds: state.selectedElementIds,
-    };
-  });
+  const { selectedElementIds, currentPageHash } = useStory(
+    ({ state: { selectedElementIds, currentPageHash } }) => {
+      return {
+        selectedElementIds,
+        currentPageHash,
+      };
+    }
+  );
 
   const { zoomSetting, setZoomSetting } = useLayout(
     ({ state: { zoomSetting }, actions: { setZoomSetting } }) => ({
@@ -56,13 +58,9 @@ function usePageAsCanvas(skipSelectedElement) {
     })
   );
 
-  const pageHash = useMemo(() => {
-    return JSON.stringify(currentPage);
-  }, [currentPage]);
-
   const hasPageHashChanged = useCallback(() => {
-    return pageHash !== pageCanvasData.currentPage;
-  }, [pageHash, pageCanvasData]);
+    return currentPageHash !== pageCanvasData.currentPage;
+  }, [currentPageHash, pageCanvasData]);
 
   const generateCanvasFromPage = useCallback(
     (callback, resetZoom = false) => {
@@ -71,10 +69,7 @@ function usePageAsCanvas(skipSelectedElement) {
       if (!resetZoom && zoomSetting !== ZOOM_SETTING.FIT) {
         return;
       }
-      if (
-        !pageCanvasData ||
-        hasPageHashChanged(currentPage, pageCanvasData.currentPage)
-      ) {
+      if (!pageCanvasData || hasPageHashChanged()) {
         if (resetZoom) {
           // If we're inserting an element, we need to reset zoom, too.
           setZoomSetting(ZOOM_SETTING.FIT);
@@ -85,7 +80,7 @@ function usePageAsCanvas(skipSelectedElement) {
           } else {
             setPageCanvasData({
               canvas,
-              currentPage: pageHash,
+              currentPage: currentPageHash,
             });
           }
           setPageCanvasPromise(null);
@@ -126,7 +121,6 @@ function usePageAsCanvas(skipSelectedElement) {
       }
     },
     [
-      currentPage,
       fullbleedContainer,
       pageCanvasData,
       pageCanvasPromise,
@@ -135,7 +129,7 @@ function usePageAsCanvas(skipSelectedElement) {
       setZoomSetting,
       zoomSetting,
       hasPageHashChanged,
-      pageHash,
+      currentPageHash,
       selectedElementIds,
       skipSelectedElement,
     ]
@@ -177,24 +171,14 @@ function usePageAsCanvas(skipSelectedElement) {
         };
         // If we have data and nothing has changed or we can skip the canvas update, just calculate the contrast.
         // Skipping is used when preset are placed under each other consecutively, the same image can be used then.
-        if (
-          pageCanvasData &&
-          (!hasPageHashChanged(currentPage, pageCanvasData.currentPage) ||
-            skipCanvasGeneration)
-        ) {
+        if (pageCanvasData && (!hasPageHashChanged() || skipCanvasGeneration)) {
           contrastCalculation(pageCanvasData.canvas);
         } else {
           generateCanvasFromPage(contrastCalculation, isInserting);
         }
       });
     },
-    [
-      currentPage,
-      generateCanvasFromPage,
-      pageCanvasData,
-      hasPageHashChanged,
-      zoomSetting,
-    ]
+    [generateCanvasFromPage, pageCanvasData, hasPageHashChanged, zoomSetting]
   );
 
   return {

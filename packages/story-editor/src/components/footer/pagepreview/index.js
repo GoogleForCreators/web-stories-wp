@@ -186,7 +186,6 @@ function PagePreview({
                   key={element.id}
                   previewMode
                   element={element}
-                  page={page}
                 />
               ))
             )}

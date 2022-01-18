@@ -211,6 +211,14 @@ const addAnimations =
   ({ animations }) =>
     dispatch({ type: types.ADD_ANIMATIONS, payload: { animations } });
 
+const toggleLayer =
+  (dispatch) =>
+  ({ metaKey, shiftKey, elementId }) =>
+    dispatch({
+      type: types.TOGGLE_LAYER,
+      payload: { metaKey, shiftKey, elementId },
+    });
+
 export const exposedActions = {
   addPage,
   addPageAt,
@@ -244,6 +252,7 @@ export const exposedActions = {
   updateAnimationState,
   addAnimations,
   updateStory,
+  toggleLayer,
 };
 
 // Internal actions

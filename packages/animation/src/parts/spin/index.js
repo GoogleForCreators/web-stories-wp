@@ -39,10 +39,12 @@ export function AnimationSpin({
   };
 
   const animationName = `rot-${rotation}-${ANIMATION_TYPES.SPIN}`;
-  const keyframes = [
-    { transform: global`rotateZ(${defaultUnit(rotation, 'deg')})` },
-    { transform: global`rotateZ(${defaultUnit(stopAngle, 'deg')})` },
-  ];
+  const keyframes = {
+    transform: [
+      global`rotateZ(${defaultUnit(rotation, 'deg')})`,
+      global`rotateZ(${defaultUnit(stopAngle, 'deg')})`,
+    ],
+  };
 
   const { id, WAAPIAnimation, AMPTarget, AMPAnimation } = SimpleAnimation(
     animationName,

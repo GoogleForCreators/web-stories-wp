@@ -365,6 +365,28 @@ const shortcuts = {
             </kbd>
           ),
         },
+        {
+          label: __('Move element 1px', 'web-stories'),
+          shortcut: (
+            <kbd>
+              <TranslateWithMarkup
+                mapping={{
+                  lkbd: <LargeKey />,
+                  shortcut: <Shortcut shortcut="shift" />,
+                }}
+              >
+                {sprintf(
+                  /* translators: 1: Shift key. */
+                  __(
+                    '<lkbd>%s</lkbd> <span>+ arrow keys</span>',
+                    'web-stories'
+                  ),
+                  prettifyShortcut('shift')
+                )}
+              </TranslateWithMarkup>
+            </kbd>
+          ),
+        },
       ],
     },
   ],
