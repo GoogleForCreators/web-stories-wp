@@ -85,7 +85,7 @@
   box-sizing: border-box;
 }
 
-.web-stories-list__story-poster::before {
+.web-stories-list__story-poster::after {
   content: '';
   display: block;
   position: absolute;
@@ -98,7 +98,6 @@
   );
   top: 0;
   left: 0;
-  z-index: 1;
 }
 
 .web-stories-list__story-content-overlay {

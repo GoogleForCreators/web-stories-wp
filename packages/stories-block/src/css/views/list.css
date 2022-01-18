@@ -27,7 +27,7 @@
 
 .ws-legacy-widget-preview
   .web-stories-list.is-view-type-list
-  .web-stories-list__story-poster::before {
+  .web-stories-list__story-poster::after {
   display: none;
 }
 
@@ -73,7 +73,7 @@
     aspect-ratio: var(--ws-list-aspect-ratio);
   }
 
-  .web-stories-list.is-view-type-list .web-stories-list__story-poster::before {
+  .web-stories-list.is-view-type-list .web-stories-list__story-poster::after {
     display: none;
   }
 
