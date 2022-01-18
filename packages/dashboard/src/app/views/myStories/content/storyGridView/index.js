@@ -136,32 +136,41 @@ const StoryGridView = ({
 
   useFocusOut(containerRef, () => setActiveGridItemId(null), []);
 
+  const getModifiedMenuItem = useCallback(
+    (value) => {
+      const menuItem = storyMenu.menuItems.find(
+        (item) => item?.value === value
+      );
+
+      Object.assign(menuItem.action, (story) => {
+        manuallySetFocusOut();
+        menuItem.action(story);
+      });
+
+      return menuItem;
+    },
+    [manuallySetFocusOut, storyMenu.menuItems]
+  );
+
   const modifiedStoryMenu = useMemo(() => {
+    const actions = [
+      STORY_CONTEXT_MENU_ACTIONS.DELETE,
+      STORY_CONTEXT_MENU_ACTIONS.RENAME,
+      STORY_CONTEXT_MENU_ACTIONS.DUPLICATE,
+    ];
+
+    const menuItems = storyMenu.menuItems.map((item) => {
+      return actions.includes(item?.value)
+        ? getModifiedMenuItem(item?.value)
+        : item;
+    });
+
     return {
       ...storyMenu,
       handleMenuToggle,
-      menuItemActions: {
-        // @todo Handle manuallySetFocusOut for new menuItems changes.
-        ...storyMenu.menuItemActions,
-        [STORY_CONTEXT_MENU_ACTIONS.DELETE]: (story) => {
-          manuallySetFocusOut();
-          storyMenu.menuItemActions[STORY_CONTEXT_MENU_ACTIONS.DELETE](story);
-        },
-        [STORY_CONTEXT_MENU_ACTIONS.DUPLICATE]: (story) => {
-          manuallySetFocusOut();
-          storyMenu.menuItemActions[STORY_CONTEXT_MENU_ACTIONS.DUPLICATE](
-            story
-          );
-        },
-        [STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK]: (story) => {
-          manuallySetFocusOut();
-          storyMenu.menuItemActions[STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK](
-            story
-          );
-        },
-      },
+      menuItems,
     };
-  }, [handleMenuToggle, manuallySetFocusOut, storyMenu]);
+  }, [handleMenuToggle, storyMenu, getModifiedMenuItem]);
 
   const memoizedStoryGrid = useMemo(
     () =>
