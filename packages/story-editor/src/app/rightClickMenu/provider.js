@@ -111,7 +111,7 @@ function RightClickMenuProvider({ children }) {
     currentPage,
     currentPageIndex,
     deleteCurrentPage,
-    duplicateElementById,
+    duplicateElementsById,
     pages,
     setBackgroundElement,
     selectedElements,
@@ -133,7 +133,7 @@ function RightClickMenuProvider({ children }) {
         arrangeElement,
         clearBackgroundElement,
         deleteCurrentPage,
-        duplicateElementById,
+        duplicateElementsById,
         setBackgroundElement,
         updateElementsById,
       },
@@ -146,7 +146,7 @@ function RightClickMenuProvider({ children }) {
       currentPage,
       currentPageIndex,
       deleteCurrentPage,
-      duplicateElementById,
+      duplicateElementsById,
       pages,
       selectedElementAnimations,
       selectedElements,
@@ -242,8 +242,10 @@ function RightClickMenuProvider({ children }) {
       return;
     }
 
-    selectedElements.map(({ id }) => duplicateElementById({ elementId: id }));
-  }, [duplicateElementById, selectedElements]);
+    duplicateElementsById({
+      elementIds: selectedElements.map((element) => element.id),
+    });
+  }, [duplicateElementsById, selectedElements]);
 
   /**
    * Duplicate the current page.

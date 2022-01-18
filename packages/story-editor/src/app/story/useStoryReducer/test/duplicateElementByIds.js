@@ -18,9 +18,9 @@
  */
 import { setupReducer } from './_utils';
 
-describe('duplicateElementById', () => {
+describe('duplicateElementsById', () => {
   it('duplicates an element at index after specified element', () => {
-    const { restore, duplicateElementById } = setupReducer();
+    const { restore, duplicateElementsById } = setupReducer();
 
     // Set an initial state with a current page.
     const initialState = restore({
@@ -39,10 +39,15 @@ describe('duplicateElementById', () => {
       selection: ['789', '456'],
     });
 
-    const result = duplicateElementById({ elementId: '456' });
+    const result = duplicateElementsById({ elementIds: ['456'] });
 
     expect(result).toStrictEqual({
       ...initialState,
+      selection: expect.arrayContaining(
+        result.pages[0].elements
+          .filter((el) => !initialState.pages[0].elements.includes(el))
+          .map((el) => el.id)
+      ),
       pages: [
         {
           id: '111',
@@ -67,8 +72,8 @@ describe('duplicateElementById', () => {
     });
   });
 
-  it('doesnt duplicate background elements', () => {
-    const { restore, duplicateElementById } = setupReducer();
+  it("doesn't duplicate background elements", () => {
+    const { restore, duplicateElementsById } = setupReducer();
 
     // Set an initial state with a current page.
     const initialState = restore({
@@ -87,12 +92,12 @@ describe('duplicateElementById', () => {
       selection: ['789', '456'],
     });
 
-    const result = duplicateElementById({ elementId: '123' });
+    const result = duplicateElementsById({ elementIds: ['123'] });
     expect(result).toStrictEqual(initialState);
   });
 
-  it('duplicates an elements animations', () => {
-    const { restore, duplicateElementById } = setupReducer();
+  it("duplicates an element's animations", () => {
+    const { restore, duplicateElementsById } = setupReducer();
 
     // Set an initial state with a current page.
     const initialState = restore({
@@ -113,12 +118,14 @@ describe('duplicateElementById', () => {
       selection: ['789', '456'],
     });
 
-    const result = duplicateElementById({ elementId: '456' });
+    const result = duplicateElementsById({ elementIds: ['456'] });
     const newElement = result.pages[0].elements.find(
       (el) => !initialState.pages[0].elements.includes(el)
     );
+    expect(result.selection).toHaveLength(1);
     expect(result).toStrictEqual({
       ...initialState,
+      selection: [newElement.id],
       pages: [
         {
           id: '111',
@@ -151,7 +158,7 @@ describe('duplicateElementById', () => {
   });
 
   it('places duplicated element in a new location', () => {
-    const { restore, duplicateElementById } = setupReducer();
+    const { restore, duplicateElementsById } = setupReducer();
 
     // Set an initial state with a current page.
     const initialState = restore({
@@ -169,15 +176,81 @@ describe('duplicateElementById', () => {
       selection: ['789', '456'],
     });
 
-    const result = duplicateElementById({ elementId: '456' });
-    const initalElement = initialState.pages[0].elements.find(
+    const result = duplicateElementsById({ elementIds: ['456'] });
+    const initialElement = initialState.pages[0].elements.find(
       (el) => el.id === '456'
     );
     const newElement = result.pages[0].elements.find(
       (el) => !initialState.pages[0].elements.includes(el)
     );
     expect(result.pages[0].elements).toHaveLength(4);
-    expect(initalElement.x).not.toBe(newElement.x);
-    expect(initalElement.y).not.toBe(newElement.y);
+    expect(initialElement.x).not.toBe(newElement.x);
+    expect(initialElement.y).not.toBe(newElement.y);
+  });
+
+  it('duplicates more than one element but not the background', () => {
+    const { restore, duplicateElementsById } = setupReducer();
+
+    // Set an initial state with a current page.
+    const initialState = restore({
+      pages: [
+        {
+          id: '111',
+          animations: [
+            { id: '1', targets: ['456'], type: 'wild_wacky_animation' },
+          ],
+          elements: [
+            { id: '123', isBackground: true, type: 'shape' },
+            { id: '456', x: 0, y: 0, type: 'shape' },
+            { id: '789', x: 0, y: 0, type: 'image' },
+          ],
+        },
+      ],
+      current: '111',
+      selection: ['789', '456'],
+    });
+
+    const result = duplicateElementsById({ elementIds: ['123', '456', '789'] });
+    const newElementIds = result.pages[0].elements
+      .filter((el) => !initialState.pages[0].elements.includes(el))
+      .map((el) => el.id);
+    expect(result).toStrictEqual({
+      ...initialState,
+      selection: expect.arrayContaining(newElementIds),
+      pages: [
+        {
+          id: '111',
+          animations: [
+            { id: '1', targets: ['456'], type: 'wild_wacky_animation' },
+            {
+              id: expect.any(String),
+              targets: expect.not.arrayContaining(['456']),
+              type: 'wild_wacky_animation',
+            },
+          ],
+          elements: [
+            expect.objectContaining({
+              id: '123',
+              isBackground: true,
+              type: 'shape',
+            }),
+            expect.objectContaining({ id: '456', x: 0, y: 0, type: 'shape' }),
+            expect.objectContaining({
+              id: expect.any(String),
+              x: expect.any(Number),
+              y: expect.any(Number),
+              type: 'shape',
+            }),
+            expect.objectContaining({ id: '789', x: 0, y: 0, type: 'image' }),
+            expect.objectContaining({
+              id: expect.any(String),
+              x: expect.any(Number),
+              y: expect.any(Number),
+              type: 'image',
+            }),
+          ],
+        },
+      ],
+    });
   });
 });
