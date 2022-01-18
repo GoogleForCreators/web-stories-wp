@@ -201,6 +201,8 @@ function Element({
     [handleKeyDown]
   );
 
+  const isPlaceholder = !isLoaded && !active;
+
   return (
     <Container
       ref={ref}
@@ -216,7 +218,7 @@ function Element({
       onBlur={makeInactive}
       tabIndex={index === 0 ? 0 : -1}
     >
-      <InnerContainer $baseColor={!isLoaded && baseColor}>
+      <InnerContainer $baseColor={isPlaceholder && baseColor}>
         <InnerElement
           type={type}
           src={src}
@@ -232,7 +234,7 @@ function Element({
           active={active}
         />
         {attribution}
-        {!isLoaded && blurHash && (
+        {isPlaceholder && blurHash && (
           <BlurhashContainer
             hash={blurHash}
             width={width}
