@@ -18,6 +18,7 @@
  */
 import { addQueryArgs } from '@web-stories-wp/design-system';
 import { DATA_VERSION } from '@web-stories-wp/migration';
+
 /**
  * WordPress dependencies
  */

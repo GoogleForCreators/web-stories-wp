@@ -109,6 +109,25 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/google/web-stories-wp/releases).
 
+= 1.16.0 =
+
+**Release Date:** January 18, 2021.
+
+* Compatibility with WordPress 5.9
+* New feature: improved video captions appearance in the editor.
+* New feature: duplicate elements via right-click menu.
+* Enhancement: use static images for displaying saved templates in the editor.
+* Enhancement: improved appearance when exploring templates in the dashboard.
+* Bug fixes and performance improvements.
+
+= 1.15.1 =
+
+**Release Date:** December 7, 2021.
+
+* Fixes a rare issue with crashing and failing to load particular stories.
+* Fixes an issue with mangled Unicode characters.
+* Fixes an issue with styling differences between the editor and the preview.
+
 = 1.15.0 =
 
 **Release Date:** November 30, 2021.
@@ -119,39 +138,16 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * New feature: added support for password protected stories.
 * Bug fixes and performance improvements.
 
-= 1.14.0 =
-
-**Release Date:** November 2, 2021.
-
-* New feature: archive page customization.
-* New feature: improved video captions appearance on the frontend.
-* New feature: right-click menu in the layers panel.
-* Performance improvements in the editor for default page templates.
-* Fixes an issue with embeds not appearing on the frontend.
-* Bug fixes and performance improvements.
-
-= 1.13.0 =
-
-**Release Date:** October 12, 2021.
-
-* New feature: tags and categories management in the editor.
-* Performance improvements for page thumbnails in the editor.
-* Improves AMP compatibility of the Web Stories embed block.
-* Fixes an AMP validation issue related to link icons.
-* Fixes an issue with setting link icons in the editor.
-* Fixes an issue with custom page templates that caused the editor to crash.
-* Bug fixes and performance improvements.
-
 == Upgrade Notice ==
+
+= 1.16.0 =
+
+WordPress 5.9 compatibility, various UI refinements, right-click menu element duplication, and several bug fixes and performance improvements.
+
+= 1.15.1 =
+
+Several bug fixes to address the editor crashing and styling differences between editor and preview.
 
 = 1.15.0 =
 
 Media hotlinking, templates search, link qualification, and several bug fixes and performance improvements.
-
-= 1.14.0 =
-
-Archive page customization, improved video captions appearance, layer panel improvements, and several bug fixes.
-
-= 1.13.0 =
-
-Categories and tags support, improved performance in the editor, and several bug fixes.

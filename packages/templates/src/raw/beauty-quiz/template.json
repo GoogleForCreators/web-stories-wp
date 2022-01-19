@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -29,7 +29,6 @@
             "id": 0,
             "alt": "Topless woman sitting on bathtub with yellow flowers",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#99684c",
             "isExternal": true
@@ -252,7 +251,6 @@
             "id": 0,
             "alt": "Woman washing her face",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#daa992",
             "isExternal": true
@@ -1469,7 +1467,6 @@
             "id": 0,
             "alt": "Topless woman putting lipstick on her lips",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#cfcecc",
             "isExternal": true
@@ -1502,7 +1499,6 @@
             "id": 0,
             "alt": "Frame baguette creativity picture",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -2156,7 +2152,6 @@
             "id": 0,
             "alt": "Woman sitting and smiling",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c2b2a4",
             "isExternal": true
@@ -2190,7 +2185,6 @@
             "id": 0,
             "alt": "Frame baguette creativity picture",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#405e50",
             "isExternal": true
@@ -3365,7 +3359,6 @@
             "id": 0,
             "alt": "Person holding dropper",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#a5765d",
             "isExternal": true
@@ -3607,7 +3600,6 @@
             "id": 0,
             "alt": "Drops of lotion on pink background",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#fbc7cb",
             "isExternal": true
@@ -4163,7 +4155,6 @@
             "id": 0,
             "alt": "Woman with red lipstick and blonde hair",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ebd1bf",
             "isExternal": true
@@ -4202,7 +4193,6 @@
             "id": 0,
             "alt": "Woman in black and white floral shirt",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#e0ada2",
             "isExternal": true
@@ -4241,7 +4231,6 @@
             "id": 0,
             "alt": "Woman in gray monokini",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d5af91",
             "isExternal": true

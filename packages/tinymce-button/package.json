@@ -11,12 +11,12 @@
   "main": "./src/index.js",
   "type": "module",
   "dependencies": {
-    "@wordpress/components": "^19.1.1",
+    "@wordpress/components": "^19.2.0",
     "@wordpress/compose": "^5.0.0",
     "@wordpress/data": "^6.1.4",
     "@wordpress/element": "^4.0.0",
     "@wordpress/i18n": "^4.2.2",
-    "prop-types": "^15.8.0"
+    "prop-types": "^15.8.1"
   },
   "devDependencies": {
     "@testing-library/react": "^12.1.2"
