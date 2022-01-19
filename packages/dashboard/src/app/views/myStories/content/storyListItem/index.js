@@ -77,27 +77,33 @@ export const StoryListItem = ({
 
   const formattedTitle = titleFormatted(story.title);
 
+  const generatedMenuItems = useMemo(
+    () =>
+      generateStoryMenu({
+        menuItems: storyMenu.menuItems,
+        story,
+        isLocked,
+      }),
+    [storyMenu, story, isLocked]
+  );
+
   const memoizedStoryMenu = useMemo(
-    () => (
-      <StoryMenu
-        menuLabel={sprintf(
-          /* translators: %s: story title.*/
-          __('Context menu for %s', 'web-stories'),
-          formattedTitle
-        )}
-        onMoreButtonSelected={(_, id) => storyMenu.handleMenuToggle(id)}
-        contextMenuId={storyMenu.contextMenuId}
-        storyId={story.id}
-        menuItems={generateStoryMenu({
-          menuItemActions: storyMenu.menuItemActions,
-          menuItems: storyMenu.menuItems,
-          story,
-          isLocked,
-        })}
-        verticalAlign="center"
-      />
-    ),
-    [isLocked, formattedTitle, storyMenu, story]
+    () =>
+      generatedMenuItems.length ? (
+        <StoryMenu
+          menuLabel={sprintf(
+            /* translators: %s: story title.*/
+            __('Context menu for %s', 'web-stories'),
+            formattedTitle
+          )}
+          onMoreButtonSelected={(_, id) => storyMenu.handleMenuToggle(id)}
+          contextMenuId={storyMenu.contextMenuId}
+          storyId={story.id}
+          menuItems={generatedMenuItems}
+          verticalAlign="center"
+        />
+      ) : null,
+    [generatedMenuItems, formattedTitle, storyMenu, story]
   );
 
   return (
