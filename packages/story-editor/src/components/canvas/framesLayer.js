@@ -58,7 +58,7 @@ const DesignSpaceGuidelineBorder = styled.div`
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
 `;
 
-const DesignSpaceGuideline = function DesignSpaceGuidline() {
+function DesignSpaceGuideline() {
   const setDesignSpaceGuideline = useCanvas(
     ({ actions }) => actions.setDesignSpaceGuideline
   );
@@ -72,7 +72,7 @@ const DesignSpaceGuideline = function DesignSpaceGuidline() {
       isVisible={isAnythingTransforming}
     />
   );
-};
+}
 
 function FramesLayer() {
   // were returning this directly because we want the elementIds array to be shallowly
@@ -89,7 +89,8 @@ function FramesLayer() {
   );
 
   const framesLayerRef = useRef(null);
-  // TODO: refactor `useCanvasKeys`. This is the last hook causing extraneous re-renders in this component.
+  // TODO: https://github.com/google/web-stories-wp/issues/10266
+  // refactor `useCanvasKeys`. This is the last hook causing extraneous re-renders in this component.
   // - pulls most of state from useStory and only creates actions and attaches them to hot keys
   // - extraneous re-renders in this component contribute only ~1ms to total re-render time,
   //   so this is a high hanging fruit with little reward.
