@@ -33,9 +33,6 @@ async function goToAndExpandTaxonomyPanel() {
 
   const taxonomyPanel = await page.$('button[aria-label="Taxonomies"]');
 
-  // Small trick to ensure we scroll to this panel.
-  await taxonomyPanel.focus();
-
   const isCollapsed = await page.evaluate(
     (button) => button.getAttribute('aria-expanded') === 'false',
     taxonomyPanel
@@ -44,6 +41,9 @@ async function goToAndExpandTaxonomyPanel() {
   if (isCollapsed) {
     await taxonomyPanel.click();
   }
+
+  // Small trick to ensure we scroll to this panel.
+  await taxonomyPanel.focus();
 }
 
 async function addCategory(name, parent) {
