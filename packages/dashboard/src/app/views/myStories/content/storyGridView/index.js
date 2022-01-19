@@ -146,7 +146,7 @@ const StoryGridView = ({
     const menuItems = storyMenu.menuItems.map((item) => {
       const _item = { ...item };
 
-      if (actions.includes(_item?.value)) {
+      if (actions.includes(item?.value)) {
         _item.action = (story) => {
           manuallySetFocusOut();
           item.action(story);
