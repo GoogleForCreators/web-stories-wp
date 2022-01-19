@@ -22,7 +22,7 @@ import { waitFor } from '@testing-library/react';
  * Internal dependencies
  */
 
-import { Fixture, asyncResponse, FIXTURE_DEFAULT_CONFIG } from '../fixture';
+import { Fixture, FIXTURE_DEFAULT_CONFIG } from '../fixture';
 import storyResponse from '../fixture/db/storyResponse';
 
 describe('Integration Layer tests : Optional API Callbacks', () => {
@@ -67,7 +67,7 @@ describe('Integration Layer tests : Optional API Callbacks', () => {
     const getStoryById = jasmine
       .createSpy('getStoryById')
       .and.callFake((storyId) => {
-        return asyncResponse({
+        return Promise.resolve({
           storyId,
           ...storyResponse,
         });

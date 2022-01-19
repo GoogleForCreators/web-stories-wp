@@ -18,6 +18,5 @@ export {
   Fixture,
   MEDIA_PER_PAGE,
   LOCAL_MEDIA_PER_PAGE,
-  asyncResponse,
   FIXTURE_DEFAULT_CONFIG,
 } from './fixture';

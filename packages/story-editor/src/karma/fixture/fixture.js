@@ -1178,7 +1178,7 @@ class APIProviderFixture {
  * @param {*} value The reponse value.
  * @return {!Promise} The promise of the response.
  */
-export function asyncResponse(value) {
+function asyncResponse(value) {
   return Promise.resolve(value);
 }
 
