@@ -75,7 +75,7 @@ function DesignSpaceGuideline() {
 }
 
 function FramesLayer() {
-  // were returning this directly because we want the elementIds array to be shallowly
+  // We are returning this directly because we want the elementIds array to be shallowly
   // compared between re-renders. This allows element properties to update without re-rendering
   // this top level component.
   const elementIds = useStory(
