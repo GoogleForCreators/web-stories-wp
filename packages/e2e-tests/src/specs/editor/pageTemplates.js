@@ -30,7 +30,7 @@ describe('Page Templates', () => {
     await clearLocalStorage();
   });
 
-  it('should be able to load an create custom page templates', async () => {
+  it('should be able to load and create custom page templates', async () => {
     await createNewStory();
 
     await expect(page).toMatchElement('input[placeholder="Add title"]');
@@ -40,13 +40,16 @@ describe('Page Templates', () => {
     await page.keyboard.press('ArrowLeft');
     await page.keyboard.press('Enter');
 
-    await expect(page).toMatchElement('button[aria-disabled="true"]', {
-      text: 'Save current page as template',
-    });
+    await expect(page).toMatchElement(
+      '#library-tab-pageTemplates[aria-selected="true"]'
+    );
+    await expect(page).toMatchElement(
+      '#library-pane-pageTemplates[aria-expanded="true"]'
+    );
+    await expect(page).toMatch('Default templates');
     await expect(page).toMatchElement(
       'button[aria-label="Select templates type"]'
     );
-    await expect(page).toMatch('Default templates');
 
     await addTextElement();
 
