@@ -32,8 +32,8 @@ import { __ } from '@web-stories-wp/i18n';
 import { useRightClickMenu } from '../../app';
 import useStory from '../../app/story/useStory';
 import { DEFAULT_PAGE_BACKGROUND_COLOR } from '../../elements/utils/createPage';
-import { isShallowEqual } from '../../utils/isEqual';
 import { Layer, PageArea } from './layout';
+import { shallowEqual } from '@web-stories-wp/react';
 
 const DisplayPageArea = styled(PageArea)`
   position: absolute;
@@ -54,7 +54,7 @@ export const isEmptyStory = (pages) => {
   const hasOnlyOnePage = pages.length === 1;
   const hasNoExtraElements = pages[0].elements.length === 1;
   const hasNoBackgroundMedia = !('resource' in pages[0].elements[0]);
-  const hasDefaultBackgroundColor = isShallowEqual(
+  const hasDefaultBackgroundColor = shallowEqual(
     DEFAULT_PAGE_BACKGROUND_COLOR.color,
     pages[0].backgroundColor.color
   );

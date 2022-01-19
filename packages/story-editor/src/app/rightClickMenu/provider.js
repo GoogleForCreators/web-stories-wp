@@ -178,7 +178,7 @@ function RightClickMenuProvider({ children }) {
     rightClickMenuReducer,
     DEFAULT_RIGHT_CLICK_MENU_STATE
   );
-  
+
   const selectedElement = selectedElements?.[0];
   const selectedElementType = selectedElement?.type;
   const currentPosition = currentPage?.elements.findIndex(
