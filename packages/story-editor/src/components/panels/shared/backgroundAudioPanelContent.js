@@ -29,6 +29,8 @@ import {
 } from '@web-stories-wp/design-system';
 import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
 import { useCallback } from '@web-stories-wp/react';
+import { ResourcePropTypes } from '@web-stories-wp/media';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
@@ -38,6 +40,7 @@ import AudioPlayer from '../../audioPlayer';
 import Tooltip from '../../tooltip';
 import { useConfig } from '../../../app';
 import { BackgroundAudioPropType } from '../../../types';
+import CaptionsPanelContent from './captionsPanelContent';
 
 const StyledButton = styled(Button)`
   ${({ theme }) =>
@@ -53,7 +56,10 @@ const UploadButton = styled(StyledButton)`
 
 function BackgroundAudioPanelContent({
   backgroundAudio,
+  tracks,
   updateBackgroundAudio,
+  updateTracks,
+  supportsCaptions = false,
 }) {
   const {
     allowedAudioMimeTypes,
@@ -75,8 +81,40 @@ function BackgroundAudioPanelContent({
         id: media.id,
         mimeType: media.mimeType,
       });
+      updateTracks([]);
     },
-    [updateBackgroundAudio]
+    [updateTracks, updateBackgroundAudio]
+  );
+
+  const handleRemoveTrack = useCallback(
+    (idToDelete) => {
+      let newTracks = [];
+      if (idToDelete) {
+        const trackIndex = tracks.findIndex(({ id }) => id === idToDelete);
+        newTracks = [
+          ...tracks.slice(0, trackIndex),
+          ...tracks.slice(trackIndex + 1),
+        ];
+      }
+      updateTracks(newTracks);
+    },
+    [tracks, updateTracks]
+  );
+
+  const handleChangeTrack = useCallback(
+    ({ src = '', id }) => {
+      const newTracks = {
+        track: src,
+        trackId: id,
+        trackName: src.split('/').pop(),
+        id: uuidv4(),
+        kind: 'captions',
+        srclang: '',
+        label: '',
+      };
+      updateTracks([...tracks, newTracks]);
+    },
+    [tracks, updateTracks]
   );
 
   const renderUploadButton = useCallback(
@@ -91,6 +129,22 @@ function BackgroundAudioPanelContent({
       </UploadButton>
     ),
     []
+  );
+
+  const captionText = __('Upload audio captions', 'web-stories');
+
+  const renderUploadCaptionButton = useCallback(
+    (open) => (
+      <UploadButton
+        onClick={open}
+        type={BUTTON_TYPES.SECONDARY}
+        size={BUTTON_SIZES.SMALL}
+        variant={BUTTON_VARIANTS.RECTANGLE}
+      >
+        {captionText}
+      </UploadButton>
+    ),
+    [captionText]
   );
 
   return (
@@ -108,26 +162,37 @@ function BackgroundAudioPanelContent({
         </Row>
       )}
       {backgroundAudio?.src && (
-        <Row>
-          <AudioPlayer
-            title={backgroundAudio?.src.substring(
-              backgroundAudio?.src.lastIndexOf('/') + 1
-            )}
-            src={backgroundAudio?.src}
-            mimeType={backgroundAudio?.mimeType}
-          />
-          <Tooltip hasTail title={__('Remove file', 'web-stories')}>
-            <StyledButton
-              aria-label={__('Remove file', 'web-stories')}
-              type={BUTTON_TYPES.TERTIARY}
-              size={BUTTON_SIZES.SMALL}
-              variant={BUTTON_VARIANTS.SQUARE}
-              onClick={() => updateBackgroundAudio(null)}
-            >
-              <Icons.Trash />
-            </StyledButton>
-          </Tooltip>
-        </Row>
+        <>
+          <Row>
+            <AudioPlayer
+              title={backgroundAudio?.src.substring(
+                backgroundAudio?.src.lastIndexOf('/') + 1
+              )}
+              src={backgroundAudio?.src}
+              mimeType={backgroundAudio?.mimeType}
+            />
+            <Tooltip hasTail title={__('Remove file', 'web-stories')}>
+              <StyledButton
+                aria-label={__('Remove file', 'web-stories')}
+                type={BUTTON_TYPES.TERTIARY}
+                size={BUTTON_SIZES.SMALL}
+                variant={BUTTON_VARIANTS.SQUARE}
+                onClick={() => updateBackgroundAudio(null)}
+              >
+                <Icons.Trash />
+              </StyledButton>
+            </Tooltip>
+          </Row>
+          {supportsCaptions && (
+            <CaptionsPanelContent
+              captionText={captionText}
+              tracks={tracks || []}
+              handleChangeTrack={handleChangeTrack}
+              handleRemoveTrack={handleRemoveTrack}
+              renderUploadButton={renderUploadCaptionButton}
+            />
+          )}
+        </>
       )}
     </>
   );
@@ -135,7 +200,10 @@ function BackgroundAudioPanelContent({
 
 BackgroundAudioPanelContent.propTypes = {
   backgroundAudio: BackgroundAudioPropType,
+  tracks: PropTypes.arrayOf(ResourcePropTypes.trackResource),
   updateBackgroundAudio: PropTypes.func.isRequired,
+  updateTracks: PropTypes.func,
+  supportsCaptions: PropTypes.bool,
 };
 
 export default BackgroundAudioPanelContent;

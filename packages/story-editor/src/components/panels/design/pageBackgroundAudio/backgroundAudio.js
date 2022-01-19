@@ -21,6 +21,7 @@ import { useCallback } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import styled from 'styled-components';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -40,11 +41,13 @@ function PageBackgroundAudioPanel() {
   const {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
+  const enhancedPageBackgroundAudio = useFeature('enhancedPageBackgroundAudio');
 
-  const { backgroundAudio, updateCurrentPageProperties } = useStory(
+  const { backgroundAudio, tracks, updateCurrentPageProperties } = useStory(
     (state) => ({
       updateCurrentPageProperties: state.actions.updateCurrentPageProperties,
       backgroundAudio: state.state.currentPage?.backgroundAudio,
+      tracks: state.state.currentPage?.tracks,
     })
   );
 
@@ -52,6 +55,15 @@ function PageBackgroundAudioPanel() {
     (audioResource) => {
       updateCurrentPageProperties({
         properties: { backgroundAudio: audioResource },
+      });
+    },
+    [updateCurrentPageProperties]
+  );
+
+  const updateTracks = useCallback(
+    (audioTracks) => {
+      updateCurrentPageProperties({
+        properties: { tracks: audioTracks },
       });
     },
     [updateCurrentPageProperties]
@@ -77,7 +89,10 @@ function PageBackgroundAudioPanel() {
       </Row>
       <BackgroundAudioPanelContent
         backgroundAudio={backgroundAudio}
+        tracks={tracks}
         updateBackgroundAudio={updateBackgroundAudio}
+        updateTracks={updateTracks}
+        supportsCaptions={enhancedPageBackgroundAudio}
       />
     </SimplePanel>
   );
