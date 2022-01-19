@@ -91,6 +91,7 @@ function LeftRail() {
     version,
     leftRailSecondaryNavigation,
     canViewDefaultTemplates,
+    styleConstants: { topOffset },
   } = useConfig();
   const leftRailRef = useRef(null);
   const upperContentRef = useRef(null);
@@ -164,6 +165,7 @@ function LeftRail() {
       onClickCapture={onContainerClickCapture}
       ref={leftRailRef}
       isOpen={sideBarVisible}
+      topOffset={topOffset}
       role="navigation"
       aria-label={__('Main dashboard navigation', 'web-stories')}
     >
