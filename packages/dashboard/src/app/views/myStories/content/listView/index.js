@@ -74,7 +74,10 @@ export default function StoryListView({
   storyStatus,
 }) {
   const { enablePostLocking } = useFeatures();
-  const { userId } = useConfig();
+  const {
+    userId,
+    styleConstants: { topOffset },
+  } = useConfig();
 
   const onSortTitleSelected = useCallback(
     (newStorySort) => {
@@ -124,7 +127,7 @@ export default function StoryListView({
   return (
     <ListView data-testid="story-list-view">
       <Table aria-label={__('List view of created stories', 'web-stories')}>
-        <StickyTableHeader>
+        <StickyTableHeader topOffset={topOffset}>
           <TableRow>
             <TablePreviewHeaderCell
               onClick={() => onSortTitleSelected(STORY_SORT_OPTIONS.NAME)}
