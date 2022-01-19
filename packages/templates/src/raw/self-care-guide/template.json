@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -193,7 +193,6 @@
             "id": 0,
             "alt": "Set of natural toiletries on marble table in bathroom",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -233,7 +232,6 @@
             "id": 0,
             "alt": "Women Doing Yoga",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "provider": "local",
             "baseColor": "#cbc5be",
@@ -475,7 +473,6 @@
             "id": 0,
             "alt": "Woman doing yoga",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true,
             "baseColor": "#dcd4d5"
@@ -818,7 +815,6 @@
             "id": 0,
             "alt": "Woman doing yoga",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -1229,7 +1225,6 @@
             "id": 0,
             "alt": "Woman doing yoga",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "provider": "local",
             "baseColor": "#9a9692",
@@ -1421,7 +1416,6 @@
             "id": 0,
             "alt": "Woman doing yoga",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "provider": "local",
             "baseColor": "#cbc5be",
@@ -1812,7 +1806,6 @@
             "id": 0,
             "alt": "Woman with afro hair, at home",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -2223,7 +2216,6 @@
             "id": 0,
             "alt": "Black smartwatch",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#abacaf",
             "isExternal": true
@@ -2415,7 +2407,6 @@
             "id": 0,
             "alt": "Woman Sleeping",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -2803,7 +2794,6 @@
             "id": 0,
             "alt": "Green and white drink with straw in clear drinking glass",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#dddddd",
             "isExternal": true
@@ -3215,7 +3205,6 @@
             "id": 0,
             "alt": "Green broccoli",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d9e8e8",
             "isExternal": true
@@ -3406,7 +3395,6 @@
             "id": 0,
             "alt": "Tomato Slice ",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#b6473f",
             "isExternal": true
@@ -3796,7 +3784,6 @@
             "id": 0,
             "alt": "Clear Glass Bowl with Herbs and Tea",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -4207,7 +4194,6 @@
             "id": 0,
             "alt": "Brown teapot on black surface",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#e4e4e5",
             "isExternal": true
@@ -4398,7 +4384,6 @@
             "id": 0,
             "alt": "Person holding white ceramic cup with hot coffee",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#6b564f",
             "isExternal": true
@@ -4768,7 +4753,6 @@
             "id": 0,
             "alt": "Woman doing yoga",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "provider": "local",
             "baseColor": "#dbd4d3",
@@ -4882,7 +4866,6 @@
             "id": 0,
             "alt": "Woman with afro hair, at home",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "provider": "local",
             "isExternal": true
@@ -4923,7 +4906,6 @@
             "id": 0,
             "alt": "Green and white drink with straw in clear drinking glass",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "provider": "local",
             "baseColor": "#47261a",
@@ -5190,7 +5172,6 @@
             "id": 0,
             "alt": "Brown teapot",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#b3b7b9",
             "isExternal": true

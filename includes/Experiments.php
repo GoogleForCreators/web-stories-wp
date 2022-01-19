@@ -259,17 +259,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'dashboard',
 			],
 			/**
-			 * Author: @dmmulroy
-			 * Issue: #2098
-			 * Creation date: 2020-06-04
-			 */
-			[
-				'name'        => 'showTextAndShapesSearchInput',
-				'label'       => __( 'Library search', 'web-stories' ),
-				'description' => __( 'Enable search input on text and shapes tabs', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
 			 * Author: @diegovar
 			 * Issue: #2616
 			 * Creation date: 2020-06-23
@@ -322,19 +311,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'name'        => 'enableHotlinking',
 				'label'       => __( 'Insert media from link', 'web-stories' ),
 				'description' => __( 'Enable inserting media element from external link', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-
-			/**
-			 * Author: @spacedmonkey
-			 * Issue #9039
-			 * Creation date: 2021-09-29
-			 */
-			[
-				'name'        => 'enableCORSProxy',
-				'label'       => __( 'CORS Proxy', 'web-stories' ),
-				'description' => __( 'Enable inserting media element without CORS headers', 'web-stories' ),
 				'group'       => 'editor',
 				'default'     => true,
 			],

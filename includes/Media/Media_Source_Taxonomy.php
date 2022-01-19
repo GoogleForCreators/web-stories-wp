@@ -140,6 +140,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 						'source-video',
 						'source-image',
 						'gif-conversion',
+						'page-template',
 					],
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
@@ -230,7 +231,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 			[
 				'taxonomy' => $this->taxonomy_slug,
 				'field'    => 'slug',
-				'terms'    => [ 'poster-generation', 'source-video', 'source-image' ],
+				'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
 				'operator' => 'NOT IN',
 			],
 		];

@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -143,7 +143,6 @@
             "id": 0,
             "alt": "Happy ethnic woman sitting at table with laptop",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -260,7 +259,6 @@
             "id": 0,
             "alt": "Woman using macbook",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -822,7 +820,6 @@
             "id": 0,
             "alt": "White arrow",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -1081,7 +1078,6 @@
             "id": 0,
             "alt": "Boy In White Polo Shirt Crying",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -1513,7 +1509,6 @@
             "id": 0,
             "alt": "Cartoon figure of a person riding a scooter",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -1567,7 +1562,6 @@
             "id": 0,
             "alt": "Woman in gray tank top",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -1734,7 +1728,6 @@
             "id": 0,
             "alt": "Cartoon figure parachuting",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -1788,7 +1781,6 @@
             "id": 0,
             "alt": "Woman wearing black eyeglasses",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -2096,7 +2088,6 @@
             "id": 0,
             "alt": "Photo Of Woman Wearing White Shirt",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -2286,7 +2277,6 @@
             "id": 0,
             "alt": "Orchid plant in a pot",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -2577,7 +2567,6 @@
             "id": 0,
             "alt": "Cartoon figure of a woman using laptop",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -2630,7 +2619,6 @@
             "id": 0,
             "alt": "Woman in brown knit top",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#646f6f",
             "isExternal": true
@@ -2887,7 +2875,6 @@
             "id": 0,
             "alt": "Cheerful girlfriends eating pizza and drinking beer in kitchen",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -2923,7 +2910,6 @@
             "id": 0,
             "alt": "Happy woman smiling during remote chat",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#bcad9f",
             "isExternal": true
@@ -2958,7 +2944,6 @@
             "id": 0,
             "alt": "Cheerful woman smiling while sitting at table with laptop",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -2992,7 +2977,6 @@
             "id": 0,
             "alt": "Woman sitting on sofa while looking at phone with laptop on lap",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -3323,7 +3307,6 @@
             "id": 0,
             "alt": "Heart shape with 'Love it.' text around it",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#3c3c3c",
             "isExternal": true
@@ -3362,7 +3345,6 @@
             "id": 0,
             "alt": "Black woman messaging on modern cellphone",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -3399,7 +3381,6 @@
             "id": 0,
             "alt": "woman lying on bed with two cats",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },

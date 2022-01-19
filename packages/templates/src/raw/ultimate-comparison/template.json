@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -31,7 +31,6 @@
             "id": 0,
             "alt": "man in white dress shirt holding smartphone",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#a2a7ac",
             "isExternal": true
@@ -357,7 +356,6 @@
             "id": 0,
             "alt": "man in black hoodie wearing black headphones",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#45403d",
             "isExternal": true
@@ -518,7 +516,6 @@
             "id": 0,
             "alt": "black wireless headset",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d3dbdb",
             "isExternal": true
@@ -983,7 +980,6 @@
             "id": 0,
             "alt": "Man in Black Sweater Wearing Black Headphones",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#2b2d33",
             "isExternal": true
@@ -1017,7 +1013,6 @@
             "id": 0,
             "alt": "Man Wearing Black Headphones",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#cac6c2",
             "isExternal": true
@@ -1791,7 +1786,6 @@
             "id": 0,
             "alt": "black and silver headphones on white surface",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d3dbdb",
             "isExternal": true
@@ -2256,7 +2250,6 @@
             "id": 0,
             "alt": "Woman Looking Up While Wearing Headphones",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#979fa2",
             "isExternal": true
@@ -2290,7 +2283,6 @@
             "id": 0,
             "alt": "Man in Black Shirt Wearing Black Headphones",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#454533",
             "isExternal": true
@@ -3065,7 +3057,6 @@
             "id": 0,
             "alt": "gray and black wireless headphones on desk",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#2d2f32",
             "isExternal": true
@@ -3522,7 +3513,6 @@
             "id": 0,
             "alt": "Man in Blue Crew Neck T-shirt Wearing Headphones",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#938d8c",
             "isExternal": true
@@ -3555,7 +3545,6 @@
             "id": 0,
             "alt": "man in black jacket wearing black headphones",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#7a7a84",
             "isExternal": true
@@ -4355,7 +4344,6 @@
             "id": 0,
             "alt": "White Cordless Headphone",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ebeaea",
             "isExternal": true
@@ -4812,7 +4800,6 @@
             "id": 0,
             "alt": "Man Wearing White Headphones",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#beaca5",
             "isExternal": true
@@ -4845,7 +4832,6 @@
             "id": 0,
             "alt": "Woman in Gray Sweatshirt Wearing Headphone",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#a59385",
             "isExternal": true
@@ -5620,7 +5606,6 @@
             "id": 0,
             "alt": "black wireless headset",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "provider": "local",
             "baseColor": "#171717",
@@ -5654,7 +5639,6 @@
             "id": 0,
             "alt": "Man Holding Smartphone",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#6b6662",
             "isExternal": true
@@ -5982,7 +5966,6 @@
             "id": 0,
             "alt": "black and silver headphones on white surface",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "provider": "local",
             "baseColor": "#cd9668",
@@ -6008,7 +5991,6 @@
             "id": 0,
             "alt": "Woman Wearing Black Headphones",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#dcd5d0",
             "isExternal": true
@@ -6413,7 +6395,6 @@
             "id": 0,
             "alt": "black wireless headset",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "provider": "local",
             "baseColor": "#171717",
@@ -6448,7 +6429,6 @@
             "id": 0,
             "alt": "black and silver headphones on white surface",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "provider": "local",
             "baseColor": "#cd9668",
@@ -8139,7 +8119,6 @@
             "id": 0,
             "alt": "Joyful millennial woman in headphones listening to music in park",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#807b77",
             "isExternal": true
@@ -8280,7 +8259,6 @@
             "id": 0,
             "alt": "Macbook Pro",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#171717",
             "isExternal": true
@@ -8421,7 +8399,6 @@
             "id": 0,
             "alt": "Person Wearing White Silicone Strap Black Smart Watch",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#6b655a",
             "isExternal": true

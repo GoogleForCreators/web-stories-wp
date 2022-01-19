@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -161,7 +161,6 @@
             "height": 369,
             "id": 0,
             "alt": "page01_image1",
-            "local": false,
             "isExternal": true
           },
           "type": "image",
@@ -251,7 +250,6 @@
             "height": 314,
             "id": 0,
             "alt": "sticker_sound",
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ffffff",
             "isExternal": true
@@ -380,7 +378,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "sticker_sound",
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ffffff",
             "isExternal": true
@@ -416,7 +413,6 @@
             "height": 316,
             "id": 0,
             "alt": "page03_image1",
-            "local": false,
             "isExternal": true,
             "baseColor": "#0c0d14"
           },
@@ -741,7 +737,6 @@
             "height": 586,
             "id": 0,
             "alt": "page04_image1",
-            "local": false,
             "baseColor": "#1a3243",
             "isExternal": true
           },
@@ -771,7 +766,6 @@
             "height": 314,
             "id": 0,
             "alt": "sticker_sound",
-            "local": false,
             "isOptimized": false,
             "isExternal": true,
             "baseColor": "#ffffff"
@@ -917,7 +911,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page05_image1",
-            "local": false,
             "baseColor": "#2e3b4b",
             "isExternal": true
           },
@@ -1189,7 +1182,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "sticker_sound",
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ffffff",
             "isExternal": true
@@ -1243,7 +1235,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page06_image1",
-            "local": false,
             "isOptimized": false,
             "baseColor": "#121319",
             "isExternal": true
@@ -1549,7 +1540,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page07_image1",
-            "local": false,
             "baseColor": "#2f2125",
             "isExternal": true
           },
@@ -1579,7 +1569,6 @@
             "height": 314,
             "id": 0,
             "alt": "sticker_sound",
-            "local": false,
             "isOptimized": false,
             "isExternal": true,
             "baseColor": "#ffffff"
@@ -1724,7 +1713,6 @@
             "height": 220,
             "id": 0,
             "alt": "page08_image1",
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ae8f7d",
             "isExternal": true
@@ -1997,7 +1985,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "sticker_sound",
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ffffff",
             "isExternal": true
@@ -2051,7 +2038,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page09_image1",
-            "local": false,
             "isOptimized": false,
             "baseColor": "#292519",
             "isExternal": true
@@ -2357,7 +2343,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page10_image1",
-            "local": false,
             "baseColor": "#8e8981",
             "isExternal": true
           },
@@ -2387,7 +2372,6 @@
             "height": 314,
             "id": 0,
             "alt": "sticker_sound",
-            "local": false,
             "isOptimized": false,
             "isExternal": true,
             "baseColor": "#ffffff"
@@ -2532,7 +2516,6 @@
             "height": 586,
             "id": 0,
             "alt": "page11_image1",
-            "local": false,
             "baseColor": "#6b6a68",
             "isExternal": true
           },
@@ -2804,7 +2787,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "sticker_sound",
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ffffff",
             "isExternal": true
@@ -3112,7 +3094,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page15_image1",
-            "local": false,
             "isOptimized": false,
             "baseColor": "#663636",
             "isExternal": true
@@ -3162,7 +3143,6 @@
             "height": 586,
             "id": 0,
             "alt": "page16_image1",
-            "local": false,
             "baseColor": "#73707d",
             "isExternal": true
           },
@@ -3192,7 +3172,6 @@
             "height": 314,
             "id": 0,
             "alt": "sticker_sound",
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ffffff",
             "isExternal": true
@@ -3337,7 +3316,6 @@
             "height": 586,
             "id": 0,
             "alt": "page17_image1",
-            "local": false,
             "baseColor": "#6a364e",
             "isExternal": true
           },
@@ -3671,7 +3649,6 @@
             "height": 255,
             "id": 0,
             "alt": "page19_image1",
-            "local": false,
             "isExternal": true,
             "baseColor": "#3f3739"
           },

@@ -268,8 +268,7 @@ const BulkVideoOptimization = () => {
             : CARD_TYPE.SINGLE_ISSUE
         }
         footer={<DefaultFooterText>{footer}</DefaultFooterText>}
-        thumbnailCount={unoptimizedVideos.length}
-        thumbnail={unoptimizedVideos.map((element) => (
+        thumbnails={unoptimizedVideos.map((element) => (
           <Thumbnail
             key={element.resource.id}
             onClick={handleClickThumbnail(element)}

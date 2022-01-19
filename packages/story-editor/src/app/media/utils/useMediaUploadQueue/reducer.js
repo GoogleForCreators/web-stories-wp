@@ -129,8 +129,15 @@ export function finishUploading(state, { payload: { id, resource } }) {
     return state;
   }
 
-  if (queueItem.resource.src !== resource.src) {
+  if (queueItem.resource.src && queueItem.resource.src !== resource.src) {
     revokeBlob(queueItem.resource.src);
+  }
+
+  if (
+    resource.poster &&
+    queueItem.resource.poster &&
+    queueItem.resource.poster !== resource.poster
+  ) {
     revokeBlob(queueItem.resource.poster);
   }
 
@@ -140,7 +147,11 @@ export function finishUploading(state, { payload: { id, resource } }) {
       item.id === id
         ? {
             ...item,
-            resource,
+            resource: {
+              ...resource,
+              // Ensure that we don't override
+              poster: resource.poster || item.resource.poster,
+            },
             previousResourceId: item.resource.id,
             posterFile: null,
             originalResourceId: null,
