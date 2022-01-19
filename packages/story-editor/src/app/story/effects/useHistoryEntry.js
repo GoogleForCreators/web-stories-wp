@@ -29,6 +29,7 @@ import deleteNestedKeys from '../utils/deleteNestedKeys';
 // Changes to these properties of elements do not create a new history entry.
 const ELEMENT_PROPS_TO_IGNORE = [
   'resource.baseColor',
+  'resource.blurHash',
   'resource.id',
   'resource.isMuted',
   'resource.posterId',
