@@ -63,6 +63,9 @@ export const generateStoryMenu = ({ menuItems, story, isLocked }) => {
         break;
     }
 
+    // Since action was already used in onClick, and it would become an invalid attribute value for <a> or <button> tag.
+    delete menuItem?.action;
+
     return {
       ...menuItem,
       ...extraProperties,
