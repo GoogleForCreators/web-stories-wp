@@ -137,7 +137,6 @@ const Menu = ({
 
       newSelectedElement?.focus();
       setFocusedId(newSelectedElement?.id || -1);
-      return;
     },
     [focusedId, onDismiss, setFocusedId]
   );

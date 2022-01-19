@@ -52,6 +52,7 @@ import useDeleteStyle from '../../components/panels/design/textStyle/stylePreset
 import useDeleteColor from '../../components/colorPicker/useDeleteColor';
 import { noop } from '../../utils/noop';
 import useVideoTrim from '../../components/videoTrim/useVideoTrim';
+import { isEmptyStory } from '../../components/canvas/emptyStateLayer';
 import {
   RIGHT_CLICK_MENU_LABELS,
   RIGHT_CLICK_MENU_SHORTCUTS,
@@ -62,6 +63,7 @@ import rightClickMenuReducer, {
   DEFAULT_RIGHT_CLICK_MENU_STATE,
 } from './reducer';
 import { getDefaultPropertiesForType, getElementStyles } from './utils';
+import useEmptyStateMenu from './menus/emptyStateMenu';
 
 const UNDO_HELP_TEXT = sprintf(
   /* translators: %s: Ctrl/Cmd + Z keyboard shortcut */
@@ -176,7 +178,7 @@ function RightClickMenuProvider({ children }) {
     rightClickMenuReducer,
     DEFAULT_RIGHT_CLICK_MENU_STATE
   );
-
+  
   const selectedElement = selectedElements?.[0];
   const selectedElementType = selectedElement?.type;
   const currentPosition = currentPage?.elements.findIndex(
@@ -1136,7 +1138,13 @@ function RightClickMenuProvider({ children }) {
     ]
   );
 
+  const emptyStateMenu = useEmptyStateMenu({ menuItemProps });
+
   const menuItems = useMemo(() => {
+    if (isEmptyStory(pages)) {
+      return emptyStateMenu;
+    }
+
     if (selectedElements.length > 1) {
       return multipleElementItems;
     }
@@ -1168,6 +1176,7 @@ function RightClickMenuProvider({ children }) {
     shapeItems,
     stickerItems,
     textItems,
+    pages,
   ]);
 
   useGlobalKeyDownEffect(

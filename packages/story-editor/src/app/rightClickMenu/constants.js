@@ -32,11 +32,17 @@ export const RIGHT_CLICK_MENU_LABELS = {
   ADD_TO_TEXT_PRESETS: __('Add Style to “Saved Styles”', 'web-stories'),
   BRING_FORWARD: __('Bring Forward', 'web-stories'),
   BRING_TO_FRONT: __('Bring to Front', 'web-stories'),
+  BROWSE_STOCK_IMAGES_AND_VIDEO: __(
+    'Browse Stock Images and Video',
+    'web-stories'
+  ),
+  BROWSE_PAGE_TEMPLATES: __('Browse Page Templates', 'web-stories'),
   CLEAR_IMAGE_STYLES: __('Clear Image Styles', 'web-stories'),
   CLEAR_SHAPE_STYLES: __('Clear Shape Styles', 'web-stories'),
   CLEAR_VIDEO_STYLES: __('Clear Video Styles', 'web-stories'),
   CLEAR_STYLES: (numElements = 1) =>
     _n('Clear style', 'Clear styles', numElements, 'web-stories'),
+  CHOOSE_IMAGE_OR_VIDEO: __('Choose Image or Video', 'web-stories'),
   COPY_IMAGE_STYLES: __('Copy Image Styles', 'web-stories'),
   COPY_SHAPE_STYLES: __('Copy Shape Styles', 'web-stories'),
   COPY_VIDEO_STYLES: __('Copy Video Styles', 'web-stories'),
@@ -71,6 +77,7 @@ export const RIGHT_CLICK_MENU_LABELS = {
   SEND_TO_BACK: __('Send to Back', 'web-stories'),
   SET_AS_PAGE_BACKGROUND: __('Set as Page Background', 'web-stories'),
   TRIM_VIDEO: __('Trim Video', 'web-stories'),
+  UPLOAD_IMAGE_OR_VIDEO: __('Upload Image or Video', 'web-stories'),
 };
 
 const StyledKbd = styled(Text).attrs({

@@ -37,6 +37,7 @@ import {
  * Internal dependencies
  */
 import { useConfig } from '../../../../../app/config';
+import useOnMediaSelect from './useOnMediaSelect';
 import { useLocalMedia } from '../../../../../app/media';
 import { SearchInput } from '../../../common';
 import useLibrary from '../../../useLibrary';
@@ -140,10 +141,6 @@ function MediaPane(props) {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
 
-  const { insertElement } = useLibrary((state) => ({
-    insertElement: state.actions.insertElement,
-  }));
-
   const isSearching = searchTerm.length > 0;
 
   /**
@@ -158,39 +155,7 @@ function MediaPane(props) {
     [setMediaType]
   );
 
-  /**
-   * Insert element such image, video and audio into the editor.
-   *
-   * @param {Object} resource Resource object
-   * @param {string} thumbnailURL The thumbnail's url
-   * @return {null|*} Return onInsert or null.
-   */
-  const insertMediaElement = useCallback(
-    (resource, thumbnailURL) => {
-      resourceList.set(resource.id, {
-        url: thumbnailURL,
-        type: 'cached',
-      });
-      insertElement(resource.type, { resource });
-    },
-    [insertElement]
-  );
-
-  /**
-   * Callback of select in media picker to insert media element.
-   *
-   * @param {Object} resource Object coming from backbone media picker.
-   */
-  const onSelect = useCallback(
-    (resource) => {
-      // WordPress media picker event, sizes.medium.source_url is the smallest image
-      insertMediaElement(
-        resource,
-        resource.sizes?.medium?.source_url || resource.src
-      );
-    },
-    [insertMediaElement]
-  );
+  const { onSelect, insertMediaElement } = useOnMediaSelect();
 
   const onSearch = (value) => {
     const trimText = value.trim();
