@@ -16,7 +16,6 @@
 /**
  * Internal dependencies
  */
-import PlainMenu from '../menu';
 import MenuButton from './button';
 import MenuGroup from './group';
 import MenuIcon from './icon';
@@ -26,7 +25,6 @@ import MenuSeparator from './separator';
 import MenuShortcut from './shortcut';
 
 export {
-  PlainMenu,
   MenuButton,
   MenuGroup,
   MenuIcon,

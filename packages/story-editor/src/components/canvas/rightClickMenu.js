@@ -42,17 +42,6 @@ const RightClickMenuContainer = styled.div`
   z-index: 9999;
 `;
 
-const ButtonWrapper = styled.div`
-  position: relative;
-`;
-
-const SubMenuWrapper = styled(ContextMenuComponents.PlainMenu)`
-  width: 230px;
-  position: absolute;
-  left: calc(100% + 2px);
-  top: -9px;
-`;
-
 const LabelWrapper = styled.span`
   width: calc(100% + 14px);
   display: inline-block;
@@ -168,19 +157,25 @@ const RightClickMenu = () => {
                   {separator === 'top' && (
                     <ContextMenuComponents.MenuSeparator />
                   )}
-                  <ButtonWrapper>
-                    {menuButtonRenderer({ label, shortcut, ...buttonProps })}
-                    {Boolean(subMenuItems?.length) && (
-                      <SubMenuWrapper
-                        isRTL={isRTL}
-                        aria-expanded
+                  {menuButtonRenderer({ label, shortcut, ...buttonProps })}
+                  {Boolean(subMenuItems?.length) && (
+                    <RightClickMenuContainer
+                      position={{
+                        y: 0,
+                        x: ref.current.firstChild.offsetWidth + 2,
+                      }}
+                    >
+                      <ContextMenu
                         isOpen
+                        onDismiss={onCloseMenu}
+                        aria-label={__('Select a layer', 'web-stories')}
+                        isRTL={isRTL}
                         isSubMenu
                       >
                         {subMenuItems.map((item) => menuButtonRenderer(item))}
-                      </SubMenuWrapper>
-                    )}
-                  </ButtonWrapper>
+                      </ContextMenu>
+                    </RightClickMenuContainer>
+                  )}
                   {separator === 'bottom' && (
                     <ContextMenuComponents.MenuSeparator />
                   )}
