@@ -26,7 +26,7 @@ import { intersect } from './utils';
 /**
  * Set selected elements to the given list of ids.
  *
- * If given `elementIds` are not a list, do nothing.
+ * If given `elementIds` is not a list, do nothing.
  *
  * If given list matches (ignoring permutations) the current selection,
  * nothing happens.
