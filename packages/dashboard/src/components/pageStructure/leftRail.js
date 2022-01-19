@@ -90,6 +90,7 @@ function LeftRail() {
     newStoryURL,
     version,
     leftRailSecondaryNavigation,
+    canViewDefaultTemplates,
     styleConstants: { topOffset },
   } = useConfig();
   const leftRailRef = useRef(null);
@@ -187,6 +188,12 @@ function LeftRail() {
         <Content>
           <NavList>
             {PRIMARY_PATHS.map(({ Icon, ...path }) => {
+              const isTemplatesDisabled =
+                path.value === APP_ROUTES.TEMPLATES_GALLERY &&
+                !canViewDefaultTemplates;
+              if (isTemplatesDisabled) {
+                return null;
+              }
               const isNotificationBubbleEnabled =
                 path.value === APP_ROUTES.TEMPLATES_GALLERY &&
                 state.currentPath !== APP_ROUTES.TEMPLATES_GALLERY;
@@ -199,6 +206,7 @@ function LeftRail() {
                       numNewTemplates
                     )
                   : label;
+
               return (
                 <NavListItem key={path.value}>
                   <NavLink

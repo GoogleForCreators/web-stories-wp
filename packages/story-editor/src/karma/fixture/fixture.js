@@ -119,6 +119,7 @@ export const FIXTURE_DEFAULT_CONFIG = {
   version: '1.0.0-alpha.9',
   isRTL: false,
   showMedia3p: true,
+  canViewDefaultTemplates: true,
   locale: {
     dateFormat: 'F j, Y',
     timeFormat: 'g:i a',
