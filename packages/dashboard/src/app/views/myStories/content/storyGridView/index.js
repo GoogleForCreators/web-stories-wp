@@ -136,23 +136,6 @@ const StoryGridView = ({
 
   useFocusOut(containerRef, () => setActiveGridItemId(null), []);
 
-  const getModifiedMenuItem = useCallback(
-    (value) => {
-      const { action, ...rest } = storyMenu.menuItems.find(
-        (item) => item?.value === value
-      );
-
-      return {
-        action: (story) => {
-          manuallySetFocusOut();
-          action(story);
-        },
-        ...rest,
-      };
-    },
-    [manuallySetFocusOut, storyMenu.menuItems]
-  );
-
   const modifiedStoryMenu = useMemo(() => {
     const actions = [
       STORY_CONTEXT_MENU_ACTIONS.DELETE,
@@ -176,7 +159,7 @@ const StoryGridView = ({
       handleMenuToggle,
       menuItems,
     };
-  }, [handleMenuToggle, storyMenu, getModifiedMenuItem]);
+  }, [handleMenuToggle, storyMenu, manuallySetFocusOut]);
 
   const memoizedStoryGrid = useMemo(
     () =>
