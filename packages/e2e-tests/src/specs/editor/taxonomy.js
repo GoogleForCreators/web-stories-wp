@@ -195,6 +195,8 @@ describe('Taxonomies', () => {
         await page.reload();
         await expect(page).toMatchElement('input[placeholder="Add title"]');
 
+        await goToAndExpandTaxonomyPanel();
+
         // See that added tags persist.
         const tokens2 = await page.evaluate(() =>
           Array.from(
