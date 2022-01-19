@@ -50,6 +50,7 @@ import StoriesView from './storiesView';
 
 function Content({
   allPagesFetched,
+  canViewDefaultTemplates,
   filter,
   loading,
   page,
@@ -96,7 +97,7 @@ function Content({
                   )
                 : __('Start telling Stories.', 'web-stories')}
             </Headline>
-            {!search?.keyword && (
+            {!search?.keyword && canViewDefaultTemplates && (
               <Button
                 type={BUTTON_TYPES.PRIMARY}
                 size={BUTTON_SIZES.MEDIUM}
@@ -114,6 +115,7 @@ function Content({
 }
 Content.propTypes = {
   allPagesFetched: PropTypes.bool,
+  canViewDefaultTemplates: PropTypes.bool,
   filter: FilterPropTypes,
   loading: PropTypes.shape({
     isLoading: PropTypes.bool,

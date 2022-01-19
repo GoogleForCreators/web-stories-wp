@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useCallback } from '@web-stories-wp/react';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -29,7 +28,6 @@ function useCORSProxy() {
   const {
     actions: { getProxyUrl },
   } = useAPI();
-  const enableCORSProxy = useFeature('enableCORSProxy');
 
   /**
    * Check if the resource can be accessed directly.
@@ -68,12 +66,12 @@ function useCORSProxy() {
   const getProxiedUrl = useCallback(
     (resource, src) => {
       const { needsProxy } = resource;
-      if (enableCORSProxy && needsProxy && src) {
+      if (needsProxy && src) {
         return getProxyUrl(src);
       }
       return src;
     },
-    [getProxyUrl, enableCORSProxy]
+    [getProxyUrl]
   );
 
   return {

@@ -14,25 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * External dependencies
- */
-import Modal from 'react-modal';
-
-/**
- * Internal dependencies
- */
-import localStore, { LOCAL_STORAGE_PREFIX } from './utils/localStore';
-import * as Icons from './icons';
-import * as SVGIcons from './icons/svg';
-
-const { setAppElement } = Modal;
-
-export { Icons, SVGIcons };
-export { localStore, LOCAL_STORAGE_PREFIX };
-export * from './components';
-export * from './contexts';
-export * from './images';
-export * from './theme';
-export * from './utils';
-export { setAppElement };
+export const TOOLBAR_HEIGHT = 32;
+export const MENU_WIDTH = 160;
+export const MENU_FOLDED_WIDTH = 36;

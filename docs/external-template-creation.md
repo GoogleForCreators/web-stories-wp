@@ -4,7 +4,7 @@
 
 - The **story JSON representation** for each template is stored in [`packages/templates/src/raw/`](https://github.com/google/web-stories-wp/tree/main/packages/templates/src/raw) (in the `main` branch).
 - The **SVGs** used in each template are stored in [`packages/stickers/src/`](https://github.com/google/web-stories-wp/tree/main/packages/stickers/src) (in the `main` branch).
-- The (non-SVG) **image &amp; video files** used in each template are stored in [`public/static/main/images/templates/`](https://github.com/googleforcreators/wp.stories.google/tree/main/public/static/main/images/templates) (in the [googleforcreators/wp.stories.google](https://github.com/googleforcreators/wp.stories.google) repo, using [Git LFS](https://git-lfs.github.com/)).
+- The (non-SVG) **image &amp; video files** used in each template are stored in [`public/static/main/images/templates/`](https://github.com/GoogleForCreators/wp.stories.google/tree/main/public/static/main/images/templates) (in the [GoogleForCreators/wp.stories.google](https://github.com/GoogleForCreators/wp.stories.google) repo, using [Git LFS](https://git-lfs.github.com/)).
 
 ## Overview
 

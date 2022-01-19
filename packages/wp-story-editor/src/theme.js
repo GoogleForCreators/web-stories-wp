@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,26 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
-import Modal from 'react-modal';
+import { createGlobalStyle } from 'styled-components';
+import { OVERLAY_CLASS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
-import localStore, { LOCAL_STORAGE_PREFIX } from './utils/localStore';
-import * as Icons from './icons';
-import * as SVGIcons from './icons/svg';
+import { TOOLBAR_HEIGHT, MENU_WIDTH, MENU_FOLDED_WIDTH } from './constants';
 
-const { setAppElement } = Modal;
+export const GlobalStyle = createGlobalStyle`
+  .${OVERLAY_CLASS} {
+    top: ${TOOLBAR_HEIGHT}px !important;
+    left: ${MENU_WIDTH}px !important;
+  }
 
-export { Icons, SVGIcons };
-export { localStore, LOCAL_STORAGE_PREFIX };
-export * from './components';
-export * from './contexts';
-export * from './images';
-export * from './theme';
-export * from './utils';
-export { setAppElement };
+  body.folded .${OVERLAY_CLASS} {
+    left: ${MENU_FOLDED_WIDTH}px !important;
+  }
+`;

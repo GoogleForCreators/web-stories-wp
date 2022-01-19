@@ -51,10 +51,14 @@ const LIBRARY_TAB_IDS = new Set(
 );
 
 function LibraryProvider({ children }) {
-  const { showMedia3p } = useConfig();
+  const { showMedia3p, canViewDefaultTemplates } = useConfig();
   const {
-    actions: { getMedia },
+    actions: { getMedia, getCustomPageTemplates },
   } = useAPI();
+
+  const supportsCustomTemplates = Boolean(getCustomPageTemplates);
+  const showPageTemplates = canViewDefaultTemplates || supportsCustomTemplates;
+
   const showMedia = Boolean(getMedia); // Do not show media tab if getMedia api callback is not provided.
   const [textSets, setTextSets] = useState({});
   const [areTextSetsLoading, setAreTextSetsLoading] = useState({});
@@ -87,9 +91,9 @@ function LibraryProvider({ children }) {
         TEXT,
         SHAPES,
         showElementsTab && ELEMS,
-        PAGE_TEMPLATES,
+        showPageTemplates && PAGE_TEMPLATES,
       ].filter(Boolean),
-    [showMedia3p, showElementsTab, showMedia]
+    [showMedia3p, showElementsTab, showMedia, showPageTemplates]
   );
 
   const [tab, setTab] = useState(tabs[0].id);
