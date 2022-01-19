@@ -1176,6 +1176,7 @@ function RightClickMenuProvider({ children }) {
     shapeItems,
     stickerItems,
     textItems,
+    emptyStateMenu,
     pages,
   ]);
 

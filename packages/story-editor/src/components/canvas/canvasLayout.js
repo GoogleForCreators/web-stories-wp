@@ -40,7 +40,7 @@ import { useLayoutParams, useLayoutParamsCssVars } from './layout';
 import CanvasUploadDropTarget from './canvasUploadDropTarget';
 import CanvasElementDropzone from './canvasElementDropzone';
 import EyedropperLayer from './eyedropperLayer';
-import EmptyStateLayer from "./emptyStateLayer";
+import EmptyStateLayer from './emptyStateLayer';
 
 // data-fix-caret is for allowing caretRangeFromPoint to work in Safari.
 // See https://github.com/google/web-stories-wp/issues/7745.

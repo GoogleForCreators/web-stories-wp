@@ -22,7 +22,6 @@ import { useCallback, useEffect } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { __, _n, sprintf } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { resourceList } from '@web-stories-wp/media';
 import {
   Button as DefaultButton,
   BUTTON_SIZES,
@@ -37,10 +36,8 @@ import {
  * Internal dependencies
  */
 import { useConfig } from '../../../../../app/config';
-import useOnMediaSelect from './useOnMediaSelect';
 import { useLocalMedia } from '../../../../../app/media';
 import { SearchInput } from '../../../common';
-import useLibrary from '../../../useLibrary';
 import { MediaUploadButton, Select } from '../../../../form';
 import {
   MediaGalleryMessage,
@@ -56,6 +53,7 @@ import { PANE_PADDING } from '../../shared';
 import { LOCAL_MEDIA_TYPE_ALL } from '../../../../../app/media/local/types';
 import { focusStyle } from '../../../../panels/shared';
 import Tooltip from '../../../../tooltip';
+import useOnMediaSelect from './useOnMediaSelect';
 import paneId from './paneId';
 import VideoOptimizationDialog from './videoOptimizationDialog';
 import LinkInsertion from './hotlink';

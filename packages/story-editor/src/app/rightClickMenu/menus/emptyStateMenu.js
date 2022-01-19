@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+
+/**
  * Internal dependencies
  */
 import { RIGHT_CLICK_MENU_LABELS } from '../constants';
@@ -85,5 +90,9 @@ function EmptyStateMenu({ menuItemProps }) {
     },
   ];
 }
+
+EmptyStateMenu.propTypes = {
+  menuItemProps: PropTypes.object,
+};
 
 export default EmptyStateMenu;
