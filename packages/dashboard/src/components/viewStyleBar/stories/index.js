@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { select } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 
 /**
@@ -29,13 +28,23 @@ import ViewStyleBar from '..';
 export default {
   title: 'Dashboard/Components/ViewStyleBar',
   component: ViewStyleBar,
+  // TODO: fix select dropdown
+  argTypes: {
+    layoutStyle: {
+      options: Object.values(VIEW_STYLE),
+    },
+  },
 };
 
-export const _default = () => {
-  return (
-    <ViewStyleBar
-      layoutStyle={select('layoutStyle', VIEW_STYLE, VIEW_STYLE.LIST)}
-      onPress={action('on press clicked')}
-    />
-  );
+const Template = (args) => {
+  return <ViewStyleBar onPress={action('on press clicked')} {...args} />;
+};
+export const _default = Template.bind({});
+_default.args = {
+  layoutStyle: VIEW_STYLE.LIST,
+};
+_default.parameters = {
+  controls: {
+    include: ['layoutStyle'],
+  },
 };

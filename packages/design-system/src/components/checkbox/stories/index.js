@@ -20,7 +20,6 @@
 import { useState } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { action } from '@storybook/addon-actions';
-import { text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
@@ -32,6 +31,12 @@ import { DarkThemeProvider } from '../../../storybookUtils';
 export default {
   title: 'DesignSystem/Components/Checkbox',
   component: Checkbox,
+  args: {
+    checkboxLabel1: 'Normal',
+    checkboxLabel2: 'Disabled',
+    checkboxLabel3: 'Checked',
+    checkboxLabel4: 'Checked and Disabled',
+  },
 };
 
 const Container = styled.div`
@@ -62,7 +67,7 @@ const Row = styled.div`
   }
 `;
 
-export const _default = () => {
+export const _default = (args) => {
   const [formState, setFormState] = useState({
     one: false,
     two: true,
@@ -91,7 +96,7 @@ export const _default = () => {
         <Row>
           <div>
             <label htmlFor="one">
-              <Text as="span">{text('Checkbox Label 1', 'Normal')}</Text>
+              <Text as="span">{args.checkboxLabel1}</Text>
             </label>
             <Checkbox
               id="one"
@@ -102,7 +107,7 @@ export const _default = () => {
           </div>
           <div>
             <label htmlFor="disabledOne">
-              <Text as="span">{text('Checkbox Label 2', 'Disabled')}</Text>
+              <Text as="span">{args.checkboxLabel2}</Text>
             </label>
             <Checkbox
               id="disabledOne"
@@ -116,7 +121,7 @@ export const _default = () => {
         <Row>
           <div>
             <label htmlFor="two">
-              <Text as="span">{text('Checkbox Label 3', 'Checked')}</Text>
+              <Text as="span">{args.checkboxLabel3}</Text>
             </label>
             <Checkbox
               id="two"
@@ -127,9 +132,7 @@ export const _default = () => {
           </div>
           <div>
             <label htmlFor="disabledTwo">
-              <Text as="span">
-                {text('Checkbox Label 4', 'Checked and Disabled')}
-              </Text>
+              <Text as="span">{args.checkboxLabel4}</Text>
             </label>
             <Checkbox
               id="disabledTwo"
@@ -146,7 +149,7 @@ export const _default = () => {
           <Row>
             <div>
               <label htmlFor="three">
-                <Text as="span">{text('Checkbox Label 1', 'Normal')}</Text>
+                <Text as="span">{args.checkboxLabel1}</Text>
               </label>
               <Checkbox
                 id="three"
@@ -157,7 +160,7 @@ export const _default = () => {
             </div>
             <div>
               <label htmlFor="disabledThree">
-                <Text as="span">{text('Checkbox Label 2', 'Disabled')}</Text>
+                <Text as="span">{args.checkboxLabel2}</Text>
               </label>
               <Checkbox
                 id="disabledThree"
@@ -171,7 +174,7 @@ export const _default = () => {
           <Row>
             <div>
               <label htmlFor="four">
-                <Text as="span">{text('Checkbox Label 3', 'Checked')}</Text>
+                <Text as="span">{args.checkboxLabel3}</Text>
               </label>
               <Checkbox
                 id="four"
@@ -182,9 +185,7 @@ export const _default = () => {
             </div>
             <div>
               <label htmlFor="disabledFour">
-                <Text as="span">
-                  {text('Checkbox Label 4', 'Checked and Disabled')}
-                </Text>
+                <Text as="span">{args.checkboxLabel4}</Text>
               </label>
               <Checkbox
                 id="disabledFour"

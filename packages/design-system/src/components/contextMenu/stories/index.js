@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-import { boolean } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import {
   useCallback,
@@ -52,6 +51,14 @@ import * as MenuItems from '../components';
 export default {
   title: 'DesignSystem/Components/ContextMenu',
   component: ContextMenu,
+  args: {
+    isOpen: true,
+  },
+  parameters: {
+    controls: {
+      include: ['isOpen'],
+    },
+  },
 };
 
 const ViewportContainer = styled.div`
@@ -83,10 +90,10 @@ const Grid = styled.div`
   }
 `;
 
-export const _default = () => {
+export const _default = (args) => {
   return (
     <Container>
-      <ContextMenu isOpen={boolean('isOpen', true)}>
+      <ContextMenu {...args}>
         <MenuItems.MenuButton onClick={action('Clicked on `one`')}>
           {'one'}
         </MenuItems.MenuButton>
@@ -138,12 +145,12 @@ export const _default = () => {
   );
 };
 
-export const DarkMode = () => {
+export const DarkMode = (args) => {
   return (
     <DarkThemeProvider>
       <Container>
         <Container>
-          <ContextMenu isOpen={boolean('isOpen', true)}>
+          <ContextMenu {...args}>
             <MenuItems.MenuButton onClick={action('Clicked on `one`')}>
               {'one'}
             </MenuItems.MenuButton>
@@ -199,12 +206,12 @@ export const DarkMode = () => {
   );
 };
 
-export const QuickActionMenu = () => {
+export const QuickActionMenu = (args) => {
   return (
     <Grid>
       <Container>
         <Text>{'Blank page; no item selected'}</Text>
-        <ContextMenu isIconMenu isOpen={boolean('isOpen', true)}>
+        <ContextMenu isIconMenu {...args}>
           <MenuItems.MenuButton onClick={action('Clicked on the first action')}>
             <MenuItems.MenuIcon title="Change background color">
               <Bucket />
@@ -227,7 +234,7 @@ export const QuickActionMenu = () => {
       </Container>
       <Container>
         <Text>{'Background Image selected'}</Text>
-        <ContextMenu isIconMenu isOpen={boolean('isOpen', true)}>
+        <ContextMenu isIconMenu {...args}>
           <MenuItems.MenuButton onClick={action('Clicked on the first action')}>
             <MenuItems.MenuIcon title="Replace background">
               <PictureSwap />
@@ -250,7 +257,7 @@ export const QuickActionMenu = () => {
       </Container>
       <Container>
         <Text>{'Foreground Image selected'}</Text>
-        <ContextMenu isIconMenu isOpen={boolean('isOpen', true)}>
+        <ContextMenu isIconMenu {...args}>
           <MenuItems.MenuButton onClick={action('Clicked on the first action')}>
             <MenuItems.MenuIcon title="Replace media">
               <PictureSwap />
@@ -280,7 +287,7 @@ export const QuickActionMenu = () => {
       </Container>
       <Container>
         <Text>{'Video selected'}</Text>
-        <ContextMenu isIconMenu isOpen={boolean('isOpen', true)}>
+        <ContextMenu isIconMenu {...args}>
           <MenuItems.MenuButton onClick={action('Clicked on the first action')}>
             <MenuItems.MenuIcon title="Replace media">
               <PictureSwap />
@@ -315,7 +322,7 @@ export const QuickActionMenu = () => {
       </Container>
       <Container>
         <Text>{'Shape selected'}</Text>
-        <ContextMenu isIconMenu isOpen={boolean('isOpen', true)}>
+        <ContextMenu isIconMenu {...args}>
           <MenuItems.MenuButton onClick={action('Clicked on the first action')}>
             <MenuItems.MenuIcon title="Change color">
               <Bucket />
@@ -345,7 +352,7 @@ export const QuickActionMenu = () => {
       </Container>
       <Container>
         <Text>{'Text selected'}</Text>
-        <ContextMenu isIconMenu isOpen={boolean('isOpen', true)}>
+        <ContextMenu isIconMenu {...args}>
           <MenuItems.MenuButton onClick={action('Clicked on the first action')}>
             <MenuItems.MenuIcon title="Change color">
               <Bucket />
@@ -730,7 +737,7 @@ export const RightClickMenu = () => {
   );
 };
 
-export const RightClickMenuStaticValues = () => {
+export const RightClickMenuStaticValues = (args) => {
   return (
     <Grid>
       <RightClickMenuOnShapeAndBackground>
@@ -738,27 +745,23 @@ export const RightClickMenuStaticValues = () => {
       </RightClickMenuOnShapeAndBackground>
       <Container>
         <Text>{'Right click on page element'}</Text>
-        <ContextMenu isOpen={boolean('isOpen', true)}>{pageMenu}</ContextMenu>
+        <ContextMenu {...args}>{pageMenu}</ContextMenu>
       </Container>
       <Container>
         <Text>{'Right click on shape element'}</Text>
-        <ContextMenu isOpen={boolean('isOpen', true)}>{shapeMenu}</ContextMenu>
+        <ContextMenu {...args}>{shapeMenu}</ContextMenu>
       </Container>
       <Container>
         <Text>{'Right click on foreground media element'}</Text>
-        <ContextMenu isOpen={boolean('isOpen', true)}>
-          {foregroundMediaMenu}
-        </ContextMenu>
+        <ContextMenu {...args}>{foregroundMediaMenu}</ContextMenu>
       </Container>
       <Container>
         <Text>{'Right click on background element'}</Text>
-        <ContextMenu isOpen={boolean('isOpen', true)}>
-          {backgroundMediaMenu}
-        </ContextMenu>
+        <ContextMenu {...args}>{backgroundMediaMenu}</ContextMenu>
       </Container>
       <Container>
         <Text>{'Right click on text element'}</Text>
-        <ContextMenu isOpen={boolean('isOpen', true)}>{textMenu}</ContextMenu>
+        <ContextMenu {...args}>{textMenu}</ContextMenu>
       </Container>
     </Grid>
   );
