@@ -42,32 +42,23 @@ const RightClickMenuContainer = styled.div`
   z-index: 9999;
 `;
 
-const LabelWrapper = styled.span`
-  width: calc(100% + 14px);
-  display: inline-block;
-  position: relative;
-  margin-left: -14px;
-  svg {
-    width: 32px;
-    position: absolute;
-    top: -25%;
-  }
-  span {
-    padding-left: 32px;
-    font-size: 12px;
-    display: inline-block;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-`;
-
-const SuffixIconWrapper = styled.div`
-  svg {
-    width: 32px;
-    color: ${({ theme }) => theme.colors.fg.secondary};
-    margin: -12px 0 !important;
-  }
+const MenuButton = styled(ContextMenuComponents.MenuButton)`
+  ${({ supportsIcon }) =>
+    supportsIcon &&
+    `
+    svg {
+      width: 32px;
+      position: absolute;
+      margin-left: -12px;
+    }
+    span {
+      padding-left: 18px;
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  `}
 `;
 
 const RightClickMenu = () => {
@@ -104,29 +95,23 @@ const RightClickMenu = () => {
     label,
     shortcut,
     icon,
-    supportsIcon,
     SuffixIcon,
     ...buttonProps
   }) => (
-    <ContextMenuComponents.MenuButton {...buttonProps}>
-      {supportsIcon && (
-        <LabelWrapper>
-          {icon}
-          {label}
-        </LabelWrapper>
-      )}
-      {!supportsIcon && label}
+    <MenuButton {...buttonProps}>
+      {icon}
+      {label}
       {shortcut && (
         <ContextMenuComponents.MenuShortcut>
           {shortcut.display}
         </ContextMenuComponents.MenuShortcut>
       )}
       {SuffixIcon && (
-        <SuffixIconWrapper>
+        <ContextMenuComponents.MenuItemSuffix>
           <SuffixIcon />
-        </SuffixIconWrapper>
+        </ContextMenuComponents.MenuItemSuffix>
       )}
-    </ContextMenuComponents.MenuButton>
+    </MenuButton>
   );
 
   return createPortal(

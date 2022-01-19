@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,25 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Internal dependencies
- */
-import MenuButton from './button';
-import MenuGroup from './group';
-import MenuIcon from './icon';
-import MenuLabel from './label';
-import MenuLink from './link';
-import MenuSeparator from './separator';
-import MenuShortcut from './shortcut';
-import MenuItemSuffix from './suffix';
 
-export {
-  MenuButton,
-  MenuGroup,
-  MenuIcon,
-  MenuItemSuffix,
-  MenuLabel,
-  MenuLink,
-  MenuSeparator,
-  MenuShortcut,
+/**
+ * External dependencies
+ */
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
+
+const Wrapper = styled.div`
+  svg {
+    width: 32px;
+    color: ${({ theme }) => theme.colors.fg.secondary};
+    margin: -12px 0 !important;
+  }
+`;
+
+function Suffix({ children }) {
+  return <Wrapper>{children}</Wrapper>;
+}
+
+Suffix.propTypes = {
+  children: PropTypes.node,
 };
+
+export default Suffix;
