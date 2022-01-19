@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-import { boolean, number, select, text } from '@storybook/addon-knobs';
 import styled, { css } from 'styled-components';
 import { useState, forwardRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
@@ -40,6 +39,24 @@ import {
 
 export default {
   title: 'DesignSystem/Components/DropDown',
+  args: {
+    hasError: false,
+    hint: 'default hint text',
+    placeholder: 'select a value',
+    ariaLabel: 'ariaLabel',
+    dropDownLabel: 'label',
+    isKeepMenuOpenOnSelection: true,
+    isRTL: false,
+    disabled: false,
+    placement: PLACEMENT.TOP,
+    popupZIndex: 1,
+  },
+  //TODO: fix select
+  argTypes: {
+    placement: {
+      options: Object.values(PLACEMENT),
+    },
+  },
 };
 
 const Container = styled.div`
@@ -82,7 +99,7 @@ const styleOverrideForAnimationEffectMenu = css`
   }
 `;
 
-export const _default = () => {
+export const _default = (args) => {
   const [selectedValue, setSelectedValue] = useState(
     basicDropDownOptions[2].value
   );
@@ -97,28 +114,19 @@ export const _default = () => {
         <DropDown
           emptyText={'No options available'}
           options={basicDropDownOptions}
-          hasError={boolean('hasError')}
-          hint={text('hint', 'default hint text')}
-          placeholder={text('placeholder', 'select a value')}
-          ariaLabel={text('ariaLabel')}
-          dropDownLabel={text('dropDownLabel', 'label')}
-          isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection')}
-          isRTL={boolean('isRTL')}
-          disabled={boolean('disabled')}
           selectedValue={selectedValue}
           onMenuItemClick={(event, newValue) => {
             action('onMenuItemClick', event);
             setSelectedValue(newValue);
           }}
-          placement={select('placement', Object.values(PLACEMENT))}
-          popupZIndex={number('popupZIndex')}
+          {...args}
         />
       </Container>
     </DarkThemeProvider>
   );
 };
 
-export const LightTheme = () => {
+export const LightTheme = (args) => {
   const [selectedValue, setSelectedValue] = useState(null);
 
   return (
@@ -126,28 +134,19 @@ export const LightTheme = () => {
       <DropDown
         emptyText={'No options available'}
         options={basicDropDownOptions}
-        hasError={boolean('hasError')}
-        hint={text('hint', 'default hint text')}
-        placeholder={text('placeholder', 'select a value')}
-        ariaLabel={text('ariaLabel')}
-        dropDownLabel={text('dropDownLabel', 'label')}
-        isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection')}
-        isRTL={boolean('isRTL')}
-        disabled={boolean('disabled')}
         selectedValue={selectedValue}
         onMenuItemClick={(event, newValue) => {
           action('onMenuItemClick', event);
           setSelectedValue(newValue);
         }}
-        placement={select('placement', Object.values(PLACEMENT))}
-        popupZIndex={number('popupZIndex')}
+        {...args}
       />
     </Container>
   );
 };
 
 const shortenedOptions = [...basicDropDownOptions.slice(0, 3)];
-export const ShortMenu = () => {
+export const ShortMenu = (args) => {
   const [selectedValue, setSelectedValue] = useState(null);
 
   return (
@@ -155,27 +154,18 @@ export const ShortMenu = () => {
       <DropDown
         emptyText={'No options available'}
         options={shortenedOptions}
-        hasError={boolean('hasError')}
-        hint={text('hint', 'default hint text')}
-        placeholder={text('placeholder', 'select a value')}
-        ariaLabel={text('ariaLabel')}
-        dropDownLabel={text('dropDownLabel', 'label')}
-        isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection')}
-        isRTL={boolean('isRTL')}
-        disabled={boolean('disabled')}
         selectedValue={selectedValue}
         onMenuItemClick={(event, newValue) => {
           action('onMenuItemClick', event);
           setSelectedValue(newValue);
         }}
-        placement={select('placement', Object.values(PLACEMENT))}
-        popupZIndex={number('popupZIndex')}
+        {...args}
       />
     </Container>
   );
 };
 
-export const NoOptionsMenu = () => {
+export const NoOptionsMenu = (args) => {
   const [selectedValue, setSelectedValue] = useState(null);
 
   return (
@@ -183,27 +173,18 @@ export const NoOptionsMenu = () => {
       <DropDown
         emptyText={'No options available'}
         options={[]}
-        hasError={boolean('hasError')}
-        hint={text('hint', 'default hint text')}
-        placeholder={text('placeholder', 'select a value')}
-        ariaLabel={text('ariaLabel')}
-        dropDownLabel={text('dropDownLabel', 'label')}
-        isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection')}
-        isRTL={boolean('isRTL')}
-        disabled={boolean('disabled')}
         selectedValue={selectedValue}
         onMenuItemClick={(event, newValue) => {
           action('onMenuItemClick', event);
           setSelectedValue(newValue);
         }}
-        placement={select('placement', Object.values(PLACEMENT))}
-        popupZIndex={number('popupZIndex')}
+        {...args}
       />
     </Container>
   );
 };
 
-export const ReallyLongLabelsMenu = () => {
+export const ReallyLongLabelsMenu = (args) => {
   const [selectedValue, setSelectedValue] = useState(null);
 
   return (
@@ -211,27 +192,18 @@ export const ReallyLongLabelsMenu = () => {
       <DropDown
         emptyText={'No options available'}
         options={reallyLongOptions}
-        hasError={boolean('hasError')}
-        hint={text('hint', 'default hint text')}
-        placeholder={text('placeholder', 'select a value')}
-        ariaLabel={text('ariaLabel')}
-        dropDownLabel={text('dropDownLabel', 'label')}
-        isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection')}
-        isRTL={boolean('isRTL')}
-        disabled={boolean('disabled')}
         selectedValue={selectedValue}
         onMenuItemClick={(event, newValue) => {
           action('onMenuItemClick', event);
           setSelectedValue(newValue);
         }}
-        placement={select('placement', Object.values(PLACEMENT))}
-        popupZIndex={number('popupZIndex')}
+        {...args}
       />
     </Container>
   );
 };
 
-export const SubMenus = () => {
+export const SubMenus = (args) => {
   const [selectedValue, setSelectedValue] = useState('dog-2');
 
   return (
@@ -239,21 +211,12 @@ export const SubMenus = () => {
       <DropDown
         emptyText={'No options available'}
         options={nestedDropDownOptions}
-        hasError={boolean('hasError')}
-        hint={text('hint', 'default hint text')}
-        placeholder={text('placeholder', 'select a value')}
-        ariaLabel={text('ariaLabel')}
-        dropDownLabel={text('dropDownLabel', 'label')}
-        isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection')}
-        isRTL={boolean('isRTL')}
-        disabled={boolean('disabled')}
         selectedValue={selectedValue}
         onMenuItemClick={(event, newValue) => {
           action('onMenuItemClick', event);
           setSelectedValue(newValue);
         }}
-        placement={select('placement', Object.values(PLACEMENT))}
-        popupZIndex={number('popupZIndex')}
+        {...args}
       />
     </Container>
   );
@@ -276,7 +239,7 @@ RenderItemOverride.propTypes = {
   isSelected: PropTypes.bool,
 };
 
-export const OverriddenAnimationProofOfConcept = () => {
+export const OverriddenAnimationProofOfConcept = (args) => {
   const [selectedValue, setSelectedValue] = useState(null);
   return (
     <DarkThemeProvider>
@@ -284,22 +247,14 @@ export const OverriddenAnimationProofOfConcept = () => {
         <DropDown
           emptyText={'No options available'}
           options={effectChooserOptions}
-          hasError={boolean('hasError')}
-          hint={text('hint', 'default hint text')}
-          placeholder={text('placeholder', 'select a value')}
-          ariaLabel={text('ariaLabel')}
-          dropDownLabel={text('dropDownLabel', 'label')}
-          isKeepMenuOpenOnSelection={boolean('isKeepMenuOpenOnSelection', true)}
-          disabled={boolean('disabled')}
           selectedValue={selectedValue}
           onMenuItemClick={(event, newValue) => {
             action('onMenuItemClick', event);
             setSelectedValue(newValue);
           }}
-          placement={select('placement', Object.values(PLACEMENT))}
-          popupZIndex={number('popupZIndex')}
           menuStylesOverride={styleOverrideForAnimationEffectMenu}
           renderItem={RenderItemOverride}
+          {...args}
         />
       </Container>
     </DarkThemeProvider>
