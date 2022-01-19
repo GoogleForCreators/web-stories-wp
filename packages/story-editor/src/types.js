@@ -65,6 +65,7 @@ StoryPropTypes.story = PropTypes.shape({
   autoAdvance: PropTypes.bool,
   defaultPageDuration: PropTypes.number,
   backgroundAudio: BackgroundAudioPropType,
+  tracks: PropTypes.arrayOf(ResourcePropTypes.trackResource),
 });
 
 StoryPropTypes.mask = PropTypes.shape({
@@ -98,6 +99,7 @@ StoryPropTypes.page = PropTypes.shape({
   elements: PropTypes.arrayOf(PropTypes.shape(StoryPropTypes.element)),
   overlay: PropTypes.oneOf(Object.values(OverlayType)),
   backgroundAudio: BackgroundAudioPropType,
+  tracks: PropTypes.arrayOf(ResourcePropTypes.trackResource),
 });
 
 const StoryLayerPropTypes = {
