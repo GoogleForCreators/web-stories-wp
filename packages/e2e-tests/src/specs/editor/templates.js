@@ -33,7 +33,7 @@ describe('Templates', () => {
       await expect(page).toMatchElement('button[aria-disabled="true"]', {
         text: 'Save current page as template',
       });
-      await expect(page).toMatchElement(
+      await expect(page).not.toMatchElement(
         'button[aria-label="Select templates type"]'
       );
       await expect(page).not.toMatch('Default templates');
