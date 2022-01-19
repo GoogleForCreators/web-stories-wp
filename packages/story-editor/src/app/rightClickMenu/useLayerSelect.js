@@ -122,6 +122,7 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
         SuffixIcon: Icons.ChevronRightSmall,
         'aria-haspopup': 'menu',
         'aria-pressed': isSubMenuOpen,
+        'aria-expanded': isSubMenuOpen,
         ...menuItemProps,
       }
     : null;
