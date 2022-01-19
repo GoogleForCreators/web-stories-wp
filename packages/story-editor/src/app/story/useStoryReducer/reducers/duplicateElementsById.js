@@ -75,6 +75,11 @@ function duplicateElementsById(state, { elementIds }) {
     return;
   });
 
+  // Do nothing if no new elements
+  if (!newSelection.length) {
+    return state;
+  }
+
   const newPages = [
     ...state.pages.slice(0, pageIndex),
     newPage,
@@ -84,7 +89,7 @@ function duplicateElementsById(state, { elementIds }) {
   return {
     ...state,
     pages: newPages,
-    selection: newSelection.length ? newSelection : state.selection,
+    selection: newSelection,
   };
 }
 

@@ -123,7 +123,7 @@ const duplicateElementsById =
   (dispatch) =>
   ({ elementIds }) =>
     dispatch({
-      type: types.DUPLICATE_ELEMENT_BY_ID,
+      type: types.DUPLICATE_ELEMENTS_BY_ID,
       payload: { elementIds },
     });
 

@@ -72,6 +72,31 @@ describe('duplicateElementsById', () => {
     });
   });
 
+  it('should not update state if non-existent element ids are passed in', () => {
+    const { restore, duplicateElementsById } = setupReducer();
+
+    // Set an initial state with a current page.
+    const initialState = restore({
+      pages: [
+        {
+          id: '111',
+          animations: [],
+          elements: [
+            { id: '123', isBackground: true, type: 'shape' },
+            { id: '456', x: 0, y: 0, type: 'shape' },
+            { id: '789', x: 0, y: 0, type: 'shape' },
+          ],
+        },
+      ],
+      current: '111',
+      selection: ['789', '456'],
+    });
+
+    const result = duplicateElementsById({ elementIds: ['not-an-id'] });
+
+    expect(result).toStrictEqual(initialState);
+  });
+
   it("doesn't duplicate background elements", () => {
     const { restore, duplicateElementsById } = setupReducer();
 
