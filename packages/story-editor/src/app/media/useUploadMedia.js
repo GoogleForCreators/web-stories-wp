@@ -107,7 +107,8 @@ function useUploadMedia({
   // Add *new* items to the media library and canvas.
   useEffect(() => {
     const newItems = pending.filter(
-      ({ id }) => !mediaRef.current.find(({ id: _id }) => id === _id)
+      ({ resource: { id: resourceId } }) =>
+        !mediaRef.current.find(({ id }) => id === resourceId)
     );
 
     if (!newItems.length) {

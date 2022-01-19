@@ -109,6 +109,17 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/google/web-stories-wp/releases).
 
+= 1.16.0 =
+
+**Release Date:** January 18, 2021.
+
+* Compatibility with WordPress 5.9
+* New feature: improved video captions appearance in the editor.
+* New feature: duplicate elements via right-click menu.
+* Enhancement: use static images for displaying saved templates in the editor.
+* Enhancement: improved appearance when exploring templates in the dashboard.
+* Bug fixes and performance improvements.
+
 = 1.15.1 =
 
 **Release Date:** December 7, 2021.
@@ -127,18 +138,11 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * New feature: added support for password protected stories.
 * Bug fixes and performance improvements.
 
-= 1.14.0 =
-
-**Release Date:** November 2, 2021.
-
-* New feature: archive page customization.
-* New feature: improved video captions appearance on the frontend.
-* New feature: right-click menu in the layers panel.
-* Performance improvements in the editor for default page templates.
-* Fixes an issue with embeds not appearing on the frontend.
-* Bug fixes and performance improvements.
-
 == Upgrade Notice ==
+
+= 1.16.0 =
+
+WordPress 5.9 compatibility, various UI refinements, right-click menu element duplication, and several bug fixes and performance improvements.
 
 = 1.15.1 =
 
@@ -147,7 +151,3 @@ Several bug fixes to address the editor crashing and styling differences between
 = 1.15.0 =
 
 Media hotlinking, templates search, link qualification, and several bug fixes and performance improvements.
-
-= 1.14.0 =
-
-Archive page customization, improved video captions appearance, layer panel improvements, and several bug fixes.
