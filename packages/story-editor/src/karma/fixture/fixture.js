@@ -77,7 +77,7 @@ function MediaUpload({ render: _render, onSelect }) {
   return _render(open);
 }
 
-const DEFAULT_CONFIG = {
+export const FIXTURE_DEFAULT_CONFIG = {
   storyId: 1,
   api: {},
   allowedMimeTypes: {
@@ -160,7 +160,7 @@ export class Fixture {
    * @param {Object} config.mocks An object containing functions to be used as stubs for the api.
    */
   constructor({ mocks } = {}) {
-    this._config = { ...DEFAULT_CONFIG };
+    this._config = { ...FIXTURE_DEFAULT_CONFIG };
 
     this._componentStubs = new Map();
     const origCreateElement = React.createElement;
@@ -1178,7 +1178,7 @@ class APIProviderFixture {
  * @param {*} value The reponse value.
  * @return {!Promise} The promise of the response.
  */
-function asyncResponse(value) {
+export function asyncResponse(value) {
   return Promise.resolve(value);
 }
 
