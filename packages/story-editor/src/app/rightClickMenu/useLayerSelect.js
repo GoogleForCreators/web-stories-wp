@@ -81,6 +81,7 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
 
   const subMenuItems = useMemo(() => {
     const intersectingElements = getIntersectingElements();
+    intersectingElements.reverse();
     return intersectingElements.map((element) => {
       const { id, isBackground, type } = element;
       const { LayerContent } = getDefinitionForType(type);
