@@ -79,10 +79,7 @@ function Popup({
   const [popupState, setPopupState] = useState(null);
   const [mounted, setMounted] = useState(false);
   const popup = useRef(null);
-  const {
-    isRTL,
-    styleConstants: { topOffset },
-  } = useConfig();
+  const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
 
   const positionPopup = useCallback(
     (evt) => {
