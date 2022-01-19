@@ -17,7 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo } from '@web-stories-wp/react';
+import { useEffect, useMemo, useState } from '@web-stories-wp/react';
 import { sprintf, __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
 import {
@@ -96,13 +96,16 @@ function DetailsContent({
   template,
 }) {
   const { postersByPage, title, description, tags, colors } = template || {};
+  const [galleryPosters, setGalleryPosters] = useState([]);
 
-  const galleryPosters = useMemo(() => {
+  useEffect(() => {
     if (postersByPage) {
-      return Object.values(postersByPage).map((poster, index) => ({
-        id: index,
-        ...poster,
-      }));
+      setGalleryPosters(
+        Object.values(postersByPage).map((poster, index) => ({
+          id: index,
+          ...poster,
+        }))
+      );
     }
     return undefined;
   }, [postersByPage]);
@@ -131,6 +134,7 @@ function DetailsContent({
         aria-label={__('View previous template', 'web-stories')}
         onClick={() => {
           switchToTemplateByOffset(previousIndex);
+          setGalleryPosters([]);
         }}
         disabled={disablePrevious}
       >
@@ -146,6 +150,7 @@ function DetailsContent({
         aria-label={__('View next template', 'web-stories')}
         onClick={() => {
           switchToTemplateByOffset(nextIndex);
+          setGalleryPosters([]);
         }}
         disabled={disableNext}
       >
