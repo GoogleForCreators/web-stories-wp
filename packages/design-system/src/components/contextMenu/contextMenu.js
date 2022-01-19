@@ -18,47 +18,59 @@
  */
 import PropTypes from 'prop-types';
 import { useMemo } from '@web-stories-wp/react';
+import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { useMouseDownOutsideRef } from '../../utils';
+import { noop } from '../../utils';
 import { SmartPopover, Shadow } from './styled';
 import Menu, { MenuPropTypes } from './menu';
 import AnimationContainer from './animationContainer';
+import { ContextMenuProvider } from './contextMenuProvider';
 
 const ContextMenu = ({
   animate,
+  'aria-label': ariaLabel = __('Menu', 'web-stories'),
+  children,
+  id,
   isAlwaysVisible,
-  items,
   isRTL,
+  isIconMenu,
   isInline = false,
+  onDismiss = noop,
   ...props
 }) => {
-  const ref = useMouseDownOutsideRef(() => {
-    props.isOpen && props.onDismiss();
-  });
   const Wrapper = useMemo(
     () => (animate ? AnimationContainer : SmartPopover),
     [animate]
   );
 
   return (
-    <Wrapper
-      isInline={isInline}
-      role={isAlwaysVisible ? null : 'dialog'}
-      isOpen={isAlwaysVisible || props.isOpen}
-      isRTL={isRTL}
-    >
-      <Menu ref={ref} aria-expanded={props.isOpen} items={items} {...props} />
-      {/* <AnimationContainer /> has a <Shadow />. Don't double the shadow. */}
-      {!animate && <Shadow />}
-    </Wrapper>
+    <ContextMenuProvider isIconMenu={isIconMenu} onDismiss={onDismiss}>
+      <Wrapper
+        aria-label={ariaLabel}
+        isInline={isInline}
+        role={isAlwaysVisible ? null : 'dialog'}
+        isOpen={isAlwaysVisible || props.isOpen}
+        isRTL={isRTL}
+      >
+        <Menu aria-expanded={props.isOpen} {...props}>
+          {children}
+        </Menu>
+        {/* <AnimationContainer /> has a <Shadow />. Don't double the shadow. */}
+        {!animate && <Shadow />}
+      </Wrapper>
+    </ContextMenuProvider>
   );
 };
 ContextMenu.propTypes = {
   ...MenuPropTypes,
   animate: PropTypes.bool,
+  'aria-label': PropTypes.string,
+  children: PropTypes.node,
+  id: PropTypes.string,
   isOpen: PropTypes.bool,
+  onDismiss: PropTypes.func,
   isAlwaysVisible: PropTypes.bool,
   isRTL: PropTypes.bool,
 };

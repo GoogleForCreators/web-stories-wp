@@ -23,7 +23,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { getMedia, saveStoryById } from './api';
+import { getMedia, saveStoryById, getFonts } from './api';
 import { HeaderLayout } from './header';
 import { LOCAL_STORAGE_CONTENT_KEY } from './constants';
 
@@ -38,7 +38,7 @@ const AppContainer = styled.div`
 export const _default = () => {
   const content = window.localStorage.getItem(LOCAL_STORAGE_CONTENT_KEY);
   const story = content ? JSON.parse(content) : {};
-  const apiCallbacks = { saveStoryById, getMedia };
+  const apiCallbacks = { saveStoryById, getMedia, getFonts };
 
   return (
     <AppContainer>

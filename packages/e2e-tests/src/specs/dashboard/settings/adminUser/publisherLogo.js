@@ -94,7 +94,7 @@ describe('Publisher Logo', () => {
 
       await page.waitForTimeout(300);
 
-      await expect(logoToMakeDefault).toClick('span', {
+      await expect(logoToMakeDefault).toClick('button', {
         text: 'Set as Default',
       });
 
@@ -157,7 +157,7 @@ describe('Publisher Logo', () => {
 
       await page.waitForTimeout(300);
 
-      await expect(logoToDelete).toClick('span', { text: 'Delete' });
+      await expect(logoToDelete).toClick('button', { text: 'Delete' });
 
       await page.waitForTimeout(300);
       const updatedPublisherLogos = await publisherLogosContainer.$$(

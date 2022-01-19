@@ -35,7 +35,6 @@ import theme, { GlobalStyle } from './theme';
 import ErrorBoundary from './components/errorBoundary';
 import { ConfigProvider } from './app/config';
 import { APIProvider } from './app/api';
-import { FileProvider } from './app/file';
 import { Media3pApiProvider } from './app/media/media3p/api';
 import { HistoryProvider } from './app/history';
 import { StoryProvider } from './app/story';
@@ -47,6 +46,7 @@ import AutoSaveHandler from './components/autoSaveHandler';
 import { TransformProvider } from './components/transform';
 import { DropTargetsProvider } from './components/dropTargets';
 import { HelpCenterProvider } from './app/helpCenter';
+import { PageDataUrlProvider } from './app/pageDataUrls';
 import DevTools from './components/devTools';
 import { GlobalStyle as DefaultMoveableGlobalStyle } from './components/moveable/moveStyle';
 import { GlobalStyle as CropMoveableGlobalStyle } from './components/moveable/cropStyle';
@@ -65,22 +65,22 @@ function StoryEditor({ config, initialEdits, children }) {
           <ErrorBoundary>
             <ConfigProvider config={_config}>
               <APIProvider>
-                <FileProvider>
-                  <Media3pApiProvider>
-                    <HistoryProvider size={50}>
-                      <SnackbarProvider>
-                        <StoryProvider
-                          storyId={storyId}
-                          initialEdits={initialEdits}
-                        >
-                          <TaxonomyProvider>
-                            <CurrentUserProvider>
-                              <FontProvider>
-                                <MediaProvider>
-                                  <AutoSaveHandler />
-                                  <TransformProvider>
-                                    <DropTargetsProvider>
-                                      <HelpCenterProvider>
+                <Media3pApiProvider>
+                  <HistoryProvider size={50}>
+                    <SnackbarProvider>
+                      <StoryProvider
+                        storyId={storyId}
+                        initialEdits={initialEdits}
+                      >
+                        <TaxonomyProvider>
+                          <CurrentUserProvider>
+                            <FontProvider>
+                              <MediaProvider>
+                                <AutoSaveHandler />
+                                <TransformProvider>
+                                  <DropTargetsProvider>
+                                    <HelpCenterProvider>
+                                      <PageDataUrlProvider>
                                         <GlobalStyle />
                                         <DevTools />
                                         <DefaultMoveableGlobalStyle />
@@ -89,18 +89,18 @@ function StoryEditor({ config, initialEdits, children }) {
                                         <CalendarStyle />
                                         <KeyboardOnlyOutlines />
                                         {children}
-                                      </HelpCenterProvider>
-                                    </DropTargetsProvider>
-                                  </TransformProvider>
-                                </MediaProvider>
-                              </FontProvider>
-                            </CurrentUserProvider>
-                          </TaxonomyProvider>
-                        </StoryProvider>
-                      </SnackbarProvider>
-                    </HistoryProvider>
-                  </Media3pApiProvider>
-                </FileProvider>
+                                      </PageDataUrlProvider>
+                                    </HelpCenterProvider>
+                                  </DropTargetsProvider>
+                                </TransformProvider>
+                              </MediaProvider>
+                            </FontProvider>
+                          </CurrentUserProvider>
+                        </TaxonomyProvider>
+                      </StoryProvider>
+                    </SnackbarProvider>
+                  </HistoryProvider>
+                </Media3pApiProvider>
               </APIProvider>
             </ConfigProvider>
           </ErrorBoundary>

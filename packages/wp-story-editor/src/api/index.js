@@ -22,3 +22,4 @@ export * from './user';
 export * from './hotlinkInfo';
 export * from './proxy';
 export * from './taxonomy';
+export * from './fonts';

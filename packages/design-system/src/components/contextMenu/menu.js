@@ -22,374 +22,178 @@ import {
   useEffect,
   useMemo,
   useRef,
-  useState,
-  forwardRef,
+  useCombinedRefs,
 } from '@web-stories-wp/react';
 import styled, { css } from 'styled-components';
-import { v4 as uuidv4 } from 'uuid';
-import { __ } from '@web-stories-wp/i18n';
 /**
  * Internal dependencies
  */
-import { BUTTON_TRANSITION_TIMING } from '../button/constants';
+import {
+  FOCUSABLE_SELECTORS,
+  KEYS,
+  noop,
+  useMouseDownOutsideRef,
+} from '../../utils';
 import { useKeyDownEffect } from '../keyboard';
-import { KEYS, noop, useComposeRefs } from '../../utils';
-import { MenuItem, MenuItemProps } from './menuItem';
-
-const FOCUSABLE_ELEMENTS = ['A', 'BUTTON'];
-
-const SEPARATOR_TOP_CLASS = 'separatorTop';
-const SEPARATOR_BOTTOM_CLASS = 'separatorBottom';
+import { useContextMenu } from './contextMenuProvider';
 
 const MenuWrapper = styled.div(
   ({ theme }) => css`
-    padding: ${({ isIconMenu }) => (isIconMenu ? 0 : '5px 0 0')};
+    padding: ${({ $isIconMenu }) => ($isIconMenu ? '4px 3px' : '8px 0')};
     background-color: ${theme.colors.bg.primary};
-    pointer-events: none;
     border-radius: ${theme.borders.radius.small};
     border: 1px solid ${theme.colors.border.disable};
-    width: ${({ isIconMenu }) => (isIconMenu ? '40px' : '210px')};
+    width: ${({ $isIconMenu }) => ($isIconMenu ? 40 : 210)}px;
+
+    *:last-child {
+      margin-bottom: 0;
+    }
   `
 );
 MenuWrapper.propTypes = {
   isIconMenu: PropTypes.bool,
 };
 
-const separatorCSS = css`
-  display: block;
-  content: '';
-  width: 100%;
-  height: 1px;
-  background-color: ${({ theme }) => theme.colors.divider.primary};
-  margin: 8px 0;
-
-  ${({ isIconMenu, theme }) =>
-    isIconMenu &&
-    css`
-      width: 40%;
-      margin: auto;
-      background-color: ${theme.colors.divider.primary};
-    `}
-`;
-separatorCSS.propTypes = {
-  isIconMenu: PropTypes.bool,
-};
-
-const MenuList = styled.ul`
-  background-color: ${({ theme }) => theme.colors.bg.primary};
-  border-radius: ${({ theme }) => theme.borders.radius.small};
-  margin: 0;
-  padding: ${({ isIconMenu }) => (isIconMenu ? 0 : '4px 0')};
-  pointer-events: auto;
-  list-style: none;
-
-  a {
-    background-color: transparent;
-    text-decoration: none;
-  }
-
-  li {
-    a,
-    button,
-    div {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 2px 16px;
-      border: 0;
-      color: ${({ theme }) => theme.colors.fg.primary};
-      transition: background-color ${BUTTON_TRANSITION_TIMING};
-    }
-    ${({ isIconMenu }) =>
-      isIconMenu &&
-      css`
-        margin: 0;
-        button {
-          padding: 0;
-          margin: 4px auto;
-        }
-        div,
-        a {
-          padding: 0;
-        }
-      `}
-
-    span {
-      transition: color ${BUTTON_TRANSITION_TIMING};
-    }
-
-    a {
-      :active span,
-      :hover span {
-        color: ${({ theme }) => theme.colors.fg.primary};
-      }
-    }
-
-    button {
-      width: ${({ isIconMenu }) => (isIconMenu ? '32px' : '100%')};
-      border-radius: ${({ isIconMenu }) => (isIconMenu ? '4px' : 0)};
-      background-color: transparent;
-
-      :disabled {
-        background-color: transparent;
-
-        span {
-          color: ${({ theme }) => theme.colors.fg.disable};
-        }
-      }
-
-      :active span,
-      :hover span {
-        color: ${({ theme }) => theme.colors.fg.primary};
-      }
-    }
-
-    &.separatorTop {
-      &:before {
-        ${separatorCSS};
-      }
-    }
-
-    &.separatorBottom {
-      &:after {
-        ${separatorCSS};
-      }
-    }
-
-    :hover a,
-    button:hover:not(:disabled) {
-      background-color: ${({ theme }) =>
-        theme.colors.interactiveBg.secondaryHover};
-    }
-
-    :active a,
-    button:active:not(:disabled) {
-      background-color: ${({ theme }) =>
-        theme.colors.interactiveBg.secondaryPress};
-    }
-  }
-`;
-MenuList.propTypes = {
-  isIconMenu: PropTypes.bool,
-};
-
 /**
- * Default wrapper to wrap the context menu's menu item. Necessary to allow
- * other apps the ability to inject their own media pickers.
+ * Extracts all focusable children from an html tree.
  *
- * @param {Object} props Component props
- * @param {Function} props.render Decorating wrapper function for menu item components.
- * @return {Node} The react component
+ * @param {HTMLElement} parent The parent to search
+ * @return {Array.<HTMLElement>} List of focusable elements
  */
-const IdentityItemWrapper = ({ render, ...props }) => render(props);
-IdentityItemWrapper.propTypes = {
-  render: PropTypes.func.isRequired,
-};
+function getFocusableChildren(parent) {
+  return Array.from(parent.querySelectorAll(FOCUSABLE_SELECTORS.join(', ')));
+}
 
-const Menu = forwardRef(
-  (
-    {
-      items,
-      isIconMenu,
-      isOpen,
-      onDismiss,
-      groupLabel = __('Menu options', 'web-stories'),
-      disableControlledTabNavigation = false,
-      ...props
+const Menu = ({
+  children,
+  disableControlledTabNavigation,
+  isOpen,
+  onFocus = noop,
+  ...props
+}) => {
+  const { focusedId, isIconMenu, onDismiss, setFocusedId } = useContextMenu(
+    ({ state, actions }) => ({
+      focusedId: state.focusedId,
+      isIconMenu: state.isIconMenu,
+      onDismiss: actions.onDismiss,
+      setFocusedId: actions.setFocusedId,
+    })
+  );
+  const mouseDownOutsideRef = useMouseDownOutsideRef(() => {
+    isOpen && onDismiss();
+  });
+  const menuRef = useRef(null);
+  const composedListRef = useCombinedRefs(mouseDownOutsideRef, menuRef);
+
+  const handleFocus = useCallback(
+    (evt) => {
+      onFocus(evt);
+
+      const focusableChildren = getFocusableChildren(menuRef.current);
+
+      if (menuRef.current === evt.target) {
+        focusableChildren?.[0]?.focus();
+      }
     },
-    ref
-  ) => {
-    const [focusedIndex, setFocusedIndex] = useState(-1);
-    const wrapperRef = useRef(null);
-    const listRef = useRef(null);
-    const menuWasAlreadyOpen = useRef(false);
-    const ids = useMemo(() => items.map(() => uuidv4()), [items]);
+    [onFocus]
+  );
 
-    const composedWrapperRef = useComposeRefs(wrapperRef, ref);
-
-    // Need ref so that `items.length` changes do not trigger the effect
-    // that focuses an item in the menu when it is first opened.
-    const totalIndex = useRef(items.length - 1);
-    totalIndex.current = items.length - 1;
-
-    /**
-     * Focus event handler for each menu item. Sets the tracked
-     * `focusedIndex` and calls a `focusCallback` if provided.
-     *
-     * @param {Event} ev The triggering event.
-     * @param {number} itemIndex The index of the item.
-     * @param {Function} focusCallback An optional callback function.
-     */
-    const handleFocusItem = useCallback((ev, itemIndex, focusCallback) => {
-      setFocusedIndex(itemIndex);
-      focusCallback?.(ev);
-    }, []);
-
-    /**
-     * Allow navigation of the list using the UP and DOWN arrow keys.
-     * Close menu if ESCAPE is pressed.
-     *
-     * @param {Event} event The synthetic event
-     * @return {void} void
-     */
-    const handleKeyboardNav = useCallback(
-      (evt) => {
-        const { key, shiftKey } = evt;
-        if (key === 'Escape') {
-          onDismiss?.(evt);
-          return;
-        }
-
-        const isAscending =
-          [KEYS.UP, KEYS.LEFT].includes(key) || (key === KEYS.TAB && shiftKey);
-        let index = focusedIndex + (isAscending ? -1 : 1);
-        let terminate = isAscending ? index < 0 : index > totalIndex.current;
-
-        while (!terminate) {
-          const element = listRef.current?.children?.[index]?.children?.[0];
-
-          if (
-            FOCUSABLE_ELEMENTS.includes(element?.tagName) &&
-            !element?.disabled
-          ) {
-            element?.focus();
-            setFocusedIndex(index);
-            return;
-          }
-
-          index = isAscending ? index - 1 : index + 1;
-          terminate = isAscending ? index < 0 : index > totalIndex.current;
-        }
-
-        // If we didn't find a focusable element or get to the start/end
-        // of the list then **tabbing should close the menu**
-        if (key === KEYS.TAB) {
-          onDismiss?.(evt);
-        }
-      },
-      [focusedIndex, onDismiss]
-    );
-
-    useEffect(() => {
-      // focus first 'focusable' element if menu is opened and no element is focused.
-      // close the menu if there's no focusable element
-      if (isOpen && !menuWasAlreadyOpen.current && listRef?.current) {
-        let index = 0;
-
-        while (index <= totalIndex.current) {
-          const element = listRef.current?.children?.[index]?.children?.[0];
-
-          if (
-            FOCUSABLE_ELEMENTS.includes(element?.tagName) &&
-            !element?.disabled
-          ) {
-            element?.focus();
-            setFocusedIndex(index);
-            menuWasAlreadyOpen.current = true;
-            return;
-          }
-
-          index++;
-        }
-
-        menuWasAlreadyOpen.current = true;
+  /**
+   * Allow navigation of the list using the UP and DOWN arrow keys.
+   * Close menu if ESCAPE is pressed.
+   *
+   * @param {Event} event The synthetic event
+   * @return {void} void
+   */
+  const handleKeyboardNav = useCallback(
+    (evt) => {
+      const { key } = evt;
+      if (key === 'Escape') {
+        onDismiss(evt);
+        return;
       }
-      // reset state when menu is closed. This component does not unmount so
-      // we need to reset the state manually
-      else if (!isOpen) {
-        setFocusedIndex(-1);
-        menuWasAlreadyOpen.current = false;
+
+      const focusableChildren = getFocusableChildren(menuRef.current);
+
+      const prevIndex = focusableChildren.findIndex(
+        (element) => element.id === focusedId
+      );
+
+      if (prevIndex === -1 && focusableChildren.length) {
+        setFocusedId(focusableChildren[0].id);
+        return;
       }
-    }, [isOpen]); // only run this effect when `isOpen` changes
 
-    const keySpec = useMemo(
-      () =>
-        disableControlledTabNavigation
-          ? { key: ['esc', 'down', 'up', 'left', 'right'] }
-          : { key: ['esc', 'down', 'up', 'left', 'right', 'tab'], shift: true },
-      [disableControlledTabNavigation]
-    );
+      const isAscending = [KEYS.UP, KEYS.LEFT].includes(key);
+      let newIndex = prevIndex + (isAscending ? -1 : 1);
 
-    useKeyDownEffect(listRef, keySpec, handleKeyboardNav, [
-      handleKeyboardNav,
-      keySpec,
-    ]);
+      if (newIndex === -1) {
+        newIndex = focusableChildren.length - 1;
+      }
 
-    return (
-      <MenuWrapper
-        ref={composedWrapperRef}
-        isIconMenu={isIconMenu}
-        role="menu"
-        {...props}
-      >
-        <MenuList
-          data-testid="context-menu-list"
-          ref={listRef}
-          isIconMenu={isIconMenu}
-          aria-label={groupLabel}
-          role="group"
-        >
-          {items.map(
-            (
-              {
-                ItemWrapper = IdentityItemWrapper,
-                separator,
-                onFocus,
-                onClick,
-                ...itemProps
-              },
-              index
-            ) => (
-              <li
-                key={ids[index]}
-                role="menuitem"
-                className={
-                  (separator === 'top' && SEPARATOR_TOP_CLASS) ||
-                  (separator === 'bottom' && SEPARATOR_BOTTOM_CLASS) ||
-                  ''
-                }
-              >
-                {/* Not standard - but necessary. `MediaUpload` component exposes an
-              event handler in a render prop. */}
-                <ItemWrapper
-                  render={({
-                    onClick: wrapperOnClick = noop,
-                    ...wrapperProps
-                  }) => (
-                    <MenuItem
-                      index={index}
-                      onFocus={(ev) => handleFocusItem(ev, index, onFocus)}
-                      onDismiss={onDismiss}
-                      onClick={(ev) => {
-                        wrapperOnClick(ev);
-                        onClick(ev);
-                      }}
-                      {...itemProps}
-                      {...wrapperProps}
-                    />
-                  )}
-                />
-              </li>
-            )
-          )}
-        </MenuList>
-      </MenuWrapper>
-    );
-  }
-);
+      // Otherwise move to the next element or loop around the list.
+      const newSelectedElement =
+        focusableChildren[newIndex % focusableChildren.length];
+
+      newSelectedElement?.focus();
+      setFocusedId(newSelectedElement?.id || -1);
+      return;
+    },
+    [focusedId, onDismiss, setFocusedId]
+  );
+
+  // focus first focusable element on open
+  useEffect(() => {
+    if (isOpen) {
+      const focusableChildren = getFocusableChildren(menuRef.current);
+
+      if (focusableChildren.length) {
+        focusableChildren?.[0]?.focus();
+        setFocusedId(focusableChildren?.[0]?.id);
+      }
+    }
+  }, [isOpen, setFocusedId]);
+
+  const keySpec = useMemo(
+    () =>
+      disableControlledTabNavigation
+        ? { key: [] }
+        : { key: ['tab'], shift: true },
+    [disableControlledTabNavigation]
+  );
+
+  useKeyDownEffect(
+    menuRef,
+    { key: ['esc', 'down', 'up', 'left', 'right'] },
+    handleKeyboardNav,
+    [handleKeyboardNav]
+  );
+
+  useKeyDownEffect(menuRef, keySpec, onDismiss, [keySpec, onDismiss]);
+
+  return (
+    <MenuWrapper
+      ref={composedListRef}
+      data-testid="context-menu-list"
+      role="menu"
+      $isIconMenu={isIconMenu}
+      // Tabbing out from the list while using 'shift' would
+      // focus the list element. Should just travel back to the previous
+      // focusable element in the DOM
+      tabIndex={menuRef.current?.contains(document.activeElement) ? -1 : 0}
+      onFocus={handleFocus}
+      {...props}
+    >
+      {children}
+    </MenuWrapper>
+  );
+};
 
 export const MenuPropTypes = {
-  groupLabel: PropTypes.string,
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      ...MenuItemProps,
-      separator: PropTypes.oneOf(['bottom', 'top']),
-    }).isRequired
-  ),
-  isIconMenu: PropTypes.bool,
-  isOpen: PropTypes.bool,
-  onDismiss: PropTypes.func,
+  children: PropTypes.node,
+  onFocus: PropTypes.func,
   disableControlledTabNavigation: PropTypes.bool,
+  isOpen: PropTypes.bool,
 };
 
 Menu.propTypes = MenuPropTypes;

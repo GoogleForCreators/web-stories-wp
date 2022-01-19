@@ -97,6 +97,7 @@ function useHistoryReducer(size) {
     requestedState,
     stateToHistory,
     clearHistory,
+    currentEntry: entries?.[offset],
     offset,
     historyLength,
     versionNumber,

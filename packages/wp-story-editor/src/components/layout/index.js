@@ -26,6 +26,7 @@ import { default as Header } from '../header';
 import { MetaBoxes, MetaBoxesProvider } from '../metaBoxes';
 import DocumentPane from '../documentPane';
 import { Priority, Design, Accessibility } from '../checklist';
+import { Footer } from '../helpCenter';
 
 function Layout() {
   return (
@@ -34,6 +35,9 @@ function Layout() {
         header={<Header />}
         footer={{
           secondaryMenu: {
+            helpCenter: {
+              Footer,
+            },
             checklist: {
               Priority,
               Design,

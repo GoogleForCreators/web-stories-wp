@@ -47,7 +47,7 @@ describe('Web Stories Widget Block', () => {
       await page.waitForSelector(
         '.edit-widgets-layout__inserter-panel-content'
       );
-      await page.type('.block-editor-inserter__search-input', 'Web Stories');
+      await page.type('input[placeholder="Search"]', 'Web Stories');
       await expect(page).toClick('button span', { text: 'Web Stories' });
 
       await page.waitForSelector('.web-stories-block-configuration-panel');

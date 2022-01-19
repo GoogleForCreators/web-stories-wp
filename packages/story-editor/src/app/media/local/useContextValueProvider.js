@@ -31,6 +31,7 @@ import useProcessMedia from '../utils/useProcessMedia';
 import useUploadMedia from '../useUploadMedia';
 import useDetectVideoHasAudio from '../utils/useDetectVideoHasAudio';
 import useDetectBaseColor from '../utils/useDetectBaseColor';
+import useDetectBlurHash from '../utils/useDetectBlurhash';
 import { LOCAL_MEDIA_TYPE_ALL } from './types';
 
 /**
@@ -66,6 +67,8 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     removePosterProcessing,
     setBaseColorProcessing,
     removeBaseColorProcessing,
+    setBlurhashProcessing,
+    removeBlurhashProcessing,
     updateMediaElement,
     deleteMediaElement,
   } = reducerActions;
@@ -118,7 +121,21 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     [fetchMediaError, fetchMediaStart, getMedia]
   );
 
-  const { uploadMedia, isUploading, isTranscoding } = useUploadMedia({
+  const {
+    uploadMedia,
+    isUploading,
+    isTranscoding,
+    isNewResourceProcessing,
+    isCurrentResourceProcessing,
+    isNewResourceTranscoding,
+    isNewResourceMuting,
+    isResourceTrimming,
+    isCurrentResourceUploading,
+    isCurrentResourceTranscoding,
+    isCurrentResourceMuting,
+    isCurrentResourceTrimming,
+    canTranscodeResource,
+  } = useUploadMedia({
     media,
     prependMedia,
     updateMediaElement,
@@ -136,8 +153,13 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     updateMediaElement,
   });
 
+  const { updateBlurHash } = useDetectBlurHash({
+    updateMediaElement,
+  });
+
   const {
     allowedMimeTypes: { video: allowedVideoMimeTypes },
+    capabilities: { hasUploadMediaAction },
   } = useConfig();
 
   const stateRef = useRef();
@@ -206,17 +228,37 @@ export default function useContextValueProvider(reducerState, reducerActions) {
           return;
         }
         setBaseColorProcessing({ id });
-        await updateBaseColor({ resource });
+        await updateBaseColor(resource);
         removeBaseColorProcessing({ id });
       })();
     },
-    [setBaseColorProcessing, removeBaseColorProcessing, updateBaseColor]
+    [setBaseColorProcessing, updateBaseColor, removeBaseColorProcessing]
+  );
+
+  const processMediaBlurhash = useCallback(
+    (resource) => {
+      const { blurHashProcessed, blurHashProcessing } = stateRef.current;
+      const { id } = resource;
+      (async () => {
+        // Simple way to prevent double-uploading.
+        if (blurHashProcessed.includes(id) || blurHashProcessing.includes(id)) {
+          return;
+        }
+        setBlurhashProcessing({ id });
+        await updateBlurHash({ resource });
+        removeBlurhashProcessing({ id });
+      })();
+    },
+    [stateRef, setBlurhashProcessing, updateBlurHash, removeBlurhashProcessing]
   );
 
   const postProcessingResource = useCallback(
     (resource) => {
+      if (!resource) {
+        return;
+      }
+
       const {
-        local,
         type,
         isMuted,
         baseColor,
@@ -225,20 +267,24 @@ export default function useContextValueProvider(reducerState, reducerActions) {
         posterId,
         mimeType,
         poster,
+        blurHash,
       } = resource;
 
-      if (local || !id) {
+      if (!canTranscodeResource(resource)) {
         return;
       }
-      if (
-        (allowedVideoMimeTypes.includes(mimeType) || type === 'gif') &&
-        !posterId
-      ) {
-        uploadVideoPoster(id, src);
-      }
 
-      if (allowedVideoMimeTypes.includes(mimeType) && isMuted === null) {
-        processVideoAudio(id, src);
+      if (hasUploadMediaAction) {
+        if (
+          (allowedVideoMimeTypes.includes(mimeType) || type === 'gif') &&
+          !posterId
+        ) {
+          uploadVideoPoster(id, src);
+        }
+
+        if (allowedVideoMimeTypes.includes(mimeType) && isMuted === null) {
+          processVideoAudio(id, src);
+        }
       }
 
       const imageSrc =
@@ -246,12 +292,18 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       if (imageSrc && !baseColor) {
         processMediaBaseColor(resource);
       }
+      if (imageSrc && !blurHash) {
+        processMediaBlurhash(resource);
+      }
     },
     [
+      canTranscodeResource,
       allowedVideoMimeTypes,
       processMediaBaseColor,
+      processMediaBlurhash,
       processVideoAudio,
       uploadVideoPoster,
+      hasUploadMediaAction,
     ]
   );
 
@@ -278,6 +330,16 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       ...reducerState,
       isUploading: isUploading || isGeneratingPosterImages,
       isTranscoding,
+      isNewResourceProcessing,
+      isCurrentResourceProcessing,
+      isNewResourceTranscoding,
+      isNewResourceMuting,
+      isResourceTrimming,
+      isCurrentResourceUploading,
+      isCurrentResourceTranscoding,
+      isCurrentResourceMuting,
+      isCurrentResourceTrimming,
+      canTranscodeResource,
     },
     actions: {
       setNextPage,

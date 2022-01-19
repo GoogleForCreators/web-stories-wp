@@ -174,6 +174,12 @@ const ALLOWED_ERROR_MESSAGES = [
   // WordPress still bundles jQuery Migrate, which logs to the console.
   'JQMIGRATE',
 
+  // Upsteam issue in gutenberg and twentytwenty theme.
+  'Stylesheet twentytwenty-block-editor-styles-css was not properly added.',
+
+  // TODO(#9240): Fix usage in the web stories block.
+  "select( 'core' ).getAuthors() is deprecated since version 5.9.",
+
   ...('chrome' === PUPPETEER_PRODUCT
     ? ALLOWED_ERROR_MESSAGES_CHROME
     : ALLOWED_ERROR_MESSAGES_FIREFOX),

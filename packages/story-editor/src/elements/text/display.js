@@ -192,8 +192,7 @@ function TextDisplay({
       (x) => `${dataToEditorX(x)}px`,
       (y) => `${dataToEditorY(y)}px`,
       dataToEditorY,
-      element,
-      dataToEditorY
+      element
     ),
     horizontalPadding: dataToEditorX(rest.padding?.horizontal || 0),
     verticalPadding: dataToEditorX(rest.padding?.vertical || 0),

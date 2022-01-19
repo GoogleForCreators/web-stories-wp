@@ -25,7 +25,7 @@ import { getSmallestUrlForWidth } from '@web-stories-wp/media';
 import { useAPI } from '../../api';
 import { useStory } from '../../story';
 import { useConfig } from '../../config';
-import { getMediaBaseColor } from '../../../utils/getMediaBaseColor';
+import getMediaBaseColor from '../../../utils/getMediaBaseColor';
 import useCORSProxy from '../../../utils/useCORSProxy';
 
 function useDetectBaseColor({ updateMediaElement }) {
@@ -39,47 +39,48 @@ function useDetectBaseColor({ updateMediaElement }) {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
   const { getProxiedUrl } = useCORSProxy();
-  const setProperties = useCallback(
-    (id, properties) => {
-      updateElementsByResourceId({ id, properties });
-    },
-    [updateElementsByResourceId]
-  );
 
   const saveBaseColor = useCallback(
     /**
      *
-     * @param {number} id Video ID.
+     * @param {import('@web-stories-wp/media').Resource} resource Resource object.
      * @param {string} baseColor Base Color.
      * @return {Promise<void>}
      */
-    async (id, baseColor) => {
+    async ({ id, isExternal }, baseColor) => {
       try {
-        const newState = ({ resource }) => ({
+        const properties = ({ resource }) => ({
           resource: {
             ...resource,
             baseColor,
           },
         });
-        setProperties(id, newState);
-        updateMediaElement({
-          id,
-          data: { baseColor },
-        });
-        if (hasUploadMediaAction) {
-          await updateMedia(id, {
-            meta: { web_stories_base_color: baseColor },
+        updateElementsByResourceId({ id, properties });
+        if (!isExternal) {
+          updateMediaElement({
+            id,
+            data: { baseColor },
           });
+          if (hasUploadMediaAction) {
+            await updateMedia(id, {
+              meta: { web_stories_base_color: baseColor },
+            });
+          }
         }
       } catch (error) {
         // Do nothing for now.
       }
     },
-    [setProperties, updateMedia, updateMediaElement, hasUploadMediaAction]
+    [
+      updateElementsByResourceId,
+      updateMediaElement,
+      hasUploadMediaAction,
+      updateMedia,
+    ]
   );
 
   const updateBaseColor = useCallback(
-    async ({ resource }) => {
+    async (resource) => {
       const { type, poster, id, isExternal } = resource;
       let imageSrc = poster;
 
@@ -100,7 +101,7 @@ function useDetectBaseColor({ updateMediaElement }) {
       const imageSrcProxied = getProxiedUrl(resource, imageSrc);
       try {
         const color = await getMediaBaseColor(imageSrcProxied);
-        await saveBaseColor(resource.id, color);
+        await saveBaseColor(resource, color);
       } catch (error) {
         // Do nothing for now.
       }

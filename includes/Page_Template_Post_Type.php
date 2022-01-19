@@ -61,6 +61,17 @@ class Page_Template_Post_Type extends Post_Type_Base implements HasRequirements 
 	}
 
 	/**
+	 * Init
+	 *
+	 * @return void
+	 */
+	public function register() {
+		parent::register();
+
+		add_action( 'delete_post', [ $this, 'delete_poster_image' ] );
+	}
+
+	/**
 	 * Get post type slug.
 	 *
 	 * @since 1.14.0
@@ -136,9 +147,7 @@ class Page_Template_Post_Type extends Post_Type_Base implements HasRequirements 
 				'item_link_description'    => _x( 'A link to a page template.', 'navigation link block description', 'web-stories' ),
 			],
 			'supports'              => [
-				'title',
-				'author',
-				'excerpt',
+				'thumbnail', // Used for preview images in the editor.
 			],
 			'capabilities'          => $capabilities,
 			'rewrite'               => false,
@@ -161,5 +170,29 @@ class Page_Template_Post_Type extends Post_Type_Base implements HasRequirements 
 	 */
 	public static function get_requirements(): array {
 		return [ 'story_post_type' ];
+	}
+
+	/**
+	 * Deletes the associated featured image when a page template is deleted.
+	 *
+	 * This prevents the featured image from becoming an orphan because it is not
+	 * displayed anywhere in WordPress or the story editor.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @param int $post_id Post ID.
+	 *
+	 * @return void
+	 */
+	public function delete_poster_image( int $post_id ) {
+		if ( get_post_type( $post_id ) !== $this->get_slug() ) {
+			return;
+		}
+
+		$thumbnail_id = get_post_thumbnail_id( $post_id );
+
+		if ( $thumbnail_id ) {
+			wp_delete_attachment( $thumbnail_id, true );
+		}
 	}
 }

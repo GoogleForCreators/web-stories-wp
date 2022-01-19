@@ -22,8 +22,8 @@ import {
   publishStory,
   skipSuiteOnFirefox,
   uploadPublisherLogoEditor,
+  takeSnapshot,
 } from '@web-stories-wp/e2e-test-utils';
-import percySnapshot from '@percy/puppeteer';
 
 const addNewTextElement = async () => {
   await expect(page).toClick('button[aria-label="Add new text element"]');
@@ -80,7 +80,7 @@ describe('Pre-Publish Checklist : Admin User', () => {
       '[aria-label="Potential Story issues by category"][data-isexpanded="true"]'
     );
     await expect(page).toMatch('Add poster image');
-    await percySnapshot(page, 'Prepublish checklist');
+    await takeSnapshot(page, 'Prepublish checklist');
   });
 
   it('should show cards related to poster image issues', async () => {

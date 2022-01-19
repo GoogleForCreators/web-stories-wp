@@ -101,7 +101,6 @@ async function getResourceFromUrl(resourceLike) {
     length,
     lengthFormatted,
     src,
-    local: false,
     isExternal: true,
     mimeType,
     ...rest,

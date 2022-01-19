@@ -17,11 +17,11 @@
 /**
  * External dependencies
  */
-import percySnapshot from '@percy/puppeteer';
 import {
   skipSuiteOnFirefox,
   visitDashboard,
 } from '@web-stories-wp/e2e-test-utils';
+import { takeSnapshot, visitDashboard } from '@web-stories-wp/e2e-test-utils';
 
 describe('Stories Dashboard with disabled JavaScript', () => {
   // Disabling JS like this is not yet supported in Firefox.
@@ -39,6 +39,6 @@ describe('Stories Dashboard with disabled JavaScript', () => {
     // Re-enable javascript for snapshots.
     await page.setJavaScriptEnabled(true);
 
-    await percySnapshot(page, 'Dashboard no js');
+    await takeSnapshot(page, 'Dashboard no js');
   });
 });

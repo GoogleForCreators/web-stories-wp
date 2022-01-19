@@ -25,7 +25,6 @@ import { Datalist } from '@web-stories-wp/design-system';
 /**
  * Internal dependencies
  */
-import objectPick from '../../../../utils/objectPick';
 import stripHTML from '../../../../utils/stripHTML';
 import { useFont } from '../../../../app/font';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
@@ -52,38 +51,26 @@ const FontPicker = forwardRef(function FontPicker(
     fonts = [],
     recentFonts = [],
     curatedFonts = [],
+    customFonts = [],
     addRecentFont,
     maybeEnqueueFontStyle,
     ensureMenuFontsLoaded,
-  } = useFont(
-    ({
-      actions: { addRecentFont, ensureMenuFontsLoaded, maybeEnqueueFontStyle },
-      state: { fonts, recentFonts, curatedFonts },
-    }) => ({
-      addRecentFont,
-      ensureMenuFontsLoaded,
-      maybeEnqueueFontStyle,
-      recentFonts,
-      curatedFonts,
-      fonts,
-    })
-  );
+    ensureCustomFontsLoaded,
+    getFontsBySearch,
+  } = useFont(({ actions, state }) => ({
+    getFontsBySearch: actions.getFontsBySearch,
+    addRecentFont: actions.addRecentFont,
+    ensureMenuFontsLoaded: actions.ensureMenuFontsLoaded,
+    ensureCustomFontsLoaded: actions.ensureCustomFontsLoaded,
+    maybeEnqueueFontStyle: actions.maybeEnqueueFontStyle,
+    recentFonts: state.recentFonts,
+    curatedFonts: state.curatedFonts,
+    fonts: state.fonts,
+    customFonts: state.customFonts,
+  }));
 
   const handleFontPickerChange = useCallback(
-    async ({ id }) => {
-      const fontObj = fonts.find((item) => item.value === id);
-      const newFont = {
-        family: id,
-        ...objectPick(fontObj, [
-          'service',
-          'fallbacks',
-          'weights',
-          'styles',
-          'variants',
-          'metrics',
-        ]),
-      };
-
+    async (newFont) => {
       await maybeEnqueueFontStyle(
         selectedElements.map(({ content }) => {
           return {
@@ -94,17 +81,16 @@ const FontPicker = forwardRef(function FontPicker(
           };
         })
       );
-      addRecentFont(fontObj);
+      addRecentFont(newFont);
       pushUpdate({ font: newFont }, true);
 
-      const newFontWeight = getClosestFontWeight(400, fontObj.weights);
+      const newFontWeight = getClosestFontWeight(400, newFont.weights);
       await handleResetFontWeight(newFontWeight);
     },
     [
       addRecentFont,
       fontStyle,
       fontWeight,
-      fonts,
       maybeEnqueueFontStyle,
       pushUpdate,
       selectedElements,
@@ -121,32 +107,68 @@ const FontPicker = forwardRef(function FontPicker(
     return map;
   }, [fonts]);
 
-  const onObserve = (observedFonts) => {
-    ensureMenuFontsLoaded(
-      observedFonts.filter(
-        (fontName) => fontMap.get(fontName)?.service === 'fonts.google.com'
-      )
-    );
-  };
+  const onObserve = useCallback(
+    (observedFonts) => {
+      if (!observedFonts.length) {
+        return;
+      }
+      ensureMenuFontsLoaded(
+        observedFonts.filter(
+          (fontName) => fontMap.get(fontName)?.service === 'fonts.google.com'
+        )
+      );
+      ensureCustomFontsLoaded(
+        observedFonts.filter(
+          (fontName) => fontMap.get(fontName)?.service === 'custom'
+        )
+      );
+    },
+    [fontMap, ensureCustomFontsLoaded, ensureMenuFontsLoaded]
+  );
 
-  const renderer = ({ option, ...rest }, _ref) => {
-    return (
-      <Datalist.Option
-        ref={_ref}
-        {...rest}
-        fontFamily={
-          option.service.includes('google')
-            ? `'${option.name}::MENU'`
-            : option.name
-        }
-      >
-        {fontFamily === option.id && (
-          <Datalist.Selected aria-label={__('Selected', 'web-stories')} />
-        )}
-        {option.name}
-      </Datalist.Option>
-    );
-  };
+  const renderer = useCallback(
+    ({ option, ...rest }, _ref) => {
+      return (
+        <Datalist.Option
+          ref={_ref}
+          {...rest}
+          fontFamily={
+            option.service === 'fonts.google.com'
+              ? `'${option.name}::MENU'`
+              : option.name
+          }
+        >
+          {fontFamily === option.id && (
+            <Datalist.Selected aria-label={__('Selected', 'web-stories')} />
+          )}
+          {option.name}
+        </Datalist.Option>
+      );
+    },
+    [fontFamily]
+  );
+
+  // These option groups will always be shown before others.
+  const priorityOptionGroups = useMemo(() => {
+    return [
+      ...(customFonts?.length
+        ? [
+            {
+              label: __('Your fonts', 'web-stories'),
+              options: customFonts,
+            },
+          ]
+        : []),
+      ...(recentFonts?.length
+        ? [
+            {
+              label: __('Recently used', 'web-stories'),
+              options: recentFonts,
+            },
+          ]
+        : []),
+    ];
+  }, [customFonts, recentFonts]);
 
   return (
     <Datalist.DropDown
@@ -157,14 +179,14 @@ const FontPicker = forwardRef(function FontPicker(
       options={fonts}
       primaryOptions={curatedFonts}
       primaryLabel={__('Recommended', 'web-stories')}
-      priorityOptions={recentFonts}
-      priorityLabel={__('Recently used', 'web-stories')}
+      priorityOptionGroups={priorityOptionGroups}
       searchResultsLabel={__('Search results', 'web-stories')}
       selectedId={MULTIPLE_VALUE === fontFamily ? '' : fontFamily}
       placeholder={
         MULTIPLE_VALUE === fontFamily ? MULTIPLE_DISPLAY_VALUE : fontFamily
       }
       hasSearch
+      getOptionsByQuery={getFontsBySearch}
       onChange={handleFontPickerChange}
       onObserve={onObserve}
       renderer={forwardRef(renderer)}

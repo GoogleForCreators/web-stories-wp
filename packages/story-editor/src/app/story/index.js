@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * Internal dependencies
+ */
+import * as storyReducers from './useStoryReducer/reducers';
 export { default as StoryProvider } from './storyProvider';
 export { default as StoryContext } from './context';
 export { default as useStory } from './useStory';
@@ -23,3 +26,5 @@ export {
   useStoryTriggersDispatch,
   STORY_EVENTS,
 } from './storyTriggers';
+
+export { storyReducers };

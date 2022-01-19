@@ -56,7 +56,6 @@ const SeeDetailsButton = styled(Button).attrs({
 const TemplateGridItem = forwardRef(
   (
     {
-      detailLink,
       onCreateStory,
       onFocus,
       height,
@@ -94,6 +93,7 @@ const TemplateGridItem = forwardRef(
               <img
                 src={posterSrc?.png}
                 alt={posterAltText}
+                decoding="async"
                 width={DEFAULT_GRID_IMG_WIDTH}
                 height={DEFAULT_GRID_IMG_HEIGHT}
               />
@@ -110,9 +110,7 @@ const TemplateGridItem = forwardRef(
                     __('Go to detail view of %s', 'web-stories'),
                     title
                   )}
-                  href={detailLink}
-                  onClick={onSeeDetailsClick}
-                  disabled={!detailLink}
+                  onClick={() => onSeeDetailsClick(id, title)}
                   className={FOCUS_TEMPLATE_CLASS}
                   tabIndex={tabIndex}
                 >

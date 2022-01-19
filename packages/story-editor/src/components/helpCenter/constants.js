@@ -17,11 +17,7 @@
  * External dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
-
-/**
- * Internal dependencies
- */
-import { FOCUSABLE_SELECTORS } from '../../constants';
+import { FOCUSABLE_SELECTORS } from '@web-stories-wp/design-system';
 
 export const KEYS = {
   ADD_BACKGROUND_MEDIA: 'addBackgroundMedia',

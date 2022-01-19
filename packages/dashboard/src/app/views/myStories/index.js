@@ -74,7 +74,7 @@ function MyStories() {
       getAuthors,
     })
   );
-  const { apiCallbacks } = useConfig();
+  const { apiCallbacks, canViewDefaultTemplates } = useConfig();
 
   const {
     filter,
@@ -99,12 +99,12 @@ function MyStories() {
           id,
           name,
         }));
-        setQueriedAuthors((exisitingUsers) => {
-          const exisitingUsersIds = exisitingUsers.map(({ id }) => id);
+        setQueriedAuthors((existingUsers) => {
+          const existingUsersIds = existingUsers.map(({ id }) => id);
           const newUsers = userData.filter(
-            (newUser) => !exisitingUsersIds.includes(newUser.id)
+            (newUser) => !existingUsersIds.includes(newUser.id)
           );
-          return [...exisitingUsers, ...newUsers];
+          return [...existingUsers, ...newUsers];
         });
       });
     },
@@ -164,6 +164,7 @@ function MyStories() {
 
       <Content
         allPagesFetched={allPagesFetched}
+        canViewDefaultTemplates={canViewDefaultTemplates}
         filter={filter}
         loading={{ isLoading, showStoriesWhileLoading }}
         page={page}

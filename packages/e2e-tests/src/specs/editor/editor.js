@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import percySnapshot from '@percy/puppeteer';
 import {
+  takeSnapshot,
   createNewStory,
   toggleVideoOptimization,
   previewStory,
@@ -32,7 +32,7 @@ describe('Story Editor', () => {
 
     await expect(page).toMatchElement('input[placeholder="Add title"]');
 
-    await percySnapshot(page, 'Empty Editor');
+    await takeSnapshot(page, 'Empty Editor');
   });
 
   describe('RTL', () => {
@@ -43,7 +43,7 @@ describe('Story Editor', () => {
 
       await expect(page).toMatchElement('input[placeholder="Add title"]');
 
-      await percySnapshot(page, 'Empty Editor on RTL');
+      await takeSnapshot(page, 'Empty Editor on RTL');
     });
   });
 

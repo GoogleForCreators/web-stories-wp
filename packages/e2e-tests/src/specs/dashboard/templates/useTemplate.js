@@ -17,8 +17,11 @@
 /**
  * External dependencies
  */
-import percySnapshot from '@percy/puppeteer';
-import { visitDashboard } from '@web-stories-wp/e2e-test-utils';
+import {
+  takeSnapshot,
+  visitDashboard,
+  withPlugin,
+} from '@web-stories-wp/e2e-test-utils';
 
 describe('Template', () => {
   it('should be able to use existing template for new story', async () => {
@@ -40,7 +43,7 @@ describe('Template', () => {
       '[data-testid="template-grid-item-1"]'
     );
 
-    await expect(firstTemplate).toClick('a', { text: 'See details' });
+    await expect(firstTemplate).toClick('button', { text: 'See details' });
     // Get count of template colors to compare to 'saved colors' in the editor.
     const templateDetailsColors = await page.evaluate(() => {
       const elements = document.querySelectorAll(
@@ -54,7 +57,10 @@ describe('Template', () => {
       return colors;
     });
 
-    await expect(page).toClick('button', { text: 'Use template' });
+    await expect(page).toClick(
+      'button[aria-label="Use Fresh & Bright template to create new story"]'
+    );
+
     await page.waitForNavigation();
 
     // Wait for title input to load before continuing.
@@ -71,7 +77,7 @@ describe('Template', () => {
         ),
       { timeout: 5000 } // requestIdleCallback in the carousel kicks in after 5s the latest.
     );
-    await percySnapshot(page, 'Story From Template');
+    await takeSnapshot(page, 'Story From Template');
 
     // Select a text layer so 'Saved Colors' panel is present
     await expect(page).toClick('div[data-testid="layer-option"] button', {
@@ -95,5 +101,18 @@ describe('Template', () => {
     });
 
     expect(editorSavedColors).toStrictEqual(templateDetailsColors);
+  });
+  describe('Disabled', () => {
+    withPlugin('e2e-tests-disable-default-templates');
+
+    it('should not render explore templates', async () => {
+      await visitDashboard();
+
+      await expect(page).toMatch('Start telling Stories');
+
+      await expect(page).not.toMatchElement('a', {
+        text: 'Explore Templates',
+      });
+    });
   });
 });

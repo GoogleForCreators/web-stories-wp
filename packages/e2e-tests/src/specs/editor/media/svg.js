@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import percySnapshot from '@percy/puppeteer';
 import {
+  takeSnapshot,
   withExperimentalFeatures,
   createNewStory,
   uploadMedia,
@@ -46,7 +46,7 @@ describe('SVG', () => {
 
     await expect(page).toMatchElement('[data-testid="imageElement"]');
 
-    await percySnapshot(page, 'Inserting SVG from Dialog');
+    await takeSnapshot(page, 'Inserting SVG from Dialog');
   });
 
   describe('Upload', () => {
@@ -74,7 +74,7 @@ describe('SVG', () => {
 
       await expect(page).toMatchElement('[data-testid="imageElement"]');
 
-      await percySnapshot(page, 'Uploading SVG to editor');
+      await takeSnapshot(page, 'Uploading SVG to editor');
     });
   });
 

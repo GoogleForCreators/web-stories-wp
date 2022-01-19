@@ -29,11 +29,6 @@ import {
 } from '../constants';
 import { GeneralAnimationPropTypes } from '../outputs/types';
 
-export const WAAPIAnimationProps = {
-  children: PropTypes.node.isRequired,
-  hoistAnimation: PropTypes.func,
-};
-
 export const AMPAnimationProps = {
   className: PropTypes.string,
   children: PropTypes.node,

@@ -179,6 +179,25 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 	}
 
 	/**
+	 * @covers ::get_exclude_tax_query
+	 */
+	public function test_get_exclude_tax_query_filter() {
+		add_filter( 'web_stories_hide_auto_generated_attachments', '__return_false' );
+		$args    = [
+			'tax_query' => [
+				[
+					'taxonomy' => 'people',
+					'field'    => 'slug',
+					'terms'    => 'bob',
+				],
+			],
+		];
+		$results = $this->call_private_method( $this->instance, 'get_exclude_tax_query', [ $args ] );
+		remove_filter( 'web_stories_hide_auto_generated_attachments', '__return_false' );
+		$this->assertSame( $args, $results );
+	}
+
+	/**
 	 * @covers ::filter_ajax_query_attachments_args
 	 * @covers ::get_exclude_tax_query
 	 */
@@ -190,7 +209,7 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 				[
 					'taxonomy' => $tax_slug,
 					'field'    => 'slug',
-					'terms'    => [ 'poster-generation', 'source-video', 'source-image' ],
+					'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
 					'operator' => 'NOT IN',
 				],
 			],
@@ -214,7 +233,7 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 				[
 					'taxonomy' => $tax_slug,
 					'field'    => 'slug',
-					'terms'    => [ 'poster-generation', 'source-video', 'source-image' ],
+					'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
 					'operator' => 'NOT IN',
 				],
 				[
@@ -299,7 +318,7 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 			[
 				'taxonomy' => $this->instance->get_taxonomy_slug(),
 				'field'    => 'slug',
-				'terms'    => [ 'poster-generation', 'source-video', 'source-image' ],
+				'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
 				'operator' => 'NOT IN',
 			],
 			[
@@ -345,7 +364,7 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 				[
 					'taxonomy' => $tax_slug,
 					'field'    => 'slug',
-					'terms'    => [ 'poster-generation', 'source-video', 'source-image' ],
+					'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
 					'operator' => 'NOT IN',
 				],
 			],

@@ -22,8 +22,8 @@ import {
   uploadFile,
   deleteMedia,
   skipSuiteOnFirefox,
+  takeSnapshot,
 } from '@web-stories-wp/e2e-test-utils';
-import percySnapshot from '@percy/puppeteer';
 
 describe('Background Audio', () => {
   // Firefox does not yet support file uploads with Puppeteer. See https://bugzilla.mozilla.org/show_bug.cgi?id=1553847.
@@ -75,7 +75,7 @@ describe('Background Audio', () => {
 
       await expect(page).toMatchElement('button[aria-label="Play"]');
 
-      await percySnapshot(page, 'Story Background Audio');
+      await takeSnapshot(page, 'Story Background Audio');
     });
   });
 
