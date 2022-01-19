@@ -20,8 +20,8 @@
 import {
   skipSuiteOnFirefox,
   visitDashboard,
+  takeSnapshot,
 } from '@web-stories-wp/e2e-test-utils';
-import { takeSnapshot, visitDashboard } from '@web-stories-wp/e2e-test-utils';
 
 describe('Stories Dashboard with disabled JavaScript', () => {
   // Disabling JS like this is not yet supported in Firefox.

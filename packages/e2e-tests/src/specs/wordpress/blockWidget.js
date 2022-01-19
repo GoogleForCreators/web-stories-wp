@@ -26,8 +26,8 @@ import {
   insertWidget,
   minWPVersionRequired,
   skipSuiteOnFirefox,
+  takeSnapshot,
 } from '@web-stories-wp/e2e-test-utils';
-import percySnapshot from '@percy/puppeteer';
 
 describe('Web Stories Widget Block', () => {
   minWPVersionRequired('5.8');
@@ -77,7 +77,7 @@ describe('Web Stories Widget Block', () => {
       await expect(page).toMatchElement('amp-story-player');
       await expect(page).toMatch('Embed Settings');
 
-      await percySnapshot(page, 'Block Widgets - Regular Block');
+      await takeSnapshot(page, 'Block Widgets - Regular Block');
     });
   });
 
@@ -121,7 +121,7 @@ describe('Web Stories Widget Block', () => {
         '.widget-liquid-right .widget-control-save:disabled'
       );
 
-      await percySnapshot(page, 'Classic Widget');
+      await takeSnapshot(page, 'Classic Widget');
 
       await deactivatePlugin('classic-widgets');
       await visitBlockWidgetScreen();
@@ -161,7 +161,7 @@ describe('Web Stories Widget Block', () => {
         '.block-editor-block-toolbar .block-editor-block-switcher'
       );
 
-      await percySnapshot(page, 'Block Widgets - Legacy Widget Block');
+      await takeSnapshot(page, 'Block Widgets - Legacy Widget Block');
 
       // TODO: Fix block transform.
       // Block transformation via the block toolbar is unstable, since
@@ -195,7 +195,7 @@ describe('Web Stories Widget Block', () => {
 
       await expect(page).toMatch('Test Block Widget');
 
-      await percySnapshot(page, 'Block Widgets - Transformed Block');
+      await takeSnapshot(page, 'Block Widgets - Transformed Block');
     });
   });
 });

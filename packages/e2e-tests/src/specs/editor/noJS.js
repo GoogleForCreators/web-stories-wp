@@ -19,9 +19,9 @@
  */
 import {
   createNewStory,
+  takeSnapshot,
   skipSuiteOnFirefox,
 } from '@web-stories-wp/e2e-test-utils';
-import { takeSnapshot, createNewStory } from '@web-stories-wp/e2e-test-utils';
 
 describe('Story Editor with disabled JavaScript', () => {
   // Disabling JS like this is not yet supported in Firefox.
