@@ -366,6 +366,18 @@ class Experiments extends Service_Base implements HasRequirements {
 				'description' => __( 'Enable adding custom fonts', 'web-stories' ),
 				'group'       => 'general',
 			],
+
+			/**
+			 * Author: @spacedmonkey
+			 * Issue: #8821
+			 * Creation date: 2022-01-19
+			 */
+			[
+				'name'        => 'enhancedPageBackgroundAudio',
+				'label'       => __( 'Page Background Audio', 'web-stories' ),
+				'description' => __( 'Enable adding captions to background audio', 'web-stories' ),
+				'group'       => 'editor',
+			],
 		];
 	}
 
