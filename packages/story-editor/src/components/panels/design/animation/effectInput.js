@@ -30,7 +30,7 @@ import {
   FIELD_TYPES,
   GeneralAnimationPropTypes,
   AnimationFormPropTypes,
-} from '@web-stories-wp/animation';
+} from '@googleforcreators/animation';
 /**
  * Internal dependencies
  */

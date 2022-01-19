@@ -31,7 +31,7 @@ import {
   getMediaSizePositionProps,
   calculateSrcSet,
 } from '@web-stories-wp/media';
-import { BG_MIN_SCALE, BG_MAX_SCALE } from '@web-stories-wp/animation';
+import { BG_MIN_SCALE, BG_MAX_SCALE } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies

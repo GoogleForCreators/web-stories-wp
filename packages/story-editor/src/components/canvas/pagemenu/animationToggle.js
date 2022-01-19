@@ -21,7 +21,7 @@ import { useCallback } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { Icons } from '@web-stories-wp/design-system';
-import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
+import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
 /**
  * Internal dependencies
  */

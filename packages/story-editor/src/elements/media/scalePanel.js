@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { _x } from '@web-stories-wp/i18n';
 import { Slider } from '@web-stories-wp/design-system';
-import { BG_MIN_SCALE, BG_MAX_SCALE } from '@web-stories-wp/animation';
+import { BG_MIN_SCALE, BG_MAX_SCALE } from '@googleforcreators/animation';
 /**
  * Internal dependencies
  */

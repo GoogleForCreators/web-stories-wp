@@ -23,7 +23,7 @@ import {
   BACKGROUND_ANIMATION_EFFECTS,
   DIRECTION,
   SCALE_DIRECTION,
-} from '@web-stories-wp/animation';
+} from '@googleforcreators/animation';
 
 /**
  * Internal dependencies

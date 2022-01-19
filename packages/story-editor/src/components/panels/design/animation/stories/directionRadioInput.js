@@ -22,7 +22,7 @@ import {
   DIRECTION,
   ROTATION,
   SCALE_DIRECTION,
-} from '@web-stories-wp/animation';
+} from '@googleforcreators/animation';
 
 /**
  * Internal dependencies
