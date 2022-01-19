@@ -38,7 +38,7 @@ export const generateStoryMenu = ({ menuItems, story, isLocked }) => {
     menuItems.find((item) => item?.value === value);
 
   const menuItemsFiltered = menuItems.filter(
-    (item) => typeof item.isEnabled === undefined || item.isEnabled(story)
+    (item) => typeof item.isEnabled === 'undefined' || item.isEnabled(story)
   );
 
   return menuItemsFiltered.map(({ capability, value, ...menuItem }) => {
