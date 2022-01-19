@@ -161,9 +161,14 @@ const StoryGridView = ({
     ];
 
     const menuItems = storyMenu.menuItems.map((item) => {
-      return actions.includes(item?.value)
-        ? getModifiedMenuItem(item?.value)
-        : item;
+      if (actions.includes(item?.value)) {
+        item.action = (story) => {
+          manuallySetFocusOut();
+          item.action(story);
+        };
+      }
+
+      return item;
     });
 
     return {
