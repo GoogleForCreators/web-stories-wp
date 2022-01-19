@@ -46,12 +46,23 @@ const PageBackgroundTextLowContrast = () => {
   }));
 
   useEffect(() => {
+    let isStale = false;
+
     getPagesWithFailedContrast(storyPages, pageSize)
       .then((failures) => {
+        if (isStale) {
+          return;
+        }
         const failedPages = failures.map(({ page }) => page);
-        failedPages.length && setFailingPages(failedPages);
+        setFailingPages(failedPages);
       })
-      .catch(() => {});
+      .catch(() => {
+        // TODO: Add some error handling
+      });
+
+    return () => {
+      isStale = true;
+    };
   }, [storyPages, pageSize]);
 
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
