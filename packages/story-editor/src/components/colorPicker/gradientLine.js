@@ -24,7 +24,7 @@ import { __, sprintf } from '@googleforcreators/i18n';
 import {
   ColorStopPropType,
   generatePatternStyles,
-} from '@web-stories-wp/patterns';
+} from '@googleforcreators/patterns';
 import { themeHelpers } from '@googleforcreators/design-system';
 
 /**

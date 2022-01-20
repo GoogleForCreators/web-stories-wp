@@ -19,7 +19,10 @@
  */
 import PropTypes from 'prop-types';
 import { useMemo } from '@web-stories-wp/react';
-import { createSolid, generatePatternStyles } from '@web-stories-wp/patterns';
+import {
+  createSolid,
+  generatePatternStyles,
+} from '@googleforcreators/patterns';
 import {
   dataToEditorX,
   dataToEditorY,

@@ -21,7 +21,7 @@ import { fireEvent, screen, waitFor } from '@testing-library/react';
 import {
   createSolid,
   getPreviewText as getPreviewTextMock,
-} from '@web-stories-wp/patterns';
+} from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies
@@ -40,9 +40,9 @@ jest.mock('@googleforcreators/design-system', () => ({
 }));
 
 jest.mock('../getPreviewStyle', () => jest.fn());
-jest.mock('@web-stories-wp/patterns', () => {
+jest.mock('@googleforcreators/patterns', () => {
   return {
-    ...jest.requireActual('@web-stories-wp/patterns'),
+    ...jest.requireActual('@googleforcreators/patterns'),
     getPreviewText: jest.fn(),
   };
 });

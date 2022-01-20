@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
-import { getHexFromSolidArray } from '@web-stories-wp/patterns';
+import { getHexFromSolidArray } from '@googleforcreators/patterns';
 import { preloadImage } from '@googleforcreators/media';
 
 /**

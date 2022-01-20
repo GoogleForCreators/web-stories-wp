@@ -17,7 +17,7 @@
     "@googleforcreators/fonts": "*",
     "@googleforcreators/i18n": "*",
     "@googleforcreators/media": "*",
-    "@web-stories-wp/patterns": "*",
+    "@googleforcreators/patterns": "*",
     "@web-stories-wp/react": "*",
     "@web-stories-wp/story-editor": "*",
     "@web-stories-wp/tracking": "*",

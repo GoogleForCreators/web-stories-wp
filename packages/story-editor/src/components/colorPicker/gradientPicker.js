@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
-import { ColorStopPropType } from '@web-stories-wp/patterns';
+import { ColorStopPropType } from '@googleforcreators/patterns';
 import {
   Button,
   BUTTON_SIZES,
