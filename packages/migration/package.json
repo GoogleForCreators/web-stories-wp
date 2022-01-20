@@ -1,5 +1,5 @@
 {
-  "name": "@web-stories-wp/migration",
+  "name": "@googleforcreators/migration",
   "private": true,
   "engines": {
     "node": ">= 16",
