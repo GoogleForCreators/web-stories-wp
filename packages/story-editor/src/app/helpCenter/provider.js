@@ -26,7 +26,7 @@ import {
   useRef,
 } from '@web-stories-wp/react';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { clamp } from '@web-stories-wp/animation';
+import { clamp } from '@googleforcreators/animation';
 import {
   localStore,
   LOCAL_STORAGE_PREFIX,

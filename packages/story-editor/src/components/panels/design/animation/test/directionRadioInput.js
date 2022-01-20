@@ -20,7 +20,7 @@
 import { useState } from '@web-stories-wp/react';
 import { fireEvent, screen } from '@testing-library/react';
 import PropTypes from 'prop-types';
-import { DIRECTION, SCALE_DIRECTION } from '@web-stories-wp/animation';
+import { DIRECTION, SCALE_DIRECTION } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies

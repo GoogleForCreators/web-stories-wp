@@ -40,7 +40,7 @@ import {
   hasOffsets,
   STORY_ANIMATION_STATE,
   getAnimationEffectDefaults,
-} from '@web-stories-wp/animation';
+} from '@googleforcreators/animation';
 /**
  * Internal dependencies
  */

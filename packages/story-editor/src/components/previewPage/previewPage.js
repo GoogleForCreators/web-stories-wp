@@ -24,7 +24,7 @@ import {
   StoryAnimation,
   useStoryAnimationContext,
   STORY_ANIMATION_STATE,
-} from '@web-stories-wp/animation';
+} from '@googleforcreators/animation';
 
 /**
  * Internal dependencies

@@ -34,7 +34,7 @@ import {
   ROTATION,
   SCALE_DIRECTION,
   SCALE_DIRECTION_MAP,
-} from '@web-stories-wp/animation';
+} from '@googleforcreators/animation';
 /**
  * Internal dependencies
  */
