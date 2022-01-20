@@ -36,7 +36,7 @@ import {
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
 import styled from 'styled-components';
-import { differenceInDays, getOptions, toDate } from '@web-stories-wp/date';
+import { differenceInDays, getOptions, toDate } from '@googleforcreators/date';
 
 /**
  * Internal dependencies

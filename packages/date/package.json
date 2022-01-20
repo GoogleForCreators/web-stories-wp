@@ -1,5 +1,5 @@
 {
-  "name": "@web-stories-wp/date",
+  "name": "@googleforcreators/date",
   "private": true,
   "engines": {
     "node": ">= 16",

@@ -16,7 +16,7 @@
     "@web-stories-wp/tracking": "*"
   },
   "devDependencies": {
-    "@web-stories-wp/date": "*",
+    "@googleforcreators/date": "*",
     "@web-stories-wp/stickers": "*",
     "puppeteer": "^10.4.0"
   },

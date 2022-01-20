@@ -14,7 +14,7 @@
     "@ap.cx/hues": "^2.4.0",
     "@ffmpeg/ffmpeg": "^0.10.1",
     "@googleforcreators/animation": "*",
-    "@web-stories-wp/date": "*",
+    "@googleforcreators/date": "*",
     "@web-stories-wp/design-system": "*",
     "@web-stories-wp/fonts": "*",
     "@googleforcreators/i18n": "*",

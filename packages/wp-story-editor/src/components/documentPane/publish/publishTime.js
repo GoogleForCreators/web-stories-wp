@@ -23,7 +23,7 @@ import {
   useState,
   useFocusOut,
 } from '@web-stories-wp/react';
-import { format, formatTime, is12Hour } from '@web-stories-wp/date';
+import { format, formatTime, is12Hour } from '@googleforcreators/date';
 import { __ } from '@googleforcreators/i18n';
 import {
   DropDownSelect,

@@ -12,7 +12,7 @@
   "type": "module",
   "dependencies": {
     "@googleforcreators/dashboard": "*",
-    "@web-stories-wp/date": "*",
+    "@googleforcreators/date": "*",
     "@web-stories-wp/design-system": "*",
     "@web-stories-wp/fonts": "*",
     "@googleforcreators/i18n": "*",

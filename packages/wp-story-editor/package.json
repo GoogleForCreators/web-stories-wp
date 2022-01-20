@@ -11,7 +11,7 @@
   "main": "./src/index.js",
   "type": "module",
   "dependencies": {
-    "@web-stories-wp/date": "*",
+    "@googleforcreators/date": "*",
     "@web-stories-wp/design-system": "*",
     "@googleforcreators/i18n": "*",
     "@web-stories-wp/media": "*",

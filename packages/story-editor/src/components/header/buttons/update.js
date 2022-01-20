@@ -27,7 +27,12 @@ import {
   Icons,
 } from '@web-stories-wp/design-system';
 import PropTypes from 'prop-types';
-import { getOptions, isAfter, subMinutes, toDate } from '@web-stories-wp/date';
+import {
+  getOptions,
+  isAfter,
+  subMinutes,
+  toDate,
+} from '@googleforcreators/date';
 
 /**
  * Internal dependencies
