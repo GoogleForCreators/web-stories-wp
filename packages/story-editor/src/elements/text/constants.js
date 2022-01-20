@@ -23,22 +23,32 @@ import { createSolid } from '@googleforcreators/patterns';
  */
 import { SHARED_DEFAULT_ATTRIBUTES } from '../shared/constants';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import PanelTypes from '../../components/panels/design/types';
+import { DEFAULT_PRESET } from '../../components/library/panes/text/textPresets';
+
+const {
+  borderRadius,
+  font,
+  fontSize,
+  fontWeight,
+  lineHeight,
+  padding,
+  textAlign,
+  width,
+} = DEFAULT_PRESET;
 
 export const defaultAttributes = {
   ...SHARED_DEFAULT_ATTRIBUTES,
-  backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
-  font: TEXT_ELEMENT_DEFAULT_FONT,
-  fontSize: 36,
   backgroundColor: createSolid(196, 196, 196),
-  lineHeight: 1.3,
-  textAlign: 'initial',
-  padding: {
-    vertical: 0,
-    horizontal: 0,
-    locked: true,
-  },
+  backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
+  borderRadius,
+  font,
+  fontSize,
+  fontWeight,
+  lineHeight,
+  padding,
+  textAlign,
+  width,
 };
 
 export const clearableAttributes = {

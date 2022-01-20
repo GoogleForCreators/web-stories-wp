@@ -487,7 +487,7 @@ describe('useRightClickMenu', () => {
         expect(mockShowSnackbar).toHaveBeenCalledWith(
           expect.objectContaining({
             actionLabel: 'Undo',
-            message: 'Cleared style.',
+            message: 'Cleared styles.',
           })
         );
       });
@@ -635,7 +635,7 @@ describe('useRightClickMenu', () => {
         expect(mockShowSnackbar).toHaveBeenCalledWith(
           expect.objectContaining({
             actionLabel: 'Undo',
-            message: 'Cleared style.',
+            message: 'Cleared styles.',
           })
         );
       });

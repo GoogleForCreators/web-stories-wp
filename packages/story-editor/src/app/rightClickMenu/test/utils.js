@@ -35,6 +35,7 @@ const ALL_PROPERTIES = {
   overlay: 'some-overlay-here',
   padding: '4px',
   textAlign: 'center',
+  width: '200px',
 
   // extra properties that will be ignored
   flavor: 'banana',
@@ -57,12 +58,14 @@ const expectedTextStyles = objectPick(ALL_PROPERTIES, [
   'backgroundTextMode',
   'border',
   'borderRadius',
+  'font',
+  'fontSize',
+  'fontWeight',
+  'lineHeight',
   'opacity',
   'padding',
   'textAlign',
-  'font',
-  'fontSize',
-  'lineHeight',
+  'width',
 ]);
 
 const { clearableAttributes: clearableGifAttributes } =
