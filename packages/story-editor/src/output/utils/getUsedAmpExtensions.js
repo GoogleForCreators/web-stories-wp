@@ -50,7 +50,11 @@ const getUsedAmpExtensions = (pages) => {
     src: 'https://cdn.ampproject.org/v0/amp-story-captions-0.1.js',
   };
 
-  for (const { elements } of pages) {
+  for (const { elements, tracks: audioTracks, backgroundAudio } of pages) {
+    if (backgroundAudio && audioTracks?.length > 0) {
+      extensions.push(ampVideo);
+      extensions.push(ampStoryCaptions);
+    }
     for (const { type, tracks } of elements) {
       switch (type) {
         case 'video':
