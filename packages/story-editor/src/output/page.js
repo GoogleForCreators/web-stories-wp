@@ -88,7 +88,10 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
     )
     .map(({ id: videoId }) => `el-${videoId}-captions`);
 
-  if (backgroundAudio?.id && tracks) {
+  const hasBackgroundAudioWithTracks =
+    backgroundAudio?.src && tracks.length > 0;
+
+  if (hasBackgroundAudioWithTracks) {
     videoCaptions.push(`el-${backgroundAudio.id}-captions`);
   }
 
@@ -138,7 +141,7 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
           </div>
         </amp-story-grid-layer>
       </StoryAnimation.Provider>
-      {backgroundAudio && tracks.length > 0 && (
+      {hasBackgroundAudioWithTracks && (
         <HiddenAudio
           backgroundAudio={backgroundAudio}
           tracks={tracks}
