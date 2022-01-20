@@ -269,10 +269,10 @@ function HierarchicalTermSelector({
       <HierarchicalInput
         inputValue={searchText}
         onInputChange={handleInputChange}
-        label={taxonomy.labels.search_items}
+        label={taxonomy.labels.searchItems}
         options={orderedCategories}
         onChange={handleClickCategory}
-        noOptionsText={taxonomy.labels?.not_found}
+        noOptionsText={taxonomy.labels?.notFound}
       />
       {canCreateTerms ? (
         <>
@@ -282,23 +282,23 @@ function HierarchicalTermSelector({
               aria-expanded={false}
               onClick={handleToggleNewCategory}
             >
-              {taxonomy.labels.add_new_item}
+              {taxonomy.labels.addNewItem}
             </LinkButton>
           )}
           {showAddNewCategory ? (
             <AddNewCategoryForm ref={formRef} onSubmit={handleSubmit}>
               <Input
                 autoFocus
-                name={taxonomy.labels.new_item_name}
-                label={taxonomy.labels.new_item_name}
+                name={taxonomy.labels.newItemName}
+                label={taxonomy.labels.newItemName}
                 value={newCategoryName}
                 onChange={handleChangeNewCategoryName}
                 hasFocus={hasFocus}
               />
-              <Label htmlFor={dropdownId}>{taxonomy.labels.parent_item}</Label>
+              <Label htmlFor={dropdownId}>{taxonomy.labels.parentItem}</Label>
               <DropDown
                 id={dropdownId}
-                ariaLabel={taxonomy.labels.parent_item}
+                ariaLabel={taxonomy.labels.parentItem}
                 options={dropdownCategories}
                 selectedValue={selectedParent}
                 onMenuItemClick={handleParentSelect}
@@ -308,7 +308,7 @@ function HierarchicalTermSelector({
                   disabled={!newCategoryName.length}
                   type="submit"
                 >
-                  {taxonomy.labels.add_new_item}
+                  {taxonomy.labels.addNewItem}
                 </AddNewCategoryButton>
                 <AddNewCategoryButton
                   aria-expanded

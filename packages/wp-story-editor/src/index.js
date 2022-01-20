@@ -47,7 +47,7 @@ import {
   MediaUpload,
 } from './components';
 import getApiCallbacks from './api/utils/getApiCallbacks';
-import { transformGetStoryResponse } from './api/utils';
+import { transformStoryResponse } from './api/utils';
 import { TIPS, TOOLBAR_HEIGHT, MENU_WIDTH } from './constants';
 import { GlobalStyle } from './theme.js';
 
@@ -72,7 +72,7 @@ window.webStories.initializeStoryEditor = (id, config, initialEdits) => {
   initializeTracking('Editor');
 
   initialEdits.story = initialEdits.story
-    ? transformGetStoryResponse(initialEdits.story)
+    ? transformStoryResponse(initialEdits.story)
     : null;
 
   const editorConfig = {

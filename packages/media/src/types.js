@@ -23,8 +23,8 @@ const ResourcePropTypes = {};
 
 ResourcePropTypes.resourceSize = PropTypes.shape({
   file: PropTypes.string,
-  source_url: PropTypes.string.isRequired,
-  mime_type: PropTypes.string.isRequired,
+  sourceUrl: PropTypes.string.isRequired,
+  mimeType: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
 });
@@ -166,7 +166,7 @@ export { ResourcePropTypes };
  * @typedef {ResourceSize} ResourceSize
  * @property {number} width The width of the ResourceSize.
  * @property {number} height The height of the ResourceSize.
- * @property {string} source_url The URL pointing to the resource for this size.
+ * @property {string} sourceUrl The URL pointing to the resource for this size.
  * @property {string|null} mimeType The mimeType of this ResourceSize.
  */
 
