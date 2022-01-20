@@ -19,7 +19,7 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { useCallback, useEffect, useContext } from '@web-stories-wp/react';
+import { useCallback, useEffect, useContext } from '@googleforcreators/react';
 import {
   BUTTON_TRANSITION_TIMING,
   Icons,
@@ -29,7 +29,7 @@ import {
   ThemeGlobals,
   NotificationBubble,
   BUBBLE_VARIANTS,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

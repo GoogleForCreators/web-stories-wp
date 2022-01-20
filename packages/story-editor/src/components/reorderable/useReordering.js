@@ -17,14 +17,14 @@
 /**
  * External dependencies
  */
-import { sprintf, __ } from '@web-stories-wp/i18n';
+import { sprintf, __ } from '@googleforcreators/i18n';
 import {
   useState,
   useCallback,
   useRef,
   useEffect,
-} from '@web-stories-wp/react';
-import { useLiveRegion } from '@web-stories-wp/design-system';
+} from '@googleforcreators/react';
+import { useLiveRegion } from '@googleforcreators/design-system';
 
 /* translators: %d: new position. */
 const REORDER_MESSAGE = __(

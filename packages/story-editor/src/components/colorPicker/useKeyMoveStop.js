@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useKeyDownEffect } from '@web-stories-wp/design-system';
+import { useKeyDownEffect } from '@googleforcreators/design-system';
 
 function useKeyMoveStop(ref, onMove) {
   // Reversed since the gradient line is reversed in terms of colors.

@@ -22,7 +22,7 @@ import { fireEvent, screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { dataPixels } from '@web-stories-wp/units';
+import { dataPixels } from '@googleforcreators/units';
 import {
   MULTIPLE_VALUE,
   MULTIPLE_DISPLAY_VALUE,

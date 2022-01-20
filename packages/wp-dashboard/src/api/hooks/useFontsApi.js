@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useState } from '@web-stories-wp/react';
-import { useConfig } from '@web-stories-wp/dashboard';
+import { useCallback, useEffect, useState } from '@googleforcreators/react';
+import { useConfig } from '@googleforcreators/dashboard';
 
 /**
  * Internal dependencies

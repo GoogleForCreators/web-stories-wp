@@ -18,8 +18,8 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo } from '@web-stories-wp/react';
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { useMemo } from '@googleforcreators/react';
+import { __, sprintf } from '@googleforcreators/i18n';
 import {
   Button,
   BUTTON_SIZES,
@@ -27,7 +27,7 @@ import {
   Headline,
   LoadingSpinner,
   THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

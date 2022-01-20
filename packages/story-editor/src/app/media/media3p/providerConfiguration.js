@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies

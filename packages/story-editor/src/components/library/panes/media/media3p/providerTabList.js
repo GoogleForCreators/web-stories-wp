@@ -22,9 +22,9 @@ import {
   useRef,
   useState,
   useEffect,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import styled from 'styled-components';
-import { useKeyDownEffect } from '@web-stories-wp/design-system';
+import { useKeyDownEffect } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

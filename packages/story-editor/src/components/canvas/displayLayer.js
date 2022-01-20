@@ -24,14 +24,14 @@ import {
   useEffect,
   useMemo,
   useCombinedRefs,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
-import { _x, __ } from '@web-stories-wp/i18n';
+import { _x, __ } from '@googleforcreators/i18n';
 import {
   StoryAnimation,
   STORY_ANIMATION_STATE,
   useStoryAnimationContext,
-} from '@web-stories-wp/animation';
+} from '@googleforcreators/animation';
 
 /**
  * Internal dependencies

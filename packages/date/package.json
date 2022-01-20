@@ -1,6 +1,16 @@
 {
-  "name": "@web-stories-wp/date",
-  "private": true,
+  "name": "@googleforcreators/date",
+  "description": "Date-handling package, a tiny wrapper around date-fns.",
+  "private": false,
+  "version": "0.0.1",
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "keywords": [
+    "web stories",
+    "datetime"
+  ],
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"
@@ -11,7 +21,7 @@
   "main": "./src/index.js",
   "type": "module",
   "dependencies": {
-    "@web-stories-wp/i18n": "*",
+    "@googleforcreators/i18n": "*",
     "date-fns": "^2.28.0",
     "date-fns-tz": "^1.1.6"
   },

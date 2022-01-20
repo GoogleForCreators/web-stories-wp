@@ -20,7 +20,7 @@
 import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 import { FlagsProvider } from 'flagged';
-import { SnackbarProvider } from '@web-stories-wp/design-system';
+import { SnackbarProvider } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

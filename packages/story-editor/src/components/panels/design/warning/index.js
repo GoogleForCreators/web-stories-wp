@@ -13,22 +13,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Internal dependencies
- */
-import snakeCaseToCamelCase from '../snakeCaseToCamelCase';
 
-describe('snakeCaseToCamelCase', () => {
-  it.each`
-    key            | result
-    ${''}          | ${''}
-    ${undefined}   | ${''}
-    ${'test'}      | ${'test'}
-    ${'rest_base'} | ${'restBase'}
-    ${'_links'}    | ${'_links'}
-    ${'links_'}    | ${'links_'}
-    ${'a_l'}       | ${'aL'}
-  `('should return the expected string for $key', ({ key, result }) => {
-    expect(snakeCaseToCamelCase(key)).toStrictEqual(result);
-  });
-});
+export { default } from './warning';

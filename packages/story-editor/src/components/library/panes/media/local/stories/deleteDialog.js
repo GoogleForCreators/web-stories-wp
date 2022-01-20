@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-import { SnackbarContext } from '@web-stories-wp/design-system';
+import { SnackbarContext } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

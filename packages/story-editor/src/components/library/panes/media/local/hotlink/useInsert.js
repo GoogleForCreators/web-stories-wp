@@ -17,17 +17,17 @@
 /**
  * External dependencies
  */
-import { useCallback, useState } from '@web-stories-wp/react';
-import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
+import { useCallback, useState } from '@googleforcreators/react';
+import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import {
   getImageFromVideo,
   seekVideo,
   getVideoLength,
   preloadVideo,
   hasVideoGotAudio,
-} from '@web-stories-wp/media';
+} from '@googleforcreators/media';
 import { v4 as uuidv4 } from 'uuid';
-import { trackError, trackEvent } from '@web-stories-wp/tracking';
+import { trackError, trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
@@ -83,12 +83,7 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
 
   const insertMedia = useCallback(
     async (hotlinkData, needsProxy) => {
-      const {
-        ext,
-        type,
-        mime_type: mimeType,
-        file_name: originalFileName,
-      } = hotlinkData;
+      const { ext, type, mimeType, fileName: originalFileName } = hotlinkData;
 
       const isVideo = type === 'video';
 
@@ -204,8 +199,8 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
       // is a great opportunity to measure usage in a reasonably accurate way.
       trackEvent('hotlink_media', {
         event_label: link,
-        file_size: hotlinkInfo.file_size,
-        file_type: hotlinkInfo.mime_type,
+        file_size: hotlinkInfo.fileSize,
+        file_type: hotlinkInfo.mimeType,
         needs_proxy: shouldProxy,
       });
 

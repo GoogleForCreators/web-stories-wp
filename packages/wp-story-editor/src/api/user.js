@@ -18,6 +18,11 @@
  */
 import apiFetch from '@wordpress/api-fetch';
 
+/**
+ * Internal dependencies
+ */
+import { snakeToCamelCaseObjectKeys } from './utils';
+
 export function getCurrentUser(config) {
   return apiFetch({
     path: config.api.currentUser,
@@ -28,5 +33,12 @@ export function updateCurrentUser(config, data) {
     path: config.api.currentUser,
     method: 'POST',
     data,
+  }).then((resp) => {
+    delete resp._links;
+    return snakeToCamelCaseObjectKeys(resp, [
+      'meta',
+      'capabilities',
+      'extra_capabilities',
+    ]);
   });
 }

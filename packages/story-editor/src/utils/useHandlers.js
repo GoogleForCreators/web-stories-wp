@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useRef } from '@web-stories-wp/react';
+import { useCallback, useMemo, useRef } from '@googleforcreators/react';
 
 function useHandlers() {
   const handlersRef = useRef([]);

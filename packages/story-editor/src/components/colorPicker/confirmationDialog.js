@@ -16,10 +16,10 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import { useState } from '@web-stories-wp/react';
+import { useState } from '@googleforcreators/react';
 import styled from 'styled-components';
 import {
   Text,
@@ -27,7 +27,7 @@ import {
   THEME_CONSTANTS,
   LOCAL_STORAGE_PREFIX,
   localStore,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

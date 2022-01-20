@@ -17,6 +17,6 @@
 /**
  * External dependencies
  */
-import { createContext } from '@web-stories-wp/react';
+import { createContext } from '@googleforcreators/react';
 
 export default createContext({ state: {}, actions: {}, tabs: {}, refs: {} });

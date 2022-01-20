@@ -59,7 +59,7 @@ describe('useLoadStory', () => {
       Promise.resolve(
         createStory({
           date: '2020-01-01T19:20:20',
-          date_gmt: '2020-01-01T20:20:20',
+          dateGmt: '2020-01-01T20:20:20',
         })
       )
     );

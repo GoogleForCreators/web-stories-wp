@@ -20,7 +20,7 @@ import {
   dataToEditorY,
   getBox,
   DANGER_ZONE_HEIGHT,
-} from '@web-stories-wp/units';
+} from '@googleforcreators/units';
 
 function calcTopOffset(box, dangerZoneOffset) {
   const { y, height } = box;

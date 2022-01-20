@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { render, act } from '@testing-library/react';
-import { resourceList } from '@web-stories-wp/media';
+import { resourceList } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -61,16 +61,16 @@ describe('MediaDisplay', () => {
         alt: '',
         sizes: {
           medium: {
-            source_url: 'https://example.com/image1-mid.png',
+            sourceUrl: 'https://example.com/image1-mid.png',
             width: 500,
             height: 400,
-            mime_type: 'image/png',
+            mimeType: 'image/png',
           },
           full: {
-            source_url: 'https://example.com/image1.png',
+            sourceUrl: 'https://example.com/image1.png',
             width: 1000,
             height: 800,
-            mime_type: 'image/png',
+            mimeType: 'image/png',
           },
         },
       },

@@ -17,9 +17,9 @@
 /**
  * External dependencies
  */
-import { __, sprintf, _n, TranslateWithMarkup } from '@web-stories-wp/i18n';
-import { trackClick } from '@web-stories-wp/tracking';
-import { Link, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { __, sprintf, _n, TranslateWithMarkup } from '@googleforcreators/i18n';
+import { trackClick } from '@googleforcreators/tracking';
+import { Link, THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 export const THUMBNAIL_MAX = 4;
 export const THUMBNAIL_COUNT_FOR_OVERFLOW = 3;
@@ -120,6 +120,15 @@ export const ACCESSIBILITY_COPY = {
       'Ensure legibility of text and ease of reading by increasing color contrast',
       'web-stories'
     ),
+    textPanel: __(
+      'This color or font size combination may be hard for some people to read.',
+      'web-stories'
+    ),
+    backgroundPanel: __(
+      'This background color may make some text hard to read.',
+      'web-stories'
+    ),
+    warningIcon: __('Low Warning', 'web-stories'),
   },
   videoMissingCaptions: {
     title: __('Add video captions', 'web-stories'),

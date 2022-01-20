@@ -17,15 +17,15 @@
 /**
  * External dependencies
  */
-import { getSettings, getOptions, format } from '@web-stories-wp/date';
+import { getSettings, getOptions, format } from '@googleforcreators/date';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import {
   PLACEMENT,
   Text,
   THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

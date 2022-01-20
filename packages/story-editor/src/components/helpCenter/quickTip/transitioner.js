@@ -18,7 +18,7 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { BEZIER } from '@web-stories-wp/design-system';
+import { BEZIER } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 
 export const PAGE_TEMPLATE_TYPES = {
   cover: { name: __('Cover', 'web-stories') },

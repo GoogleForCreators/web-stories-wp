@@ -27,8 +27,8 @@ import {
   THEME_CONSTANTS,
   useKeyDownEffect,
   useLiveRegion,
-} from '@web-stories-wp/design-system';
-import { _n, sprintf, __ } from '@web-stories-wp/i18n';
+} from '@googleforcreators/design-system';
+import { _n, sprintf, __ } from '@googleforcreators/i18n';
 import {
   useCallback,
   useDebouncedCallback,
@@ -36,7 +36,7 @@ import {
   usePrevious,
   useRef,
   useState,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 
 /**
  * Internal dependencies

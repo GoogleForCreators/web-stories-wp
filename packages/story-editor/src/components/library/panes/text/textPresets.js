@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { __, _x } from '@web-stories-wp/i18n';
-import { dataFontEm, PAGE_HEIGHT } from '@web-stories-wp/units';
+import { __, _x } from '@googleforcreators/i18n';
+import { dataFontEm, PAGE_HEIGHT } from '@googleforcreators/units';
 
 /**
  * Internal dependencies

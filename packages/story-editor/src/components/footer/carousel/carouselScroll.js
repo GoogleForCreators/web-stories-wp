@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import {
   Button,
@@ -26,7 +26,7 @@ import {
   BUTTON_VARIANTS,
   BUTTON_TYPES,
   BUTTON_SIZES,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
