@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { createGlobalStyle } from 'styled-components';
-import { SVGIcons } from '@web-stories-wp/design-system';
+import { SVGIcons } from '@googleforcreators/design-system';
 
 export const GlobalStyle = createGlobalStyle`
   .default-moveable .moveable-control,

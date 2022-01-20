@@ -20,14 +20,14 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useCallback } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import {
   NumericInput,
   Icons,
   ToggleButton,
   BUTTON_SIZES,
   BUTTON_VARIANTS,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

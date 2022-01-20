@@ -22,7 +22,7 @@ import { memo, useRef, useState } from '@web-stories-wp/react';
 import styled, { css } from 'styled-components';
 import { generatePatternStyles } from '@web-stories-wp/patterns';
 import { useUnits } from '@web-stories-wp/units';
-import { StoryAnimation } from '@web-stories-wp/animation';
+import { StoryAnimation } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies

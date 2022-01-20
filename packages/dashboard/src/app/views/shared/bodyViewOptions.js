@@ -19,14 +19,14 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { TranslateWithMarkup, __ } from '@web-stories-wp/i18n';
+import { TranslateWithMarkup, __ } from '@googleforcreators/i18n';
 import {
   Text,
   THEME_CONSTANTS,
   DropDown,
   Datalist,
   noop,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

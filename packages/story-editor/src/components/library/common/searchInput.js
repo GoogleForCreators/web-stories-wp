@@ -23,9 +23,9 @@ import {
   useCallback,
   useDebouncedCallback,
 } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
-import { SearchInput } from '@web-stories-wp/design-system';
+import { SearchInput } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

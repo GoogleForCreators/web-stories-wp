@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { sprintf, _n } from '@web-stories-wp/i18n';
+import { sprintf, _n } from '@googleforcreators/i18n';
 import { useMemo } from '@web-stories-wp/react';
 
 /**

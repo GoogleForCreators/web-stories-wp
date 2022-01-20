@@ -18,7 +18,7 @@
  */
 import { render, screen } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
-import { theme } from '@web-stories-wp/design-system';
+import { theme } from '@googleforcreators/design-system';
 import {
   useConfig,
   useCurrentUser,

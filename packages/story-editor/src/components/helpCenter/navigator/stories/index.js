@@ -18,7 +18,10 @@
  */
 import { useState } from '@web-stories-wp/react';
 import styled, { ThemeProvider } from 'styled-components';
-import { theme as dsTheme, ThemeGlobals } from '@web-stories-wp/design-system';
+import {
+  theme as dsTheme,
+  ThemeGlobals,
+} from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

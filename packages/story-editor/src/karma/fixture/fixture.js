@@ -27,7 +27,7 @@ import {
   screen,
   waitFor,
 } from '@testing-library/react';
-import { setAppElement } from '@web-stories-wp/design-system';
+import { setAppElement } from '@googleforcreators/design-system';
 import { FixtureEvents } from '@web-stories-wp/karma-fixture';
 import { DATA_VERSION } from '@web-stories-wp/migration';
 
@@ -77,7 +77,7 @@ function MediaUpload({ render: _render, onSelect }) {
   return _render(open);
 }
 
-const DEFAULT_CONFIG = {
+export const FIXTURE_DEFAULT_CONFIG = {
   storyId: 1,
   api: {},
   allowedMimeTypes: {
@@ -119,6 +119,7 @@ const DEFAULT_CONFIG = {
   version: '1.0.0-alpha.9',
   isRTL: false,
   showMedia3p: true,
+  canViewDefaultTemplates: true,
   locale: {
     dateFormat: 'F j, Y',
     timeFormat: 'g:i a',
@@ -160,7 +161,7 @@ export class Fixture {
    * @param {Object} config.mocks An object containing functions to be used as stubs for the api.
    */
   constructor({ mocks } = {}) {
-    this._config = { ...DEFAULT_CONFIG };
+    this._config = { ...FIXTURE_DEFAULT_CONFIG };
 
     this._componentStubs = new Map();
     const origCreateElement = React.createElement;

@@ -28,7 +28,7 @@ import {
 } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { _x } from '@web-stories-wp/i18n';
+import { _x } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies

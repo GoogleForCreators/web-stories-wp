@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { DIRECTION, SCALE_DIRECTION } from '@web-stories-wp/animation';
+import { DIRECTION, SCALE_DIRECTION } from '@googleforcreators/animation';
 /**
  * Internal dependencies
  */

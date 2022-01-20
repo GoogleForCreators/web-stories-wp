@@ -40,7 +40,7 @@ import { renderPanel } from '../../../shared/test/_utils';
 
 let mockControls;
 jest.mock('../../../../../utils/textMeasurements');
-jest.mock('@web-stories-wp/design-system', () => {
+jest.mock('@googleforcreators/design-system', () => {
   // eslint-disable-next-line no-undef
   const React = require('@web-stories-wp/react');
   // eslint-disable-next-line no-undef
@@ -54,7 +54,7 @@ jest.mock('@web-stories-wp/design-system', () => {
   };
   return {
     __esModule: true,
-    ...jest.requireActual('@web-stories-wp/design-system'),
+    ...jest.requireActual('@googleforcreators/design-system'),
     Datalist: {
       DropDown: FakeControl,
     },

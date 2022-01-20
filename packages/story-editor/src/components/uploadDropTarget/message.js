@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
+import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { memo } from '@web-stories-wp/react';
@@ -25,7 +25,7 @@ import {
   Icons,
   Text as DefaultText,
   THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

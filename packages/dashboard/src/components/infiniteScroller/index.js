@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import { useEffect, useRef, useReducer, useMemo } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -26,7 +26,7 @@ import {
   Text,
   THEME_CONSTANTS,
   themeHelpers,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 const ScrollMessage = styled.div`
   width: 100%;

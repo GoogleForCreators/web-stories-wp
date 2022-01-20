@@ -20,7 +20,7 @@
 import { forwardRef, useCallback } from '@web-stories-wp/react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@googleforcreators/i18n';
 import { getPreviewText, PatternPropType } from '@web-stories-wp/patterns';
 import {
   Button,
@@ -28,7 +28,7 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Icons,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

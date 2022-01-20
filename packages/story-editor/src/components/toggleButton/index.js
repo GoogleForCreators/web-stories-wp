@@ -26,7 +26,7 @@ import {
   Text,
   TOOLTIP_PLACEMENT,
   Tooltip,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { forwardRef } from '@web-stories-wp/react';
 
 const Button = styled(dsButton)`

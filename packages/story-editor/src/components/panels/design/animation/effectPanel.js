@@ -27,7 +27,7 @@ import {
   FIELD_TYPES,
   getAnimationEffectProps,
   AnimationProps,
-} from '@web-stories-wp/animation';
+} from '@googleforcreators/animation';
 
 /**
  * Internal dependencies

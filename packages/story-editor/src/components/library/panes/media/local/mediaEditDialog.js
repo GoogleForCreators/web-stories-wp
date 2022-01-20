@@ -20,8 +20,8 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { useCallback, useState } from '@web-stories-wp/react';
-import { formatDate, toDate, isValid } from '@web-stories-wp/date';
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { formatDate, toDate, isValid } from '@googleforcreators/date';
+import { __, sprintf } from '@googleforcreators/i18n';
 import { trackError } from '@web-stories-wp/tracking';
 import {
   getSmallestUrlForWidth,
@@ -32,7 +32,7 @@ import {
   TextArea,
   THEME_CONSTANTS,
   useSnackbar,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

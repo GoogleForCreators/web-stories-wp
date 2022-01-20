@@ -17,9 +17,9 @@
 /**
  * External dependencies
  */
-import { sprintf, __ } from '@web-stories-wp/i18n';
+import { sprintf, __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
-import { THEME_CONSTANTS, Text } from '@web-stories-wp/design-system';
+import { THEME_CONSTANTS, Text } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

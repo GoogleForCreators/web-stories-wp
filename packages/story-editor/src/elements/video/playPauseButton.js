@@ -27,9 +27,9 @@ import {
   useRef,
 } from '@web-stories-wp/react';
 import { CSSTransition } from 'react-transition-group';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import { rgba } from 'polished';
-import { Icons, useKeyDownEffect } from '@web-stories-wp/design-system';
+import { Icons, useKeyDownEffect } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

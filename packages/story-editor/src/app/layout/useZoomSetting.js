@@ -19,7 +19,7 @@
  */
 import { useMemo, useReduction } from '@web-stories-wp/react';
 import { PAGE_WIDTH, PAGE_RATIO, FULLBLEED_RATIO } from '@web-stories-wp/units';
-import { themeHelpers } from '@web-stories-wp/design-system';
+import { themeHelpers } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

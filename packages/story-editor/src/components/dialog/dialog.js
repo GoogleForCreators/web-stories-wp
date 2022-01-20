@@ -27,7 +27,7 @@ import {
   BUTTON_TYPES,
   theme,
   lightMode,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Dialog is wrapped in a ThemeProvider so that colors can be inverted.

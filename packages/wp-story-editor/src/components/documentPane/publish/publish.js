@@ -24,14 +24,14 @@ import {
   forwardRef,
 } from '@web-stories-wp/react';
 import styled from 'styled-components';
-import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
+import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import {
   Link,
   Text,
   THEME_CONSTANTS,
   Icons,
   Datalist,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import {
   highlightStates as states,
   highlightStyles as styles,

@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { InterfaceSkeleton } from '@web-stories-wp/dashboard';
+import { InterfaceSkeleton } from '@googleforcreators/dashboard';
 
 /**
  * Internal dependencies

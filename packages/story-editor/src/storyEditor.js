@@ -24,7 +24,7 @@ import {
   SnackbarProvider,
   ModalGlobalStyle,
   deepMerge,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { useMemo } from '@web-stories-wp/react';
 import { FlagsProvider } from 'flagged';
 
