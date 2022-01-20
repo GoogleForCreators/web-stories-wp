@@ -37,13 +37,15 @@ import {
 import { useKeyDownEffect } from '../keyboard';
 import { useContextMenu } from './contextMenuProvider';
 
+export const CONTEXT_MENU_WIDTH = 218;
+
 const MenuWrapper = styled.div(
   ({ theme }) => css`
     padding: ${({ $isIconMenu }) => ($isIconMenu ? '4px 3px' : '8px 0')};
     background-color: ${theme.colors.bg.primary};
     border-radius: ${theme.borders.radius.small};
     border: 1px solid ${theme.colors.border.disable};
-    width: ${({ $isIconMenu }) => ($isIconMenu ? 40 : 218)}px;
+    width: ${({ $isIconMenu }) => ($isIconMenu ? 40 : CONTEXT_MENU_WIDTH)}px;
 
     *:last-child {
       margin-bottom: 0;

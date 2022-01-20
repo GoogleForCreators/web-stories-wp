@@ -29,6 +29,7 @@ import {
  * Internal dependencies
  */
 import { __ } from '@web-stories-wp/i18n';
+import { CONTEXT_MENU_WIDTH } from '@web-stories-wp/design-system/src/components/contextMenu/menu';
 import { useRightClickMenu } from '../../app';
 import useStory from '../../app/story/useStory';
 import isEmptyStory from '../../app/story/utils/isEmptyStory';
@@ -45,6 +46,9 @@ const EmptyStateMessage = styled.div`
   align-items: center;
   padding: 20px;
   text-align: center;
+  svg {
+    pointer-events: none;
+  }
 `;
 
 function EmptyStateLayer() {
@@ -57,6 +61,13 @@ function EmptyStateLayer() {
     return null;
   }
 
+  const onButtonClick = (e) => {
+    const bb = e.target.getBoundingClientRect();
+    e.clientX = bb.left - CONTEXT_MENU_WIDTH / 2 + bb.width / 2;
+    e.clientY = bb.top - 132 + bb.height;
+    onOpenMenu(e);
+  };
+
   return (
     <Layer onContextMenu={onOpenMenu}>
       <DisplayPageArea withSafezone={false}>
@@ -64,7 +75,7 @@ function EmptyStateLayer() {
           <Button
             type={BUTTON_TYPES.SECONDARY}
             variant={BUTTON_VARIANTS.CIRCLE}
-            onClick={onOpenMenu}
+            onClick={onButtonClick}
           >
             <Icons.Media />
           </Button>
