@@ -30,7 +30,7 @@ import './setLocaleData';
 /**
  * External dependencies
  */
-import Dashboard from '@web-stories-wp/dashboard';
+import Dashboard from '@googleforcreators/dashboard';
 import { domReady, setAppElement } from '@web-stories-wp/design-system';
 import { StrictMode, render } from '@web-stories-wp/react';
 import { updateSettings } from '@web-stories-wp/date';

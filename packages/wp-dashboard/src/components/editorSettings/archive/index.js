@@ -32,7 +32,7 @@ import {
 } from '@web-stories-wp/design-system';
 import { trackEvent } from '@web-stories-wp/tracking';
 import styled from 'styled-components';
-import { TEXT_INPUT_DEBOUNCE } from '@web-stories-wp/dashboard';
+import { TEXT_INPUT_DEBOUNCE } from '@googleforcreators/dashboard';
 
 /**
  * Internal dependencies

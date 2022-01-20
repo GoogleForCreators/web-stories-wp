@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useRouteHistory } from '@web-stories-wp/dashboard';
+import { useRouteHistory } from '@googleforcreators/dashboard';
 import { useEffect } from '@web-stories-wp/react';
 
 function useAdminSubMenu() {

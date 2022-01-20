@@ -19,7 +19,7 @@
 import { useCallback, useState, useEffect } from '@web-stories-wp/react';
 import { enableTracking, disableTracking } from '@web-stories-wp/tracking';
 import { useSnackbar, localStore } from '@web-stories-wp/design-system';
-import { useRouteHistory } from '@web-stories-wp/dashboard';
+import { useRouteHistory } from '@googleforcreators/dashboard';
 /**
  * Internal dependencies
  */

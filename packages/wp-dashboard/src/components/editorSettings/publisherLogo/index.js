@@ -30,7 +30,7 @@ import {
   useGridViewKeys,
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
-import { FileUpload, useConfig } from '@web-stories-wp/dashboard';
+import { FileUpload, useConfig } from '@googleforcreators/dashboard';
 
 /**
  * Internal dependencies

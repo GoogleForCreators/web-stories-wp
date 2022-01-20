@@ -39,7 +39,7 @@ import {
   resolveRoute,
   APP_ROUTES,
   useRouteHistory,
-} from '@web-stories-wp/dashboard';
+} from '@googleforcreators/dashboard';
 
 /**
  * Internal dependencies
