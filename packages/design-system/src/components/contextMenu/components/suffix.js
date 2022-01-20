@@ -23,7 +23,7 @@ const Suffix = styled.div`
   svg {
     width: 32px;
     color: ${({ theme }) => theme.colors.fg.secondary};
-    margin: -12px 0 !important;
+    margin: -12px -14px -12px 0 !important;
   }
 `;
 
