@@ -1,6 +1,16 @@
 {
   "name": "@googleforcreators/date",
-  "private": true,
+  "description": "Date-handling package, a tiny wrapper around date-fns.",
+  "private": false,
+  "version": "0.0.1",
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "keywords": [
+    "web stories",
+    "datetime"
+  ],
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"

@@ -1,6 +1,17 @@
 {
   "name": "@googleforcreators/animation",
-  "private": true,
+  "description": "Web Stories editor animation library.",
+  "private": false,
+  "version": "0.0.1",
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "keywords": [
+    "web stories",
+    "animations",
+    "web animations"
+  ],
   "type": "module",
   "engines": {
     "node": ">= 16",

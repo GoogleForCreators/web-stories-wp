@@ -1,6 +1,17 @@
 {
   "name": "@googleforcreators/i18n",
-  "private": true,
+  "description": "Tiny i18n gettext helper package.",
+  "private": false,
+  "version": "0.0.1",
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "keywords": [
+    "web stories",
+    "i18n",
+    "gettext"
+  ],
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"
