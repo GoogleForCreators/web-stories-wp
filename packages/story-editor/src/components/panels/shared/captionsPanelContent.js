@@ -29,9 +29,9 @@ import {
   Text,
   THEME_CONSTANTS,
   themeHelpers,
-} from '@web-stories-wp/design-system';
-import { __ } from '@web-stories-wp/i18n';
-import { ResourcePropTypes } from '@web-stories-wp/media';
+} from '@googleforcreators/design-system';
+import { __ } from '@googleforcreators/i18n';
+import { ResourcePropTypes } from '@googleforcreators/media';
 
 /**
  * Internal dependencies

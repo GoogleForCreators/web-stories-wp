@@ -29,7 +29,7 @@ import {
 } from '@googleforcreators/design-system';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import { useCallback } from '@web-stories-wp/react';
-import { ResourcePropTypes } from '@web-stories-wp/media';
+import { ResourcePropTypes } from '@googleforcreators/media';
 import { v4 as uuidv4 } from 'uuid';
 
 /**
