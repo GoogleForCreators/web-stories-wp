@@ -31,7 +31,7 @@ import {
   THEME_CONSTANTS,
   Tooltip,
 } from '@googleforcreators/design-system';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies

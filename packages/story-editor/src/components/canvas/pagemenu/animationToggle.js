@@ -19,7 +19,7 @@
  */
 import { useCallback } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent } from '@googleforcreators/tracking';
 import { Icons } from '@googleforcreators/design-system';
 import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
 /**

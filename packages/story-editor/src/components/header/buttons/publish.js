@@ -25,7 +25,7 @@ import {
   getOptions,
 } from '@googleforcreators/date';
 import { __ } from '@googleforcreators/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent } from '@googleforcreators/tracking';
 import PropTypes from 'prop-types';
 
 /**

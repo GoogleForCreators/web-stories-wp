@@ -24,7 +24,7 @@
     "@googleforcreators/i18n": "*",
     "@googleforcreators/patterns": "*",
     "@googleforcreators/react": "*",
-    "@web-stories-wp/tracking": "*",
+    "@googleforcreators/tracking": "*",
     "big.js": "^6.1.1",
     "focus-visible": "^5.2.0",
     "mousetrap": "^1.6.5",

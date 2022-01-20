@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 import { useCallback, useState } from '@googleforcreators/react';
 import { formatDate, toDate, isValid } from '@googleforcreators/date';
 import { __, sprintf } from '@googleforcreators/i18n';
-import { trackError } from '@web-stories-wp/tracking';
+import { trackError } from '@googleforcreators/tracking';
 import {
   getSmallestUrlForWidth,
   ResourcePropTypes,

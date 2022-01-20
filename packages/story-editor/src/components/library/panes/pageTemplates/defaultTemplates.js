@@ -25,7 +25,7 @@ import {
   useRef,
 } from '@googleforcreators/react';
 import { _x, __ } from '@googleforcreators/i18n';
-import { getTimeTracker, trackEvent } from '@web-stories-wp/tracking';
+import { getTimeTracker, trackEvent } from '@googleforcreators/tracking';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import {

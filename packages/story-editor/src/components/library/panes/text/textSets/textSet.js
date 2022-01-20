@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent } from '@googleforcreators/tracking';
 import { useCallback, forwardRef } from '@googleforcreators/react';
 import { dataToEditorX, dataToEditorY } from '@googleforcreators/units';
 import {

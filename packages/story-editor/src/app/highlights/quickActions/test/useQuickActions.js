@@ -82,7 +82,7 @@ jest.mock('@googleforcreators/design-system', () => ({
   useSnackbar: jest.fn(() => ({ showSnackbar: jest.fn() })),
 }));
 
-jest.mock('@web-stories-wp/tracking');
+jest.mock('@googleforcreators/tracking');
 
 jest.mock('@googleforcreators/media', () => ({
   ...jest.requireActual('@googleforcreators/media'),

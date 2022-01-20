@@ -30,7 +30,7 @@
     "@googleforcreators/patterns": "*",
     "@googleforcreators/react": "*",
     "@googleforcreators/templates": "*",
-    "@web-stories-wp/tracking": "*",
+    "@googleforcreators/tracking": "*",
     "@googleforcreators/units": "*",
     "flagged": "^2.0.1",
     "history": "^5.2.0",

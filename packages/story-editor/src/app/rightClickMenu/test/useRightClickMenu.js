@@ -47,7 +47,7 @@ jest.mock('@googleforcreators/design-system', () => ({
   useSnackbar: jest.fn(),
 }));
 
-jest.mock('@web-stories-wp/tracking');
+jest.mock('@googleforcreators/tracking');
 
 const mockEvent = {
   preventDefault: jest.fn(),

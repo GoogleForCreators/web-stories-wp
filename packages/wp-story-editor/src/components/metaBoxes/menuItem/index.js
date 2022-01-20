@@ -18,7 +18,7 @@
  */
 import { __ } from '@googleforcreators/i18n';
 import { useCallback } from '@googleforcreators/react';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent } from '@googleforcreators/tracking';
 import { Tooltip } from '@googleforcreators/story-editor';
 import {
   Button,

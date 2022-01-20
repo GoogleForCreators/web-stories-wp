@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useEffect } from '@googleforcreators/react';
-import { trackTiming } from '@web-stories-wp/tracking';
+import { trackTiming } from '@googleforcreators/tracking';
 
 const TRACES = {};
 const OBSERVED_EVENTS = ['click', 'pointerdown', 'pointerup'];

@@ -20,7 +20,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import { useCallback } from '@googleforcreators/react';
-import { trackClick } from '@web-stories-wp/tracking';
+import { trackClick } from '@googleforcreators/tracking';
 import {
   themeHelpers,
   Link as DsLink,

@@ -32,7 +32,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent } from '@googleforcreators/tracking';
 import styled from 'styled-components';
 import useApplyTextAutoStyle from '../../../../utils/useApplyTextAutoStyle';
 import Tooltip from '../../../tooltip';

@@ -32,7 +32,7 @@ import {
   Tooltip,
 } from '@googleforcreators/design-system';
 import styled from 'styled-components';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies

@@ -24,7 +24,7 @@ import {
   useState,
   useEffect,
 } from '@googleforcreators/react';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent } from '@googleforcreators/tracking';
 import { getMsFromHMS } from '@googleforcreators/media';
 
 /**
