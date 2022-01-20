@@ -31,6 +31,7 @@ import isElementBelowLimit from '../utils/isElementBelowLimit';
 import { ELEMENT_TYPES } from '../elements';
 import OutputElement from './element';
 import getLongestMediaElement from './utils/getLongestMediaElement';
+import HiddenAudio from './utils/HiddenAudio';
 
 const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 
@@ -41,6 +42,7 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
     elements,
     backgroundColor,
     backgroundAudio,
+    tracks = [],
     pageAttachment,
   } = page;
   const { ctaText, url, icon, theme, rel = [] } = pageAttachment || {};
@@ -79,17 +81,27 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
         }
   );
 
-  const videoCaptions = elements
+  const videoElementCaptions = elements
     .filter(
-      ({ type, tracks }) => type === ELEMENT_TYPES.VIDEO && tracks?.length > 0
+      ({ type, tracks: videoTracks }) =>
+        type === ELEMENT_TYPES.VIDEO && videoTracks?.length > 0
     )
     .map(({ id: videoId }) => `el-${videoId}-captions`);
+
+  const audioCaptions = backgroundAudio?.id
+    ? [`el-${backgroundAudio.id}-captions`]
+    : [];
+
+  const videoCaptions = [...videoElementCaptions, ...audioCaptions];
+
+  const backgroundAudioSrc =
+    backgroundAudio?.src && !tracks ? backgroundAudio.src : undefined;
 
   return (
     <amp-story-page
       id={id}
       auto-advance-after={autoAdvance ? autoAdvanceAfter : undefined}
-      background-audio={backgroundAudio?.src ?? undefined}
+      background-audio={backgroundAudioSrc}
     >
       <StoryAnimation.Provider animations={animations} elements={elements}>
         <StoryAnimation.AMPAnimations />
@@ -128,6 +140,13 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
           </div>
         </amp-story-grid-layer>
       </StoryAnimation.Provider>
+      {backgroundAudio && tracks.length > 0 && (
+        <HiddenAudio
+          backgroundAudio={backgroundAudio}
+          tracks={tracks}
+          id={id}
+        />
+      )}
       {videoCaptions.length > 0 && (
         <amp-story-grid-layer
           template="vertical"
