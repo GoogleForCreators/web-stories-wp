@@ -152,7 +152,7 @@ export const createStoryFromTemplate = async (config, template) => {
 
   const { createdBy, pages, version, colors } = template;
   const { getStoryPropsToSave } = await import(
-    /* webpackChunkName: "chunk-getStoryPropsToSave" */ '@web-stories-wp/story-editor'
+    /* webpackChunkName: "chunk-getStoryPropsToSave" */ '@googleforcreators/story-editor'
   );
   const storyPropsToSave = await getStoryPropsToSave({
     story: {

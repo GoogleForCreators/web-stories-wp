@@ -30,7 +30,7 @@ import {
   useStory,
   useCheckpoint,
   useRefreshPostEditURL,
-} from '@web-stories-wp/story-editor';
+} from '@googleforcreators/story-editor';
 
 const InputRow = styled(Row)`
   margin-left: 34px;

@@ -17,7 +17,7 @@
     "@googleforcreators/media": "*",
     "@googleforcreators/migration": "*",
     "@googleforcreators/react": "*",
-    "@web-stories-wp/story-editor": "*",
+    "@googleforcreators/story-editor": "*",
     "@web-stories-wp/tracking": "*",
     "@wordpress/api-fetch": "^5.2.6",
     "flagged": "^2.0.1",

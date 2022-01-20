@@ -34,7 +34,7 @@ import {
   GlobalStyle,
   CropMoveableGlobalStyle,
   EditorConfigProvider,
-} from '@web-stories-wp/story-editor';
+} from '@googleforcreators/story-editor';
 import {
   DashboardGlobalStyle,
   DashboardKeyboardOnlyOutline,

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { HeaderTitle } from '@web-stories-wp/story-editor';
+import { HeaderTitle } from '@googleforcreators/story-editor';
 
 /**
  * Internal dependencies

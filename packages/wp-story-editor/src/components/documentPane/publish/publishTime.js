@@ -36,7 +36,7 @@ import {
   Popup,
   useStory,
   focusStyle,
-} from '@web-stories-wp/story-editor';
+} from '@googleforcreators/story-editor';
 
 // date-fns format without timezone.
 const TIMEZONELESS_FORMAT = 'Y-m-d\\TH:i:s';

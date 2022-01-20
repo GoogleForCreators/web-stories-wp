@@ -27,7 +27,7 @@ import {
   UndoButton,
   UpdateButton,
   PublishButton,
-} from '@web-stories-wp/story-editor';
+} from '@googleforcreators/story-editor';
 
 /**
  * Internal dependencies

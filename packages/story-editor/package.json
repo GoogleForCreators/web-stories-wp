@@ -1,5 +1,5 @@
 {
-  "name": "@web-stories-wp/story-editor",
+  "name": "@googleforcreators/story-editor",
   "description": "The core Web Stories editor web application, which is platform-agnostic.",
   "private": false,
   "version": "0.0.1",

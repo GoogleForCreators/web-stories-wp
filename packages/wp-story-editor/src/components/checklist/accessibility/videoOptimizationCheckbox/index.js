@@ -41,7 +41,7 @@ import {
   useStory,
   ChecklistCard,
   DefaultFooterText,
-} from '@web-stories-wp/story-editor';
+} from '@googleforcreators/story-editor';
 
 const CheckboxContainer = styled.div`
   display: flex;
