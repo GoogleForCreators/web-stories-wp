@@ -45,10 +45,10 @@ function BackgroundAudioPanel() {
   const { backgroundAudio, updateStory } = useStory(
     ({
       state: {
-        story: { backgroundAudio, tracks },
+        story: { backgroundAudio },
       },
       actions: { updateStory },
-    }) => ({ backgroundAudio, tracks, updateStory })
+    }) => ({ backgroundAudio, updateStory })
   );
 
   const updateBackgroundAudio = useCallback(
