@@ -28,27 +28,24 @@ import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
 import { useStory } from '../story';
 import { LAYER_DIRECTIONS } from '../../constants';
 import getKeyboardMovement from '../../utils/getKeyboardMovement';
-import { getDefinitionForType, duplicateElement } from '../../elements';
+import { getDefinitionForType } from '../../elements';
 import { useTransform } from '../../components/transform';
-import useAddPastedElements from './useAddPastedElements';
 import { useCanvas } from '.';
 
 /**
  * @param {{current: Node}} ref Reference.
  */
 function useCanvasKeys(ref) {
-  const addPastedElements = useAddPastedElements();
-
   const {
     selectedElementIds,
     selectedElements,
     arrangeSelection,
     clearSelection,
     deleteSelectedElements,
+    duplicateElementsById,
     updateSelectedElements,
     setSelectedElementsById,
     currentPage,
-    selectedElementAnimations,
     animationState,
     updateAnimationState,
   } = useStory(
@@ -57,13 +54,13 @@ function useCanvasKeys(ref) {
         selectedElementIds,
         selectedElements,
         currentPage,
-        selectedElementAnimations,
         animationState,
       },
       actions: {
         arrangeSelection,
         clearSelection,
         deleteSelectedElements,
+        duplicateElementsById,
         updateSelectedElements,
         setSelectedElementsById,
         updateAnimationState,
@@ -76,9 +73,9 @@ function useCanvasKeys(ref) {
         arrangeSelection,
         clearSelection,
         deleteSelectedElements,
+        duplicateElementsById,
         updateSelectedElements,
         setSelectedElementsById,
-        selectedElementAnimations,
         animationState,
         updateAnimationState,
       };
@@ -234,30 +231,11 @@ function useCanvasKeys(ref) {
     if (selectedElements.length === 0) {
       return;
     }
-    const { elements, animations } = selectedElements
-      // Filter out the background element (never makes sense to clone that)
-      .filter(({ isBackground }) => !isBackground)
-      .reduce(
-        ({ elements, animations }, selectedElement) => {
-          const { element, elementAnimations } = duplicateElement({
-            element: selectedElement,
-            animations: selectedElementAnimations,
-            existingElements: selectedElements,
-          });
 
-          return {
-            elements: [...elements, element],
-            animations: [...animations, ...elementAnimations],
-          };
-        },
-        {
-          elements: [],
-          animations: [],
-        }
-      );
-
-    addPastedElements(elements, animations);
-  }, [addPastedElements, selectedElements, selectedElementAnimations]);
+    duplicateElementsById({
+      elementIds: selectedElements.map((element) => element.id),
+    });
+  }, [duplicateElementsById, selectedElements]);
 
   useGlobalKeyDownEffect('clone', () => cloneHandler(), [cloneHandler]);
 
