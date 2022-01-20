@@ -34,16 +34,18 @@ import { DarkThemeProvider } from '../../../storybookUtils/darkThemeProvider';
 
 export default {
   title: 'DesignSystem/Components/Button',
-  // TODO: fix select dropdown
   argTypes: {
     type: {
       options: Object.values(BUTTON_TYPES),
+      control: 'select',
     },
     variant: {
       options: Object.values(BUTTON_VARIANTS),
+      control: 'select',
     },
     size: {
       options: Object.values(BUTTON_SIZES),
+      control: 'radio',
     },
   },
   args: {
@@ -195,7 +197,7 @@ ToggleButtonContainer.propTypes = {
   type: PropTypes.oneOf(Object.values(BUTTON_TYPES)),
 };
 
-export const ToggleButtons = () => {
+export const ToggleButtons = (args) => {
   const [isToggled, setToggled] = useState(false);
   const swapToggled = useCallback(() => setToggled((b) => !b), []);
   return (
@@ -210,36 +212,40 @@ export const ToggleButtons = () => {
       <ToggleButtonContainer
         isToggled={isToggled}
         swapToggled={swapToggled}
+        {...args}
         type={BUTTON_TYPES.QUATERNARY}
       />
       <DarkThemeProvider>
         <ToggleButtonContainer
           isToggled={isToggled}
           swapToggled={swapToggled}
+          {...args}
           type={BUTTON_TYPES.QUATERNARY}
         />
       </DarkThemeProvider>
     </>
   );
 };
+ToggleButtons.parameters = { controls: { include: [] } };
 
-export const PrebakedButtons = () => {
+export const PrebakedButtons = (args) => {
   const [isLocked, setLocked] = useState(false);
   const swapLocked = useCallback(() => setLocked((b) => !b), []);
   return (
     <>
       <Container>
         <Row>
-          <LockToggle isLocked={isLocked} onClick={swapLocked} />
+          <LockToggle isLocked={isLocked} onClick={swapLocked} {...args} />
         </Row>
       </Container>
       <DarkThemeProvider>
         <Container>
           <Row>
-            <LockToggle isLocked={isLocked} onClick={swapLocked} />
+            <LockToggle isLocked={isLocked} onClick={swapLocked} {...args} />
           </Row>
         </Container>
       </DarkThemeProvider>
     </>
   );
 };
+PrebakedButtons.parameters = { controls: { include: [] } };

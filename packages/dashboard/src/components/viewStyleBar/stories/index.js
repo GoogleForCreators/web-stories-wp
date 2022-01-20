@@ -28,7 +28,6 @@ import ViewStyleBar from '..';
 export default {
   title: 'Dashboard/Components/ViewStyleBar',
   component: ViewStyleBar,
-  // TODO: fix select dropdown
   argTypes: {
     layoutStyle: {
       options: Object.values(VIEW_STYLE),

@@ -44,10 +44,10 @@ export default {
     placement: PLACEMENT.BOTTOM,
     popupZIndex: 1,
   },
-  //TODO: fix select
   argTypes: {
     placement: {
       options: Object.values(PLACEMENT),
+      control: 'select',
     },
   },
 };
