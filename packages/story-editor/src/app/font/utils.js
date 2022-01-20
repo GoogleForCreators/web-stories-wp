@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { getFontCSS } from '@web-stories-wp/fonts';
+import { getFontCSS } from '@googleforcreators/fonts';
 
 /**
  * Enqueue an inline stylesheet for a given font family and URL.

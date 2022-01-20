@@ -24,7 +24,7 @@ import {
   useRef,
   useState,
 } from '@web-stories-wp/react';
-import { CURATED_FONT_NAMES } from '@web-stories-wp/fonts';
+import { CURATED_FONT_NAMES } from '@googleforcreators/fonts';
 import { useFeature } from 'flagged';
 
 /**

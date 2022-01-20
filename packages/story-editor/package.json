@@ -16,7 +16,7 @@
     "@googleforcreators/animation": "*",
     "@googleforcreators/date": "*",
     "@googleforcreators/design-system": "*",
-    "@web-stories-wp/fonts": "*",
+    "@googleforcreators/fonts": "*",
     "@googleforcreators/i18n": "*",
     "@web-stories-wp/karma-fixture": "*",
     "@web-stories-wp/media": "*",

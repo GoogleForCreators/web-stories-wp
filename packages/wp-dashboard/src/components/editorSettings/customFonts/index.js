@@ -32,7 +32,6 @@ import {
   Tooltip,
 } from '@googleforcreators/design-system';
 import styled from 'styled-components';
-import getFontDataFromUrl from '@web-stories-wp/fonts/src/utils/getFontDataFromUrl';
 import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
@@ -49,6 +48,7 @@ import {
   TextInputHelperText,
 } from '../components';
 import ConfirmationDialog from './confirmationDialog';
+import getFontDataFromUrl from './utils/getFontDataFromUrl';
 
 export const TEXT = {
   ADD_CONTEXT: __(

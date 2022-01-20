@@ -14,7 +14,7 @@
     "@googleforcreators/dashboard": "*",
     "@googleforcreators/date": "*",
     "@googleforcreators/design-system": "*",
-    "@web-stories-wp/fonts": "*",
+    "@googleforcreators/fonts": "*",
     "@googleforcreators/i18n": "*",
     "@web-stories-wp/media": "*",
     "@web-stories-wp/patterns": "*",

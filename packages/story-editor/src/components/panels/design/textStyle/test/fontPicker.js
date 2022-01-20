@@ -19,7 +19,7 @@
  */
 import { fireEvent, waitFor, screen } from '@testing-library/react';
 import { Datalist } from '@googleforcreators/design-system';
-import { CURATED_FONT_NAMES } from '@web-stories-wp/fonts';
+import { CURATED_FONT_NAMES } from '@googleforcreators/fonts';
 
 /**
  * Internal dependencies
