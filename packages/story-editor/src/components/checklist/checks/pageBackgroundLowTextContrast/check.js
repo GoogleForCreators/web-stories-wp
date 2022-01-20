@@ -21,7 +21,7 @@ import {
   FULLBLEED_RATIO,
   getBox,
   getBoundRect,
-} from '@web-stories-wp/units';
+} from '@googleforcreators/units';
 import {
   getMediaSizePositionProps,
   preloadImage,

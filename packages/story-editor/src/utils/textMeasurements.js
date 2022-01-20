@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { renderToStaticMarkup } from '@googleforcreators/react';
-import { dataPixels, PAGE_HEIGHT } from '@web-stories-wp/units';
+import { dataPixels, PAGE_HEIGHT } from '@googleforcreators/units';
 
 /**
  * Internal dependencies

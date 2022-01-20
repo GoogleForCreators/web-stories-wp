@@ -21,7 +21,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { useCallback, forwardRef } from '@googleforcreators/react';
-import { dataToEditorX, dataToEditorY } from '@web-stories-wp/units';
+import { dataToEditorX, dataToEditorY } from '@googleforcreators/units';
 import {
   BUTTON_TRANSITION_TIMING,
   ThemeGlobals,

@@ -32,7 +32,7 @@ import {
   PAGE_HEIGHT,
   getBoundRect,
   calcRotatedObjectPositionAndSize,
-} from '@web-stories-wp/units';
+} from '@googleforcreators/units';
 import {
   useKeyDownEffect,
   Icons,

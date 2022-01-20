@@ -24,7 +24,7 @@ import {
   useRef,
   useState,
 } from '@googleforcreators/react';
-import { useUnits } from '@web-stories-wp/units';
+import { useUnits } from '@googleforcreators/units';
 
 /**
  * Internal dependencies

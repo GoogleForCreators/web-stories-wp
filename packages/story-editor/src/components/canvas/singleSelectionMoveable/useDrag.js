@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useUnits } from '@web-stories-wp/units';
+import { useUnits } from '@googleforcreators/units';
 import { useBatchingCallback } from '@googleforcreators/react';
 /**
  * Internal dependencies

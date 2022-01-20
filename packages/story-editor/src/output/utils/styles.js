@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { FULLBLEED_RATIO, PAGE_RATIO } from '@web-stories-wp/units';
+import { FULLBLEED_RATIO, PAGE_RATIO } from '@googleforcreators/units';
 
 /**
  * Internal dependencies

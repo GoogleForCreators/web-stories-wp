@@ -22,7 +22,7 @@ import {
   DANGER_ZONE_HEIGHT,
   FULLBLEED_HEIGHT,
   PAGE_WIDTH,
-} from '@web-stories-wp/units';
+} from '@googleforcreators/units';
 
 /**
  * Internal dependencies
