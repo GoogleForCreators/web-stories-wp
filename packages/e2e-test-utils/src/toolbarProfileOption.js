@@ -30,7 +30,7 @@ async function toggleToolbarProfileOption(enable) {
 
   const selector = `#admin_bar_front`;
   await page.waitForSelector(selector);
-  const checkedSelector = `${selector}[checked=checked]`;
+  const checkedSelector = `${selector}:checked`;
   const isChecked = Boolean(await page.$(checkedSelector));
   if ((!isChecked && enable) || (isChecked && !enable)) {
     await page.click(selector);
