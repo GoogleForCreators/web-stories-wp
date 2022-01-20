@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback, useRef } from '@googleforcreators/react';
-import getAllTemplates from '@web-stories-wp/templates';
+import getAllTemplates from '@googleforcreators/templates';
 
 /**
  * Internal dependencies
