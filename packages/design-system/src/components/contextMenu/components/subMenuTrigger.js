@@ -22,7 +22,7 @@ import {
   useCallback,
   useEffect,
   useRef,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 
 /**

@@ -22,10 +22,10 @@ import {
   useEffect,
   useMemo,
   useState,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import SAT from 'sat';
-import { __ } from '@web-stories-wp/i18n';
-import { Icons } from '@web-stories-wp/design-system';
+import { __ } from '@googleforcreators/i18n';
+import { Icons } from '@googleforcreators/design-system';
 import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
