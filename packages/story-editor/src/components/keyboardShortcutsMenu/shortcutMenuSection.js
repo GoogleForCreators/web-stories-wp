@@ -20,7 +20,11 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import { Headline, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import {
+  Headline,
+  Text,
+  THEME_CONSTANTS,
+} from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback } from '@web-stories-wp/react';
-import { useKeyDownEffect } from '@web-stories-wp/design-system';
+import { useKeyDownEffect } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

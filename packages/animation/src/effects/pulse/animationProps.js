@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { __, _x } from '@web-stories-wp/i18n';
+import { __, _x } from '@googleforcreators/i18n';
 
 /**
  * External dependencies

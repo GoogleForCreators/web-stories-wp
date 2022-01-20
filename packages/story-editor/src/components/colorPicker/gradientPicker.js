@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import { ColorStopPropType } from '@web-stories-wp/patterns';
 import {
   Button,
@@ -27,7 +27,7 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Icons,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useReducer, useMemo } from '@web-stories-wp/react';
-import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
+import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies

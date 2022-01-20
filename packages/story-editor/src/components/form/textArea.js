@@ -24,7 +24,7 @@ import {
   useEffect,
 } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
-import { TextArea as StyledTextArea } from '@web-stories-wp/design-system';
+import { TextArea as StyledTextArea } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

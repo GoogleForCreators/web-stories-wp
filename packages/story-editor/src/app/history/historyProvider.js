@@ -24,7 +24,7 @@ import {
   useState,
   useRef,
 } from '@web-stories-wp/react';
-import { useGlobalKeyDownEffect } from '@web-stories-wp/design-system';
+import { useGlobalKeyDownEffect } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

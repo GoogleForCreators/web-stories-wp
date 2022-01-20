@@ -26,8 +26,8 @@ import {
   BUTTON_VARIANTS,
   Icons,
   themeHelpers,
-} from '@web-stories-wp/design-system';
-import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
+} from '@googleforcreators/design-system';
+import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import { useCallback } from '@web-stories-wp/react';
 import { ResourcePropTypes } from '@web-stories-wp/media';
 import { v4 as uuidv4 } from 'uuid';

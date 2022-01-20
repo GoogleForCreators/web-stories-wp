@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { sprintf, _n, __ } from '@web-stories-wp/i18n';
+import { sprintf, _n, __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 
 /**
@@ -29,7 +29,7 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   Tooltip,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { useStory } from '../../../app/story';
 import { useLocalMedia } from '../../../app/media';
 import { MEDIA_VIDEO_DIMENSIONS_THRESHOLD } from '../../../constants';

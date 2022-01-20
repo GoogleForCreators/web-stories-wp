@@ -109,14 +109,6 @@ describe('Integration Layer tests : Optional API Callbacks', () => {
       await fixture.events.click(fixture.editor.library.pageTemplatesTab);
     });
 
-    await fixture.events.click(
-      fixture.editor.library.pageTemplatesPane.dropDown
-    );
-
-    const optionArray = fixture.screen.getAllByRole('option', {
-      name: /templates/,
-    });
-
-    expect(optionArray.length).toBe(1);
+    expect(fixture.editor.library.pageTemplatesPane.dropDown).toBeNull();
   });
 });

@@ -23,13 +23,13 @@ import {
   useState,
   useFocusOut,
 } from '@web-stories-wp/react';
-import { format, formatTime, is12Hour } from '@web-stories-wp/date';
-import { __ } from '@web-stories-wp/i18n';
+import { format, formatTime, is12Hour } from '@googleforcreators/date';
+import { __ } from '@googleforcreators/i18n';
 import {
   DropDownSelect,
   PLACEMENT,
   useKeyDownEffect,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import {
   DateTime,
   Row,

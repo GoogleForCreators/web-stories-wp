@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { Headline, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { Headline, THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

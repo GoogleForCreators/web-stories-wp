@@ -24,9 +24,9 @@ import {
   useMemo,
 } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
-import { __, _x, TranslateWithMarkup } from '@web-stories-wp/i18n';
+import { __, _x, TranslateWithMarkup } from '@googleforcreators/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
-import { THEME_CONSTANTS, DropDown } from '@web-stories-wp/design-system';
+import { THEME_CONSTANTS, DropDown } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

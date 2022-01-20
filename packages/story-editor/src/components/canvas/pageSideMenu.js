@@ -21,8 +21,8 @@ import {
   ContextMenu,
   ContextMenuComponents,
   noop,
-} from '@web-stories-wp/design-system';
-import { __ } from '@web-stories-wp/i18n';
+} from '@googleforcreators/design-system';
+import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import { Fragment } from '@web-stories-wp/react';

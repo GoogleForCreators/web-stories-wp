@@ -19,13 +19,13 @@
  */
 import { useCallback, useEffect, useState } from '@web-stories-wp/react';
 import styled from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import {
   Input,
   Link,
   ThemeGlobals,
   THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

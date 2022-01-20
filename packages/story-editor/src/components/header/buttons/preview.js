@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback, useState } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import {
   Button,
@@ -26,7 +26,7 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Icons,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';
 
 /**

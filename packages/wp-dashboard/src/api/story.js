@@ -16,13 +16,13 @@
 /**
  * External dependencies
  */
-import { addQueryArgs } from '@web-stories-wp/design-system';
+import { addQueryArgs } from '@googleforcreators/design-system';
 import {
   ORDER_BY_SORT,
   STORIES_PER_REQUEST,
   STORY_SORT_OPTIONS,
   STORY_STATUS,
-} from '@web-stories-wp/dashboard';
+} from '@googleforcreators/dashboard';
 import { createSolidFromString } from '@web-stories-wp/patterns';
 
 /**

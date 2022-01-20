@@ -26,7 +26,7 @@ import {
   useRef,
   useUnmount,
 } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import {
   getPreviewText,
   getOpaquePattern,
@@ -38,7 +38,7 @@ import {
   THEME_CONSTANTS,
   Swatch,
   PLACEMENT,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

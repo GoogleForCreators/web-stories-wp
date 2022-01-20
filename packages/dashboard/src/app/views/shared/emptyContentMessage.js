@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { DesertColor } from '@web-stories-wp/design-system';
+import { DesertColor } from '@googleforcreators/design-system';
 
 const Message = styled.div`
   display: flex;

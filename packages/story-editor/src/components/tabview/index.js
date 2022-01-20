@@ -27,7 +27,7 @@ import {
   THEME_CONSTANTS,
   themeHelpers,
   ThemeGlobals,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

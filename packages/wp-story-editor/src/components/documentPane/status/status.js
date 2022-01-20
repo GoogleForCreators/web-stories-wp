@@ -19,8 +19,8 @@
  */
 import { useCallback, useMemo, useState } from '@web-stories-wp/react';
 import styled from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
-import { Input } from '@web-stories-wp/design-system';
+import { __ } from '@googleforcreators/i18n';
+import { Input } from '@googleforcreators/design-system';
 import { trackEvent } from '@web-stories-wp/tracking';
 import {
   Row,

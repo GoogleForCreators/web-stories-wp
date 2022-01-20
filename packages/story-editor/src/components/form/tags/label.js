@@ -17,7 +17,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 export default styled(Text).attrs({
   forwardedAs: 'label',

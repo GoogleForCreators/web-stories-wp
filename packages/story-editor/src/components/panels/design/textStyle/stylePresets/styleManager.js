@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import { CSSTransition } from 'react-transition-group';
 import { useFocusOut, useRef, useState } from '@web-stories-wp/react';
 import styled from 'styled-components';
@@ -26,7 +26,7 @@ import {
   localStore,
   Text,
   THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';
 
 /**

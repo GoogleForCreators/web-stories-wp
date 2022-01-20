@@ -18,14 +18,14 @@
  * External dependencies
  */
 import { useCallback } from '@web-stories-wp/react';
-import { __, _n, sprintf } from '@web-stories-wp/i18n';
+import { __, _n, sprintf } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import {
   Button,
   BUTTON_VARIANTS,
   BUTTON_TYPES,
   BUTTON_SIZES,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

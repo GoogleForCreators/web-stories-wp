@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { FlagsProvider } from 'flagged';
-import { setAppElement } from '@web-stories-wp/design-system';
+import { setAppElement } from '@googleforcreators/design-system';
 import { screen, act, waitFor } from '@testing-library/react';
 import {
   ConfigContext,

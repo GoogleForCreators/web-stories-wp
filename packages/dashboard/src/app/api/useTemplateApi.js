@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback, useReducer } from '@web-stories-wp/react';
-import { compareDesc } from '@web-stories-wp/date';
+import { compareDesc } from '@googleforcreators/date';
 import getAllTemplates from '@web-stories-wp/templates';
 /**
  * Internal dependencies

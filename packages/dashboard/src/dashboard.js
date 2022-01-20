@@ -23,7 +23,7 @@ import {
   theme as externalDesignSystemTheme,
   ThemeGlobals,
   deepMerge,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 import PropTypes from 'prop-types';
