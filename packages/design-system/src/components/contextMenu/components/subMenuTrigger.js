@@ -28,12 +28,27 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { useKeyDownEffect } from '../../keyboard';
+import { FOCUSABLE_SELECTORS, KEYS } from '../../../utils';
+import { useContextMenu } from '../contextMenuProvider';
 import MenuButton from './button';
 import Suffix from './suffix';
 
+/**
+ * Extracts all focusable children from an html tree, optionally ignoring items from submenu.
+ *
+ * @param {HTMLElement} parent The parent to search
+ * @return {Array.<HTMLElement>} List of focusable elements
+ */
+function getFocusableChildren(parent) {
+  return Array.from(parent.querySelectorAll(FOCUSABLE_SELECTORS.join(', ')));
+}
+
 function SubMenuTrigger({
-  setIsSubMenuOpen,
+  openSubMenu,
+  closeSubMenu,
   isSubMenuOpen,
+  isRTL = false,
   subMenuRef,
   parentMenuRef,
   label,
@@ -42,6 +57,10 @@ function SubMenuTrigger({
 }) {
   const ref = useRef();
   const pointerTracker = useRef({});
+
+  const { setFocusedId } = useContextMenu(({ actions }) => ({
+    setFocusedId: actions.setFocusedId,
+  }));
 
   const pointerIsOutside = (node) => {
     const { x, y, width, height } = node.getBoundingClientRect();
@@ -56,12 +75,15 @@ function SubMenuTrigger({
   };
 
   const maybeCloseSubMenu = useDebouncedCallback(() => {
+    if (!ref.current || !subMenuRef.current?.firstChild) {
+      return;
+    }
     // If after 200ms the cursor is not in the submenu and not in itself, leave.
     if (
       pointerIsOutside(ref.current) &&
       pointerIsOutside(subMenuRef.current.firstChild)
     ) {
-      setIsSubMenuOpen(false);
+      closeSubMenu();
     }
   }, 200);
 
@@ -77,6 +99,14 @@ function SubMenuTrigger({
     };
   }, [trackPointer]);
 
+  useEffect(() => {
+    if (isSubMenuOpen && subMenuRef.current) {
+      const subMenuItems = getFocusableChildren(subMenuRef.current);
+      subMenuItems[0].focus();
+      setFocusedId(subMenuItems[0].id);
+    }
+  }, [isSubMenuOpen, subMenuRef, setFocusedId]);
+
   // If the pointer enters parent menu, maybe we need to close the submenu.
   useEffect(() => {
     const node = parentMenuRef.current?.firstChild;
@@ -89,13 +119,39 @@ function SubMenuTrigger({
     };
   }, [isSubMenuOpen, parentMenuRef, maybeCloseSubMenu]);
 
+  const handleKeyboardEvents = useCallback(
+    (evt) => {
+      const { code } = evt;
+      if ([KEYS.SPACE, KEYS.ENTER].includes(code)) {
+        if (!isSubMenuOpen) {
+          openSubMenu();
+        } else {
+          closeSubMenu();
+        }
+        return;
+      }
+      if ((!isRTL && KEYS.RIGHT === code) || (isRTL && KEYS.LEFT) === code) {
+        if (!isSubMenuOpen) {
+          openSubMenu();
+        }
+      }
+    },
+    [openSubMenu, closeSubMenu, isSubMenuOpen, isRTL]
+  );
+
+  useKeyDownEffect(
+    ref,
+    { key: ['enter', 'space', 'left', 'right'] },
+    handleKeyboardEvents,
+    [handleKeyboardEvents]
+  );
+
   // Menu trigger does not react to clicking.
-  // @todo Add opening with space / enter / right or left arrow key.
   return (
     <MenuButton
       {...buttonProps}
       ref={ref}
-      onPointerEnter={() => setIsSubMenuOpen(true)}
+      onPointerEnter={openSubMenu}
       onPointerLeave={maybeCloseSubMenu}
       onClick={(e) => e.preventDefault()}
     >
@@ -110,12 +166,14 @@ function SubMenuTrigger({
 }
 
 SubMenuTrigger.propTypes = {
-  setIsSubMenuOpen: PropTypes.func.isRequired,
+  openSubMenu: PropTypes.func.isRequired,
+  closeSubMenu: PropTypes.func.isRequired,
   isSubMenuOpen: PropTypes.bool.isRequired,
+  isRTL: PropTypes.bool,
   subMenuRef: PropTypes.object.isRequired,
   parentMenuRef: PropTypes.object.isRequired,
   label: PropTypes.string,
-  SuffixIcon: PropTypes.node,
+  SuffixIcon: PropTypes.object,
 };
 
 export default SubMenuTrigger;

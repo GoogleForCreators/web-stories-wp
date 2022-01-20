@@ -18,22 +18,13 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
 
-const Wrapper = styled.div`
+const Suffix = styled.div`
   svg {
     width: 32px;
     color: ${({ theme }) => theme.colors.fg.secondary};
     margin: -12px 0 !important;
   }
 `;
-
-function Suffix({ children }) {
-  return <Wrapper>{children}</Wrapper>;
-}
-
-Suffix.propTypes = {
-  children: PropTypes.node,
-};
 
 export default Suffix;

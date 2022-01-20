@@ -137,6 +137,7 @@ const RightClickMenu = () => {
                 shortcut,
                 separator,
                 subMenuItems,
+                closeSubMenu,
                 ...buttonProps
               }) => (
                 <Fragment key={label}>
@@ -148,9 +149,12 @@ const RightClickMenu = () => {
                   {subMenuItems && (
                     <>
                       <ContextMenuComponents.SubMenuTrigger
+                        isMenuOpen={isMenuOpen}
+                        closeSubMenu={closeSubMenu}
                         subMenuRef={subMenuRef}
                         parentMenuRef={ref}
                         label={label}
+                        isRTL={isRTL}
                         {...buttonProps}
                       />
                       {Boolean(subMenuItems.length) && (
@@ -164,9 +168,11 @@ const RightClickMenu = () => {
                           <ContextMenu
                             isOpen
                             onDismiss={onCloseMenu}
+                            onCloseSubMenu={closeSubMenu}
                             aria-label={__('Select a layer', 'web-stories')}
                             isRTL={isRTL}
                             isSubMenu
+                            parentMenuRef={ref}
                           >
                             {subMenuItems.map((item) =>
                               menuButtonRenderer(item)

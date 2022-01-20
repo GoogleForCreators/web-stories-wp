@@ -80,6 +80,8 @@ const Menu = ({
   isOpen,
   onFocus = noop,
   isSubMenu = false,
+  parentMenuRef,
+  onCloseSubMenu = noop,
   ...props
 }) => {
   const { isRTL } = props;
@@ -140,10 +142,6 @@ const Menu = ({
         prevIndex = 0;
       }
 
-      const prevItemHasSubMenuOpen =
-        focusableChildren[prevIndex]?.hasAttribute('aria-haspopup') &&
-        focusableChildren[prevIndex]?.getAttribute('aria-pressed');
-
       // If we're moving up-down.
       if ([KEYS.UP, KEYS.DOWN].includes(key)) {
         const isAscending = KEYS.UP === key;
@@ -162,28 +160,27 @@ const Menu = ({
         return;
       }
       // Maybe move from submenu to parent menu.
-      if (isSubMenu && (KEYS.LEFT === key || (isRTL && KEYS.RIGHT === key))) {
-        // Get the toggled button sharing the same parent.
-        const parentButton = menuRef.current.parentElement.querySelector(
-          'button[aria-pressed="true"][aria-haspopup="menu"]'
+      if (
+        isSubMenu &&
+        ((!isRTL && KEYS.LEFT === key) || (isRTL && KEYS.RIGHT === key))
+      ) {
+        // Get the button with expanded popup.
+        const parentButton = parentMenuRef.current.querySelector(
+          'button[aria-expanded="true"][aria-haspopup="menu"]'
         );
         parentButton?.focus();
-        return;
-      }
-      // Maybe move into submenu.
-      if (
-        !isSubMenu &&
-        (KEYS.RIGHT === key || (isRTL && KEYS.LEFT === key)) &&
-        prevItemHasSubMenuOpen
-      ) {
-        const subMenu = menuRef.current.querySelector('[role="menu"]');
-        if (subMenu) {
-          const subMenuItems = getFocusableChildren(subMenu, true);
-          subMenuItems[0]?.focus();
-        }
+        onCloseSubMenu();
       }
     },
-    [focusedId, onDismiss, setFocusedId, isRTL, isSubMenu]
+    [
+      focusedId,
+      onDismiss,
+      setFocusedId,
+      isRTL,
+      isSubMenu,
+      onCloseSubMenu,
+      parentMenuRef,
+    ]
   );
 
   // focus first focusable element on open
@@ -238,8 +235,10 @@ export const MenuPropTypes = {
   onFocus: PropTypes.func,
   disableControlledTabNavigation: PropTypes.bool,
   isOpen: PropTypes.bool,
+  onCloseSubMenu: PropTypes.func,
   isSubMenu: PropTypes.bool,
   isRTL: PropTypes.bool,
+  parentMenuRef: PropTypes.object,
 };
 
 Menu.propTypes = MenuPropTypes;
