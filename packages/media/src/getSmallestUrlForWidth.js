@@ -24,7 +24,7 @@ import aspectRatiosApproximatelyMatch from './aspectRatiosApproximatelyMatch';
  * minWidth, according to the device pixel ratio.
  *
  * @param {number} minWidth The minimum width of the thumbnail to return.
- * @param {import('@web-stories-wp/media').Resource} resource The resource.
+ * @param {import('@googleforcreators/media').Resource} resource The resource.
  * @return {string} Source URL of the smallest available size media.
  */
 function getSmallestUrlForWidth(minWidth, resource) {

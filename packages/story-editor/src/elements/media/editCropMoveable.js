@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import { useEffect, useRef } from '@web-stories-wp/react';
 import { useUnits } from '@web-stories-wp/units';
-import { getFocalFromOffset } from '@web-stories-wp/media';
+import { getFocalFromOffset } from '@googleforcreators/media';
 
 /**
  * Internal dependencies

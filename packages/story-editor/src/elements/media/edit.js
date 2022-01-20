@@ -30,7 +30,7 @@ import PropTypes from 'prop-types';
 import {
   getMediaSizePositionProps,
   calculateSrcSet,
-} from '@web-stories-wp/media';
+} from '@googleforcreators/media';
 import { BG_MIN_SCALE, BG_MAX_SCALE } from '@googleforcreators/animation';
 
 /**

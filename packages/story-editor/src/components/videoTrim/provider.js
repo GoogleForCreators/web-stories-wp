@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback } from '@web-stories-wp/react';
-import { formatMsToHMS, getVideoLengthDisplay } from '@web-stories-wp/media';
+import { formatMsToHMS, getVideoLengthDisplay } from '@googleforcreators/media';
 import { trackEvent } from '@web-stories-wp/tracking';
 
 /**

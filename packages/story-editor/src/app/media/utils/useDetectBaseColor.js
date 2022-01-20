@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback } from '@web-stories-wp/react';
-import { getSmallestUrlForWidth } from '@web-stories-wp/media';
+import { getSmallestUrlForWidth } from '@googleforcreators/media';
 /**
  * Internal dependencies
  */
@@ -43,7 +43,7 @@ function useDetectBaseColor({ updateMediaElement }) {
   const saveBaseColor = useCallback(
     /**
      *
-     * @param {import('@web-stories-wp/media').Resource} resource Resource object.
+     * @param {import('@googleforcreators/media').Resource} resource Resource object.
      * @param {string} baseColor Base Color.
      * @return {Promise<void>}
      */

@@ -30,14 +30,14 @@ import {
   getImageFromVideo,
   seekVideo,
   preloadVideo,
-} from '@web-stories-wp/media';
+} from '@googleforcreators/media';
 import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Generates a image resource object from a local File object.
  *
  * @param {File} file File object.
- * @return {Promise<import('@web-stories-wp/media').Resource>} Local image resource object.
+ * @return {Promise<import('@googleforcreators/media').Resource>} Local image resource object.
  */
 const getImageResource = async (file) => {
   const alt = getFileName(file);
@@ -61,7 +61,7 @@ const getImageResource = async (file) => {
  * Generates a video resource object from a local File object.
  *
  * @param {File} file File object.
- * @return {Promise<import('@web-stories-wp/media').Resource>} Local video resource object.
+ * @return {Promise<import('@googleforcreators/media').Resource>} Local video resource object.
  */
 const getVideoResource = async (file) => {
   const alt = getFileName(file);
@@ -123,7 +123,7 @@ const getPlaceholderResource = (file) => {
  * Generates a resource object from a local File object.
  *
  * @param {File} file File object.
- * @return {Promise<Object<{resource: import('@web-stories-wp/media').Resource, posterFile: File}>>} Object containing resource object and poster file.
+ * @return {Promise<Object<{resource: import('@googleforcreators/media').Resource, posterFile: File}>>} Object containing resource object and poster file.
  */
 const getResourceFromLocalFile = async (file) => {
   const type = getTypeFromMime(file.type);

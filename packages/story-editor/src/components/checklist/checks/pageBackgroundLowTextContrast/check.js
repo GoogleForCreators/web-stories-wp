@@ -22,12 +22,15 @@ import {
   getBox,
   getBoundRect,
 } from '@web-stories-wp/units';
-import { getMediaSizePositionProps, preloadImage } from '@web-stories-wp/media';
+import {
+  getMediaSizePositionProps,
+  preloadImage,
+} from '@googleforcreators/media';
+import { createSolidFromString } from '@web-stories-wp/patterns';
 
 /**
  * Internal dependencies
  */
-import createSolidFromString from '@web-stories-wp/patterns/src/createSolidFromString';
 import {
   calculateLuminanceFromRGB,
   calculateLuminanceFromStyleColor,

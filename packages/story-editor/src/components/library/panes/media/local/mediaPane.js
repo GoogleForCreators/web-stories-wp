@@ -22,7 +22,7 @@ import { useCallback, useEffect } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { __, _n, sprintf } from '@googleforcreators/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { resourceList } from '@web-stories-wp/media';
+import { resourceList } from '@googleforcreators/media';
 import {
   Button as DefaultButton,
   BUTTON_SIZES,

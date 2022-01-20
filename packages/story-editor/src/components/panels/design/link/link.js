@@ -190,7 +190,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     /**
      * Handle link icon change.
      *
-     * @param {import('@web-stories-wp/media').Resource} resource The new image.
+     * @param {import('@googleforcreators/media').Resource} resource The new image.
      */
     (resource) => {
       handleChange({ icon: resource?.src }, true);

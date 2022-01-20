@@ -70,7 +70,7 @@
     "@web-stories-wp/karma-failed-tests-reporter": "*",
     "@web-stories-wp/karma-puppeteer-client": "*",
     "@web-stories-wp/karma-puppeteer-launcher": "*",
-    "@web-stories-wp/media": "*",
+    "@googleforcreators/media": "*",
     "@web-stories-wp/migration": "*",
     "@web-stories-wp/story-editor": "*",
     "@wordpress/babel-plugin-import-jsx-pragma": "^3.1.0",
