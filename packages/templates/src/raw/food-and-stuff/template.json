@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -35,7 +35,6 @@
             "height": 23,
             "id": 0,
             "alt": "icon_logo",
-            "local": true,
             "isExternal": true
           },
           "type": "image",
@@ -77,7 +76,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page1_bg",
-            "local": false,
             "sizes": [],
             "isExternal": true
           }
@@ -322,7 +320,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page3_image1",
-            "local": false,
             "sizes": [],
             "baseColor": "#ffffff",
             "isExternal": true
@@ -934,7 +931,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page5_bg",
-            "local": false,
             "sizes": [],
             "isExternal": true
           },
@@ -1108,7 +1104,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page5_bg",
-            "local": false,
             "sizes": [],
             "isExternal": true
           }
@@ -1886,7 +1881,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page7_bg",
-            "local": false,
             "sizes": [],
             "isExternal": true
           },
@@ -2456,7 +2450,6 @@
             "height": 220,
             "id": 0,
             "alt": "page8_image1",
-            "local": false,
             "sizes": [],
             "isExternal": true
           },
@@ -2730,7 +2723,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page9_image1",
-            "local": false,
             "sizes": [],
             "isExternal": true
           },
@@ -2764,7 +2756,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page9_image4",
-            "local": false,
             "sizes": [],
             "isExternal": true
           },
@@ -2796,7 +2787,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page9_image3",
-            "local": false,
             "sizes": [],
             "isExternal": true
           },
@@ -2828,7 +2818,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page9_image2",
-            "local": false,
             "sizes": [],
             "isExternal": true
           },
@@ -2861,7 +2850,6 @@
             "posterId": 0,
             "id": 0,
             "alt": "page9_image1",
-            "local": false,
             "sizes": [],
             "isExternal": true
           }

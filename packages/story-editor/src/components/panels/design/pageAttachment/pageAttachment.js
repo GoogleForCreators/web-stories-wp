@@ -27,6 +27,8 @@ import { __ } from '@web-stories-wp/i18n';
 import {
   Checkbox,
   Input,
+  isValidUrl,
+  withProtocol,
   Text,
   THEME_CONSTANTS,
   ThemeGlobals,
@@ -38,7 +40,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { useStory, useCanvas, useAPI } from '../../../../app';
-import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../../utils/url';
+import { toAbsoluteUrl } from '../../../../utils/url';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
 import { LinkIcon, LinkInput, Row } from '../../../form';
 import { SimplePanel } from '../../panel';

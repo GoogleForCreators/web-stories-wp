@@ -33,6 +33,7 @@ import {
  */
 import StoryPropTypes from '../../types';
 import useCORSProxy from '../../utils/useCORSProxy';
+import { useLocalMedia } from '../../app';
 import { mediaWithScale } from './util';
 import MediaDisplay from './display';
 
@@ -43,18 +44,29 @@ const Img = styled.img`
 
 function ImageDisplay({ element, box, previewMode }) {
   const { resource, scale, focalX, focalY } = element;
+  const { id: resourceId, alt } = resource;
   const { width, height } = box;
   const ref = useRef();
 
   let initialSrcType = 'smallest';
   let initialSrc = getSmallestUrlForWidth(0, resource);
 
-  if (resourceList.get(resource.id)?.type === 'cached') {
+  if (resourceList.get(resourceId)?.type === 'cached') {
     initialSrcType = 'cached';
-    initialSrc = resourceList.get(resource.id).url;
+    initialSrc = resourceList.get(resourceId).url;
   }
 
-  if (resourceList.get(resource.id)?.type === 'fullsize' || resource.local) {
+  const { isCurrentResourceProcessing, isCurrentResourceUploading } =
+    useLocalMedia(({ state }) => ({
+      isCurrentResourceProcessing: state.isCurrentResourceProcessing,
+      isCurrentResourceUploading: state.isCurrentResourceUploading,
+    }));
+
+  if (
+    resourceList.get(resourceId)?.type === 'fullsize' ||
+    isCurrentResourceProcessing(resourceId) ||
+    isCurrentResourceUploading(resourceId)
+  ) {
     initialSrcType = 'fullsize';
     initialSrc = resource.src;
   }
@@ -80,24 +92,30 @@ function ImageDisplay({ element, box, previewMode }) {
   useEffect(() => {
     let timeout;
     let mounted = true;
-    if (resourceList.get(resource.id)?.type !== 'fullsize' && resource.src) {
+    if (resourceList.get(resourceId)?.type !== 'fullsize' && resource.src) {
       timeout = setTimeout(async () => {
         const url = getProxiedUrl(resource, resource.src);
-        const preloadedImg = await preloadImage(url, srcSet);
-        if (mounted) {
-          resourceList.set(resource.id, {
-            type: 'fullsize',
-          });
-          setSrc(preloadedImg.currentSrc);
-          setSrcType('fullsize');
+        try {
+          const preloadedImg = await preloadImage({ src: url, srcset: srcSet });
+          if (mounted) {
+            resourceList.set(resource.id, {
+              type: 'fullsize',
+            });
+            setSrc(preloadedImg.currentSrc);
+            setSrcType('fullsize');
+          }
+        } catch {
+          // Ignore
         }
       });
+    } else {
+      setSrc(resource.src);
     }
     return () => {
       mounted = false;
       clearTimeout(timeout);
     };
-  }, [getProxiedUrl, resource, srcSet, srcType]);
+  }, [getProxiedUrl, resource, srcSet, srcType, resourceId]);
 
   const showPlaceholder = srcType !== 'fullsize';
 
@@ -114,7 +132,7 @@ function ImageDisplay({ element, box, previewMode }) {
         decoding="sync"
         src={src}
         srcSet={srcSet}
-        alt={resource.alt}
+        alt={alt}
         data-testid="imageElement"
         data-leaf-element="true"
         {...imgProps}

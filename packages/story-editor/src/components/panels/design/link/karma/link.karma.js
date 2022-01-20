@@ -218,9 +218,7 @@ describe('Link Panel', () => {
       await setPageAttachmentLink('http://pageattachment.com');
     });
 
-    // TODO: https://github.com/google/web-stories-wp/issues/9911
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should not allow adding link in Page Attachment area', async () => {
+    it('should not allow adding link in Page Attachment area', async () => {
       const insertElement = await fixture.renderHook(() => useInsertElement());
       const element = await fixture.act(() =>
         insertElement('shape', {
@@ -236,16 +234,18 @@ describe('Link Panel', () => {
       await moveElementToBottom(frame, 0);
 
       await closePanel('Selection');
+      await closePanel('Color');
+      await closePanel('Border');
 
       linkPanel = fixture.editor.inspector.designPanel.link;
       await fixture.events.click(linkPanel.address);
 
-      await fixture.events.sleep(5000);
-
       await fixture.snapshot('Page Attachment warning & dashed line visible');
 
-      const warning = fixture.screen.getByText(
-        'Link can not reside below the dashed line when a page attachment is present'
+      const warning = await waitFor(() =>
+        fixture.screen.getByText(
+          'Link can not reside below the dashed line when a page attachment is present'
+        )
       );
       expect(warning).toBeDefined();
     });

@@ -52,7 +52,6 @@ const MEDIA_LIST_FROM_GET_MEDIA = [
     length: undefined,
     lengthFormatted: undefined,
     alt: 'IMAGE',
-    local: false,
     isPlaceholder: false,
     isMuted: false,
     isOptimized: false,

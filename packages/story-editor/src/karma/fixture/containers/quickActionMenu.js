@@ -25,73 +25,73 @@ export class QuickActionMenu extends Container {
   }
 
   get changeBackgroundColorButton() {
-    return this.queryByRole('button', {
+    return this.queryByRole('menuitem', {
       name: ACTIONS.CHANGE_BACKGROUND_COLOR.text,
     });
   }
 
   get changeColorButton() {
-    return this.queryByRole('button', {
+    return this.queryByRole('menuitem', {
       name: ACTIONS.CHANGE_COLOR.text,
     });
   }
 
   get insertBackgroundMediaButton() {
-    return this.queryByRole('button', {
+    return this.queryByRole('menuitem', {
       name: ACTIONS.INSERT_BACKGROUND_MEDIA.text,
     });
   }
 
   get insertTextButton() {
-    return this.queryByRole('button', {
+    return this.queryByRole('menuitem', {
       name: ACTIONS.INSERT_TEXT.text,
     });
   }
 
   get replaceMediaButton() {
-    return this.queryByRole('button', {
+    return this.queryByRole('menuitem', {
       name: ACTIONS.REPLACE_MEDIA.text,
     });
   }
 
   get replaceBackgroundMediaButton() {
-    return this.queryByRole('button', {
+    return this.queryByRole('menuitem', {
       name: ACTIONS.REPLACE_BACKGROUND_MEDIA.text,
     });
   }
 
   get addAnimationButton() {
-    return this.queryByRole('button', {
+    return this.queryByRole('menuitem', {
       name: ACTIONS.ADD_ANIMATION.text,
     });
   }
 
   get addLinkButton() {
-    return this.queryByRole('button', {
+    return this.queryByRole('menuitem', {
       name: ACTIONS.ADD_LINK.text,
     });
   }
 
   get addCaptionsButton() {
-    return this.queryByRole('button', {
+    return this.queryByRole('menuitem', {
       name: ACTIONS.ADD_CAPTIONS.text,
     });
   }
 
   get resetElementButton() {
-    return this.queryByRole('button', {
+    return this.queryByRole('menuitem', {
       name: ACTIONS.RESET_ELEMENT.text,
     });
   }
 
   get textColorButton() {
-    return this.queryByRole('button', {
+    return this.queryByRole('menuitem', {
       name: ACTIONS.CHANGE_TEXT_COLOR.text,
     });
   }
 
   get fontButton() {
-    return this.queryByRole('button', {
+    return this.queryByRole('menuitem', {
       name: ACTIONS.CHANGE_FONT.text,
     });
   }

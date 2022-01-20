@@ -30,3 +30,4 @@ export { default as useResizeEffect } from './useResizeEffect';
 export { default as renderToStaticMarkup } from './renderToStaticMarkup';
 export { default as useUnmount } from './useUnmount';
 export { default as useWhyDidYouUpdate } from './useWhyDidYouUpdate';
+export { default as shallowEqual } from './shallowEqual';

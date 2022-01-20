@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -25,13 +25,12 @@
             "mimeType": "image/png",
             "creationDate": "2021-06-10T11:38:48",
             "baseColor": "#e6c092",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/rock-music-festival/page1_bg.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/rock-music-festival/page1_bg.jpg",
             "width": 1080,
             "height": 1920,
             "id": 0,
             "alt": "People watching band on the stage",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -333,7 +332,6 @@
             "lengthFormatted": "0:36",
             "alt": "Aerial view of people watching a concert",
             "sizes": [],
-            "local": false,
             "isOptimized": true,
             "isMuted": true,
             "isExternal": true
@@ -510,7 +508,6 @@
             "lengthFormatted": "0:18",
             "alt": "Rock Band Concert",
             "sizes": [],
-            "local": false,
             "isOptimized": true,
             "isMuted": true,
             "baseColor": "#1c111d",
@@ -672,13 +669,12 @@
             "mimeType": "image/png",
             "creationDate": "2021-06-25T08:13:43",
             "baseColor": "#111417",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/rock-music-festival/page4_bg.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/rock-music-festival/page4_bg.jpg",
             "width": 1080,
             "height": 1920,
             "id": 0,
             "alt": "Black metal guitar stand with turned-on stage light",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -956,13 +952,12 @@
             "mimeType": "image/png",
             "creationDate": "2021-06-10T11:39:40",
             "baseColor": "#1b1616",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/rock-music-festival/page5_bg.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/rock-music-festival/page5_bg.jpg",
             "width": 1080,
             "height": 1920,
             "id": 0,
             "alt": "People in a concert",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -1122,13 +1117,12 @@
             "mimeType": "image/png",
             "creationDate": "2021-06-10T11:40:03",
             "baseColor": "#1d181c",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/rock-music-festival/page6_bg.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/rock-music-festival/page6_bg.jpg",
             "width": 1080,
             "height": 1920,
             "id": 0,
             "alt": "People having a concert",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -1264,13 +1258,12 @@
             "mimeType": "image/png",
             "creationDate": "2021-06-11T11:46:51",
             "baseColor": "#0a0b0c",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/rock-music-festival/page7_bg.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/rock-music-festival/page7_bg.jpg",
             "width": 1080,
             "height": 1920,
             "id": 0,
             "alt": "Gray roll up door opened",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -1446,7 +1439,6 @@
             "id": 0,
             "alt": "Black background with white dusty corners",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ffffff",
             "isExternal": true
@@ -1540,7 +1532,6 @@
             "id": 0,
             "alt": "Labels with three stages, stage 1 at the top, stage 2 and 3 at the bottom",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -1615,13 +1606,12 @@
             "mimeType": "image/png",
             "creationDate": "2021-06-10T11:41:17",
             "baseColor": "#170d0c",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/rock-music-festival/page9_bg.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/rock-music-festival/page9_bg.jpg",
             "width": 1080,
             "height": 1919,
             "id": 0,
             "alt": "Person holding drinking glass",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -1838,13 +1828,12 @@
             "mimeType": "image/png",
             "creationDate": "2021-06-10T11:41:22",
             "baseColor": "#1c150e",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/rock-music-festival/page10_bg.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/rock-music-festival/page10_bg.jpg",
             "width": 1080,
             "height": 1919,
             "id": 0,
             "alt": "Burger with stick",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -1974,13 +1963,12 @@
             "mimeType": "image/png",
             "creationDate": "2021-06-10T11:41:41",
             "baseColor": "#141d1c",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/rock-music-festival/page11_bg.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/rock-music-festival/page11_bg.jpg",
             "width": 1080,
             "height": 1919,
             "id": 0,
             "alt": "Woman touching head of topless man holding cup with beer",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -2110,13 +2098,12 @@
             "mimeType": "image/png",
             "creationDate": "2021-06-10T11:41:50",
             "baseColor": "#352325",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/rock-music-festival/page12_bg.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/rock-music-festival/page12_bg.jpg",
             "width": 1080,
             "height": 1919,
             "id": 0,
             "alt": "Selective focus photography of man playing drum",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -2251,13 +2238,12 @@
             "mimeType": "image/png",
             "creationDate": "2021-06-10T11:42:01",
             "baseColor": "#c5bbb7",
-            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/rock-music-festival/page13_image1.png",
+            "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/rock-music-festival/page13_image1.jpg",
             "width": 720,
             "height": 1280,
             "id": 0,
             "alt": "Man in gray zip up jacket holding red and black smartphone",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },

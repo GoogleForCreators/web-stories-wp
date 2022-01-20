@@ -45,6 +45,9 @@ const defaultProviderValues = {
     apiCallbacks: {
       createStoryFromTemplate: noop, // Not required in general, but without this "use template" button will not render and a test will fail.
     },
+    styleConstants: {
+      topOffset: 0,
+    },
   },
   api: {},
 };

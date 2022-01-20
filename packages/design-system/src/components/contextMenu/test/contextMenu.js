@@ -16,13 +16,13 @@
 /**
  * External dependencies
  */
-import { fireEvent, screen, within } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
  */
 import { ContextMenu } from '..';
-import { MenuItem, linkOrButtonValidator } from '../menuItem';
+import * as ContextMenuComponents from '../components';
 import { renderWithProviders } from '../../../testUtils/renderWithProviders';
 import { noop } from '../../../utils';
 
@@ -34,14 +34,38 @@ const items = [
 
 describe('ContextMenu', () => {
   it('contextMenu should be invisible', () => {
-    renderWithProviders(<ContextMenu items={items} />);
+    renderWithProviders(
+      <ContextMenu>
+        <ContextMenuComponents.MenuButton onClick={noop}>
+          {'this is a button'}
+        </ContextMenuComponents.MenuButton>
+        <ContextMenuComponents.MenuLink href="/">
+          {'this is a link'}
+        </ContextMenuComponents.MenuLink>
+        <ContextMenuComponents.MenuLabel>
+          {'this is neither a button nor a link'}
+        </ContextMenuComponents.MenuLabel>
+      </ContextMenu>
+    );
 
     expect(screen.queryByRole('menu')).not.toBeInTheDocument();
     expect(screen.queryByRole('menuitem')).not.toBeInTheDocument();
   });
 
   it('contextMenu should be visible', () => {
-    renderWithProviders(<ContextMenu items={items} isOpen />);
+    renderWithProviders(
+      <ContextMenu isOpen>
+        <ContextMenuComponents.MenuButton onClick={noop}>
+          {'this is a button'}
+        </ContextMenuComponents.MenuButton>
+        <ContextMenuComponents.MenuLink href="/">
+          {'this is a link'}
+        </ContextMenuComponents.MenuLink>
+        <ContextMenuComponents.MenuLabel>
+          {'this is neither a button nor a link'}
+        </ContextMenuComponents.MenuLabel>
+      </ContextMenu>
+    );
 
     expect(screen.getByRole('menu')).toBeInTheDocument();
     expect(screen.getByText('this is a button')).toBeInTheDocument();
@@ -53,7 +77,17 @@ describe('ContextMenu', () => {
     renderWithProviders(
       <div>
         <div data-testid="some-element" />
-        <ContextMenu items={items} isOpen onDismiss={onDismiss} />
+        <ContextMenu isOpen onDismiss={onDismiss}>
+          <ContextMenuComponents.MenuButton onClick={noop}>
+            {'this is a button'}
+          </ContextMenuComponents.MenuButton>
+          <ContextMenuComponents.MenuLink href="/">
+            {'this is a link'}
+          </ContextMenuComponents.MenuLink>
+          <ContextMenuComponents.MenuLabel>
+            {'this is neither a button nor a link'}
+          </ContextMenuComponents.MenuLabel>
+        </ContextMenu>
       </div>
     );
 
@@ -69,7 +103,17 @@ describe('ContextMenu', () => {
     renderWithProviders(
       <div>
         <div data-testid="some-element" />
-        <ContextMenu items={items} isOpen onDismiss={onDismiss} />
+        <ContextMenu isOpen onDismiss={onDismiss}>
+          <ContextMenuComponents.MenuButton onClick={noop}>
+            {'this is a button'}
+          </ContextMenuComponents.MenuButton>
+          <ContextMenuComponents.MenuLink href="/">
+            {'this is a link'}
+          </ContextMenuComponents.MenuLink>
+          <ContextMenuComponents.MenuLabel>
+            {'this is neither a button nor a link'}
+          </ContextMenuComponents.MenuLabel>
+        </ContextMenu>
       </div>
     );
 
@@ -84,74 +128,38 @@ describe('ContextMenu', () => {
     // need menu to start closed since focus gets changed
     // when the menu goes from closed -> open
     const { rerender } = renderWithProviders(
-      <ContextMenu isOpen={false} items={items} />
+      <ContextMenu isOpen={false}>
+        <ContextMenuComponents.MenuButton onClick={noop}>
+          {'this is a button'}
+        </ContextMenuComponents.MenuButton>
+        <ContextMenuComponents.MenuLink href="/">
+          {'this is a link'}
+        </ContextMenuComponents.MenuLink>
+        <ContextMenuComponents.MenuLabel>
+          {'this is neither a button nor a link'}
+        </ContextMenuComponents.MenuLabel>
+      </ContextMenu>
     );
 
-    rerender(<ContextMenu isOpen items={items} />);
+    rerender(
+      <ContextMenu isOpen>
+        <ContextMenuComponents.MenuButton onClick={noop}>
+          {'this is a button'}
+        </ContextMenuComponents.MenuButton>
+        <ContextMenuComponents.MenuLink href="/">
+          {'this is a link'}
+        </ContextMenuComponents.MenuLink>
+        <ContextMenuComponents.MenuLabel>
+          {'this is neither a button nor a link'}
+        </ContextMenuComponents.MenuLabel>
+      </ContextMenu>
+    );
 
     // opening the menu should focus the first focusable item
-    const [firstButton] = screen.queryAllByRole('menuitem', {
+    const [button] = screen.queryAllByRole('menuitem', {
       name: items[0].label,
     });
 
-    expect(within(firstButton).getByRole('button')).toHaveFocus();
-  });
-});
-
-describe('MenuItem', () => {
-  const testLabel = 'my label';
-
-  it('should render a button if `onClick` is passed as a prop', () => {
-    renderWithProviders(<MenuItem label={testLabel} onClick={noop} />);
-    expect(screen.getByText(testLabel)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: testLabel })).toBeInTheDocument();
-    expect(screen.queryByRole('link')).not.toBeInTheDocument();
-  });
-
-  it('should render a link if `href` is passed as a prop', () => {
-    renderWithProviders(<MenuItem label={testLabel} href="test" />);
-    expect(screen.getByText(testLabel)).toBeInTheDocument();
-    expect(screen.queryByRole('button')).not.toBeInTheDocument();
-    expect(screen.getByRole('link', { name: testLabel })).toBeInTheDocument();
-  });
-
-  it('should render a div if neither `onClick` nor `href` are passed as props', () => {
-    renderWithProviders(<MenuItem label={testLabel} />);
-    expect(screen.getByText(testLabel)).toBeInTheDocument();
-    expect(screen.queryByRole('button')).not.toBeInTheDocument();
-    expect(screen.queryByRole('link')).not.toBeInTheDocument();
-  });
-
-  it('should call onClick and onDismiss when a clickable item is clicked', () => {
-    const onClick = jest.fn();
-    const onDismiss = jest.fn();
-    renderWithProviders(
-      <MenuItem label="my label" onClick={onClick} onDismiss={onDismiss} />
-    );
-
-    const button = screen.getByRole('button', { name: 'my label' });
-
-    fireEvent.click(button);
-
-    expect(onClick).toHaveBeenCalledTimes(1);
-    expect(onDismiss).toHaveBeenCalledTimes(1);
-  });
-});
-
-describe('linkOrButtonValidator', () => {
-  it('should return null if `href` included without `disabled`', () => {
-    expect(linkOrButtonValidator({ href: 'test' }, '', 'Test')).toBeNull();
-  });
-
-  it('should throw an error if `href` and `disabled` are both included', () => {
-    expect(
-      linkOrButtonValidator({ disabled: true, href: 'test' }, '', 'Test')
-    ).toStrictEqual(expect.any(Error));
-  });
-
-  it('should throw an error if `newTab=true` but `href` is not specified', () => {
-    expect(linkOrButtonValidator({ newTab: true }, '', 'Test')).toStrictEqual(
-      expect.any(Error)
-    );
+    expect(button).toHaveFocus();
   });
 });

@@ -25,7 +25,7 @@ export { Input, BaseInput } from './input';
 export { LoadingBar, LOADING_INDICATOR_CLASS } from './loadingBar';
 export { LoadingSpinner } from './loadingSpinner';
 export { MediaInput, MEDIA_VARIANTS } from './mediaInput';
-export { Modal, ModalGlobalStyle } from './modal';
+export { Modal, ModalGlobalStyle, OVERLAY_CLASS } from './modal';
 export { NumericInput } from './input/numericInput';
 export * from './menu';
 export * from './pill';

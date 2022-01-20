@@ -24,7 +24,13 @@ import { FULLBLEED_RATIO } from '@web-stories-wp/units';
  * Internal dependencies
  */
 import { useDropTargets } from '../../dropTargets';
-import { useCanvas, useLayout, useUserOnboarding } from '../../../app';
+import {
+  useCanvas,
+  useLayout,
+  useUserOnboarding,
+  CANVAS_BOUNDING_BOX_IDS,
+  useCanvasBoundingBox,
+} from '../../../app';
 
 function useSnapping({
   canSnap,
@@ -32,12 +38,12 @@ function useSnapping({
   snappingOffsetX = null,
   isDragging,
 }) {
-  const { pageContainer, canvasContainer, designSpaceGuideline } = useCanvas(
-    ({ state: { pageContainer, canvasContainer, designSpaceGuideline } }) => ({
-      pageContainer,
-      canvasContainer,
-      designSpaceGuideline,
-    })
+  const canvasRect = useCanvasBoundingBox(
+    CANVAS_BOUNDING_BOX_IDS.CANVAS_CONTAINER
+  );
+  const pageRect = useCanvasBoundingBox(CANVAS_BOUNDING_BOX_IDS.PAGE_CONTAINER);
+  const designSpaceGuideline = useCanvas(
+    ({ state }) => state.designSpaceGuideline
   );
   const { pageWidth, pageHeight } = useLayout(
     ({ state: { pageWidth, pageHeight } }) => ({
@@ -46,9 +52,9 @@ function useSnapping({
     })
   );
   const { activeDropTargetId, isDropTargetingDisabled } = useDropTargets(
-    (state) => ({
-      activeDropTargetId: state.state.activeDropTargetId,
-      isDropTargetingDisabled: state.state.isDropTargetingDisabled,
+    ({ state }) => ({
+      activeDropTargetId: state.activeDropTargetId,
+      isDropTargetingDisabled: state.isDropTargetingDisabled,
     })
   );
 
@@ -71,12 +77,9 @@ function useSnapping({
     [isDragging, designSpaceGuideline, triggerOnboarding]
   );
 
-  if (!canvasContainer || !pageContainer) {
+  if (!canvasRect || !pageRect) {
     return {};
   }
-
-  const canvasRect = canvasContainer.getBoundingClientRect();
-  const pageRect = pageContainer.getBoundingClientRect();
 
   const canvasOffsetX = snappingOffsetX ? snappingOffsetX : canvasRect.x;
 

@@ -42,7 +42,6 @@ const RESOURCES = [
     id: undefined,
     length: null,
     lengthFormatted: null,
-    local: false,
     mimeType: 'image/jpeg',
     poster: null,
     posterId: null,
