@@ -42,25 +42,6 @@ const RightClickMenuContainer = styled.div`
   z-index: 9999;
 `;
 
-const MenuButton = styled(ContextMenuComponents.MenuButton)`
-  ${({ supportsIcon }) =>
-    supportsIcon &&
-    `
-    svg {
-      width: 32px;
-      position: absolute;
-      margin-left: -12px;
-    }
-    span {
-      padding-left: 18px;
-      font-size: 12px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-  `}
-`;
-
 const RightClickMenu = () => {
   const { isRTL } = useConfig();
   const {
@@ -92,29 +73,6 @@ const RightClickMenu = () => {
     };
   }, [ref]);
 
-  const menuButtonRenderer = ({
-    label,
-    shortcut,
-    icon,
-    SuffixIcon,
-    ...buttonProps
-  }) => (
-    <MenuButton {...buttonProps}>
-      {icon}
-      {label}
-      {shortcut && (
-        <ContextMenuComponents.MenuShortcut>
-          {shortcut.display}
-        </ContextMenuComponents.MenuShortcut>
-      )}
-      {SuffixIcon && (
-        <ContextMenuComponents.MenuItemSuffix>
-          <SuffixIcon />
-        </ContextMenuComponents.MenuItemSuffix>
-      )}
-    </MenuButton>
-  );
-
   return createPortal(
     <StyleSheetManager stylisPlugins={[]}>
       <RightClickMenuContainer position={menuPosition} ref={ref}>
@@ -134,7 +92,6 @@ const RightClickMenu = () => {
             {rightClickMenuItems.map(
               ({
                 label,
-                shortcut,
                 separator,
                 subMenuItems,
                 closeSubMenu,
@@ -144,8 +101,12 @@ const RightClickMenu = () => {
                   {separator === 'top' && (
                     <ContextMenuComponents.MenuSeparator />
                   )}
-                  {!subMenuItems &&
-                    menuButtonRenderer({ label, shortcut, ...buttonProps })}
+                  {!subMenuItems && (
+                    <ContextMenuComponents.MenuItem
+                      label={label}
+                      {...buttonProps}
+                    />
+                  )}
                   {subMenuItems && (
                     <>
                       <ContextMenuComponents.SubMenuTrigger
@@ -174,8 +135,14 @@ const RightClickMenu = () => {
                             isSubMenu
                             parentMenuRef={ref}
                           >
-                            {subMenuItems.map((item) =>
-                              menuButtonRenderer(item)
+                            {subMenuItems.map(
+                              ({ label: subLabel, ...item }) => (
+                                <ContextMenuComponents.MenuItem
+                                  key={subLabel}
+                                  label={subLabel}
+                                  {...item}
+                                />
+                              )
                             )}
                           </ContextMenu>
                         </RightClickMenuContainer>

@@ -31,11 +31,10 @@ import PropTypes from 'prop-types';
 import { useKeyDownEffect } from '../../keyboard';
 import { FOCUSABLE_SELECTORS, KEYS } from '../../../utils';
 import { useContextMenu } from '../contextMenuProvider';
-import MenuButton from './button';
-import Suffix from './suffix';
+import MenuItem from './item';
 
 /**
- * Extracts all focusable children from an html tree, optionally ignoring items from submenu.
+ * Extracts all focusable children from an html tree.
  *
  * @param {HTMLElement} parent The parent to search
  * @return {Array.<HTMLElement>} List of focusable elements
@@ -51,8 +50,6 @@ function SubMenuTrigger({
   isRTL = false,
   subMenuRef,
   parentMenuRef,
-  label,
-  SuffixIcon,
   ...buttonProps
 }) {
   const ref = useRef();
@@ -148,20 +145,13 @@ function SubMenuTrigger({
 
   // Menu trigger does not react to clicking.
   return (
-    <MenuButton
+    <MenuItem
       {...buttonProps}
       ref={ref}
       onPointerEnter={openSubMenu}
       onPointerLeave={maybeCloseSubMenu}
       onClick={(e) => e.preventDefault()}
-    >
-      {label}
-      {SuffixIcon && (
-        <Suffix>
-          <SuffixIcon />
-        </Suffix>
-      )}
-    </MenuButton>
+    />
   );
 }
 
@@ -172,8 +162,6 @@ SubMenuTrigger.propTypes = {
   isRTL: PropTypes.bool,
   subMenuRef: PropTypes.object.isRequired,
   parentMenuRef: PropTypes.object.isRequired,
-  label: PropTypes.string,
-  SuffixIcon: PropTypes.object,
 };
 
 export default SubMenuTrigger;
