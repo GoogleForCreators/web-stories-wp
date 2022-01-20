@@ -19,7 +19,7 @@
  */
 import { readdirSync, readFileSync } from 'fs';
 import { resolve } from 'path';
-import stickers from '@web-stories-wp/stickers';
+import stickers from '@googleforcreators/stickers';
 import { isValid } from '@googleforcreators/date';
 
 describe('raw template files', () => {
