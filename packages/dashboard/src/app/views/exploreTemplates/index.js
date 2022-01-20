@@ -24,7 +24,7 @@ import {
   useState,
   useRef,
 } from '@googleforcreators/react';
-import { trackEvent, trackScreenView } from '@web-stories-wp/tracking';
+import { trackEvent, trackScreenView } from '@googleforcreators/tracking';
 import { uniqueEntriesByKey } from '@googleforcreators/design-system';
 
 /**

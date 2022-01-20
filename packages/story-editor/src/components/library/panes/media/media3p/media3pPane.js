@@ -27,7 +27,7 @@ import {
 } from '@googleforcreators/react';
 import { useFeature, useFeatures } from 'flagged';
 import { __ } from '@googleforcreators/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies

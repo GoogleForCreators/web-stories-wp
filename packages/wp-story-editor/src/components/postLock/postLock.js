@@ -25,7 +25,7 @@ import {
   useState,
 } from '@googleforcreators/react';
 import { useFeatures } from 'flagged';
-import { trackError } from '@web-stories-wp/tracking';
+import { trackError } from '@googleforcreators/tracking';
 import {
   useStory,
   useConfig,

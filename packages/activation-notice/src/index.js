@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { FlagsProvider } from 'flagged';
-import { initializeTracking } from '@web-stories-wp/tracking';
+import { initializeTracking } from '@googleforcreators/tracking';
 
 /**
  * WordPress dependencies

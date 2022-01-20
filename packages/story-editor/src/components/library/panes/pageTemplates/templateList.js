@@ -26,7 +26,7 @@ import {
 import PropTypes from 'prop-types';
 import { useVirtual } from 'react-virtual';
 import { __ } from '@googleforcreators/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent } from '@googleforcreators/tracking';
 import { UnitsProvider } from '@googleforcreators/units';
 import { useSnackbar } from '@googleforcreators/design-system';
 

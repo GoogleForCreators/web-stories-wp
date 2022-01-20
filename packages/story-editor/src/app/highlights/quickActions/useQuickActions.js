@@ -26,7 +26,7 @@ import {
   PLACEMENT,
   Icons,
 } from '@googleforcreators/design-system';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent } from '@googleforcreators/tracking';
 import { resourceList } from '@googleforcreators/media';
 
 /**

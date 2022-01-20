@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useEffect, useCallback, useState } from '@googleforcreators/react';
-import { trackError } from '@web-stories-wp/tracking';
+import { trackError } from '@googleforcreators/tracking';
 import { useConfig } from '@googleforcreators/story-editor';
 
 /**

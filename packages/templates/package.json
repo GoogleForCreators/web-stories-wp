@@ -22,7 +22,7 @@
   "dependencies": {
     "@googleforcreators/i18n": "*",
     "@googleforcreators/migration": "*",
-    "@web-stories-wp/tracking": "*"
+    "@googleforcreators/tracking": "*"
   },
   "devDependencies": {
     "@googleforcreators/date": "*",
