@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import { createRef, useCallback, useMemo, useRef } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { createSolidFromString } from '@web-stories-wp/patterns';
+import { createSolidFromString } from '@googleforcreators/patterns';
 import { PAGE_WIDTH, useUnits } from '@web-stories-wp/units';
 import {
   ThemeGlobals,

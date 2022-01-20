@@ -31,7 +31,7 @@ import {
   getPreviewText,
   getOpaquePattern,
   PatternPropType,
-} from '@web-stories-wp/patterns';
+} from '@googleforcreators/patterns';
 import {
   HexInput,
   Text,

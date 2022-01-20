@@ -24,7 +24,7 @@ import {
   getSolidFromHex,
   isPatternEqual,
   createSolidFromString,
-} from '@web-stories-wp/patterns';
+} from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies

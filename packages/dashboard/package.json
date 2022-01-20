@@ -27,7 +27,7 @@
     "@web-stories-wp/karma-fixture": "*",
     "@googleforcreators/media": "*",
     "@googleforcreators/migration": "*",
-    "@web-stories-wp/patterns": "*",
+    "@googleforcreators/patterns": "*",
     "@web-stories-wp/react": "*",
     "@web-stories-wp/templates": "*",
     "@web-stories-wp/tracking": "*",

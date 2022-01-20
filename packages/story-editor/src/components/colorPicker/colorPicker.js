@@ -28,7 +28,7 @@ import {
   useCallback,
 } from '@web-stories-wp/react';
 import { __ } from '@googleforcreators/i18n';
-import { PatternPropType, hasGradient } from '@web-stories-wp/patterns';
+import { PatternPropType, hasGradient } from '@googleforcreators/patterns';
 import { useKeyDownEffect } from '@googleforcreators/design-system';
 
 /**

@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { act, fireEvent, screen } from '@testing-library/react';
-import { createSolid } from '@web-stories-wp/patterns';
+import { createSolid } from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies

@@ -26,7 +26,7 @@ import {
 } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { parseToRgb } from 'polished';
-import { getHexFromValue, getPreviewText } from '@web-stories-wp/patterns';
+import { getHexFromValue, getPreviewText } from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies

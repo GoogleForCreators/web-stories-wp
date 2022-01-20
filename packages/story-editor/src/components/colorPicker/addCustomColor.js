@@ -20,7 +20,7 @@
 import { useCallback } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { PatternPropType } from '@web-stories-wp/patterns';
+import { PatternPropType } from '@googleforcreators/patterns';
 import {
   Button,
   BUTTON_SIZES,

@@ -22,7 +22,7 @@
   "sideEffects": false,
   "dependencies": {
     "@googleforcreators/i18n": "*",
-    "@web-stories-wp/patterns": "*",
+    "@googleforcreators/patterns": "*",
     "@web-stories-wp/react": "*",
     "@web-stories-wp/tracking": "*",
     "big.js": "^6.1.1",

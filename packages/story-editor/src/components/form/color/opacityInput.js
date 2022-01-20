@@ -21,7 +21,7 @@ import { useState, useCallback, useEffect } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { _x, __ } from '@googleforcreators/i18n';
-import { PatternPropType } from '@web-stories-wp/patterns';
+import { PatternPropType } from '@googleforcreators/patterns';
 import { NumericInput, Icons } from '@googleforcreators/design-system';
 
 /**

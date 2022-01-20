@@ -35,7 +35,7 @@ import {
 } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { generatePatternStyles } from '@web-stories-wp/patterns';
+import { generatePatternStyles } from '@googleforcreators/patterns';
 import { fetchRemoteBlob, blobToFile } from '@googleforcreators/media';
 import { trackError } from '@web-stories-wp/tracking';
 

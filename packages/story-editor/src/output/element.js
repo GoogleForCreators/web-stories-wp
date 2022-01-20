@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { generatePatternStyles } from '@web-stories-wp/patterns';
+import { generatePatternStyles } from '@googleforcreators/patterns';
 import { getBox } from '@web-stories-wp/units';
 import { StoryAnimation } from '@googleforcreators/animation';
 

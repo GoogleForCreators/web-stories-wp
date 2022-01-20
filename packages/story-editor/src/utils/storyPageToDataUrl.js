@@ -29,7 +29,7 @@ import {
   UnitsProvider,
 } from '@web-stories-wp/units';
 import styled, { ThemeProvider } from 'styled-components';
-import { generatePatternStyles } from '@web-stories-wp/patterns';
+import { generatePatternStyles } from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies
