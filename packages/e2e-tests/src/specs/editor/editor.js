@@ -90,6 +90,8 @@ describe('Story Editor', () => {
     const editorPage = page;
     const previewPage = await previewStory(editorPage);
 
+    await previewPage.waitForSelector('amp-story');
+
     await expect(previewPage).toMatch(/Preview/i);
     await expect(previewPage).toMatch(/Debug/i);
     await expect(previewPage).toMatch(/Add device/i);
