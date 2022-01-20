@@ -166,7 +166,7 @@ const Menu = ({
       ) {
         // Get the button with expanded popup.
         const parentButton = parentMenuRef.current.querySelector(
-          'button[aria-expanded="true"][aria-haspopup="menu"]'
+          'button[aria-expanded="true"][aria-haspopup]'
         );
         parentButton?.focus();
         onCloseSubMenu();

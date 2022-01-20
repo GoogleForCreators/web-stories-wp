@@ -129,10 +129,7 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
         closeSubMenu: () => setIsSubMenuOpen(false),
         isSubMenuOpen,
         subMenuItems: isSubMenuOpen ? subMenuItems : [],
-        dismissOnClick: false,
         SuffixIcon: isRTL ? ReversedIcon : Icons.ChevronRightSmall,
-        'aria-haspopup': 'menu',
-        'aria-expanded': isSubMenuOpen,
         ...menuItemProps,
       }
     : null;

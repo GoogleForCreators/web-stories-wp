@@ -151,6 +151,9 @@ function SubMenuTrigger({
       onPointerEnter={openSubMenu}
       onPointerLeave={maybeCloseSubMenu}
       onClick={(e) => e.preventDefault()}
+      aria-haspopup
+      aria-expanded={isSubMenuOpen}
+      dismissOnClick={false}
     />
   );
 }

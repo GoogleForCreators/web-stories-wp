@@ -35,6 +35,7 @@ import { DarkThemeProvider } from '../../../storybookUtils';
 import {
   Bucket,
   Captions,
+  ChevronRightSmall,
   CircleSpeed,
   Eraser,
   LetterTLargeLetterTSmall,
@@ -558,6 +559,76 @@ const RightClickContextMenuContainer = styled.div`
   top: ${({ position }) => position?.y ?? 0}px;
   left: ${({ position }) => position?.x ?? 0}px;
 `;
+
+export const WithSubMenu = () => {
+  const ref = useRef();
+  const subMenuRef = useRef();
+  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
+  return (
+    <Container ref={ref}>
+      <ContextMenu isOpen={boolean('isOpen', true)}>
+        <MenuItems.MenuButton onClick={action('Clicked on `one`')}>
+          {'one'}
+        </MenuItems.MenuButton>
+        <MenuItems.MenuButton onClick={action('Clicked on `two`')}>
+          {'two'}
+        </MenuItems.MenuButton>
+        <MenuItems.MenuButton
+          onClick={action('Clicked on `disabled`')}
+          disabled
+        >
+          {'this is disabled'}
+        </MenuItems.MenuButton>
+        <MenuItems.MenuSeparator />
+        <MenuItems.SubMenuTrigger
+          subMenuRef={subMenuRef}
+          isSubMenuOpen={isSubMenuOpen}
+          parentMenuRef={ref}
+          closeSubMenu={() => setIsSubMenuOpen(false)}
+          openSubMenu={() => setIsSubMenuOpen(true)}
+          label="More items"
+          SuffixIcon={ChevronRightSmall}
+        />
+        <RightClickContextMenuContainer
+          position={{
+            y: 102,
+            x: 212,
+          }}
+          ref={subMenuRef}
+        >
+          <ContextMenu
+            isOpen={isSubMenuOpen}
+            onCloseSubMenu={() => setIsSubMenuOpen(false)}
+            isSubMenu
+            parentMenuRef={ref}
+          >
+            <MenuItems.MenuButton
+              dismissOnClick={false}
+              onClick={() => () => setIsSubMenuOpen(false)}
+            >
+              {'Select layer 1'}
+            </MenuItems.MenuButton>
+            <MenuItems.MenuSeparator />
+            <MenuItems.MenuButton
+              dismissOnClick={false}
+              onClick={() => setIsSubMenuOpen(false)}
+            >
+              {'Select background'}
+            </MenuItems.MenuButton>
+          </ContextMenu>
+        </RightClickContextMenuContainer>
+        <MenuItems.MenuLabel>
+          {'i am neither a button nor a link'}
+        </MenuItems.MenuLabel>
+        <MenuItems.MenuSeparator />
+        <MenuItems.MenuButton onClick={action('Clicked on `i am a button`')}>
+          {'i am a button!'}
+          <MenuItems.MenuShortcut>{'⌥ ⌘ A'}</MenuItems.MenuShortcut>
+        </MenuItems.MenuButton>
+      </ContextMenu>
+    </Container>
+  );
+};
 
 export const RightClickMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
