@@ -48,6 +48,11 @@ export async function toggleExperiments(features, enable) {
     })
   );
 
+  // Ensures the button is visible and can be clicked on in Firefox.
+  await page.evaluate(() => {
+    document.getElementById('submit').scrollIntoView();
+  });
+
   await Promise.all([page.waitForNavigation(), page.click('#submit')]);
   await expect(page).toMatch('Settings saved.');
 
