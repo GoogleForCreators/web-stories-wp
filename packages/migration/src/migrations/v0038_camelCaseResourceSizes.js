@@ -51,13 +51,10 @@ function snakeToCamelCaseObjectKeys(obj) {
 
 function updateElement(element) {
   if (element?.resource?.sizes) {
-    element.resource.sizes = Object.entries(element.resource.sizes).reduce(
-      (sizes, [key, value]) => {
-        sizes[key] = snakeToCamelCaseObjectKeys(value);
-        return sizes;
-      },
-      {}
-    );
+    for (const [key, value] of Object.entries(element.resource.sizes)) {
+      // eslint-disable-next-line security/detect-object-injection
+      element.resource.sizes[key] = snakeToCamelCaseObjectKeys(value);
+    }
   }
   return element;
 }

@@ -52,8 +52,7 @@ const PROPS_LOCAL = {
         width: 1920,
         height: 1080,
         mimeType: 'image/jpeg',
-        sourceUrl:
-          'http://wp.local/wp-content/uploads/2020/08/local_image.jpg',
+        sourceUrl: 'http://wp.local/wp-content/uploads/2020/08/local_image.jpg',
       },
     },
   },

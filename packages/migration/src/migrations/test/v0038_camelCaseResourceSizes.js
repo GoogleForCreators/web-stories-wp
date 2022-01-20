@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import camelCaseResourceSizes from '../v0037_camelCaseResourceSizes';
+import camelCaseResourceSizes from '../v0038_camelCaseResourceSizes';
 
 describe('camelCaseResourceSizes', () => {
   it('should migrate resource sizes to camel case', () => {
