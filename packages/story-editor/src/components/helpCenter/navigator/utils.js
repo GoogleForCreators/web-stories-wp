@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { BEZIER } from '@web-stories-wp/design-system';
+import { BEZIER } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

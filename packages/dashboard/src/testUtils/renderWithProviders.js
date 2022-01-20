@@ -25,7 +25,7 @@ import {
   lightMode,
   SnackbarProvider,
   noop,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -44,6 +44,9 @@ const defaultProviderValues = {
     allowedImageMimeTypes: ['image/png', 'image/jpeg', 'image/gif'],
     apiCallbacks: {
       createStoryFromTemplate: noop, // Not required in general, but without this "use template" button will not render and a test will fail.
+    },
+    styleConstants: {
+      topOffset: 0,
     },
   },
   api: {},

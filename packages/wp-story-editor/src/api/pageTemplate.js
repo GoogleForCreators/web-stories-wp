@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { addQueryArgs } from '@web-stories-wp/design-system';
+import { addQueryArgs } from '@googleforcreators/design-system';
 
 /**
  * WordPress dependencies
@@ -111,5 +111,5 @@ export function deletePageTemplate(config, id) {
     }),
     data: { force: true },
     method: 'POST',
-  });
+  }); // Response is not being used in core editor.
 }

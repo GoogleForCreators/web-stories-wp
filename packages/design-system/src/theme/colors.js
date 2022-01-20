@@ -94,6 +94,7 @@ const accent = {
 const status = {
   negative: '#D93025',
   positive: '#188038',
+  warning: '#f4b844',
 };
 const standard = {
   black: '#000',

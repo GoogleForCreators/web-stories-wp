@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { useEffect, useCallback, useRef } from '@web-stories-wp/react';
-import { getSmallestUrlForWidth } from '@web-stories-wp/media';
+import { useEffect, useCallback, useRef } from '@googleforcreators/react';
+import { getSmallestUrlForWidth } from '@googleforcreators/media';
 import { getTimeTracker } from '@web-stories-wp/tracking';
 
 /**

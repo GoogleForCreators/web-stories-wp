@@ -20,12 +20,12 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { useCallback, forwardRef } from '@web-stories-wp/react';
+import { useCallback, forwardRef } from '@googleforcreators/react';
 import { dataToEditorX, dataToEditorY } from '@web-stories-wp/units';
 import {
   BUTTON_TRANSITION_TIMING,
   ThemeGlobals,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

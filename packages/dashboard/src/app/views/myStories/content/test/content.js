@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
-import { SnackbarProvider } from '@web-stories-wp/design-system';
+import { SnackbarProvider } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

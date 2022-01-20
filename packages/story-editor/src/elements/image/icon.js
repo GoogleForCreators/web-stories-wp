@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { getSmallestUrlForWidth } from '@web-stories-wp/media';
+import { getSmallestUrlForWidth } from '@googleforcreators/media';
 /**
  * Internal dependencies
  */

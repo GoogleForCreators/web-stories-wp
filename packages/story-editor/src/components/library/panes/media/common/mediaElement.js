@@ -25,10 +25,10 @@ import {
   memo,
   useState,
   useRef,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { rgba } from 'polished';
-import { __ } from '@web-stories-wp/i18n';
-import { LoadingBar, useKeyDownEffect } from '@web-stories-wp/design-system';
+import { __ } from '@googleforcreators/i18n';
+import { LoadingBar, useKeyDownEffect } from '@googleforcreators/design-system';
 import { Blurhash } from 'react-blurhash';
 /**
  * Internal dependencies
@@ -201,6 +201,8 @@ function Element({
     [handleKeyDown]
   );
 
+  const isPlaceholder = !isLoaded && !active;
+
   return (
     <Container
       ref={ref}
@@ -216,7 +218,7 @@ function Element({
       onBlur={makeInactive}
       tabIndex={index === 0 ? 0 : -1}
     >
-      <InnerContainer $baseColor={!isLoaded && baseColor}>
+      <InnerContainer $baseColor={isPlaceholder && baseColor}>
         <InnerElement
           type={type}
           src={src}
@@ -232,7 +234,7 @@ function Element({
           active={active}
         />
         {attribution}
-        {!isLoaded && blurHash && (
+        {isPlaceholder && blurHash && (
           <BlurhashContainer
             hash={blurHash}
             width={width}
@@ -243,7 +245,7 @@ function Element({
         {(!src ||
           isCurrentResourceProcessing(resourceId) ||
           isCurrentResourceUploading(resourceId)) && (
-          <LoadingBar loadingMessage={__('Uploading media', 'web-stories')} />
+          <LoadingBar loadingMessage={__('Uploading media…', 'web-stories')} />
         )}
         {providerType === 'local' && canEditMedia && (
           <DropDownMenu
@@ -285,32 +287,20 @@ Element.propTypes = {
  * @return {null|*} Element or null if does not map to video/image.
  */
 function MediaElement(props) {
-  const {
-    isCurrentResourceTrimming,
-    isCurrentResourceMuting,
-    isCurrentResourceTranscoding,
-  } = useLocalMedia(
-    ({
-      state: {
-        isCurrentResourceMuting,
-        isCurrentResourceTrimming,
-        isCurrentResourceTranscoding,
-      },
-    }) => ({
-      isCurrentResourceMuting,
-      isCurrentResourceTrimming,
-      isCurrentResourceTranscoding,
-    })
-  );
-  const { id } = props.resource;
+  const { isCurrentResourceProcessing, isCurrentResourceUploading } =
+    useLocalMedia(({ state }) => ({
+      isCurrentResourceProcessing: state.isCurrentResourceProcessing,
+      isCurrentResourceUploading: state.isCurrentResourceUploading,
+    }));
+
+  const { id: resourceId } = props.resource;
 
   if (
-    isCurrentResourceTrimming(id) ||
-    isCurrentResourceMuting(id) ||
-    isCurrentResourceTranscoding(id)
+    isCurrentResourceProcessing(resourceId) ||
+    isCurrentResourceUploading(resourceId)
   ) {
     return (
-      <Tooltip title={__('Video is being processed', 'web-stories')}>
+      <Tooltip title={__('Uploading media…', 'web-stories')}>
         <Element {...props} />
       </Tooltip>
     );

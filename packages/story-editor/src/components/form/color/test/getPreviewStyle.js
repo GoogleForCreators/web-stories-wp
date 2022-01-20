@@ -20,14 +20,14 @@
 import {
   createSolid,
   generatePatternStyles as generatePatternStylesMock,
-} from '@web-stories-wp/patterns';
+} from '@googleforcreators/patterns';
 /**
  * Internal dependencies
  */
 import getPreviewStyle from '../getPreviewStyle';
 
-jest.mock('@web-stories-wp/patterns', () => ({
-  ...jest.requireActual('@web-stories-wp/patterns'),
+jest.mock('@googleforcreators/patterns', () => ({
+  ...jest.requireActual('@googleforcreators/patterns'),
   generatePatternStyles: jest.fn(),
 }));
 

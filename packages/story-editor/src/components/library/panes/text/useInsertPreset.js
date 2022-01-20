@@ -21,7 +21,7 @@ import {
   useEffect,
   useRef,
   useState,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { dataFontEm, PAGE_HEIGHT } from '@web-stories-wp/units';
 
 /**

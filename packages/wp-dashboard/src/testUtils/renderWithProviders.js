@@ -24,8 +24,8 @@ import {
   theme as externalDesignSystemTheme,
   lightMode,
   SnackbarProvider,
-} from '@web-stories-wp/design-system';
-import { ConfigProvider } from '@web-stories-wp/dashboard';
+} from '@googleforcreators/design-system';
+import { ConfigProvider } from '@googleforcreators/dashboard';
 
 /**
  * Internal dependencies

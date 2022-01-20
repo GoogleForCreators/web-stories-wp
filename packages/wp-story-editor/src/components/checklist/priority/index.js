@@ -29,7 +29,7 @@ import {
   VideoOptimization,
   StoryAmpValidationErrors,
   PublisherLogoMissing,
-} from '@web-stories-wp/story-editor';
+} from '@googleforcreators/story-editor';
 
 /**
  * Internal dependencies

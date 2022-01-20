@@ -18,7 +18,7 @@
  * External dependencies
  */
 import cloneDeep from 'clone-deep';
-import { useEffect, useRef } from '@web-stories-wp/react';
+import { useEffect, useRef } from '@googleforcreators/react';
 
 /**
  * Internal dependencies

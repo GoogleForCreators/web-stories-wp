@@ -18,8 +18,8 @@
  * External dependencies
  */
 import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
-import { getHexFromSolidArray } from '@web-stories-wp/patterns';
-import { preloadImage } from '@web-stories-wp/media';
+import { getHexFromSolidArray } from '@googleforcreators/patterns';
+import { preloadImage } from '@googleforcreators/media';
 
 /**
  * Extracts the base color from an image element.

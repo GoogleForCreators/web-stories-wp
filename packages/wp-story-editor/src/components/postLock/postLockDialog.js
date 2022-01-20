@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 import {
   Button,
@@ -25,8 +25,8 @@ import {
   BUTTON_TYPES,
   THEME_CONSTANTS,
   Text,
-} from '@web-stories-wp/design-system';
-import { Dialog } from '@web-stories-wp/story-editor';
+} from '@googleforcreators/design-system';
+import { Dialog } from '@googleforcreators/story-editor';
 
 /**
  * Internal dependencies

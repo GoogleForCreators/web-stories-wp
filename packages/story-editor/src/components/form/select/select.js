@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import { DropDown } from '@web-stories-wp/design-system';
+import { DropDown } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

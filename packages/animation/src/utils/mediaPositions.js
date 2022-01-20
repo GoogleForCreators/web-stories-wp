@@ -38,7 +38,7 @@ import {
   PAGE_HEIGHT,
   PAGE_WIDTH,
 } from '@web-stories-wp/units';
-import { getMediaSizePositionProps } from '@web-stories-wp/media';
+import { getMediaSizePositionProps } from '@googleforcreators/media';
 
 const PRECISION = 1;
 

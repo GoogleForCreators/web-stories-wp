@@ -158,7 +158,12 @@ describe('ColorPicker', () => {
 
         // Add text and apply the previously saved color.
         await fixture.events.click(fixture.editor.library.textAdd);
-        await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+        await waitFor(() => {
+          if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+            throw new Error('node not ready');
+          }
+          expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
+        });
         await fixture.events.click(
           fixture.editor.inspector.designPanel.textStyle.fontColor.button
         );
@@ -189,7 +194,12 @@ describe('ColorPicker', () => {
 
         // Add text and apply the previously saved color.
         await fixture.events.click(fixture.editor.library.textAdd);
-        await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+        await waitFor(() => {
+          if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+            throw new Error('node not ready');
+          }
+          expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
+        });
         await fixture.events.click(
           fixture.editor.inspector.designPanel.textStyle.fontColor.button
         );
@@ -207,8 +217,12 @@ describe('ColorPicker', () => {
       it('should allow saving text background color', async () => {
         // Add text element
         await fixture.events.click(fixture.editor.library.textAdd);
-        await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
-
+        await waitFor(() => {
+          if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+            throw new Error('node not ready');
+          }
+          expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
+        });
         // add fill
         await fixture.events.click(
           fixture.editor.inspector.designPanel.textStyle.fill
@@ -231,7 +245,12 @@ describe('ColorPicker', () => {
       it('should allow deleting local and global color presets', async () => {
         // Add text element and a color preset.
         await fixture.events.click(fixture.editor.library.textAdd);
-        await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+        await waitFor(() => {
+          if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+            throw new Error('node not ready');
+          }
+          expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
+        });
         await fixture.events.click(
           fixture.editor.inspector.designPanel.textStyle.fontColor.button
         );
@@ -245,6 +264,7 @@ describe('ColorPicker', () => {
         await fixture.snapshot('Color presets in edit mode');
 
         // Verify being in edit mode.
+
         expect(picker.exitEditButton).toBeTruthy();
         expect(picker.deleteGlobalColor).toBeTruthy();
         // Verify edit mode has no aXe violations.
@@ -256,6 +276,9 @@ describe('ColorPicker', () => {
 
         // Confirm both the color picker and the confirmation dialog are open since it's a global color.
         await waitFor(() => {
+          if (fixture.screen.getAllByRole('dialog').length !== 2) {
+            throw new Error('dialog not ready');
+          }
           expect(fixture.screen.getAllByRole('dialog').length).toBe(2);
         });
         await fixture.events.click(

@@ -209,6 +209,8 @@ class Dashboard extends Service_Base {
 	public function add_menu_page() {
 		$parent = 'edit.php?post_type=' . $this->story_post_type->get_slug();
 
+		$settings = $this->get_dashboard_settings();
+
 		$this->hook_suffix['stories-dashboard'] = add_submenu_page(
 			$parent,
 			__( 'Dashboard', 'web-stories' ),
@@ -219,15 +221,17 @@ class Dashboard extends Service_Base {
 			0
 		);
 
-		$this->hook_suffix['stories-dashboard-explore'] = add_submenu_page(
-			$parent,
-			__( 'Explore Templates', 'web-stories' ),
-			__( 'Explore Templates', 'web-stories' ),
-			'edit_web-stories',
-			'stories-dashboard#/templates-gallery',
-			'__return_null',
-			1
-		);
+		if ( isset( $settings['canViewDefaultTemplates'] ) && $settings['canViewDefaultTemplates'] ) {
+			$this->hook_suffix['stories-dashboard-explore'] = add_submenu_page(
+				$parent,
+				__( 'Explore Templates', 'web-stories' ),
+				__( 'Explore Templates', 'web-stories' ),
+				'edit_web-stories',
+				'stories-dashboard#/templates-gallery',
+				'__return_null',
+				1
+			);
+		}
 
 		$this->hook_suffix['stories-dashboard-settings'] = add_submenu_page(
 			$parent,
@@ -423,16 +427,16 @@ class Dashboard extends Service_Base {
 		}
 
 		$settings = [
-			'isRTL'                 => is_rtl(),
-			'userId'                => get_current_user_id(),
-			'locale'                => $this->locale->get_locale_settings(),
-			'newStoryURL'           => $new_story_url,
-			'archiveURL'            => $this->story_post_type->get_archive_link(),
-			'cdnURL'                => trailingslashit( WEBSTORIES_CDN_URL ),
-			'allowedImageMimeTypes' => $this->types->get_allowed_image_mime_types(),
-			'version'               => WEBSTORIES_VERSION,
-			'encodeMarkup'          => $this->decoder->supports_decoding(),
-			'api'                   => [
+			'isRTL'                   => is_rtl(),
+			'userId'                  => get_current_user_id(),
+			'locale'                  => $this->locale->get_locale_settings(),
+			'newStoryURL'             => $new_story_url,
+			'archiveURL'              => $this->story_post_type->get_archive_link(),
+			'cdnURL'                  => trailingslashit( WEBSTORIES_CDN_URL ),
+			'allowedImageMimeTypes'   => $this->types->get_allowed_image_mime_types(),
+			'version'                 => WEBSTORIES_VERSION,
+			'encodeMarkup'            => $this->decoder->supports_decoding(),
+			'api'                     => [
 				'stories'        => trailingslashit( $this->story_post_type->get_rest_url() ),
 				'media'          => '/web-stories/v1/media/',
 				'currentUser'    => '/web-stories/v1/users/me/',
@@ -442,14 +446,15 @@ class Dashboard extends Service_Base {
 				'pages'          => '/wp/v2/pages/',
 				'publisherLogos' => '/web-stories/v1/publisher-logos/',
 			],
-			'maxUpload'             => $max_upload_size,
-			'maxUploadFormatted'    => size_format( $max_upload_size ),
-			'capabilities'          => [
+			'maxUpload'               => $max_upload_size,
+			'maxUploadFormatted'      => size_format( $max_upload_size ),
+			'capabilities'            => [
 				'canManageSettings' => current_user_can( 'manage_options' ),
 				'canUploadFiles'    => current_user_can( 'upload_files' ),
 			],
-			'siteKitStatus'         => $this->site_kit->get_plugin_status(),
-			'flags'                 => array_merge(
+			'canViewDefaultTemplates' => true,
+			'siteKitStatus'           => $this->site_kit->get_plugin_status(),
+			'flags'                   => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),
 				$this->experiments->get_experiment_statuses( 'dashboard' )
 			),

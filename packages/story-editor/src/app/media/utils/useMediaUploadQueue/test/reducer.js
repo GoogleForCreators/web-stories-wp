@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { revokeBlob } from '@web-stories-wp/media';
+import { revokeBlob } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -38,11 +38,15 @@ import {
 } from '../reducer';
 import { ITEM_STATUS } from '../constants';
 
-jest.mock('@web-stories-wp/media', () => ({
+jest.mock('@googleforcreators/media', () => ({
   revokeBlob: jest.fn(),
 }));
 
 describe('useMediaUploadQueue', () => {
+  afterEach(() => {
+    revokeBlob.mockReset();
+  });
+
   describe('addItem', () => {
     it('should add item to queue with ID and pending state', () => {
       const initialState = { queue: [] };
@@ -120,6 +124,7 @@ describe('useMediaUploadQueue', () => {
             resource: {
               id: 456,
               src: 'foo',
+              poster: 'blob-url',
             },
             originalResourceId: 111,
             state: ITEM_STATUS.UPLOADING,
@@ -134,6 +139,7 @@ describe('useMediaUploadQueue', () => {
           resource: {
             id: 789,
             src: 'bar',
+            poster: 'new-url',
           },
         },
       });
@@ -148,6 +154,7 @@ describe('useMediaUploadQueue', () => {
             resource: {
               id: 789,
               src: 'bar',
+              poster: 'new-url',
             },
             previousResourceId: 456,
             state: ITEM_STATUS.UPLOADED,
@@ -177,7 +184,7 @@ describe('useMediaUploadQueue', () => {
       expect(result).toStrictEqual(initialState);
     });
 
-    it('revokes previous blob URLs', () => {
+    it('revokes previous src blob URL', () => {
       const initialState = {
         queue: [
           {
@@ -186,6 +193,7 @@ describe('useMediaUploadQueue', () => {
             resource: {
               id: 456,
               foo: 'bar',
+              src: 'blob-url',
             },
             state: ITEM_STATUS.PENDING,
           },
@@ -198,10 +206,85 @@ describe('useMediaUploadQueue', () => {
           resource: {
             id: 456,
             bar: 'baz',
+            src: 'new-url',
           },
         },
       });
-      expect(revokeBlob).toHaveBeenCalledTimes(2);
+      expect(revokeBlob).toHaveBeenCalledWith('blob-url');
+    });
+
+    it('revokes previous poster blob URL', () => {
+      const initialState = {
+        queue: [
+          {
+            id: 123,
+            file: {},
+            resource: {
+              id: 456,
+              foo: 'bar',
+              poster: 'blob-url',
+            },
+            state: ITEM_STATUS.PENDING,
+          },
+        ],
+      };
+
+      finishUploading(initialState, {
+        payload: {
+          id: 123,
+          resource: {
+            id: 456,
+            bar: 'baz',
+            poster: 'new-url',
+          },
+        },
+      });
+      expect(revokeBlob).toHaveBeenCalledWith('blob-url');
+    });
+
+    it('keeps existing poster if no new one was provided', () => {
+      const initialState = {
+        queue: [
+          {
+            id: 123,
+            file: {},
+            resource: {
+              id: 456,
+              foo: 'bar',
+              poster: 'blob-url',
+            },
+            state: ITEM_STATUS.PENDING,
+          },
+        ],
+      };
+
+      const result = finishUploading(initialState, {
+        payload: {
+          id: 123,
+          resource: {
+            id: 456,
+            bar: 'baz',
+          },
+        },
+      });
+      expect(revokeBlob).not.toHaveBeenCalled();
+      expect(result).toStrictEqual({
+        queue: [
+          {
+            id: 123,
+            file: {},
+            resource: {
+              id: 456,
+              bar: 'baz',
+              poster: 'blob-url',
+            },
+            state: ITEM_STATUS.UPLOADED,
+            previousResourceId: 456,
+            posterFile: null,
+            originalResourceId: null,
+          },
+        ],
+      });
     });
   });
 

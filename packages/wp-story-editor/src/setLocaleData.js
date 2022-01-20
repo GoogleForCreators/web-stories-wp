@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { setLocaleData } from '@web-stories-wp/i18n';
+import { setLocaleData } from '@googleforcreators/i18n';
 
 for (const localeData of window?.webStories?.localeData || []) {
   setLocaleData(localeData);

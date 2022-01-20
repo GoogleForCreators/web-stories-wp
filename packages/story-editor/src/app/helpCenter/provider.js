@@ -24,13 +24,13 @@ import {
   useState,
   useMemo,
   useRef,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { clamp } from '@web-stories-wp/animation';
+import { clamp } from '@googleforcreators/animation';
 import {
   localStore,
   LOCAL_STORAGE_PREFIX,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

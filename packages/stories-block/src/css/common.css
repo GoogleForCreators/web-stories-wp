@@ -83,11 +83,6 @@
   box-sizing: border-box;
 }
 
-.web-stories-list__story-poster amp-img img {
-  object-fit: cover;
-  box-sizing: border-box;
-}
-
 .web-stories-list__story-poster::before {
   content: '';
   display: block;

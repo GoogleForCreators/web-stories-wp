@@ -316,19 +316,6 @@ class Experiments extends Service_Base implements HasRequirements {
 			],
 
 			/**
-			 * Author: @spacedmonkey
-			 * Issue #9039
-			 * Creation date: 2021-09-29
-			 */
-			[
-				'name'        => 'enableCORSProxy',
-				'label'       => __( 'CORS Proxy', 'web-stories' ),
-				'description' => __( 'Enable inserting media element without CORS headers', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-
-			/**
 			 * Author: @barklund
 			 * Issue: #8877
 			 * Creation date: 2021-09-01
