@@ -11,7 +11,7 @@
   "main": "./src/index.js",
   "type": "module",
   "dependencies": {
-    "@web-stories-wp/migration": "*"
+    "@googleforcreators/migration": "*"
   },
   "devDependencies": {
     "puppeteer": "*"

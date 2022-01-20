@@ -30,7 +30,7 @@ import {
   localStore,
   LOCAL_STORAGE_PREFIX,
 } from '@googleforcreators/design-system';
-import { DATA_VERSION, migrate } from '@web-stories-wp/migration';
+import { DATA_VERSION, migrate } from '@googleforcreators/migration';
 
 /**
  * Internal dependencies
