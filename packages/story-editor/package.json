@@ -34,7 +34,7 @@
     "@googleforcreators/react": "*",
     "@googleforcreators/stickers": "*",
     "@googleforcreators/templates": "*",
-    "@web-stories-wp/text-sets": "*",
+    "@googleforcreators/text-sets": "*",
     "@web-stories-wp/tracking": "*",
     "@web-stories-wp/units": "*",
     "blurhash": "^1.1.4",
