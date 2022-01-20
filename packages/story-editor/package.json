@@ -32,7 +32,7 @@
     "@googleforcreators/migration": "*",
     "@googleforcreators/patterns": "*",
     "@googleforcreators/react": "*",
-    "@web-stories-wp/stickers": "*",
+    "@googleforcreators/stickers": "*",
     "@web-stories-wp/templates": "*",
     "@web-stories-wp/text-sets": "*",
     "@web-stories-wp/tracking": "*",

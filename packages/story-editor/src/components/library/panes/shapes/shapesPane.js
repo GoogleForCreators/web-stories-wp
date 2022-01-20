@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import { useRef } from '@googleforcreators/react';
-import STICKERS from '@web-stories-wp/stickers';
+import STICKERS from '@googleforcreators/stickers';
 
 /**
  * Internal dependencies
