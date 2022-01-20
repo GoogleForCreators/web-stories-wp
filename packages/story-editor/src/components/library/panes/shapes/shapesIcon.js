@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-import { Icons } from '@web-stories-wp/design-system';
+import { Icons } from '@googleforcreators/design-system';
 
 function ShapesIcon() {
   return <Icons.Shapes title={__('Shapes library', 'web-stories')} />;

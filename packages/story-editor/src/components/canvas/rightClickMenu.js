@@ -21,7 +21,7 @@ import { __ } from '@googleforcreators/i18n';
 import {
   ContextMenu,
   ContextMenuComponents,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import {
   createPortal,
   Fragment,

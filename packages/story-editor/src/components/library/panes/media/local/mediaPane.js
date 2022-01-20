@@ -31,7 +31,7 @@ import {
   Text,
   THEME_CONSTANTS,
   Icons,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

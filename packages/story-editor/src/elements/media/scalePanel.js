@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { _x } from '@googleforcreators/i18n';
-import { Slider } from '@web-stories-wp/design-system';
+import { Slider } from '@googleforcreators/design-system';
 import { BG_MIN_SCALE, BG_MAX_SCALE } from '@googleforcreators/animation';
 /**
  * Internal dependencies

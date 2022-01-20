@@ -26,7 +26,7 @@ import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
 /**
  * Internal dependencies
  */
-import { useKeyDownEffect } from '@web-stories-wp/design-system';
+import { useKeyDownEffect } from '@googleforcreators/design-system';
 import { DESIGN_SPACE_MARGIN } from '../../constants';
 import {
   useStory,

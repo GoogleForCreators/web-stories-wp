@@ -30,7 +30,7 @@ import {
   Text,
   THEME_CONSTANTS,
   Tooltip,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import styled from 'styled-components';
 import getFontDataFromUrl from '@web-stories-wp/fonts/src/utils/getFontDataFromUrl';
 import { trackEvent } from '@web-stories-wp/tracking';

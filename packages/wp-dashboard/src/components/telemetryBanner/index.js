@@ -34,7 +34,7 @@ import {
   Link,
   Text,
   THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import {
   resolveRoute,
   APP_ROUTES,

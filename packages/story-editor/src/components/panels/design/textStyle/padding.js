@@ -25,7 +25,7 @@ import {
   Icons,
   LockToggle as DefaultLockToggle,
   NumericInput,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

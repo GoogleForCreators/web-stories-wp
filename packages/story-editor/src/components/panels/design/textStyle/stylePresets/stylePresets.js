@@ -27,7 +27,7 @@ import {
   Icons,
   Button,
   PLACEMENT,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import { useRef, useState } from '@web-stories-wp/react';

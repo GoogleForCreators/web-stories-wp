@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import { useCallback } from '@web-stories-wp/react';
 import { __ } from '@googleforcreators/i18n';
-import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

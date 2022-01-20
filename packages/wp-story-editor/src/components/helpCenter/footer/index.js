@@ -26,7 +26,7 @@ import {
   Link as DsLink,
   THEME_CONSTANTS,
   Text,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 const Panel = styled.div`
   padding: 16px 0 24px 0;

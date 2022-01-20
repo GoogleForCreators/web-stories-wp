@@ -25,7 +25,7 @@ import {
   useCallback,
   useRef,
 } from '@web-stories-wp/react';
-import { Text, useKeyDownEffect } from '@web-stories-wp/design-system';
+import { Text, useKeyDownEffect } from '@googleforcreators/design-system';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { useUnits } from '@web-stories-wp/units';
 

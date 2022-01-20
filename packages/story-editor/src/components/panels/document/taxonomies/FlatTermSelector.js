@@ -26,7 +26,7 @@ import {
 } from '@web-stories-wp/react';
 import { __, sprintf, _n } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
-import { useLiveRegion } from '@web-stories-wp/design-system';
+import { useLiveRegion } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

@@ -22,7 +22,7 @@ import {
   themeHelpers,
   Text,
   THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 const Panel = styled.div`
   padding: 24px 0 16px 0;

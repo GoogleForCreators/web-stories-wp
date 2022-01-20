@@ -23,7 +23,7 @@ import { useVirtual } from 'react-virtual';
 import { __ } from '@googleforcreators/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { UnitsProvider } from '@web-stories-wp/units';
-import { useSnackbar } from '@web-stories-wp/design-system';
+import { useSnackbar } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

@@ -25,7 +25,7 @@ import {
   ColorStopPropType,
   generatePatternStyles,
 } from '@web-stories-wp/patterns';
-import { themeHelpers } from '@web-stories-wp/design-system';
+import { themeHelpers } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

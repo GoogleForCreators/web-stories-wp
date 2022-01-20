@@ -28,7 +28,7 @@ import {
   BUTTON_VARIANTS,
   Icons,
   Tooltip,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import {
   DIRECTION,
   ROTATION,

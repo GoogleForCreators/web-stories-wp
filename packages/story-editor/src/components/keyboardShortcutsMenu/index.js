@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
-import { Icons, useGlobalKeyDownEffect } from '@web-stories-wp/design-system';
+import { Icons, useGlobalKeyDownEffect } from '@googleforcreators/design-system';
 import { useEffect, useFocusOut, useRef } from '@web-stories-wp/react';
 
 /**

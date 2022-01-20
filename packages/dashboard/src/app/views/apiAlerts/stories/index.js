@@ -21,7 +21,7 @@ import {
   Button,
   BUTTON_TYPES,
   SnackbarProvider,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { theme as ds_theme } from '@web-stories-wp/design-system';
+import { theme as ds_theme } from '@googleforcreators/design-system';
 import {
   forwardRef,
   render,

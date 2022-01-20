@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { act, renderHook } from '@testing-library/react-hooks';
-import { SnackbarContext } from '@web-stories-wp/design-system';
+import { SnackbarContext } from '@googleforcreators/design-system';
 import { ConfigContext } from '@web-stories-wp/story-editor';
 
 /**
@@ -26,8 +26,8 @@ import { ConfigContext } from '@web-stories-wp/story-editor';
  */
 import useMediaPicker from '../useMediaPicker';
 
-jest.mock('@web-stories-wp/design-system', () => ({
-  ...jest.requireActual('@web-stories-wp/design-system'),
+jest.mock('@googleforcreators/design-system', () => ({
+  ...jest.requireActual('@googleforcreators/design-system'),
   useSnackbar: () => {
     return {
       showSnackbar: jest.fn(),

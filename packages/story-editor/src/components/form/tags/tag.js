@@ -23,7 +23,7 @@ import {
   THEME_CONSTANTS,
   Tooltip,
   TOOLTIP_PLACEMENT,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import { useMemo } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';

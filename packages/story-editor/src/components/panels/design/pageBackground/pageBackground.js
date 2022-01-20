@@ -30,7 +30,7 @@ import {
   Text as DefaultText,
   THEME_CONSTANTS,
   Tooltip,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { trackEvent } from '@web-stories-wp/tracking';
 
 /**

@@ -23,7 +23,7 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Icons,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { hrefTo } from '@storybook/addon-links';
 
 function PreviewButton() {

@@ -24,7 +24,7 @@ import {
 } from '@web-stories-wp/react';
 import { __, sprintf } from '@googleforcreators/i18n';
 import { trackScreenView } from '@web-stories-wp/tracking';
-import { Snackbar, useSnackbar } from '@web-stories-wp/design-system';
+import { Snackbar, useSnackbar } from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';
 
 /**

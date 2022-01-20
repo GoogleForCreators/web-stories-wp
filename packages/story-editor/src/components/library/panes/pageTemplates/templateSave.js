@@ -26,7 +26,7 @@ import {
   THEME_CONSTANTS,
   Text,
   useSnackbar,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { v4 as uuidv4 } from 'uuid';
 import { DATA_VERSION } from '@web-stories-wp/migration';
 

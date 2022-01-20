@@ -26,7 +26,7 @@ import {
   Icons,
   themeHelpers,
   Tooltip,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { useRef, memo } from '@web-stories-wp/react';
 
 /**

@@ -31,7 +31,7 @@ import {
   THEME_CONSTANTS,
   Icons,
   Datalist,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import {
   highlightStates as states,
   highlightStyles as styles,

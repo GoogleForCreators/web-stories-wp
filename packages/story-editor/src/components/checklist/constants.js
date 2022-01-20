@@ -19,7 +19,7 @@
  */
 import { __, sprintf, _n, TranslateWithMarkup } from '@googleforcreators/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
-import { Link, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { Link, THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 export const THUMBNAIL_MAX = 4;
 export const THUMBNAIL_COUNT_FOR_OVERFLOW = 3;

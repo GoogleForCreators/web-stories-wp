@@ -26,7 +26,7 @@ import {
   useState,
 } from '@web-stories-wp/react';
 import { __, sprintf } from '@googleforcreators/i18n';
-import { useGridViewKeys } from '@web-stories-wp/design-system';
+import { useGridViewKeys } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

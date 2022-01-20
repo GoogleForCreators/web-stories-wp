@@ -27,7 +27,7 @@ import {
   THEME_CONSTANTS,
   useKeyDownEffect,
   useLiveRegion,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { _n, sprintf, __ } from '@googleforcreators/i18n';
 import {
   useCallback,

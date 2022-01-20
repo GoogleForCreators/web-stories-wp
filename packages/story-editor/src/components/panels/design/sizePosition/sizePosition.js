@@ -35,7 +35,7 @@ import {
   BUTTON_SIZES,
   BUTTON_VARIANTS,
   Tooltip,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

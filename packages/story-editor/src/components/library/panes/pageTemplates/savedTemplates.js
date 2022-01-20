@@ -22,7 +22,7 @@ import {
   Text,
   THEME_CONSTANTS,
   useSnackbar,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import {
   useCallback,

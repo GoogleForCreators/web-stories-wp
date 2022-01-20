@@ -27,7 +27,7 @@ import {
   THEME_CONSTANTS,
   BUTTON_TRANSITION_TIMING,
   Text,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { Icons, LoadingBar } from '@web-stories-wp/design-system';
+import { Icons, LoadingBar } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

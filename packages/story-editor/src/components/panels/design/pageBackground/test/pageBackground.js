@@ -28,8 +28,8 @@ import ConfigContext from '../../../../../app/config/context';
 import { StoryContext } from '../../../../../app/story';
 import useFFmpeg from '../../../../../app/media/utils/useFFmpeg';
 
-jest.mock('@web-stories-wp/design-system', () => ({
-  ...jest.requireActual('@web-stories-wp/design-system'),
+jest.mock('@googleforcreators/design-system', () => ({
+  ...jest.requireActual('@googleforcreators/design-system'),
   useSnackbar: jest.fn(() => ({ showSnackbar: jest.fn() })),
 }));
 jest.mock('../../../../../app/media/utils/useFFmpeg');

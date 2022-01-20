@@ -26,7 +26,7 @@ import {
   Text,
   THEME_CONSTANTS,
   themeHelpers,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 const ScrollMessage = styled.div`
   width: 100%;

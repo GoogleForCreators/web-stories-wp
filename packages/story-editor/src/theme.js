@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { createGlobalStyle, ThemeContext } from 'styled-components';
-import { theme, themeHelpers } from '@web-stories-wp/design-system';
+import { theme, themeHelpers } from '@googleforcreators/design-system';
 import { identity, useContextSelector } from '@web-stories-wp/react';
 
 export const GlobalStyle = createGlobalStyle`

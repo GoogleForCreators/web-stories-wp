@@ -28,7 +28,7 @@ import {
 import { useFeatures } from 'flagged';
 import { getTimeTracker, trackEvent } from '@web-stories-wp/tracking';
 import { loadTextSets } from '@web-stories-wp/text-sets';
-import { uniqueEntriesByKey } from '@web-stories-wp/design-system';
+import { uniqueEntriesByKey } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

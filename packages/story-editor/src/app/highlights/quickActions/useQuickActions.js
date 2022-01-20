@@ -25,7 +25,7 @@ import {
   useSnackbar,
   PLACEMENT,
   Icons,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { resourceList } from '@web-stories-wp/media';
 

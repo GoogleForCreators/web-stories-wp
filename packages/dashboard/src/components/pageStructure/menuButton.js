@@ -20,7 +20,7 @@
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
-import { themeHelpers } from '@web-stories-wp/design-system';
+import { themeHelpers } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

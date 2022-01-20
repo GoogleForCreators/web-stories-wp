@@ -29,7 +29,7 @@ import {
   DropDownSelect,
   PLACEMENT,
   useKeyDownEffect,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import {
   DateTime,
   Row,

@@ -29,7 +29,7 @@ import { __ } from '@googleforcreators/i18n';
 import {
   useGridViewKeys,
   THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { FileUpload, useConfig } from '@googleforcreators/dashboard';
 
 /**

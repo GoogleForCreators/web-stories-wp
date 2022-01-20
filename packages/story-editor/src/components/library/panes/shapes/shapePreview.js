@@ -26,7 +26,7 @@ import { PAGE_WIDTH, useUnits } from '@web-stories-wp/units';
 import {
   ThemeGlobals,
   BUTTON_TRANSITION_TIMING,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

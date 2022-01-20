@@ -34,7 +34,7 @@ import {
   NotificationBubble,
   Text,
   THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import styled from 'styled-components';
 import { differenceInDays, getOptions, toDate } from '@googleforcreators/date';
 

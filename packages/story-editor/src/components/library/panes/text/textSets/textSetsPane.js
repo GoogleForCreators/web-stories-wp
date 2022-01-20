@@ -42,7 +42,7 @@ import {
   Headline,
   useLiveRegion,
   localStore,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

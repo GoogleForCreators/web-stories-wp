@@ -29,7 +29,7 @@ import {
 import { CSSTransition } from 'react-transition-group';
 import { __ } from '@googleforcreators/i18n';
 import { rgba } from 'polished';
-import { Icons, useKeyDownEffect } from '@web-stories-wp/design-system';
+import { Icons, useKeyDownEffect } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

@@ -26,7 +26,7 @@ import {
   DropDown,
   Datalist,
   noop,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

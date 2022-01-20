@@ -24,7 +24,7 @@ import {
   useRef,
   useEffect,
 } from '@web-stories-wp/react';
-import { useLiveRegion } from '@web-stories-wp/design-system';
+import { useLiveRegion } from '@googleforcreators/design-system';
 
 /* translators: %d: new position. */
 const REORDER_MESSAGE = __(

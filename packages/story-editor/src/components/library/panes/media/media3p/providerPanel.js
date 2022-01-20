@@ -22,7 +22,7 @@ import styled, { css } from 'styled-components';
 import { useCallback } from '@web-stories-wp/react';
 import { __ } from '@googleforcreators/i18n';
 import { resourceList } from '@web-stories-wp/media';
-import { Headline, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { Headline, THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

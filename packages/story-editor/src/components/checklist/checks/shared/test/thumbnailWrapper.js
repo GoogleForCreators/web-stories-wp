@@ -18,7 +18,7 @@
  */
 import { render, screen } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
-import { theme as dsTheme } from '@web-stories-wp/design-system';
+import { theme as dsTheme } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

@@ -32,7 +32,7 @@ import {
   Button,
   Text,
   themeHelpers,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

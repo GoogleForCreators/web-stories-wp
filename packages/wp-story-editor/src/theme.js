@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { createGlobalStyle } from 'styled-components';
-import { OVERLAY_CLASS } from '@web-stories-wp/design-system';
+import { OVERLAY_CLASS } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

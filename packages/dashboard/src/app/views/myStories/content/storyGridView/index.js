@@ -30,7 +30,7 @@ import {
   useCallback,
   useFocusOut,
 } from '@web-stories-wp/react';
-import { useGridViewKeys } from '@web-stories-wp/design-system';
+import { useGridViewKeys } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

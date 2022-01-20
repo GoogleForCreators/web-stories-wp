@@ -30,7 +30,7 @@ import {
   Chip,
   Icons,
   useKeyDownEffect,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

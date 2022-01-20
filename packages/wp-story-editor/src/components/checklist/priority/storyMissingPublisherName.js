@@ -25,7 +25,7 @@ import {
   useRegisterCheck,
   useIsChecklistMounted,
 } from '@web-stories-wp/story-editor';
-import { Link, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { Link, THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 const StoryMissingPublisherName = () => {
   const isChecklistMounted = useIsChecklistMounted();

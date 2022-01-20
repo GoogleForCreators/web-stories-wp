@@ -29,7 +29,7 @@ import { FULLBLEED_RATIO, PAGE_RATIO } from '@web-stories-wp/units';
 import {
   localStore,
   LOCAL_STORAGE_PREFIX,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { DATA_VERSION, migrate } from '@web-stories-wp/migration';
 
 /**

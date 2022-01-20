@@ -24,7 +24,7 @@ import styled from 'styled-components';
 import {
   MediaInput as Input,
   themeHelpers,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

@@ -27,7 +27,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { useGridViewKeys, useSnackbar } from '@web-stories-wp/design-system';
+import { useGridViewKeys, useSnackbar } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

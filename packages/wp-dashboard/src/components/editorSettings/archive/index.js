@@ -29,7 +29,7 @@ import {
   DropDown,
   Search,
   THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { trackEvent } from '@web-stories-wp/tracking';
 import styled from 'styled-components';
 import { TEXT_INPUT_DEBOUNCE } from '@googleforcreators/dashboard';

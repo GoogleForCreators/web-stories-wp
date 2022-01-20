@@ -27,7 +27,7 @@ import {
   ToggleButton,
   BUTTON_SIZES,
   BUTTON_VARIANTS,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

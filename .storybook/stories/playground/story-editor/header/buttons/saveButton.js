@@ -22,7 +22,7 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   useSnackbar,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { useStory } from '@web-stories-wp/story-editor';
 
 function SaveButton() {

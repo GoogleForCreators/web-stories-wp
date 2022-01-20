@@ -27,7 +27,7 @@ import {
   BUTTON_SIZES,
   BUTTON_VARIANTS,
   BUTTON_TYPES,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 const HEADER_FOOTER_HEIGHT = 52;
 

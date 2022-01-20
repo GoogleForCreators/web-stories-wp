@@ -27,7 +27,7 @@ import {
   BUTTON_SIZES,
   Button,
   theme,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 function ConfirmationDialog({ onClose, onPrimary }) {
   return (

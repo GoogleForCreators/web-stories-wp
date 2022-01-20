@@ -13,7 +13,7 @@
   "dependencies": {
     "@googleforcreators/animation": "*",
     "@googleforcreators/date": "*",
-    "@web-stories-wp/design-system": "*",
+    "@googleforcreators/design-system": "*",
     "@googleforcreators/i18n": "*",
     "@web-stories-wp/karma-fixture": "*",
     "@web-stories-wp/media": "*",

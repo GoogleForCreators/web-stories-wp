@@ -54,7 +54,7 @@ import {
   BUTTON_SIZES,
   BUTTON_VARIANTS,
   BUTTON_TYPES,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import CircularProgress from '../circularProgress';
 import useEyedropper from '../eyedropper';
 import Pointer from './pointer';

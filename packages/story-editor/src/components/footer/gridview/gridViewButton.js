@@ -26,7 +26,7 @@ import {
   Icons,
   Modal,
   PLACEMENT,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { useCallback, useState } from '@web-stories-wp/react';
 import { trackEvent } from '@web-stories-wp/tracking';
 import styled from 'styled-components';

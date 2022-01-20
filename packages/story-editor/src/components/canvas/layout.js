@@ -29,7 +29,10 @@ import {
 import { __ } from '@googleforcreators/i18n';
 import { generatePatternStyles } from '@web-stories-wp/patterns';
 import { FULLBLEED_RATIO } from '@web-stories-wp/units';
-import { THEME_CONSTANTS, themeHelpers } from '@web-stories-wp/design-system';
+import {
+  THEME_CONSTANTS,
+  themeHelpers,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

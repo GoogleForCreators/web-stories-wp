@@ -20,7 +20,7 @@
 import { useCallback } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import { __, _x } from '@googleforcreators/i18n';
-import { Icons, NumericInput } from '@web-stories-wp/design-system';
+import { Icons, NumericInput } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
