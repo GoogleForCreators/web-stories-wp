@@ -81,18 +81,16 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
         }
   );
 
-  const videoElementCaptions = elements
+  const videoCaptions = elements
     .filter(
       ({ type, tracks: videoTracks }) =>
         type === ELEMENT_TYPES.VIDEO && videoTracks?.length > 0
     )
     .map(({ id: videoId }) => `el-${videoId}-captions`);
 
-  const audioCaptions = backgroundAudio?.id
-    ? [`el-${backgroundAudio.id}-captions`]
-    : [];
-
-  const videoCaptions = [...videoElementCaptions, ...audioCaptions];
+  if (backgroundAudio?.id && tracks) {
+    videoCaptions.push(`el-${backgroundAudio.id}-captions`);
+  }
 
   const backgroundAudioSrc =
     backgroundAudio?.src && !tracks ? backgroundAudio.src : undefined;
