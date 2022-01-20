@@ -81,10 +81,12 @@ jobs:
         include:
           - browser: 'chrome'
             wp: 'latest'
+            experimental: false
             snapshots: true
             shard: '1/2'
           - browser: 'chrome'
             wp: 'latest'
+            experimental: false
             snapshots: true
             shard: '2/2'
 
