@@ -316,16 +316,22 @@ function useMediaUploadQueue() {
     [startTranscoding, finishTranscoding, transcodeVideo, cancelUploading]
   );
 
-  const uploadItem = useCallback(
+  const uploadVideo = useCallback(
     async (item) => {
       const { id, file, resource, additionalData = {} } = item;
       let { posterFile } = item;
 
       let newResource;
 
-      const posterFileName = getFileName(file) + '-poster.jpeg';
+      // The newly uploaded file won't have a poster yet.
+      // However, we'll likely still have one on file.
+      // Add it back so we're never without one.
+      // The final poster will be uploaded later by uploadVideoPoster().
+      newResource = await uploadFile(file, additionalData);
 
-      startUploading({ id });
+      if (!isMounted.current) {
+        return;
+      }
 
       // If we don't have a poster yet (e.g. after converting a GIF),
       // try to generate one now.
@@ -337,34 +343,8 @@ function useMediaUploadQueue() {
         }
       }
 
-      trackEvent('upload_media', {
-        file_size: file?.size,
-        file_type: file?.type,
-      });
-
-      //eslint-disable-next-line @wordpress/no-unused-vars-before-return
-      const trackTiming = getTimeTracker('load_upload_media');
-
       try {
-        // The newly uploaded file won't have a poster yet.
-        // However, we'll likely still have one on file.
-        // Add it back so we're never without one.
-        // The final poster will be uploaded later by uploadVideoPoster().
-        newResource = await uploadFile(file, additionalData);
-
-        if (!isMounted.current) {
-          return;
-        }
-      } catch (error) {
-        // Cancel uploading if there were any errors.
-        cancelUploading({ id, error });
-
-        trackError('upload_media', error?.message);
-      } finally {
-        trackTiming();
-      }
-
-      try {
+        const posterFileName = getFileName(posterFile);
         const { poster, posterId } = await uploadVideoPoster(
           newResource.id,
           posterFileName,
@@ -380,17 +360,6 @@ function useMediaUploadQueue() {
           poster: poster || newResource.poster || resource.poster,
           posterId,
         };
-
-        if (resource.mimeType === 'image/gif') {
-          newResource = {
-            ...newResource,
-
-            output: {
-              ...newResource.output,
-              poster: poster || newResource.poster || resource.poster,
-            },
-          };
-        }
       } catch {
         // Not interested in errors here.
       }
@@ -400,14 +369,55 @@ function useMediaUploadQueue() {
         resource: newResource,
       });
     },
-    [
-      startUploading,
-      finishUploading,
-      cancelUploading,
-      uploadFile,
-      getFirstFrameOfVideo,
-      uploadVideoPoster,
-    ]
+    [finishUploading, getFirstFrameOfVideo, uploadFile, uploadVideoPoster]
+  );
+
+  const uploadImage = useCallback(
+    async (item) => {
+      const { id, file, additionalData = {} } = item;
+      const resource = await uploadFile(file, additionalData);
+
+      if (!isMounted.current) {
+        return;
+      }
+
+      finishUploading({
+        id,
+        resource,
+      });
+    },
+    [finishUploading, uploadFile]
+  );
+
+  const uploadItem = useCallback(
+    async (item) => {
+      const { id, file, resource } = item;
+
+      startUploading({ id });
+
+      trackEvent('upload_media', {
+        file_size: file?.size,
+        file_type: file?.type,
+      });
+
+      const trackTiming = getTimeTracker('load_upload_media');
+
+      try {
+        if (['video', 'gif'].includes(resource.type)) {
+          await uploadVideo(item);
+        } else {
+          await uploadImage(item);
+        }
+      } catch (error) {
+        // Cancel uploading if there were any errors.
+        cancelUploading({ id, error });
+
+        trackError('upload_media', error?.message);
+      } finally {
+        trackTiming();
+      }
+    },
+    [startUploading, cancelUploading, uploadImage, uploadVideo]
   );
 
   // Upload files to server, optionally first transcoding them.
