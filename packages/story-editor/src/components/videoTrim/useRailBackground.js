@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useState, useEffect } from '@web-stories-wp/react';
-import { generateVideoStrip } from '@web-stories-wp/media';
+import { generateVideoStrip } from '@googleforcreators/media';
 
 /**
  * Internal dependencies

@@ -22,12 +22,12 @@ export function createStory(properties = {}) {
   return {
     title: { raw: 'title' },
     excerpt: { raw: 'excerpt' },
-    permalink_template: 'http://localhost:8899/web-stories/%pagename%',
-    style_presets: { colors: [TEST_COLOR] },
+    permalinkTemplate: 'http://localhost:8899/web-stories/%pagename%',
+    stylePresets: { colors: [TEST_COLOR] },
     author: { id: 1, name: 'John Doe' },
-    featured_media: { height: 0, id: 0, url: '', width: 0 },
-    publisher_logo: { height: 0, id: 0, url: '', width: 0 },
-    lock_user: {
+    featuredMedia: { height: 0, id: 0, url: '', width: 0 },
+    publisherLogo: { height: 0, id: 0, url: '', width: 0 },
+    lockUser: {
       id: 0,
       name: '',
       avatar: '',
@@ -65,80 +65,79 @@ export const GET_MEDIA_RESPONSE_BODY = [
         file: 'IMAGE-146x300.jpg',
         width: 146,
         height: 300,
-        mime_type: 'image/jpeg',
-        source_url:
+        mimeType: 'image/jpeg',
+        sourceUrl:
           'http://wp.local/wp-content/uploads/2020/09/IMAGE-146x300.jpg',
       },
       large: {
         file: 'IMAGE-498x1024.jpg',
         width: 498,
         height: 1024,
-        mime_type: 'image/jpeg',
-        source_url:
+        mimeType: 'image/jpeg',
+        sourceUrl:
           'http://wp.local/wp-content/uploads/2020/09/IMAGE-498x1024.jpg',
       },
       thumbnail: {
         file: 'IMAGE-150x150.jpg',
         width: 150,
         height: 150,
-        mime_type: 'image/jpeg',
-        source_url:
+        mimeType: 'image/jpeg',
+        sourceUrl:
           'http://wp.local/wp-content/uploads/2020/09/IMAGE-150x150.jpg',
       },
       medium_large: {
         file: 'IMAGE-768x1579.jpg',
         width: 768,
         height: 1579,
-        mime_type: 'image/jpeg',
-        source_url:
+        mimeType: 'image/jpeg',
+        sourceUrl:
           'http://wp.local/wp-content/uploads/2020/09/IMAGE-768x1579.jpg',
       },
       '1536x1536': {
         file: 'IMAGE-747x1536.jpg',
         width: 747,
         height: 1536,
-        mime_type: 'image/jpeg',
-        source_url:
+        mimeType: 'image/jpeg',
+        sourceUrl:
           'http://wp.local/wp-content/uploads/2020/09/IMAGE-747x1536.jpg',
       },
       '2048x2048': {
         file: 'IMAGE-996x2048.jpg',
         width: 996,
         height: 2048,
-        mime_type: 'image/jpeg',
-        source_url:
+        mimeType: 'image/jpeg',
+        sourceUrl:
           'http://wp.local/wp-content/uploads/2020/09/IMAGE-996x2048.jpg',
       },
       'web-stories-poster-portrait': {
         file: 'IMAGE-640x853.jpg',
         width: 640,
         height: 853,
-        mime_type: 'image/jpeg',
-        source_url:
+        mimeType: 'image/jpeg',
+        sourceUrl:
           'http://wp.local/wp-content/uploads/2020/09/IMAGE-640x853.jpg',
       },
       'web-stories-publisher-logo': {
         file: 'IMAGE-96x96.jpg',
         width: 96,
         height: 96,
-        mime_type: 'image/jpeg',
-        source_url:
-          'http://wp.local/wp-content/uploads/2020/09/IMAGE-96x96.jpg',
+        mimeType: 'image/jpeg',
+        sourceUrl: 'http://wp.local/wp-content/uploads/2020/09/IMAGE-96x96.jpg',
       },
       'web-stories-thumbnail': {
         file: 'IMAGE-150x308.jpg',
         width: 150,
         height: 308,
-        mime_type: 'image/jpeg',
-        source_url:
+        mimeType: 'image/jpeg',
+        sourceUrl:
           'http://wp.local/wp-content/uploads/2020/09/IMAGE-150x308.jpg',
       },
       full: {
         file: 'IMAGE.jpg',
         width: 1080,
         height: 2220,
-        mime_type: 'image/jpeg',
-        source_url: 'http://wp.local/wp-content/uploads/2020/09/IMAGE.jpg',
+        mimeType: 'image/jpeg',
+        sourceUrl: 'http://wp.local/wp-content/uploads/2020/09/IMAGE.jpg',
       },
     },
     attribution: undefined,

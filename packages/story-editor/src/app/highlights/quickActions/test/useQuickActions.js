@@ -84,8 +84,8 @@ jest.mock('@googleforcreators/design-system', () => ({
 
 jest.mock('@web-stories-wp/tracking');
 
-jest.mock('@web-stories-wp/media', () => ({
-  ...jest.requireActual('@web-stories-wp/media'),
+jest.mock('@googleforcreators/media', () => ({
+  ...jest.requireActual('@googleforcreators/media'),
   resourceList: {
     set: jest.fn(),
   },

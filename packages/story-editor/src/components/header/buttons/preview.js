@@ -117,7 +117,7 @@ function PreviewButton({ forceIsSaving = false }) {
           if (popup.location.href) {
             // Auto-save sends an updated preview link, use that instead if available.
             const updatedPreviewLink = decoratePreviewLink(
-              update?.preview_link ?? previewLink
+              update?.previewLink ?? previewLink
             );
             popup.location.replace(updatedPreviewLink);
           }

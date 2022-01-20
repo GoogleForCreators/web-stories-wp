@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { useEffect, useRef, useCallback } from '@web-stories-wp/react';
-import { getFocalFromOffset } from '@web-stories-wp/media';
+import { getFocalFromOffset } from '@googleforcreators/media';
 import { useKeyDownEffect } from '@googleforcreators/design-system';
 
 /**

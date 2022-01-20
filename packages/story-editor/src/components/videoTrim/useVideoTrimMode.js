@@ -25,7 +25,7 @@ import {
   useEffect,
 } from '@web-stories-wp/react';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { getMsFromHMS } from '@web-stories-wp/media';
+import { getMsFromHMS } from '@googleforcreators/media';
 
 /**
  * Internal dependencies

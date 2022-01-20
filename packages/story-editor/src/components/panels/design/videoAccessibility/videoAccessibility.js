@@ -82,7 +82,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     /**
      * Handle video poster change.
      *
-     * @param {import('@web-stories-wp/media').Resource} [newPoster] The new image. Or null if reset.
+     * @param {import('@googleforcreators/media').Resource} [newPoster] The new image. Or null if reset.
      */
     (newPoster) => {
       if (newPoster?.src === rawPoster) {

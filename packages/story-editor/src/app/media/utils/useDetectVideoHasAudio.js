@@ -22,7 +22,7 @@ import {
   hasVideoGotAudio,
   preloadVideo,
   seekVideo,
-} from '@web-stories-wp/media';
+} from '@googleforcreators/media';
 
 /**
  * Internal dependencies

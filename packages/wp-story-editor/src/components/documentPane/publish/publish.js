@@ -171,7 +171,7 @@ function PublishPanel() {
     /**
      * Handle story poster change.
      *
-     * @param {import('@web-stories-wp/media').Resource} newPoster The new image.
+     * @param {import('@googleforcreators/media').Resource} newPoster The new image.
      * @return {void}
      */
     (newPoster) => {

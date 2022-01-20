@@ -26,7 +26,7 @@ import {
   getMediaSizePositionProps,
   calculateSrcSet,
   getSmallestUrlForWidth,
-} from '@web-stories-wp/media';
+} from '@googleforcreators/media';
 
 /**
  * Internal dependencies

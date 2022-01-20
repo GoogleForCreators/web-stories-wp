@@ -27,7 +27,7 @@ import {
   Icons,
 } from '@googleforcreators/design-system';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { resourceList } from '@web-stories-wp/media';
+import { resourceList } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -164,10 +164,10 @@ export const MediaPicker = ({ render, ...props }) => {
             optimizeGif({ resource });
           }
         }
-        // WordPress media picker event, sizes.medium.source_url is the smallest image
+        // WordPress media picker event, sizes.medium.sourceUrl is the smallest image
         insertMediaElement(
           resource,
-          resource.sizes?.medium?.source_url || resource.src
+          resource.sizes?.medium?.sourceUrl || resource.src
         );
 
         postProcessingResource(resource);

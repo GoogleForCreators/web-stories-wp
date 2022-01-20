@@ -185,7 +185,7 @@ function PageAttachmentPanel() {
     /**
      * Handle page attachment icon change.
      *
-     * @param {import('@web-stories-wp/media').Resource} resource The new image.
+     * @param {import('@googleforcreators/media').Resource} resource The new image.
      */
     (resource) => {
       updatePageAttachment({ icon: resource?.src }, true);

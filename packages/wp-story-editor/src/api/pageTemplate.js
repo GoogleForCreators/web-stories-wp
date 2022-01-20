@@ -111,5 +111,5 @@ export function deletePageTemplate(config, id) {
     }),
     data: { force: true },
     method: 'POST',
-  });
+  }); // Response is not being used in core editor.
 }

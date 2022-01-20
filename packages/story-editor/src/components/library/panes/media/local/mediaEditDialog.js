@@ -26,7 +26,7 @@ import { trackError } from '@web-stories-wp/tracking';
 import {
   getSmallestUrlForWidth,
   ResourcePropTypes,
-} from '@web-stories-wp/media';
+} from '@googleforcreators/media';
 import {
   Text,
   TextArea,

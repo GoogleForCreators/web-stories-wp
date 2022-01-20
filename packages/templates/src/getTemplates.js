@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { getTimeTracker } from '@web-stories-wp/tracking';
-import { DATA_VERSION, migrate } from '@web-stories-wp/migration';
+import { DATA_VERSION, migrate } from '@googleforcreators/migration';
 
 /**
  * Internal dependencies
