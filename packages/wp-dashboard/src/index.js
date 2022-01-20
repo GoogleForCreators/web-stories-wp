@@ -33,7 +33,7 @@ import './setLocaleData';
 import Dashboard from '@googleforcreators/dashboard';
 import { domReady, setAppElement } from '@web-stories-wp/design-system';
 import { StrictMode, render } from '@web-stories-wp/react';
-import { updateSettings } from '@web-stories-wp/date';
+import { updateSettings } from '@googleforcreators/date';
 import { initializeTracking } from '@web-stories-wp/tracking';
 
 /**
