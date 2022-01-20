@@ -24,7 +24,7 @@ import {
   CHECKLIST_PRIORITY_COPY,
   useRegisterCheck,
   useIsChecklistMounted,
-} from '@web-stories-wp/story-editor';
+} from '@googleforcreators/story-editor';
 import { Link, THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 const StoryMissingPublisherName = () => {

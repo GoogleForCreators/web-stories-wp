@@ -25,7 +25,7 @@ import {
   useStory,
   useAPI,
   useInspector,
-} from '@web-stories-wp/story-editor';
+} from '@googleforcreators/story-editor';
 
 function Author() {
   const {

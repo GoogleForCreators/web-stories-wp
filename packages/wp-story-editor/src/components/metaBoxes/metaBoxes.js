@@ -23,7 +23,7 @@ import {
   useState,
   createPortal,
 } from '@googleforcreators/react';
-import { useConfig, useStory } from '@web-stories-wp/story-editor';
+import { useConfig, useStory } from '@googleforcreators/story-editor';
 
 /**
  * Internal dependencies
