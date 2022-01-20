@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-export { default as PageBackgroundTextLowContrast } from './component';
-export {
-  pageBackgroundTextLowContrast,
-  getPagesWithFailedContrast,
-} from './check';
+export const TOOLBAR_HEIGHT = 32;
+export const MENU_WIDTH = 160;
+export const MENU_FOLDED_WIDTH = 36;

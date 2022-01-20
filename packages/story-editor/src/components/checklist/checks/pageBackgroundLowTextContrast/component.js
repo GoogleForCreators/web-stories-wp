@@ -34,7 +34,7 @@ import { ThumbnailPagePreview } from '../../utils';
 import { ACCESSIBILITY_COPY } from '../../constants';
 import { useRegisterCheck } from '../../countContext';
 import { useIsChecklistMounted } from '../../popupMountedContext';
-import { pageBackgroundTextLowContrast } from './check';
+import { getPagesWithFailedContrast } from './check';
 
 const PageBackgroundTextLowContrast = () => {
   const isChecklistMounted = useIsChecklistMounted();
@@ -45,30 +45,25 @@ const PageBackgroundTextLowContrast = () => {
     height: pageHeight,
   }));
 
-  const getFailingPages = useCallback(async () => {
-    const promises = [];
-    (storyPages || []).forEach((page) => {
-      const maybeTextContrastResult = pageBackgroundTextLowContrast({
-        ...page,
-        pageSize,
-      });
-      if (maybeTextContrastResult instanceof Promise) {
-        promises.push(
-          maybeTextContrastResult.then((result) => ({ result, page }))
-        );
-      } else {
-        promises.push(maybeTextContrastResult);
-      }
-    });
-    const awaitedResult = await Promise.all(promises);
-    return awaitedResult.filter(({ result }) => result).map(({ page }) => page);
-  }, [storyPages, pageSize]);
-
   useEffect(() => {
-    getFailingPages().then((failures) => {
-      setFailingPages(failures);
-    });
-  }, [getFailingPages]);
+    let isStale = false;
+
+    getPagesWithFailedContrast(storyPages, pageSize)
+      .then((failures) => {
+        if (isStale) {
+          return;
+        }
+        const failedPages = failures.map(({ page }) => page);
+        setFailingPages(failedPages);
+      })
+      .catch(() => {
+        // TODO: Add some error handling
+      });
+
+    return () => {
+      isStale = true;
+    };
+  }, [storyPages, pageSize]);
 
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(

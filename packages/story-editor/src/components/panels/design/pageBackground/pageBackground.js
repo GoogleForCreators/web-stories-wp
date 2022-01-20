@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
+import { useCallback, useEffect, useState } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -37,12 +37,17 @@ import { trackEvent } from '@web-stories-wp/tracking';
  * Internal dependencies
  */
 import { Color, MediaUploadButton, Row as DefaultRow } from '../../../form';
-import { useConfig, useStory } from '../../../../app';
+import { useConfig, useStory, useLayout } from '../../../../app';
+import {
+  getPagesWithFailedContrast,
+  ACCESSIBILITY_COPY,
+} from '../../../checklist';
 import { SimplePanel } from '../../panel';
 import { FlipControls } from '../../shared';
 import { createNewElement, getDefinitionForType } from '../../../../elements';
 import { states, styles, useHighlights } from '../../../../app/highlights';
 import getElementProperties from '../../../canvas/utils/getElementProperties';
+import Warning from '../warning';
 
 const DEFAULT_FLIP = { horizontal: false, vertical: false };
 
@@ -107,6 +112,12 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
   const {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
+  const pageSize = useLayout(({ state: { pageWidth, pageHeight } }) => ({
+    width: pageWidth,
+    height: pageHeight,
+  }));
+
+  const [failedContrast, setFailedContrast] = useState(false);
 
   const updateBackgroundColor = useCallback(
     (value) => {
@@ -162,6 +173,21 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
       cancelHighlight: state.cancelEffect,
     })
   );
+
+  useEffect(() => {
+    getPagesWithFailedContrast([currentPage], pageSize)
+      .then((failedPages) => {
+        // getPagesWithFailedContrast returns an array of pages, since we only care
+        // about currentPage, we can grab the single page result.
+        const result = failedPages[0]?.result;
+        // We only want to show the warning if the text is on the background element
+        const isBackgroundElement = result?.some(
+          ({ isBackground }) => isBackground
+        );
+        setFailedContrast(Boolean(isBackgroundElement));
+      })
+      .catch(() => {});
+  }, [currentPage, pageSize]);
 
   const backgroundEl = selectedElements[0];
   if (!backgroundEl || !backgroundEl.isBackground) {
@@ -238,6 +264,9 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
             value={flip}
           />
         </Row>
+      )}
+      {failedContrast && (
+        <Warning message={ACCESSIBILITY_COPY.lowContrast.backgroundPanel} />
       )}
     </SimplePanel>
   );

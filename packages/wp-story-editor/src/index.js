@@ -48,7 +48,8 @@ import {
 } from './components';
 import getApiCallbacks from './api/utils/getApiCallbacks';
 import { transformGetStoryResponse } from './api/utils';
-import { TIPS } from './constants';
+import { TIPS, TOOLBAR_HEIGHT, MENU_WIDTH } from './constants';
+import { GlobalStyle } from './theme.js';
 
 window.webStories = window.webStories || {};
 window.webStories.domReady = domReady;
@@ -79,11 +80,16 @@ window.webStories.initializeStoryEditor = (id, config, initialEdits) => {
     apiCallbacks: getApiCallbacks(config),
     additionalTips: TIPS,
     MediaUpload,
+    styleConstants: {
+      topOffset: TOOLBAR_HEIGHT,
+      leftOffset: MENU_WIDTH,
+    },
   };
 
   render(
     <StrictMode>
       <StoryEditor config={editorConfig} initialEdits={initialEdits}>
+        <GlobalStyle />
         <Layout />
         <PostPublishDialog />
         <StatusCheck />

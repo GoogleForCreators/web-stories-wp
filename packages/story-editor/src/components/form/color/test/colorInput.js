@@ -31,6 +31,8 @@ import { renderWithTheme } from '../../../../testUtils';
 import ColorInput from '../colorInput';
 import getPreviewStyleMock from '../getPreviewStyle';
 import { StoryContext } from '../../../../app/story';
+import { ConfigContext } from '../../../../app/config';
+import defaultConfig from '../../../../defaultConfig.js';
 
 jest.mock('@web-stories-wp/design-system', () => ({
   ...jest.requireActual('@web-stories-wp/design-system'),
@@ -62,10 +64,13 @@ function arrange(children = null) {
       updateStory: jest.fn(),
     },
   };
+
   renderWithTheme(
-    <StoryContext.Provider value={storyContextValue}>
-      {children}
-    </StoryContext.Provider>
+    <ConfigContext.Provider value={defaultConfig}>
+      <StoryContext.Provider value={storyContextValue}>
+        {children}
+      </StoryContext.Provider>
+    </ConfigContext.Provider>
   );
   const button = screen.getByRole('button', { name: 'Color' });
   const input = screen.queryByLabelText('Color', { selector: 'input' });

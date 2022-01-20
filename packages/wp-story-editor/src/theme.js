@@ -13,9 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { createGlobalStyle } from 'styled-components';
+import { OVERLAY_CLASS } from '@web-stories-wp/design-system';
 
-export { default as PageBackgroundTextLowContrast } from './component';
-export {
-  pageBackgroundTextLowContrast,
-  getPagesWithFailedContrast,
-} from './check';
+/**
+ * Internal dependencies
+ */
+import { TOOLBAR_HEIGHT, MENU_WIDTH, MENU_FOLDED_WIDTH } from './constants';
+
+export const GlobalStyle = createGlobalStyle`
+  .${OVERLAY_CLASS} {
+    top: ${TOOLBAR_HEIGHT}px !important;
+    left: ${MENU_WIDTH}px !important;
+  }
+
+  body.folded .${OVERLAY_CLASS} {
+    left: ${MENU_FOLDED_WIDTH}px !important;
+  }
+`;

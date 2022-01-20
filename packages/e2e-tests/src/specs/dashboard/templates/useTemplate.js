@@ -17,7 +17,11 @@
 /**
  * External dependencies
  */
-import { takeSnapshot, visitDashboard } from '@web-stories-wp/e2e-test-utils';
+import {
+  takeSnapshot,
+  visitDashboard,
+  withPlugin,
+} from '@web-stories-wp/e2e-test-utils';
 
 describe('Template', () => {
   it('should be able to use existing template for new story', async () => {
@@ -97,5 +101,18 @@ describe('Template', () => {
     });
 
     expect(editorSavedColors).toStrictEqual(templateDetailsColors);
+  });
+  describe('Disabled', () => {
+    withPlugin('e2e-tests-disable-default-templates');
+
+    it('should not render explore templates', async () => {
+      await visitDashboard();
+
+      await expect(page).toMatch('Start telling Stories');
+
+      await expect(page).not.toMatchElement('a', {
+        text: 'Explore Templates',
+      });
+    });
   });
 });

@@ -335,6 +335,36 @@ function getBackgroundColorByType(element) {
       return () => undefined;
   }
 }
+/**
+ * Returns all failing pages as well as the offending elements' id(s).
+ *
+ * @param {Array<Page>}  storyPages The story's page(s) to check for contrast failures
+ * @param {Object} pageSize pageWidth and pageHeight from useLayout state
+ * @return {Array<Object>} Each object contains the page that failed and the results
+ * from `pageBackgroundTextLowContrast`. In `results` you will find the offending
+ * elements' id(s).
+ */
+export async function getPagesWithFailedContrast(storyPages, pageSize) {
+  const promises = [];
+  (storyPages || []).forEach((page) => {
+    const maybeTextContrastResult = pageBackgroundTextLowContrast({
+      ...page,
+      pageSize,
+    });
+    if (maybeTextContrastResult instanceof Promise) {
+      promises.push(
+        maybeTextContrastResult.then((result) => ({ result, page }))
+      );
+    } else {
+      promises.push(maybeTextContrastResult);
+    }
+  });
+  const awaitedPageResult = await Promise.all(promises);
+  // if any element fails, return the page
+  return awaitedPageResult
+    .filter((results) => results.result.some(({ id }) => id))
+    .map((page) => page);
+}
 
 export async function pageBackgroundTextLowContrast(page) {
   // getting the background color can be async, prepare to resolve them with Promise.all
@@ -374,6 +404,8 @@ export async function pageBackgroundTextLowContrast(page) {
               backgroundColor: getBackgroundColorResult,
               textStyleColors,
               fontSize: element.fontSize,
+              id: element.id,
+              isBackgroundElement: backgroundElement.isBackground,
             }
           );
         };
@@ -390,8 +422,15 @@ export async function pageBackgroundTextLowContrast(page) {
 
   // resolve promises
   const bgColorComparisons = await Promise.all(backgroundColorPromises);
-
-  return bgColorComparisons.some((compareObj) =>
-    textBackgroundHasLowContrast(compareObj)
-  );
+  const results = bgColorComparisons.map((compareObj) => {
+    // add the offending elementId and isBackground to result
+    // isBackground tells us whether the actual background element is part of the contrast issue
+    return (
+      textBackgroundHasLowContrast(compareObj) && {
+        id: compareObj.id,
+        isBackground: compareObj.isBackgroundElement,
+      }
+    );
+  });
+  return results.filter(({ id }) => id);
 }

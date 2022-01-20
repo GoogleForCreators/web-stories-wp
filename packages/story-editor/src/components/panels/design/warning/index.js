@@ -14,8 +14,4 @@
  * limitations under the License.
  */
 
-export { default as PageBackgroundTextLowContrast } from './component';
-export {
-  pageBackgroundTextLowContrast,
-  getPagesWithFailedContrast,
-} from './check';
+export { default } from './warning';
