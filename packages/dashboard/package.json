@@ -7,24 +7,29 @@
     "name": "Google",
     "url": "https://creators.google/"
   },
+  "license": "Apache-2.0",
   "keywords": [
     "web stories"
   ],
+  "homepage": "https://github.com/google/web-stories-wp/",
+  "repository": "git+https://github.com/google/web-stories-wp.git",
+  "bugs": {
+    "url": "https://github.com/google/web-stories-wp/issues"
+  },
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"
   },
+  "type": "module",
   "exports": {
     "default": "./src/index.js"
   },
   "main": "./src/index.js",
-  "type": "module",
   "dependencies": {
     "@googleforcreators/animation": "*",
     "@googleforcreators/date": "*",
     "@googleforcreators/design-system": "*",
     "@googleforcreators/i18n": "*",
-    "@web-stories-wp/karma-fixture": "*",
     "@googleforcreators/media": "*",
     "@googleforcreators/migration": "*",
     "@googleforcreators/patterns": "*",
@@ -32,6 +37,7 @@
     "@googleforcreators/templates": "*",
     "@googleforcreators/tracking": "*",
     "@googleforcreators/units": "*",
+    "@web-stories-wp/karma-fixture": "*",
     "flagged": "^2.0.1",
     "history": "^5.2.0",
     "prop-types": "^15.8.1",
