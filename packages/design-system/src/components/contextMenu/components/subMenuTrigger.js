@@ -23,6 +23,7 @@ import {
   useEffect,
   useRef,
 } from '@web-stories-wp/react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -107,5 +108,14 @@ function SubMenuTrigger({
     </MenuButton>
   );
 }
+
+SubMenuTrigger.propTypes = {
+  setIsSubMenuOpen: PropTypes.func.isRequired,
+  isSubMenuOpen: PropTypes.bool.isRequired,
+  subMenuRef: PropTypes.object.isRequired,
+  parentMenuRef: PropTypes.object.isRequired,
+  label: PropTypes.string,
+  SuffixIcon: PropTypes.node,
+};
 
 export default SubMenuTrigger;
