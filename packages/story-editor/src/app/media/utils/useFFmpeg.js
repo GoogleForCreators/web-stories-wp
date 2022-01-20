@@ -24,7 +24,7 @@ import {
   getExtensionFromMimeType,
   getFileName,
   blobToFile,
-} from '@web-stories-wp/media';
+} from '@googleforcreators/media';
 
 /**
  * Internal dependencies

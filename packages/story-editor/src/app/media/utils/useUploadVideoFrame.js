@@ -23,7 +23,7 @@ import {
   preloadImage,
   getFirstFrameOfVideo,
   getFileNameFromUrl,
-} from '@web-stories-wp/media';
+} from '@googleforcreators/media';
 /**
  * Internal dependencies
  */

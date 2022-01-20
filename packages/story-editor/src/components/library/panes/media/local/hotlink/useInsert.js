@@ -25,7 +25,7 @@ import {
   getVideoLength,
   preloadVideo,
   hasVideoGotAudio,
-} from '@web-stories-wp/media';
+} from '@googleforcreators/media';
 import { v4 as uuidv4 } from 'uuid';
 import { trackError, trackEvent } from '@web-stories-wp/tracking';
 

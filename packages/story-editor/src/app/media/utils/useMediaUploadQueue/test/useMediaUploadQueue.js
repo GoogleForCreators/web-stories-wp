@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { renderHook, act } from '@testing-library/react-hooks';
-import { isAnimatedGif, createResource } from '@web-stories-wp/media';
+import { isAnimatedGif, createResource } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -53,8 +53,8 @@ jest.mock('../../useFFmpeg', () => ({
   })),
 }));
 
-jest.mock('@web-stories-wp/media', () => ({
-  ...jest.requireActual('@web-stories-wp/media'),
+jest.mock('@googleforcreators/media', () => ({
+  ...jest.requireActual('@googleforcreators/media'),
   isAnimatedGif: jest.fn(),
 }));
 

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { isBlobURL } from '@web-stories-wp/media';
+import { isBlobURL } from '@googleforcreators/media';
 
 /**
  * Internal dependencies

@@ -29,7 +29,7 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
 } from '@googleforcreators/design-system';
-import { getVideoLengthDisplay } from '@web-stories-wp/media';
+import { getVideoLengthDisplay } from '@googleforcreators/media';
 
 /**
  * Internal dependencies

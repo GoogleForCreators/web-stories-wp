@@ -14,7 +14,7 @@
     "@googleforcreators/date": "*",
     "@googleforcreators/design-system": "*",
     "@googleforcreators/i18n": "*",
-    "@web-stories-wp/media": "*",
+    "@googleforcreators/media": "*",
     "@web-stories-wp/migration": "*",
     "@web-stories-wp/react": "*",
     "@web-stories-wp/story-editor": "*",

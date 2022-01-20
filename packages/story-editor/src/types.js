@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { PatternPropType } from '@web-stories-wp/patterns';
-import { ResourcePropTypes } from '@web-stories-wp/media';
+import { ResourcePropTypes } from '@googleforcreators/media';
 import { AnimationProps } from '@googleforcreators/animation';
 
 /**

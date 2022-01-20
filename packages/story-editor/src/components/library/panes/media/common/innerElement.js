@@ -23,7 +23,7 @@ import {
   getSmallestUrlForWidth,
   resourceList,
   ResourcePropTypes,
-} from '@web-stories-wp/media';
+} from '@googleforcreators/media';
 import {
   Icons,
   Text,
