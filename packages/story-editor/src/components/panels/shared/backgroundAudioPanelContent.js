@@ -81,9 +81,11 @@ function BackgroundAudioPanelContent({
         id: media.id,
         mimeType: media.mimeType,
       });
-      updateTracks([]);
+      if (supportsCaptions) {
+        updateTracks([]);
+      }
     },
-    [updateTracks, updateBackgroundAudio]
+    [supportsCaptions, updateTracks, updateBackgroundAudio]
   );
 
   const handleRemoveTrack = useCallback(
