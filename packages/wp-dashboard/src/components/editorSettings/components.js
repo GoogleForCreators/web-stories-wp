@@ -30,7 +30,7 @@ import {
   THEME_CONSTANTS,
   themeHelpers,
 } from '@web-stories-wp/design-system';
-import { StandardViewContentGutter } from '@web-stories-wp/dashboard';
+import { StandardViewContentGutter } from '@googleforcreators/dashboard';
 
 export const Wrapper = styled.div``;
 

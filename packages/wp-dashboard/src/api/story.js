@@ -22,7 +22,7 @@ import {
   STORIES_PER_REQUEST,
   STORY_SORT_OPTIONS,
   STORY_STATUS,
-} from '@web-stories-wp/dashboard';
+} from '@googleforcreators/dashboard';
 import { createSolidFromString } from '@web-stories-wp/patterns';
 
 /**

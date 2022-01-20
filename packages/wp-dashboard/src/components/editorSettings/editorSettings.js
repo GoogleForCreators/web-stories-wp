@@ -25,7 +25,7 @@ import {
   MIN_IMG_WIDTH,
   MIN_IMG_HEIGHT,
   useConfig,
-} from '@web-stories-wp/dashboard';
+} from '@googleforcreators/dashboard';
 import { useFeature } from 'flagged';
 
 /**

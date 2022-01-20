@@ -40,7 +40,7 @@ import {
   DashboardKeyboardOnlyOutline,
   ConfigProvider as DashboardConfigProvider,
   ApiProvider,
-} from '@web-stories-wp/dashboard';
+} from '@googleforcreators/dashboard';
 
 // @todo: Find better way to mock these.
 const wp = {};
