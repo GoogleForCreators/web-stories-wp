@@ -22,6 +22,7 @@ import {
   publishStory,
   visitDashboard,
   insertStoryTitle,
+  trashAllPosts,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Stories Dashboard', () => {
@@ -32,6 +33,11 @@ describe('Stories Dashboard', () => {
     await publishStory();
     await visitDashboard();
   });
+
+  afterEach(async () => {
+    await trashAllPosts('web-story');
+  });
+
   it('should delete story', async () => {
     await expect(page).toMatchElement('h2', { text: 'Dashboard' });
     await page.hover(
