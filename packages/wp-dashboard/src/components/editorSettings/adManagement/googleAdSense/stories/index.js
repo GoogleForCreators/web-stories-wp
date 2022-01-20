@@ -17,7 +17,6 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-import { text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
@@ -27,17 +26,25 @@ import GoogleAdSense from '..';
 export default {
   title: 'Dashboard/Views/EditorSettings/AdManagement/GoogleAdSense',
   component: GoogleAdSense,
+  args: {
+    slotId: '',
+    publisherId: '',
+  },
+  parameters: {
+    controls: {
+      include: ['slotId', 'publisherId'],
+    },
+  },
 };
 
-export const _default = () => {
+export const _default = (args) => {
   return (
     <GoogleAdSense
-      publisherId={text('publisherId', '')}
-      slotId={text('slotId', '')}
       handleUpdatePublisherId={(newPublisherId) =>
         action('update publisher id')(newPublisherId)
       }
       handleUpdateSlotId={(newSlotId) => action('update slot id')(newSlotId)}
+      {...args}
     />
   );
 };
