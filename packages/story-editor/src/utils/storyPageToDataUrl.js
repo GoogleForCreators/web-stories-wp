@@ -27,7 +27,7 @@ import {
   PAGE_RATIO,
   FULLBLEED_RATIO,
   UnitsProvider,
-} from '@web-stories-wp/units';
+} from '@googleforcreators/units';
 import styled, { ThemeProvider } from 'styled-components';
 import { generatePatternStyles } from '@googleforcreators/patterns';
 

@@ -25,7 +25,7 @@ import {
   useMemo,
   useRef,
 } from '@googleforcreators/react';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent } from '@googleforcreators/tracking';
 import { clamp } from '@googleforcreators/animation';
 import {
   localStore,

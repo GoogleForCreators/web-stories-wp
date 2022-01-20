@@ -18,7 +18,7 @@
  */
 import { useState, useEffect, useCallback } from '@googleforcreators/react';
 import { __, TranslateWithMarkup } from '@googleforcreators/i18n';
-import { trackClick, trackEvent } from '@web-stories-wp/tracking';
+import { trackClick, trackEvent } from '@googleforcreators/tracking';
 import {
   Text,
   Link,

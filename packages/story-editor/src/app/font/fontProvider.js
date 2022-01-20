@@ -30,7 +30,7 @@ import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
-import { trackError } from '@web-stories-wp/tracking';
+import { trackError } from '@googleforcreators/tracking';
 import loadStylesheet from '../../utils/loadStylesheet';
 import { FONT_WEIGHT_NAMES } from '../../constants';
 import { useAPI } from '../api';

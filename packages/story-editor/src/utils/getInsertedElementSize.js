@@ -22,7 +22,7 @@ import {
   PAGE_HEIGHT,
   PAGE_WIDTH,
   DEFAULT_DPR,
-} from '@web-stories-wp/units';
+} from '@googleforcreators/units';
 
 /**
  * Internal dependencies

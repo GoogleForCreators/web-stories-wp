@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { createSolid } from '@googleforcreators/patterns';
-import { PAGE_WIDTH } from '@web-stories-wp/units';
+import { PAGE_WIDTH } from '@googleforcreators/units';
 /**
  * Internal dependencies
  */

@@ -37,7 +37,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import { fetchRemoteBlob, blobToFile } from '@googleforcreators/media';
-import { trackError } from '@web-stories-wp/tracking';
+import { trackError } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies

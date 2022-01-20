@@ -22,7 +22,7 @@ import {
   useRef,
   useState,
 } from '@googleforcreators/react';
-import { dataFontEm, PAGE_HEIGHT } from '@web-stories-wp/units';
+import { dataFontEm, PAGE_HEIGHT } from '@googleforcreators/units';
 
 /**
  * Internal dependencies

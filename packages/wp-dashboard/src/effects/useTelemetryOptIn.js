@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { useCallback, useState, useEffect } from '@googleforcreators/react';
-import { enableTracking, disableTracking } from '@web-stories-wp/tracking';
+import { enableTracking, disableTracking } from '@googleforcreators/tracking';
 import { useSnackbar, localStore } from '@googleforcreators/design-system';
 import { useRouteHistory } from '@googleforcreators/dashboard';
 /**

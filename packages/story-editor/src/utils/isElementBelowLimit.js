@@ -21,7 +21,7 @@ import {
   DANGER_ZONE_HEIGHT,
   FULLBLEED_HEIGHT,
   getCorners,
-} from '@web-stories-wp/units';
+} from '@googleforcreators/units';
 
 function isElementBelowLimit(element, verifyLink = true) {
   if (verifyLink && !element.link?.url?.length) {

@@ -28,7 +28,7 @@ import {
   trackError,
   trackEvent,
   getTimeTracker,
-} from '@web-stories-wp/tracking';
+} from '@googleforcreators/tracking';
 import {
   createBlob,
   getFileName,

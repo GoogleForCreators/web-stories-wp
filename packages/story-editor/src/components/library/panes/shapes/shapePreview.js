@@ -25,9 +25,9 @@ import {
   useRef,
 } from '@googleforcreators/react';
 import styled from 'styled-components';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent } from '@googleforcreators/tracking';
 import { createSolidFromString } from '@googleforcreators/patterns';
-import { PAGE_WIDTH, useUnits } from '@web-stories-wp/units';
+import { PAGE_WIDTH, useUnits } from '@googleforcreators/units';
 import {
   ThemeGlobals,
   BUTTON_TRANSITION_TIMING,

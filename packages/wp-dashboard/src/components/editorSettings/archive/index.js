@@ -30,7 +30,7 @@ import {
   Search,
   THEME_CONSTANTS,
 } from '@googleforcreators/design-system';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent } from '@googleforcreators/tracking';
 import styled from 'styled-components';
 import { TEXT_INPUT_DEBOUNCE } from '@googleforcreators/dashboard';
 

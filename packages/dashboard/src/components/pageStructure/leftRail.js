@@ -23,7 +23,7 @@ import {
   useLayoutEffect,
   useRef,
 } from '@googleforcreators/react';
-import { trackClick, trackEvent } from '@web-stories-wp/tracking';
+import { trackClick, trackEvent } from '@googleforcreators/tracking';
 import { getTemplateMetaData } from '@googleforcreators/templates';
 import { __, sprintf } from '@googleforcreators/i18n';
 import {

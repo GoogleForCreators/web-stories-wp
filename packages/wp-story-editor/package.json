@@ -18,7 +18,7 @@
     "@googleforcreators/migration": "*",
     "@googleforcreators/react": "*",
     "@googleforcreators/story-editor": "*",
-    "@web-stories-wp/tracking": "*",
+    "@googleforcreators/tracking": "*",
     "@wordpress/api-fetch": "^5.2.6",
     "flagged": "^2.0.1",
     "polished": "^4.1.3",

@@ -22,7 +22,7 @@ import { render, act, waitFor } from '@testing-library/react';
 import { MockMoveable } from 'react-moveable';
 import PropTypes from 'prop-types';
 import { forwardRef } from '@googleforcreators/react';
-import { UnitsProvider } from '@web-stories-wp/units';
+import { UnitsProvider } from '@googleforcreators/units';
 
 /**
  * Internal dependencies

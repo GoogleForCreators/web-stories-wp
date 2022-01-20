@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import { useCallback } from '@googleforcreators/react';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
