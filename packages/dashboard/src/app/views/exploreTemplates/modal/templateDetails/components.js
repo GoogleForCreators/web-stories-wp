@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 
 export const Panel = styled.section`
   padding: 16vh 0 14vh 0;

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __, sprintf, _n, TranslateWithMarkup } from '@web-stories-wp/i18n';
+import { __, sprintf, _n, TranslateWithMarkup } from '@googleforcreators/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
 import { Link, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 

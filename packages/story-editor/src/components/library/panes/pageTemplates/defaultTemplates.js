@@ -24,7 +24,7 @@ import {
   useCallback,
   useRef,
 } from '@web-stories-wp/react';
-import { _x, __ } from '@web-stories-wp/i18n';
+import { _x, __ } from '@googleforcreators/i18n';
 import { getTimeTracker, trackEvent } from '@web-stories-wp/tracking';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';

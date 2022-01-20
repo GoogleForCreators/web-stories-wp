@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __, TranslateWithMarkup, sprintf } from '@web-stories-wp/i18n';
+import { __, TranslateWithMarkup, sprintf } from '@googleforcreators/i18n';
 import {
   isPlatformMacOS,
   prettifyShortcut,

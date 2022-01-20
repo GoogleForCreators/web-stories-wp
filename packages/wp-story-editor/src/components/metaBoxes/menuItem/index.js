@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import { useCallback } from '@web-stories-wp/react';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { Tooltip } from '@web-stories-wp/story-editor';

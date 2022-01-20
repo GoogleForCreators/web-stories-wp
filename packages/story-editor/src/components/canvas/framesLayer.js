@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import { memo, useRef, useCallback } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import { PAGE_WIDTH } from '@web-stories-wp/units';
 import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
 

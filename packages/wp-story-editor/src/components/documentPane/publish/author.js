@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import { useCallback, useEffect, useState } from '@web-stories-wp/react';
 import { Datalist } from '@web-stories-wp/design-system';
 import {

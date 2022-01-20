@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __, _x, sprintf } from '@web-stories-wp/i18n';
+import { __, _x, sprintf } from '@googleforcreators/i18n';
 import {
   ANIMATION_EFFECTS,
   BACKGROUND_ANIMATION_EFFECTS,

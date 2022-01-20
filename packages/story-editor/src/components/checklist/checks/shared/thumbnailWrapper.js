@@ -28,7 +28,7 @@ import {
   themeHelpers,
 } from '@web-stories-wp/design-system';
 import { useState } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies

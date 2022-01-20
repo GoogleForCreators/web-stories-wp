@@ -33,7 +33,7 @@ import {
   __,
   _x,
   translateToInclusiveList,
-} from '@web-stories-wp/i18n';
+} from '@googleforcreators/i18n';
 import {
   THEME_CONSTANTS,
   LOCAL_STORAGE_PREFIX,

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useState, useCallback } from '@web-stories-wp/react';
-import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
+import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import {
   Button,
   BUTTON_SIZES,

@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import { useRef, useEffect, useCallback } from '@web-stories-wp/react';
 import { rgba } from 'polished';
 import styled, { css } from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies

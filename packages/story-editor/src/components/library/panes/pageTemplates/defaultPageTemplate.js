@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import { forwardRef } from '@web-stories-wp/react';
 import styled from 'styled-components';
-import { _x, sprintf, __ } from '@web-stories-wp/i18n';
+import { _x, sprintf, __ } from '@googleforcreators/i18n';
 import {
   Button,
   BUTTON_TYPES,

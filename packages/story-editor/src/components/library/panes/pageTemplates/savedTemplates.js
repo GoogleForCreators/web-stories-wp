@@ -23,7 +23,7 @@ import {
   THEME_CONSTANTS,
   useSnackbar,
 } from '@web-stories-wp/design-system';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import {
   useCallback,
   useLayoutEffect,

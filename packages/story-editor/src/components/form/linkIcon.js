@@ -24,7 +24,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
+import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import { MEDIA_VARIANTS } from '@web-stories-wp/design-system';
 import { useConfig } from '../../app';
 import Media from './media';

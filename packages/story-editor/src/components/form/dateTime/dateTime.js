@@ -21,7 +21,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
 import { useCallback, useRef, useState } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import {
   Button,
   BUTTON_SIZES,

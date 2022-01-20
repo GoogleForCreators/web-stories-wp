@@ -18,7 +18,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { TranslateWithMarkup } from '@web-stories-wp/i18n';
+import { TranslateWithMarkup } from '@googleforcreators/i18n';
 import {
   Link,
   themeHelpers,

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __, _x, sprintf, _n } from '@web-stories-wp/i18n';
+import { __, _x, sprintf, _n } from '@googleforcreators/i18n';
 
 export const TEMPLATE_CATEGORIES = {
   DIY_CRAFTS: 'diy_crafts',

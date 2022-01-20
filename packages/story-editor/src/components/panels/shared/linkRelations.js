@@ -23,7 +23,7 @@ import {
   Text,
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import { useCallback } from '@web-stories-wp/react';
 import styled from 'styled-components';
 

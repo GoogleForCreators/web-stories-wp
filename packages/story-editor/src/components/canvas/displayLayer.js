@@ -26,7 +26,7 @@ import {
   useCombinedRefs,
 } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
-import { _x, __ } from '@web-stories-wp/i18n';
+import { _x, __ } from '@googleforcreators/i18n';
 import {
   StoryAnimation,
   STORY_ANIMATION_STATE,

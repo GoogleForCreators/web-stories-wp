@@ -11,7 +11,7 @@
   },
   "main": "./src/index.js",
   "dependencies": {
-    "@web-stories-wp/i18n": "*",
+    "@googleforcreators/i18n": "*",
     "@web-stories-wp/media": "*",
     "@web-stories-wp/react": "*",
     "@web-stories-wp/units": "*",

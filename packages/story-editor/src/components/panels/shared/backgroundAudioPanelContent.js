@@ -27,7 +27,7 @@ import {
   Icons,
   themeHelpers,
 } from '@web-stories-wp/design-system';
-import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
+import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import { useCallback } from '@web-stories-wp/react';
 
 /**

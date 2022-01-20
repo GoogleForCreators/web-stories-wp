@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import { Icons, useGlobalKeyDownEffect } from '@web-stories-wp/design-system';
 import { useEffect, useFocusOut, useRef } from '@web-stories-wp/react';
 

@@ -11,7 +11,7 @@
   "main": "./src/index.js",
   "type": "module",
   "dependencies": {
-    "@web-stories-wp/i18n": "*",
+    "@googleforcreators/i18n": "*",
     "@web-stories-wp/react": "*",
     "prop-types": "^15.8.1"
   }

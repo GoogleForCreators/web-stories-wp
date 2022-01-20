@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { sprintf, _n } from '@web-stories-wp/i18n';
+import { sprintf, _n } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 import { useMemo } from '@web-stories-wp/react';
 import { v4 as uuidv4 } from 'uuid';
