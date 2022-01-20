@@ -65,7 +65,7 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
       return [];
     }
     const clickedPoint = new SAT.Vector(x, y);
-    return currentPage.elements
+    const intersectingElements = currentPage.elements
       .map((element) => {
         const { id, rotationAngle } = element;
         const node = nodesById[id];
@@ -77,11 +77,12 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
         return SAT.pointInPolygon(clickedPoint, elementP) ? element : null;
       })
       .filter((el) => el);
+    intersectingElements.reverse();
+    return intersectingElements;
   }, [currentPage, x, y, nodesById]);
 
   const subMenuItems = useMemo(() => {
     const intersectingElements = getIntersectingElements();
-    intersectingElements.reverse();
     return intersectingElements.map((element) => {
       const { id, isBackground, type } = element;
       const { LayerContent } = getDefinitionForType(type);
