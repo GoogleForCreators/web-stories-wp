@@ -478,23 +478,29 @@ function useMediaUploadQueue() {
 
             if (isGifThatNeedsTranscoding) {
               convertGifItem(item);
-            } else if (canTranscodeFile(file)) {
+              return;
+            }
+
+            if (canTranscodeFile(file)) {
               if (trimData) {
                 trimVideoItem(item);
-              } else if (muteVideo) {
-                muteVideoItem(item);
-              } else {
-                // Transcode/Optimize videos before upload.
-                // TODO: Only transcode & optimize video if needed (criteria TBD).
-                // Probably need to use FFmpeg first to get more information (dimensions, fps, etc.)
-                optimizeVideoItem(item);
+                return;
               }
-            } else {
-              uploadItem(item);
+
+              if (muteVideo) {
+                muteVideoItem(item);
+                return;
+              }
+
+              // Transcode/Optimize videos before upload.
+              // TODO: Only transcode & optimize video if needed (criteria TBD).
+              // Probably need to use FFmpeg first to get more information (dimensions, fps, etc.)
+              optimizeVideoItem(item);
+              return;
             }
-          } else {
-            uploadItem(item);
           }
+
+          uploadItem(item);
         })
       );
     })();
