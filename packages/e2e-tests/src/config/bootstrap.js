@@ -337,6 +337,7 @@ beforeAll(async () => {
 
   await setCurrentUser('admin', 'password');
   await trashAllPosts();
+  await trashAllPosts('page');
   await trashAllPosts('web-story');
   await trashAllTerms('web_story_category');
   await trashAllTerms('web_story_tag');
