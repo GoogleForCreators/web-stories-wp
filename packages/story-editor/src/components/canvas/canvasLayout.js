@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled, { StyleSheetManager } from 'styled-components';
-import { memo, useRef, useCombinedRefs } from '@web-stories-wp/react';
+import { memo, useRef, useCombinedRefs } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 

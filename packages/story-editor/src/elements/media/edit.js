@@ -24,13 +24,13 @@ import {
   useRef,
   useEffect,
   useUnmount,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 import {
   getMediaSizePositionProps,
   calculateSrcSet,
-} from '@web-stories-wp/media';
+} from '@googleforcreators/media';
 import { BG_MIN_SCALE, BG_MAX_SCALE } from '@googleforcreators/animation';
 
 /**

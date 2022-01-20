@@ -25,7 +25,7 @@ import {
   hasGradient,
   hasOpacity,
   PatternPropType,
-} from '@web-stories-wp/patterns';
+} from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies

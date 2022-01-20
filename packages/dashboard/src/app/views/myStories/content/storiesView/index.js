@@ -23,7 +23,7 @@ import {
   useCallback,
   useMemo,
   useEffect,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { __, sprintf } from '@googleforcreators/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import {

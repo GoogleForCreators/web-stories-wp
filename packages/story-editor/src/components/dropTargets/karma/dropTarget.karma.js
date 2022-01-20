@@ -24,6 +24,7 @@ import { waitFor } from '@testing-library/react';
  */
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
+import { useLocalMedia } from '../../../app/media';
 
 describe('Drop-Target integration', () => {
   let fixture;
@@ -107,9 +108,7 @@ describe('Drop-Target integration', () => {
       expect(bgElement.resource.baseColor).toEqual('#734727');
     });
 
-    // TODO: https://github.com/google/web-stories-wp/issues/10145
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should correctly handle image dragged from library straight to edge (no cached base color)', async () => {
+    it('should correctly handle image dragged from library straight to edge (no cached base color)', async () => {
       const backgroundId = (await getElements(fixture))[0].id;
 
       // Verify that bg replacement is empty
@@ -118,7 +117,13 @@ describe('Drop-Target integration', () => {
       expect(rep1).toBeEmpty();
 
       // Get library element reference
-      const libraryElement = fixture.editor.library.media.item(4);
+      const mediaIndex = 4;
+      const { mediaResource } = await fixture.renderHook(() =>
+        useLocalMedia(({ state }) => ({
+          mediaResource: state.media[mediaIndex],
+        }))
+      );
+      const libraryElement = fixture.editor.library.media.item(mediaIndex);
 
       // Drag the element to the background
       await dragToDropTarget(fixture, libraryElement, backgroundId);
@@ -158,8 +163,12 @@ describe('Drop-Target integration', () => {
 
       // Verify the background base color is handled as expected.
       await waitFor(() => {
-        expect(bgElement.resource.baseColor).toEqual('#a38d7f');
+        if (bgElement.resource.baseColor === mediaResource.baseColor) {
+          return;
+        }
+        throw new Error('Background element image loading');
       });
+      expect(bgElement.resource.baseColor).toEqual(mediaResource.baseColor);
     });
   });
 

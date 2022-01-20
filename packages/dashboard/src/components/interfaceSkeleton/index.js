@@ -21,7 +21,7 @@ import {
   usePrevious,
   useRef,
   useState,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { __, sprintf } from '@googleforcreators/i18n';
 import { trackScreenView } from '@web-stories-wp/tracking';
 import { Snackbar, useSnackbar } from '@googleforcreators/design-system';

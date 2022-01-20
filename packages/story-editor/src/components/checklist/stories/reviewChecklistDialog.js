@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-import { useCallback, useState } from '@web-stories-wp/react';
+import { useCallback, useState } from '@googleforcreators/react';
 import { Button, BUTTON_TYPES } from '@googleforcreators/design-system';
 /**
  * Internal dependencies

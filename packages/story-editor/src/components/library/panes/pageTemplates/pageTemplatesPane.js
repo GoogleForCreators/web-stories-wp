@@ -22,7 +22,7 @@ import {
   useMemo,
   useCallback,
   useEffect,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import { FULLBLEED_RATIO, PAGE_RATIO } from '@web-stories-wp/units';
@@ -30,7 +30,7 @@ import {
   localStore,
   LOCAL_STORAGE_PREFIX,
 } from '@googleforcreators/design-system';
-import { DATA_VERSION, migrate } from '@web-stories-wp/migration';
+import { DATA_VERSION, migrate } from '@googleforcreators/migration';
 
 /**
  * Internal dependencies

@@ -23,7 +23,7 @@ import {
   STORY_SORT_OPTIONS,
   STORY_STATUS,
 } from '@googleforcreators/dashboard';
-import { createSolidFromString } from '@web-stories-wp/patterns';
+import { createSolidFromString } from '@googleforcreators/patterns';
 
 /**
  * WordPress dependencies
@@ -152,7 +152,7 @@ export const createStoryFromTemplate = async (config, template) => {
 
   const { createdBy, pages, version, colors } = template;
   const { getStoryPropsToSave } = await import(
-    /* webpackChunkName: "chunk-getStoryPropsToSave" */ '@web-stories-wp/story-editor'
+    /* webpackChunkName: "chunk-getStoryPropsToSave" */ '@googleforcreators/story-editor'
   );
   const storyPropsToSave = await getStoryPropsToSave({
     story: {

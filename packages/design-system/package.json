@@ -1,6 +1,15 @@
 {
   "name": "@googleforcreators/design-system",
-  "private": true,
+  "description": "Main UI components for the Web Stories editor and dashboard",
+  "private": false,
+  "version": "0.0.1",
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "keywords": [
+    "web stories"
+  ],
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"
@@ -13,8 +22,8 @@
   "sideEffects": false,
   "dependencies": {
     "@googleforcreators/i18n": "*",
-    "@web-stories-wp/patterns": "*",
-    "@web-stories-wp/react": "*",
+    "@googleforcreators/patterns": "*",
+    "@googleforcreators/react": "*",
     "@web-stories-wp/tracking": "*",
     "big.js": "^6.1.1",
     "focus-visible": "^5.2.0",

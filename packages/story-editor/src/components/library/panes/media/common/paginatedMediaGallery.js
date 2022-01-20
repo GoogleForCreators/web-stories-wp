@@ -25,7 +25,7 @@ import {
   useRef,
   useState,
   useDebouncedCallback,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';

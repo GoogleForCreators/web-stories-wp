@@ -22,7 +22,7 @@ import {
   useEffect,
   useCallback,
   useMemo,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { __, _x, TranslateWithMarkup } from '@googleforcreators/i18n';
 import { trackClick } from '@web-stories-wp/tracking';

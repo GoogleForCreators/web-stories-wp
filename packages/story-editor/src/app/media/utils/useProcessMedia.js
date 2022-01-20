@@ -16,12 +16,12 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
+import { useCallback } from '@googleforcreators/react';
 import {
   fetchRemoteBlob,
   fetchRemoteFile,
   isAnimatedGif,
-} from '@web-stories-wp/media';
+} from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -104,7 +104,7 @@ function useProcessMedia({
   /**
    * Optimize video existing video using FFmpeg.
    *
-   * @param {import('@web-stories-wp/media').Resource} resource Resource object.
+   * @param {import('@googleforcreators/media').Resource} resource Resource object.
    */
   const optimizeVideo = useCallback(
     ({ resource: oldResource }) => {
@@ -173,7 +173,7 @@ function useProcessMedia({
   /**
    * Trim existing video using FFmpeg.
    *
-   * @param {import('@web-stories-wp/media').Resource} resource Resource object.
+   * @param {import('@googleforcreators/media').Resource} resource Resource object.
    * @param {string} start Time stamp of start time of new video. Example '00:01:02.345'.
    * @param {string} end Time stamp of end time of new video. Example '00:02:00'.
    */
@@ -265,7 +265,7 @@ function useProcessMedia({
   /**
    * Mute existing video using FFmpeg.
    *
-   * @param {import('@web-stories-wp/media').Resource} resource Resource object.
+   * @param {import('@googleforcreators/media').Resource} resource Resource object.
    */
   const muteExistingVideo = useCallback(
     ({ resource: oldResource }) => {
@@ -350,7 +350,7 @@ function useProcessMedia({
   /**
    * Convert existing gif to a video using FFmpeg.
    *
-   * @param {import('@web-stories-wp/media').Resource} resource Resource object.
+   * @param {import('@googleforcreators/media').Resource} resource Resource object.
    */
   const optimizeGif = useCallback(
     ({ resource: oldResource }) => {

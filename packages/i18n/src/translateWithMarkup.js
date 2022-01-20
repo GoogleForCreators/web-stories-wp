@@ -17,7 +17,11 @@
 /**
  * External dependencies
  */
-import { cloneElement, createElement, Fragment } from '@web-stories-wp/react';
+import {
+  cloneElement,
+  createElement,
+  Fragment,
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 
 /** @typedef {import('react').ReactNode} ReactNode */

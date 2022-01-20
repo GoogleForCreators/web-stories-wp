@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { addQueryArgs } from '@googleforcreators/design-system';
-import { DATA_VERSION } from '@web-stories-wp/migration';
+import { DATA_VERSION } from '@googleforcreators/migration';
 
 /**
  * WordPress dependencies
@@ -85,7 +85,7 @@ const getStorySaveData = (
  * Fire REST API call to save story.
  *
  * @param {Object} config Configuration object.
- * @param {import('@web-stories-wp/story-editor').StoryPropTypes.story} story Story object.
+ * @param {import('@googleforcreators/story-editor').StoryPropTypes.story} story Story object.
  * @return {Promise} Return apiFetch promise.
  */
 export function saveStoryById(config, story) {
@@ -129,7 +129,7 @@ export function saveStoryById(config, story) {
  * Fire REST API call to auto-save story.
  *
  * @param {Object} config API path.
- * @param {import('@web-stories-wp/story-editor').StoryPropTypes.story} story Story object.
+ * @param {import('@googleforcreators/story-editor').StoryPropTypes.story} story Story object.
  * @return {Promise} Return apiFetch promise.
  */
 export function autoSaveById(config, story) {

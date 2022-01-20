@@ -22,14 +22,14 @@ import {
   useRef,
   useCallback,
   useDebouncedCallback,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
 } from '@googleforcreators/design-system';
-import { getVideoLengthDisplay } from '@web-stories-wp/media';
+import { getVideoLengthDisplay } from '@googleforcreators/media';
 
 /**
  * Internal dependencies

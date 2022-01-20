@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-import { useRef, useEffect, useCallback } from '@web-stories-wp/react';
+import { useRef, useEffect, useCallback } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { ThemeGlobals } from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useCallback } from '@web-stories-wp/react';
+import { useState, useCallback } from '@googleforcreators/react';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import {
   Button,

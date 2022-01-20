@@ -23,7 +23,7 @@ import {
   useRef,
   useCallback,
   forwardRef,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { FOCUSABLE_SELECTORS } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 /**

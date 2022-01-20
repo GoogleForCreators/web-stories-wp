@@ -22,7 +22,7 @@ import {
   useState,
   useEffect,
   useDebouncedCallback,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import {
   Checkbox,
@@ -185,7 +185,7 @@ function PageAttachmentPanel() {
     /**
      * Handle page attachment icon change.
      *
-     * @param {import('@web-stories-wp/media').Resource} resource The new image.
+     * @param {import('@googleforcreators/media').Resource} resource The new image.
      */
     (resource) => {
       updatePageAttachment({ icon: resource?.src }, true);

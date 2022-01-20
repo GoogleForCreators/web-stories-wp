@@ -23,7 +23,7 @@ import {
   useRef,
   useDebouncedCallback,
   useResizeEffect,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { PAGE_RATIO } from '@web-stories-wp/units';
 
 /**

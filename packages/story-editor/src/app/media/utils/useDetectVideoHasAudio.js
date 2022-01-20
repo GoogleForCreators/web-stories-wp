@@ -17,12 +17,12 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
+import { useCallback } from '@googleforcreators/react';
 import {
   hasVideoGotAudio,
   preloadVideo,
   seekVideo,
-} from '@web-stories-wp/media';
+} from '@googleforcreators/media';
 
 /**
  * Internal dependencies

@@ -20,7 +20,7 @@
 import { fireEvent, screen } from '@testing-library/react';
 import MockDate from 'mockdate';
 import { setAppElement } from '@googleforcreators/design-system';
-import { StoryContext } from '@web-stories-wp/story-editor';
+import { StoryContext } from '@googleforcreators/story-editor';
 
 /**
  * Internal dependencies

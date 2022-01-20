@@ -23,7 +23,7 @@ import {
   useRef,
   useState,
   useFocusOut,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { Input } from '@googleforcreators/design-system';

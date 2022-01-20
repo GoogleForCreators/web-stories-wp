@@ -32,11 +32,11 @@ import {
   useEffect,
   useFocusOut,
   useState,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { generatePatternStyles } from '@web-stories-wp/patterns';
-import { fetchRemoteBlob, blobToFile } from '@web-stories-wp/media';
+import { generatePatternStyles } from '@googleforcreators/patterns';
+import { fetchRemoteBlob, blobToFile } from '@googleforcreators/media';
 import { trackError } from '@web-stories-wp/tracking';
 
 /**

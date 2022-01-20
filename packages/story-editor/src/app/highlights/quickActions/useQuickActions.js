@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useMemo, useRef } from '@web-stories-wp/react';
+import { useCallback, useMemo, useRef } from '@googleforcreators/react';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import {
   prettifyShortcut,
@@ -27,7 +27,7 @@ import {
   Icons,
 } from '@googleforcreators/design-system';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { resourceList } from '@web-stories-wp/media';
+import { resourceList } from '@googleforcreators/media';
 
 /**
  * Internal dependencies

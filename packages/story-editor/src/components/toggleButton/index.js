@@ -27,7 +27,7 @@ import {
   TOOLTIP_PLACEMENT,
   Tooltip,
 } from '@googleforcreators/design-system';
-import { forwardRef } from '@web-stories-wp/react';
+import { forwardRef } from '@googleforcreators/react';
 
 const Button = styled(dsButton)`
   height: 36px;

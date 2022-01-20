@@ -18,7 +18,7 @@
  */
 import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
-import { useEffect } from '@web-stories-wp/react';
+import { useEffect } from '@googleforcreators/react';
 
 /**
  * Internal dependencies

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo, useCallback } from '@web-stories-wp/react';
+import { useMemo, useCallback } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import { DropDown, NumericInput } from '@googleforcreators/design-system';

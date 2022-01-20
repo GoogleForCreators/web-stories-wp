@@ -18,14 +18,14 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-import { useCallback, useEffect, useState } from '@web-stories-wp/react';
+import { useCallback, useEffect, useState } from '@googleforcreators/react';
 import { Datalist } from '@googleforcreators/design-system';
 import {
   Row,
   useStory,
   useAPI,
   useInspector,
-} from '@web-stories-wp/story-editor';
+} from '@googleforcreators/story-editor';
 
 function Author() {
   const {

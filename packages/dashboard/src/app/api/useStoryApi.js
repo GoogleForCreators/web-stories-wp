@@ -22,7 +22,7 @@ import {
   useMemo,
   useReducer,
   useRef,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { getTimeTracker } from '@web-stories-wp/tracking';
 
 /**

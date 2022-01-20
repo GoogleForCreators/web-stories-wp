@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useState } from '@web-stories-wp/react';
+import { useState } from '@googleforcreators/react';
 import { number } from '@storybook/addon-knobs';
 import styled, { ThemeProvider } from 'styled-components';
 import {

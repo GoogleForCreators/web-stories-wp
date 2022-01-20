@@ -24,7 +24,7 @@ import {
   useRef,
   useCallback,
   useResizeEffect,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { __, sprintf } from '@googleforcreators/i18n';
 import { PAGE_RATIO } from '@web-stories-wp/units';
 import {

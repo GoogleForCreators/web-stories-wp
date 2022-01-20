@@ -17,7 +17,12 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo, useRef, useCallback, useState } from '@web-stories-wp/react';
+import {
+  useMemo,
+  useRef,
+  useCallback,
+  useState,
+} from '@googleforcreators/react';
 
 /**
  * Internal dependencies

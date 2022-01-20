@@ -23,7 +23,7 @@ import {
   useEffect,
   useState,
   useDebouncedCallback,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 
 /**
  * External dependencies

@@ -20,7 +20,7 @@
 import { ThemeProvider } from 'styled-components';
 import PropTypes from 'prop-types';
 import { render } from '@testing-library/react';
-import { useMemo } from '@web-stories-wp/react';
+import { useMemo } from '@googleforcreators/react';
 
 /**
  * Internal dependencies

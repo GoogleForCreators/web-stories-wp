@@ -23,7 +23,7 @@ import {
   useCallback,
   useRef,
   useEffect,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { useLiveRegion } from '@googleforcreators/design-system';
 
 /* translators: %d: new position. */

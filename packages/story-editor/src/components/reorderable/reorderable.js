@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { forwardRef, useRef } from '@web-stories-wp/react';
+import { forwardRef, useRef } from '@googleforcreators/react';
 
 /**
  * Internal dependencies

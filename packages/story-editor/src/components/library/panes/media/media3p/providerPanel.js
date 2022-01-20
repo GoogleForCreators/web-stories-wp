@@ -19,9 +19,9 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { useCallback } from '@web-stories-wp/react';
+import { useCallback } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
-import { resourceList } from '@web-stories-wp/media';
+import { resourceList } from '@googleforcreators/media';
 import { Headline, THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 /**

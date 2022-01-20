@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useMemo, useCallback, useRef } from '@web-stories-wp/react';
+import { useMemo, useCallback, useRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { useVirtual } from 'react-virtual';
 import { __ } from '@googleforcreators/i18n';

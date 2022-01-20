@@ -22,9 +22,9 @@ import {
   useFocusOut,
   useLayoutEffect,
   useRef,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { trackClick, trackEvent } from '@web-stories-wp/tracking';
-import { getTemplateMetaData } from '@web-stories-wp/templates';
+import { getTemplateMetaData } from '@googleforcreators/templates';
 import { __, sprintf } from '@googleforcreators/i18n';
 import {
   Button,

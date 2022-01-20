@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { useEffect } from '@web-stories-wp/react';
-import { migrate } from '@web-stories-wp/migration';
+import { useEffect } from '@googleforcreators/react';
+import { migrate } from '@googleforcreators/migration';
 
 /**
  * Internal dependencies

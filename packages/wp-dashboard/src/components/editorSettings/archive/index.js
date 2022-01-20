@@ -23,7 +23,7 @@ import {
   useDebouncedCallback,
   useEffect,
   useState,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { __, _x, TranslateWithMarkup, sprintf } from '@googleforcreators/i18n';
 import {
   DropDown,

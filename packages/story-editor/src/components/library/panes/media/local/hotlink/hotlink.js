@@ -26,7 +26,7 @@ import {
   Icons,
 } from '@googleforcreators/design-system';
 import styled from 'styled-components';
-import { useState } from '@web-stories-wp/react';
+import { useState } from '@googleforcreators/react';
 import { useFeature } from 'flagged';
 
 /**

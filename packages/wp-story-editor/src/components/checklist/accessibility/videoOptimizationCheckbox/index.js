@@ -21,7 +21,7 @@ import {
   useState,
   useRef,
   useEffect,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import {
   Button,
   BUTTON_SIZES,
@@ -41,7 +41,7 @@ import {
   useStory,
   ChecklistCard,
   DefaultFooterText,
-} from '@web-stories-wp/story-editor';
+} from '@googleforcreators/story-editor';
 
 const CheckboxContainer = styled.div`
   display: flex;

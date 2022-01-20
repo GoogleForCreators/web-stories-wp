@@ -25,7 +25,7 @@ import {
   useEffect,
   createPortal,
   useState,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { __, TranslateWithMarkup } from '@googleforcreators/i18n';
 import {

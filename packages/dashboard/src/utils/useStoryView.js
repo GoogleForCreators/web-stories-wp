@@ -23,7 +23,7 @@ import {
   useMemo,
   useRef,
   useState,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { trackEvent } from '@web-stories-wp/tracking';
 /**
@@ -124,15 +124,17 @@ export default function useStoryView({
   }, []);
 
   useEffect(() => {
-    trackEvent('search', {
-      search_type: 'dashboard_stories',
-      search_term: searchKeyword,
-      search_filter: filter,
-      search_author_filter: authorFilterId,
-      search_order: sortDirection,
-      search_orderby: sort,
-      search_view: viewStyle,
-    });
+    if (searchKeyword.length) {
+      trackEvent('search', {
+        search_type: 'dashboard_stories',
+        search_term: searchKeyword,
+        search_filter: filter,
+        search_author_filter: authorFilterId,
+        search_order: sortDirection,
+        search_orderby: sort,
+        search_view: viewStyle,
+      });
+    }
   }, [searchKeyword, filter, sortDirection, sort, viewStyle, authorFilterId]);
 
   useEffect(() => {

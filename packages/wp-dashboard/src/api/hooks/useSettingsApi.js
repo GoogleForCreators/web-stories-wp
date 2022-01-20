@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useReducer } from '@web-stories-wp/react';
+import { useCallback, useReducer } from '@googleforcreators/react';
 import { useConfig } from '@googleforcreators/dashboard';
 
 /**

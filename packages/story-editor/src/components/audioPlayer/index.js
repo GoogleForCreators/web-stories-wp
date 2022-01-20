@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { useState, useCallback, useRef } from '@web-stories-wp/react';
+import { useState, useCallback, useRef } from '@googleforcreators/react';
 import {
   THEME_CONSTANTS,
   themeHelpers,

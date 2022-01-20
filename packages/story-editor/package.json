@@ -1,6 +1,15 @@
 {
-  "name": "@web-stories-wp/story-editor",
-  "private": true,
+  "name": "@googleforcreators/story-editor",
+  "description": "The core Web Stories editor web application, which is platform-agnostic.",
+  "private": false,
+  "version": "0.0.1",
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "keywords": [
+    "web stories"
+  ],
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"
@@ -19,13 +28,13 @@
     "@googleforcreators/fonts": "*",
     "@googleforcreators/i18n": "*",
     "@web-stories-wp/karma-fixture": "*",
-    "@web-stories-wp/media": "*",
-    "@web-stories-wp/migration": "*",
-    "@web-stories-wp/patterns": "*",
-    "@web-stories-wp/react": "*",
-    "@web-stories-wp/stickers": "*",
-    "@web-stories-wp/templates": "*",
-    "@web-stories-wp/text-sets": "*",
+    "@googleforcreators/media": "*",
+    "@googleforcreators/migration": "*",
+    "@googleforcreators/patterns": "*",
+    "@googleforcreators/react": "*",
+    "@googleforcreators/stickers": "*",
+    "@googleforcreators/templates": "*",
+    "@googleforcreators/text-sets": "*",
     "@web-stories-wp/tracking": "*",
     "@web-stories-wp/units": "*",
     "blurhash": "^1.1.4",

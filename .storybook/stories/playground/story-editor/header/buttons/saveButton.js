@@ -23,7 +23,7 @@ import {
   BUTTON_VARIANTS,
   useSnackbar,
 } from '@googleforcreators/design-system';
-import { useStory } from '@web-stories-wp/story-editor';
+import { useStory } from '@googleforcreators/story-editor';
 
 function SaveButton() {
   const { isSaving, saveStory } = useStory(

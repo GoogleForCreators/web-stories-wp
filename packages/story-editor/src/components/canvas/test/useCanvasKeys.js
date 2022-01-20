@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { render, fireEvent } from '@testing-library/react';
-import { useRef } from '@web-stories-wp/react';
+import { useRef } from '@googleforcreators/react';
 
 /**
  * Internal dependencies

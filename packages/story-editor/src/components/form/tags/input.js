@@ -29,7 +29,7 @@ import {
   useRef,
   useState,
   useCallback,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
