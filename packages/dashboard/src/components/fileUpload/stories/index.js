@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { action } from '@storybook/addon-actions';
 
 /**
  * Internal dependencies
@@ -38,9 +37,12 @@ export default {
     instructionalText:
       'Drag a jpg, png, or static gif in this box. Or click “Upload logo” below.',
   },
+  argTypes: {
+    onSubmit: { action: 'files uploaded' },
+  },
   parameters: {
     controls: {
-      exclude: ['id', 'ariaLabel', 'onSubmit', 'acceptableFormats'],
+      exclude: ['id', 'ariaLabel', 'acceptableFormats'],
     },
   },
 };
@@ -50,7 +52,6 @@ export const _default = (args) => {
     <Container>
       <FileUpload
         acceptableFormats={['.jpg', '.jpeg', '.png', '.gif']}
-        onSubmit={action('files uploaded')}
         id={'898989'}
         ariaLabel={'Click to upload a file'}
         {...args}

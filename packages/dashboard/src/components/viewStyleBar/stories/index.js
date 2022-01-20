@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,12 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
-
 /**
  * Internal dependencies
  */
@@ -32,18 +26,16 @@ export default {
     layoutStyle: {
       options: Object.values(VIEW_STYLE),
     },
+    onPress: {
+      action: 'on press clicked',
+    },
   },
 };
 
 const Template = (args) => {
-  return <ViewStyleBar onPress={action('on press clicked')} {...args} />;
+  return <ViewStyleBar {...args} />;
 };
 export const _default = Template.bind({});
 _default.args = {
   layoutStyle: VIEW_STYLE.LIST,
-};
-_default.parameters = {
-  controls: {
-    include: ['layoutStyle'],
-  },
 };

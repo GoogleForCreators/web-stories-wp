@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,6 @@
  */
 import { useState } from '@googleforcreators/react';
 import styled from 'styled-components';
-import { action } from '@storybook/addon-actions';
 
 /**
  * Internal dependencies
@@ -36,6 +35,13 @@ export default {
     checkboxLabel2: 'Disabled',
     checkboxLabel3: 'Checked',
     checkboxLabel4: 'Checked and Disabled',
+  },
+  argTypes: {
+    checkboxLabel1: { name: 'Label 1' },
+    checkboxLabel2: { name: 'Label 2' },
+    checkboxLabel3: { name: 'Label 3' },
+    checkboxLabel4: { name: 'Label 4' },
+    handleChange: { action: 'checkbox changed' },
   },
 };
 
@@ -83,7 +89,7 @@ export const _default = (args) => {
     const name = event.target.name;
     const value = event.target.checked;
 
-    action(event.target.name)(event);
+    args.handleChange(event.target.name, event);
     setFormState((prevState) => ({
       ...prevState,
       [name]: value,

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 
 /**
@@ -35,9 +34,14 @@ export default {
     heading: 'Dashboard',
     searchPlaceholder: 'Find Stories',
   },
+  argTypes: {
+    handleSearchChange: {
+      action: 'Search with value',
+    },
+  },
   parameters: {
     controls: {
-      exclude: ['searchOptions', 'handleSearchChange', 'children', 'onClear'],
+      exclude: ['searchOptions', 'children', 'onClear'],
     },
   },
 };
@@ -54,7 +58,7 @@ export const _default = (args) => {
       <LeftRail />
       <PageHeading
         searchOptions={[]}
-        handleSearchChange={(value) => action('Search with value: ', value)}
+        handleSearchChange={(value) => args.handleSearchChange(value)}
         {...args}
       >
         <InnerContent />

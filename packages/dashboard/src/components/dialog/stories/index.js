@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
 import {
   Button,
   BUTTON_SIZES,
@@ -40,6 +39,14 @@ export default {
     secondaryText: 'cancel action',
     primaryText: 'confirm action',
   },
+  argTypes: {
+    onClose: {
+      action: 'closed',
+    },
+    onPrimary: {
+      action: 'confirmed',
+    },
+  },
   parameters: {
     controls: {
       include: ['isOpen', 'title', 'secondaryText', 'primaryText'],
@@ -49,11 +56,7 @@ export default {
 
 export const _default = (args) => {
   return (
-    <Dialog
-      onClose={action('closed')}
-      onPrimary={action('confirmed')}
-      {...args}
-    >
+    <Dialog {...args}>
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
@@ -63,16 +66,16 @@ export const _default = (args) => {
   );
 };
 
-export const WithCustomAction = (args) => {
+// eslint-disable-next-line react/prop-types
+export const WithCustomAction = ({ onClickButton, onConfirmed, ...args }) => {
   return (
     <Dialog
-      onClose={action('closed')}
       actions={
         <>
           <Button
             type={BUTTON_TYPES.TERTIARY}
             size={BUTTON_SIZES.SMALL}
-            onClick={action('closed')}
+            onClick={onClickButton}
           >
             {'Dismiss'}
           </Button>
@@ -80,7 +83,7 @@ export const WithCustomAction = (args) => {
             type={BUTTON_TYPES.PRIMARY}
             size={BUTTON_SIZES.SMALL}
             href={args.href}
-            onClick={action('confirmed')}
+            onClick={onConfirmed}
           >
             {'Add to new post'}
           </Button>
@@ -101,8 +104,28 @@ WithCustomAction.args = {
   title: 'my dialog title',
   href: 'https://example.com',
 };
+WithCustomAction.argTypes = {
+  onClose: {
+    action: 'closed',
+  },
+  onClickButton: {
+    action: 'closed',
+    name: 'dismiss click',
+  },
+  onConfirmed: {
+    action: 'confirmed',
+    name: 'confirm click',
+  },
+};
 WithCustomAction.parameters = {
   controls: {
-    include: ['isOpen', 'title', 'href'],
+    include: [
+      'isOpen',
+      'title',
+      'href',
+      'onClose',
+      'dismiss click',
+      'confirm click',
+    ],
   },
 };

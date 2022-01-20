@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,11 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
 
 /**
  * Internal dependencies
@@ -36,22 +31,33 @@ export default {
   args: {
     bottomActionLabel: 'MY CTA',
   },
+  argTypes: {
+    handleMenuToggle: {
+      action: 'handleMenuToggle',
+    },
+    handleMenuItemSelected: {
+      action: 'handleMenuItemSelected',
+    },
+  },
   parameters: {
     controls: {
-      include: ['bottomActionLabel'],
+      include: [
+        'bottomActionLabel',
+        'handleMenuToggle',
+        'handleMenuItemSelected',
+      ],
     },
   },
 };
-
 export const _default = (args) => {
   return (
     <StoryGridView
       stories={formattedStoriesArray}
       storyMenu={{
-        handleMenuToggle: action('handleMenuToggle'),
+        handleMenuToggle: args.handleMenuToggle,
         contextMenuId: -1,
         menuItems: STORY_CONTEXT_MENU_ITEMS,
-        handleMenuItemSelected: action('handleMenuItemSelected'),
+        handleMenuItemSelected: args.handleMenuItemSelected,
       }}
       pageSize={STORYBOOK_PAGE_SIZE}
       {...args}
