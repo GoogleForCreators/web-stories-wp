@@ -32,7 +32,7 @@ import {
   Tooltip,
 } from '@googleforcreators/design-system';
 import styled from 'styled-components';
-import getFontDataFromUrl from '@web-stories-wp/fonts/src/utils/getFontDataFromUrl';
+import { getFontDataFromUrl } from '@googleforcreators/fonts';
 import { trackEvent } from '@web-stories-wp/tracking';
 
 /**

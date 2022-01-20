@@ -64,7 +64,7 @@
     "@googleforcreators/dashboard": "*",
     "@googleforcreators/design-system": "*",
     "@web-stories-wp/e2e-tests": "*",
-    "@web-stories-wp/fonts": "*",
+    "@googleforcreators/fonts": "*",
     "@web-stories-wp/jest-amp": "*",
     "@web-stories-wp/jest-parallel-sequencer": "*",
     "@web-stories-wp/karma-failed-tests-reporter": "*",

@@ -20,7 +20,7 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { FlagsProvider } from 'flagged';
 import { PAGE_RATIO, UnitsProvider } from '@web-stories-wp/units';
-import { CURATED_FONT_NAMES } from '@web-stories-wp/fonts';
+import { CURATED_FONT_NAMES } from '@googleforcreators/fonts';
 
 /**
  * Internal dependencies
