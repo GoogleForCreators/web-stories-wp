@@ -27,6 +27,7 @@ import SAT from 'sat';
 import { __ } from '@googleforcreators/i18n';
 import { Icons } from '@googleforcreators/design-system';
 import { trackEvent } from '@web-stories-wp/tracking';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -35,8 +36,14 @@ import useStory from '../story/useStory';
 import createPolygon from '../canvas/utils/createPolygon';
 import { useCanvas } from '../canvas';
 import { getDefinitionForType } from '../../elements';
+import { useConfig } from '../config';
+
+const ReversedIcon = styled(Icons.ChevronRightSmall)`
+  transform: rotate(180deg);
+`;
 
 function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
+  const { isRTL } = useConfig();
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   const { nodesById } = useCanvas(({ state: { nodesById } }) => ({
     nodesById,
@@ -123,7 +130,7 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
         isSubMenuOpen,
         subMenuItems: isSubMenuOpen ? subMenuItems : [],
         dismissOnClick: false,
-        SuffixIcon: Icons.ChevronRightSmall,
+        SuffixIcon: isRTL ? ReversedIcon : Icons.ChevronRightSmall,
         'aria-haspopup': 'menu',
         'aria-expanded': isSubMenuOpen,
         ...menuItemProps,
