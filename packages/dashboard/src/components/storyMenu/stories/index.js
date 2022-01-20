@@ -22,7 +22,7 @@ import { actions } from '@storybook/addon-actions';
 /**
  * Internal dependencies
  */
-import { useState } from '@web-stories-wp/react';
+import { useState } from '@googleforcreators/react';
 import StoryMenu, { MoreVerticalButton } from '..';
 import { STORY_CONTEXT_MENU_ITEMS } from '../../../constants';
 

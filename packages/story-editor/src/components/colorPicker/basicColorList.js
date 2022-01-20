@@ -26,7 +26,7 @@ import {
   hasGradient,
 } from '@googleforcreators/patterns';
 import { Icons, Swatch, themeHelpers } from '@googleforcreators/design-system';
-import { useRef } from '@web-stories-wp/react';
+import { useRef } from '@googleforcreators/react';
 import { __, sprintf } from '@googleforcreators/i18n';
 
 /**

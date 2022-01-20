@@ -23,7 +23,7 @@ import {
   useFocusOut,
   useMemo,
   useState,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { noop, useGridViewKeys } from '@googleforcreators/design-system';
 

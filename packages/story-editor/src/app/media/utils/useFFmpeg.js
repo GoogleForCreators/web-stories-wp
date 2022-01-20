@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
-import { useCallback, useMemo } from '@web-stories-wp/react';
+import { useCallback, useMemo } from '@googleforcreators/react';
 import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
 import {
   getExtensionFromMimeType,

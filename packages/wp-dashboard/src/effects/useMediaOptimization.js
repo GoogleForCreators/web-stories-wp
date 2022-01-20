@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
+import { useCallback } from '@googleforcreators/react';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { useSnackbar } from '@googleforcreators/design-system';
 

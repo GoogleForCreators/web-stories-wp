@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { Fragment, useCallback, memo } from '@web-stories-wp/react';
+import { Fragment, useCallback, memo } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
 

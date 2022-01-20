@@ -23,7 +23,7 @@ import {
   useCallback,
   useMemo,
   useState,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 
 function useEditingElement() {
   const [state, dispatch] = useReducer(reducer, {

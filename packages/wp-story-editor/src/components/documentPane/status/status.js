@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useState } from '@web-stories-wp/react';
+import { useCallback, useMemo, useState } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import { Input } from '@googleforcreators/design-system';

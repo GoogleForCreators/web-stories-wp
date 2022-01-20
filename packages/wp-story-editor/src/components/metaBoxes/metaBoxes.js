@@ -22,7 +22,7 @@ import {
   useRef,
   useState,
   createPortal,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { useConfig, useStory } from '@web-stories-wp/story-editor';
 
 /**

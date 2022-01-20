@@ -23,7 +23,7 @@ import {
   Icons,
   useGlobalKeyDownEffect,
 } from '@googleforcreators/design-system';
-import { useEffect, useFocusOut, useRef } from '@web-stories-wp/react';
+import { useEffect, useFocusOut, useRef } from '@googleforcreators/react';
 
 /**
  * Internal dependencies

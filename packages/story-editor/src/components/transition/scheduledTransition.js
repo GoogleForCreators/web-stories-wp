@@ -23,7 +23,7 @@ import {
   useRef,
   forwardRef,
   cloneElement,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { Transition } from 'react-transition-group';
 

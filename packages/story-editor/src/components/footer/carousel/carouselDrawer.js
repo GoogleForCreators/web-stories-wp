@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
+import { useCallback } from '@googleforcreators/react';
 import { __, _n, sprintf } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import {

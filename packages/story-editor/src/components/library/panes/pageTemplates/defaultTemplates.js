@@ -23,7 +23,7 @@ import {
   useMemo,
   useCallback,
   useRef,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { _x, __ } from '@googleforcreators/i18n';
 import { getTimeTracker, trackEvent } from '@web-stories-wp/tracking';
 import styled from 'styled-components';

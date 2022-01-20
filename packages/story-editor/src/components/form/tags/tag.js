@@ -25,7 +25,7 @@ import {
   TOOLTIP_PLACEMENT,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
-import { useMemo } from '@web-stories-wp/react';
+import { useMemo } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';

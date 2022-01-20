@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useRef } from '@web-stories-wp/react';
+import { useEffect, useRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';

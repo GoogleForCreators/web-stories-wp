@@ -23,7 +23,7 @@ import {
   useEffect,
   useRef,
   useState,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { CURATED_FONT_NAMES } from '@googleforcreators/fonts';
 import { useFeature } from 'flagged';
 

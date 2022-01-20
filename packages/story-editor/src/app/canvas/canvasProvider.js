@@ -24,7 +24,7 @@ import {
   useMemo,
   useRef,
   useState,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import SAT from 'sat';
 import { UnitsProvider } from '@web-stories-wp/units';
 

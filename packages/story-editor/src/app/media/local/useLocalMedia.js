@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { identity } from '@web-stories-wp/react';
+import { identity } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */

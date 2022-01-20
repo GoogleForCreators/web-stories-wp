@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
+import { useCallback } from '@googleforcreators/react';
 import { PAGE_HEIGHT, PAGE_WIDTH } from '@web-stories-wp/units';
 
 /**

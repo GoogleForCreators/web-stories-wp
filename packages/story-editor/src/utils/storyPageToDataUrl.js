@@ -22,7 +22,7 @@ import {
   forwardRef,
   render,
   unmountComponentAtNode,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import {
   PAGE_RATIO,
   FULLBLEED_RATIO,

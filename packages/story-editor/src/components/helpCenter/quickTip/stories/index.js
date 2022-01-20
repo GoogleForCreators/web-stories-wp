@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { boolean } from '@storybook/addon-knobs';
-import { useState } from '@web-stories-wp/react';
+import { useState } from '@googleforcreators/react';
 import { TransitionGroup } from 'react-transition-group';
 import styled, { ThemeProvider } from 'styled-components';
 import {

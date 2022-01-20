@@ -19,7 +19,7 @@
  */
 import { __ } from '@googleforcreators/i18n';
 import { CSSTransition } from 'react-transition-group';
-import { useFocusOut, useRef, useState } from '@web-stories-wp/react';
+import { useFocusOut, useRef, useState } from '@googleforcreators/react';
 import styled from 'styled-components';
 import {
   LOCAL_STORAGE_PREFIX,

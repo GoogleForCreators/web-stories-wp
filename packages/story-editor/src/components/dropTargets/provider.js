@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useState, useMemo, useCallback } from '@web-stories-wp/react';
+import { useState, useMemo, useCallback } from '@googleforcreators/react';
 import { noop, useGlobalIsKeyPressed } from '@googleforcreators/design-system';
 
 /**

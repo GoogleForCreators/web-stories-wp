@@ -23,7 +23,7 @@ import {
   useRef,
   useState,
   useFocusOut,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { useKeyDownEffect } from '@googleforcreators/design-system';
 
 /**

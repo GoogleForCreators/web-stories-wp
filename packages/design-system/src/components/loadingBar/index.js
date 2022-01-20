@@ -19,7 +19,7 @@
 import PropTypes from 'prop-types';
 import { CSSTransition } from 'react-transition-group';
 import styled, { keyframes } from 'styled-components';
-import { useRef } from '@web-stories-wp/react';
+import { useRef } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */

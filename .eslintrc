@@ -582,11 +582,11 @@
             "paths": [
               {
                 "name": "react",
-                "message": "Use @web-stories-wp/react instead."
+                "message": "Use @googleforcreators/react instead."
               },
               {
                 "name": "react-dom",
-                "message": "Use @web-stories-wp/react instead."
+                "message": "Use @googleforcreators/react instead."
               }
             ]
           }

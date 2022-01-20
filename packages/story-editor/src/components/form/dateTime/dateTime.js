@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { rgba } from 'polished';
-import { useCallback, useRef, useState } from '@web-stories-wp/react';
+import { useCallback, useRef, useState } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import {
   Button,

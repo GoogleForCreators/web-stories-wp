@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
-import { forwardRef } from '@web-stories-wp/react';
+import { forwardRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 
 /**

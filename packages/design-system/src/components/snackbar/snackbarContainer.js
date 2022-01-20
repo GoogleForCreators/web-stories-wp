@@ -16,7 +16,12 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useMemo, useRef } from '@web-stories-wp/react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';

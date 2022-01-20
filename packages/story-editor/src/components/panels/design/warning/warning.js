@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useEffect } from '@web-stories-wp/react';
+import { useEffect } from '@googleforcreators/react';
 import {
   Text,
   Icons,

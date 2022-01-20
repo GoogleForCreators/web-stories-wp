@@ -22,7 +22,7 @@ import {
   useMemo,
   useCallback,
   useEffect,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import { FULLBLEED_RATIO, PAGE_RATIO } from '@web-stories-wp/units';

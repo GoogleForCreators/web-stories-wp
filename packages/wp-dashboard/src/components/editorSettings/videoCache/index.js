@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useMemo } from '@web-stories-wp/react';
+import { useCallback, useMemo } from '@googleforcreators/react';
 import { v4 as uuidv4 } from 'uuid';
 import { __ } from '@googleforcreators/i18n';
 import { Checkbox, THEME_CONSTANTS } from '@googleforcreators/design-system';

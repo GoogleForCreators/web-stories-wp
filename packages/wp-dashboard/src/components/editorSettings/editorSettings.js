@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useState } from '@web-stories-wp/react';
+import { useCallback, useEffect, useState } from '@googleforcreators/react';
 import { __, sprintf } from '@googleforcreators/i18n';
 import {
   PageHeading,

@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
-import { memo } from '@web-stories-wp/react';
+import { memo } from '@googleforcreators/react';
 import { HeaderTitle } from '@web-stories-wp/story-editor';
 
 /**

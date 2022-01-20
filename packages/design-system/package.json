@@ -23,7 +23,7 @@
   "dependencies": {
     "@googleforcreators/i18n": "*",
     "@googleforcreators/patterns": "*",
-    "@web-stories-wp/react": "*",
+    "@googleforcreators/react": "*",
     "@web-stories-wp/tracking": "*",
     "big.js": "^6.1.1",
     "focus-visible": "^5.2.0",

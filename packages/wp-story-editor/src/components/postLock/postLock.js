@@ -23,7 +23,7 @@ import {
   useMemo,
   useRef,
   useState,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { useFeatures } from 'flagged';
 import { trackError } from '@web-stories-wp/tracking';
 import {

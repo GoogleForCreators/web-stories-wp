@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { trackEvent } from '@web-stories-wp/tracking';
-import { useEffect, useRef, useState } from '@web-stories-wp/react';
+import { useEffect, useRef, useState } from '@googleforcreators/react';
 
 /**
  * Internal dependencies

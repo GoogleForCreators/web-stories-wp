@@ -22,7 +22,7 @@ import {
   memo,
   useCallback,
   useDebouncedCallback,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@googleforcreators/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';

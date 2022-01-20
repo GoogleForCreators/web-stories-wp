@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useCallback, useEffect } from '@web-stories-wp/react';
+import { useState, useCallback, useEffect } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@googleforcreators/i18n';
 import {

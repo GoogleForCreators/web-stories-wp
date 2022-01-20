@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useState } from '@web-stories-wp/react';
+import { useEffect, useState } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { useFeature } from 'flagged';
 

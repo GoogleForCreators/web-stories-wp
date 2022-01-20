@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from '@web-stories-wp/react';
+import { useCallback, useMemo } from '@googleforcreators/react';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import { getFileName } from '@googleforcreators/media';
 

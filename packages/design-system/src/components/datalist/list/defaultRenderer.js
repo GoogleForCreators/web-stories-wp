@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { forwardRef } from '@web-stories-wp/react';
+import { forwardRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
 

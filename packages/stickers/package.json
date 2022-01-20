@@ -21,7 +21,7 @@
   "type": "module",
   "dependencies": {
     "@googleforcreators/i18n": "*",
-    "@web-stories-wp/react": "*",
+    "@googleforcreators/react": "*",
     "prop-types": "^15.8.1"
   }
 }

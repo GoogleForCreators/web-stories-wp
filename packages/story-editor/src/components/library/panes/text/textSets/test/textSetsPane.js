@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useRef } from '@web-stories-wp/react';
+import { useRef } from '@googleforcreators/react';
 import { screen } from '@testing-library/react';
 
 /**

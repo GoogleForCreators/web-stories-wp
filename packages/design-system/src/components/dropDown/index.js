@@ -23,7 +23,7 @@ import {
   useMemo,
   useRef,
   useState,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 import { __, sprintf } from '@googleforcreators/i18n';

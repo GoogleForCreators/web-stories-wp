@@ -25,7 +25,7 @@ import {
   useRef,
   useEffect,
   useResizeEffect,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import { FULLBLEED_RATIO } from '@web-stories-wp/units';

@@ -24,7 +24,7 @@ import {
   useMemo,
   useState,
   useCallback,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { useFeatures } from 'flagged';
 import { getTimeTracker, trackEvent } from '@web-stories-wp/tracking';
 import { loadTextSets } from '@web-stories-wp/text-sets';

@@ -26,7 +26,7 @@ import {
   Icons,
   themeHelpers,
 } from '@googleforcreators/design-system';
-import { useContext } from '@web-stories-wp/react';
+import { useContext } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 
 /**

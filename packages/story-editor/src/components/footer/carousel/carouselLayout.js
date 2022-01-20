@@ -20,7 +20,7 @@
 import { CSSTransition } from 'react-transition-group';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
-import { useRef } from '@web-stories-wp/react';
+import { useRef } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
