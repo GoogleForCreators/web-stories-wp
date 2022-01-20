@@ -71,6 +71,7 @@ const RightClickMenu = () => {
     maskRef,
   } = useRightClickMenu();
   const ref = useRef();
+  const subMenuRef = useRef();
 
   /**
    * Prevent browser's context menu when right clicking on custom ContextMenu
@@ -142,24 +143,38 @@ const RightClickMenu = () => {
                   {separator === 'top' && (
                     <ContextMenuComponents.MenuSeparator />
                   )}
-                  {menuButtonRenderer({ label, shortcut, ...buttonProps })}
-                  {Boolean(subMenuItems?.length) && (
-                    <RightClickMenuContainer
-                      position={{
-                        y: 0,
-                        x: ref.current.firstChild.offsetWidth + 2,
-                      }}
-                    >
-                      <ContextMenu
-                        isOpen
-                        onDismiss={onCloseMenu}
-                        aria-label={__('Select a layer', 'web-stories')}
-                        isRTL={isRTL}
-                        isSubMenu
-                      >
-                        {subMenuItems.map((item) => menuButtonRenderer(item))}
-                      </ContextMenu>
-                    </RightClickMenuContainer>
+                  {!subMenuItems &&
+                    menuButtonRenderer({ label, shortcut, ...buttonProps })}
+                  {subMenuItems && (
+                    <>
+                      <ContextMenuComponents.SubMenuTrigger
+                        subMenuRef={subMenuRef}
+                        parentMenuRef={ref}
+                        label={label}
+                        {...buttonProps}
+                      />
+                      {Boolean(subMenuItems.length) && (
+                        <RightClickMenuContainer
+                          position={{
+                            y: 0,
+                            x: ref.current.firstChild.offsetWidth + 2,
+                          }}
+                          ref={subMenuRef}
+                        >
+                          <ContextMenu
+                            isOpen
+                            onDismiss={onCloseMenu}
+                            aria-label={__('Select a layer', 'web-stories')}
+                            isRTL={isRTL}
+                            isSubMenu
+                          >
+                            {subMenuItems.map((item) =>
+                              menuButtonRenderer(item)
+                            )}
+                          </ContextMenu>
+                        </RightClickMenuContainer>
+                      )}
+                    </>
                   )}
                   {separator === 'bottom' && (
                     <ContextMenuComponents.MenuSeparator />

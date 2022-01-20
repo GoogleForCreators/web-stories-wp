@@ -24,6 +24,7 @@ import MenuLink from './link';
 import MenuSeparator from './separator';
 import MenuShortcut from './shortcut';
 import MenuItemSuffix from './suffix';
+import SubMenuTrigger from './subMenuTrigger';
 
 export {
   MenuButton,
@@ -34,4 +35,5 @@ export {
   MenuLink,
   MenuSeparator,
   MenuShortcut,
+  SubMenuTrigger,
 };

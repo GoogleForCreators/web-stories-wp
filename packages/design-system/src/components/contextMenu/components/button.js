@@ -19,7 +19,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-import { useMemo } from '@web-stories-wp/react';
+import { forwardRef, useMemo } from '@web-stories-wp/react';
 /**
  * Internal dependencies
  */
@@ -63,16 +63,13 @@ const StyledButton = styled(BaseButton)`
  * @param {Function} props.onClick Click event handler.
  * @param {boolean} props.dismissOnClick If to call onDismiss when clicking.
  * @param {Function} props.onFocus Focus event handler.
+ * @param {Object} ref Ref object.
  * @return {Node} The react node
  */
-function Button({
-  id,
-  onBlur,
-  onClick,
-  onFocus,
-  dismissOnClick = true,
-  ...props
-}) {
+function ButtonWithRef(
+  { id, onBlur, onClick, onFocus, dismissOnClick = true, ...props },
+  ref
+) {
   const { focusedId, isIconMenu, onDismiss, onMenuItemBlur, onMenuItemFocus } =
     useContextMenu(({ state, actions }) => ({
       focusedId: state.focusedId,
@@ -101,6 +98,7 @@ function Button({
 
   return (
     <StyledButton
+      ref={ref}
       id={elementId}
       tabIndex={focusedId === elementId ? 0 : -1}
       role="menuitem"
@@ -113,6 +111,7 @@ function Button({
   );
 }
 
+const Button = forwardRef(ButtonWithRef);
 Button.propTypes = {
   id: PropTypes.string,
   onBlur: PropTypes.func,
@@ -120,5 +119,7 @@ Button.propTypes = {
   onFocus: PropTypes.func,
   dismissOnClick: PropTypes.bool,
 };
+
+ButtonWithRef.propTypes = Button.propTypes;
 
 export default Button;

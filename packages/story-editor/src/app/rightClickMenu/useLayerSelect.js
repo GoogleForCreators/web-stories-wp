@@ -117,12 +117,12 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
     ? {
         label: __('Select Layer', 'web-stories'),
         separator: 'bottom',
-        onClick: () => setIsSubMenuOpen(!isSubMenuOpen),
+        setIsSubMenuOpen,
+        isSubMenuOpen,
         subMenuItems: isSubMenuOpen ? subMenuItems : [],
         dismissOnClick: false,
         SuffixIcon: Icons.ChevronRightSmall,
         'aria-haspopup': 'menu',
-        'aria-pressed': isSubMenuOpen,
         'aria-expanded': isSubMenuOpen,
         ...menuItemProps,
       }

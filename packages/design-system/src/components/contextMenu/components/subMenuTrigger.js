@@ -1,0 +1,111 @@
+/*
+ * Copyright 2022 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+/**
+ * External dependencies
+ */
+import {
+  useDebouncedCallback,
+  useCallback,
+  useEffect,
+  useRef,
+} from '@web-stories-wp/react';
+
+/**
+ * Internal dependencies
+ */
+import MenuButton from './button';
+import Suffix from './suffix';
+
+function SubMenuTrigger({
+  setIsSubMenuOpen,
+  isSubMenuOpen,
+  subMenuRef,
+  parentMenuRef,
+  label,
+  SuffixIcon,
+  ...buttonProps
+}) {
+  const ref = useRef();
+  const pointerTracker = useRef({});
+
+  const pointerIsOutside = (node) => {
+    const { x, y, width, height } = node.getBoundingClientRect();
+    const { x: pointerX, y: pointerY } = pointerTracker.current;
+    const buffer = 2;
+    return (
+      pointerX < x - buffer ||
+      pointerX > x + width + buffer ||
+      pointerY < y - buffer ||
+      pointerY > y + height + buffer
+    );
+  };
+
+  const maybeCloseSubMenu = useDebouncedCallback(() => {
+    // If after 200ms the cursor is not in the submenu and not in itself, leave.
+    if (
+      pointerIsOutside(ref.current) &&
+      pointerIsOutside(subMenuRef.current.firstChild)
+    ) {
+      setIsSubMenuOpen(false);
+    }
+  }, 200);
+
+  const trackPointer = useCallback((e) => {
+    pointerTracker.current.x = e.clientX;
+    pointerTracker.current.y = e.clientY;
+  }, []);
+
+  useEffect(() => {
+    document.addEventListener('pointermove', trackPointer);
+    return () => {
+      document.removeEventListener('pointermove', trackPointer);
+    };
+  }, [trackPointer]);
+
+  // If the pointer enters parent menu, maybe we need to close the submenu.
+  useEffect(() => {
+    const node = parentMenuRef.current?.firstChild;
+    if (!isSubMenuOpen || !node) {
+      return undefined;
+    }
+    node.addEventListener('pointerenter', maybeCloseSubMenu);
+    return () => {
+      node.removeEventListener('pointerenter', maybeCloseSubMenu);
+    };
+  }, [isSubMenuOpen, parentMenuRef, maybeCloseSubMenu]);
+
+  // Menu trigger does not react to clicking.
+  // @todo Add opening with space / enter / right or left arrow key.
+  return (
+    <MenuButton
+      {...buttonProps}
+      ref={ref}
+      onPointerEnter={() => setIsSubMenuOpen(true)}
+      onPointerLeave={maybeCloseSubMenu}
+      onClick={(e) => e.preventDefault()}
+    >
+      {label}
+      {SuffixIcon && (
+        <Suffix>
+          <SuffixIcon />
+        </Suffix>
+      )}
+    </MenuButton>
+  );
+}
+
+export default SubMenuTrigger;
