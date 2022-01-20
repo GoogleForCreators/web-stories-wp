@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { FULLBLEED_HEIGHT, PAGE_WIDTH } from '@web-stories-wp/units';
+import { FULLBLEED_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
 
 /**
  * Internal dependencies

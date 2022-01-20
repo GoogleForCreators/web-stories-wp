@@ -25,7 +25,7 @@ import {
   useMemo,
   useCallback,
 } from '@googleforcreators/react';
-import { PAGE_RATIO, useUnits } from '@web-stories-wp/units';
+import { PAGE_RATIO, useUnits } from '@googleforcreators/units';
 
 /**
  * Internal dependencies

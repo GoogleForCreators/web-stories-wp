@@ -18,7 +18,11 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { PAGE_WIDTH, PAGE_HEIGHT, editorPixels } from '@web-stories-wp/units';
+import {
+  PAGE_WIDTH,
+  PAGE_HEIGHT,
+  editorPixels,
+} from '@googleforcreators/units';
 import { getMediaSizePositionProps } from '@googleforcreators/media';
 
 /**

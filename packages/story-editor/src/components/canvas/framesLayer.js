@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import { memo, useRef, useCallback } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
-import { PAGE_WIDTH } from '@web-stories-wp/units';
+import { PAGE_WIDTH } from '@googleforcreators/units';
 import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
 
 /**

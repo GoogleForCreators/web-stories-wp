@@ -25,7 +25,7 @@ import stickers from '@googleforcreators/stickers';
 import {
   calcRotatedObjectPositionAndSize,
   dataPixels,
-} from '@web-stories-wp/units';
+} from '@googleforcreators/units';
 import {
   Button,
   LockToggle,

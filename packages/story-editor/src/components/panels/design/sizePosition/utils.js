@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { calcRotatedObjectPositionAndSize } from '@web-stories-wp/units';
+import { calcRotatedObjectPositionAndSize } from '@googleforcreators/units';
 /**
  * Internal dependencies
  */

@@ -28,7 +28,7 @@ import {
 } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { generatePatternStyles } from '@googleforcreators/patterns';
-import { FULLBLEED_RATIO } from '@web-stories-wp/units';
+import { FULLBLEED_RATIO } from '@googleforcreators/units';
 import {
   THEME_CONSTANTS,
   themeHelpers,

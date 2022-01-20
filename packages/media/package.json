@@ -23,7 +23,7 @@
   "dependencies": {
     "@googleforcreators/react": "*",
     "@web-stories-wp/tracking": "*",
-    "@web-stories-wp/units": "*",
+    "@googleforcreators/units": "*",
     "mime": "^3.0.0",
     "prop-types": "^15.8.1"
   },

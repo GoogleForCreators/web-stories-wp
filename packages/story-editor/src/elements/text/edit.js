@@ -28,7 +28,7 @@ import {
 } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { generatePatternStyles } from '@googleforcreators/patterns';
-import { useUnits } from '@web-stories-wp/units';
+import { useUnits } from '@googleforcreators/units';
 
 /**
  * Internal dependencies
