@@ -49,7 +49,7 @@ jobs:
         ports:
           - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-    continue-on-error: ${{ matrix.experimental == true }}
+    continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
         php: ['7.0', '8.0']
@@ -59,6 +59,7 @@ jobs:
         # TODO: Switch to 'latest' once a new minor release is out.
         wp: ['5.8']
         coverage: [false]
+        experimental: [false]
         include:
           # Using PHP 7.4 for code coverage run as 8.0 throws errors.
           - php: '7.4'

@@ -66,25 +66,28 @@ jobs:
     name: ${{ matrix.browser }} - WP ${{ matrix.wp }} (${{ matrix.shard }})${{ matrix.experimental && ' (experimental)' || '' }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    continue-on-error: ${{ matrix.experimental == true }}
+    continue-on-error: ${{ matrix.experimental }}
     strategy:
+      # TODO: Perhaps remove eventually. See also https://github.com/actions/toolkit/issues/399
+      fail-fast: false
       matrix:
         # TODO: add back Firefox once support is more mature.
         browser: ['chrome']
         wp: ['5.5']
         snapshots: [false]
+        experimental: [false]
         # We want to split up the tests into 2 parts running in parallel.
         shard: ['1/2', '2/2']
         include:
           - browser: 'chrome'
             wp: 'latest'
             snapshots: true
-
             shard: '1/2'
           - browser: 'chrome'
             wp: 'latest'
             snapshots: true
             shard: '2/2'
+
           - browser: 'chrome'
             wp: '5.9-RC3'
             experimental: true
@@ -95,6 +98,7 @@ jobs:
             experimental: true
             snapshots: false
             shard: '2/2'
+
           - browser: 'firefox'
             wp: 'latest'
             experimental: true
