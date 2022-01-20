@@ -20,7 +20,7 @@
 import { useMemo, useRef } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { __, _x } from '@web-stories-wp/i18n';
+import { __, _x } from '@googleforcreators/i18n';
 import {
   Button,
   BUTTON_SIZES,

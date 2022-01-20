@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import { useMemo } from '@web-stories-wp/react';
 import { getRelativeDisplayDate } from '@web-stories-wp/date';
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@googleforcreators/i18n';
 import {
   Headline,
   Text,

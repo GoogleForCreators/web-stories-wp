@@ -27,7 +27,7 @@ import {
 } from '@web-stories-wp/patterns';
 import { Icons, Swatch, themeHelpers } from '@web-stories-wp/design-system';
 import { useRef } from '@web-stories-wp/react';
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies

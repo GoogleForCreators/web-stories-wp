@@ -20,7 +20,7 @@
 import { useState, useCallback, useEffect } from '@web-stories-wp/react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { _x, __ } from '@web-stories-wp/i18n';
+import { _x, __ } from '@googleforcreators/i18n';
 import { PatternPropType } from '@web-stories-wp/patterns';
 import { NumericInput, Icons } from '@web-stories-wp/design-system';
 

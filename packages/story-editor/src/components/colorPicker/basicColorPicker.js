@@ -31,7 +31,7 @@ import {
   localStore,
   LOCAL_STORAGE_PREFIX,
 } from '@web-stories-wp/design-system';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import { useState } from '@web-stories-wp/react';
 
 /**

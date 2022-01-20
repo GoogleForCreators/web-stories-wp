@@ -24,7 +24,7 @@ import {
   useEffect,
   useState,
 } from '@web-stories-wp/react';
-import { __, _x, TranslateWithMarkup, sprintf } from '@web-stories-wp/i18n';
+import { __, _x, TranslateWithMarkup, sprintf } from '@googleforcreators/i18n';
 import {
   DropDown,
   Search,

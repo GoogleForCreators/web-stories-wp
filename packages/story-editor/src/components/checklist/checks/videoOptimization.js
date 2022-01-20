@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { sprintf, _n, __ } from '@web-stories-wp/i18n';
+import { sprintf, _n, __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 
 /**

@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback } from '@web-stories-wp/react';
-import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
+import { __, TranslateWithMarkup } from '@googleforcreators/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
 import { Link, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
 import { Dialog } from '@web-stories-wp/story-editor';

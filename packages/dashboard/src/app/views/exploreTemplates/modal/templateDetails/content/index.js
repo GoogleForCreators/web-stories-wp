@@ -18,7 +18,7 @@
  */
 import PropTypes from 'prop-types';
 import { useEffect, useMemo, useState } from '@web-stories-wp/react';
-import { sprintf, __ } from '@web-stories-wp/i18n';
+import { sprintf, __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import {
   Button,

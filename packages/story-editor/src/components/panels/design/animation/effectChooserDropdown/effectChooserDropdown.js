@@ -19,7 +19,7 @@
  */
 import { forwardRef, useCallback, useMemo } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
-import { __, _x } from '@web-stories-wp/i18n';
+import { __, _x } from '@googleforcreators/i18n';
 import { useFeatures } from 'flagged';
 import { css } from 'styled-components';
 import { DropDown, PLACEMENT } from '@web-stories-wp/design-system';

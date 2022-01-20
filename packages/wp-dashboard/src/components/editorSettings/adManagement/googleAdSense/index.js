@@ -19,7 +19,7 @@
  */
 import { useState, useCallback, useEffect } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
-import { __, sprintf, TranslateWithMarkup } from '@web-stories-wp/i18n';
+import { __, sprintf, TranslateWithMarkup } from '@googleforcreators/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
 import {
   BUTTON_SIZES,

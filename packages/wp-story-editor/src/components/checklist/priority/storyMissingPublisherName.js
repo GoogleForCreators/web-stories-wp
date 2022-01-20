@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { TranslateWithMarkup, __ } from '@web-stories-wp/i18n';
+import { TranslateWithMarkup, __ } from '@googleforcreators/i18n';
 import {
   useConfig,
   ChecklistCard,

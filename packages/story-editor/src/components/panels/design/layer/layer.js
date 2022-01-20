@@ -19,7 +19,7 @@
  */
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import {
   Button,
   BUTTON_TYPES,

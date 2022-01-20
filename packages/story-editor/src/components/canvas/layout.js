@@ -26,7 +26,7 @@ import {
   useEffect,
   useResizeEffect,
 } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import { generatePatternStyles } from '@web-stories-wp/patterns';
 import { FULLBLEED_RATIO } from '@web-stories-wp/units';
 import { THEME_CONSTANTS, themeHelpers } from '@web-stories-wp/design-system';

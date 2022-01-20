@@ -19,7 +19,7 @@
  */
 import { formatDistanceToNow, isToday, isYesterday } from 'date-fns';
 import { toDate } from 'date-fns-tz';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies

@@ -25,7 +25,7 @@ import {
 } from '@web-stories-wp/react';
 import { trackClick, trackEvent } from '@web-stories-wp/tracking';
 import { getTemplateMetaData } from '@web-stories-wp/templates';
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@googleforcreators/i18n';
 import {
   Button,
   BUTTON_SIZES,

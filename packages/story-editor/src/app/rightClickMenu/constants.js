@@ -22,7 +22,7 @@ import {
   Text,
   THEME_CONSTANTS,
 } from '@web-stories-wp/design-system';
-import { __, _n } from '@web-stories-wp/i18n';
+import { __, _n } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 
 export const RIGHT_CLICK_MENU_LABELS = {

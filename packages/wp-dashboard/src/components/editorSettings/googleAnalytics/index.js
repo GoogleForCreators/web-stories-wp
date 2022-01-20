@@ -24,7 +24,7 @@ import {
   useMemo,
 } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
-import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
+import { __, TranslateWithMarkup } from '@googleforcreators/i18n';
 import { trackClick, trackEvent } from '@web-stories-wp/tracking';
 import {
   BUTTON_SIZES,

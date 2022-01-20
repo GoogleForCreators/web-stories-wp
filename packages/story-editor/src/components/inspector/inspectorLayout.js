@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import { useCallback } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { useEscapeToBlurEffect } from '@web-stories-wp/design-system';
 

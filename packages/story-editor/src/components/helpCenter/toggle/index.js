@@ -18,7 +18,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { __, _n, sprintf } from '@web-stories-wp/i18n';
+import { __, _n, sprintf } from '@googleforcreators/i18n';
 import { Icons } from '@web-stories-wp/design-system';
 
 /**

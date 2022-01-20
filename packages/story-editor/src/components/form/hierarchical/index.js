@@ -28,7 +28,7 @@ import {
   useKeyDownEffect,
   useLiveRegion,
 } from '@web-stories-wp/design-system';
-import { _n, sprintf, __ } from '@web-stories-wp/i18n';
+import { _n, sprintf, __ } from '@googleforcreators/i18n';
 import {
   useCallback,
   useDebouncedCallback,
