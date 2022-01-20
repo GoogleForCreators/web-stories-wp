@@ -19,12 +19,12 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { getMediaSizePositionProps } from '@web-stories-wp/media';
+import { getMediaSizePositionProps } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
  */
-import { useRef } from '@web-stories-wp/react';
+import { useRef } from '@googleforcreators/react';
 import { useUnits } from '@web-stories-wp/units';
 import StoryPropTypes from '../../types';
 import {

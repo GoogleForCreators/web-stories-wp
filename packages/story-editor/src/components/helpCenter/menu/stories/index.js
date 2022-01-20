@@ -17,9 +17,12 @@
  * External dependencies
  */
 import styled, { ThemeProvider } from 'styled-components';
-import { useState } from '@web-stories-wp/react';
+import { useState } from '@googleforcreators/react';
 import { TransitionGroup } from 'react-transition-group';
-import { theme as dsTheme, ThemeGlobals } from '@web-stories-wp/design-system';
+import {
+  theme as dsTheme,
+  ThemeGlobals,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

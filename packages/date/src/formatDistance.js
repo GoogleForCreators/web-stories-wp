@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __, _n, sprintf } from '@web-stories-wp/i18n';
+import { __, _n, sprintf } from '@googleforcreators/i18n';
 
 const formatDistanceLocale = {
   lessThanXMinutes(count) {

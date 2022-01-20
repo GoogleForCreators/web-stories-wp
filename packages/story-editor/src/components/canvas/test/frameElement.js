@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { render, fireEvent } from '@testing-library/react';
-import { createSolid } from '@web-stories-wp/patterns';
+import { createSolid } from '@googleforcreators/patterns';
 /**
  * Internal dependencies
  */

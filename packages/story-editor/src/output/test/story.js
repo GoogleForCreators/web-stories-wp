@@ -19,7 +19,7 @@
  */
 jest.mock('flagged');
 import { useFeature } from 'flagged';
-import { renderToStaticMarkup } from '@web-stories-wp/react';
+import { renderToStaticMarkup } from '@googleforcreators/react';
 
 /**
  * Internal dependencies

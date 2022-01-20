@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useReducer, useMemo } from '@web-stories-wp/react';
+import { useReducer, useMemo } from '@googleforcreators/react';
 
 /**
  * Internal dependencies

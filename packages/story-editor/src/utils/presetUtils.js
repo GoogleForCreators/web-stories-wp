@@ -22,7 +22,7 @@ import {
   createSolid,
   generatePatternStyles,
   isPatternEqual,
-} from '@web-stories-wp/patterns';
+} from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState } from '@web-stories-wp/react';
+import { useState } from '@googleforcreators/react';
 import { dataPixels } from '@web-stories-wp/units';
 
 function useAlignment() {

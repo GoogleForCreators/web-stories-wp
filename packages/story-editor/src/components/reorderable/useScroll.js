@@ -22,7 +22,7 @@ import {
   useCallback,
   useEffect,
   useBatchingCallback,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 
 const SCROLL_PERCENT = 0.2;
 const MAX_SCROLL_STEP = 10;

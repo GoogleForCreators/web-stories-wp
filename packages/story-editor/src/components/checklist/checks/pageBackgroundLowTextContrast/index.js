@@ -15,4 +15,7 @@
  */
 
 export { default as PageBackgroundTextLowContrast } from './component';
-export { pageBackgroundTextLowContrast } from './check';
+export {
+  pageBackgroundTextLowContrast,
+  getPagesWithFailedContrast,
+} from './check';

@@ -23,7 +23,7 @@ import {
   useMemo,
   useRef,
   useCombinedRefs,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import styled, { css } from 'styled-components';
 /**
  * Internal dependencies

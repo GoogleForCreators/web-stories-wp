@@ -1,6 +1,17 @@
 {
-  "name": "@web-stories-wp/fonts",
-  "private": true,
+  "name": "@googleforcreators/fonts",
+  "description": "A list of curated font names as well as all current Google Fonts including their font metrics.",
+  "private": false,
+  "version": "0.0.1",
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "keywords": [
+    "web stories",
+    "fonts",
+    "google fonts"
+  ],
   "type": "module",
   "engines": {
     "node": ">= 16",

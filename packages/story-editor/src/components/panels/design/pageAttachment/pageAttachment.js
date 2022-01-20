@@ -22,8 +22,8 @@ import {
   useState,
   useEffect,
   useDebouncedCallback,
-} from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
+} from '@googleforcreators/react';
+import { __ } from '@googleforcreators/i18n';
 import {
   Checkbox,
   Input,
@@ -32,7 +32,7 @@ import {
   Text,
   THEME_CONSTANTS,
   ThemeGlobals,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
 
@@ -185,7 +185,7 @@ function PageAttachmentPanel() {
     /**
      * Handle page attachment icon change.
      *
-     * @param {import('@web-stories-wp/media').Resource} resource The new image.
+     * @param {import('@googleforcreators/media').Resource} resource The new image.
      */
     (resource) => {
       updatePageAttachment({ icon: resource?.src }, true);

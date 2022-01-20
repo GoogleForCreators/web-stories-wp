@@ -412,6 +412,7 @@ class Editor extends Service_Base implements HasRequirements {
 				'interval'         => $time_window,
 				'showLockedDialog' => $show_locked_dialog,
 			],
+			'canViewDefaultTemplates'      => true,
 			'version'                      => WEBSTORIES_VERSION,
 			'nonce'                        => $nonce,
 			'showMedia3p'                  => true,

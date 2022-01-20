@@ -1,6 +1,15 @@
 {
-  "name": "@web-stories-wp/story-editor",
-  "private": true,
+  "name": "@googleforcreators/story-editor",
+  "description": "The core Web Stories editor web application, which is platform-agnostic.",
+  "private": false,
+  "version": "0.0.1",
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "keywords": [
+    "web stories"
+  ],
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"
@@ -13,18 +22,18 @@
   "dependencies": {
     "@ap.cx/hues": "^2.4.0",
     "@ffmpeg/ffmpeg": "^0.10.1",
-    "@web-stories-wp/animation": "*",
-    "@web-stories-wp/date": "*",
-    "@web-stories-wp/design-system": "*",
-    "@web-stories-wp/fonts": "*",
-    "@web-stories-wp/i18n": "*",
+    "@googleforcreators/animation": "*",
+    "@googleforcreators/date": "*",
+    "@googleforcreators/design-system": "*",
+    "@googleforcreators/fonts": "*",
+    "@googleforcreators/i18n": "*",
     "@web-stories-wp/karma-fixture": "*",
-    "@web-stories-wp/media": "*",
-    "@web-stories-wp/migration": "*",
-    "@web-stories-wp/patterns": "*",
-    "@web-stories-wp/react": "*",
-    "@web-stories-wp/stickers": "*",
-    "@web-stories-wp/templates": "*",
+    "@googleforcreators/media": "*",
+    "@googleforcreators/migration": "*",
+    "@googleforcreators/patterns": "*",
+    "@googleforcreators/react": "*",
+    "@googleforcreators/stickers": "*",
+    "@googleforcreators/templates": "*",
     "@web-stories-wp/text-sets": "*",
     "@web-stories-wp/tracking": "*",
     "@web-stories-wp/units": "*",
@@ -40,7 +49,7 @@
     "history": "^5.2.0",
     "html-to-image": "1.9.0",
     "polished": "^4.1.3",
-    "prop-types": "^15.8.0",
+    "prop-types": "^15.8.1",
     "react-blurhash": "^0.1.3",
     "react-calendar": "^3.5.0",
     "react-color": "^2.19.3",

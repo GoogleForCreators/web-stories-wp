@@ -17,7 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { forwardRef, useMemo } from '@web-stories-wp/react';
+import { forwardRef, useMemo } from '@googleforcreators/react';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 

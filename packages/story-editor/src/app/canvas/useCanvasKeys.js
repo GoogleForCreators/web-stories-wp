@@ -17,10 +17,10 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useRef } from '@web-stories-wp/react';
+import { useCallback, useEffect, useRef } from '@googleforcreators/react';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { useGlobalKeyDownEffect } from '@web-stories-wp/design-system';
-import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
+import { useGlobalKeyDownEffect } from '@googleforcreators/design-system';
+import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies

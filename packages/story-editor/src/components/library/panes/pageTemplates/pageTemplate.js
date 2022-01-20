@@ -24,19 +24,19 @@ import {
   BUTTON_VARIANTS,
   Icons,
   themeHelpers,
-} from '@web-stories-wp/design-system';
-import { __ } from '@web-stories-wp/i18n';
+} from '@googleforcreators/design-system';
+import { __ } from '@googleforcreators/i18n';
 import {
   forwardRef,
   useCallback,
   useEffect,
   useFocusOut,
   useState,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { generatePatternStyles } from '@web-stories-wp/patterns';
-import { fetchRemoteBlob, blobToFile } from '@web-stories-wp/media';
+import { generatePatternStyles } from '@googleforcreators/patterns';
+import { fetchRemoteBlob, blobToFile } from '@googleforcreators/media';
 import { trackError } from '@web-stories-wp/tracking';
 
 /**

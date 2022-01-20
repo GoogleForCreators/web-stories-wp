@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { renderToStaticMarkup } from '@web-stories-wp/react';
+import { renderToStaticMarkup } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -47,16 +47,16 @@ describe('Image output', () => {
         width: 1920,
         sizes: {
           mid: {
-            source_url: 'https://example.com/image-mid.png',
+            sourceUrl: 'https://example.com/image-mid.png',
             width: 960,
             height: 540,
-            mime_type: 'image/png',
+            mimeType: 'image/png',
           },
           full: {
-            source_url: 'https://example.com/image.png',
+            sourceUrl: 'https://example.com/image.png',
             width: 1920,
             height: 1080,
-            mime_type: 'image/png',
+            mimeType: 'image/png',
           },
         },
       },

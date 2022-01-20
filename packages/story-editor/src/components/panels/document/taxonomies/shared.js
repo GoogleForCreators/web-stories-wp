@@ -25,7 +25,7 @@ import {
   themeHelpers,
   Button,
   BUTTON_VARIANTS,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 export const TaxonomyPropType = PropTypes.shape({
   capabilities: PropTypes.object,

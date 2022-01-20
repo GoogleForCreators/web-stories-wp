@@ -30,10 +30,10 @@ import './setLocaleData';
 /**
  * External dependencies
  */
-import Dashboard from '@web-stories-wp/dashboard';
-import { domReady, setAppElement } from '@web-stories-wp/design-system';
-import { StrictMode, render } from '@web-stories-wp/react';
-import { updateSettings } from '@web-stories-wp/date';
+import Dashboard from '@googleforcreators/dashboard';
+import { domReady, setAppElement } from '@googleforcreators/design-system';
+import { StrictMode, render } from '@googleforcreators/react';
+import { updateSettings } from '@googleforcreators/date';
 import { initializeTracking } from '@web-stories-wp/tracking';
 
 /**
@@ -41,7 +41,7 @@ import { initializeTracking } from '@web-stories-wp/tracking';
  */
 import getApiCallbacks from './api/utils/getApiCallbacks';
 import { GlobalStyle } from './theme';
-import { LEFT_RAIL_SECONDARY_NAVIGATION } from './constants';
+import { LEFT_RAIL_SECONDARY_NAVIGATION, TOOLBAR_HEIGHT } from './constants';
 import { Layout } from './components';
 
 window.webStories = window.webStories || {};
@@ -68,6 +68,9 @@ window.webStories.initializeStoryDashboard = (id, config) => {
     ...config,
     apiCallbacks: getApiCallbacks(config),
     leftRailSecondaryNavigation: LEFT_RAIL_SECONDARY_NAVIGATION,
+    styleConstants: {
+      topOffset: TOOLBAR_HEIGHT,
+    },
   };
 
   render(

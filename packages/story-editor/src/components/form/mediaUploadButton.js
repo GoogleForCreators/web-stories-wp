@@ -17,9 +17,9 @@
 /**
  * External dependencies
  */
-import { useSnackbar } from '@web-stories-wp/design-system';
-import { useCallback, useMemo } from '@web-stories-wp/react';
-import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
+import { useSnackbar } from '@googleforcreators/design-system';
+import { useCallback, useMemo } from '@googleforcreators/react';
+import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 
 /**

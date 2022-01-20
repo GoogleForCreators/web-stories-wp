@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { createSolidFromString } from '@web-stories-wp/patterns';
+import { createSolidFromString } from '@googleforcreators/patterns';
 /**
  * Internal dependencies
  */

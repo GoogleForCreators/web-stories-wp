@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { createGlobalStyle } from 'styled-components';
+import { SVGIcons } from '@googleforcreators/design-system';
 
 export const GlobalStyle = createGlobalStyle`
   .default-moveable .moveable-control,
@@ -104,16 +105,29 @@ export const GlobalStyle = createGlobalStyle`
   .default-moveable.moveable-control-box .moveable-line.moveable-rotation-line {
     background: ${({ theme }) => theme.colors.border.selection} !important;
     width: 1px;
-    height: 15px;
-    top: 25px;
+    height: 12px;
+    top: 28px;
   }
 
   .default-moveable.moveable-control-box .moveable-control.moveable-rotation-control {
     border-radius: 50px;
-    width: 10px;
-    height: 10px;
-    margin-left: -5px;
-    top: 25px;
+    width: 29px;
+    height: 29px;
+    margin-left: -14.5px;
+    top: 10.5px;
+  }
+
+  .default-moveable.moveable-control-box .moveable-control.moveable-rotation-control::after {
+    content: '';
+    position: absolute;
+    width: 28px;
+    height: 28px;
+    left: -1px;
+    top: -1px;
+    background-image: url('${SVGIcons.ArrowCircle}');
+    background-size: 100%;
+    /* The icon is black and we can't use color because it's not inline so invert it is */
+    filter: invert(100%);
   }
 
   .default-moveable.hide-handles .moveable-line.moveable-rotation-line,

@@ -17,15 +17,15 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useState } from '@web-stories-wp/react';
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { useCallback, useEffect, useState } from '@googleforcreators/react';
+import { __, sprintf } from '@googleforcreators/i18n';
 import {
   PageHeading,
   Layout,
   MIN_IMG_WIDTH,
   MIN_IMG_HEIGHT,
   useConfig,
-} from '@web-stories-wp/dashboard';
+} from '@googleforcreators/dashboard';
 import { useFeature } from 'flagged';
 
 /**

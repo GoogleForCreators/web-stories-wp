@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
-import { Icons } from '@web-stories-wp/design-system';
+import { __ } from '@googleforcreators/i18n';
+import { Icons } from '@googleforcreators/design-system';
 
 function Media3pIcon() {
   return <Icons.Picture title={__('Explore Media', 'web-stories')} />;

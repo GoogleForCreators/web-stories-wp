@@ -22,6 +22,7 @@ use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Configuration;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpBoilerplate;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpBoilerplateErrorHandler;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpRuntimePreloads;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpStoryCssOptimizer;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\MinifyHtml;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\OptimizeViewport;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\ReorderHead;
@@ -81,9 +82,10 @@ class Optimization extends TestCase {
 		$configuration = $this->call_private_method( $optimization, 'get_optimizer_configuration' );
 		$config_array  = $this->get_private_property( $configuration, 'configuration' );
 
-		$transformers = Configuration::DEFAULT_TRANSFORMERS;
+		$transformers   = Configuration::DEFAULT_TRANSFORMERS;
+		$transformers[] = AmpStoryCssOptimizer::class;
 
-		$this->assertCount( 1, $config_array );
+		$this->assertCount( 2, $config_array );
 		$this->assertArrayHasKey( 'transformers', $config_array );
 		$this->assertEqualSets( $transformers, $config_array['transformers'] );
 	}
@@ -108,7 +110,7 @@ class Optimization extends TestCase {
 			ReorderHead::class,
 		];
 
-		$this->assertCount( 1, $config_array );
+		$this->assertCount( 2, $config_array );
 		$this->assertArrayHasKey( 'transformers', $config_array );
 		$this->assertEqualSets( $transformers, $config_array['transformers'] );
 	}

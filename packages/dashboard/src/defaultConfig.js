@@ -80,6 +80,9 @@ const defaultConfig = {
   flags: {},
   apiCallbacks: {},
   leftRailSecondaryNavigation: [],
+  styleConstants: {
+    topOffset: 0,
+  },
 };
 
 export default defaultConfig;

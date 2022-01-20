@@ -17,9 +17,9 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
-import { List, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { useCallback, useMemo } from '@googleforcreators/react';
+import { __ } from '@googleforcreators/i18n';
+import { List, THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -33,7 +33,7 @@ import {
   ChecklistCardStyles,
 } from '../../checklistCard';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
-import { filterStoryElements, getVisibleThumbnails } from '../utils';
+import { filterStoryElements } from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
 
@@ -71,6 +71,16 @@ const ImageElementResolution = () => {
   const isRendered = failingElements.length > 0;
   useRegisterCheck('ImageElementResolution', isRendered);
 
+  const thumbnails = failingElements.map((element) => (
+    <Thumbnail
+      key={element.id}
+      onClick={() => handleClick(element.id, element.pageId)}
+      type={THUMBNAIL_TYPES.IMAGE}
+      displayBackground={<LayerThumbnail page={element} />}
+      aria-label={__('Go to offending image', 'web-stories')}
+    />
+  ));
+
   return (
     isRendered &&
     isChecklistMounted && (
@@ -88,20 +98,7 @@ const ImageElementResolution = () => {
             </List>
           </ChecklistCardStyles.CardListWrapper>
         }
-        thumbnailCount={failingElements.length}
-        thumbnail={
-          <>
-            {getVisibleThumbnails(failingElements).map((element) => (
-              <Thumbnail
-                key={element.id}
-                onClick={() => handleClick(element.id, element.pageId)}
-                type={THUMBNAIL_TYPES.IMAGE}
-                displayBackground={<LayerThumbnail page={element} />}
-                aria-label={__('Go to offending image', 'web-stories')}
-              />
-            ))}
-          </>
-        }
+        thumbnails={thumbnails}
       />
     )
   );

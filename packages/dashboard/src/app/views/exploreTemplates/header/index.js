@@ -17,12 +17,12 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 
 /**
  * External dependencies
  */
-import { useDebouncedCallback, useCallback } from '@web-stories-wp/react';
+import { useDebouncedCallback, useCallback } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { useFeature } from 'flagged';
 

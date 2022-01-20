@@ -14,28 +14,10 @@
  * limitations under the License.
  */
 /**
- * External dependencies
- */
-import { noop } from '@web-stories-wp/design-system';
-/**
  * Internal dependencies
  */
-import {
-  STORY_CONTEXT_MENU_ITEMS,
-  STORY_CONTEXT_MENU_ACTIONS,
-} from '../../../constants';
+import { STORY_CONTEXT_MENU_ITEMS } from '../../../constants';
 import { generateStoryMenu } from '../story-menu-generator';
-
-const TEST_MENU_ITEM_ACTIONS = Object.values(STORY_CONTEXT_MENU_ACTIONS).reduce(
-  (all, actionName) => {
-    all[actionName] = noop;
-
-    return all;
-  },
-  {
-    default: noop,
-  }
-);
 
 const TEST_STORY = {
   previewLink: 'preview-link',
@@ -49,7 +31,6 @@ const TEST_STORY = {
 describe('generateStoryMenu', () => {
   it('should generate menu items of the correct shape', () => {
     const menuItems = generateStoryMenu({
-      menuItemActions: TEST_MENU_ITEM_ACTIONS,
       menuItems: STORY_CONTEXT_MENU_ITEMS,
       story: TEST_STORY,
     });
