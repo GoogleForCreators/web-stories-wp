@@ -73,7 +73,7 @@ const PaginationContainer = styled.div`
         `}
 `;
 
-const TemplateTag = styled(Chip)`
+const TemplateTag = styled(Chip).attrs({ forwardedAs: 'div' })`
   margin-right: 12px;
   margin-bottom: 12px;
   > span {
