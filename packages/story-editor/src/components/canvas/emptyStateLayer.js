@@ -31,9 +31,8 @@ import {
 import { __ } from '@web-stories-wp/i18n';
 import { useRightClickMenu } from '../../app';
 import useStory from '../../app/story/useStory';
-import { DEFAULT_PAGE_BACKGROUND_COLOR } from '../../elements/utils/createPage';
+import isEmptyStory from '../../app/story/utils/isEmptyStory';
 import { Layer, PageArea } from './layout';
-import { shallowEqual } from '@web-stories-wp/react';
 
 const DisplayPageArea = styled(PageArea)`
   position: absolute;
@@ -44,28 +43,9 @@ const EmptyStateMessage = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 20px;
+  text-align: center;
 `;
-
-export const isEmptyStory = (pages) => {
-  if (pages.length === 0) {
-    return false;
-  }
-
-  const hasOnlyOnePage = pages.length === 1;
-  const hasNoExtraElements = pages[0].elements.length === 1;
-  const hasNoBackgroundMedia = !('resource' in pages[0].elements[0]);
-  const hasDefaultBackgroundColor = shallowEqual(
-    DEFAULT_PAGE_BACKGROUND_COLOR.color,
-    pages[0].backgroundColor.color
-  );
-
-  return (
-    hasOnlyOnePage &&
-    hasNoExtraElements &&
-    hasNoBackgroundMedia &&
-    hasDefaultBackgroundColor
-  );
-};
 
 function EmptyStateLayer() {
   const onOpenMenu = useRightClickMenu((value) => value.onOpenMenu);

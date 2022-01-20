@@ -43,7 +43,7 @@ const MenuWrapper = styled.div(
     background-color: ${theme.colors.bg.primary};
     border-radius: ${theme.borders.radius.small};
     border: 1px solid ${theme.colors.border.disable};
-    width: ${({ $isIconMenu }) => ($isIconMenu ? 40 : 210)}px;
+    width: ${({ $isIconMenu }) => ($isIconMenu ? 40 : 218)}px;
 
     *:last-child {
       margin-bottom: 0;

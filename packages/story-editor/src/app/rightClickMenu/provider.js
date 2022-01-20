@@ -52,7 +52,7 @@ import useDeleteStyle from '../../components/panels/design/textStyle/stylePreset
 import useDeleteColor from '../../components/colorPicker/useDeleteColor';
 import { noop } from '../../utils/noop';
 import useVideoTrim from '../../components/videoTrim/useVideoTrim';
-import { isEmptyStory } from '../../components/canvas/emptyStateLayer';
+import isEmptyStory from '../story/utils/isEmptyStory';
 import {
   RIGHT_CLICK_MENU_LABELS,
   RIGHT_CLICK_MENU_SHORTCUTS,
