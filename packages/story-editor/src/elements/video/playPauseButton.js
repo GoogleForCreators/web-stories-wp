@@ -25,7 +25,7 @@ import {
   useState,
   useDebouncedCallback,
   useRef,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { CSSTransition } from 'react-transition-group';
 import { __ } from '@googleforcreators/i18n';
 import { rgba } from 'polished';

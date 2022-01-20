@@ -25,7 +25,7 @@ import {
   ModalGlobalStyle,
   deepMerge,
 } from '@googleforcreators/design-system';
-import { useMemo } from '@web-stories-wp/react';
+import { useMemo } from '@googleforcreators/react';
 import { FlagsProvider } from 'flagged';
 
 /**

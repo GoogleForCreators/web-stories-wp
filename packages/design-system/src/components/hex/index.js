@@ -23,7 +23,7 @@ import {
   useEffect,
   useRef,
   useState,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { parseToRgb } from 'polished';
 import { getHexFromValue, getPreviewText } from '@googleforcreators/patterns';

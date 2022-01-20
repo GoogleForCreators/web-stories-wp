@@ -23,7 +23,7 @@ import {
   useMemo,
   useReduction,
   useRef,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import {
   trackError,
   trackEvent,

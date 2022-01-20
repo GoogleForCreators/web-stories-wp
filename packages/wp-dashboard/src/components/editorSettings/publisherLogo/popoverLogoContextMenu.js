@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { Fragment, useCallback } from '@web-stories-wp/react';
+import { Fragment, useCallback } from '@googleforcreators/react';
 import { __, sprintf } from '@googleforcreators/i18n';
 import {
   Icons,

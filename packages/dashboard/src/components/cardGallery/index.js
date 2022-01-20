@@ -24,7 +24,7 @@ import {
   useMemo,
   useRef,
   useState,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { __, sprintf } from '@googleforcreators/i18n';
 import { useGridViewKeys } from '@googleforcreators/design-system';
 

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { EditorState, Modifier } from 'draft-js';
-import { useCallback } from '@web-stories-wp/react';
+import { useCallback } from '@googleforcreators/react';
 
 /**
  * Internal dependencies

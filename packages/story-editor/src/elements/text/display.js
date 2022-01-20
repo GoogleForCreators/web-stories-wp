@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useEffect, useRef, useMemo } from '@web-stories-wp/react';
+import { useEffect, useRef, useMemo } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { createSolid } from '@googleforcreators/patterns';
 import { useUnits } from '@web-stories-wp/units';

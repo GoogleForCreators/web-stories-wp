@@ -31,7 +31,7 @@
     "@googleforcreators/media": "*",
     "@googleforcreators/migration": "*",
     "@googleforcreators/patterns": "*",
-    "@web-stories-wp/react": "*",
+    "@googleforcreators/react": "*",
     "@web-stories-wp/stickers": "*",
     "@web-stories-wp/templates": "*",
     "@web-stories-wp/text-sets": "*",

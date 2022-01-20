@@ -30,7 +30,7 @@ import {
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
-import { useRef, useState } from '@web-stories-wp/react';
+import { useRef, useState } from '@googleforcreators/react';
 
 /**
  * Internal dependencies

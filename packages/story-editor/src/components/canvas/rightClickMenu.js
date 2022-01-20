@@ -27,7 +27,7 @@ import {
   Fragment,
   useRef,
   useEffect,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 
 /**
  * Internal dependencies

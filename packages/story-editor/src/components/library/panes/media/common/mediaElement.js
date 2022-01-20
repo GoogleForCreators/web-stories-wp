@@ -25,7 +25,7 @@ import {
   memo,
   useState,
   useRef,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { rgba } from 'polished';
 import { __ } from '@googleforcreators/i18n';
 import { LoadingBar, useKeyDownEffect } from '@googleforcreators/design-system';

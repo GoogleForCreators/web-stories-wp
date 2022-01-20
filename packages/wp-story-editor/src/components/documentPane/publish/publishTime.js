@@ -22,7 +22,7 @@ import {
   useRef,
   useState,
   useFocusOut,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { format, formatTime, is12Hour } from '@googleforcreators/date';
 import { __ } from '@googleforcreators/i18n';
 import {

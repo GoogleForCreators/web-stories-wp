@@ -29,7 +29,7 @@ import {
   useMemo,
   useCallback,
   useFocusOut,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { useGridViewKeys } from '@googleforcreators/design-system';
 /**
  * Internal dependencies

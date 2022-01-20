@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect } from '@web-stories-wp/react';
+import { useEffect } from '@googleforcreators/react';
 import { trackTiming } from '@web-stories-wp/tracking';
 
 const TRACES = {};

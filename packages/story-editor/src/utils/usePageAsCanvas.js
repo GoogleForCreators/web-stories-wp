@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
+import { useCallback } from '@googleforcreators/react';
 import { FULLBLEED_RATIO, getBox, PAGE_RATIO } from '@web-stories-wp/units';
 
 /**

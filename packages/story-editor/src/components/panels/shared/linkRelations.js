@@ -24,7 +24,7 @@ import {
   THEME_CONSTANTS,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
-import { useCallback } from '@web-stories-wp/react';
+import { useCallback } from '@googleforcreators/react';
 import styled from 'styled-components';
 
 /**

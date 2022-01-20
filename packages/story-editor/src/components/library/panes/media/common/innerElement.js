@@ -17,7 +17,7 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import { useEffect, useRef, memo } from '@web-stories-wp/react';
+import { useEffect, useRef, memo } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import {
   getSmallestUrlForWidth,

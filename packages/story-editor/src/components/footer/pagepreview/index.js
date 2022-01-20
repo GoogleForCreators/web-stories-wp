@@ -27,7 +27,7 @@ import {
   useRef,
   useCallback,
   useEffect,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { useFeature } from 'flagged';
 
 /**

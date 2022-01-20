@@ -25,7 +25,7 @@ import {
   useCallback,
   useEffect,
   useMemo,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { trackEvent } from '@web-stories-wp/tracking';
 import {
   localStore,

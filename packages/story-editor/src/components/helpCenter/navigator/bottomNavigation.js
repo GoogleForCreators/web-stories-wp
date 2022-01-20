@@ -19,7 +19,7 @@
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
-import { useEffect, useState, useRef } from '@web-stories-wp/react';
+import { useEffect, useState, useRef } from '@googleforcreators/react';
 import {
   BUTTON_SIZES,
   BUTTON_TYPES,

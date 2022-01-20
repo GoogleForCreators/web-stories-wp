@@ -19,7 +19,7 @@
 import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import { useState } from '@web-stories-wp/react';
+import { useState } from '@googleforcreators/react';
 import styled from 'styled-components';
 import {
   Text,

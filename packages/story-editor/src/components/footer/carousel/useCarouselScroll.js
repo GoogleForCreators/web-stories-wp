@@ -23,7 +23,7 @@ import {
   useState,
   useEffect,
   useLayoutEffect,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 
 /**
  * Internal dependencies

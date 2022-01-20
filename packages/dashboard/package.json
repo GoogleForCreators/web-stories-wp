@@ -28,7 +28,7 @@
     "@googleforcreators/media": "*",
     "@googleforcreators/migration": "*",
     "@googleforcreators/patterns": "*",
-    "@web-stories-wp/react": "*",
+    "@googleforcreators/react": "*",
     "@web-stories-wp/templates": "*",
     "@web-stories-wp/tracking": "*",
     "@web-stories-wp/units": "*",

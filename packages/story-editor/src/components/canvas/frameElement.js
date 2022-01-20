@@ -23,7 +23,7 @@ import {
   useLayoutEffect,
   useRef,
   useState,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { useUnits } from '@web-stories-wp/units';
 
 /**

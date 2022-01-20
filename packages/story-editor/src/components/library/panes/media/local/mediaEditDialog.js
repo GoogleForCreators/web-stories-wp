@@ -19,7 +19,7 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { useCallback, useState } from '@web-stories-wp/react';
+import { useCallback, useState } from '@googleforcreators/react';
 import { formatDate, toDate, isValid } from '@googleforcreators/date';
 import { __, sprintf } from '@googleforcreators/i18n';
 import { trackError } from '@web-stories-wp/tracking';

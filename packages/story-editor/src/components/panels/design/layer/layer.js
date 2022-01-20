@@ -27,7 +27,7 @@ import {
   themeHelpers,
   Tooltip,
 } from '@googleforcreators/design-system';
-import { useRef, memo } from '@web-stories-wp/react';
+import { useRef, memo } from '@googleforcreators/react';
 
 /**
  * Internal dependencies

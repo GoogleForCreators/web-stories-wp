@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useMemo, useState } from '@web-stories-wp/react';
+import { useCallback, useMemo, useState } from '@googleforcreators/react';
 import { useConfig } from '@web-stories-wp/story-editor';
 
 /**

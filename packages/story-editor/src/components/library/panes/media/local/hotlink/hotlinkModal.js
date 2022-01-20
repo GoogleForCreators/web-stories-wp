@@ -23,7 +23,7 @@ import {
   useRef,
   useLayoutEffect,
   useCallback,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 

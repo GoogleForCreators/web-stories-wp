@@ -26,7 +26,7 @@ import {
   useRef,
   useState,
   useCallback,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { PatternPropType, hasGradient } from '@googleforcreators/patterns';
 import { useKeyDownEffect } from '@googleforcreators/design-system';

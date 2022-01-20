@@ -18,7 +18,7 @@
     "@googleforcreators/i18n": "*",
     "@googleforcreators/media": "*",
     "@googleforcreators/patterns": "*",
-    "@web-stories-wp/react": "*",
+    "@googleforcreators/react": "*",
     "@web-stories-wp/story-editor": "*",
     "@web-stories-wp/tracking": "*",
     "@wordpress/api-fetch": "^5.2.6",

@@ -29,7 +29,7 @@ import {
   useMemo,
   useReducer,
   useRef,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { v4 as uuidv4 } from 'uuid';
 
 /** @typedef {import('react')} Node */

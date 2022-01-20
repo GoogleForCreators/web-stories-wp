@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
+import { useCallback } from '@googleforcreators/react';
 import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
 import {
   preloadImage,

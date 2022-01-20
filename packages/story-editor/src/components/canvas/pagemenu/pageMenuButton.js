@@ -25,7 +25,7 @@ import {
   BUTTON_TYPES,
   BUTTON_SIZES,
 } from '@googleforcreators/design-system';
-import { forwardRef } from '@web-stories-wp/react';
+import { forwardRef } from '@googleforcreators/react';
 
 /**
  * Internal dependencies

@@ -23,7 +23,7 @@ import {
   useEffect,
   useState,
   useRef,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { useGlobalKeyDownEffect } from '@googleforcreators/design-system';
 
 /**

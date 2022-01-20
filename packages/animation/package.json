@@ -24,7 +24,7 @@
   "dependencies": {
     "@googleforcreators/i18n": "*",
     "@googleforcreators/media": "*",
-    "@web-stories-wp/react": "*",
+    "@googleforcreators/react": "*",
     "@web-stories-wp/units": "*",
     "flagged": "^2.0.1",
     "prop-types": "^15.8.1",

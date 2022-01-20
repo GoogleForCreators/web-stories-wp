@@ -16,7 +16,11 @@
 /**
  * External dependencies
  */
-import { useCallback, useRef, useContextSelector } from '@web-stories-wp/react';
+import {
+  useCallback,
+  useRef,
+  useContextSelector,
+} from '@googleforcreators/react';
 /**
  * Internal dependencies
  */

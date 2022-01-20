@@ -20,7 +20,7 @@
 import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Fragment, useCallback } from '@web-stories-wp/react';
+import { Fragment, useCallback } from '@googleforcreators/react';
 import {
   ContextMenu,
   ContextMenuComponents,
