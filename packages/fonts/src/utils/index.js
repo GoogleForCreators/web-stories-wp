@@ -16,4 +16,3 @@
 
 export { default as getFontCSS } from './getFontCSS';
 export { default as getGoogleFontURL } from './getGoogleFontURL';
-export { default as getFontDataFromUrl } from './getFontDataFromUrl';
