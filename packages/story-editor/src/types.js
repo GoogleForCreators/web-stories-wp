@@ -65,7 +65,6 @@ StoryPropTypes.story = PropTypes.shape({
   autoAdvance: PropTypes.bool,
   defaultPageDuration: PropTypes.number,
   backgroundAudio: BackgroundAudioPropType,
-  tracks: PropTypes.arrayOf(ResourcePropTypes.trackResource),
 });
 
 StoryPropTypes.mask = PropTypes.shape({

@@ -43,9 +43,7 @@ function BackgroundAudioPanel() {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
 
-  const enhancedPageBackgroundAudio = useFeature('enhancedPageBackgroundAudio');
-
-  const { backgroundAudio, tracks, updateStory } = useStory(
+  const { backgroundAudio, updateStory } = useStory(
     ({
       state: {
         story: { backgroundAudio, tracks },
@@ -57,13 +55,6 @@ function BackgroundAudioPanel() {
   const updateBackgroundAudio = useCallback(
     (audioResource) => {
       updateStory({ properties: { backgroundAudio: audioResource } });
-    },
-    [updateStory]
-  );
-
-  const updateTracks = useCallback(
-    (audioTracks) => {
-      updateStory({ properties: { tracks: audioTracks } });
     },
     [updateStory]
   );
@@ -88,10 +79,7 @@ function BackgroundAudioPanel() {
       </Row>
       <BackgroundAudioPanelContent
         backgroundAudio={backgroundAudio}
-        tracks={tracks}
         updateBackgroundAudio={updateBackgroundAudio}
-        updateTracks={updateTracks}
-        supportsCaptions={enhancedPageBackgroundAudio}
       />
     </SimplePanel>
   );

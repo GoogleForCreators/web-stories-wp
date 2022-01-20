@@ -35,7 +35,6 @@ function getStoryPropsToSave({ story, pages, metadata }) {
     'autoAdvance',
     'defaultPageDuration',
     'backgroundAudio',
-    'tracks',
     'terms',
   ]);
 
