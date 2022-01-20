@@ -62,6 +62,12 @@
     }
   },
   "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "civicrm/composer-downloads-plugin": true,
+      "cweagans/composer-patches": true,
+      "mcaskill/composer-exclude-files": true
+    },
     "discard-changes": true,
     "platform": {
       "php": "7.0.21"
@@ -73,7 +79,7 @@
       "composer-normalize": {
         "path": "vendor/bin/composer-normalize",
         "type": "phar",
-        "url": "https://github.com/ergebnis/composer-normalize/releases/download/2.18.0/composer-normalize.phar"
+        "url": "https://github.com/ergebnis/composer-normalize/releases/download/2.23.0/composer-normalize.phar"
       },
       "php-scoper": {
         "path": "vendor/bin/php-scoper",
@@ -83,7 +89,7 @@
       "phpstan": {
         "path": "vendor/bin/phpstan",
         "type": "phar",
-        "url": "https://github.com/phpstan/phpstan/releases/download/1.2.0/phpstan.phar"
+        "url": "https://github.com/phpstan/phpstan/releases/download/1.4.0/phpstan.phar"
       }
     },
     "enable-patching": true,

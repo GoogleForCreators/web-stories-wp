@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -191,7 +191,6 @@
             "id": 0,
             "alt": "Green Indoor Plants",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#252313",
             "isExternal": true
@@ -447,7 +446,6 @@
             "id": 0,
             "alt": "Green Plants on Brown Clay Pot",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#dadad9",
             "isExternal": true
@@ -810,7 +808,6 @@
             "id": 0,
             "alt": "Top View Photo of Gardening Tools",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#3d362c",
             "isExternal": true
@@ -1086,7 +1083,6 @@
             "id": 0,
             "alt": "Person Arranging Pot Plant",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#bab19f",
             "isExternal": true
@@ -1392,7 +1388,6 @@
             "id": 0,
             "alt": "Photo of Plants On White Pot",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#dddee3",
             "isExternal": true
@@ -1985,7 +1980,6 @@
             "id": 0,
             "alt": "black pruning shears beside green gloves",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d4d4c7",
             "isExternal": true
@@ -2554,7 +2548,6 @@
             "id": 0,
             "alt": "Photo of Green Leafed Plant in Bottle With Water",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#e2e8f5",
             "isExternal": true
@@ -3132,7 +3125,6 @@
             "id": 0,
             "alt": "Photo of Plants On White Pot",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#dedee4",
             "isExternal": true
@@ -3163,7 +3155,6 @@
             "id": 0,
             "alt": "shallow focus photography of potted plants",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#beb1a4",
             "isExternal": true
@@ -3464,7 +3455,6 @@
             "id": 0,
             "alt": "green vegetable",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#1b443f",
             "isExternal": true
@@ -3583,7 +3573,6 @@
             "id": 0,
             "alt": "Person Holding Green Plant in Brown Pot",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#5e4833",
             "isExternal": true
@@ -3703,7 +3692,6 @@
             "id": 0,
             "alt": "plant in gray pot",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#e7e6e8",
             "isExternal": true

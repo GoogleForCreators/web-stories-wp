@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -31,7 +31,6 @@
             "id": 12755,
             "title": "",
             "alt": "",
-            "local": false,
             "sizes": [],
             "isExternal": false
           }
@@ -123,7 +122,6 @@
             "id": 12757,
             "title": "",
             "alt": "Web Stories",
-            "local": false,
             "sizes": [],
             "isExternal": false
           },
@@ -196,7 +194,6 @@
             "lengthFormatted": "0:04",
             "title": "",
             "alt": "",
-            "local": true,
             "sizes": [],
             "isExternal": false
           }
@@ -359,7 +356,6 @@
             "lengthFormatted": "0:09",
             "title": "",
             "alt": "",
-            "local": true,
             "sizes": [],
             "isExternal": false
           }
@@ -521,7 +517,6 @@
             "lengthFormatted": "0:09",
             "title": "",
             "alt": "",
-            "local": true,
             "sizes": [],
             "isExternal": false
           }
@@ -684,7 +679,6 @@
             "lengthFormatted": "0:06",
             "title": "",
             "alt": "",
-            "local": true,
             "sizes": [],
             "isExternal": false
           }
@@ -846,7 +840,6 @@
             "lengthFormatted": "0:03",
             "title": "",
             "alt": "",
-            "local": true,
             "sizes": [],
             "isExternal": false
           }
@@ -1008,7 +1001,6 @@
             "lengthFormatted": "0:22",
             "title": "",
             "alt": "",
-            "local": true,
             "sizes": [],
             "isExternal": false
           }
@@ -1170,7 +1162,6 @@
             "lengthFormatted": "0:10",
             "title": "",
             "alt": "",
-            "local": true,
             "sizes": [],
             "isExternal": false
           },
@@ -1331,7 +1322,6 @@
             "id": 12730,
             "title": "",
             "alt": "",
-            "local": false,
             "sizes": [],
             "isExternal": false
           }

@@ -121,7 +121,21 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     [fetchMediaError, fetchMediaStart, getMedia]
   );
 
-  const { uploadMedia, isUploading, isTranscoding } = useUploadMedia({
+  const {
+    uploadMedia,
+    isUploading,
+    isTranscoding,
+    isNewResourceProcessing,
+    isCurrentResourceProcessing,
+    isNewResourceTranscoding,
+    isNewResourceMuting,
+    isResourceTrimming,
+    isCurrentResourceUploading,
+    isCurrentResourceTranscoding,
+    isCurrentResourceMuting,
+    isCurrentResourceTrimming,
+    canTranscodeResource,
+  } = useUploadMedia({
     media,
     prependMedia,
     updateMediaElement,
@@ -145,6 +159,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
 
   const {
     allowedMimeTypes: { video: allowedVideoMimeTypes },
+    capabilities: { hasUploadMediaAction },
   } = useConfig();
 
   const stateRef = useRef();
@@ -213,7 +228,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
           return;
         }
         setBaseColorProcessing({ id });
-        await updateBaseColor({ resource });
+        await updateBaseColor(resource);
         removeBaseColorProcessing({ id });
       })();
     },
@@ -239,8 +254,11 @@ export default function useContextValueProvider(reducerState, reducerActions) {
 
   const postProcessingResource = useCallback(
     (resource) => {
+      if (!resource) {
+        return;
+      }
+
       const {
-        local,
         type,
         isMuted,
         baseColor,
@@ -252,18 +270,21 @@ export default function useContextValueProvider(reducerState, reducerActions) {
         blurHash,
       } = resource;
 
-      if (local || !id) {
+      if (!canTranscodeResource(resource)) {
         return;
       }
-      if (
-        (allowedVideoMimeTypes.includes(mimeType) || type === 'gif') &&
-        !posterId
-      ) {
-        uploadVideoPoster(id, src);
-      }
 
-      if (allowedVideoMimeTypes.includes(mimeType) && isMuted === null) {
-        processVideoAudio(id, src);
+      if (hasUploadMediaAction) {
+        if (
+          (allowedVideoMimeTypes.includes(mimeType) || type === 'gif') &&
+          !posterId
+        ) {
+          uploadVideoPoster(id, src);
+        }
+
+        if (allowedVideoMimeTypes.includes(mimeType) && isMuted === null) {
+          processVideoAudio(id, src);
+        }
       }
 
       const imageSrc =
@@ -276,11 +297,13 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       }
     },
     [
+      canTranscodeResource,
       allowedVideoMimeTypes,
       processMediaBaseColor,
       processMediaBlurhash,
       processVideoAudio,
       uploadVideoPoster,
+      hasUploadMediaAction,
     ]
   );
 
@@ -307,6 +330,16 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       ...reducerState,
       isUploading: isUploading || isGeneratingPosterImages,
       isTranscoding,
+      isNewResourceProcessing,
+      isCurrentResourceProcessing,
+      isNewResourceTranscoding,
+      isNewResourceMuting,
+      isResourceTrimming,
+      isCurrentResourceUploading,
+      isCurrentResourceTranscoding,
+      isCurrentResourceMuting,
+      isCurrentResourceTrimming,
+      canTranscodeResource,
     },
     actions: {
       setNextPage,

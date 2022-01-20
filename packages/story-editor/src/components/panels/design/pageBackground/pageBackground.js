@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
+import { useCallback, useEffect, useState } from '@web-stories-wp/react';
 import { __ } from '@web-stories-wp/i18n';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -29,17 +29,25 @@ import {
   Icons,
   Text as DefaultText,
   THEME_CONSTANTS,
+  Tooltip,
 } from '@web-stories-wp/design-system';
+import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
  * Internal dependencies
  */
-import { Color, Row as DefaultRow } from '../../../form';
-import { useStory } from '../../../../app';
+import { Color, MediaUploadButton, Row as DefaultRow } from '../../../form';
+import { useConfig, useStory, useLayout } from '../../../../app';
+import {
+  getPagesWithFailedContrast,
+  ACCESSIBILITY_COPY,
+} from '../../../checklist';
 import { SimplePanel } from '../../panel';
 import { FlipControls } from '../../shared';
-import { getDefinitionForType } from '../../../../elements';
+import { createNewElement, getDefinitionForType } from '../../../../elements';
 import { states, styles, useHighlights } from '../../../../app/highlights';
+import getElementProperties from '../../../canvas/utils/getElementProperties';
+import Warning from '../warning';
 
 const DEFAULT_FLIP = { horizontal: false, vertical: false };
 
@@ -54,7 +62,7 @@ const SelectedMedia = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
   display: flex;
   justify-content: space-between;
-  margin-right: 20px;
+  margin-right: 12px;
 `;
 
 const MediaWrapper = styled.div`
@@ -75,18 +83,41 @@ const RemoveButton = styled(Button)`
   align-self: center;
 `;
 
+const ReplaceButton = styled(Button).attrs({
+  size: BUTTON_SIZES.SMALL,
+  variant: BUTTON_VARIANTS.SQUARE,
+  type: BUTTON_TYPES.TERTIARY,
+})`
+  margin-right: 8px;
+`;
+
 const Text = styled(DefaultText)`
   align-self: center;
   width: 55px;
 `;
 
 function PageBackgroundPanel({ selectedElements, pushUpdate }) {
-  const { currentPage, clearBackgroundElement, updateCurrentPageProperties } =
-    useStory(({ state, actions }) => ({
-      currentPage: state.currentPage,
-      clearBackgroundElement: actions.clearBackgroundElement,
-      updateCurrentPageProperties: actions.updateCurrentPageProperties,
-    }));
+  const {
+    combineElements,
+    currentPage,
+    clearBackgroundElement,
+    updateCurrentPageProperties,
+  } = useStory(({ state, actions }) => ({
+    currentPage: state.currentPage,
+    clearBackgroundElement: actions.clearBackgroundElement,
+    combineElements: actions.combineElements,
+    updateCurrentPageProperties: actions.updateCurrentPageProperties,
+  }));
+
+  const {
+    capabilities: { hasUploadMediaAction },
+  } = useConfig();
+  const pageSize = useLayout(({ state: { pageWidth, pageHeight } }) => ({
+    width: pageWidth,
+    height: pageHeight,
+  }));
+
+  const [failedContrast, setFailedContrast] = useState(false);
 
   const updateBackgroundColor = useCallback(
     (value) => {
@@ -106,6 +137,35 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
     clearBackgroundElement();
   }, [pushUpdate, clearBackgroundElement]);
 
+  /**
+   * Callback of select in media picker to replace background media.
+   *
+   * @param {Object} resource Object coming from backbone media picker.
+   */
+  const onSelect = useCallback(
+    (resource) => {
+      const element = createNewElement(
+        resource.type,
+        getElementProperties(resource.type, { resource })
+      );
+      combineElements({
+        firstElement: element,
+        secondId: selectedElements[0].id,
+      });
+      trackEvent('replace_background_media');
+    },
+    [combineElements, selectedElements]
+  );
+
+  const renderReplaceButton = useCallback(
+    (open) => (
+      <ReplaceButton onClick={open} aria-label={__('Replace', 'web-stories')}>
+        <Icons.ArrowCloud />
+      </ReplaceButton>
+    ),
+    []
+  );
+
   const { highlight, resetHighlight, cancelHighlight } = useHighlights(
     (state) => ({
       highlight: state[states.PAGE_BACKGROUND],
@@ -113,6 +173,21 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
       cancelHighlight: state.cancelEffect,
     })
   );
+
+  useEffect(() => {
+    getPagesWithFailedContrast([currentPage], pageSize)
+      .then((failedPages) => {
+        // getPagesWithFailedContrast returns an array of pages, since we only care
+        // about currentPage, we can grab the single page result.
+        const result = failedPages[0]?.result;
+        // We only want to show the warning if the text is on the background element
+        const isBackgroundElement = result?.some(
+          ({ isBackground }) => isBackground
+        );
+        setFailedContrast(Boolean(isBackgroundElement));
+      })
+      .catch(() => {});
+  }, [currentPage, pageSize]);
 
   const backgroundEl = selectedElements[0];
   if (!backgroundEl || !backgroundEl.isBackground) {
@@ -175,11 +250,23 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
               <Icons.Cross />
             </RemoveButton>
           </SelectedMedia>
+          {hasUploadMediaAction && (
+            <Tooltip title={__('Replace', 'web-stories')}>
+              <MediaUploadButton
+                buttonInsertText={__('Use as background', 'web-stories')}
+                onInsert={onSelect}
+                renderButton={renderReplaceButton}
+              />
+            </Tooltip>
+          )}
           <FlipControls
             onChange={(value) => pushUpdate({ flip: value }, true)}
             value={flip}
           />
         </Row>
+      )}
+      {failedContrast && (
+        <Warning message={ACCESSIBILITY_COPY.lowContrast.backgroundPanel} />
       )}
     </SimplePanel>
   );

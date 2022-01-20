@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -211,7 +211,6 @@
             "id": 0,
             "alt": "Blue ceramic dinnerware on rack",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#e5e4e3",
             "isExternal": true
@@ -245,7 +244,6 @@
             "id": 0,
             "alt": "Four brown wooden chairs",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c1bab5",
             "isExternal": true
@@ -360,7 +358,6 @@
             "lengthFormatted": "0:09",
             "alt": "Portrait Of A Woman Self Isolating At Home",
             "sizes": [],
-            "local": false,
             "isOptimized": true,
             "isMuted": true,
             "baseColor": "#887a73",
@@ -729,7 +726,6 @@
             "id": 0,
             "alt": "Brown wooden rack",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#cccecd",
             "isExternal": true
@@ -763,7 +759,6 @@
             "id": 0,
             "alt": "Green Leafed Plants On Kitchen Island",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "provider": "local",
             "baseColor": "#cbcdcc",
@@ -798,7 +793,6 @@
             "id": 0,
             "alt": "Closeup photo of turned on iPad with rack on table",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "provider": "local",
             "baseColor": "#beb8b2",
@@ -833,7 +827,6 @@
             "id": 0,
             "alt": "Two clear glass jars on brown wooden floating shelf",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#dcdad9",
             "isExternal": true
@@ -1059,7 +1052,6 @@
             "id": 0,
             "alt": "Grey pendant lamp with kitchen island",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#cfd2d6",
             "isExternal": true
@@ -1093,7 +1085,6 @@
             "id": 0,
             "alt": "Four brown stools",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d3cbc4",
             "isExternal": true
@@ -1127,7 +1118,6 @@
             "id": 0,
             "alt": "Chopping Boards Near Oven Under Hood",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#cac2bc",
             "isExternal": true
@@ -1161,7 +1151,6 @@
             "id": 0,
             "alt": "Grey pendant lamp with kitchen island",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "provider": "local",
             "baseColor": "#d1d0ce",
@@ -1397,7 +1386,6 @@
             "id": 0,
             "alt": "White and brown wooden kitchen cabinet",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c6c5c8",
             "isExternal": true
@@ -1431,7 +1419,6 @@
             "id": 0,
             "alt": "White Ceramic Bowls on Brown Wooden Shelf",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c0b9b4",
             "isExternal": true
@@ -1465,7 +1452,6 @@
             "id": 0,
             "alt": "White and brown wooden kitchen cabinet",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "provider": "local",
             "baseColor": "#c3c3c1",
@@ -1500,7 +1486,6 @@
             "id": 0,
             "alt": "Brown wooden dining table with white chairs near kitchen",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d0d2d2",
             "isExternal": true
@@ -1579,7 +1564,6 @@
             "lengthFormatted": "0:10",
             "alt": "A Woman Instructor Giving On Line Yoga Exercise At Home",
             "sizes": [],
-            "local": false,
             "isOptimized": true,
             "isMuted": true,
             "baseColor": "#c8bba9",
@@ -1732,7 +1716,6 @@
             "id": 0,
             "alt": "Kitchen Room Design ",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#b2afac",
             "isExternal": true
@@ -1779,7 +1762,6 @@
             "lengthFormatted": "0:07",
             "alt": "Woman Standing in the Kitchen",
             "sizes": [],
-            "local": false,
             "isOptimized": true,
             "isMuted": true,
             "baseColor": "#c9c5ba",
@@ -1939,7 +1921,6 @@
             "id": 0,
             "alt": "Wooden Shelves With Kitchen Utensils",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#cbc9cc",
             "isExternal": true
@@ -1992,7 +1973,6 @@
             "id": 0,
             "alt": "Kitchen Room Design ",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "provider": "local",
             "baseColor": "#c3c3c1",
@@ -2229,7 +2209,6 @@
             "id": 0,
             "alt": "White wooden kitchen cabinet with white wooden kitchen cabinet",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c9c3c3",
             "isExternal": true
@@ -2572,7 +2551,6 @@
             "id": 0,
             "alt": "White Bedspread Beside Nightstand With White and Copper Table Lamp",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d6d8d8",
             "isExternal": true
@@ -2672,7 +2650,6 @@
             "id": 0,
             "alt": "White and brown chairs beside wicker basket near white wall",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#e5e4e4",
             "isExternal": true
@@ -2762,7 +2739,6 @@
             "id": 0,
             "alt": "White Shade Table Lamp Near Bed",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "provider": "local",
             "baseColor": "#dedddc",

@@ -24,17 +24,16 @@ import { isPlatformMacOS, useSnackbar } from '@web-stories-wp/design-system';
  */
 import { useRightClickMenu, RightClickMenuProvider } from '..';
 import { useCanvas } from '../../canvas';
-import { useStory } from '../../story';
+import useStory from '../../story/useStory';
+import { useLocalMedia } from '../../media';
 import { RIGHT_CLICK_MENU_LABELS } from '../constants';
 
 jest.mock('../../canvas', () => ({
   useCanvas: jest.fn(),
 }));
 
-jest.mock('../../story', () => ({
-  ...jest.requireActual('../../story'),
-  useStory: jest.fn(),
-}));
+jest.mock('../../media');
+jest.mock('../../story/useStory');
 
 const mockVideoTrim = jest.fn();
 jest.mock(
@@ -109,6 +108,9 @@ describe('useRightClickMenu', () => {
     mockUseSnackbar.mockReturnValue({ showSnackbar: mockShowSnackbar });
     mockIsPlatformMacOS.mockReturnValue(false);
     mockVideoTrim.mockImplementation((cb) => cb(defaultTrimContext));
+    useLocalMedia.mockReturnValue({
+      canTranscodeResource: jest.fn(),
+    });
   });
 
   describe('context menu manipulation', () => {
@@ -209,7 +211,7 @@ describe('useRightClickMenu', () => {
       expect(labels).toStrictEqual([
         RIGHT_CLICK_MENU_LABELS.DETACH_IMAGE_FROM_BACKGROUND,
         RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND_IMAGE,
-        RIGHT_CLICK_MENU_LABELS.CLEAR_STYLE,
+        RIGHT_CLICK_MENU_LABELS.CLEAR_STYLES(1),
         RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER,
         RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_BEFORE,
         RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE,
@@ -305,7 +307,7 @@ describe('useRightClickMenu', () => {
       expect(labels).toStrictEqual([
         RIGHT_CLICK_MENU_LABELS.DETACH_IMAGE_FROM_BACKGROUND,
         RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND_IMAGE,
-        RIGHT_CLICK_MENU_LABELS.CLEAR_STYLE,
+        RIGHT_CLICK_MENU_LABELS.CLEAR_STYLES(1),
         RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER,
         RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_BEFORE,
         RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE,
@@ -337,7 +339,7 @@ describe('useRightClickMenu', () => {
       expect(labels).toStrictEqual([
         RIGHT_CLICK_MENU_LABELS.DETACH_VIDEO_FROM_BACKGROUND,
         RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND_VIDEO,
-        RIGHT_CLICK_MENU_LABELS.CLEAR_STYLE,
+        RIGHT_CLICK_MENU_LABELS.CLEAR_STYLES(1),
         RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER,
         RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_BEFORE,
         RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE,
@@ -358,6 +360,9 @@ describe('useRightClickMenu', () => {
       });
 
       it('should contain enabled "trim video"', () => {
+        useLocalMedia.mockReturnValue({
+          canTranscodeResource: () => true,
+        });
         const { result } = renderHook(() => useRightClickMenu(), {
           wrapper: RightClickMenuProvider,
         });
@@ -380,7 +385,7 @@ describe('useRightClickMenu', () => {
                 type: 'video',
                 isBackground: true,
                 resource: {
-                  isTranscoding: true,
+                  isExternal: false,
                 },
               },
             ],
@@ -388,6 +393,9 @@ describe('useRightClickMenu', () => {
         });
 
         it('should contain disabled "trim video"', () => {
+          useLocalMedia.mockReturnValue({
+            canTranscodeResource: () => false,
+          });
           const { result } = renderHook(() => useRightClickMenu(), {
             wrapper: RightClickMenuProvider,
           });
@@ -495,7 +503,7 @@ describe('useRightClickMenu', () => {
             type: 'video',
             borderRadius: '4px',
             resource: {
-              isTranscoding: false,
+              isExternal: false,
             },
           },
         ],
@@ -532,6 +540,9 @@ describe('useRightClickMenu', () => {
       });
 
       it('should contain enabled "trim video"', () => {
+        useLocalMedia.mockReturnValue({
+          canTranscodeResource: () => true,
+        });
         const { result } = renderHook(() => useRightClickMenu(), {
           wrapper: RightClickMenuProvider,
         });
@@ -554,7 +565,7 @@ describe('useRightClickMenu', () => {
                 type: 'video',
                 borderRadius: '4px',
                 resource: {
-                  isTranscoding: true,
+                  isExternal: true,
                 },
               },
             ],
@@ -562,6 +573,9 @@ describe('useRightClickMenu', () => {
         });
 
         it('should contain disabled "trim video"', () => {
+          useLocalMedia.mockReturnValue({
+            canTranscodeResource: () => false,
+          });
           const { result } = renderHook(() => useRightClickMenu(), {
             wrapper: RightClickMenuProvider,
           });
@@ -717,6 +731,7 @@ describe('useRightClickMenu', () => {
       const labels = result.current.menuItems.map((item) => item.label);
       expect(labels).toStrictEqual([
         RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(2),
+        RIGHT_CLICK_MENU_LABELS.CLEAR_STYLES(2),
       ]);
     });
   });

@@ -84,7 +84,7 @@ jobs:
 
   # Get the current CDN assets version.
   # If the static assets on the CDN have changed since the last release,
-  # bump the assets version accordingly in the googleforcreators/wp.stories.google repo.
+  # bump the assets version accordingly in the GoogleForCreators/wp.stories.google repo.
   assets-version:
     name: Prepare static assets
     runs-on: ubuntu-latest
@@ -128,7 +128,7 @@ jobs:
       - name: Checkout wp.stories.google
         uses: actions/checkout@v2
         with:
-          repository: googleforcreators/wp.stories.google
+          repository: GoogleForCreators/wp.stories.google
           lfs: true
           # Needed so the below commits will trigger a website deployment.
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
@@ -195,7 +195,7 @@ jobs:
           fetch-depth: 0 # 0 indicates all history for all branches and tags.
 
       - name: Setup Node
-        uses: actions/setup-node@v2.5.0
+        uses: actions/setup-node@v2.5.1
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -279,7 +279,7 @@ jobs:
         continue-on-error: true
 
       - name: Setup Node
-        uses: actions/setup-node@v2.5.0
+        uses: actions/setup-node@v2.5.1
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -490,7 +490,7 @@ jobs:
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       - name: Setup Node
-        uses: actions/setup-node@v2.5.0
+        uses: actions/setup-node@v2.5.1
         with:
           node-version-file: '.nvmrc'
           cache: npm

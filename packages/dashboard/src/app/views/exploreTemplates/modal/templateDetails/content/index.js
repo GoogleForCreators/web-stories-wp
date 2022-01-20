@@ -17,7 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo } from '@web-stories-wp/react';
+import { useEffect, useMemo, useState } from '@web-stories-wp/react';
 import { sprintf, __ } from '@web-stories-wp/i18n';
 import styled from 'styled-components';
 import {
@@ -96,18 +96,36 @@ function DetailsContent({
   template,
 }) {
   const { postersByPage, title, description, tags, colors } = template || {};
+  const [galleryPosters, setGalleryPosters] = useState([]);
 
-  const galleryPosters = useMemo(() => {
+  useEffect(() => {
     if (postersByPage) {
-      return Object.values(postersByPage).map((poster, index) => ({
-        id: index,
-        ...poster,
-      }));
+      setGalleryPosters(
+        Object.values(postersByPage).map((poster, index) => ({
+          id: index,
+          ...poster,
+        }))
+      );
     }
     return undefined;
   }, [postersByPage]);
 
   const { NextButton, PrevButton } = useMemo(() => {
+    const nextIndex = isRTL ? activeTemplateIndex - 1 : activeTemplateIndex + 1;
+    const previousIndex = isRTL
+      ? activeTemplateIndex + 1
+      : activeTemplateIndex - 1;
+
+    const disablePrevious = isRTL
+      ? !filteredTemplatesLength ||
+        activeTemplateIndex === filteredTemplatesLength - 1
+      : !filteredTemplatesLength || activeTemplateIndex === 0;
+
+    const disableNext = isRTL
+      ? !filteredTemplatesLength || activeTemplateIndex === 0
+      : !filteredTemplatesLength ||
+        activeTemplateIndex === filteredTemplatesLength - 1;
+
     const Previous = (
       <Button
         type={BUTTON_TYPES.TERTIARY}
@@ -115,9 +133,10 @@ function DetailsContent({
         variant={BUTTON_VARIANTS.SQUARE}
         aria-label={__('View previous template', 'web-stories')}
         onClick={() => {
-          switchToTemplateByOffset(activeTemplateIndex - 1);
+          switchToTemplateByOffset(previousIndex);
+          setGalleryPosters([]);
         }}
-        disabled={!filteredTemplatesLength || activeTemplateIndex === 0}
+        disabled={disablePrevious}
       >
         <Icons.ArrowLeftLarge height={32} width={32} />
       </Button>
@@ -130,12 +149,10 @@ function DetailsContent({
         variant={BUTTON_VARIANTS.SQUARE}
         aria-label={__('View next template', 'web-stories')}
         onClick={() => {
-          switchToTemplateByOffset(activeTemplateIndex + 1);
+          switchToTemplateByOffset(nextIndex);
+          setGalleryPosters([]);
         }}
-        disabled={
-          !filteredTemplatesLength ||
-          activeTemplateIndex === filteredTemplatesLength - 1
-        }
+        disabled={disableNext}
       >
         <Icons.ArrowRightLarge height={32} width={32} />
       </Button>

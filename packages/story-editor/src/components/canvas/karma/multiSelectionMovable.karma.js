@@ -157,7 +157,7 @@ describe('Multi-selection Moveable integration', () => {
 
       it('should select bg element when clicking out of the multi-selection', async () => {
         const { x, y } = safezone.getBoundingClientRect();
-        await fixture.events.mouse.click(x + 200, y + 200);
+        await fixture.events.mouse.click(x + 100, y + 200);
         const storyContext = await fixture.renderHook(() => useStory());
 
         // Let's assure we have the background element (the first element) in the selection now.

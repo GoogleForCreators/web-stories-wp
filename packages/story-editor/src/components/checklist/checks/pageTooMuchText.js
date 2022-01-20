@@ -34,7 +34,6 @@ import {
 import {
   characterCountForPage,
   filterStoryPages,
-  getVisibleThumbnails,
   ThumbnailPagePreview,
 } from '../utils';
 import { useRegisterCheck } from '../countContext';
@@ -70,10 +69,26 @@ const PageTooMuchText = () => {
       }),
     [setHighlights]
   );
+
   const { footer, title } = DESIGN_COPY.tooMuchPageText;
 
   const isRendered = failingPages.length > 0;
   useRegisterCheck('PageTooMuchText', isRendered);
+
+  const thumbnails = failingPages.map((page) => (
+    <Thumbnail
+      key={page.id}
+      onClick={() =>
+        handleClick({
+          pageId: page.id,
+          elements: page.elements.filter(({ type }) => type === 'text'),
+        })
+      }
+      type={THUMBNAIL_TYPES.PAGE}
+      displayBackground={<ThumbnailPagePreview page={page} />}
+      aria-label={__('Go to offending page', 'web-stories')}
+    />
+  ));
 
   return (
     isRendered &&
@@ -92,27 +107,7 @@ const PageTooMuchText = () => {
             </List>
           </ChecklistCardStyles.CardListWrapper>
         }
-        thumbnailCount={failingPages.length}
-        thumbnail={
-          <>
-            {getVisibleThumbnails(failingPages).map((page) => (
-              <Thumbnail
-                key={page.id}
-                onClick={() =>
-                  handleClick({
-                    pageId: page.id,
-                    elements: page.elements.filter(
-                      ({ type }) => type === 'text'
-                    ),
-                  })
-                }
-                type={THUMBNAIL_TYPES.PAGE}
-                displayBackground={<ThumbnailPagePreview page={page} />}
-                aria-label={__('Go to offending page', 'web-stories')}
-              />
-            ))}
-          </>
-        }
+        thumbnails={thumbnails}
       />
     )
   );

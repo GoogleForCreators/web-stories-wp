@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { getElementProperties } from '../useInsertElement';
+import getElementProperties from '../getElementProperties';
 
 const COMMON_PROPERTIES = {
   opacity: 100,
@@ -73,7 +73,6 @@ const VIDEO_RESOURCE = {
   lengthFormatted: '0:06',
   alt: 'small-video',
   sizes: {},
-  local: false,
   isOptimized: false,
   baseColor: '#734727',
 };

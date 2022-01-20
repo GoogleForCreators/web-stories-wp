@@ -30,6 +30,6 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/react-hooks": "^7.0.1",
     "mockdate": "^3.0.5",
-    "prop-types": "^15.7.2"
+    "prop-types": "^15.8.1"
   }
 }

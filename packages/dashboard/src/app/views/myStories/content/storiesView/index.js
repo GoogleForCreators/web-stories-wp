@@ -167,29 +167,37 @@ function StoriesView({
     [showSnackbar]
   );
 
+  const menuItems = STORY_CONTEXT_MENU_ITEMS.map((item) => {
+    switch (item?.value) {
+      case STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK:
+        item.action = handleCopyStoryLink;
+        break;
+      case STORY_CONTEXT_MENU_ACTIONS.DELETE:
+        item.action = handleDeleteStory;
+        break;
+      case STORY_CONTEXT_MENU_ACTIONS.DUPLICATE:
+        item.action = handleDuplicateStory;
+        break;
+      case STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK:
+        item.action = handleOpenStoryInEditor;
+        break;
+      case STORY_CONTEXT_MENU_ACTIONS.RENAME:
+        item.action = handleRenameStory;
+        break;
+      default:
+        item.action = () => setContextMenuId(-1);
+        break;
+    }
+    return item;
+  });
+
   const storyMenu = useMemo(() => {
     return {
       handleMenuToggle: setContextMenuId,
       contextMenuId,
-      menuItemActions: {
-        default: () => setContextMenuId(-1),
-        [STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK]: handleCopyStoryLink,
-        [STORY_CONTEXT_MENU_ACTIONS.DELETE]: handleDeleteStory,
-        [STORY_CONTEXT_MENU_ACTIONS.DUPLICATE]: handleDuplicateStory,
-        [STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK]: handleOpenStoryInEditor,
-        [STORY_CONTEXT_MENU_ACTIONS.RENAME]: handleRenameStory,
-      },
-      menuItems: STORY_CONTEXT_MENU_ITEMS,
+      menuItems,
     };
-  }, [
-    contextMenuId,
-    handleCopyStoryLink,
-    handleDeleteStory,
-    handleDuplicateStory,
-    handleOpenStoryInEditor,
-    handleRenameStory,
-    setContextMenuId,
-  ]);
+  }, [contextMenuId, menuItems, setContextMenuId]);
 
   const renameStory = useMemo(() => {
     return {

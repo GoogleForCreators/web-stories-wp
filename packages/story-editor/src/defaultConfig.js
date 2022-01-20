@@ -152,6 +152,7 @@ const defaultConfig = {
   metadata: {
     publisher: '',
   },
+  canViewDefaultTemplates: true,
   showMedia3p: true,
   encodeMarkup: true,
   ffmpegCoreUrl:
@@ -160,6 +161,10 @@ const defaultConfig = {
     getFonts,
   },
   MediaUpload: () => null,
+  styleConstants: {
+    topOffset: 0,
+    leftOffset: 0,
+  },
 };
 
 export default defaultConfig;

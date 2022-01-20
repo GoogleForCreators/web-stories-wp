@@ -17,6 +17,7 @@
 export default [
   {
     baseColor: '#734727',
+    blurHash: 'L9D]rV~X004n9EjF-=WX00ITM^t7',
     type: 'image',
     id: 1,
     src: 'http://localhost:9876/__static__/blue-marble.jpg',
@@ -47,7 +48,6 @@ export default [
         source_url: 'http://localhost:9876/__static__/blue-marble.jpg',
       },
     },
-    local: false,
     isPlaceholder: false,
     isOptimized: false,
     isMuted: false,
@@ -55,6 +55,7 @@ export default [
   },
   {
     baseColor: '#734727',
+    blurHash: 'LPJjI_WBjZR+~VR*f6oL?GNHj[s,',
     type: 'image',
     id: 2,
     guid: {
@@ -96,7 +97,6 @@ export default [
         source_url: 'http://localhost:9876/__static__/curiosity.jpg',
       },
     },
-    local: false,
     isPlaceholder: false,
     isOptimized: false,
     isMuted: false,
@@ -104,6 +104,7 @@ export default [
   },
   {
     baseColor: '#734727',
+    blurHash: 'L4BM_PIU00%MD%M{j[xu00%M~qM{',
     type: 'image',
     id: 3,
     guid: {
@@ -145,7 +146,6 @@ export default [
         source_url: 'http://localhost:9876/__static__/earth.jpg',
       },
     },
-    local: false,
     isPlaceholder: false,
     isOptimized: false,
     isMuted: false,
@@ -153,6 +153,7 @@ export default [
   },
   {
     baseColor: '#734727',
+    blurHash: 'LA6tp]0M~U4;E3%1IpxsRls.WXjZ',
     type: 'image',
     id: 4,
     guid: {
@@ -199,13 +200,14 @@ export default [
       web_stories_poster_id: 0,
       web_stories_trim_data: {},
     },
-    local: false,
     isPlaceholder: false,
     isOptimized: false,
     isMuted: false,
     isExternal: false,
   },
   {
+    baseColor: '#46372e',
+    blurHash: 'L8B{u=^j00E2s,oeW=WC009b~V%0',
     type: 'image',
     id: 5,
     guid: {
@@ -246,14 +248,14 @@ export default [
       web_stories_poster_id: 0,
       web_stories_trim_data: {},
     },
-    local: false,
     isPlaceholder: false,
     isOptimized: false,
     isMuted: false,
     isExternal: false,
   },
   {
-    baseColor: '#000fff',
+    baseColor: '#484846',
+    blurHash: 'LHBzC3~q4n00RjRja{t79FM{xuxu',
     type: 'video',
     id: 6,
     guid: {
@@ -269,7 +271,6 @@ export default [
     width: 640,
     height: 480,
     sizes: {},
-    local: false,
     isPlaceholder: false,
     isOptimized: false,
     isMuted: false,
@@ -280,6 +281,7 @@ export default [
   },
   {
     baseColor: '#734727',
+    blurHash: 'LF9HFU00IV~qxvM{tRaxMxxuWARk',
     type: 'video',
     id: 7,
     src: 'http://localhost:9876/__static__/asteroid.ogg',
@@ -292,7 +294,6 @@ export default [
     width: 640,
     height: 360,
     sizes: {},
-    local: false,
     isPlaceholder: false,
     isOptimized: false,
     isMuted: false,
@@ -303,6 +304,7 @@ export default [
   },
   {
     baseColor: '#ffffff',
+    blurHash: 'LE97nm00IV~qx]M_t8j?MyxuWARk',
     type: 'image',
     id: 8,
     guid: {
@@ -338,7 +340,6 @@ export default [
         source_url: 'http://localhost:9876/__static__/transparent.png',
       },
     },
-    local: false,
     isPlaceholder: false,
     isOptimized: false,
     isMuted: false,

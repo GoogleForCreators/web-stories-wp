@@ -94,7 +94,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
     const contextMenuList = contextMenuLists[storyIndex];
 
     // it is focused on the link within the list
-    const contextMenuItem = within(contextMenuList).getByRole('button', {
+    const contextMenuItem = within(contextMenuList).getByRole('menuitem', {
       name: contextMenuText,
     });
 
@@ -104,7 +104,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
       limit < 8
     ) {
       // eslint-disable-next-line no-await-in-loop
-      await fixture.events.keyboard.press('tab');
+      await fixture.events.keyboard.press('down');
       limit++;
     }
 
@@ -519,7 +519,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
         document.activeElement.innerText
       );
 
-      await fixture.events.keyboard.press('tab');
+      await fixture.events.keyboard.press('down');
 
       expect(secondContextMenuItem.innerText).toEqual(
         document.activeElement.innerText

@@ -178,6 +178,7 @@ function PagePreview({
                 width={width}
                 height={height}
                 alt={label}
+                decoding="async"
               />
             ) : (
               page.elements.map((element) => (
@@ -185,7 +186,6 @@ function PagePreview({
                   key={element.id}
                   previewMode
                   element={element}
-                  page={page}
                 />
               ))
             )}
