@@ -211,15 +211,26 @@ if ('true' === process.env.CI) {
 // Set default timeout for individual expect-puppeteer assertions. (Default: 500)
 setDefaultOptions({ timeout: EXPECT_PUPPETEER_TIMEOUT || 1000 });
 
+// Different args needed for Firefox, see https://github.com/puppeteer/puppeteer/issues/6442.
+const VIEWPORT_CHROME = {
+  width: 1600,
+  height: 1000,
+};
+const VIEWPORT_FIREFOX = {
+  width: 1600,
+  height: 900, // Smaller than the window size in jest-puppeteer.config.cjs.
+};
+
 /**
  * Set up browser.
  */
 async function setupBrowser() {
   // Same as jest-puppeteer.config.cjs and percy.config.yml
-  await setBrowserViewport({
-    width: 1600,
-    height: 1000,
-  });
+  await setBrowserViewport(
+    process.env.PUPPETEER_PRODUCT === 'firefox'
+      ? VIEWPORT_FIREFOX
+      : VIEWPORT_CHROME
+  );
 }
 
 /**
