@@ -51,8 +51,8 @@ function versionCompare(a, b) {
  * @param {string} minVersion Minimum require WordPress version.
  */
 export function minWPVersionRequired(minVersion) {
-  const WPVersion = process.env?.WP_VERSION;
-  if ('latest' !== WPVersion && !versionCompare(WPVersion, minVersion)) {
+  const wpVersion = process.env?.WP_VERSION || 'latest';
+  if ('latest' !== wpVersion && !versionCompare(wpVersion, minVersion)) {
     test.only('minimum WordPress requirement not met', () => {});
   }
 }
