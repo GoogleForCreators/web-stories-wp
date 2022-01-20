@@ -1,5 +1,5 @@
 {
-  "name": "@web-stories-wp/i18n",
+  "name": "@googleforcreators/i18n",
   "private": true,
   "engines": {
     "node": ">= 16",

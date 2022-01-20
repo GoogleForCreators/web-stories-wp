@@ -24,10 +24,10 @@ import {
   useDebouncedCallback,
 } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@googleforcreators/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import styled from 'styled-components';
-import { Pill } from '@web-stories-wp/design-system';
+import { Pill } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

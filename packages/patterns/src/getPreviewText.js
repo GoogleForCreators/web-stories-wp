@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 
 function printRGB(r, g, b) {
   const hex = (v) => v.toString(16).padStart(2, '0');

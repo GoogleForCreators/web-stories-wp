@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { addQueryArgs } from '@web-stories-wp/design-system';
+import { addQueryArgs } from '@googleforcreators/design-system';
 
 /**
  * WordPress dependencies

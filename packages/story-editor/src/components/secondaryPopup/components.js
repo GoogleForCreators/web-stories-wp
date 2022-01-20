@@ -17,7 +17,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { Button, themeHelpers } from '@web-stories-wp/design-system';
+import { Button, themeHelpers } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

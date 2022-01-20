@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 /**
  * External dependencies
  */
@@ -30,7 +30,7 @@ import {
   useCallback,
   useFocusOut,
 } from '@web-stories-wp/react';
-import { useGridViewKeys } from '@web-stories-wp/design-system';
+import { useGridViewKeys } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

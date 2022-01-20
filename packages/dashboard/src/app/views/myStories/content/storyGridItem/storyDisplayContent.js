@@ -19,8 +19,8 @@
  */
 import { useMemo } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
-import { __, sprintf } from '@web-stories-wp/i18n';
-import { Tooltip, TOOLTIP_PLACEMENT } from '@web-stories-wp/design-system';
+import { __, sprintf } from '@googleforcreators/i18n';
+import { Tooltip, TOOLTIP_PLACEMENT } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

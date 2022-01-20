@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 // The navigation buttons and menu gutters
 export const NAVIGATION_BUTTON_WIDTH = THEME_CONSTANTS.ICON_SIZE;

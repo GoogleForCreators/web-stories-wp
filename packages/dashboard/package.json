@@ -1,5 +1,5 @@
 {
-  "name": "@web-stories-wp/dashboard",
+  "name": "@googleforcreators/dashboard",
   "private": true,
   "engines": {
     "node": ">= 16",
@@ -11,10 +11,10 @@
   "main": "./src/index.js",
   "type": "module",
   "dependencies": {
-    "@web-stories-wp/animation": "*",
-    "@web-stories-wp/date": "*",
-    "@web-stories-wp/design-system": "*",
-    "@web-stories-wp/i18n": "*",
+    "@googleforcreators/animation": "*",
+    "@googleforcreators/date": "*",
+    "@googleforcreators/design-system": "*",
+    "@googleforcreators/i18n": "*",
     "@web-stories-wp/karma-fixture": "*",
     "@web-stories-wp/media": "*",
     "@web-stories-wp/migration": "*",

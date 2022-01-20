@@ -20,7 +20,7 @@
 import { useFeature } from 'flagged';
 import { useCallback, useEffect } from '@web-stories-wp/react';
 import styled from 'styled-components';
-import { __, _n, sprintf } from '@web-stories-wp/i18n';
+import { __, _n, sprintf } from '@googleforcreators/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import { resourceList } from '@web-stories-wp/media';
 import {
@@ -31,7 +31,7 @@ import {
   Text,
   THEME_CONSTANTS,
   Icons,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

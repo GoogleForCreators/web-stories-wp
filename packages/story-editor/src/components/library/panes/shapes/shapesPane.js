@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import { useRef } from '@web-stories-wp/react';
 import STICKERS from '@web-stories-wp/stickers';
 

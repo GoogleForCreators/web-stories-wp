@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 import {
   useEffect,
@@ -24,7 +24,7 @@ import {
   useCallback,
   forwardRef,
 } from '@web-stories-wp/react';
-import { FOCUSABLE_SELECTORS } from '@web-stories-wp/design-system';
+import { FOCUSABLE_SELECTORS } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 /**
  * Internal dependencies

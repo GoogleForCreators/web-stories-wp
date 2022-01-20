@@ -30,8 +30,8 @@ import {
   Link,
   Text,
   THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
-import { TranslateWithMarkup, __ } from '@web-stories-wp/i18n';
+} from '@googleforcreators/design-system';
+import { TranslateWithMarkup, __ } from '@googleforcreators/i18n';
 import { trackClick } from '@web-stories-wp/tracking';
 import styled from 'styled-components';
 import {

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useCallback, useEffect, useState } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
@@ -30,7 +30,7 @@ import {
   Text as DefaultText,
   THEME_CONSTANTS,
   Tooltip,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { trackEvent } from '@web-stories-wp/tracking';
 
 /**

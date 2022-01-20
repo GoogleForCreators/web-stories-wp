@@ -19,8 +19,12 @@
  */
 import PropTypes from 'prop-types';
 import { forwardRef } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
-import { isValidUrl, withProtocol, Input } from '@web-stories-wp/design-system';
+import { __ } from '@googleforcreators/i18n';
+import {
+  isValidUrl,
+  withProtocol,
+  Input,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

@@ -23,7 +23,7 @@ import { DATA_VERSION } from '@web-stories-wp/migration';
 import {
   useGlobalKeyDownEffect,
   useSnackbar,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

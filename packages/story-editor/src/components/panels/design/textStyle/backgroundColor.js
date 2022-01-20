@@ -20,8 +20,8 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useCallback, useRef } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
-import { PillGroup } from '@web-stories-wp/design-system';
+import { __ } from '@googleforcreators/i18n';
+import { PillGroup } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

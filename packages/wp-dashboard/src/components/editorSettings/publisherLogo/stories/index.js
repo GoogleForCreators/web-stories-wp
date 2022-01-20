@@ -21,7 +21,7 @@ import { useCallback, useState } from '@web-stories-wp/react';
 import { boolean, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
 import { createBlob, createFileReader } from '@web-stories-wp/media';
-import { ConfigProvider } from '@web-stories-wp/dashboard';
+import { ConfigProvider } from '@googleforcreators/dashboard';
 
 /**
  * Internal dependencies

@@ -17,11 +17,11 @@
  * External dependencies
  */
 import styled, { StyleSheetManager } from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import {
   ContextMenu,
   ContextMenuComponents,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import {
   createPortal,
   Fragment,

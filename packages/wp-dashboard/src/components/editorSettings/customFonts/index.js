@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useState, useCallback } from '@web-stories-wp/react';
-import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
+import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import {
   Button,
   BUTTON_SIZES,
@@ -30,9 +30,8 @@ import {
   Text,
   THEME_CONSTANTS,
   Tooltip,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import styled from 'styled-components';
-import getFontDataFromUrl from '@web-stories-wp/fonts/src/utils/getFontDataFromUrl';
 import { trackEvent } from '@web-stories-wp/tracking';
 
 /**
@@ -49,6 +48,7 @@ import {
   TextInputHelperText,
 } from '../components';
 import ConfirmationDialog from './confirmationDialog';
+import getFontDataFromUrl from './utils/getFontDataFromUrl';
 
 export const TEXT = {
   ADD_CONTEXT: __(

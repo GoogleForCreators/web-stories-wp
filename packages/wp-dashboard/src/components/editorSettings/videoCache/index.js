@@ -20,8 +20,8 @@
 import PropTypes from 'prop-types';
 import { useCallback, useMemo } from '@web-stories-wp/react';
 import { v4 as uuidv4 } from 'uuid';
-import { __ } from '@web-stories-wp/i18n';
-import { Checkbox, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { __ } from '@googleforcreators/i18n';
+import { Checkbox, THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

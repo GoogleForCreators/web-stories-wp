@@ -22,7 +22,7 @@ import {
   localStore,
   LOCAL_STORAGE_PREFIX,
   setAppElement,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

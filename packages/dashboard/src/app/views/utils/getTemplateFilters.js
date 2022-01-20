@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { uniqueEntriesByKey } from '@web-stories-wp/design-system';
+import { uniqueEntriesByKey } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

@@ -27,8 +27,8 @@ import {
   useRef,
 } from '@web-stories-wp/react';
 import { rgba } from 'polished';
-import { __ } from '@web-stories-wp/i18n';
-import { LoadingBar, useKeyDownEffect } from '@web-stories-wp/design-system';
+import { __ } from '@googleforcreators/i18n';
+import { LoadingBar, useKeyDownEffect } from '@googleforcreators/design-system';
 import { Blurhash } from 'react-blurhash';
 /**
  * Internal dependencies

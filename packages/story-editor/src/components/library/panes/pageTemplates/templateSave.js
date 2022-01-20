@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import { useCallback, useMemo } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import {
@@ -26,7 +26,7 @@ import {
   THEME_CONSTANTS,
   Text,
   useSnackbar,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { v4 as uuidv4 } from 'uuid';
 import { DATA_VERSION } from '@web-stories-wp/migration';
 

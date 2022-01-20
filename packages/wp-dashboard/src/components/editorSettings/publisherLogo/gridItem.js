@@ -18,8 +18,8 @@
  */
 import PropTypes from 'prop-types';
 import { forwardRef } from '@web-stories-wp/react';
-import { __, sprintf } from '@web-stories-wp/i18n';
-import { THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { __, sprintf } from '@googleforcreators/i18n';
+import { THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

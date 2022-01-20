@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useEffect, useMemo, useCallback } from '@web-stories-wp/react';
-import { noop } from '@web-stories-wp/design-system';
+import { noop } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

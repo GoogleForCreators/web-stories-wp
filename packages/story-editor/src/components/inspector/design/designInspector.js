@@ -19,7 +19,7 @@
  */
 import { useCallback } from '@web-stories-wp/react';
 import styled from 'styled-components';
-import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
+import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies

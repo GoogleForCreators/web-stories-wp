@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useGlobalIsKeyPressed } from '@web-stories-wp/design-system';
+import { useGlobalIsKeyPressed } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

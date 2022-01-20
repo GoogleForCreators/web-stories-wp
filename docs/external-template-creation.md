@@ -146,7 +146,7 @@ Once you have the story JSON, several code changes are needed to add it to the l
       /**
        * External dependencies
        */
-      import { __, _x } from '@web-stories-wp/i18n';
+      import { __, _x } from '@googleforcreators/i18n';
 
       export default {
         slug: 'template-name',

@@ -18,8 +18,8 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { _x } from '@web-stories-wp/i18n';
-import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { _x } from '@googleforcreators/i18n';
+import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 const RequiredWrapper = styled.div`
   display: flex;
