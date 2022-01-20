@@ -33,7 +33,7 @@
     "@googleforcreators/patterns": "*",
     "@googleforcreators/react": "*",
     "@googleforcreators/stickers": "*",
-    "@web-stories-wp/templates": "*",
+    "@googleforcreators/templates": "*",
     "@web-stories-wp/text-sets": "*",
     "@web-stories-wp/tracking": "*",
     "@web-stories-wp/units": "*",

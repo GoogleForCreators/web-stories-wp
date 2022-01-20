@@ -29,7 +29,7 @@
     "@googleforcreators/migration": "*",
     "@googleforcreators/patterns": "*",
     "@googleforcreators/react": "*",
-    "@web-stories-wp/templates": "*",
+    "@googleforcreators/templates": "*",
     "@web-stories-wp/tracking": "*",
     "@web-stories-wp/units": "*",
     "flagged": "^2.0.1",
