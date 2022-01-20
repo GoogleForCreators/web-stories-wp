@@ -20,9 +20,9 @@
 import {
   createNewStory,
   publishStory,
-  skipSuiteOnFirefox,
   uploadPublisherLogoEditor,
   takeSnapshot,
+  skipSuiteOnFirefox,
 } from '@web-stories-wp/e2e-test-utils';
 
 const addNewTextElement = async () => {
@@ -42,10 +42,6 @@ const addPages = async (number) => {
 };
 
 describe('Pre-Publish Checklist : Admin User', () => {
-  // Thew window size for Firefox is actually smaller than the viewport,
-  // causing the checklist button to be off-screen, thus failing the test.
-  skipSuiteOnFirefox();
-
   beforeEach(async () => {
     await createNewStory();
   });
@@ -83,33 +79,38 @@ describe('Pre-Publish Checklist : Admin User', () => {
     await takeSnapshot(page, 'Prepublish checklist');
   });
 
-  it('should show cards related to poster image issues', async () => {
-    await addNewTextElement();
-    await addPages(3);
+  describe('Poster Image', () => {
+    // Firefox does not yet support file uploads with Puppeteer. See https://bugzilla.mozilla.org/show_bug.cgi?id=1553847.
+    skipSuiteOnFirefox();
 
-    await expect(page).toClick('button', { text: 'Publish' });
-    await expect(page).toClick('button', { text: 'Review Checklist' });
-    await expect(page).toMatch('Add poster image');
+    it('should show cards related to poster image issues', async () => {
+      await addNewTextElement();
+      await addPages(3);
 
-    await expect(page).toClick('p', { text: 'Document' });
+      await expect(page).toClick('button', { text: 'Publish' });
+      await expect(page).toClick('button', { text: 'Review Checklist' });
+      await expect(page).toMatch('Add poster image');
 
-    //find publish panel button
-    const publishPanelButton = await expect(page).toMatchElement(
-      '#inspector-tab-document button',
-      { text: 'Publishing' }
-    );
+      await expect(page).toClick('p', { text: 'Document' });
 
-    const isPublishPanelExpanded = await publishPanelButton.evaluate(
-      (node) => node.getAttribute('aria-expanded') === 'true'
-    );
+      //find publish panel button
+      const publishPanelButton = await expect(page).toMatchElement(
+        '#inspector-tab-document button',
+        { text: 'Publishing' }
+      );
 
-    //open publish panel if not open
-    if (!isPublishPanelExpanded) {
-      await publishPanelButton.click();
-    }
-    await uploadPublisherLogoEditor('example-1.jpg', false);
+      const isPublishPanelExpanded = await publishPanelButton.evaluate(
+        (node) => node.getAttribute('aria-expanded') === 'true'
+      );
 
-    await expect(page).not.toMatch('Add poster image');
+      //open publish panel if not open
+      if (!isPublishPanelExpanded) {
+        await publishPanelButton.click();
+      }
+      await uploadPublisherLogoEditor('example-1.jpg', false);
+
+      await expect(page).not.toMatch('Add poster image');
+    });
   });
 
   it('should focus on media button when poster image issue card is clicked', async () => {
