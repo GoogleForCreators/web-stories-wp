@@ -188,7 +188,7 @@ export function updateMedia(config, mediaId, data) {
     path: `${config.api.media}${mediaId}/`,
     data,
     method: 'POST',
-  });
+  }).then(getResourceFromAttachment);
 }
 
 /**
@@ -196,7 +196,7 @@ export function updateMedia(config, mediaId, data) {
  *
  * @param {Object} config Configuration object.
  * @param  {number} mediaId Media id
- * @return {Promise} Media Object Promise.
+ * @return {void}
  */
 export function deleteMedia(config, mediaId) {
   // `apiFetch` by default turns `DELETE` requests into `POST` requests
@@ -204,7 +204,7 @@ export function deleteMedia(config, mediaId) {
   // However, some Web Application Firewall (WAF) solutions prevent this.
   // `?_method=DELETE` is an alternative solution to override the request method.
   // See https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_method-or-x-http-method-override-header
-  return apiFetch({
+  apiFetch({
     path: addQueryArgs(`${config.api.media}${mediaId}/`, { _method: 'DELETE' }),
     data: { force: true },
     method: 'POST',

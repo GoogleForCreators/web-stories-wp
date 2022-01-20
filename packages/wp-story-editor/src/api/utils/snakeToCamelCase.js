@@ -38,8 +38,8 @@ export function snakeToCamelCase(string = '') {
  * Transform a given object keys from snake case to camel case recursively.
  *
  * @param {Object} obj Object to be transformed.
- * @param {Object} ignore Array of keys to be ignored for camelcase.
- * @return {any} Transformed object.
+ * @param {Array} ignore Ignore certain objects by using its key ( the parent passed key itself is not ignored ).
+ * @return {Object} Transformed object.
  */
 export function snakeToCamelCaseObjectKeys(obj, ignore = []) {
   const isObject = (val) =>

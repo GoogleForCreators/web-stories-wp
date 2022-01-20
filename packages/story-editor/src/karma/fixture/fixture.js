@@ -628,7 +628,7 @@ class APIProviderFixture {
         () =>
           asyncResponse({
             ...storyResponse,
-            story_data: {
+            storyData: {
               version: DATA_VERSION,
               pages: this._pages,
             },
@@ -647,7 +647,7 @@ class APIProviderFixture {
 
       const getMedia = useCallback(({ mediaType, searchTerm, pagingNum }) => {
         const filterByMediaType = mediaType
-          ? ({ mime_type }) => mime_type.startsWith(mediaType)
+          ? ({ mimeType }) => mimeType.startsWith(mediaType)
           : () => true;
         const filterBySearchTerm = searchTerm
           ? ({ alt_text }) => alt_text.includes(searchTerm)
@@ -691,9 +691,9 @@ class APIProviderFixture {
         () =>
           asyncResponse({
             ext: 'jpg',
-            mime_type: 'image/jpeg',
+            mimeType: 'image/jpeg',
             type: 'image',
-            file_name: 'example.jpg',
+            fileName: 'example.jpg',
           }),
         []
       );
