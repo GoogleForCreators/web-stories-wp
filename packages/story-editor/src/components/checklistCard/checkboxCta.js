@@ -17,7 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { Checkbox } from '@web-stories-wp/design-system';
+import { Checkbox } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

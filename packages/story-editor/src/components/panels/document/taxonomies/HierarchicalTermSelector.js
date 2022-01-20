@@ -29,7 +29,7 @@ import {
   THEME_CONSTANTS,
   themeHelpers,
   useLiveRegion,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import {
   useCallback,
   useEffect,

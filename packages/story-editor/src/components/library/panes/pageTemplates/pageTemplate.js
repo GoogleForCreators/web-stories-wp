@@ -24,7 +24,7 @@ import {
   BUTTON_VARIANTS,
   Icons,
   themeHelpers,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import {
   forwardRef,

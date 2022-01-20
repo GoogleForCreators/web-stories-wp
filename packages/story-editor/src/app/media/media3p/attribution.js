@@ -22,7 +22,7 @@ import { rgba } from 'polished';
 import {
   Text as DefaultText,
   THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

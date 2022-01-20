@@ -24,7 +24,7 @@ import {
   Switch as BaseSwitch,
   SwitchPropTypes,
   useKeyDownEffect,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 const StyledSwitch = styled(BaseSwitch)`
   label:focus-within ~ span {

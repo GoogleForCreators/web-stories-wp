@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { Icons } from '@web-stories-wp/design-system';
+import { Icons } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

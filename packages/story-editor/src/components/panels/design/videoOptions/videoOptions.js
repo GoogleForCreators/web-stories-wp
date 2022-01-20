@@ -31,7 +31,7 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   useLiveRegion,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { useCallback, useEffect } from '@web-stories-wp/react';
 
 /**

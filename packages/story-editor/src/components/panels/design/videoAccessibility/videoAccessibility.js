@@ -25,7 +25,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 import { Media, Row, TextArea } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue, useCommonObjectValue } from '../../shared';

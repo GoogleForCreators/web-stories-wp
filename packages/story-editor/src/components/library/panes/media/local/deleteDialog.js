@@ -25,7 +25,7 @@ import {
   Text,
   THEME_CONSTANTS,
   useSnackbar,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

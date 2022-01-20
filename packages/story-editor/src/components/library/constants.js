@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-import { TOOLTIP_PLACEMENT } from '@web-stories-wp/design-system';
+import { TOOLTIP_PLACEMENT } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

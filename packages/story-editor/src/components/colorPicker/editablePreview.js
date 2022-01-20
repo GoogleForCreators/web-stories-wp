@@ -32,7 +32,7 @@ import {
   Text,
   THEME_CONSTANTS,
   useKeyDownEffect,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 const EditableInput = lazy(() =>
   import(

@@ -15,7 +15,7 @@
     "@ffmpeg/ffmpeg": "^0.10.1",
     "@googleforcreators/animation": "*",
     "@googleforcreators/date": "*",
-    "@web-stories-wp/design-system": "*",
+    "@googleforcreators/design-system": "*",
     "@web-stories-wp/fonts": "*",
     "@googleforcreators/i18n": "*",
     "@web-stories-wp/karma-fixture": "*",

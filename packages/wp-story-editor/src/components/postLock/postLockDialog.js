@@ -25,7 +25,7 @@ import {
   BUTTON_TYPES,
   THEME_CONSTANTS,
   Text,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { Dialog } from '@web-stories-wp/story-editor';
 
 /**

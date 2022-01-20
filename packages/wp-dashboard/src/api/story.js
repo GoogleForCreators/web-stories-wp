@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { addQueryArgs } from '@web-stories-wp/design-system';
+import { addQueryArgs } from '@googleforcreators/design-system';
 import {
   ORDER_BY_SORT,
   STORIES_PER_REQUEST,

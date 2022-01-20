@@ -12,7 +12,7 @@
   "type": "module",
   "dependencies": {
     "@googleforcreators/date": "*",
-    "@web-stories-wp/design-system": "*",
+    "@googleforcreators/design-system": "*",
     "@googleforcreators/i18n": "*",
     "@web-stories-wp/media": "*",
     "@web-stories-wp/migration": "*",

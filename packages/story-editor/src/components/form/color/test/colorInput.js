@@ -34,8 +34,8 @@ import { StoryContext } from '../../../../app/story';
 import { ConfigContext } from '../../../../app/config';
 import defaultConfig from '../../../../defaultConfig.js';
 
-jest.mock('@web-stories-wp/design-system', () => ({
-  ...jest.requireActual('@web-stories-wp/design-system'),
+jest.mock('@googleforcreators/design-system', () => ({
+  ...jest.requireActual('@googleforcreators/design-system'),
   Popup: ({ children, isOpen }) => (isOpen ? children : null),
 }));
 

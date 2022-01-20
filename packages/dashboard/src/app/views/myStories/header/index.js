@@ -27,7 +27,7 @@ import PropTypes from 'prop-types';
 import { __, sprintf } from '@googleforcreators/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import styled from 'styled-components';
-import { Pill } from '@web-stories-wp/design-system';
+import { Pill } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

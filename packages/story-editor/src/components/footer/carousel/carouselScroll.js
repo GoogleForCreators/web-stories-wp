@@ -26,7 +26,7 @@ import {
   BUTTON_VARIANTS,
   BUTTON_TYPES,
   BUTTON_SIZES,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

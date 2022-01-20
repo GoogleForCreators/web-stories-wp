@@ -32,7 +32,7 @@ import {
   Text,
   THEME_CONSTANTS,
   ThemeGlobals,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
 

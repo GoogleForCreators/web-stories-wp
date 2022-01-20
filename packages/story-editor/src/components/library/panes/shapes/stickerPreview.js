@@ -24,7 +24,7 @@ import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { useUnits } from '@web-stories-wp/units';
 
 /**

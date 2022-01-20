@@ -31,7 +31,7 @@ import {
   BUTTON_TYPES,
   THEME_CONSTANTS,
   NotificationBubble,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import styled from 'styled-components';
 
 /**

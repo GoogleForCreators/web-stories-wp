@@ -19,7 +19,7 @@
  */
 import { render } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
-import { theme } from '@web-stories-wp/design-system';
+import { theme } from '@googleforcreators/design-system';
 
 // eslint-disable-next-line react/prop-types
 const WithThemeProvider = ({ children }) => {

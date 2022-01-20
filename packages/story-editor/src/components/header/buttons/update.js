@@ -25,7 +25,7 @@ import {
   BUTTON_VARIANTS,
   useGlobalKeyDownEffect,
   Icons,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';
 import {
   getOptions,

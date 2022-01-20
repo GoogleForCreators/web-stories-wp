@@ -27,7 +27,7 @@ import {
   BUTTON_VARIANTS,
   Icons,
   PLACEMENT,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import styled from 'styled-components';
 
 /**

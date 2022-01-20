@@ -19,7 +19,7 @@
 import { __ } from '@googleforcreators/i18n';
 import { useRef, useEffect, useCallback } from '@web-stories-wp/react';
 import styled from 'styled-components';
-import { ThemeGlobals } from '@web-stories-wp/design-system';
+import { ThemeGlobals } from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';
 
 /**

@@ -26,7 +26,7 @@ import {
   Text,
   THEME_CONSTANTS,
   Tooltip,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

@@ -25,7 +25,7 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 const Message = styled.div`
   color: #fff;

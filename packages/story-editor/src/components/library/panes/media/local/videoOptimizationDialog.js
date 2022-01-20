@@ -24,7 +24,7 @@ import {
   THEME_CONSTANTS,
   LOCAL_STORAGE_PREFIX,
   localStore,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

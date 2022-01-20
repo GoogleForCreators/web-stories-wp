@@ -20,7 +20,7 @@ import {
   prettifyShortcut,
   useGlobalKeyDownEffect,
   useSnackbar,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { __, sprintf } from '@googleforcreators/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
 import PropTypes from 'prop-types';

@@ -22,7 +22,7 @@ import {
   isPlatformMacOS,
   prettifyShortcut,
   Shortcut,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 const isMacOS = isPlatformMacOS();
 

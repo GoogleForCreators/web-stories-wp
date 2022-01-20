@@ -28,7 +28,7 @@ import {
   lightMode,
   ThemeGlobals,
   ModalGlobalStyle,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import {
   theme,
   GlobalStyle,

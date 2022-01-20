@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-import { FOCUSABLE_SELECTORS } from '@web-stories-wp/design-system';
+import { FOCUSABLE_SELECTORS } from '@googleforcreators/design-system';
 
 export const KEYS = {
   ADD_BACKGROUND_MEDIA: 'addBackgroundMedia',

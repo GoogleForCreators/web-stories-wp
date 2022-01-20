@@ -25,7 +25,7 @@ import {
   BUTTON_VARIANTS,
   Icons,
   themeHelpers,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { useContext } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 

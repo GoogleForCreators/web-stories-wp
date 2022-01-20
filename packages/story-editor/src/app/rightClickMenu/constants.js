@@ -21,7 +21,7 @@ import {
   Shortcut,
   Text,
   THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { __, _n } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 

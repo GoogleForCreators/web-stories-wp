@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { VisuallyHidden } from '@web-stories-wp/design-system';
+import { VisuallyHidden } from '@googleforcreators/design-system';
 import { getRelativeDisplayDate } from '@googleforcreators/date';
 import { __, sprintf } from '@googleforcreators/i18n';
 import { useFeatures } from 'flagged';

@@ -29,7 +29,7 @@ import {
 } from '@web-stories-wp/react';
 import { __ } from '@googleforcreators/i18n';
 import { PatternPropType, hasGradient } from '@web-stories-wp/patterns';
-import { useKeyDownEffect } from '@web-stories-wp/design-system';
+import { useKeyDownEffect } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

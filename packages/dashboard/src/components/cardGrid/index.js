@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { forwardRef } from '@web-stories-wp/react';
-import { ThemeGlobals, themeHelpers } from '@web-stories-wp/design-system';
+import { ThemeGlobals, themeHelpers } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

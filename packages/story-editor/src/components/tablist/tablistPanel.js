@@ -21,7 +21,7 @@ import { sprintf, _n } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 import { useMemo } from '@web-stories-wp/react';
 import { v4 as uuidv4 } from 'uuid';
-import { Icons } from '@web-stories-wp/design-system';
+import { Icons } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

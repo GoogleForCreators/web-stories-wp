@@ -24,7 +24,7 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Icons,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import styled from 'styled-components';
 import { useState } from '@web-stories-wp/react';
 import { useFeature } from 'flagged';

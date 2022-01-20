@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import { memo, useCallback, useRef } from '@web-stories-wp/react';
 import { __ } from '@googleforcreators/i18n';
-import { Icons } from '@web-stories-wp/design-system';
+import { Icons } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

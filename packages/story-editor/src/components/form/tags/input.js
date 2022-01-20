@@ -21,7 +21,7 @@ import {
   BaseInput,
   List,
   noop,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import {
   useEffect,
   useMemo,

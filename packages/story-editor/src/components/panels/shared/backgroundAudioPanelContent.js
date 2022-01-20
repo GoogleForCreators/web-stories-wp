@@ -26,7 +26,7 @@ import {
   BUTTON_VARIANTS,
   Icons,
   themeHelpers,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import { useCallback } from '@web-stories-wp/react';
 

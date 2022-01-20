@@ -62,7 +62,7 @@
     "@testing-library/react-hooks": "^7.0.2",
     "@testing-library/user-event": "^13.5.0",
     "@googleforcreators/dashboard": "*",
-    "@web-stories-wp/design-system": "*",
+    "@googleforcreators/design-system": "*",
     "@web-stories-wp/e2e-tests": "*",
     "@web-stories-wp/fonts": "*",
     "@web-stories-wp/jest-amp": "*",

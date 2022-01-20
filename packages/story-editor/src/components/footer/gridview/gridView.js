@@ -35,7 +35,7 @@ import {
   BUTTON_VARIANTS,
   Icons,
   useGridViewKeys,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

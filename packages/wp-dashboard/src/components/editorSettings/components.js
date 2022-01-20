@@ -29,7 +29,7 @@ import {
   Text,
   THEME_CONSTANTS,
   themeHelpers,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { StandardViewContentGutter } from '@googleforcreators/dashboard';
 
 export const Wrapper = styled.div``;

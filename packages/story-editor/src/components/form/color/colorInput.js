@@ -38,7 +38,7 @@ import {
   THEME_CONSTANTS,
   Swatch,
   PLACEMENT,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

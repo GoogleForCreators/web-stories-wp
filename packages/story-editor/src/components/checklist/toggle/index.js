@@ -20,7 +20,7 @@ import { useMemo } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __, _n, sprintf } from '@googleforcreators/i18n';
-import { Icons, noop } from '@web-stories-wp/design-system';
+import { Icons, noop } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

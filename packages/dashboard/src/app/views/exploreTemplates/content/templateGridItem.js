@@ -23,7 +23,7 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   noop,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { forwardRef } from '@web-stories-wp/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';

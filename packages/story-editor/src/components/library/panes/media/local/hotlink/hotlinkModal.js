@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
-import { Input, withProtocol } from '@web-stories-wp/design-system';
+import { Input, withProtocol } from '@googleforcreators/design-system';
 import {
   useState,
   useRef,

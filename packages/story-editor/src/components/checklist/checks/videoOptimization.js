@@ -29,7 +29,7 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   Tooltip,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { useStory } from '../../../app/story';
 import { useLocalMedia } from '../../../app/media';
 import { MEDIA_VIDEO_DIMENSIONS_THRESHOLD } from '../../../constants';

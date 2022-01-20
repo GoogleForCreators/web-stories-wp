@@ -21,7 +21,7 @@ import styled from 'styled-components';
 import { useCallback } from '@web-stories-wp/react';
 import { __ } from '@googleforcreators/i18n';
 import { trackEvent } from '@web-stories-wp/tracking';
-import { useEscapeToBlurEffect } from '@web-stories-wp/design-system';
+import { useEscapeToBlurEffect } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

@@ -24,7 +24,7 @@ import {
   useCallback,
   forwardRef,
 } from '@web-stories-wp/react';
-import { FOCUSABLE_SELECTORS } from '@web-stories-wp/design-system';
+import { FOCUSABLE_SELECTORS } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 /**
  * Internal dependencies
