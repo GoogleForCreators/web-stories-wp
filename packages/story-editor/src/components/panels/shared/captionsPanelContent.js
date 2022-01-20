@@ -85,7 +85,15 @@ function CaptionsPanelContent({
   uploadError = false,
   clearFileText = __('Remove file', 'web-stories'),
 }) {
-  const { MediaUpload } = useConfig();
+  const {
+    capabilities: { hasUploadMediaAction },
+    MediaUpload,
+  } = useConfig();
+
+  if (!hasUploadMediaAction && !tracks.length) {
+    return null;
+  }
+
   return (
     <>
       {isMixedValue && (
