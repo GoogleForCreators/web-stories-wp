@@ -321,13 +321,12 @@ function useMediaUploadQueue() {
       const { id, file, resource, additionalData = {} } = item;
       let { posterFile } = item;
 
-      let newResource;
 
       // The newly uploaded file won't have a poster yet.
       // However, we'll likely still have one on file.
       // Add it back so we're never without one.
       // The final poster will be uploaded later by uploadVideoPoster().
-      newResource = await uploadFile(file, additionalData);
+      let newResource = await uploadFile(file, additionalData);
 
       if (!isMounted.current) {
         return;
