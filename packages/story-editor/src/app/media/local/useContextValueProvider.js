@@ -17,9 +17,9 @@
 /**
  * External dependencies
  */
-import { useEffect, useCallback, useRef } from '@web-stories-wp/react';
-import { getSmallestUrlForWidth } from '@web-stories-wp/media';
-import { getTimeTracker } from '@web-stories-wp/tracking';
+import { useEffect, useCallback, useRef } from '@googleforcreators/react';
+import { getSmallestUrlForWidth } from '@googleforcreators/media';
+import { getTimeTracker } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
@@ -159,6 +159,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
 
   const {
     allowedMimeTypes: { video: allowedVideoMimeTypes },
+    capabilities: { hasUploadMediaAction },
   } = useConfig();
 
   const stateRef = useRef();
@@ -273,15 +274,17 @@ export default function useContextValueProvider(reducerState, reducerActions) {
         return;
       }
 
-      if (
-        (allowedVideoMimeTypes.includes(mimeType) || type === 'gif') &&
-        !posterId
-      ) {
-        uploadVideoPoster(id, src);
-      }
+      if (hasUploadMediaAction) {
+        if (
+          (allowedVideoMimeTypes.includes(mimeType) || type === 'gif') &&
+          !posterId
+        ) {
+          uploadVideoPoster(id, src);
+        }
 
-      if (allowedVideoMimeTypes.includes(mimeType) && isMuted === null) {
-        processVideoAudio(id, src);
+        if (allowedVideoMimeTypes.includes(mimeType) && isMuted === null) {
+          processVideoAudio(id, src);
+        }
       }
 
       const imageSrc =
@@ -300,6 +303,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       processMediaBlurhash,
       processVideoAudio,
       uploadVideoPoster,
+      hasUploadMediaAction,
     ]
   );
 

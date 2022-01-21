@@ -1,6 +1,17 @@
 {
-  "name": "@web-stories-wp/i18n",
-  "private": true,
+  "name": "@googleforcreators/i18n",
+  "description": "Tiny i18n gettext helper package.",
+  "private": false,
+  "version": "0.0.1",
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "keywords": [
+    "web stories",
+    "i18n",
+    "gettext"
+  ],
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"
@@ -13,8 +24,8 @@
   "sideEffects": false,
   "dependencies": {
     "@tannin/sprintf": "^1.2.0",
-    "@web-stories-wp/react": "*",
-    "prop-types": "^15.8.0",
+    "@googleforcreators/react": "*",
+    "prop-types": "^15.8.1",
     "tannin": "^1.2.0"
   }
 }

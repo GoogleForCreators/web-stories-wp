@@ -18,17 +18,17 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
-import { useCallback, useMemo } from '@web-stories-wp/react';
+import { __ } from '@googleforcreators/i18n';
+import { useCallback, useMemo } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
-import { v4 as uuidv4 } from 'uuid';
 import {
   BUTTON_TRANSITION_TIMING,
   THEME_CONSTANTS,
   Text,
   useSnackbar,
-} from '@web-stories-wp/design-system';
-import { DATA_VERSION } from '@web-stories-wp/migration';
+} from '@googleforcreators/design-system';
+import { v4 as uuidv4 } from 'uuid';
+import { DATA_VERSION } from '@googleforcreators/migration';
 
 /**
  * Internal dependencies
@@ -111,33 +111,40 @@ function TemplateSave({ setShowDefaultTemplates, updateList }) {
     [currentPage]
   );
   const handleSaveTemplate = useCallback(
-    (e) => {
+    async (e) => {
       e.preventDefault();
+
       if (isDisabled) {
         return;
       }
-      addPageTemplate({
-        ...currentPage,
-        id: uuidv4(),
-        version: DATA_VERSION,
-        title: null,
-      })
-        .then((addedTemplate) => {
-          updateList?.(addedTemplate);
-          showSnackbar({
-            message: __('Page Template saved.', 'web-stories'),
-            dismissible: true,
-          });
-        })
-        .catch(() => {
-          showSnackbar({
-            message: __(
-              'Unable to save the template. Please try again.',
-              'web-stories'
-            ),
-            dismissible: true,
-          });
+
+      let imageId;
+
+      try {
+        const { templateId, ...page } = currentPage;
+        const addedTemplate = await addPageTemplate({
+          story_data: {
+            ...page,
+            id: uuidv4(),
+            version: DATA_VERSION,
+          },
+          featured_media: imageId,
+          title: null,
         });
+        updateList?.(addedTemplate);
+        showSnackbar({
+          message: __('Page Template saved.', 'web-stories'),
+          dismissable: true,
+        });
+      } catch {
+        showSnackbar({
+          message: __(
+            'Unable to save the template. Please try again.',
+            'web-stories'
+          ),
+          dismissable: true,
+        });
+      }
       setShowDefaultTemplates(false);
     },
     [

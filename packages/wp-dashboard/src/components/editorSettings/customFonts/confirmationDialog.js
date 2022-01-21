@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 import { ThemeProvider } from 'styled-components';
 import {
@@ -27,7 +27,7 @@ import {
   BUTTON_SIZES,
   Button,
   theme,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 function ConfirmationDialog({ onClose, onPrimary }) {
   return (

@@ -16,8 +16,8 @@
 /**
  * External dependencies
  */
-import { useRouteHistory } from '@web-stories-wp/dashboard';
-import { useEffect } from '@web-stories-wp/react';
+import { useRouteHistory } from '@googleforcreators/dashboard';
+import { useEffect } from '@googleforcreators/react';
 
 function useAdminSubMenu() {
   const { currentPath } = useRouteHistory(({ state: { currentPath } }) => ({

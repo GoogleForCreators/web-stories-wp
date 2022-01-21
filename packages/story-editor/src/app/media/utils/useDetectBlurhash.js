@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
-import { getSmallestUrlForWidth } from '@web-stories-wp/media';
+import { useCallback } from '@googleforcreators/react';
+import { getSmallestUrlForWidth } from '@googleforcreators/media';
 /**
  * Internal dependencies
  */

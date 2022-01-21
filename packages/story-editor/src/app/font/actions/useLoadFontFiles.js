@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
-import { getGoogleFontURL } from '@web-stories-wp/fonts';
+import { useCallback } from '@googleforcreators/react';
+import { getGoogleFontURL } from '@googleforcreators/fonts';
 
 /**
  * Internal dependencies

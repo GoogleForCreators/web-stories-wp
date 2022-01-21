@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -582,7 +582,6 @@
             "id": 0,
             "alt": "Cover of the book: Peter Beard",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -771,7 +770,6 @@
             "id": 0,
             "alt": "Cover of the book: Vogue and The Metropolitan Museum of Art Costume Institute: Parties,  Exhibitions, People by Hamish Bowles",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -1369,7 +1367,6 @@
             "id": 0,
             "alt": "Cover of the book: Breaking Ground: Architecture by Women: Hall, Jane",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -1407,7 +1404,6 @@
             "id": 0,
             "alt": "Cover of the book: The New Black Vanguard",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -1664,7 +1660,6 @@
             "id": 0,
             "alt": "Illustration of a photo frame",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -1706,7 +1701,6 @@
             "id": 0,
             "alt": "Illustration of a photo frame",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -1745,7 +1739,6 @@
             "id": 0,
             "alt": "Illustration of a photo frame",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -1897,7 +1890,6 @@
             "id": 0,
             "alt": "Cover of the book: Life with Picasso",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c87f61",
             "isExternal": true
@@ -2174,7 +2166,6 @@
             "id": 0,
             "alt": "Cover of the book: Walden",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#496733",
             "isExternal": true
@@ -2829,7 +2820,6 @@
             "id": 0,
             "alt": "Man on sofa",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#29333b",
             "isExternal": true
@@ -2902,7 +2892,6 @@
             "id": 0,
             "alt": "Woman in black blazer using macbook pro",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },

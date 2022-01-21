@@ -18,15 +18,15 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { forwardRef } from '@web-stories-wp/react';
+import { forwardRef } from '@googleforcreators/react';
 import styled from 'styled-components';
-import { _x, sprintf, __ } from '@web-stories-wp/i18n';
+import { _x, sprintf, __ } from '@googleforcreators/i18n';
 import {
   Button,
   BUTTON_TYPES,
   THEME_CONSTANTS,
   Text,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

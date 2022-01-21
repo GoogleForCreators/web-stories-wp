@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { DATA_VERSION } from '@web-stories-wp/migration';
+import { DATA_VERSION } from '@googleforcreators/migration';
 
 const storyTags = [
   {
@@ -75,17 +75,17 @@ export default {
   status: 'draft',
   slug: '',
   date: '2020-05-06T22:32:37',
-  date_gmt: '2020-05-06T22:32:37',
+  dateGmt: '2020-05-06T22:32:37',
   modified: '2020-05-06T22:32:37',
   excerpt: { raw: '' },
   link: 'http://stories.local/?post_type=web-story&p=1',
-  preview_link: 'http://stories.local/?post_type=web-story&p=1',
-  story_data: {
+  previewLink: 'http://stories.local/?post_type=web-story&p=1',
+  storyData: {
     version: DATA_VERSION,
     pages: [],
   },
-  permalink_template: 'http://stories3.local/stories/%pagename%/',
-  style_presets: { textStyles: [], colors: [] },
+  permalinkTemplate: 'http://stories3.local/stories/%pagename%/',
+  stylePresets: { textStyles: [], colors: [] },
   password: '',
   author: { id: 1, name: 'John Doe' },
   capabilities: {
@@ -96,18 +96,18 @@ export default {
     'assign-web_story_category': true,
     'create-web_story_category': true,
   },
-  lock_user: {
+  lockUser: {
     id: 0,
     name: '',
     avatar: '',
   },
-  featured_media: {
+  featuredMedia: {
     id: 0,
     height: 0,
     width: 0,
     url: '',
   },
-  publisher_logo: {
+  publisherLogo: {
     id: 0,
     height: 0,
     width: 0,

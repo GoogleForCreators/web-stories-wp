@@ -17,21 +17,21 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import {
-  useState,
-  useCallback,
-  useRef,
-  useLayoutEffect,
-} from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
-import {
+  LoadingSpinner,
   Text,
   THEME_CONSTANTS,
   useSnackbar,
-  LoadingSpinner,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
+import { __ } from '@googleforcreators/i18n';
+import {
+  useCallback,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from '@googleforcreators/react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies

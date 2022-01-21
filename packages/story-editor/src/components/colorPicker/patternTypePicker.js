@@ -17,17 +17,17 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
+import { useCallback } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import {
   ToggleButton,
   Icons,
   BUTTON_SIZES,
   BUTTON_VARIANTS,
   BUTTON_TYPES,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 const HEADER_FOOTER_HEIGHT = 52;
 

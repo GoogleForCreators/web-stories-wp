@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -31,7 +31,6 @@
             "id": 0,
             "alt": "Elderly man sketching on white cardboard",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#aea49d",
             "isExternal": true
@@ -248,7 +247,6 @@
             "id": 0,
             "alt": "Three Women in Assorted-Color Tops",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "provider": "local",
             "baseColor": "#a1a2ab",
@@ -497,7 +495,6 @@
             "id": 0,
             "alt": "Woman in White and Brown Floral Dress",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -810,7 +807,6 @@
             "id": 0,
             "alt": "Woman in Gray Sweater Leaning Backward  Near White Window Curtain",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#dddbda",
             "isExternal": true
@@ -1188,7 +1184,6 @@
             "id": 0,
             "alt": "Woman in Under Garment Standing on The Platform",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#564d3d",
             "isExternal": true
@@ -1232,7 +1227,6 @@
             "id": 0,
             "alt": "Man in Brown Shirt Kissing Woman in White Tank Top",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#261e16",
             "isExternal": true
@@ -1297,7 +1291,6 @@
             "id": 0,
             "alt": "Person Face in Close Up PhotoWoman Sitting on a Sofa Chair in a Room",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -1547,7 +1540,6 @@
             "id": 0,
             "alt": "Woman Sitting on a Sofa Chair in a Room",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -1854,7 +1846,6 @@
             "id": 0,
             "alt": "Man in Brown T-shirt Standing Beside Woman in Brown Brassiere",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -2090,7 +2081,6 @@
             "id": 0,
             "alt": "Woman in Black Tank Top",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d59e76",
             "isExternal": true
@@ -2341,7 +2331,6 @@
             "id": 0,
             "alt": "Girl in pinstriped shirt kissing the woman's forehead",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -2646,7 +2635,6 @@
             "id": 0,
             "alt": "woman in white shirt with blue eyes",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#222c2a",
             "isExternal": true
@@ -2891,7 +2879,6 @@
             "id": 0,
             "alt": "Man Taking Video With Woman Standing Inside Room",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -3284,7 +3271,6 @@
             "id": 0,
             "alt": "Woman Holding on Railings",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#312218",
             "isExternal": true
@@ -3325,7 +3311,6 @@
             "id": 0,
             "alt": "Woman Holding on Railings",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#302218",
             "isExternal": true
@@ -3553,7 +3538,6 @@
             "id": 0,
             "alt": "woman in white off shoulder dress sitting on white floor",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#dcbca1",
             "isExternal": true
@@ -3707,7 +3691,6 @@
             "id": 0,
             "alt": "Woman Wearing Brown Cardigan",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#533a2c",
             "isExternal": true

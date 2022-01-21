@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { useCallback } from '@googleforcreators/react';
+import { __, sprintf } from '@googleforcreators/i18n';
 
 /**
  * Update page URL in browser.

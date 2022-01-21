@@ -17,13 +17,13 @@
 /**
  * External dependencies
  */
-import { __, _x, sprintf } from '@web-stories-wp/i18n';
+import { __, _x, sprintf } from '@googleforcreators/i18n';
 import {
   ANIMATION_EFFECTS,
   BACKGROUND_ANIMATION_EFFECTS,
   DIRECTION,
   SCALE_DIRECTION,
-} from '@web-stories-wp/animation';
+} from '@googleforcreators/animation';
 
 /**
  * Internal dependencies

@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
-import { Modal, theme } from '@web-stories-wp/design-system';
+import { __ } from '@googleforcreators/i18n';
+import { Modal, theme } from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';
 
 /**

@@ -25,11 +25,15 @@ import {
   useState,
   useDebouncedCallback,
   useRef,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { CSSTransition } from 'react-transition-group';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import { rgba } from 'polished';
-import { Icons, useKeyDownEffect, Popup } from '@web-stories-wp/design-system';
+import {
+  Icons,
+  useKeyDownEffect,
+  Popup,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

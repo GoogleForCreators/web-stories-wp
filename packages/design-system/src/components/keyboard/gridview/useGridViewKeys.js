@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useMemo, useState } from '@web-stories-wp/react';
+import { useEffect, useMemo, useState } from '@googleforcreators/react';
 
 /**
  * Internal dependencies

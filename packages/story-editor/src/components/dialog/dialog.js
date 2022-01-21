@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo } from '@web-stories-wp/react';
+import { useMemo } from '@googleforcreators/react';
 import { ThemeProvider } from 'styled-components';
 import {
   Dialog as StyledDialog,
@@ -27,7 +27,7 @@ import {
   BUTTON_TYPES,
   theme,
   lightMode,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Dialog is wrapped in a ThemeProvider so that colors can be inverted.

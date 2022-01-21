@@ -18,20 +18,20 @@
  */
 import { render, screen } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
-import { theme } from '@web-stories-wp/design-system';
+import { theme } from '@googleforcreators/design-system';
 import {
   useConfig,
   useCurrentUser,
   useStory,
-} from '@web-stories-wp/story-editor';
+} from '@googleforcreators/story-editor';
 
 /**
  * Internal dependencies
  */
 import VideoOptimizationCheckbox from '..';
 
-jest.mock('@web-stories-wp/story-editor', () => ({
-  ...jest.requireActual('@web-stories-wp/story-editor'),
+jest.mock('@googleforcreators/story-editor', () => ({
+  ...jest.requireActual('@googleforcreators/story-editor'),
   useConfig: jest.fn(),
   useCurrentUser: jest.fn(),
   useStory: jest.fn(),

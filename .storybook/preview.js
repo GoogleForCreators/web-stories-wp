@@ -28,19 +28,19 @@ import {
   lightMode,
   ThemeGlobals,
   ModalGlobalStyle,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import {
   theme,
   GlobalStyle,
   CropMoveableGlobalStyle,
   EditorConfigProvider,
-} from '@web-stories-wp/story-editor';
+} from '@googleforcreators/story-editor';
 import {
   DashboardGlobalStyle,
   DashboardKeyboardOnlyOutline,
   ConfigProvider as DashboardConfigProvider,
   ApiProvider,
-} from '@web-stories-wp/dashboard';
+} from '@googleforcreators/dashboard';
 
 // @todo: Find better way to mock these.
 const wp = {};

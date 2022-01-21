@@ -18,11 +18,11 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback } from '@web-stories-wp/react';
-import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
-import { trackClick } from '@web-stories-wp/tracking';
-import { Link, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
-import { Dialog } from '@web-stories-wp/story-editor';
+import { useCallback } from '@googleforcreators/react';
+import { __, TranslateWithMarkup } from '@googleforcreators/i18n';
+import { trackClick } from '@googleforcreators/tracking';
+import { Link, Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Dialog } from '@googleforcreators/story-editor';
 
 const SUPPORT_URL = __(
   'https://wordpress.org/support/plugin/web-stories/',

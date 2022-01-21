@@ -1,6 +1,15 @@
 {
-  "name": "@web-stories-wp/units",
-  "private": true,
+  "name": "@googleforcreators/units",
+  "description": "A collection of utility functions as well as a React context provider for dealing with \"data\" and \"editor\" pixels in the Web Stories editor.",
+  "private": false,
+  "version": "0.0.1",
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "keywords": [
+    "web stories"
+  ],
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"
@@ -12,8 +21,8 @@
   "type": "module",
   "sideEffects": false,
   "dependencies": {
-    "@web-stories-wp/react": "*",
-    "prop-types": "^15.8.0"
+    "@googleforcreators/react": "*",
+    "prop-types": "^15.8.1"
   },
   "devDependencies": {}
 }

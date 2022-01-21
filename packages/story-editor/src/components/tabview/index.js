@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import { useRef, useCallback, forwardRef } from '@web-stories-wp/react';
+import { useRef, useCallback, forwardRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import {
   useKeyDownEffect,
@@ -27,7 +27,7 @@ import {
   THEME_CONSTANTS,
   themeHelpers,
   ThemeGlobals,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

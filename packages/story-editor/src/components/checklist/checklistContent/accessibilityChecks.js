@@ -20,7 +20,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import { ISSUE_TYPES } from '../constants';
 import { ChecklistCategoryProvider } from '../countContext';
 import { PanelText, StyledTablistPanel } from '../styles';

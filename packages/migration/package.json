@@ -1,6 +1,15 @@
 {
-  "name": "@web-stories-wp/migration",
-  "private": true,
+  "name": "@googleforcreators/migration",
+  "description": "Utility package for migrating stories to the latest data format.",
+  "private": false,
+  "version": "0.0.1",
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "keywords": [
+    "web stories"
+  ],
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"

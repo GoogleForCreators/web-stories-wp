@@ -16,16 +16,16 @@
 /**
  * External dependencies
  */
-import { useMemo } from '@web-stories-wp/react';
+import { useMemo } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import STICKERS from '@web-stories-wp/stickers';
+import STICKERS from '@googleforcreators/stickers';
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
-} from '@web-stories-wp/design-system';
-import { useUnits } from '@web-stories-wp/units';
+} from '@googleforcreators/design-system';
+import { useUnits } from '@googleforcreators/units';
 
 /**
  * Internal dependencies

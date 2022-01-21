@@ -18,7 +18,7 @@
  * External dependencies
  */
 import * as PropTypes from 'prop-types';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies
@@ -28,31 +28,25 @@ import {
   ChecklistCard,
   DefaultFooterText,
 } from '../../../checklistCard';
-import { getVisibleThumbnails } from '../../utils';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../../thumbnail';
 
-function VideoChecklistCard({ title, elements, footer, handleClick }) {
+function VideoChecklistCard({ elements, footer, onThumbnailClick, ...props }) {
   return (
     <ChecklistCard
-      title={title}
+      {...props}
       cardType={
         elements.length > 1 ? CARD_TYPE.MULTIPLE_ISSUE : CARD_TYPE.SINGLE_ISSUE
       }
       footer={<DefaultFooterText>{footer}</DefaultFooterText>}
-      thumbnailCount={elements.length}
-      thumbnail={
-        <>
-          {getVisibleThumbnails(elements).map((element) => (
-            <Thumbnail
-              key={element.id}
-              onClick={() => handleClick(element.id, element.pageId)}
-              type={THUMBNAIL_TYPES.VIDEO}
-              displayBackground={<LayerThumbnail page={element} />}
-              aria-label={__('Go to offending video', 'web-stories')}
-            />
-          ))}
-        </>
-      }
+      thumbnails={elements.map((element) => (
+        <Thumbnail
+          key={element.id}
+          onClick={() => onThumbnailClick(element.id, element.pageId)}
+          type={THUMBNAIL_TYPES.VIDEO}
+          displayBackground={<LayerThumbnail page={element} />}
+          aria-label={__('Go to offending video', 'web-stories')}
+        />
+      ))}
     />
   );
 }
@@ -61,7 +55,7 @@ VideoChecklistCard.propTypes = {
   title: PropTypes.string.isRequired,
   elements: PropTypes.arrayOf(PropTypes.object).isRequired,
   footer: PropTypes.string.isRequired,
-  handleClick: PropTypes.func.isRequired,
+  onThumbnailClick: PropTypes.func.isRequired,
 };
 
 export default VideoChecklistCard;

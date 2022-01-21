@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
-import { PAGE_HEIGHT, PAGE_WIDTH } from '@web-stories-wp/units';
+import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
 
 /**
  * Internal dependencies

@@ -18,8 +18,8 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
-import { UnitsProvider, PAGE_RATIO } from '@web-stories-wp/units';
-import STICKERS from '@web-stories-wp/stickers';
+import { UnitsProvider, PAGE_RATIO } from '@googleforcreators/units';
+import STICKERS from '@googleforcreators/stickers';
 
 /**
  * Internal dependencies

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { themeHelpers, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { themeHelpers } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -51,7 +51,7 @@ export const StickyTableHeader = styled(TableHeader)`
     background: ${({ theme }) => theme.colors.bg.secondary};
     position: sticky;
     z-index: 2;
-    top: ${THEME_CONSTANTS.WP_ADMIN.TOOLBAR_HEIGHT}px;
+    top: ${({ topOffset }) => `${topOffset}px`};
 
     :first-child {
       border-top-left-radius: ${({ theme }) => theme.borders.radius.small};

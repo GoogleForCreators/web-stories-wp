@@ -17,19 +17,19 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import {
   useRef,
   useCallback,
   useDebouncedCallback,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
-} from '@web-stories-wp/design-system';
-import { getVideoLengthDisplay } from '@web-stories-wp/media';
+} from '@googleforcreators/design-system';
+import { getVideoLengthDisplay } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -165,7 +165,11 @@ function VideoTrimmer() {
       <RailWrapper>
         <Rail
           width={railWidth}
-          style={{ backgroundImage: `url(${railBackgroundImage})` }}
+          style={{
+            backgroundImage: railBackgroundImage
+              ? `url(${railBackgroundImage})`
+              : undefined,
+          }}
         >
           <Scrim isLeftAligned width={(startOffset / maxOffset) * railWidth} />
           <Scrim width={((maxOffset - endOffset) / maxOffset) * railWidth} />

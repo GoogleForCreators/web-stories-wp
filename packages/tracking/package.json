@@ -1,6 +1,18 @@
 {
-  "name": "@web-stories-wp/tracking",
-  "private": true,
+  "name": "@googleforcreators/tracking",
+  "description": "Utility package for telemetry in the Web Stories editor, powered by Google Analytics.",
+  "private": false,
+  "version": "0.0.1",
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "keywords": [
+    "web stories",
+    "analytics",
+    "google analytics",
+    "telemetry"
+  ],
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"

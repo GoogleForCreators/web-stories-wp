@@ -63,24 +63,37 @@ concurrency:
 
 jobs:
   e2e:
-    name: '${{ matrix.browser }} - WP ${{ matrix.wp }}'
+    name: '${{ matrix.browser }} - WP ${{ matrix.wp }} (${{ matrix.shard }})'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     continue-on-error: ${{ matrix.experimental == true }}
     strategy:
       matrix:
         # TODO: add back Firefox once support is more mature.
+        browser: ['chrome']
+        wp: ['5.5']
+        snapshots: [false]
+        # We want to split up the tests into 2 parts running in parallel.
+        shard: ['1/2', '2/2']
         include:
           - browser: 'chrome'
             wp: 'latest'
             snapshots: true
+            shard: '1/2'
           - browser: 'chrome'
-            wp: '5.9-RC2'
+            wp: 'latest'
+            snapshots: true
+            shard: '2/2'
+          - browser: 'chrome'
+            wp: '5.9-RC3'
             experimental: true
             snapshots: false
+            shard: '1/2'
           - browser: 'chrome'
-            wp: '5.5'
+            wp: '5.9-RC3'
+            experimental: true
             snapshots: false
+            shard: '2/2'
 
     steps:
       - name: Checkout
@@ -140,6 +153,7 @@ jobs:
         run: npm run test:e2e
         env:
           WP_VERSION: ${{ matrix.wp }}
+          SHARD: ${{ matrix.shard }}
         if: ( ! matrix.snapshots ) || ( github.event.pull_request.draft == true )
 
       - name: Stop Docker environment

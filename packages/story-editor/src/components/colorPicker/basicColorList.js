@@ -24,10 +24,10 @@ import {
   generatePatternStyles,
   hasOpacity,
   hasGradient,
-} from '@web-stories-wp/patterns';
-import { Icons, Swatch, themeHelpers } from '@web-stories-wp/design-system';
-import { useRef } from '@web-stories-wp/react';
-import { __, sprintf } from '@web-stories-wp/i18n';
+} from '@googleforcreators/patterns';
+import { Icons, Swatch, themeHelpers } from '@googleforcreators/design-system';
+import { useRef } from '@googleforcreators/react';
+import { __, sprintf } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies

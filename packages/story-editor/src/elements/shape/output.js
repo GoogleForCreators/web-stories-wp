@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { generatePatternStyles } from '@web-stories-wp/patterns';
+import { generatePatternStyles } from '@googleforcreators/patterns';
 /**
  * Internal dependencies
  */

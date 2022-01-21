@@ -18,15 +18,20 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { createRef, useCallback, useMemo, useRef } from '@web-stories-wp/react';
+import {
+  createRef,
+  useCallback,
+  useMemo,
+  useRef,
+} from '@googleforcreators/react';
 import styled from 'styled-components';
-import { trackEvent } from '@web-stories-wp/tracking';
-import { createSolidFromString } from '@web-stories-wp/patterns';
-import { PAGE_WIDTH, useUnits } from '@web-stories-wp/units';
+import { trackEvent } from '@googleforcreators/tracking';
+import { createSolidFromString } from '@googleforcreators/patterns';
+import { PAGE_WIDTH, useUnits } from '@googleforcreators/units';
 import {
   ThemeGlobals,
   BUTTON_TRANSITION_TIMING,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

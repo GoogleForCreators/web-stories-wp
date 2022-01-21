@@ -15,27 +15,24 @@
  */
 
 /**
+ * Internal dependencies
+ */
+import getCanvasBlob from './getCanvasBlob';
+
+/**
  * Returns a still image from a given video element.
  *
  * @param {HTMLVideoElement} video Video element.
  * @return {Promise<Blob>} JPEG image blob.
  */
 function getImageFromVideo(video) {
-  return new Promise((resolve, reject) => {
-    const canvas = document.createElement('canvas');
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
+  const canvas = document.createElement('canvas');
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
 
-    const ctx = canvas.getContext('2d');
-    try {
-      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-    } catch (err) {
-      // Browser probably doesn't support the video codec.
-      reject(err);
-    }
-
-    canvas.toBlob(resolve, 'image/jpeg');
-  });
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  return getCanvasBlob(canvas);
 }
 
 export default getImageFromVideo;

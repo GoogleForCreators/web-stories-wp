@@ -21,10 +21,10 @@ import {
   usePrevious,
   useRef,
   useState,
-} from '@web-stories-wp/react';
-import { __, sprintf } from '@web-stories-wp/i18n';
-import { trackScreenView } from '@web-stories-wp/tracking';
-import { Snackbar, useSnackbar } from '@web-stories-wp/design-system';
+} from '@googleforcreators/react';
+import { __, sprintf } from '@googleforcreators/i18n';
+import { trackScreenView } from '@googleforcreators/tracking';
+import { Snackbar, useSnackbar } from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';
 
 /**
@@ -41,6 +41,7 @@ import { Route, useRouteHistory } from '../../app/router';
 import { AppFrame, LeftRail, PageContent } from '../pageStructure';
 import useApiAlerts from '../../app/api/useApiAlerts';
 import useApi from '../../app/api/useApi';
+import { useConfig } from '../../app/config';
 
 const InterfaceSkeleton = ({ additionalRoutes }) => {
   const {
@@ -50,6 +51,8 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
     },
     actions: { push, replace },
   } = useRouteHistory();
+
+  const { canViewDefaultTemplates } = useConfig();
 
   const { addInitialFetchListener } = useApi(
     ({
@@ -74,12 +77,16 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
   // have no stories created.
   useEffect(() => {
     return addInitialFetchListener?.((storyStatuses) => {
-      if (storyStatuses?.all <= 0 && isFirstLoadOnMyStories.current) {
+      if (
+        storyStatuses?.all <= 0 &&
+        isFirstLoadOnMyStories.current &&
+        canViewDefaultTemplates
+      ) {
         push(APP_ROUTES.TEMPLATES_GALLERY);
       }
       setIsRedirectComplete(true);
     });
-  }, [addInitialFetchListener, push, currentPath]);
+  }, [addInitialFetchListener, push, currentPath, canViewDefaultTemplates]);
 
   useEffect(() => {
     if (!isRedirectComplete) {
@@ -133,10 +140,12 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
             path={APP_ROUTES.DASHBOARD}
             component={<MyStoriesView />}
           />
-          <Route
-            path={APP_ROUTES.TEMPLATES_GALLERY}
-            component={<ExploreTemplatesView />}
-          />
+          {canViewDefaultTemplates && (
+            <Route
+              path={APP_ROUTES.TEMPLATES_GALLERY}
+              component={<ExploreTemplatesView />}
+            />
+          )}
           {additionalRoutes &&
             additionalRoutes.map((routeProps) => (
               <Route key={routeProps.path} {...routeProps} />

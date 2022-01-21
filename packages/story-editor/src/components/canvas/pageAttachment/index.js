@@ -19,8 +19,9 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { __ } from '@web-stories-wp/i18n';
-import { Popup } from '@web-stories-wp/design-system';
+import { Popup } from '@googleforcreators/design-system';
+import { __ } from '@googleforcreators/i18n';
+
 /**
  * Internal dependencies
  */

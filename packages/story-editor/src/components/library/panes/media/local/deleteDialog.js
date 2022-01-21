@@ -18,14 +18,14 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
-import { trackError } from '@web-stories-wp/tracking';
+import { useCallback } from '@googleforcreators/react';
+import { __ } from '@googleforcreators/i18n';
+import { trackError } from '@googleforcreators/tracking';
 import {
   Text,
   THEME_CONSTANTS,
   useSnackbar,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

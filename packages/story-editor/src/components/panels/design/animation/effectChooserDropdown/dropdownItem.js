@@ -17,9 +17,9 @@
 /**
  * External dependencies
  */
-import { forwardRef } from '@web-stories-wp/react';
+import { forwardRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
-import { Tooltip } from '@web-stories-wp/design-system';
+import { Tooltip } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
