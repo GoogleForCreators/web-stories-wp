@@ -48,3 +48,41 @@ jobs:
         env:
           ZENHUB_API_TOKEN: ${{ secrets.ZENHUB_API_TOKEN }}
           RELEASE_ID: ${{ steps.release.outputs.release_id }}
+
+      - name: Retrieve linked issues
+        uses: actions/github-script@v5
+        id: linked-issues
+        with:
+          script: |
+            query linkedIssues($name:String!, $owner:String!) {
+              repository(name: $name, owner: $owner) {
+                pullRequest(number: 10290) {
+                  title
+                  closingIssuesReferences(first: 10) {
+                    nodes {
+                      number
+                    }
+                  }
+                }
+              }
+            }
+            const variables = {
+              owner: context.repo.owner,
+              name: context.repo.repo,
+            }
+            return github.graphql(query, variables)
+
+      # https://github.com/ZenHubIO/API#add-or-remove-issues-to-or-from-a-release-report
+      # https://docs.github.com/en/graphql/reference/objects#issueconnection
+      - name: Add linked issues to release
+        run: |
+          ISSUE_NUMBERS=$((echo $LINKED_ISSUES ) | jq '.data.repository.pullRequest.closingIssuesReferences.nodes | .[] | .number')
+
+          while IFS= read -r ISSUE_NUMBER; do
+            echo "Adding linked issue $ISSUE to release $RELEASE_ID"
+            curl -s -H "X-Authentication-Token: $ZENHUB_API_TOKEN" -H 'Content-Type: application/json' -X PATCH "https://api.zenhub.com/p1/reports/release/${RELEASE_ID}/issues" -d '{ "add_issues": [{ "repo_id": '"$GITHUB_REPO_ID"', "issue_number": '"$ISSUE_NUMBER"' }], "remove_issues": [] }'
+          done <<< "$ISSUE_NUMBERS"
+        env:
+          ZENHUB_API_TOKEN: ${{ secrets.ZENHUB_API_TOKEN }}
+          RELEASE_ID: ${{ steps.release.outputs.release_id }}
+          LINKED_ISSUES: ${{ steps.linked-issues.outputs.result }}
