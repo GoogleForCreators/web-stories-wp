@@ -108,12 +108,12 @@ function CardGallery({ galleryPosters, isRTL, galleryLabel }) {
               selectedGridItemIndex === index
                 ? sprintf(
                     /* translators: %s: page number. */
-                    __('Preview of page %s (current page)', 'web-stories'),
+                    __('Page %s (current page)', 'web-stories'),
                     pageNumber
                   )
                 : sprintf(
                     /* translators: %s: page number. */
-                    __('Preview of page %s', 'web-stories'),
+                    __('Page %s', 'web-stories'),
                     pageNumber
                   )
             }
@@ -167,7 +167,7 @@ function CardGallery({ galleryPosters, isRTL, galleryLabel }) {
               decoding="async"
               alt={sprintf(
                 /* translators: %s: active preview page number */
-                __('Active Template Page Preview - Page %s', 'web-stories'),
+                __('Active Page Preview - Page %s', 'web-stories'),
                 selectedGridItemIndex + 1
               )}
               width={DEFAULT_GRID_IMG_WIDTH}

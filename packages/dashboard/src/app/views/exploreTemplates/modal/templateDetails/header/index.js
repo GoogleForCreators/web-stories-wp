@@ -61,7 +61,7 @@ function Header({
         type={BUTTON_TYPES.TERTIARY}
         variant={BUTTON_VARIANTS.SQUARE}
         size={BUTTON_SIZES.SMALL}
-        aria-label={__('Close detail view', 'web-stories')}
+        aria-label={__('Close', 'web-stories')}
         onClick={handleDetailsToggle}
       >
         <Icons.CrossLarge />

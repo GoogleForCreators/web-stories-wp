@@ -105,6 +105,12 @@ describe('See template details modal', () => {
   }
 
   describe('Action: Navigate template details modal', () => {
+    it('should pass accessibility tests', async () => {
+      const templateDetails = fixture.screen.queryByRole('dialog');
+      expect(templateDetails).toBeTruthy();
+      await expectAsync(templateDetails).toHaveNoViolations();
+    });
+
     it('should update current template', async () => {
       const firstTemplateTitle = await getTemplateTitle(0);
       const templateTitle = fixture.screen.getByTestId(
@@ -242,9 +248,9 @@ describe('See template details modal', () => {
 
       expect(firstPage).toBeTruthy();
 
-      const activePage = fixture.screen.getByLabelText(
-        'Active Page Preview - Page 1'
-      );
+      const activePage = fixture.screen.getByRole('img', {
+        name: 'Active Page Preview - Page 1',
+      });
 
       expect(activePage).toBeTruthy();
 
@@ -254,7 +260,9 @@ describe('See template details modal', () => {
 
       await fixture.events.click(secondPage);
 
-      fixture.screen.getByLabelText('Active Page Preview - Page 2');
+      fixture.screen.getByRole('img', {
+        name: 'Active Page Preview - Page 2',
+      });
 
       expect(activePage).toBeTruthy();
     });
@@ -287,9 +295,9 @@ describe('See template details modal', () => {
 
       await fixture.events.keyboard.press('Enter');
 
-      const activePreviewPage = fixture.screen.getByLabelText(
-        'Active Page Preview - Page 4'
-      );
+      const activePreviewPage = fixture.screen.getByRole('img', {
+        name: 'Active Page Preview - Page 4',
+      });
 
       expect(activePreviewPage).toBeTruthy();
     });
