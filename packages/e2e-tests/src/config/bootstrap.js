@@ -138,6 +138,9 @@ const ALLOWED_ERROR_MESSAGES_FIREFOX = [
 
   // Not caused by the editor.
   'This page is in Quirks Mode.',
+
+  // Some bug in Firefox?
+  'JSWindowActorChild.sendAsyncMessage: JSWindowActorChild cannot send at the moment',
 ];
 
 /**
