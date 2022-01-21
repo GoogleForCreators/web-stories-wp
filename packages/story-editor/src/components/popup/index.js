@@ -106,7 +106,7 @@ function Popup({
         height: popup.current?.getBoundingClientRect()?.height,
       });
     },
-    [anchor, dock, placement, spacing, mounted, isRTL, topOffset]
+    [anchor, dock, placement, spacing, isRTL, topOffset]
   );
 
   useEffect(() => {
