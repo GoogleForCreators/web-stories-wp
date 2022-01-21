@@ -783,6 +783,8 @@ function RightClickMenuProvider({ children }) {
       ? RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND_VIDEO
       : RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND_IMAGE;
 
+    const showTrimModeAction = isVideo && hasTrimMode;
+
     return [
       {
         label: detachLabel,
@@ -794,14 +796,16 @@ function RightClickMenuProvider({ children }) {
         label: scaleLabel,
         onClick: handleOpenScaleAndCrop,
         disabled: disableBackgroundMediaActions,
+        separator: showTrimModeAction ? undefined : 'bottom',
         ...menuItemProps,
       },
-      ...(isVideo && hasTrimMode
+      ...(showTrimModeAction
         ? [
             {
               label: RIGHT_CLICK_MENU_LABELS.TRIM_VIDEO,
               onClick: toggleTrimMode,
               disabled: !canTranscodeResource(selectedElement?.resource),
+              separator: showTrimModeAction ? 'bottom' : undefined,
               ...menuItemProps,
             },
           ]
