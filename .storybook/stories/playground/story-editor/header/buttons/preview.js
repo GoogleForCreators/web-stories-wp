@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { Tooltip, useStory } from '@web-stories-wp/story-editor';
+import { Tooltip, useStory } from '@googleforcreators/story-editor';
 import {
   Button,
   BUTTON_SIZES,

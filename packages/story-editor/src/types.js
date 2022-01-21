@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { PatternPropType } from '@web-stories-wp/patterns';
+import { PatternPropType } from '@googleforcreators/patterns';
 import { ResourcePropTypes } from '@googleforcreators/media';
 import { AnimationProps } from '@googleforcreators/animation';
 

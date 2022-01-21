@@ -32,9 +32,9 @@ import './setLocaleData';
  */
 import Dashboard from '@googleforcreators/dashboard';
 import { domReady, setAppElement } from '@googleforcreators/design-system';
-import { StrictMode, render } from '@web-stories-wp/react';
+import { StrictMode, render } from '@googleforcreators/react';
 import { updateSettings } from '@googleforcreators/date';
-import { initializeTracking } from '@web-stories-wp/tracking';
+import { initializeTracking } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies

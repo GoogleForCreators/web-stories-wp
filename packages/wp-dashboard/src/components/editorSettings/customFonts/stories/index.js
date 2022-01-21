@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useRef, useState } from '@web-stories-wp/react';
+import { useCallback, useRef, useState } from '@googleforcreators/react';
 import { action } from '@storybook/addon-actions';
 
 /**

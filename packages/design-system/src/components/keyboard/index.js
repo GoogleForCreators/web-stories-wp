@@ -25,7 +25,7 @@ import {
   useState,
   useContext,
   useBatchingCallback,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 /**
  * Internal dependencies
  */

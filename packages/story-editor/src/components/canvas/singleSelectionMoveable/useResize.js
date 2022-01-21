@@ -17,9 +17,9 @@
 /**
  * External dependencies
  */
-import { useState } from '@web-stories-wp/react';
+import { useState } from '@googleforcreators/react';
 import classnames from 'classnames';
-import { useUnits } from '@web-stories-wp/units';
+import { useUnits } from '@googleforcreators/units';
 
 /**
  * Internal dependencies

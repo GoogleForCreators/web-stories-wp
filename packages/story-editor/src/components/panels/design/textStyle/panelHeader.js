@@ -26,13 +26,13 @@ import {
   Icons,
   themeHelpers,
 } from '@googleforcreators/design-system';
-import { useContext } from '@web-stories-wp/react';
+import { useContext } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent } from '@googleforcreators/tracking';
 import styled from 'styled-components';
 import useApplyTextAutoStyle from '../../../../utils/useApplyTextAutoStyle';
 import Tooltip from '../../../tooltip';

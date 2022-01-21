@@ -22,7 +22,7 @@ import {
   forwardRef,
   useState,
   useEffect,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { TextArea as StyledTextArea } from '@googleforcreators/design-system';
 

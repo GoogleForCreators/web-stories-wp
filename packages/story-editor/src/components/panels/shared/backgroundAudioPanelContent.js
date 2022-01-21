@@ -28,7 +28,7 @@ import {
   themeHelpers,
 } from '@googleforcreators/design-system';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
-import { useCallback } from '@web-stories-wp/react';
+import { useCallback } from '@googleforcreators/react';
 import { ResourcePropTypes } from '@googleforcreators/media';
 import { v4 as uuidv4 } from 'uuid';
 

@@ -36,7 +36,7 @@ import {
   usePrevious,
   useRef,
   useState,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 
 /**
  * Internal dependencies

@@ -23,12 +23,12 @@ import {
   useMemo,
   useReduction,
   useRef,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import {
   trackError,
   trackEvent,
   getTimeTracker,
-} from '@web-stories-wp/tracking';
+} from '@googleforcreators/tracking';
 import {
   createBlob,
   getFileName,

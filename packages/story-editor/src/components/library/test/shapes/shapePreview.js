@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
-import { UnitsProvider, PAGE_RATIO } from '@web-stories-wp/units';
+import { UnitsProvider, PAGE_RATIO } from '@googleforcreators/units';
 
 /**
  * Internal dependencies

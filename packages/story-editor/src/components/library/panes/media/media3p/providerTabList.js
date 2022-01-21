@@ -22,7 +22,7 @@ import {
   useRef,
   useState,
   useEffect,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import styled from 'styled-components';
 import { useKeyDownEffect } from '@googleforcreators/design-system';
 

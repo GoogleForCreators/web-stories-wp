@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useReduction } from '@web-stories-wp/react';
+import { useReduction } from '@googleforcreators/react';
 
 const imageCacheReducer = {
   setCachedImage: (cachedImages, { payload: { pageId, cachedImage } }) => ({

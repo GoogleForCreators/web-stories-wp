@@ -22,7 +22,7 @@ import {
   useMemo,
   useRef,
   useState,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 /**
  * Internal dependencies
  */

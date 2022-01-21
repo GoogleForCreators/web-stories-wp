@@ -17,11 +17,11 @@
 /**
  * External dependencies
  */
-import { forwardRef, useCallback } from '@web-stories-wp/react';
+import { forwardRef, useCallback } from '@googleforcreators/react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { __, sprintf } from '@googleforcreators/i18n';
-import { getPreviewText, PatternPropType } from '@web-stories-wp/patterns';
+import { getPreviewText, PatternPropType } from '@googleforcreators/patterns';
 import {
   Button,
   BUTTON_SIZES,

@@ -19,7 +19,12 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { useCallback, useRef, useState, useMemo } from '@web-stories-wp/react';
+import {
+  useCallback,
+  useRef,
+  useState,
+  useMemo,
+} from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { v4 as uuidv4 } from 'uuid';
 import {

@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { act, fireEvent, screen } from '@testing-library/react';
-import { createSolid } from '@web-stories-wp/patterns';
+import { createSolid } from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies
@@ -42,7 +42,7 @@ let mockControls;
 jest.mock('../../../../../utils/textMeasurements');
 jest.mock('@googleforcreators/design-system', () => {
   // eslint-disable-next-line no-undef
-  const React = require('@web-stories-wp/react');
+  const React = require('@googleforcreators/react');
   // eslint-disable-next-line no-undef
   const _PropTypes = require('prop-types');
   const FakeControl = React.forwardRef(function FakeControl(props, ref) {
@@ -62,7 +62,7 @@ jest.mock('@googleforcreators/design-system', () => {
 });
 jest.mock('../../../../form/color/color', () => {
   // eslint-disable-next-line no-undef
-  const React = require('@web-stories-wp/react');
+  const React = require('@googleforcreators/react');
   // eslint-disable-next-line no-undef
   const _PropTypes = require('prop-types');
   const FakeControl = React.forwardRef(function FakeControl(props, ref) {

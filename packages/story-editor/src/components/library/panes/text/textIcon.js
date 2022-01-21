@@ -19,9 +19,9 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useState } from '@web-stories-wp/react';
+import { useState } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent } from '@googleforcreators/tracking';
 import { Icons } from '@googleforcreators/design-system';
 
 /**

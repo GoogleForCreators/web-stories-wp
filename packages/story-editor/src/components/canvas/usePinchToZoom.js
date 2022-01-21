@@ -17,7 +17,10 @@
 /**
  * External dependencies
  */
-import { useLayoutEffect, useDebouncedCallback } from '@web-stories-wp/react';
+import {
+  useLayoutEffect,
+  useDebouncedCallback,
+} from '@googleforcreators/react';
 
 /**
  * Internal dependencies

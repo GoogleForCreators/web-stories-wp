@@ -24,8 +24,8 @@ import { getMediaSizePositionProps } from '@googleforcreators/media';
 /**
  * Internal dependencies
  */
-import { useRef } from '@web-stories-wp/react';
-import { useUnits } from '@web-stories-wp/units';
+import { useRef } from '@googleforcreators/react';
+import { useUnits } from '@googleforcreators/units';
 import StoryPropTypes from '../../types';
 import {
   elementFillContent,

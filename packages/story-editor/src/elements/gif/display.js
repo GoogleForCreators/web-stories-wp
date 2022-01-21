@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useRef } from '@web-stories-wp/react';
+import { useRef } from '@googleforcreators/react';
 import { getMediaSizePositionProps } from '@googleforcreators/media';
 
 /**

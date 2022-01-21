@@ -27,7 +27,7 @@ import {
   Icons,
   themeHelpers,
 } from '@googleforcreators/design-system';
-import { useState } from '@web-stories-wp/react';
+import { useState } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 
 /**

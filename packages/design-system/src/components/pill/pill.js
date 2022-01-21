@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { forwardRef } from '@web-stories-wp/react';
+import { forwardRef } from '@googleforcreators/react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 /**

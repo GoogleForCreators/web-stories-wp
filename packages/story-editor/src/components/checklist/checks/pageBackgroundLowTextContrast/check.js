@@ -21,12 +21,12 @@ import {
   FULLBLEED_RATIO,
   getBox,
   getBoundRect,
-} from '@web-stories-wp/units';
+} from '@googleforcreators/units';
 import {
   getMediaSizePositionProps,
   preloadImage,
 } from '@googleforcreators/media';
-import { createSolidFromString } from '@web-stories-wp/patterns';
+import { createSolidFromString } from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies

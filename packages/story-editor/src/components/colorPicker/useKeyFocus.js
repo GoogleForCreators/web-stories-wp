@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useLayoutEffect, createRef, useMemo } from '@web-stories-wp/react';
+import { useLayoutEffect, createRef, useMemo } from '@googleforcreators/react';
 
 function useKeyFocus(ref, stops, currentStopIndex) {
   const numStops = stops.length;

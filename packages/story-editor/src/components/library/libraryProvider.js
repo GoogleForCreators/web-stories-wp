@@ -24,10 +24,10 @@ import {
   useMemo,
   useState,
   useCallback,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { useFeatures } from 'flagged';
-import { getTimeTracker, trackEvent } from '@web-stories-wp/tracking';
-import { loadTextSets } from '@web-stories-wp/text-sets';
+import { getTimeTracker, trackEvent } from '@googleforcreators/tracking';
+import { loadTextSets } from '@googleforcreators/text-sets';
 import { uniqueEntriesByKey } from '@googleforcreators/design-system';
 
 /**

@@ -23,7 +23,7 @@ import {
   useEffect,
   useRef,
   useResizeEffect,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import styled from 'styled-components';
 import { themeHelpers } from '@googleforcreators/design-system';
 

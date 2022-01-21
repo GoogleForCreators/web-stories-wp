@@ -24,7 +24,7 @@ import {
   useState,
   lazy,
   Suspense,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { __ } from '@googleforcreators/i18n';

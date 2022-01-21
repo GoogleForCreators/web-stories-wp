@@ -22,10 +22,10 @@ import {
   useCallback,
   useEffect,
   useMemo,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { __, TranslateWithMarkup } from '@googleforcreators/i18n';
-import { trackClick, trackEvent } from '@web-stories-wp/tracking';
+import { trackClick, trackEvent } from '@googleforcreators/tracking';
 import {
   BUTTON_SIZES,
   BUTTON_TYPES,

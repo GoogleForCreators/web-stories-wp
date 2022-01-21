@@ -18,9 +18,9 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useCallback } from '@web-stories-wp/react';
+import { useCallback } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent } from '@googleforcreators/tracking';
 import { useEscapeToBlurEffect } from '@googleforcreators/design-system';
 
 /**

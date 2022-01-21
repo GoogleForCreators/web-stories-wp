@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { shallowEqual } from '@web-stories-wp/react';
+import { shallowEqual } from '@googleforcreators/react';
 
 /**
  * Internal dependencies

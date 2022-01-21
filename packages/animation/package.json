@@ -1,11 +1,28 @@
 {
   "name": "@googleforcreators/animation",
-  "private": true,
-  "type": "module",
+  "description": "Web Stories editor animation library.",
+  "private": false,
+  "version": "0.0.1",
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "web stories",
+    "animations",
+    "web animations"
+  ],
+  "homepage": "https://github.com/google/web-stories-wp/",
+  "repository": "git+https://github.com/google/web-stories-wp.git",
+  "bugs": {
+    "url": "https://github.com/google/web-stories-wp/issues"
+  },
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"
   },
+  "type": "module",
   "exports": {
     "default": "./src/index.js"
   },
@@ -13,8 +30,8 @@
   "dependencies": {
     "@googleforcreators/i18n": "*",
     "@googleforcreators/media": "*",
-    "@web-stories-wp/react": "*",
-    "@web-stories-wp/units": "*",
+    "@googleforcreators/react": "*",
+    "@googleforcreators/units": "*",
     "flagged": "^2.0.1",
     "prop-types": "^15.8.1",
     "styled-components": "^5.3.3",

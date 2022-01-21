@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useRef, useCallback } from '@web-stories-wp/react';
+import { useEffect, useRef, useCallback } from '@googleforcreators/react';
 import { getFocalFromOffset } from '@googleforcreators/media';
 import { useKeyDownEffect } from '@googleforcreators/design-system';
 

@@ -19,7 +19,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useState } from '@web-stories-wp/react';
+import { useEffect, useState } from '@googleforcreators/react';
 import { createGlobalStyle } from 'styled-components';
 
 /**

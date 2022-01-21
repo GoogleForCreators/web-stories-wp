@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useCallback } from '@web-stories-wp/react';
+import { useState, useCallback } from '@googleforcreators/react';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import {
   Button,
@@ -32,7 +32,7 @@ import {
   Tooltip,
 } from '@googleforcreators/design-system';
 import styled from 'styled-components';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies

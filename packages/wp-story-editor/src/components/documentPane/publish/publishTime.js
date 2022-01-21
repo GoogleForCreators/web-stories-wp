@@ -22,7 +22,7 @@ import {
   useRef,
   useState,
   useFocusOut,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { format, formatTime, is12Hour } from '@googleforcreators/date';
 import { __ } from '@googleforcreators/i18n';
 import {
@@ -36,7 +36,7 @@ import {
   Popup,
   useStory,
   focusStyle,
-} from '@web-stories-wp/story-editor';
+} from '@googleforcreators/story-editor';
 
 // date-fns format without timezone.
 const TIMEZONELESS_FORMAT = 'Y-m-d\\TH:i:s';

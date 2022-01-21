@@ -22,7 +22,7 @@ import {
   PAGE_WIDTH,
   FULLBLEED_HEIGHT,
   FULLBLEED_RATIO,
-} from '@web-stories-wp/units';
+} from '@googleforcreators/units';
 
 /**
  * Internal dependencies

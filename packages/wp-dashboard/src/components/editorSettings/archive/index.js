@@ -23,14 +23,14 @@ import {
   useDebouncedCallback,
   useEffect,
   useState,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { __, _x, TranslateWithMarkup, sprintf } from '@googleforcreators/i18n';
 import {
   DropDown,
   Search,
   THEME_CONSTANTS,
 } from '@googleforcreators/design-system';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent } from '@googleforcreators/tracking';
 import styled from 'styled-components';
 import { TEXT_INPUT_DEBOUNCE } from '@googleforcreators/dashboard';
 

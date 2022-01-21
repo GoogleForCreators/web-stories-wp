@@ -32,7 +32,7 @@ import {
   BUTTON_VARIANTS,
   useLiveRegion,
 } from '@googleforcreators/design-system';
-import { useCallback, useEffect } from '@web-stories-wp/react';
+import { useCallback, useEffect } from '@googleforcreators/react';
 
 /**
  * Internal dependencies

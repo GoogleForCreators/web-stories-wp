@@ -18,8 +18,8 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-import { useCallback, useState } from '@web-stories-wp/react';
-import { getTimeTracker } from '@web-stories-wp/tracking';
+import { useCallback, useState } from '@googleforcreators/react';
+import { getTimeTracker } from '@googleforcreators/tracking';
 import { useSnackbar } from '@googleforcreators/design-system';
 
 /**

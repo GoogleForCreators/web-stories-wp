@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { preloadImage } from '@googleforcreators/media';
-import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
+import { getTimeTracker, trackError } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies

@@ -23,8 +23,8 @@ import {
   useMemo,
   useState,
   useEffect,
-} from '@web-stories-wp/react';
-import { trackEvent } from '@web-stories-wp/tracking';
+} from '@googleforcreators/react';
+import { trackEvent } from '@googleforcreators/tracking';
 import { getMsFromHMS } from '@googleforcreators/media';
 
 /**

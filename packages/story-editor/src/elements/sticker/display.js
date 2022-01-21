@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import stickers from '@web-stories-wp/stickers';
+import stickers from '@googleforcreators/stickers';
 /**
  * Internal dependencies
  */

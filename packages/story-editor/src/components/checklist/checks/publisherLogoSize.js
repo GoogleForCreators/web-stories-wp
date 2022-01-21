@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
+import { useCallback } from '@googleforcreators/react';
 import { List, THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 /**

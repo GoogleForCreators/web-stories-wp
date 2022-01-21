@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useRef } from '@web-stories-wp/react';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { useCallback, useEffect, useRef } from '@googleforcreators/react';
+import { trackEvent } from '@googleforcreators/tracking';
 import { useGlobalKeyDownEffect } from '@googleforcreators/design-system';
 import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
 

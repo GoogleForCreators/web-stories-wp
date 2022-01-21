@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useState } from '@web-stories-wp/react';
+import { useState } from '@googleforcreators/react';
 import {
   Button,
   BUTTON_TYPES,

@@ -25,9 +25,9 @@ import {
   useEffect,
   useMemo,
   useResizeEffect,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies

@@ -20,8 +20,8 @@
 import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
 import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
-import { useCallback, useEffect } from '@web-stories-wp/react';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { useCallback, useEffect } from '@googleforcreators/react';
+import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies

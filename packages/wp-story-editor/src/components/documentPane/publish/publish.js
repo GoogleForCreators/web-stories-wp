@@ -22,7 +22,7 @@ import {
   useEffect,
   useCallback,
   forwardRef,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import styled from 'styled-components';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import {
@@ -45,7 +45,7 @@ import {
   useConfig,
   useHighlights,
   useInspector,
-} from '@web-stories-wp/story-editor';
+} from '@googleforcreators/story-editor';
 
 /**
  * Internal dependencies

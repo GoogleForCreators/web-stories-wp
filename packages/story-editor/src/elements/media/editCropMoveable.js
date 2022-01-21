@@ -18,8 +18,8 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useRef } from '@web-stories-wp/react';
-import { useUnits } from '@web-stories-wp/units';
+import { useEffect, useRef } from '@googleforcreators/react';
+import { useUnits } from '@googleforcreators/units';
 import { getFocalFromOffset } from '@googleforcreators/media';
 
 /**

@@ -18,10 +18,10 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { memo, useRef, useState } from '@web-stories-wp/react';
+import { memo, useRef, useState } from '@googleforcreators/react';
 import styled, { css } from 'styled-components';
-import { generatePatternStyles } from '@web-stories-wp/patterns';
-import { useUnits } from '@web-stories-wp/units';
+import { generatePatternStyles } from '@googleforcreators/patterns';
+import { useUnits } from '@googleforcreators/units';
 import { StoryAnimation } from '@googleforcreators/animation';
 
 /**

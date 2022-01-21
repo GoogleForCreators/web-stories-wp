@@ -26,7 +26,7 @@ import {
   THEME_CONSTANTS,
   Text,
 } from '@googleforcreators/design-system';
-import { Dialog } from '@web-stories-wp/story-editor';
+import { Dialog } from '@googleforcreators/story-editor';
 
 /**
  * Internal dependencies

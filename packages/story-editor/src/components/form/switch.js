@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-import { useCallback, useRef } from '@web-stories-wp/react';
+import { useCallback, useRef } from '@googleforcreators/react';
 import styled from 'styled-components';
 import {
   Switch as BaseSwitch,

@@ -17,8 +17,11 @@
 /**
  * External dependencies
  */
-import { useMemo } from '@web-stories-wp/react';
-import { convertToCSS, generatePatternStyles } from '@web-stories-wp/patterns';
+import { useMemo } from '@googleforcreators/react';
+import {
+  convertToCSS,
+  generatePatternStyles,
+} from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies

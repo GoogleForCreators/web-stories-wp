@@ -17,11 +17,11 @@
 /**
  * External dependencies
  */
-import { useEffect, useRef } from '@web-stories-wp/react';
+import { useEffect, useRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
-import { CircularProgress, useStory } from '@web-stories-wp/story-editor';
+import { CircularProgress, useStory } from '@googleforcreators/story-editor';
 
 const Wrapper = styled.div`
   position: relative;

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useState } from '@web-stories-wp/react';
+import { useCallback, useState } from '@googleforcreators/react';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import {
   getImageFromVideo,
@@ -27,7 +27,7 @@ import {
   hasVideoGotAudio,
 } from '@googleforcreators/media';
 import { v4 as uuidv4 } from 'uuid';
-import { trackError, trackEvent } from '@web-stories-wp/tracking';
+import { trackError, trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies

@@ -22,14 +22,14 @@ import {
   forwardRef,
   render,
   unmountComponentAtNode,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import {
   PAGE_RATIO,
   FULLBLEED_RATIO,
   UnitsProvider,
-} from '@web-stories-wp/units';
+} from '@googleforcreators/units';
 import styled, { ThemeProvider } from 'styled-components';
-import { generatePatternStyles } from '@web-stories-wp/patterns';
+import { generatePatternStyles } from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies

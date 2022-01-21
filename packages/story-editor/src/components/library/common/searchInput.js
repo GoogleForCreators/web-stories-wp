@@ -22,7 +22,7 @@ import {
   useState,
   useCallback,
   useDebouncedCallback,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import { SearchInput } from '@googleforcreators/design-system';

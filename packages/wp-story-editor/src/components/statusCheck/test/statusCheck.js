@@ -22,7 +22,7 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import { setAppElement } from '@googleforcreators/design-system';
-import { ConfigContext } from '@web-stories-wp/story-editor';
+import { ConfigContext } from '@googleforcreators/story-editor';
 
 /**
  * Internal dependencies

@@ -17,11 +17,11 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useMemo } from '@web-stories-wp/react';
+import { useCallback, useEffect, useMemo } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent } from '@googleforcreators/tracking';
 import { useSnackbar } from '@googleforcreators/design-system';
-import { useConfig, useAPI } from '@web-stories-wp/story-editor';
+import { useConfig, useAPI } from '@googleforcreators/story-editor';
 import PropTypes from 'prop-types';
 
 /**

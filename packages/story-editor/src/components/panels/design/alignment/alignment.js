@@ -23,7 +23,7 @@ import {
   useCallback,
   useState,
   useEffect,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
@@ -32,7 +32,7 @@ import {
   PAGE_HEIGHT,
   getBoundRect,
   calcRotatedObjectPositionAndSize,
-} from '@web-stories-wp/units';
+} from '@googleforcreators/units';
 import {
   useKeyDownEffect,
   Icons,

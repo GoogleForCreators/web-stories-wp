@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useMemo } from '@web-stories-wp/react';
+import { useState, useMemo } from '@googleforcreators/react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 

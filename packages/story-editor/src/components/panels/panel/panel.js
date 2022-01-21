@@ -25,8 +25,8 @@ import {
   useCallback,
   useEffect,
   useMemo,
-} from '@web-stories-wp/react';
-import { trackEvent } from '@web-stories-wp/tracking';
+} from '@googleforcreators/react';
+import { trackEvent } from '@googleforcreators/tracking';
 import {
   localStore,
   LOCAL_STORAGE_PREFIX,

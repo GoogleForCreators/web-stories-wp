@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useSnackbar } from '@googleforcreators/design-system';
-import { useCallback, useMemo } from '@web-stories-wp/react';
+import { useCallback, useMemo } from '@googleforcreators/react';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 

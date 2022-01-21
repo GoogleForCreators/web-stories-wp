@@ -19,13 +19,13 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { useCallback, useMemo, useRef } from '@web-stories-wp/react';
+import { useCallback, useMemo, useRef } from '@googleforcreators/react';
 import { __, _x } from '@googleforcreators/i18n';
-import stickers from '@web-stories-wp/stickers';
+import stickers from '@googleforcreators/stickers';
 import {
   calcRotatedObjectPositionAndSize,
   dataPixels,
-} from '@web-stories-wp/units';
+} from '@googleforcreators/units';
 import {
   Button,
   LockToggle,

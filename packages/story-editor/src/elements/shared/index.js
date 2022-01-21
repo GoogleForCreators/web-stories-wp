@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { css } from 'styled-components';
-import { generatePatternStyles } from '@web-stories-wp/patterns';
+import { generatePatternStyles } from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies

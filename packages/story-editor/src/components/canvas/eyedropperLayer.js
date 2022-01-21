@@ -17,10 +17,10 @@
 /**
  * External dependencies
  */
-import { useRef, useFocusOut } from '@web-stories-wp/react';
+import { useRef, useFocusOut } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { rgba, readableColor } from 'polished';
-import { FULLBLEED_RATIO } from '@web-stories-wp/units';
+import { FULLBLEED_RATIO } from '@googleforcreators/units';
 import { useGlobalKeyDownEffect } from '@googleforcreators/design-system';
 
 /**

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useUnits } from '@web-stories-wp/units';
+import { useUnits } from '@googleforcreators/units';
 
 function useResize({ onGroupEventEnd, targetList, setTransformStyle, frames }) {
   const { editorToDataX, editorToDataY, dataToEditorY } = useUnits((state) => ({

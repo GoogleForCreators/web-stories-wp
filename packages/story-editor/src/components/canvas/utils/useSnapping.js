@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
-import { FULLBLEED_RATIO } from '@web-stories-wp/units';
+import { useCallback } from '@googleforcreators/react';
+import { FULLBLEED_RATIO } from '@googleforcreators/units';
 
 /**
  * Internal dependencies

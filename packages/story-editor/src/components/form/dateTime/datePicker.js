@@ -25,7 +25,7 @@ import {
   useEffect,
   lazy,
   Suspense,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { _x } from '@googleforcreators/i18n';

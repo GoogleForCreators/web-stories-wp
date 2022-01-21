@@ -24,8 +24,8 @@ import {
   useState,
   useMemo,
   useRef,
-} from '@web-stories-wp/react';
-import { trackEvent } from '@web-stories-wp/tracking';
+} from '@googleforcreators/react';
+import { trackEvent } from '@googleforcreators/tracking';
 import { clamp } from '@googleforcreators/animation';
 import {
   localStore,

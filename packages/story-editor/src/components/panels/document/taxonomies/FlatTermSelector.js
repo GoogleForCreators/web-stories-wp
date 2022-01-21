@@ -23,7 +23,7 @@ import {
   useMemo,
   useState,
   useEffect,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { __, sprintf, _n } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 import { useLiveRegion } from '@googleforcreators/design-system';

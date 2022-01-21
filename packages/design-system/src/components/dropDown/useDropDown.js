@@ -21,7 +21,7 @@ import {
   useMemo,
   useState,
   useDebouncedCallback,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { sprintf, _n, __ } from '@googleforcreators/i18n';
 
 /**

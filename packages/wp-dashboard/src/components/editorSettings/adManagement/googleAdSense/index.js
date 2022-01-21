@@ -17,10 +17,10 @@
 /**
  * External dependencies
  */
-import { useState, useCallback, useEffect } from '@web-stories-wp/react';
+import { useState, useCallback, useEffect } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { __, sprintf, TranslateWithMarkup } from '@googleforcreators/i18n';
-import { trackClick } from '@web-stories-wp/tracking';
+import { trackClick } from '@googleforcreators/tracking';
 import {
   BUTTON_SIZES,
   BUTTON_TYPES,

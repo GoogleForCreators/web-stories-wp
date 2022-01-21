@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { trackError } from '@web-stories-wp/tracking';
+import { trackError } from '@googleforcreators/tracking';
 
 export const LOCAL_STORAGE_PREFIX = {
   PANEL: 'web_stories_ui_panel_settings',
