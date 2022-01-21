@@ -54,7 +54,7 @@ jobs:
           script: |
             const query = `query linkedIssues($name:String!, $owner:String!) {
               repository(name: $name, owner: $owner) {
-                pullRequest(number: 10290) {
+                pullRequest(number: ${PR_NUMBER}) {
                   title
                   closingIssuesReferences(first: 10) {
                     nodes {
@@ -74,7 +74,7 @@ jobs:
       # https://docs.github.com/en/graphql/reference/objects#issueconnection
       - name: Add linked issues to release
         run: |
-          ISSUE_NUMBERS=$((echo $LINKED_ISSUES ) | jq '.data.repository.pullRequest.closingIssuesReferences.nodes | .[] | .number')
+          ISSUE_NUMBERS=$((echo $LINKED_ISSUES ) | jq '.repository.pullRequest.closingIssuesReferences.nodes | .[] | .number')
 
           while IFS= read -r ISSUE_NUMBER; do
             echo "Adding linked issue $ISSUE to release $RELEASE_ID"
