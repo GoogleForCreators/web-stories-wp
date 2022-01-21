@@ -31,35 +31,15 @@ jobs:
           node-version-file: '.nvmrc'
           cache: npm
 
-      # Rollup is needed to create `packages/migration/scripts/module.js`
-      # TODO: Maybe remove from release?
-      - name: Build ESM
-        run: |
-          npm ci
-          npx rollup --config packages/migration/rollup.config.migrate.js
+      - name: Install dependencies
+        run: npm ci
         env:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       # For the time being, using incremental versions like v0.1.202111302140
-      # `npm version` updates all packages, even the ones we don't intend to publish.
-      # To address this, we undo the version change for private packages.
-      # We're doing the commit ourselves since committing doesn't work properly when using workspaces.
-      # See https://github.com/npm/cli/issues/4017
+      # Not committing any changes here for the dry run.
       - name: Version bumps
-        run: |
-          OUTPUT=$(npm version --no-git-tag-version --workspaces "0.1.$(date -u +%Y%m%d%H%M)")
-          # Workaround: `npm version` returns the new version for *every* package.
-          # Just grab the very last one from the last line, since they all should be identical anyway.
-          # We then use this to manually commit and tag the version bump
-          NEW_VERSION="${OUTPUT##*$'\n'}"
-          for package in ./packages/*/package.json; do
-            if [[ $(cat $package | jq '.private') == true ]]; then
-              git checkout --quiet $package
-            fi
-          done
-          git add packages/*/package.json
-          git commit -m "Tagging npm package version $NEW_VERSION"
-          git tag $NEW_VERSION
+        run: npm version --no-git-tag-version --workspaces "0.1.$(date -u +%Y%m%d%H%M)"
 
       # Set up a local npm registry with Verdaccio.
       - name: Set up local registry
@@ -106,17 +86,32 @@ jobs:
           registry-url: ${{ env.PRODUCTION_REGISTRY_URL }}
           scope: '@googleforcreators'
 
-      # Rollup is needed to create `packages/migration/scripts/module.js`
-      - name: Build ESM
-        run: |
-          npm ci
-          npx rollup --config packages/migration/rollup.config.migrate.js
+      - name: Install dependencies
+        run: npm ci
         env:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       # For the time being, using incremental versions like v0.1.202111302140
+      # `npm version` updates all packages, even the ones we don't intend to publish.
+      # To address this, we undo the version change for private packages.
+      # We're doing the commit ourselves since committing doesn't work properly when using workspaces.
+      # See https://github.com/npm/cli/issues/4017
       - name: Version bumps
-        run: npm version --workspaces --no-git-tag-version "0.1.$(date -u +%Y%m%d%H%M)"
+        run: |
+          OUTPUT=$(npm version --no-git-tag-version --workspaces "0.1.$(date -u +%Y%m%d%H%M)")
+          # Workaround: `npm version` returns the new version for *every* package.
+          # Just grab the very last one from the last line, since they all should be identical anyway.
+          # We then use this to manually commit and tag the version bump
+          NEW_VERSION="${OUTPUT##*$'\n'}"
+          for package in ./packages/*/package.json; do
+            if [[ $(cat $package | jq '.private') == true ]]; then
+              git checkout --quiet $package
+            fi
+          done
+          git add packages/*/package.json
+          git commit -m "Tagging npm package version $NEW_VERSION"
+          git tag $NEW_VERSION
+          git push origin main
 
       # Dry-run releasing
       - name: Dry-run production release
