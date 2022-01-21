@@ -1,22 +1,20 @@
 {
   "name": "web-stories-wp",
-  "title": "Web Stories",
-  "private": true,
   "description": "Visual storytelling for WordPress.",
-  "author": "Google",
+  "private": true,
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
   "license": "Apache-2.0",
-  "type": "module",
   "keywords": [
     "amp",
     "stories",
     "storytelling",
     "wordpress"
   ],
-  "homepage": "https://github.com/google/web-stories-wp",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/google/web-stories-wp.git"
-  },
+  "homepage": "https://github.com/google/web-stories-wp/",
+  "repository": "git+https://github.com/google/web-stories-wp.git",
   "bugs": {
     "url": "https://github.com/google/web-stories-wp/issues"
   },
@@ -24,6 +22,7 @@
     "node": ">= 16",
     "npm": ">= 7.3"
   },
+  "type": "module",
   "workspaces": {
     "packages": [
       "packages/*"
@@ -129,6 +128,7 @@
     "markdownlint-cli": "^0.29.0",
     "mini-css-extract-plugin": "^1.6.2",
     "mockdate": "^3.0.5",
+    "npm-package-json-lint": "^5.4.2",
     "npm-run-all": "^4.1.5",
     "optimize-css-assets-webpack-plugin": "^6.0.1",
     "patch-package": "^6.4.7",
@@ -185,6 +185,7 @@
     "lint:js": "eslint .",
     "lint:js:fix": "eslint --fix .",
     "lint:js:report": "eslint --output-file build/lint-js-report.json --format json .",
+    "lint:package-json": "npmPkgJsonLint .",
     "lint:php": "composer phpcs",
     "lint:php:fix": "composer phpcbf",
     "lint:phpstan": "composer phpstan",
