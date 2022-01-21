@@ -33,7 +33,7 @@ export const defaultAttributes = {
   backgroundColor: defaultBackgroundColor,
 };
 
-export const clearableAttributes = {
+export const copyableAttributes = {
   ...SHARED_DEFAULT_CLEARABLE_ATTRIBUTES,
   backgroundColor: defaultBackgroundColor,
 };

@@ -34,23 +34,7 @@ export const getElementStyles = (element) => {
     return null;
   }
 
-  const { clearableAttributes } = getDefinitionForType(element.type);
+  const { copyableAttributes } = getDefinitionForType(element.type);
 
-  return objectPick(element, Object.keys(clearableAttributes));
-};
-
-/**
- *
- * @param {string} type the type of the element to update
- * @return {Object|null} the default properties for the element type.
- * Return `null` if `type` isn't valid.
- */
-export const getDefaultPropertiesForType = (type) => {
-  if (!type || !elementTypes.includes(type)) {
-    return null;
-  }
-
-  const { clearableAttributes } = getDefinitionForType(type);
-
-  return clearableAttributes;
+  return objectPick(element, Object.keys(copyableAttributes));
 };
