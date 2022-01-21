@@ -32,10 +32,11 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { themeHelpers } from '../../theme';
 import { noop } from '../../utils';
 import { getTransforms, getOffset } from './utils';
 import { PLACEMENT } from './constants';
-
+const DEFAULT_TOPOFFSET = 32;
 const Container = styled.div.attrs(
   ({
     $offset: { x, y, width, height },
@@ -58,10 +59,9 @@ const Container = styled.div.attrs(
   top: 0px;
   position: fixed;
   z-index: 2;
-  overflow-y: auto;
   max-height: ${({ topOffset }) => `calc(100vh - ${topOffset}px)`};
+  ${themeHelpers.scrollbarCSS};
 `;
-
 function Popup({
   isRTL = false,
   anchor,
@@ -76,7 +76,7 @@ function Popup({
   fillHeight = false,
   onPositionUpdate = noop,
   refCallback = noop,
-  topOffset,
+  topOffset = DEFAULT_TOPOFFSET,
 }) {
   const [popupState, setPopupState] = useState(null);
   const [mounted, setMounted] = useState(false);
@@ -128,7 +128,6 @@ function Popup({
   }, [popupState, onPositionUpdate, refCallback]);
 
   useResizeEffect({ current: document.body }, positionPopup, [positionPopup]);
-
   return popupState && isOpen
     ? createPortal(
         <Container
