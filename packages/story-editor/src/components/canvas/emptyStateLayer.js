@@ -23,13 +23,13 @@ import {
   BUTTON_VARIANTS,
   Button,
   Icons,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
-import { CONTEXT_MENU_WIDTH } from '@web-stories-wp/design-system/src/components/contextMenu/menu';
+import { __ } from '@googleforcreators/i18n';
+import { CONTEXT_MENU_WIDTH } from '@googleforcreators/design-system/src/components/contextMenu/menu';
 import { useDropTargets, useRightClickMenu } from '../../app';
 import useStory from '../../app/story/useStory';
 import isEmptyStory from '../../app/story/utils/isEmptyStory';

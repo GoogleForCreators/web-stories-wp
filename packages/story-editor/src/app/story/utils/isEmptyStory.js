@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { shallowEqual } from '@web-stories-wp/react';
+import { shallowEqual } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -30,7 +30,7 @@ const isEmptyStory = (pages) => {
     return false;
   }
 
-  const hasNoExtraElements = pages[0].elements.length === 1;
+  const hasNoExtraElements = pages[0].elements?.length === 1;
   if (!hasNoExtraElements) {
     return false;
   }
