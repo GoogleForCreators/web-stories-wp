@@ -321,7 +321,6 @@ function useMediaUploadQueue() {
       const { id, file, resource, additionalData = {} } = item;
       let { posterFile } = item;
 
-
       // The newly uploaded file won't have a poster yet.
       // However, we'll likely still have one on file.
       // Add it back so we're never without one.
