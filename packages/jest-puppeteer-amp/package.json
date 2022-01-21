@@ -1,6 +1,22 @@
 {
   "name": "@web-stories-wp/jest-puppeteer-amp",
+  "description": "Custom Jest matcher for AMP validation on Puppeteer pages",
   "private": true,
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "jest",
+    "amp",
+    "puppeteer"
+  ],
+  "homepage": "https://github.com/google/web-stories-wp/",
+  "repository": "git+https://github.com/google/web-stories-wp.git",
+  "bugs": {
+    "url": "https://github.com/google/web-stories-wp/issues"
+  },
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"

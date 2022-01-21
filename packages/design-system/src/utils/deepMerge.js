@@ -22,13 +22,15 @@
  */
 export default function deepMerge(object, source = {}) {
   Object.entries(source).forEach(([key, value]) => {
-    if (value && 'object' === typeof value && !Array.isArray(value)) {
-      if (!object[key]) {
-        Object.assign(object, { [key]: {} });
+    if (value !== undefined) {
+      if (value && 'object' === typeof value && !Array.isArray(value)) {
+        if (!object[key]) {
+          Object.assign(object, { [key]: {} });
+        }
+        deepMerge(object[key], value);
+      } else {
+        Object.assign(object, { [key]: value });
       }
-      deepMerge(object[key], value);
-    } else {
-      Object.assign(object, { [key]: value });
     }
   });
 

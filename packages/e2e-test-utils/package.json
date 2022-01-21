@@ -1,6 +1,20 @@
 {
   "name": "@web-stories-wp/e2e-test-utils",
+  "description": "Utils for running e2e tests for the WordPress Web Stories editor",
   "private": true,
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "web stories"
+  ],
+  "homepage": "https://github.com/google/web-stories-wp/",
+  "repository": "git+https://github.com/google/web-stories-wp.git",
+  "bugs": {
+    "url": "https://github.com/google/web-stories-wp/issues"
+  },
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"
