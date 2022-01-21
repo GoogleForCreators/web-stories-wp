@@ -27,7 +27,7 @@
   "devDependencies": {
     "@googleforcreators/date": "*",
     "@googleforcreators/stickers": "*",
-    "puppeteer": "^10.4.0"
+    "puppeteer": "^13.1.1"
   },
   "scripts": {
     "render-template-posters": "node ./scripts/cli.js"
