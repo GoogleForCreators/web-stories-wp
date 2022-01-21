@@ -36,7 +36,7 @@ import { themeHelpers } from '../../theme';
 import { noop } from '../../utils';
 import { getTransforms, getOffset } from './utils';
 import { PLACEMENT } from './constants';
-const DEFAULT_TOPOFFSET = 32;
+const DEFAULT_TOPOFFSET = 0;
 const Container = styled.div.attrs(
   ({
     $offset: { x, y, width, height },

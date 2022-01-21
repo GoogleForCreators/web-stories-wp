@@ -100,9 +100,9 @@ export function getYOffset(placement, spacing = 0, anchorRect) {
  * @param {MutableRefObject<HTMLElement>} dock Dock element.
  * @param {MutableRefObject<HTMLElement>} popup Popup element.
  * @param {boolean} isRTL isRTL.
+ * @param {number} topOffset Header Offset.
  * @return {Offset} Popup offset.
  */
-
 export function getOffset(
   placement,
   spacing,
