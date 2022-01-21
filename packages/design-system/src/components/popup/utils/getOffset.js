@@ -101,6 +101,7 @@ export function getYOffset(placement, spacing = 0, anchorRect) {
  * @param {MutableRefObject<HTMLElement>} popup Popup element.
  * @param {boolean} isRTL isRTL.
  * @param {number} topOffset Header Offset.
+ * @param {bool} shouldHaveDifferentoffset Boolean to set different offset for colorInput popup.
  * @return {Offset} Popup offset.
  */
 export function getOffset(
@@ -110,7 +111,8 @@ export function getOffset(
   dock,
   popup,
   isRTL,
-  topOffset
+  topOffset,
+  shouldHaveDifferentoffset
 ) {
   const anchorRect = anchor.current.getBoundingClientRect();
   const bodyRect = document.body.getBoundingClientRect();
@@ -145,7 +147,9 @@ export function getOffset(
   // Clamp values
   return {
     x: Math.max(0, Math.min(offsetX, maxOffsetX)),
-    y: Math.max(topOffset, Math.min(offsetY, maxOffsetY)),
+    y: shouldHaveDifferentoffset
+      ? Math.max(topOffset, Math.min(offsetY, maxOffsetY))
+      : offsetY,
     width: anchorRect.width,
     height: anchorRect.height,
     bottom: popupRect?.bottom,

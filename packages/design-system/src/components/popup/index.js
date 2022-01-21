@@ -79,6 +79,7 @@ function Popup({
   refCallback = noop,
   topOffset = DEFAULT_TOPOFFSET,
   noOverFlow = false,
+  shouldHaveDifferentoffset = false,
 }) {
   const [popupState, setPopupState] = useState(null);
   const [mounted, setMounted] = useState(false);
@@ -95,11 +96,29 @@ function Popup({
       setPopupState({
         offset:
           anchor?.current &&
-          getOffset(placement, spacing, anchor, dock, popup, isRTL, topOffset),
+          getOffset(
+            placement,
+            spacing,
+            anchor,
+            dock,
+            popup,
+            isRTL,
+            topOffset,
+            shouldHaveDifferentoffset
+          ),
         height: popup.current?.getBoundingClientRect()?.height,
       });
     },
-    [mounted, anchor, placement, spacing, dock, isRTL, topOffset]
+    [
+      mounted,
+      anchor,
+      placement,
+      spacing,
+      dock,
+      isRTL,
+      topOffset,
+      shouldHaveDifferentoffset,
+    ]
   );
   useEffect(() => {
     // If the popup height changes meanwhile, let's update the popup, too.

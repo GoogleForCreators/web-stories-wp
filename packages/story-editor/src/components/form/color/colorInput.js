@@ -232,6 +232,7 @@ const ColorInput = forwardRef(function ColorInput(
         spacing={SPACING}
         invisible={isEyedropperActive}
         topOffset={topOffset}
+        shouldHaveDifferentoffset
         renderContents={({ propagateDimensionChange }) => (
           <ColorPicker
             color={isMixed ? null : value}
