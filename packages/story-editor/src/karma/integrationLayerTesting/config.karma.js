@@ -13,9 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
+
 import { waitFor } from '@testing-library/react';
 
 /**
@@ -29,7 +31,7 @@ import storyResponse from '../fixture/db/storyResponse';
 describe('Integration Layer tests : EditorConfig Params :', () => {
   let fixture;
 
-  // fixture.setConfig() doesn't overwrite the whole object but merges therefore optional parrams need to be set undefined explicitly.
+  // fixture.setConfig() doesn't overwrite the whole object but merges therefore optional params need to be set undefined explicitly.
   const MINIMUM_CONFIG = {};
 
   for (const key of Object.keys(defaultConfig)) {
