@@ -52,7 +52,7 @@ jobs:
         id: linked-issues
         with:
           script: |
-            query linkedIssues($name:String!, $owner:String!) {
+            const query = `query linkedIssues($name:String!, $owner:String!) {
               repository(name: $name, owner: $owner) {
                 pullRequest(number: 10290) {
                   title
@@ -63,7 +63,7 @@ jobs:
                   }
                 }
               }
-            }
+            }`
             const variables = {
               owner: context.repo.owner,
               name: context.repo.repo,
