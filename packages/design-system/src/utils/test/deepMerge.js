@@ -27,6 +27,8 @@ const object1 = {
       },
     },
   },
+  g: 'g',
+  h: 'h',
   x: 'y',
   z: {
     dates: ['Jan', 'Feb'],
@@ -43,6 +45,8 @@ const object2 = {
       },
     },
   },
+  g: undefined,
+  h: null,
   x: 'y',
   z: {
     dates: ['Jan', 'Feb', 'March'],
@@ -60,6 +64,8 @@ const expectedResult = {
     },
   },
   x: 'y',
+  g: 'g',
+  h: null,
   z: {
     dates: ['Jan', 'Feb', 'March'],
   },
