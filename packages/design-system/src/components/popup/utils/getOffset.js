@@ -148,5 +148,7 @@ export function getOffset(
     y: Math.max(topOffset, Math.min(offsetY, maxOffsetY)),
     width: anchorRect.width,
     height: anchorRect.height,
+    bottom: popupRect?.bottom,
+    popupLeft: popupRect?.left,
   };
 }
