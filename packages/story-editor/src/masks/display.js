@@ -30,9 +30,10 @@ import {
   shouldDisplayBorder,
   getBorderColor,
   getBorderWrapperStyle,
+  getBorderedElementStyle,
 } from '../utils/elementBorder';
 import { MaskTypes } from './constants';
-import { getElementMask, singleBorderMask } from '.';
+import { getElementMask, singleBorderMask, getBorderedMaskProperties } from '.';
 
 const FILL_STYLE = {
   position: 'absolute',
@@ -107,53 +108,96 @@ export default function WithMask({
     previewMode ? '-preview' : ''
   }-${randomId}`;
 
-  const wrapperStyle = !showSingleBorder
-    ? null
-    : getBorderWrapperStyle(maskId, borderWidth * 2);
+  if (showSingleBorder) {
+    const wrapperStyle = getBorderWrapperStyle(mask, borderWidth);
 
-  return (
-    <>
-      {showSingleBorder && (
+    const { viewBox, groupTransform, maskTransform, relativeBorderWidth } =
+      getBorderedMaskProperties(
+        mask,
+        borderWidth,
+        element.width,
+        element.height
+      );
+    return (
+      <>
         <div style={{ ...style, ...wrapperStyle }}>
           <svg
-            viewBox={`0 0 1 ${1 / mask.ratio}`}
+            viewBox={viewBox}
             width="100%"
             height="100%"
             preserveAspectRatio="none"
             style={SVG_STYLE}
           >
-            <path
-              vectorEffect="non-scaling-stroke"
-              stroke={borderColor}
-              strokeWidth={borderWidth * 2}
-              fill="none"
-              d={mask?.path}
-            />
+            <mask id={`punchout-${maskId}`}>
+              <rect x="-100" y="-100" width="201" height="201" fill="white" />
+              <path d={mask?.path} fill="black" />
+            </mask>
+            <g transform={groupTransform}>
+              <path
+                d={mask?.path}
+                mask={`url(#punchout-${maskId})`}
+                stroke={borderColor}
+                strokeWidth={relativeBorderWidth}
+              />
+            </g>
+          </svg>
+
+          <svg
+            width="0"
+            height="0"
+            viewBox={viewBox}
+            preserveAspectRatio="none"
+          >
+            <defs>
+              <clipPath id={maskId} clipPathUnits="objectBoundingBox">
+                <path d={mask?.path} fill="white" transform={maskTransform} />
+              </clipPath>
+            </defs>
           </svg>
         </div>
-      )}
-      <div
-        style={{
-          pointerEvents: 'initial',
-          ...fullStyle,
-          ...(!isBackground ? { clipPath: `url(#${maskId})` } : {}),
-        }}
-        {...rest}
-      >
-        <svg width={0} height={0}>
-          <defs>
-            <clipPath
-              id={maskId}
-              transform={`scale(1 ${mask.ratio})`}
-              clipPathUnits="objectBoundingBox"
-            >
-              <path d={mask.path} />
-            </clipPath>
-          </defs>
-        </svg>
-        {children}
-      </div>
-    </>
+        <div
+          style={{
+            pointerEvents: 'initial',
+            clipPath: `url(#${maskId})`,
+            ...wrapperStyle,
+          }}
+        >
+          <div
+            style={{
+              ...fullStyle,
+              ...getBorderedElementStyle(mask, borderWidth),
+            }}
+            {...rest}
+          >
+            {children}
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  return (
+    <div
+      style={{
+        pointerEvents: 'initial',
+        ...fullStyle,
+        ...(!isBackground ? { clipPath: `url(#${maskId})` } : {}),
+      }}
+      {...rest}
+    >
+      <svg width={0} height={0}>
+        <defs>
+          <clipPath
+            id={maskId}
+            transform={`scale(1 ${mask.ratio})`}
+            clipPathUnits="objectBoundingBox"
+          >
+            <path d={mask.path} />
+          </clipPath>
+        </defs>
+      </svg>
+      {children}
+    </div>
   );
 }
 

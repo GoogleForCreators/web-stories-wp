@@ -202,24 +202,42 @@ export function getResponsiveBorder(border, previewMode, converter) {
 /**
  * Gets style for the border svg wrapper.
  *
- * @param {string} maskId Clipping mask id.
+ * @param {Object} mask The mask used for this element
  * @param {number} borderWidth border width value
  * @return {Object} SVG border wrapper style.
  */
-export function getBorderWrapperStyle(maskId, borderWidth) {
-  if (!maskId || !borderWidth) {
+export function getBorderWrapperStyle(mask, borderWidth) {
+  if (!mask || !borderWidth) {
     return {};
   }
 
   return {
-    clipPath: `url(#${maskId})`,
-    width: `calc(100% + ${borderWidth}px)`,
-    height: `calc(100% + ${borderWidth}px)`,
+    width: `calc(100% + ${borderWidth * 2}px)`,
+    height: `calc(100% + ${(borderWidth * 2) / mask.ratio}px)`,
     position: 'absolute',
-    top: `-${borderWidth / 2}px`,
-    left: `-${borderWidth / 2}px`,
+    top: `-${borderWidth / mask.ratio}px`,
+    left: `-${borderWidth}px`,
     pointerEvents: 'initial',
     display: 'block',
     zIndex: 0,
+  };
+}
+
+/**
+ * Gets style for the bordered element.
+ *
+ * @param {Object} mask The mask used for this element
+ * @param {number} borderWidth border width value
+ * @return {Object} SVG border wrapper style.
+ */
+export function getBorderedElementStyle(mask, borderWidth) {
+  if (!mask || !borderWidth) {
+    return {};
+  }
+
+  return {
+    position: 'absolute',
+    top: `${borderWidth / mask.ratio}px`,
+    left: `${borderWidth}px`,
   };
 }

@@ -48,3 +48,23 @@ function getDefaultElementMask(type) {
   const { isMaskable } = getDefinitionForType(type);
   return isMaskable ? DEFAULT_MASK : null;
 }
+
+export function getBorderedMaskProperties(
+  mask,
+  borderWidth,
+  elementWidth,
+  elementHeight
+) {
+  const relativeWidth = (elementWidth + 2 * borderWidth) / elementWidth;
+  const relativeHeight =
+    (elementHeight / mask.ratio + 2 * borderWidth) / elementHeight;
+  const offsetX = (relativeWidth - 1) / 2;
+  const offsetY = (relativeHeight - 1) / 2;
+  const relativeBorderWidth = 2 * Math.min(offsetX, offsetY);
+  const viewBox = `0 0 ${relativeWidth} ${relativeHeight}`;
+  const groupTransform = `translate(${offsetX},${offsetY})`;
+  const maskTransform = `scale(${1 / relativeWidth},${
+    1 / relativeHeight
+  }) translate(${offsetX},${offsetY})`;
+  return { viewBox, groupTransform, maskTransform, relativeBorderWidth };
+}
