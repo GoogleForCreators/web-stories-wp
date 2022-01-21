@@ -1273,13 +1273,7 @@ describe('Page output', () => {
       const { container } = render(<PageOutput {...props} />);
       const captions = container.querySelector('amp-story-captions');
       await expect(captions).toBeInTheDocument();
-      expect(captions).toMatchInlineSnapshot(`
-      <amp-story-captions
-        height="100"
-        id="el-123-captions"
-        layout="fixed-height"
-      />
-      `);
+      expect(captions).toMatchSnapshot();
       const video = container.querySelector('amp-video');
       await expect(video).toBeInTheDocument();
       expect(video).toMatchSnapshot();

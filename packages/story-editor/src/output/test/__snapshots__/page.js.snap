@@ -1,5 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Page output background audio should add background audio as amp-video 1`] = `
+<amp-story-captions
+  height="100"
+  id="el-123-captions"
+  layout="fixed-height"
+/>
+`;
+
 exports[`Page output background audio should add background audio as amp-video 2`] = `
 <amp-video
   autoplay="autoplay"
