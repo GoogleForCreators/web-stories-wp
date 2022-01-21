@@ -17,14 +17,14 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, memo, forwardRef } from '@web-stories-wp/react';
+import { useEffect, memo, forwardRef } from '@googleforcreators/react';
 import styled, { StyleSheetManager } from 'styled-components';
-import { generatePatternStyles } from '@web-stories-wp/patterns';
+import { generatePatternStyles } from '@googleforcreators/patterns';
 import {
   StoryAnimation,
   useStoryAnimationContext,
   STORY_ANIMATION_STATE,
-} from '@web-stories-wp/animation';
+} from '@googleforcreators/animation';
 
 /**
  * Internal dependencies

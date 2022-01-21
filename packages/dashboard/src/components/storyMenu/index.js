@@ -17,15 +17,15 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Fragment, useCallback } from '@web-stories-wp/react';
+import { Fragment, useCallback } from '@googleforcreators/react';
 import {
   ContextMenu,
   ContextMenuComponents,
   themeHelpers,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

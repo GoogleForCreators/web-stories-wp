@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { identity, useContextSelector } from '@web-stories-wp/react';
+import { identity, useContextSelector } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */

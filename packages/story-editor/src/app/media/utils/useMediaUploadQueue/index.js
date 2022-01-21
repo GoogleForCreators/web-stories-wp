@@ -23,18 +23,18 @@ import {
   useMemo,
   useReduction,
   useRef,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import {
   trackError,
   trackEvent,
   getTimeTracker,
-} from '@web-stories-wp/tracking';
+} from '@googleforcreators/tracking';
 import {
   createBlob,
   getFileName,
   getImageDimensions,
   isAnimatedGif,
-} from '@web-stories-wp/media';
+} from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -774,7 +774,7 @@ function useMediaUploadQueue() {
      * Checks whether the resource is not external and
      * not already uploading.
      *
-     * @param {import('@web-stories-wp/media').Resource} resource Resource object.
+     * @param {import('@googleforcreators/media').Resource} resource Resource object.
      * @return {boolean} Whether a given resource can be transcoded.
      */
     const canTranscodeResource = (resource) => {

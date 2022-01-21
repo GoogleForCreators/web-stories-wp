@@ -21,10 +21,14 @@ import {
   useEffect,
   useState,
   useDebouncedCallback,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import styled, { css } from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
-import { Button, BUTTON_VARIANTS, Icons } from '@web-stories-wp/design-system';
+import { __ } from '@googleforcreators/i18n';
+import {
+  Button,
+  BUTTON_VARIANTS,
+  Icons,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

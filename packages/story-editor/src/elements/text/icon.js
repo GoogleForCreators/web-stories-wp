@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { Icons } from '@web-stories-wp/design-system';
+import { Icons } from '@googleforcreators/design-system';
 
 const IconContainer = styled.div`
   height: 21px;

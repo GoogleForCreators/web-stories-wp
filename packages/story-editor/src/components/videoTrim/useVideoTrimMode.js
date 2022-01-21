@@ -23,9 +23,9 @@ import {
   useMemo,
   useState,
   useEffect,
-} from '@web-stories-wp/react';
-import { trackEvent } from '@web-stories-wp/tracking';
-import { getMsFromHMS } from '@web-stories-wp/media';
+} from '@googleforcreators/react';
+import { trackEvent } from '@googleforcreators/tracking';
+import { getMsFromHMS } from '@googleforcreators/media';
 
 /**
  * Internal dependencies

@@ -55,8 +55,8 @@ const RESOURCE = {
   sizes: {
     full: {
       file: 'media/unsplash:1234',
-      source_url: 'http://lala.com',
-      mime_type: 'image/jpeg',
+      sourceUrl: 'http://lala.com',
+      mimeType: 'image/jpeg',
       width: 530,
       height: 353,
     },

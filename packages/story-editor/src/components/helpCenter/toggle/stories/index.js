@@ -16,10 +16,13 @@
 /**
  * External dependencies
  */
-import { useState } from '@web-stories-wp/react';
+import { useState } from '@googleforcreators/react';
 import { number } from '@storybook/addon-knobs';
 import styled, { ThemeProvider } from 'styled-components';
-import { theme as dsTheme, ThemeGlobals } from '@web-stories-wp/design-system';
+import {
+  theme as dsTheme,
+  ThemeGlobals,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

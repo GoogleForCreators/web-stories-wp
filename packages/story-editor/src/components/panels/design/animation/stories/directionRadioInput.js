@@ -16,13 +16,13 @@
 /**
  * External dependencies
  */
-import { useState } from '@web-stories-wp/react';
+import { useState } from '@googleforcreators/react';
 import styled from 'styled-components';
 import {
   DIRECTION,
   ROTATION,
   SCALE_DIRECTION,
-} from '@web-stories-wp/animation';
+} from '@googleforcreators/animation';
 
 /**
  * Internal dependencies

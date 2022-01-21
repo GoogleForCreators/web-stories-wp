@@ -21,7 +21,7 @@ import { fireEvent, screen, waitFor } from '@testing-library/react';
 import {
   createSolid,
   getPreviewText as getPreviewTextMock,
-} from '@web-stories-wp/patterns';
+} from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies
@@ -34,15 +34,15 @@ import { StoryContext } from '../../../../app/story';
 import { ConfigContext } from '../../../../app/config';
 import defaultConfig from '../../../../defaultConfig.js';
 
-jest.mock('@web-stories-wp/design-system', () => ({
-  ...jest.requireActual('@web-stories-wp/design-system'),
+jest.mock('@googleforcreators/design-system', () => ({
+  ...jest.requireActual('@googleforcreators/design-system'),
   Popup: ({ children, isOpen }) => (isOpen ? children : null),
 }));
 
 jest.mock('../getPreviewStyle', () => jest.fn());
-jest.mock('@web-stories-wp/patterns', () => {
+jest.mock('@googleforcreators/patterns', () => {
   return {
-    ...jest.requireActual('@web-stories-wp/patterns'),
+    ...jest.requireActual('@googleforcreators/patterns'),
     getPreviewText: jest.fn(),
   };
 });

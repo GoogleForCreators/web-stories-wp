@@ -21,7 +21,7 @@ import {
   useState,
   useRef,
   useEffect,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import {
   Button,
   BUTTON_SIZES,
@@ -30,9 +30,9 @@ import {
   Link,
   Text,
   THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
-import { TranslateWithMarkup, __ } from '@web-stories-wp/i18n';
-import { trackClick } from '@web-stories-wp/tracking';
+} from '@googleforcreators/design-system';
+import { TranslateWithMarkup, __ } from '@googleforcreators/i18n';
+import { trackClick } from '@googleforcreators/tracking';
 import styled from 'styled-components';
 import {
   useConfig,
@@ -41,7 +41,7 @@ import {
   useStory,
   ChecklistCard,
   DefaultFooterText,
-} from '@web-stories-wp/story-editor';
+} from '@googleforcreators/story-editor';
 
 const CheckboxContainer = styled.div`
   display: flex;

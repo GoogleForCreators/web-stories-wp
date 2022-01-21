@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
+import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
 /**
  * Internal dependencies
  */

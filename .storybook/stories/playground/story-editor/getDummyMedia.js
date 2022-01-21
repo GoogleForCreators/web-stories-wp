@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { createResource } from '@web-stories-wp/media';
+import { createResource } from '@googleforcreators/media';
 
 function createDummyImageData({
   mimeType = 'image/jpeg',

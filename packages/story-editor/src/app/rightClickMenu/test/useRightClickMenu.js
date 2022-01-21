@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { act, renderHook } from '@testing-library/react-hooks';
-import { isPlatformMacOS, useSnackbar } from '@web-stories-wp/design-system';
+import { isPlatformMacOS, useSnackbar } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -41,13 +41,13 @@ jest.mock(
   () => (cb) => mockVideoTrim(cb)
 );
 
-jest.mock('@web-stories-wp/design-system', () => ({
-  ...jest.requireActual('@web-stories-wp/design-system'),
+jest.mock('@googleforcreators/design-system', () => ({
+  ...jest.requireActual('@googleforcreators/design-system'),
   isPlatformMacOS: jest.fn(),
   useSnackbar: jest.fn(),
 }));
 
-jest.mock('@web-stories-wp/tracking');
+jest.mock('@googleforcreators/tracking');
 
 const mockEvent = {
   preventDefault: jest.fn(),

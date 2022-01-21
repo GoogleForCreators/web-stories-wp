@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
-import { FIELD_TYPES } from '@web-stories-wp/animation';
+import { FIELD_TYPES } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies

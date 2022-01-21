@@ -23,7 +23,7 @@ import {
   useRef,
   forwardRef,
   useDebouncedCallback,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 

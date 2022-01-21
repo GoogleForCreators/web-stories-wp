@@ -25,7 +25,7 @@ import {
   seekVideo,
   getVideoLength,
   hasVideoGotAudio,
-} from '@web-stories-wp/media';
+} from '@googleforcreators/media';
 
 /**
  * @typedef {Object} ResourceLike
@@ -35,7 +35,7 @@ import {
  */
 
 /**
- * @typedef {import('@web-stories-wp/media').Resource} Resource
+ * @typedef {import('@googleforcreators/media').Resource} Resource
  */
 
 /**

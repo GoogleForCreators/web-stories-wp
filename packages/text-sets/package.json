@@ -1,6 +1,15 @@
 {
-  "name": "@web-stories-wp/text-sets",
-  "private": true,
+  "name": "@googleforcreators/text-sets",
+  "description": "A set of predefined text combinations for use in the Web Stories editor.",
+  "private": false,
+  "version": "0.0.1",
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "keywords": [
+    "web stories"
+  ],
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"
@@ -11,7 +20,7 @@
   "main": "./src/index.js",
   "type": "module",
   "dependencies": {
-    "@web-stories-wp/migration": "*"
+    "@googleforcreators/migration": "*"
   },
   "devDependencies": {
     "puppeteer": "*"

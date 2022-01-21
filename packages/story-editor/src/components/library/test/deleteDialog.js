@@ -18,7 +18,10 @@
  * External dependencies
  */
 import { waitFor, fireEvent, screen } from '@testing-library/react';
-import { setAppElement, SnackbarContext } from '@web-stories-wp/design-system';
+import {
+  setAppElement,
+  SnackbarContext,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

@@ -17,15 +17,15 @@
 /**
  * External dependencies
  */
-import { useRef } from '@web-stories-wp/react';
+import { useRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@googleforcreators/i18n';
 import {
   ColorStopPropType,
   generatePatternStyles,
-} from '@web-stories-wp/patterns';
-import { themeHelpers } from '@web-stories-wp/design-system';
+} from '@googleforcreators/patterns';
+import { themeHelpers } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

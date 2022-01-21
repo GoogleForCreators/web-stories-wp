@@ -19,13 +19,13 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useEffect } from '@web-stories-wp/react';
+import { useEffect } from '@googleforcreators/react';
 import {
   Text,
   Icons,
   useLiveRegion,
   THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { useEffect, useRef } from '@web-stories-wp/react';
-import { useSnackbar } from '@web-stories-wp/design-system';
+import { useEffect, useRef } from '@googleforcreators/react';
+import { useSnackbar } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

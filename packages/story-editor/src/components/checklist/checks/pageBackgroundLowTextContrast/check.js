@@ -21,13 +21,16 @@ import {
   FULLBLEED_RATIO,
   getBox,
   getBoundRect,
-} from '@web-stories-wp/units';
-import { getMediaSizePositionProps, preloadImage } from '@web-stories-wp/media';
+} from '@googleforcreators/units';
+import {
+  getMediaSizePositionProps,
+  preloadImage,
+} from '@googleforcreators/media';
+import { createSolidFromString } from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies
  */
-import createSolidFromString from '@web-stories-wp/patterns/src/createSolidFromString';
 import {
   calculateLuminanceFromRGB,
   calculateLuminanceFromStyleColor,

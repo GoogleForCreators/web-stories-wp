@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 // If the workspace is wider than this limit, this margin will be applied to the right
 export const VERY_WIDE_WORKSPACE_LIMIT = 1000;

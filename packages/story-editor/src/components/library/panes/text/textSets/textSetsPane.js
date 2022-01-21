@@ -22,18 +22,19 @@ import {
   useMemo,
   useCallback,
   useEffect,
-} from '@web-stories-wp/react';
+  useRef,
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent } from '@googleforcreators/tracking';
 import {
   _n,
   sprintf,
   __,
   _x,
   translateToInclusiveList,
-} from '@web-stories-wp/i18n';
+} from '@googleforcreators/i18n';
 import {
   THEME_CONSTANTS,
   LOCAL_STORAGE_PREFIX,
@@ -42,7 +43,7 @@ import {
   Headline,
   useLiveRegion,
   localStore,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -89,6 +90,7 @@ function TextSetsPane({ paneRef }) {
     })
   );
   const [showInUse, setShowInUse] = useState(false);
+  const trackChange = useRef(false);
 
   const allTextSets = useMemo(() => Object.values(textSets).flat(), [textSets]);
   const storyPages = useStory(({ state: { pages } }) => pages);
@@ -172,22 +174,25 @@ function TextSetsPane({ paneRef }) {
       localStore.setItemByKey(`${LOCAL_STORAGE_PREFIX.TEXT_SET_SETTINGS}`, {
         selectedCategory,
       });
+      trackChange.current = true;
     },
     [speak]
   );
 
-  const onChangeShowInUse = useCallback(
-    () => requestAnimationFrame(() => setShowInUse((prevVal) => !prevVal)),
-    [setShowInUse]
-  );
+  const onChangeShowInUse = useCallback(() => {
+    requestAnimationFrame(() => setShowInUse((prevVal) => !prevVal));
+    trackChange.current = true;
+  }, [setShowInUse]);
 
   useEffect(() => {
-    trackEvent('search', {
-      search_type: 'textsets',
-      search_term: '',
-      search_category: selectedCat,
-      search_filter: showInUse ? 'show_in_use' : undefined,
-    });
+    if (trackChange.current) {
+      trackEvent('search', {
+        search_type: 'textsets',
+        search_term: '',
+        search_category: selectedCat,
+        search_filter: showInUse ? 'show_in_use' : undefined,
+      });
+    }
   }, [selectedCat, showInUse]);
 
   const sectionId = useMemo(() => `section-${uuidv4()}`, []);

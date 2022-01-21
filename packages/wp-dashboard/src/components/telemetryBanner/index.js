@@ -25,21 +25,21 @@ import {
   useEffect,
   createPortal,
   useState,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
-import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
+import { __, TranslateWithMarkup } from '@googleforcreators/i18n';
 import {
   Banner,
   Checkbox,
   Link,
   Text,
   THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import {
   resolveRoute,
   APP_ROUTES,
   useRouteHistory,
-} from '@web-stories-wp/dashboard';
+} from '@googleforcreators/dashboard';
 
 /**
  * Internal dependencies
