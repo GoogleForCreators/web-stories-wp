@@ -59,6 +59,7 @@ const Container = styled.div.attrs(
   top: 0px;
   position: fixed;
   z-index: 2;
+  overflow-y: auto;
   max-height: ${({ topOffset }) => `calc(100vh - ${topOffset}px)`};
   ${themeHelpers.scrollbarCSS};
 `;
@@ -137,6 +138,7 @@ function Popup({
           placement={placement}
           $offset={popupState.offset}
           invisible={invisible}
+          topOffset={topOffset}
         >
           {renderContents
             ? renderContents({ propagateDimensionChange: positionPopup })
