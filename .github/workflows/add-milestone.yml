@@ -19,7 +19,7 @@ jobs:
     name: Add milestone
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    if: github.event.pull_request.merged == true
+#    if: github.event.pull_request.merged == true
     steps:
       # https://github.com/ZenHubIO/API#get-release-reports-for-a-repository
       # https://github.com/ZenHubIO/API#add-or-remove-issues-to-or-from-a-release-report
