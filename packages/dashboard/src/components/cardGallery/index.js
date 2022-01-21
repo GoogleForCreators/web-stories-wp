@@ -108,12 +108,12 @@ function CardGallery({ galleryPosters, isRTL, galleryLabel }) {
               selectedGridItemIndex === index
                 ? sprintf(
                     /* translators: %s: page number. */
-                    __('Page %s (current page)', 'web-stories'),
+                    __('Preview of page %s (current page)', 'web-stories'),
                     pageNumber
                   )
                 : sprintf(
                     /* translators: %s: page number. */
-                    __('Page %s', 'web-stories'),
+                    __('Preview of page %s', 'web-stories'),
                     pageNumber
                   )
             }
@@ -145,18 +145,13 @@ function CardGallery({ galleryPosters, isRTL, galleryLabel }) {
     <GalleryContainer ref={containerRef}>
       <Thumbnails
         ref={gridRef}
+        role="group"
         aria-label={galleryLabel}
         data-testid="mini-cards-container"
       >
         {GalleryItems}
       </Thumbnails>
-      <DisplayPage
-        aria-label={sprintf(
-          /* translators: %s: active preview page number */
-          __('Active Page Preview - Page %s', 'web-stories'),
-          selectedGridItemIndex + 1
-        )}
-      >
+      <DisplayPage>
         {galleryPosters[selectedGridItemIndex] && (
           <picture>
             <source
@@ -170,7 +165,11 @@ function CardGallery({ galleryPosters, isRTL, galleryLabel }) {
             <img
               src={galleryPosters[selectedGridItemIndex].png}
               decoding="async"
-              alt={getPosterAltCopy(selectedGridItemIndex + 1)}
+              alt={sprintf(
+                /* translators: %s: active preview page number */
+                __('Active Template Page Preview - Page %s', 'web-stories'),
+                selectedGridItemIndex + 1
+              )}
               width={DEFAULT_GRID_IMG_WIDTH}
               height={DEFAULT_GRID_IMG_HEIGHT}
             />
