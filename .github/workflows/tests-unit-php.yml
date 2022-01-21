@@ -65,9 +65,11 @@ jobs:
           - php: '7.4'
             wp: '5.8'
             coverage: true
+            experimental: false
 
           - php: '7.0'
             wp: '5.5'
+            experimental: false
 
           - php: '8.0'
             wp: '5.8'
