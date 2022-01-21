@@ -50,8 +50,10 @@ function Dashboard({ config, children }) {
     colors: lightMode,
   };
   // Set up modal focus trap on app's mount
-  document.body.setAttribute('id', 'dashboard-app');
-  setAppElement('#dashboard-app');
+
+  document.body.setAttribute('id', 'dashboardWrapper');
+  setAppElement('#dashboardWrapper > div:first-of-type');
+
   return (
     <FlagsProvider features={flags}>
       <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
