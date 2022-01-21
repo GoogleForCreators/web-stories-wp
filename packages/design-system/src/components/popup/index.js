@@ -59,9 +59,9 @@ const Container = styled.div.attrs(
   top: 0px;
   position: fixed;
   z-index: 2;
-  overflow-y: auto;
+  ${({ noOverFlow }) => (noOverFlow ? `` : `overflow-y: auto;`)};
   max-height: ${({ topOffset }) => `calc(100vh - ${topOffset}px)`};
-  ${themeHelpers.scrollbarCSS};
+  ${themeHelpers.scrollbarCSS}
 `;
 function Popup({
   isRTL = false,
@@ -78,6 +78,7 @@ function Popup({
   onPositionUpdate = noop,
   refCallback = noop,
   topOffset = DEFAULT_TOPOFFSET,
+  noOverFlow = false,
 }) {
   const [popupState, setPopupState] = useState(null);
   const [mounted, setMounted] = useState(false);
@@ -139,6 +140,7 @@ function Popup({
           $offset={popupState.offset}
           invisible={invisible}
           topOffset={topOffset}
+          noOverFlow={noOverFlow}
         >
           {renderContents
             ? renderContents({ propagateDimensionChange: positionPopup })
@@ -159,6 +161,7 @@ Popup.propTypes = {
   zIndex: PropTypes.number,
   spacing: PropTypes.object,
   isOpen: PropTypes.bool,
+  noOverFlow: PropTypes.bool,
   fillWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   fillHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   onPositionUpdate: PropTypes.func,

@@ -267,6 +267,7 @@ function Tooltip({
         spacing={spacing}
         isOpen={Boolean(shown && (shortcut || title))}
         onPositionUpdate={positionArrow}
+        noOverFlow
       >
         <TooltipContainer
           className={className}
