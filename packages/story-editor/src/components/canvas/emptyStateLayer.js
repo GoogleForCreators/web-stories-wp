@@ -30,7 +30,7 @@ import {
  */
 import { __ } from '@web-stories-wp/i18n';
 import { CONTEXT_MENU_WIDTH } from '@web-stories-wp/design-system/src/components/contextMenu/menu';
-import { useRightClickMenu } from '../../app';
+import { useDropTargets, useRightClickMenu } from '../../app';
 import useStory from '../../app/story/useStory';
 import isEmptyStory from '../../app/story/utils/isEmptyStory';
 import { Layer, PageArea } from './layout';
@@ -56,8 +56,13 @@ function EmptyStateLayer() {
   const { pages } = useStory(({ state: { pages } }) => ({
     pages,
   }));
+  const { activeDropTargetId } = useDropTargets(
+    ({ state: { activeDropTargetId } }) => ({
+      activeDropTargetId,
+    })
+  );
 
-  if (!isEmptyStory(pages)) {
+  if (!isEmptyStory(pages) || activeDropTargetId) {
     return null;
   }
 

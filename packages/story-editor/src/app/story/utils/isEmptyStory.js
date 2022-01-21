@@ -35,7 +35,7 @@ const isEmptyStory = (pages) => {
     return false;
   }
 
-  const hasNoBackgroundMedia = !('resource' in pages[0].elements[0]);
+  const hasNoBackgroundMedia = pages[0].elements[0].isDefaultBackground;
   if (!hasNoBackgroundMedia) {
     return false;
   }
