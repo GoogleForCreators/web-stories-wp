@@ -26,7 +26,6 @@
 
 namespace Google\Web_Stories\REST_API;
 
-use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Media\Types;
@@ -48,13 +47,6 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		'Etag',
 		'Last-Modified',
 	];
-
-	/**
-	 * Experiments instance.
-	 *
-	 * @var Experiments Experiments instance.
-	 */
-	private $experiments;
 
 	/**
 	 * Story_Post_Type instance.
@@ -81,14 +73,12 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 * Constructor.
 	 *
 	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
-	 * @param Experiments     $experiments Experiments instance.
 	 * @param Types           $types Types instance.
 	 *
 	 * @return void
 	 */
-	public function __construct( Story_Post_Type $story_post_type, Experiments $experiments, Types $types ) {
+	public function __construct( Story_Post_Type $story_post_type, Types $types ) {
 		$this->story_post_type = $story_post_type;
-		$this->experiments     = $experiments;
 		$this->types           = $types;
 
 		$this->namespace = 'web-stories/v1';
@@ -138,10 +128,6 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 				],
 			]
 		);
-
-		if ( ! $this->experiments->is_experiment_enabled( 'enableCORSProxy' ) ) {
-			return;
-		}
 
 		register_rest_route(
 			$this->namespace,

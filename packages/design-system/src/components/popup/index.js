@@ -26,7 +26,7 @@ import {
   useResizeEffect,
   createPortal,
   useEffect,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 
 /**

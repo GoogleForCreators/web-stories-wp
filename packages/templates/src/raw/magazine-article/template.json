@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -53,7 +53,6 @@
             "id": 0,
             "alt": "Airplane wing towards clouds",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -91,7 +90,6 @@
             "id": 0,
             "alt": "White noise texture",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#e4e4e4",
             "isExternal": true
@@ -411,7 +409,6 @@
             "id": 0,
             "alt": "White noise texture",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#e4e4e4",
             "isExternal": true
@@ -464,7 +461,6 @@
             "id": 0,
             "alt": "Scenic view of sea against sky during sunset",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#112242",
             "isExternal": true
@@ -505,7 +501,6 @@
             "id": 0,
             "alt": "White noise texture",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#e4e4e4",
             "isExternal": true
@@ -634,7 +629,6 @@
             "id": 0,
             "alt": "Grey textile",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#21242f",
             "isExternal": true
@@ -687,7 +681,6 @@
             "id": 0,
             "alt": "White noise texture",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#e4e4e4",
             "isExternal": true
@@ -962,7 +955,6 @@
             "id": 0,
             "alt": "Black and gray laptop computer",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#242423",
             "isExternal": true
@@ -1015,7 +1007,6 @@
             "id": 0,
             "alt": "White noise texture",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#e4e4e4",
             "isExternal": true
@@ -1172,7 +1163,6 @@
             "id": 0,
             "alt": "Dark photo of metal mesh screen",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#0d0d0d",
             "isExternal": true
@@ -1235,7 +1225,6 @@
             "id": 0,
             "alt": "Close up colors detail fabric",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#525252",
             "isExternal": true
@@ -1460,7 +1449,6 @@
             "id": 0,
             "alt": "Person holding smartphone riding airplane",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#2e2f2d",
             "isExternal": true
@@ -1509,7 +1497,6 @@
             "id": 0,
             "alt": "White noise texture",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#e4e4e4",
             "isExternal": true
@@ -1799,7 +1786,6 @@
             "id": 0,
             "alt": "People inside commercial air plane",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c2c8d1",
             "isExternal": true
@@ -1838,7 +1824,6 @@
             "id": 0,
             "alt": "White noise texture",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#e4e4e4",
             "isExternal": true
@@ -1966,7 +1951,6 @@
             "id": 0,
             "alt": "Man looking on his sitting on plane seat",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#231f1e",
             "isExternal": true
@@ -2015,7 +1999,6 @@
             "id": 0,
             "alt": "White noise texture",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#e4e4e4",
             "isExternal": true
@@ -2170,7 +2153,6 @@
             "id": 0,
             "alt": "Inside view of building",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#452d38",
             "isExternal": true
@@ -2219,7 +2201,6 @@
             "id": 0,
             "alt": "White noise texture",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#e4e4e4",
             "isExternal": true
@@ -2494,7 +2475,6 @@
             "id": 0,
             "alt": "People on hallway",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d2d3d0",
             "isExternal": true
@@ -2519,7 +2499,6 @@
             "id": 0,
             "alt": "White noise texture",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#e4e4e4",
             "isExternal": true
@@ -2697,7 +2676,6 @@
             "id": 0,
             "alt": "People in station",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#3a2b20",
             "isExternal": true
@@ -2736,7 +2714,6 @@
             "id": 0,
             "alt": "People walking on white tiled floor",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#b1aca8",
             "isExternal": true
@@ -2775,7 +2752,6 @@
             "id": 0,
             "alt": "White noise texture",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#e4e4e4",
             "isExternal": true
@@ -2927,7 +2903,6 @@
             "id": 0,
             "alt": "Black and white business computer connection",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c4c3c4",
             "isExternal": true

@@ -16,10 +16,10 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
-import { useCallback } from '@web-stories-wp/react';
-import { trackEvent } from '@web-stories-wp/tracking';
-import { Tooltip } from '@web-stories-wp/story-editor';
+import { __ } from '@googleforcreators/i18n';
+import { useCallback } from '@googleforcreators/react';
+import { trackEvent } from '@googleforcreators/tracking';
+import { Tooltip } from '@googleforcreators/story-editor';
 import {
   Button,
   BUTTON_SIZES,
@@ -27,7 +27,7 @@ import {
   BUTTON_VARIANTS,
   Icons,
   PLACEMENT,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import styled from 'styled-components';
 
 /**

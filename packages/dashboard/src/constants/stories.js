@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __, sprintf, _n } from '@web-stories-wp/i18n';
+import { __, sprintf, _n } from '@googleforcreators/i18n';
 
 export const STORY_CONTEXT_MENU_ACTIONS = {
   OPEN_IN_EDITOR: 'open-in-editor-action',
@@ -33,32 +33,34 @@ export const STORY_CONTEXT_MENU_ITEMS = [
   {
     label: __('Open in editor', 'web-stories'),
     value: STORY_CONTEXT_MENU_ACTIONS.OPEN_IN_EDITOR,
-    capability: 'hasEditAction',
+    isEnabled: (story) => Boolean(story?.capabilities?.hasEditAction),
   },
   {
     label: __('Open in new tab', 'web-stories'),
     value: STORY_CONTEXT_MENU_ACTIONS.OPEN_STORY_LINK,
+    isEnabled: (story) => Boolean(story?.previewLink),
   },
   {
     label: __('Copy Story URL', 'web-stories'),
     value: STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK,
+    isEnabled: (story) => Boolean(story?.previewLink),
   },
   {
     label: __('Rename', 'web-stories'),
     value: STORY_CONTEXT_MENU_ACTIONS.RENAME,
     separator: 'top',
-    capability: 'hasEditAction',
+    isEnabled: (story) => Boolean(story?.capabilities?.hasEditAction),
   },
   {
     label: __('Duplicate', 'web-stories'),
     value: STORY_CONTEXT_MENU_ACTIONS.DUPLICATE,
-    capability: 'hasEditAction',
+    isEnabled: (story) => Boolean(story?.capabilities?.hasEditAction),
   },
   {
     label: __('Delete Story', 'web-stories'),
     value: STORY_CONTEXT_MENU_ACTIONS.DELETE,
     separator: 'top',
-    capability: 'hasDeleteAction',
+    isEnabled: (story) => Boolean(story?.capabilities?.hasDeleteAction),
   },
 ];
 

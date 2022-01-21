@@ -18,11 +18,11 @@
  * External dependencies
  */
 import { useFeature } from 'flagged';
-import { useCallback, useEffect } from '@web-stories-wp/react';
+import { useCallback, useEffect } from '@googleforcreators/react';
 import styled from 'styled-components';
-import { __, _n, sprintf } from '@web-stories-wp/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
-import { resourceList } from '@web-stories-wp/media';
+import { __, _n, sprintf } from '@googleforcreators/i18n';
+import { trackEvent } from '@googleforcreators/tracking';
+import { resourceList } from '@googleforcreators/media';
 import {
   Button as DefaultButton,
   BUTTON_SIZES,
@@ -31,7 +31,7 @@ import {
   Text,
   THEME_CONSTANTS,
   Icons,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -183,10 +183,10 @@ function MediaPane(props) {
    */
   const onSelect = useCallback(
     (resource) => {
-      // WordPress media picker event, sizes.medium.source_url is the smallest image
+      // WordPress media picker event, sizes.medium.sourceUrl is the smallest image
       insertMediaElement(
         resource,
-        resource.sizes?.medium?.source_url || resource.src
+        resource.sizes?.medium?.sourceUrl || resource.src
       );
     },
     [insertMediaElement]

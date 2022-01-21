@@ -17,14 +17,14 @@
 /**
  * External dependencies
  */
-import { useState, useCallback, useEffect } from '@web-stories-wp/react';
+import { useState, useCallback, useEffect } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@googleforcreators/i18n';
 import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

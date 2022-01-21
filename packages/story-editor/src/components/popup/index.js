@@ -26,9 +26,8 @@ import {
   useRef,
   useResizeEffect,
   createPortal,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
-import { THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -61,7 +60,7 @@ const Container = styled.div.attrs(
   position: fixed;
   z-index: 2;
   overflow-y: auto;
-  max-height: calc(100vh - ${THEME_CONSTANTS.WP_ADMIN.TOOLBAR_HEIGHT}px);
+  max-height: ${({ topOffset }) => `calc(100vh - ${topOffset}px)`};
 `;
 
 function Popup({
@@ -80,7 +79,7 @@ function Popup({
   const [popupState, setPopupState] = useState(null);
   const isMounted = useRef(false);
   const popup = useRef(null);
-  const { isRTL } = useConfig();
+  const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
 
   useEffect(() => {
     isMounted.current = true;
@@ -103,11 +102,11 @@ function Popup({
       setPopupState({
         offset:
           anchor?.current &&
-          getOffset(placement, spacing, anchor, dock, popup, isRTL),
+          getOffset(placement, spacing, anchor, dock, popup, isRTL, topOffset),
         height: popup.current?.getBoundingClientRect()?.height,
       });
     },
-    [anchor, dock, placement, spacing, isRTL]
+    [anchor, dock, placement, spacing, mounted, isRTL, topOffset]
   );
 
   useEffect(() => {
@@ -151,6 +150,7 @@ function Popup({
           placement={placement}
           isRTL={isRTL}
           $offset={popupState.offset}
+          topOffset={topOffset}
           invisible={invisible}
         >
           {renderContents

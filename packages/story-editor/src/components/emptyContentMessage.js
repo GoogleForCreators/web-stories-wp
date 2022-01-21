@@ -18,7 +18,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { DesertBw } from '@web-stories-wp/design-system';
+import { DesertBw } from '@googleforcreators/design-system';
 
 const Message = styled.div`
   display: flex;

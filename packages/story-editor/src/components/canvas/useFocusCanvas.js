@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
-import { useGlobalKeyDownEffect } from '@web-stories-wp/design-system';
+import { useCallback } from '@googleforcreators/react';
+import { useGlobalKeyDownEffect } from '@googleforcreators/design-system';
 
 function useFocusCanvas() {
   /**

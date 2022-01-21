@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, useEffect } from '@web-stories-wp/react';
+import { useState, useEffect } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { text } from '@storybook/addon-knobs';
 

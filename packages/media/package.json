@@ -1,6 +1,15 @@
 {
-  "name": "@web-stories-wp/media",
-  "private": true,
+  "name": "@googleforcreators/media",
+  "description": "Functionality for creating and working with media resources in the Web Stories editor.",
+  "private": false,
+  "version": "0.0.1",
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "keywords": [
+    "web stories"
+  ],
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"
@@ -12,11 +21,11 @@
   "type": "module",
   "sideEffects": false,
   "dependencies": {
-    "@web-stories-wp/react": "*",
-    "@web-stories-wp/tracking": "*",
-    "@web-stories-wp/units": "*",
+    "@googleforcreators/react": "*",
+    "@googleforcreators/tracking": "*",
+    "@googleforcreators/units": "*",
     "mime": "^3.0.0",
-    "prop-types": "^15.8.0"
+    "prop-types": "^15.8.1"
   },
   "devDependencies": {}
 }

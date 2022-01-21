@@ -22,7 +22,7 @@ import {
   useRef,
   useCallback,
   createContext,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 
 export const LayoutContext = createContext(null);

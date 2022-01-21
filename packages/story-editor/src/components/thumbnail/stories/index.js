@@ -19,7 +19,7 @@
 import { action } from '@storybook/addon-actions';
 import { boolean, text } from '@storybook/addon-knobs';
 import styled from 'styled-components';
-import { Tooltip, Icons } from '@web-stories-wp/design-system';
+import { Tooltip, Icons } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

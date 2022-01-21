@@ -17,9 +17,9 @@
 /**
  * External dependencies
  */
-import { useMemo, useState } from '@web-stories-wp/react';
+import { useMemo, useState } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
-import { differenceInSeconds } from '@web-stories-wp/date';
+import { differenceInSeconds } from '@googleforcreators/date';
 
 /**
  * Internal dependencies

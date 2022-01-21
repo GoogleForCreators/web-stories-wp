@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -31,7 +31,6 @@
             "id": 0,
             "alt": "Wrinkle texture on dark color",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -69,7 +68,6 @@
             "id": 0,
             "alt": "Man in blue denim jacket",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#2f2423",
             "isExternal": true
@@ -318,7 +316,6 @@
             "id": 0,
             "alt": "Group of people standing inside dome watching concert",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -465,7 +462,6 @@
             "id": 0,
             "alt": "White distributed particles on black backdrop",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -567,7 +563,6 @@
             "id": 0,
             "alt": "Man in blue denim jacket",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#312423",
             "isExternal": true
@@ -753,7 +748,6 @@
             "id": 0,
             "alt": "Man in black crew neck t-shirt holding white ceramic mug",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#dbaf8d",
             "isExternal": true
@@ -967,7 +961,6 @@
             "id": 0,
             "alt": "White distributed particles on black backdrop",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "provider": "local",
             "baseColor": "#ac3c3c",
@@ -1070,7 +1063,6 @@
             "id": 0,
             "alt": "Photo of a selective focus on DJ booth in a club",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d31d78",
             "isExternal": true
@@ -1256,7 +1248,6 @@
             "id": 0,
             "alt": "Ouf light signage",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#fa6ad0",
             "isExternal": true
@@ -1472,7 +1463,6 @@
             "id": 0,
             "alt": "Man wearing a cap in a",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -1798,7 +1788,6 @@
             "id": 0,
             "alt": "People partying inside room",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -2772,7 +2761,6 @@
             "id": 0,
             "alt": "Women in club",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -3092,7 +3080,6 @@
             "id": 0,
             "alt": "White metal frame in grayscale photography",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -4076,7 +4063,6 @@
             "id": 0,
             "alt": "DJ booth in a club",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -4395,7 +4381,6 @@
             "id": 0,
             "alt": "Man singing on stage white wearing brown crew-neck shirt",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -5381,7 +5366,6 @@
             "id": 0,
             "alt": "Ouf light signage",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -5700,7 +5684,6 @@
             "id": 0,
             "alt": "People dancing inside room with green lights",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           }
@@ -6676,7 +6659,6 @@
             "id": 0,
             "alt": "White distributed particles on black backdrop",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "provider": "local",
             "baseColor": "#ac3c3c",
@@ -6779,7 +6761,6 @@
             "id": 0,
             "alt": "People gathering on concert field",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#12150f",
             "isExternal": true
@@ -6890,7 +6871,6 @@
             "id": 0,
             "alt": "Selective focus silhouette photography of man playing red-lighted DJ terminal",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#110427",
             "isExternal": true

@@ -1,6 +1,15 @@
 {
-  "name": "@web-stories-wp/templates",
-  "private": true,
+  "name": "@googleforcreators/templates",
+  "description": "A set of existing Web Stories templates for use in the editor",
+  "private": false,
+  "version": "0.0.1",
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "keywords": [
+    "web stories"
+  ],
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"
@@ -11,13 +20,13 @@
   "main": "./src/index.js",
   "type": "module",
   "dependencies": {
-    "@web-stories-wp/i18n": "*",
-    "@web-stories-wp/migration": "*",
-    "@web-stories-wp/tracking": "*"
+    "@googleforcreators/i18n": "*",
+    "@googleforcreators/migration": "*",
+    "@googleforcreators/tracking": "*"
   },
   "devDependencies": {
-    "@web-stories-wp/date": "*",
-    "@web-stories-wp/stickers": "*",
+    "@googleforcreators/date": "*",
+    "@googleforcreators/stickers": "*",
     "puppeteer": "^10.4.0"
   },
   "scripts": {

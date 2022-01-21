@@ -25,10 +25,10 @@ import {
   useCallback,
   useMemo,
   useUnmount,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
-import { generatePatternStyles } from '@web-stories-wp/patterns';
-import { useUnits } from '@web-stories-wp/units';
+import { generatePatternStyles } from '@googleforcreators/patterns';
+import { useUnits } from '@googleforcreators/units';
 
 /**
  * Internal dependencies

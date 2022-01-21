@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { memo } from '@web-stories-wp/react';
+import { memo } from '@googleforcreators/react';
 
 /**
  * Internal dependencies

@@ -26,7 +26,7 @@ import {
   useCallback,
   useDebouncedCallback,
   useEffect,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 
 /**
  * Internal dependencies

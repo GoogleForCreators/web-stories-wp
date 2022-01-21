@@ -22,12 +22,12 @@ import PropTypes from 'prop-types';
 import {
   generatePatternStyles,
   PatternPropType,
-} from '@web-stories-wp/patterns';
+} from '@googleforcreators/patterns';
 import {
   THEME_CONSTANTS,
   BUTTON_TRANSITION_TIMING,
   Text,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import { Headline, Link, Text } from '@web-stories-wp/design-system';
+import { Headline, Link, Text } from '@googleforcreators/design-system';
 
 export const Content = styled.div`
   display: flex;

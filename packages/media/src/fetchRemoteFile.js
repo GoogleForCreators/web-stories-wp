@@ -19,6 +19,7 @@
  */
 import getFileNameFromUrl from './getFileNameFromUrl';
 import fetchRemoteBlob from './fetchRemoteBlob';
+import blobToFile from './blobToFile';
 
 function generateFileName(url) {
   const currentFileName = getFileNameFromUrl(url);
@@ -44,9 +45,7 @@ function generateFileName(url) {
 async function fetchRemoteFile(url, mimeType) {
   const data = await fetchRemoteBlob(url);
   const name = generateFileName(url);
-  return new File([data], name, {
-    type: mimeType,
-  });
+  return blobToFile(data, name, mimeType);
 }
 
 export default fetchRemoteFile;

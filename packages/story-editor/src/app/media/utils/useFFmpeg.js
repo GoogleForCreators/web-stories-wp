@@ -18,9 +18,13 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
-import { useCallback, useMemo } from '@web-stories-wp/react';
-import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
-import { getExtensionFromMimeType, getFileName } from '@web-stories-wp/media';
+import { useCallback, useMemo } from '@googleforcreators/react';
+import { getTimeTracker, trackError } from '@googleforcreators/tracking';
+import {
+  getExtensionFromMimeType,
+  getFileName,
+  blobToFile,
+} from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -196,12 +200,10 @@ function useFFmpeg() {
 
         const data = ffmpeg.FS('readFile', tempFileName);
 
-        return new File(
-          [new Blob([data.buffer], { type: MEDIA_POSTER_IMAGE_MIME_TYPE })],
+        return blobToFile(
+          new Blob([data.buffer], { type: MEDIA_POSTER_IMAGE_MIME_TYPE }),
           outputFileName,
-          {
-            type: MEDIA_POSTER_IMAGE_MIME_TYPE,
-          }
+          MEDIA_POSTER_IMAGE_MIME_TYPE
         );
       } catch (err) {
         // eslint-disable-next-line no-console
@@ -253,12 +255,10 @@ function useFFmpeg() {
 
         const data = ffmpeg.FS('readFile', tempFileName);
 
-        return new File(
-          [new Blob([data.buffer], { type: MEDIA_TRANSCODED_MIME_TYPE })],
+        return blobToFile(
+          new Blob([data.buffer], { type: MEDIA_TRANSCODED_MIME_TYPE }),
           outputFileName,
-          {
-            type: MEDIA_TRANSCODED_MIME_TYPE,
-          }
+          MEDIA_TRANSCODED_MIME_TYPE
         );
       } catch (err) {
         // eslint-disable-next-line no-console
@@ -314,9 +314,11 @@ function useFFmpeg() {
         );
         const data = ffmpeg.FS('readFile', tempFileName);
 
-        return new File([new Blob([data.buffer], { type })], outputFileName, {
-          type,
-        });
+        return blobToFile(
+          new Blob([data.buffer], { type }),
+          outputFileName,
+          type
+        );
       } catch (err) {
         // eslint-disable-next-line no-console
         console.log(err);
@@ -371,9 +373,11 @@ function useFFmpeg() {
 
         const data = ffmpeg.FS('readFile', tempFileName);
 
-        return new File([new Blob([data.buffer], { type })], outputFileName, {
-          type,
-        });
+        return blobToFile(
+          new Blob([data.buffer], { type }),
+          outputFileName,
+          type
+        );
       } catch (err) {
         // eslint-disable-next-line no-console
         console.log(err);
@@ -424,12 +428,10 @@ function useFFmpeg() {
 
         const data = ffmpeg.FS('readFile', tempFileName);
 
-        return new File(
-          [new Blob([data.buffer], { type: MEDIA_TRANSCODED_MIME_TYPE })],
+        return new blobToFile(
+          new Blob([data.buffer], { type: MEDIA_TRANSCODED_MIME_TYPE }),
           outputFileName,
-          {
-            type: MEDIA_TRANSCODED_MIME_TYPE,
-          }
+          MEDIA_TRANSCODED_MIME_TYPE
         );
       } catch (err) {
         // eslint-disable-next-line no-console

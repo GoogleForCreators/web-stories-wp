@@ -17,10 +17,10 @@
 /**
  * External dependencies
  */
-import { useMemo, useRef } from '@web-stories-wp/react';
+import { useMemo, useRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { __, _x } from '@web-stories-wp/i18n';
+import { __, _x } from '@googleforcreators/i18n';
 import {
   Button,
   BUTTON_SIZES,
@@ -28,13 +28,13 @@ import {
   BUTTON_VARIANTS,
   Icons,
   Tooltip,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import {
   DIRECTION,
   ROTATION,
   SCALE_DIRECTION,
   SCALE_DIRECTION_MAP,
-} from '@web-stories-wp/animation';
+} from '@googleforcreators/animation';
 /**
  * Internal dependencies
  */

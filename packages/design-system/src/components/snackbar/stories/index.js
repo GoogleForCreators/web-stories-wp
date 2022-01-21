@@ -18,7 +18,7 @@
  */
 import { boolean, number, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
-import { useState } from '@web-stories-wp/react';
+import { useState } from '@googleforcreators/react';
 import styled, { ThemeProvider } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 

@@ -1,6 +1,15 @@
 {
-  "name": "@web-stories-wp/stickers",
-  "private": true,
+  "name": "@googleforcreators/stickers",
+  "description": "A large set of stickers to be used by a collection of Web Stories templates.",
+  "private": false,
+  "version": "0.0.1",
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "keywords": [
+    "web stories"
+  ],
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"
@@ -11,8 +20,8 @@
   "main": "./src/index.js",
   "type": "module",
   "dependencies": {
-    "@web-stories-wp/i18n": "*",
-    "@web-stories-wp/react": "*",
-    "prop-types": "^15.8.0"
+    "@googleforcreators/i18n": "*",
+    "@googleforcreators/react": "*",
+    "prop-types": "^15.8.1"
   }
 }

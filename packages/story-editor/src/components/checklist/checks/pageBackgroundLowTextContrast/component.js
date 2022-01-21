@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useState } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
+import { useCallback, useEffect, useState } from '@googleforcreators/react';
+import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
@@ -30,11 +30,11 @@ import {
   DefaultFooterText,
 } from '../../../checklistCard';
 import { Thumbnail, THUMBNAIL_TYPES } from '../../../thumbnail';
-import { getVisibleThumbnails, ThumbnailPagePreview } from '../../utils';
+import { ThumbnailPagePreview } from '../../utils';
 import { ACCESSIBILITY_COPY } from '../../constants';
 import { useRegisterCheck } from '../../countContext';
 import { useIsChecklistMounted } from '../../popupMountedContext';
-import { pageBackgroundTextLowContrast } from './check';
+import { getPagesWithFailedContrast } from './check';
 
 const PageBackgroundTextLowContrast = () => {
   const isChecklistMounted = useIsChecklistMounted();
@@ -45,30 +45,25 @@ const PageBackgroundTextLowContrast = () => {
     height: pageHeight,
   }));
 
-  const getFailingPages = useCallback(async () => {
-    const promises = [];
-    (storyPages || []).forEach((page) => {
-      const maybeTextContrastResult = pageBackgroundTextLowContrast({
-        ...page,
-        pageSize,
-      });
-      if (maybeTextContrastResult instanceof Promise) {
-        promises.push(
-          maybeTextContrastResult.then((result) => ({ result, page }))
-        );
-      } else {
-        promises.push(maybeTextContrastResult);
-      }
-    });
-    const awaitedResult = await Promise.all(promises);
-    return awaitedResult.filter(({ result }) => result).map(({ page }) => page);
-  }, [storyPages, pageSize]);
-
   useEffect(() => {
-    getFailingPages().then((failures) => {
-      setFailingPages(failures);
-    });
-  }, [getFailingPages]);
+    let isStale = false;
+
+    getPagesWithFailedContrast(storyPages, pageSize)
+      .then((failures) => {
+        if (isStale) {
+          return;
+        }
+        const failedPages = failures.map(({ page }) => page);
+        setFailingPages(failedPages);
+      })
+      .catch(() => {
+        // TODO: Add some error handling
+      });
+
+    return () => {
+      isStale = true;
+    };
+  }, [storyPages, pageSize]);
 
   const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
   const handleClick = useCallback(
@@ -92,20 +87,15 @@ const PageBackgroundTextLowContrast = () => {
           : CARD_TYPE.SINGLE_ISSUE
       }
       footer={<DefaultFooterText>{footer}</DefaultFooterText>}
-      thumbnailCount={failingPages.length}
-      thumbnail={
-        <>
-          {getVisibleThumbnails(failingPages).map((page) => (
-            <Thumbnail
-              key={page.id}
-              onClick={() => handleClick(page.id)}
-              type={THUMBNAIL_TYPES.PAGE}
-              displayBackground={<ThumbnailPagePreview page={page} />}
-              aria-label={__('Go to offending page', 'web-stories')}
-            />
-          ))}
-        </>
-      }
+      thumbnails={failingPages.map((page) => (
+        <Thumbnail
+          key={page.id}
+          onClick={() => handleClick(page.id)}
+          type={THUMBNAIL_TYPES.PAGE}
+          displayBackground={<ThumbnailPagePreview page={page} />}
+          aria-label={__('Go to offending page', 'web-stories')}
+        />
+      ))}
     />
   ) : null;
 };

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from '@web-stories-wp/react';
+import { useCallback, useMemo } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -28,7 +28,7 @@ import { PRIORITY_COPY } from '../constants';
 import { filterStoryElements } from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
-import VideoChecklistCard from './shared/videoChecklistCard';
+import { VideoChecklistCard } from './shared';
 
 export function videoElementMissingPoster(element) {
   return (
@@ -54,6 +54,7 @@ const VideoElementMissingPoster = () => {
       }),
     [setHighlights]
   );
+
   const { footer, title } = PRIORITY_COPY.videoMissingPoster;
 
   const isRendered = elements.length > 0;
@@ -66,7 +67,7 @@ const VideoElementMissingPoster = () => {
         title={title}
         elements={elements}
         footer={footer}
-        handleClick={handleClick}
+        onThumbnailClick={handleClick}
       />
     )
   );

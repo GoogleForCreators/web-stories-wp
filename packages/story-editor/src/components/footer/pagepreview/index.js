@@ -20,14 +20,14 @@
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import PropTypes from 'prop-types';
-import { generatePatternStyles } from '@web-stories-wp/patterns';
-import { UnitsProvider } from '@web-stories-wp/units';
+import { generatePatternStyles } from '@googleforcreators/patterns';
+import { UnitsProvider } from '@googleforcreators/units';
 import {
   useState,
   useRef,
   useCallback,
   useEffect,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { useFeature } from 'flagged';
 
 /**
@@ -186,7 +186,6 @@ function PagePreview({
                   key={element.id}
                   previewMode
                   element={element}
-                  page={page}
                 />
               ))
             )}

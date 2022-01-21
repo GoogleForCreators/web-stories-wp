@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -35,7 +35,6 @@
             "id": 0,
             "alt": "Black and Brown leather padded tub sofa",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#dacdc3",
             "isExternal": true
@@ -312,7 +311,6 @@
             "id": 0,
             "alt": "Abstract shapes forming a map like layout",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#b3bbcb",
             "isExternal": true
@@ -1057,7 +1055,6 @@
             "lengthFormatted": "0:26",
             "alt": "Man waking up in his bed with a great view outside the window.",
             "sizes": [],
-            "local": false,
             "isOptimized": true,
             "isMuted": true,
             "baseColor": "#b0aab1",
@@ -1199,7 +1196,6 @@
             "id": 0,
             "alt": "White Pillows On A Bed",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d9d7d2",
             "isExternal": true
@@ -1459,7 +1455,6 @@
             "id": 0,
             "alt": "Brown stool below brown tabletop with green plant in white pot",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d6d5d0",
             "isExternal": true
@@ -1498,7 +1493,6 @@
             "id": 0,
             "alt": "Gray desk lamp mount on white wall under brown stool with white book on top near wall corner",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d2d4d6",
             "isExternal": true
@@ -1537,7 +1531,6 @@
             "id": 0,
             "alt": "White vanity sink",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#b1aca6",
             "isExternal": true
@@ -1816,7 +1809,6 @@
             "lengthFormatted": "0:24",
             "alt": "Attractive man talking to camera - stock video",
             "sizes": [],
-            "local": false,
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
@@ -1959,7 +1951,6 @@
             "id": 0,
             "alt": "Man Swimming in an Infinity Pool",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#cecec9",
             "isExternal": true
@@ -2138,7 +2129,6 @@
             "id": 0,
             "alt": "Brown Lounge Chair on Side of Swimming Pool",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#91a4d7",
             "isExternal": true
@@ -2505,7 +2495,6 @@
             "lengthFormatted": "0:24",
             "alt": "Attractive man talking to camera - stock video",
             "sizes": [],
-            "local": false,
             "isOptimized": true,
             "isMuted": true,
             "provider": "local",
@@ -2648,7 +2637,6 @@
             "id": 0,
             "alt": "Brown Wooden Shelf With Assorted Items",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#333331",
             "isExternal": true
@@ -2908,7 +2896,6 @@
             "id": 0,
             "alt": "A Romantic Setting In The Bathroom",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#a48975",
             "isExternal": true
@@ -2947,7 +2934,6 @@
             "id": 0,
             "alt": "Brown Wooden Shelf With Assorted Items",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#2b2a28",
             "isExternal": true
@@ -2986,7 +2972,6 @@
             "id": 0,
             "alt": "Man Doing Pull-Ups",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#2b1f1d",
             "isExternal": true
@@ -3800,7 +3785,6 @@
             "id": 0,
             "alt": "Empty Balcony Near Beach",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#312925",
             "isExternal": true

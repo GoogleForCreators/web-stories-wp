@@ -17,7 +17,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { BEZIER, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { BEZIER } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -56,7 +56,7 @@ export const LeftRailContainer = styled.nav.attrs({
   display: flex;
   justify-content: space-between;
   flex-direction: column;
-  top: ${THEME_CONSTANTS.WP_ADMIN.TOOLBAR_HEIGHT}px;
+  top: ${({ topOffset }) => `${topOffset}px`};
   bottom: 0;
   width: ${DASHBOARD_LEFT_NAV_WIDTH}px;
   background: ${({ theme }) => theme.colors.bg.primary};

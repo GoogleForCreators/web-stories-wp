@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useKeyDownEffect } from '@web-stories-wp/design-system';
+import { useKeyDownEffect } from '@googleforcreators/design-system';
 
 const getFocusableElements = (node) => {
   if (!node) {

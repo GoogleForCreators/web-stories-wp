@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -43,7 +43,6 @@
             "id": 0,
             "alt": "Brown wooden bench near green plants",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#272823",
             "isExternal": true
@@ -276,7 +275,6 @@
             "id": 0,
             "alt": "Brown and gray 3-story building",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#4d4749",
             "isExternal": true
@@ -548,7 +546,6 @@
             "id": 0,
             "alt": "Photo of a living room",
             "sizes": [],
-            "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
@@ -751,7 +748,6 @@
             "id": 0,
             "alt": "Square pattern image",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ffffff",
             "isExternal": true
@@ -784,7 +780,6 @@
             "id": 0,
             "alt": "Black round plate on brown wooden table",
             "sizes": [],
-            "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
@@ -1068,7 +1063,6 @@
             "id": 0,
             "alt": "Square pattern image",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ffffff",
             "isExternal": true
@@ -1101,7 +1095,6 @@
             "id": 0,
             "alt": "White concrete building",
             "sizes": [],
-            "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
@@ -1385,7 +1378,6 @@
             "id": 0,
             "alt": "Square pattern image",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ffffff",
             "isExternal": true
@@ -1418,7 +1410,6 @@
             "id": 0,
             "alt": "Brown stairs",
             "sizes": [],
-            "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
@@ -1828,7 +1819,6 @@
             "id": 0,
             "alt": "Brown fabric sofa set",
             "sizes": [],
-            "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
@@ -2033,7 +2023,6 @@
             "id": 0,
             "alt": "Square pattern image",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ffffff",
             "isExternal": true
@@ -2066,7 +2055,6 @@
             "id": 0,
             "alt": "White sofa set near window",
             "sizes": [],
-            "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
@@ -2350,7 +2338,6 @@
             "id": 0,
             "alt": "Square pattern image",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ffffff",
             "isExternal": true
@@ -2383,7 +2370,6 @@
             "id": 0,
             "alt": "Brown wooden armchair",
             "sizes": [],
-            "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
@@ -2667,7 +2653,6 @@
             "id": 0,
             "alt": "Square pattern image",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ffffff",
             "isExternal": true
@@ -2700,7 +2685,6 @@
             "id": 0,
             "alt": "Brown-and-black wooden 5-piece dining set",
             "sizes": [],
-            "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
@@ -3054,7 +3038,6 @@
             "id": 0,
             "alt": "Gray sedan parked near multicolored building during daytime",
             "sizes": [],
-            "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,
@@ -3144,7 +3127,6 @@
             "id": 0,
             "alt": "Trees beside white house",
             "sizes": [],
-            "local": false,
             "isPlaceholder": false,
             "isOptimized": false,
             "isMuted": false,

@@ -23,14 +23,14 @@ import {
   useEffect,
   useRef,
   useState,
-} from '@web-stories-wp/react';
-import { CURATED_FONT_NAMES } from '@web-stories-wp/fonts';
+} from '@googleforcreators/react';
+import { CURATED_FONT_NAMES } from '@googleforcreators/fonts';
 import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
-import { trackError } from '@web-stories-wp/tracking';
+import { trackError } from '@googleforcreators/tracking';
 import loadStylesheet from '../../utils/loadStylesheet';
 import { FONT_WEIGHT_NAMES } from '../../constants';
 import { useAPI } from '../api';
@@ -54,7 +54,8 @@ function FontProvider({ children }) {
   useEffect(() => {
     let mounted = true;
     // Don't load custom fonts if not enabled.
-    if (!customFonts && isCustomFontsEnabled) {
+    // TODO: Don't load custom fonts when not requested by FontPicker.
+    if (!customFonts && getFonts && isCustomFontsEnabled) {
       try {
         (async () => {
           const _customFonts = await getFonts({
@@ -86,7 +87,9 @@ function FontProvider({ children }) {
   useEffect(() => {
     let mounted = true;
 
-    if (!curatedFonts.length) {
+    // Not defined when used within storyPageToDataUrl().
+    // TODO: Don't load curatedFonts when not requested by FontPicker.
+    if (!curatedFonts.length && getFonts) {
       try {
         (async () => {
           const newFonts = await getFonts({

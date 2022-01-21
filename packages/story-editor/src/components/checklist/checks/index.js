@@ -18,7 +18,10 @@ export { default as ElementLinkTappableRegionTooBig } from './elementLinkTappabl
 export { default as ElementLinkTappableRegionTooSmall } from './elementLinkTappableRegionTooSmall';
 export { default as ImageElementMissingAlt } from './imageElementMissingAlt';
 export { default as ImageElementResolution } from './imageElementResolution';
-export { PageBackgroundTextLowContrast } from './pageBackgroundLowTextContrast';
+export {
+  PageBackgroundTextLowContrast,
+  getPagesWithFailedContrast,
+} from './pageBackgroundLowTextContrast';
 export { default as PageTooLittleText } from './pageTooLittleText';
 export { default as PageTooManyLinks } from './pageTooManyLinks';
 export { default as PageTooMuchText } from './pageTooMuchText';

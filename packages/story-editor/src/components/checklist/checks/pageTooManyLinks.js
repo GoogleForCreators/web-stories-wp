@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
+import { useCallback, useMemo } from '@googleforcreators/react';
+import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
@@ -31,11 +31,7 @@ import {
   DefaultFooterText,
 } from '../../checklistCard';
 import { Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
-import {
-  filterStoryPages,
-  getVisibleThumbnails,
-  ThumbnailPagePreview,
-} from '../utils';
+import { filterStoryPages, ThumbnailPagePreview } from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
 
@@ -62,10 +58,22 @@ const PageTooManyLinks = () => {
       }),
     [setHighlights]
   );
+
   const { footer, title } = DESIGN_COPY.tooManyLinksOnPage;
 
   const isRendered = failingPages.length > 0;
   useRegisterCheck('PageTooManyLinks', isRendered);
+
+  const thumbnails = failingPages.map((page) => (
+    <Thumbnail
+      key={page.id}
+      onClick={() => handleClick(page.id)}
+      type={THUMBNAIL_TYPES.PAGE}
+      displayBackground={<ThumbnailPagePreview page={page} />}
+      aria-label={__('Go to offending page', 'web-stories')}
+    />
+  ));
+
   return (
     isRendered &&
     isChecklistMounted && (
@@ -77,20 +85,7 @@ const PageTooManyLinks = () => {
             : CARD_TYPE.SINGLE_ISSUE
         }
         footer={<DefaultFooterText>{footer}</DefaultFooterText>}
-        thumbnailCount={failingPages.length}
-        thumbnail={
-          <>
-            {getVisibleThumbnails(failingPages).map((page) => (
-              <Thumbnail
-                key={page.id}
-                onClick={() => handleClick(page.id)}
-                type={THUMBNAIL_TYPES.PAGE}
-                displayBackground={<ThumbnailPagePreview page={page} />}
-                aria-label={__('Go to offending page', 'web-stories')}
-              />
-            ))}
-          </>
-        }
+        thumbnails={thumbnails}
       />
     )
   );

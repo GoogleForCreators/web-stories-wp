@@ -17,10 +17,10 @@
 /**
  * External dependencies
  */
-import { forwardRef, useCallback } from '@web-stories-wp/react';
+import { forwardRef, useCallback } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies

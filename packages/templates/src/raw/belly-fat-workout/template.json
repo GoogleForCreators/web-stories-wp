@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -36,7 +36,6 @@
             "id": 0,
             "alt": "Young Sportswoman Working Out With Battle Ropes In A Gym",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -261,7 +260,6 @@
             "id": 0,
             "alt": "Woman Carries Dumbbells",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#adb1a8",
             "isExternal": true
@@ -485,7 +483,6 @@
             "lengthFormatted": "0:12",
             "alt": "Footage Of A Young Sportswoman Working Out With A Skipping Rope In A Gym",
             "sizes": [],
-            "local": false,
             "isOptimized": true,
             "isMuted": true,
             "baseColor": "#c2c0c0",
@@ -773,7 +770,6 @@
             "lengthFormatted": "0:06",
             "alt": "Footage Of A Young Sportswoman Doing Sit Ups While Working Out In A Gym",
             "sizes": [],
-            "local": false,
             "isOptimized": true,
             "isMuted": true,
             "baseColor": "#293241",
@@ -1062,7 +1058,6 @@
             "lengthFormatted": "0:11",
             "alt": "Footage Of A Young Sportswoman Working Out With Battle Ropes In A Gym",
             "sizes": [],
-            "local": false,
             "isOptimized": true,
             "isMuted": true,
             "baseColor": "#353b46",
@@ -1351,7 +1346,6 @@
             "lengthFormatted": "0:14",
             "alt": "Footage Of A Young Sportswoman Working Out With Kettle Bells In A Gym",
             "sizes": [],
-            "local": false,
             "isOptimized": true,
             "isMuted": true,
             "baseColor": "#283036",
@@ -1640,7 +1634,6 @@
             "lengthFormatted": "0:07",
             "alt": "Footage Of A Young Sportswoman Doing Push Ups While Working Out In A Gym",
             "sizes": [],
-            "local": false,
             "isOptimized": true,
             "isMuted": true,
             "baseColor": "#363a46",
@@ -1929,7 +1922,6 @@
             "lengthFormatted": "0:10",
             "alt": "Footage Of A Young Sportswoman Working Out With A Kettle Bell In A Gym",
             "sizes": [],
-            "local": false,
             "isOptimized": true,
             "isMuted": true,
             "baseColor": "#212b32",
@@ -2218,7 +2210,6 @@
             "lengthFormatted": "0:07",
             "alt": "Footage Of A Young Sportswoman Working Out With A Weight Plate In A Gym",
             "sizes": [],
-            "local": false,
             "isOptimized": true,
             "isMuted": true,
             "baseColor": "#292b32",
@@ -2507,7 +2498,6 @@
             "lengthFormatted": "0:08",
             "alt": "Footage Of A Young Sportswoman Taking A Break While Working Out In A Gym",
             "sizes": [],
-            "local": false,
             "isOptimized": true,
             "isMuted": true,
             "baseColor": "#28333a",
@@ -2579,7 +2569,6 @@
             "lengthFormatted": "0:05",
             "alt": "Footage Of An Unrecognizable Young Sportswoman Applying Talcum Powder To Her Hands In A Gym",
             "sizes": [],
-            "local": false,
             "isOptimized": true,
             "isMuted": true,
             "baseColor": "#d8dde2",
@@ -2653,7 +2642,6 @@
             "id": 0,
             "alt": "Woman In Black Tank Top And Black Shorts Sitting On Floor",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#383534",
             "isExternal": true
@@ -2806,7 +2794,6 @@
             "id": 0,
             "alt": "Woman In Black Sports Bra And Black Leggings Wearing Black Boxing Gloves",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#cfcfd2",
             "isExternal": true
@@ -2845,7 +2832,6 @@
             "id": 0,
             "alt": "Woman In Black Tank Top And Leggings Doing Exercise",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d3d7db",
             "isExternal": true
@@ -2884,7 +2870,6 @@
             "id": 0,
             "alt": "Woman Performing Yoga",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#cfcac6",
             "isExternal": true

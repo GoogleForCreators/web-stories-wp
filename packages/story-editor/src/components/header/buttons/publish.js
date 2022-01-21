@@ -17,10 +17,15 @@
 /**
  * External dependencies
  */
-import { useCallback, useState } from '@web-stories-wp/react';
-import { toDate, isAfter, subMinutes, getOptions } from '@web-stories-wp/date';
-import { __ } from '@web-stories-wp/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { useCallback, useState } from '@googleforcreators/react';
+import {
+  toDate,
+  isAfter,
+  subMinutes,
+  getOptions,
+} from '@googleforcreators/date';
+import { __ } from '@googleforcreators/i18n';
+import { trackEvent } from '@googleforcreators/tracking';
 import PropTypes from 'prop-types';
 
 /**

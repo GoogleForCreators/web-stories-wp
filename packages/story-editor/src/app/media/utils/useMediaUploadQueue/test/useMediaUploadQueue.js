@@ -18,24 +18,25 @@
  * External dependencies
  */
 import { renderHook, act } from '@testing-library/react-hooks';
-import { isAnimatedGif } from '@web-stories-wp/media';
+import { isAnimatedGif, createResource } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
  */
 import useMediaUploadQueue from '..';
 import useFFmpeg from '../../useFFmpeg';
+import { ITEM_STATUS } from '../constants';
 
 const canTranscodeFile = (file) => {
   return ['video/mp4'].includes(file.type);
 };
 
-const waitfor10 = async () => {
+const getFileWithSleep = () => {
   const file = new File(['foo'], 'foo.mp4', {
     type: 'video/mp4',
     size: 5000,
   });
-  await new Promise((res) => setTimeout(() => res(file), 10));
+  return new Promise((res) => setTimeout(() => res(file), 10));
 };
 
 jest.mock('../../useFFmpeg', () => ({
@@ -44,48 +45,61 @@ jest.mock('../../useFFmpeg', () => ({
     isTranscodingEnabled: true,
     canTranscodeFile,
     isFileTooLarge: jest.fn(),
-    transcodeVideo: waitfor10,
-    stripAudioFromVideo: waitfor10,
-    trimVideo: waitfor10,
+    transcodeVideo: getFileWithSleep,
+    stripAudioFromVideo: getFileWithSleep,
+    trimVideo: getFileWithSleep,
     getFirstFrameOfVideo: jest.fn(),
-    convertGifToVideo: waitfor10,
+    convertGifToVideo: getFileWithSleep,
   })),
 }));
 
-jest.mock('@web-stories-wp/media', () => ({
-  ...jest.requireActual('@web-stories-wp/media'),
+jest.mock('@googleforcreators/media', () => ({
+  ...jest.requireActual('@googleforcreators/media'),
   isAnimatedGif: jest.fn(),
 }));
 
-// todo: update to be resource object.
-const mockResource = {
-  id: 123,
-  guid: {
-    rendered: 'guid-123',
-  },
-  media_details: {
-    width: 1080,
-    height: 720,
-  },
-  source_url: 'http://localhost:9876/__static__/asteroid.ogg',
-  title: {
-    raw: 'Title',
-  },
-  description: {
-    raw: 'Description',
-  },
-  featured_media_src: {},
-  meta: {
-    web_stories_is_poster: false,
-    web_stories_poster_id: 0,
-    web_stories_trim_data: {},
-  },
-  web_stories_is_muted: false,
-};
+const mockUploadFile = jest.fn().mockImplementation((file) =>
+  Promise.resolve(
+    createResource({
+      id: 123,
+      src: 'http://example.com/file.ext',
+      mimeType: file.type,
+    })
+  )
+);
 
-const mockUploadFile = jest
-  .fn()
-  .mockImplementation(() => Promise.resolve(mockResource));
+const videoFile = new File(['foo'], 'video.mp4', {
+  type: 'video/mp4',
+  size: 5000,
+});
+
+const videoResource = createResource({
+  id: 111,
+  src: 'http://example.com/video.mp4',
+  mimeType: 'video/mp4',
+});
+
+const imageFile = new File(['foo'], 'image.png', {
+  type: 'image/png',
+  size: 5000,
+});
+
+const imageResource = createResource({
+  id: 222,
+  src: 'http://example.com/image.png',
+  mimeType: 'image/png',
+});
+
+const gifFile = new File(['foo'], 'animated.gif', {
+  type: 'image/gif',
+  size: 5000,
+});
+
+const gifResource = createResource({
+  id: 333,
+  src: 'http://example.com/animated.gif',
+  mimeType: 'image/gif',
+});
 
 jest.mock('../../../../uploader', () => ({
   useUploader: jest.fn(() => ({
@@ -136,18 +150,18 @@ describe('useMediaUploadQueue', () => {
   });
 
   it('should set isUploading state when adding an item to the queue', async () => {
-    const file = new File(['foo'], 'foo.jpg', {
-      type: 'image/jpeg',
-      size: 1000,
-    });
-
     const { result, waitForNextUpdate, waitFor } = renderHook(() =>
       useMediaUploadQueue()
     );
 
     expect(result.current.state.isUploading).toBeFalse();
 
-    act(() => result.current.actions.addItem({ file, resource: mockResource }));
+    act(() =>
+      result.current.actions.addItem({
+        file: imageFile,
+        resource: imageResource,
+      })
+    );
 
     expect(result.current.state.isUploading).toBeTrue();
 
@@ -185,22 +199,16 @@ describe('useMediaUploadQueue', () => {
 
   it('should set isUploading state when adding a gif item to the queue', async () => {
     isAnimatedGif.mockReturnValue(true);
-    const file = {
-      type: 'image/gif',
-      size: 1000,
-      arrayBuffer: () => true,
-    };
-
-    const resource = {
-      id: 123,
-      mimeType: 'image/gif',
-    };
-
     const { result, waitFor } = renderHook(() => useMediaUploadQueue());
 
     expect(result.current.state.isUploading).toBeFalse();
 
-    act(() => result.current.actions.addItem({ file, resource }));
+    act(() =>
+      result.current.actions.addItem({
+        file: gifFile,
+        resource: gifResource,
+      })
+    );
 
     const {
       resource: { id: resourceId },
@@ -214,16 +222,16 @@ describe('useMediaUploadQueue', () => {
   });
 
   it('should set isTrancoding state when adding an item to the queue', async () => {
-    const file = new File(['foo'], 'foo.mp4', {
-      type: 'video/mp4',
-      size: 5000,
-    });
-
     const { result, waitFor } = renderHook(() => useMediaUploadQueue());
 
     expect(result.current.state.isUploading).toBeFalse();
 
-    act(() => result.current.actions.addItem({ file, resource: mockResource }));
+    act(() =>
+      result.current.actions.addItem({
+        file: videoFile,
+        resource: videoResource,
+      })
+    );
 
     const {
       resource: { id: resourceId },
@@ -243,19 +251,14 @@ describe('useMediaUploadQueue', () => {
   });
 
   it('should set isMuting state when adding an item to the queue', async () => {
-    const file = new File(['foo'], 'foo.mp4', {
-      type: 'video/mp4',
-      size: 5000,
-    });
-
     const { result, waitFor } = renderHook(() => useMediaUploadQueue());
 
     expect(result.current.state.isUploading).toBeFalse();
 
     act(() =>
       result.current.actions.addItem({
-        file,
-        resource: mockResource,
+        file: videoFile,
+        resource: videoResource,
         muteVideo: true,
       })
     );
@@ -275,19 +278,14 @@ describe('useMediaUploadQueue', () => {
   });
 
   it('should set isTrimming state when adding an item to the queue', async () => {
-    const file = new File(['foo'], 'foo.mp4', {
-      type: 'video/mp4',
-      size: 5000,
-    });
-
     const { result, waitFor } = renderHook(() => useMediaUploadQueue());
 
     expect(result.current.state.isUploading).toBeFalse();
 
     act(() =>
       result.current.actions.addItem({
-        file,
-        resource: mockResource,
+        file: videoFile,
+        resource: videoResource,
         trimData: { start: 100 },
       })
     );
@@ -310,16 +308,16 @@ describe('useMediaUploadQueue', () => {
   });
 
   it('allows removing items from the queue', async () => {
-    const file = {
-      type: 'image/jpg',
-      size: 1000,
-    };
-
     const { result, waitFor, waitForNextUpdate } = renderHook(() =>
       useMediaUploadQueue()
     );
 
-    act(() => result.current.actions.addItem({ file, resource: mockResource }));
+    act(() =>
+      result.current.actions.addItem({
+        file: imageFile,
+        resource: imageResource,
+      })
+    );
 
     await waitForNextUpdate();
 
@@ -363,5 +361,64 @@ describe('useMediaUploadQueue', () => {
         canTranscodeResource: expect.any(Function),
       })
     );
+  });
+
+  it('transcodes files sequentially', async () => {
+    const { result, waitFor, waitForNextUpdate } = renderHook(() =>
+      useMediaUploadQueue()
+    );
+
+    act(() =>
+      result.current.actions.addItem({
+        file: gifFile,
+        resource: gifResource,
+      })
+    );
+    act(() =>
+      result.current.actions.addItem({
+        file: videoFile,
+        resource: { ...videoResource, id: 444 },
+      })
+    );
+    act(() =>
+      result.current.actions.addItem({
+        file: videoFile,
+        resource: { ...videoResource, id: 555 },
+      })
+    );
+    act(() =>
+      result.current.actions.addItem({
+        file: videoFile,
+        resource: { ...videoResource, id: 666 },
+      })
+    );
+    act(() =>
+      result.current.actions.addItem({
+        file: imageFile,
+        resource: imageResource,
+      })
+    );
+
+    await waitForNextUpdate();
+
+    expect(
+      result.current.state.progress.filter(
+        (item) => item.state === ITEM_STATUS.TRANSCODING
+      )
+    ).toHaveLength(1);
+
+    await waitForNextUpdate();
+
+    expect(
+      result.current.state.progress.filter(
+        (item) => item.state === ITEM_STATUS.TRANSCODING
+      )
+    ).toHaveLength(1);
+
+    await waitForNextUpdate();
+
+    await waitFor(() => expect(result.current.state.pending).toHaveLength(0));
+    await waitFor(() => expect(result.current.state.progress).toHaveLength(0));
+    await waitFor(() => expect(result.current.state.uploaded).toHaveLength(5));
   });
 });

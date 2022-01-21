@@ -16,8 +16,8 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
-import { useCallback, useMemo } from '@web-stories-wp/react';
+import { __ } from '@googleforcreators/i18n';
+import { useCallback, useMemo } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
@@ -33,7 +33,6 @@ import {
 import {
   characterCountForPage,
   filterStoryPages,
-  getVisibleThumbnails,
   ThumbnailPagePreview,
 } from '../utils';
 import { useRegisterCheck } from '../countContext';
@@ -58,9 +57,20 @@ const PageTooLittleText = () => {
       }),
     [setHighlights]
   );
+
   const { footer, title } = DESIGN_COPY.tooLittlePageText;
   const isRendered = failingPages.length > 0;
   useRegisterCheck('PageTooLittleText', isRendered);
+
+  const thumbnails = failingPages.map((page) => (
+    <Thumbnail
+      key={page.id}
+      onClick={() => handleClick(page.id)}
+      type={THUMBNAIL_TYPES.PAGE}
+      displayBackground={<ThumbnailPagePreview page={page} />}
+      aria-label={__('Go to offending page', 'web-stories')}
+    />
+  ));
 
   return isRendered && isChecklistMounted ? (
     <ChecklistCard
@@ -71,20 +81,7 @@ const PageTooLittleText = () => {
           : CARD_TYPE.SINGLE_ISSUE
       }
       footer={<DefaultFooterText>{footer}</DefaultFooterText>}
-      thumbnailCount={failingPages.length}
-      thumbnail={
-        <>
-          {getVisibleThumbnails(failingPages).map((page) => (
-            <Thumbnail
-              key={page.id}
-              onClick={() => handleClick(page.id)}
-              type={THUMBNAIL_TYPES.PAGE}
-              displayBackground={<ThumbnailPagePreview page={page} />}
-              aria-label={__('Go to offending page', 'web-stories')}
-            />
-          ))}
-        </>
-      }
+      thumbnails={thumbnails}
     />
   ) : null;
 };

@@ -16,14 +16,14 @@
 /**
  * External dependencies
  */
-import { Tooltip, useStory } from '@web-stories-wp/story-editor';
+import { Tooltip, useStory } from '@googleforcreators/story-editor';
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Icons,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { hrefTo } from '@storybook/addon-links';
 
 function PreviewButton() {

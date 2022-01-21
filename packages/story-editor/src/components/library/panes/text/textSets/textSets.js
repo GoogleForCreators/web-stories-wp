@@ -17,11 +17,11 @@
 /**
  * External dependencies
  */
-import { useMemo, useCallback, useRef } from '@web-stories-wp/react';
+import { useMemo, useCallback, useRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { useVirtual } from 'react-virtual';
-import { __ } from '@web-stories-wp/i18n';
-import { UnitsProvider } from '@web-stories-wp/units';
+import { __ } from '@googleforcreators/i18n';
+import { UnitsProvider } from '@googleforcreators/units';
 
 /**
  * Internal dependencies

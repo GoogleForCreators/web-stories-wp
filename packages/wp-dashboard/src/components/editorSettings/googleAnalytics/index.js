@@ -22,16 +22,16 @@ import {
   useCallback,
   useEffect,
   useMemo,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
-import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
-import { trackClick, trackEvent } from '@web-stories-wp/tracking';
+import { __, TranslateWithMarkup } from '@googleforcreators/i18n';
+import { trackClick, trackEvent } from '@googleforcreators/tracking';
 import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   THEME_CONSTANTS,
   NotificationBubble,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import styled from 'styled-components';
 
 /**

@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -36,7 +36,6 @@
             "id": 0,
             "alt": "Locomotive engine",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -346,7 +345,6 @@
             "id": 0,
             "alt": "Train on bridge surrounded with trees at daytime",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#363830",
             "isExternal": true
@@ -614,7 +612,6 @@
             "id": 0,
             "alt": "Fine dining inside train",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#dae1df",
             "isExternal": true
@@ -802,7 +799,6 @@
             "id": 0,
             "alt": "Gray table lamp beside white bed pillow",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#1b262c",
             "isExternal": true
@@ -985,7 +981,6 @@
             "id": 0,
             "alt": "Clear glass bowls on table",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c3a27d",
             "isExternal": true
@@ -1174,7 +1169,6 @@
             "id": 0,
             "alt": "Map of Europe highlighting London, Paris and Venice",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ffffff",
             "isExternal": true
@@ -1302,7 +1296,6 @@
             "id": 0,
             "alt": "Dotted weavy line",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ffffff",
             "isExternal": true
@@ -2321,7 +2314,6 @@
             "id": 0,
             "alt": "A map of somewhere in Europe",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ffffff",
             "isExternal": true
@@ -2360,7 +2352,6 @@
             "id": 0,
             "alt": "Dotted line",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ffffff",
             "isExternal": true
@@ -2399,7 +2390,6 @@
             "id": 0,
             "alt": "Aerial view of village on mountain cliff during orange sunset",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#3a363f",
             "isExternal": true
@@ -2712,7 +2702,6 @@
             "id": 0,
             "alt": "House surrounded by plants and grass field",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#dbbcaa",
             "isExternal": true
@@ -2901,7 +2890,6 @@
             "id": 0,
             "alt": "Map of Paris illustration",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ffffff",
             "isExternal": true
@@ -2940,7 +2928,6 @@
             "id": 0,
             "alt": "Dotted line",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ffffff",
             "isExternal": true
@@ -2979,7 +2966,6 @@
             "id": 0,
             "alt": "Bridge during night time",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#9281a1",
             "isExternal": true
@@ -3315,7 +3301,6 @@
             "id": 0,
             "alt": "Armchair Books store",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#586364",
             "isExternal": true
@@ -3352,7 +3337,6 @@
             "id": 0,
             "alt": "Illustration of city lanes in a map",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#141c24",
             "isExternal": true
@@ -3656,7 +3640,6 @@
             "id": 0,
             "alt": "Plain overview map of London",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ffffff",
             "isExternal": true
@@ -3695,7 +3678,6 @@
             "id": 0,
             "alt": "Photo of Elizabeth Tower, London",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d4d3d1",
             "isExternal": true
@@ -3982,7 +3964,6 @@
             "id": 0,
             "alt": "Dotted line",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#ffffff",
             "isExternal": true
@@ -4066,7 +4047,6 @@
             "id": 0,
             "alt": "Beige concrete structure",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#2d2727",
             "isExternal": true
@@ -4428,7 +4408,6 @@
             "id": 0,
             "alt": "Bare tress and mountain",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d7d5d2",
             "isExternal": true
@@ -4466,7 +4445,6 @@
             "id": 0,
             "alt": "Photo of house near cliff and body of water",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },

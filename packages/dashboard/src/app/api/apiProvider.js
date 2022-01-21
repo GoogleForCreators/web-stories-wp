@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { createContext } from '@web-stories-wp/react';
+import { createContext } from '@googleforcreators/react';
 
 /**
  * Internal dependencies

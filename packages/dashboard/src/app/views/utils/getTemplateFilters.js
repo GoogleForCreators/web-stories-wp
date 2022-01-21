@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { uniqueEntriesByKey } from '@googleforcreators/design-system';
+/**
  * Internal dependencies
  */
-import { uniqueEntriesByKey } from '../../../utils';
 import { TEMPLATE_META_DATA_TYPES } from '../constants';
 
 /**

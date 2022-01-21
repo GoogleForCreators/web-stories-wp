@@ -12,8 +12,8 @@
   "main": "./src/index.js",
   "dependencies": {
     "@ampproject/toolbox-optimizer": "^2.8.3",
-    "@web-stories-wp/react": "*",
+    "@googleforcreators/react": "*",
     "amphtml-validator": "1.0.35",
-    "prop-types": "^15.8.0"
+    "prop-types": "^15.8.1"
   }
 }

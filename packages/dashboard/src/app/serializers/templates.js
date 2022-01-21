@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { toUTCDate, toDate, getOptions } from '@web-stories-wp/date';
+import { toUTCDate, toDate, getOptions } from '@googleforcreators/date';
 
 export default function reshapeTemplateObject(
   originalTemplateData,

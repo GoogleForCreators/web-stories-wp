@@ -20,16 +20,16 @@ import {
   prettifyShortcut,
   useGlobalKeyDownEffect,
   useSnackbar,
-} from '@web-stories-wp/design-system';
-import { __, sprintf } from '@web-stories-wp/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
+} from '@googleforcreators/design-system';
+import { __, sprintf } from '@googleforcreators/i18n';
+import { trackEvent } from '@googleforcreators/tracking';
 import PropTypes from 'prop-types';
 import {
   useCallback,
   useMemo,
   useReducer,
   useRef,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { v4 as uuidv4 } from 'uuid';
 
 /** @typedef {import('react')} Node */

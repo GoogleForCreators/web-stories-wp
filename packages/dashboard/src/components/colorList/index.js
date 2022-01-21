@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { createSolidFromString } from '@web-stories-wp/patterns';
+import { createSolidFromString } from '@googleforcreators/patterns';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 

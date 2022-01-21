@@ -209,7 +209,7 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 				[
 					'taxonomy' => $tax_slug,
 					'field'    => 'slug',
-					'terms'    => [ 'poster-generation', 'source-video', 'source-image' ],
+					'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
 					'operator' => 'NOT IN',
 				],
 			],
@@ -233,7 +233,7 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 				[
 					'taxonomy' => $tax_slug,
 					'field'    => 'slug',
-					'terms'    => [ 'poster-generation', 'source-video', 'source-image' ],
+					'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
 					'operator' => 'NOT IN',
 				],
 				[
@@ -318,7 +318,7 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 			[
 				'taxonomy' => $this->instance->get_taxonomy_slug(),
 				'field'    => 'slug',
-				'terms'    => [ 'poster-generation', 'source-video', 'source-image' ],
+				'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
 				'operator' => 'NOT IN',
 			],
 			[
@@ -364,7 +364,7 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 				[
 					'taxonomy' => $tax_slug,
 					'field'    => 'slug',
-					'terms'    => [ 'poster-generation', 'source-video', 'source-image' ],
+					'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
 					'operator' => 'NOT IN',
 				],
 			],
