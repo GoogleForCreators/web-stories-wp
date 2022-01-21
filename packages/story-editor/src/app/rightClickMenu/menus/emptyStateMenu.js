@@ -34,6 +34,7 @@ const MediaButton = () => {
   return (
     <MediaUploadButton
       renderButton={(open) => (
+        // Disable reason: Parent menu item is a button
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
         <span onClick={open}>
           {RIGHT_CLICK_MENU_LABELS.UPLOAD_IMAGE_OR_VIDEO}
