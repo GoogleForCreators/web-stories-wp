@@ -32,7 +32,8 @@ import {
 import { renderPanel } from '../../../shared/test/_utils';
 import FontContext from '../../../../../app/font/context';
 import { StoryContext } from '../../../../../app/story';
-
+import { ConfigProvider } from '../../../../../app/config';
+import defaultConfig from '../../../../../defaultConfig';
 let mockControls;
 jest.mock('../../../../form/color/color', () => {
   // eslint-disable-next-line no-undef
@@ -68,21 +69,23 @@ function Wrapper({ children }) {
     actions: { updateStory: jest.fn(), updateElementsById: jest.fn() },
   };
   return (
-    <StoryContext.Provider value={storyContextValue}>
-      <FontContext.Provider
-        value={{
-          state: {
-            fonts: [],
-          },
-          actions: {
-            maybeEnqueueFontStyle: () => Promise.resolve(),
-            getFontByName: jest.fn(),
-          },
-        }}
-      >
-        {children}
-      </FontContext.Provider>
-    </StoryContext.Provider>
+    <ConfigProvider config={defaultConfig}>
+      <StoryContext.Provider value={storyContextValue}>
+        <FontContext.Provider
+          value={{
+            state: {
+              fonts: [],
+            },
+            actions: {
+              maybeEnqueueFontStyle: () => Promise.resolve(),
+              getFontByName: jest.fn(),
+            },
+          }}
+        >
+          {children}
+        </FontContext.Provider>
+      </StoryContext.Provider>
+    </ConfigProvider>
   );
 }
 

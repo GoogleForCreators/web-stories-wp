@@ -25,12 +25,18 @@ import { createSolid } from '@googleforcreators/patterns';
 import Color from '../color';
 import applyOpacityChange from '../applyOpacityChange';
 import { renderWithTheme } from '../../../../testUtils';
+import { ConfigProvider } from '../../../../app/config';
+import defaultConfig from '../../../../defaultConfig';
 
 jest.mock('../applyOpacityChange', () => jest.fn());
 
 function arrange(props = {}) {
   const onChange = jest.fn();
-  renderWithTheme(<Color label="Color" onChange={onChange} {...props} />);
+  renderWithTheme(
+    <ConfigProvider config={defaultConfig}>
+      <Color label="Color" onChange={onChange} {...props} />
+    </ConfigProvider>
+  );
   const colorPreview = screen.getByRole('button', { name: 'Color' });
   const opacityInput = screen.queryByLabelText(/Opacity/);
   return {
