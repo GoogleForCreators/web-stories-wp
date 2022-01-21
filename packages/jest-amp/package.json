@@ -1,6 +1,21 @@
 {
   "name": "@web-stories-wp/jest-amp",
+  "description": "Custom Jest matchers for AMP validation",
   "private": true,
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "jest",
+    "amp"
+  ],
+  "homepage": "https://github.com/google/web-stories-wp/",
+  "repository": "git+https://github.com/google/web-stories-wp.git",
+  "bugs": {
+    "url": "https://github.com/google/web-stories-wp/issues"
+  },
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"

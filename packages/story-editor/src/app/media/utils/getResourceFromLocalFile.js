@@ -30,8 +30,15 @@ import {
   getImageFromVideo,
   seekVideo,
   preloadVideo,
+  blobToFile,
 } from '@googleforcreators/media';
 import { v4 as uuidv4 } from 'uuid';
+
+/**
+ * Internal dependencies
+ */
+import { MEDIA_POSTER_IMAGE_MIME_TYPE } from '../../../constants';
+import getPosterName from './getPosterName';
 
 /**
  * Generates a image resource object from a local File object.
@@ -81,7 +88,11 @@ const getVideoResource = async (file) => {
 
   await seekVideo(videoEl);
   const hasAudio = hasVideoGotAudio(videoEl);
-  const posterFile = await getImageFromVideo(videoEl);
+  const posterFile = blobToFile(
+    await getImageFromVideo(videoEl),
+    getPosterName(getFileName(file)),
+    MEDIA_POSTER_IMAGE_MIME_TYPE
+  );
   const poster = createBlob(posterFile);
   const { width, height } = await getImageDimensions(poster);
 

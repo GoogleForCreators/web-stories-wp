@@ -35,6 +35,7 @@ web-stories-scraper
 .markdownlint.json
 .markdownlintignore
 .npmignore
+.npmpackagejsonlintrc.json
 .npmrc
 .nvmrc
 .phpstorm.meta.php
