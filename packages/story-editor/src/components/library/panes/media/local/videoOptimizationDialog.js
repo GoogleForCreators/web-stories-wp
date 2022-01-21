@@ -17,14 +17,14 @@
 /**
  * External dependencies
  */
-import { useCallback, useState } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
+import { useCallback, useState } from '@googleforcreators/react';
+import { __ } from '@googleforcreators/i18n';
 import {
   Text,
   THEME_CONSTANTS,
   LOCAL_STORAGE_PREFIX,
   localStore,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useState, useRef } from '@web-stories-wp/react';
+import { useState, useRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 
 /**

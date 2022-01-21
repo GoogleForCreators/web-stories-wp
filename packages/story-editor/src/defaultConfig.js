@@ -119,6 +119,7 @@ const defaultConfig = {
   metadata: {
     publisher: '',
   },
+  canViewDefaultTemplates: true,
   showMedia3p: true,
   encodeMarkup: true,
   ffmpegCoreUrl:

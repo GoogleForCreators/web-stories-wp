@@ -18,14 +18,14 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
-import { useCallback, useMemo } from '@web-stories-wp/react';
+import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
+import { useCallback, useMemo } from '@googleforcreators/react';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 import { Media, Row, TextArea } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue, useCommonObjectValue } from '../../shared';
@@ -82,7 +82,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     /**
      * Handle video poster change.
      *
-     * @param {import('@web-stories-wp/media').Resource} [newPoster] The new image. Or null if reset.
+     * @param {import('@googleforcreators/media').Resource} [newPoster] The new image. Or null if reset.
      */
     (newPoster) => {
       if (newPoster?.src === rawPoster) {

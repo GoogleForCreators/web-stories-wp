@@ -22,21 +22,21 @@ import {
   useRef,
   useState,
   useFocusOut,
-} from '@web-stories-wp/react';
-import { format, formatTime, is12Hour } from '@web-stories-wp/date';
-import { __ } from '@web-stories-wp/i18n';
+} from '@googleforcreators/react';
+import { format, formatTime, is12Hour } from '@googleforcreators/date';
+import { __ } from '@googleforcreators/i18n';
 import {
   DropDownSelect,
   PLACEMENT,
   useKeyDownEffect,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import {
   DateTime,
   Row,
   Popup,
   useStory,
   focusStyle,
-} from '@web-stories-wp/story-editor';
+} from '@googleforcreators/story-editor';
 
 // date-fns format without timezone.
 const TIMEZONELESS_FORMAT = 'Y-m-d\\TH:i:s';

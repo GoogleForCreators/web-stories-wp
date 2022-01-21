@@ -21,7 +21,12 @@ import apiFetch from '@wordpress/api-fetch';
 /**
  * External dependencies
  */
-import { addQueryArgs } from '@web-stories-wp/design-system';
+import { addQueryArgs } from '@googleforcreators/design-system';
+
+/**
+ * Internal dependencies
+ */
+import { snakeToCamelCaseObjectKeys } from './utils';
 
 export function getAuthors(config, search) {
   return apiFetch({
@@ -30,5 +35,10 @@ export function getAuthors(config, search) {
       who: 'authors',
       search,
     }),
+  }).then((resp) => {
+    return resp.map((author) => {
+      delete author._links;
+      return snakeToCamelCaseObjectKeys(author);
+    });
   });
 }

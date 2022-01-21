@@ -1,17 +1,32 @@
 {
   "name": "@web-stories-wp/activation-notice",
+  "description": "Web Stories for WordPress plugin activation notice",
   "private": true,
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "web stories",
+    "wordpress"
+  ],
+  "homepage": "https://github.com/google/web-stories-wp/",
+  "repository": "git+https://github.com/google/web-stories-wp.git",
+  "bugs": {
+    "url": "https://github.com/google/web-stories-wp/issues"
+  },
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"
   },
+  "type": "module",
   "exports": {
     "default": "./src/index.js"
   },
   "main": "./src/index.js",
-  "type": "module",
   "dependencies": {
-    "@web-stories-wp/tracking": "*",
+    "@googleforcreators/tracking": "*",
     "@wordpress/element": "^4.0.0",
     "@wordpress/i18n": "^4.2.2",
     "flagged": "^2.0.1",

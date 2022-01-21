@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { UnitsProvider, PAGE_WIDTH } from '@web-stories-wp/units';
+import { UnitsProvider, PAGE_WIDTH } from '@googleforcreators/units';
 
 /**
  * Internal dependencies

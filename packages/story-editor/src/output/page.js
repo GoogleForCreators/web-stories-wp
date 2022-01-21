@@ -18,10 +18,10 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { __ } from '@web-stories-wp/i18n';
-import { generatePatternStyles } from '@web-stories-wp/patterns';
-import { PAGE_HEIGHT, PAGE_WIDTH } from '@web-stories-wp/units';
-import { getTotalDuration, StoryAnimation } from '@web-stories-wp/animation';
+import { __ } from '@googleforcreators/i18n';
+import { generatePatternStyles } from '@googleforcreators/patterns';
+import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
+import { getTotalDuration, StoryAnimation } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies

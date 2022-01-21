@@ -22,10 +22,10 @@ import {
   useFocusOut,
   useLayoutEffect,
   useRef,
-} from '@web-stories-wp/react';
-import { trackClick, trackEvent } from '@web-stories-wp/tracking';
-import { getTemplateMetaData } from '@web-stories-wp/templates';
-import { __, sprintf } from '@web-stories-wp/i18n';
+} from '@googleforcreators/react';
+import { trackClick, trackEvent } from '@googleforcreators/tracking';
+import { getTemplateMetaData } from '@googleforcreators/templates';
+import { __, sprintf } from '@googleforcreators/i18n';
 import {
   Button,
   BUTTON_SIZES,
@@ -34,9 +34,9 @@ import {
   NotificationBubble,
   Text,
   THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import styled from 'styled-components';
-import { differenceInDays, getOptions, toDate } from '@web-stories-wp/date';
+import { differenceInDays, getOptions, toDate } from '@googleforcreators/date';
 
 /**
  * Internal dependencies
@@ -90,6 +90,7 @@ function LeftRail() {
     newStoryURL,
     version,
     leftRailSecondaryNavigation,
+    canViewDefaultTemplates,
     styleConstants: { topOffset },
   } = useConfig();
   const leftRailRef = useRef(null);
@@ -187,6 +188,12 @@ function LeftRail() {
         <Content>
           <NavList>
             {PRIMARY_PATHS.map(({ Icon, ...path }) => {
+              const isTemplatesDisabled =
+                path.value === APP_ROUTES.TEMPLATES_GALLERY &&
+                !canViewDefaultTemplates;
+              if (isTemplatesDisabled) {
+                return null;
+              }
               const isNotificationBubbleEnabled =
                 path.value === APP_ROUTES.TEMPLATES_GALLERY &&
                 state.currentPath !== APP_ROUTES.TEMPLATES_GALLERY;
@@ -199,6 +206,7 @@ function LeftRail() {
                       numNewTemplates
                     )
                   : label;
+
               return (
                 <NavListItem key={path.value}>
                   <NavLink

@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { TranslateWithMarkup, __ } from '@web-stories-wp/i18n';
+import { TranslateWithMarkup, __ } from '@googleforcreators/i18n';
 import {
   useConfig,
   ChecklistCard,
@@ -24,8 +24,8 @@ import {
   CHECKLIST_PRIORITY_COPY,
   useRegisterCheck,
   useIsChecklistMounted,
-} from '@web-stories-wp/story-editor';
-import { Link, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+} from '@googleforcreators/story-editor';
+import { Link, THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 const StoryMissingPublisherName = () => {
   const isChecklistMounted = useIsChecklistMounted();

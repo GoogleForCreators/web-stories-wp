@@ -22,7 +22,7 @@ import PropTypes from 'prop-types';
 import {
   generatePatternStyles,
   getSolidFromHex,
-} from '@web-stories-wp/patterns';
+} from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies

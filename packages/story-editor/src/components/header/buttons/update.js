@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import {
   Button,
   BUTTON_SIZES,
@@ -25,9 +25,14 @@ import {
   BUTTON_VARIANTS,
   useGlobalKeyDownEffect,
   Icons,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';
-import { getOptions, isAfter, subMinutes, toDate } from '@web-stories-wp/date';
+import {
+  getOptions,
+  isAfter,
+  subMinutes,
+  toDate,
+} from '@googleforcreators/date';
 
 /**
  * Internal dependencies

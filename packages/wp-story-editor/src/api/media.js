@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { addQueryArgs } from '@web-stories-wp/design-system';
+import { addQueryArgs } from '@googleforcreators/design-system';
 
 /**
  * WordPress dependencies
@@ -74,7 +74,7 @@ export function getMedia(
  *
  * @param {Object} config Configuration object.
  * @param {number} mediaId Media ID.
- * @return {Promise<import('@web-stories-wp/media').Resource>} Media object promise.
+ * @return {Promise<import('@googleforcreators/media').Resource>} Media object promise.
  */
 export function getMediaById(config, mediaId) {
   const path = addQueryArgs(`${config.api.media}${mediaId}/`, {
@@ -90,7 +90,7 @@ export function getMediaById(config, mediaId) {
  *
  * @param {Object} config Configuration object.
  * @param {number} mediaId Media ID.
- * @return {Promise<import('@web-stories-wp/media').Resource>} Media resource if found, null otherwise.
+ * @return {Promise<import('@googleforcreators/media').Resource>} Media resource if found, null otherwise.
  */
 export async function getMutedMediaById(config, mediaId) {
   const path = addQueryArgs(`${config.api.media}${mediaId}/`, {
@@ -112,7 +112,7 @@ export async function getMutedMediaById(config, mediaId) {
  *
  * @param {Object} config Configuration object.
  * @param {number} mediaId Media ID.
- * @return {Promise<import('@web-stories-wp/media').Resource>} Media resource if found, null otherwise.
+ * @return {Promise<import('@googleforcreators/media').Resource>} Media resource if found, null otherwise.
  */
 export async function getOptimizedMediaById(config, mediaId) {
   const path = addQueryArgs(`${config.api.media}${mediaId}/`, {
@@ -134,7 +134,7 @@ export async function getOptimizedMediaById(config, mediaId) {
  *
  * @param {Object} config Configuration object.
  * @param {number} mediaId Media ID.
- * @return {Promise<import('@web-stories-wp/media').Resource>} Media resource if found, null otherwise.
+ * @return {Promise<import('@googleforcreators/media').Resource>} Media resource if found, null otherwise.
  */
 export async function getPosterMediaById(config, mediaId) {
   const path = addQueryArgs(`${config.api.media}${mediaId}/`, {
@@ -157,7 +157,7 @@ export async function getPosterMediaById(config, mediaId) {
  * @param {Object} config Configuration object.
  * @param {File} file Media File to Save.
  * @param {?Object} additionalData Additional data to include in the request.
- * @return {Promise<import('@web-stories-wp/media').Resource>} Media resource.
+ * @return {Promise<import('@googleforcreators/media').Resource>} Media resource.
  */
 export function uploadMedia(config, file, additionalData) {
   // Create upload payload
@@ -188,7 +188,7 @@ export function updateMedia(config, mediaId, data) {
     path: `${config.api.media}${mediaId}/`,
     data,
     method: 'POST',
-  });
+  }).then(getResourceFromAttachment);
 }
 
 /**
@@ -196,7 +196,7 @@ export function updateMedia(config, mediaId, data) {
  *
  * @param {Object} config Configuration object.
  * @param  {number} mediaId Media id
- * @return {Promise} Media Object Promise.
+ * @return {void}
  */
 export function deleteMedia(config, mediaId) {
   // `apiFetch` by default turns `DELETE` requests into `POST` requests
@@ -204,7 +204,7 @@ export function deleteMedia(config, mediaId) {
   // However, some Web Application Firewall (WAF) solutions prevent this.
   // `?_method=DELETE` is an alternative solution to override the request method.
   // See https://developer.wordpress.org/rest-api/using-the-rest-api/global-parameters/#_method-or-x-http-method-override-header
-  return apiFetch({
+  apiFetch({
     path: addQueryArgs(`${config.api.media}${mediaId}/`, { _method: 'DELETE' }),
     data: { force: true },
     method: 'POST',

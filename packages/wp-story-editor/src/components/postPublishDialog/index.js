@@ -17,11 +17,11 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useState } from '@web-stories-wp/react';
-import { __, TranslateWithMarkup } from '@web-stories-wp/i18n';
-import { trackClick } from '@web-stories-wp/tracking';
-import { Link, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
-import { Dialog, useStory } from '@web-stories-wp/story-editor';
+import { useCallback, useEffect, useState } from '@googleforcreators/react';
+import { __, TranslateWithMarkup } from '@googleforcreators/i18n';
+import { trackClick } from '@googleforcreators/tracking';
+import { Link, Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import { Dialog, useStory } from '@googleforcreators/story-editor';
 
 function PostPublishDialog() {
   const {

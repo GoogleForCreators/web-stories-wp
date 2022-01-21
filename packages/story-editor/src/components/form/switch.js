@@ -17,14 +17,14 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
-import { useCallback, useRef } from '@web-stories-wp/react';
+import { __ } from '@googleforcreators/i18n';
+import { useCallback, useRef } from '@googleforcreators/react';
 import styled from 'styled-components';
 import {
   Switch as BaseSwitch,
   SwitchPropTypes,
   useKeyDownEffect,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 const StyledSwitch = styled(BaseSwitch)`
   label:focus-within ~ span {

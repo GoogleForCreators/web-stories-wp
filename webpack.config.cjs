@@ -77,7 +77,7 @@ const sharedConfig = {
       // See https://github.com/google/web-stories-wp/pull/9001 for context.
       // TODO(#5792): Use `mangleExports` option in webpack v5 instead.
       {
-        test: require.resolve('@web-stories-wp/i18n'), // eslint-disable-line node/no-extraneous-require
+        test: require.resolve('@googleforcreators/i18n'), // eslint-disable-line node/no-extraneous-require
         loader: 'expose-loader',
         options: {
           exposes: [

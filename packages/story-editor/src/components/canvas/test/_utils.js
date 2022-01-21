@@ -19,7 +19,7 @@
  */
 import { ThemeProvider } from 'styled-components';
 import PropTypes from 'prop-types';
-import { PAGE_WIDTH, PAGE_RATIO } from '@web-stories-wp/units';
+import { PAGE_WIDTH, PAGE_RATIO } from '@googleforcreators/units';
 
 /**
  * Internal dependencies

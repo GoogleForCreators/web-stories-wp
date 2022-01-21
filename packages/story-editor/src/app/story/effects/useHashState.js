@@ -31,7 +31,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useState } from '@web-stories-wp/react';
+import { useEffect, useState } from '@googleforcreators/react';
 
 export function hashToParams(hash) {
   return new URLSearchParams(hash.startsWith('#') ? hash.substr(1) : hash);

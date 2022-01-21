@@ -16,10 +16,10 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
-import { useRef, useEffect, useCallback } from '@web-stories-wp/react';
+import { __ } from '@googleforcreators/i18n';
+import { useRef, useEffect, useCallback } from '@googleforcreators/react';
 import styled from 'styled-components';
-import { ThemeGlobals } from '@web-stories-wp/design-system';
+import { ThemeGlobals } from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';
 
 /**

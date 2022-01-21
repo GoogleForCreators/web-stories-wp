@@ -17,19 +17,19 @@
 /**
  * External dependencies
  */
-import { sprintf, _n, __ } from '@web-stories-wp/i18n';
+import { sprintf, _n, __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { useCallback, useMemo, useReducer } from '@web-stories-wp/react';
+import { useCallback, useMemo, useReducer } from '@googleforcreators/react';
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   Tooltip,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { useStory } from '../../../app/story';
 import { useLocalMedia } from '../../../app/media';
 import { MEDIA_VIDEO_DIMENSIONS_THRESHOLD } from '../../../constants';

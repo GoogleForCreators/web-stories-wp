@@ -23,14 +23,14 @@ import {
   useEffect,
   useRef,
   useState,
-} from '@web-stories-wp/react';
-import { CURATED_FONT_NAMES } from '@web-stories-wp/fonts';
+} from '@googleforcreators/react';
+import { CURATED_FONT_NAMES } from '@googleforcreators/fonts';
 import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
-import { trackError } from '@web-stories-wp/tracking';
+import { trackError } from '@googleforcreators/tracking';
 import loadStylesheet from '../../utils/loadStylesheet';
 import { FONT_WEIGHT_NAMES } from '../../constants';
 import { useAPI } from '../api';

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useState } from '@web-stories-wp/react';
+import { useEffect, useState } from '@googleforcreators/react';
 import { EditorState, Modifier } from 'draft-js';
 
 const FAUX_SELECTION = 'CUSTOM-FAUX';

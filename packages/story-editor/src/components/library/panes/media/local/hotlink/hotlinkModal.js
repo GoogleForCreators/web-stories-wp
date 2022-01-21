@@ -16,14 +16,14 @@
 /**
  * External dependencies
  */
-import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
-import { Input, withProtocol } from '@web-stories-wp/design-system';
+import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
+import { Input, withProtocol } from '@googleforcreators/design-system';
 import {
   useState,
   useRef,
   useLayoutEffect,
   useCallback,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 

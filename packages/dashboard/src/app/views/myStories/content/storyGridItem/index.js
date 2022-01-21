@@ -16,12 +16,12 @@
 /**
  * External dependencies
  */
-import { VisuallyHidden } from '@web-stories-wp/design-system';
-import { getRelativeDisplayDate } from '@web-stories-wp/date';
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { VisuallyHidden } from '@googleforcreators/design-system';
+import { getRelativeDisplayDate } from '@googleforcreators/date';
+import { __, sprintf } from '@googleforcreators/i18n';
 import { useFeatures } from 'flagged';
 import PropTypes from 'prop-types';
-import { useMemo, forwardRef } from '@web-stories-wp/react';
+import { useMemo, forwardRef } from '@googleforcreators/react';
 import { css } from 'styled-components';
 /**
  * Internal dependencies
@@ -72,7 +72,6 @@ const StoryGridItem = forwardRef(
     const generatedMenuItems = useMemo(
       () =>
         generateStoryMenu({
-          menuItemActions: storyMenu.menuItemActions,
           menuItems: storyMenu.menuItems,
           story,
           isLocked,
@@ -89,35 +88,36 @@ const StoryGridItem = forwardRef(
     const formattedTitle = titleFormatted(story.title);
 
     const memoizedStoryMenu = useMemo(
-      () => (
-        <StoryMenu
-          menuLabel={
-            isLocked
-              ? sprintf(
-                  /* translators: 1: story title. 2: user currently editing the story. */
-                  __('Context menu for %1$s (locked by %2$s)', 'web-stories'),
-                  formattedTitle,
-                  story?.lockUser.name
-                )
-              : sprintf(
-                  /* translators: %s: story title.*/
-                  __('Context menu for %s', 'web-stories'),
-                  formattedTitle
-                )
-          }
-          itemActive={isActive}
-          tabIndex={tabIndex}
-          onMoreButtonSelected={storyMenu.handleMenuToggle}
-          contextMenuId={storyMenu.contextMenuId}
-          storyId={story.id}
-          isInverted
-          menuItems={generatedMenuItems}
-          menuStyleOverrides={css`
-            /* force menu position to bottom corner */
-            margin: 0 0 0 auto;
-          `}
-        />
-      ),
+      () =>
+        generatedMenuItems.length ? (
+          <StoryMenu
+            menuLabel={
+              isLocked
+                ? sprintf(
+                    /* translators: 1: story title. 2: user currently editing the story. */
+                    __('Context menu for %1$s (locked by %2$s)', 'web-stories'),
+                    formattedTitle,
+                    story?.lockUser.name
+                  )
+                : sprintf(
+                    /* translators: %s: story title.*/
+                    __('Context menu for %s', 'web-stories'),
+                    formattedTitle
+                  )
+            }
+            itemActive={isActive}
+            tabIndex={tabIndex}
+            onMoreButtonSelected={storyMenu.handleMenuToggle}
+            contextMenuId={storyMenu.contextMenuId}
+            storyId={story.id}
+            isInverted
+            menuItems={generatedMenuItems}
+            menuStyleOverrides={css`
+              /* force menu position to bottom corner */
+              margin: 0 0 0 auto;
+            `}
+          />
+        ) : null,
       [
         isLocked,
         formattedTitle,

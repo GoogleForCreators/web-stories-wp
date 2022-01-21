@@ -41,7 +41,7 @@ export default class PageTemplates extends Container {
   }
 
   get dropDown() {
-    return this.getByRole('button', { name: 'Select templates type' });
+    return this.queryByRole('button', { name: 'Select templates type' });
   }
 
   dropDownOption(name) {
