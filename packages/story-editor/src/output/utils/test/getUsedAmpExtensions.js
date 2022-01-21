@@ -151,6 +151,10 @@ describe('getUsedAmpExtensions', () => {
     expect(actual).toStrictEqual(
       expect.arrayContaining([
         {
+          name: 'amp-video',
+          src: 'https://cdn.ampproject.org/v0/amp-video-0.1.js',
+        },
+        {
           name: 'amp-story-captions',
           src: 'https://cdn.ampproject.org/v0/amp-story-captions-0.1.js',
         },
