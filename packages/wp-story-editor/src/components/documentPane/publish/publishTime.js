@@ -36,6 +36,7 @@ import {
   Row,
   useStory,
   focusStyle,
+  useConfig,
 } from '@googleforcreators/story-editor';
 
 // date-fns format without timezone.
@@ -93,7 +94,9 @@ function PublishTime() {
     },
     [showDatePicker, updateStory]
   );
-
+  const {
+    styleConstants: { topOffset },
+  } = useConfig();
   // Floating date means an unset date so that the story publish date will match the time it will get published.
   const floatingDate =
     ['draft', 'pending', 'auto-draft'].includes(status) &&
@@ -128,6 +131,7 @@ function PublishTime() {
         />
       </Row>
       <Popup
+        topOffset={topOffset}
         anchor={dateFieldRef}
         isOpen={showDatePicker}
         placement={PLACEMENT.BOTTOM_END}

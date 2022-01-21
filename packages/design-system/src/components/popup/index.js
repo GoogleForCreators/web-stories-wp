@@ -32,7 +32,6 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../theme';
 import { noop } from '../../utils';
 import { getTransforms, getOffset } from './utils';
 import { PLACEMENT } from './constants';
@@ -60,7 +59,7 @@ const Container = styled.div.attrs(
   position: fixed;
   z-index: 2;
   overflow-y: auto;
-  max-height: calc(100vh - ${THEME_CONSTANTS.WP_ADMIN.TOOLBAR_HEIGHT}px);
+  max-height: ${({ topOffset }) => `calc(100vh - ${topOffset}px)`};
 `;
 
 function Popup({
@@ -77,6 +76,7 @@ function Popup({
   fillHeight = false,
   onPositionUpdate = noop,
   refCallback = noop,
+  topOffset,
 }) {
   const [popupState, setPopupState] = useState(null);
   const [mounted, setMounted] = useState(false);
@@ -93,11 +93,11 @@ function Popup({
       setPopupState({
         offset:
           anchor?.current &&
-          getOffset(placement, spacing, anchor, dock, popup, isRTL),
+          getOffset(placement, spacing, anchor, dock, popup, isRTL, topOffset),
         height: popup.current?.getBoundingClientRect()?.height,
       });
     },
-    [anchor, dock, placement, spacing, mounted, isRTL]
+    [mounted, anchor, placement, spacing, dock, isRTL, topOffset]
   );
   useEffect(() => {
     // If the popup height changes meanwhile, let's update the popup, too.

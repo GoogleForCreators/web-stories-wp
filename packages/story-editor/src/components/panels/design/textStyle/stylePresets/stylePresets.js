@@ -110,7 +110,10 @@ function PresetPanel({ pushUpdate }) {
   } = useInspector();
   const buttonRef = useRef(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const { isRTL } = useConfig();
+  const {
+    isRTL,
+    styleConstants: { topOffset },
+  } = useConfig();
   const { textStyles } = globalStoryStyles;
   const hasPresets = textStyles.length > 0;
 
@@ -156,6 +159,7 @@ function PresetPanel({ pushUpdate }) {
             <Icons.ChevronDownSmall />
           </StyledMoreButton>
           <Popup
+            topOffset={topOffset}
             isRTL={isRTL}
             anchor={buttonRef}
             dock={inspector}

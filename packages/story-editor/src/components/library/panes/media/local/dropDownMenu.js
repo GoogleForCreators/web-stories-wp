@@ -140,7 +140,9 @@ function DropDownMenu({
     () => setShowEditDialog(false),
     [setShowEditDialog]
   );
-
+  const {
+    styleConstants: { topOffset },
+  } = useConfig();
   const listId = useMemo(() => `list-${uuidv4()}`, []);
   const buttonId = useMemo(() => `button-${uuidv4()}`, []);
 
@@ -170,6 +172,7 @@ function DropDownMenu({
               placement={PLACEMENT.BOTTOM_START}
               isOpen={isMenuOpen}
               width={160}
+              topOffset={topOffset}
             >
               <DropDownContainer>
                 <Menu

@@ -156,7 +156,10 @@ const ColorInput = forwardRef(function ColorInput(
       isEyedropperActive,
     })
   );
-  const { isRTL } = useConfig();
+  const {
+    isRTL,
+    styleConstants: { topOffset },
+  } = useConfig();
   const {
     refs: { inspector },
   } = useInspector();
@@ -228,6 +231,7 @@ const ColorInput = forwardRef(function ColorInput(
         placement={PLACEMENT.LEFT_START}
         spacing={SPACING}
         invisible={isEyedropperActive}
+        topOffset={topOffset}
         renderContents={({ propagateDimensionChange }) => (
           <ColorPicker
             color={isMixed ? null : value}

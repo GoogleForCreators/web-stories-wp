@@ -124,7 +124,10 @@ function PlayPauseButton({
   element,
   videoRef = null,
 }) {
-  const { isRTL } = useConfig();
+  const {
+    isRTL,
+    styleConstants: { topOffset },
+  } = useConfig();
   const hasVideoSrc = Boolean(element.resource.src);
   const isPlayAbove =
     element.width < PLAY_ABOVE_BREAKPOINT_WIDTH ||
@@ -253,6 +256,7 @@ function PlayPauseButton({
           isOpen
           placement="top"
           spacing={playAboveSpacing}
+          topOffset={topOffset}
         >
           {children}
         </Popup>
