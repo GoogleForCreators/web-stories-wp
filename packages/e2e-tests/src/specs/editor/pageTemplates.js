@@ -61,6 +61,10 @@ describe('Page Templates', () => {
       text: 'Save current page as template',
     });
 
+    await page.waitForResponse((response) =>
+      response.url().includes('web-stories/v1/web-story-page')
+    );
+
     // Adding a custom page template automatically switches to the "Saved Templates" view.
     await expect(page).toMatch('Page Template saved.');
     await expect(page).toMatch('Saved templates');
