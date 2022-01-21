@@ -26,7 +26,9 @@ import { useEffect, useRef } from '@googleforcreators/react';
 import { useHistory } from '../../history';
 import deleteNestedKeys from '../utils/deleteNestedKeys';
 
-// Changes to these properties of elements do not create a new history entry.
+// Changes to these properties of elements do not create a new history entry
+// if only one (or multiple) of these properties change but nothing else changes.
+// These are still saved as part of changes involving other properties.
 const ELEMENT_PROPS_TO_IGNORE = [
   'resource.baseColor',
   'resource.blurHash',
