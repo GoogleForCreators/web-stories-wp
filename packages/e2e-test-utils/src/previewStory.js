@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-const MAX_WAIT_THRESHOLD = 5000;
+const MAX_WAIT_THRESHOLD = 10000;
 
 /** @typedef {import('puppeteer').Page} Page */
 
