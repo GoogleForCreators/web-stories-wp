@@ -52,6 +52,7 @@ jobs:
         id: linked-issues
         with:
           script: |
+            const { PR_NUMBER } = process.env
             const query = `query linkedIssues($name:String!, $owner:String!) {
               repository(name: $name, owner: $owner) {
                 pullRequest(number: ${PR_NUMBER}) {
