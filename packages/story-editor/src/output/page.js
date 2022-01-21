@@ -89,15 +89,14 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
     .map(({ id: videoId }) => `el-${videoId}-captions`);
 
   const hasBackgroundAudioWithTracks =
-    backgroundAudio?.src && tracks.length > 0;
+    backgroundAudio?.src && tracks?.length > 0;
 
   if (hasBackgroundAudioWithTracks) {
     videoCaptions.push(`el-${backgroundAudio.id}-captions`);
   }
 
   const backgroundAudioSrc =
-    backgroundAudio?.src && !tracks ? backgroundAudio.src : undefined;
-
+    backgroundAudio?.src && !tracks?.length ? backgroundAudio.src : undefined;
   return (
     <amp-story-page
       id={id}

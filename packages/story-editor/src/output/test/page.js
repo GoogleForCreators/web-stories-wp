@@ -1243,6 +1243,47 @@ describe('Page output', () => {
         'background-audio="https://example.com/audio.mp3"'
       );
     });
+    it('should add background audio as amp-video', async () => {
+      const props = {
+        id: '123',
+        page: {
+          backgroundAudio: {
+            src: 'https://example.com/audio.mp3',
+            id: 123,
+            mimeType: 'audio/mpeg',
+          },
+          tracks: [
+            {
+              track: 'https://example.com/track.vtt',
+              trackId: 123,
+              trackName: 'track.vtt',
+              id: 'rersd-fdfd-fdfd-fdfd',
+              srcLang: '',
+              label: '',
+              kind: 'captions',
+            },
+          ],
+          id: '123',
+          elements: [],
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const { container } = render(<PageOutput {...props} />);
+      const captions = container.querySelector('amp-story-captions');
+      await expect(captions).toBeInTheDocument();
+      expect(captions).toMatchInlineSnapshot(`
+      <amp-story-captions
+        height="100"
+        id="el-123-captions"
+        layout="fixed-height"
+      />
+      `);
+      const video = container.querySelector('amp-video');
+      await expect(video).toBeInTheDocument();
+      expect(video).toMatchSnapshot();
+    });
   });
 
   describe('video captions', () => {
