@@ -58,7 +58,7 @@ describe('Quick Actions integration', () => {
   });
 
   describe('quick action menu should have no aXe accessibility violations', () => {
-    it('should pass accessibility tests with the default menu', async () => {
+    it('should have no aXe violations with the default menu', async () => {
       await expectAsync(
         fixture.editor.canvas.quickActionMenu.node
       ).toHaveNoViolations();
@@ -194,6 +194,7 @@ describe('Quick Actions integration', () => {
 
     it(`clicking the \`${ACTIONS.ADD_LINK.text}\` button should select the link panel and focus the input`, async () => {
       // click quick menu button
+
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.addLinkButton
       );
@@ -860,7 +861,6 @@ describe('Quick Actions integration', () => {
           lengthFormatted: '0:06',
           alt: 'small-video',
           sizes: {},
-          local: false,
           isOptimized: false,
           baseColor: '#734727',
         },

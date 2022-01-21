@@ -17,13 +17,13 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useRef } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
+import { useCallback, useEffect, useRef } from '@googleforcreators/react';
+import { __ } from '@googleforcreators/i18n';
 import {
   useSnackbar,
   localStore,
   LOCAL_STORAGE_PREFIX,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -65,8 +65,19 @@ function useUploadMedia({
       progress,
       uploaded,
       failures,
+      finished,
+      isNewResourceProcessing,
+      isCurrentResourceProcessing,
+      isNewResourceTranscoding,
+      isNewResourceMuting,
+      isResourceTrimming,
+      isCurrentResourceUploading,
+      isCurrentResourceTranscoding,
+      isCurrentResourceMuting,
+      isCurrentResourceTrimming,
+      canTranscodeResource,
     },
-    actions: { addItem, removeItem },
+    actions: { addItem, removeItem, finishItem },
   } = useMediaUploadQueue();
   const { isTranscodingEnabled, canTranscodeFile, isFileTooLarge } =
     useFFmpeg();
@@ -96,7 +107,8 @@ function useUploadMedia({
   // Add *new* items to the media library and canvas.
   useEffect(() => {
     const newItems = pending.filter(
-      ({ id }) => !mediaRef.current.find(({ id: _id }) => id === _id)
+      ({ resource: { id: resourceId } }) =>
+        !mediaRef.current.find(({ id }) => id === resourceId)
     );
 
     if (!newItems.length) {
@@ -118,49 +130,79 @@ function useUploadMedia({
 
   // Update *existing* items in the media library and on canvas.
   useEffect(() => {
-    for (const { id, onUploadProgress, resource } of progress) {
+    for (const { onUploadProgress, resource } of progress) {
+      const { id: resourceId } = resource;
+
       if (!resource) {
         continue;
       }
 
       updateMediaElement({
-        id,
+        id: resourceId,
         data: resource,
       });
 
       if (onUploadProgress) {
-        onUploadProgress({ id, resource: resource });
+        onUploadProgress({ id: resourceId, resource: resource });
       }
     }
   }, [progress, updateMediaElement]);
 
   // Handle *processed* items.
   // Update resources in media library and on canvas.
+  // Caters for both `resource.id` as well as `previousResourceId`,
+  // since after upload to the backend, the resource's temporary uuid
+  // will have been replaced with the permanent ID from the backend.
   useEffect(() => {
-    for (const { id, resource, onUploadSuccess } of uploaded) {
+    for (const {
+      id: itemId,
+      resource,
+      onUploadSuccess,
+      previousResourceId,
+    } of uploaded) {
+      const { id: resourceId } = resource;
       if (!resource) {
         continue;
       }
 
-      updateMediaElement({ id, data: resource });
-
-      if (onUploadSuccess) {
-        onUploadSuccess({ id, resource: resource });
+      updateMediaElement({ id: resourceId, data: resource });
+      if (previousResourceId) {
+        updateMediaElement({ id: previousResourceId, data: resource });
       }
 
+      if (onUploadSuccess) {
+        onUploadSuccess({ id: resourceId, resource: resource });
+        if (previousResourceId) {
+          onUploadSuccess({ id: previousResourceId, resource: resource });
+        }
+      }
+
+      finishItem({ id: itemId });
+    }
+  }, [uploaded, updateMediaElement, finishItem]);
+
+  // Handle *finished* items.
+  // At this point, uploaded resources have been updated and rendered everywhere,
+  // and no further action is required.
+  // It is safe to remove them from the queue now.
+  useEffect(() => {
+    for (const { id } of finished) {
       removeItem({ id });
     }
-  }, [uploaded, updateMediaElement, removeItem]);
+  }, [finished, removeItem]);
 
   // Handle *failed* items.
   // Remove resources from media library and canvas.
   useEffect(() => {
-    for (const { id, onUploadError, error, resource } of failures) {
+    for (const { id: itemId, onUploadError, error, resource } of failures) {
+      const { id: resourceId } = resource;
+
       if (onUploadError) {
-        onUploadError({ id });
+        onUploadError({ id: resourceId });
       }
-      deleteMediaElement({ id });
-      removeItem({ id });
+
+      deleteMediaElement({ id: resourceId });
+      removeItem({ id: itemId });
 
       const thumbnailSrc =
         resource && ['video', 'gif'].includes(resource.type)
@@ -195,9 +237,10 @@ function useUploadMedia({
      * @param {Function} args.onUploadSuccess Callback for when upload succeeds.
      * @param {Object} args.additionalData Object of additionalData.
      * @param {boolean} args.muteVideo Should the video being transcoded, should also be muted.
-     * @param {import('@web-stories-wp/media').TrimData} args.trimData Trim data.
-     * @param {import('@web-stories-wp/media').Resource} args.resource Resource object.
+     * @param {import('@googleforcreators/media').TrimData} args.trimData Trim data.
+     * @param {import('@googleforcreators/media').Resource} args.resource Resource object.
      * @param {Blob} args.posterFile Blob object of poster.
+     * @param {number} args.originalResourceId Original resource id.
      * @return {void}
      */
     async (
@@ -212,6 +255,7 @@ function useUploadMedia({
         trimData,
         resource,
         posterFile,
+        originalResourceId,
       } = {}
     ) => {
       // If there are no files passed, don't try to upload.
@@ -251,6 +295,7 @@ function useUploadMedia({
             posterFile = newPosterFile;
             resource = newResource;
           }
+
           addItem({
             file,
             resource,
@@ -262,6 +307,7 @@ function useUploadMedia({
             posterFile,
             muteVideo,
             trimData,
+            originalResourceId,
           });
         })
       );
@@ -280,6 +326,16 @@ function useUploadMedia({
     uploadMedia,
     isUploading,
     isTranscoding,
+    isNewResourceProcessing,
+    isCurrentResourceProcessing,
+    isNewResourceTranscoding,
+    isNewResourceMuting,
+    isResourceTrimming,
+    isCurrentResourceUploading,
+    isCurrentResourceTranscoding,
+    isCurrentResourceMuting,
+    isCurrentResourceTrimming,
+    canTranscodeResource,
   };
 }
 

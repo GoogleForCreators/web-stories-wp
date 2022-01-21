@@ -26,10 +26,10 @@ import {
   useRef,
   useState,
   useCallback,
-} from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
-import { PatternPropType, hasGradient } from '@web-stories-wp/patterns';
-import { useKeyDownEffect } from '@web-stories-wp/design-system';
+} from '@googleforcreators/react';
+import { __ } from '@googleforcreators/i18n';
+import { PatternPropType, hasGradient } from '@googleforcreators/patterns';
+import { useKeyDownEffect } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -151,7 +151,13 @@ function ColorPicker({
     : BasicColorPicker;
 
   return (
-    <CSSTransition in appear classNames="picker" timeout={300}>
+    <CSSTransition
+      nodeRef={containerRef}
+      in
+      appear
+      classNames="picker"
+      timeout={300}
+    >
       <Container
         role="dialog"
         aria-label={__('Color and gradient picker', 'web-stories')}
@@ -168,6 +174,7 @@ function ColorPicker({
           allowsSavedColors={allowsSavedColors}
           showDialog={showDialog}
           setShowDialog={setShowDialog}
+          changedStyle={changedStyle}
         />
       </Container>
     </CSSTransition>

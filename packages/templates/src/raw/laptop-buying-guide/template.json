@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 37,
   "pages": [
     {
       "elements": [
@@ -150,7 +150,6 @@
             "id": 0,
             "alt": "Macbook pro 16 inch mockup",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#040404",
             "isExternal": true
@@ -182,6 +181,7 @@
             "type": "image",
             "mimeType": "image/png",
             "creationDate": "2021-05-31T07:41:44",
+            "baseColor": "#090909",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/laptop-buying-guide/page01_image02.png",
             "width": 61,
             "height": 74,
@@ -189,7 +189,6 @@
             "id": 0,
             "alt": "Pointer hand icon",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -406,7 +405,6 @@
             "id": 0,
             "alt": "Man tapping on laptop computer",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#141417",
             "isExternal": true
@@ -608,7 +606,6 @@
             "id": 0,
             "alt": "Illustration, Digital, Woman, Water, Sol, Landscape",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#b28c47",
             "isExternal": true
@@ -1000,7 +997,6 @@
             "id": 0,
             "alt": "Macbook pro 16 inch mockup",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#040404",
             "isExternal": true
@@ -1366,7 +1362,6 @@
             "id": 0,
             "alt": "Macbook pro from side view mockup",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#050505",
             "isExternal": true
@@ -1916,7 +1911,6 @@
             "id": 0,
             "alt": "Blue diagonal bars",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#0454fc",
             "isExternal": true
@@ -2124,7 +2118,6 @@
             "id": 0,
             "alt": "Blue diagonal bars",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#0454fc",
             "isExternal": true
@@ -2336,7 +2329,6 @@
             "id": 0,
             "alt": "Blue diagonal bars",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#0454fc",
             "isExternal": true
@@ -2498,7 +2490,6 @@
             "id": 0,
             "alt": "Illustration of hands on keyboard",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#a07145",
             "isExternal": true
@@ -2890,7 +2881,6 @@
             "id": 0,
             "alt": "Close-Up Of Laptop Against White Background",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#c7c7c7",
             "isExternal": true
@@ -3249,13 +3239,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#acdbea",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/laptop-buying-guide/page09_image01.png",
             "width": 1920,
             "height": 1329,
             "id": 0,
             "alt": "Macbook Pro 16\" mockup",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -4493,7 +4483,6 @@
             "id": 0,
             "alt": "Remote work office home office",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#e6d3c3",
             "isExternal": true
@@ -4877,13 +4866,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/png",
+            "baseColor": "#d9d9da",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/laptop-buying-guide/page12_14_image01.png",
             "width": 1920,
             "height": 1440,
             "id": 0,
             "alt": "Clean Macbook Air mockup",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -5241,13 +5230,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#28a6d6",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/laptop-buying-guide/page13_image01.jpg",
             "width": 1920,
             "height": 1440,
             "id": 0,
             "alt": "Laptop floating angled Open",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -5637,7 +5626,6 @@
             "id": 0,
             "alt": "Macbook pro 16 inch mockup",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#040404",
             "isExternal": true
@@ -5915,7 +5903,6 @@
             "id": 0,
             "alt": "Clean Macbook Air mockup",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d8d9da",
             "isExternal": true
@@ -6185,13 +6172,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#28a6d6",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/laptop-buying-guide/page13_image01.jpg",
             "width": 1920,
             "height": 1440,
             "id": 0,
             "alt": "Laptop floating angled Open",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "isExternal": true
           },
@@ -6630,7 +6617,6 @@
             "id": 0,
             "alt": "Person holding turned-on black iPad",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d8dbdc",
             "isExternal": true
@@ -6885,7 +6871,6 @@
             "id": 0,
             "alt": "MacBook Pro on top of brown table",
             "sizes": [],
-            "local": false,
             "isOptimized": false,
             "baseColor": "#d5cfc5",
             "isExternal": true

@@ -18,7 +18,10 @@
  * External dependencies
  */
 import { waitFor, fireEvent, screen } from '@testing-library/react';
-import { setAppElement, SnackbarContext } from '@web-stories-wp/design-system';
+import {
+  setAppElement,
+  SnackbarContext,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -77,7 +80,7 @@ describe('DeleteDialog', () => {
     const { container } = setup();
     setAppElement(container);
 
-    expect(screen.queryByText('Delete Image?')).toBeInTheDocument();
+    expect(screen.getByText('Delete Image?')).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /cancel/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /delete/i })).toBeInTheDocument();
   });

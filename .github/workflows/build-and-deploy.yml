@@ -78,7 +78,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Setup Node
-        uses: actions/setup-node@v2.5.0
+        uses: actions/setup-node@v2.5.1
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -102,7 +102,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Setup Node
-        uses: actions/setup-node@v2.5.0
+        uses: actions/setup-node@v2.5.1
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -179,7 +179,7 @@ jobs:
         working-directory: ${{ github.ref }}
 
       - name: Setup Cloud SDK
-        uses: google-github-actions/setup-gcloud@v0.2.1
+        uses: google-github-actions/setup-gcloud@v0.3
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           service_account_key: ${{ secrets.GCP_SA_KEY }}
@@ -229,7 +229,6 @@ jobs:
       github.event.pull_request.head.repo.fork == false &&
       github.event.pull_request.user.login != 'dependabot[bot]'
     needs: upload-artifacts
-
     outputs:
       comment_body: ${{ steps.get-comment-body.outputs.body }}
 

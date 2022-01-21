@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { forwardRef } from '@web-stories-wp/react';
+import { forwardRef } from '@googleforcreators/react';
 import Moveable from 'react-moveable';
 
 /**
@@ -27,9 +27,11 @@ import InOverlay from '../overlay';
 
 const DEFAULT_Z_INDEX = 10;
 
-function MoveableWithRef({ ...moveableProps }, ref) {
+// eslint-disable-next-line react/prop-types
+function MoveableWithRef({ onContextMenu, ...moveableProps }, ref) {
   return (
     <InOverlay
+      onContextMenu={onContextMenu}
       zIndex={DEFAULT_Z_INDEX}
       pointerEvents="initial"
       render={({ container }) => {

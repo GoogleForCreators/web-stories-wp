@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { PAGE_HEIGHT, PAGE_WIDTH } from '@web-stories-wp/units';
+import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
 
 /**
  * Internal dependencies
@@ -25,6 +25,7 @@ import { pageBackgroundTextLowContrast } from '../pageBackgroundLowTextContrast'
 
 describe('pageBackgroundTextLowContrast', () => {
   const bgEl = {
+    id: 'bgEl-id',
     x: 1,
     y: 1,
     type: 'shape',
@@ -40,6 +41,7 @@ describe('pageBackgroundTextLowContrast', () => {
     },
   };
   const textEl = {
+    id: 'textEl -id',
     type: 'text',
     backgroundTextMode: 'NONE',
     content: 'Fill with text',
@@ -65,10 +67,32 @@ describe('pageBackgroundTextLowContrast', () => {
     },
   };
 
-  it('should return true if the default font (no spans, no colors added) does not have high enough contrast with the page', async () => {
-    await expect(pageBackgroundTextLowContrast(page)).resolves.toBe(true);
+  it('should return an array of ids if the default font (no spans, no colors added) does not have high enough contrast with the page', async () => {
+    const check = await pageBackgroundTextLowContrast(page);
+    await expect(check[0].id).toBe(textEl.id);
   });
-  it('should return false if the text size is large enough', async () => {
+  it('should return an array containing isBackground if the default font does not have high enough contrast with the background element', async () => {
+    const check = await pageBackgroundTextLowContrast(page);
+    await expect(check[0].isBackground).toBeTrue();
+  });
+  it('should return an array containing isBackground = false if the contrast issue is cause by an overlapped element', async () => {
+    const overlappedElement = {
+      ...bgEl,
+      isBackground: false,
+    };
+
+    const smallGreyTextEl = {
+      ...textEl,
+      content: '<span style="color:#777777">I woke up like this</span>',
+    };
+
+    const check = await pageBackgroundTextLowContrast({
+      ...page,
+      elements: [overlappedElement, smallGreyTextEl],
+    });
+    await expect(check[0].isBackground).toBeFalse();
+  });
+  it('should return an empty array if the text size is large enough', async () => {
     const largeGreyTextEl = {
       ...textEl,
       content: '<span style="color:#777777">I woke up like this</span>',
@@ -93,20 +117,20 @@ describe('pageBackgroundTextLowContrast', () => {
       ...whiteBgPage,
       elements: [bgEl, largeGreyTextEl],
     });
-    expect(pass).toBe(false);
+    expect(pass).toHaveLength(0);
     const fail = await pageBackgroundTextLowContrast({
       ...whiteBgPage,
       elements: [bgEl, smallGreyTextEl],
     });
-    expect(fail).toBe(true);
+    expect(fail[0].id).toContain(textEl.id);
   });
 
-  it('should return false if the contrast is great enough', async () => {
+  it('should return an empty array if the contrast is great enough', async () => {
     const whiteBackgroundColor = { color: { r: 255, g: 255, b: 255 } };
     const check = await pageBackgroundTextLowContrast({
       ...page,
       backgroundColor: whiteBackgroundColor,
     });
-    expect(check).toBe(false);
+    expect(check).toHaveLength(0);
   });
 });

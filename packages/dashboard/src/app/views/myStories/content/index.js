@@ -18,14 +18,14 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@googleforcreators/i18n';
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   Headline,
   THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -50,15 +50,15 @@ import StoriesView from './storiesView';
 
 function Content({
   allPagesFetched,
+  canViewDefaultTemplates,
   filter,
-  isLoading,
+  loading,
   page,
   search,
   sort,
   stories,
   storyActions,
   view,
-  showStoriesWhileLoading,
 }) {
   return (
     <Layout.Scrollable>
@@ -67,19 +67,15 @@ function Content({
           <>
             <StoriesView
               filterValue={filter.value}
-              isLoading={isLoading}
               sort={sort}
               storyActions={storyActions}
               stories={stories}
               view={view}
-              loading={{
-                isLoading,
-                showStoriesWhileLoading,
-              }}
+              loading={loading}
             />
             <InfiniteScroller
               canLoadMore={!allPagesFetched}
-              isLoading={isLoading}
+              isLoading={loading?.isLoading}
               allDataLoadedMessage={__('No more stories', 'web-stories')}
               onLoadMore={page.requestNextPage}
             />
@@ -101,7 +97,7 @@ function Content({
                   )
                 : __('Start telling Stories.', 'web-stories')}
             </Headline>
-            {!search?.keyword && (
+            {!search?.keyword && canViewDefaultTemplates && (
               <Button
                 type={BUTTON_TYPES.PRIMARY}
                 size={BUTTON_SIZES.MEDIUM}
@@ -119,15 +115,18 @@ function Content({
 }
 Content.propTypes = {
   allPagesFetched: PropTypes.bool,
+  canViewDefaultTemplates: PropTypes.bool,
   filter: FilterPropTypes,
-  isLoading: PropTypes.bool,
+  loading: PropTypes.shape({
+    isLoading: PropTypes.bool,
+    showStoriesWhileLoading: ShowStoriesWhileLoadingPropType,
+  }),
   page: PagePropTypes,
   search: PropTypes.object,
   sort: SortPropTypes,
   stories: StoriesPropType,
   storyActions: StoryActionsPropType,
   view: ViewPropTypes,
-  showStoriesWhileLoading: ShowStoriesWhileLoadingPropType,
 };
 
 export default Content;

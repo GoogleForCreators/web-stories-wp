@@ -17,19 +17,20 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import { useEffect, useRef } from '@web-stories-wp/react';
+import { useEffect, useRef, memo } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import {
   getSmallestUrlForWidth,
   resourceList,
   ResourcePropTypes,
-} from '@web-stories-wp/media';
+} from '@googleforcreators/media';
 import {
   Icons,
   Text,
   THEME_CONSTANTS,
   noop,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
+
 /**
  * Internal dependencies
  */
@@ -83,10 +84,6 @@ const Duration = styled(Text).attrs({
   display: block;
 `;
 
-const HiddenPosterImage = styled.img`
-  display: none;
-`;
-
 const CloneImg = styled.img`
   opacity: 0;
   width: ${({ width }) => `${width}px`};
@@ -109,15 +106,39 @@ function InnerElement({
   isMuted,
 }) {
   const newVideoPosterRef = useRef(null);
+  // Track if we have already set the dragging resource.
+  const hasSetResourceTracker = useRef(null);
 
-  const {
-    state: { draggingResource },
-    actions: { handleDrag, handleDrop, setDraggingResource },
-  } = useDropTargets();
+  // Note: This `useDropTargets` is purposefully separated from the one below since it
+  // uses a custom function for checking for equality and is meant for `handleDrag` and `handleDrop` only.
+  const { handleDrag, handleDrop } = useDropTargets(
+    ({ actions: { handleDrag, handleDrop } }) => ({
+      handleDrag,
+      handleDrop,
+    }),
+    () => {
+      // If we're dragging this element, always update the actions.
+      if (hasSetResourceTracker.current) {
+        return false;
+        // If we're rendering the first time, init `handleDrag` and `handleDrop`.
+      } else if (hasSetResourceTracker.current === null) {
+        hasSetResourceTracker.current = false;
+        return false;
+      }
+      // Otherwise ignore the changes in the actions.
+      return true;
+    }
+  );
+
+  const { setDraggingResource } = useDropTargets(
+    ({ actions: { setDraggingResource } }) => ({
+      setDraggingResource,
+    })
+  );
 
   useEffect(() => {
     // assign display poster for videos
-    if (resource.poster && resource.poster.includes('blob')) {
+    if (resource.poster) {
       newVideoPosterRef.current = resource.poster;
     }
   }, [resource.poster]);
@@ -130,9 +151,11 @@ function InnerElement({
   };
 
   let media;
-  const thumbnailURL = getSmallestUrlForWidth(width, resource);
   const { lengthFormatted, poster, mimeType } = resource;
   const displayPoster = poster ?? newVideoPosterRef.current;
+  const thumbnailURL = displayPoster
+    ? displayPoster
+    : getSmallestUrlForWidth(width, resource);
 
   const commonProps = {
     width,
@@ -145,6 +168,7 @@ function InnerElement({
     ...commonProps,
     onLoad: makeMediaVisible,
     loading: 'lazy',
+    decoding: 'async',
     draggable: false,
   };
 
@@ -165,7 +189,7 @@ function InnerElement({
     muted: true,
     preload: 'metadata',
     poster: displayPoster,
-    showWithoutDelay: !poster || Boolean(newVideoPosterRef.current),
+    showWithoutDelay: active,
   };
 
   if (type === ContentType.IMAGE) {
@@ -175,25 +199,26 @@ function InnerElement({
   } else if ([ContentType.VIDEO, ContentType.GIF].includes(type)) {
     media = (
       <>
-        {/* eslint-disable-next-line styled-components-a11y/media-has-caption,jsx-a11y/media-has-caption -- No captions/tracks because video is muted. */}
-        <Video key={src} {...videoProps} ref={mediaElement}>
-          {type === ContentType.GIF ? (
-            resource.output.src && (
-              <source
-                src={resource.output.src}
-                type={resource.output.mimeType}
-              />
-            )
-          ) : (
-            <source
-              src={getSmallestUrlForWidth(width, resource)}
-              type={mimeType}
-            />
-          )}
-        </Video>
-        {displayPoster && (
+        {poster && !active ? (
           /* eslint-disable-next-line styled-components-a11y/alt-text -- False positive. */
-          <HiddenPosterImage src={poster} {...commonImageProps} />
+          <Image key={src} {...imageProps} ref={mediaElement} />
+        ) : (
+          // eslint-disable-next-line jsx-a11y/media-has-caption,styled-components-a11y/media-has-caption -- No captions/tracks because video is muted.
+          <Video key={src} {...videoProps} ref={mediaElement}>
+            {type === ContentType.GIF ? (
+              resource.output.src && (
+                <source
+                  src={resource.output.src}
+                  type={resource.output.mimeType}
+                />
+              )
+            ) : (
+              <source
+                src={getSmallestUrlForWidth(width, resource)}
+                type={mimeType}
+              />
+            )}
+          </Video>
         )}
         {type === ContentType.VIDEO && showVideoDetail && lengthFormatted && (
           <DurationWrapper>
@@ -209,24 +234,20 @@ function InnerElement({
     );
     cloneProps.src = poster;
   }
+
   if (!media) {
     throw new Error('Invalid media element type.');
   }
 
   const dragHandler = (event) => {
-    if (
-      [ContentType.VIDEO, ContentType.GIF].includes(type) &&
-      !mediaElement.current?.paused
-    ) {
-      mediaElement.current?.pause();
-    }
-    if (!draggingResource) {
+    if (!hasSetResourceTracker.current) {
       // Drop-targets handling.
       resourceList.set(resource.id, {
         url: thumbnailURL,
         type: 'cached',
       });
       setDraggingResource(resource);
+      hasSetResourceTracker.current = true;
     }
     handleDrag(resource, event.clientX, event.clientY);
   };
@@ -239,7 +260,10 @@ function InnerElement({
       <LibraryMoveable
         active={active}
         handleDrag={dragHandler}
-        handleDragEnd={() => handleDrop(resource)}
+        handleDragEnd={() => {
+          handleDrop(resource);
+          hasSetResourceTracker.current = false;
+        }}
         type={resource.type}
         elementProps={{ resource }}
         onClick={onClick(imageURL)}
@@ -265,4 +289,4 @@ InnerElement.propTypes = {
   active: PropTypes.bool.isRequired,
 };
 
-export default InnerElement;
+export default memo(InnerElement);

@@ -17,8 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
-import { useFeature } from 'flagged';
+import { useCallback } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -29,7 +28,6 @@ function useCORSProxy() {
   const {
     actions: { getProxyUrl },
   } = useAPI();
-  const enableCORSProxy = useFeature('enableCORSProxy');
 
   /**
    * Check if the resource can be accessed directly.
@@ -42,7 +40,7 @@ function useCORSProxy() {
    *
    * @type {function(): boolean}
    */
-  async function checkResourceAccess(link) {
+  const checkResourceAccess = useCallback(async (link) => {
     let shouldProxy = false;
     if (!link) {
       return shouldProxy;
@@ -56,17 +54,24 @@ function useCORSProxy() {
     }
 
     return shouldProxy;
-  }
+  }, []);
 
+  /**
+   * Get proxied url.
+   *
+   * @param {Object} resource Resource object
+   * @param {string} src The thumbnail's url
+   * @return {null|string} Return proxied source or null.
+   */
   const getProxiedUrl = useCallback(
     (resource, src) => {
       const { needsProxy } = resource;
-      if (enableCORSProxy && needsProxy && src) {
+      if (needsProxy && src) {
         return getProxyUrl(src);
       }
       return src;
     },
-    [getProxyUrl, enableCORSProxy]
+    [getProxyUrl]
   );
 
   return {

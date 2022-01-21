@@ -108,4 +108,60 @@ class Page_Template_Controller extends Stories_Base_Controller {
 
 		return $this->add_additional_fields_schema( $this->schema );
 	}
+
+	/**
+	 * Checks if a given request has access to read posts.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
+	 */
+	public function get_items_permissions_check( $request ) {
+		$ret = parent::get_items_permissions_check( $request );
+
+		if ( is_wp_error( $ret ) ) {
+			return $ret;
+		}
+
+		$post_type = get_post_type_object( $this->post_type );
+
+		if ( ! $post_type || ! current_user_can( $post_type->cap->edit_posts ) ) {
+			return new WP_Error(
+				'rest_forbidden_context',
+				__( 'Sorry, you are not allowed to edit page templates.', 'web-stories' ),
+				[ 'status' => rest_authorization_required_code() ]
+			);
+		}
+
+		return true;
+	}
+
+	/**
+	 * Checks if a given request has access to read a post.
+	 *
+	 * @since 1.14.0
+	 *
+	 * @param WP_REST_Request $request Full details about the request.
+	 * @return true|WP_Error True if the request has read access for the item, WP_Error object otherwise.
+	 */
+	public function get_item_permissions_check( $request ) {
+		$ret = parent::get_item_permissions_check( $request );
+
+		if ( is_wp_error( $ret ) ) {
+			return $ret;
+		}
+
+		$post_type = get_post_type_object( $this->post_type );
+
+		if ( ! $post_type || ! current_user_can( $post_type->cap->edit_posts ) ) {
+			return new WP_Error(
+				'rest_forbidden_context',
+				__( 'Sorry, you are not allowed to edit page templates.', 'web-stories' ),
+				[ 'status' => rest_authorization_required_code() ]
+			);
+		}
+
+		return true;
+	}
 }

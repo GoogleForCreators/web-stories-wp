@@ -22,10 +22,10 @@ import {
   useMemo,
   useRef,
   useFocusOut,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 
 /**
@@ -61,6 +61,7 @@ const SearchInputWrapper = styled.div``;
  * @param {string} props.label If present, will display a text label above input. ariaLabel controls accessibility label of input since there are times search components are present without label text visible.
  * @param {Object} props.menuStylesOverride should be formatted as a css template literal with styled components. Gives access to completely overriding menu styles (container div > ul > li).
  * @param {Function} props.onMenuItemClick Triggered when a user clicks or presses 'Enter' on an option, or 'Enter' is pressed on input. Returns an object containing label and value keys.
+ * @param {Function} props.onClear Triggered when a user clicks clear 'x' button on the search input.
  * @param {Array} props.options All options, should contain either 1) objects with a label, value, anything else you need can be added and accessed through renderItem or 2) Objects containing a label and options, where options is structured as first option with array of objects containing at least value and label - this will create a nested list.
  * @param {string} props.placeholder Placeholder text to display in input if no value is present.
  * @param {string} props.placement placement passed to popover for where menu should expand, defaults to "bottom_end".
@@ -79,6 +80,7 @@ export const Search = ({
   hint,
   label,
   onMenuItemClick,
+  onClear,
   options = [],
   placeholder = DEFAULT_PLACEHOLDER,
   placement = PLACEMENT.BOTTOM,
@@ -178,9 +180,9 @@ export const Search = ({
 
   const handleClearInput = useCallback(() => {
     inputState.set(undefined);
-    onMenuItemClick?.(null, { label: '', value: '' });
+    onClear();
     handleReturnToInput();
-  }, [handleReturnToInput, inputState, onMenuItemClick]);
+  }, [handleReturnToInput, inputState, onClear]);
 
   const handleTabClear = useCallback(() => {
     isOpen.set(false);
@@ -319,6 +321,7 @@ Search.propTypes = {
   label: PropTypes.string,
   menuStylesOverride: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   onMenuItemClick: PropTypes.func,
+  onClear: PropTypes.func,
   options: MENU_OPTIONS,
   placeholder: PropTypes.string,
   placement: PropTypes.oneOf(Object.values(PLACEMENT)),

@@ -25,17 +25,18 @@ import {
   memo,
   useState,
   useRef,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { rgba } from 'polished';
-import { __ } from '@web-stories-wp/i18n';
-import { LoadingBar, useKeyDownEffect } from '@web-stories-wp/design-system';
+import { __ } from '@googleforcreators/i18n';
+import { LoadingBar, useKeyDownEffect } from '@googleforcreators/design-system';
+import { Blurhash } from 'react-blurhash';
 /**
  * Internal dependencies
  */
 import DropDownMenu from '../local/dropDownMenu';
 import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
-import { ContentType } from '../../../../../app/media';
+import { ContentType, useLocalMedia } from '../../../../../app/media';
 import Tooltip from '../../../../tooltip';
 import Attribution from './attribution';
 import InnerElement from './innerElement';
@@ -65,6 +66,12 @@ const InnerContainer = styled.div`
   }
 `;
 
+const BlurhashContainer = styled(Blurhash)`
+  position: absolute !important;
+  top: 0;
+  left: 0;
+`;
+
 function Element({
   index,
   resource,
@@ -81,14 +88,17 @@ function Element({
     type,
     width: originalWidth,
     height: originalHeight,
-    local,
     alt,
     isMuted,
-    isTranscoding,
-    isMuting,
-    isTrimming,
     baseColor,
+    blurHash,
   } = resource;
+
+  const { isCurrentResourceProcessing, isCurrentResourceUploading } =
+    useLocalMedia(({ state }) => ({
+      isCurrentResourceProcessing: state.isCurrentResourceProcessing,
+      isCurrentResourceUploading: state.isCurrentResourceUploading,
+    }));
 
   const oRatio =
     originalWidth && originalHeight ? originalWidth / originalHeight : 1;
@@ -124,12 +134,7 @@ function Element({
         setHoverTimer(null);
       }
     };
-    if (isMenuOpen) {
-      if (mediaElement.current && !mediaElement.current.paused) {
-        // If it's a video, pause the preview while the dropdown menu is open.
-        mediaElement.current.pause();
-      }
-    } else {
+    if (!isMenuOpen) {
       if (active) {
         setShowVideoDetail(false);
         if (mediaElement.current && hoverTimer == null) {
@@ -144,7 +149,7 @@ function Element({
       } else {
         setShowVideoDetail(true);
         resetHoverTime();
-        if (mediaElement.current && src) {
+        if (mediaElement.current && mediaElement.current?.pause && src) {
           // Stop video and reset position.
           mediaElement.current.pause();
           mediaElement.current.currentTime = 0;
@@ -154,9 +159,12 @@ function Element({
     return resetHoverTime;
   }, [isMenuOpen, active, type, src, hoverTimer, setHoverTimer, activeRef]);
 
-  const onClick = (thumbnailUrl) => () => {
-    onInsert(resource, thumbnailUrl);
-  };
+  const onClick = useCallback(
+    (thumbnailUrl) => () => {
+      onInsert(resource, thumbnailUrl);
+    },
+    [onInsert, resource]
+  );
 
   const attribution = active &&
     resource.attribution?.author?.displayName &&
@@ -171,7 +179,7 @@ function Element({
 
   useRovingTabIndex({ ref });
 
-  const onLoad = () => setLoaded(true);
+  const onLoad = useCallback(() => setLoaded(true), []);
 
   const handleKeyDown = useCallback(
     ({ key }) => {
@@ -193,6 +201,8 @@ function Element({
     [handleKeyDown]
   );
 
+  const isPlaceholder = !isLoaded && !active;
+
   return (
     <Container
       ref={ref}
@@ -208,7 +218,7 @@ function Element({
       onBlur={makeInactive}
       tabIndex={index === 0 ? 0 : -1}
     >
-      <InnerContainer $baseColor={!isLoaded && baseColor}>
+      <InnerContainer $baseColor={isPlaceholder && baseColor}>
         <InnerElement
           type={type}
           src={src}
@@ -224,8 +234,18 @@ function Element({
           active={active}
         />
         {attribution}
-        {(local || isTranscoding || isMuting || isTrimming) && (
-          <LoadingBar loadingMessage={__('Uploading media', 'web-stories')} />
+        {isPlaceholder && blurHash && (
+          <BlurhashContainer
+            hash={blurHash}
+            width={width}
+            height={height}
+            punch={1}
+          />
+        )}
+        {(!src ||
+          isCurrentResourceProcessing(resourceId) ||
+          isCurrentResourceUploading(resourceId)) && (
+          <LoadingBar loadingMessage={__('Uploading media…', 'web-stories')} />
         )}
         {providerType === 'local' && canEditMedia && (
           <DropDownMenu
@@ -267,11 +287,20 @@ Element.propTypes = {
  * @return {null|*} Element or null if does not map to video/image.
  */
 function MediaElement(props) {
-  const { isTranscoding, isMuting, isTrimming } = props.resource;
+  const { isCurrentResourceProcessing, isCurrentResourceUploading } =
+    useLocalMedia(({ state }) => ({
+      isCurrentResourceProcessing: state.isCurrentResourceProcessing,
+      isCurrentResourceUploading: state.isCurrentResourceUploading,
+    }));
 
-  if (isTranscoding || isMuting || isTrimming) {
+  const { id: resourceId } = props.resource;
+
+  if (
+    isCurrentResourceProcessing(resourceId) ||
+    isCurrentResourceUploading(resourceId)
+  ) {
     return (
-      <Tooltip title={__('Video is being processed', 'web-stories')}>
+      <Tooltip title={__('Uploading media…', 'web-stories')}>
         <Element {...props} />
       </Tooltip>
     );

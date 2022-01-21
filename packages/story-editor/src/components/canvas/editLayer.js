@@ -19,9 +19,9 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { memo, useEffect, useRef } from '@web-stories-wp/react';
-import { _x, __ } from '@web-stories-wp/i18n';
-import { useKeyDownEffect } from '@web-stories-wp/design-system';
+import { memo, useEffect, useRef } from '@googleforcreators/react';
+import { _x, __ } from '@googleforcreators/i18n';
+import { useKeyDownEffect } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

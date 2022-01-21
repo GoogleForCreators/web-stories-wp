@@ -25,9 +25,9 @@ import {
   useMemo,
   useBatchingCallback,
   useCombinedRefs,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import classnames from 'classnames';
-import { useUnits } from '@web-stories-wp/units';
+import { useUnits } from '@googleforcreators/units';
 
 /**
  * Internal dependencies
@@ -53,30 +53,22 @@ function SingleSelectionMoveable({
   const moveable = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
 
-  const { nodesById } = useCanvas(({ state: { nodesById } }) => ({
-    nodesById,
+  const nodesById = useCanvas(({ state }) => state.nodesById);
+  const getBox = useUnits(({ actions }) => actions.getBox);
+  const pushTransform = useTransform(({ actions }) => actions.pushTransform);
+  const { zoomSetting, scrollLeft, scrollTop } = useLayout(({ state }) => ({
+    zoomSetting: state.zoomSetting,
+    scrollLeft: state.scrollLeft,
+    scrollTop: state.scrollTop,
   }));
-  const { getBox } = useUnits(({ actions: { getBox } }) => ({
-    getBox,
-  }));
-  const {
-    actions: { pushTransform },
-  } = useTransform();
-  const { zoomSetting, scrollLeft, scrollTop } = useLayout(
-    ({ state: { zoomSetting, scrollLeft, scrollTop } }) => ({
-      zoomSetting,
-      scrollLeft,
-      scrollTop,
-    })
-  );
 
   const actionsEnabled = !selectedElement.isBackground;
 
   const latestEvent = useRef();
 
-  const { backgroundElement } = useStory(({ state: { currentPage } }) => ({
-    backgroundElement: currentPage.elements[0] ?? {},
-  }));
+  const backgroundElementId = useStory(
+    ({ state }) => state.currentPage?.elements[0]?.id
+  );
 
   useWindowResizeHandler(moveable);
 
@@ -215,7 +207,7 @@ function SingleSelectionMoveable({
 
   // Get a list of all the other non-bg nodes
   const otherNodes = Object.values(
-    objectWithout(nodesById, [selectedElement.id, backgroundElement.id])
+    objectWithout(nodesById, [selectedElement.id, backgroundElementId])
   );
 
   const snapProps = useSnapping({

@@ -64,6 +64,7 @@ describe('getResourceFromMedia3p', () => {
     };
     const expectedStoryEditorResource = {
       baseColor: '#00379b',
+      blurHash: undefined,
       type: 'video',
       mimeType: 'video/mp4',
       creationDate: '2018-09-25T20:03.07Z',
@@ -77,7 +78,6 @@ describe('getResourceFromMedia3p', () => {
       length: 121,
       lengthFormatted: '2:01',
       alt: 'NYC Postcard',
-      local: false,
       isPlaceholder: false,
       isMuted: true,
       isOptimized: true,
@@ -86,17 +86,17 @@ describe('getResourceFromMedia3p', () => {
       sizes: {
         full: {
           file: 'media/coverr:g9re0sRUYA',
-          source_url:
+          sourceUrl:
             'https://storage.coverr.co/videos/Y5RaHMvC502h001U003e3YbypqDJdjEMOaT?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6IjIzQ0I1QURCMjc3QTk2RTc4MTBBIiwiaWF0IjoxNTk2MDc3Njk5fQ.hfcLRuoZqXwJiZtgv40MI-hS3cMlzhbwNIEvNKtTXNw',
-          mime_type: 'video/mp4',
+          mimeType: 'video/mp4',
           width: 1080,
           height: 1920,
         },
         preview: {
           file: 'media/coverr:g9re0sRUYA',
-          source_url:
+          sourceUrl:
             'https://storage.coverr.co/videos/Y5RaHMvC502h001U003e3YbypqDJdjEMOaT/preview?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6IjIzQ0I1QURCMjc3QTk2RTc4MTBBIiwiaWF0IjoxNTk2MDc3Njk5fQ.hfcLRuoZqXwJiZtgv40MI-hS3cMlzhbwNIEvNKtTXNw',
-          mime_type: 'video/mp4',
+          mimeType: 'video/mp4',
           width: 360,
           height: 640,
         },
@@ -154,6 +154,7 @@ describe('getResourceFromMedia3p', () => {
     };
     const expectedStoryEditorResource = {
       baseColor: '#00379b',
+      blurHash: undefined,
       type: 'video',
       mimeType: 'video/mp4',
       creationDate: '2018-09-25T20:03.07Z',
@@ -167,7 +168,6 @@ describe('getResourceFromMedia3p', () => {
       length: 121,
       lengthFormatted: '2:01',
       alt: 'Test title',
-      local: false,
       isPlaceholder: false,
       isMuted: true,
       isOptimized: true,
@@ -176,17 +176,17 @@ describe('getResourceFromMedia3p', () => {
       sizes: {
         full: {
           file: 'media/coverr:g9re0sRUYA',
-          source_url:
+          sourceUrl:
             'https://storage.coverr.co/videos/Y5RaHMvC502h001U003e3YbypqDJdjEMOaT?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6IjIzQ0I1QURCMjc3QTk2RTc4MTBBIiwiaWF0IjoxNTk2MDc3Njk5fQ.hfcLRuoZqXwJiZtgv40MI-hS3cMlzhbwNIEvNKtTXNw',
-          mime_type: 'video/mp4',
+          mimeType: 'video/mp4',
           width: 1080,
           height: 1920,
         },
         preview: {
           file: 'media/coverr:g9re0sRUYA',
-          source_url:
+          sourceUrl:
             'https://storage.coverr.co/videos/Y5RaHMvC502h001U003e3YbypqDJdjEMOaT/preview?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6IjIzQ0I1QURCMjc3QTk2RTc4MTBBIiwiaWF0IjoxNTk2MDc3Njk5fQ.hfcLRuoZqXwJiZtgv40MI-hS3cMlzhbwNIEvNKtTXNw',
-          mime_type: 'video/mp4',
+          mimeType: 'video/mp4',
           width: 360,
           height: 640,
         },
@@ -243,6 +243,7 @@ describe('getResourceFromMedia3p', () => {
     };
     const expectedStoryEditorResource = {
       baseColor: '#00379b',
+      blurHash: undefined,
       type: 'video',
       mimeType: 'video/mp4',
       creationDate: '2018-09-25T20:03.07Z',
@@ -256,7 +257,6 @@ describe('getResourceFromMedia3p', () => {
       length: 121,
       lengthFormatted: '2:01',
       alt: 'media/coverr:g9re0sRUYA',
-      local: false,
       isPlaceholder: false,
       isMuted: true,
       isOptimized: true,
@@ -265,17 +265,17 @@ describe('getResourceFromMedia3p', () => {
       sizes: {
         full: {
           file: 'media/coverr:g9re0sRUYA',
-          source_url:
+          sourceUrl:
             'https://storage.coverr.co/videos/Y5RaHMvC502h001U003e3YbypqDJdjEMOaT?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6IjIzQ0I1QURCMjc3QTk2RTc4MTBBIiwiaWF0IjoxNTk2MDc3Njk5fQ.hfcLRuoZqXwJiZtgv40MI-hS3cMlzhbwNIEvNKtTXNw',
-          mime_type: 'video/mp4',
+          mimeType: 'video/mp4',
           width: 1080,
           height: 1920,
         },
         preview: {
           file: 'media/coverr:g9re0sRUYA',
-          source_url:
+          sourceUrl:
             'https://storage.coverr.co/videos/Y5RaHMvC502h001U003e3YbypqDJdjEMOaT/preview?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6IjIzQ0I1QURCMjc3QTk2RTc4MTBBIiwiaWF0IjoxNTk2MDc3Njk5fQ.hfcLRuoZqXwJiZtgv40MI-hS3cMlzhbwNIEvNKtTXNw',
-          mime_type: 'video/mp4',
+          mimeType: 'video/mp4',
           width: 360,
           height: 640,
         },
@@ -329,6 +329,7 @@ describe('getResourceFromMedia3p', () => {
     };
     const expectedStoryEditorResource = {
       baseColor: '#00379b',
+      blurHash: undefined,
       type: 'video',
       mimeType: 'video/mp4',
       creationDate: '2018-09-25T20:03.07Z',
@@ -342,7 +343,6 @@ describe('getResourceFromMedia3p', () => {
       length: 121,
       lengthFormatted: '2:01',
       alt: 'NYC Postcard',
-      local: false,
       isPlaceholder: false,
       isMuted: true,
       isOptimized: true,
@@ -351,17 +351,17 @@ describe('getResourceFromMedia3p', () => {
       sizes: {
         full: {
           file: 'media/coverr:g9re0sRUYA',
-          source_url:
+          sourceUrl:
             'https://storage.coverr.co/videos/Y5RaHMvC502h001U003e3YbypqDJdjEMOaT?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6IjIzQ0I1QURCMjc3QTk2RTc4MTBBIiwiaWF0IjoxNTk2MDc3Njk5fQ.hfcLRuoZqXwJiZtgv40MI-hS3cMlzhbwNIEvNKtTXNw',
-          mime_type: 'video/mp4',
+          mimeType: 'video/mp4',
           width: 1080,
           height: 1920,
         },
         preview: {
           file: 'media/coverr:g9re0sRUYA',
-          source_url:
+          sourceUrl:
             'https://storage.coverr.co/videos/Y5RaHMvC502h001U003e3YbypqDJdjEMOaT/preview?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6IjIzQ0I1QURCMjc3QTk2RTc4MTBBIiwiaWF0IjoxNTk2MDc3Njk5fQ.hfcLRuoZqXwJiZtgv40MI-hS3cMlzhbwNIEvNKtTXNw',
-          mime_type: 'video/mp4',
+          mimeType: 'video/mp4',
           width: 640,
           height: 1137.7777777777778,
         },
@@ -521,6 +521,7 @@ describe('getResourceFromMedia3p', () => {
 
     const expectedStoryEditorResource = {
       baseColor: '#00379b',
+      blurHash: undefined,
       id: 'media/tenor:3468838096637910112',
       length: undefined,
       lengthFormatted: undefined,
@@ -531,7 +532,6 @@ describe('getResourceFromMedia3p', () => {
       width: 498,
       height: 498,
       alt: 'media/tenor:3468838096637910112',
-      local: false,
       isPlaceholder: false,
       isMuted: false,
       isOptimized: true,
@@ -545,24 +545,24 @@ describe('getResourceFromMedia3p', () => {
         full: {
           file: 'media/tenor:3468838096637910112',
           height: 498,
-          mime_type: 'image/gif',
-          source_url:
+          mimeType: 'image/gif',
+          sourceUrl:
             'https://c.tenor.com/MCPJ3sVx3GAAAAAC/happy-national-cat-day-peace.gif',
           width: 498,
         },
         large: {
           file: 'media/tenor:3468838096637910112',
           height: 220,
-          mime_type: 'image/gif',
-          source_url:
+          mimeType: 'image/gif',
+          sourceUrl:
             'https://c.tenor.com/MCPJ3sVx3GAAAAAM/happy-national-cat-day-peace.gif',
           width: 220,
         },
         web_stories_thumbnail: {
           file: 'media/tenor:3468838096637910112',
           height: 90,
-          mime_type: 'image/gif',
-          source_url:
+          mimeType: 'image/gif',
+          sourceUrl:
             'https://c.tenor.com/MCPJ3sVx3GAAAAAS/happy-national-cat-day-peace.gif',
           width: 90,
         },

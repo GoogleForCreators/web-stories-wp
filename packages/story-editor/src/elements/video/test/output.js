@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { renderToStaticMarkup } from '@web-stories-wp/react';
+import { renderToStaticMarkup } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -130,9 +130,6 @@ describe('Video output', () => {
             kind: 'captions',
           },
         ],
-      },
-      args: {
-        enableBetterCaptions: true,
       },
     };
 

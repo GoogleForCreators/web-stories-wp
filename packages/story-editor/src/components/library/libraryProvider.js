@@ -18,17 +18,24 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useRef, useMemo, useState } from '@web-stories-wp/react';
+import {
+  useEffect,
+  useRef,
+  useMemo,
+  useState,
+  useCallback,
+} from '@googleforcreators/react';
 import { useFeatures } from 'flagged';
-import { getTimeTracker, trackEvent } from '@web-stories-wp/tracking';
-import { loadTextSets } from '@web-stories-wp/text-sets';
+import { getTimeTracker, trackEvent } from '@googleforcreators/tracking';
+import { loadTextSets } from '@googleforcreators/text-sets';
+import { uniqueEntriesByKey } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 import { useInsertElement, useInsertTextSet } from '../canvas';
 import { useHighlights } from '../../app/highlights';
-import { useConfig } from '../../app';
+import { useConfig, useAPI } from '../../app';
 import Context from './context';
 import {
   ELEMS,
@@ -44,21 +51,56 @@ const LIBRARY_TAB_IDS = new Set(
 );
 
 function LibraryProvider({ children }) {
-  const [tab, setTab] = useState(MEDIA.id);
+  const { showMedia3p, canViewDefaultTemplates } = useConfig();
+  const {
+    actions: { getMedia, getCustomPageTemplates },
+  } = useAPI();
+
+  const supportsCustomTemplates = Boolean(getCustomPageTemplates);
+  const showPageTemplates = canViewDefaultTemplates || supportsCustomTemplates;
+
+  const showMedia = Boolean(getMedia); // Do not show media tab if getMedia api callback is not provided.
   const [textSets, setTextSets] = useState({});
   const [areTextSetsLoading, setAreTextSetsLoading] = useState({});
-  const [savedTemplates, setSavedTemplates] = useState(null);
+  const [savedTemplates, _setSavedTemplates] = useState(null);
+
   // The first page of templates to fetch is 1.
   const [nextTemplatesToFetch, setNextTemplatesToFetch] = useState(1);
   // If to use smart colors with text and text sets.
   const [shouldUseSmartColor, setShouldUseSmartColor] = useState(false);
 
+  const setSavedTemplates = useCallback(
+    (t) =>
+      _setSavedTemplates((_savedTemplates) =>
+        uniqueEntriesByKey(
+          typeof t === 'function' ? t(_savedTemplates) : t,
+          'templateId'
+        )
+      ),
+    []
+  );
+
+  const { showElementsTab } = useFeatures();
+
+  const tabs = useMemo(
+    // Order here is important, as it denotes the actual visual order of elements.
+    () =>
+      [
+        showMedia && MEDIA,
+        showMedia3p && MEDIA3P,
+        TEXT,
+        SHAPES,
+        showElementsTab && ELEMS,
+        showPageTemplates && PAGE_TEMPLATES,
+      ].filter(Boolean),
+    [showMedia3p, showElementsTab, showMedia, showPageTemplates]
+  );
+
+  const [tab, setTab] = useState(tabs[0].id);
+
   const insertElement = useInsertElement();
   const { insertTextSet, insertTextSetByOffset } =
     useInsertTextSet(shouldUseSmartColor);
-
-  const { showElementsTab } = useFeatures();
-  const { showMedia3p } = useConfig();
 
   const { highlightedTab } = useHighlights(({ tab: highlightedTab }) => ({
     highlightedTab,
@@ -90,20 +132,6 @@ function LibraryProvider({ children }) {
       [PAGE_TEMPLATES.id]: pageTemplatesTabRef,
     }),
     []
-  );
-
-  const tabs = useMemo(
-    // Order here is important, as it denotes the actual visual order of elements.
-    () =>
-      [
-        MEDIA,
-        showMedia3p && MEDIA3P,
-        TEXT,
-        SHAPES,
-        showElementsTab && ELEMS,
-        PAGE_TEMPLATES,
-      ].filter(Boolean),
-    [showMedia3p, showElementsTab]
   );
 
   const state = useMemo(
@@ -143,6 +171,7 @@ function LibraryProvider({ children }) {
       nextTemplatesToFetch,
       setNextTemplatesToFetch,
       shouldUseSmartColor,
+      setSavedTemplates,
     ]
   );
   useEffect(() => {

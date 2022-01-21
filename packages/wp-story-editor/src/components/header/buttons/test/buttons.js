@@ -19,8 +19,8 @@
  */
 import { fireEvent, screen } from '@testing-library/react';
 import MockDate from 'mockdate';
-import { setAppElement } from '@web-stories-wp/design-system';
-import { StoryContext } from '@web-stories-wp/story-editor';
+import { setAppElement } from '@googleforcreators/design-system';
+import { StoryContext } from '@googleforcreators/story-editor';
 
 /**
  * Internal dependencies
@@ -101,24 +101,20 @@ describe('Buttons', () => {
   it('should always display history and preview buttons', () => {
     arrange();
     expect(
-      screen.queryByRole('button', { name: 'Undo Changes' })
+      screen.getByRole('button', { name: 'Undo Changes' })
     ).toBeInTheDocument();
     expect(
-      screen.queryByRole('button', { name: 'Redo Changes' })
+      screen.getByRole('button', { name: 'Redo Changes' })
     ).toBeInTheDocument();
-    expect(
-      screen.queryByRole('button', { name: 'Preview' })
-    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Preview' })).toBeInTheDocument();
   });
 
   it('should display Publish button for draft stories', () => {
     arrange();
     expect(
-      screen.queryByRole('button', { name: 'Save draft' })
+      screen.getByRole('button', { name: 'Save draft' })
     ).toBeInTheDocument();
-    expect(
-      screen.queryByRole('button', { name: 'Publish' })
-    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Publish' })).toBeInTheDocument();
   });
 
   it('should display Update button for published stories', () => {
@@ -126,11 +122,9 @@ describe('Buttons', () => {
       story: { status: 'publish' },
     });
     expect(
-      screen.queryByRole('button', { name: 'Switch to Draft' })
+      screen.getByRole('button', { name: 'Switch to Draft' })
     ).toBeInTheDocument();
-    expect(
-      screen.queryByRole('button', { name: 'Update' })
-    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Update' })).toBeInTheDocument();
   });
 
   it('should display Submit for Review button for draft stories if lacking capabilities', () => {
@@ -138,10 +132,10 @@ describe('Buttons', () => {
       storyState: { capabilities: { publish: false } },
     });
     expect(
-      screen.queryByRole('button', { name: 'Save draft' })
+      screen.getByRole('button', { name: 'Save draft' })
     ).toBeInTheDocument();
     expect(
-      screen.queryByRole('button', { name: 'Submit for review' })
+      screen.getByRole('button', { name: 'Submit for review' })
     ).toBeInTheDocument();
     expect(
       screen.queryByRole('button', { name: 'Publish' })
@@ -153,14 +147,12 @@ describe('Buttons', () => {
       story: { status: 'pending' },
     });
     expect(
-      screen.queryByRole('button', { name: 'Switch to Draft' })
+      screen.getByRole('button', { name: 'Switch to Draft' })
     ).toBeInTheDocument();
     expect(
-      screen.queryByRole('button', { name: 'Save as pending' })
+      screen.getByRole('button', { name: 'Save as pending' })
     ).toBeInTheDocument();
-    expect(
-      screen.queryByRole('button', { name: 'Publish' })
-    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Publish' })).toBeInTheDocument();
   });
 
   it('should display two buttons for pending stories if lacking capabilities', () => {
@@ -169,10 +161,10 @@ describe('Buttons', () => {
       storyState: { capabilities: { publish: false } },
     });
     expect(
-      screen.queryByRole('button', { name: 'Switch to Draft' })
+      screen.getByRole('button', { name: 'Switch to Draft' })
     ).toBeInTheDocument();
     expect(
-      screen.queryByRole('button', { name: 'Submit for review' })
+      screen.getByRole('button', { name: 'Submit for review' })
     ).toBeInTheDocument();
     expect(
       screen.queryByRole('button', { name: 'Publish' })
@@ -211,13 +203,13 @@ describe('Buttons', () => {
       },
     });
     expect(
-      screen.queryByRole('button', { name: 'Schedule' })
+      screen.getByRole('button', { name: 'Schedule' })
     ).toBeInTheDocument();
   });
 
   it('should display loading indicator while the story is updating', () => {
     arrange({ meta: { isSaving: true } });
-    expect(screen.queryByRole('progressbar')).toBeInTheDocument();
+    expect(screen.getByRole('progressbar')).toBeInTheDocument();
     expect(screen.queryByRole('button', { name: 'Save draft' })).toBeDisabled();
     expect(screen.queryByRole('button', { name: 'Preview' })).toBeDisabled();
     expect(screen.queryByRole('button', { name: 'Publish' })).toBeDisabled();

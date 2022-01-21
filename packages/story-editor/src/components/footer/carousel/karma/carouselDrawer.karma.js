@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../../karma';
@@ -27,9 +32,15 @@ describe('Carousel Drawer', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
-
+    await fixture.collapseHelpCenter();
     // We add some content to the first page to make the thumbnail more interesting
     await fixture.events.click(fixture.editor.library.media.item(0));
+
+    await waitFor(() => {
+      if (fixture.editor.footer.carousel.pages.length === 0) {
+        throw new Error('Carousel pages not loaded yet');
+      }
+    });
   });
 
   afterEach(() => {
@@ -120,6 +131,20 @@ describe('Carousel Drawer', () => {
 
       expect(fixture.editor.footer.carousel.pages.length).toBe(1 + EXTRA_PAGES);
       await fixture.snapshot('Re-expanded');
+    });
+
+    it('should have no aXe violations while carousel is expanded', async () => {
+      await expectAsync(
+        fixture.editor.footer.carousel.node
+      ).toHaveNoViolations();
+    });
+
+    it('should have no aXe violations while carousel is collapsed', async () => {
+      await fixture.events.click(fixture.editor.footer.carousel.toggle);
+      await fixture.events.sleep(TOGGLE_DURATION);
+      await expectAsync(
+        fixture.editor.footer.carousel.node
+      ).toHaveNoViolations();
     });
   });
 });

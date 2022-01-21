@@ -21,8 +21,8 @@ import {
   Shortcut,
   Text,
   THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
-import { __ } from '@web-stories-wp/i18n';
+} from '@googleforcreators/design-system';
+import { __, _n } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 
 export const RIGHT_CLICK_MENU_LABELS = {
@@ -35,7 +35,8 @@ export const RIGHT_CLICK_MENU_LABELS = {
   CLEAR_IMAGE_STYLES: __('Clear Image Styles', 'web-stories'),
   CLEAR_SHAPE_STYLES: __('Clear Shape Styles', 'web-stories'),
   CLEAR_VIDEO_STYLES: __('Clear Video Styles', 'web-stories'),
-  CLEAR_STYLE: __('Clear Style', 'web-stories'),
+  CLEAR_STYLES: (numElements = 1) =>
+    _n('Clear style', 'Clear styles', numElements, 'web-stories'),
   COPY_IMAGE_STYLES: __('Copy Image Styles', 'web-stories'),
   COPY_SHAPE_STYLES: __('Copy Shape Styles', 'web-stories'),
   COPY_VIDEO_STYLES: __('Copy Video Styles', 'web-stories'),
@@ -50,6 +51,8 @@ export const RIGHT_CLICK_MENU_LABELS = {
     'web-stories'
   ),
   DUPLICATE_PAGE: __('Duplicate Page', 'web-stories'),
+  DUPLICATE_ELEMENTS: (numElements = 1) =>
+    _n('Duplicate Element', 'Duplicate Elements', numElements, 'web-stories'),
   PASTE_IMAGE_STYLES: __('Paste Image Styles', 'web-stories'),
   PASTE_SHAPE_STYLES: __('Paste Shape Styles', 'web-stories'),
   PASTE_VIDEO_STYLES: __('Paste Video Styles', 'web-stories'),

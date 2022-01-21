@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { act, screen } from '@testing-library/react';
-import { UnitsProvider, PAGE_RATIO } from '@web-stories-wp/units';
+import { screen } from '@testing-library/react';
+import { UnitsProvider, PAGE_RATIO } from '@googleforcreators/units';
 
 /**
  * Internal dependencies
@@ -50,35 +50,31 @@ describe('ShapePreview', () => {
   });
 
   it('should render', () => {
-    let shapePreviewElement;
-    act(() => {
-      const canvasValue = {
-        state: {
-          nodesById: {},
-          pageSize: {},
-          pageContainer: document.body,
-          canvasContainer: document.body,
-          designSpaceGuideline: {},
-        },
-        actions: {},
-      };
-      renderWithTheme(
-        <CanvasContext.Provider value={canvasValue}>
-          <UnitsProvider
-            pageSize={{
-              width: TEXT_SET_SIZE,
-              height: TEXT_SET_SIZE / PAGE_RATIO,
-            }}
-            dataToEditorX={jest.fn()}
-            dataToEditorY={jest.fn()}
-          >
-            <ShapePreview mask={rectangleMask} />
-          </UnitsProvider>
-        </CanvasContext.Provider>
-      );
-      shapePreviewElement = screen.getByLabelText(rectangleMask.name);
-    });
-
-    expect(shapePreviewElement).toBeInTheDocument();
+    const canvasValue = {
+      state: {
+        nodesById: {},
+        pageSize: {},
+        pageContainer: document.body,
+        canvasContainer: document.body,
+        designSpaceGuideline: {},
+        boundingBoxes: {},
+      },
+      actions: {},
+    };
+    renderWithTheme(
+      <CanvasContext.Provider value={canvasValue}>
+        <UnitsProvider
+          pageSize={{
+            width: TEXT_SET_SIZE,
+            height: TEXT_SET_SIZE / PAGE_RATIO,
+          }}
+          dataToEditorX={jest.fn()}
+          dataToEditorY={jest.fn()}
+        >
+          <ShapePreview mask={rectangleMask} />
+        </UnitsProvider>
+      </CanvasContext.Provider>
+    );
+    expect(screen.getByLabelText(rectangleMask.name)).toBeInTheDocument();
   });
 });

@@ -17,14 +17,17 @@
 /**
  * External dependencies
  */
-import StoryEditor, { InterfaceSkeleton } from '@web-stories-wp/story-editor';
+import StoryEditor, {
+  InterfaceSkeleton,
+} from '@googleforcreators/story-editor';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { getDummyMedia } from './getDummyMedia';
+import { getMedia, saveStoryById, getFonts } from './api';
 import { HeaderLayout } from './header';
+import { LOCAL_STORAGE_CONTENT_KEY } from './constants';
 
 export default {
   title: 'Playground/Stories Editor',
@@ -34,91 +37,16 @@ const AppContainer = styled.div`
   height: 100vh;
 `;
 
-// @todo None of these should be required by default, https://github.com/google/web-stories-wp/pull/9569#discussion_r738458801
-const apiCallbacksNames = [
-  'getAuthors',
-  'getStoryById',
-  'getDemoStoryById',
-  'saveStoryById',
-  'autoSaveById',
-  'getMedia',
-  'getMediaById',
-  'getMutedMediaById',
-  'getOptimizedMediaById',
-  'uploadMedia',
-  'updateMedia',
-  'deleteMedia',
-  'getLinkMetadata',
-  'getCustomPageTemplates',
-  'addPageTemplate',
-  'deletePageTemplate',
-  'getCurrentUser',
-  'updateCurrentUser',
-  'getHotlinkInfo',
-  'getProxyUrl',
-  'getPublisherLogos',
-  'addPublisherLogo',
-  'getTaxonomies',
-  'getTaxonomyTerm',
-  'createTaxonomyTerm',
-];
+export const _default = () => {
+  const content = window.localStorage.getItem(LOCAL_STORAGE_CONTENT_KEY);
+  const story = content ? JSON.parse(content) : {};
+  const apiCallbacks = { saveStoryById, getMedia, getFonts };
 
-// @todo Should still work with empty object.
-const story = {
-  title: { raw: '' },
-  excerpt: { raw: '' },
-  permalink_template: 'https://example.org/web-stories/%pagename%/',
-  style_presets: {
-    color: [],
-    textStyles: [],
-  },
-  date: '2021-10-26T12:38:38', // Publishing field breaks if date is not provided.
+  return (
+    <AppContainer>
+      <StoryEditor config={{ apiCallbacks }} initialEdits={{ story }}>
+        <InterfaceSkeleton header={<HeaderLayout />} />
+      </StoryEditor>
+    </AppContainer>
+  );
 };
-
-const apiCallbacks = apiCallbacksNames.reduce((callbacks, name) => {
-  let response;
-
-  const dummyMedia = getDummyMedia();
-  switch (name) {
-    case 'getCurrentUser':
-      response = { id: 1 };
-      break;
-    case 'getMedia':
-      response = {
-        data: dummyMedia,
-        headers: {
-          totalItems: dummyMedia.length,
-          totalPages: 1,
-        },
-      };
-      break;
-    case 'getPublisherLogos':
-      response = [{ url: '' }];
-      break;
-    default:
-      response = {};
-  }
-
-  if ('saveStoryById' === name) {
-    callbacks[name] = (_story) => {
-      window.localStorage.setItem('preview_markup', _story?.content);
-      return Promise.resolve(story);
-    };
-  } else {
-    callbacks[name] = () => Promise.resolve(response);
-  }
-
-  return callbacks;
-}, {});
-
-const config = {
-  apiCallbacks,
-};
-
-export const _default = () => (
-  <AppContainer>
-    <StoryEditor config={config} initialEdits={{ story }}>
-      <InterfaceSkeleton header={<HeaderLayout />} />
-    </StoryEditor>
-  </AppContainer>
-);

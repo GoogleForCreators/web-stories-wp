@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { createSolid } from '@web-stories-wp/patterns';
-import { waitFor, act, fireEvent } from '@testing-library/react';
+import { createSolid } from '@googleforcreators/patterns';
+import { waitFor, fireEvent } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -148,9 +148,7 @@ describe('<ColorPicker /> and saved colors', () => {
         color: TEAL_COLOR,
       });
 
-    act(() => {
-      fireEvent.click(getCustomButton());
-    });
+    fireEvent.click(getCustomButton());
 
     // Wait for the lazy-loaded module
     await waitFor(() => expect(getEditableAlphaElement()).toBeInTheDocument());
@@ -182,9 +180,7 @@ describe('<ColorPicker /> and saved colors', () => {
         color: TEAL_COLOR,
       });
 
-    act(() => {
-      fireEvent.click(getCustomButton());
-    });
+    fireEvent.click(getCustomButton());
 
     // Wait for the lazy-loaded module
     await waitFor(() => expect(getEditableAlphaElement()).toBeInTheDocument());

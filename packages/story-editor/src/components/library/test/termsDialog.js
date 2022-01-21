@@ -31,11 +31,11 @@
 /**
  * External dependencies
  */
-import { waitFor, fireEvent, act, screen } from '@testing-library/react';
+import { waitFor, fireEvent, screen } from '@testing-library/react';
 import {
   localStore,
   LOCAL_STORAGE_PREFIX,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -43,9 +43,9 @@ import {
 import TermsDialog from '../panes/media/media3p/termsDialog';
 import { renderWithTheme } from '../../../testUtils';
 
-jest.mock('@web-stories-wp/design-system', () => ({
+jest.mock('@googleforcreators/design-system', () => ({
   __esModule: true,
-  ...jest.requireActual('@web-stories-wp/design-system'),
+  ...jest.requireActual('@googleforcreators/design-system'),
   localStore: {
     setItemByKey: jest.fn(),
     getItemByKey: jest.fn(() => false),
@@ -69,9 +69,9 @@ describe('TermsDialog', () => {
     expect(localStore.getItemByKey).toHaveBeenCalledWith(
       LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P
     );
-    act(() => {
-      fireEvent.click(dismiss);
-    });
+
+    fireEvent.click(dismiss);
+
     await waitFor(() =>
       expect(localStore.setItemByKey).toHaveBeenCalledWith(
         LOCAL_STORAGE_PREFIX.TERMS_MEDIA3P,

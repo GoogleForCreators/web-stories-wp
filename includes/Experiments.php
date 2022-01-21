@@ -259,29 +259,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'dashboard',
 			],
 			/**
-			 * Author: @littlemilkstudio
-			 * Issue: 9508
-			 * Creation date: 2021-11-05
-			 */
-			[
-				'name'        => 'enableExploreTemplatesSearch',
-				'label'       => __( 'Template search', 'web-stories' ),
-				'description' => __( 'Enable search for templates', 'web-stories' ),
-				'group'       => 'dashboard',
-				'default'     => true,
-			],
-			/**
-			 * Author: @dmmulroy
-			 * Issue: #2098
-			 * Creation date: 2020-06-04
-			 */
-			[
-				'name'        => 'showTextAndShapesSearchInput',
-				'label'       => __( 'Library search', 'web-stories' ),
-				'description' => __( 'Enable search input on text and shapes tabs', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
 			 * Author: @diegovar
 			 * Issue: #2616
 			 * Creation date: 2020-06-23
@@ -326,18 +303,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'general',
 			],
 			/**
-			 * Author: @spacedmonkey
-			 * Issue: #8811
-			 * Creation date: 2021-09-06
-			 */
-			[
-				'name'        => 'archivePageCustomization',
-				'label'       => __( 'Archive Page', 'web-stories' ),
-				'description' => __( 'Allow Web Stories archive page customization', 'web-stories' ),
-				'group'       => 'general',
-				'default'     => true,
-			],
-			/**
 			 * Author: @miina
 			 * Issue #471
 			 * Creation date: 2021-08-10
@@ -346,19 +311,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'name'        => 'enableHotlinking',
 				'label'       => __( 'Insert media from link', 'web-stories' ),
 				'description' => __( 'Enable inserting media element from external link', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-
-			/**
-			 * Author: @spacedmonkey
-			 * Issue #9039
-			 * Creation date: 2021-09-29
-			 */
-			[
-				'name'        => 'enableCORSProxy',
-				'label'       => __( 'CORS Proxy', 'web-stories' ),
-				'description' => __( 'Enable inserting media element without CORS headers', 'web-stories' ),
 				'group'       => 'editor',
 				'default'     => true,
 			],
@@ -389,17 +341,30 @@ class Experiments extends Service_Base implements HasRequirements {
 				'default'     => true,
 			],
 
+
 			/**
 			 * Author: @swissspidy
-			 * Issue: #5315
-			 * Creation date: 2021-09-23
+			 * Issue: #9344
+			 * Creation date: 2021-11-26
 			 */
 			[
-				'name'        => 'enableBetterCaptions',
+				'name'        => 'customVideoCaptionsInEditor',
 				'label'       => __( 'Video Captions', 'web-stories' ),
-				'description' => __( 'Improve video captions appearance when viewing stories', 'web-stories' ),
-				'group'       => 'general',
+				'description' => __( 'Improve video captions appearance in the editor', 'web-stories' ),
+				'group'       => 'editor',
 				'default'     => true,
+			],
+
+			/**
+			 * Author: @miina
+			 * Issue: #9880
+			 * Creation date: 2021-12-15
+			 */
+			[
+				'name'        => 'customFonts',
+				'label'       => __( 'Custom Fonts', 'web-stories' ),
+				'description' => __( 'Enable adding custom fonts', 'web-stories' ),
+				'group'       => 'general',
 			],
 		];
 	}

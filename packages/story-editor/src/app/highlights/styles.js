@@ -18,7 +18,10 @@
  */
 import { rgba } from 'polished';
 import { css, keyframes } from 'styled-components';
-import { theme as dsTheme, themeHelpers } from '@web-stories-wp/design-system';
+import {
+  theme as dsTheme,
+  themeHelpers,
+} from '@googleforcreators/design-system';
 
 const flash = keyframes`
   50% {

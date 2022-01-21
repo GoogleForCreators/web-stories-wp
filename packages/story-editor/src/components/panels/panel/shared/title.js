@@ -19,7 +19,7 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { useCallback, useEffect, useContext } from '@web-stories-wp/react';
+import { useCallback, useEffect, useContext } from '@googleforcreators/react';
 import {
   BUTTON_TRANSITION_TIMING,
   Icons,
@@ -29,7 +29,7 @@ import {
   ThemeGlobals,
   NotificationBubble,
   BUBBLE_VARIANTS,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -56,7 +56,7 @@ const Header = styled(Headline).attrs({
   align-items: center;
   justify-content: space-between;
   padding: ${({ isCollapsed }) =>
-    isCollapsed ? '14px 20px' : '14px 20px 6px 20px'};
+    isCollapsed ? '14px 16px' : '14px 16px 6px 16px'};
 `;
 
 const Heading = styled.span`
@@ -88,7 +88,6 @@ const IconWrapper = styled.div`
   position: relative;
   width: 32px;
   height: 32px;
-
   svg {
     position: relative;
     z-index: 1;
@@ -111,17 +110,16 @@ const Collapse = styled.button`
   cursor: pointer;
   margin-left: -12px;
   transition: ${BUTTON_TRANSITION_TIMING};
-
   &:hover,
   &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR}, &[${ThemeGlobals.FOCUS_VISIBLE_DATA_ATTRIBUTE}] {
     color: ${({ theme }) => theme.colors.fg.primary};
   }
+
   ${focusStyle};
 
   svg {
     width: 32px;
     height: 32px;
-
     ${({ $isCollapsed, theme }) =>
       $isCollapsed &&
       css`

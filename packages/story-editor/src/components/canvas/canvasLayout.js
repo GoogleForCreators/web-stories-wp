@@ -18,14 +18,19 @@
  * External dependencies
  */
 import styled, { StyleSheetManager } from 'styled-components';
-import { memo, useRef, useCallback } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
+import { memo, useRef, useCombinedRefs } from '@googleforcreators/react';
+import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { useCanvas } from '../../app';
+import {
+  CANVAS_BOUNDING_BOX_IDS,
+  useCanvas,
+  useCanvasBoundingBoxRef,
+  useLayout,
+} from '../../app';
 import EditLayer from './editLayer';
 import DisplayLayer from './displayLayer';
 import FramesLayer from './framesLayer';
@@ -50,22 +55,33 @@ const Background = styled.section.attrs({
 `;
 
 function CanvasLayout({ header, footer }) {
+  const boundingBoxTrackingRef = useCanvasBoundingBoxRef(
+    CANVAS_BOUNDING_BOX_IDS.CANVAS_CONTAINER
+  );
   const { setCanvasContainer } = useCanvas((state) => ({
     setCanvasContainer: state.actions.setCanvasContainer,
   }));
 
   const backgroundRef = useRef(null);
 
-  const setBackgroundRef = useCallback(
-    (ref) => {
-      backgroundRef.current = ref;
-      setCanvasContainer(ref);
-    },
-    [setCanvasContainer]
+  const setBackgroundRef = useCombinedRefs(
+    backgroundRef,
+    setCanvasContainer,
+    boundingBoxTrackingRef
   );
 
   useLayoutParams(backgroundRef);
   const layoutParamsCss = useLayoutParamsCssVars();
+
+  const { pageWidth, pageHeight } = useLayout(
+    ({ state: { pageWidth, pageHeight } }) => ({
+      pageWidth,
+      pageHeight,
+    })
+  );
+
+  // If we don't have proper canvas dimensions yet, don't bother rendering element layers.
+  const hasDimensions = pageWidth !== 0 && pageHeight !== 0;
 
   // Elsewhere we use stylisRTLPlugin in case of RTL, however, since we're
   // forcing the canvas to always be LTR due to problems that otherwise come up
@@ -77,8 +93,8 @@ function CanvasLayout({ header, footer }) {
         <CanvasUploadDropTarget>
           <CanvasElementDropzone>
             <SelectionCanvas>
-              <DisplayLayer />
-              <FramesLayer />
+              {hasDimensions && <DisplayLayer />}
+              {hasDimensions && <FramesLayer />}
               <NavLayer header={header} footer={footer} />
             </SelectionCanvas>
             <EditLayer />

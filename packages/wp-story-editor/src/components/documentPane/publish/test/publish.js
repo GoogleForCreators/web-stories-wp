@@ -17,14 +17,14 @@
 /**
  * External dependencies
  */
-import { fireEvent, waitFor, screen, act } from '@testing-library/react';
+import { fireEvent, waitFor, screen } from '@testing-library/react';
 import MockDate from 'mockdate';
 import {
   APIContext,
   ConfigContext,
   StoryContext,
   InspectorContext,
-} from '@web-stories-wp/story-editor';
+} from '@googleforcreators/story-editor';
 
 /**
  * Internal dependencies
@@ -255,11 +255,9 @@ describe('PublishPanel', () => {
 
     const element = screen.getByRole('button', { name: 'Story publish time' });
 
-    act(() => {
-      fireEvent.keyDown(element, {
-        key: 'Enter',
-        which: 13,
-      });
+    fireEvent.keyDown(element, {
+      key: 'Enter',
+      which: 13,
     });
 
     await waitFor(() => {

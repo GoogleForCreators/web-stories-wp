@@ -17,9 +17,9 @@
 /**
  * External dependencies
  */
-import { act, screen } from '@testing-library/react';
-import { UnitsProvider, PAGE_RATIO } from '@web-stories-wp/units';
-import STICKERS from '@web-stories-wp/stickers';
+import { screen } from '@testing-library/react';
+import { UnitsProvider, PAGE_RATIO } from '@googleforcreators/units';
+import STICKERS from '@googleforcreators/stickers';
 
 /**
  * Internal dependencies
@@ -44,37 +44,33 @@ describe('StickerPreview', () => {
   });
 
   it('should render', () => {
-    let stickerPreviewElement;
-    act(() => {
-      const canvasValue = {
-        state: {
-          nodesById: {},
-          pageSize: {},
-          pageContainer: document.body,
-          canvasContainer: document.body,
-          designSpaceGuideline: {},
-        },
-        actions: {},
-      };
-      renderWithTheme(
-        <CanvasContext.Provider value={canvasValue}>
-          <UnitsProvider
-            pageSize={{
-              width: TEXT_SET_SIZE,
-              height: TEXT_SET_SIZE / PAGE_RATIO,
-            }}
-            dataToEditorX={jest.fn()}
-            dataToEditorY={jest.fn()}
-          >
-            <StickerPreview stickerType={'beautyCta'} />
-          </UnitsProvider>
-        </CanvasContext.Provider>
-      );
+    const canvasValue = {
+      state: {
+        nodesById: {},
+        pageSize: {},
+        pageContainer: document.body,
+        canvasContainer: document.body,
+        designSpaceGuideline: {},
+        boundingBoxes: {},
+      },
+      actions: {},
+    };
+    renderWithTheme(
+      <CanvasContext.Provider value={canvasValue}>
+        <UnitsProvider
+          pageSize={{
+            width: TEXT_SET_SIZE,
+            height: TEXT_SET_SIZE / PAGE_RATIO,
+          }}
+          dataToEditorX={jest.fn()}
+          dataToEditorY={jest.fn()}
+        >
+          <StickerPreview stickerType={'beautyCta'} />
+        </UnitsProvider>
+      </CanvasContext.Provider>
+    );
 
-      // Stickers render title in svg <title>...</title> element
-      stickerPreviewElement = screen.getByText(STICKERS.beautyCta.title);
-    });
-
-    expect(stickerPreviewElement).toBeInTheDocument();
+    // Stickers render title in svg <title>...</title> element
+    expect(screen.getByText(STICKERS.beautyCta.title)).toBeInTheDocument();
   });
 });

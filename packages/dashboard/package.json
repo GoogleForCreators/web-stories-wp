@@ -1,6 +1,15 @@
 {
-  "name": "@web-stories-wp/dashboard",
-  "private": true,
+  "name": "@googleforcreators/dashboard",
+  "description": "The core Web Stories dashboard web application, which is platform-agnostic.",
+  "private": false,
+  "version": "0.0.1",
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "keywords": [
+    "web stories"
+  ],
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"
@@ -11,22 +20,21 @@
   "main": "./src/index.js",
   "type": "module",
   "dependencies": {
-    "@web-stories-wp/animation": "*",
-    "@web-stories-wp/date": "*",
-    "@web-stories-wp/design-system": "*",
-    "@web-stories-wp/fonts": "*",
-    "@web-stories-wp/i18n": "*",
+    "@googleforcreators/animation": "*",
+    "@googleforcreators/date": "*",
+    "@googleforcreators/design-system": "*",
+    "@googleforcreators/i18n": "*",
     "@web-stories-wp/karma-fixture": "*",
-    "@web-stories-wp/media": "*",
-    "@web-stories-wp/migration": "*",
-    "@web-stories-wp/patterns": "*",
-    "@web-stories-wp/react": "*",
-    "@web-stories-wp/templates": "*",
-    "@web-stories-wp/tracking": "*",
-    "@web-stories-wp/units": "*",
+    "@googleforcreators/media": "*",
+    "@googleforcreators/migration": "*",
+    "@googleforcreators/patterns": "*",
+    "@googleforcreators/react": "*",
+    "@googleforcreators/templates": "*",
+    "@googleforcreators/tracking": "*",
+    "@googleforcreators/units": "*",
     "flagged": "^2.0.1",
-    "history": "^5.1.0",
-    "prop-types": "^15.7.2",
+    "history": "^5.2.0",
+    "prop-types": "^15.8.1",
     "query-string": "^7.0.1",
     "styled-components": "^5.3.3"
   },
@@ -36,7 +44,7 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/react-hooks": "^7.0.2",
     "@testing-library/user-event": "^13.5.0",
-    "jest": "^27.3.1",
+    "jest": "^27.4.5",
     "react": "^17.0.2",
     "stylis-plugin-rtl": "^1.0.0"
   }

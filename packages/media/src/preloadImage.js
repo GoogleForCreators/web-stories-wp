@@ -17,13 +17,16 @@
 /**
  * Preload image using a promise.
  *
- * @param {string} src Image source.
- * @param {string} [srcset] Image source set.
+ * @param {Object} attr Image attributes
+ * @param {string} attr.src Image source.
+ * @param {string} attr.srcset Image source set.
+ * @param {number|string} attr.width Image width.
+ * @param {number|string} attr.height Image height.
  * @return {Promise} Image object.
  */
-const preloadImage = (src, srcset = undefined) => {
+const preloadImage = ({ src, srcset, width, height }) => {
   return new Promise((resolve, reject) => {
-    const image = new window.Image();
+    const image = new window.Image(width, height);
     image.onload = () => resolve(image);
     image.onerror = reject;
     image.decoding = 'async';

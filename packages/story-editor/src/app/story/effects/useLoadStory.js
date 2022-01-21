@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { useEffect } from '@web-stories-wp/react';
-import { migrate } from '@web-stories-wp/migration';
+import { useEffect } from '@googleforcreators/react';
+import { migrate } from '@googleforcreators/migration';
 
 /**
  * Internal dependencies
@@ -30,33 +30,35 @@ import getUniquePresets from '../../../utils/getUniquePresets';
 
 function loadStory(storyId, post, restore, clearHistory) {
   const {
-    title: { raw: title },
+    title: { raw: title = '' } = {},
     status,
     slug,
     date,
     modified,
-    excerpt: { raw: excerpt },
+    excerpt: { raw: excerpt = '' } = {},
     link,
-    story_data: storyDataRaw,
-    permalink_template: permalinkTemplate,
-    style_presets: globalStoryStyles,
+    storyData: storyDataRaw,
+    permalinkTemplate,
+    stylePresets: globalStoryStyles = {},
     password,
-    preview_link: previewLink,
-    edit_link: editLink,
-    embed_post_link: embedPostLink,
+    previewLink,
+    editLink,
+    embedPostLink,
     author,
     capabilities = {
       publish: false,
       'assign-author': false,
     },
-    lock_user: lockUser,
-    featured_media: featuredMedia,
-    publisher_logo: publisherLogo,
+    lockUser,
+    featuredMedia,
+    publisherLogo,
     taxonomies,
     terms,
   } = post;
 
-  const [prefix, suffix] = permalinkTemplate.split(/%(?:postname|pagename)%/);
+  const [prefix, suffix] = permalinkTemplate
+    ? permalinkTemplate.split(/%(?:postname|pagename)%/)
+    : [];
   // If either of these is undefined, the placeholder was not found in settings.
   const foundSettings = prefix !== undefined && suffix !== undefined;
   const permalinkConfig = foundSettings

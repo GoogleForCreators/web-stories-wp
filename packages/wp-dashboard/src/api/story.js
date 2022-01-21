@@ -16,14 +16,14 @@
 /**
  * External dependencies
  */
-import { addQueryArgs } from '@web-stories-wp/design-system';
+import { addQueryArgs } from '@googleforcreators/design-system';
 import {
   ORDER_BY_SORT,
   STORIES_PER_REQUEST,
   STORY_SORT_OPTIONS,
   STORY_STATUS,
-} from '@web-stories-wp/dashboard';
-import { createSolidFromString } from '@web-stories-wp/patterns';
+} from '@googleforcreators/dashboard';
+import { createSolidFromString } from '@googleforcreators/patterns';
 
 /**
  * WordPress dependencies
@@ -152,7 +152,7 @@ export const createStoryFromTemplate = async (config, template) => {
 
   const { createdBy, pages, version, colors } = template;
   const { getStoryPropsToSave } = await import(
-    /* webpackChunkName: "chunk-getStoryPropsToSave" */ '@web-stories-wp/story-editor'
+    /* webpackChunkName: "chunk-getStoryPropsToSave" */ '@googleforcreators/story-editor'
   );
   const storyPropsToSave = await getStoryPropsToSave({
     story: {

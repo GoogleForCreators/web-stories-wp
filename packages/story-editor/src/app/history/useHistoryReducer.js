@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useReducer, useCallback } from '@web-stories-wp/react';
+import { useReducer, useCallback } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -97,6 +97,7 @@ function useHistoryReducer(size) {
     requestedState,
     stateToHistory,
     clearHistory,
+    currentEntry: entries?.[offset],
     offset,
     historyLength,
     versionNumber,

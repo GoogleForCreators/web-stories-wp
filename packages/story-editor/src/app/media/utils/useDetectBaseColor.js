@@ -17,19 +17,20 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
+import { useCallback } from '@googleforcreators/react';
+import { getSmallestUrlForWidth } from '@googleforcreators/media';
 /**
  * Internal dependencies
  */
 import { useAPI } from '../../api';
 import { useStory } from '../../story';
 import { useConfig } from '../../config';
-import { getMediaBaseColor } from '../../../utils/getMediaBaseColor';
+import getMediaBaseColor from '../../../utils/getMediaBaseColor';
 import useCORSProxy from '../../../utils/useCORSProxy';
 
 function useDetectBaseColor({ updateMediaElement }) {
   const {
-    actions: { updateMedia },
+    actions: { updateMedia, getPosterMediaById },
   } = useAPI();
   const { updateElementsByResourceId } = useStory((state) => ({
     updateElementsByResourceId: state.actions.updateElementsByResourceId,
@@ -38,61 +39,74 @@ function useDetectBaseColor({ updateMediaElement }) {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
   const { getProxiedUrl } = useCORSProxy();
-  const setProperties = useCallback(
-    (id, properties) => {
-      updateElementsByResourceId({ id, properties });
-    },
-    [updateElementsByResourceId]
-  );
 
   const saveBaseColor = useCallback(
     /**
      *
-     * @param {number} id Video ID.
+     * @param {import('@googleforcreators/media').Resource} resource Resource object.
      * @param {string} baseColor Base Color.
      * @return {Promise<void>}
      */
-    async (id, baseColor) => {
+    async ({ id, isExternal }, baseColor) => {
       try {
-        const newState = ({ resource }) => ({
+        const properties = ({ resource }) => ({
           resource: {
             ...resource,
             baseColor,
           },
         });
-        setProperties(id, newState);
-        updateMediaElement({
-          id,
-          data: { baseColor },
-        });
-        if (hasUploadMediaAction) {
-          await updateMedia(id, {
-            meta: { web_stories_base_color: baseColor },
+        updateElementsByResourceId({ id, properties });
+        if (!isExternal) {
+          updateMediaElement({
+            id,
+            data: { baseColor },
           });
+          if (hasUploadMediaAction) {
+            await updateMedia(id, {
+              meta: { web_stories_base_color: baseColor },
+            });
+          }
         }
       } catch (error) {
         // Do nothing for now.
       }
     },
-    [setProperties, updateMedia, updateMediaElement, hasUploadMediaAction]
+    [
+      updateElementsByResourceId,
+      updateMediaElement,
+      hasUploadMediaAction,
+      updateMedia,
+    ]
   );
 
   const updateBaseColor = useCallback(
-    async ({ resource }) => {
-      const { type, src, poster } = resource;
-      const imageSrc = type === 'image' ? src : poster;
+    async (resource) => {
+      const { type, poster, id, isExternal } = resource;
+      let imageSrc = poster;
+
+      if (type === 'image') {
+        imageSrc = getSmallestUrlForWidth(0, resource);
+      } else if (!isExternal) {
+        const posterResource = getPosterMediaById
+          ? await getPosterMediaById(id)
+          : null;
+        if (posterResource) {
+          imageSrc = getSmallestUrlForWidth(0, posterResource);
+        }
+      }
+
       if (!imageSrc) {
         return;
       }
       const imageSrcProxied = getProxiedUrl(resource, imageSrc);
       try {
         const color = await getMediaBaseColor(imageSrcProxied);
-        await saveBaseColor(resource.id, color);
+        await saveBaseColor(resource, color);
       } catch (error) {
         // Do nothing for now.
       }
     },
-    [getProxiedUrl, saveBaseColor]
+    [getProxiedUrl, getPosterMediaById, saveBaseColor]
   );
 
   return {

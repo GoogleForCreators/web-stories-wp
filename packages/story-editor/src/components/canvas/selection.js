@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
+import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies
@@ -26,9 +26,13 @@ import { useStory, useCanvas } from '../../app';
 import SingleSelectionMoveable from './singleSelectionMoveable';
 import MultiSelectionMoveable from './multiSelectionMoveable';
 
-function Selection() {
-  const { currentPage, selectedElements, isAnimating } = useStory((state) => ({
-    currentPage: state.state.currentPage,
+function Selection(props) {
+  const isBackground = useStory(({ state }) => {
+    return (
+      state.selectedElements[0]?.id === state.currentPage.elements?.[0]?.id
+    );
+  });
+  const { selectedElements, isAnimating } = useStory((state) => ({
     selectedElements: state.state.selectedElements,
     isAnimating: [
       STORY_ANIMATION_STATE.PLAYING,
@@ -50,7 +54,6 @@ function Selection() {
   }
 
   // No need for displaying non-functional frame for selected background.
-  const isBackground = selectedElements[0].id === currentPage.elements?.[0]?.id;
   if (isBackground) {
     return null;
   }
@@ -84,7 +87,9 @@ function Selection() {
   }
 
   // Multi-selection.
-  return <MultiSelectionMoveable selectedElements={selectedElements} />;
+  return (
+    <MultiSelectionMoveable {...props} selectedElements={selectedElements} />
+  );
 }
 
 export default Selection;

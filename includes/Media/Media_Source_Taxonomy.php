@@ -140,6 +140,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 						'source-video',
 						'source-image',
 						'gif-conversion',
+						'page-template',
 					],
 					'context'     => [ 'view', 'edit', 'embed' ],
 				],
@@ -213,11 +214,24 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 * @return array  Tax query arg.
 	 */
 	private function get_exclude_tax_query( array $args ): array {
+		/**
+		 * Filter whether generated attachments should be hidden in the media library.
+		 *
+		 * @since 1.16.0
+		 *
+		 * @param bool  $enabled Whether the taxonomy check should be applied.
+		 * @param array $args    Existing WP_Query args.
+		 */
+		$enabled = apply_filters( 'web_stories_hide_auto_generated_attachments', true, $args );
+		if ( true !== $enabled ) {
+			return $args;
+		}
+
 		$tax_query = [
 			[
 				'taxonomy' => $this->taxonomy_slug,
 				'field'    => 'slug',
-				'terms'    => [ 'poster-generation', 'source-video', 'source-image' ],
+				'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
 				'operator' => 'NOT IN',
 			],
 		];

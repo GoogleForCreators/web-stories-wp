@@ -16,3 +16,5 @@
 
 export { default as CanvasProvider } from './canvasProvider';
 export { default as useCanvas } from './useCanvas';
+export * from './constants';
+export * from './useCanvasBoundingBox';

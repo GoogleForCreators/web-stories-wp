@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { useEffect, useMemo, useCallback } from '@web-stories-wp/react';
-import { noop } from '@web-stories-wp/design-system';
+import { useEffect, useMemo, useCallback } from '@googleforcreators/react';
+import { noop } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -74,14 +74,22 @@ function MyStories() {
       getAuthors,
     })
   );
-  const { apiCallbacks } = useConfig();
+  const { apiCallbacks, canViewDefaultTemplates } = useConfig();
 
-  const { filter, page, search, sort, view, showStoriesWhileLoading, author } =
-    useStoryView({
-      filters: STORY_STATUSES,
-      isLoading,
-      totalPages,
-    });
+  const {
+    filter,
+    page,
+    search,
+    sort,
+    view,
+    showStoriesWhileLoading,
+    initialPageReady,
+    author,
+  } = useStoryView({
+    filters: STORY_STATUSES,
+    isLoading,
+    totalPages,
+  });
 
   const { setQueriedAuthors } = author;
   let queryAuthorsBySearch = useCallback(
@@ -91,12 +99,12 @@ function MyStories() {
           id,
           name,
         }));
-        setQueriedAuthors((exisitingUsers) => {
-          const exisitingUsersIds = exisitingUsers.map(({ id }) => id);
+        setQueriedAuthors((existingUsers) => {
+          const existingUsersIds = existingUsers.map(({ id }) => id);
           const newUsers = userData.filter(
-            (newUser) => !exisitingUsersIds.includes(newUser.id)
+            (newUser) => !existingUsersIds.includes(newUser.id)
           );
-          return [...exisitingUsers, ...newUsers];
+          return [...existingUsers, ...newUsers];
         });
       });
     },
@@ -142,7 +150,7 @@ function MyStories() {
   return (
     <Layout.Provider>
       <Header
-        isLoading={isLoading && !orderedStories.length}
+        initialPageReady={initialPageReady}
         filter={filter}
         search={search}
         sort={sort}
@@ -156,8 +164,9 @@ function MyStories() {
 
       <Content
         allPagesFetched={allPagesFetched}
+        canViewDefaultTemplates={canViewDefaultTemplates}
         filter={filter}
-        isLoading={isLoading}
+        loading={{ isLoading, showStoriesWhileLoading }}
         page={page}
         search={search}
         sort={sort}
@@ -168,7 +177,6 @@ function MyStories() {
           updateStory,
         }}
         view={view}
-        showStoriesWhileLoading={showStoriesWhileLoading}
       />
 
       <Layout.Fixed>

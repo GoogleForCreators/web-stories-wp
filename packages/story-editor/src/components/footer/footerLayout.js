@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 
 /**

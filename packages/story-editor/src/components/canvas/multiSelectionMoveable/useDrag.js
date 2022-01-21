@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useRef } from '@web-stories-wp/react';
+import { useRef } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -35,9 +35,11 @@ function useMultiSelectionDrag({
   isDragging,
   setIsDragging,
 }) {
-  const {
-    state: { draggingResource },
-  } = useDropTargets();
+  const { draggingResource } = useDropTargets(
+    ({ state: { draggingResource } }) => ({
+      draggingResource,
+    })
+  );
   const { nodesById, handleSelectElement } = useCanvas(
     ({ state: { nodesById }, actions: { handleSelectElement } }) => ({
       nodesById,

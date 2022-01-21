@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { useRef, useEffect } from '@web-stories-wp/react';
 import { v4 as uuidv4 } from 'uuid';
 
 /**
@@ -25,11 +24,9 @@ import { v4 as uuidv4 } from 'uuid';
  */
 import { AnimationOutput, WithAnimation } from '../outputs';
 import getInitialStyleFromKeyframes from '../utils/getInitialStyleFromKeyframes';
-import createKeyframeEffect from '../utils/createKeyframeEffect';
-import { WAAPIAnimationProps, AMPAnimationProps } from './types';
-import FullSizeAbsolute from './components/fullSizeAbsolute';
+import { AMPAnimationProps } from './types';
 
-const sanitizeTimings = (timings) => ({
+export const sanitizeTimings = (timings) => ({
   ...timings,
   easing: timings.easing || 'linear',
 });
@@ -43,34 +40,12 @@ function SimpleAnimation(
 ) {
   const id = uuidv4();
 
-  const WAAPIAnimation = function ({ children, hoistAnimation }) {
-    const target = useRef(null);
-
-    useEffect(() => {
-      const targetEl = targetLeafElement
-        ? target.current?.querySelector('[data-leaf-element="true"]')
-        : target.current;
-      if (!targetEl) {
-        return () => {};
-      }
-      const effect = createKeyframeEffect(
-        targetEl,
-        keyframes,
-        sanitizeTimings(timings)
-      );
-      return hoistAnimation(new Animation(effect, document.timeline));
-    }, [hoistAnimation]);
-
-    return useClippingContainer ? (
-      <FullSizeAbsolute overflowHidden={useClippingContainer}>
-        <FullSizeAbsolute ref={target}>{children}</FullSizeAbsolute>
-      </FullSizeAbsolute>
-    ) : (
-      <FullSizeAbsolute ref={target}>{children}</FullSizeAbsolute>
-    );
+  const WAAPIAnimation = {
+    timings: sanitizeTimings(timings),
+    keyframes,
+    targetLeafElement,
+    useClippingContainer,
   };
-
-  WAAPIAnimation.propTypes = WAAPIAnimationProps;
 
   const AMPTarget = function ({ children, style = {} }) {
     const animationStyle = targetLeafElement

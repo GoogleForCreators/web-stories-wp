@@ -19,8 +19,8 @@
  */
 import { readdirSync, readFileSync } from 'fs';
 import { resolve } from 'path';
-import stickers from '@web-stories-wp/stickers';
-import { isValid } from '@web-stories-wp/date';
+import stickers from '@googleforcreators/stickers';
+import { isValid } from '@googleforcreators/date';
 
 describe('raw template files', () => {
   const templates = readdirSync(
@@ -144,6 +144,21 @@ describe('raw template files', () => {
 
           expect(element?.resource?.isMuted).toBeDefined();
           expect(element?.resource?.isMuted).toBeBoolean();
+        }
+      }
+    });
+
+    it('images and videos should have baseColor', () => {
+      for (const { elements } of templateData.pages) {
+        for (const element of elements) {
+          // eslint-disable-next-line jest/no-if
+          if (!['image', 'video', 'gif'].includes(element?.type)) {
+            continue;
+          }
+
+          expect(element?.resource?.baseColor).toStrictEqual(
+            expect.stringMatching(/^#(?:[0-9a-fA-F]{3}){1,2}$/)
+          );
         }
       }
     });

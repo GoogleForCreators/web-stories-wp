@@ -19,8 +19,8 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useRef, useMemo, useCallback } from '@web-stories-wp/react';
-import { getMediaSizePositionProps } from '@web-stories-wp/media';
+import { useRef, useMemo, useCallback } from '@googleforcreators/react';
+import { getMediaSizePositionProps } from '@googleforcreators/media';
 /**
  * Internal dependencies
  */
@@ -28,6 +28,8 @@ import StoryPropTypes from '../../types';
 import MediaDisplay from '../media/display';
 import useVideoTrim from '../../components/videoTrim/useVideoTrim';
 import CircularProgress from '../../components/circularProgress';
+import { elementWithFlip } from '../shared';
+import getTransformFlip from '../shared/getTransformFlip';
 import PlayPauseButton from './playPauseButton';
 import { getBackgroundStyle, videoWithScale } from './util';
 
@@ -36,6 +38,7 @@ const Video = styled.video`
   max-width: initial;
   max-height: initial;
   ${videoWithScale}
+  ${elementWithFlip}
 `;
 
 const Wrapper = styled.div`
@@ -55,7 +58,7 @@ const Spinner = styled.div`
 
 function VideoTrim({ box, element }) {
   const { width, height } = box;
-  const { poster, tracks, isBackground, scale, focalX, focalY } = element;
+  const { poster, tracks, isBackground, scale, flip, focalX, focalY } = element;
   const wrapperRef = useRef();
   const videoRef = useRef();
   let style = {};
@@ -105,10 +108,11 @@ function VideoTrim({ box, element }) {
     width,
     height,
     scale,
-    focalX,
-    focalY
+    flip?.horizontal ? 100 - focalX : focalX,
+    flip?.vertical ? 100 - focalY : focalY
   );
 
+  videoProps.transformFlip = getTransformFlip(flip);
   videoProps.crossOrigin = 'anonymous';
 
   return (

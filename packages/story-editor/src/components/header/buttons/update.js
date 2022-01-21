@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import {
   Button,
   BUTTON_SIZES,
@@ -25,9 +25,14 @@ import {
   BUTTON_VARIANTS,
   useGlobalKeyDownEffect,
   Icons,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';
-import { getOptions, isAfter, subMinutes, toDate } from '@web-stories-wp/date';
+import {
+  getOptions,
+  isAfter,
+  subMinutes,
+  toDate,
+} from '@googleforcreators/date';
 
 /**
  * Internal dependencies
@@ -85,8 +90,8 @@ function UpdateButton({ hasUpdates = false, forceIsSaving = false }) {
 
   const isSaving = _isSaving || forceIsSaving;
 
-  const { isUploading } = useLocalMedia((state) => ({
-    isUploading: state.state.isUploading,
+  const { isUploading } = useLocalMedia(({ state: { isUploading } }) => ({
+    isUploading,
   }));
   const {
     state: { hasNewChanges },
@@ -147,7 +152,7 @@ function UpdateButton({ hasUpdates = false, forceIsSaving = false }) {
     <ButtonWithChecklistWarning
       text={text}
       onClick={() => saveStory()}
-      disabled={isSaving || isUploading}
+      disabled={!isEnabled}
       isUploading={isUploading}
       canPublish={canPublish}
     />

@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { waitFor } from '@testing-library/react';
-import { DATA_VERSION } from '@web-stories-wp/migration';
+import { DATA_VERSION } from '@googleforcreators/migration';
 /**
  * Internal dependencies
  */
@@ -51,6 +51,9 @@ describe('Checklist integration', () => {
       await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
       // eslint-disable-next-line no-await-in-loop, no-loop-func
       await waitFor(() => {
+        if (!fixture.editor.footer.carousel.pages.length) {
+          throw new Error('page not yet added');
+        }
         expect(fixture.editor.footer.carousel.pages.length).toBe(
           clickCount + 1
         );
@@ -128,6 +131,20 @@ describe('Checklist integration', () => {
 
       await fixture.events.click(fixture.editor.checklist.closeButton);
       await fixture.events.sleep(500);
+    });
+  });
+
+  describe('Checklist aXe tests', () => {
+    it('should have no aXe violations with empty message on a new story', async () => {
+      await openChecklist();
+      await expectAsync(fixture.editor.checklist.node).toHaveNoViolations();
+    });
+
+    it('should have no aXe violations with checks present', async () => {
+      await addPages(4);
+      await addAccessibilityIssue();
+      await openChecklist();
+      await expectAsync(fixture.editor.checklist.node).toHaveNoViolations();
     });
   });
 
@@ -312,17 +329,17 @@ describe('Checklist integration', () => {
   });
 
   describe('checklist should have no aXe accessibility violations', () => {
-    it('should pass accessibility tests with with a closed checklist', async () => {
+    it('should have no aXe violations with with a closed checklist', async () => {
       await expectAsync(fixture.editor.checklist.node).toHaveNoViolations();
     });
 
-    it('should pass accessibility tests with an open empty checklist', async () => {
+    it('should have no aXe violations with an open empty checklist', async () => {
       await openChecklist();
 
       await expectAsync(fixture.editor.checklist.node).toHaveNoViolations();
     });
 
-    it('should pass accessibility tests with a open non-empty checklist', async () => {
+    it('should have no aXe violations with a open non-empty checklist', async () => {
       await addPages(4);
 
       await openChecklist();
@@ -431,6 +448,9 @@ describe('Checklist integration - Card visibility', () => {
       await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
       // eslint-disable-next-line no-await-in-loop, no-loop-func
       await waitFor(() => {
+        if (!fixture.editor.footer.carousel.pages.length) {
+          throw new Error('page not yet added');
+        }
         expect(fixture.editor.footer.carousel.pages.length).toBe(
           clickCount + 1
         );
@@ -500,7 +520,6 @@ describe('Checklist integration - Card visibility', () => {
           lengthFormatted: '0:06',
           title: 'small-video',
           alt: 'small-video',
-          local: false,
           isOptimized: false,
           baseColor: '#734727',
         },
@@ -529,18 +548,18 @@ describe('Checklist integration - Card visibility', () => {
               author: 1,
               slug: '',
               date: '2020-05-06T22:32:37',
-              date_gmt: '2020-05-06T22:32:37',
+              dateGmt: '2020-05-06T22:32:37',
               modified: '2020-05-06T22:32:37',
               excerpt: { raw: '' },
               link: 'http://stories.local/?post_type=web-story&p=1',
-              preview_link: 'http://stories.local/?post_type=web-story&p=1',
-              story_data: {
+              previewLink: 'http://stories.local/?post_type=web-story&p=1',
+              storyData: {
                 version: DATA_VERSION,
                 pages: [],
               },
-              featured_media: 2,
-              permalink_template: 'http://stories3.local/stories/%pagename%/',
-              style_presets: { textStyles: [], colors: [] },
+              featuredMedia: 2,
+              permalinkTemplate: 'http://stories3.local/stories/%pagename%/',
+              stylePresets: { textStyles: [], colors: [] },
               password: '',
             }),
         },

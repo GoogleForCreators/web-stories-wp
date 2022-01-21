@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import {
   forwardRef,
@@ -25,11 +25,15 @@ import {
   useRef,
   useEffect,
   useResizeEffect,
-} from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
-import { generatePatternStyles } from '@web-stories-wp/patterns';
-import { FULLBLEED_RATIO } from '@web-stories-wp/units';
-import { THEME_CONSTANTS, themeHelpers } from '@web-stories-wp/design-system';
+} from '@googleforcreators/react';
+import { __ } from '@googleforcreators/i18n';
+import { generatePatternStyles } from '@googleforcreators/patterns';
+import { FULLBLEED_RATIO } from '@googleforcreators/units';
+import {
+  THEME_CONSTANTS,
+  themeHelpers,
+} from '@googleforcreators/design-system';
+
 /**
  * Internal dependencies
  */
@@ -125,10 +129,15 @@ const PageAreaContainer = styled(Area).attrs({
   overflow: ${({ showOverflow }) =>
     showOverflow ? 'visible' : 'var(--overflow-x) var(--overflow-y)'};
 
-  ${({ isControlled, hasVerticalOverflow, hasHorizontalOverflow }) =>
+  ${({
+    isControlled,
+    hasVerticalOverflow,
+    hasHorizontalOverflow,
+    showOverflow,
+  }) =>
     isControlled &&
-    css`
-      overflow: ${({ showOverflow }) => (showOverflow ? 'visible' : 'hidden')};
+    `
+      overflow: ${showOverflow ? 'visible' : 'hidden'};
       width: calc(
         100% - ${hasVerticalOverflow ? themeHelpers.SCROLLBAR_WIDTH : 0}px
       );
@@ -160,17 +169,23 @@ const PaddedPage = styled.div`
 const PageClip = styled.div`
   ${({ hasHorizontalOverflow, hasVerticalOverflow }) =>
     (hasHorizontalOverflow || hasVerticalOverflow) &&
-    css`
+    `
       overflow: hidden;
-      width: ${hasHorizontalOverflow
-        ? 'calc(var(--page-width-px) + var(--page-padding-px))'
-        : `calc(var(--viewport-width-px) - ${themeHelpers.SCROLLBAR_WIDTH}px)`};
-      flex-basis: ${hasHorizontalOverflow
-        ? 'calc(var(--page-width-px) + var(--page-padding-px))'
-        : `calc(var(--viewport-width-px) - ${themeHelpers.SCROLLBAR_WIDTH}px)`};
-      height: ${hasVerticalOverflow
-        ? 'calc(var(--fullbleed-height-px) + var(--page-padding-px))'
-        : `calc(var(--viewport-height-px) - ${themeHelpers.SCROLLBAR_WIDTH}px)`};
+      width: ${
+        hasHorizontalOverflow
+          ? 'calc(var(--page-width-px) + var(--page-padding-px))'
+          : `calc(var(--viewport-width-px) - ${themeHelpers.SCROLLBAR_WIDTH}px)`
+      };
+      flex-basis: ${
+        hasHorizontalOverflow
+          ? 'calc(var(--page-width-px) + var(--page-padding-px))'
+          : `calc(var(--viewport-width-px) - ${themeHelpers.SCROLLBAR_WIDTH}px)`
+      };
+      height: ${
+        hasVerticalOverflow
+          ? 'calc(var(--fullbleed-height-px) + var(--page-padding-px))'
+          : `calc(var(--viewport-height-px) - ${themeHelpers.SCROLLBAR_WIDTH}px)`
+      };
       flex-shrink: 0;
       flex-grow: 0;
       display: flex;
@@ -192,14 +207,14 @@ const FullbleedContainer = styled.div`
 
   ${({ isControlled }) =>
     isControlled &&
-    css`
+    `
       left: var(--scroll-left-px);
       top: var(--scroll-top-px);
     `};
 
   ${({ isBackgroundSelected, theme }) =>
     isBackgroundSelected &&
-    css`
+    `
       &:before {
         content: '';
         position: absolute;
@@ -344,8 +359,8 @@ function useLayoutParamsCssVars() {
     '--viewport-height-px': `${viewportHeight}px`,
     '--overflow-x': hasHorizontalOverflow ? 'scroll' : 'visible',
     '--overflow-y': hasVerticalOverflow ? 'scroll' : 'visible',
-    '--scroll-left-px': `-${scrollLeft}px`,
-    '--scroll-top-px': `-${scrollTop}px`,
+    '--scroll-left-px': `${-scrollLeft}px`,
+    '--scroll-top-px': `${-scrollTop}px`,
   };
 }
 
@@ -439,11 +454,11 @@ const PageArea = forwardRef(function PageArea(
               ) : (
                 children
               )}
+              {overlay}
             </PageAreaWithoutOverflow>
           </FullbleedContainer>
         </PaddedPage>
       </PageClip>
-      {overlay}
     </PageAreaContainer>
   );
 });

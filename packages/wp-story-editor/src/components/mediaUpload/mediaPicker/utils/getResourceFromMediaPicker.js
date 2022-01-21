@@ -17,13 +17,13 @@
 /**
  * External dependencies
  */
-import { createResource, getResourceSize } from '@web-stories-wp/media';
+import { createResource, getResourceSize } from '@googleforcreators/media';
 
 /**
  * Generates a resource object from a WordPress media picker object.
  *
  * @param {Object} mediaPickerEl WP Media Picker object.
- * @return {import('@web-stories-wp/media').Resource} Resource object.
+ * @return {import('@googleforcreators/media').Resource} Resource object.
  */
 const getResourceFromMediaPicker = (mediaPickerEl) => {
   const {
@@ -50,11 +50,13 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     web_stories_media_source: mediaSource,
     web_stories_is_muted: isMuted,
     web_stories_base_color: baseColor,
+    web_stories_blurhash: blurHash,
     trim_data: trimData,
   } = mediaPickerEl;
 
   return createResource({
     baseColor,
+    blurHash,
     mimeType,
     creationDate: date,
     src: url || src,

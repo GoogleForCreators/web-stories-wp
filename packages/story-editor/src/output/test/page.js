@@ -17,16 +17,21 @@
 /**
  * External dependencies
  */
-import { renderToStaticMarkup } from '@web-stories-wp/react';
+import { renderToStaticMarkup } from '@googleforcreators/react';
 import { render } from '@testing-library/react';
 import { useFeature } from 'flagged';
-import { PAGE_WIDTH, PAGE_HEIGHT } from '@web-stories-wp/units';
+import { PAGE_WIDTH, PAGE_HEIGHT } from '@googleforcreators/units';
 
 /**
  * Internal dependencies
  */
 import PageOutput from '../page';
-import { queryByAutoAdvanceAfter, queryById } from '../../testUtils';
+import {
+  queryByAutoAdvanceAfter,
+  getByAutoAdvanceAfter,
+  queryById,
+  getById,
+} from '../../testUtils';
 import { MaskTypes } from '../../masks/constants';
 
 jest.mock('flagged');
@@ -270,9 +275,7 @@ describe('Page output', () => {
       };
 
       const { container } = render(<PageOutput {...props} />);
-      await expect(
-        queryByAutoAdvanceAfter(container, '7s')
-      ).toBeInTheDocument();
+      await expect(getByAutoAdvanceAfter(container, '7s')).toBeInTheDocument();
     });
 
     it('should use default duration for images', async () => {
@@ -311,9 +314,7 @@ describe('Page output', () => {
       };
 
       const { container } = render(<PageOutput {...props} />);
-      await expect(
-        queryByAutoAdvanceAfter(container, '7s')
-      ).toBeInTheDocument();
+      await expect(getByAutoAdvanceAfter(container, '7s')).toBeInTheDocument();
     });
 
     it('should use video element ID for auto-advance-after', async () => {
@@ -370,7 +371,7 @@ describe('Page output', () => {
         </amp-video>
       `);
       await expect(
-        queryByAutoAdvanceAfter(container, 'el-baz-media')
+        getByAutoAdvanceAfter(container, 'el-baz-media')
       ).toBeInTheDocument();
     });
 
@@ -411,7 +412,7 @@ describe('Page output', () => {
       };
 
       const { container } = render(<PageOutput {...props} />);
-      const video = queryById(container, 'el-baz-media');
+      const video = getById(container, 'el-baz-media');
       await expect(video).toBeInTheDocument();
       expect(video).toMatchInlineSnapshot(`
         <amp-video
@@ -428,7 +429,7 @@ describe('Page output', () => {
         </amp-video>
       `);
       await expect(
-        queryByAutoAdvanceAfter(container, 'el-baz-media')
+        getByAutoAdvanceAfter(container, 'el-baz-media')
       ).toBeInTheDocument();
     });
 
@@ -469,9 +470,7 @@ describe('Page output', () => {
       };
 
       const { container } = render(<PageOutput {...props} />);
-      await expect(
-        queryByAutoAdvanceAfter(container, '7s')
-      ).toBeInTheDocument();
+      await expect(getByAutoAdvanceAfter(container, '7s')).toBeInTheDocument();
     });
   });
 
@@ -772,9 +771,6 @@ describe('Page output', () => {
         },
         autoAdvance: true,
         defaultPageDuration: 11,
-        args: {
-          enableBetterCaptions: true,
-        },
       };
 
       const { container } = render(<PageOutput {...props} />);
@@ -1295,9 +1291,6 @@ describe('Page output', () => {
         },
         autoAdvance: true,
         defaultPageDuration: 7,
-        args: {
-          enableBetterCaptions: true,
-        },
       };
 
       const { container } = render(<PageOutput {...props} />);

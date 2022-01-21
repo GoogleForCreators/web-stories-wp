@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { createSolid } from '@web-stories-wp/patterns';
+import { createSolid } from '@googleforcreators/patterns';
 /**
  * Internal dependencies
  */
@@ -81,6 +81,10 @@ describe('Carousel integration', () => {
     thumb.node.scrollIntoView();
     await fixture.events.mouse.clickOn(thumb.node, 5, 5);
   }
+
+  it('should have no aXe violations', async () => {
+    await expectAsync(fixture.editor.footer.carousel.node).toHaveNoViolations();
+  });
 
   it('should select the current page', async () => {
     expect(await getCurrentPageId()).toEqual('page1');

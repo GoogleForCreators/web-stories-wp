@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Headline, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { Headline, THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 export const Container = styled.div`
   position: relative;

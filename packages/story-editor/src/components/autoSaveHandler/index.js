@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useEffect, useRef } from '@web-stories-wp/react';
+import { useEffect, useRef } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -40,8 +40,8 @@ function AutoSaveHandler() {
       saveStory,
     })
   );
-  const { isUploading } = useLocalMedia((state) => ({
-    isUploading: state.state.isUploading,
+  const { isUploading } = useLocalMedia(({ state: { isUploading } }) => ({
+    isUploading,
   }));
 
   const isDraft = 'draft' === status || !status;

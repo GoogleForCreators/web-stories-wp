@@ -17,10 +17,10 @@
 /**
  * External dependencies
  */
-import { act, fireEvent, screen, waitFor } from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { FlagsProvider } from 'flagged';
-import { curatedFontNames } from '@web-stories-wp/fonts';
-import { PAGE_RATIO, UnitsProvider } from '@web-stories-wp/units';
+import { PAGE_RATIO, UnitsProvider } from '@googleforcreators/units';
+import { CURATED_FONT_NAMES } from '@googleforcreators/fonts';
 
 /**
  * Internal dependencies
@@ -71,7 +71,7 @@ describe('TextPane', () => {
 
   it('should insert text with preset text style when clicking Enter', async () => {
     const availableCuratedFonts = fontsListResponse.filter(
-      (font) => curatedFontNames.indexOf(font.name) > 0
+      (font) => CURATED_FONT_NAMES.indexOf(font.name) > 0
     );
 
     const fontContextValues = {
@@ -82,6 +82,7 @@ describe('TextPane', () => {
       },
       actions: {
         ensureMenuFontsLoaded: () => {},
+        ensureCustomFontsLoaded: () => {},
       },
     };
 
@@ -120,16 +121,15 @@ describe('TextPane', () => {
       </FlagsProvider>
     );
 
-    act(() => {
-      // Note: onClick handler is in Moveable so we can't test that directly in this component
-      // and have to test using key handlers instead.
-      fireEvent.keyDown(screen.getByRole('button', { name: 'Title 1' }), {
-        key: 'Enter',
-        which: 13,
-      });
+    // Note: onClick handler is in Moveable so we can't test that directly in this component
+    // and have to test using key handlers instead.
+    fireEvent.keyDown(screen.getByRole('button', { name: 'Title 1' }), {
+      key: 'Enter',
+      which: 13,
     });
 
     await waitFor(() => expect(insertPreset).toHaveBeenCalledTimes(1));
+
     // Height is being assigned in the process of text insertion.
     await waitFor(() =>
       expect(insertPreset).toHaveBeenCalledWith(PRESETS[0].element, {

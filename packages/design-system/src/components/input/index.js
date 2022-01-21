@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { forwardRef, useMemo, useState } from '@web-stories-wp/react';
+import { forwardRef, useMemo, useState } from '@googleforcreators/react';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 /**
@@ -245,7 +245,7 @@ export const InputPropTypes = {
   onFocus: PropTypes.func,
   suffix: PropTypes.node,
   unit: PropTypes.string,
-  value: PropTypes.string.isRequired,
+  value: PropTypes.string,
   isIndeterminate: PropTypes.bool,
   containerStyleOverride: PropTypes.oneOfType([
     PropTypes.object,

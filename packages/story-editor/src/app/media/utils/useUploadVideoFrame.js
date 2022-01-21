@@ -17,13 +17,13 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
-import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
+import { useCallback } from '@googleforcreators/react';
+import { getTimeTracker, trackError } from '@googleforcreators/tracking';
 import {
   preloadImage,
   getFirstFrameOfVideo,
   getFileNameFromUrl,
-} from '@web-stories-wp/media';
+} from '@googleforcreators/media';
 /**
  * Internal dependencies
  */
@@ -44,12 +44,6 @@ function useUploadVideoFrame({ updateMediaElement }) {
   const { updateElementsByResourceId } = useStory((state) => ({
     updateElementsByResourceId: state.actions.updateElementsByResourceId,
   }));
-  const setProperties = useCallback(
-    (id, properties) => {
-      updateElementsByResourceId({ id, properties });
-    },
-    [updateElementsByResourceId]
-  );
 
   /**
    * Uploads a poster file.
@@ -97,7 +91,11 @@ function useUploadVideoFrame({ updateMediaElement }) {
       }
 
       // Preload the full image in the browser to stop jumping around.
-      await preloadImage(poster);
+      try {
+        await preloadImage({ src: poster });
+      } catch {
+        // Ignore
+      }
 
       return { posterId, poster, posterWidth, posterHeight };
     },
@@ -135,7 +133,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
               height: posterHeight,
             }) ||
           null;
-        const newState = ({ resource }) => ({
+        const properties = ({ resource }) => ({
           resource: {
             ...resource,
             posterId,
@@ -143,7 +141,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
             ...newSize,
           },
         });
-        setProperties(id, newState);
+        updateElementsByResourceId({ id, properties });
         updateMediaElement({
           id,
           data: {
@@ -159,7 +157,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
         trackTiming();
       }
     },
-    [uploadVideoPoster, updateMediaElement, setProperties]
+    [uploadVideoPoster, updateElementsByResourceId, updateMediaElement]
   );
 
   return {

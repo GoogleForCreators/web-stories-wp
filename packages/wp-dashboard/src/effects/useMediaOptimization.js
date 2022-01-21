@@ -17,9 +17,9 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
-import { trackEvent } from '@web-stories-wp/tracking';
-import { useSnackbar } from '@web-stories-wp/design-system';
+import { useCallback } from '@googleforcreators/react';
+import { trackEvent } from '@googleforcreators/tracking';
+import { useSnackbar } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -51,7 +51,11 @@ export default function useMediaOptimization() {
     trackEvent('video_optimization_optin', {
       status: mediaOptimization ? 'off' : 'on',
     });
-    showSnackbar({ message: SUCCESS.SETTINGS.UPDATED, dismissible: true });
+    showSnackbar({
+      'aria-label': SUCCESS.SETTINGS.UPDATED,
+      message: SUCCESS.SETTINGS.UPDATED,
+      dismissible: true,
+    });
   }, [mediaOptimization, showSnackbar, toggleWebStoriesMediaOptimization]);
 
   return {

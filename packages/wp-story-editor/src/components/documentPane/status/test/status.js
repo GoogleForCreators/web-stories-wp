@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
-import { StoryContext } from '@web-stories-wp/story-editor';
+import { StoryContext } from '@googleforcreators/story-editor';
 
 /**
  * Internal dependencies
@@ -132,7 +132,7 @@ describe('statusPanel', () => {
       },
       'test'
     );
-    expect(screen.queryByLabelText('Password')).toBeInTheDocument();
+    expect(screen.getByLabelText('Password')).toBeInTheDocument();
   });
 
   it('should hide password field when changing visibility', () => {

@@ -23,17 +23,16 @@ import {
   useDebouncedCallback,
   useEffect,
   useState,
-} from '@web-stories-wp/react';
-import { __, _x, TranslateWithMarkup, sprintf } from '@web-stories-wp/i18n';
-import { useFeature } from 'flagged';
+} from '@googleforcreators/react';
+import { __, _x, TranslateWithMarkup, sprintf } from '@googleforcreators/i18n';
 import {
   DropDown,
   Search,
   THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
-import { trackEvent } from '@web-stories-wp/tracking';
+} from '@googleforcreators/design-system';
+import { trackEvent } from '@googleforcreators/tracking';
 import styled from 'styled-components';
-import { TEXT_INPUT_DEBOUNCE } from '@web-stories-wp/dashboard';
+import { TEXT_INPUT_DEBOUNCE } from '@googleforcreators/dashboard';
 
 /**
  * Internal dependencies
@@ -152,13 +151,6 @@ export default function ArchiveSettings({
     });
     setSearchOptions(await searchPages(value));
   }, TEXT_INPUT_DEBOUNCE);
-
-  const isFeatureEnabled = useFeature('archivePageCustomization');
-
-  if (!isFeatureEnabled) {
-    return null;
-  }
-
   return (
     <SettingForm>
       <div>

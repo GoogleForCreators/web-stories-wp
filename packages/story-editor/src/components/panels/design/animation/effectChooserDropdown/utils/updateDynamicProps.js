@@ -21,7 +21,7 @@ import {
   BACKGROUND_ANIMATION_EFFECTS,
   DIRECTION,
   SCALE_DIRECTION,
-} from '@web-stories-wp/animation';
+} from '@googleforcreators/animation';
 
 const updateDynamicProps = ({ animation, disabledOptions = [] }) => {
   // we don't want to have a disbaled direction initially selected either.

@@ -24,7 +24,7 @@ import {
   useMemo,
   useState,
   useEffect,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 
 /**
  * Internal dependencies

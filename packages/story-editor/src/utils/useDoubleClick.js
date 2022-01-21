@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useState } from '@web-stories-wp/react';
+import { useCallback, useEffect, useState } from '@googleforcreators/react';
 
 /**
  * This hook creates a handler to use for double click listening
@@ -67,7 +67,6 @@ const useDoubleClick = (onSingleClick, onDoubleClick, ms = null) => {
           onSingleClick(evt, target);
         }
         setTarget(newTarget);
-        evt.persist();
         setLastEvent(evt);
         return;
       }

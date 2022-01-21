@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useContext } from '@web-stories-wp/react';
+import { useContext } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */

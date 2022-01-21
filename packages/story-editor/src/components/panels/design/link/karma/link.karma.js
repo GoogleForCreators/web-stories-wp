@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { waitFor } from '@testing-library/react';
-import { createSolidFromString } from '@web-stories-wp/patterns';
+import { createSolidFromString } from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies
@@ -234,16 +234,18 @@ describe('Link Panel', () => {
       await moveElementToBottom(frame, 0);
 
       await closePanel('Selection');
+      await closePanel('Color');
+      await closePanel('Border');
 
       linkPanel = fixture.editor.inspector.designPanel.link;
       await fixture.events.click(linkPanel.address);
 
-      await fixture.events.sleep(5000);
-
       await fixture.snapshot('Page Attachment warning & dashed line visible');
 
-      const warning = fixture.screen.getByText(
-        'Link can not reside below the dashed line when a page attachment is present'
+      const warning = await waitFor(() =>
+        fixture.screen.getByText(
+          'Link can not reside below the dashed line when a page attachment is present'
+        )
       );
       expect(warning).toBeDefined();
     });

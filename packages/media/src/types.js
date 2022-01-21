@@ -23,8 +23,8 @@ const ResourcePropTypes = {};
 
 ResourcePropTypes.resourceSize = PropTypes.shape({
   file: PropTypes.string,
-  source_url: PropTypes.string.isRequired,
-  mime_type: PropTypes.string.isRequired,
+  sourceUrl: PropTypes.string.isRequired,
+  mimeType: PropTypes.string.isRequired,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
 });
@@ -84,7 +84,6 @@ ResourcePropTypes.gifResource = PropTypes.shape({
   height: PropTypes.number.isRequired,
   title: PropTypes.string,
   alt: PropTypes.string,
-  local: PropTypes.bool,
   sizes: ResourcePropTypes.imageResourceSizes,
   output: PropTypes.shape({
     mimeType: PropTypes.string.isRequired,
@@ -136,6 +135,8 @@ export { ResourcePropTypes };
  * Attachment object.
  *
  * @typedef {Attachment} Attachment
+ * @property {string|null} baseColor Attachment base color.
+ * @property {string|null} blurHash Attachment blur hash.
  * @property {string} [type] Attachment type, e.g. video or image.
  * @property {string} mimeType The MIME type.
  * @property {string|null} creationDate When the attachment was created.
@@ -165,7 +166,7 @@ export { ResourcePropTypes };
  * @typedef {ResourceSize} ResourceSize
  * @property {number} width The width of the ResourceSize.
  * @property {number} height The height of the ResourceSize.
- * @property {string} source_url The URL pointing to the resource for this size.
+ * @property {string} sourceUrl The URL pointing to the resource for this size.
  * @property {string|null} mimeType The mimeType of this ResourceSize.
  */
 
@@ -174,6 +175,7 @@ export { ResourcePropTypes };
  *
  * @typedef {Resource} Resource
  * @property {string|null} baseColor An optional attribution to detect the base color of a resource (an image or video). Value looks like #ff00ff.
+ * @property {string|null} blurHash An optional attribution to detect the blurhash of a resource (an image or video).
  * @property {string|null} type Resource type. Currently only "image" and "video" values are allowed. If not specified, will be calculated from the mime-type.
  * @property {string} mimeType The MIME type.
  * @property {string|null} creationDate When resource was created.

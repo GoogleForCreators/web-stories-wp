@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
-import { noop } from '@web-stories-wp/design-system';
+import { noop } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
@@ -37,7 +37,6 @@ const fakeStories = [
     status: 'publish',
     title: 'Story A',
     pages: [{ id: '10', elements: [] }],
-    centerTargetAction: () => {},
     bottomTargetAction: 'https://example.com',
     link: 'https://example.com',
     editStoryLink: 'https://example.com',
@@ -53,7 +52,6 @@ const fakeStories = [
     status: 'draft',
     title: 'Story B',
     pages: [{ id: '20', elements: [] }],
-    centerTargetAction: () => {},
     bottomTargetAction: 'https://example.com',
     link: 'https://example.com',
     editStoryLink: 'https://example.com',
@@ -69,7 +67,6 @@ const fakeStories = [
     status: 'publish',
     title: 'Story C',
     pages: [{ id: '30', elements: [] }],
-    centerTargetAction: () => {},
     bottomTargetAction: 'https://example.com',
     link: 'https://example.com',
     editStoryLink: 'https://example.com',

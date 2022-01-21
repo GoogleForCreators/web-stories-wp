@@ -17,11 +17,11 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useState } from '@web-stories-wp/react';
+import { useCallback, useMemo, useState } from '@googleforcreators/react';
 import styled from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
-import { Input } from '@web-stories-wp/design-system';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { __ } from '@googleforcreators/i18n';
+import { Input } from '@googleforcreators/design-system';
+import { trackEvent } from '@googleforcreators/tracking';
 import {
   Row,
   RadioGroup,
@@ -30,7 +30,7 @@ import {
   useStory,
   useCheckpoint,
   useRefreshPostEditURL,
-} from '@web-stories-wp/story-editor';
+} from '@googleforcreators/story-editor';
 
 const InputRow = styled(Row)`
   margin-left: 34px;

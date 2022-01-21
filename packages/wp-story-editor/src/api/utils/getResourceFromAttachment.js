@@ -21,7 +21,11 @@ import {
   createResource,
   getTypeFromMime,
   getResourceSize,
-} from '@web-stories-wp/media';
+} from '@googleforcreators/media';
+/**
+ * Internal dependencies
+ */
+import { snakeToCamelCaseObjectKeys } from './snakeToCamelCase';
 
 /**
  * MediaDetails object.
@@ -51,15 +55,21 @@ function getImageResourceFromAttachment(attachment) {
   const {
     id,
     date_gmt,
-    media_details: { width, height, sizes },
+    media_details: { width, height, sizes: _sizes },
     mime_type: mimeType,
     alt_text: alt,
     source_url: src,
-    meta: { web_stories_base_color: baseColor },
+    meta: { web_stories_base_color: baseColor, web_stories_blurhash: blurHash },
   } = attachment;
+
+  const sizes = Object.entries(_sizes).reduce((sizes, [key, value]) => {
+    sizes[key] = snakeToCamelCaseObjectKeys(value);
+    return sizes;
+  }, {});
 
   return createResource({
     baseColor,
+    blurHash,
     mimeType,
     creationDate: date_gmt,
     src,
@@ -93,11 +103,13 @@ function getVideoResourceFromAttachment(attachment) {
     meta: {
       web_stories_trim_data: trimData,
       web_stories_base_color: baseColor,
+      web_stories_blurhash: blurHash,
     },
   } = attachment;
 
   return createResource({
     baseColor,
+    blurHash,
     mimeType,
     creationDate: date_gmt,
     src,
@@ -137,11 +149,12 @@ function getGifResourceFromAttachment(attachment) {
     },
     alt_text: alt,
     source_url: src,
-    meta: { web_stories_base_color: baseColor },
+    meta: { web_stories_base_color: baseColor, web_stories_blurhash: blurHash },
   } = attachment;
 
   return createResource({
     baseColor,
+    blurHash,
     type: 'gif',
     mimeType: 'image/gif',
     creationDate: date_gmt,

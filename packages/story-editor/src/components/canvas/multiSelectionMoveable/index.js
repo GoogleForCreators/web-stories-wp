@@ -18,8 +18,8 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useRef, useEffect, useState } from '@web-stories-wp/react';
-import { useUnits } from '@web-stories-wp/units';
+import { useRef, useEffect, useState } from '@googleforcreators/react';
+import { useUnits } from '@googleforcreators/units';
 /**
  * Internal dependencies
  */
@@ -38,7 +38,7 @@ import useRotate from './useRotate';
 
 const CORNER_HANDLES = ['nw', 'ne', 'sw', 'se'];
 
-function MultiSelectionMoveable({ selectedElements }) {
+function MultiSelectionMoveable({ selectedElements, ...props }) {
   const moveable = useRef();
 
   const { updateElementsById, deleteElementsById, backgroundElement } =
@@ -234,6 +234,7 @@ function MultiSelectionMoveable({ selectedElements }) {
 
   return (
     <Moveable
+      {...props}
       className={'default-moveable'}
       ref={moveable}
       zIndex={0}

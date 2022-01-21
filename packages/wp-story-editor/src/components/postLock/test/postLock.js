@@ -18,13 +18,13 @@
  * External dependencies
  */
 import { FlagsProvider } from 'flagged';
-import { setAppElement } from '@web-stories-wp/design-system';
+import { setAppElement } from '@googleforcreators/design-system';
 import { screen, act, waitFor } from '@testing-library/react';
 import {
   ConfigContext,
   StoryContext,
   CurrentUserContext,
-} from '@web-stories-wp/story-editor';
+} from '@googleforcreators/story-editor';
 
 /**
  * Internal dependencies
@@ -148,18 +148,16 @@ describe('PostLock', () => {
   it.skip('should display dialog', async () => {
     jest.spyOn(window, 'setInterval');
 
-    act(() => {
-      getStoryLockById.mockReturnValue(
-        Promise.resolve({
-          locked: true,
-          user: 123,
-          nonce: 'fsdfds',
-          _embedded: { author: [{ id: 123, name: 'John Doe' }] },
-        })
-      );
+    getStoryLockById.mockReturnValue(
+      Promise.resolve({
+        locked: true,
+        user: 123,
+        nonce: 'fsdfds',
+        _embedded: { author: [{ id: 123, name: 'John Doe' }] },
+      })
+    );
 
-      setup();
-    });
+    setup();
 
     expect(setInterval).toHaveBeenCalledTimes(1);
 
@@ -173,12 +171,14 @@ describe('PostLock', () => {
     });
 
     await waitFor(() => {
-      const dashboardButton = screen.getByRole('link', { name: 'Dashboard' });
-      expect(dashboardButton).toBeInTheDocument();
       expect(
-        screen.getByText('John Doe now has editing control of this story.')
+        screen.getByRole('link', { name: 'Dashboard' })
       ).toBeInTheDocument();
     });
+
+    expect(
+      screen.getByText('John Doe now has editing control of this story.')
+    ).toBeInTheDocument();
   });
 
   it('should not display dialog', () => {

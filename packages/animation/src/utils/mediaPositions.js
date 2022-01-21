@@ -37,8 +37,8 @@ import {
   FULLBLEED_HEIGHT,
   PAGE_HEIGHT,
   PAGE_WIDTH,
-} from '@web-stories-wp/units';
-import { getMediaSizePositionProps } from '@web-stories-wp/media';
+} from '@googleforcreators/units';
+import { getMediaSizePositionProps } from '@googleforcreators/media';
 
 const PRECISION = 1;
 

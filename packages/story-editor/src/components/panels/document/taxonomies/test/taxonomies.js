@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { screen, act } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -49,19 +49,13 @@ function arrange({ taxonomies, isCapable }) {
     },
   };
 
-  let view;
-
-  act(() => {
-    view = renderWithTheme(
-      <StoryContext.Provider value={storyContextValue}>
-        <TaxonomyContext.Provider value={taxonomyContextValue}>
-          <TaxonomiesPanel />
-        </TaxonomyContext.Provider>
-      </StoryContext.Provider>
-    );
-  });
-
-  return view;
+  return renderWithTheme(
+    <StoryContext.Provider value={storyContextValue}>
+      <TaxonomyContext.Provider value={taxonomyContextValue}>
+        <TaxonomiesPanel />
+      </TaxonomyContext.Provider>
+    </StoryContext.Provider>
+  );
 }
 
 describe('TaxonomiesPanel', () => {
@@ -98,7 +92,7 @@ describe('TaxonomiesPanel', () => {
           slug: 'web_story_category',
           restBase: 'web_story_category',
           name: 'Categories',
-          labels: { not_found: '' },
+          labels: { notFound: '' },
           hierarchical: false,
         },
       ],
@@ -128,9 +122,9 @@ describe('TaxonomiesPanel', () => {
           restBase: 'web_story_category',
           name: 'Categories',
           labels: {
-            search_items: 'Story Categories',
-            add_new_item: 'Add New',
-            not_found: '',
+            searchItems: 'Story Categories',
+            addNewItem: 'Add New',
+            notFound: '',
           },
           hierarchical: true,
           visibility: {

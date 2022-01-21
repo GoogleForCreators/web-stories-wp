@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\Admin;
 
+use Google\Web_Stories\Infrastructure\Conditional;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Stories_Script_Data;
 use Google\Web_Stories\Story_Post_Type;
@@ -42,7 +43,7 @@ use WP_Error;
  *
  * @package Google\Web_Stories
  */
-class Customizer extends Service_Base {
+class Customizer extends Service_Base implements Conditional {
 
 	/**
 	 * Customizer section slug.
@@ -122,6 +123,17 @@ class Customizer extends Service_Base {
 	 */
 	public function register() {
 		add_action( 'customize_register', [ $this, 'register_customizer_settings' ] );
+	}
+
+	/**
+	 * Check whether the conditional object is currently needed.
+	 *
+	 * @since 1.16.0
+	 *
+	 * @return bool Whether the conditional object is needed.
+	 */
+	public static function is_needed(): bool {
+		return ! function_exists( 'wp_is_block_theme' ) || ! wp_is_block_theme();
 	}
 
 	/**

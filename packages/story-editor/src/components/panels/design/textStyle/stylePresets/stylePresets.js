@@ -27,10 +27,10 @@ import {
   Icons,
   Button,
   PLACEMENT,
-} from '@web-stories-wp/design-system';
-import { __ } from '@web-stories-wp/i18n';
+} from '@googleforcreators/design-system';
+import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
-import { useRef, useState } from '@web-stories-wp/react';
+import { useRef, useState } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -56,6 +56,7 @@ const StylesWrapper = styled.div``;
 const SubHeading = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.secondary};
   margin: 6px 0;
+  font-weight: ${({ theme }) => theme.typography.weight.bold};
 `;
 
 const StyledButton = styled(Button)`

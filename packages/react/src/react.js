@@ -34,5 +34,3 @@ export {
   useImperativeHandle,
   useContext as useContextReact,
 } from 'react';
-
-export { shallowEqual } from 'react-pure-render';

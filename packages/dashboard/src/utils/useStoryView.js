@@ -23,9 +23,9 @@ import {
   useMemo,
   useRef,
   useState,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent } from '@googleforcreators/tracking';
 /**
  * Internal dependencies
  */
@@ -50,6 +50,7 @@ export default function useStoryView({
   const [authorFilterId, _setAuthorFilterId] = useState(null);
   const [queriedAuthors, setQueriedAuthors] = useState([]);
   const showStoriesWhileLoading = useRef(false);
+  const [initialPageReady, setInitialPageReady] = useState(false);
 
   const { pageSize } = usePagePreviewSize({
     thumbnailMode: viewStyle === VIEW_STYLE.LIST,
@@ -123,15 +124,17 @@ export default function useStoryView({
   }, []);
 
   useEffect(() => {
-    trackEvent('search', {
-      search_type: 'dashboard_stories',
-      search_term: searchKeyword,
-      search_filter: filter,
-      search_author_filter: authorFilterId,
-      search_order: sortDirection,
-      search_orderby: sort,
-      search_view: viewStyle,
-    });
+    if (searchKeyword.length) {
+      trackEvent('search', {
+        search_type: 'dashboard_stories',
+        search_term: searchKeyword,
+        search_filter: filter,
+        search_author_filter: authorFilterId,
+        search_order: sortDirection,
+        search_orderby: sort,
+        search_view: viewStyle,
+      });
+    }
   }, [searchKeyword, filter, sortDirection, sort, viewStyle, authorFilterId]);
 
   useEffect(() => {
@@ -140,6 +143,13 @@ export default function useStoryView({
       showStoriesWhileLoading.current = false;
     }
   }, [isLoading]);
+
+  useEffect(() => {
+    // give views a way to prevent early excess renders by waiting until data's ready
+    if (totalPages && !initialPageReady) {
+      setInitialPageReady(true);
+    }
+  }, [totalPages, initialPageReady]);
 
   return useMemo(
     () => ({
@@ -173,6 +183,7 @@ export default function useStoryView({
         queriedAuthors,
         setQueriedAuthors,
       },
+      initialPageReady,
       showStoriesWhileLoading,
     }),
     [
@@ -184,6 +195,7 @@ export default function useStoryView({
       sortDirection,
       setSortDirection,
       filter,
+      initialPageReady,
       setFilter,
       page,
       requestNextPage,

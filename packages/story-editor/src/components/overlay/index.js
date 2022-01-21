@@ -18,7 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { forwardRef, useContext, createPortal } from '@web-stories-wp/react';
+import { forwardRef, useContext, createPortal } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -37,7 +37,7 @@ const Wrapper = styled.div`
 `;
 
 function InOverlayWithRef(
-  { zIndex, pointerEvents, render, children = null },
+  { zIndex, pointerEvents, render, children = null, ...props },
   ref
 ) {
   const { container, overlay } = useContext(Context);
@@ -47,6 +47,7 @@ function InOverlayWithRef(
   const slot = (
     /* eslint-disable-next-line styled-components-a11y/no-static-element-interactions -- No role required here. */
     <Wrapper
+      {...props}
       ref={ref}
       zIndex={zIndex || 0}
       pointerEvents={pointerEvents}

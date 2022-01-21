@@ -17,11 +17,10 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
-import { useCallback, useState } from '@web-stories-wp/react';
-import { getTimeTracker } from '@web-stories-wp/tracking';
-import { useSnackbar } from '@web-stories-wp/design-system';
-import { useFeature } from 'flagged';
+import { __ } from '@googleforcreators/i18n';
+import { useCallback, useState } from '@googleforcreators/react';
+import { getTimeTracker } from '@googleforcreators/tracking';
+import { useSnackbar } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -57,8 +56,6 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
   const { editLink } = story;
   const refreshPostEditURL = useRefreshPostEditURL(storyId, editLink);
 
-  const enableBetterCaptions = useFeature('enableBetterCaptions');
-
   const saveStory = useCallback(
     (props) => {
       setIsSaving(true);
@@ -75,7 +72,6 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
           story,
           pages,
           metadata,
-          args: { enableBetterCaptions },
         }),
         ...props,
       })
@@ -84,10 +80,10 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
             status,
             slug,
             link,
-            preview_link: previewLink,
-            edit_link: newEditLink,
-            embed_post_link: embedPostLink,
-            featured_media: featuredMedia,
+            previewLink,
+            editLink: newEditLink,
+            embedPostLink,
+            featuredMedia,
           } = data;
 
           const properties = {
@@ -130,7 +126,6 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
       refreshPostEditURL,
       showSnackbar,
       resetNewChanges,
-      enableBetterCaptions,
     ]
   );
 

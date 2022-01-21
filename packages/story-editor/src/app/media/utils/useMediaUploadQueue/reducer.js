@@ -18,7 +18,12 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
-import { revokeBlob } from '@web-stories-wp/media';
+import { revokeBlob } from '@googleforcreators/media';
+
+/**
+ * Internal dependencies
+ */
+import { ITEM_STATUS } from './constants';
 
 /**
  * Add an item to the upload queue.
@@ -27,7 +32,7 @@ import { revokeBlob } from '@web-stories-wp/media';
  * @param {Object} action Action object.
  * @param {Object} action.payload Action payload.
  * @param {File} action.payload.file File object.
- * @param {import('@web-stories-wp/media').Resource} action.payload.resource Resource object.
+ * @param {import('@googleforcreators/media').Resource} action.payload.resource Resource object.
  * @param {Function} action.payload.onUploadStart Callback for when upload starts.
  * @param {Function} action.payload.onUploadProgress Callback for when upload progresses.
  * @param {Function} action.payload.onUploadError Callback for when upload errors.
@@ -35,7 +40,8 @@ import { revokeBlob } from '@web-stories-wp/media';
  * @param {Object}   action.payload.additionalData Additional Data object.
  * @param {File} action.payload.posterFile File object.
  * @param {boolean} action.payload.muteVideo Whether the video being uploaded should be muted.
- * @param {import('@web-stories-wp/media').TrimData} action.payload.trimData Trim data.
+ * @param {import('@googleforcreators/media').TrimData} action.payload.trimData Trim data.
+ * @param {number} action.payload.originalResourceId Original resource id.
  * @return {Object} New state
  */
 export function addItem(
@@ -52,18 +58,21 @@ export function addItem(
       posterFile,
       muteVideo,
       trimData,
+      originalResourceId,
     },
   }
 ) {
   const id = uuidv4();
+
+  if (!resource.id) {
+    resource.id = uuidv4();
+  }
+
   const newItem = {
     id,
     file,
-    state: 'PENDING',
-    resource: {
-      ...resource,
-      id,
-    },
+    state: ITEM_STATUS.PENDING,
+    resource,
     onUploadStart,
     onUploadProgress,
     onUploadError,
@@ -72,6 +81,7 @@ export function addItem(
     posterFile,
     muteVideo,
     trimData,
+    originalResourceId,
   };
 
   return {
@@ -96,7 +106,7 @@ export function startUploading(state, { payload: { id } }) {
       item.id === id
         ? {
             ...item,
-            state: 'UPLOADING',
+            state: ITEM_STATUS.UPLOADING,
           }
         : item
     ),
@@ -110,7 +120,7 @@ export function startUploading(state, { payload: { id } }) {
  * @param {Object} action Action object.
  * @param {Object} action.payload Action payload.
  * @param {string} action.payload.id Item ID.
- * @param {import('@web-stories-wp/media').Resource} action.payload.resource Resource object.
+ * @param {import('@googleforcreators/media').Resource} action.payload.resource Resource object.
  * @return {Object} New state
  */
 export function finishUploading(state, { payload: { id, resource } }) {
@@ -119,8 +129,15 @@ export function finishUploading(state, { payload: { id, resource } }) {
     return state;
   }
 
-  if (queueItem.resource.src !== resource.src) {
+  if (queueItem.resource.src && queueItem.resource.src !== resource.src) {
     revokeBlob(queueItem.resource.src);
+  }
+
+  if (
+    resource.poster &&
+    queueItem.resource.poster &&
+    queueItem.resource.poster !== resource.poster
+  ) {
     revokeBlob(queueItem.resource.poster);
   }
 
@@ -130,9 +147,15 @@ export function finishUploading(state, { payload: { id, resource } }) {
       item.id === id
         ? {
             ...item,
-            resource,
+            resource: {
+              ...resource,
+              // Ensure that we don't override
+              poster: resource.poster || item.resource.poster,
+            },
+            previousResourceId: item.resource.id,
             posterFile: null,
-            state: 'UPLOADED',
+            originalResourceId: null,
+            state: ITEM_STATUS.UPLOADED,
           }
         : item
     ),
@@ -155,7 +178,7 @@ export function cancelUploading(state, { payload: { id } }) {
       item.id === id
         ? {
             ...item,
-            state: 'CANCELLED',
+            state: ITEM_STATUS.CANCELLED,
           }
         : item
     ),
@@ -178,11 +201,7 @@ export function startTranscoding(state, { payload: { id } }) {
       item.id === id
         ? {
             ...item,
-            state: 'TRANSCODING',
-            resource: {
-              ...item.resource,
-              isTranscoding: true,
-            },
+            state: ITEM_STATUS.TRANSCODING,
           }
         : item
     ),
@@ -207,10 +226,9 @@ export function finishTranscoding(state, { payload: { id, file } }) {
         ? {
             ...item,
             file,
-            state: 'TRANSCODED',
+            state: ITEM_STATUS.TRANSCODED,
             resource: {
               ...item.resource,
-              isTranscoding: false,
               isOptimized: true,
             },
           }
@@ -235,11 +253,7 @@ export function startMuting(state, { payload: { id } }) {
       item.id === id
         ? {
             ...item,
-            state: 'MUTING',
-            resource: {
-              ...item.resource,
-              isMuting: true,
-            },
+            state: ITEM_STATUS.MUTING,
           }
         : item
     ),
@@ -264,10 +278,9 @@ export function finishMuting(state, { payload: { id, file } }) {
         ? {
             ...item,
             file,
-            state: 'MUTED',
+            state: ITEM_STATUS.MUTED,
             resource: {
               ...item.resource,
-              isMuting: false,
               isMuted: true,
             },
           }
@@ -292,11 +305,7 @@ export function startTrimming(state, { payload: { id } }) {
       item.id === id
         ? {
             ...item,
-            state: 'TRIMMING',
-            resource: {
-              ...item.resource,
-              isTrimming: true,
-            },
+            state: ITEM_STATUS.TRIMMING,
           }
         : item
     ),
@@ -321,11 +330,7 @@ export function finishTrimming(state, { payload: { id, file } }) {
         ? {
             ...item,
             file,
-            state: 'TRIMMED',
-            resource: {
-              ...item.resource,
-              isTrimming: false,
-            },
+            state: ITEM_STATUS.TRIMMED,
           }
         : item
     ),
@@ -342,7 +347,7 @@ export function finishTrimming(state, { payload: { id, file } }) {
  * @param {Object} action.payload Action payload.
  * @param {string} action.payload.id Item ID.
  * @param {File} action.payload.posterFile Poster file.
- * @param {import('@web-stories-wp/media').Resource} action.payload.resource Resource object.
+ * @param {import('@googleforcreators/media').Resource} action.payload.resource Resource object.
  * @return {Object} New state
  */
 export function replacePlaceholderResource(
@@ -367,10 +372,35 @@ export function replacePlaceholderResource(
             ...item,
             resource: {
               ...resource,
-              id,
+              // Keep the existing resource's ID (which at this point is a random uuid)
+              // instead of overriding it with another random uuid.
+              id: item.resource.id,
               isPlaceholder: false,
             },
             posterFile,
+          }
+        : item
+    ),
+  };
+}
+
+/**
+ * Mark an item upload as fully finished.
+ *
+ * @param {Object} state Current state.
+ * @param {Object} action Action object.
+ * @param {Object} action.payload Action payload.
+ * @param {string} action.payload.id Item ID.
+ * @return {Object} New state
+ */
+export function finishItem(state, { payload: { id } }) {
+  return {
+    ...state,
+    queue: state.queue.map((item) =>
+      item.id === id
+        ? {
+            ...item,
+            state: ITEM_STATUS.FINISHED,
           }
         : item
     ),

@@ -24,14 +24,14 @@ import {
   useRef,
   useEffect,
   useUnmount,
-} from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
+} from '@googleforcreators/react';
+import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 import {
   getMediaSizePositionProps,
   calculateSrcSet,
-} from '@web-stories-wp/media';
-import { BG_MIN_SCALE, BG_MAX_SCALE } from '@web-stories-wp/animation';
+} from '@googleforcreators/media';
+import { BG_MIN_SCALE, BG_MAX_SCALE } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies
@@ -295,6 +295,7 @@ function MediaEdit({ element, box, setLocalProperties }) {
       )}
 
       <ScalePanel
+        aria-label={__('Scale media', 'web-stories')}
         data-testid="edit-panel-slider"
         setProperties={updateLocalProperties}
         x={x}

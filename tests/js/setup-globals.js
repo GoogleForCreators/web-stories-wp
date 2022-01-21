@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-global.webStoriesEditorSettings = {};
-global.webStoriesDashboardSettings = {};
+global.webStories = {};
 global.webStoriesBlockSettings = {
   config: {
     api: {},
@@ -78,6 +77,8 @@ global.matchMedia = jest.fn().mockImplementation((query) => ({
 window.HTMLMediaElement.prototype.load = () => undefined;
 window.HTMLMediaElement.prototype.play = () => Promise.resolve();
 window.HTMLMediaElement.prototype.pause = () => undefined;
+File.prototype.arrayBuffer = () =>
+  new Promise((resolve) => resolve(new ArrayBuffer(0)));
 
 // Prevent React warnings when setting the `muted` attribute on `<video>` elements.
 // See https://github.com/testing-library/react-testing-library/issues/470

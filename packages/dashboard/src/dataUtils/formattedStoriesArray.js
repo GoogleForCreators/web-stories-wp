@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { toUTCDate } from '@web-stories-wp/date';
+import { toUTCDate } from '@googleforcreators/date';
 
 // @todo Remove WordPress specific and unused fields.
 const formattedStoriesArray = [

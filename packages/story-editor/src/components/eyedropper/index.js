@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
+import { useCallback } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -90,6 +90,9 @@ export default ({ onChange }) => {
                     ).data;
                     setEyedropperPixelData(pixelData);
                     setEyedropperImg(canvas.toDataURL());
+                    resolve();
+                  })
+                  .catch(() => {
                     resolve();
                   });
               });

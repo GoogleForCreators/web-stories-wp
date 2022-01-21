@@ -18,10 +18,10 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { __ } from '@web-stories-wp/i18n';
-import { generatePatternStyles } from '@web-stories-wp/patterns';
-import { PAGE_HEIGHT, PAGE_WIDTH } from '@web-stories-wp/units';
-import { getTotalDuration, StoryAnimation } from '@web-stories-wp/animation';
+import { __ } from '@googleforcreators/i18n';
+import { generatePatternStyles } from '@googleforcreators/patterns';
+import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
+import { getTotalDuration, StoryAnimation } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies
@@ -34,12 +34,7 @@ import getLongestMediaElement from './utils/getLongestMediaElement';
 
 const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 
-function OutputPage({
-  page,
-  autoAdvance = true,
-  defaultPageDuration = 7,
-  args = {},
-}) {
+function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
   const {
     id,
     animations,
@@ -107,7 +102,7 @@ function OutputPage({
           >
             <div className="page-fullbleed-area" style={backgroundStyles}>
               <div className="page-safe-area">
-                <OutputElement element={backgroundElement} args={args} />
+                <OutputElement element={backgroundElement} />
                 {backgroundElement.overlay && (
                   <div
                     className="page-background-overlay-area"
@@ -127,13 +122,13 @@ function OutputPage({
           <div className="page-fullbleed-area">
             <div className="page-safe-area">
               {validElements.map((element) => (
-                <OutputElement key={element.id} element={element} args={args} />
+                <OutputElement key={element.id} element={element} />
               ))}
             </div>
           </div>
         </amp-story-grid-layer>
       </StoryAnimation.Provider>
-      {args.enableBetterCaptions && videoCaptions.length > 0 && (
+      {videoCaptions.length > 0 && (
         <amp-story-grid-layer
           template="vertical"
           aspect-ratio={ASPECT_RATIO}
@@ -171,9 +166,6 @@ OutputPage.propTypes = {
   page: StoryPropTypes.page.isRequired,
   autoAdvance: PropTypes.bool,
   defaultPageDuration: PropTypes.number,
-  args: PropTypes.shape({
-    enableBetterCaptions: PropTypes.bool,
-  }),
 };
 
 export default OutputPage;

@@ -234,13 +234,10 @@ describe('Background Copy & Paste', () => {
     // Navigate back to previous page and add Background image
     await goToPreviousPage();
     const bgMedia = fixture.editor.library.media.item(0);
-    const canvas = fixture.editor.canvas.framesLayer.fullbleed;
-    await fixture.events.mouse.seq(({ down, moveRel, up }) => [
-      moveRel(bgMedia, 20, 20),
-      down(),
-      moveRel(canvas, 5, 5),
-      up(),
-    ]);
+    await fixture.events.click(bgMedia);
+    await fixture.events.click(
+      fixture.editor.inspector.designPanel.sizePosition.setAsBackground
+    );
 
     // we want to zoom in a little bit so background
     // is big enough for all background animations.

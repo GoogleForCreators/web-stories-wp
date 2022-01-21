@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { useUnits } from '@web-stories-wp/units';
-import { useBatchingCallback } from '@web-stories-wp/react';
+import { useUnits } from '@googleforcreators/units';
+import { useBatchingCallback } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
@@ -33,9 +33,17 @@ function useSingleSelectionDrag({
   setTransformStyle,
   frame,
 }) {
-  const {
-    actions: { handleDrag, handleDrop, setDraggingResource, isDropSource },
-  } = useDropTargets();
+  const { isDropSource, handleDrag, handleDrop, setDraggingResource } =
+    useDropTargets(
+      ({
+        actions: { handleDrag, handleDrop, isDropSource, setDraggingResource },
+      }) => ({
+        handleDrag,
+        handleDrop,
+        setDraggingResource,
+        isDropSource,
+      })
+    );
 
   const { handleElementOutOfCanvas } = useElementOutOfCanvas();
 

@@ -17,13 +17,19 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo, useRef, useEffect } from '@web-stories-wp/react';
+import {
+  useCallback,
+  useMemo,
+  useRef,
+  useEffect,
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { useVirtual } from 'react-virtual';
-import { __ } from '@web-stories-wp/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
-import { UnitsProvider } from '@web-stories-wp/units';
-import { useSnackbar } from '@web-stories-wp/design-system';
+import { __ } from '@googleforcreators/i18n';
+import { trackEvent } from '@googleforcreators/tracking';
+import { UnitsProvider } from '@googleforcreators/units';
+import { useSnackbar } from '@googleforcreators/design-system';
+
 /**
  * Internal dependencies
  */
@@ -59,11 +65,12 @@ function TemplateList({
   const pageIds = useMemo(() => pages?.map((page) => page.id) || [], [pages]);
 
   const handlePageClick = useCallback(
-    (page) => {
+    ({ templateId, version, title, ...page }) => {
+      // Just using destructuring above so we don't pass unnecessary props to addPage().
       const duplicatedPage = duplicatePage(page);
       addPage({ page: duplicatedPage });
       trackEvent('insert_page_template', {
-        name: page.title,
+        name: title || 'custom', // Custom page templates don't have titles (yet).
       });
       showSnackbar({
         message: __('Page Template added.', 'web-stories'),
@@ -79,8 +86,8 @@ function TemplateList({
     size: rowsTotal,
     parentRef,
     estimateSize: useCallback(
-      () => pageSize.containerHeight + PANEL_GRID_ROW_GAP,
-      [pageSize.containerHeight]
+      () => pageSize.height + PANEL_GRID_ROW_GAP,
+      [pageSize.height]
     ),
     overscan: 4,
   });
@@ -145,7 +152,7 @@ function TemplateList({
           height={rowVirtualizer.totalSize}
           ref={containerRef}
           columnWidth={pageSize.width}
-          rowHeight={pageSize.containerHeight}
+          rowHeight={pageSize.height}
           paneLeft={PANE_PADDING}
           onFocus={handleGridFocus}
           role="list"
@@ -195,6 +202,9 @@ TemplateList.propTypes = {
   pages: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
+      image: PropTypes.shape({
+        url: PropTypes.string,
+      }),
     })
   ),
   pageSize: PropTypes.object.isRequired,

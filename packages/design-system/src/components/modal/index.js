@@ -17,29 +17,18 @@
 /**
  * External dependencies
  */
-import { useContextReact as useContext } from '@web-stories-wp/react';
+import { useContextReact as useContext } from '@googleforcreators/react';
 import ReactModal from 'react-modal';
 import PropTypes from 'prop-types';
 import { createGlobalStyle, ThemeContext } from 'styled-components';
 
-/**
- * Internal dependencies
- */
-import { THEME_CONSTANTS } from '../../theme';
-
-const CONTENT_CLASS = 'WebStories_ReactModal__Content';
-const OVERLAY_CLASS = 'WebStories_ReactModal__Overlay';
+export const CONTENT_CLASS = 'WebStories_ReactModal__Content';
+export const OVERLAY_CLASS = 'WebStories_ReactModal__Overlay';
 
 export const ModalGlobalStyle = createGlobalStyle`
   .${OVERLAY_CLASS} {
     opacity: 0;
     transition: opacity 0.1s ease-out;
-    top: ${THEME_CONSTANTS.WP_ADMIN.TOOLBAR_HEIGHT}px !important;
-    left: ${THEME_CONSTANTS.WP_ADMIN.MENU_WIDTH}px !important;
-  }
-
-  body.folded .${OVERLAY_CLASS} {
-    left: ${THEME_CONSTANTS.WP_ADMIN.MENU_FOLDED_WIDTH}px !important;
   }
 
   .${OVERLAY_CLASS}.ReactModal__Overlay--after-open {

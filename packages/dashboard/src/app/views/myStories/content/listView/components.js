@@ -17,7 +17,7 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import { Text, themeHelpers } from '@web-stories-wp/design-system';
+import { Text, themeHelpers } from '@googleforcreators/design-system';
 
 const { focusableOutlineCSS } = themeHelpers;
 

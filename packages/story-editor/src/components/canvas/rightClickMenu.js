@@ -17,9 +17,17 @@
  * External dependencies
  */
 import styled, { StyleSheetManager } from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
-import { ContextMenu } from '@web-stories-wp/design-system';
-import { createPortal, useRef, useEffect } from '@web-stories-wp/react';
+import { __ } from '@googleforcreators/i18n';
+import {
+  ContextMenu,
+  ContextMenuComponents,
+} from '@googleforcreators/design-system';
+import {
+  createPortal,
+  Fragment,
+  useRef,
+  useEffect,
+} from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -72,15 +80,35 @@ const RightClickMenu = () => {
             data-testid="right-click-context-menu"
             isOpen={isMenuOpen}
             onDismiss={onCloseMenu}
-            items={rightClickMenuItems}
-            groupLabel={__(
+            aria-label={__(
               'Context Menu for the selected element',
               'web-stories'
             )}
             maskRef={maskRef}
             onMouseDown={(evt) => evt.stopPropagation()}
             isRTL={isRTL}
-          />
+          >
+            {rightClickMenuItems.map(
+              ({ label, shortcut, separator, ...buttonProps }) => (
+                <Fragment key={label}>
+                  {separator === 'top' && (
+                    <ContextMenuComponents.MenuSeparator />
+                  )}
+                  <ContextMenuComponents.MenuButton {...buttonProps}>
+                    {label}
+                    {shortcut && (
+                      <ContextMenuComponents.MenuShortcut>
+                        {shortcut.display}
+                      </ContextMenuComponents.MenuShortcut>
+                    )}
+                  </ContextMenuComponents.MenuButton>
+                  {separator === 'bottom' && (
+                    <ContextMenuComponents.MenuSeparator />
+                  )}
+                </Fragment>
+              )
+            )}
+          </ContextMenu>
         </DirectionAware>
       </RightClickMenuContainer>
     </StyleSheetManager>,

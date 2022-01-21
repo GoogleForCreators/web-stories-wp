@@ -18,42 +18,141 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useMemo, useRef, useState } from '@web-stories-wp/react';
-import { curatedFontNames } from '@web-stories-wp/fonts';
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from '@googleforcreators/react';
+import { CURATED_FONT_NAMES } from '@googleforcreators/fonts';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
+import { trackError } from '@googleforcreators/tracking';
 import loadStylesheet from '../../utils/loadStylesheet';
 import { FONT_WEIGHT_NAMES } from '../../constants';
+import { useAPI } from '../api';
 import Context from './context';
-import useLoadFonts from './effects/useLoadFonts';
 import useLoadFontFiles from './actions/useLoadFontFiles';
 
 export const GOOGLE_MENU_FONT_URL = 'https://fonts.googleapis.com/css';
 
 function FontProvider({ children }) {
-  const [fonts, setFonts] = useState([]);
+  const isCustomFontsEnabled = useFeature('customFonts');
+  const [queriedFonts, setQueriedFonts] = useState([]);
+  const [curatedFonts, setCuratedFonts] = useState([]);
   const [recentFonts, setRecentFonts] = useState([]);
+  const [customFonts, setCustomFonts] = useState(null);
+  const {
+    actions: { getFonts },
+  } = useAPI();
 
-  useLoadFonts({ fonts, setFonts });
+  const fonts = queriedFonts.length > 0 ? queriedFonts : curatedFonts;
 
-  const getFontBy = useCallback(
-    (key, value) => {
-      const foundFont = fonts.find((thisFont) => thisFont[key] === value);
-      if (!foundFont) {
-        return {};
+  useEffect(() => {
+    let mounted = true;
+    // Don't load custom fonts if not enabled.
+    // TODO: Don't load custom fonts when not requested by FontPicker.
+    if (!customFonts && getFonts && isCustomFontsEnabled) {
+      try {
+        (async () => {
+          const _customFonts = await getFonts({
+            service: 'custom',
+          });
+
+          if (!mounted) {
+            return;
+          }
+
+          const formattedFonts = _customFonts.map((font) => ({
+            id: font.family,
+            name: font.family,
+            value: font.family,
+            ...font,
+          }));
+
+          setCustomFonts(formattedFonts);
+        })();
+      } catch (err) {
+        trackError('font_provider', err.message);
       }
-      return foundFont;
+    }
+    return () => {
+      mounted = false;
+    };
+  });
+
+  useEffect(() => {
+    let mounted = true;
+
+    // Not defined when used within storyPageToDataUrl().
+    // TODO: Don't load curatedFonts when not requested by FontPicker.
+    if (!curatedFonts.length && getFonts) {
+      try {
+        (async () => {
+          const newFonts = await getFonts({
+            include: CURATED_FONT_NAMES.join(','),
+          });
+
+          if (!mounted) {
+            return;
+          }
+
+          const formattedFonts = newFonts.map((font) => ({
+            id: font.family,
+            name: font.family,
+            value: font.family,
+            ...font,
+          }));
+
+          setCuratedFonts(formattedFonts);
+        })();
+      } catch (err) {
+        trackError('font_provider', err.message);
+      }
+    }
+
+    return () => {
+      mounted = false;
+    };
+  }, [curatedFonts, getFonts]);
+
+  const { maybeEnqueueFontStyle, maybeLoadFont } = useLoadFontFiles();
+
+  const getFontByName = useCallback(
+    (name) => {
+      const foundFont = fonts.find((font) => font.family === name);
+      return foundFont ? foundFont : {};
     },
     [fonts]
   );
 
-  const getFontByName = useCallback(
-    (name) => {
-      return getFontBy('family', name);
+  const getFontsBySearch = useCallback(
+    async (search) => {
+      if (search.length < 2) {
+        setQueriedFonts([]);
+        return [];
+      }
+
+      // If there are custom fonts in the DB, we should not include those to search when custom fonts are not enabled.
+      const newFonts = await getFonts({
+        search,
+        service: isCustomFontsEnabled ? null : 'builtin',
+      });
+
+      const formattedFonts = newFonts.map((font) => ({
+        ...font,
+        id: font.family,
+        name: font.family,
+        value: font.family,
+      }));
+
+      setQueriedFonts(formattedFonts);
+      return formattedFonts;
     },
-    [getFontBy]
+    [getFonts, isCustomFontsEnabled]
   );
 
   const getFontWeight = useCallback(
@@ -99,8 +198,8 @@ function FontProvider({ children }) {
   );
 
   const menuFonts = useRef([]);
-  const ensureMenuFontsLoaded = useCallback((menuFontsRequested) => {
-    const newMenuFonts = menuFontsRequested.filter(
+  const ensureMenuFontsLoaded = useCallback((fontsToLoad) => {
+    const newMenuFonts = fontsToLoad.filter(
       (fontName) => !menuFonts.current.includes(fontName)
     );
     if (!newMenuFonts?.length) {
@@ -111,7 +210,7 @@ function FontProvider({ children }) {
     // Create new <link> in head with ref to new font families
     const families = encodeURIComponent(newMenuFonts.join('|'));
     const url = `${GOOGLE_MENU_FONT_URL}?family=${families}&subset=menu&display=swap`;
-    loadStylesheet(url).catch(() => {
+    loadStylesheet(url, 'web-stories-google-fonts-menu-css').catch(() => {
       // If they failed to load, remove from array again!
       menuFonts.current = menuFonts.current.filter(
         (font) => !newMenuFonts.includes(font)
@@ -119,25 +218,35 @@ function FontProvider({ children }) {
     });
   }, []);
 
-  const maybeEnqueueFontStyle = useLoadFontFiles();
+  const ensureCustomFontsLoaded = useCallback(
+    (fontsToLoad) => {
+      for (const font of fontsToLoad) {
+        const fontObj = fonts.find(({ family }) => family === font);
+        if (!fontObj) {
+          continue;
+        }
 
-  const curatedFonts = useMemo(
-    () => fonts.filter((font) => curatedFontNames.includes(font.name)),
-    [fonts]
+        maybeLoadFont(fontObj);
+      }
+    },
+    [fonts, maybeLoadFont]
   );
 
   const state = {
     state: {
-      fonts,
+      fonts: queriedFonts.length > 0 ? queriedFonts : curatedFonts,
       curatedFonts,
+      customFonts,
       recentFonts,
     },
     actions: {
+      getFontsBySearch,
       getFontByName,
       maybeEnqueueFontStyle,
       getFontWeight,
       getFontFallback,
       ensureMenuFontsLoaded,
+      ensureCustomFontsLoaded,
       addRecentFont,
     },
   };

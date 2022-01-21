@@ -18,18 +18,27 @@
  */
 import { TransitionGroup } from 'react-transition-group';
 import PropTypes from 'prop-types';
-import { memo } from '@web-stories-wp/react';
+import { memo } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
  */
 import { Menu } from '../menu';
 import { QuickTip } from '../quickTip';
-import { TIPS, DONE_TIP_ENTRY, ReadTipsType } from '../constants';
+import { DONE_TIP_ENTRY } from '../constants';
+import { useHelpCenter } from '../../../app';
 
-const TIP_MAP = { ...TIPS, [DONE_TIP_ENTRY[0]]: DONE_TIP_ENTRY[1] };
-
-function Companion({ tipKey, onTipSelect, isLeftToRightTransition, readTips }) {
+function Companion({
+  tipKey,
+  onTipSelect,
+  isLeftToRightTransition,
+  readTips,
+  components,
+}) {
+  const {
+    state: { tips },
+  } = useHelpCenter();
+  const TIP_MAP = { ...tips, [DONE_TIP_ENTRY[0]]: DONE_TIP_ENTRY[1] };
   const tip = tipKey && TIP_MAP[tipKey];
 
   return (
@@ -43,17 +52,23 @@ function Companion({ tipKey, onTipSelect, isLeftToRightTransition, readTips }) {
           {...tip}
         />
       ) : (
-        <Menu key="menu" readTips={readTips} onTipSelect={onTipSelect} />
+        <Menu
+          key="menu"
+          readTips={readTips}
+          onTipSelect={onTipSelect}
+          components={components}
+        />
       )}
     </TransitionGroup>
   );
 }
 
 Companion.propTypes = {
-  readTips: ReadTipsType,
-  tipKey: PropTypes.oneOf(Object.keys(TIP_MAP)),
+  readTips: PropTypes.object,
+  tipKey: PropTypes.string,
   onTipSelect: PropTypes.func.isRequired,
   isLeftToRightTransition: PropTypes.bool.isRequired,
+  components: PropTypes.object,
 };
 
 export default memo(Companion);

@@ -17,16 +17,13 @@
 /**
  * External dependencies
  */
-import { FULLBLEED_RATIO, PAGE_RATIO } from '@web-stories-wp/units';
+import { FULLBLEED_RATIO, PAGE_RATIO } from '@googleforcreators/units';
 
 /**
  * Internal dependencies
  */
+import isHexColorString from '../../utils/isHexColorString';
 import theme from '../../theme';
-
-function isHexColorString(s) {
-  return /^#(?:[a-f0-9]{3}){1,2}$/i.test(s);
-}
 
 function CustomStyles() {
   const safeToFullRatio = PAGE_RATIO / FULLBLEED_RATIO;

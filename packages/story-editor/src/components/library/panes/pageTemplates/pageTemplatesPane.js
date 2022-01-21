@@ -22,14 +22,15 @@ import {
   useMemo,
   useCallback,
   useEffect,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import styled from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
-import { FULLBLEED_RATIO, PAGE_RATIO } from '@web-stories-wp/units';
+import { __ } from '@googleforcreators/i18n';
+import { FULLBLEED_RATIO, PAGE_RATIO } from '@googleforcreators/units';
 import {
   localStore,
   LOCAL_STORAGE_PREFIX,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
+import { DATA_VERSION, migrate } from '@googleforcreators/migration';
 
 /**
  * Internal dependencies
@@ -38,6 +39,7 @@ import { Pane } from '../shared';
 import { Select } from '../../../form';
 import { useAPI } from '../../../../app/api';
 import useLibrary from '../../useLibrary';
+import { useConfig } from '../../../../app/config';
 import paneId from './paneId';
 import DefaultTemplates from './defaultTemplates';
 import SavedTemplates from './savedTemplates';
@@ -57,7 +59,6 @@ export const PaneInner = styled.div`
 
 const DropDownWrapper = styled.div`
   text-align: left;
-  height: 36px;
   margin: 28px 16px 17px;
 `;
 
@@ -78,6 +79,9 @@ function PageTemplatesPane(props) {
     actions: { getCustomPageTemplates },
   } = useAPI();
 
+  const { canViewDefaultTemplates } = useConfig();
+  const supportsCustomTemplates = Boolean(getCustomPageTemplates);
+
   const {
     savedTemplates,
     setSavedTemplates,
@@ -91,18 +95,23 @@ function PageTemplatesPane(props) {
   }));
 
   const [showDefaultTemplates, setShowDefaultTemplates] = useState(
-    DEFAULT_TEMPLATE_VIEW === null ? true : DEFAULT_TEMPLATE_VIEW
+    DEFAULT_TEMPLATE_VIEW === null
+      ? canViewDefaultTemplates
+      : canViewDefaultTemplates && DEFAULT_TEMPLATE_VIEW
   );
+
   const [highlightedTemplate, setHighlightedTemplate] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const updateTemplatesList = useCallback(
     (page) => {
-      setSavedTemplates([page, ...(savedTemplates || [])]);
+      setSavedTemplates((_savedTemplates) => {
+        return [page, ...(_savedTemplates || [])];
+      });
       setHighlightedTemplate(page.id);
       localStore.setItemByKey(LOCAL_STORAGE_KEY, false);
     },
-    [setSavedTemplates, savedTemplates]
+    [setSavedTemplates]
   );
 
   const loadTemplates = useCallback(() => {
@@ -115,7 +124,28 @@ function PageTemplatesPane(props) {
     setIsLoading(true);
     getCustomPageTemplates(nextTemplatesToFetch)
       .then(({ templates, hasMore }) => {
-        setSavedTemplates([...(savedTemplates || []), ...templates]);
+        const updatedTemplates = templates.map(
+          ({ version, templateId, ...page }) => {
+            const template = {
+              pages: [page],
+            };
+
+            // Older page templates unfortunately don't have a version.
+            // This is just a reasonable fallback, as 25 was the data version
+            // when custom page templates were first introduced.
+            const migratedTemplate = migrate(template, version || 25);
+            return {
+              templateId,
+              version: DATA_VERSION,
+              ...migratedTemplate.pages[0],
+            };
+          }
+        );
+        setSavedTemplates((_savedTemplates) => [
+          ...(_savedTemplates || []),
+          ...updatedTemplates,
+        ]);
+
         if (!hasMore) {
           setNextTemplatesToFetch(false);
         } else {
@@ -124,22 +154,24 @@ function PageTemplatesPane(props) {
       })
       .catch(() => {
         setNextTemplatesToFetch(false);
-        if (null === savedTemplates) {
-          setSavedTemplates([]);
-        }
+        setSavedTemplates((_savedTemplates) => _savedTemplates ?? []);
       })
       .finally(() => setIsLoading(false));
   }, [
     getCustomPageTemplates,
     nextTemplatesToFetch,
     setSavedTemplates,
-    savedTemplates,
     setNextTemplatesToFetch,
   ]);
 
-  const handleToggle = () => {
-    setShowDefaultTemplates(!showDefaultTemplates);
-    localStore.setItemByKey(LOCAL_STORAGE_KEY, !showDefaultTemplates);
+  const handleSelect = (_, menuItem) => {
+    const value = menuItem === DEFAULT;
+    const shouldSetShowDefaultTemplates = showDefaultTemplates !== value;
+
+    if (shouldSetShowDefaultTemplates) {
+      setShowDefaultTemplates(DEFAULT === menuItem);
+      localStore.setItemByKey(LOCAL_STORAGE_KEY, value);
+    }
   };
 
   useEffect(() => {
@@ -158,16 +190,21 @@ function PageTemplatesPane(props) {
     return () => clearTimeout(timeout);
   }, [highlightedTemplate]);
 
-  const options = [
-    {
+  const options = [];
+
+  if (canViewDefaultTemplates) {
+    options.push({
       value: DEFAULT,
       label: __('Default templates', 'web-stories'),
-    },
-    {
+    });
+  }
+
+  if (supportsCustomTemplates) {
+    options.push({
       value: SAVED,
       label: __('Saved templates', 'web-stories'),
-    },
-  ];
+    });
+  }
 
   const pageSize = useMemo(() => {
     const width = PAGE_TEMPLATE_PANE_WIDTH;
@@ -180,19 +217,23 @@ function PageTemplatesPane(props) {
     <StyledPane id={paneId} {...props}>
       <PaneInner>
         <>
-          <ButtonWrapper>
-            <TemplateSave
-              setShowDefaultTemplates={setShowDefaultTemplates}
-              updateList={updateTemplatesList}
-            />
-          </ButtonWrapper>
+          {supportsCustomTemplates && (
+            <ButtonWrapper>
+              <TemplateSave
+                setShowDefaultTemplates={setShowDefaultTemplates}
+                updateList={updateTemplatesList}
+              />
+            </ButtonWrapper>
+          )}
           <DropDownWrapper>
-            <Select
-              options={options}
-              selectedValue={showDefaultTemplates ? DEFAULT : SAVED}
-              onMenuItemClick={handleToggle}
-              aria-label={__('Select templates type', 'web-stories')}
-            />
+            {options.length > 1 && (
+              <Select
+                options={options}
+                selectedValue={showDefaultTemplates ? DEFAULT : SAVED}
+                onMenuItemClick={handleSelect}
+                aria-label={__('Select templates type', 'web-stories')}
+              />
+            )}
           </DropDownWrapper>
         </>
         {showDefaultTemplates ? (

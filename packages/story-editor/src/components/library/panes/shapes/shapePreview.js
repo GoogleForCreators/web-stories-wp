@@ -18,15 +18,20 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { createRef, useCallback, useMemo, useRef } from '@web-stories-wp/react';
+import {
+  createRef,
+  useCallback,
+  useMemo,
+  useRef,
+} from '@googleforcreators/react';
 import styled from 'styled-components';
-import { trackEvent } from '@web-stories-wp/tracking';
-import { createSolidFromString } from '@web-stories-wp/patterns';
-import { PAGE_WIDTH, useUnits } from '@web-stories-wp/units';
+import { trackEvent } from '@googleforcreators/tracking';
+import { createSolidFromString } from '@googleforcreators/patterns';
+import { PAGE_WIDTH, useUnits } from '@googleforcreators/units';
 import {
   ThemeGlobals,
   BUTTON_TRANSITION_TIMING,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
@@ -167,9 +172,14 @@ function ShapePreview({ mask, isPreview, index }) {
   // We use rovingTabIndex for navigating so only the first item will have 0 as tabIndex.
   // onClick on Aspect is for the keyboard only.
   return (
-    <Aspect ref={ref} onClick={onClick} tabIndex={index === 0 ? 0 : -1}>
+    <Aspect
+      ref={ref}
+      onClick={onClick}
+      tabIndex={index === 0 ? 0 : -1}
+      aria-label={mask.name}
+    >
       <AspectInner>
-        <ShapePreviewContainer key={mask.type} aria-label={mask.name}>
+        <ShapePreviewContainer key={mask.type}>
           <ShapePreviewSizer />
           {getSVG()}
         </ShapePreviewContainer>

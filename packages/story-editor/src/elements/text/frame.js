@@ -19,8 +19,8 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useRef, useEffect } from '@web-stories-wp/react';
-import { useUnits } from '@web-stories-wp/units';
+import { useRef, useEffect } from '@googleforcreators/react';
+import { useUnits } from '@googleforcreators/units';
 
 /**
  * Internal dependencies
@@ -52,9 +52,9 @@ function TextFrame({ element, element: { id, content, ...rest }, wrapperRef }) {
   }));
   const props = generateParagraphTextStyle(
     rest,
-    dataToEditorX,
+    (x) => `${dataToEditorX(x)}px`,
+    (y) => `${dataToEditorY(y)}px`,
     dataToEditorY,
-    undefined,
     element
   );
   const { selectedElementIds } = useStory((state) => ({

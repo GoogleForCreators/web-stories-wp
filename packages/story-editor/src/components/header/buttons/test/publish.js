@@ -23,7 +23,7 @@ import {
   waitForElementToBeRemoved,
 } from '@testing-library/react';
 import MockDate from 'mockdate';
-import { setAppElement } from '@web-stories-wp/design-system';
+import { setAppElement } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -188,7 +188,7 @@ describe('PublishButton', () => {
     });
 
     await waitForElementToBeRemoved(() =>
-      screen.getByRole('button', { name: 'Continue to publish' })
+      screen.queryByRole('button', { name: 'Continue to publish' })
     );
   });
 
@@ -215,7 +215,7 @@ describe('PublishButton', () => {
     expect(saveStory).not.toHaveBeenCalled();
 
     await waitForElementToBeRemoved(() =>
-      screen.getByRole('button', { name: 'Review Checklist' })
+      screen.queryByRole('button', { name: 'Review Checklist' })
     );
   });
 

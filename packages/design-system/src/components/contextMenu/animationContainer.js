@@ -22,7 +22,7 @@ import {
   useLayoutEffect,
   useRef,
   useState,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import styled, { css } from 'styled-components';
 /**
  * Internal dependencies

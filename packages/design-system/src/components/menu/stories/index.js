@@ -20,7 +20,7 @@
 import { action } from '@storybook/addon-actions';
 import { boolean, number, text } from '@storybook/addon-knobs';
 import styled, { css } from 'styled-components';
-import { useState, forwardRef } from '@web-stories-wp/react';
+import { useState, forwardRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 
 /**

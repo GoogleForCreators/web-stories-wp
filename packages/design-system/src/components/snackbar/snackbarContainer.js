@@ -16,7 +16,12 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useMemo, useRef } from '@web-stories-wp/react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
@@ -142,7 +147,7 @@ export const SnackbarContainer = ({
       }
     });
   }, [notifications, speak]);
-
+  const nodeRef = useRef();
   return (
     <StyledContainer placement={placement}>
       <TransitionGroup>
@@ -164,9 +169,10 @@ export const SnackbarContainer = ({
               key={notification.id || ids[index]}
               timeout={300}
               unmountOnExit
+              nodeRef={nodeRef}
               classNames="react-snackbar-alert__snackbar-container"
             >
-              <ChildContainer placement={placement}>
+              <ChildContainer ref={nodeRef} placement={placement}>
                 <Component
                   {...notificationProps}
                   aria-hidden

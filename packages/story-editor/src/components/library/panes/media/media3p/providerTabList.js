@@ -22,9 +22,9 @@ import {
   useRef,
   useState,
   useEffect,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import styled from 'styled-components';
-import { useKeyDownEffect } from '@web-stories-wp/design-system';
+import { useKeyDownEffect } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -34,7 +34,7 @@ import { useConfig } from '../../../../../app/config';
 import { PROVIDERS } from '../../../../../app/media/media3p/providerConfiguration';
 import ProviderTab from './providerTab';
 
-const Section = styled.div`
+const Section = styled.div.attrs({ role: 'tablist' })`
   display: flex;
   flex-wrap: wrap;
   margin-top: 16px;

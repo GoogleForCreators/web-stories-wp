@@ -27,9 +27,9 @@ import {
   screen,
   waitFor,
 } from '@testing-library/react';
-import { setAppElement } from '@web-stories-wp/design-system';
+import { setAppElement } from '@googleforcreators/design-system';
 import { FixtureEvents } from '@web-stories-wp/karma-fixture';
-import { DATA_VERSION } from '@web-stories-wp/migration';
+import { DATA_VERSION } from '@googleforcreators/migration';
 
 /**
  * Internal dependencies
@@ -37,8 +37,6 @@ import { DATA_VERSION } from '@web-stories-wp/migration';
 import StoryEditor from '../../storyEditor';
 import APIProvider from '../../app/api/apiProvider';
 import APIContext from '../../app/api/context';
-import FileProvider from '../../app/file/provider';
-import FileContext from '../../app/file/context';
 import Layout from '../../components/layout';
 import { createPage } from '../../elements';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
@@ -69,14 +67,17 @@ export const LOCAL_MEDIA_PER_PAGE = 50;
 
 function MediaUpload({ render: _render, onSelect }) {
   const open = () => {
-    const image = { type: 'image', src: 'https://www.example.com/media1' };
+    const image = {
+      type: 'image',
+      src: 'http://localhost:9876/__static__/saturn.jpg',
+    };
     onSelect(image);
   };
 
   return _render(open);
 }
 
-const DEFAULT_CONFIG = {
+export const FIXTURE_DEFAULT_CONFIG = {
   storyId: 1,
   api: {},
   allowedMimeTypes: {
@@ -118,6 +119,7 @@ const DEFAULT_CONFIG = {
   version: '1.0.0-alpha.9',
   isRTL: false,
   showMedia3p: true,
+  canViewDefaultTemplates: true,
   locale: {
     dateFormat: 'F j, Y',
     timeFormat: 'g:i a',
@@ -159,7 +161,7 @@ export class Fixture {
    * @param {Object} config.mocks An object containing functions to be used as stubs for the api.
    */
   constructor({ mocks } = {}) {
-    this._config = { ...DEFAULT_CONFIG };
+    this._config = { ...FIXTURE_DEFAULT_CONFIG };
 
     this._componentStubs = new Map();
     const origCreateElement = React.createElement;
@@ -185,11 +187,6 @@ export class Fixture {
     this.apiProviderFixture_ = new APIProviderFixture({ mocks });
     this.stubComponent(APIProvider).callFake(
       this.apiProviderFixture_.Component
-    );
-
-    this.fileProviderFixture_ = new FileProviderFixture();
-    this.stubComponent(FileProvider).callFake(
-      this.fileProviderFixture_.Component
     );
 
     this._layoutStub = this.stubComponent(Layout);
@@ -614,126 +611,6 @@ function HookExecutor({ hooks }) {
 }
 /* eslint-enable react/prop-types, react/jsx-no-useless-fragment */
 
-class FileProviderFixture {
-  constructor() {
-    this._pages = [];
-
-    // eslint-disable-next-line react/prop-types
-    const Comp = ({ children }) => {
-      const getFonts = useCallback(
-        () =>
-          asyncResponse([
-            {
-              name: 'Abel',
-              value: 'Abel',
-              family: 'Abel',
-              fallbacks: ['sans-serif'],
-              service: 'fonts.google.com',
-              weights: [400],
-              styles: ['regular'],
-              variants: [[0, 400]],
-            },
-            {
-              name: 'Abhaya Libre',
-              value: 'Abhaya Libre',
-              family: 'Abhaya Libre',
-              fallbacks: ['serif'],
-              service: 'fonts.google.com',
-              weights: [400, 500, 600, 700, 800],
-              styles: ['regular'],
-              variants: [
-                [0, 400],
-                [0, 500],
-                [0, 600],
-                [0, 700],
-                [0, 800],
-              ],
-            },
-            ...[TEXT_ELEMENT_DEFAULT_FONT].map((font) => ({
-              name: font.family,
-              value: font.family,
-              ...font,
-            })),
-            {
-              name: 'Source Serif Pro',
-              value: 'Source Serif Pro',
-              family: 'Source Serif Pro',
-              fallbacks: ['serif'],
-              service: 'fonts.google.com',
-              weights: [400, 600, 700],
-              styles: ['regular'],
-              variants: [
-                [0, 400],
-                [0, 600],
-                [0, 700],
-              ],
-            },
-            {
-              name: 'Space Mono',
-              value: 'Space Mono',
-              family: 'Space Mono',
-              fallbacks: ['monospace'],
-              service: 'fonts.google.com',
-              weights: [400, 700],
-              styles: ['regular', 'italic'],
-              variants: [
-                [0, 400],
-                [1, 400],
-                [0, 700],
-                [1, 700],
-              ],
-            },
-            {
-              name: 'Ubuntu',
-              value: 'Ubuntu',
-              family: 'Ubuntu',
-              fallbacks: ['monospace'],
-              service: 'fonts.google.com',
-              weights: [400, 700],
-              styles: ['regular', 'italic'],
-              variants: [
-                [0, 400],
-                [1, 400],
-                [0, 700],
-                [1, 700],
-              ],
-            },
-            {
-              name: 'Yrsa',
-              value: 'Yrsa',
-              family: 'Yrsa',
-              fallbacks: ['serif'],
-              service: 'fonts.google.com',
-              weights: [300, 400, 500, 600, 700],
-              styles: ['regular'],
-              variants: [
-                [0, 300],
-                [0, 400],
-                [0, 500],
-                [0, 600],
-                [0, 700],
-              ],
-            },
-          ]),
-        []
-      );
-
-      const state = {
-        actions: { getFonts },
-      };
-      return (
-        <FileContext.Provider value={state}>{children}</FileContext.Provider>
-      );
-    };
-    Comp.displayName = 'Fixture(FileProvider)';
-    this._comp = Comp;
-  }
-
-  get Component() {
-    return this._comp;
-  }
-}
-
 /* eslint-disable jasmine/no-unsafe-spy */
 class APIProviderFixture {
   /**
@@ -751,7 +628,7 @@ class APIProviderFixture {
         () =>
           asyncResponse({
             ...storyResponse,
-            story_data: {
+            storyData: {
               version: DATA_VERSION,
               pages: this._pages,
             },
@@ -770,7 +647,7 @@ class APIProviderFixture {
 
       const getMedia = useCallback(({ mediaType, searchTerm, pagingNum }) => {
         const filterByMediaType = mediaType
-          ? ({ mime_type }) => mime_type.startsWith(mediaType)
+          ? ({ mimeType }) => mimeType.startsWith(mediaType)
           : () => true;
         const filterBySearchTerm = searchTerm
           ? ({ alt_text }) => alt_text.includes(searchTerm)
@@ -814,9 +691,9 @@ class APIProviderFixture {
         () =>
           asyncResponse({
             ext: 'jpg',
-            mime_type: 'image/jpeg',
+            mimeType: 'image/jpeg',
             type: 'image',
-            file_name: 'example.jpg',
+            fileName: 'example.jpg',
           }),
         []
       );
@@ -945,6 +822,301 @@ class APIProviderFixture {
         []
       );
 
+      const getFonts = useCallback((params) => {
+        let fonts = [
+          {
+            name: 'Abel',
+            value: 'Abel',
+            family: 'Abel',
+            fallbacks: ['sans-serif'],
+            weights: [400],
+            styles: ['regular'],
+            variants: [[0, 400]],
+            service: 'fonts.google.com',
+            metrics: {
+              upm: 2048,
+              asc: 2006,
+              des: -604,
+              tAsc: 2006,
+              tDes: -604,
+              tLGap: 0,
+              wAsc: 2006,
+              wDes: 604,
+              xH: 1044,
+              capH: 1434,
+              yMin: -604,
+              yMax: 2005,
+              hAsc: 2006,
+              hDes: -604,
+              lGap: 0,
+            },
+          },
+          {
+            name: 'Abhaya Libre',
+            value: 'Abhaya Libre',
+            family: 'Abhaya Libre',
+            fallbacks: ['serif'],
+            weights: [400, 500, 600, 700, 800],
+            styles: ['regular'],
+            variants: [
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [0, 800],
+            ],
+            service: 'fonts.google.com',
+            metrics: {
+              upm: 1024,
+              asc: 860,
+              des: -348,
+              tAsc: 860,
+              tDes: -348,
+              tLGap: 0,
+              wAsc: 860,
+              wDes: 348,
+              yMin: -340,
+              yMax: 856,
+              hAsc: 860,
+              hDes: -348,
+              lGap: 0,
+            },
+          },
+          {
+            value: 'Overpass Regular',
+            name: 'Overpass Regular',
+            family: 'Overpass Regular',
+            fallbacks: ['sans-serif'],
+            weights: [400],
+            styles: ['regular'],
+            variants: [[0, 400]],
+            url: 'https://overpass-30e2.kxcdn.com/overpass-regular.ttf',
+            service: 'custom',
+            metrics: {
+              upm: 1000,
+              asc: 982,
+              des: -284,
+              tAsc: 750,
+              tDes: -250,
+              tLGap: 266,
+              wAsc: 1062,
+              wDes: 378,
+              xH: 511,
+              capH: 700,
+              yMin: -378,
+              yMax: 1062,
+              hAsc: 982,
+              hDes: -284,
+              lGap: 266,
+            },
+          },
+          {
+            ...TEXT_ELEMENT_DEFAULT_FONT,
+            name: TEXT_ELEMENT_DEFAULT_FONT.family,
+            value: TEXT_ELEMENT_DEFAULT_FONT.family,
+          },
+          {
+            name: 'Source Serif Pro',
+            value: 'Source Serif Pro',
+            family: 'Source Serif Pro',
+            fallbacks: ['serif'],
+            weights: [200, 300, 400, 600, 700, 900],
+            styles: ['italic', 'regular'],
+            variants: [
+              [0, 200],
+              [1, 200],
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 600],
+              [1, 600],
+              [0, 700],
+              [1, 700],
+              [0, 900],
+              [1, 900],
+            ],
+            service: 'fonts.google.com',
+            metrics: {
+              upm: 1000,
+              asc: 918,
+              des: -335,
+              tAsc: 918,
+              tDes: -335,
+              tLGap: 0,
+              wAsc: 1036,
+              wDes: 335,
+              xH: 475,
+              capH: 670,
+              yMin: -335,
+              yMax: 1002,
+              hAsc: 918,
+              hDes: -335,
+              lGap: 0,
+            },
+          },
+          {
+            name: 'Space Mono',
+            value: 'Space Mono',
+            family: 'Space Mono',
+            fallbacks: ['monospace'],
+            weights: [400, 700],
+            styles: ['regular', 'italic'],
+            variants: [
+              [0, 400],
+              [1, 400],
+              [0, 700],
+              [1, 700],
+            ],
+            service: 'fonts.google.com',
+            metrics: {
+              upm: 1000,
+              asc: 1120,
+              des: -361,
+              tAsc: 1120,
+              tDes: -361,
+              tLGap: 0,
+              wAsc: 1120,
+              wDes: 361,
+              xH: 496,
+              capH: 700,
+              yMin: -309,
+              yMax: 1090,
+              hAsc: 1120,
+              hDes: -361,
+              lGap: 0,
+            },
+          },
+          {
+            name: 'Ubuntu',
+            value: 'Ubuntu',
+            family: 'Ubuntu',
+            fallbacks: ['sans-serif'],
+            weights: [300, 400, 500, 700],
+            styles: ['italic', 'regular'],
+            variants: [
+              [0, 300],
+              [1, 300],
+              [0, 400],
+              [1, 400],
+              [0, 500],
+              [1, 500],
+              [0, 700],
+              [1, 700],
+            ],
+            service: 'fonts.google.com',
+            metrics: {
+              upm: 1000,
+              asc: 932,
+              des: -189,
+              tAsc: 776,
+              tDes: -185,
+              tLGap: 56,
+              wAsc: 932,
+              wDes: 189,
+              xH: 520,
+              capH: 693,
+              yMin: -189,
+              yMax: 962,
+              hAsc: 932,
+              hDes: -189,
+              lGap: 28,
+            },
+          },
+          {
+            name: 'Vazir Regular',
+            value: 'Vazir Regular',
+            family: 'Vazir Regular',
+            fallbacks: ['sans-serif'],
+            weights: [400],
+            styles: ['regular'],
+            variants: [[0, 400]],
+            url: 'https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/Vazir-Regular.ttf',
+            service: 'custom',
+            metrics: {
+              upm: 2048,
+              asc: 2200,
+              des: -1100,
+              tAsc: 2200,
+              tDes: -1100,
+              tLGap: 0,
+              wAsc: 2200,
+              wDes: 1100,
+              xH: 1082,
+              capH: 1638,
+              yMin: -1116,
+              yMax: 2163,
+              hAsc: 2200,
+              hDes: -1100,
+              lGap: 0,
+            },
+          },
+          {
+            name: 'Yrsa',
+            value: 'Yrsa',
+            family: 'Yrsa',
+            fallbacks: ['serif'],
+            weights: [300, 400, 500, 600, 700],
+            styles: ['regular', 'italic'],
+            variants: [
+              [0, 300],
+              [0, 400],
+              [0, 500],
+              [0, 600],
+              [0, 700],
+              [1, 300],
+              [1, 400],
+              [1, 500],
+              [1, 600],
+              [1, 700],
+            ],
+            service: 'fonts.google.com',
+            metrics: {
+              upm: 1000,
+              asc: 728,
+              des: -272,
+              tAsc: 728,
+              tDes: -272,
+              tLGap: 218,
+              wAsc: 971,
+              wDes: 422,
+              xH: 413,
+              capH: 568,
+              yMin: -211,
+              yMax: 925,
+              hAsc: 728,
+              hDes: -272,
+              lGap: 218,
+            },
+          },
+        ];
+
+        if (params.include) {
+          fonts = fonts.filter(({ family }) => params.include.includes(family));
+        }
+
+        if (params.search) {
+          fonts = fonts.filter(({ family }) =>
+            family.toLowerCase().includes(params.search.toLowerCase())
+          );
+        }
+
+        // If we're getting custom fonts, return custom only.
+        if (params.service) {
+          fonts = fonts.filter(({ service }) => {
+            if ('custom' === params.service) {
+              return service === params.service;
+            }
+            if ('builtin' === params.service) {
+              return 'fonts.google.com' === params.service;
+            }
+            return [];
+          });
+        }
+
+        return asyncResponse(fonts);
+      }, []);
+
       const state = {
         actions: {
           autoSaveById,
@@ -968,6 +1140,7 @@ class APIProviderFixture {
           getTaxonomyTerm,
           createTaxonomyTerm,
           getTaxonomies,
+          getFonts,
           ...mocks,
         },
       };

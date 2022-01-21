@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { dataPixels } from '@web-stories-wp/units';
+import { dataPixels } from '@googleforcreators/units';
 
 /**
  * Internal dependencies

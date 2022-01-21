@@ -23,13 +23,13 @@ import {
   BUTTON_SIZES,
   Icons,
   themeHelpers,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
 import { useConfig } from '../../../app/config';
 import { forceFocusCompanion } from '../utils';
-import { ReadTipsType, TIPS } from '../constants';
+import { useHelpCenter } from '../../../app';
 
 const Panel = styled.div`
   padding: 24px 0;
@@ -90,11 +90,15 @@ Tip.propTypes = {
   unread: PropTypes.bool,
 };
 
-const TIPS_ITERABLE = Object.entries(TIPS);
 export function Tips({ onTipSelect = () => {}, readTips }) {
+  const {
+    state: { tips },
+  } = useHelpCenter();
+  const tipsIterable = Object.entries(tips);
+
   return (
     <Panel>
-      {TIPS_ITERABLE.map(([key, tip]) => (
+      {tipsIterable.map(([key, tip]) => (
         <Tip
           unread={!readTips[key]}
           key={key}
@@ -110,6 +114,6 @@ export function Tips({ onTipSelect = () => {}, readTips }) {
   );
 }
 Tips.propTypes = {
-  readTips: ReadTipsType,
+  readTips: PropTypes.object,
   onTipSelect: PropTypes.func,
 };

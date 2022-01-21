@@ -19,13 +19,13 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { useCallback, useMemo, useRef } from '@web-stories-wp/react';
-import { __, _x } from '@web-stories-wp/i18n';
-import stickers from '@web-stories-wp/stickers';
+import { useCallback, useMemo, useRef } from '@googleforcreators/react';
+import { __, _x } from '@googleforcreators/i18n';
+import stickers from '@googleforcreators/stickers';
 import {
   calcRotatedObjectPositionAndSize,
   dataPixels,
-} from '@web-stories-wp/units';
+} from '@googleforcreators/units';
 import {
   Button,
   LockToggle,
@@ -35,7 +35,7 @@ import {
   BUTTON_SIZES,
   BUTTON_VARIANTS,
   Tooltip,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -93,11 +93,12 @@ const gridWithFlip = css`
 const Grid = styled.div`
   display: grid;
   ${({ canFlip }) => (canFlip ? gridWithFlip : gridWithoutFlip)}
-  grid-template-columns: 1fr 4px 8px 4px 1fr 4px 32px;
+  grid-template-columns: 1fr 4px 8px 4px 1fr 8px 32px;
   grid-template-rows: repeat(4, 36px);
   row-gap: 16px;
   align-items: center;
   justify-items: start;
+  margin-bottom: 16px;
 `;
 
 const Area = styled.div`
