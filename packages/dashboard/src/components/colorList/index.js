@@ -36,15 +36,17 @@ const borderLookup = (color) => ({
   '#fcfcfc': `border: solid 1px ${color}`,
 });
 
-const ColorContainer = styled.div`
+const ColorContainer = styled.ul`
   display: flex;
+  margin: 0;
 `;
 
-const Color = styled.div`
+const Color = styled.li`
   ${({ theme, $backgroundColor, color, size, spacing }) => `
     width: ${size}px;
     height: ${size}px;
     border-radius: 50%;
+    margin-bottom: 0;
     background-color: rgb(${$backgroundColor});
     ${borderLookup(theme.colors.border.defaultNormal)[color] || ''};
 
@@ -54,9 +56,9 @@ const Color = styled.div`
   `}
 `;
 
-function ColorList({ colors, size, spacing }) {
+function ColorList({ colors, size, spacing, ...rest }) {
   return (
-    <ColorContainer>
+    <ColorContainer {...rest}>
       {colors.map(({ label, color }) => {
         const { r, g, b } = createSolidFromString(color).color;
         const backgroundColor = `${r}, ${g}, ${b}`;
