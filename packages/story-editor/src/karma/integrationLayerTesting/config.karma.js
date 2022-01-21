@@ -29,7 +29,7 @@ import storyResponse from '../fixture/db/storyResponse';
 describe('Integration Layer tests : EditorConfig Params :', () => {
   let fixture;
 
-  // fixture.setConfig() doesn't overwrite the who;e object but merges therefore optional parrams need to be set undefined explicitly.
+  // fixture.setConfig() doesn't overwrite the whole object but merges therefore optional parrams need to be set undefined explicitly.
   const MINIMUM_CONFIG = {};
 
   for (const key of Object.keys(defaultConfig)) {
@@ -95,6 +95,8 @@ describe('Integration Layer tests : EditorConfig Params :', () => {
       },
     });
 
+    //do not close helpcenter, check for additional tip
+
     await waitFor(() => {
       expect(fixture.screen.getByText(exampleTip.title)).toBeTruthy();
     });
@@ -120,8 +122,6 @@ describe('Integration Layer tests : EditorConfig Params :', () => {
       ...MINIMUM_CONFIG,
       storyId: STORY_ID,
     });
-
-    await fixture.collapseHelpCenter();
 
     expect(getStoryById).toHaveBeenCalledWith(STORY_ID);
   });
@@ -172,10 +172,9 @@ describe('Integration Layer tests : EditorConfig Params :', () => {
     //wait for mediaPane to stabalize
     await fixture.events.sleep(500);
 
-    const uploadButton = fixture.querySelector(
-      `[aria-label="Upload media button"]`
-    );
-
+    const uploadButton = fixture.screen.queryByRole('button', {
+      name: 'Upload',
+    });
     expect(uploadButton).toBeFalsy();
   });
 
@@ -193,6 +192,9 @@ describe('Integration Layer tests : EditorConfig Params :', () => {
     });
 
     await fixture.collapseHelpCenter();
+
+    //wait for mediaPane to stabalize
+    await fixture.events.sleep(500);
 
     const insertByLinkButton = fixture.querySelector(
       `[aria-label="Insert by link"]`
