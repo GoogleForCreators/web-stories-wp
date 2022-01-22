@@ -261,10 +261,14 @@ describe('Right Click Menu integration', () => {
         width: 640 / 2,
         height: 529 / 2,
         resource: {
+          id: 10,
           type: 'image',
           mimeType: 'image/jpg',
           src: 'http://localhost:9876/__static__/earth.jpg',
           alt: 'Earth',
+          width: 640,
+          height: 529,
+          baseColor: '#734727',
         },
       })
     );
@@ -283,10 +287,13 @@ describe('Right Click Menu integration', () => {
         width: 640 / 2,
         height: 529 / 2,
         resource: {
+          id: 6,
           type: 'image',
           mimeType: 'image/jpg',
           src: 'http://localhost:9876/__static__/ranger9.png',
           alt: 'Ranger',
+          width: 640,
+          height: 480,
         },
       })
     );
@@ -307,8 +314,10 @@ describe('Right Click Menu integration', () => {
         resource: {
           width: 640,
           height: 529,
-          mimeType: 'image/jpg',
+          type: 'video',
+          mimeType: 'video/mp4',
           src: 'http://localhost:9876/__static__/beach.mp4',
+          alt: 'beach',
         },
       })
     );
@@ -689,13 +698,13 @@ describe('Right Click Menu integration', () => {
       ).toBe(4);
       expect(
         fixture.editor.inspector.designPanel.layerPanel.layers[2].textContent
-      ).toBe('Earth');
+      ).toContain('Earth');
       expect(
         fixture.editor.inspector.designPanel.layerPanel.layers[1].textContent
-      ).toBe('Video Content');
+      ).toContain('beach');
       expect(
         fixture.editor.inspector.designPanel.layerPanel.layers[0].textContent
-      ).toBe('Ranger');
+      ).toContain('Ranger');
 
       // More than one layer so some movement buttons will be enabled
       expect(sendBackward().disabled).toBeFalse();
@@ -709,13 +718,13 @@ describe('Right Click Menu integration', () => {
       // verify new layer order
       expect(
         fixture.editor.inspector.designPanel.layerPanel.layers[2].textContent
-      ).toBe('Earth');
+      ).toContain('Earth');
       expect(
         fixture.editor.inspector.designPanel.layerPanel.layers[1].textContent
-      ).toBe('Ranger');
+      ).toContain('Ranger');
       expect(
         fixture.editor.inspector.designPanel.layerPanel.layers[0].textContent
-      ).toBe('Video Content');
+      ).toContain('beach');
 
       // right click image
       await rightClickOnTarget(
@@ -734,13 +743,13 @@ describe('Right Click Menu integration', () => {
 
       expect(
         fixture.editor.inspector.designPanel.layerPanel.layers[2].textContent
-      ).toBe('Earth');
+      ).toContain('Earth');
       expect(
         fixture.editor.inspector.designPanel.layerPanel.layers[1].textContent
-      ).toBe('Video Content');
+      ).toContain('beach');
       expect(
         fixture.editor.inspector.designPanel.layerPanel.layers[0].textContent
-      ).toBe('Ranger');
+      ).toContain('Ranger');
 
       // Move image all the way to back
       await rightClickOnTarget(
@@ -754,13 +763,13 @@ describe('Right Click Menu integration', () => {
       );
       expect(
         fixture.editor.inspector.designPanel.layerPanel.layers[2].textContent
-      ).toBe('Ranger');
+      ).toContain('Ranger');
       expect(
         fixture.editor.inspector.designPanel.layerPanel.layers[1].textContent
-      ).toBe('Earth');
+      ).toContain('Earth');
       expect(
         fixture.editor.inspector.designPanel.layerPanel.layers[0].textContent
-      ).toBe('Video Content');
+      ).toContain('beach');
 
       // verify 'back' buttons are disabled since ranger image is under everything
       // except the background
@@ -775,13 +784,13 @@ describe('Right Click Menu integration', () => {
       // verify positioning
       expect(
         fixture.editor.inspector.designPanel.layerPanel.layers[2].textContent
-      ).toBe('Earth');
+      ).toContain('Earth');
       expect(
         fixture.editor.inspector.designPanel.layerPanel.layers[1].textContent
-      ).toBe('Video Content');
+      ).toContain('beach');
       expect(
         fixture.editor.inspector.designPanel.layerPanel.layers[0].textContent
-      ).toBe('Ranger');
+      ).toContain('Ranger');
 
       // verify 'forward' buttons are disabled since ranger image is under everything
       // except the background

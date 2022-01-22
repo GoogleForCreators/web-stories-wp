@@ -71,13 +71,13 @@ const RESOURCE_BUILDERS = {
         url: 'http://localhost:9876/__static__/beach.mp4',
         width: 1920,
         height: 1080,
-        mimeType: 'image/mp4',
+        mimeType: 'video/mp4',
       },
       {
         url: 'http://localhost:9876/__static__/beach.mp4',
         width: 640,
         height: 360,
-        mimeType: 'image/jpg',
+        mimeType: 'video/mp4',
       },
     ],
     imageUrls: [

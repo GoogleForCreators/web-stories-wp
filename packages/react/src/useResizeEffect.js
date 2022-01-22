@@ -42,8 +42,7 @@ if (typeof window !== 'undefined' && window && !('ResizeObserver' in window)) {
 function useResizeEffect(ref, handler, deps = undefined) {
   useEffect(
     () => {
-      const node = ref?.current;
-      if (!node || !ResizeObserver) {
+      if (!ref?.current || !ResizeObserver) {
         return undefined;
       }
 
@@ -51,10 +50,15 @@ function useResizeEffect(ref, handler, deps = undefined) {
         // requestAnimationFrame prevents the 'ResizeObserver loop limit exceeded' error
         // https://stackoverflow.com/a/58701523/13078978
         window.requestAnimationFrame(() => {
+          if (!ref?.current) {
+            return;
+          }
+
           const last =
             entries?.length !== undefined && entries?.length > 0
               ? entries[entries.length - 1]
               : null;
+
           if (last) {
             const { width, height } = last.contentRect;
             handler({ width, height });
@@ -62,9 +66,11 @@ function useResizeEffect(ref, handler, deps = undefined) {
         });
       });
 
-      observer.observe(node);
+      observer.observe(ref?.current);
 
-      return () => observer.disconnect();
+      return () => {
+        observer.disconnect();
+      };
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     deps || []
