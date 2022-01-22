@@ -195,7 +195,7 @@ describe('Color formatter', () => {
 
       // Fourth argument is actual style to set
       const styleToSet = togglePrefixStyle.mock.calls[0][3];
-      expect(styleToSet()).toStrictEqual(`${WEIGHT}-900`);
+      expect(styleToSet()).toBe(`${WEIGHT}-900`);
     });
 
     it('should invoke togglePrefixStyle correctly for explicitly setting bold to false', () => {
@@ -228,7 +228,7 @@ describe('Color formatter', () => {
 
       // Fourth argument is actual style to set
       const styleToSet = togglePrefixStyle.mock.calls[0][3];
-      expect(styleToSet()).toStrictEqual(`${WEIGHT}-700`);
+      expect(styleToSet()).toBe(`${WEIGHT}-700`);
     });
 
     it('should correctly determine if setting bold when toggling without explicit flag', () => {
