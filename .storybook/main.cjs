@@ -93,7 +93,7 @@ module.exports = {
                     removeViewBox: false,
                     removeDimensions: true,
                     convertColors: {
-                      // See https://github.com/google/web-stories-wp/pull/6361
+                      // See https://github.com/googleforcreators/web-stories-wp-wp/pull/6361
                       currentColor: false,
                     },
                   },

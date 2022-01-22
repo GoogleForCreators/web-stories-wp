@@ -68,7 +68,7 @@ describe('Inserting 3P Media', () => {
     await expect(page).toMatchElement('[data-testid="imageElement"]');
   });
 
-  // Skipped for https://github.com/google/web-stories-wp/issues/7481
+  // Skipped for https://github.com/googleforcreators/web-stories-wp-wp/issues/7481
   // eslint-disable-next-line jest/no-disabled-tests
   it.skip('should insert a Coverr video', async () => {
     await createNewStory();
@@ -91,7 +91,7 @@ describe('Inserting 3P Media', () => {
     await expect(page).toMatchElement('[data-testid="videoElement"]');
   });
 
-  // Skipped for https://github.com/google/web-stories-wp/issues/7481
+  // Skipped for https://github.com/googleforcreators/web-stories-wp-wp/issues/7481
   // eslint-disable-next-line jest/no-disabled-tests
   it.skip('should insert a Tenor GIF', async () => {
     await createNewStory();

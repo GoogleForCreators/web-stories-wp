@@ -2,8 +2,8 @@
 
 ## Where things are stored
 
-- The **story JSON representation** for each template is stored in [`packages/templates/src/raw/`](https://github.com/google/web-stories-wp/tree/main/packages/templates/src/raw) (in the `main` branch).
-- The **SVGs** used in each template are stored in [`packages/stickers/src/`](https://github.com/google/web-stories-wp/tree/main/packages/stickers/src) (in the `main` branch).
+- The **story JSON representation** for each template is stored in [`packages/templates/src/raw/`](https://github.com/googleforcreators/web-stories-wp-wp/tree/main/packages/templates/src/raw) (in the `main` branch).
+- The **SVGs** used in each template are stored in [`packages/stickers/src/`](https://github.com/googleforcreators/web-stories-wp-wp/tree/main/packages/stickers/src) (in the `main` branch).
 - The (non-SVG) **image &amp; video files** used in each template are stored in [`public/static/main/images/templates/`](https://github.com/GoogleForCreators/wp.stories.google/tree/main/public/static/main/images/templates) (in the [GoogleForCreators/wp.stories.google](https://github.com/GoogleForCreators/wp.stories.google) repo, using [Git LFS](https://git-lfs.github.com/)).
 
 ## Overview
@@ -16,7 +16,7 @@ To add a new template to the editor:
     - Upload (drag & drop) images and videos into the story to add them.
 3. [Engineer] Commit all images & videos used in the template to the codebase.
     - Filenames should follow the existing convention e.g. `travel_page9_bg.jpg`.
-    - Make sure images are not too large &mdash; full-width images should be 1080p, large images should be 720p, and small images should be 480p. See [#6485](https://github.com/google/web-stories-wp/pull/6485) for an example.
+    - Make sure images are not too large &mdash; full-width images should be 1080p, large images should be 720p, and small images should be 480p. See [#6485](https://github.com/googleforcreators/web-stories-wp-wp/pull/6485) for an example.
     - Make sure videos are 720p.
     - Make sure caption files are also committed along with the videos, when available.
 4. [Engineer] Get the story JSON from your shared WP environment, modify its image & video URLs, and integrate it into the codebase (see [details](#get-the-story-json)).
@@ -119,7 +119,7 @@ Another way to get the story JSON is by inspecting the network request that save
 
 Once you have the story JSON, several code changes are needed to add it to the list of default templates in the editor.
 
-1. In [`packages/templates/src/raw/`](https://github.com/google/web-stories-wp/tree/main/packages/templates/src/raw), create a new directory `<template_name>` for your template. Now add your template's story JSON in a new file e.g. `<template_name>/template.json`.
+1. In [`packages/templates/src/raw/`](https://github.com/googleforcreators/web-stories-wp-wp/tree/main/packages/templates/src/raw), create a new directory `<template_name>` for your template. Now add your template's story JSON in a new file e.g. `<template_name>/template.json`.
    - Make following changes to the template JSON,
       - Reset following extraneous properties,
         - `current: null`
@@ -183,7 +183,7 @@ Once you have the story JSON, several code changes are needed to add it to the l
       };
     ```
 
-4. In [`packages/templates/src/getTemplates.js`](https://github.com/google/web-stories-wp/blob/main/packages/templates/src/getTemplates.js), add `"<template_name>"` to the string array in the `getTemplates()` function.
+4. In [`packages/templates/src/getTemplates.js`](https://github.com/googleforcreators/web-stories-wp-wp/blob/main/packages/templates/src/getTemplates.js), add `"<template_name>"` to the string array in the `getTemplates()` function.
 5. Verify in your WP environment that the new template is visible in the editor's "Explore Templates" section.
 6. Create a single pull request with all of the changes in steps 1-3.
 

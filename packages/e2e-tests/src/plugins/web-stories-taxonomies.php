@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Web Stories Test Plugin: Taxonomies
- * Plugin URI:  https://github.com/google/web-stories-wp
+ * Plugin URI:  https://github.com/googleforcreators/web-stories-wp-wp
  * Description: Test plugin that adds some custom taxonomies.
  * Author:      Google
  * Author URI:  https://opensource.google.com/

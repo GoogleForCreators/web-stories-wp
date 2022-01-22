@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: E2E Tests Site kit adsense mock
- * Plugin URI:  https://github.com/google/web-stories-wp
+ * Plugin URI:  https://github.com/googleforcreators/web-stories-wp-wp
  * Description: Utility plugin to mock sitekit adsense
  * Author:      Google
  * Author URI:  https://opensource.google.com

@@ -84,7 +84,7 @@ export const GRID_VIEW_CONFIG_ICON = (
 
 // Defining the SVG like this ensures that IDs are unique
 // even if there are multiple instances of the component.
-// See https://github.com/google/web-stories-wp/issues/8401
+// See https://github.com/googleforcreators/web-stories-wp-wp/issues/8401
 export const BlockIcon = () => {
   const id = useInstanceId(BlockIcon);
 

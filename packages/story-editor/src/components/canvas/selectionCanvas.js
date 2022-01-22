@@ -239,7 +239,7 @@ function SelectionCanvas({ children }) {
   useEffect(updateLasso);
 
   // data-fix-caret is for allowing caretRangeFromPoint to work in Safari.
-  // See https://github.com/google/web-stories-wp/issues/7745.
+  // See https://github.com/googleforcreators/web-stories-wp-wp/issues/7745.
   return (
     <Container
       onMouseDown={onMouseDown}

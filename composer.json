@@ -1,9 +1,9 @@
 {
-  "name": "google/web-stories-wp",
+  "name": "googleforcreators/web-stories-wp-wp",
   "description": "Visual storytelling for WordPress.",
   "license": "Apache-2.0",
   "type": "wordpress-plugin",
-  "homepage": "https://github.com/google/web-stories-wp",
+  "homepage": "https://github.com/googleforcreators/web-stories-wp-wp",
   "require": {
     "php": "^7.0 || ^8.0",
     "ext-dom": "*",

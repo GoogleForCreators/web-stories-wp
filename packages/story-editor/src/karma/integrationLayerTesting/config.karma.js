@@ -88,7 +88,7 @@ describe('Integration Layer tests : EditorConfig Params :', () => {
       description: [
         'This is an example tip used for testing. <a>Learn more</a>',
       ],
-      href: 'https://github.com/google/web-stories-wp',
+      href: 'https://github.com/googleforcreators/web-stories-wp-wp',
     };
     await shouldRenderWithConfig({
       ...MINIMUM_CONFIG,

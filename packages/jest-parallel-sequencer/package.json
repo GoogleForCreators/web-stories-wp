@@ -10,10 +10,10 @@
   "keywords": [
     "jest"
   ],
-  "homepage": "https://github.com/google/web-stories-wp/",
-  "repository": "git+https://github.com/google/web-stories-wp.git",
+  "homepage": "https://github.com/googleforcreators/web-stories-wp-wp/",
+  "repository": "git+https://github.com/GoogleForCreators/web-stories-wp.git",
   "bugs": {
-    "url": "https://github.com/google/web-stories-wp/issues"
+    "url": "https://github.com/googleforcreators/web-stories-wp-wp/issues"
   },
   "engines": {
     "node": ">= 16",

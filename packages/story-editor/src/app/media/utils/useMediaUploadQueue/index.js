@@ -160,7 +160,7 @@ function useMediaUploadQueue() {
             currentPosterGenerationItem.current !== null;
 
           // Prevent simultaneous ffmpeg poster generation processes.
-          // See https://github.com/google/web-stories-wp/issues/8779
+          // See https://github.com/googleforcreators/web-stories-wp-wp/issues/8779
           if (isAlreadyGeneratingPoster) {
             return;
           }
@@ -476,7 +476,7 @@ function useMediaUploadQueue() {
           const isAlreadyTranscoding = currentTranscodingItem.current !== null;
 
           // Prevent simultaneous transcoding processes.
-          // See https://github.com/google/web-stories-wp/issues/8779
+          // See https://github.com/googleforcreators/web-stories-wp-wp/issues/8779
           if (needsTranscoding && isAlreadyTranscoding) {
             return;
           }

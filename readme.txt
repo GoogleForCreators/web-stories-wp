@@ -107,7 +107,7 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 == Changelog ==
 
-For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/google/web-stories-wp/releases).
+For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/googleforcreators/web-stories-wp-wp/releases).
 
 = 1.16.0 =
 
