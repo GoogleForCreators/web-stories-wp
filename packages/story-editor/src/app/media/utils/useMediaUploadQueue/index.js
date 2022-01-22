@@ -51,6 +51,11 @@ const initialState = {
   queue: [],
 };
 
+// The navigator.hardwareConcurrency read-only property returns
+// the number of logical processors available to run threads on the user's computer.
+// Not supported by Safari, hence the fallback.
+const MAX_CONCURRENCY = navigator.hardwareConcurrency || 2;
+
 /**
  * Media upload queue implementation.
  *
@@ -85,8 +90,20 @@ function useMediaUploadQueue() {
   });
 
   const isMounted = useRef(false);
-  const currentTranscodingItem = useRef(null);
-  const currentPosterGenerationItem = useRef(null);
+
+  /**
+   * Set of items currently being transcoded.
+   *
+   * @type {import('react').MutableRefObject<Set<string>>}
+   */
+  const currentTranscodingItems = useRef(new Set());
+
+  /**
+   * Set of items currently undergoing poster generation.
+   *
+   * @type {import('react').MutableRefObject<Set<string>>}
+   */
+  const currentPosterGenerationItems = useRef(new Set());
 
   const {
     startUploading,
@@ -156,16 +173,20 @@ function useMediaUploadQueue() {
             return;
           }
 
+          const hasTranscodingCapacity =
+            currentTranscodingItems.current.size +
+              currentPosterGenerationItems.current.size <
+            MAX_CONCURRENCY;
           const isAlreadyGeneratingPoster =
-            currentPosterGenerationItem.current !== null;
+            currentPosterGenerationItems.current.has(id);
 
           // Prevent simultaneous ffmpeg poster generation processes.
           // See https://github.com/googleforcreators/web-stories-wp/issues/8779
-          if (isAlreadyGeneratingPoster) {
+          if (!hasTranscodingCapacity || isAlreadyGeneratingPoster) {
             return;
           }
 
-          currentPosterGenerationItem.current = id;
+          currentPosterGenerationItems.current.add(id);
 
           try {
             const videoFrame = await getFirstFrameOfVideo(file);
@@ -190,7 +211,7 @@ function useMediaUploadQueue() {
           } catch {
             // Not interested in errors here.
           } finally {
-            currentPosterGenerationItem.current = null;
+            currentPosterGenerationItems.current.delete(id);
           }
         })
       );
@@ -226,7 +247,7 @@ function useMediaUploadQueue() {
 
         trackError('upload_media', error?.message);
       } finally {
-        currentTranscodingItem.current = null;
+        currentTranscodingItems.current.delete(id);
       }
     },
     [startTranscoding, finishTranscoding, convertGifToVideo, cancelUploading]
@@ -256,7 +277,7 @@ function useMediaUploadQueue() {
 
         trackError('upload_media', error?.message);
       } finally {
-        currentTranscodingItem.current = null;
+        currentTranscodingItems.current.delete(id);
       }
     },
     [startTrimming, finishTrimming, trimVideo, cancelUploading]
@@ -283,7 +304,7 @@ function useMediaUploadQueue() {
 
         trackError('upload_media', error?.message);
       } finally {
-        currentTranscodingItem.current = null;
+        currentTranscodingItems.current.delete(id);
       }
     },
     [startMuting, finishMuting, stripAudioFromVideo, cancelUploading]
@@ -310,7 +331,7 @@ function useMediaUploadQueue() {
 
         trackError('upload_media', error?.message);
       } finally {
-        currentTranscodingItem.current = null;
+        currentTranscodingItems.current.delete(id);
       }
     },
     [startTranscoding, finishTranscoding, transcodeVideo, cancelUploading]
@@ -473,16 +494,23 @@ function useMediaUploadQueue() {
             isTranscodingEnabled &&
             (isGifThatNeedsTranscoding || canTranscodeFile(file));
 
-          const isAlreadyTranscoding = currentTranscodingItem.current !== null;
+          const hasTranscodingCapacity =
+            currentTranscodingItems.current.size +
+              currentPosterGenerationItems.current.size <
+            MAX_CONCURRENCY;
+          const isAlreadyTranscoding = currentTranscodingItems.current.has(id);
 
           // Prevent simultaneous transcoding processes.
           // See https://github.com/googleforcreators/web-stories-wp/issues/8779
-          if (needsTranscoding && isAlreadyTranscoding) {
+          if (
+            needsTranscoding &&
+            (isAlreadyTranscoding || !hasTranscodingCapacity)
+          ) {
             return;
           }
 
           if (isTranscodingEnabled) {
-            currentTranscodingItem.current = id;
+            currentTranscodingItems.current.add(id);
 
             if (isGifThatNeedsTranscoding) {
               convertGifItem(item);
