@@ -14,6 +14,10 @@ on:
 env:
   PRODUCTION_REGISTRY_URL: https://wombat-dressing-room.appspot.com
   LOCAL_REGISTRY_URL: http://localhost:4873
+  GIT_AUTHOR_EMAIL: 94923726+googleforcreators-bot@users.noreply.github.com
+  GIT_AUTHOR_NAME: googleforcreators-bot
+  GIT_COMMITTER_EMAIL: 94923726+googleforcreators-bot@users.noreply.github.com
+  GIT_COMMITTER_NAME: googleforcreators-bot
 
 jobs:
   dry-run:
@@ -76,6 +80,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       # See go/npm-publish
       - name: Setup Node
@@ -111,7 +117,9 @@ jobs:
           git add packages/*/package.json
           git commit -m "Tagging npm package version $NEW_VERSION"
           git tag $NEW_VERSION
-          git push origin main
+          git status
+          git log -n 1
+          git show --pretty=%gd --stat
 
       # Dry-run releasing
       - name: Dry-run production release
@@ -119,12 +127,14 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISHING_TOKEN }}
 
-      #      # Do the actual publishing to npmjs.com.
-      #      - name: Publish packages to production
-      #        run: npm publish --workspaces
-      #        env:
-      #          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISHING_TOKEN }}
+# TODO: Re-enable once ready
+#      - name: Push version bumps
+#        run: git push origin main
 
-      # Undo the version bumps in Git. We only needed them for publishing.
-      - name: Clean up local changes
-        run: git checkout .
+# TODO: Re-enable once ready
+#      # Do the actual publishing to npmjs.com.
+#      - name: Publish packages to production
+#        run: npm publish --workspaces
+#        env:
+#          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISHING_TOKEN }}
+
