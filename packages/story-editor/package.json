@@ -42,7 +42,6 @@
     "@googleforcreators/text-sets": "*",
     "@googleforcreators/tracking": "*",
     "@googleforcreators/units": "*",
-    "@web-stories-wp/karma-fixture": "*",
     "blurhash": "^1.1.4",
     "classnames": "^2.3.1",
     "clone-deep": "^4.0.1",
@@ -68,6 +67,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@googleforcreators/karma-fixture": "*",
     "@storybook/addon-actions": "^6.3.6",
     "@storybook/addon-knobs": "^6.3.0",
     "@testing-library/dom": "^8.10.1",

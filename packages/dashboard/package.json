@@ -37,7 +37,6 @@
     "@googleforcreators/templates": "*",
     "@googleforcreators/tracking": "*",
     "@googleforcreators/units": "*",
-    "@web-stories-wp/karma-fixture": "*",
     "flagged": "^2.0.1",
     "history": "^5.2.0",
     "prop-types": "^15.8.1",
@@ -45,6 +44,7 @@
     "styled-components": "^5.3.3"
   },
   "devDependencies": {
+    "@googleforcreators/karma-fixture": "*",
     "@storybook/addon-actions": "^6.3.6",
     "@storybook/addon-knobs": "^6.3.0",
     "@testing-library/react": "^12.1.2",
