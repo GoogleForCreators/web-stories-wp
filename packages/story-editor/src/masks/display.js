@@ -51,7 +51,6 @@ const SVG_STYLE = {
   bottom: 0,
   height: '100%',
   width: '100%',
-  pointerEvents: 'initial',
 };
 
 export default function WithMask({
@@ -128,10 +127,11 @@ export default function WithMask({
       ...style,
       ...borderWrapperStyle,
       transform: actualTransform,
+      pointerEvents: 'none',
     };
 
     return (
-      <div style={style}>
+      <div style={{ ...style, pointerEvents: 'initial' }}>
         <div style={borderStyle}>
           <svg
             viewBox={viewBox}
