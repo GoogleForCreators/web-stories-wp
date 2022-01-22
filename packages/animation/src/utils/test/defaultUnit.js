@@ -23,7 +23,7 @@ describe('defaultUnit(input, unit)', () => {
   it('appends the default unit if the input value ends in a digit', () => {
     const input = 123456;
     const unit = 'px';
-    expect(defaultUnit(input, unit)).toStrictEqual(`${input}${unit}`);
+    expect(defaultUnit(input, unit)).toBe(`${input}${unit}`);
   });
 
   it('doesnt append the default unit if the input value ends in a non-digit', () => {
