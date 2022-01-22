@@ -124,9 +124,15 @@ export default function WithMask({
         dataToEditorY(element.height)
       );
 
+    const borderStyle = {
+      ...style,
+      ...borderWrapperStyle,
+      transform: actualTransform,
+    };
+
     return (
-      <div style={{ ...style }}>
-        <div style={{ ...style, ...borderWrapperStyle }}>
+      <div style={style}>
+        <div style={borderStyle}>
           <svg
             viewBox={viewBox}
             width="100%"
