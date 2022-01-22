@@ -21,8 +21,8 @@
     "npm": ">= 7.3"
   },
   "main": "./src/index.cjs",
-  "dependencies": {
-    "karma": "^6.3.11",
-    "puppeteer": "^13.1.1"
+  "peerDependencies": {
+    "karma": "*",
+    "puppeteer": "*"
   }
 }

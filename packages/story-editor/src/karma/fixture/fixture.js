@@ -28,7 +28,7 @@ import {
   waitFor,
 } from '@testing-library/react';
 import { setAppElement } from '@googleforcreators/design-system';
-import { FixtureEvents } from '@web-stories-wp/karma-fixture';
+import { FixtureEvents } from '@googleforcreators/karma-fixture';
 import { DATA_VERSION } from '@googleforcreators/migration';
 
 /**

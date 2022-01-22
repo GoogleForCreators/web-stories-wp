@@ -27,8 +27,6 @@
   "main": "./src/index.js",
   "dependencies": {
     "prop-types": "^15.8.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
     "resize-observer-polyfill": "^1.5.1",
     "shallow-equal": "^1.2.1",
     "use-context-selector": "^1.2.11",
@@ -37,5 +35,9 @@
   "devDependencies": {
     "@testing-library/react": "^12.1.2",
     "@testing-library/react-hooks": "^7.0.2"
+  },
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   }
 }
