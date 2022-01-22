@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { canMaskHaveBorder, singleBorderMask } from '../masks';
+import { canMaskHaveBorder, checkMultiBorderSupport } from '../masks';
 
 function hasBorder({ border }) {
   if (!border) {
@@ -45,7 +45,7 @@ export function shouldDisplayBorder(element) {
   return (
     hasBorder(element) &&
     canMaskHaveBorder(element) &&
-    !singleBorderMask(element)
+    checkMultiBorderSupport(element)
   );
 }
 
@@ -89,7 +89,7 @@ export function getBorderPositionCSS({
  */
 export function getBorderStyle(element) {
   // If there's no border, return the radius only.
-  if (!hasBorder(element) || singleBorderMask(element)) {
+  if (!hasBorder(element) || !checkMultiBorderSupport(element)) {
     return getBorderRadius(element);
   }
   const { border } = element;
@@ -196,29 +196,5 @@ export function getResponsiveBorder(border, previewMode, converter) {
     top: converter(top),
     right: converter(right),
     bottom: converter(bottom),
-  };
-}
-
-/**
- * Gets style for the border svg wrapper.
- *
- * @param {Object} mask The mask used for this element
- * @param {number} borderWidth border width value
- * @return {Object} SVG border wrapper style.
- */
-export function getBorderWrapperStyle(mask, borderWidth) {
-  if (!mask || !borderWidth) {
-    return {};
-  }
-
-  return {
-    width: `calc(100% + ${borderWidth * 6}px)`,
-    height: `calc(100% + ${(borderWidth * 6) / mask.ratio}px)`,
-    position: 'absolute',
-    top: `-${(3 * borderWidth) / mask.ratio}px`,
-    left: `-${3 * borderWidth}px`,
-    pointerEvents: 'initial',
-    display: 'block',
-    zIndex: 0,
   };
 }

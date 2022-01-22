@@ -29,9 +29,13 @@ import PropTypes from 'prop-types';
  */
 import StoryPropTypes from '../types';
 import getTransformFlip from '../elements/shared/getTransformFlip';
-import { getBorderColor, getBorderWrapperStyle } from '../utils/elementBorder';
+import { getBorderColor } from '../utils/elementBorder';
 import { DEFAULT_MASK } from './constants';
-import { getElementMask, singleBorderMask } from '.';
+import {
+  getElementMask,
+  checkMultiBorderSupport,
+  getBorderedMaskProperties,
+} from '.';
 
 const FILL_STYLE = {
   position: 'absolute',
@@ -90,7 +94,9 @@ export default function WithMask({
   }
 
   const borderWidth = border?.left;
-  const showSingleBorder = Boolean(singleBorderMask(element) && borderWidth);
+  const showSingleBorder = Boolean(
+    !checkMultiBorderSupport(element) && borderWidth
+  );
   const borderColor = border?.color
     ? getBorderColor({ color: border.color })
     : 'none';
@@ -100,55 +106,87 @@ export default function WithMask({
 
   const maskId = `mask-${mask.type}-${element.id}-output`;
 
-  const wrapperStyle = !showSingleBorder
-    ? null
-    : getBorderWrapperStyle(maskId, borderWidth * 2);
+  if (showSingleBorder) {
+    const { viewBox, groupTransform, borderWrapperStyle, relativeBorderWidth } =
+      getBorderedMaskProperties(
+        mask,
+        borderWidth,
+        element.width,
+        element.height
+      );
 
-  return (
-    <>
-      {showSingleBorder && (
-        <div style={wrapperStyle}>
+    return (
+      <div style={{ ...style }}>
+        <div style={{ ...style, ...borderWrapperStyle }}>
           <svg
-            viewBox={`0 0 1 ${1 / mask.ratio}`}
+            viewBox={viewBox}
             width="100%"
             height="100%"
             preserveAspectRatio="none"
             style={SVG_STYLE}
           >
-            <path
-              vectorEffect="non-scaling-stroke"
-              stroke={borderColor}
-              strokeWidth={borderWidth * 2}
-              fill="none"
-              d={mask?.path}
-            />
+            <g transform={groupTransform}>
+              <path
+                d={mask?.path}
+                stroke={borderColor}
+                strokeWidth={relativeBorderWidth}
+                fill="transparent"
+              />
+            </g>
           </svg>
         </div>
-      )}
-      <div
-        style={{
-          ...(fill ? FILL_STYLE : {}),
-          ...style,
-          clipPath: `url(#${maskId})`,
-          // stylelint-disable-next-line
-          WebkitClipPath: `url(#${maskId})`,
-        }}
-        {...rest}
-      >
-        <svg width={0} height={0}>
-          <defs>
-            <clipPath
-              id={maskId}
-              transform={`scale(1 ${mask.ratio})`}
-              clipPathUnits="objectBoundingBox"
-            >
-              <path d={mask.path} />
-            </clipPath>
-          </defs>
-        </svg>
-        {children}
+        <div
+          style={{
+            ...(fill ? FILL_STYLE : {}),
+            ...style,
+            clipPath: `url(#${maskId})`,
+            // stylelint-disable-next-line
+            WebkitClipPath: `url(#${maskId})`,
+            opacity: 1,
+          }}
+          {...rest}
+        >
+          <svg width={0} height={0}>
+            <defs>
+              <clipPath
+                id={maskId}
+                transform={`scale(1 ${mask.ratio})`}
+                clipPathUnits="objectBoundingBox"
+              >
+                <path d={mask.path} />
+              </clipPath>
+            </defs>
+          </svg>
+          {children}
+        </div>
       </div>
-    </>
+    );
+  }
+
+  return (
+    <div
+      style={{
+        ...(fill ? FILL_STYLE : {}),
+        ...style,
+        clipPath: `url(#${maskId})`,
+        // stylelint-disable-next-line
+        WebkitClipPath: `url(#${maskId})`,
+      }}
+      {...rest}
+    >
+      <svg width={0} height={0}>
+        <defs>
+          <clipPath
+            id={maskId}
+            transform={`scale(1 ${mask.ratio})`}
+            clipPathUnits="objectBoundingBox"
+          >
+            <path d={mask.path} />
+          </clipPath>
+        </defs>
+      </svg>
+      {children}
+    </div>
   );
 }
 

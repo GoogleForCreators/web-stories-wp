@@ -26,7 +26,7 @@ import { LockToggle, Icons } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import { singleBorderMask } from '../../../../masks';
+import { checkMultiBorderSupport } from '../../../../masks';
 import { StackableGroup, StackableInput } from '../../../form/stackable';
 import Tooltip from '../../../tooltip';
 import { focusStyle, useCommonObjectValue } from '../../shared';
@@ -73,12 +73,10 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
   );
 
   // Some shapes i.e all non-rectangular shapes only support a single border width value
-  const singleBorderSupport = selectedElements.some((el) =>
-    singleBorderMask(el)
-  );
+  const hasMultiBorderSupport = selectedElements.every(checkMultiBorderSupport);
 
   // Only if true for all selected elements.
-  const lockBorder = border.lockedWidth === true || singleBorderSupport;
+  const lockBorder = border.lockedWidth === true || !hasMultiBorderSupport;
 
   const handleChange = useCallback(
     (name) => (evt, value) => {
@@ -156,7 +154,7 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
           </>
         )}
       </StackableGroup>
-      {!singleBorderSupport && (
+      {hasMultiBorderSupport && (
         <ToggleWrapper locked={lockBorder}>
           <Tooltip title={__('Toggle consistent border', 'web-stories')}>
             <StyledLockToggle

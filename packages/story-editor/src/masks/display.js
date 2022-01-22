@@ -29,7 +29,11 @@ import StoryPropTypes from '../types';
 import getTransformFlip from '../elements/shared/getTransformFlip';
 import { shouldDisplayBorder, getBorderColor } from '../utils/elementBorder';
 import { MaskTypes } from './constants';
-import { getElementMask, singleBorderMask, getBorderedMaskProperties } from '.';
+import {
+  getElementMask,
+  checkMultiBorderSupport,
+  getBorderedMaskProperties,
+} from '.';
 
 const FILL_STYLE = {
   position: 'absolute',
@@ -83,7 +87,9 @@ export default function WithMask({
   }));
 
   const borderWidth = !previewMode ? border?.left : responsiveBorder?.left;
-  const showSingleBorder = Boolean(singleBorderMask(element) && borderWidth);
+  const showSingleBorder = Boolean(
+    !checkMultiBorderSupport(element) && borderWidth
+  );
   const borderColor = border?.color
     ? getBorderColor({ color: border.color })
     : 'none';

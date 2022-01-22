@@ -32,9 +32,9 @@ export function canMaskHaveBorder(element) {
   return !mask || mask.supportsBorder;
 }
 
-export function singleBorderMask(element) {
+export function checkMultiBorderSupport(element) {
   const { mask } = element;
-  return mask && DEFAULT_MASK.type !== mask?.type;
+  return !mask || DEFAULT_MASK.type === mask?.type;
 }
 
 export function getMaskByType(type) {
@@ -57,21 +57,21 @@ export function getBorderedMaskProperties(
   elementHeight
 ) {
   const fullPadding = BORDER_MULTIPLIER * borderWidth;
-  const halfPadding = fullPadding / 2;
   const relativeWidth = (elementWidth + fullPadding) / elementWidth;
   const relativeHeight = (elementHeight + fullPadding) / elementHeight;
   const offsetX = (relativeWidth - 1) / 2;
   const offsetY = (relativeHeight - 1) / 2;
+  const scaledHeight = relativeHeight / mask.ratio;
   const relativeBorderWidth =
-    (2 / BORDER_MULTIPLIER) * Math.min(offsetX, offsetY);
-  const viewBox = `0 0 ${relativeWidth} ${relativeHeight / mask.ratio}`;
+    (2 / BORDER_MULTIPLIER) * Math.max(offsetX, offsetY);
+  const viewBox = `0 0 ${relativeWidth} ${scaledHeight}`;
   const groupTransform = `translate(${offsetX},${offsetY})`;
   const borderWrapperStyle = {
-    width: `calc(100% + ${fullPadding}px)`,
-    height: `calc(100% + ${fullPadding / mask.ratio}px)`,
+    width: `${relativeWidth * 100}%`,
+    height: `${relativeHeight * 100}%`,
     position: 'absolute',
-    left: `${-halfPadding}px`,
-    top: `${-halfPadding / mask.ratio}px`,
+    left: `${-offsetX * 100}%`,
+    top: `${-offsetY * 100}%`,
     pointerEvents: 'initial',
     display: 'block',
     zIndex: 1,

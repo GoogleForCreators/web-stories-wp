@@ -24,7 +24,7 @@ import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
-import { canMaskHaveBorder } from '../../../../masks';
+import { checkMultiBorderSupport, canMaskHaveBorder } from '../../../../masks';
 import { Color, Row } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { useCommonObjectValue } from '../../shared';
@@ -63,6 +63,10 @@ function BorderStylePanel(props) {
     return null;
   }
 
+  // Some shapes i.e all non-rectangular shapes only support a single border width value
+  // If so, they also don't support opacity for the border color, so that has to be removed here
+  const hasMultiBorderSupport = selectedElements.every(checkMultiBorderSupport);
+
   const hasBorder = [left, top, right, bottom].some((value) => value > 0);
   return (
     <SimplePanel name="borderStyle" title={__('Border', 'web-stories')}>
@@ -77,6 +81,7 @@ function BorderStylePanel(props) {
             label={__('Border color', 'web-stories')}
             changedStyle="border-color"
             hasEyedropper
+            allowsOpacity={hasMultiBorderSupport}
           />
         </Row>
       )}
