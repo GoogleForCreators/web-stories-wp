@@ -49,9 +49,6 @@ jobs:
       - name: Publish packages locally
         run: npm --registry=$LOCAL_REGISTRY_URL --workspaces publish
 
-      - name: Stop local registry
-        run: bash bin/stop-local-npm-registry.sh
-
       # Undo the version bumps in Git. We only needed them for testing.
       - name: Clean up local changes
         run: git checkout .
@@ -67,6 +64,9 @@ jobs:
           cd $TEST_DIR
           npm init --yes
           npm --registry=$LOCAL_REGISTRY_URL install $PUBLIC_PACKAGES
+
+      - name: Stop local registry
+        run: bash bin/stop-local-npm-registry.sh
 
   release:
     name: Release
