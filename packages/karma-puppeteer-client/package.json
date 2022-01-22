@@ -22,6 +22,6 @@
   },
   "main": "./src/index.cjs",
   "dependencies": {
-    "karma": "^6.3.9"
+    "karma": "^6.3.11"
   }
 }
