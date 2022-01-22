@@ -125,7 +125,7 @@
     "karma-webpack": "^4.0.2",
     "lerna-changelog": "^2.2.0",
     "lint-staged": "^12.2.2",
-    "markdownlint-cli": "^0.29.0",
+    "markdownlint-cli": "^0.30.0",
     "mini-css-extract-plugin": "^1.6.2",
     "mockdate": "^3.0.5",
     "npm-package-json-lint": "^5.4.2",
