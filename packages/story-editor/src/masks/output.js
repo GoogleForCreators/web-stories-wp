@@ -68,12 +68,13 @@ export default function WithMask({
   const mask = getElementMask(element);
   const { flip, isBackground, border } = element;
 
-  const transformFlip = getTransformFlip(flip);
-  if (transformFlip) {
-    style.transform = style.transform
-      ? `${style.transform} ${transformFlip}`
-      : transformFlip;
-  }
+  const flipTransform = getTransformFlip(flip) || '';
+  const actualTransform = `${style.transform || ''} ${flipTransform}`.trim();
+
+  const styleWithTransform = {
+    ...style,
+    transform: actualTransform,
+  };
 
   if (
     !mask?.type ||
@@ -84,7 +85,7 @@ export default function WithMask({
       <div
         style={{
           ...(fill ? FILL_STYLE : {}),
-          ...style,
+          ...styleWithTransform,
         }}
         {...rest}
       >
@@ -115,9 +116,14 @@ export default function WithMask({
         element.height
       );
 
+    const borderStyle = {
+      ...style,
+      ...borderWrapperStyle,
+    };
+
     return (
-      <div style={{ ...style }}>
-        <div style={{ ...style, ...borderWrapperStyle }}>
+      <div style={styleWithTransform}>
+        <div style={borderStyle}>
           <svg
             viewBox={viewBox}
             width="100%"
@@ -167,7 +173,7 @@ export default function WithMask({
     <div
       style={{
         ...(fill ? FILL_STYLE : {}),
-        ...style,
+        ...styleWithTransform,
         clipPath: `url(#${maskId})`,
         // stylelint-disable-next-line
         WebkitClipPath: `url(#${maskId})`,
