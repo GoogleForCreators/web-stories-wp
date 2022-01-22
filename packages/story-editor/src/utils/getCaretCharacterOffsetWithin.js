@@ -51,7 +51,7 @@ function getCaretCharacterOffsetWithin(element, clientX, clientY) {
         }
       } else if (doc.caretRangeFromPoint) {
         // Change 'user-select' temporarily to make getting the correct range work for Safari.
-        // See https://github.com/googleforcreators/web-stories-wp-wp/issues/7745.
+        // See https://github.com/googleforcreators/web-stories-wp/issues/7745.
         const elementsToAdjust = document.querySelectorAll('[data-fix-caret]');
         for (const elementToAdjust of elementsToAdjust) {
           elementToAdjust.style.webkitUserSelect = 'auto';

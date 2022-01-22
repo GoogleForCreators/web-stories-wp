@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: E2E Tests Disable 3P media.
- * Plugin URI:  https://github.com/googleforcreators/web-stories-wp-wp
+ * Plugin URI:  https://github.com/googleforcreators/web-stories-wp
  * Description: Disable 3P media.
  * Author:      Google
  * Author URI:  https://opensource.google.com

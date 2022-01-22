@@ -172,7 +172,7 @@ function observeConsoleLogging() {
     }
 
     // Special case: ignore 403 errors on logout page.
-    // See https://github.com/googleforcreators/web-stories-wp-wp/pull/7889
+    // See https://github.com/googleforcreators/web-stories-wp/pull/7889
     if (
       text.includes(
         'Failed to load resource: the server responded with a status of 403 (Forbidden)'

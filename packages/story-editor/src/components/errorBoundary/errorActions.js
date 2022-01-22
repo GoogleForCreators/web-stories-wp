@@ -48,7 +48,7 @@ const Wrapper = styled.div`
 
 function ErrorActions({ error, errorInfo }) {
   const body = encodeURIComponent(`${error}${errorInfo.componentStack}`);
-  const reportUrl = `https://github.com/googleforcreators/web-stories-wp-wp/issues/new?labels=Type%3A+Bug&template=bug_report.md&title=${error}&body=${body}`;
+  const reportUrl = `https://github.com/googleforcreators/web-stories-wp/issues/new?labels=Type%3A+Bug&template=bug_report.md&title=${error}&body=${body}`;
 
   const reload = () => {
     window.location.reload(true);

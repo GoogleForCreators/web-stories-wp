@@ -171,7 +171,7 @@ describe('Inline style override', () => {
       });
 
       // Disable reason: This doesn't work due to bug #1606:
-      // https://github.com/googleforcreators/web-stories-wp-wp/issues/1606
+      // https://github.com/googleforcreators/web-stories-wp/issues/1606
       // eslint-disable-next-line jasmine/no-disabled-tests
       xit('should have correct formatting when pressing mod+i, then underline toggle, then inserting text', async () => {
         // Verify that italic and underline are untoggled in design panel

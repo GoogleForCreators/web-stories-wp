@@ -74,7 +74,7 @@ const sharedConfig = {
       // which would break i18n string extraction.
       // While introducing global variables is not ideal, it helps ensuring
       // i18n works while retaining all tree shaking functionality in webpack.
-      // See https://github.com/googleforcreators/web-stories-wp-wp/pull/9001 for context.
+      // See https://github.com/googleforcreators/web-stories-wp/pull/9001 for context.
       // TODO(#5792): Use `mangleExports` option in webpack v5 instead.
       {
         test: require.resolve('@googleforcreators/i18n'), // eslint-disable-line node/no-extraneous-require
@@ -172,7 +172,7 @@ const sharedConfig = {
                     removeViewBox: false,
                     removeDimensions: true,
                     convertColors: {
-                      // See https://github.com/googleforcreators/web-stories-wp-wp/pull/6361
+                      // See https://github.com/googleforcreators/web-stories-wp/pull/6361
                       currentColor: false,
                     },
                   },

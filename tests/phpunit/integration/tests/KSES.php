@@ -334,7 +334,7 @@ class KSES extends DependencyInjectedTestCase {
 				'css'      => 'pointer-events: initial',
 				'expected' => 'pointer-events: initial',
 			],
-			// See https://github.com/googleforcreators/web-stories-wp-wp/pull/7380.
+			// See https://github.com/googleforcreators/web-stories-wp/pull/7380.
 			[
 				'css'      => 'will-change: transform',
 				'expected' => 'will-change: transform',

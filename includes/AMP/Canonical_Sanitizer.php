@@ -5,7 +5,7 @@
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp-wp
+ * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -43,8 +43,8 @@ use DOMElement;
  * handles that already.
  *
  * @see \AMP_Theme_Support::ensure_required_markup()
- * @link https://github.com/googleforcreators/web-stories-wp-wp/issues/4193
- * @link https://github.com/googleforcreators/web-stories-wp-wp/pull/8169
+ * @link https://github.com/googleforcreators/web-stories-wp/issues/4193
+ * @link https://github.com/googleforcreators/web-stories-wp/pull/8169
  *
  * @since 1.1.0
  */

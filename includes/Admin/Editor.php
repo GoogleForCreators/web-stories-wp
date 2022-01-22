@@ -5,7 +5,7 @@
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp-wp
+ * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -307,7 +307,7 @@ class Editor extends Service_Base implements HasRequirements {
 			]
 		);
 
-		// Dequeue forms.css, see https://github.com/googleforcreators/web-stories-wp-wp/issues/349 .
+		// Dequeue forms.css, see https://github.com/googleforcreators/web-stories-wp/issues/349 .
 		$this->assets->remove_admin_style( [ 'forms' ] );
 	}
 

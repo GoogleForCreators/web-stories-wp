@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Web Stories Test Plugin: Meta Box
- * Plugin URI:  https://github.com/googleforcreators/web-stories-wp-wp
+ * Plugin URI:  https://github.com/googleforcreators/web-stories-wp
  * Description: Test plugin for custom meta boxes.
  * Author:      Google
  * Author URI:  https://opensource.google.com/
