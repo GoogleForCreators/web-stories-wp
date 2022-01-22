@@ -212,32 +212,13 @@ export function getBorderWrapperStyle(mask, borderWidth) {
   }
 
   return {
-    width: `calc(100% + ${borderWidth * 2}px)`,
-    height: `calc(100% + ${(borderWidth * 2) / mask.ratio}px)`,
+    width: `calc(100% + ${borderWidth * 6}px)`,
+    height: `calc(100% + ${(borderWidth * 6) / mask.ratio}px)`,
     position: 'absolute',
-    top: `-${borderWidth / mask.ratio}px`,
-    left: `-${borderWidth}px`,
+    top: `-${(3 * borderWidth) / mask.ratio}px`,
+    left: `-${3 * borderWidth}px`,
     pointerEvents: 'initial',
     display: 'block',
     zIndex: 0,
-  };
-}
-
-/**
- * Gets style for the bordered element.
- *
- * @param {Object} mask The mask used for this element
- * @param {number} borderWidth border width value
- * @return {Object} SVG border wrapper style.
- */
-export function getBorderedElementStyle(mask, borderWidth) {
-  if (!mask || !borderWidth) {
-    return {};
-  }
-
-  return {
-    position: 'absolute',
-    top: `${borderWidth / mask.ratio}px`,
-    left: `${borderWidth}px`,
   };
 }

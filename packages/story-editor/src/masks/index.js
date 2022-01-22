@@ -49,22 +49,33 @@ function getDefaultElementMask(type) {
   return isMaskable ? DEFAULT_MASK : null;
 }
 
+const BORDER_MULTIPLIER = 3;
 export function getBorderedMaskProperties(
   mask,
   borderWidth,
   elementWidth,
   elementHeight
 ) {
-  const relativeWidth = (elementWidth + 2 * borderWidth) / elementWidth;
-  const relativeHeight =
-    (elementHeight / mask.ratio + 2 * borderWidth) / elementHeight;
+  const fullPadding = BORDER_MULTIPLIER * borderWidth;
+  const halfPadding = fullPadding / 2;
+  const relativeWidth = (elementWidth + fullPadding) / elementWidth;
+  const relativeHeight = (elementHeight + fullPadding) / elementHeight;
   const offsetX = (relativeWidth - 1) / 2;
   const offsetY = (relativeHeight - 1) / 2;
-  const relativeBorderWidth = 2 * Math.min(offsetX, offsetY);
-  const viewBox = `0 0 ${relativeWidth} ${relativeHeight}`;
+  const relativeBorderWidth =
+    (2 / BORDER_MULTIPLIER) * Math.min(offsetX, offsetY);
+  const viewBox = `0 0 ${relativeWidth} ${relativeHeight / mask.ratio}`;
   const groupTransform = `translate(${offsetX},${offsetY})`;
-  const maskTransform = `scale(${1 / relativeWidth},${
-    1 / relativeHeight
-  }) translate(${offsetX},${offsetY})`;
-  return { viewBox, groupTransform, maskTransform, relativeBorderWidth };
+  const borderWrapperStyle = {
+    width: `calc(100% + ${fullPadding}px)`,
+    height: `calc(100% + ${fullPadding / mask.ratio}px)`,
+    position: 'absolute',
+    left: `${-halfPadding}px`,
+    top: `${-halfPadding / mask.ratio}px`,
+    pointerEvents: 'initial',
+    display: 'block',
+    zIndex: 1,
+    opacity: 1,
+  };
+  return { viewBox, groupTransform, borderWrapperStyle, relativeBorderWidth };
 }

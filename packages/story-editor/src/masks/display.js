@@ -20,18 +20,14 @@
 import PropTypes from 'prop-types';
 import { useMemo } from '@googleforcreators/react';
 import { v4 as uuidv4 } from 'uuid';
+import { useUnits } from '@googleforcreators/units';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../types';
 import getTransformFlip from '../elements/shared/getTransformFlip';
-import {
-  shouldDisplayBorder,
-  getBorderColor,
-  getBorderWrapperStyle,
-  getBorderedElementStyle,
-} from '../utils/elementBorder';
+import { shouldDisplayBorder, getBorderColor } from '../utils/elementBorder';
 import { MaskTypes } from './constants';
 import { getElementMask, singleBorderMask, getBorderedMaskProperties } from '.';
 
@@ -81,6 +77,11 @@ export default function WithMask({
     transform: actualTransform,
   };
 
+  const { dataToEditorX, dataToEditorY } = useUnits((state) => ({
+    dataToEditorX: state.actions.dataToEditorX,
+    dataToEditorY: state.actions.dataToEditorY,
+  }));
+
   const borderWidth = !previewMode ? border?.left : responsiveBorder?.left;
   const showSingleBorder = Boolean(singleBorderMask(element) && borderWidth);
   const borderColor = border?.color
@@ -109,18 +110,17 @@ export default function WithMask({
   }-${randomId}`;
 
   if (showSingleBorder) {
-    const wrapperStyle = getBorderWrapperStyle(mask, borderWidth);
-
-    const { viewBox, groupTransform, maskTransform, relativeBorderWidth } =
+    const { viewBox, groupTransform, borderWrapperStyle, relativeBorderWidth } =
       getBorderedMaskProperties(
         mask,
         borderWidth,
-        element.width,
-        element.height
+        dataToEditorX(element.width),
+        dataToEditorY(element.height)
       );
+
     return (
-      <>
-        <div style={{ ...style, ...wrapperStyle }}>
+      <div style={{ ...style }}>
+        <div style={{ ...style, ...borderWrapperStyle }}>
           <svg
             viewBox={viewBox}
             width="100%"
@@ -128,51 +128,39 @@ export default function WithMask({
             preserveAspectRatio="none"
             style={SVG_STYLE}
           >
-            <mask id={`punchout-${maskId}`}>
-              <rect x="-100" y="-100" width="201" height="201" fill="white" />
-              <path d={mask?.path} fill="black" />
-            </mask>
             <g transform={groupTransform}>
               <path
                 d={mask?.path}
-                mask={`url(#punchout-${maskId})`}
                 stroke={borderColor}
                 strokeWidth={relativeBorderWidth}
+                fill="transparent"
               />
             </g>
-          </svg>
-
-          <svg
-            width="0"
-            height="0"
-            viewBox={viewBox}
-            preserveAspectRatio="none"
-          >
-            <defs>
-              <clipPath id={maskId} clipPathUnits="objectBoundingBox">
-                <path d={mask?.path} fill="white" transform={maskTransform} />
-              </clipPath>
-            </defs>
           </svg>
         </div>
         <div
           style={{
             pointerEvents: 'initial',
-            clipPath: `url(#${maskId})`,
-            ...wrapperStyle,
+            ...fullStyle,
+            ...(!isBackground ? { clipPath: `url(#${maskId})` } : {}),
+            opacity: 1,
           }}
+          {...rest}
         >
-          <div
-            style={{
-              ...fullStyle,
-              ...getBorderedElementStyle(mask, borderWidth),
-            }}
-            {...rest}
-          >
-            {children}
-          </div>
+          <svg width={0} height={0}>
+            <defs>
+              <clipPath
+                id={maskId}
+                transform={`scale(1 ${mask.ratio})`}
+                clipPathUnits="objectBoundingBox"
+              >
+                <path d={mask.path} />
+              </clipPath>
+            </defs>
+          </svg>
+          {children}
         </div>
-      </>
+      </div>
     );
   }
 
