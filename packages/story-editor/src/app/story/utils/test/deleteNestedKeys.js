@@ -123,6 +123,33 @@ describe('deleteNestedKeys', () => {
     });
   });
 
+  it('should not change anything in properties with `null` and `undefined` as parent values', () => {
+    const obj1 = {
+      bar: undefined,
+      foo: null,
+    };
+    deleteNestedKeys(['bar.a', 'foo.a'])(obj1);
+    expect(obj1).toStrictEqual({
+      bar: undefined,
+      foo: null,
+    });
+
+    const obj2 = {
+      bar: 'Hello World',
+      foo: {
+        bar: null,
+      },
+    };
+
+    deleteNestedKeys(['foo.bar.a', 'foo.bar.b'])(obj2);
+    expect(obj2).toStrictEqual({
+      bar: 'Hello World',
+      foo: {
+        bar: null,
+      },
+    });
+  });
+
   it('should delete multiple properties', () => {
     const object = {
       bar: 'Hello World',

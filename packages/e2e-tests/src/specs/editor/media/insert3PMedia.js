@@ -74,7 +74,7 @@ describe('Inserting 3P Media', () => {
     // Firefox has issues playing media (MP4 videos).
     skipSuiteOnFirefox();
 
-    // Skipped for https://github.com/google/web-stories-wp/issues/7481
+    // Skipped for https://github.com/googleforcreators/web-stories-wp/issues/7481
     // eslint-disable-next-line jest/no-disabled-tests
     it.skip('should insert a Coverr video', async () => {
       await createNewStory();
@@ -101,9 +101,11 @@ describe('Inserting 3P Media', () => {
     // Firefox has issues playing media (MP4 videos).
     skipSuiteOnFirefox();
 
-    // Skipped for https://github.com/google/web-stories-wp/issues/7481
+    // Skipped for https://github.com/googleforcreators/web-stories-wp/issues/7481
     // eslint-disable-next-line jest/no-disabled-tests
     it.skip('should insert a Tenor GIF', async () => {
+      await createNewStory();
+
       await expect(page).toClick(media3pSelector);
 
       await expect(page).toMatchElement('button', { text: 'GIFs' });

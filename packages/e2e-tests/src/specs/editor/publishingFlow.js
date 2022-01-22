@@ -26,7 +26,7 @@ import {
   getEditedPostContent,
 } from '@web-stories-wp/e2e-test-utils';
 
-// Disable for https://github.com/google/web-stories-wp/issues/6238
+// Disable for https://github.com/googleforcreators/web-stories-wp/issues/6238
 // eslint-disable-next-line jest/no-disabled-tests
 describe.skip('Publishing Flow', () => {
   it('should guide me towards creating a new post to embed my story', async () => {

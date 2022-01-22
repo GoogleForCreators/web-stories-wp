@@ -50,7 +50,7 @@ describe('Handling .mov files', () => {
       await toggleVideoOptimization(false);
     });
 
-    // Flakey test, see https://github.com/google/web-stories-wp/issues/8232.
+    // Flakey test, see https://github.com/googleforcreators/web-stories-wp/issues/8232.
     // eslint-disable-next-line jest/no-disabled-tests
     it.skip('should insert .mov video from media dialog', async () => {
       await createNewStory();

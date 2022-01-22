@@ -12,10 +12,10 @@
     "web stories",
     "datetime"
   ],
-  "homepage": "https://github.com/google/web-stories-wp/",
-  "repository": "git+https://github.com/google/web-stories-wp.git",
+  "homepage": "https://github.com/googleforcreators/web-stories-wp/",
+  "repository": "git+https://github.com/GoogleForCreators/web-stories-wp.git",
   "bugs": {
-    "url": "https://github.com/google/web-stories-wp/issues"
+    "url": "https://github.com/googleforcreators/web-stories-wp/issues"
   },
   "engines": {
     "node": ">= 16",
@@ -29,7 +29,7 @@
   "dependencies": {
     "@googleforcreators/i18n": "*",
     "date-fns": "^2.28.0",
-    "date-fns-tz": "^1.1.6"
+    "date-fns-tz": "^1.2.2"
   },
   "devDependencies": {
     "mockdate": "^3.0.5"

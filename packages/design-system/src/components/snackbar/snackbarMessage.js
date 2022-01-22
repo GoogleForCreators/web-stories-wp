@@ -271,7 +271,7 @@ const SnackbarMessage = ({
 };
 
 SnackbarMessage.propTypes = {
-  'aria-label': PropTypes.string.isRequired,
+  'aria-label': PropTypes.string,
   customZIndex: PropTypes.number,
   message: PropTypes.string.isRequired,
   onDismiss: PropTypes.func.isRequired,

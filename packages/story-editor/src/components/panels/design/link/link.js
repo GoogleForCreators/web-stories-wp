@@ -255,7 +255,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
         onFocus={() => {
           setIsLinkFocused(true);
         }}
-        value={url}
+        value={url || ''}
         placeholder={
           isMultipleUrl
             ? MULTIPLE_DISPLAY_VALUE

@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: E2E Tests Disable default templates
- * Plugin URI:  https://github.com/google/web-stories-wp
+ * Plugin URI:  https://github.com/googleforcreators/web-stories-wp
  * Description: Disable default templates.
  * Author:      Google
  * Author URI:  https://opensource.google.com

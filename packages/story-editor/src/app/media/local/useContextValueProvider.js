@@ -76,6 +76,16 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     actions: { getMedia, updateMedia },
   } = useAPI();
 
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    isMounted.current = true;
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
   const fetchMedia = useCallback(
     (
       {
@@ -100,9 +110,14 @@ export default function useContextValueProvider(reducerState, reducerActions) {
         cacheBust: cacheBust,
       })
         .then(({ data, headers }) => {
+          if (!isMounted.current) {
+            return;
+          }
+
           const totalPages = parseInt(headers.totalPages);
           const totalItems = parseInt(headers.totalItems);
           const hasMore = p < totalPages;
+
           callback({
             media: data,
             mediaType: currentMediaType,
