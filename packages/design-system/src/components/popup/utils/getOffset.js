@@ -101,7 +101,7 @@ export function getYOffset(placement, spacing = 0, anchorRect) {
  * @param {MutableRefObject<HTMLElement>} popup Popup element.
  * @param {boolean} isRTL isRTL.
  * @param {number} topOffset Header Offset.
- * @param {bool} shouldHaveDifferentoffset Boolean to set different offset for colorInput popup.
+ * @param {boolean} shouldHaveDifferentoffset Boolean to set different offset for colorInput popup.
  * @return {Offset} Popup offset.
  */
 export function getOffset(
