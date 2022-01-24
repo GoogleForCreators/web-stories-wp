@@ -96,7 +96,7 @@ function SubMenuTrigger({
   }, [isSubMenuOpen, subMenuRef, setFocusedId]);
 
   useEffect(() => {
-    const node = parentMenuRef.current?.firstChild;
+    const node = parentMenuRef.current?.querySelector('[role="dialog"]');
     if (!isSubMenuOpen || !node) {
       return undefined;
     }
