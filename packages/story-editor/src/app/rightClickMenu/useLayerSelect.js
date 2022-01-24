@@ -45,9 +45,7 @@ const ReversedIcon = styled(Icons.ChevronRightSmall)`
 function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
   const { isRTL } = useConfig();
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
-  const { nodesById } = useCanvas(({ state: { nodesById } }) => ({
-    nodesById,
-  }));
+  const nodesById = useCanvas(({ state: { nodesById } }) => nodesById);
   const { currentPage, selectedElements, setSelectedElementsById } = useStory(
     ({
       state: { currentPage, selectedElements },
