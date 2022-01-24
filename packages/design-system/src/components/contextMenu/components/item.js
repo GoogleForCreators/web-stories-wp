@@ -70,7 +70,7 @@ const MenuItem = forwardRef(MenuItemWithRef);
 MenuItem.propTypes = {
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   shortcut: PropTypes.shape({
-    display: PropTypes.string.isRequired,
+    display: PropTypes.object.isRequired,
     title: PropTypes.string,
   }),
   icon: PropTypes.node,

@@ -88,6 +88,13 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
 
   const subMenuItems = useMemo(() => {
     const intersectingElements = getIntersectingElements();
+    // If the only intersecting element is the selected element, don't display the menu.
+    if (
+      intersectingElements.length === 1 &&
+      intersectingElements[0].id === selectedElements[0].id
+    ) {
+      return [];
+    }
     return intersectingElements.map((element) => {
       const { id, isBackground, type } = element;
       const { LayerContent } = getDefinitionForType(type);
