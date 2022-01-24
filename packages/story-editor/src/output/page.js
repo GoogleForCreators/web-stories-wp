@@ -91,7 +91,7 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
     backgroundAudio?.src && backgroundAudioTracks?.length > 0;
 
   if (hasBackgroundAudioWithTracks) {
-    videoCaptions.push(`el-${backgroundAudio.id}-captions`);
+    videoCaptions.push(`el-${id}-captions`);
   }
 
   const backgroundAudioSrc =
