@@ -482,24 +482,26 @@ function useMediaUploadQueue() {
           }
 
           if (isTranscodingEnabled) {
-            currentTranscodingItem.current = id;
-
             if (isGifThatNeedsTranscoding) {
+              currentTranscodingItem.current = id;
               convertGifItem(item);
               return;
             }
 
             if (canTranscodeFile(file)) {
               if (trimData) {
+                currentTranscodingItem.current = id;
                 trimVideoItem(item);
                 return;
               }
 
               if (muteVideo) {
+                currentTranscodingItem.current = id;
                 muteVideoItem(item);
                 return;
               }
 
+              currentTranscodingItem.current = id;
               // Transcode/Optimize videos before upload.
               // TODO: Only transcode & optimize video if needed (criteria TBD).
               // Probably need to use FFmpeg first to get more information (dimensions, fps, etc.)
