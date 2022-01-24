@@ -56,8 +56,10 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
     : { backgroundColor: 'white', ...generatePatternStyles(backgroundColor) };
 
   const animationDuration = getTotalDuration({ animations }) / 1000;
+  const isNotLoopingBackgroundAudio =
+    backgroundAudio?.length && !backgroundAudio?.loop;
   const backgroundAudioDuration =
-    backgroundAudio?.length && !backgroundAudio?.loop
+    isNotLoopingBackgroundAudio && backgroundAudio?.length
       ? backgroundAudio.length
       : 0;
 
@@ -148,7 +150,7 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
           </div>
         </amp-story-grid-layer>
       </StoryAnimation.Provider>
-      {(hasBackgroundAudioWithTracks || !backgroundAudio.loop) && (
+      {(hasBackgroundAudioWithTracks || isNotLoopingBackgroundAudio) && (
         <HiddenAudio
           backgroundAudio={backgroundAudio}
           tracks={backgroundAudioTracks}
