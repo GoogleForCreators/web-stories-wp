@@ -132,7 +132,7 @@ function MediaDisplay({
 MediaDisplay.propTypes = {
   element: StoryPropTypes.elements.media.isRequired,
   mediaRef: PropTypes.object,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   showPlaceholder: PropTypes.bool,
   previewMode: PropTypes.bool,
 };

@@ -1,6 +1,6 @@
 # Once a PR has been merged, this action adds it to the upcoming release.
 #
-# See https://github.com/google/web-stories-wp/issues/6301
+# See https://github.com/googleforcreators/web-stories-wp/issues/6301
 
 name: Add milestone
 

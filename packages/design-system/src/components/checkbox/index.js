@@ -95,7 +95,7 @@ const BaseCheckbox = ({ checked, disabled, className = '', ...props }, ref) => (
     <input
       type="checkbox"
       ref={ref}
-      checked={checked}
+      checked={Boolean(checked)}
       disabled={disabled}
       aria-checked={checked}
       {...props}

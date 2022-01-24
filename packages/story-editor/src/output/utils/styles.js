@@ -72,7 +72,7 @@ function CustomStyles() {
           /*
             The following rule is for Safari only.
             In Safari, the font size is rounded up, causing overflow, this hack undoes this.
-            See https://github.com/google/web-stories-wp/issues/6323
+            See https://github.com/googleforcreators/web-stories-wp/issues/6323
            */
           `
               @media not all and (min-resolution:.001dpcm) {
@@ -134,7 +134,7 @@ function CustomStyles() {
                 }
               }
 
-              .align-bottom {
+              amp-story-grid-layer.align-bottom {
                 align-content: end;
                 padding: 0;
               }
