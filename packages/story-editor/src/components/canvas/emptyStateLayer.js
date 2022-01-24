@@ -90,11 +90,17 @@ function EmptyStateLayer() {
             type={BUTTON_TYPES.SECONDARY}
             variant={BUTTON_VARIANTS.CIRCLE}
             onClick={onButtonClick}
+            aria-haspopup="true"
+            aria-label={__('Add content', 'web-stories')}
+            aria-describedby="emptystate-message"
           >
             <Icons.Media />
           </Button>
           <ThemeProvider theme={{ ...theme, colors: lightMode }}>
-            <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+            <Text
+              id="emptystate-message"
+              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+            >
               {__(
                 'Add an image, video or template to get started',
                 'web-stories'
