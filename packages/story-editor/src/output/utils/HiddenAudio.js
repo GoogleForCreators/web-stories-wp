@@ -33,18 +33,12 @@ function HiddenAudio({ backgroundAudio, tracks, id }) {
     src,
   };
 
-  const videoProps = {
-    autoPlay: 'autoplay',
-    layout: 'responsive',
-    width: '0',
-    height: '0',
-    loop: 'loop',
-  };
-
   return (
     <amp-story-grid-layer template="fill">
       <amp-video
-        {...videoProps}
+        autoPlay="autoplay"
+        layout="nodisplay"
+        loop="loop"
         id={`page-${id}-background-audio`}
         // Actual <amp-story-captions> output happens in OutputPage.
         captions-id={tracks?.length > 0 ? `el-${id}-captions` : undefined}
