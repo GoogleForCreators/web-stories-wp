@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: E2E Tests Post Lock mock
- * Plugin URI:  https://github.com/google/web-stories-wp
+ * Plugin URI:  https://github.com/googleforcreators/web-stories-wp
  * Description: Mock post lock.
  * Author:      Google
  * Author URI:  https://opensource.google.com

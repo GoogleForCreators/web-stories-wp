@@ -34,7 +34,7 @@ describe('Curated fonts', () => {
   );
   const fontNames = fonts.map(({ family }) => family);
 
-  // @see https://github.com/google/web-stories-wp/issues/3880
+  // @see https://github.com/googleforcreators/web-stories-wp/issues/3880
   it.each(CURATED_FONT_NAMES)(
     '%s font should exist in global fonts list',
     (fontName) => {

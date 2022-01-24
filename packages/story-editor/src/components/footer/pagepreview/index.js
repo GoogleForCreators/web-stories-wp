@@ -200,7 +200,7 @@ PagePreview.propTypes = {
   page: StoryPropTypes.page.isRequired,
   label: PropTypes.string,
   isCacheable: PropTypes.bool,
-  cachedImage: PropTypes.object,
+  cachedImage: PropTypes.string,
   setCachedImage: PropTypes.func,
   pageImageData: PropTypes.string,
   width: PropTypes.number.isRequired,

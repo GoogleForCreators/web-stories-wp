@@ -43,5 +43,5 @@ PHP_VERSION=8.0 npm run env:start
 Alternatively, you can use your own local WordPress environment (e.g. using [Local by Flywheel](https://localbyflywheel.com/)) and clone this repository right into your `wp-content/plugins` directory.
 
 ```bash
-cd wp-content/plugins && git clone git@github.com:google/web-stories-wp.git web-stories
+cd wp-content/plugins && git clone git@github.com:googleforcreators/web-stories-wp.git web-stories
 ```

@@ -65,6 +65,13 @@ export function TestFrameElement({
       selectedElements: [],
       selectedElementIds: [],
       ...(inputStoryContext && inputStoryContext.state),
+      currentPage: {
+        ...(inputStoryContext.state?.currentPage || {}),
+        elements: [
+          element,
+          ...(inputStoryContext.state?.currentPage?.elements || []),
+        ],
+      },
     },
     actions: {
       toggleElementInSelection: () => {},
@@ -87,7 +94,7 @@ export function TestFrameElement({
             <CanvasProvider>
               <TransformProvider>
                 <WithRefs refs={refs}>
-                  <FrameElement element={element} />
+                  <FrameElement id={element.id} />
                 </WithRefs>
               </TransformProvider>
             </CanvasProvider>

@@ -14,7 +14,7 @@ To get the ZIP file:
 4. Download `web-stories.zip`  
     ![ZIP file list](https://user-images.githubusercontent.com/841956/80693026-b6a12200-8ad2-11ea-8ae0-76dc279f3250.png)
 
-The same is also possible for the **master** branch. For this, navigate to [the Actions tab](https://github.com/google/web-stories-wp/actions?query=workflow%3A%22Continuous+Integration%22+branch%3Amaster) in the repository navigation and click on the latest Continuous Integration run to download the ZIP file.
+The same is also possible for the **master** branch. For this, navigate to [the Actions tab](https://github.com/googleforcreators/web-stories-wp/actions?query=workflow%3A%22Continuous+Integration%22+branch%3Amaster) in the repository navigation and click on the latest Continuous Integration run to download the ZIP file.
 
 ## Web Stories Tester Plugin
 

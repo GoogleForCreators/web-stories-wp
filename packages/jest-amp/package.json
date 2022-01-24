@@ -11,10 +11,10 @@
     "jest",
     "amp"
   ],
-  "homepage": "https://github.com/google/web-stories-wp/",
-  "repository": "git+https://github.com/google/web-stories-wp.git",
+  "homepage": "https://github.com/googleforcreators/web-stories-wp/",
+  "repository": "git+https://github.com/GoogleForCreators/web-stories-wp.git",
   "bugs": {
-    "url": "https://github.com/google/web-stories-wp/issues"
+    "url": "https://github.com/googleforcreators/web-stories-wp/issues"
   },
   "engines": {
     "node": ">= 16",
@@ -26,7 +26,7 @@
   },
   "main": "./src/index.js",
   "dependencies": {
-    "@ampproject/toolbox-optimizer": "^2.8.3",
+    "@ampproject/toolbox-optimizer": "^2.8.7",
     "@googleforcreators/react": "*",
     "amphtml-validator": "1.0.35",
     "prop-types": "^15.8.1"

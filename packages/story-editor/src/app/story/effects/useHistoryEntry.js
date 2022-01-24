@@ -26,9 +26,17 @@ import { useEffect, useRef } from '@googleforcreators/react';
 import { useHistory } from '../../history';
 import deleteNestedKeys from '../utils/deleteNestedKeys';
 
-// Changes to these properties of elements do not create a new history entry.
-// Props to be added in
-const ELEMENT_PROPS_TO_IGNORE = [];
+// Changes to these properties of elements do not create a new history entry
+// if only one (or multiple) of these properties change but nothing else changes.
+// These are still saved as part of changes involving other properties.
+const ELEMENT_PROPS_TO_IGNORE = [
+  'resource.baseColor',
+  'resource.blurHash',
+  'resource.id',
+  'resource.isMuted',
+  'resource.posterId',
+  'resource.poster',
+];
 
 // Record any change to core variables in history (history will know if it's a replay)
 function useHistoryEntry({ story, current, pages, selection, capabilities }) {

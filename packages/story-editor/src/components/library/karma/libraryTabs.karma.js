@@ -47,7 +47,7 @@ describe('LibraryTabs integration', () => {
 
   describe('library Tabs should have no aXe accessibility violations', () => {
     // Disable reason: aXe violations
-    // TODO: https://github.com/google/web-stories-wp/issues/9954
+    // TODO: https://github.com/googleforcreators/web-stories-wp/issues/9954
     // eslint-disable-next-line jasmine/no-disabled-tests
     xit('Local Media Panel should have no aXe violations', async () => {
       const { mediaTab } = fixture.editor.library;

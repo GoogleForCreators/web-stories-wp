@@ -5,7 +5,7 @@
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/google/web-stories-wp
+ * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -290,7 +290,7 @@ class AMP extends Service_Base implements HasRequirements {
 	 * Prevents issues where this plugin uses newer features that the plugin doesn't know about yet,
 	 * causing false positives with validation.
 	 *
-	 * @link https://github.com/google/web-stories-wp/issues/7131
+	 * @link https://github.com/googleforcreators/web-stories-wp/issues/7131
 	 *
 	 * @since 1.6.0
 	 *

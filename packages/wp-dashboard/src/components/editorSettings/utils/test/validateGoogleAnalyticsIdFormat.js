@@ -20,7 +20,7 @@
 import { validateGoogleAnalyticsIdFormat } from '..';
 
 // GA4 measurement ID format is not yet supported in AMP.
-// See https://github.com/google/web-stories-wp/issues/6479
+// See https://github.com/googleforcreators/web-stories-wp/issues/6479
 const idsToValidate = [
   ['UA-000000-56', true],
   ['ua-098765432-9875', true],
