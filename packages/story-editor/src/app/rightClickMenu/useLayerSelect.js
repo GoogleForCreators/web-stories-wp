@@ -26,7 +26,7 @@ import {
 import SAT from 'sat';
 import { __ } from '@googleforcreators/i18n';
 import { Icons } from '@googleforcreators/design-system';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent } from '@googleforcreators/tracking';
 import styled from 'styled-components';
 
 /**

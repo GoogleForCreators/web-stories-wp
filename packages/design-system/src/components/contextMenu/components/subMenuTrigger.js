@@ -62,6 +62,9 @@ function SubMenuTrigger({
   const pointerIsOutside = (node) => {
     const { x, y, width, height } = node.getBoundingClientRect();
     const { x: pointerX, y: pointerY } = pointerTracker.current;
+    if (pointerX === undefined || pointerY === undefined) {
+      return true;
+    }
     const buffer = 2;
     return (
       pointerX < x - buffer ||
@@ -84,18 +87,6 @@ function SubMenuTrigger({
     }
   }, 200);
 
-  const trackPointer = useCallback((e) => {
-    pointerTracker.current.x = e.clientX;
-    pointerTracker.current.y = e.clientY;
-  }, []);
-
-  useEffect(() => {
-    document.addEventListener('pointermove', trackPointer);
-    return () => {
-      document.removeEventListener('pointermove', trackPointer);
-    };
-  }, [trackPointer]);
-
   useEffect(() => {
     if (isSubMenuOpen && subMenuRef.current) {
       const subMenuItems = getFocusableChildren(subMenuRef.current);
@@ -104,15 +95,20 @@ function SubMenuTrigger({
     }
   }, [isSubMenuOpen, subMenuRef, setFocusedId]);
 
-  // If the pointer enters parent menu, maybe we need to close the submenu.
   useEffect(() => {
     const node = parentMenuRef.current?.firstChild;
     if (!isSubMenuOpen || !node) {
       return undefined;
     }
-    node.addEventListener('pointerenter', maybeCloseSubMenu);
+    const onPointerMove = (e) => {
+      // Track the pointer when moving inside the menu while the submenu is open.
+      pointerTracker.current.x = e.clientX;
+      pointerTracker.current.y = e.clientY;
+      maybeCloseSubMenu();
+    };
+    node.addEventListener('pointermove', onPointerMove);
     return () => {
-      node.removeEventListener('pointerenter', maybeCloseSubMenu);
+      node.removeEventListener('pointermove', onPointerMove);
     };
   }, [isSubMenuOpen, parentMenuRef, maybeCloseSubMenu]);
 
@@ -149,7 +145,11 @@ function SubMenuTrigger({
       {...buttonProps}
       ref={ref}
       onPointerEnter={openSubMenu}
-      onPointerLeave={maybeCloseSubMenu}
+      onPointerLeave={() => {
+        // Reset tracker in case we moved out of the menu fully.
+        pointerTracker.current = {};
+        maybeCloseSubMenu();
+      }}
       onClick={(e) => e.preventDefault()}
       aria-haspopup
       aria-expanded={isSubMenuOpen}
