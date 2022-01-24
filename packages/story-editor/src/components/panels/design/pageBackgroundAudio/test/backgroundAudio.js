@@ -138,7 +138,17 @@ describe('BackgroundAudioPanel', () => {
         mimeType: 'audio/mpeg',
       },
       enhancedPageBackgroundAudio: true,
-      tracks: [{ id: 123, trackName: 'test' }],
+      tracks: [
+        {
+          track: 'https://example.com/track.vtt',
+          trackId: 123,
+          trackName: 'track.vtt',
+          id: 'rersd-fdfd-fdfd-fdfd',
+          srcLang: '',
+          label: '',
+          kind: 'captions',
+        },
+      ],
     });
     const input = screen.getByRole('textbox', { name: 'Filename' });
     expect(input).toHaveValue('test');
@@ -184,7 +194,17 @@ describe('BackgroundAudioPanel', () => {
       },
       enhancedPageBackgroundAudio: true,
       hasUploadMediaAction: false,
-      tracks: [{ id: 123, trackName: 'test' }],
+      tracks: [
+        {
+          track: 'https://example.com/track.vtt',
+          trackId: 123,
+          trackName: 'track.vtt',
+          id: 'rersd-fdfd-fdfd-fdfd',
+          srcLang: '',
+          label: '',
+          kind: 'captions',
+        },
+      ],
     });
     const input = screen.getByRole('textbox', { name: 'Filename' });
     expect(input).toHaveValue('test');
