@@ -30,12 +30,11 @@ export default {
       action: 'on press clicked',
     },
   },
+  args: {
+    layoutStyle: VIEW_STYLE.LIST,
+  },
 };
 
-const Template = (args) => {
+export const _default = (args) => {
   return <ViewStyleBar {...args} />;
-};
-export const _default = Template.bind({});
-_default.args = {
-  layoutStyle: VIEW_STYLE.LIST,
 };
