@@ -41,7 +41,7 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
     animations,
     elements,
     backgroundColor,
-    backgroundAudio,
+    backgroundAudio = { src: '', loop: true, length: 0 },
     tracks: backgroundAudioTracks = [],
     pageAttachment,
   } = page;
@@ -56,16 +56,22 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
     : { backgroundColor: 'white', ...generatePatternStyles(backgroundColor) };
 
   const animationDuration = getTotalDuration({ animations }) / 1000;
+  const backgroundAudioDuration =
+    backgroundAudio?.length && !backgroundAudio?.loop
+      ? backgroundAudio.length
+      : 0;
+
   // If the page doesn't have media, take either the animations time or the configured default duration time.
   const nonMediaPageDuration = Math.max(
     animationDuration || 0,
+    backgroundAudioDuration,
     defaultPageDuration
   );
   // If we have media, take the media time for advancement time and ignore the default,
   // but still consider animation time as the minimum, too.
   const longestMediaElement = getLongestMediaElement(
     elements,
-    animationDuration || 1
+    Math.max(animationDuration || 1, backgroundAudioDuration)
   );
   const autoAdvanceAfter = longestMediaElement?.id
     ? `el-${longestMediaElement?.id}-media`
@@ -88,14 +94,14 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
     .map(({ id: videoId }) => `el-${videoId}-captions`);
 
   const hasBackgroundAudioWithTracks =
-    backgroundAudio?.src && backgroundAudioTracks?.length > 0;
+    backgroundAudio.src && backgroundAudioTracks?.length > 0;
 
   if (hasBackgroundAudioWithTracks) {
     videoCaptions.push(`el-${id}-captions`);
   }
 
   const backgroundAudioSrc =
-    !hasBackgroundAudioWithTracks && backgroundAudio?.src
+    !hasBackgroundAudioWithTracks && backgroundAudio.src
       ? backgroundAudio.src
       : undefined;
 
@@ -142,10 +148,11 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
           </div>
         </amp-story-grid-layer>
       </StoryAnimation.Provider>
-      {hasBackgroundAudioWithTracks && (
+      {(hasBackgroundAudioWithTracks || !backgroundAudio.loop) && (
         <HiddenAudio
           backgroundAudio={backgroundAudio}
           tracks={backgroundAudioTracks}
+          loop={backgroundAudio.loop}
           id={id}
         />
       )}

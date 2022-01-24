@@ -44,6 +44,7 @@ import { getCommonValue } from '../../shared';
 import useFFmpeg from '../../../../app/media/utils/useFFmpeg';
 import { useLocalMedia } from '../../../../app';
 import CircularProgress from '../../../circularProgress';
+import LoopPanelContent from '../../shared/loopPanelContent';
 
 const Row = styled(DefaultRow)`
   margin-top: 2px;
@@ -149,8 +150,6 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     }
   }, [isTrimming, trimButtonText, speak]);
 
-  const checkboxId = `cb-${uuidv4()}`;
-
   const Processing = () => {
     return (
       <Spinner>
@@ -159,22 +158,15 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     );
   };
 
+  const onChange = (evt) => pushUpdate({ loop: evt.target.checked }, true);
+
   return (
     <SimplePanel
       name="videoOptions"
       title={__('Video Settings', 'web-stories')}
     >
       <Row spaceBetween={false}>
-        <StyledCheckbox
-          id={checkboxId}
-          checked={loop}
-          onChange={(evt) => pushUpdate({ loop: evt.target.checked }, true)}
-        />
-        <Label htmlFor={checkboxId}>
-          <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-            {__('Loop', 'web-stories')}
-          </Text>
-        </Label>
+        <LoopPanelContent loop={loop} onChange={onChange} />
         {hasTrimMode && (
           <TrimWrapper>
             <TrimButton

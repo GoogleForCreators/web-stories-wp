@@ -25,8 +25,17 @@ import { ResourcePropTypes } from '@googleforcreators/media';
  */
 import { BackgroundAudioPropType } from '../../types';
 
-function HiddenAudio({ backgroundAudio, tracks, id }) {
+function HiddenAudio({ backgroundAudio, tracks, id, loop = true }) {
   const { mimeType, src } = backgroundAudio;
+
+  const videoProps = {
+    autoPlay: 'autoplay',
+    layout: 'nodisplay',
+    loop: loop ? 'loop' : undefined,
+    id: `page-${id}-background-audio`,
+    // Actual <amp-story-captions> output happens in OutputPage.
+    'captions-id': tracks?.length > 0 ? `el-${id}-captions` : undefined,
+  };
 
   const sourceProps = {
     type: mimeType,
@@ -35,14 +44,7 @@ function HiddenAudio({ backgroundAudio, tracks, id }) {
 
   return (
     <amp-story-grid-layer template="fill">
-      <amp-video
-        autoPlay="autoplay"
-        layout="nodisplay"
-        loop="loop"
-        id={`page-${id}-background-audio`}
-        // Actual <amp-story-captions> output happens in OutputPage.
-        captions-id={tracks?.length > 0 ? `el-${id}-captions` : undefined}
-      >
+      <amp-video {...videoProps}>
         <source {...sourceProps} />
         {tracks &&
           tracks.map(({ srclang, label, kind, track, id: key }, i) => (
@@ -63,6 +65,7 @@ function HiddenAudio({ backgroundAudio, tracks, id }) {
 HiddenAudio.propTypes = {
   backgroundAudio: BackgroundAudioPropType,
   id: PropTypes.string.isRequired,
+  loop: PropTypes.bool,
   tracks: PropTypes.arrayOf(ResourcePropTypes.trackResource).isRequired,
 };
 

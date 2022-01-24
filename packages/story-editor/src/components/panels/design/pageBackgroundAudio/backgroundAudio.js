@@ -93,6 +93,7 @@ function PageBackgroundAudioPanel() {
         updateBackgroundAudio={updateBackgroundAudio}
         updateTracks={updateTracks}
         supportsCaptions={enhancedPageBackgroundAudio}
+        supportsLooping={enhancedPageBackgroundAudio}
       />
     </SimplePanel>
   );
