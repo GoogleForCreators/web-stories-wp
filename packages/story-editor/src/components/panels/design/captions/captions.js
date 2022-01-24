@@ -62,9 +62,6 @@ export const MIN_MAX = {
 function CaptionsPanel({ selectedElements, pushUpdate }) {
   const tracks = getCommonValue(selectedElements, 'tracks', []);
   const isMixedValue = tracks === MULTIPLE_VALUE;
-  /* @TODO: Implement error handling after removing modal and
-  using native browser upload. */
-  const uploadError = false;
 
   const {
     capabilities: { hasUploadMediaAction },
@@ -157,7 +154,6 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
         handleChangeTrack={handleChangeTrack}
         handleRemoveTrack={handleRemoveTrack}
         renderUploadButton={renderUploadButton}
-        uploadError={uploadError}
       />
     </SimplePanel>
   );

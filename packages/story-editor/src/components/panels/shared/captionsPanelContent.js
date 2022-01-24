@@ -82,7 +82,6 @@ function CaptionsPanelContent({
   handleChangeTrack,
   handleRemoveTrack,
   renderUploadButton,
-  uploadError = false,
   clearFileText = __('Remove file', 'web-stories'),
 }) {
   const {
@@ -134,28 +133,19 @@ function CaptionsPanelContent({
           </Row>
         ))}
       {!tracks.length && (
-        <>
-          <Row expand>
-            <MediaUpload
-              onSelect={handleChangeTrack}
-              onSelectErrorMessage={__(
-                'Please choose a VTT file to use as caption.',
-                'web-stories'
-              )}
-              type={['text/vtt']}
-              title={captionText}
-              buttonInsertText={__('Select caption', 'web-stories')}
-              render={renderUploadButton}
-            />
-          </Row>
-          {uploadError && (
-            <Row expand>
-              <ErrorText role="alert">
-                {__('Upload error. Please try again', 'web-stories')}
-              </ErrorText>
-            </Row>
-          )}
-        </>
+        <Row expand>
+          <MediaUpload
+            onSelect={handleChangeTrack}
+            onSelectErrorMessage={__(
+              'Please choose a VTT file to use as caption.',
+              'web-stories'
+            )}
+            type={['text/vtt']}
+            title={captionText}
+            buttonInsertText={__('Select caption', 'web-stories')}
+            render={renderUploadButton}
+          />
+        </Row>
       )}
     </>
   );
@@ -169,7 +159,6 @@ CaptionsPanelContent.propTypes = {
   handleChangeTrack: PropTypes.func,
   handleRemoveTrack: PropTypes.func,
   renderUploadButton: PropTypes.func,
-  uploadError: PropTypes.bool,
 };
 
 export default CaptionsPanelContent;
