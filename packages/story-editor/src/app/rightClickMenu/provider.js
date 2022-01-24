@@ -16,21 +16,10 @@
 /**
  * External dependencies
  */
-import {
-  prettifyShortcut,
-  useGlobalKeyDownEffect,
-  useSnackbar,
-} from '@googleforcreators/design-system';
-import { __, sprintf } from '@googleforcreators/i18n';
+import { useGlobalKeyDownEffect } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import PropTypes from 'prop-types';
-import {
-  useCallback,
-  useMemo,
-  useReducer,
-  useRef,
-} from '@googleforcreators/react';
-import { v4 as uuidv4 } from 'uuid';
+import { useCallback, useMemo, useReducer } from '@googleforcreators/react';
 
 /** @typedef {import('react')} Node */
 
@@ -39,18 +28,7 @@ import { v4 as uuidv4 } from 'uuid';
  */
 import useStory from '../story/useStory';
 import { useLocalMedia } from '../media';
-import { createPage, duplicatePage, ELEMENT_TYPES } from '../../elements';
-import updateProperties from '../../components/inspector/design/updateProperties';
-import useAddPreset from '../../utils/useAddPreset';
-import useApplyStyle from '../../components/panels/design/textStyle/stylePresets/useApplyStyle';
-import { PRESET_TYPES } from '../../constants';
-import { useCanvas } from '../canvas';
-import { getTextPresets } from '../../utils/presetUtils';
-import getUpdatedSizeAndPosition from '../../utils/getUpdatedSizeAndPosition';
-import { useHistory } from '../history';
-import useDeleteStyle from '../../components/panels/design/textStyle/stylePresets/useDeleteStyle';
-import useDeleteColor from '../../components/colorPicker/useDeleteColor';
-import { noop } from '../../utils/noop';
+import { ELEMENT_TYPES } from '../../elements';
 import useVideoTrim from '../../components/videoTrim/useVideoTrim';
 import {
   RIGHT_CLICK_MENU_LABELS,
@@ -61,14 +39,14 @@ import rightClickMenuReducer, {
   ACTION_TYPES,
   DEFAULT_RIGHT_CLICK_MENU_STATE,
 } from './reducer';
-import { getElementStyles } from './utils';
 import useLayerSelect from './useLayerSelect';
-
-const UNDO_HELP_TEXT = sprintf(
-  /* translators: %s: Ctrl/Cmd + Z keyboard shortcut */
-  __('Press %s to undo the last change', 'web-stories'),
-  prettifyShortcut('mod+z')
-);
+import {
+  useCopyPasteActions,
+  useElementActions,
+  useLayerActions,
+  usePageActions,
+  usePresetActions,
+} from './hooks';
 
 /**
  * Determines the items displayed in the right click menu
@@ -82,75 +60,11 @@ const UNDO_HELP_TEXT = sprintf(
  * @return {Node} React node
  */
 function RightClickMenuProvider({ children }) {
-  const { addGlobalPreset: addGlobalTextPreset } = useAddPreset({
-    presetType: PRESET_TYPES.STYLE,
-  });
-  const { addGlobalPreset: addGlobalColorPreset } = useAddPreset({
-    presetType: PRESET_TYPES.COLOR,
-  });
-  const deleteGlobalTextPreset = useDeleteStyle({
-    onEmpty: noop,
-  });
-  const { deleteGlobalPreset: deleteGlobalColorPreset } = useDeleteColor({
-    onEmpty: noop,
-  });
-  const { setEditingElement } = useCanvas(({ actions }) => ({
-    setEditingElement: actions.setEditingElement,
-  }));
-  const { undo } = useHistory(({ actions: { undo } }) => ({
-    undo,
-  }));
-  const { showSnackbar } = useSnackbar();
-  const {
-    addAnimations,
-    addPage,
-    addPageAt,
-    arrangeElement,
-    clearBackgroundElement,
-    currentPage,
-    currentPageIndex,
-    deleteCurrentPage,
-    duplicateElementsById,
-    pages,
-    setBackgroundElement,
-    selectedElements,
-    selectedElementAnimations,
-    updateElementsById,
-  } = useStory(
-    ({
-      state: {
-        currentPage,
-        currentPageIndex,
-        pages,
-        selectedElementAnimations,
-        selectedElements,
-      },
-      actions: {
-        addAnimations,
-        addPage,
-        addPageAt,
-        arrangeElement,
-        clearBackgroundElement,
-        deleteCurrentPage,
-        duplicateElementsById,
-        setBackgroundElement,
-        updateElementsById,
-      },
-    }) => ({
-      addAnimations,
-      addPage,
-      addPageAt,
-      arrangeElement,
-      clearBackgroundElement,
-      currentPage,
+  const { currentPageIndex, pages, selectedElements } = useStory(
+    ({ state: { currentPageIndex, pages, selectedElements } }) => ({
       currentPageIndex,
-      deleteCurrentPage,
-      duplicateElementsById,
       pages,
-      selectedElementAnimations,
       selectedElements,
-      setBackgroundElement,
-      updateElementsById,
     })
   );
 
@@ -167,23 +81,35 @@ function RightClickMenuProvider({ children }) {
     })
   );
 
-  // Needed to not pass stale refs of `undo` to snackbar
-  const undoRef = useRef(undo);
-  undoRef.current = undo;
-
   const [{ copiedElement, isMenuOpen, menuPosition }, dispatch] = useReducer(
     rightClickMenuReducer,
     DEFAULT_RIGHT_CLICK_MENU_STATE
   );
 
-  const selectedElement = selectedElements?.[0];
-  const selectedElementType = selectedElement?.type;
-  const currentPosition = currentPage?.elements.findIndex(
-    (element) => element.id === selectedElement?.id
+  // Right Click Actions
+  const {
+    canElementMoveBackwards,
+    canElementMoveForwards,
+    onBringForward,
+    onBringToFront,
+    onSendBackward,
+    onSendToBack,
+  } = useLayerActions();
+  const { onAddPageAtPosition, onDuplicatePage, onDeletePage } =
+    usePageActions();
+  const {
+    onDuplicateSelectedElements,
+    onOpenScaleAndCrop,
+    onSetPageBackground,
+    onRemovePageBackground,
+  } = useElementActions();
+  const { onAddTextPreset, onAddColorPreset } = usePresetActions();
+  const { onCopyStyles, onPasteStyles } = useCopyPasteActions(
+    dispatch,
+    copiedElement
   );
-  const canElementMoveBackwards = currentPosition > 1;
-  const canElementMoveForwards =
-    currentPosition < currentPage?.elements.length - 1;
+
+  const selectedElement = selectedElements?.[0];
 
   /**
    * Open the menu at the position from the click event.
@@ -233,466 +159,6 @@ function RightClickMenuProvider({ children }) {
     evt.stopPropagation();
   }, []);
 
-  /**
-   * Duplicate all selected elements.
-   */
-  const handleDuplicateElements = useCallback(() => {
-    if (!selectedElements.length) {
-      return;
-    }
-
-    duplicateElementsById({
-      elementIds: selectedElements.map((element) => element.id),
-    });
-  }, [duplicateElementsById, selectedElements]);
-
-  /**
-   * Duplicate the current page.
-   */
-  const handleDuplicatePage = useCallback(() => {
-    addPage({ page: duplicatePage(currentPage) });
-  }, [addPage, currentPage]);
-
-  /**
-   * Adds a new page at the designated index.
-   *
-   * Defaults to adding the new page after all of the existing pages.
-   *
-   * @param {number} index The index
-   */
-  const handleAddPageAtPosition = useCallback(
-    (index) => {
-      const position = Boolean(index) || index === 0 ? index : pages.length - 1;
-
-      addPageAt({ page: createPage(), position });
-
-      trackEvent('context_menu_action', {
-        name: 'page_added',
-        element: selectedElementType,
-        isBackground: selectedElement?.isBackground,
-      });
-    },
-    [
-      addPageAt,
-      pages?.length,
-      selectedElement?.isBackground,
-      selectedElementType,
-    ]
-  );
-
-  /**
-   * Delete the current page.
-   */
-  const handleDeletePage = useCallback(() => {
-    deleteCurrentPage();
-
-    trackEvent('context_menu_action', {
-      name: 'page_deleted',
-      element: selectedElementType,
-      isBackground: selectedElement?.isBackground,
-    });
-  }, [deleteCurrentPage, selectedElement?.isBackground, selectedElementType]);
-
-  /**
-   * Send element one layer backwards, if possible.
-   */
-  const handleSendBackward = useCallback(() => {
-    const newPosition =
-      currentPosition === 1 ? currentPosition : currentPosition - 1;
-
-    arrangeElement({
-      elementId: selectedElement.id,
-      position: newPosition,
-    });
-
-    trackEvent('context_menu_action', {
-      name: 'send_backward',
-      element: selectedElementType,
-      isBackground: selectedElement?.isBackground,
-    });
-  }, [
-    arrangeElement,
-    currentPosition,
-    selectedElement?.id,
-    selectedElement?.isBackground,
-    selectedElementType,
-  ]);
-
-  /**
-   * Send element all the way back, if possible.
-   */
-  const handleSendToBack = useCallback(() => {
-    arrangeElement({
-      elementId: selectedElement.id,
-      position: 1,
-    });
-
-    trackEvent('context_menu_action', {
-      name: 'send_to_back',
-      element: selectedElementType,
-    });
-  }, [arrangeElement, selectedElement?.id, selectedElementType]);
-
-  /**
-   * Bring element one layer forwards, if possible.
-   */
-  const handleBringForward = useCallback(() => {
-    const newPosition =
-      currentPosition >= currentPage.elements.length - 1
-        ? currentPosition
-        : currentPosition + 1;
-
-    arrangeElement({
-      elementId: selectedElement.id,
-      position: newPosition,
-    });
-
-    trackEvent('context_menu_action', {
-      name: 'bring_forward',
-      element: selectedElementType,
-    });
-  }, [
-    arrangeElement,
-    currentPage,
-    currentPosition,
-    selectedElement?.id,
-    selectedElementType,
-  ]);
-
-  /**
-   * Send element all the way to the front, if possible.
-   */
-  const handleBringToFront = useCallback(() => {
-    arrangeElement({
-      elementId: selectedElement.id,
-      position: currentPage.elements.length - 1,
-    });
-
-    trackEvent('context_menu_action', {
-      name: 'bring_to_front',
-      element: selectedElementType,
-    });
-  }, [arrangeElement, currentPage, selectedElement?.id, selectedElementType]);
-
-  /**
-   * Set element as the element being 'edited'.
-   *
-   * @param {Event} evt The triggering event
-   */
-  const handleOpenScaleAndCrop = useCallback(
-    (evt) => {
-      setEditingElement(selectedElement?.id, evt);
-
-      trackEvent('context_menu_action', {
-        name: 'open_scale_and_crop',
-        element: selectedElementType,
-        isBackground: selectedElement?.isBackground,
-      });
-    },
-    [
-      selectedElement?.id,
-      selectedElement?.isBackground,
-      selectedElementType,
-      setEditingElement,
-    ]
-  );
-
-  /**
-   * Copy the styles and animations of the selected element.
-   */
-  const handleCopyStyles = useCallback(() => {
-    const oldStyles = { ...copiedElement };
-
-    dispatch({
-      type: ACTION_TYPES.COPY_ELEMENT_STYLES,
-      payload: {
-        animations: selectedElementAnimations,
-        styles: getElementStyles(selectedElement),
-        type: selectedElementType,
-      },
-    });
-
-    showSnackbar({
-      actionLabel: __('Undo', 'web-stories'),
-      dismissible: false,
-      message: __('Copied style.', 'web-stories'),
-      onAction: () => {
-        dispatch({
-          type: ACTION_TYPES.COPY_ELEMENT_STYLES,
-          payload: oldStyles,
-        });
-
-        trackEvent('context_menu_action', {
-          name: 'undo_copy_styles',
-          element: selectedElementType,
-          isBackground: selectedElement?.isBackground,
-        });
-      },
-      actionHelpText: UNDO_HELP_TEXT,
-    });
-
-    trackEvent('context_menu_action', {
-      name: 'copy_styles',
-      element: selectedElementType,
-      isBackground: selectedElement?.isBackground,
-    });
-  }, [
-    copiedElement,
-    selectedElement,
-    selectedElementAnimations,
-    selectedElementType,
-    showSnackbar,
-  ]);
-
-  const selectedElementId = selectedElement?.id;
-  const pushUpdate = useCallback(
-    (update, commitValues) => {
-      if (selectedElementId) {
-        updateElementsById({
-          elementIds: [selectedElementId],
-          properties: (element) => {
-            const updates = updateProperties(element, update, commitValues);
-            const sizeUpdates = getUpdatedSizeAndPosition({
-              ...element,
-              ...updates,
-            });
-            return {
-              ...updates,
-              ...sizeUpdates,
-            };
-          },
-        });
-      }
-    },
-    [selectedElementId, updateElementsById]
-  );
-
-  const handleApplyStyle = useApplyStyle({ pushUpdate });
-
-  /**
-   * Update the selected element's styles and animations.
-   *
-   * Pasting is not allowed if the copied element styles are from a
-   * different element type.
-   */
-  const handlePasteStyles = useCallback(() => {
-    const id = selectedElement?.id;
-
-    if (!id || selectedElement?.type !== copiedElement.type) {
-      return;
-    }
-
-    // Delete old animation if one exists
-    const oldAnimationToDelete = selectedElementAnimations.length
-      ? { ...selectedElementAnimations[0], delete: true }
-      : undefined;
-
-    // Create new animations
-    const newAnimations = copiedElement.animations.map((animation) => ({
-      ...animation,
-      id: uuidv4(),
-      targets: [selectedElement.id],
-    }));
-
-    addAnimations({ animations: newAnimations });
-
-    // Text elements need the text styles extracted from content before
-    // applying to the other text
-    if (copiedElement.type === 'text' && copiedElement.styles.content) {
-      const { textStyles } = getTextPresets(
-        [copiedElement.styles],
-        {
-          textStyles: [],
-          colors: [],
-        },
-        PRESET_TYPES.STYLE
-      );
-      const { colors } = getTextPresets(
-        [copiedElement.styles],
-        {
-          textStyles: [],
-          colors: [],
-        },
-        PRESET_TYPES.Color
-      );
-      const { content, ...copiedElementStyles } = copiedElement.styles;
-      const updatedElementStyles = {
-        ...copiedElementStyles,
-        ...textStyles[0],
-        ...colors[0].color,
-        animation: oldAnimationToDelete,
-        border: copiedElementStyles.border || null,
-      };
-      handleApplyStyle(updatedElementStyles);
-    } else {
-      // Add styles and animations to element
-      updateElementsById({
-        elementIds: [selectedElement.id],
-        properties: (currentProperties) =>
-          updateProperties(
-            currentProperties,
-            {
-              ...copiedElement.styles,
-              animation: oldAnimationToDelete,
-            },
-            /* commitValues */ true
-          ),
-      });
-    }
-
-    showSnackbar({
-      actionLabel: __('Undo', 'web-stories'),
-      dismissible: false,
-      message: __('Pasted style.', 'web-stories'),
-      // don't pass a stale reference for undo
-      // need history updates to run so `undo` works correctly.
-      onAction: () => {
-        undoRef.current();
-
-        trackEvent('context_menu_action', {
-          name: 'undo_paste_styles',
-          element: selectedElementType,
-          isBackground: selectedElement?.isBackground,
-        });
-      },
-      actionHelpText: UNDO_HELP_TEXT,
-    });
-
-    trackEvent('context_menu_action', {
-      name: 'paste_styles',
-      element: selectedElementType,
-      isBackground: selectedElement?.isBackground,
-    });
-  }, [
-    addAnimations,
-    copiedElement,
-    handleApplyStyle,
-    selectedElement,
-    selectedElementAnimations,
-    selectedElementType,
-    showSnackbar,
-    updateElementsById,
-  ]);
-
-  /**
-   * Set currently selected element as the page's background.
-   */
-  const handleSetPageBackground = useCallback(() => {
-    setBackgroundElement({ elementId: selectedElement.id });
-
-    trackEvent('context_menu_action', {
-      name: 'set_as_page_background',
-      element: selectedElementType,
-    });
-  }, [setBackgroundElement, selectedElement?.id, selectedElementType]);
-
-  /**
-   * Remove media from background and clear opacity and overlay.
-   */
-  const handleRemoveMediaFromBackground = useCallback(() => {
-    updateElementsById({
-      elementIds: [selectedElement.id],
-      properties: (currentProperties) =>
-        updateProperties(
-          currentProperties,
-          {
-            isBackground: false,
-            opacity: 100,
-            overlay: null,
-          },
-          /* commitValues */ true
-        ),
-    });
-
-    clearBackgroundElement();
-
-    trackEvent('context_menu_action', {
-      name: 'remove_media_from_background',
-      element: selectedElementType,
-      isBackground: selectedElement?.isBackground,
-    });
-  }, [
-    clearBackgroundElement,
-    selectedElement?.id,
-    selectedElement?.isBackground,
-    selectedElementType,
-    updateElementsById,
-  ]);
-
-  /**
-   * Add text styles to global presets.
-   *
-   * @param {Event} evt The triggering event
-   */
-  const handleAddTextPreset = useCallback(
-    (evt) => {
-      const preset = addGlobalTextPreset(evt);
-
-      showSnackbar({
-        actionLabel: __('Undo', 'web-stories'),
-        dismissible: false,
-        message: __('Saved style to "Saved Styles".', 'web-stories'),
-        onAction: () => {
-          deleteGlobalTextPreset(preset);
-
-          trackEvent('context_menu_action', {
-            name: 'remove_text_preset',
-            element: selectedElementType,
-          });
-        },
-        actionHelpText: UNDO_HELP_TEXT,
-      });
-
-      trackEvent('context_menu_action', {
-        name: 'add_text_preset',
-        element: selectedElementType,
-      });
-    },
-    [
-      addGlobalTextPreset,
-      deleteGlobalTextPreset,
-      selectedElementType,
-      showSnackbar,
-    ]
-  );
-
-  /**
-   * Add color to global presets.
-   *
-   * @param {Event} evt The triggering event
-   */
-  const handleAddColorPreset = useCallback(
-    (evt) => {
-      const preset = addGlobalColorPreset(evt);
-
-      showSnackbar({
-        actionLabel: __('Undo', 'web-stories'),
-        dismissible: false,
-        message: __('Added color to "Saved Colors".', 'web-stories'),
-        onAction: () => {
-          deleteGlobalColorPreset(preset);
-
-          trackEvent('context_menu_action', {
-            name: 'remove_color_preset',
-            element: selectedElementType,
-          });
-        },
-        actionHelpText: UNDO_HELP_TEXT,
-      });
-
-      trackEvent('context_menu_action', {
-        name: 'add_color_preset',
-        element: selectedElementType,
-      });
-    },
-    [
-      addGlobalColorPreset,
-      deleteGlobalColorPreset,
-      selectedElementType,
-      showSnackbar,
-    ]
-  );
-
   const menuItemProps = useMemo(
     () => ({
       onMouseDown: handleMouseDown,
@@ -706,39 +172,39 @@ function RightClickMenuProvider({ children }) {
         label: RIGHT_CLICK_MENU_LABELS.SEND_BACKWARD,
         shortcut: RIGHT_CLICK_MENU_SHORTCUTS.SEND_BACKWARD,
         disabled: !canElementMoveBackwards,
-        onClick: handleSendBackward,
+        onClick: onSendBackward,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.SEND_TO_BACK,
         shortcut: RIGHT_CLICK_MENU_SHORTCUTS.SEND_TO_BACK,
         disabled: !canElementMoveBackwards,
-        onClick: handleSendToBack,
+        onClick: onSendToBack,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.BRING_FORWARD,
         shortcut: RIGHT_CLICK_MENU_SHORTCUTS.BRING_FORWARD,
         disabled: !canElementMoveForwards,
-        onClick: handleBringForward,
+        onClick: onBringForward,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.BRING_TO_FRONT,
         shortcut: RIGHT_CLICK_MENU_SHORTCUTS.BRING_TO_FRONT,
         disabled: !canElementMoveForwards,
-        onClick: handleBringToFront,
+        onClick: onBringToFront,
         ...menuItemProps,
       },
     ],
     [
       canElementMoveBackwards,
-      handleSendBackward,
-      menuItemProps,
-      handleSendToBack,
-      handleBringForward,
       canElementMoveForwards,
-      handleBringToFront,
+      onBringForward,
+      onBringToFront,
+      onSendBackward,
+      onSendToBack,
+      menuItemProps,
     ]
   );
 
@@ -746,31 +212,31 @@ function RightClickMenuProvider({ children }) {
     () => [
       {
         label: RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER,
-        onClick: () => handleAddPageAtPosition(currentPageIndex + 1),
+        onClick: () => onAddPageAtPosition(currentPageIndex + 1),
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_BEFORE,
-        onClick: () => handleAddPageAtPosition(currentPageIndex),
+        onClick: () => onAddPageAtPosition(currentPageIndex),
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE,
-        onClick: handleDuplicatePage,
+        onClick: onDuplicatePage,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.DELETE_PAGE,
-        onClick: handleDeletePage,
+        onClick: onDeletePage,
         disabled: pages.length === 1,
         ...menuItemProps,
       },
     ],
     [
       currentPageIndex,
-      handleAddPageAtPosition,
-      handleDeletePage,
-      handleDuplicatePage,
+      onAddPageAtPosition,
+      onDeletePage,
+      onDuplicatePage,
       menuItemProps,
       pages,
     ]
@@ -797,13 +263,13 @@ function RightClickMenuProvider({ children }) {
     const items = [
       {
         label: detachLabel,
-        onClick: handleRemoveMediaFromBackground,
+        onClick: onRemovePageBackground,
         disabled: disableBackgroundMediaActions,
         ...menuItemProps,
       },
       {
         label: scaleLabel,
-        onClick: handleOpenScaleAndCrop,
+        onClick: onOpenScaleAndCrop,
         disabled: disableBackgroundMediaActions,
         separator: showTrimModeAction ? undefined : 'bottom',
         ...menuItemProps,
@@ -827,11 +293,11 @@ function RightClickMenuProvider({ children }) {
     return items;
   }, [
     canTranscodeResource,
-    handleOpenScaleAndCrop,
-    handleRemoveMediaFromBackground,
     hasTrimMode,
     layerSelectItem,
     menuItemProps,
+    onOpenScaleAndCrop,
+    onRemovePageBackground,
     pageManipulationItems,
     selectedElement,
     toggleTrimMode,
@@ -843,7 +309,7 @@ function RightClickMenuProvider({ children }) {
         label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(
           selectedElements.length
         ),
-        onClick: handleDuplicateElements,
+        onClick: onDuplicateSelectedElements,
         separator: 'bottom',
         ...menuItemProps,
       },
@@ -852,24 +318,24 @@ function RightClickMenuProvider({ children }) {
         label: RIGHT_CLICK_MENU_LABELS.COPY_STYLES,
         separator: 'top',
         shortcut: RIGHT_CLICK_MENU_SHORTCUTS.COPY_STYLES,
-        onClick: handleCopyStyles,
+        onClick: onCopyStyles,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.PASTE_STYLES,
         shortcut: RIGHT_CLICK_MENU_SHORTCUTS.PASTE_STYLES,
-        onClick: handlePasteStyles,
+        onClick: onPasteStyles,
         disabled: copiedElement.type !== selectedElement?.type,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.ADD_TO_TEXT_PRESETS,
-        onClick: handleAddTextPreset,
+        onClick: onAddTextPreset,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.ADD_TO_COLOR_PRESETS,
-        onClick: handleAddColorPreset,
+        onClick: onAddColorPreset,
         ...menuItemProps,
       },
     ];
@@ -878,15 +344,15 @@ function RightClickMenuProvider({ children }) {
     }
     return items;
   }, [
+    copiedElement,
     layerItems,
     layerSelectItem,
-    handleAddTextPreset,
-    handleDuplicateElements,
     menuItemProps,
-    handleAddColorPreset,
-    handleCopyStyles,
-    handlePasteStyles,
-    copiedElement,
+    onAddColorPreset,
+    onAddTextPreset,
+    onCopyStyles,
+    onDuplicateSelectedElements,
+    onPasteStyles,
     selectedElement,
     selectedElements.length,
   ]);
@@ -908,7 +374,7 @@ function RightClickMenuProvider({ children }) {
         label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(
           selectedElements.length
         ),
-        onClick: handleDuplicateElements,
+        onClick: onDuplicateSelectedElements,
         separator: 'bottom',
         ...menuItemProps,
       },
@@ -916,12 +382,12 @@ function RightClickMenuProvider({ children }) {
       {
         label: RIGHT_CLICK_MENU_LABELS.SET_AS_PAGE_BACKGROUND,
         separator: 'top',
-        onClick: handleSetPageBackground,
+        onClick: onSetPageBackground,
         ...menuItemProps,
       },
       {
         label: scaleLabel,
-        onClick: handleOpenScaleAndCrop,
+        onClick: onOpenScaleAndCrop,
         ...menuItemProps,
       },
       ...(isVideo && hasTrimMode
@@ -938,13 +404,13 @@ function RightClickMenuProvider({ children }) {
         label: copyLabel,
         separator: 'top',
         shortcut: RIGHT_CLICK_MENU_SHORTCUTS.COPY_STYLES,
-        onClick: handleCopyStyles,
+        onClick: onCopyStyles,
         ...menuItemProps,
       },
       {
         label: pasteLabel,
         shortcut: RIGHT_CLICK_MENU_SHORTCUTS.PASTE_STYLES,
-        onClick: handlePasteStyles,
+        onClick: onPasteStyles,
         disabled: copiedElement.type !== selectedElement?.type,
         ...menuItemProps,
       },
@@ -956,15 +422,15 @@ function RightClickMenuProvider({ children }) {
   }, [
     canTranscodeResource,
     copiedElement,
-    handleCopyStyles,
-    handleDuplicateElements,
-    handleOpenScaleAndCrop,
-    handlePasteStyles,
-    handleSetPageBackground,
     hasTrimMode,
     layerItems,
     layerSelectItem,
     menuItemProps,
+    onCopyStyles,
+    onDuplicateSelectedElements,
+    onOpenScaleAndCrop,
+    onPasteStyles,
+    onSetPageBackground,
     selectedElement,
     selectedElements.length,
     toggleTrimMode,
@@ -976,7 +442,7 @@ function RightClickMenuProvider({ children }) {
         label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(
           selectedElements.length
         ),
-        onClick: handleDuplicateElements,
+        onClick: onDuplicateSelectedElements,
         separator: 'bottom',
         ...menuItemProps,
       },
@@ -985,19 +451,19 @@ function RightClickMenuProvider({ children }) {
         label: RIGHT_CLICK_MENU_LABELS.COPY_SHAPE_STYLES,
         separator: 'top',
         shortcut: RIGHT_CLICK_MENU_SHORTCUTS.COPY_STYLES,
-        onClick: handleCopyStyles,
+        onClick: onCopyStyles,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.PASTE_SHAPE_STYLES,
         shortcut: RIGHT_CLICK_MENU_SHORTCUTS.PASTE_STYLES,
-        onClick: handlePasteStyles,
+        onClick: onPasteStyles,
         disabled: copiedElement.type !== selectedElement?.type,
         ...menuItemProps,
       },
       {
         label: RIGHT_CLICK_MENU_LABELS.ADD_TO_COLOR_PRESETS,
-        onClick: handleAddColorPreset,
+        onClick: onAddColorPreset,
         ...menuItemProps,
       },
     ];
@@ -1007,13 +473,13 @@ function RightClickMenuProvider({ children }) {
     return items;
   }, [
     copiedElement?.type,
-    handleAddColorPreset,
-    handleCopyStyles,
-    handleDuplicateElements,
-    handlePasteStyles,
     layerItems,
     layerSelectItem,
     menuItemProps,
+    onAddColorPreset,
+    onCopyStyles,
+    onDuplicateSelectedElements,
+    onPasteStyles,
     selectedElement?.type,
     selectedElements.length,
   ]);
@@ -1024,7 +490,7 @@ function RightClickMenuProvider({ children }) {
         label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(
           selectedElements.length
         ),
-        onClick: handleDuplicateElements,
+        onClick: onDuplicateSelectedElements,
         separator: 'bottom',
         ...menuItemProps,
       },
@@ -1035,10 +501,10 @@ function RightClickMenuProvider({ children }) {
     }
     return items;
   }, [
-    handleDuplicateElements,
     layerItems,
     layerSelectItem,
     menuItemProps,
+    onDuplicateSelectedElements,
     selectedElements.length,
   ]);
 
@@ -1048,11 +514,11 @@ function RightClickMenuProvider({ children }) {
         label: RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(
           selectedElements.length
         ),
-        onClick: handleDuplicateElements,
+        onClick: onDuplicateSelectedElements,
         ...menuItemProps,
       },
     ],
-    [handleDuplicateElements, menuItemProps, selectedElements.length]
+    [menuItemProps, onDuplicateSelectedElements, selectedElements.length]
   );
 
   const menuItems = useMemo(() => {
@@ -1093,18 +559,18 @@ function RightClickMenuProvider({ children }) {
     { key: ['mod+alt+o'] },
     (evt) => {
       evt.preventDefault();
-      handleCopyStyles();
+      onCopyStyles();
     },
-    [handleCopyStyles]
+    [onCopyStyles]
   );
 
   useGlobalKeyDownEffect(
     { key: ['mod+alt+p'] },
     (evt) => {
       evt.preventDefault();
-      handlePasteStyles();
+      onPasteStyles();
     },
-    [handlePasteStyles]
+    [onPasteStyles]
   );
 
   const value = useMemo(

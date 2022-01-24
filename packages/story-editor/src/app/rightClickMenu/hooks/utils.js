@@ -17,8 +17,8 @@
 /**
  * Internal dependencies
  */
-import { getDefinitionForType, ELEMENT_TYPES } from '../../elements';
-import objectPick from '../../utils/objectPick';
+import { getDefinitionForType, ELEMENT_TYPES } from '../../../elements';
+import objectPick from '../../../utils/objectPick';
 
 const elementTypes = Object.values(ELEMENT_TYPES);
 
