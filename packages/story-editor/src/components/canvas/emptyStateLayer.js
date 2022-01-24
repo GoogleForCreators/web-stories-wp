@@ -76,7 +76,9 @@ function EmptyStateLayer() {
   const onButtonClick = (e) => {
     const bb = e.target.getBoundingClientRect();
     e.clientX = bb.left - CONTEXT_MENU_WIDTH / 2 + bb.width / 2;
-    e.clientY = bb.top - 132 + bb.height;
+    // Hardcoded because it's not trivial to get the menu height here.
+    const EMPTY_STATE_CONTEXT_MENU_HEIGHT = 132;
+    e.clientY = bb.top - EMPTY_STATE_CONTEXT_MENU_HEIGHT + bb.height;
     onOpenMenu(e);
   };
 

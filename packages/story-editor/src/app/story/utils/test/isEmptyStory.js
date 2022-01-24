@@ -48,4 +48,10 @@ describe('isEmptyStory', () => {
     const storyWith2Pages = [createPage(), createPage()];
     expect(isEmptyStory(storyWith2Pages)).toBeFalse();
   });
+
+  it('should not count story with extra elements as empty', () => {
+    const storyWithExtraElements = [createPage()];
+    storyWithExtraElements[0].elements.push({});
+    expect(isEmptyStory(storyWithExtraElements)).toBeFalse();
+  });
 });
