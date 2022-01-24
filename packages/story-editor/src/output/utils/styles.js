@@ -134,7 +134,7 @@ function CustomStyles() {
                 }
               }
 
-              .align-bottom {
+              amp-story-grid-layer.align-bottom {
                 align-content: end;
                 padding: 0;
               }
