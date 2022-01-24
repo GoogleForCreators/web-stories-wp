@@ -62,8 +62,6 @@ export function getBorderedMaskProperties(
   const offsetX = (relativeWidth - 1) / 2;
   const offsetY = (relativeHeight - 1) / 2;
   const scaledHeight = relativeHeight / mask.ratio;
-  const relativeBorderWidth =
-    (2 / BORDER_MULTIPLIER) * Math.max(offsetX, offsetY);
   const viewBox = `0 0 ${relativeWidth} ${scaledHeight}`;
   const groupTransform = `translate(${offsetX},${offsetY})`;
   const borderWrapperStyle = {
@@ -77,5 +75,5 @@ export function getBorderedMaskProperties(
     zIndex: 1,
     opacity: 1,
   };
-  return { viewBox, groupTransform, borderWrapperStyle, relativeBorderWidth };
+  return { viewBox, groupTransform, borderWrapperStyle };
 }

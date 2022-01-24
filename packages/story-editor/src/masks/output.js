@@ -108,7 +108,7 @@ export default function WithMask({
   const maskId = `mask-${mask.type}-${element.id}-output`;
 
   if (showSingleBorder) {
-    const { viewBox, groupTransform, borderWrapperStyle, relativeBorderWidth } =
+    const { viewBox, groupTransform, borderWrapperStyle } =
       getBorderedMaskProperties(
         mask,
         borderWidth,
@@ -135,7 +135,8 @@ export default function WithMask({
               <path
                 d={mask?.path}
                 stroke={borderColor}
-                strokeWidth={relativeBorderWidth}
+                strokeWidth={borderWidth}
+                vectorEffect="non-scaling-stroke"
                 fill="transparent"
               />
             </g>
