@@ -489,19 +489,18 @@ function useMediaUploadQueue() {
             }
 
             if (canTranscodeFile(file)) {
+              currentTranscodingItem.current = id;
+
               if (trimData) {
-                currentTranscodingItem.current = id;
                 trimVideoItem(item);
                 return;
               }
 
               if (muteVideo) {
-                currentTranscodingItem.current = id;
                 muteVideoItem(item);
                 return;
               }
 
-              currentTranscodingItem.current = id;
               // Transcode/Optimize videos before upload.
               // TODO: Only transcode & optimize video if needed (criteria TBD).
               // Probably need to use FFmpeg first to get more information (dimensions, fps, etc.)
