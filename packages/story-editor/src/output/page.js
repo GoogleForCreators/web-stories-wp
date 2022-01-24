@@ -42,7 +42,7 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
     elements,
     backgroundColor,
     backgroundAudio,
-    tracks = [],
+    tracks: backgroundAudioTracks = [],
     pageAttachment,
   } = page;
   const { ctaText, url, icon, theme, rel = [] } = pageAttachment || {};
@@ -83,20 +83,22 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
 
   const videoCaptions = elements
     .filter(
-      ({ type, tracks: videoTracks }) =>
-        type === ELEMENT_TYPES.VIDEO && videoTracks?.length > 0
+      ({ type, tracks }) => type === ELEMENT_TYPES.VIDEO && tracks?.length > 0
     )
     .map(({ id: videoId }) => `el-${videoId}-captions`);
 
   const hasBackgroundAudioWithTracks =
-    backgroundAudio?.src && tracks?.length > 0;
+    backgroundAudio?.src && backgroundAudioTracks?.length > 0;
 
   if (hasBackgroundAudioWithTracks) {
     videoCaptions.push(`el-${backgroundAudio.id}-captions`);
   }
 
   const backgroundAudioSrc =
-    backgroundAudio?.src && !tracks?.length ? backgroundAudio.src : undefined;
+    !hasBackgroundAudioWithTracks && backgroundAudio?.src
+      ? backgroundAudio.src
+      : undefined;
+
   return (
     <amp-story-page
       id={id}
@@ -143,7 +145,7 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
       {hasBackgroundAudioWithTracks && (
         <HiddenAudio
           backgroundAudio={backgroundAudio}
-          tracks={tracks}
+          tracks={backgroundAudioTracks}
           id={id}
         />
       )}
