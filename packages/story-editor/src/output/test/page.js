@@ -1271,12 +1271,20 @@ describe('Page output', () => {
       };
 
       const { container } = render(<PageOutput {...props} />);
+
       const captions = container.querySelector('amp-story-captions');
       await expect(captions).toBeInTheDocument();
       expect(captions).toMatchSnapshot();
+
       const video = container.querySelector('amp-video');
       await expect(video).toBeInTheDocument();
       expect(video).toMatchSnapshot();
+
+      const page = container.querySelector('amp-story-page');
+      await expect(page).toBeInTheDocument();
+      expect(page).not.toContain(
+        'background-audio="https://example.com/audio.mp3"'
+      );
     });
   });
 
