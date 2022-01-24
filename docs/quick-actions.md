@@ -75,7 +75,7 @@ A user should be able to navigate the quick actions menu with their keyboard.
 
 ### Highlights
 
-This feature uses the `highlights` api that was implemented in [this pr: #6150](https://github.com/google/web-stories-wp/pull/5965).
+This feature uses the `highlights` api that was implemented in [this pr: #6150](https://github.com/googleforcreators/web-stories-wp/pull/5965).
 
 ### Testing
 

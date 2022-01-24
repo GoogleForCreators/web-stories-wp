@@ -60,7 +60,7 @@ function SkeletonPage({ pageId, index }) {
   const bgElement = page.elements[0];
   const { isMedia } = getDefinitionForType(bgElement.type);
   // Using isHexColorString for extra hardening.
-  // See https://github.com/google/web-stories-wp/issues/9888.
+  // See https://github.com/googleforcreators/web-stories-wp/issues/9888.
   const bgColor =
     isMedia && isHexColorString(bgElement.resource?.baseColor)
       ? getSolidFromHex(bgElement.resource.baseColor.replace('#', ''))

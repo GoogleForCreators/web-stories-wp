@@ -40,7 +40,12 @@ function deleteNestedKeys(paths) {
       const lastKey = keys.pop();
       const nextLastKey = keys.pop();
       const nextLastObj = keys.reduce((a, key) => a?.[key] || a, object);
-      if (Object.prototype.hasOwnProperty.call(nextLastObj, nextLastKey)) {
+      // Make sure we're not trying to get a property out of `undefined` or `null`.
+      if (
+        Object.prototype.hasOwnProperty.call(nextLastObj, nextLastKey) &&
+        'object' === typeof nextLastObj[nextLastKey] &&
+        nextLastObj[nextLastKey]
+      ) {
         delete nextLastObj[nextLastKey][lastKey];
       }
     });

@@ -63,9 +63,10 @@ describe('Zoom selector', () => {
       toHaveSize: () => ({
         compare: function (actual, width, height) {
           const { clientWidth, clientHeight } = actual;
+          // 1px differences due to rounding are OK.
           const pass =
-            Math.round(clientWidth) === Math.round(width) &&
-            Math.round(clientHeight) === Math.round(height);
+            Math.abs(clientWidth - width) <= 1 &&
+            Math.abs(clientHeight - height) <= 1;
           return {
             pass,
             message: pass

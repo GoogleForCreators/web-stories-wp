@@ -132,7 +132,7 @@ describe('Web Stories Block', () => {
     await takeSnapshot(page, 'Story select modal');
   });
 
-  // Disable for https://github.com/google/web-stories-wp/issues/6237
+  // Disable for https://github.com/googleforcreators/web-stories-wp/issues/6237
   // eslint-disable-next-line jest/no-disabled-tests
   describe.skip('AMP validation', () => {
     withDisabledToolbarOnFrontend();

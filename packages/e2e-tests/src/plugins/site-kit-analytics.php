@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: E2E Tests Site kit Analytics mock
- * Plugin URI:  https://github.com/google/web-stories-wp
+ * Plugin URI:  https://github.com/googleforcreators/web-stories-wp
  * Description: Utility plugin to mock sitekit analytics
  * Author:      Google
  * Author URI:  https://opensource.google.com
