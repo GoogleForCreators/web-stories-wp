@@ -28,8 +28,6 @@ module.exports = {
     '@storybook/addon-a11y/register',
     '@storybook/addon-essentials',
     '@storybook/addon-storysource/register',
-    '@storybook/addon-viewport/register',
-    '@storybook/addon-backgrounds/register',
     'storybook-rtl-addon',
   ],
   reactOptions: {

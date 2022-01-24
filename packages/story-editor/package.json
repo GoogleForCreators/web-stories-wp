@@ -69,7 +69,7 @@
   "devDependencies": {
     "@googleforcreators/karma-fixture": "*",
     "@storybook/addon-actions": "^6.3.6",
-    "@storybook/addon-knobs": "^6.3.0",
+    "@storybook/addon-essentials": "^6.4.13",
     "@testing-library/dom": "^8.10.1",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
