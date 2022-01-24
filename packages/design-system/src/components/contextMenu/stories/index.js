@@ -606,6 +606,7 @@ const RightClickMenuOnShapeAndBackground = ({ children }) => {
             />
           </ContextMenu>
         </RightClickContextMenuContainer>
+        <MenuItems.MenuSeparator />
         {shapeMenu}
       </ContextMenu>
     </Container>
