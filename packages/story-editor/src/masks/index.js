@@ -49,6 +49,12 @@ function getDefaultElementMask(type) {
   return isMaskable ? DEFAULT_MASK : null;
 }
 
+/*
+ * This constant and calculation concerns growing the element while shrinking
+ * the inside SVG through viewbox so it overlaps the element correctly.
+ * The math and logic is explained in this GH comment:
+ * https://github.com/GoogleForCreators/web-stories-wp/pull/9851#issuecomment-1020461756
+ */
 const BORDER_MULTIPLIER = 3;
 export function getBorderedMaskProperties(
   mask,
