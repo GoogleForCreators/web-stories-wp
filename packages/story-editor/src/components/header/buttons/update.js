@@ -37,8 +37,9 @@ import {
 /**
  * Internal dependencies
  */
-import { useStory, useLocalMedia, useHistory } from '../../../app';
+import { useStory, useHistory } from '../../../app';
 import Tooltip from '../../tooltip';
+import useIsUploadingToStory from '../../../utils/useIsUploadingToStory';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
 function PlainButton({ text, onClick, disabled }) {
@@ -90,9 +91,7 @@ function UpdateButton({ hasUpdates = false, forceIsSaving = false }) {
 
   const isSaving = _isSaving || forceIsSaving;
 
-  const { isUploading } = useLocalMedia(({ state: { isUploading } }) => ({
-    isUploading,
-  }));
+  const isUploading = useIsUploadingToStory();
   const {
     state: { hasNewChanges },
   } = useHistory();
