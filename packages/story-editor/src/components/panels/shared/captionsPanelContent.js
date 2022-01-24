@@ -26,8 +26,6 @@ import {
   BUTTON_VARIANTS,
   Icons,
   Input,
-  Text,
-  THEME_CONSTANTS,
   themeHelpers,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
@@ -46,13 +44,6 @@ const InputRow = styled.div`
   display: flex;
   flex-grow: 1;
   margin-right: 8px;
-`;
-
-const ErrorText = styled(Text).attrs({
-  as: 'span',
-  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
-})`
-  color: ${({ theme }) => theme.colors.fg.negative};
 `;
 
 const StyledFileInput = styled(Input)(
