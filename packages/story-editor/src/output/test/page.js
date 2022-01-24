@@ -1493,6 +1493,38 @@ describe('Page output', () => {
 
       await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
     });
+
+    it('should produce valid output with background audio with captions', async () => {
+      const props = {
+        id: '123',
+        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          backgroundAudio: {
+            src: 'https://example.com/audio.mp3',
+            id: 123,
+            mimeType: 'audio/mpeg',
+          },
+          tracks: [
+            {
+              track: 'https://example.com/track.vtt',
+              trackId: 123,
+              trackName: 'track.vtt',
+              id: 'rersd-fdfd-fdfd-fdfd',
+              srcLang: '',
+              label: '',
+              kind: 'captions',
+            },
+          ],
+          animations: [],
+          elements: [],
+        },
+        autoAdvance: true,
+        defaultPageDuration: 11,
+      };
+
+      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+    });
   });
 });
 
