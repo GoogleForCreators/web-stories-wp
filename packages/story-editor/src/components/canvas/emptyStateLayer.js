@@ -17,12 +17,16 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Button,
   Icons,
+  Text,
+  THEME_CONSTANTS,
+  theme,
+  lightMode,
 } from '@googleforcreators/design-system';
 
 /**
@@ -48,6 +52,9 @@ const EmptyStateMessage = styled.div`
   text-align: center;
   svg {
     pointer-events: none;
+  }
+  p {
+    margin-top: 14px;
   }
 `;
 
@@ -84,12 +91,14 @@ function EmptyStateLayer() {
           >
             <Icons.Media />
           </Button>
-          <p>
-            {__(
-              'Add an image, video or template to get started',
-              'web-stories'
-            )}
-          </p>
+          <ThemeProvider theme={{ ...theme, colors: lightMode }}>
+            <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+              {__(
+                'Add an image, video or template to get started',
+                'web-stories'
+              )}
+            </Text>
+          </ThemeProvider>
         </EmptyStateMessage>
       </DisplayPageArea>
     </Layer>
