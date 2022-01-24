@@ -20,14 +20,12 @@ import { getGlobalSpace, literal } from '..';
 
 describe('literal', () => {
   it('interpolates the same as a template literal given an empty string', () => {
-    expect(literal([''])).toStrictEqual(``);
+    expect(literal([''])).toBe(``);
   });
 
   it('interpolates the same as a template literal given some args', () => {
     const args = ['am', 'dog'];
-    expect(literal(['I ', ' a '], ...args)).toStrictEqual(
-      `I ${args[0]} a ${args[1]}`
-    );
+    expect(literal(['I ', ' a '], ...args)).toBe(`I ${args[0]} a ${args[1]}`);
   });
 });
 

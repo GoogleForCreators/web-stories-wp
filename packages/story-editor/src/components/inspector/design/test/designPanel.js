@@ -86,8 +86,8 @@ describe('DesignPanel', () => {
       );
 
       expect(formContext.isMultiple).toBe(false);
-      expect(typeof formContext.registerPresubmitHandler === 'function').toBe(
-        true
+      expect(formContext.registerPresubmitHandler).toStrictEqual(
+        expect.any(Function)
       );
     });
 

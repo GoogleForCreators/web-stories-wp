@@ -179,7 +179,7 @@ describe('Color formatter', () => {
 
       // Fourth argument is actual style to set
       const styleToSet = togglePrefixStyle.mock.calls[0][3];
-      expect(styleToSet()).toStrictEqual(`${LETTERSPACING}-N150`);
+      expect(styleToSet()).toBe(`${LETTERSPACING}-N150`);
     });
   });
 });

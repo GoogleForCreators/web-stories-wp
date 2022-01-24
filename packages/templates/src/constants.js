@@ -20,7 +20,7 @@
 // Templates need to be added:
 //   1. 'beauty-quiz',
 //   2. 'sports-quiz',
-// See https://github.com/google/web-stories-wp/issues/8725 for more details.
+// See https://github.com/googleforcreators/web-stories-wp/issues/8725 for more details.
 
 export const TEMPLATE_NAMES = [
   'fresh-and-bright',

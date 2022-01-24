@@ -68,4 +68,4 @@ You will need a WordPress environment to run the plugin. To run a local instance
 npm run env:start
 ```
 
-See [local environment documentation](https://github.com/google/web-stories-wp/blob/main/docs/local-environment.md) for more information.
+See [local environment documentation](https://github.com/googleforcreators/web-stories-wp/blob/main/docs/local-environment.md) for more information.

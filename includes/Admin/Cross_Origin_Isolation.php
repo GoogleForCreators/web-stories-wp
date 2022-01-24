@@ -7,7 +7,7 @@
  * @package   Google\Web_Stories\Traits
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/google/web-stories-wp
+ * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -115,7 +115,7 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 	 * However, actual cross-origin isolation by sending COOP and COEP headers is only
 	 * needed when video optimization is enabled
 	 *
-	 * @link https://github.com/google/web-stories-wp/issues/9327
+	 * @link https://github.com/googleforcreators/web-stories-wp/issues/9327
 	 * @link https://web.dev/coop-coep/
 	 *
 	 * @since 1.14.0
@@ -332,7 +332,7 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 				'crossorigin="anonymous" ' . $attribute . '="' . $url . '"',
 				"crossorigin='anonymous' {$attribute}='{$url}'",
 			],
-			$html 
+			$html
 		);
 
 		return $new_html;

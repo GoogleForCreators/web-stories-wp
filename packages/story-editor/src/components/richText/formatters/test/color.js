@@ -165,7 +165,7 @@ describe('Color formatter', () => {
 
       // Fourth argument is actual style to set
       const styleToSet = togglePrefixStyle.mock.calls[0][3];
-      expect(styleToSet()).toStrictEqual(`${COLOR}-ff00ff64`);
+      expect(styleToSet()).toBe(`${COLOR}-ff00ff64`);
     });
 
     it('should invoke togglePrefixStyle correctly with black color', () => {

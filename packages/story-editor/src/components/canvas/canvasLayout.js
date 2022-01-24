@@ -42,7 +42,7 @@ import CanvasElementDropzone from './canvasElementDropzone';
 import EyedropperLayer from './eyedropperLayer';
 
 // data-fix-caret is for allowing caretRangeFromPoint to work in Safari.
-// See https://github.com/google/web-stories-wp/issues/7745.
+// See https://github.com/googleforcreators/web-stories-wp/issues/7745.
 const Background = styled.section.attrs({
   'aria-label': __('Canvas', 'web-stories'),
   'data-fix-caret': true,

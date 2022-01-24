@@ -82,11 +82,20 @@ function Popup({
   shouldHaveDifferentoffset = false,
 }) {
   const [popupState, setPopupState] = useState(null);
-  const [mounted, setMounted] = useState(false);
+  const isMounted = useRef(false);
   const popup = useRef(null);
+
+  useEffect(() => {
+    isMounted.current = true;
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
   const positionPopup = useCallback(
     (evt) => {
-      if (!mounted) {
+      if (!isMounted.current) {
         return;
       }
       // If scrolling within the popup, ignore.
@@ -110,14 +119,13 @@ function Popup({
       });
     },
     [
-      mounted,
       anchor,
-      placement,
-      spacing,
       dock,
       isRTL,
-      topOffset,
+      placement,
       shouldHaveDifferentoffset,
+      spacing,
+      topOffset,
     ]
   );
   useEffect(() => {
@@ -131,19 +139,24 @@ function Popup({
   }, [popupState?.height, positionPopup]);
 
   useLayoutEffect(() => {
-    setMounted(true);
     if (!isOpen) {
       return undefined;
     }
+    isMounted.current = true;
     positionPopup();
     // Adjust the position when scrolling.
     document.addEventListener('scroll', positionPopup, true);
     return () => {
       document.removeEventListener('scroll', positionPopup, true);
+      isMounted.current = false;
     };
   }, [isOpen, positionPopup]);
 
   useLayoutEffect(() => {
+    if (!isMounted.current) {
+      return;
+    }
+
     onPositionUpdate(popupState);
     refCallback(popup);
   }, [popupState, onPositionUpdate, refCallback]);

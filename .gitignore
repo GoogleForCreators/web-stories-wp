@@ -18,3 +18,4 @@ node_modules
 phpcs.xml
 phpunit.xml
 .phpunit.result.cache
+/packages/*/package-lock.json

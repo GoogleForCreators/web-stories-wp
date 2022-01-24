@@ -25,6 +25,7 @@ import {
   useMemo,
   useCallback,
   useDebouncedCallback,
+  useEffect,
 } from '@googleforcreators/react';
 
 /**
@@ -114,6 +115,15 @@ function Tooltip({
   const tooltipRef = useRef(null);
   const placementRef = useRef(placement);
   const [dynamicPlacement, setDynamicPlacement] = useState(placement);
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    isMounted.current = true;
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
 
   const spacing = useMemo(
     () => ({
@@ -207,9 +217,14 @@ function Tooltip({
   const onHover = useCallback(
     (evt) => {
       const handle = () => {
+        if (!isMounted.current) {
+          return;
+        }
+
         setShown(true);
         onPointerEnter(evt);
       };
+
       if (isDelayed) {
         const now = performance.now();
         if (now - lastVisibleDelayedTooltip < REPEAT_DELAYED_MS) {
@@ -305,7 +320,7 @@ const TooltipPropTypes = {
   onPointerEnter: PropTypes.func,
   onPointerLeave: PropTypes.func,
   shortcut: PropTypes.string,
-  title: PropTypes.string,
+  title: PropTypes.node,
   forceAnchorRef: PropTypes.object,
   tooltipProps: PropTypes.object,
   className: PropTypes.string,
