@@ -67,13 +67,13 @@ function MenuItemWithRef(
 
 const MenuItem = forwardRef(MenuItemWithRef);
 
-MenuItemWithRef.propTypes = MenuItem.propTypes;
-
 MenuItem.propTypes = {
   label: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   shortcut: PropTypes.object,
   icon: PropTypes.node,
   SuffixIcon: PropTypes.object,
 };
+
+MenuItemWithRef.propTypes = MenuItem.propTypes;
 
 export default MenuItem;
