@@ -20,10 +20,13 @@
 import styled from 'styled-components';
 
 const Suffix = styled.div`
+  position: relative;
   svg {
     width: 32px;
     color: ${({ theme }) => theme.colors.fg.secondary};
-    margin: -12px -14px -12px 0 !important;
+    position: absolute;
+    right: -14px;
+    top: -16px;
   }
 `;
 
