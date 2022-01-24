@@ -12,11 +12,9 @@ exports[`Page output background audio should add background audio as amp-video 2
 <amp-video
   autoplay="autoplay"
   captions-id="el-123-captions"
-  height="0"
   id="page-123-background-audio"
-  layout="responsive"
+  layout="nodisplay"
   loop="loop"
-  width="0"
 >
   <source
     src="https://example.com/audio.mp3"

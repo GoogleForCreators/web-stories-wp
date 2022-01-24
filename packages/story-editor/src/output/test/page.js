@@ -1275,10 +1275,12 @@ describe('Page output', () => {
       const captions = container.querySelector('amp-story-captions');
       await expect(captions).toBeInTheDocument();
       expect(captions).toMatchSnapshot();
+      expect(captions).toHaveAttribute('id', 'el-123-captions');
 
       const video = container.querySelector('amp-video');
       await expect(video).toBeInTheDocument();
       expect(video).toMatchSnapshot();
+      expect(video).toHaveAttribute('captions-id', 'el-123-captions');
 
       const page = container.querySelector('amp-story-page');
       await expect(page).toBeInTheDocument();
