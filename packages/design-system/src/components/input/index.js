@@ -153,7 +153,7 @@ export const Input = forwardRef(
       hasFocus = false,
       suffix,
       unit = '',
-      value,
+      value = '',
       isIndeterminate = false,
       containerStyleOverride = '',
       ...props

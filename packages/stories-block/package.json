@@ -1,22 +1,36 @@
 {
   "name": "@web-stories-wp/stories-block",
+  "description": "Web Stories block",
   "private": true,
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "web stories"
+  ],
+  "homepage": "https://github.com/googleforcreators/web-stories-wp/",
+  "repository": "git+https://github.com/GoogleForCreators/web-stories-wp.git",
+  "bugs": {
+    "url": "https://github.com/googleforcreators/web-stories-wp/issues"
+  },
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"
   },
+  "type": "module",
   "exports": {
     "default": "./src/index.js"
   },
   "main": "./src/index.js",
-  "type": "module",
   "sideEffects": [
     "./src/index.js",
     "*.css"
   ],
   "dependencies": {
+    "@googleforcreators/tracking": "*",
     "@web-stories-wp/glider": "*",
-    "@web-stories-wp/tracking": "*",
     "@wordpress/api-fetch": "^5.2.6",
     "@wordpress/block-editor": "^8.0.13",
     "@wordpress/blocks": "^11.0.0",
@@ -26,9 +40,9 @@
     "@wordpress/date": "^4.2.2",
     "@wordpress/element": "^4.0.0",
     "@wordpress/i18n": "^4.2.2",
-    "@wordpress/url": "^3.2.1",
-    "@wordpress/viewport": "^4.0.5",
     "@wordpress/icons": "^6.1.1",
+    "@wordpress/url": "^3.2.1",
+    "@wordpress/viewport": "^4.0.7",
     "classnames": "^2.3.1",
     "lodash": "^4.17.21",
     "prop-types": "^15.8.1"

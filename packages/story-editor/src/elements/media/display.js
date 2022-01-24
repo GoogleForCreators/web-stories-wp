@@ -25,7 +25,7 @@ import { getMediaSizePositionProps } from '@googleforcreators/media';
  * Internal dependencies
  */
 import { useRef } from '@googleforcreators/react';
-import { useUnits } from '@web-stories-wp/units';
+import { useUnits } from '@googleforcreators/units';
 import StoryPropTypes from '../../types';
 import {
   elementFillContent,
@@ -130,7 +130,7 @@ function MediaDisplay({
 MediaDisplay.propTypes = {
   element: StoryPropTypes.elements.media.isRequired,
   mediaRef: PropTypes.object,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   showPlaceholder: PropTypes.bool,
   previewMode: PropTypes.bool,
 };

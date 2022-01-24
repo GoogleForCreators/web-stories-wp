@@ -21,7 +21,7 @@ import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import PropTypes from 'prop-types';
 import { generatePatternStyles } from '@googleforcreators/patterns';
-import { UnitsProvider } from '@web-stories-wp/units';
+import { UnitsProvider } from '@googleforcreators/units';
 import {
   useState,
   useRef,
@@ -200,7 +200,7 @@ PagePreview.propTypes = {
   page: StoryPropTypes.page.isRequired,
   label: PropTypes.string,
   isCacheable: PropTypes.bool,
-  cachedImage: PropTypes.object,
+  cachedImage: PropTypes.string,
   setCachedImage: PropTypes.func,
   pageImageData: PropTypes.string,
   width: PropTypes.number.isRequired,

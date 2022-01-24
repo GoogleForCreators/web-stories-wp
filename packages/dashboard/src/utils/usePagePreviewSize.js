@@ -24,7 +24,7 @@ import {
   useDebouncedCallback,
   useResizeEffect,
 } from '@googleforcreators/react';
-import { PAGE_RATIO } from '@web-stories-wp/units';
+import { PAGE_RATIO } from '@googleforcreators/units';
 
 /**
  * Internal dependencies

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import STICKERS from '@googleforcreators/stickers';
-import { dataPixels } from '@web-stories-wp/units';
+import { dataPixels } from '@googleforcreators/units';
 
 /**
  * Internal dependencies

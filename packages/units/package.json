@@ -1,5 +1,5 @@
 {
-  "name": "@web-stories-wp/units",
+  "name": "@googleforcreators/units",
   "description": "A collection of utility functions as well as a React context provider for dealing with \"data\" and \"editor\" pixels in the Web Stories editor.",
   "private": false,
   "version": "0.0.1",
@@ -7,18 +7,24 @@
     "name": "Google",
     "url": "https://creators.google/"
   },
+  "license": "Apache-2.0",
   "keywords": [
     "web stories"
   ],
+  "homepage": "https://github.com/googleforcreators/web-stories-wp/",
+  "repository": "git+https://github.com/GoogleForCreators/web-stories-wp.git",
+  "bugs": {
+    "url": "https://github.com/googleforcreators/web-stories-wp/issues"
+  },
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"
   },
+  "type": "module",
   "exports": {
     "default": "./src/index.js"
   },
   "main": "./src/index.js",
-  "type": "module",
   "sideEffects": false,
   "dependencies": {
     "@googleforcreators/react": "*",

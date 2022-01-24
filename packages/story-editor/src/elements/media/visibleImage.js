@@ -36,6 +36,8 @@ function VisibleImage({ ...attrs }) {
 VisibleImage.propTypes = {
   src: PropTypes.string.isRequired,
   alt: PropTypes.string.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
 };
 
 export default VisibleImage;

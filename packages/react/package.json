@@ -7,22 +7,26 @@
     "name": "Google",
     "url": "https://creators.google/"
   },
+  "license": "Apache-2.0",
   "keywords": [
     "web stories"
   ],
+  "homepage": "https://github.com/googleforcreators/web-stories-wp/",
+  "repository": "git+https://github.com/GoogleForCreators/web-stories-wp.git",
+  "bugs": {
+    "url": "https://github.com/googleforcreators/web-stories-wp/issues"
+  },
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"
   },
+  "type": "module",
   "exports": {
     "default": "./src/index.js"
   },
   "main": "./src/index.js",
-  "type": "module",
   "dependencies": {
     "prop-types": "^15.8.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
     "resize-observer-polyfill": "^1.5.1",
     "shallow-equal": "^1.2.1",
     "use-context-selector": "^1.2.11",
@@ -31,5 +35,9 @@
   "devDependencies": {
     "@testing-library/react": "^12.1.2",
     "@testing-library/react-hooks": "^7.0.2"
+  },
+  "peerDependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   }
 }

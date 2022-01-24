@@ -33,7 +33,7 @@ const PLUGIN_FILE_CONTENT = `
 
  * Plugin Name: Web Stories
  * Description: Visual storytelling for WordPress.
- * Plugin URI: https://github.com/google/web-stories-wp
+ * Plugin URI: https://github.com/googleforcreators/web-stories-wp
  * Author: Google
  * Author URI: https://opensource.google.com/
  * Version: 1.0.0-alpha
@@ -44,7 +44,7 @@ const PLUGIN_FILE_CONTENT = `
  * License: Apache License 2.0
  * License URI: https://www.apache.org/licenses/LICENSE-2.0
  */
- 
+
  define( 'WEBSTORIES_VERSION', '1.0.0-alpha+1234567' );
 `;
 

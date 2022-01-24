@@ -25,7 +25,7 @@ import {
   BUTTON_SIZES,
   BUTTON_TYPES,
 } from '@googleforcreators/design-system';
-import { useUnits } from '@web-stories-wp/units';
+import { useUnits } from '@googleforcreators/units';
 
 /**
  * Internal dependencies

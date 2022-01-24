@@ -27,7 +27,7 @@ import {
   useCombinedRefs,
 } from '@googleforcreators/react';
 import classnames from 'classnames';
-import { useUnits } from '@web-stories-wp/units';
+import { useUnits } from '@googleforcreators/units';
 
 /**
  * Internal dependencies
@@ -146,6 +146,10 @@ function SingleSelectionMoveable({
    */
   const resetMoveable = useBatchingCallback(
     (target) => {
+      if (!moveable.current) {
+        return;
+      }
+
       frame.direction = [0, 0];
       frame.translate = [0, 0];
       frame.resize = [0, 0];
@@ -156,9 +160,7 @@ function SingleSelectionMoveable({
       target.style.transform = '';
       target.style.width = '';
       target.style.height = '';
-      if (moveable.current) {
-        moveable.current.updateRect();
-      }
+      moveable.current.updateRect();
     },
     [frame, pushTransform, selectedElement.id]
   );

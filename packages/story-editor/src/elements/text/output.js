@@ -27,7 +27,7 @@ import {
   dataToEditorX,
   dataToEditorY,
   dataToFontSizeY as dataToFontSize,
-} from '@web-stories-wp/units';
+} from '@googleforcreators/units';
 import classnames from 'classnames';
 
 /**

@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { useRef, useEffect, useState } from '@googleforcreators/react';
-import { useUnits } from '@web-stories-wp/units';
+import { useUnits } from '@googleforcreators/units';
 /**
  * Internal dependencies
  */

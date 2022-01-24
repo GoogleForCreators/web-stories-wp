@@ -33,7 +33,7 @@ function ShapeOutput({ element: { backgroundColor, isDefaultBackground } }) {
   const style = isDefaultBackground
     ? null
     : generatePatternStyles(backgroundColor);
-  // willChange added by #7380 https://github.com/google/web-stories-wp/pull/7380
+  // willChange added by #7380 https://github.com/googleforcreators/web-stories-wp/pull/7380
   // to prevent issues with the border radius on shapes not being respected when animated
   return <div className="fill" style={{ ...style, willChange: 'transform' }} />;
 }

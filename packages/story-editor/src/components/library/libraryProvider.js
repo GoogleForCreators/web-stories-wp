@@ -26,8 +26,8 @@ import {
   useCallback,
 } from '@googleforcreators/react';
 import { useFeatures } from 'flagged';
-import { getTimeTracker, trackEvent } from '@web-stories-wp/tracking';
-import { loadTextSets } from '@web-stories-wp/text-sets';
+import { getTimeTracker, trackEvent } from '@googleforcreators/tracking';
+import { loadTextSets } from '@googleforcreators/text-sets';
 import { uniqueEntriesByKey } from '@googleforcreators/design-system';
 
 /**
@@ -175,17 +175,30 @@ function LibraryProvider({ children }) {
     ]
   );
   useEffect(() => {
+    let mounted = true;
+
     async function getTextSets() {
       const trackTiming = getTimeTracker('load_text_sets');
       setAreTextSetsLoading(true);
-      setTextSets(await loadTextSets());
+      const newTextSets = await loadTextSets();
       trackTiming();
+
+      if (!mounted) {
+        return;
+      }
+
+      setTextSets(newTextSets);
       setAreTextSetsLoading(false);
     }
+
     // if text sets have not been loaded but are needed fetch dynamically imported text sets
     if (tab === TEXT.id && !Object.keys(textSets).length) {
       getTextSets();
     }
+
+    return () => {
+      mounted = false;
+    };
   }, [tab, textSets]);
 
   return <Context.Provider value={state}>{children}</Context.Provider>;

@@ -7,44 +7,50 @@
     "name": "Google",
     "url": "https://creators.google/"
   },
+  "license": "Apache-2.0",
   "keywords": [
     "web stories"
   ],
+  "homepage": "https://github.com/googleforcreators/web-stories-wp/",
+  "repository": "git+https://github.com/GoogleForCreators/web-stories-wp.git",
+  "bugs": {
+    "url": "https://github.com/googleforcreators/web-stories-wp/issues"
+  },
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"
   },
+  "type": "module",
   "exports": {
     "default": "./src/index.js"
   },
   "main": "./src/index.js",
-  "type": "module",
   "dependencies": {
     "@googleforcreators/animation": "*",
     "@googleforcreators/date": "*",
     "@googleforcreators/design-system": "*",
     "@googleforcreators/i18n": "*",
-    "@web-stories-wp/karma-fixture": "*",
     "@googleforcreators/media": "*",
     "@googleforcreators/migration": "*",
     "@googleforcreators/patterns": "*",
     "@googleforcreators/react": "*",
     "@googleforcreators/templates": "*",
-    "@web-stories-wp/tracking": "*",
-    "@web-stories-wp/units": "*",
+    "@googleforcreators/tracking": "*",
+    "@googleforcreators/units": "*",
     "flagged": "^2.0.1",
     "history": "^5.2.0",
     "prop-types": "^15.8.1",
-    "query-string": "^7.0.1",
+    "query-string": "^7.1.0",
     "styled-components": "^5.3.3"
   },
   "devDependencies": {
+    "@googleforcreators/karma-fixture": "*",
     "@storybook/addon-actions": "^6.3.6",
     "@storybook/addon-knobs": "^6.3.0",
     "@testing-library/react": "^12.1.2",
     "@testing-library/react-hooks": "^7.0.2",
     "@testing-library/user-event": "^13.5.0",
-    "jest": "^27.4.5",
+    "jest": "^27.4.7",
     "react": "^17.0.2",
     "stylis-plugin-rtl": "^1.0.0"
   }

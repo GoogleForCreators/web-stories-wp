@@ -29,7 +29,7 @@ import {
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { trackEvent } from '@googleforcreators/tracking';
 import {
   NumericInput,
   Text,
