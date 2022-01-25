@@ -43,27 +43,19 @@ function PageBackgroundAudioPanel() {
   } = useConfig();
   const enhancedPageBackgroundAudio = useFeature('enhancedPageBackgroundAudio');
 
-  const { backgroundAudio, tracks, updateCurrentPageProperties } = useStory(
+  const { backgroundAudio, updateCurrentPageProperties } = useStory(
     (state) => ({
       updateCurrentPageProperties: state.actions.updateCurrentPageProperties,
       backgroundAudio: state.state.currentPage?.backgroundAudio,
-      tracks: state.state.currentPage?.tracks,
     })
   );
 
   const updateBackgroundAudio = useCallback(
-    (audioResource) => {
+    (updatedBackgroundAudio) => {
       updateCurrentPageProperties({
-        properties: { backgroundAudio: audioResource },
-      });
-    },
-    [updateCurrentPageProperties]
-  );
-
-  const updateTracks = useCallback(
-    (audioTracks) => {
-      updateCurrentPageProperties({
-        properties: { tracks: audioTracks },
+        properties: {
+          backgroundAudio: updatedBackgroundAudio,
+        },
       });
     },
     [updateCurrentPageProperties]
@@ -89,9 +81,7 @@ function PageBackgroundAudioPanel() {
       </Row>
       <BackgroundAudioPanelContent
         backgroundAudio={backgroundAudio}
-        tracks={tracks}
         updateBackgroundAudio={updateBackgroundAudio}
-        updateTracks={updateTracks}
         supportsCaptions={enhancedPageBackgroundAudio}
       />
     </SimplePanel>

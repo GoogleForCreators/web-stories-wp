@@ -25,8 +25,9 @@ import { ResourcePropTypes } from '@googleforcreators/media';
  */
 import { BackgroundAudioPropType } from '../../types';
 
-function HiddenAudio({ backgroundAudio, tracks, id }) {
-  const { mimeType, src } = backgroundAudio;
+function HiddenAudio({ backgroundAudio, id }) {
+  const { resource, tracks } = backgroundAudio || {};
+  const { mimeType, src } = resource;
 
   const sourceProps = {
     type: mimeType,
@@ -61,9 +62,12 @@ function HiddenAudio({ backgroundAudio, tracks, id }) {
 }
 
 HiddenAudio.propTypes = {
-  backgroundAudio: BackgroundAudioPropType,
+  backgroundAudio: PropTypes.shape({
+    resource: BackgroundAudioPropType,
+    loop: PropTypes.bool,
+    tracks: PropTypes.arrayOf(ResourcePropTypes.trackResource),
+  }),
   id: PropTypes.string.isRequired,
-  tracks: PropTypes.arrayOf(ResourcePropTypes.trackResource).isRequired,
 };
 
 export default HiddenAudio;

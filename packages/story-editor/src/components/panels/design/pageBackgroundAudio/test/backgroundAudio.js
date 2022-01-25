@@ -35,7 +35,6 @@ function MediaUpload({ render }) {
 
 function arrange({
   backgroundAudio,
-  tracks,
   hasUploadMediaAction = true,
   enhancedPageBackgroundAudio = false,
 } = {}) {
@@ -59,7 +58,6 @@ function arrange({
     state: {
       currentPage: {
         backgroundAudio,
-        tracks,
       },
     },
     actions: { updateStory },
@@ -113,9 +111,11 @@ describe('BackgroundAudioPanel', () => {
   it('should render button to play and delete audio', () => {
     arrange({
       backgroundAudio: {
-        src: 'https://example.com/audio.mp3',
-        id: 123,
-        mimeType: 'audio/mpeg',
+        resource: {
+          src: 'https://example.com/audio.mp3',
+          id: 123,
+          mimeType: 'audio/mpeg',
+        },
       },
     });
     expect(
@@ -133,36 +133,40 @@ describe('BackgroundAudioPanel', () => {
   it('should render existing captions', () => {
     arrange({
       backgroundAudio: {
-        src: 'https://example.com/audio.mp3',
-        id: 123,
-        mimeType: 'audio/mpeg',
+        resource: {
+          src: 'https://example.com/audio.mp3',
+          id: 123,
+          mimeType: 'audio/mpeg',
+        },
+        tracks: [
+          {
+            track: 'https://example.com/track.vtt',
+            trackId: 123,
+            trackName: 'track.vtt',
+            id: 'rersd-fdfd-fdfd-fdfd',
+            srcLang: '',
+            label: '',
+            kind: 'captions',
+          },
+        ],
       },
       enhancedPageBackgroundAudio: true,
-      tracks: [
-        {
-          track: 'https://example.com/track.vtt',
-          trackId: 123,
-          trackName: 'track.vtt',
-          id: 'rersd-fdfd-fdfd-fdfd',
-          srcLang: '',
-          label: '',
-          kind: 'captions',
-        },
-      ],
     });
     const input = screen.getByRole('textbox', { name: 'Filename' });
-    expect(input).toHaveValue('test');
+    expect(input).toHaveValue('track.vtt');
   });
 
   it('should render upload button for captions', () => {
     arrange({
       backgroundAudio: {
-        src: 'https://example.com/audio.mp3',
-        id: 123,
-        mimeType: 'audio/mpeg',
+        resource: {
+          src: 'https://example.com/audio.mp3',
+          id: 123,
+          mimeType: 'audio/mpeg',
+        },
+        tracks: [],
       },
       enhancedPageBackgroundAudio: true,
-      tracks: [],
     });
     expect(
       screen.getByRole('button', { name: 'Upload audio captions' })
@@ -172,13 +176,15 @@ describe('BackgroundAudioPanel', () => {
   it('should not render upload button for captions without hasUploadMediaAction', () => {
     arrange({
       backgroundAudio: {
-        src: 'https://example.com/audio.mp3',
-        id: 123,
-        mimeType: 'audio/mpeg',
+        resource: {
+          src: 'https://example.com/audio.mp3',
+          id: 123,
+          mimeType: 'audio/mpeg',
+        },
+        tracks: [],
       },
       enhancedPageBackgroundAudio: true,
       hasUploadMediaAction: false,
-      tracks: [],
     });
     expect(
       screen.queryByRole('button', { name: 'Upload audio captions' })
@@ -188,25 +194,27 @@ describe('BackgroundAudioPanel', () => {
   it('should render existing captions without hasUploadMediaAction', () => {
     arrange({
       backgroundAudio: {
-        src: 'https://example.com/audio.mp3',
-        id: 123,
-        mimeType: 'audio/mpeg',
+        resource: {
+          src: 'https://example.com/audio.mp3',
+          id: 123,
+          mimeType: 'audio/mpeg',
+        },
+        tracks: [
+          {
+            track: 'https://example.com/track.vtt',
+            trackId: 123,
+            trackName: 'track.vtt',
+            id: 'rersd-fdfd-fdfd-fdfd',
+            srcLang: '',
+            label: '',
+            kind: 'captions',
+          },
+        ],
       },
       enhancedPageBackgroundAudio: true,
       hasUploadMediaAction: false,
-      tracks: [
-        {
-          track: 'https://example.com/track.vtt',
-          trackId: 123,
-          trackName: 'track.vtt',
-          id: 'rersd-fdfd-fdfd-fdfd',
-          srcLang: '',
-          label: '',
-          kind: 'captions',
-        },
-      ],
     });
     const input = screen.getByRole('textbox', { name: 'Filename' });
-    expect(input).toHaveValue('test');
+    expect(input).toHaveValue('track.vtt');
   });
 });

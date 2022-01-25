@@ -149,18 +149,20 @@ describe('getUsedAmpExtensions', () => {
   it('should include the amp-stroy-captions script if there is a background audio with tracks', () => {
     const pages = [
       {
-        backgroundAudio: { src: 'https://example.com/audio.mp3' },
-        tracks: [
-          {
-            track: 'https://example.com/track.vtt',
-            trackId: 123,
-            trackName: 'track.vtt',
-            id: 'rersd-fdfd-fdfd-fdfd',
-            srcLang: '',
-            label: '',
-            kind: 'captions',
-          },
-        ],
+        backgroundAudio: {
+          resource: { src: 'https://example.com/audio.mp3' },
+          tracks: [
+            {
+              track: 'https://example.com/track.vtt',
+              trackId: 123,
+              trackName: 'track.vtt',
+              id: 'rersd-fdfd-fdfd-fdfd',
+              srcLang: '',
+              label: '',
+              kind: 'captions',
+            },
+          ],
+        },
         elements: [],
       },
     ];

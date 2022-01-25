@@ -42,10 +42,14 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
     elements,
     backgroundColor,
     backgroundAudio,
-    tracks: backgroundAudioTracks = [],
     pageAttachment,
   } = page;
   const { ctaText, url, icon, theme, rel = [] } = pageAttachment || {};
+
+  const {
+    resource: backgroundAudioResource,
+    tracks: backgroundAudioTracks = [],
+  } = backgroundAudio || {};
 
   const [backgroundElement, ...regularElements] = elements;
 
@@ -88,15 +92,15 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
     .map(({ id: videoId }) => `el-${videoId}-captions`);
 
   const hasBackgroundAudioWithTracks =
-    backgroundAudio?.src && backgroundAudioTracks?.length > 0;
+    backgroundAudioResource?.src && backgroundAudioTracks?.length > 0;
 
   if (hasBackgroundAudioWithTracks) {
     videoCaptions.push(`el-${id}-captions`);
   }
 
   const backgroundAudioSrc =
-    !hasBackgroundAudioWithTracks && backgroundAudio?.src
-      ? backgroundAudio.src
+    !hasBackgroundAudioWithTracks && backgroundAudioResource?.src
+      ? backgroundAudioResource.src
       : undefined;
 
   return (
@@ -143,11 +147,7 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
         </amp-story-grid-layer>
       </StoryAnimation.Provider>
       {hasBackgroundAudioWithTracks && (
-        <HiddenAudio
-          backgroundAudio={backgroundAudio}
-          tracks={backgroundAudioTracks}
-          id={id}
-        />
+        <HiddenAudio backgroundAudio={backgroundAudio} id={id} />
       )}
       {videoCaptions.length > 0 && (
         <amp-story-grid-layer

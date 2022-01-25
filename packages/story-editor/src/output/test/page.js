@@ -1227,9 +1227,12 @@ describe('Page output', () => {
         id: '123',
         page: {
           backgroundAudio: {
-            src: 'https://example.com/audio.mp3',
-            id: 123,
-            mimeType: 'audio/mpeg',
+            resource: {
+              src: 'https://example.com/audio.mp3',
+              id: 123,
+              mimeType: 'audio/mpeg',
+            },
+            tracks: [],
           },
           id: '123',
           elements: [],
@@ -1248,21 +1251,23 @@ describe('Page output', () => {
         id: '123',
         page: {
           backgroundAudio: {
-            src: 'https://example.com/audio.mp3',
-            id: 123,
-            mimeType: 'audio/mpeg',
-          },
-          tracks: [
-            {
-              track: 'https://example.com/track.vtt',
-              trackId: 123,
-              trackName: 'track.vtt',
-              id: 'rersd-fdfd-fdfd-fdfd',
-              srcLang: '',
-              label: '',
-              kind: 'captions',
+            resource: {
+              src: 'https://example.com/audio.mp3',
+              id: 123,
+              mimeType: 'audio/mpeg',
             },
-          ],
+            tracks: [
+              {
+                track: 'https://example.com/track.vtt',
+                trackId: 123,
+                trackName: 'track.vtt',
+                id: 'rersd-fdfd-fdfd-fdfd',
+                srcLang: '',
+                label: '',
+                kind: 'captions',
+              },
+            ],
+          },
           id: '123',
           elements: [],
         },
@@ -1482,9 +1487,12 @@ describe('Page output', () => {
         page: {
           id: '123',
           backgroundAudio: {
-            src: 'https://example.com/audio.mp3',
-            id: 123,
-            mimeType: 'audio/mpeg',
+            resource: {
+              src: 'https://example.com/audio.mp3',
+              id: 123,
+              mimeType: 'audio/mpeg',
+            },
+            tracks: [],
           },
           animations: [],
           elements: [],
@@ -1503,21 +1511,23 @@ describe('Page output', () => {
         page: {
           id: '123',
           backgroundAudio: {
-            src: 'https://example.com/audio.mp3',
-            id: 123,
-            mimeType: 'audio/mpeg',
-          },
-          tracks: [
-            {
-              track: 'https://example.com/track.vtt',
-              trackId: 123,
-              trackName: 'track.vtt',
-              id: 'rersd-fdfd-fdfd-fdfd',
-              srcLang: '',
-              label: '',
-              kind: 'captions',
+            resource: {
+              src: 'https://example.com/audio.mp3',
+              id: 123,
+              mimeType: 'audio/mpeg',
             },
-          ],
+            tracks: [
+              {
+                track: 'https://example.com/track.vtt',
+                trackId: 123,
+                trackName: 'track.vtt',
+                id: 'rersd-fdfd-fdfd-fdfd',
+                srcLang: '',
+                label: '',
+                kind: 'captions',
+              },
+            ],
+          },
           animations: [],
           elements: [],
         },

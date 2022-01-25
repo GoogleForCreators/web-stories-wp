@@ -56,9 +56,7 @@ const UploadButton = styled(StyledButton)`
 
 function BackgroundAudioPanelContent({
   backgroundAudio,
-  tracks,
   updateBackgroundAudio,
-  updateTracks,
   supportsCaptions = false,
 }) {
   const {
@@ -68,6 +66,8 @@ function BackgroundAudioPanelContent({
     MediaUpload,
   } = useConfig();
 
+  const { resource, tracks } = backgroundAudio || {};
+
   const onSelectErrorMessage = sprintf(
     /* translators: %s: list of allowed file types. */
     __('Please choose only %s to insert into page.', 'web-stories'),
@@ -76,16 +76,27 @@ function BackgroundAudioPanelContent({
 
   const onSelect = useCallback(
     (media) => {
-      updateBackgroundAudio({
-        src: media.src,
-        id: media.id,
-        mimeType: media.mimeType,
-      });
+      const updatedBackgroundAudio = {
+        resource: {
+          src: media.src,
+          id: media.id,
+          mimeType: media.mimeType,
+        },
+      };
+
       if (supportsCaptions) {
-        updateTracks([]);
+        updatedBackgroundAudio.tracks = [];
       }
+      updateBackgroundAudio(updatedBackgroundAudio);
     },
-    [supportsCaptions, updateTracks, updateBackgroundAudio]
+    [supportsCaptions, updateBackgroundAudio]
+  );
+
+  const updateTracks = useCallback(
+    (newTracks) => {
+      updateBackgroundAudio({ ...backgroundAudio, tracks: newTracks });
+    },
+    [backgroundAudio, updateBackgroundAudio]
   );
 
   const handleRemoveTrack = useCallback(
@@ -151,7 +162,7 @@ function BackgroundAudioPanelContent({
 
   return (
     <>
-      {!backgroundAudio?.src && hasUploadMediaAction && (
+      {!resource?.src && hasUploadMediaAction && (
         <Row expand>
           <MediaUpload
             onSelect={onSelect}
@@ -163,15 +174,15 @@ function BackgroundAudioPanelContent({
           />
         </Row>
       )}
-      {backgroundAudio?.src && (
+      {resource?.src && (
         <>
           <Row>
             <AudioPlayer
-              title={backgroundAudio?.src.substring(
-                backgroundAudio?.src.lastIndexOf('/') + 1
+              title={resource?.src.substring(
+                resource?.src.lastIndexOf('/') + 1
               )}
-              src={backgroundAudio?.src}
-              mimeType={backgroundAudio?.mimeType}
+              src={resource?.src}
+              mimeType={resource?.mimeType}
             />
             <Tooltip hasTail title={__('Remove file', 'web-stories')}>
               <StyledButton
@@ -201,10 +212,12 @@ function BackgroundAudioPanelContent({
 }
 
 BackgroundAudioPanelContent.propTypes = {
-  backgroundAudio: BackgroundAudioPropType,
-  tracks: PropTypes.arrayOf(ResourcePropTypes.trackResource),
+  backgroundAudio: PropTypes.shape({
+    resource: BackgroundAudioPropType,
+    loop: PropTypes.bool,
+    tracks: PropTypes.arrayOf(ResourcePropTypes.trackResource),
+  }),
   updateBackgroundAudio: PropTypes.func.isRequired,
-  updateTracks: PropTypes.func,
   supportsCaptions: PropTypes.bool,
 };
 
