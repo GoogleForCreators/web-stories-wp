@@ -90,7 +90,7 @@ jobs:
       - name: Upload snapshot files artifact
         uses: actions/upload-artifact@v2
         with:
-          name: karma_snapshots
+          name: karma-snapshots-${{ matrix.shard }}
           path: .test_artifacts/karma_snapshots
 
   percy:
@@ -107,14 +107,16 @@ jobs:
       - name: Install dependencies
         run: npm install @percy/cli
 
-      - name: Download snapshot files artifact
+      - name: Download snapshot files artifacts
         uses: actions/download-artifact@v2
         with:
-          name: karma_snapshots
           path: .test_artifacts
         continue-on-error: true
 
       - name: Upload Percy snapshots
-        run: npx percy snapshot --config=percy.config.yml .test_artifacts/karma_snapshots
+        run: |
+          ls -lah
+          ls -lah .test_artifacts
+          npx percy snapshot --config=percy.config.yml ./.test_artifacts
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
