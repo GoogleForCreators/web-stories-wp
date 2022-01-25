@@ -21,7 +21,6 @@ import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { addDecorator, addParameters } from '@storybook/react';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
-import { useDirection } from 'storybook-rtl-addon';
 import {
   theme as designSystemTheme,
   lightMode,
@@ -81,9 +80,7 @@ addParameters({
 
 addDecorator((story, context) => {
   const { id } = context;
-
-  const direction = useDirection(context);
-  const isRTL = 'rtl' === direction;
+  const isRTL = false;
 
   const isDesignSystemStorybook = id.startsWith('designsystem');
   const isDashboardStorybook = id.startsWith('dashboard');

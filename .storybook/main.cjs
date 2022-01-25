@@ -28,7 +28,6 @@ module.exports = {
     '@storybook/addon-a11y/register',
     '@storybook/addon-essentials',
     '@storybook/addon-storysource/register',
-    'storybook-rtl-addon',
   ],
   reactOptions: {
     fastRefresh: true,
