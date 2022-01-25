@@ -12,6 +12,7 @@ on:
       - '**/package.json'
       - 'package-lock.json'
       - '__static__/**'
+      - '.github/workflows/tests-karma-editor.yml'
     branches:
       - main
       - release/*
@@ -26,6 +27,7 @@ on:
       - '**/package.json'
       - 'package-lock.json'
       - '__static__/**'
+      - '.github/workflows/tests-karma-editor.yml'
     types:
       - opened
       - reopened
