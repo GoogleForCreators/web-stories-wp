@@ -263,6 +263,10 @@ describe('Quick Actions integration', () => {
           selectedElement: originalSelectedElement,
         } = story);
 
+        if (!originalSelectedElement) {
+          throw new Error('story not ready');
+        }
+
         expect(originalSelectedElement.overlay.type).toBe('linear');
         expect(originalAnimations.length).toEqual(1);
       });
@@ -445,10 +449,14 @@ describe('Quick Actions integration', () => {
             selectedElement: originalSelectedElement,
           } = story);
 
+          if (!originalSelectedElement) {
+            throw new Error('story not ready');
+          }
+
           expect(originalAnimations.length).toEqual(1);
           expect(originalSelectedElement.opacity).toEqual(99);
-        },
-        { timeout: 4000 }
+        }
+        // { timeout: 4000 }
       );
 
       // reset the element
@@ -617,6 +625,10 @@ describe('Quick Actions integration', () => {
           animations: originalAnimations,
           selectedElement: originalSelectedElement,
         } = story);
+
+        if (!originalSelectedElement) {
+          throw new Error('story not ready');
+        }
 
         expect(originalSelectedElement.overlay.type).toBe('linear');
         expect(originalAnimations.length).toEqual(1);
@@ -801,9 +813,13 @@ describe('Quick Actions integration', () => {
           );
           ({ animations: originalAnimations } = story);
 
+          if (originalAnimations.length === 0) {
+            throw new Error('story not ready');
+          }
+
           expect(originalAnimations.length).toEqual(1);
-        },
-        { timeout: 4000 }
+        }
+        // { timeout: 4000 }
       );
 
       // reset the element
@@ -1018,6 +1034,10 @@ describe('Quick Actions integration', () => {
           selectedElement: originalSelectedElement,
         } = story);
 
+        if (!originalSelectedElement) {
+          throw new Error('story not ready');
+        }
+
         expect(originalSelectedElement.overlay.type).toBe('linear');
         expect(originalAnimations.length).toEqual(1);
       });
@@ -1181,6 +1201,10 @@ describe('Quick Actions integration', () => {
           animations: originalAnimations,
           selectedElement: originalSelectedElement,
         } = story);
+
+        if (!originalSelectedElement) {
+          throw new Error('story not ready');
+        }
 
         expect(originalSelectedElement.opacity).toBe(40);
         expect(originalAnimations.length).toEqual(1);

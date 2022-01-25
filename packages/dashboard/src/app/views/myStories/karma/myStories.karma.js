@@ -127,7 +127,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
 
       await fixture.events.click(exploreTemplatesMenuItem);
       const templatesGridEl = await waitFor(() =>
-        fixture.screen.queryByText('Viewing all templates')
+        fixture.screen.findByText('Viewing all templates')
       );
 
       expect(templatesGridEl).toBeTruthy();
@@ -288,7 +288,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
       await fixture.events.sleep(500);
 
       const storyElements = await waitFor(() =>
-        fixture.screen.getAllByTestId(/^story-context-menu-/)
+        fixture.screen.findAllByTestId(/^story-context-menu-/)
       );
 
       expect(storyElements.length).toEqual(
