@@ -28,172 +28,31 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import StoryPropTypes from '../types';
-import getTransformFlip from '../elements/shared/getTransformFlip';
-import { getBorderColor } from '../utils/elementBorder';
+import BorderedMaskedElement from './borderedMaskedElement';
 import { DEFAULT_MASK } from './constants';
-import {
-  getElementMask,
-  checkMultiBorderSupport,
-  getBorderedMaskProperties,
-} from '.';
-
-const FILL_STYLE = {
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-};
-
-const SVG_STYLE = {
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  height: '100%',
-  width: '100%',
-  pointerEvents: 'initial',
-};
 
 export default function WithMask({
   element,
   fill,
-  style,
-  children,
-  box,
-  skipDefaultMask,
+  skipDefaultMask = false,
   ...rest
 }) {
-  const mask = getElementMask(element);
-  const { flip, isBackground, border } = element;
-
-  const flipTransform = getTransformFlip(flip) || '';
-  const actualTransform = `${style.transform || ''} ${flipTransform}`.trim();
-
-  const styleWithTransform = {
-    ...style,
-    transform: actualTransform,
-  };
-
-  if (
-    !mask?.type ||
-    (skipDefaultMask && mask.type === DEFAULT_MASK.type) ||
-    isBackground
-  ) {
-    return (
-      <div
-        style={{
-          ...(fill ? FILL_STYLE : {}),
-          ...styleWithTransform,
-        }}
-        {...rest}
-      >
-        {children}
-      </div>
-    );
-  }
-
-  const borderWidth = border?.left;
-  const showSingleBorder = Boolean(
-    !checkMultiBorderSupport(element) && borderWidth
-  );
-  const borderColor = border?.color
-    ? getBorderColor({ color: border.color })
-    : 'none';
-
-  // @todo: Chrome cannot do inline clip-path using data: URLs.
-  // See https://bugs.chromium.org/p/chromium/issues/detail?id=1041024.
-
-  const maskId = `mask-${mask.type}-${element.id}-output`;
-
-  if (showSingleBorder) {
-    const { viewBox, groupTransform, borderWrapperStyle } =
-      getBorderedMaskProperties(
-        mask,
-        borderWidth,
-        element.width,
-        element.height
-      );
-
-    const borderStyle = {
-      ...style,
-      ...borderWrapperStyle,
-    };
-
-    return (
-      <div style={styleWithTransform}>
-        <div style={borderStyle}>
-          <svg
-            viewBox={viewBox}
-            width="100%"
-            height="100%"
-            preserveAspectRatio="none"
-            style={SVG_STYLE}
-          >
-            <g transform={groupTransform}>
-              <path
-                d={mask?.path}
-                stroke={borderColor}
-                strokeWidth={borderWidth}
-                vectorEffect="non-scaling-stroke"
-                fill="transparent"
-              />
-            </g>
-          </svg>
-        </div>
-        <div
-          style={{
-            ...(fill ? FILL_STYLE : {}),
-            ...style,
-            clipPath: `url(#${maskId})`,
-            // stylelint-disable-next-line
-            WebkitClipPath: `url(#${maskId})`,
-            opacity: 1,
-          }}
-          {...rest}
-        >
-          <svg width={0} height={0}>
-            <defs>
-              <clipPath
-                id={maskId}
-                transform={`scale(1 ${mask.ratio})`}
-                clipPathUnits="objectBoundingBox"
-              >
-                <path d={mask.path} />
-              </clipPath>
-            </defs>
-          </svg>
-          {children}
-        </div>
-      </div>
-    );
-  }
+  const getBorderWidth = () => element.border?.left;
+  const elementWidth = element.width;
+  const elementHeight = element.height;
+  const forceRectangularMask =
+    skipDefaultMask && element.mask?.type === DEFAULT_MASK.type;
 
   return (
-    <div
-      style={{
-        ...(fill ? FILL_STYLE : {}),
-        ...styleWithTransform,
-        clipPath: `url(#${maskId})`,
-        // stylelint-disable-next-line
-        WebkitClipPath: `url(#${maskId})`,
-      }}
+    <BorderedMaskedElement
+      element={element}
+      hasFill={fill}
+      getBorderWidth={getBorderWidth}
+      elementWidth={elementWidth}
+      elementHeight={elementHeight}
+      forceRectangularMask={forceRectangularMask}
       {...rest}
-    >
-      <svg width={0} height={0}>
-        <defs>
-          <clipPath
-            id={maskId}
-            transform={`scale(1 ${mask.ratio})`}
-            clipPathUnits="objectBoundingBox"
-          >
-            <path d={mask.path} />
-          </clipPath>
-        </defs>
-      </svg>
-      {children}
-    </div>
+    />
   );
 }
 
@@ -204,8 +63,4 @@ WithMask.propTypes = {
   children: PropTypes.node.isRequired,
   box: StoryPropTypes.box.isRequired,
   skipDefaultMask: PropTypes.bool,
-};
-
-WithMask.defaultProps = {
-  skipDefaultMask: false,
 };
