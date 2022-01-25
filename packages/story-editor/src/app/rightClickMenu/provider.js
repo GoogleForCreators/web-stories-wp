@@ -61,7 +61,7 @@ import rightClickMenuReducer, {
   ACTION_TYPES,
   DEFAULT_RIGHT_CLICK_MENU_STATE,
 } from './reducer';
-import { getDefaultPropertiesForType, getElementStyles } from './utils';
+import { getElementStyles } from './utils';
 import useLayerSelect from './useLayerSelect';
 
 const UNDO_HELP_TEXT = sprintf(
@@ -69,8 +69,6 @@ const UNDO_HELP_TEXT = sprintf(
   __('Press %s to undo the last change', 'web-stories'),
   prettifyShortcut('mod+z')
 );
-
-const CLEARABLE_ELEMENT_TYPES = ['image', 'video', 'gif', 'shape'];
 
 /**
  * Determines the items displayed in the right click menu
@@ -575,86 +573,6 @@ function RightClickMenuProvider({ children }) {
   ]);
 
   /**
-   * Reset styles for one element to their defaults. Return the styles that were reset
-   * or null if there are not styles to reset.
-   *
-   * @param {Object} element The element to reset.
-   * @return {Object|null} The new styles or null.
-   */
-  const clearElementStyles = useCallback(
-    (element) => {
-      const resetProperties = getDefaultPropertiesForType(element.type);
-
-      if (resetProperties) {
-        updateElementsById({
-          elementIds: [element.id],
-          properties: (currentProperties) =>
-            updateProperties(
-              currentProperties,
-              resetProperties,
-              /* commitValues */ true
-            ),
-        });
-      }
-
-      return resetProperties;
-    },
-    [updateElementsById]
-  );
-
-  /**
-   * Revert element styles to their defaults. Show a snackbar with a button
-   * that can 'undo' the change.
-   *
-   * Each element type has a different set of defaults.
-   */
-  const handleClearElementStyles = useCallback(() => {
-    if (!selectedElements.length) {
-      return;
-    }
-
-    const stylesReset = selectedElements
-      .map(
-        (element) =>
-          // only clear element styles for certain element types
-          CLEARABLE_ELEMENT_TYPES.includes(element.type) &&
-          clearElementStyles(element)
-      )
-      .some((styles) => Boolean(styles));
-
-    // only show snackbar if any elements had styles reset
-    if (stylesReset) {
-      showSnackbar({
-        actionLabel: __('Undo', 'web-stories'),
-        dismissible: false,
-        message: __('Cleared style.', 'web-stories'),
-        // don't pass a stale reference for undo
-        // need history updates to run so `undo` works correctly.
-        onAction: () => {
-          undoRef.current();
-
-          trackEvent('context_menu_action', {
-            name: 'undo_clear_styles',
-            elements: selectedElements.map((element) => element.type),
-            hasBackgroundElement: selectedElements.some(
-              (element) => element.isBackground
-            ),
-          });
-        },
-        actionHelpText: UNDO_HELP_TEXT,
-      });
-
-      trackEvent('context_menu_action', {
-        name: 'clear_styles',
-        elements: selectedElements.map((element) => element.type),
-        hasBackgroundElement: selectedElements.some(
-          (element) => element.isBackground
-        ),
-      });
-    }
-  }, [clearElementStyles, selectedElements, showSnackbar]);
-
-  /**
    * Set currently selected element as the page's background.
    */
   const handleSetPageBackground = useCallback(() => {
@@ -872,6 +790,8 @@ function RightClickMenuProvider({ children }) {
       ? RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND_VIDEO
       : RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND_IMAGE;
 
+    const showTrimModeAction = isVideo && hasTrimMode;
+
     const items = [
       {
         label: detachLabel,
@@ -883,25 +803,20 @@ function RightClickMenuProvider({ children }) {
         label: scaleLabel,
         onClick: handleOpenScaleAndCrop,
         disabled: disableBackgroundMediaActions,
+        separator: showTrimModeAction ? undefined : 'bottom',
         ...menuItemProps,
       },
-      ...(isVideo && hasTrimMode
+      ...(showTrimModeAction
         ? [
             {
               label: RIGHT_CLICK_MENU_LABELS.TRIM_VIDEO,
               onClick: toggleTrimMode,
               disabled: !canTranscodeResource(selectedElement?.resource),
+              separator: showTrimModeAction ? 'bottom' : undefined,
               ...menuItemProps,
             },
           ]
         : []),
-      {
-        label: RIGHT_CLICK_MENU_LABELS.CLEAR_STYLES(selectedElements.length),
-        onClick: handleClearElementStyles,
-        disabled: disableBackgroundMediaActions,
-        separator: 'bottom',
-        ...menuItemProps,
-      },
       ...pageManipulationItems,
     ];
     if (layerSelectItem) {
@@ -910,7 +825,6 @@ function RightClickMenuProvider({ children }) {
     return items;
   }, [
     canTranscodeResource,
-    handleClearElementStyles,
     handleOpenScaleAndCrop,
     handleRemoveMediaFromBackground,
     hasTrimMode,
@@ -918,7 +832,6 @@ function RightClickMenuProvider({ children }) {
     menuItemProps,
     pageManipulationItems,
     selectedElement,
-    selectedElements.length,
     toggleTrimMode,
   ]);
 
@@ -987,9 +900,6 @@ function RightClickMenuProvider({ children }) {
     const pasteLabel = isVideo
       ? RIGHT_CLICK_MENU_LABELS.PASTE_VIDEO_STYLES
       : RIGHT_CLICK_MENU_LABELS.PASTE_IMAGE_STYLES;
-    const clearLabel = isVideo
-      ? RIGHT_CLICK_MENU_LABELS.CLEAR_VIDEO_STYLES
-      : RIGHT_CLICK_MENU_LABELS.CLEAR_IMAGE_STYLES;
 
     const items = [
       {
@@ -1036,11 +946,6 @@ function RightClickMenuProvider({ children }) {
         disabled: copiedElement.type !== selectedElement?.type,
         ...menuItemProps,
       },
-      {
-        label: clearLabel,
-        onClick: handleClearElementStyles,
-        ...menuItemProps,
-      },
     ];
     if (layerSelectItem) {
       return [layerSelectItem, ...items];
@@ -1049,7 +954,6 @@ function RightClickMenuProvider({ children }) {
   }, [
     canTranscodeResource,
     copiedElement,
-    handleClearElementStyles,
     handleCopyStyles,
     handleDuplicateElements,
     handleOpenScaleAndCrop,
@@ -1090,11 +994,6 @@ function RightClickMenuProvider({ children }) {
         ...menuItemProps,
       },
       {
-        label: RIGHT_CLICK_MENU_LABELS.CLEAR_SHAPE_STYLES,
-        onClick: handleClearElementStyles,
-        ...menuItemProps,
-      },
-      {
         label: RIGHT_CLICK_MENU_LABELS.ADD_TO_COLOR_PRESETS,
         onClick: handleAddColorPreset,
         ...menuItemProps,
@@ -1107,7 +1006,6 @@ function RightClickMenuProvider({ children }) {
   }, [
     copiedElement?.type,
     handleAddColorPreset,
-    handleClearElementStyles,
     handleCopyStyles,
     handleDuplicateElements,
     handlePasteStyles,
@@ -1151,18 +1049,8 @@ function RightClickMenuProvider({ children }) {
         onClick: handleDuplicateElements,
         ...menuItemProps,
       },
-      {
-        label: RIGHT_CLICK_MENU_LABELS.CLEAR_STYLES(selectedElements.length),
-        onClick: handleClearElementStyles,
-        ...menuItemProps,
-      },
     ],
-    [
-      handleClearElementStyles,
-      handleDuplicateElements,
-      menuItemProps,
-      selectedElements.length,
-    ]
+    [handleDuplicateElements, menuItemProps, selectedElements.length]
   );
 
   const menuItems = useMemo(() => {

@@ -96,7 +96,8 @@ function CanvasProvider({ children }) {
   } = useEditingElement();
 
   const {
-    currentPage,
+    elements,
+    backgroundElementId,
     selectedElementIds,
     toggleElementInSelection,
     setSelectedElementsById,
@@ -105,8 +106,10 @@ function CanvasProvider({ children }) {
       state: { currentPage, selectedElementIds },
       actions: { toggleElementInSelection, setSelectedElementsById },
     }) => {
+      const elements = currentPage?.elements || [];
       return {
-        currentPage,
+        elements,
+        backgroundElementId: elements[0]?.id,
         selectedElementIds,
         toggleElementInSelection,
         setSelectedElementsById,
@@ -133,7 +136,7 @@ function CanvasProvider({ children }) {
         setSelectedElementsById({ elementIds: [elId] });
       }
       evt.currentTarget.focus({ preventScroll: true });
-      if (currentPage?.elements[0].id !== elId) {
+      if (backgroundElementId !== elId) {
         evt.stopPropagation();
       }
 
@@ -151,7 +154,7 @@ function CanvasProvider({ children }) {
     },
     [
       editingElement,
-      currentPage?.elements,
+      backgroundElementId,
       clearEditing,
       toggleElementInSelection,
       setSelectedElementsById,
@@ -161,7 +164,7 @@ function CanvasProvider({ children }) {
   const selectIntersection = useCallback(
     ({ x: lx, y: ly, width: lw, height: lh }) => {
       const lassoP = createPolygon(0, lx, ly, lw, lh);
-      const newSelectedElementIds = currentPage.elements
+      const newSelectedElementIds = elements
         .filter(({ isBackground }) => !isBackground)
         .map(({ id, rotationAngle, x, y, width, height }) => {
           const elementP = createPolygon(rotationAngle, x, y, width, height);
@@ -170,7 +173,7 @@ function CanvasProvider({ children }) {
         .filter((id) => id);
       setSelectedElementsById({ elementIds: newSelectedElementIds });
     },
-    [currentPage, setSelectedElementsById]
+    [elements, setSelectedElementsById]
   );
 
   // Reset editing mode when selection changes.
