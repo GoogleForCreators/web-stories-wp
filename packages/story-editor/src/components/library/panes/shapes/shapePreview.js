@@ -138,6 +138,8 @@ function ShapePreview({ mask, isPreview, index }) {
       mask: {
         type: mask.type,
       },
+      // Rectangles have unlocked aspect ratio by default.
+      lockAspectRatio: 'rectangle' !== mask.type,
     }),
     [mask.ratio, mask.type]
   );
