@@ -83,9 +83,6 @@ function BorderedMaskedElement({
   };
 
   const borderWidth = getBorderWidth();
-  const showSingleBorder = Boolean(
-    !canSupportMultiBorder(element) && borderWidth
-  );
   const borderColor = border?.color
     ? getBorderColor({ color: border.color })
     : 'none';
@@ -102,6 +99,11 @@ function BorderedMaskedElement({
       </div>
     );
   }
+
+  const showSingleBorder =
+    !canSupportMultiBorder(element) &&
+    borderWidth > 0 &&
+    borderColor !== 'none';
 
   // @todo: Chrome cannot do inline clip-path using data: URLs.
   // See https://bugs.chromium.org/p/chromium/issues/detail?id=1041024.
