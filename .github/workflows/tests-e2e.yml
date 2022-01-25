@@ -176,11 +176,19 @@ jobs:
           COMPOSE_INTERACTIVE_NO_CLI: true
           WP_VERSION: ${{ matrix.wp }}
 
+      - name: Get Chromium executable path
+        id: chromium_path
+        run: |
+          CHROMIUM=$(node -p "const puppeteer = require('puppeteer'); puppeteer.executablePath();")
+          echo "::set-output name=chromium_path::${CHROMIUM}"
+        if: ( matrix.snapshots ) && ( github.event.pull_request.draft == false )
+
       - name: Run E2E tests with percy
         run: npm run test:e2e:percy
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_E2E }}
           WP_VERSION: ${{ matrix.wp }}
+          PERCY_BROWSER_EXECUTABLE: ${{ steps.chromium_path.outputs.chromium_path }}
           PERCY_PARALLEL_NONCE: ${{ needs.nonce.outputs.result }}
         if: ( matrix.snapshots ) && ( github.event.pull_request.draft == false )
 
