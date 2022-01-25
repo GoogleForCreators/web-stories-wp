@@ -19,7 +19,8 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
-import { useMemo } from '@googleforcreators/react';
+import { useMemo, forwardRef } from '@googleforcreators/react';
+
 /**
  * Internal dependencies
  */
@@ -61,10 +62,15 @@ const StyledButton = styled(BaseButton)`
  * @param {string} props.id id attribute for the element
  * @param {Function} props.onBlur Blur event handler.
  * @param {Function} props.onClick Click event handler.
+ * @param {boolean} props.dismissOnClick If to call onDismiss when clicking.
  * @param {Function} props.onFocus Focus event handler.
+ * @param {Object} ref Ref object.
  * @return {Node} The react node
  */
-function Button({ id, onBlur, onClick, onFocus, ...props }) {
+function ButtonWithRef(
+  { id, onBlur, onClick, onFocus, dismissOnClick = true, ...props },
+  ref
+) {
   const { focusedId, isIconMenu, onDismiss, onMenuItemBlur, onMenuItemFocus } =
     useContextMenu(({ state, actions }) => ({
       focusedId: state.focusedId,
@@ -83,7 +89,7 @@ function Button({ id, onBlur, onClick, onFocus, ...props }) {
 
   const handleClick = (evt) => {
     onClick(evt);
-    onDismiss(evt);
+    dismissOnClick && onDismiss(evt);
   };
 
   const handleFocus = (evt) => {
@@ -93,6 +99,7 @@ function Button({ id, onBlur, onClick, onFocus, ...props }) {
 
   return (
     <StyledButton
+      ref={ref}
       id={elementId}
       tabIndex={focusedId === elementId ? 0 : -1}
       role="menuitem"
@@ -105,11 +112,15 @@ function Button({ id, onBlur, onClick, onFocus, ...props }) {
   );
 }
 
+const Button = forwardRef(ButtonWithRef);
 Button.propTypes = {
   id: PropTypes.string,
   onBlur: PropTypes.func,
   onClick: PropTypes.func.isRequired,
   onFocus: PropTypes.func,
+  dismissOnClick: PropTypes.bool,
 };
+
+ButtonWithRef.propTypes = Button.propTypes;
 
 export default Button;

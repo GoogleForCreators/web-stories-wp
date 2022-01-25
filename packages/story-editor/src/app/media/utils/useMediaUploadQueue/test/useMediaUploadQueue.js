@@ -421,4 +421,63 @@ describe('useMediaUploadQueue', () => {
     await waitFor(() => expect(result.current.state.progress).toHaveLength(0));
     await waitFor(() => expect(result.current.state.uploaded).toHaveLength(5));
   });
+
+  it('transcodes files sequentially with image first', async () => {
+    const { result, waitFor, waitForNextUpdate } = renderHook(() =>
+      useMediaUploadQueue()
+    );
+
+    act(() =>
+      result.current.actions.addItem({
+        file: imageFile,
+        resource: imageResource,
+      })
+    );
+    act(() =>
+      result.current.actions.addItem({
+        file: gifFile,
+        resource: gifResource,
+      })
+    );
+    act(() =>
+      result.current.actions.addItem({
+        file: videoFile,
+        resource: { ...videoResource, id: 444 },
+      })
+    );
+    act(() =>
+      result.current.actions.addItem({
+        file: videoFile,
+        resource: { ...videoResource, id: 555 },
+      })
+    );
+    act(() =>
+      result.current.actions.addItem({
+        file: videoFile,
+        resource: { ...videoResource, id: 666 },
+      })
+    );
+
+    await waitForNextUpdate();
+
+    expect(
+      result.current.state.progress.filter(
+        (item) => item.state === ITEM_STATUS.TRANSCODING
+      )
+    ).toHaveLength(1);
+
+    await waitForNextUpdate();
+
+    expect(
+      result.current.state.progress.filter(
+        (item) => item.state === ITEM_STATUS.TRANSCODING
+      )
+    ).toHaveLength(1);
+
+    await waitForNextUpdate();
+
+    await waitFor(() => expect(result.current.state.pending).toHaveLength(0));
+    await waitFor(() => expect(result.current.state.progress).toHaveLength(0));
+    await waitFor(() => expect(result.current.state.uploaded).toHaveLength(5));
+  });
 });

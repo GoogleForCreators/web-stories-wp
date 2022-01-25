@@ -482,14 +482,15 @@ function useMediaUploadQueue() {
           }
 
           if (isTranscodingEnabled) {
-            currentTranscodingItem.current = id;
-
             if (isGifThatNeedsTranscoding) {
+              currentTranscodingItem.current = id;
               convertGifItem(item);
               return;
             }
 
             if (canTranscodeFile(file)) {
+              currentTranscodingItem.current = id;
+
               if (trimData) {
                 trimVideoItem(item);
                 return;

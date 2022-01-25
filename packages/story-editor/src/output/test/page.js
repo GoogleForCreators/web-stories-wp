@@ -1194,7 +1194,7 @@ describe('Page output', () => {
       );
     });
 
-    it('should not output border if the element is not rectangular', () => {
+    it('should not output border radius if the element is not rectangular', () => {
       const props = {
         id: '123',
         backgroundColor: { color: { r: 255, g: 255, b: 255 } },
