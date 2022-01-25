@@ -122,7 +122,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     if: always()
-    needs: [e2e, nonce]
+    needs: [karma, nonce]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
