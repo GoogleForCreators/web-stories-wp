@@ -1227,9 +1227,12 @@ describe('Page output', () => {
         id: '123',
         page: {
           backgroundAudio: {
-            src: 'https://example.com/audio.mp3',
-            id: 123,
-            mimeType: 'audio/mpeg',
+            resource: {
+              src: 'https://example.com/audio.mp3',
+              id: 123,
+              mimeType: 'audio/mpeg',
+            },
+            tracks: [],
           },
           id: '123',
           elements: [],
@@ -1240,6 +1243,53 @@ describe('Page output', () => {
 
       const content = renderToStaticMarkup(<PageOutput {...props} />);
       expect(content).toContain(
+        'background-audio="https://example.com/audio.mp3"'
+      );
+    });
+    it('should add background audio as amp-video', async () => {
+      const props = {
+        id: '123',
+        page: {
+          backgroundAudio: {
+            resource: {
+              src: 'https://example.com/audio.mp3',
+              id: 123,
+              mimeType: 'audio/mpeg',
+            },
+            tracks: [
+              {
+                track: 'https://example.com/track.vtt',
+                trackId: 123,
+                trackName: 'track.vtt',
+                id: 'rersd-fdfd-fdfd-fdfd',
+                srcLang: '',
+                label: '',
+                kind: 'captions',
+              },
+            ],
+          },
+          id: '123',
+          elements: [],
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const { container } = render(<PageOutput {...props} />);
+
+      const captions = container.querySelector('amp-story-captions');
+      await expect(captions).toBeInTheDocument();
+      expect(captions).toMatchSnapshot();
+      expect(captions).toHaveAttribute('id', 'el-123-captions');
+
+      const video = container.querySelector('amp-video');
+      await expect(video).toBeInTheDocument();
+      expect(video).toMatchSnapshot();
+      expect(video).toHaveAttribute('captions-id', 'el-123-captions');
+
+      const page = container.querySelector('amp-story-page');
+      await expect(page).toBeInTheDocument();
+      expect(page).not.toContain(
         'background-audio="https://example.com/audio.mp3"'
       );
     });
@@ -1437,9 +1487,46 @@ describe('Page output', () => {
         page: {
           id: '123',
           backgroundAudio: {
-            src: 'https://example.com/audio.mp3',
-            id: 123,
-            mimeType: 'audio/mpeg',
+            resource: {
+              src: 'https://example.com/audio.mp3',
+              id: 123,
+              mimeType: 'audio/mpeg',
+            },
+            tracks: [],
+          },
+          animations: [],
+          elements: [],
+        },
+        autoAdvance: true,
+        defaultPageDuration: 11,
+      };
+
+      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+    });
+
+    it('should produce valid output with background audio with captions', async () => {
+      const props = {
+        id: '123',
+        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          backgroundAudio: {
+            resource: {
+              src: 'https://example.com/audio.mp3',
+              id: 123,
+              mimeType: 'audio/mpeg',
+            },
+            tracks: [
+              {
+                track: 'https://example.com/track.vtt',
+                trackId: 123,
+                trackName: 'track.vtt',
+                id: 'rersd-fdfd-fdfd-fdfd',
+                srcLang: '',
+                label: '',
+                kind: 'captions',
+              },
+            ],
           },
           animations: [],
           elements: [],
