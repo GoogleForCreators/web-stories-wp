@@ -41,6 +41,7 @@ import Tooltip from '../../tooltip';
 import { useConfig } from '../../../app';
 import { BackgroundAudioPropType } from '../../../types';
 import CaptionsPanelContent from './captionsPanelContent';
+import LoopPanelContent from './loopPanelContent';
 
 const StyledButton = styled(Button)`
   ${({ theme }) =>
@@ -58,6 +59,7 @@ function BackgroundAudioPanelContent({
   backgroundAudio,
   updateBackgroundAudio,
   supportsCaptions = false,
+  supportsLooping = false,
 }) {
   const {
     allowedAudioMimeTypes,
@@ -66,7 +68,7 @@ function BackgroundAudioPanelContent({
     MediaUpload,
   } = useConfig();
 
-  const { resource, tracks } = backgroundAudio || {};
+  const { resource, tracks = [], loop = true } = backgroundAudio || {};
 
   const onSelectErrorMessage = sprintf(
     /* translators: %s: list of allowed file types. */
@@ -81,6 +83,8 @@ function BackgroundAudioPanelContent({
           src: media.src,
           id: media.id,
           mimeType: media.mimeType,
+          length: media.length,
+          lengthFormatted: media.lengthFormatted,
         },
       };
 
@@ -95,6 +99,13 @@ function BackgroundAudioPanelContent({
   const updateTracks = useCallback(
     (newTracks) => {
       updateBackgroundAudio({ ...backgroundAudio, tracks: newTracks });
+    },
+    [backgroundAudio, updateBackgroundAudio]
+  );
+
+  const onChangeLoop = useCallback(
+    (evt) => {
+      updateBackgroundAudio({ ...backgroundAudio, loop: evt.target.checked });
     },
     [backgroundAudio, updateBackgroundAudio]
   );
@@ -205,6 +216,11 @@ function BackgroundAudioPanelContent({
               renderUploadButton={renderUploadCaptionButton}
             />
           )}
+          {supportsLooping && resource?.length && (
+            <Row spaceBetween={false}>
+              <LoopPanelContent loop={loop} onChange={onChangeLoop} />
+            </Row>
+          )}
         </>
       )}
     </>
@@ -219,6 +235,7 @@ BackgroundAudioPanelContent.propTypes = {
   }),
   updateBackgroundAudio: PropTypes.func.isRequired,
   supportsCaptions: PropTypes.bool,
+  supportsLooping: PropTypes.bool,
 };
 
 export default BackgroundAudioPanelContent;

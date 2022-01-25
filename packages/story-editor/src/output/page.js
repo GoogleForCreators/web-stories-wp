@@ -35,6 +35,7 @@ import HiddenAudio from './utils/HiddenAudio';
 
 const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 
+// eslint-disable-next-line complexity
 function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
   const {
     id,
@@ -49,6 +50,7 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
   const {
     resource: backgroundAudioResource,
     tracks: backgroundAudioTracks = [],
+    loop: backgroundAudioLoop = true,
   } = backgroundAudio || {};
 
   const [backgroundElement, ...regularElements] = elements;
@@ -60,16 +62,23 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
     : { backgroundColor: 'white', ...generatePatternStyles(backgroundColor) };
 
   const animationDuration = getTotalDuration({ animations }) / 1000;
+  const isNotLoopingBackgroundAudio =
+    backgroundAudioResource?.length && !backgroundAudioLoop;
+  const backgroundAudioDuration =
+    isNotLoopingBackgroundAudio && backgroundAudioResource?.length
+      ? backgroundAudioResource.length
+      : 0;
   // If the page doesn't have media, take either the animations time or the configured default duration time.
   const nonMediaPageDuration = Math.max(
     animationDuration || 0,
+    backgroundAudioDuration,
     defaultPageDuration
   );
   // If we have media, take the media time for advancement time and ignore the default,
   // but still consider animation time as the minimum, too.
   const longestMediaElement = getLongestMediaElement(
     elements,
-    animationDuration || 1
+    Math.max(animationDuration || 1, backgroundAudioDuration)
   );
   const autoAdvanceAfter = longestMediaElement?.id
     ? `el-${longestMediaElement?.id}-media`
@@ -146,9 +155,10 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
           </div>
         </amp-story-grid-layer>
       </StoryAnimation.Provider>
-      {hasBackgroundAudioWithTracks && (
-        <HiddenAudio backgroundAudio={backgroundAudio} id={id} />
-      )}
+      {hasBackgroundAudioWithTracks ||
+        (isNotLoopingBackgroundAudio && (
+          <HiddenAudio backgroundAudio={backgroundAudio} id={id} />
+        ))}
       {videoCaptions.length > 0 && (
         <amp-story-grid-layer
           template="vertical"
