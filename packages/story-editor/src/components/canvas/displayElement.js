@@ -63,7 +63,6 @@ const Wrapper = styled.div.attrs(
   ${({ previewMode }) => !previewMode && elementWithRotation}
   contain: layout;
   transition: opacity 0.15s cubic-bezier(0, 0, 0.54, 1);
-
   ${({ isBackground, theme }) =>
     isBackground &&
     css`
@@ -177,6 +176,12 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
     resetOnNullTransform: false,
   });
 
+  const responsiveBorder = getResponsiveBorder(
+    border,
+    previewMode,
+    dataToEditorX
+  );
+
   return (
     <Wrapper
       ref={wrapperRef}
@@ -194,13 +199,14 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
             opacity: typeof opacity !== 'undefined' ? opacity / 100 : null,
             ...(shouldDisplayBorder(element)
               ? getBorderPositionCSS({
-                  ...getResponsiveBorder(border, previewMode, dataToEditorX),
+                  ...responsiveBorder,
                   width: `${box.width}px`,
                   height: `${box.height}px`,
                 })
               : null),
           }}
           previewMode={previewMode}
+          responsiveBorder={responsiveBorder}
         >
           <Display element={element} previewMode={previewMode} box={box} />
         </WithMask>

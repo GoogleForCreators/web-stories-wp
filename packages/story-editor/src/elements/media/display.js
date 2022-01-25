@@ -71,6 +71,7 @@ function MediaDisplay({
     width,
     height,
     overlay,
+    mask,
   } = element;
 
   const { dataToEditorX } = useUnits((state) => ({
@@ -119,6 +120,7 @@ function MediaDisplay({
       borderRadius={borderRadius}
       width={width}
       height={height}
+      mask={mask}
       showPlaceholder={showPlaceholder}
     >
       {children}
