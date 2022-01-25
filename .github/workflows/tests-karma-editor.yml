@@ -87,10 +87,18 @@ jobs:
           file: build/logs/karma-coverage/story-editor/lcov.info
           flags: karmatests
 
+      # Replace slash with a dash to get a valid artifact name
+      - name: Set artifact name
+        id: artifact_name
+        run: echo "::set-output name=artifact_name::${SHARD//\//-}"
+        env:
+          DISABLE_ERROR_BOUNDARIES: true
+          SHARD: ${{ matrix.shard }}
+
       - name: Upload snapshot files artifact
         uses: actions/upload-artifact@v2
         with:
-          name: karma-snapshots-${{ matrix.shard }}
+          name: karma-snapshots-${{ steps.artifact_name.outputs.artifact_name }}
           path: .test_artifacts/karma_snapshots
 
   percy:
