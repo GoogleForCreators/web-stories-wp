@@ -22,10 +22,11 @@ import { useEffect, useRef, useMemo } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { createSolid } from '@googleforcreators/patterns';
 import { useUnits } from '@googleforcreators/units';
+
 /**
  * Internal dependencies
  */
-import { useFont } from '../../app';
+import { useFont } from '../../app/font';
 import {
   elementFillContent,
   elementWithFont,
