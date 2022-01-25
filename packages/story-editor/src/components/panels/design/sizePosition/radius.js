@@ -27,7 +27,7 @@ import { LockToggle, Icons } from '@googleforcreators/design-system';
  * Internal dependencies
  */
 import { StackableGroup, StackableInput } from '../../../form/stackable';
-import { canMaskHaveBorder } from '../../../../masks';
+import { canSupportMultiBorder } from '../../../../masks';
 import { useCommonObjectValue, focusStyle } from '../../shared';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import Tooltip from '../../../tooltip';
@@ -76,7 +76,7 @@ function RadiusControls({ selectedElements, pushUpdateForObject }) {
   );
 
   const allSupportBorder = selectedElements.every((el) =>
-    canMaskHaveBorder(el)
+    canSupportMultiBorder(el)
   );
 
   const lockRadius = borderRadius.locked === true;

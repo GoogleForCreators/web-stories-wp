@@ -4,6 +4,12 @@ on:
   schedule:
     - cron: '0 12 * * 1'
 
+env:
+  GIT_AUTHOR_EMAIL: 94923726+googleforcreators-bot@users.noreply.github.com
+  GIT_AUTHOR_NAME: googleforcreators-bot
+  GIT_COMMITTER_EMAIL: 94923726+googleforcreators-bot@users.noreply.github.com
+  GIT_COMMITTER_NAME: googleforcreators-bot
+
 jobs:
   update-template:
     name: Migrate templates and text sets

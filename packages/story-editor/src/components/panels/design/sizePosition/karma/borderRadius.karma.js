@@ -140,7 +140,7 @@ describe('Border Radius', () => {
     await fixture.snapshot('Shape element with locked border radius');
   });
 
-  it('should not allow border for non-rectangular shape', async () => {
+  it('should not allow border radius for non-rectangular shape', async () => {
     await fixture.events.click(fixture.editor.library.shapesTab);
     await fixture.events.click(fixture.editor.library.shapes.shape('Circle'));
     // Verify that the radius input is not found.

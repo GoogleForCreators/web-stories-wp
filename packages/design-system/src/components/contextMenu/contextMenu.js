@@ -34,12 +34,12 @@ const ContextMenu = ({
   children,
   id,
   isAlwaysVisible,
-  isRTL,
   isIconMenu,
   isInline = false,
   onDismiss = noop,
   ...props
 }) => {
+  const { isRTL } = props;
   const Wrapper = useMemo(
     () => (animate ? AnimationContainer : SmartPopover),
     [animate]
