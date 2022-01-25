@@ -85,6 +85,30 @@ jobs:
           file: build/logs/karma-coverage/story-editor/lcov.info
           flags: karmatests
 
+      - name: Upload snapshot files artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: karma_snapshots
+          path: .test_artifacts/karma_snapshots
+
+  percy:
+    name: Percy
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    # The action cannot access the secret when run from a PR fork or authored by Dependabot.
+    if: >
+      github.event.pull_request.draft == false &&
+      github.event.pull_request.head.repo.fork == false &&
+      github.event.pull_request.user.login != 'dependabot[bot]'
+    needs: [karma]
+    steps:
+      - name: Download snapshot files artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: karma_snapshots
+          path: .test_artifacts
+        continue-on-error: true
+
       - name: Upload Percy snapshots
         uses: percy/snapshot-action@v0.1.2
         with:
@@ -92,8 +116,3 @@ jobs:
           flags: '--config=percy.config.yml'
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
-        # The action cannot access the secret when run from a PR fork or authored by Dependabot.
-        if: >
-          github.event.pull_request.draft == false &&
-          github.event.pull_request.head.repo.fork == false &&
-          github.event.pull_request.user.login != 'dependabot[bot]'
