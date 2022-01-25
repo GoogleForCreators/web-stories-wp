@@ -102,7 +102,7 @@ jobs:
       github.event.pull_request.draft == false &&
       github.event.pull_request.head.repo.fork == false &&
       github.event.pull_request.user.login != 'dependabot[bot]'
-    needs: [karma]
+    needs: karma
     steps:
       - name: Download snapshot files artifact
         uses: actions/download-artifact@v2
@@ -110,8 +110,8 @@ jobs:
           name: karma_snapshots
           path: .test_artifacts
         continue-on-error: true
-
-    - name: Upload Percy snapshots
-      run: npx percy snapshot --config=percy.config.yml .test_artifacts/karma_snapshots
-      env:
-        PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+  
+      - name: Upload Percy snapshots
+        run: npx percy snapshot --config=percy.config.yml .test_artifacts/karma_snapshots
+        env:
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
