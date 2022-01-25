@@ -110,6 +110,7 @@ jobs:
           path: build/web-stories
 
   nonce:
+    name: Percy Nonce
     runs-on: ubuntu-latest
     outputs:
       result: ${{ steps.nonce.outputs.result }}
@@ -201,7 +202,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     if: always()
-    needs: e2e
+    needs: [e2e, nonce]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -213,3 +214,4 @@ jobs:
         run: npx percy build:finalize
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_E2E }}
+          PERCY_PARALLEL_NONCE: ${{ needs.nonce.outputs.result }}
