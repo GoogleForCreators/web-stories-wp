@@ -23,7 +23,7 @@ const puppeteer = require('puppeteer');
  * Internal dependencies
  */
 const MouseWithDnd = require('./mouseWithDnd.cjs');
-const takePercySnapshot = require('./snapshot');
+const takePercySnapshot = require('./snapshot.cjs');
 
 function puppeteerBrowser(baseBrowserDecorator, config) {
   baseBrowserDecorator(this);
