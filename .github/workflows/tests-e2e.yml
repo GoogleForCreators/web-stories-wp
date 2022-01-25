@@ -109,12 +109,20 @@ jobs:
           name: web-stories
           path: build/web-stories
 
+  nonce:
+    runs-on: ubuntu-latest
+    outputs:
+      result: ${{ steps.nonce.outputs.result }}
+    steps:
+      - id: nonce
+        run: echo "::set-output name=result::${{ github.run_id }}-$(date +%s)"
+
   e2e:
     name: '${{ matrix.browser }} - WP ${{ matrix.wp }} (${{ matrix.shard }})'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     continue-on-error: ${{ matrix.experimental == true }}
-    needs: build
+    needs: [build, nonce]
     strategy:
       matrix:
         # TODO: add back Firefox once support is more mature.
@@ -172,6 +180,7 @@ jobs:
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_E2E }}
           WP_VERSION: ${{ matrix.wp }}
+          PERCY_PARALLEL_NONCE: ${{ needs.nonce.outputs.result }}
         if: ( matrix.snapshots ) && ( github.event.pull_request.draft == false )
 
       - name: Run E2E tests
@@ -186,3 +195,21 @@ jobs:
         if: always()
         env:
           COMPOSE_INTERACTIVE_NO_CLI: true
+
+  percy:
+    name: Percy
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    if: always()
+    needs: e2e
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: npm install @percy/cli
+
+      - name: Finalize Percy build
+        run: npx percy build:finalize
+        env:
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_E2E }}
