@@ -19,7 +19,7 @@
  */
 import { useCallback, useReducer } from '@googleforcreators/react';
 import { compareDesc } from '@googleforcreators/date';
-import getAllTemplates from '@googleforcreators/templates';
+import { getAllTemplates } from '@googleforcreators/templates';
 /**
  * Internal dependencies
  */
