@@ -59,7 +59,7 @@ export const _default = (args) => {
       actions: args.updateMediaElement,
     },
   };
-  const snackbarValue = args.showSnackbar;
+  const snackbarValue = { showSnackbar: args.showSnackbar };
 
   return (
     <SnackbarContext.Provider value={snackbarValue}>
