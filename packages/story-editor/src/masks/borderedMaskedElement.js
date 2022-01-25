@@ -78,7 +78,7 @@ function BorderedMaskedElement({
   const fullStyle = {
     ...(hasFill ? FILL_STYLE : {}),
     ...style,
-    transform: actualTransform,
+    transform: actualTransform || null,
   };
 
   const borderWidth = getBorderWidth();
