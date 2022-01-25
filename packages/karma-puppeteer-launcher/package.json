@@ -21,6 +21,9 @@
     "npm": ">= 7.3"
   },
   "main": "./src/index.cjs",
+  "dependencies": {
+    "@percy/puppeteer": "^2.0.0"
+  },
   "peerDependencies": {
     "karma": "*",
     "puppeteer": "*"

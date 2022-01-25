@@ -23,7 +23,7 @@ const puppeteer = require('puppeteer');
  * Internal dependencies
  */
 const MouseWithDnd = require('./mouseWithDnd.cjs');
-const extractAndSaveSnapshot = require('./snapshot.cjs');
+const takePercySnapshot = require('./snapshot');
 
 function puppeteerBrowser(baseBrowserDecorator, config) {
   baseBrowserDecorator(this);
@@ -104,17 +104,13 @@ async function exposeFunctions(page, config) {
   await exposeFunction(
     page,
     'saveSnapshot',
-    async (frame, testName, snapshotName) => {
-      if (!config.snapshots) {
+    async (frame, testName, snapshotName, options) => {
+      if (process.env?.PERCY_TOKEN) {
         // Do nothing unless snapshots are enabled.
         return;
       }
-      await extractAndSaveSnapshot(
-        frame,
-        testName,
-        snapshotName,
-        config.snapshotsDir
-      );
+
+      await takePercySnapshot(frame, testName, snapshotName, options);
     }
   );
 
