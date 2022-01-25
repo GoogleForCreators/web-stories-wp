@@ -122,9 +122,6 @@ jobs:
         continue-on-error: true
 
       - name: Upload Percy snapshots
-        run: |
-          ls -lah
-          ls -lah .test_artifacts
-          npx percy snapshot --config=percy.config.yml ./.test_artifacts
+        run: npx percy snapshot --config=percy.config.yml ./.test_artifacts
         env:
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
