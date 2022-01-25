@@ -72,16 +72,24 @@ describe('Eyedropper', () => {
     // Use eyedropper to select the color
     const bgPanel = fixture.editor.inspector.designPanel.pageBackground;
     await fixture.events.click(bgPanel.backgroundColor.button);
-    await waitFor(() => expect(bgPanel.backgroundColor.picker).toBeDefined());
+    await waitFor(() => {
+      if (!bgPanel.backgroundColor.picker) {
+        throw new Error('picker not ready');
+      }
+      expect(bgPanel.backgroundColor.picker).toBeDefined();
+    });
     // Go to the custom color view
     await fixture.events.click(bgPanel.backgroundColor.picker.custom);
     // Contents of the color picker are lazy loaded
-    await waitFor(() =>
-      expect(bgPanel.backgroundColor.picker.eyedropper).toBeDefined()
-    );
+    await waitFor(() => {
+      if (!bgPanel.backgroundColor.picker) {
+        throw new Error('picker not ready');
+      }
+      expect(bgPanel.backgroundColor.picker).toBeDefined();
+    });
     // Click the eyedropper icon in the custom view
     await fixture.events.click(bgPanel.backgroundColor.picker.eyedropper);
-    await waitFor(() => fixture.screen.getByTestId('eyedropperLayer'), {
+    await waitFor(() => fixture.screen.findByTestId('eyedropperLayer'), {
       timeout: 9000,
     });
     const imageOnCanvas = (await getElements(fixture))[1];
