@@ -56,7 +56,6 @@ function BorderedMaskedElement({
   hasFill = false,
   style,
   children,
-  box,
   applyFlip = true,
   postfix = '',
   getBorderWidth,
@@ -74,7 +73,7 @@ function BorderedMaskedElement({
 
   const flipTransform = (applyFlip && getTransformFlip(flip)) || '';
 
-  const actualTransform = `${style.transform || ''} ${flipTransform}`.trim();
+  const actualTransform = `${style?.transform || ''} ${flipTransform}`.trim();
 
   const fullStyle = {
     ...(hasFill ? FILL_STYLE : {}),
