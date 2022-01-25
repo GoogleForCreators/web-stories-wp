@@ -52,6 +52,7 @@ const RightClickMenu = () => {
     maskRef,
   } = useRightClickMenu();
   const ref = useRef();
+  const subMenuRef = useRef();
 
   /**
    * Prevent browser's context menu when right clicking on custom ContextMenu
@@ -89,19 +90,65 @@ const RightClickMenu = () => {
             isRTL={isRTL}
           >
             {rightClickMenuItems.map(
-              ({ label, shortcut, separator, ...buttonProps }) => (
+              ({
+                label,
+                separator,
+                subMenuItems,
+                closeSubMenu,
+                ...buttonProps
+              }) => (
                 <Fragment key={label}>
                   {separator === 'top' && (
                     <ContextMenuComponents.MenuSeparator />
                   )}
-                  <ContextMenuComponents.MenuButton {...buttonProps}>
-                    {label}
-                    {shortcut && (
-                      <ContextMenuComponents.MenuShortcut>
-                        {shortcut.display}
-                      </ContextMenuComponents.MenuShortcut>
-                    )}
-                  </ContextMenuComponents.MenuButton>
+                  {!subMenuItems && (
+                    <ContextMenuComponents.MenuItem
+                      label={label}
+                      {...buttonProps}
+                    />
+                  )}
+                  {subMenuItems && (
+                    <>
+                      <ContextMenuComponents.SubMenuTrigger
+                        isMenuOpen={isMenuOpen}
+                        closeSubMenu={closeSubMenu}
+                        subMenuRef={subMenuRef}
+                        parentMenuRef={ref}
+                        label={label}
+                        isRTL={isRTL}
+                        {...buttonProps}
+                      />
+                      {Boolean(subMenuItems.length) && (
+                        <RightClickMenuContainer
+                          position={{
+                            y: 0,
+                            x: ref.current.firstChild.offsetWidth + 2,
+                          }}
+                          ref={subMenuRef}
+                        >
+                          <ContextMenu
+                            isOpen
+                            onDismiss={onCloseMenu}
+                            onCloseSubMenu={closeSubMenu}
+                            aria-label={__('Select a layer', 'web-stories')}
+                            isRTL={isRTL}
+                            isSubMenu
+                            parentMenuRef={ref}
+                          >
+                            {subMenuItems.map(
+                              ({ label: subLabel, ...item }) => (
+                                <ContextMenuComponents.MenuItem
+                                  key={subLabel}
+                                  label={subLabel}
+                                  {...item}
+                                />
+                              )
+                            )}
+                          </ContextMenu>
+                        </RightClickMenuContainer>
+                      )}
+                    </>
+                  )}
                   {separator === 'bottom' && (
                     <ContextMenuComponents.MenuSeparator />
                   )}
