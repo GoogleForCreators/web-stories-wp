@@ -38,6 +38,7 @@ import {
 import useLibrary from '../../useLibrary';
 import LibraryMoveable from '../shared/libraryMoveable';
 import { focusStyle } from '../../../panels/shared';
+import { MaskTypes } from '../../../../masks/constants';
 
 // By default, the element should be 33% of the page.
 export const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 3;
@@ -139,7 +140,7 @@ function ShapePreview({ mask, isPreview, index }) {
         type: mask.type,
       },
       // Rectangles have unlocked aspect ratio by default.
-      lockAspectRatio: 'rectangle' !== mask.type,
+      lockAspectRatio: MaskTypes.RECTANGLE !== mask.type,
     }),
     [mask.ratio, mask.type]
   );
