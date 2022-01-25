@@ -41,7 +41,7 @@ export const defaultAttributes = {
   },
 };
 
-export const clearableAttributes = {
+export const copyableAttributes = {
   ...defaultAttributes,
   content: '',
   border: null,

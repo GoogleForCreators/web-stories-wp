@@ -57,7 +57,6 @@ Different actions will be rendered depending on the Element that is right clicke
 |--|--|
 |Detach image from background|Removes the media from the background of the page and sets it in the foreground.|
 |Scale & crop background image|Show the scale and crop UI so that the user may scale or crop the image to the desired size.|
-|Clear style|Remove all styles currently applied to the background media. A snackbar is displayed on completion.|
 
 </details>
 
@@ -73,7 +72,6 @@ Different actions will be rendered depending on the Element that is right clicke
 |Bring to front|Place media in front of all other elements. Disabled if the element is all the way forward.|
 |Copy image styles|Copy all styles applied to the media to the clipboard. A snackbar is displayed on completion.|
 |Paste image styles|Add all styles in the clipboard to the selected media. A snackbar is displayed on completion.|
-|Clear image styles|Remove all styles from the currently selected media. A snackbar is displayed on completion.|
 
 </details>
 
@@ -95,31 +93,21 @@ Different actions will be rendered depending on the Element that is right clicke
 
 ## Technical notes and considerations
 
-### Copying, pasting, and clearing styles
+### Copying and pasting styles
 
 When a user right clicks elements, they may be given the option to copy an element's styles and paste them to another element of the same type.
 
-They may also be given the option to 'clear' styles from the element. This resets some properties to the default values.
+**Note**: This does not override all styles of the element. Only styles that are in the table below are able to be copied and pasted:
 
-**Note**: This does not override all styles of the element. Only styles that are in the table below are able to be copied, pasted, and cleared:
-
-|Element type|Properties that are copy/paste-able and clear-able|
+|Element type|Properties that are copy/paste-able|
 |--|--|
 |Text|- `backgroundColor`<br/>- `backgroundTextMode`<br/>- `border`<br/>- `border-radius`<br/>- `flip`<br/>- `font`<br/>- `fontSize`<br/>- `lineHeight`<br/>- `opacity`<br/>- `padding`<br/>- `rotationAngle`<br/>- `textAlign`|
 |Foreground Media|- `border`<br/>- `border-radius`<br/>- `flip`<br/>- `opacity`<br/>- `overlay`<br/>- `rotationAngle`|
 |Shape|- `backgroundColor`<br/>- `flip`<br/>- `opacity`<br/>- `rotationAngle`|
 
-#### Copying and pasting styles
-
 A user may copy styles from any text, foreground media, and shape element. A user may not copy background media element styles.
 
 Once styles are copied, a user may select an element of the same type and 'paste' those onto the selected element. The selected element's properties will be overridden by the 'copied' styles.
-
-#### Clearing styles
-
-A user may clear styles from text, foreground media, shape, and background media elements. This action resets properties to their defaults.
-
-**Note:** Text presets are all different styled versions of the same _text_ element. Any clearing of text styles will make all text presets look exactly the same.
 
 ### Testing 
 
