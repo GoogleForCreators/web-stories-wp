@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { useState } from '@googleforcreators/react';
 import classnames from 'classnames';
 import { useUnits } from '@googleforcreators/units';
 
@@ -49,6 +48,7 @@ function useSingleSelectionResize({
   isEditMode,
   pushTransform,
   classNames,
+  forceLockRatio,
 }) {
   const { updateSelectedElements } = useStory((state) => ({
     updateSelectedElements: state.actions.updateSelectedElements,
@@ -68,9 +68,18 @@ function useSingleSelectionResize({
       })
     );
 
-  const { lockAspectRatio, type } = selectedElement;
-  const { resizeRules = {}, updateForResizeEvent } = getDefinitionForType(type);
-  const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
+  const { lockAspectRatio: lockRatio, type } = selectedElement;
+  const lockAspectRatio = forceLockRatio || lockRatio;
+  const {
+    resizeRules: lockedResizeRules = {},
+    unlockedResizeRules,
+    updateForResizeEvent,
+  } = getDefinitionForType(type);
+  // If the ratio is unlocked and we have rules for it, use those rules.
+  const resizeRules =
+    !lockAspectRatio && unlockedResizeRules
+      ? unlockedResizeRules
+      : lockedResizeRules;
 
   const minWidth = dataToEditorX(resizeRules.minWidth);
   const minHeight = dataToEditorY(resizeRules.minHeight);
@@ -80,9 +89,6 @@ function useSingleSelectionResize({
     let newWidth = width;
     let newHeight = height;
     let updates = null;
-
-    // If it's text and locked, leave as currently is.
-    // If it's text and unlocked, allow changing width only because height is auto. // @todo Elsewhere.
 
     if (lockAspectRatio) {
       if (newWidth < minWidth) {
@@ -124,18 +130,11 @@ function useSingleSelectionResize({
     setTransformStyle(target, frame);
   };
 
-  const onResizeStart = ({ setOrigin, dragStart, direction }) => {
+  const onResizeStart = ({ setOrigin, dragStart }) => {
     setOrigin(['%', '%']);
     if (dragStart) {
       dragStart.set(frame.translate);
     }
-    // Lock ratio for diagonal directions (nw, ne, sw, se). Both
-    // `direction[]` values for diagonals are either 1 or -1. Non-diagonal
-    // directions have 0s.
-    /*const newResizingMode = direction[0] !== 0 && direction[1] !== 0;
-    if (isResizingFromCorner !== newResizingMode) {
-      setIsResizingFromCorner(newResizingMode);
-    }*/
     if (isEditMode) {
       // In edit mode, we need to signal right away that the action started.
       pushTransform(selectedElement.id, frame);
@@ -166,7 +165,6 @@ function useSingleSelectionResize({
       }
       updateSelectedElements({ properties });
     }
-    //setIsResizingFromCorner(true);
     resetMoveable(target);
   };
 
