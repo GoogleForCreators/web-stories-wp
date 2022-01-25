@@ -149,7 +149,7 @@ function getCornerPercentages(borderRadius, measure) {
  */
 export function getBorderRadius(element) {
   const { borderRadius, width, height } = element;
-  if (!borderRadius || !canMaskHaveBorder(element)) {
+  if (!borderRadius || !canSupportMultiBorder(element)) {
     return {};
   }
   /* We're using the format
