@@ -165,7 +165,6 @@ BorderedMaskedElement.propTypes = {
   applyFlip: PropTypes.bool,
   hasFill: PropTypes.bool,
   children: PropTypes.node.isRequired,
-  box: StoryPropTypes.box.isRequired,
   getBorderWidth: PropTypes.func.isRequired,
   postfix: PropTypes.string,
   elementWidth: PropTypes.number.isRequired,
@@ -211,7 +210,6 @@ MaskedElement.propTypes = {
   id: PropTypes.string.isRequired,
   mask: PropTypes.object.isRequired,
   children: PropTypes.node.isRequired,
-  box: StoryPropTypes.box.isRequired,
 };
 
 export default BorderedMaskedElement;

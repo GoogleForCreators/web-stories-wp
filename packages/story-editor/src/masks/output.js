@@ -35,6 +35,7 @@ export default function WithMask({
   element,
   fill,
   skipDefaultMask = false,
+  box,
   ...rest
 }) {
   const getBorderWidth = () => element.border?.left;
