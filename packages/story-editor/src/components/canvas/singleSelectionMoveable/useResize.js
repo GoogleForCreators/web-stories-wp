@@ -68,8 +68,8 @@ function useSingleSelectionResize({
       })
     );
 
-  const { lockAspectRatio: lockRatio, type } = selectedElement;
-  const lockAspectRatio = forceLockRatio || lockRatio;
+  const { lockAspectRatio: elementLockRatio, type } = selectedElement;
+  const lockAspectRatio = forceLockRatio || elementLockRatio;
   const {
     resizeRules: lockedResizeRules = {},
     unlockedResizeRules,
