@@ -105,7 +105,7 @@ async function exposeFunctions(page, config) {
     page,
     'saveSnapshot',
     async (frame, testName, snapshotName, options) => {
-      if (process.env?.PERCY_TOKEN) {
+      if (!process.env?.PERCY_TOKEN) {
         // Do nothing unless snapshots are enabled.
         return;
       }
