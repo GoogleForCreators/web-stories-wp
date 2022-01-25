@@ -61,7 +61,7 @@ export const isMaskable = false;
 
 export const resizeRules = {
   vertical: false,
-  horizontal: false,
+  horizontal: true,
   diagonal: true,
   minWidth: 20,
   minHeight: 0, // Enforced by min font size
@@ -70,7 +70,6 @@ export const resizeRules = {
 // Resize rules change for text element if aspect ratio is unlocked.
 export const unlockedResizeRules = {
   ...resizeRules,
-  horizontal: true,
   diagonal: false,
 };
 

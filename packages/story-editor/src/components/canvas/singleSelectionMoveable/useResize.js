@@ -71,7 +71,7 @@ function useSingleSelectionResize({
   const { lockAspectRatio: elementLockRatio, type } = selectedElement;
   const lockAspectRatio = forceLockRatio || elementLockRatio;
   const {
-    resizeRules: lockedResizeRules = {},
+    resizeRules: defaultResizeRules = {},
     unlockedResizeRules,
     updateForResizeEvent,
   } = getDefinitionForType(type);
@@ -79,7 +79,7 @@ function useSingleSelectionResize({
   const resizeRules =
     !lockAspectRatio && unlockedResizeRules
       ? unlockedResizeRules
-      : lockedResizeRules;
+      : defaultResizeRules;
 
   const minWidth = dataToEditorX(resizeRules.minWidth);
   const minHeight = dataToEditorY(resizeRules.minHeight);
@@ -109,7 +109,8 @@ function useSingleSelectionResize({
         selectedElement,
         direction,
         editorToDataX(newWidth, false),
-        editorToDataY(newHeight, false)
+        editorToDataY(newHeight, false),
+        lockAspectRatio
       );
     }
     if (updates && updates.height) {
@@ -160,7 +161,13 @@ function useSingleSelectionResize({
       if (updateForResizeEvent) {
         Object.assign(
           properties,
-          updateForResizeEvent(selectedElement, direction, newWidth, newHeight)
+          updateForResizeEvent(
+            selectedElement,
+            direction,
+            newWidth,
+            newHeight,
+            lockAspectRatio
+          )
         );
       }
       updateSelectedElements({ properties });
