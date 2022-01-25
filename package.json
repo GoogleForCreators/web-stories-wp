@@ -233,13 +233,13 @@
     "postworkflow:fonts": "npx prettier --write packages/fonts/src/fonts.json; cp packages/fonts/src/fonts.json includes/data/fonts/fonts.json",
     "workflow:render-text-sets": "npm run render-text-sets --workspace packages/text-sets",
     "workflow:render-template-posters": "npm run render-template-posters --workspace=packages/templates",
-    "preworkflow:migrate": "[ -f packages/migration/src/module.js ] || npx rollup --config packages/migration/rollup.config.migrate.js",
+    "preworkflow:migrate": "[ -f packages/migration/scripts/module.js ] || npx rollup --config packages/migration/rollup.config.migrate.js",
     "workflow:migrate": "npm-run-all --parallel workflow:migrate:*",
-    "workflow:migrate:text-sets": "migration packages/text-sets/src/raw",
+    "workflow:migrate:text-sets": "npm run migration --workspace packages/migration packages/text-sets/src/raw",
     "postworkflow:migrate:text-sets": "npx prettier --write packages/text-sets/src/raw",
-    "workflow:migrate:templates": "migration packages/templates/src/raw",
+    "workflow:migrate:templates": "npm run migration --workspace packages/migration packages/templates/src/raw",
     "postworkflow:migrate:templates": "npx prettier --write packages/templates/src/raw",
-    "workflow:migrate:ftue-story": "migration includes/data/stories",
+    "workflow:migrate:ftue-story": "npm run migration --workspace packages/migration includes/data/stories",
     "postworkflow:migrate:ftue-story": "npx prettier --write includes/data/stories"
   },
   "husky": {
