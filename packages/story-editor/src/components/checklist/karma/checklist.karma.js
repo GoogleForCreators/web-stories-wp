@@ -85,6 +85,10 @@ describe('Checklist integration', () => {
           type: 'image',
           mimeType: 'image/jpg',
           src: 'http://localhost:9876/__static__/earth.jpg',
+          alt: '',
+          width: 640,
+          height: 529,
+          baseColor: '#734727',
         },
       })
     );
@@ -398,10 +402,13 @@ describe('Checklist integration - Card visibility', () => {
           first: () => ({
             toJSON: () => ({
               id: 10,
-              url: 'http://localhost:9876/__static__/earth.jpg',
-              mime: 'image/jpeg',
-              width: 400,
-              height: 480,
+              type: 'image',
+              mimeType: 'image/jpg',
+              src: 'http://localhost:9876/__static__/earth.jpg',
+              alt: 'earth',
+              width: 640,
+              height: 529,
+              baseColor: '#734727',
             }),
           }),
         }),
@@ -410,10 +417,13 @@ describe('Checklist integration - Card visibility', () => {
       once: (_type, callback) =>
         callback({
           id: 10,
-          url: 'http://localhost:9876/__static__/earth.jpg',
-          mime: 'image/jpeg',
-          width: 400,
-          height: 480,
+          type: 'image',
+          mimeType: 'image/jpg',
+          src: 'http://localhost:9876/__static__/earth.jpg',
+          alt: 'earth',
+          width: 640,
+          height: 529,
+          baseColor: '#734727',
         }),
       open: () => {},
       close: () => {},
@@ -482,11 +492,14 @@ describe('Checklist integration - Card visibility', () => {
         width: 640 / 2,
         height: 529 / 2,
         resource: {
+          id: 10,
           type: 'image',
           mimeType: 'image/jpg',
           src: 'http://localhost:9876/__static__/earth.jpg',
-          width: 300,
-          height: 400,
+          alt: 'earth',
+          width: 640,
+          height: 529,
+          baseColor: '#734727',
         },
       })
     );

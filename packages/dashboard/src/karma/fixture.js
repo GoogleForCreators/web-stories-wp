@@ -30,7 +30,7 @@ import {
   FixtureEvents,
   ComponentStub,
   actPromise,
-} from '@web-stories-wp/karma-fixture';
+} from '@googleforcreators/karma-fixture';
 
 /**
  * Internal dependencies

@@ -295,4 +295,4 @@ describe('Search <Search />', () => {
 });
 
 // TODO: Keyboard events need mock useKeyDownEffect
-// https://github.com/google/web-stories-wp/issues/5764
+// https://github.com/googleforcreators/web-stories-wp/issues/5764

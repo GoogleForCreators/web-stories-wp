@@ -64,7 +64,7 @@ describe('Telemetry Banner', () => {
     await expect(page).not.toMatch('Help improve the editor!');
   });
 
-  // Skipped for https://github.com/google/web-stories-wp/issues/9619
+  // Skipped for https://github.com/googleforcreators/web-stories-wp/issues/9619
   // eslint-disable-next-line jest/no-disabled-tests
   it.skip('should keep focus on the checkbox when checking/unchecking via keyboard', async () => {
     await page.waitForTimeout(300); // Because dashboard takes some time before banner appears.

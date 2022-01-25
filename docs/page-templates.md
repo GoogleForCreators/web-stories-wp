@@ -20,7 +20,7 @@ Unlike templates which come with lots of stock photography when creating a story
 
 To preserve images to persist into the page template, they need to be converted to shapes. Shapes will be not be replaced with placeholder grids when rendered as page templates and applied to pages.
 
-There has been consideration to make it so that some images can be passed through in [Issue #6032](https://github.com/google/web-stories-wp/issues/6032).
+There has been consideration to make it so that some images can be passed through in [Issue #6032](https://github.com/googleforcreators/web-stories-wp/issues/6032).
 
 ### Page Template Previews
 
