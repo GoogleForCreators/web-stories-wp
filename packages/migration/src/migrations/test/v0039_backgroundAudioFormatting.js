@@ -18,7 +18,7 @@
  */
 import backgroundAudioFormatting from '../v0039_backgroundAudioFormatting';
 
-describe('removeTransientMediaProperties', () => {
+describe('backgroundAudioFormatting', () => {
   it('should move properties', () => {
     expect(
       backgroundAudioFormatting({
