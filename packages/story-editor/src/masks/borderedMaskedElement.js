@@ -30,7 +30,7 @@ import { getBorderColor } from '../utils/elementBorder';
 import { MaskTypes } from './constants';
 import {
   getElementMask,
-  checkMultiBorderSupport,
+  canSupportMultiBorder,
   getBorderedMaskProperties,
 } from '.';
 
@@ -84,7 +84,7 @@ function BorderedMaskedElement({
 
   const borderWidth = getBorderWidth();
   const showSingleBorder = Boolean(
-    !checkMultiBorderSupport(element) && borderWidth
+    !canSupportMultiBorder(element) && borderWidth
   );
   const borderColor = border?.color
     ? getBorderColor({ color: border.color })

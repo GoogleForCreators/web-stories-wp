@@ -26,7 +26,7 @@ import { LockToggle, Icons } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import { checkMultiBorderSupport } from '../../../../masks';
+import { canSupportMultiBorder } from '../../../../masks';
 import { StackableGroup, StackableInput } from '../../../form/stackable';
 import Tooltip from '../../../tooltip';
 import { focusStyle, useCommonObjectValue } from '../../shared';
@@ -73,7 +73,7 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
   );
 
   // Some shapes i.e all non-rectangular shapes only support a single border width value
-  const hasMultiBorderSupport = selectedElements.every(checkMultiBorderSupport);
+  const hasMultiBorderSupport = selectedElements.every(canSupportMultiBorder);
 
   // Only if true for all selected elements.
   const lockBorder = border.lockedWidth === true || !hasMultiBorderSupport;

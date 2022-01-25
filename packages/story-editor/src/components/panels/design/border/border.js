@@ -24,7 +24,7 @@ import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
-import { checkMultiBorderSupport, canMaskHaveBorder } from '../../../../masks';
+import { canSupportMultiBorder, canMaskHaveBorder } from '../../../../masks';
 import { Color, Row } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { useCommonObjectValue } from '../../shared';
@@ -65,7 +65,7 @@ function BorderStylePanel(props) {
 
   // Some shapes i.e all non-rectangular shapes only support a single border width value
   // If so, they also don't support opacity for the border color, so that has to be removed here
-  const hasMultiBorderSupport = selectedElements.every(checkMultiBorderSupport);
+  const hasMultiBorderSupport = selectedElements.every(canSupportMultiBorder);
 
   const hasBorder = [left, top, right, bottom].some((value) => value > 0);
   return (

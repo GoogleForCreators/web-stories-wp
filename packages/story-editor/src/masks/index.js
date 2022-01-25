@@ -32,7 +32,7 @@ export function canMaskHaveBorder(element) {
   return !mask || mask.supportsBorder;
 }
 
-export function checkMultiBorderSupport(element) {
+export function canSupportMultiBorder(element) {
   const { mask } = element;
   return !mask || DEFAULT_MASK.type === mask?.type;
 }
