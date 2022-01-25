@@ -68,9 +68,8 @@ function useSingleSelectionResize({
       })
     );
 
-  const { resizeRules = {}, updateForResizeEvent } = getDefinitionForType(
-    selectedElement.type
-  );
+  const { lockAspectRatio, type } = selectedElement;
+  const { resizeRules = {}, updateForResizeEvent } = getDefinitionForType(type);
   const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
 
   const minWidth = dataToEditorX(resizeRules.minWidth);
@@ -82,7 +81,10 @@ function useSingleSelectionResize({
     let newHeight = height;
     let updates = null;
 
-    if (isResizingFromCorner) {
+    // If it's text and locked, leave as currently is.
+    // If it's text and unlocked, allow changing width only because height is auto. // @todo Elsewhere.
+
+    if (lockAspectRatio) {
       if (newWidth < minWidth) {
         newWidth = minWidth;
         newHeight = newWidth / aspectRatio;
@@ -130,10 +132,10 @@ function useSingleSelectionResize({
     // Lock ratio for diagonal directions (nw, ne, sw, se). Both
     // `direction[]` values for diagonals are either 1 or -1. Non-diagonal
     // directions have 0s.
-    const newResizingMode = direction[0] !== 0 && direction[1] !== 0;
+    /*const newResizingMode = direction[0] !== 0 && direction[1] !== 0;
     if (isResizingFromCorner !== newResizingMode) {
       setIsResizingFromCorner(newResizingMode);
-    }
+    }*/
     if (isEditMode) {
       // In edit mode, we need to signal right away that the action started.
       pushTransform(selectedElement.id, frame);
@@ -164,7 +166,7 @@ function useSingleSelectionResize({
       }
       updateSelectedElements({ properties });
     }
-    setIsResizingFromCorner(true);
+    //setIsResizingFromCorner(true);
     resetMoveable(target);
   };
 
@@ -176,7 +178,7 @@ function useSingleSelectionResize({
     onResize,
     onResizeStart,
     onResizeEnd,
-    keepRatio: isResizingFromCorner || selectedElement?.type === 'sticker',
+    keepRatio: lockAspectRatio,
     renderDirections: getRenderDirections(resizeRules),
     className: classnames(classNames, {
       'visually-hide-handles': visuallyHideHandles,
