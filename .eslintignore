@@ -2,7 +2,7 @@
 **/vendor/**
 **/assets/js/*.js
 **/packages/imgareaselect/src/index.js
-**/packages/migration/src/module.js
+**/packages/migration/scripts/module.js
 bin/build/*
 build/*
 !.storybook

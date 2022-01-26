@@ -80,6 +80,12 @@ describe('Right Click Menu integration', () => {
     });
   }
 
+  function selectLayerButton() {
+    return fixture.screen.getByRole('menuitem', {
+      name: /^Select Layer/i,
+    });
+  }
+
   function setAsPageBackground() {
     return fixture.screen.getByRole('menuitem', {
       name: /^Set as page Background/i,
@@ -171,6 +177,12 @@ describe('Right Click Menu integration', () => {
   function duplicateElements() {
     return fixture.screen.getByRole('menuitem', {
       name: /^Duplicate Element/i,
+    });
+  }
+
+  function getMenuItemByName(name) {
+    return fixture.screen.getByRole('menuitem', {
+      name,
     });
   }
 
@@ -309,6 +321,11 @@ describe('Right Click Menu integration', () => {
     );
   }
 
+  const getSelection = async () => {
+    const storyContext = await fixture.renderHook(() => useStory());
+    return storyContext.state.selectedElements;
+  };
+
   /**
    * Add shape to canvas
    *
@@ -428,6 +445,52 @@ describe('Right Click Menu integration', () => {
           name: 'Context Menu for the selected element',
         })
       ).toBeNull();
+    });
+  });
+
+  describe('Right click menu: Select Layer', () => {
+    it('should allow selecting a layer from the point where the menu was opened from', async () => {
+      // Add a Triangle and an image to the same place.
+      await fixture.events.click(fixture.editor.library.media.item(0));
+      await fixture.events.click(fixture.editor.library.shapesTab);
+      await fixture.events.click(
+        fixture.editor.library.shapes.shape('Triangle')
+      );
+      // Add a Text a different place.
+      await addText({ x: 200 });
+
+      // Right-click on the top-left corner of the triangle.
+      const triangle = fixture.editor.canvas.framesLayer.frames[2].node;
+      const { x, y } = triangle.getBoundingClientRect();
+      await fixture.events.mouse.click(x + 10, y + 10, {
+        button: 'right',
+      });
+
+      // Open the Select Layer submenu.
+      await fixture.events.click(selectLayerButton());
+      // Verify if displays Background, Triangle, Image as options but not the text.
+      expect(getMenuItemByName('Background')).not.toBeNull();
+      expect(getMenuItemByName('Triangle')).not.toBeNull();
+      expect(getMenuItemByName('blue-marble')).not.toBeNull();
+      expect(() => getMenuItemByName('Fill in some text')).toThrow();
+
+      // Verify that clicking on the background button selects background.
+      await fixture.events.click(getMenuItemByName('Background'));
+      const [element] = await getSelection();
+      expect(element.isDefaultBackground).toBeTrue();
+    });
+
+    it('should not display the option to select layer when opening from the layer panel', async () => {
+      await addEarthImage();
+
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.layerPanel.layers[0],
+        {
+          button: 'right',
+        }
+      );
+
+      expect(() => selectLayerButton()).toThrow();
     });
   });
 

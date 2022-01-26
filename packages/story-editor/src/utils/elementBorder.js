@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { canMaskHaveBorder } from '../masks';
+import { canMaskHaveBorder, canSupportMultiBorder } from '../masks';
 
 function hasBorder({ border }) {
   if (!border) {
@@ -36,13 +36,17 @@ function hasBorder({ border }) {
 }
 
 /**
- * Check if border should be displayed for an element.
+ * Check if rectangular border should be displayed for an element.
  *
  * @param {Object} element Element object.
  * @return {boolean} If should be displayed.
  */
 export function shouldDisplayBorder(element) {
-  return hasBorder(element) && canMaskHaveBorder(element);
+  return (
+    hasBorder(element) &&
+    canMaskHaveBorder(element) &&
+    canSupportMultiBorder(element)
+  );
 }
 
 /**
@@ -84,8 +88,8 @@ export function getBorderPositionCSS({
  * @return {Object} Border style.
  */
 export function getBorderStyle(element) {
-  // If there's no border, return the radius only.
-  if (!hasBorder(element)) {
+  // If there's no rectangular border, return the radius only.
+  if (!hasBorder(element) || !canSupportMultiBorder(element)) {
     return getBorderRadius(element);
   }
   const { border } = element;
@@ -145,7 +149,7 @@ function getCornerPercentages(borderRadius, measure) {
  */
 export function getBorderRadius(element) {
   const { borderRadius, width, height } = element;
-  if (!borderRadius || !canMaskHaveBorder(element)) {
+  if (!borderRadius || !canSupportMultiBorder(element)) {
     return {};
   }
   /* We're using the format

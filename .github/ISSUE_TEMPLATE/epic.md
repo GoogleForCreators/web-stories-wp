@@ -22,7 +22,7 @@ assignees: ''
 
 ### Does this epic have any performance impact?
 
-<!-- How might this epic affect user-perceived performance? --> 
+<!-- How might this epic affect user-perceived performance? -->
 
 <!-- After implementation, did you verify that there any impact? Was it positive, neutral or regressive? -->
 

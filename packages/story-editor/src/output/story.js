@@ -79,7 +79,7 @@ function OutputStory({
           publisher-logo-src={publisherLogoUrl}
           title={title}
           poster-portrait-src={featuredMediaUrl}
-          background-audio={backgroundAudio?.src ?? undefined}
+          background-audio={backgroundAudio?.resource?.src ?? undefined}
         >
           {pages.map((page) => (
             <OutputPage
@@ -101,7 +101,9 @@ OutputStory.propTypes = {
     title: PropTypes.string.isRequired,
     autoAdvance: PropTypes.bool,
     defaultPageDuration: PropTypes.number,
-    backgroundAudio: BackgroundAudioPropType,
+    backgroundAudio: PropTypes.shape({
+      resource: BackgroundAudioPropType,
+    }),
     publisherLogo: PropTypes.shape({
       url: PropTypes.string.isRequired,
     }),

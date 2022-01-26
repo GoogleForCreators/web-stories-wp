@@ -32,6 +32,11 @@ export function canMaskHaveBorder(element) {
   return !mask || mask.supportsBorder;
 }
 
+export function canSupportMultiBorder(element) {
+  const { mask } = element;
+  return !mask || DEFAULT_MASK.type === mask?.type;
+}
+
 export function getMaskByType(type) {
   return MASKS.find((mask) => mask.type === type) || DEFAULT_MASK;
 }
@@ -42,4 +47,39 @@ function getDefaultElementMask(type) {
   }
   const { isMaskable } = getDefinitionForType(type);
   return isMaskable ? DEFAULT_MASK : null;
+}
+
+/*
+ * This constant and calculation concerns growing the element while shrinking
+ * the inside SVG through viewbox so it overlaps the element correctly.
+ * The math and logic is explained in this GH comment:
+ * https://github.com/GoogleForCreators/web-stories-wp/pull/9851#issuecomment-1020461756
+ */
+const BORDER_MULTIPLIER = 3;
+export function getBorderedMaskProperties(
+  mask,
+  borderWidth,
+  elementWidth,
+  elementHeight
+) {
+  const fullPadding = BORDER_MULTIPLIER * borderWidth;
+  const relativeWidth = (elementWidth + fullPadding) / elementWidth;
+  const relativeHeight = (elementHeight + fullPadding) / elementHeight;
+  const offsetX = (relativeWidth - 1) / 2;
+  const offsetY = (relativeHeight - 1) / 2;
+  const scaledHeight = relativeHeight / mask.ratio;
+  const viewBox = `0 0 ${relativeWidth} ${scaledHeight}`;
+  const groupTransform = `translate(${offsetX},${offsetY})`;
+  const borderWrapperStyle = {
+    width: `${relativeWidth * 100}%`,
+    height: `${relativeHeight * 100}%`,
+    position: 'absolute',
+    left: `${-offsetX * 100}%`,
+    top: `${-offsetY * 100}%`,
+    pointerEvents: 'initial',
+    display: 'block',
+    zIndex: 1,
+    opacity: 1,
+  };
+  return { viewBox, groupTransform, borderWrapperStyle };
 }
