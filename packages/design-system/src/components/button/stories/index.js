@@ -197,7 +197,7 @@ ToggleButtonContainer.propTypes = {
   type: PropTypes.oneOf(Object.values(BUTTON_TYPES)),
 };
 
-export const ToggleButtons = (args) => {
+export const ToggleButtons = () => {
   const [isToggled, setToggled] = useState(false);
   const swapToggled = useCallback(() => setToggled((b) => !b), []);
   return (
@@ -212,14 +212,12 @@ export const ToggleButtons = (args) => {
       <ToggleButtonContainer
         isToggled={isToggled}
         swapToggled={swapToggled}
-        {...args}
         type={BUTTON_TYPES.QUATERNARY}
       />
       <DarkThemeProvider>
         <ToggleButtonContainer
           isToggled={isToggled}
           swapToggled={swapToggled}
-          {...args}
           type={BUTTON_TYPES.QUATERNARY}
         />
       </DarkThemeProvider>

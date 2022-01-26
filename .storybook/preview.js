@@ -80,6 +80,7 @@ addParameters({
 
 addDecorator((story, context) => {
   const { id } = context;
+  // TODO(#10380): Replacement add-on for RTL feature
   const isRTL = false;
 
   const isDesignSystemStorybook = id.startsWith('designsystem');

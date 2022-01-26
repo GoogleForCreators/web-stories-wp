@@ -59,11 +59,7 @@ export const _default = (args) => {
       <Container>
         <Text>{'Percentage:'}</Text>
         <Slider
-          thumbSize={args.thumbSize}
-          min={args.min}
-          max={args.max}
-          majorStep={args.majorStep}
-          minorStep={args.minorStep}
+          {...args}
           handleChange={setLightValue}
           value={lightValue}
           suffix="%"
@@ -73,11 +69,7 @@ export const _default = (args) => {
         <Container>
           <Text>{'Milliseconds:'}</Text>
           <Slider
-            thumbSize={args.thumbSize}
-            min={args.min}
-            max={args.max}
-            majorStep={args.majorStep}
-            minorStep={args.minorStep}
+            {...args}
             handleChange={setDarkValue}
             value={darkValue}
             suffix="ms"

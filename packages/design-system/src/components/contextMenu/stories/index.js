@@ -568,8 +568,7 @@ const RightClickContextMenuContainer = styled.div`
   left: ${({ position }) => position?.x ?? 0}px;
 `;
 
-// eslint-disable-next-line react/prop-types
-const RightClickMenuOnShapeAndBackground = ({ children, args }) => {
+const RightClickMenuOnShapeAndBackground = ({ children, ...args }) => {
   const ref = useRef();
   const subMenuRef = useRef();
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
@@ -695,7 +694,7 @@ export const WithSubMenu = (args) => {
   );
 };
 
-export const RightClickMenu = () => {
+export const RightClickMenu = (args) => {
   const [isOpen, setIsOpen] = useState(false);
   const [menuPosition, setMenuPosition] = useState({});
   const layoutRef = useRef();
@@ -730,13 +729,18 @@ export const RightClickMenu = () => {
       {/*eslint-disable-next-line styled-components-a11y/no-noninteractive-element-interactions*/}
       <SampleLayout ref={layoutRef} role="region" onKeyDown={() => {}} />
       <RightClickContextMenuContainer position={menuPosition}>
-        <ContextMenu isOpen={isOpen} onDismiss={() => setIsOpen(false)}>
+        <ContextMenu
+          isOpen={isOpen}
+          onDismiss={() => setIsOpen(false)}
+          {...args}
+        >
           {pageMenu}
         </ContextMenu>
       </RightClickContextMenuContainer>
     </ViewportContainer>
   );
 };
+RightClickMenu.parameters = { controls: { include: [] } };
 
 export const RightClickMenuStaticValues = (args) => {
   return (
