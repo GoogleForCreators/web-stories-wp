@@ -99,10 +99,11 @@ function Popup({
       if (evt?.target?.nodeType && popup.current?.contains(evt.target)) {
         return;
       }
+
       setPopupState({
-        offset:
-          anchor?.current &&
-          getOffset(placement, spacing, anchor, dock, popup, isRTL, topOffset),
+        offset: anchor?.current
+          ? getOffset(placement, spacing, anchor, dock, popup, isRTL, topOffset)
+          : {},
         height: popup.current?.getBoundingClientRect()?.height,
       });
     },

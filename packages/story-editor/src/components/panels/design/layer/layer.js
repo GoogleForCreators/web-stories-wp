@@ -255,9 +255,9 @@ function preventReorder(e) {
 function Layer({ element }) {
   const { LayerIcon, LayerContent } = getDefinitionForType(element.type);
   const { isSelected, handleClick } = useLayerSelection(element);
-  const { duplicateElementById, deleteElementById } = useStory(
+  const { duplicateElementsById, deleteElementById } = useStory(
     ({ actions }) => ({
-      duplicateElementById: actions.duplicateElementById,
+      duplicateElementsById: actions.duplicateElementsById,
       deleteElementById: actions.deleteElementById,
     })
   );
@@ -337,7 +337,9 @@ function Layer({ element }) {
                 aria-label={__('Duplicate', 'web-stories')}
                 aria-describedby={layerId}
                 onPointerDown={preventReorder}
-                onClick={() => duplicateElementById({ elementId: element.id })}
+                onClick={() =>
+                  duplicateElementsById({ elementIds: [element.id] })
+                }
               >
                 <Icons.PagePlus />
               </LayerAction>

@@ -46,8 +46,10 @@ class Stories_Terms_Controller extends WP_REST_Terms_Controller {
 	 */
 	public function __construct( $taxonomy ) {
 		parent::__construct( $taxonomy );
-		$tax_obj         = get_taxonomy( $taxonomy );
-		$this->namespace = ! empty( $tax_obj->rest_namespace ) ? $tax_obj->rest_namespace : 'web-stories/v1';
+		$taxonomy_object = get_taxonomy( $taxonomy );
+		$this->namespace = $taxonomy_object && is_string( $taxonomy_object->rest_namespace ) ?
+			$taxonomy_object->rest_namespace :
+			'web-stories/v1';
 	}
 
 	/**
