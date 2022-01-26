@@ -44,7 +44,7 @@ Buttons!
 - There’s a 4th type of button in the design system called Plain - this button type has no styles, it’s just a reset button without any outline or background color that can be used when we need something to semantically be a button but the designs disagree. This shouldn’t happen often and should be a bit of an escape hatch.
 - Button variants in the designs are square and rectangle. The additional variants of circle and icon were added because there are occasions in the editor and dashboard where there are no shared button styles but the element is expected to behave as a button. By having a button variant of icon we can eliminate the need of having specific exportable buttons like `ArrowDown`.
 - Button types, sizes, and variants (circle, rectangle, square, icon) are all available as [constants](../packages/design-system/src/components/button/constants.js) and importable via `BUTTON_TYPES`, `BUTTON_SIZES`, `BUTTON_VARIANTS` so that we don’t have to worry about miscellaneous strings.
-- Every button combination has a [demo in storybook](https://google.github.io/web-stories-wp/storybook/?path=/story/designsystem-components-button--default).
+- Every button combination has a [demo in storybook](https://googleforcreators.github.io/web-stories-wp/storybook/?path=/story/designsystem-components-button--default).
 
 Typography
 
@@ -53,7 +53,7 @@ Typography
 - The typography components are `<Display />`, `<Headline />`, `<Link />`, `<Text />`, found [here](../packages/design-system/src/components/typography/index.js).
 - Each is a styled component and can be passed whatever element you want it to be with `as` or `forwardedAs` depending on your situation.
 - These are meant to decrease our need to individually style text elements and ensure consistency.
-- There’s a demo for every [type setting in storybook](https://google.github.io/web-stories-wp/storybook/?path=/story/designsystem-components-typography-display--default).
+- There’s a demo for every [type setting in storybook](https://googleforcreators.github.io/web-stories-wp/storybook/?path=/story/designsystem-components-typography-display--default).
 
 Circular dependencies
 
