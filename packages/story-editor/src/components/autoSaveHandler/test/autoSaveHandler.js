@@ -25,7 +25,6 @@ import { render } from '@testing-library/react';
 import HistoryContext from '../../../app/history/context';
 import StoryContext from '../../../app/story/context';
 import ConfigContext from '../../../app/config/context';
-import MediaContext from '../../../app/media/context';
 import AutoSaveHandler from '..';
 import useIsUploadingToStory from '../../../utils/useIsUploadingToStory';
 
