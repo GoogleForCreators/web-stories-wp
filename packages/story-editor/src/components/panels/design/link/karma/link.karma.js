@@ -81,7 +81,11 @@ describe('Link Panel', () => {
     beforeEach(async () => {
       await fixture.editor.library.textTab.click();
       await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      await waitFor(() => {
+        if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+          throw new Error('node not ready');
+        }
+      });
       linkPanel = fixture.editor.inspector.designPanel.link;
     });
 
@@ -125,7 +129,11 @@ describe('Link Panel', () => {
     it('should display the link tooltip correctly', async () => {
       const linkDescription = 'Example description';
       // make sure address input exists
-      await waitFor(() => linkPanel.address);
+      await waitFor(() => {
+        if (!linkPanel.address) {
+          throw new Error('address input not ready');
+        }
+      });
 
       await fixture.events.click(linkPanel.address);
       await fixture.events.keyboard.type('example.com');
@@ -133,7 +141,11 @@ describe('Link Panel', () => {
       // Debounce time for populating meta-data.
       await fixture.events.keyboard.press('tab');
       // make sure description input exists
-      await waitFor(() => linkPanel.description, { timeout: 1500 });
+      await waitFor(() => {
+        if (!linkPanel.description) {
+          throw new Error('description input not ready');
+        }
+      });
       await fixture.events.click(linkPanel.description, { clickCount: 3 });
       await fixture.events.keyboard.type(linkDescription);
       await fixture.events.keyboard.press('tab');
@@ -148,17 +160,27 @@ describe('Link Panel', () => {
       const frame = fixture.editor.canvas.framesLayer.frames[1].node;
       await fixture.events.mouse.moveRel(frame, 10, 10);
 
-      await waitFor(() => {
-        const tooltip = fixture.screen.getByText(linkDescription);
-        expect(tooltip.textContent).toBe(linkDescription);
-      });
+      await waitFor(
+        () => {
+          const tooltip = fixture.screen.findByText(linkDescription);
+          if (!tooltip) {
+            throw new Error('tooltip not ready');
+          }
+          expect(tooltip).toHaveTextContent(linkDescription);
+        },
+        { timeout: 5000 }
+      );
       await fixture.snapshot(
         'Element is hovered on. The link tooltip is visible'
       );
 
       // Select the element again.
       await fixture.events.click(frame);
-      await waitFor(() => fixture.editor.inspector.designPanel.link.address);
+      await waitFor(() => {
+        if (!fixture.editor.inspector.designPanel.link.address) {
+          throw new Error('address element not ready');
+        }
+      });
       await fixture.events.click(
         fixture.editor.inspector.designPanel.link.address,
         { clickCount: 3 }
@@ -350,7 +372,11 @@ describe('Link Panel', () => {
   describe('CUJ: Creator Can Add A Link: Remove applied link', () => {
     beforeEach(async () => {
       await fixture.events.click(fixture.editor.library.textAdd);
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      await waitFor(() => {
+        if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+          throw new Error('node not ready');
+        }
+      });
       linkPanel = fixture.editor.inspector.designPanel.link;
       await fixture.events.click(linkPanel.address);
       await fixture.events.keyboard.type('http://google.com');
