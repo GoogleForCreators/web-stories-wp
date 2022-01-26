@@ -84,16 +84,6 @@ jobs:
             wp: 'latest'
             snapshots: true
             shard: '2/2'
-          - browser: 'chrome'
-            wp: '5.9-RC3'
-            experimental: true
-            snapshots: false
-            shard: '1/2'
-          - browser: 'chrome'
-            wp: '5.9-RC3'
-            experimental: true
-            snapshots: false
-            shard: '2/2'
 
     steps:
       - name: Checkout
