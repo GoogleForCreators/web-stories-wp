@@ -25,7 +25,7 @@ import { useMemo } from '@googleforcreators/react';
 import { useLocalMedia, useStory } from '../app';
 
 function useIsUploadingToStory() {
-  const resourceIds = useStory(({ state: { pages } }) =>
+  const resourceIds = useStory(({ state: { pages = [] } }) =>
     pages.reduce((acc, curr) => {
       acc.push(
         ...curr.elements
