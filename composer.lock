@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "abd7a8bf505558f4c74dc75940d20b1b",
+    "content-hash": "986f37c806e9c6db2d2547b7f1397765",
     "packages": [
         {
             "name": "ampproject/amp-toolbox",
@@ -86,12 +86,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ampproject/amp-wp",
-                "reference": "a32862ff3a52eeba5cf49ef82d9219ae0a4ec0f2"
+                "reference": "0bb79481943d70a8ccc5cd145cb04fc4a3bfce92"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/a32862ff3a52eeba5cf49ef82d9219ae0a4ec0f2",
-                "reference": "a32862ff3a52eeba5cf49ef82d9219ae0a4ec0f2",
+                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/0bb79481943d70a8ccc5cd145cb04fc4a3bfce92",
+                "reference": "0bb79481943d70a8ccc5cd145cb04fc4a3bfce92",
                 "shasum": ""
             },
             "require": {
@@ -194,7 +194,7 @@
             ],
             "description": "WordPress plugin for adding AMP support.",
             "homepage": "https://github.com/ampproject/amp-wp",
-            "time": "2022-01-21T18:32:00+00:00"
+            "time": "2022-01-25T23:22:49+00:00"
         },
         {
             "name": "civicrm/composer-downloads-plugin",
@@ -1503,24 +1503,27 @@
         },
         {
             "name": "php-stubs/wordpress-stubs",
-            "version": "v5.8.2",
+            "version": "v5.9.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-stubs/wordpress-stubs.git",
-                "reference": "67fd773742b7be5b4463f40318b0b4890a07033b"
+                "reference": "0fa8dd9a1bd2a1b60e85afc6c798fca1f599cc1b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-stubs/wordpress-stubs/zipball/67fd773742b7be5b4463f40318b0b4890a07033b",
-                "reference": "67fd773742b7be5b4463f40318b0b4890a07033b",
+                "url": "https://api.github.com/repos/php-stubs/wordpress-stubs/zipball/0fa8dd9a1bd2a1b60e85afc6c798fca1f599cc1b",
+                "reference": "0fa8dd9a1bd2a1b60e85afc6c798fca1f599cc1b",
                 "shasum": ""
             },
             "replace": {
                 "giacocorsiglia/wordpress-stubs": "*"
             },
             "require-dev": {
-                "giacocorsiglia/stubs-generator": "^0.5.0",
-                "php": "~7.1"
+                "nikic/php-parser": "< 4.12.0",
+                "php": "~7.3 || ~8.0",
+                "php-stubs/generator": "^0.8.0",
+                "phpdocumentor/reflection-docblock": "^5.3",
+                "phpstan/phpstan": "^1.2"
             },
             "suggest": {
                 "paragonie/sodium_compat": "Pure PHP implementation of libsodium",
@@ -1541,9 +1544,9 @@
             ],
             "support": {
                 "issues": "https://github.com/php-stubs/wordpress-stubs/issues",
-                "source": "https://github.com/php-stubs/wordpress-stubs/tree/v5.8.2"
+                "source": "https://github.com/php-stubs/wordpress-stubs/tree/v5.9.0"
             },
-            "time": "2021-11-11T13:57:00+00:00"
+            "time": "2022-01-26T00:27:45+00:00"
         },
         {
             "name": "phpcompatibility/php-compatibility",
@@ -2562,12 +2565,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "25a216c5c0426f341fbff7f045fa3946c8041521"
+                "reference": "341bf2dc38dcbc17c9cc7bd1b44c3a40c84959e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/25a216c5c0426f341fbff7f045fa3946c8041521",
-                "reference": "25a216c5c0426f341fbff7f045fa3946c8041521",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/341bf2dc38dcbc17c9cc7bd1b44c3a40c84959e0",
+                "reference": "341bf2dc38dcbc17c9cc7bd1b44c3a40c84959e0",
                 "shasum": ""
             },
             "conflict": {
@@ -2607,7 +2610,7 @@
                 "cesnet/simplesamlphp-module-proxystatistics": "<3.1",
                 "codeception/codeception": "<3.1.3|>=4,<4.1.22",
                 "codeigniter/framework": "<=3.0.6",
-                "codeigniter4/framework": "<4.1.6",
+                "codeigniter4/framework": "<4.1.8",
                 "codiad/codiad": "<=2.8.4",
                 "composer/composer": "<1.10.23|>=2-alpha.1,<2.1.9",
                 "concrete5/concrete5": "<8.5.5",
@@ -2999,7 +3002,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-22T00:48:41+00:00"
+            "time": "2022-01-25T09:14:18+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
