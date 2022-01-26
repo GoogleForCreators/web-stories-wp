@@ -217,7 +217,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       await fixture.events.keyboard.type('000');
       await fixture.events.keyboard.press('Tab');
 
-      // This text should be added without any changes.
+      // Should be added with white style on black background.
       await fixture.editor.library.textTab.click();
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
@@ -226,7 +226,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
 
       const [text1] = await getSelection();
       expect(text1.content).toEqual(
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+        '<span style="color: #fff">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>'
       );
 
       await fixture.events.mouse.moveRel(
@@ -235,7 +235,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
         10
       );
       await fixture.events.sleep(800);
-      // Title is added with white text color since it's using auto styling.
+      // Should be added with white style on black background.
       await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
       await waitFor(() => fixture.editor.canvas.framesLayer.frames[2].node);
       const [title] = await getSelection();
