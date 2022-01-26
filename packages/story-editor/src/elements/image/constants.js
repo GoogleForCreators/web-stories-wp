@@ -41,7 +41,7 @@ export const defaultAttributes = {
   ...MEDIA_DEFAULT_ATTRIBUTES,
 };
 
-export const clearableAttributes = {
+export const copyableAttributes = {
   ...SHARED_DEFAULT_CLEARABLE_ATTRIBUTES,
   ...MEDIA_DEFAULT_CLEARABLE_ATTRIBUTES,
 };

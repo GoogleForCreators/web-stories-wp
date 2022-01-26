@@ -141,7 +141,7 @@ describe('Clone element integration', () => {
     expect(await getNumElements()).toBe(5);
 
     // Verify new elements are in fact clones and in correct positions
-    const clonedImg1 = await getElementByIndex(4);
+    const clonedImg1 = await getElementByIndex(3);
     expect(clonedImg1).toEqual(
       jasmine.objectContaining({
         resource: jasmine.objectContaining({
