@@ -133,6 +133,12 @@ jobs:
           # Needed so the below commits will trigger a website deployment.
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
+      - name: Setup Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.4.0
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+
       # For release candidates of new major releases:
       #
       # 1. Get highest assets version
@@ -145,15 +151,29 @@ jobs:
       - name: Prepare assets for RC
         if: ${{ contains(github.event.inputs.version, 'rc') && ! startsWith(github.ref, 'refs/heads/release/') }}
         run: |
-          LATEST_ASSETS_VERSION=$(ls | sort -n | tail -1)
+          LATEST_ASSETS_VERSION=$(gsutil ls gs://web-stories-wp-cdn-assets/ | sed 's/gs:\/\/web-stories-wp-cdn-assets\///' | sed 's/\///' | sort -n | tail -1)
           NEW_ASSETS_VERSION=$LATEST_ASSETS_VERSION
-          if ! diff -qr $BASE_ASSETS_VERSION $LATEST_ASSETS_VERSION &>/dev/null; then
+
+          NUMBER_OF_NEW_ASSETS=$(ls main | wc -l)
+
+          if [[ "0" -eq NUMBER_OF_NEW_ASSETS ]]; then
+            echo "No new assets found. Not uploading anything."
+          else
+            echo "New assets found."
             NEW_ASSETS_VERSION=$((LATEST_ASSETS_VERSION+1))
-            cp -r $BASE_ASSETS_VERSION $NEW_ASSETS_VERSION
+
+            echo "Copying existing assets over to new version"
+
+            gsutil -m rsync -r gs://web-stories-wp-cdn-assets/$LATEST_ASSETS_VERSION gs://web-stories-wp-cdn-assets/$NEW_ASSETS_VERSION
+
+            echo "Uploading new assets to new version"
+            gsutil -m rsync -r -x '(^|/)\.' main gs://web-stories-wp-cdn-assets/$NEW_ASSETS_VERSION
+
+            rm -rf static/main/*
 
             git add .
             git status
-            git commit -m "Bump static assets for plugin release $PLUGIN_VERSION"
+            git commit -m "Preparing assets for plugin release $PLUGIN_VERSION"
             git pull --rebase
             git push origin main
           fi
