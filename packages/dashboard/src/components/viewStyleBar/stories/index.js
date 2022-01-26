@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,13 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-import { select } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
-
 /**
  * Internal dependencies
  */
@@ -29,13 +22,19 @@ import ViewStyleBar from '..';
 export default {
   title: 'Dashboard/Components/ViewStyleBar',
   component: ViewStyleBar,
+  argTypes: {
+    layoutStyle: {
+      options: Object.values(VIEW_STYLE),
+    },
+    onPress: {
+      action: 'on press clicked',
+    },
+  },
+  args: {
+    layoutStyle: VIEW_STYLE.LIST,
+  },
 };
 
-export const _default = () => {
-  return (
-    <ViewStyleBar
-      layoutStyle={select('layoutStyle', VIEW_STYLE, VIEW_STYLE.LIST)}
-      onPress={action('on press clicked')}
-    />
-  );
+export const _default = (args) => {
+  return <ViewStyleBar {...args} />;
 };

@@ -13,10 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { number } from '@storybook/addon-knobs';
+
 /**
  * Internal dependencies
  */
@@ -25,14 +22,18 @@ import { LoadingSpinner } from '..';
 export default {
   title: 'DesignSystem/Components/LoadingSpinner',
   component: LoadingSpinner,
+  args: {
+    animationSize: 95,
+    circleSize: 12,
+    numCircles: 11,
+  },
+  parameters: {
+    controls: {
+      exclude: ['loadingMessage'],
+    },
+  },
 };
 
-export const _default = () => {
-  return (
-    <LoadingSpinner
-      animationSize={number('Animation Size', 95)}
-      circleSize={number('Circle Size', 12)}
-      numCircles={number('Number of Circles', 11)}
-    />
-  );
+export const _default = (args) => {
+  return <LoadingSpinner {...args} />;
 };

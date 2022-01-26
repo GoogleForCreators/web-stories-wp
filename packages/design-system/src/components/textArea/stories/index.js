@@ -20,7 +20,6 @@
 import { useState } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { action } from '@storybook/addon-actions';
-import { text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
@@ -32,6 +31,13 @@ import { Headline } from '../../..';
 export default {
   title: 'DesignSystem/Components/TextArea',
   component: TextArea,
+  args: {
+    label1: 'Normal',
+    label2: 'Error',
+    label3: 'Disabled',
+    label4: 'With Counter',
+    hint: 'Hint',
+  },
 };
 
 const Container = styled.div`
@@ -54,7 +60,7 @@ const Row = styled.div`
   }
 `;
 
-export const _default = () => {
+export const _default = (args) => {
   const [inputState, setInputState] = useState({
     oneLight: 'Light mode text',
     twoLight: 'disabled',
@@ -89,8 +95,8 @@ export const _default = () => {
             name="oneLight"
             value={inputState.oneLight}
             onChange={handleChange}
-            label={text('TextArea 1 Label', 'Normal')}
-            hint={text('Hint', 'Hint')}
+            label={args.label1}
+            hint={args.hint}
             placeholder="placeholder"
           />
           <TextArea
@@ -99,8 +105,8 @@ export const _default = () => {
             name="twoLight"
             value={inputState.twoLight}
             onChange={handleChange}
-            label={text('TextArea 2 Label', 'Error')}
-            hint={text('Hint', 'Hint')}
+            label={args.label2}
+            hint={args.hint}
             placeholder="placeholder"
             hasError
           />
@@ -110,8 +116,8 @@ export const _default = () => {
             name="threeLight"
             value={inputState.threeLight}
             onChange={handleChange}
-            label={text('TextArea 3 Label', 'Disabled')}
-            hint={text('Hint', 'Hint')}
+            label={args.label3}
+            hint={args.hint}
             placeholder="placeholder"
             disabled
           />
@@ -121,8 +127,8 @@ export const _default = () => {
             name="fourLight"
             value={inputState.fourLight}
             onChange={handleChange}
-            label={text('TextArea 4 Label', 'With counter')}
-            hint={text('Hint', 'Hint')}
+            label={args.label4}
+            hint={args.hint}
             placeholder="placeholder"
             showCount
             maxLength={20}
@@ -138,8 +144,8 @@ export const _default = () => {
               name="oneDark"
               value={inputState.oneDark}
               onChange={handleChange}
-              label={text('TextArea 1 Label', 'Normal')}
-              hint={text('Hint', 'Hint')}
+              label={args.label1}
+              hint={args.hint}
               placeholder="placeholder"
             />
             <TextArea
@@ -148,8 +154,8 @@ export const _default = () => {
               name="twoDark"
               value={inputState.twoDark}
               onChange={handleChange}
-              label={text('TextArea 2 Label', 'Error')}
-              hint={text('Hint', 'Hint')}
+              label={args.label2}
+              hint={args.hint}
               placeholder="placeholder"
               hasError
             />
@@ -159,8 +165,8 @@ export const _default = () => {
               name="threeDark"
               value={inputState.threeDark}
               onChange={handleChange}
-              label={text('TextArea 3 Label', 'Disabled')}
-              hint={text('Hint', 'Hint')}
+              label={args.label3}
+              hint={args.hint}
               placeholder="placeholder"
               disabled
             />
@@ -170,8 +176,8 @@ export const _default = () => {
               name="fourDark"
               value={inputState.fourDark}
               onChange={handleChange}
-              label={text('TextArea 4 Label', 'With counter')}
-              hint={text('Hint', 'Hint')}
+              label={args.label4}
+              hint={args.hint}
               placeholder="placeholder"
               showCount
               maxLength={200}

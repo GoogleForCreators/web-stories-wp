@@ -17,7 +17,6 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { boolean, text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
@@ -27,6 +26,10 @@ import { LoadingBar } from '..';
 export default {
   title: 'DesignSystem/Components/LoadingBar',
   component: LoadingBar,
+  args: {
+    loadingMessage: 'sample aria loading text',
+    showLoadingBar: true,
+  },
 };
 
 const Container = styled.div`
@@ -38,15 +41,11 @@ const Container = styled.div`
   border-radius: 4px;
   background-color: gray;
 `;
-export const _default = () => {
-  const showLoadingBar = boolean('showLoadingBar', true);
+export const _default = (args) => {
+  const showLoadingBar = args.showLoadingBar;
   return (
     <Container>
-      {showLoadingBar && (
-        <LoadingBar
-          loadingMessage={text('loadingMessage', 'sample aria loading text')}
-        />
-      )}
+      {showLoadingBar && <LoadingBar loadingMessage={args.message} />}
     </Container>
   );
 };
