@@ -568,14 +568,15 @@ const RightClickContextMenuContainer = styled.div`
   left: ${({ position }) => position?.x ?? 0}px;
 `;
 
-const RightClickMenuOnShapeAndBackground = ({ children }) => {
+// eslint-disable-next-line react/prop-types
+const RightClickMenuOnShapeAndBackground = ({ children, args }) => {
   const ref = useRef();
   const subMenuRef = useRef();
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   return (
     <Container ref={ref}>
       {children}
-      <ContextMenu isOpen={boolean('isOpen', true)}>
+      <ContextMenu {...args}>
         <MenuItems.SubMenuTrigger
           subMenuRef={subMenuRef}
           isSubMenuOpen={isSubMenuOpen}
@@ -624,13 +625,13 @@ RightClickMenuOnShapeAndBackground.propTypes = {
   children: PropTypes.node,
 };
 
-export const WithSubMenu = () => {
+export const WithSubMenu = (args) => {
   const ref = useRef();
   const subMenuRef = useRef();
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
   return (
     <Container ref={ref}>
-      <ContextMenu isOpen={boolean('isOpen', true)}>
+      <ContextMenu {...args}>
         <MenuItems.MenuButton onClick={action('Clicked on `one`')}>
           {'one'}
         </MenuItems.MenuButton>
