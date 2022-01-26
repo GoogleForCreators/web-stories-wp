@@ -100,9 +100,11 @@ describe('BackgroundAudioPanel', () => {
   it('should render button to play and delete audio', () => {
     arrange({
       backgroundAudio: {
-        src: 'https://example.com/audio.mp3',
-        id: 123,
-        mimeType: 'audio/mpeg',
+        resource: {
+          src: 'https://example.com/audio.mp3',
+          id: 123,
+          mimeType: 'audio/mpeg',
+        },
       },
     });
     expect(
