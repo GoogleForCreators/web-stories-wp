@@ -38,7 +38,7 @@ describe('Panels/Captions', () => {
     resource: { posterId: 0, poster: '', alt: '' },
     tracks: [],
   };
-  function arrange(config, ...args) {
+  function arrange(config, selectedElements) {
     const configValue = {
       capabilities: {
         hasUploadMediaAction: true,
@@ -53,7 +53,7 @@ describe('Panels/Captions', () => {
       </ConfigContext.Provider>
     );
 
-    return renderPanel(Captions, ...args, wrapper);
+    return renderPanel(Captions, selectedElements, wrapper);
   }
 
   beforeAll(() => {
