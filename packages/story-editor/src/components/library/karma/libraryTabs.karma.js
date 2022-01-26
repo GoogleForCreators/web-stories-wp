@@ -185,7 +185,12 @@ describe('LibraryTabs integration', () => {
 
       // Click tab
       await fixture.events.mouse.clickOn(textTab, 5, 5);
-      await waitFor(() => fixture.editor.library.text);
+      await waitFor(() => {
+        if (!fixture.editor.library.text) {
+          throw new Error('text tab not ready');
+        }
+        expect(fixture.editor.library.text).toBeTruthy();
+      });
       expect(textTab).toHaveFocus();
 
       // Click elsewhere
