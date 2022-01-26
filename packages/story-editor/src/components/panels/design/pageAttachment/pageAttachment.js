@@ -131,6 +131,11 @@ function PageAttachmentPanel() {
   const { getProxiedUrl, checkResourceAccess } = useCORSProxy();
 
   const populateUrlData = useDebouncedCallback(async (value) => {
+    // Nothing to fetch for tel: or mailto: links.
+    if (!value.startsWith('http://') || !value.startsWith('https://')) {
+      return;
+    }
+
     setFetchingMetadata(true);
     try {
       const { image } = getLinkMetadata ? await getLinkMetadata(value) : {};
