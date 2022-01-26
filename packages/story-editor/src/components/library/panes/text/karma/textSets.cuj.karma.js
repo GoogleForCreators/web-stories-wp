@@ -45,21 +45,35 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
 
   it('should display text sets', async () => {
     await waitFor(
-      () => expect(fixture.editor.library.text.textSets.length).toBeTruthy(),
+      () => {
+        if (fixture.editor.library.text.textSets.length === 0) {
+          throw new Error('test sets not ready');
+        }
+        expect(fixture.editor.library.text.textSets.length).toBeTruthy();
+      },
       { timeout: 2000 }
     );
   });
 
   it('should allow inserting text sets', async () => {
     await waitFor(
-      () => expect(fixture.editor.library.text.textSets.length).toBeTruthy(),
+      () => {
+        if (fixture.editor.library.text.textSets.length === 0) {
+          throw new Error('test sets not ready');
+        }
+        expect(fixture.editor.library.text.textSets.length).toBeTruthy();
+      },
       { timeout: 2000 }
     );
     const textSets = fixture.editor.library.text.textSets;
     await fixture.events.click(textSets[1]);
 
     // Wait for text set to be inserted
-    await waitFor(() => fixture.editor.canvas.framesLayer.frames[2].node);
+    await waitFor(() => {
+      if (!fixture.editor.canvas.framesLayer.frames[2].node) {
+        throw new Error('node not ready');
+      }
+    });
 
     // Text sets contain at least 2 elements.
     expect((await getSelection()).length).toBeGreaterThan(1);
@@ -67,7 +81,12 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
 
   it('should allow inserting text set by keyboard', async () => {
     await waitFor(
-      () => expect(fixture.editor.library.text.textSets.length).toBeTruthy(),
+      () => {
+        if (fixture.editor.library.text.textSets.length === 0) {
+          throw new Error('test sets not ready');
+        }
+        expect(fixture.editor.library.text.textSets.length).toBeTruthy();
+      },
       { timeout: 2000 }
     );
     const textSets = fixture.editor.library.text.textSets;
@@ -83,7 +102,11 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     await fixture.events.keyboard.press('Enter');
 
     // Wait for text set to be inserted
-    await waitFor(() => fixture.editor.canvas.framesLayer.frames[2].node);
+    await waitFor(() => {
+      if (!fixture.editor.canvas.framesLayer.frames[2].node) {
+        throw new Error('node not ready');
+      }
+    });
 
     // Text sets contain at least 2 elements.
     expect((await getSelection()).length).toBeGreaterThan(1);
@@ -91,7 +114,12 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
 
   it('should allow user to drag and drop text set onto page', async () => {
     await waitFor(
-      () => expect(fixture.editor.library.text.textSets.length).toBeTruthy(),
+      () => {
+        if (fixture.editor.library.text.textSets.length === 0) {
+          throw new Error('test sets not ready');
+        }
+        expect(fixture.editor.library.text.textSets.length).toBeTruthy();
+      },
       { timeout: 2000 }
     );
 
@@ -113,11 +141,14 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
   });
 
   it('should allow filtering text sets by category', async () => {
-    await waitFor(() =>
+    await waitFor(() => {
+      if (!fixture.editor.library.text.textSetFilter('Editorial')) {
+        throw new Error('filtering not ready');
+      }
       expect(
         fixture.editor.library.text.textSetFilter('Editorial')
-      ).toBeTruthy()
-    );
+      ).toBeTruthy();
+    });
     await fixture.events.click(
       fixture.editor.library.text.textSetFilter('Editorial')
     );
@@ -126,41 +157,68 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
 
   it('should position the text sets as expected by category', async () => {
     await waitFor(
-      () => expect(fixture.editor.library.text.textSets.length).toBeTruthy(),
+      () => {
+        if (fixture.editor.library.text.textSets.length === 0) {
+          throw new Error('text sets not ready');
+        }
+        expect(fixture.editor.library.text.textSets.length).toBeTruthy();
+      },
       { timeout: 2000 }
     );
 
     await fixture.events.click(
       fixture.editor.library.text.textSetFilter('Editorial')
     );
-    const editorialTextSets = await waitFor(
-      () => fixture.editor.library.text.textSets
-    );
+    const editorialTextSets = await waitFor(() => {
+      if (!fixture.editor.library.text.textSets) {
+        throw new Error('editorialTextSets not ready');
+      }
+      return fixture.editor.library.text.textSets;
+    });
     await fixture.events.click(editorialTextSets[0]);
-    await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+    await waitFor(() => {
+      if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+        throw new Error('node not ready');
+      }
+    });
     await fixture.snapshot('Editorial text set positioning');
 
     await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
     await fixture.events.click(
       fixture.editor.library.text.textSetFilter('Header')
     );
-    const headerTextSets = await waitFor(
-      () => fixture.editor.library.text.textSets
-    );
+    const headerTextSets = await waitFor(() => {
+      if (!fixture.editor.library.text.textSets) {
+        throw new Error('headerTextSets set not ready');
+      }
+      return fixture.editor.library.text.textSets;
+    });
 
     await fixture.events.click(headerTextSets[0]);
-    await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+    await waitFor(() => {
+      if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+        throw new Error('node not ready');
+      }
+    });
     await fixture.snapshot('List text set positioning');
 
     await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
     await fixture.events.click(
       fixture.editor.library.text.textSetFilter('Steps')
     );
-    const stepsTextSets = await waitFor(
-      () => fixture.editor.library.text.textSets
-    );
+    const stepsTextSets = await waitFor(() => {
+      if (!fixture.editor.library.text.textSets) {
+        throw new Error('stepsTextSets not ready');
+      }
+      return fixture.editor.library.text.textSets;
+    });
     await fixture.events.click(stepsTextSets[0]);
-    await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+    await waitFor(() => {
+      if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+        throw new Error('node not ready');
+      }
+    });
+
     await fixture.snapshot('Steps text set positioning');
   });
 
@@ -176,23 +234,36 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
       await fixture.events.keyboard.press('Tab');
 
       await waitFor(
-        () => expect(fixture.editor.library.text.textSets.length).toBeTruthy(),
+        () => {
+          if (fixture.editor.library.text.textSets.length === 0) {
+            throw new Error('text sets not ready');
+          }
+          expect(fixture.editor.library.text.textSets.length).toBeTruthy();
+        },
         { timeout: 2000 }
       );
-      const textSets = await waitFor(
-        () => fixture.editor.library.text.textSets
-      );
+      const textSets = await waitFor(() => {
+        if (!fixture.editor.library.text.textSets) {
+          throw new Error('text set not ready');
+        }
+        return fixture.editor.library.text.textSets;
+      });
       // First hover text set to trigger image generation
       await fixture.events.mouse.moveRel(textSets[1], 10, 10);
 
       await fixture.events.sleep(800);
       // Then click the text set
       await fixture.events.click(textSets[1]);
+
       await waitFor(
-        () =>
+        () => {
+          if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+            throw new Error('node not ready');
+          }
           expect(
             fixture.editor.canvas.framesLayer.frames[1].node
-          ).toBeDefined(),
+          ).toBeDefined();
+        },
         { timeout: 5000 }
       );
       const selection = await getSelection();

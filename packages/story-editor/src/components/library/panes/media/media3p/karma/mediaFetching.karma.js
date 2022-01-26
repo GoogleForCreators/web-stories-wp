@@ -399,9 +399,7 @@ describe('Media3pPane fetching', () => {
 
     await fixture.events.click(fixture.editor.library.media3p.mediaElements[0]);
 
-    await waitFor(() => {
-      expect(mediaGallery.scrollTop).toBe(0);
-    });
+    expect(mediaGallery.scrollTop).toBe(0);
   });
   // TODO: https://github.com/googleforcreators/web-stories-wp/issues/10144
   // eslint-disable-next-line jasmine/no-disabled-tests
