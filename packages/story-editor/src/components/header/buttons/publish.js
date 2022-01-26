@@ -31,9 +31,10 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { useStory, useLocalMedia } from '../../../app';
+import { useStory } from '../../../app';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
 import { useCheckpoint, ReviewChecklistDialog } from '../../checklist';
+import useIsUploadingToStory from '../../../utils/useIsUploadingToStory';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
 function PublishButton({ forceIsSaving }) {
@@ -65,9 +66,7 @@ function PublishButton({ forceIsSaving }) {
       canPublish: Boolean(capabilities?.publish),
     })
   );
-  const { isUploading } = useLocalMedia((state) => ({
-    isUploading: state.state.isUploading,
-  }));
+  const isUploading = useIsUploadingToStory();
 
   const { shouldReviewDialogBeSeen } = useCheckpoint(
     ({ state: { shouldReviewDialogBeSeen } }) => ({

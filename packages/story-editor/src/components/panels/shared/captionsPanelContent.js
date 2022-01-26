@@ -47,9 +47,9 @@ const InputRow = styled.div`
 `;
 
 const StyledFileInput = styled(Input)(
-  ({ hasMixedValue, theme }) => css`
+  ({ $isIndeterminate, theme }) => css`
     ${focusStyle};
-    ${!hasMixedValue &&
+    ${!$isIndeterminate &&
     css`
       * > input:disabled {
         color: ${theme.colors.fg.primary};
@@ -67,7 +67,7 @@ const StyledButton = styled(Button)`
 `;
 
 function CaptionsPanelContent({
-  isMixedValue = false,
+  isIndeterminate = false,
   tracks = [],
   captionText = __('Upload a file', 'web-stories'),
   handleChangeTrack,
@@ -86,44 +86,41 @@ function CaptionsPanelContent({
 
   return (
     <>
-      {isMixedValue && (
+      {isIndeterminate && (
         <Row>
           <StyledFileInput
             value={MULTIPLE_DISPLAY_VALUE}
             disabled
             aria-label={__('Filename', 'web-stories')}
             onChange={() => handleRemoveTrack()}
-            hasMixedValue={isMixedValue}
+            $isIndeterminate={isIndeterminate}
           />
         </Row>
       )}
-      {tracks &&
-        !isMixedValue &&
-        tracks.map(({ id, trackName }) => (
-          <Row key={`row-filename-${id}`}>
-            <InputRow>
-              <StyledFileInput
-                value={trackName}
-                aria-label={__('Filename', 'web-stories')}
-                onChange={() => handleRemoveTrack(id)}
-                hasMixedValue={isMixedValue}
-                disabled
-              />
-            </InputRow>
-            <Tooltip hasTail title={clearFileText}>
-              <StyledButton
-                aria-label={clearFileText}
-                type={BUTTON_TYPES.TERTIARY}
-                size={BUTTON_SIZES.SMALL}
-                variant={BUTTON_VARIANTS.SQUARE}
-                onClick={() => handleRemoveTrack(id)}
-              >
-                <Icons.Trash />
-              </StyledButton>
-            </Tooltip>
-          </Row>
-        ))}
-      {!tracks.length && (
+      {tracks.map(({ id, trackName }) => (
+        <Row key={`row-filename-${id}`}>
+          <InputRow>
+            <StyledFileInput
+              value={trackName}
+              aria-label={__('Filename', 'web-stories')}
+              onChange={() => handleRemoveTrack(id)}
+              disabled
+            />
+          </InputRow>
+          <Tooltip hasTail title={clearFileText}>
+            <StyledButton
+              aria-label={clearFileText}
+              type={BUTTON_TYPES.TERTIARY}
+              size={BUTTON_SIZES.SMALL}
+              variant={BUTTON_VARIANTS.SQUARE}
+              onClick={() => handleRemoveTrack(id)}
+            >
+              <Icons.Trash />
+            </StyledButton>
+          </Tooltip>
+        </Row>
+      ))}
+      {!tracks.length && !isIndeterminate && (
         <Row expand>
           <MediaUpload
             onSelect={handleChangeTrack}
@@ -143,7 +140,7 @@ function CaptionsPanelContent({
 }
 
 CaptionsPanelContent.propTypes = {
-  isMixedValue: PropTypes.bool,
+  isIndeterminate: PropTypes.bool,
   tracks: PropTypes.arrayOf(ResourcePropTypes.trackResource),
   captionText: PropTypes.string,
   clearFileText: PropTypes.string,
