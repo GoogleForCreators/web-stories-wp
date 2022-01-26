@@ -27,7 +27,7 @@ import { MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import { useStory } from '../../../app';
 import { initHelpers } from './_utils';
 
-fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edit', () => {
+describe('CUJ: Creator can Add and Write Text: Select an individual word to edit', () => {
   const data = {};
 
   const {
@@ -139,9 +139,8 @@ fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edi
       expect(letterSpacing.value).toBe('50%');
       expect(fontColor.hex.value).toBe('FF6600');
 
-      // Move selection to characters 6-9 (partially overlapping new styles and no styles)
-      // @todo For some reason this is not selecting 6-9 properly, and the test fails!
-      await setSelection(6, 9);
+      // Move selection to characters 7-10 (partially overlapping new styles and no styles)
+      await setSelection(7, 10);
 
       // Verify that the toggles are off (as to be expected with mixed styles)
       expect(bold.checked).toBe(false);
@@ -184,7 +183,8 @@ fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edi
 
       // Exit edit-mode
       const safezone = data.fixture.querySelector('[data-testid="safezone"]');
-      await data.fixture.events.click(safezone);
+      const rect = safezone.getBoundingClientRect();
+      await data.fixture.events.mouse.click(rect.left + 10, rect.top + 10);
       await data.fixture.snapshot('With inline style applied');
 
       // Assume text content to match expectation
@@ -206,7 +206,7 @@ fdescribe('CUJ: Creator can Add and Write Text: Select an individual word to edi
         'letter-spacing: 1em',
         'text-transform: uppercase',
       ].join('; ');
-      const expected = `Lorem <span style="${firstCSS}">i</span><span style="${secondCSS}">p</span><span style="${secondCSS}">su</span>m dolor sit amet, consectetur adipiscing elit`;
+      const expected = `Lorem <span style="${firstCSS}">i</span><span style="${secondCSS}">p</span><span style="${secondCSS}">su</span>m dolor sit amet, consectetur adipiscing elit.`;
       expect(actual).toBe(expected);
     });
   });
