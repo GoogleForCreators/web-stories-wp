@@ -48,7 +48,10 @@ describe('Alignment Panel', () => {
   describe('When there is one element on canvas', () => {
     beforeEach(async () => {
       // Add first text element
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
       await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
 
       // It will correctly be selected now
@@ -129,7 +132,10 @@ describe('Alignment Panel', () => {
       xdescribe('When there are two elements on canvas', () => {
         beforeEach(async () => {
           // Add second text element
-          await fixture.events.click(fixture.editor.library.textAdd);
+          await fixture.editor.library.textTab.click();
+          await fixture.events.click(
+            fixture.editor.library.text.preset('Paragraph')
+          );
 
           // TODO: move second text element to appropriate place
 
@@ -153,7 +159,10 @@ describe('Alignment Panel', () => {
         describe('When there are three elements on canvas', () => {
           beforeEach(async () => {
             // Add third text element
-            await fixture.events.click(fixture.editor.library.textAdd);
+            await fixture.editor.library.textTab.click();
+            await fixture.events.click(
+              fixture.editor.library.text.preset('Paragraph')
+            );
 
             // TODO: move third text element to appropriate place
 

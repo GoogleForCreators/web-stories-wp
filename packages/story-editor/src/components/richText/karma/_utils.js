@@ -41,13 +41,19 @@ export function initHelpers(data) {
   }
 
   async function addInitialText(addExtra = false) {
-    await data.fixture.events.click(data.fixture.editor.library.textAdd);
+    await data.fixture.editor.library.textTab.click();
+    await data.fixture.events.click(
+      data.fixture.editor.library.text.preset('Paragraph')
+    );
     await waitFor(() => data.fixture.editor.canvas.framesLayer.frames[1].node);
 
     if (addExtra) {
       // Move the first text field 10 steps down to avoid placing these on top of each other.
       await repeatPress('ArrowDown', 10);
-      await data.fixture.events.click(data.fixture.editor.library.textAdd);
+      await data.fixture.editor.library.textTab.click();
+      await data.fixture.events.click(
+        data.fixture.editor.library.text.preset('Paragraph')
+      );
       await waitFor(
         () => data.fixture.editor.canvas.framesLayer.frames[2].node
       );

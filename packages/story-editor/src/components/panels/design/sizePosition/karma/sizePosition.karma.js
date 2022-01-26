@@ -53,7 +53,10 @@ describe('Selection Panel', () => {
 
   describe('CUJ: Creator can Transform an Element: Set height and width', () => {
     beforeEach(async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
       await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       panel = fixture.editor.inspector.designPanel.sizePosition;
     });

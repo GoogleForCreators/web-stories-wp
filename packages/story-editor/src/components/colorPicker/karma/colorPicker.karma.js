@@ -157,7 +157,10 @@ describe('ColorPicker', () => {
         );
 
         // Add text and apply the previously saved color.
-        await fixture.events.click(fixture.editor.library.textAdd);
+        await fixture.editor.library.textTab.click();
+        await fixture.events.click(
+          fixture.editor.library.text.preset('Paragraph')
+        );
         await waitFor(() => {
           if (!fixture.editor.canvas.framesLayer.frames[1].node) {
             throw new Error('node not ready');
@@ -193,7 +196,10 @@ describe('ColorPicker', () => {
         );
 
         // Add text and apply the previously saved color.
-        await fixture.events.click(fixture.editor.library.textAdd);
+        await fixture.editor.library.textTab.click();
+        await fixture.events.click(
+          fixture.editor.library.text.preset('Paragraph')
+        );
         await waitFor(() => {
           if (!fixture.editor.canvas.framesLayer.frames[1].node) {
             throw new Error('node not ready');
@@ -216,7 +222,10 @@ describe('ColorPicker', () => {
 
       it('should allow saving text background color', async () => {
         // Add text element
-        await fixture.events.click(fixture.editor.library.textAdd);
+        await fixture.editor.library.textTab.click();
+        await fixture.events.click(
+          fixture.editor.library.text.preset('Paragraph')
+        );
         await waitFor(() => {
           if (!fixture.editor.canvas.framesLayer.frames[1].node) {
             throw new Error('node not ready');
@@ -244,7 +253,10 @@ describe('ColorPicker', () => {
     describe('CUJ: Creator can Apply or Save a Color from/to Their Preset Library: Manage Color Presets', () => {
       it('should allow deleting local and global color presets', async () => {
         // Add text element and a color preset.
-        await fixture.events.click(fixture.editor.library.textAdd);
+        await fixture.editor.library.textTab.click();
+        await fixture.events.click(
+          fixture.editor.library.text.preset('Paragraph')
+        );
         await waitFor(() => {
           if (!fixture.editor.canvas.framesLayer.frames[1].node) {
             throw new Error('node not ready');

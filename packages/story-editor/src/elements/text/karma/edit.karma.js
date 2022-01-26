@@ -61,7 +61,10 @@ describe('TextEdit integration', () => {
     let frame;
 
     beforeEach(async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
       await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       frame = fixture.editor.canvas.framesLayer.frames[1].node;
     });
@@ -175,7 +178,10 @@ describe('TextEdit integration', () => {
 
     describe('edit mode', () => {
       it('should not change height when entering and exiting edit mode', async () => {
-        await fixture.events.click(fixture.editor.library.textAdd);
+        await fixture.editor.library.textTab.click();
+        await fixture.events.click(
+          fixture.editor.library.text.preset('Paragraph')
+        );
         await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
         frame = fixture.editor.canvas.framesLayer.frames[1].node;
         const { width } = frame.getBoundingClientRect();

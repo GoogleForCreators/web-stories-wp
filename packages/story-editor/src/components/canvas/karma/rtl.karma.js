@@ -50,7 +50,10 @@ describe('RTL support', () => {
 
   describe('CUJ: Creator can Select an Element: Transforming element', () => {
     it('should allow dragging element in RTL mode', async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
       await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       const frame = fixture.editor.canvas.framesLayer.frames[1].node;
       const elements = await getSelectedElements();
@@ -72,7 +75,10 @@ describe('RTL support', () => {
     });
 
     it('should allow resizing element in RTL mode', async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
       await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       const elements = await getSelectedElements();
       const originWidth = elements[0].width;

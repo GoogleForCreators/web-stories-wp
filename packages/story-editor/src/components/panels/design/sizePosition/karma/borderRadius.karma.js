@@ -43,7 +43,10 @@ describe('Border Radius', () => {
 
   describe('CUJ: Creator can Manipulate Shape: Border Radius', () => {
     it('should allow the user to add border radius for text element', async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
       await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       // Choose Fill as background for visibility.
       await fixture.events.click(

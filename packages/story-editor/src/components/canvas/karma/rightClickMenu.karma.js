@@ -422,7 +422,10 @@ describe('Right Click Menu integration', () => {
 
     it('should open and close the context menu using keyboard shortcuts', async () => {
       // add an element to the page
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
       await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
 

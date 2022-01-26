@@ -218,11 +218,16 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       await fixture.events.keyboard.press('Tab');
 
       // This text should be added without any changes.
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
       await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
 
       const [text1] = await getSelection();
-      expect(text1.content).toEqual('Fill in some text');
+      expect(text1.content).toEqual(
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+      );
 
       await fixture.events.mouse.moveRel(
         fixture.editor.library.text.preset('Title 1'),

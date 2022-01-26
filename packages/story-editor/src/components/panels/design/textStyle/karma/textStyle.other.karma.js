@@ -42,7 +42,11 @@ describe('Text Style Panel', () => {
 
   describe('Panel state', () => {
     beforeEach(async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
+      // @todo Chenge the text to "Fill in some text" first.
     });
 
     it('should have the style panel always expanded', async () => {
@@ -57,7 +61,10 @@ describe('Text Style Panel', () => {
       await fixture.snapshot('Collapsed style panel');
 
       // Add a new text now.
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
       await waitFor(() => fixture.editor.canvas.framesLayer.frames[2].node);
       // Expect the inputs to be visible again, since the panel should be expanded again.
       expect(
@@ -99,7 +106,10 @@ describe('Text Style Panel', () => {
       await fixture.events.keyboard.press('Tab');
 
       // Add text element.
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
       await fixture.events.click(
         fixture.editor.inspector.designPanel.textStyle.adaptiveColor
       );
@@ -136,7 +146,10 @@ describe('Text Style Panel', () => {
 
   describe('Line-height & Padding', () => {
     beforeEach(async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
     });
 
     it('should display padding and line-height correctly', async () => {
@@ -179,7 +192,10 @@ describe('Text Style Panel', () => {
 
   describe('Font controls', () => {
     beforeEach(async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
     });
 
     it('should allow whole number font sizes', async () => {
@@ -219,7 +235,10 @@ describe('Text Style Panel', () => {
 
   describe('Font picker', () => {
     beforeEach(async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
     });
     const getOptions = () => {
       return fixture.screen

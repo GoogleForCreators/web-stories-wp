@@ -40,7 +40,8 @@ describe('Animation Panel', function () {
   });
 
   it('should render the animation panel when an element is selected.', async function () {
-    await fixture.events.click(fixture.editor.library.textAdd);
+    await fixture.editor.library.textTab.click();
+    await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
     await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
     const panel = fixture.editor.inspector.designPanel.animation;
     expect(panel).not.toBeNull();
@@ -49,7 +50,8 @@ describe('Animation Panel', function () {
   // TODO #6953
   // eslint-disable-next-line jasmine/no-disabled-tests
   xit('can click the animation chooser and select an effect.', async function () {
-    await fixture.events.click(fixture.editor.library.textAdd);
+    await fixture.editor.library.textTab.click();
+    await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
     await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
     const panel = fixture.editor.inspector.designPanel.animation;
 
@@ -65,7 +67,8 @@ describe('Animation Panel', function () {
   });
 
   it('replaces an existing effect with a new one.', async function () {
-    await fixture.events.click(fixture.editor.library.textAdd);
+    await fixture.editor.library.textTab.click();
+    await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
     await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
     const panel = fixture.editor.inspector.designPanel.animation;
 
@@ -86,7 +89,8 @@ describe('Animation Panel', function () {
   });
 
   it('plays the animation when a control in the panel is changed.', async function () {
-    await fixture.events.click(fixture.editor.library.textAdd);
+    await fixture.editor.library.textTab.click();
+    await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
     await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
     const panel = fixture.editor.inspector.designPanel.animation;
 
