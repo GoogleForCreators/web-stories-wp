@@ -34,6 +34,7 @@ const Main = styled.div`
   position: absolute;
   display: grid;
   min-width: 917px;
+  width: 100%;
   height: 100%;
   margin: 0 -3.7% 0 3.7%;
   grid-gap: 3.7%;
