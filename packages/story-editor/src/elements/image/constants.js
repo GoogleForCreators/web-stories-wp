@@ -39,6 +39,7 @@ export {
 export const defaultAttributes = {
   ...SHARED_DEFAULT_ATTRIBUTES,
   ...MEDIA_DEFAULT_ATTRIBUTES,
+  lockAspectRatio: false,
 };
 
 export const copyableAttributes = {

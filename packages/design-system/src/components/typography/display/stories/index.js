@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,35 +15,37 @@
  */
 
 /**
- * External dependencies
- */
-import { select } from '@storybook/addon-knobs';
-
-/**
  * Internal dependencies
  */
 import { THEME_CONSTANTS } from '../../../..';
 import { Text } from '../..';
 import { Display } from '..';
 
+const displayRenderAsOptions = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+const displayPresetSizes = THEME_CONSTANTS.TYPOGRAPHY.DISPLAY_SIZES;
+
 export default {
   title: 'DesignSystem/Components/Typography/Display',
   component: Display,
+  arg: {
+    as: 'h1',
+  },
+  argTypes: {
+    as: {
+      options: displayRenderAsOptions,
+      control: 'select',
+      name: 'as HTML:',
+    },
+  },
 };
 
-const displayPresetSizes = THEME_CONSTANTS.TYPOGRAPHY.DISPLAY_SIZES;
-const displayRenderAsOptions = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
-
-export const _default = () => (
+export const _default = (args) => (
   <>
     {displayPresetSizes.map((presetSize) => (
       <div key={`${presetSize}_display`}>
         <Text size={'small'}>{presetSize}</Text>
 
-        <Display
-          size={presetSize}
-          as={select('as', displayRenderAsOptions, 'h1')}
-        >
+        <Display size={presetSize} {...args}>
           {'The Quick Brown Fox Jumps Over the Lazy Dog'} <br />
         </Display>
       </div>

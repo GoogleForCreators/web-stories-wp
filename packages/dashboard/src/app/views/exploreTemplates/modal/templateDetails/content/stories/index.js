@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-import { boolean } from '@storybook/addon-knobs';
 /**
  * Internal dependencies
  */
@@ -32,7 +31,7 @@ export default {
 export const _default = () => (
   <DetailsContent
     activeTemplateIndex={8}
-    isRTL={boolean('isRTL')}
+    isRTL={false}
     filteredTemplatesLength={12}
     switchToTemplateByOffset={action('switch to template by offset clicked')}
     template={formattedTemplatesArray[1]}
