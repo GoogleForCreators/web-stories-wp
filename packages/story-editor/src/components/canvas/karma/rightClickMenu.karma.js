@@ -475,7 +475,11 @@ describe('Right Click Menu integration', () => {
       expect(getMenuItemByName('Background')).not.toBeNull();
       expect(getMenuItemByName('Triangle')).not.toBeNull();
       expect(getMenuItemByName('blue-marble')).not.toBeNull();
-      expect(() => getMenuItemByName('Fill in some text')).toThrow();
+      expect(() =>
+        getMenuItemByName(
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+        )
+      ).toThrow();
 
       // Verify that clicking on the background button selects background.
       await fixture.events.click(getMenuItemByName('Background'));

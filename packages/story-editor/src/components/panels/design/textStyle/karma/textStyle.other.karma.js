@@ -115,7 +115,9 @@ describe('Text Style Panel', () => {
 
       await waitFor(
         async () => {
-          const texts = await fixture.screen.getAllByText('Fill in some text');
+          const texts = fixture.screen.getAllByText(
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+          );
           expect(texts).toBeDefined();
 
           const whiteTexts = texts.filter((text) =>
@@ -133,7 +135,7 @@ describe('Text Style Panel', () => {
             },
           } = await fixture.renderHook(() => useStory());
           expect(elements[1].content).toBe(
-            '<span style="color: #fff">Fill in some text</span>'
+            '<span style="color: #fff">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>'
           );
         },
         {
@@ -162,7 +164,7 @@ describe('Text Style Panel', () => {
       await fixture.events.keyboard.press('tab');
 
       const texts = await waitFor(() =>
-        fixture.screen.getAllByText('Fill in some text')
+        fixture.screen.getAllByText('Lorem ipsum dolor sit amet, consectetur adipiscing elit.')
       );
 
       // Display layer.
