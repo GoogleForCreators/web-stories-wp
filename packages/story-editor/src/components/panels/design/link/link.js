@@ -136,7 +136,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
 
   const populateMetadata = useDebouncedCallback(async (newUrl) => {
     // Nothing to fetch for tel: or mailto: links.
-    if (!newUrl.startsWith('http://') || !newUrl.startsWith('https://')) {
+    if (!newUrl.startsWith('http://') && !newUrl.startsWith('https://')) {
       return;
     }
 
