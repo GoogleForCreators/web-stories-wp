@@ -26,6 +26,12 @@ import { useStory } from '../..';
 /**
  * Creates the right click menu layer actions.
  *
+ * Exposes two booleans:
+ * - `canElementMoveBackwards`
+ * - `canElementMoveForwards`
+ *
+ * These define the ability of the element to move in the layers.
+ *
  * @return {Object} Right click menu layer actions
  */
 const useLayerActions = () => {
