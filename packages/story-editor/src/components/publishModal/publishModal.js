@@ -28,6 +28,9 @@ import Header from './header';
 import MainContent from './mainContent';
 
 const Container = styled.div`
+  position: relative;
+  height: 100%;
+  overflow: hidden;
   color: ${({ theme }) => theme.colors.fg.primary};
   background-color: ${({ theme }) => theme.colors.bg.primary};
   border: ${({ theme }) => `1px solid ${theme.colors.divider.primary}`};
