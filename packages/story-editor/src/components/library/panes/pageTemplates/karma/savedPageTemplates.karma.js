@@ -43,7 +43,7 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
   });
 
   describe('Saved page templates', () => {
-    beforeEach(async () => {
+    const openSavedTemplates = async () => {
       await fixture.events.click(fixture.editor.library.pageTemplatesTab);
       await fixture.events.click(
         fixture.editor.library.pageTemplatesPane.dropDown
@@ -54,6 +54,10 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
           'Saved templates'
         )
       );
+    };
+
+    beforeEach(async () => {
+      await openSavedTemplates();
     });
 
     it('should allow saving a non-empty page as template', async () => {
@@ -90,6 +94,9 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
         fixture.editor.library.text.preset('Paragraph')
       );
       await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+
+      await openSavedTemplates();
+
       await fixture.events.click(
         fixture.editor.library.pageTemplatesPane.saveTemplateBtn
       );
