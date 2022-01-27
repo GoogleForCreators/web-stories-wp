@@ -20,12 +20,8 @@
     "node": ">= 16",
     "npm": ">= 7.3"
   },
-  "type": "module",
-  "exports": {
-    "default": "./src/index.js"
-  },
-  "main": "./dist/index.js",
-  "module": "./dist-module/index.js",
+  "type": "module",  "main": "dist/index.js",
+  "module": "dist-module/index.js",
   "source": "./src/index.js",
   "dependencies": {
     "polished": "^4.1.4",

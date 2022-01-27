@@ -23,11 +23,8 @@
     "npm": ">= 7.3"
   },
   "type": "module",
-  "exports": {
-    "default": "./src/index.js"
-  },
-  "main": "./dist/index.js",
-  "module": "./dist-module/index.js",
+  "main": "dist/index.js",
+  "module": "dist-module/index.js",
   "source": "./src/index.js",
   "devDependencies": {
     "got": "^11.8.3",

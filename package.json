@@ -173,6 +173,7 @@
     "workspaces-run": "^1.0.1"
   },
   "scripts": {
+    "bundle": "rollup",
     "build": "npm-run-all build:*",
     "prebuild:js": "rm -rf assets/css/* assets/js/*",
     "build:js": "NODE_ENV=production webpack --config webpack.config.cjs",
