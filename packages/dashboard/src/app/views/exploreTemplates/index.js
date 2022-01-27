@@ -178,7 +178,6 @@ function ExploreTemplates() {
         title && trackScreenView(title);
 
         if (newIsOpen && id) {
-          speak(__('Enter detail templates view', 'web-stories'));
           updateTemplateView(id);
         }
 
@@ -203,7 +202,7 @@ function ExploreTemplates() {
         sprintf(
           /* translators: %s: template title */
           __('Viewing %s', 'web-stories'),
-          newTemplate?.title
+          newTemplate.title
         )
       );
     },
