@@ -52,7 +52,6 @@ const Background = styled.section.attrs({
   height: 100%;
   position: relative;
   user-select: none;
-  contain: strict;
 `;
 
 function CanvasLayout({ header, footer }) {
