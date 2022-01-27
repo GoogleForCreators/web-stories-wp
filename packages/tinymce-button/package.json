@@ -19,7 +19,6 @@
     "node": ">= 16",
     "npm": ">= 7.3"
   },
-  "type": "module",
   "exports": {
     "default": "./src/index.js"
   },

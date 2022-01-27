@@ -21,7 +21,6 @@
     "node": ">= 16",
     "npm": ">= 7.3"
   },
-  "type": "module",
   "bin": {
     "commander": "./src/index.js"
   },
