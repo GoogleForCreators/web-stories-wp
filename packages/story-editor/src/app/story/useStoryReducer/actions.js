@@ -119,12 +119,12 @@ const updateElementById =
       payload: { elementIds: [elementId], properties },
     });
 
-const duplicateElementById =
+const duplicateElementsById =
   (dispatch) =>
-  ({ elementId }) =>
+  ({ elementIds }) =>
     dispatch({
-      type: types.DUPLICATE_ELEMENT_BY_ID,
-      payload: { elementId },
+      type: types.DUPLICATE_ELEMENTS_BY_ID,
+      payload: { elementIds },
     });
 
 const updateSelectedElements =
@@ -237,7 +237,7 @@ export const exposedActions = {
   updateElementsByResourceId,
   deleteElementsByResourceId,
   updateElementById,
-  duplicateElementById,
+  duplicateElementsById,
   updateSelectedElements,
   combineElements,
   setBackgroundElement,

@@ -127,10 +127,24 @@ describe('Border Panel', () => {
     await fixture.snapshot('Shape element with border');
   });
 
-  it('should not allow border for non-rectangular shape', async () => {
+  it('should allow border for non-rectangular shape', async () => {
     await fixture.events.click(fixture.editor.library.shapesTab);
     await fixture.events.click(fixture.editor.library.shapes.shape('Circle'));
-    // Verify that panel is not found.
-    expect(() => fixture.editor.inspector.designPanel.border).toThrow();
+
+    const panel = fixture.editor.inspector.designPanel.border;
+    await fixture.events.click(panel.width(), { clickCount: 3 });
+    await fixture.events.keyboard.type('10');
+    await fixture.events.keyboard.press('Tab');
+
+    const [element] = await getSelection();
+    const {
+      border: { left },
+    } = element;
+    expect(left).toBe(10);
+
+    await fixture.snapshot('Non-rectangular shape element with border');
+
+    // Verify that border cannot have opacity
+    expect(() => panel.borderColor.opacity).toThrow();
   });
 });

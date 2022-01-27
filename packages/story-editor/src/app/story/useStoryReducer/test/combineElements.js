@@ -547,7 +547,7 @@ describe('combineElements', () => {
       });
     });
 
-    it('should not preserve the border of origin element when combining with non-rectangular', () => {
+    it('should preserve the border of origin element even when combining with non-rectangular', () => {
       const { restore, combineElements } = setupReducer();
 
       const state = getDefaultState5();
@@ -576,6 +576,12 @@ describe('combineElements', () => {
         y: 10,
         focalX: 50,
         focalY: 50,
+        border: {
+          bottom: 10,
+          left: 10,
+          right: 10,
+          top: 10,
+        },
       });
     });
   });
@@ -650,7 +656,7 @@ describe('combineElements', () => {
       });
     });
 
-    it('should not preserve the border of origin element when combining with non-rectangular', () => {
+    it('should not preserve the border radius of origin element when combining with non-rectangular', () => {
       const { restore, combineElements } = setupReducer();
 
       const state = getDefaultState6();

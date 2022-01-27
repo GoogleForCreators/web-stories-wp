@@ -19,6 +19,8 @@ export const KEYS = {
   LEFT: 'ArrowLeft',
   RIGHT: 'ArrowRight',
   UP: 'ArrowUp',
+  ENTER: 'Enter',
+  SPACE: 'Space',
   TAB: 'Tab',
 };
 

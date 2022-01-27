@@ -16,9 +16,9 @@
 /**
  * Internal dependencies
  */
-import { getDefinitionForType, ELEMENT_TYPES } from '../../../elements';
+import { ELEMENT_TYPES } from '../../../elements';
 import objectPick from '../../../utils/objectPick';
-import { getElementStyles, getDefaultPropertiesForType } from '../utils';
+import { getElementStyles } from '../utils';
 
 const ALL_PROPERTIES = {
   // style properties
@@ -65,17 +65,6 @@ const expectedTextStyles = objectPick(ALL_PROPERTIES, [
   'lineHeight',
 ]);
 
-const { clearableAttributes: clearableGifAttributes } =
-  getDefinitionForType('gif');
-const { clearableAttributes: clearableImageAttributes } =
-  getDefinitionForType('image');
-const { clearableAttributes: clearableShapeAttributes } =
-  getDefinitionForType('shape');
-const { clearableAttributes: clearableTextAttributes } =
-  getDefinitionForType('text');
-const { clearableAttributes: clearableVideoAttributes } =
-  getDefinitionForType('video');
-
 describe('getElementStyles', () => {
   it('should return `null` if the element does not have the correct structure', () => {
     // No element
@@ -99,32 +88,6 @@ describe('getElementStyles', () => {
     'should pick the correct properties for a `$type` element',
     ({ type, expectedProperties }) => {
       const result = getElementStyles({ ...ALL_PROPERTIES, type });
-
-      expect(result).toStrictEqual(expectedProperties);
-    }
-  );
-});
-
-describe('getDefaultPropertiesForType', () => {
-  it('should return `null` if the element does not have the correct structure', () => {
-    // No element type
-    expect(getDefaultPropertiesForType({})).toBeNull();
-
-    // Element type does not exist
-    expect(getDefaultPropertiesForType({ type: 'banana' })).toBeNull();
-  });
-
-  it.each`
-    type                   | expectedProperties
-    ${ELEMENT_TYPES.IMAGE} | ${clearableImageAttributes}
-    ${ELEMENT_TYPES.GIF}   | ${clearableGifAttributes}
-    ${ELEMENT_TYPES.VIDEO} | ${clearableVideoAttributes}
-    ${ELEMENT_TYPES.SHAPE} | ${clearableShapeAttributes}
-    ${ELEMENT_TYPES.TEXT}  | ${clearableTextAttributes}
-  `(
-    'should return the default properties for a `$type` element',
-    ({ type, expectedProperties }) => {
-      const result = getDefaultPropertiesForType(type);
 
       expect(result).toStrictEqual(expectedProperties);
     }

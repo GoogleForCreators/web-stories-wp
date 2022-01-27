@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-import { boolean } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import {
   useCallback,
@@ -26,6 +25,7 @@ import {
   useRef,
   useEffect,
 } from '@googleforcreators/react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -35,6 +35,8 @@ import { DarkThemeProvider } from '../../../storybookUtils';
 import {
   Bucket,
   Captions,
+  CheckmarkSmall,
+  ChevronRightSmall,
   CircleSpeed,
   Eraser,
   LetterTLargeLetterTSmall,
@@ -49,6 +51,14 @@ import * as MenuItems from '../components';
 export default {
   title: 'DesignSystem/Components/ContextMenu',
   component: ContextMenu,
+  args: {
+    isOpen: true,
+  },
+  parameters: {
+    controls: {
+      include: ['isOpen'],
+    },
+  },
 };
 
 const ViewportContainer = styled.div`
@@ -80,10 +90,10 @@ const Grid = styled.div`
   }
 `;
 
-export const _default = () => {
+export const _default = (args) => {
   return (
     <Container>
-      <ContextMenu isOpen={boolean('isOpen', true)}>
+      <ContextMenu {...args}>
         <MenuItems.MenuButton onClick={action('Clicked on `one`')}>
           {'one'}
         </MenuItems.MenuButton>
@@ -135,12 +145,12 @@ export const _default = () => {
   );
 };
 
-export const DarkMode = () => {
+export const DarkMode = (args) => {
   return (
     <DarkThemeProvider>
       <Container>
         <Container>
-          <ContextMenu isOpen={boolean('isOpen', true)}>
+          <ContextMenu {...args}>
             <MenuItems.MenuButton onClick={action('Clicked on `one`')}>
               {'one'}
             </MenuItems.MenuButton>
@@ -196,12 +206,12 @@ export const DarkMode = () => {
   );
 };
 
-export const QuickActionMenu = () => {
+export const QuickActionMenu = (args) => {
   return (
     <Grid>
       <Container>
         <Text>{'Blank page; no item selected'}</Text>
-        <ContextMenu isIconMenu isOpen={boolean('isOpen', true)}>
+        <ContextMenu isIconMenu {...args}>
           <MenuItems.MenuButton onClick={action('Clicked on the first action')}>
             <MenuItems.MenuIcon title="Change background color">
               <Bucket />
@@ -224,7 +234,7 @@ export const QuickActionMenu = () => {
       </Container>
       <Container>
         <Text>{'Background Image selected'}</Text>
-        <ContextMenu isIconMenu isOpen={boolean('isOpen', true)}>
+        <ContextMenu isIconMenu {...args}>
           <MenuItems.MenuButton onClick={action('Clicked on the first action')}>
             <MenuItems.MenuIcon title="Replace background">
               <PictureSwap />
@@ -247,7 +257,7 @@ export const QuickActionMenu = () => {
       </Container>
       <Container>
         <Text>{'Foreground Image selected'}</Text>
-        <ContextMenu isIconMenu isOpen={boolean('isOpen', true)}>
+        <ContextMenu isIconMenu {...args}>
           <MenuItems.MenuButton onClick={action('Clicked on the first action')}>
             <MenuItems.MenuIcon title="Replace media">
               <PictureSwap />
@@ -277,7 +287,7 @@ export const QuickActionMenu = () => {
       </Container>
       <Container>
         <Text>{'Video selected'}</Text>
-        <ContextMenu isIconMenu isOpen={boolean('isOpen', true)}>
+        <ContextMenu isIconMenu {...args}>
           <MenuItems.MenuButton onClick={action('Clicked on the first action')}>
             <MenuItems.MenuIcon title="Replace media">
               <PictureSwap />
@@ -312,7 +322,7 @@ export const QuickActionMenu = () => {
       </Container>
       <Container>
         <Text>{'Shape selected'}</Text>
-        <ContextMenu isIconMenu isOpen={boolean('isOpen', true)}>
+        <ContextMenu isIconMenu {...args}>
           <MenuItems.MenuButton onClick={action('Clicked on the first action')}>
             <MenuItems.MenuIcon title="Change color">
               <Bucket />
@@ -342,7 +352,7 @@ export const QuickActionMenu = () => {
       </Container>
       <Container>
         <Text>{'Text selected'}</Text>
-        <ContextMenu isIconMenu isOpen={boolean('isOpen', true)}>
+        <ContextMenu isIconMenu {...args}>
           <MenuItems.MenuButton onClick={action('Clicked on the first action')}>
             <MenuItems.MenuIcon title="Change color">
               <Bucket />
@@ -552,14 +562,139 @@ const SampleLayout = styled.div`
   height: 800px;
   border: 1px solid black;
 `;
-
 const RightClickContextMenuContainer = styled.div`
   position: absolute;
   top: ${({ position }) => position?.y ?? 0}px;
   left: ${({ position }) => position?.x ?? 0}px;
 `;
 
-export const RightClickMenu = () => {
+const RightClickMenuOnShapeAndBackground = ({ children, ...args }) => {
+  const ref = useRef();
+  const subMenuRef = useRef();
+  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
+  return (
+    <Container ref={ref}>
+      {children}
+      <ContextMenu {...args}>
+        <MenuItems.SubMenuTrigger
+          subMenuRef={subMenuRef}
+          isSubMenuOpen={isSubMenuOpen}
+          parentMenuRef={ref}
+          closeSubMenu={() => setIsSubMenuOpen(false)}
+          openSubMenu={() => setIsSubMenuOpen(true)}
+          label="Select Layer"
+          SuffixIcon={ChevronRightSmall}
+        />
+        <RightClickContextMenuContainer
+          position={{
+            y: 0,
+            x: 212,
+          }}
+          ref={subMenuRef}
+        >
+          <ContextMenu
+            isOpen={isSubMenuOpen}
+            onCloseSubMenu={() => setIsSubMenuOpen(false)}
+            isSubMenu
+            parentMenuRef={ref}
+          >
+            <MenuItems.MenuItem
+              supportsIcon
+              dismissOnClick={false}
+              onClick={() => () => setIsSubMenuOpen(false)}
+              icon={<CheckmarkSmall />}
+              label={<span>{'Select rectangle'}</span>}
+            />
+            <MenuItems.MenuItem
+              supportsIcon
+              dismissOnClick={false}
+              onClick={() => setIsSubMenuOpen(false)}
+              label={<span>{'Select background'}</span>}
+            />
+          </ContextMenu>
+        </RightClickContextMenuContainer>
+        <MenuItems.MenuSeparator />
+        {shapeMenu}
+      </ContextMenu>
+    </Container>
+  );
+};
+
+RightClickMenuOnShapeAndBackground.propTypes = {
+  children: PropTypes.node,
+};
+
+export const WithSubMenu = (args) => {
+  const ref = useRef();
+  const subMenuRef = useRef();
+  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
+  return (
+    <Container ref={ref}>
+      <ContextMenu {...args}>
+        <MenuItems.MenuButton onClick={action('Clicked on `one`')}>
+          {'one'}
+        </MenuItems.MenuButton>
+        <MenuItems.MenuButton onClick={action('Clicked on `two`')}>
+          {'two'}
+        </MenuItems.MenuButton>
+        <MenuItems.MenuButton
+          onClick={action('Clicked on `disabled`')}
+          disabled
+        >
+          {'this is disabled'}
+        </MenuItems.MenuButton>
+        <MenuItems.MenuSeparator />
+        <MenuItems.SubMenuTrigger
+          subMenuRef={subMenuRef}
+          isSubMenuOpen={isSubMenuOpen}
+          parentMenuRef={ref}
+          closeSubMenu={() => setIsSubMenuOpen(false)}
+          openSubMenu={() => setIsSubMenuOpen(true)}
+          label="More items"
+          SuffixIcon={ChevronRightSmall}
+        />
+        <RightClickContextMenuContainer
+          position={{
+            y: 102,
+            x: 212,
+          }}
+          ref={subMenuRef}
+        >
+          <ContextMenu
+            isOpen={isSubMenuOpen}
+            onCloseSubMenu={() => setIsSubMenuOpen(false)}
+            isSubMenu
+            parentMenuRef={ref}
+          >
+            <MenuItems.MenuButton
+              dismissOnClick={false}
+              onClick={() => () => setIsSubMenuOpen(false)}
+            >
+              {'Select layer 1'}
+            </MenuItems.MenuButton>
+            <MenuItems.MenuSeparator />
+            <MenuItems.MenuButton
+              dismissOnClick={false}
+              onClick={() => setIsSubMenuOpen(false)}
+            >
+              {'Select background'}
+            </MenuItems.MenuButton>
+          </ContextMenu>
+        </RightClickContextMenuContainer>
+        <MenuItems.MenuLabel>
+          {'i am neither a button nor a link'}
+        </MenuItems.MenuLabel>
+        <MenuItems.MenuSeparator />
+        <MenuItems.MenuButton onClick={action('Clicked on `i am a button`')}>
+          {'i am a button!'}
+          <MenuItems.MenuShortcut>{'⌥ ⌘ A'}</MenuItems.MenuShortcut>
+        </MenuItems.MenuButton>
+      </ContextMenu>
+    </Container>
+  );
+};
+
+export const RightClickMenu = (args) => {
   const [isOpen, setIsOpen] = useState(false);
   const [menuPosition, setMenuPosition] = useState({});
   const layoutRef = useRef();
@@ -594,40 +729,44 @@ export const RightClickMenu = () => {
       {/*eslint-disable-next-line styled-components-a11y/no-noninteractive-element-interactions*/}
       <SampleLayout ref={layoutRef} role="region" onKeyDown={() => {}} />
       <RightClickContextMenuContainer position={menuPosition}>
-        <ContextMenu isOpen={isOpen} onDismiss={() => setIsOpen(false)}>
+        <ContextMenu
+          isOpen={isOpen}
+          onDismiss={() => setIsOpen(false)}
+          {...args}
+        >
           {pageMenu}
         </ContextMenu>
       </RightClickContextMenuContainer>
     </ViewportContainer>
   );
 };
+RightClickMenu.parameters = { controls: { include: [] } };
 
-export const RightClickMenuStaticValues = () => {
+export const RightClickMenuStaticValues = (args) => {
   return (
     <Grid>
+      <RightClickMenuOnShapeAndBackground>
+        <Text>{'Right click menu on top of shape and background'}</Text>
+      </RightClickMenuOnShapeAndBackground>
       <Container>
         <Text>{'Right click on page element'}</Text>
-        <ContextMenu isOpen={boolean('isOpen', true)}>{pageMenu}</ContextMenu>
+        <ContextMenu {...args}>{pageMenu}</ContextMenu>
       </Container>
       <Container>
         <Text>{'Right click on shape element'}</Text>
-        <ContextMenu isOpen={boolean('isOpen', true)}>{shapeMenu}</ContextMenu>
+        <ContextMenu {...args}>{shapeMenu}</ContextMenu>
       </Container>
       <Container>
         <Text>{'Right click on foreground media element'}</Text>
-        <ContextMenu isOpen={boolean('isOpen', true)}>
-          {foregroundMediaMenu}
-        </ContextMenu>
+        <ContextMenu {...args}>{foregroundMediaMenu}</ContextMenu>
       </Container>
       <Container>
         <Text>{'Right click on background element'}</Text>
-        <ContextMenu isOpen={boolean('isOpen', true)}>
-          {backgroundMediaMenu}
-        </ContextMenu>
+        <ContextMenu {...args}>{backgroundMediaMenu}</ContextMenu>
       </Container>
       <Container>
         <Text>{'Right click on text element'}</Text>
-        <ContextMenu isOpen={boolean('isOpen', true)}>{textMenu}</ContextMenu>
+        <ContextMenu {...args}>{textMenu}</ContextMenu>
       </Container>
     </Grid>
   );

@@ -103,18 +103,18 @@ function Popup({
         return;
       }
       setPopupState({
-        offset:
-          anchor?.current &&
-          getOffset(
-            placement,
-            spacing,
-            anchor,
-            dock,
-            popup,
-            isRTL,
-            topOffset,
-            shouldHaveDifferentoffset
-          ),
+        offset: anchor?.current
+          ? getOffset(
+              placement,
+              spacing,
+              anchor,
+              dock,
+              popup,
+              isRTL,
+              topOffset,
+              shouldHaveDifferentoffset
+            )
+          : {},
         height: popup.current?.getBoundingClientRect()?.height,
       });
     },

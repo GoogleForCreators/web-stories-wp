@@ -17,7 +17,6 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-import { boolean } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
@@ -27,14 +26,22 @@ import MediaOptimizationSettings from '..';
 export default {
   title: 'Dashboard/Views/EditorSettings/MediaOptimization',
   component: MediaOptimizationSettings,
+  args: {
+    disabled: true,
+    selected: true,
+  },
+  parameters: {
+    controls: {
+      exclude: ['onCheckboxSelected'],
+    },
+  },
 };
 
-export const _default = () => {
+export const _default = (args) => {
   return (
     <MediaOptimizationSettings
-      disabled={boolean('disabled', true)}
-      selected={boolean('userMediaOptimization', true)}
       onCheckboxSelected={action('onCheckboxSelected fired')}
+      {...args}
     />
   );
 };
