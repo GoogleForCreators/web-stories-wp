@@ -57,7 +57,9 @@ const usePageActions = () => {
    */
   const handleAddPageAtPosition = useCallback(
     (index) => {
-      const position = Boolean(index) || index === 0 ? index : pageLength - 1;
+      let position = Boolean(index) || index === 0 ? index : pageLength - 1;
+      position = position > pageLength ? pageLength - 1 : position;
+      position = position < 0 ? 0 : position;
 
       addPageAt({ page: createPage(), position });
 
