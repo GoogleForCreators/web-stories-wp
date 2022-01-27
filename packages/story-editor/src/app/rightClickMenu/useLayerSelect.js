@@ -87,6 +87,9 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
   }, [currentPage, x, y, nodesById]);
 
   const subMenuItems = useMemo(() => {
+    if (selectedElements.length === 0) {
+      return [];
+    }
     const intersectingElements = getIntersectingElements();
     // If the only intersecting element is the selected element, don't display the menu.
     if (
