@@ -230,6 +230,14 @@
     "__webpack_public_path__": true
   },
   "settings": {
+    "import/resolver": {
+      "@web-stories-wp/eslint-import-resolver": {
+        "mapping": {
+          "^@googleforcreators\\/(.*)": "./packages/$1/src/",
+          "^@web-stories-wp\\/(.*)": "./packages/$1/src/"
+        }
+      }
+    },
     "jsdoc": {
       "mode": "typescript",
       "preferredTypes": {
@@ -450,6 +458,7 @@
         "packages/dashboard/src/karma-tests.cjs",
         "packages/story-editor/src/karma-tests.cjs",
         "packages/migration/src/**/*.js",
+        "packages/eslint-import-resolver/src/*.js",
         "packages/fonts/**/*.js",
         "packages/commander/**/*.js",
         "packages/templates/scripts/cli.js",

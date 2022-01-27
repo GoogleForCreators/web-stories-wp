@@ -72,6 +72,7 @@
     "@testing-library/react-hooks": "^7.0.2",
     "@testing-library/user-event": "^13.5.0",
     "@web-stories-wp/e2e-tests": "*",
+    "@web-stories-wp/eslint-import-resolver": "*",
     "@web-stories-wp/jest-amp": "*",
     "@web-stories-wp/jest-parallel-sequencer": "*",
     "@web-stories-wp/karma-failed-tests-reporter": "*",
