@@ -19,8 +19,6 @@
  */
 import {
   Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
   BUTTON_VARIANTS,
   Icons,
   themeHelpers,
@@ -92,8 +90,8 @@ PreviewPageWrapper.propTypes = {
 
 const ButtonWrapper = styled.div`
   position: absolute;
-  top: 0;
-  right: 0;
+  top: calc(50% - 16px);
+  right: calc(50% - 16px);
   z-index: 1;
   padding: 8px;
 `;
@@ -231,13 +229,11 @@ function PageTemplate(
         {isActivePage && handleDelete && (
           <ButtonWrapper>
             <Button
-              variant={BUTTON_VARIANTS.CIRCLE}
-              type={BUTTON_TYPES.SECONDARY}
-              size={BUTTON_SIZES.SMALL}
+              variant={BUTTON_VARIANTS.ICON}
               onClick={(e) => handleDelete(page, e)}
               aria-label={__('Delete Page Template', 'web-stories')}
             >
-              <Icons.Trash />
+              <Icons.PlusFilled />
             </Button>
           </ButtonWrapper>
         )}

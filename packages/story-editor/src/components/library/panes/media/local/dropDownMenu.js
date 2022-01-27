@@ -35,6 +35,7 @@ import {
   PLACEMENT,
   Popup,
 } from '@googleforcreators/design-system';
+
 /**
  * Internal dependencies
  */
@@ -42,13 +43,12 @@ import { useLocalMedia } from '../../../../../app';
 import DeleteDialog from './deleteDialog';
 import MediaEditDialog from './mediaEditDialog';
 
-const MoreButton = styled(Button).attrs({ variant: BUTTON_VARIANTS.ICON })`
+const AddButton = styled(Button).attrs({ variant: BUTTON_VARIANTS.ICON })`
   display: flex;
   align-items: center;
   position: absolute;
-  top: 8px;
-  right: 8px;
-  background: ${({ theme }) => theme.colors.bg.secondary};
+  top: calc(50% - 16px);
+  right: calc(50% - 16px);
   color: ${({ theme }) => theme.colors.fg.primary};
   border-radius: 100%;
   width: 28px;
@@ -57,7 +57,7 @@ const MoreButton = styled(Button).attrs({ variant: BUTTON_VARIANTS.ICON })`
 
 const IconContainer = styled.div`
   height: 32px;
-  width: auto;
+  width: 32px;
 `;
 
 const DropDownContainer = styled.div`
@@ -150,7 +150,7 @@ function DropDownMenu({
       <MenuContainer>
         {(display || isMenuOpen) && (
           <>
-            <MoreButton
+            <AddButton
               ref={moreButtonRef}
               onClick={onMenuOpen}
               aria-label={__('More', 'web-stories')}
@@ -161,9 +161,9 @@ function DropDownMenu({
               id={buttonId}
             >
               <IconContainer>
-                <Icons.Dots />
+                <Icons.PlusFilled />
               </IconContainer>
-            </MoreButton>
+            </AddButton>
             <Popup
               anchor={moreButtonRef}
               placement={PLACEMENT.BOTTOM_START}
