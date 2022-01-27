@@ -120,6 +120,7 @@ export default (async () => {
       output: {
         dir: dirname(resolvePath(pkg.dir, pkg.config.main)),
         format: 'cjs',
+        exports: 'auto',
       },
       plugins,
       external,
