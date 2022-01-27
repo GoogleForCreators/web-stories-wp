@@ -45,7 +45,7 @@ use WP_Post;
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
- * @implements Iterator<int, \WP_Post>
+ * @implements Iterator<int, Story>
  */
 abstract class Renderer implements RenderingInterface, Iterator {
 	/**
@@ -200,11 +200,11 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @return mixed|void
+	 * @return Story|null
 	 */
 	#[\ReturnTypeWillChange]
 	public function current() {
-		return $this->stories[ $this->position ];
+		return $this->stories[ $this->position ] ?? null;
 	}
 
 	/**
@@ -624,21 +624,36 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 */
 	protected function render_link_attributes() {
 		/**
-		  * Filters the link attributes added to a story's <a> tag.
-		  *
-		  * @since 1.17.0
-		  *
-		  * @param array  $attributes Key value array of attribute name to attribute value.
-		  * @param Story  $story      The current story instance.
-		  * @param int    $position   The current story's position within the list.
-		  * @param string $view_type  The current view type.
-		  */
-		$story_render_attributes = apply_filters( 'web_stories_renderer_link_attributes', [], $this->current(), $this->position, $this->get_view_type() );
-		if ( ! empty( $story_render_attributes ) ) {
-			foreach ( $story_render_attributes as $attribute => $value ) {
-				echo ' ' . wp_kses_one_attr( $attribute . '="' . esc_attr( $value ) . '"', 'a' );
+		 * The current story.
+		 *
+		 * @var Story $story
+		 */
+		$story = $this->current();
+
+		/**
+		 * Filters the link attributes added to a story's <a> tag.
+		 *
+		 * @since 1.17.0
+		 *
+		 * @param array  $attributes Key value array of attribute name to attribute value.
+		 * @param Story  $story      The current story instance.
+		 * @param int    $position   The current story's position within the list.
+		 * @param string $view_type  The current view type.
+		 */
+		$attributes = apply_filters( 'web_stories_renderer_link_attributes', [], $story, $this->position, $this->get_view_type() );
+
+		$attrs = [];
+
+		if ( ! empty( $attributes ) ) {
+			foreach ( $attributes as $attribute => $value ) {
+				$attrs[] = wp_kses_one_attr( $attribute . '="' . esc_attr( $value ) . '"', 'a' );
 			}
 		}
+
+		$attrs = array_filter( $attrs ); // Filter out empty values rejected by KSES.
+
+		//phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo implode( ' ', $attrs );
 	}
 
 	/**
