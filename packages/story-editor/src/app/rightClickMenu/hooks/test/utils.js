@@ -16,8 +16,8 @@
 /**
  * Internal dependencies
  */
-import { ELEMENT_TYPES } from '../../../elements';
-import objectPick from '../../../utils/objectPick';
+import { ELEMENT_TYPES } from '../../../../elements';
+import objectPick from '../../../../utils/objectPick';
 import { getElementStyles } from '../utils';
 
 const ALL_PROPERTIES = {

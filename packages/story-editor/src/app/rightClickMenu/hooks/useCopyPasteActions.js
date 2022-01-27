@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useSnackbar } from '@googleforcreators/design-system';
+import { noop, useSnackbar } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import { useCallback, useRef } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
@@ -45,7 +45,7 @@ import { UNDO_HELP_TEXT } from './constants';
  * @param {Object} copiedElement Stored element styles
  * @return {Object} Right click menu copy/paste actions
  */
-const useCopyPasteActions = (dispatch, copiedElement) => {
+const useCopyPasteActions = (dispatch = noop, copiedElement) => {
   const undo = useHistory(({ actions }) => actions.undo);
   const {
     addAnimations,

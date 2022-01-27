@@ -79,6 +79,7 @@ const defaultStoryContext = {
   currentPage: {
     elements: [],
   },
+  elements: [],
   deleteCurrentPage: jest.fn(),
   pages: [{}],
   selectedElements: [],
