@@ -22,9 +22,6 @@ import { renderHook } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-/**
- * Internal dependencies
- */
 import { useElementActions } from '..';
 import { useCanvas, useStory } from '../../..';
 import { ELEMENT } from './constants';

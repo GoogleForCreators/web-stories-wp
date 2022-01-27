@@ -50,12 +50,11 @@ const usePresetActions = () => {
   const { deleteGlobalPreset: deleteGlobalColorPreset } = useDeleteColor({
     onEmpty: noop,
   });
-  const undo = useHistory(({ actions }) => actions.undo);
-  const { selectedElement } = useStory(({ state }) => ({
-    selectedElement: state.selectedElements?.[0],
-  }));
+  const selectedElement = useStory(({ state }) => state.selectedElements?.[0]);
 
   const { showSnackbar } = useSnackbar();
+
+  const undo = useHistory(({ actions }) => actions.undo);
 
   // Needed to not pass stale refs of `undo` to snackbar
   const undoRef = useRef(undo);

@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * Internal dependencies
- */
 /**
  * External dependencies
  */
 import { renderHook } from '@testing-library/react-hooks';
+/**
+ * Internal dependencies
+ */
 import { usePageActions } from '..';
 import { useStory } from '../../..';
 import { createPage, duplicatePage } from '../../../../elements';
