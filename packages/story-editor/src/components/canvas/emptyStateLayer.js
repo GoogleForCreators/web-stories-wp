@@ -59,7 +59,12 @@ const EmptyStateMessage = styled.div`
 `;
 
 function EmptyStateLayer() {
-  const onOpenMenu = useRightClickMenu((value) => value.onOpenMenu);
+  const { isMenuOpen, onOpenMenu } = useRightClickMenu(
+    ({ isMenuOpen, onOpenMenu }) => ({
+      isMenuOpen,
+      onOpenMenu,
+    })
+  );
   const { pages } = useStory(({ state: { pages } }) => ({
     pages,
   }));
@@ -93,6 +98,7 @@ function EmptyStateLayer() {
             aria-haspopup="true"
             aria-label={__('Add content', 'web-stories')}
             aria-describedby="emptystate-message"
+            aria-expanded={isMenuOpen}
           >
             <Icons.Media />
           </Button>
