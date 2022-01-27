@@ -119,6 +119,7 @@ describe('Selection Panel', () => {
         fixture.editor.library.text.preset('Paragraph')
       );
       await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+
       panel = fixture.editor.inspector.designPanel.sizePosition;
 
       // Switch to shapes tab and click the triangle
@@ -147,7 +148,8 @@ describe('Selection Panel', () => {
       await fixture.events.keyboard.press('tab');
 
       const updatedElements = await getSelection();
-      expect(updatedElements[0].height).toBe(oHeight1);
+      // The height of the text was reduced automatically due to the number of rows decreasing.
+      expect(updatedElements[0].height).toBeLessThanOrEqual(oHeight1);
       expect(updatedElements[1].height).toBe(oHeight2);
     });
   });
