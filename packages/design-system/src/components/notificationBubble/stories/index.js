@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { boolean, number } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 
 /**
@@ -30,6 +29,16 @@ import { NotificationBubble, BUBBLE_VARIANTS } from '..';
 export default {
   title: 'DesignSystem/Components/NotificationBubble',
   component: NotificationBubble,
+  args: {
+    isSmall: false,
+    invertTextColor: false,
+    notificationCount: 6,
+  },
+  parameters: {
+    controls: {
+      exclude: ['variant'],
+    },
+  },
 };
 
 const VARIANT_OPTIONS = Object.values(BUBBLE_VARIANTS);
@@ -53,7 +62,7 @@ const Row = styled.div`
   }
 `;
 
-export const _default = () => {
+export const _default = (args) => {
   return (
     <>
       <Headline>{'Notification Bubble'}</Headline>
@@ -61,13 +70,7 @@ export const _default = () => {
       <Container>
         <Row>
           {VARIANT_OPTIONS.map((variant) => (
-            <NotificationBubble
-              key={variant}
-              isSmall={boolean('Is Small', false)}
-              invertTextColor={boolean('Invert Text Color', false)}
-              notificationCount={number('Notification Count', 6)}
-              variant={variant}
-            />
+            <NotificationBubble key={variant} variant={variant} {...args} />
           ))}
         </Row>
       </Container>
@@ -75,13 +78,7 @@ export const _default = () => {
         <Container>
           <Row>
             {VARIANT_OPTIONS.map((variant) => (
-              <NotificationBubble
-                key={variant}
-                invertTextColor={boolean('Invert Text Color', false)}
-                isSmall={boolean('Is Small', false)}
-                notificationCount={number('Notification Count', 6)}
-                variant={variant}
-              />
+              <NotificationBubble key={variant} variant={variant} {...args} />
             ))}
           </Row>
         </Container>

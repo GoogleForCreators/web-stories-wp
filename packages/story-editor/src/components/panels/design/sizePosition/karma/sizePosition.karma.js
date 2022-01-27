@@ -52,16 +52,40 @@ describe('Selection Panel', () => {
   };
 
   describe('CUJ: Creator can Transform an Element: Set height and width', () => {
-    beforeEach(async () => {
+    it('should have correct default aspect ratio lock values', async () => {
+      await fixture.events.click(fixture.editor.library.media.item(0));
+      const [image] = await getSelection();
+      expect(image.lockAspectRatio).toBeFalse();
+
+      await fixture.events.click(fixture.editor.library.shapesTab);
+      await fixture.events.click(
+        fixture.editor.library.shapes.shape('Triangle')
+      );
+      const [triangle] = await getSelection();
+      expect(triangle.lockAspectRatio).toBeTrue();
+
+      await fixture.events.click(
+        fixture.editor.library.shapes.shape('Rectangle')
+      );
+      const [rectangle] = await getSelection();
+      expect(rectangle.lockAspectRatio).toBeFalse();
+
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
+      const [text] = await getSelection();
+      expect(text.lockAspectRatio).not.toBeFalse();
+    });
+
+    it('should allow the user to change the height & width of a text element', async () => {
       await fixture.editor.library.textTab.click();
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
       );
       await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       panel = fixture.editor.inspector.designPanel.sizePosition;
-    });
 
-    it('should allow the user to change the height & width of a text element', async () => {
       // Store original width and height
       const ratio = panel.width.value / panel.height.value;
 
@@ -90,6 +114,13 @@ describe('Selection Panel', () => {
     });
 
     it('should disable setting height independently of multi-selection containing text', async () => {
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
+      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      panel = fixture.editor.inspector.designPanel.sizePosition;
+
       // Switch to shapes tab and click the triangle
       await fixture.events.click(fixture.editor.library.shapesTab);
       await fixture.events.click(

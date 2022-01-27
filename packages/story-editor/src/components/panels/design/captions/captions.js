@@ -61,7 +61,7 @@ export const MIN_MAX = {
 
 function CaptionsPanel({ selectedElements, pushUpdate }) {
   const tracks = getCommonValue(selectedElements, 'tracks', []);
-  const isMixedValue = tracks === MULTIPLE_VALUE;
+  const isIndeterminate = tracks === MULTIPLE_VALUE;
 
   const {
     capabilities: { hasUploadMediaAction },
@@ -149,8 +149,8 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
       isPersistable={!highlight}
     >
       <CaptionsPanelContent
-        isMixedValue={isMixedValue}
-        tracks={tracks}
+        isIndeterminate={isIndeterminate}
+        tracks={!isIndeterminate ? tracks : []}
         handleChangeTrack={handleChangeTrack}
         handleRemoveTrack={handleRemoveTrack}
         renderUploadButton={renderUploadButton}
