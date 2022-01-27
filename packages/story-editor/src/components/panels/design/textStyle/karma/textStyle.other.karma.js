@@ -164,7 +164,9 @@ describe('Text Style Panel', () => {
       await fixture.events.keyboard.press('tab');
 
       const texts = await waitFor(() =>
-        fixture.screen.getAllByText('Lorem ipsum dolor sit amet, consectetur adipiscing elit.')
+        fixture.screen.getAllByText(
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+        )
       );
 
       // Display layer.
