@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,10 +17,8 @@
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
-import { boolean, number, text } from '@storybook/addon-knobs';
 import styled from 'styled-components';
-import { Icons } from '@web-stories-wp/design-system';
+import { Icons } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -29,6 +27,15 @@ import { ToggleButton } from '..';
 
 export default {
   title: 'Stories Editor/Components/ToggleButton',
+  args: {
+    ariaLabel: 'my help center label',
+    isOpen: false,
+    notificationCount: 0,
+  },
+  argTypes: {
+    helpCenterClick: { action: 'help center clicked' },
+    checklistClicked: { action: 'checklist clicked' },
+  },
 };
 
 const Container = styled.div`
@@ -51,25 +58,21 @@ const ChecklistIcon = styled(Icons.Checkbox)`
   display: block;
 `;
 
-export const _default = () => (
+export const _default = (args) => (
   <Container>
     <ToggleButton
       label="Help"
       MainIcon={HelpCenterIcon}
-      onClick={() => action('help center clicked')()}
+      onClick={() => args.helpCenterClick()}
       aria-owns="my popupId"
-      aria-label={text('help center aria-label', 'my help center label')}
-      isOpen={boolean('help center is open', false)}
-      notificationCount={number('help center notification count', 0)}
+      {...args}
     />
     <ToggleButton
       label="Checklist"
       MainIcon={ChecklistIcon}
-      onClick={() => action('checklist clicked')()}
+      onClick={() => args.checklistClicked()}
       aria-owns="my popupId"
-      aria-label={text('checklist aria-label', 'my checklist label')}
-      isOpen={boolean('checklist is open', false)}
-      notificationCount={number('checklist notification count', 0)}
+      {...args}
     />
   </Container>
 );

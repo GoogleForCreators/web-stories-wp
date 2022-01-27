@@ -18,7 +18,10 @@
  * External dependencies
  */
 import { waitFor, fireEvent, screen } from '@testing-library/react';
-import { SnackbarContext, setAppElement } from '@web-stories-wp/design-system';
+import {
+  SnackbarContext,
+  setAppElement,
+} from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
@@ -37,7 +40,6 @@ const resource = {
   src: 'image-url',
   width: 910,
   height: 675,
-  local: false,
   alt: 'my image alt text',
   sizes: {},
 };

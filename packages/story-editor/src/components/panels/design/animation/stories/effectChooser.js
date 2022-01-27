@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,8 @@
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
-import { boolean, select } from '@storybook/addon-knobs';
 import styled from 'styled-components';
-import { SCALE_DIRECTION, DIRECTION } from '@web-stories-wp/animation';
+import { SCALE_DIRECTION, DIRECTION } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies
@@ -30,33 +28,47 @@ import {
   foregroundEffectOptions,
 } from '../effectChooserDropdown/dropdownConstants';
 
+const allEffectTypes = [
+  ...Object.keys(foregroundEffectOptions),
+  ...Object.keys(backgroundEffectOptions),
+];
+const allDirections = [
+  ...Object.values(DIRECTION),
+  ...Object.values(SCALE_DIRECTION),
+];
+
 export default {
   title: 'Stories Editor/Components/Panels/Animations/Effect Chooser',
   component: EffectChooserDropdown,
+  args: {
+    isBackgroundEffects: false,
+  },
+  argTypes: {
+    selectedEffectType: {
+      options: allEffectTypes,
+      control: 'select',
+    },
+    direction: {
+      options: allDirections,
+      control: 'select',
+    },
+    onAnimationSelected: { action: 'onAnimationSelected' },
+    onNoEffectSelected: { action: 'onNoEffectSelected' },
+  },
 };
 
 const Container = styled.div`
   width: 276px;
   margin: 25vh 30px 0;
 `;
-export const _default = () => {
-  const allEffectTypes = [
-    ...Object.keys(foregroundEffectOptions),
-    ...Object.keys(backgroundEffectOptions),
-  ];
-  const allDirections = [
-    ...Object.values(DIRECTION),
-    ...Object.values(SCALE_DIRECTION),
-  ];
+export const _default = (args) => {
   return (
     <Container>
       <EffectChooserDropdown
-        onAnimationSelected={(sender) => action('onAnimationSelected', sender)}
-        onNoEffectSelected={() => action('onNoEffectSelected')}
-        isBackgroundEffects={boolean('isBackgroundEffects', false)}
-        selectedEffectType={select('selectedEffectType', allEffectTypes)}
+        onAnimationSelected={(sender) => args.onAnimationSelected(sender)}
+        onNoEffectSelected={() => args.onNoEffectSelected}
         disabledTypeOptionsMap={[]}
-        direction={select('direction', allDirections)}
+        {...args}
       />
     </Container>
   );

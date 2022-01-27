@@ -19,6 +19,7 @@ export { default as FilterToggle } from './filterToggle';
 export { default as LinkIcon } from './linkIcon';
 export { default as LinkInput } from './link';
 export { default as Media } from './media';
+export { default as MediaUploadButton } from './mediaUploadButton';
 export { default as Row } from './row';
 export { default as Switch } from './switch';
 export { default as TextArea } from './textArea';

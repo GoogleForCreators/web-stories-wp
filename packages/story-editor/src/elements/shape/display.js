@@ -18,9 +18,9 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useRef } from '@web-stories-wp/react';
+import { useRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
-import { useUnits } from '@web-stories-wp/units';
+import { useUnits } from '@googleforcreators/units';
 
 /**
  * Internal dependencies
@@ -51,6 +51,7 @@ function ShapeDisplay({ element, previewMode }) {
     backgroundColor,
     border,
     borderRadius,
+    mask,
     width: elementWidth,
     height: elementHeight,
   } = element;
@@ -95,6 +96,7 @@ function ShapeDisplay({ element, previewMode }) {
       width={elementWidth}
       height={elementHeight}
       border={getResponsiveBorder(border, previewMode, dataToEditorX)}
+      mask={mask}
     />
   );
 }

@@ -25,7 +25,8 @@ import {
   useRef,
   useResizeEffect,
   createPortal,
-} from '@web-stories-wp/react';
+  useEffect,
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 
 /**
@@ -78,12 +79,20 @@ function Popup({
   refCallback = noop,
 }) {
   const [popupState, setPopupState] = useState(null);
-  const [mounted, setMounted] = useState(false);
+  const isMounted = useRef(false);
   const popup = useRef(null);
+
+  useEffect(() => {
+    isMounted.current = true;
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
 
   const positionPopup = useCallback(
     async (evt) => {
-      if (!mounted) {
+      if (!isMounted.current) {
         return;
       }
 
@@ -97,23 +106,28 @@ function Popup({
           anchor?.current && getOffset(placement, spacing, anchor, dock, popup),
       });
     },
-    [anchor, dock, placement, spacing, mounted]
+    [anchor, dock, placement, spacing]
   );
 
   useLayoutEffect(() => {
     if (!isOpen) {
       return () => {};
     }
-    setMounted(true);
+    isMounted.current = true;
     positionPopup();
     // Adjust the position when scrolling.
     document.addEventListener('scroll', positionPopup, true);
     return () => {
       document.removeEventListener('scroll', positionPopup, true);
+      isMounted.current = false;
     };
   }, [isOpen, positionPopup]);
 
   useLayoutEffect(() => {
+    if (!isMounted.current) {
+      return;
+    }
+
     onPositionUpdate(popupState);
     refCallback(popup);
   }, [popupState, onPositionUpdate, refCallback]);

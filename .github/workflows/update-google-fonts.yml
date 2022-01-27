@@ -4,6 +4,12 @@ on:
   schedule:
     - cron: '0 12 * * 1'
 
+env:
+  GIT_AUTHOR_EMAIL: 94923726+googleforcreators-bot@users.noreply.github.com
+  GIT_AUTHOR_NAME: googleforcreators-bot
+  GIT_COMMITTER_EMAIL: 94923726+googleforcreators-bot@users.noreply.github.com
+  GIT_COMMITTER_NAME: googleforcreators-bot
+
 jobs:
   update-fonts:
     name: Update Google Fonts
@@ -17,7 +23,7 @@ jobs:
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       - name: Setup Node
-        uses: actions/setup-node@v2.5.0
+        uses: actions/setup-node@v2.5.1
         with:
           node-version-file: '.nvmrc'
           cache: npm

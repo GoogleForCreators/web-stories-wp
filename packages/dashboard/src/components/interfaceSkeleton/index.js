@@ -18,44 +18,43 @@
  */
 import {
   useEffect,
-  useMemo,
   usePrevious,
   useRef,
   useState,
-} from '@web-stories-wp/react';
-import { __, sprintf } from '@web-stories-wp/i18n';
-import { trackScreenView } from '@web-stories-wp/tracking';
-import { Snackbar, useSnackbar } from '@web-stories-wp/design-system';
+} from '@googleforcreators/react';
+import { __, sprintf } from '@googleforcreators/i18n';
+import { trackScreenView } from '@googleforcreators/tracking';
+import { Snackbar, useSnackbar } from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import {
-  ExploreTemplatesView,
-  MyStoriesView,
-  TemplateDetailsView,
-} from '../../app/views';
+import { ExploreTemplatesView, MyStoriesView } from '../../app/views';
 import {
   ADMIN_TITLE,
   APP_ROUTES,
   NESTED_APP_ROUTES,
   ROUTE_TITLES,
 } from '../../constants';
-import { matchPath, Route, useRouteHistory } from '../../app/router';
+import { Route, useRouteHistory } from '../../app/router';
 import { AppFrame, LeftRail, PageContent } from '../pageStructure';
 import useApiAlerts from '../../app/api/useApiAlerts';
 import useApi from '../../app/api/useApi';
+import { useConfig } from '../../app/config';
 
 const InterfaceSkeleton = ({ additionalRoutes }) => {
   const {
     state: {
       currentPath,
-      queryParams: { id: templateId },
+      queryParams: { id: templateId, isLocal },
     },
-    actions: { push },
+    actions: { push, replace },
   } = useRouteHistory();
-  const { currentTemplate, addInitialFetchListener } = useApi(
+
+  const { canViewDefaultTemplates } = useConfig();
+
+  const { addInitialFetchListener } = useApi(
     ({
       actions: {
         storyApi: { addInitialFetchListener },
@@ -78,40 +77,35 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
   // have no stories created.
   useEffect(() => {
     return addInitialFetchListener?.((storyStatuses) => {
-      if (storyStatuses?.all <= 0 && isFirstLoadOnMyStories.current) {
+      if (
+        storyStatuses?.all <= 0 &&
+        isFirstLoadOnMyStories.current &&
+        canViewDefaultTemplates
+      ) {
         push(APP_ROUTES.TEMPLATES_GALLERY);
       }
       setIsRedirectComplete(true);
     });
-  }, [addInitialFetchListener, push, currentPath]);
-
-  const fullPath = useMemo(() => {
-    return currentPath.includes(APP_ROUTES.TEMPLATE_DETAIL) &&
-      templateId &&
-      currentTemplate
-      ? `${currentPath}/${templateId}`
-      : currentPath;
-    // Disable reason: avoid sending duplicate tracking events.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentPath, currentTemplate]);
+  }, [addInitialFetchListener, push, currentPath, canViewDefaultTemplates]);
 
   useEffect(() => {
     if (!isRedirectComplete) {
       return;
     }
-
-    if (currentPath.includes(APP_ROUTES.TEMPLATE_DETAIL) && !currentTemplate) {
+    // backwards compatibility for template details pages,
+    // if templateId is present modal will open to appropriate template
+    if (currentPath.includes(NESTED_APP_ROUTES.TEMPLATES_GALLERY_DETAIL)) {
+      replace(
+        templateId
+          ? `${APP_ROUTES.TEMPLATES_GALLERY}?id=${templateId}&isLocal=${
+              isLocal || false
+            }`
+          : `${APP_ROUTES.TEMPLATES_GALLERY}`
+      );
       return;
     }
 
-    let dynamicPageTitle = ROUTE_TITLES[currentPath] || ROUTE_TITLES.DEFAULT;
-    if (currentPath.includes(APP_ROUTES.TEMPLATE_DETAIL)) {
-      dynamicPageTitle = sprintf(
-        /* translators: %s: Template name. */
-        __('Template: %s', 'web-stories'),
-        currentTemplate
-      );
-    }
+    const dynamicPageTitle = ROUTE_TITLES[currentPath] || ROUTE_TITLES.DEFAULT;
 
     document.title = sprintf(
       /* translators: Admin screen title. 1: Admin screen name, 2: Network or site name. */
@@ -121,15 +115,7 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
     );
 
     trackScreenView(dynamicPageTitle);
-
-    // Disable reason: avoid sending duplicate tracking events.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fullPath, isRedirectComplete]);
-
-  const hideLeftRail = matchPath(
-    currentPath,
-    NESTED_APP_ROUTES.TEMPLATES_GALLERY_DETAIL
-  );
+  }, [currentPath, isLocal, isRedirectComplete, replace, templateId]);
 
   useApiAlerts();
   const { clearSnackbar, removeSnack, placement, currentSnacks } =
@@ -147,22 +133,19 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
   return (
     <>
       <AppFrame>
-        {!hideLeftRail && <LeftRail />}
-        <PageContent fullWidth={hideLeftRail}>
+        <LeftRail />
+        <PageContent>
           <Route
             exact
             path={APP_ROUTES.DASHBOARD}
             component={<MyStoriesView />}
           />
-          <Route
-            exact
-            path={APP_ROUTES.TEMPLATES_GALLERY}
-            component={<ExploreTemplatesView />}
-          />
-          <Route
-            path={NESTED_APP_ROUTES.TEMPLATES_GALLERY_DETAIL}
-            component={<TemplateDetailsView />}
-          />
+          {canViewDefaultTemplates && (
+            <Route
+              path={APP_ROUTES.TEMPLATES_GALLERY}
+              component={<ExploreTemplatesView />}
+            />
+          )}
           {additionalRoutes &&
             additionalRoutes.map((routeProps) => (
               <Route key={routeProps.path} {...routeProps} />

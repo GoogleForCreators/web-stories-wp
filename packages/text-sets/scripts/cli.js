@@ -101,7 +101,7 @@ fs.mkdirSync(screenshotsPath, { recursive: true });
 
   await browser.close();
   console.log(
-    `\nText sets images generated in ${screenshotsPath}, please move and commit them to the static-site branch`
+    `\nText sets images generated in ${screenshotsPath}, please move and commit them to the GoogleForCreators/wp.stories.google repo.`
   );
 })();
 

@@ -18,14 +18,14 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 const Message = styled.div`
   color: #fff;
@@ -48,7 +48,7 @@ const Wrapper = styled.div`
 
 function ErrorActions({ error, errorInfo }) {
   const body = encodeURIComponent(`${error}${errorInfo.componentStack}`);
-  const reportUrl = `https://github.com/google/web-stories-wp/issues/new?labels=Type%3A+Bug&template=bug_report.md&title=${error}&body=${body}`;
+  const reportUrl = `https://github.com/googleforcreators/web-stories-wp/issues/new?labels=Type%3A+Bug&template=bug_report.md&title=${error}&body=${body}`;
 
   const reload = () => {
     window.location.reload(true);

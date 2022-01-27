@@ -25,11 +25,14 @@ import {
   useRef,
   useEffect,
   useResizeEffect,
-} from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
-import { generatePatternStyles } from '@web-stories-wp/patterns';
-import { FULLBLEED_RATIO } from '@web-stories-wp/units';
-import { THEME_CONSTANTS, themeHelpers } from '@web-stories-wp/design-system';
+} from '@googleforcreators/react';
+import { __ } from '@googleforcreators/i18n';
+import { generatePatternStyles } from '@googleforcreators/patterns';
+import { FULLBLEED_RATIO } from '@googleforcreators/units';
+import {
+  THEME_CONSTANTS,
+  themeHelpers,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -126,10 +129,15 @@ const PageAreaContainer = styled(Area).attrs({
   overflow: ${({ showOverflow }) =>
     showOverflow ? 'visible' : 'var(--overflow-x) var(--overflow-y)'};
 
-  ${({ isControlled, hasVerticalOverflow, hasHorizontalOverflow }) =>
+  ${({
+    isControlled,
+    hasVerticalOverflow,
+    hasHorizontalOverflow,
+    showOverflow,
+  }) =>
     isControlled &&
     `
-      overflow: ${({ showOverflow }) => (showOverflow ? 'visible' : 'hidden')};
+      overflow: ${showOverflow ? 'visible' : 'hidden'};
       width: calc(
         100% - ${hasVerticalOverflow ? themeHelpers.SCROLLBAR_WIDTH : 0}px
       );
@@ -351,8 +359,8 @@ function useLayoutParamsCssVars() {
     '--viewport-height-px': `${viewportHeight}px`,
     '--overflow-x': hasHorizontalOverflow ? 'scroll' : 'visible',
     '--overflow-y': hasVerticalOverflow ? 'scroll' : 'visible',
-    '--scroll-left-px': `-${scrollLeft}px`,
-    '--scroll-top-px': `-${scrollTop}px`,
+    '--scroll-left-px': `${-scrollLeft}px`,
+    '--scroll-top-px': `${-scrollTop}px`,
   };
 }
 

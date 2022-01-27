@@ -19,13 +19,13 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { getMediaSizePositionProps } from '@web-stories-wp/media';
+import { getMediaSizePositionProps } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
  */
-import { useRef } from '@web-stories-wp/react';
-import { useUnits } from '@web-stories-wp/units';
+import { useRef } from '@googleforcreators/react';
+import { useUnits } from '@googleforcreators/units';
 import StoryPropTypes from '../../types';
 import {
   elementFillContent,
@@ -71,6 +71,7 @@ function MediaDisplay({
     width,
     height,
     overlay,
+    mask,
   } = element;
 
   const { dataToEditorX } = useUnits((state) => ({
@@ -119,6 +120,7 @@ function MediaDisplay({
       borderRadius={borderRadius}
       width={width}
       height={height}
+      mask={mask}
       showPlaceholder={showPlaceholder}
     >
       {children}
@@ -130,7 +132,7 @@ function MediaDisplay({
 MediaDisplay.propTypes = {
   element: StoryPropTypes.elements.media.isRequired,
   mediaRef: PropTypes.object,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   showPlaceholder: PropTypes.bool,
   previewMode: PropTypes.bool,
 };

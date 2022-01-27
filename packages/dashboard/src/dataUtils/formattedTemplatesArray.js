@@ -17,12 +17,11 @@
 /**
  * External dependencies
  */
-import { toUTCDate } from '@web-stories-wp/date';
+import { toUTCDate } from '@googleforcreators/date';
 
 const formattedTemplatesArray = [
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=10&isLocal=false',
     slug: 'template-slug-1',
     createdBy: 'Google',
     description:
@@ -409,6 +408,7 @@ const formattedTemplatesArray = [
               type: 'rectangle',
             },
             isBackground: true,
+            isDefaultBackground: true,
             type: 'shape',
             id: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
           },
@@ -1297,7 +1297,6 @@ const formattedTemplatesArray = [
   },
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=9&isLocal=false',
     slug: 'template-slug-2',
     createdBy: 'Google',
     description:
@@ -1491,7 +1490,7 @@ const formattedTemplatesArray = [
       { label: 'Black', color: '#28292b', family: 'Black' },
       { label: 'White', color: '#fff', family: 'White' },
       { label: 'Brown', color: '#eadfd6', family: 'Brown' },
-      { label: 'Test Color', color: '#eadfd6', family: 'Test Color' },
+      { label: 'Test Color', color: '#fff000', family: 'Test Color' },
     ],
     vertical: 'Fitness',
     title: 'Filterable By Color',
@@ -1516,7 +1515,6 @@ const formattedTemplatesArray = [
   },
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=3&isLocal=false',
     slug: 'template-slug-3',
     createdBy: 'Google',
     description:
@@ -1734,7 +1732,6 @@ const formattedTemplatesArray = [
   },
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=4&isLocal=false',
     slug: 'template-slug-4',
     createdBy: 'Google',
     description:
@@ -1952,7 +1949,6 @@ const formattedTemplatesArray = [
   },
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=5&isLocal=false',
     slug: 'template-slug-5',
     createdBy: 'Google',
     description:
@@ -2170,7 +2166,6 @@ const formattedTemplatesArray = [
   },
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=6&isLocal=false',
     slug: 'template-slug-6',
     createdBy: 'Google',
     description:
@@ -2388,7 +2383,6 @@ const formattedTemplatesArray = [
   },
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=7&isLocal=false',
     slug: 'template-slug-7',
     createdBy: 'Google',
     description:
@@ -2606,7 +2600,6 @@ const formattedTemplatesArray = [
   },
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=8&isLocal=false',
     slug: 'template-slug-8',
     createdBy: 'Google',
     description:

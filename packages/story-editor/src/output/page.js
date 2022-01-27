@@ -18,10 +18,10 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { __ } from '@web-stories-wp/i18n';
-import { generatePatternStyles } from '@web-stories-wp/patterns';
-import { PAGE_HEIGHT, PAGE_WIDTH } from '@web-stories-wp/units';
-import { getTotalDuration, StoryAnimation } from '@web-stories-wp/animation';
+import { __ } from '@googleforcreators/i18n';
+import { generatePatternStyles } from '@googleforcreators/patterns';
+import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
+import { getTotalDuration, StoryAnimation } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies
@@ -31,6 +31,7 @@ import isElementBelowLimit from '../utils/isElementBelowLimit';
 import { ELEMENT_TYPES } from '../elements';
 import OutputElement from './element';
 import getLongestMediaElement from './utils/getLongestMediaElement';
+import HiddenAudio from './utils/HiddenAudio';
 
 const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 
@@ -44,6 +45,11 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
     pageAttachment,
   } = page;
   const { ctaText, url, icon, theme, rel = [] } = pageAttachment || {};
+
+  const {
+    resource: backgroundAudioResource,
+    tracks: backgroundAudioTracks = [],
+  } = backgroundAudio || {};
 
   const [backgroundElement, ...regularElements] = elements;
 
@@ -85,11 +91,23 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
     )
     .map(({ id: videoId }) => `el-${videoId}-captions`);
 
+  const hasBackgroundAudioWithTracks =
+    backgroundAudioResource?.src && backgroundAudioTracks?.length > 0;
+
+  if (hasBackgroundAudioWithTracks) {
+    videoCaptions.push(`el-${id}-captions`);
+  }
+
+  const backgroundAudioSrc =
+    !hasBackgroundAudioWithTracks && backgroundAudioResource?.src
+      ? backgroundAudioResource.src
+      : undefined;
+
   return (
     <amp-story-page
       id={id}
       auto-advance-after={autoAdvance ? autoAdvanceAfter : undefined}
-      background-audio={backgroundAudio?.src ?? undefined}
+      background-audio={backgroundAudioSrc}
     >
       <StoryAnimation.Provider animations={animations} elements={elements}>
         <StoryAnimation.AMPAnimations />
@@ -128,6 +146,9 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
           </div>
         </amp-story-grid-layer>
       </StoryAnimation.Provider>
+      {hasBackgroundAudioWithTracks && (
+        <HiddenAudio backgroundAudio={backgroundAudio} id={id} />
+      )}
       {videoCaptions.length > 0 && (
         <amp-story-grid-layer
           template="vertical"

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,34 +15,39 @@
  */
 
 /**
- * External dependencies
- */
-import { select } from '@storybook/addon-knobs';
-
-/**
  * Internal dependencies
  */
 import { Text } from '..';
 import { Headline } from '../..';
 import { THEME_CONSTANTS, theme } from '../../../..';
 
-export default {
-  title: 'DesignSystem/Components/Typography/Text',
-  component: Text,
-};
-
-const booleanOptions = [true, false];
 const textPresetSizes = THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES;
 const textRenderAsOptions = ['p', 'a', 'span'];
 
-export const _default = () => (
+export default {
+  title: 'DesignSystem/Components/Typography/Text',
+  component: Text,
+  arg: {
+    as: 'p',
+  },
+  argTypes: {
+    as: {
+      options: textRenderAsOptions,
+      control: 'radio',
+      name: 'as HTML:',
+    },
+  },
+  parameters: {
+    controls: {
+      include: ['as HTML:'],
+    },
+  },
+};
+
+export const _default = (args) => (
   <>
     {textPresetSizes.map((presetSize) => (
-      <Text
-        key={`${presetSize}_text`}
-        size={presetSize}
-        as={select('as', textRenderAsOptions, 'p')}
-      >
+      <Text key={`${presetSize}_text`} size={presetSize} {...args}>
         {presetSize} <br />
         {
           'Duka din veranda till fest, för en långväga gäst, i landet lagom är bäst.'
@@ -52,15 +57,10 @@ export const _default = () => (
   </>
 );
 
-export const Bold = () => (
+export const Bold = (args) => (
   <>
     {textPresetSizes.map((presetSize) => (
-      <Text
-        key={`${presetSize}_text_bold`}
-        size={presetSize}
-        isBold
-        as={select('as', textRenderAsOptions, 'p')}
-      >
+      <Text key={`${presetSize}_text_bold`} size={presetSize} isBold {...args}>
         {presetSize} <br />
         {'Regnet slår mot rutorna nu, men natten är ljus, i ett land utan ljud'}
       </Text>
@@ -68,7 +68,7 @@ export const Bold = () => (
   </>
 );
 
-export const Label = () => (
+export const Label = (args) => (
   <>
     <Headline as="h1">{'Label'}</Headline>
     {textPresetSizes.map((presetSize) => {
@@ -78,7 +78,7 @@ export const Label = () => (
             key={`${presetSize}_text_link`}
             size={presetSize}
             as="label"
-            isBold={select('isBold', booleanOptions, false)}
+            {...args}
           >
             {`${presetSize} - Och glasen glittrar tyst på vårt bord`}
             <br />
@@ -95,8 +95,8 @@ export const Label = () => (
             key={`${presetSize}_text_link_disabled`}
             size={presetSize}
             as="label"
-            isBold={select('isBold', booleanOptions, false)}
             disabled
+            {...args}
           >
             {`${presetSize} - Och glasen glittrar tyst på vårt bord`}
             <br />
@@ -106,3 +106,11 @@ export const Label = () => (
     })}
   </>
 );
+Label.args = {
+  isBold: false,
+};
+Label.parameters = {
+  controls: {
+    include: ['isBold'],
+  },
+};

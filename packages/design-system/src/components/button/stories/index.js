@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,9 +17,8 @@
 /**
  * External dependencies
  */
-import { useState, useCallback } from '@web-stories-wp/react';
+import { useState, useCallback } from '@googleforcreators/react';
 import styled from 'styled-components';
-import { select } from '@storybook/addon-knobs';
 import PropTypes from 'prop-types';
 
 /**
@@ -35,6 +34,25 @@ import { DarkThemeProvider } from '../../../storybookUtils/darkThemeProvider';
 
 export default {
   title: 'DesignSystem/Components/Button',
+  argTypes: {
+    type: {
+      options: Object.values(BUTTON_TYPES),
+      control: 'select',
+    },
+    variant: {
+      options: Object.values(BUTTON_VARIANTS),
+      control: 'select',
+    },
+    size: {
+      options: Object.values(BUTTON_SIZES),
+      control: 'radio',
+    },
+  },
+  args: {
+    type: BUTTON_TYPES.PRIMARY,
+    variant: BUTTON_VARIANTS.RECTANGLE,
+    size: BUTTON_SIZES.MEDIUM,
+  },
 };
 
 const Container = styled.div`
@@ -72,7 +90,7 @@ ButtonContent.propTypes = {
   variant: PropTypes.oneOf(Object.values(BUTTON_VARIANTS)),
 };
 
-const ButtonCombosToDisplay = () => (
+const ButtonCombosToDisplay = (args) => (
   <Container>
     <Headline as="h2">{'Buttons by Variant, Size, and Type'}</Headline>
     {Object.values(BUTTON_VARIANTS).map((buttonVariant) => {
@@ -103,24 +121,7 @@ const ButtonCombosToDisplay = () => (
     </Headline>
     <Row>
       <div>
-        <Button
-          href=""
-          type={select(
-            'link as button - type',
-            Object.values(BUTTON_TYPES),
-            BUTTON_TYPES.PRIMARY
-          )}
-          variant={select(
-            'link as button - variant',
-            Object.values(BUTTON_VARIANTS),
-            BUTTON_VARIANTS.RECTANGLE
-          )}
-          size={select(
-            'link as button - size',
-            Object.values(BUTTON_SIZES),
-            BUTTON_SIZES.MEDIUM
-          )}
-        >
+        <Button href="" {...args}>
           {'Link as Button'}
         </Button>
         <Text>{'Link as Button'}</Text>
@@ -136,24 +137,7 @@ const ButtonCombosToDisplay = () => (
         <Text>{'Edge case: short'}</Text>
       </div>
       <div>
-        <Button
-          disabled
-          type={select(
-            'disabled button type',
-            Object.values(BUTTON_TYPES),
-            BUTTON_TYPES.PRIMARY
-          )}
-          variant={select(
-            'disabled button variant',
-            Object.values(BUTTON_VARIANTS),
-            BUTTON_VARIANTS.RECTANGLE
-          )}
-          size={select(
-            'disabled button size',
-            Object.values(BUTTON_SIZES),
-            BUTTON_SIZES.MEDIUM
-          )}
-        >
+        <Button disabled {...args}>
           {'Text'}
         </Button>
         <Text>{'Disabled button'}</Text>
@@ -162,15 +146,15 @@ const ButtonCombosToDisplay = () => (
   </Container>
 );
 
-export const DarkTheme = () => {
+export const DarkTheme = (args) => {
   return (
     <DarkThemeProvider>
-      <ButtonCombosToDisplay />
+      <ButtonCombosToDisplay {...args} />
     </DarkThemeProvider>
   );
 };
 
-export const LightTheme = () => <ButtonCombosToDisplay />;
+export const LightTheme = (args) => <ButtonCombosToDisplay {...args} />;
 
 const TOGGLE_VARIANTS = [BUTTON_VARIANTS.CIRCLE, BUTTON_VARIANTS.SQUARE];
 const ToggleButtonContainer = ({ isToggled, swapToggled, type }) => (
@@ -240,24 +224,26 @@ export const ToggleButtons = () => {
     </>
   );
 };
+ToggleButtons.parameters = { controls: { include: [] } };
 
-export const PrebakedButtons = () => {
+export const PrebakedButtons = (args) => {
   const [isLocked, setLocked] = useState(false);
   const swapLocked = useCallback(() => setLocked((b) => !b), []);
   return (
     <>
       <Container>
         <Row>
-          <LockToggle isLocked={isLocked} onClick={swapLocked} />
+          <LockToggle isLocked={isLocked} onClick={swapLocked} {...args} />
         </Row>
       </Container>
       <DarkThemeProvider>
         <Container>
           <Row>
-            <LockToggle isLocked={isLocked} onClick={swapLocked} />
+            <LockToggle isLocked={isLocked} onClick={swapLocked} {...args} />
           </Row>
         </Container>
       </DarkThemeProvider>
     </>
   );
 };
+PrebakedButtons.parameters = { controls: { include: [] } };

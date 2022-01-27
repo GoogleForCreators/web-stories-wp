@@ -25,10 +25,11 @@ import {
   useLayoutEffect,
   useFocusOut,
   forwardRef,
-} from '@web-stories-wp/react';
+  memo,
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 
 /**
@@ -58,15 +59,14 @@ const OptionList = forwardRef(function OptionList(
   {
     keyword = '',
     value = '',
-    onSelect = () => {},
-    onClose = () => {},
-    onExpandedChange = () => {},
+    onSelect = noop,
+    onClose = noop,
+    onExpandedChange = noop,
     focusTrigger = 0,
     options = [],
     primaryOptions,
     primaryLabel,
-    priorityOptions = [],
-    priorityLabel,
+    priorityOptionGroups = [],
     searchResultsLabel,
     renderer = DefaultRenderer,
     onObserve,
@@ -95,16 +95,9 @@ const OptionList = forwardRef(function OptionList(
       ];
     }
     // Otherwise return primary options in one group possibly preceded
-    // by an optional list of priority options if such exist.
+    // by an optional groups of priority options if such exist.
     return [
-      ...(priorityOptions?.length
-        ? [
-            {
-              label: priorityLabel,
-              options: priorityOptions,
-            },
-          ]
-        : []),
+      ...(priorityOptionGroups?.length ? priorityOptionGroups : []),
       {
         label: primaryLabel,
         options: primaryOptions,
@@ -113,9 +106,8 @@ const OptionList = forwardRef(function OptionList(
   }, [
     keyword,
     options,
-    priorityOptions,
+    priorityOptionGroups,
     primaryOptions,
-    priorityLabel,
     primaryLabel,
     searchResultsLabel,
   ]);
@@ -163,7 +155,7 @@ const OptionList = forwardRef(function OptionList(
       // clear existing option references before next update to filteredGroup
       optionsRef.current = [];
     };
-  }, [observer, onObserve, filteredListGroups]);
+  }, [observer, onObserve, filteredListGroups, renderer]);
 
   /*
    * KEYBOARD ACCESSIBILITY
@@ -298,8 +290,7 @@ OptionList.propTypes = {
   options: PropTypes.array,
   primaryOptions: PropTypes.array.isRequired,
   primaryLabel: PropTypes.string,
-  priorityOptions: PropTypes.array,
-  priorityLabel: PropTypes.string,
+  priorityOptionGroups: PropTypes.array,
   searchResultsLabel: PropTypes.string,
   renderer: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   onObserve: PropTypes.func,
@@ -307,4 +298,4 @@ OptionList.propTypes = {
   focusSearch: PropTypes.func,
 };
 
-export default OptionList;
+export default memo(OptionList);

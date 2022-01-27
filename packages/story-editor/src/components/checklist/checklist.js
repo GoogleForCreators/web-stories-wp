@@ -16,19 +16,19 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 import {
   useEffect,
   useRef,
   useCallback,
   forwardRef,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
+import { FOCUSABLE_SELECTORS } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { FOCUSABLE_SELECTORS } from '../../constants';
 import DirectionAware from '../directionAware';
 import Popup, { NavigationWrapper, TopNavigation } from '../secondaryPopup';
 import { Z_INDEX } from '../canvas/layout';

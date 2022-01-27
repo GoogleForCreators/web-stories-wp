@@ -17,13 +17,9 @@
 /**
  * External dependencies
  */
-import { sprintf, __ } from '@web-stories-wp/i18n';
+import { sprintf, __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
-import {
-  THEME_CONSTANTS,
-  Text,
-  VisuallyHidden,
-} from '@web-stories-wp/design-system';
+import { THEME_CONSTANTS, Text } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
@@ -33,13 +29,11 @@ import { Container } from './styles';
  * Element and page thumbnails, used in the prepublish checklist
  *
  * @param {Object} props Component props.
- * @param {string} props.screenReaderText Text that is not rendered on the screen to give context to those using screen readers.
  * @param {number} props.overflowCount The number of thumbnails that are overflowing.
  * @return {Node} Overflow Thumbnail to render
  */
-const OverflowThumbnail = ({ overflowCount, screenReaderText, ...rest }) => (
+const OverflowThumbnail = ({ overflowCount, ...rest }) => (
   <Container $isOverflow as="div" {...rest}>
-    <VisuallyHidden>{screenReaderText}</VisuallyHidden>
     <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.MEDIUM}>
       {sprintf(
         /* translators: %s: number of thumbnails in overflow */
@@ -51,7 +45,6 @@ const OverflowThumbnail = ({ overflowCount, screenReaderText, ...rest }) => (
 );
 
 OverflowThumbnail.propTypes = {
-  screenReaderText: PropTypes.string.isRequired,
   overflowCount: PropTypes.number.isRequired,
 };
 export default OverflowThumbnail;

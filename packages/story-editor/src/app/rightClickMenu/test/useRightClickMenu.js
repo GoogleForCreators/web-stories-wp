@@ -17,24 +17,23 @@
  * External dependencies
  */
 import { act, renderHook } from '@testing-library/react-hooks';
-import { isPlatformMacOS, useSnackbar } from '@web-stories-wp/design-system';
+import { isPlatformMacOS, useSnackbar } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 import { useRightClickMenu, RightClickMenuProvider } from '..';
 import { useCanvas } from '../../canvas';
-import { useStory } from '../../story';
+import useStory from '../../story/useStory';
+import { useLocalMedia } from '../../media';
 import { RIGHT_CLICK_MENU_LABELS } from '../constants';
 
 jest.mock('../../canvas', () => ({
   useCanvas: jest.fn(),
 }));
 
-jest.mock('../../story', () => ({
-  ...jest.requireActual('../../story'),
-  useStory: jest.fn(),
-}));
+jest.mock('../../media');
+jest.mock('../../story/useStory');
 
 const mockVideoTrim = jest.fn();
 jest.mock(
@@ -42,13 +41,13 @@ jest.mock(
   () => (cb) => mockVideoTrim(cb)
 );
 
-jest.mock('@web-stories-wp/design-system', () => ({
-  ...jest.requireActual('@web-stories-wp/design-system'),
+jest.mock('@googleforcreators/design-system', () => ({
+  ...jest.requireActual('@googleforcreators/design-system'),
   isPlatformMacOS: jest.fn(),
   useSnackbar: jest.fn(),
 }));
 
-jest.mock('@web-stories-wp/tracking');
+jest.mock('@googleforcreators/tracking');
 
 const mockEvent = {
   preventDefault: jest.fn(),
@@ -109,6 +108,9 @@ describe('useRightClickMenu', () => {
     mockUseSnackbar.mockReturnValue({ showSnackbar: mockShowSnackbar });
     mockIsPlatformMacOS.mockReturnValue(false);
     mockVideoTrim.mockImplementation((cb) => cb(defaultTrimContext));
+    useLocalMedia.mockReturnValue({
+      canTranscodeResource: jest.fn(),
+    });
   });
 
   describe('context menu manipulation', () => {
@@ -209,7 +211,6 @@ describe('useRightClickMenu', () => {
       expect(labels).toStrictEqual([
         RIGHT_CLICK_MENU_LABELS.DETACH_IMAGE_FROM_BACKGROUND,
         RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND_IMAGE,
-        RIGHT_CLICK_MENU_LABELS.CLEAR_STYLE,
         RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER,
         RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_BEFORE,
         RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE,
@@ -222,7 +223,7 @@ describe('useRightClickMenu', () => {
         wrapper: RightClickMenuProvider,
       });
 
-      const backgroundImageItems = result.current.menuItems.slice(0, 3);
+      const backgroundImageItems = result.current.menuItems.slice(0, 2);
       backgroundImageItems.map((item) => {
         expect(item.disabled).toBeTrue();
       });
@@ -305,7 +306,6 @@ describe('useRightClickMenu', () => {
       expect(labels).toStrictEqual([
         RIGHT_CLICK_MENU_LABELS.DETACH_IMAGE_FROM_BACKGROUND,
         RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND_IMAGE,
-        RIGHT_CLICK_MENU_LABELS.CLEAR_STYLE,
         RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER,
         RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_BEFORE,
         RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE,
@@ -337,7 +337,6 @@ describe('useRightClickMenu', () => {
       expect(labels).toStrictEqual([
         RIGHT_CLICK_MENU_LABELS.DETACH_VIDEO_FROM_BACKGROUND,
         RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND_VIDEO,
-        RIGHT_CLICK_MENU_LABELS.CLEAR_STYLE,
         RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER,
         RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_BEFORE,
         RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE,
@@ -358,6 +357,9 @@ describe('useRightClickMenu', () => {
       });
 
       it('should contain enabled "trim video"', () => {
+        useLocalMedia.mockReturnValue({
+          canTranscodeResource: () => true,
+        });
         const { result } = renderHook(() => useRightClickMenu(), {
           wrapper: RightClickMenuProvider,
         });
@@ -380,7 +382,7 @@ describe('useRightClickMenu', () => {
                 type: 'video',
                 isBackground: true,
                 resource: {
-                  isTranscoding: true,
+                  isExternal: false,
                 },
               },
             ],
@@ -388,6 +390,9 @@ describe('useRightClickMenu', () => {
         });
 
         it('should contain disabled "trim video"', () => {
+          useLocalMedia.mockReturnValue({
+            canTranscodeResource: () => false,
+          });
           const { result } = renderHook(() => useRightClickMenu(), {
             wrapper: RightClickMenuProvider,
           });
@@ -430,12 +435,11 @@ describe('useRightClickMenu', () => {
         RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_IMAGE,
         RIGHT_CLICK_MENU_LABELS.COPY_IMAGE_STYLES,
         RIGHT_CLICK_MENU_LABELS.PASTE_IMAGE_STYLES,
-        RIGHT_CLICK_MENU_LABELS.CLEAR_IMAGE_STYLES,
       ]);
     });
 
-    describe('copying, pasting, and clearing styles', () => {
-      it('should show a snackbar when copying, pasting, and clearing styles', () => {
+    describe('copying and pasting styles', () => {
+      it('should show a snackbar when copying and pasting styles', () => {
         const { result } = renderHook(() => useRightClickMenu(), {
           wrapper: RightClickMenuProvider,
         });
@@ -467,20 +471,6 @@ describe('useRightClickMenu', () => {
             message: 'Pasted style.',
           })
         );
-
-        const clear = result.current.menuItems.find(
-          (item) => item.label === RIGHT_CLICK_MENU_LABELS.CLEAR_IMAGE_STYLES
-        );
-        act(() => {
-          clear.onClick();
-        });
-
-        expect(mockShowSnackbar).toHaveBeenCalledWith(
-          expect.objectContaining({
-            actionLabel: 'Undo',
-            message: 'Cleared style.',
-          })
-        );
       });
     });
   });
@@ -495,7 +485,7 @@ describe('useRightClickMenu', () => {
             type: 'video',
             borderRadius: '4px',
             resource: {
-              isTranscoding: false,
+              isExternal: false,
             },
           },
         ],
@@ -515,7 +505,6 @@ describe('useRightClickMenu', () => {
         RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_VIDEO,
         RIGHT_CLICK_MENU_LABELS.COPY_VIDEO_STYLES,
         RIGHT_CLICK_MENU_LABELS.PASTE_VIDEO_STYLES,
-        RIGHT_CLICK_MENU_LABELS.CLEAR_VIDEO_STYLES,
       ]);
     });
 
@@ -532,6 +521,9 @@ describe('useRightClickMenu', () => {
       });
 
       it('should contain enabled "trim video"', () => {
+        useLocalMedia.mockReturnValue({
+          canTranscodeResource: () => true,
+        });
         const { result } = renderHook(() => useRightClickMenu(), {
           wrapper: RightClickMenuProvider,
         });
@@ -554,7 +546,7 @@ describe('useRightClickMenu', () => {
                 type: 'video',
                 borderRadius: '4px',
                 resource: {
-                  isTranscoding: true,
+                  isExternal: true,
                 },
               },
             ],
@@ -562,6 +554,9 @@ describe('useRightClickMenu', () => {
         });
 
         it('should contain disabled "trim video"', () => {
+          useLocalMedia.mockReturnValue({
+            canTranscodeResource: () => false,
+          });
           const { result } = renderHook(() => useRightClickMenu(), {
             wrapper: RightClickMenuProvider,
           });
@@ -576,8 +571,8 @@ describe('useRightClickMenu', () => {
       });
     });
 
-    describe('copying, pasting, and clearing styles', () => {
-      it('should show a snackbar when copying, pasting, and clearing styles', () => {
+    describe('copying and pasting styles', () => {
+      it('should show a snackbar when copying and pasting styles', () => {
         const { result } = renderHook(() => useRightClickMenu(), {
           wrapper: RightClickMenuProvider,
         });
@@ -609,20 +604,6 @@ describe('useRightClickMenu', () => {
             message: 'Pasted style.',
           })
         );
-
-        const clear = result.current.menuItems.find(
-          (item) => item.label === RIGHT_CLICK_MENU_LABELS.CLEAR_VIDEO_STYLES
-        );
-        act(() => {
-          clear.onClick();
-        });
-
-        expect(mockShowSnackbar).toHaveBeenCalledWith(
-          expect.objectContaining({
-            actionLabel: 'Undo',
-            message: 'Cleared style.',
-          })
-        );
       });
     });
   });
@@ -651,7 +632,6 @@ describe('useRightClickMenu', () => {
         ...expectedLayerActions,
         RIGHT_CLICK_MENU_LABELS.COPY_SHAPE_STYLES,
         RIGHT_CLICK_MENU_LABELS.PASTE_SHAPE_STYLES,
-        RIGHT_CLICK_MENU_LABELS.CLEAR_SHAPE_STYLES,
         RIGHT_CLICK_MENU_LABELS.ADD_TO_COLOR_PRESETS,
       ]);
     });

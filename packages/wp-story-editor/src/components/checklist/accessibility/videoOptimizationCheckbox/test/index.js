@@ -18,27 +18,44 @@
  */
 import { render, screen } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
-import { theme } from '@web-stories-wp/design-system';
-import { useConfig, useCurrentUser } from '@web-stories-wp/story-editor';
+import { theme } from '@googleforcreators/design-system';
+import {
+  useConfig,
+  useCurrentUser,
+  useStory,
+} from '@googleforcreators/story-editor';
 
 /**
  * Internal dependencies
  */
 import VideoOptimizationCheckbox from '..';
 
-jest.mock('@web-stories-wp/story-editor', () => ({
-  ...jest.requireActual('@web-stories-wp/story-editor'),
+jest.mock('@googleforcreators/story-editor', () => ({
+  ...jest.requireActual('@googleforcreators/story-editor'),
   useConfig: jest.fn(),
   useCurrentUser: jest.fn(),
+  useStory: jest.fn(),
   useIsChecklistMounted: jest.fn(() => true),
 }));
 
 const mockUseConfig = useConfig;
 const mockUseCurrentUser = useCurrentUser;
+const mockUseStory = useStory;
 const mockToggleWebStoriesMediaOptimization = jest.fn();
 const mockUser = {
   meta: {
     web_stories_media_optimization: false,
+  },
+};
+
+const mockStory = {
+  state: {
+    meta: {
+      isSaving: false,
+    },
+  },
+  actions: {
+    saveStory: jest.fn(),
   },
 };
 
@@ -54,6 +71,7 @@ describe('VideoOptimizationCheckbox', () => {
       currentUser: mockUser,
       toggleWebStoriesMediaOptimization: mockToggleWebStoriesMediaOptimization,
     });
+    mockUseStory.mockReturnValue(mockStory);
   });
 
   it('should render `null` if auto video optimization is enabled', () => {

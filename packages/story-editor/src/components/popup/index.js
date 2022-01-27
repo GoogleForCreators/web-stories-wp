@@ -26,9 +26,8 @@ import {
   useRef,
   useResizeEffect,
   createPortal,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
-import { THEME_CONSTANTS } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -61,7 +60,7 @@ const Container = styled.div.attrs(
   position: fixed;
   z-index: 2;
   overflow-y: auto;
-  max-height: calc(100vh - ${THEME_CONSTANTS.WP_ADMIN.TOOLBAR_HEIGHT}px);
+  max-height: ${({ topOffset }) => `calc(100vh - ${topOffset}px)`};
 `;
 
 function Popup({
@@ -78,13 +77,21 @@ function Popup({
   onPositionUpdate = noop,
 }) {
   const [popupState, setPopupState] = useState(null);
-  const [mounted, setMounted] = useState(false);
+  const isMounted = useRef(false);
   const popup = useRef(null);
-  const { isRTL } = useConfig();
+  const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
+
+  useEffect(() => {
+    isMounted.current = true;
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
 
   const positionPopup = useCallback(
     (evt) => {
-      if (!mounted) {
+      if (!isMounted.current) {
         return;
       }
 
@@ -92,14 +99,15 @@ function Popup({
       if (evt?.target?.nodeType && popup.current?.contains(evt.target)) {
         return;
       }
+
       setPopupState({
-        offset:
-          anchor?.current &&
-          getOffset(placement, spacing, anchor, dock, popup, isRTL),
+        offset: anchor?.current
+          ? getOffset(placement, spacing, anchor, dock, popup, isRTL, topOffset)
+          : {},
         height: popup.current?.getBoundingClientRect()?.height,
       });
     },
-    [anchor, dock, placement, spacing, mounted, isRTL]
+    [anchor, dock, placement, spacing, isRTL, topOffset]
   );
 
   useEffect(() => {
@@ -113,10 +121,10 @@ function Popup({
   }, [popupState?.height, positionPopup]);
 
   useLayoutEffect(() => {
-    setMounted(true);
     if (!isOpen) {
       return undefined;
     }
+    isMounted.current = true;
     positionPopup();
 
     // Adjust the position when scrolling.
@@ -124,7 +132,13 @@ function Popup({
     return () => document.removeEventListener('scroll', positionPopup, true);
   }, [isOpen, positionPopup]);
 
-  useLayoutEffect(onPositionUpdate, [popupState, onPositionUpdate]);
+  useLayoutEffect(() => {
+    if (!isMounted.current) {
+      return;
+    }
+
+    onPositionUpdate();
+  }, [popupState, onPositionUpdate]);
 
   useResizeEffect({ current: document.body }, positionPopup, [positionPopup]);
 
@@ -137,6 +151,7 @@ function Popup({
           placement={placement}
           isRTL={isRTL}
           $offset={popupState.offset}
+          topOffset={topOffset}
           invisible={invisible}
         >
           {renderContents

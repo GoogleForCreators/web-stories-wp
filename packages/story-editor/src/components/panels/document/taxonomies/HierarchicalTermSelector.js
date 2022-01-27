@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@googleforcreators/i18n';
 import {
   Button,
   BUTTON_SIZES,
@@ -29,14 +29,14 @@ import {
   THEME_CONSTANTS,
   themeHelpers,
   useLiveRegion,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import {
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
@@ -269,10 +269,10 @@ function HierarchicalTermSelector({
       <HierarchicalInput
         inputValue={searchText}
         onInputChange={handleInputChange}
-        label={taxonomy.labels.search_items}
+        label={taxonomy.labels.searchItems}
         options={orderedCategories}
         onChange={handleClickCategory}
-        noOptionsText={taxonomy.labels?.not_found}
+        noOptionsText={taxonomy.labels?.notFound}
       />
       {canCreateTerms ? (
         <>
@@ -282,23 +282,23 @@ function HierarchicalTermSelector({
               aria-expanded={false}
               onClick={handleToggleNewCategory}
             >
-              {taxonomy.labels.add_new_item}
+              {taxonomy.labels.addNewItem}
             </LinkButton>
           )}
           {showAddNewCategory ? (
             <AddNewCategoryForm ref={formRef} onSubmit={handleSubmit}>
               <Input
                 autoFocus
-                name={taxonomy.labels.new_item_name}
-                label={taxonomy.labels.new_item_name}
+                name={taxonomy.labels.newItemName}
+                label={taxonomy.labels.newItemName}
                 value={newCategoryName}
                 onChange={handleChangeNewCategoryName}
                 hasFocus={hasFocus}
               />
-              <Label htmlFor={dropdownId}>{taxonomy.labels.parent_item}</Label>
+              <Label htmlFor={dropdownId}>{taxonomy.labels.parentItem}</Label>
               <DropDown
                 id={dropdownId}
-                ariaLabel={taxonomy.labels.parent_item}
+                ariaLabel={taxonomy.labels.parentItem}
                 options={dropdownCategories}
                 selectedValue={selectedParent}
                 onMenuItemClick={handleParentSelect}
@@ -308,7 +308,7 @@ function HierarchicalTermSelector({
                   disabled={!newCategoryName.length}
                   type="submit"
                 >
-                  {taxonomy.labels.add_new_item}
+                  {taxonomy.labels.addNewItem}
                 </AddNewCategoryButton>
                 <AddNewCategoryButton
                   aria-expanded

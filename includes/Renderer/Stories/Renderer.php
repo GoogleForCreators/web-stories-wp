@@ -5,7 +5,7 @@
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/google/web-stories-wp
+ * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -591,26 +591,14 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			?>
 			<div class="web-stories-list__story-poster">
 				<a href="<?php echo esc_url( $story->get_url() ); ?>" <?php $this->render_link_attributes(); ?>>
-					<?php
-					if ( $this->context->is_amp() ) {
-						// Set the dimensions to '0' so that we can handle image ratio/size by CSS per view type.
-						?>
-						<amp-img
-							src="<?php echo esc_url( $poster_url ); ?>"
-							layout="responsive"
-							width="0"
-							height="0"
-							alt="<?php echo esc_attr( $story->get_title() ); ?>"
-						>
-						</amp-img>
-	<?php } else { ?>
-						<img
-							src="<?php echo esc_url( $poster_url ); ?>"
-							alt="<?php echo esc_attr( $story->get_title() ); ?>"
-							width="<?php echo absint( $this->width ); ?>"
-							height="<?php echo absint( $this->height ); ?>"
-						>
-					<?php } ?>
+					<img
+						src="<?php echo esc_url( $poster_url ); ?>"
+						alt="<?php echo esc_attr( $story->get_title() ); ?>"
+						width="<?php echo absint( $this->width ); ?>"
+						height="<?php echo absint( $this->height ); ?>"
+						loading="lazy"
+						decoding="async"
+					>
 				</a>
 			</div>
 			<?php

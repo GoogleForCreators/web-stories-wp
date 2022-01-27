@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useLayoutEffect } from '@web-stories-wp/react';
+import { useLayoutEffect } from '@googleforcreators/react';
 
 function useHandleRowVisibility({
   innerContainerRef,

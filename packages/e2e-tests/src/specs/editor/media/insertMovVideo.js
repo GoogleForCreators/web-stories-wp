@@ -37,7 +37,7 @@ describe('Handling .mov files', () => {
     }
   });
 
-  // Flakey test, see https://github.com/google/web-stories-wp/issues/8232.
+  // Flakey test, see https://github.com/googleforcreators/web-stories-wp/issues/8232.
   // eslint-disable-next-line jest/no-disabled-tests
   it.skip('should insert .mov', async () => {
     await createNewStory();

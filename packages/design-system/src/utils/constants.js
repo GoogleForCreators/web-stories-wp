@@ -19,5 +19,16 @@ export const KEYS = {
   LEFT: 'ArrowLeft',
   RIGHT: 'ArrowRight',
   UP: 'ArrowUp',
+  ENTER: 'Enter',
+  SPACE: 'Space',
   TAB: 'Tab',
 };
+
+export const FOCUSABLE_SELECTORS = [
+  'button:not(:disabled)',
+  '[href]',
+  'input:not(:disabled)',
+  'select:not(:disabled)',
+  'textarea:not(:disabled)',
+  '[tabindex]:not([tabindex="-1"])',
+];

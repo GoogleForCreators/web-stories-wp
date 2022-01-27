@@ -20,16 +20,16 @@
 import { visitDashboard } from '@web-stories-wp/e2e-test-utils';
 
 describe('Admin Menu', () => {
-  // Disable reason: broken by https://github.com/google/web-stories-wp/pull/7213, needs updating.
+  // Disable reason: broken by https://github.com/googleforcreators/web-stories-wp/pull/7213, needs updating.
   // eslint-disable-next-line jest/no-disabled-tests
   it.skip('should sync the WP nav with the dashboard nav', async () => {
     await visitDashboard();
 
     // Initial visit to `/` makes `Dashboard` link current in WP
     await page.hover('#menu-posts-web-story');
-    await await expect(
-      page.$('#menu-posts-web-story .current a')
-    ).resolves.toMatch('Dashboard');
+    await expect(page.$('#menu-posts-web-story .current a')).resolves.toMatch(
+      'Dashboard'
+    );
     await page.hover('[aria-label="Main dashboard navigation"]');
 
     // Navigating through the application to a new page syncs the WP current page in Nav
@@ -42,9 +42,9 @@ describe('Admin Menu', () => {
     ]);
     await page.waitForTimeout(100);
     await page.hover('#menu-posts-web-story');
-    await await expect(
-      page.$('#menu-posts-web-story .current a')
-    ).resolves.toMatch('Explore Templates');
+    await expect(page.$('#menu-posts-web-story .current a')).resolves.toMatch(
+      'Explore Templates'
+    );
     await page.hover('[aria-label="Main dashboard navigation"]');
 
     // Navigating through WP to a new page syncs the WP current page in Nav
@@ -57,9 +57,9 @@ describe('Admin Menu', () => {
       }),
     ]);
     await page.waitForTimeout(100);
-    await await expect(
-      page.$('#menu-posts-web-story .current a')
-    ).resolves.toMatch('Settings');
+    await expect(page.$('#menu-posts-web-story .current a')).resolves.toMatch(
+      'Settings'
+    );
     // await page.hover('[aria-label="Main dashboard navigation"]');
 
     // Navigating through application back to My Story from another route
@@ -72,8 +72,8 @@ describe('Admin Menu', () => {
     ]);
     await page.waitForTimeout(100);
     await page.hover('#menu-posts-web-story');
-    await await expect(
-      page.$('#menu-posts-web-story .current a')
-    ).resolves.toMatch('Dashboard');
+    await expect(page.$('#menu-posts-web-story .current a')).resolves.toMatch(
+      'Dashboard'
+    );
   });
 });

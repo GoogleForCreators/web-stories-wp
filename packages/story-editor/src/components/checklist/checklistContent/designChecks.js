@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 /**
  * Internal dependencies
@@ -38,7 +38,7 @@ function DesignPanel({
   return isChecklistMounted ? (
     <StyledTablistPanel
       badgeCount={badgeCount}
-      isExpanded={badgeCount && isOpen}
+      isExpanded={Boolean(badgeCount) && isOpen}
       onClick={onClick}
       maxHeight={maxHeight}
       title={title}

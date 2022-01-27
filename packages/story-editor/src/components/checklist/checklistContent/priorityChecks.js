@@ -16,9 +16,9 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
-import { useEffect } from '@web-stories-wp/react';
+import { useEffect } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -42,7 +42,7 @@ function PriorityPanel({
   return isChecklistMounted ? (
     <StyledTablistPanel
       badgeCount={badgeCount}
-      isExpanded={badgeCount && isOpen}
+      isExpanded={Boolean(badgeCount) && isOpen}
       onClick={onClick}
       maxHeight={maxHeight}
       status={PANEL_STATES.DANGER}

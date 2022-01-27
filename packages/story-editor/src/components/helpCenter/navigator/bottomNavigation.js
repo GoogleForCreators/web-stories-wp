@@ -18,14 +18,14 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
-import { useEffect, useState, useRef } from '@web-stories-wp/react';
+import { __ } from '@googleforcreators/i18n';
+import { useEffect, useState, useRef } from '@googleforcreators/react';
 import {
   BUTTON_SIZES,
   BUTTON_TYPES,
   Icons,
   BEZIER,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
@@ -59,8 +59,8 @@ const BottomNavButtons = styled.div`
 const ArrowWrap = styled.div`
   ${secondaryTextStyle}
   margin: -5px -16px;
-  ${({ isRTL }) =>
-    isRTL &&
+  ${({ $isRTL }) =>
+    $isRTL &&
     css`
       transform: rotate(180deg);
     `}
@@ -118,7 +118,7 @@ export function BottomNavigation({
           size={BUTTON_SIZES.SMALL}
           disabled={!hasBottomNavigation}
         >
-          <ArrowWrap isRTL={isRTL}>
+          <ArrowWrap $isRTL={isRTL}>
             <Icons.ArrowLeft />
           </ArrowWrap>
           <span css={secondaryTextStyle}>{__('All Tips', 'web-stories')}</span>

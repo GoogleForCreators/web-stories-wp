@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useEffect, useState } from '@web-stories-wp/react';
+import { useCallback, useEffect, useState } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -33,13 +33,24 @@ function CurrentUserProvider({ children }) {
   } = useAPI();
 
   useEffect(() => {
+    let isMounted = true;
     if (getCurrentUser && !Object.keys(currentUser).length) {
-      getCurrentUser().then(setCurrentUser);
+      getCurrentUser().then((user) => {
+        if (!isMounted) {
+          return;
+        }
+        setCurrentUser(user);
+      });
     }
+
+    return () => {
+      isMounted = false;
+    };
   }, [currentUser, getCurrentUser]);
 
   const updateCurrentUser = useCallback(
-    (data) => _updateCurrentUser(data).then(setCurrentUser),
+    (data) =>
+      _updateCurrentUser ? _updateCurrentUser(data).then(setCurrentUser) : null,
     [_updateCurrentUser]
   );
 

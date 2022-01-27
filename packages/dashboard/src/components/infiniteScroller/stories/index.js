@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,9 +17,8 @@
 /**
  * External dependencies
  */
-import { useState, useEffect } from '@web-stories-wp/react';
+import { useState, useEffect } from '@googleforcreators/react';
 import styled from 'styled-components';
-import { text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
@@ -29,6 +28,16 @@ import InfiniteScroller from '..';
 export default {
   title: 'Dashboard/Components/InfiniteScroller',
   component: InfiniteScroller,
+  args: {
+    loadingMessage:
+      'Data is loading - please note, interesection observers and storybook do not play nicely in firefox.',
+    allDataLoadedMessage: 'all data is loaded',
+  },
+  parameters: {
+    controls: {
+      include: ['loadingMessage', 'allDataLoadedMessage'],
+    },
+  },
 };
 
 const Item = styled.div`
@@ -52,7 +61,7 @@ const Item = styled.div`
 
 const generateArray = (n) => new Array(n).fill(<span>{'Demo Item'}</span>);
 
-export const _default = () => {
+export const _default = (args) => {
   const [currentCount, setCurrentCount] = useState(5);
   const [isAllDataLoaded, setIsAllDataLoaded] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -82,14 +91,7 @@ export const _default = () => {
           }}
           isLoading={isLoading}
           canLoadMore={!isAllDataLoaded}
-          loadingMessage={text(
-            'loadingMessage',
-            'Data is loading - please note, interesection observers and storybook do not play nicely in firefox.'
-          )}
-          allDataLoadedMessage={text(
-            'allDataLoadedMessage',
-            'all data is loaded'
-          )}
+          {...args}
         />
       </>
     );

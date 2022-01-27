@@ -19,12 +19,11 @@
 /**
  * External dependencies
  */
-import { toUTCDate } from '@web-stories-wp/date';
+import { toUTCDate } from '@googleforcreators/date';
 
 const formattedTemplatesArray = [
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=10&isLocal=false',
     createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
@@ -57,6 +56,7 @@ const formattedTemplatesArray = [
               type: 'rectangle',
             },
             isBackground: true,
+            isDefaultBackground: true,
             type: 'shape',
             id: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
           },
@@ -234,6 +234,7 @@ const formattedTemplatesArray = [
               type: 'rectangle',
             },
             isBackground: true,
+            isDefaultBackground: true,
             type: 'shape',
             id: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
           },
@@ -410,6 +411,7 @@ const formattedTemplatesArray = [
               type: 'rectangle',
             },
             isBackground: true,
+            isDefaultBackground: true,
             type: 'shape',
             id: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
           },
@@ -586,6 +588,7 @@ const formattedTemplatesArray = [
               type: 'rectangle',
             },
             isBackground: true,
+            isDefaultBackground: true,
             type: 'shape',
             id: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
           },
@@ -762,6 +765,7 @@ const formattedTemplatesArray = [
               type: 'rectangle',
             },
             isBackground: true,
+            isDefaultBackground: true,
             type: 'shape',
             id: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
           },
@@ -938,6 +942,7 @@ const formattedTemplatesArray = [
               type: 'rectangle',
             },
             isBackground: true,
+            isDefaultBackground: true,
             type: 'shape',
             id: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
           },
@@ -1114,6 +1119,7 @@ const formattedTemplatesArray = [
               type: 'rectangle',
             },
             isBackground: true,
+            isDefaultBackground: true,
             type: 'shape',
             id: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
           },
@@ -1289,7 +1295,6 @@ const formattedTemplatesArray = [
   },
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=9&isLocal=false',
     createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
@@ -1322,6 +1327,7 @@ const formattedTemplatesArray = [
               type: 'rectangle',
             },
             isBackground: true,
+            isDefaultBackground: true,
             type: 'shape',
             id: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
           },
@@ -1489,7 +1495,6 @@ const formattedTemplatesArray = [
   },
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=3&isLocal=false',
     createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
@@ -1522,6 +1527,7 @@ const formattedTemplatesArray = [
               type: 'rectangle',
             },
             isBackground: true,
+            isDefaultBackground: true,
             type: 'shape',
             id: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
           },
@@ -1689,7 +1695,6 @@ const formattedTemplatesArray = [
   },
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=4&isLocal=false',
     createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
@@ -1722,6 +1727,7 @@ const formattedTemplatesArray = [
               type: 'rectangle',
             },
             isBackground: true,
+            isDefaultBackground: true,
             type: 'shape',
             id: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
           },
@@ -1891,7 +1897,6 @@ const formattedTemplatesArray = [
   },
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=5&isLocal=false',
     createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
@@ -1924,6 +1929,7 @@ const formattedTemplatesArray = [
               type: 'rectangle',
             },
             isBackground: true,
+            isDefaultBackground: true,
             type: 'shape',
             id: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
           },
@@ -2091,7 +2097,6 @@ const formattedTemplatesArray = [
   },
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=6&isLocal=false',
     createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
@@ -2124,6 +2129,7 @@ const formattedTemplatesArray = [
               type: 'rectangle',
             },
             isBackground: true,
+            isDefaultBackground: true,
             type: 'shape',
             id: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
           },
@@ -2291,7 +2297,6 @@ const formattedTemplatesArray = [
   },
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=7&isLocal=false',
     createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
@@ -2324,6 +2329,7 @@ const formattedTemplatesArray = [
               type: 'rectangle',
             },
             isBackground: true,
+            isDefaultBackground: true,
             type: 'shape',
             id: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
           },
@@ -2491,7 +2497,6 @@ const formattedTemplatesArray = [
   },
   {
     version: 2,
-    centerTargetAction: 'template-detail?id=8&isLocal=false',
     createdBy: 'Google',
     description:
       'Maecenas ultrices tortor nibh, eu consequat magna maximus non. Quisque nec tellus lacus.',
@@ -2524,6 +2529,7 @@ const formattedTemplatesArray = [
               type: 'rectangle',
             },
             isBackground: true,
+            isDefaultBackground: true,
             type: 'shape',
             id: 'ef056bde-fdc3-4f71-809a-e69c62ae914d',
           },

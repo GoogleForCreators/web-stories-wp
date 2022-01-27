@@ -23,14 +23,14 @@ import {
   useMemo,
   useState,
   useEffect,
-} from '@web-stories-wp/react';
-import { trackEvent } from '@web-stories-wp/tracking';
-import { getMsFromHMS } from '@web-stories-wp/media';
+} from '@googleforcreators/react';
+import { trackEvent } from '@googleforcreators/tracking';
+import { getMsFromHMS } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
  */
-import { useCanvas, useStory, useAPI } from '../../app';
+import { useCanvas, useStory, useAPI, useLocalMedia } from '../../app';
 import useFFmpeg from '../../app/media/utils/useFFmpeg';
 
 function useVideoTrimMode() {
@@ -55,6 +55,12 @@ function useVideoTrimMode() {
     actions: { getMediaById },
   } = useAPI();
   const [videoData, setVideoData] = useState(null);
+
+  const { isCurrentResourceUploading } = useLocalMedia(
+    ({ state: { isCurrentResourceUploading } }) => ({
+      isCurrentResourceUploading,
+    })
+  );
 
   const getVideoData = useCallback(() => {
     const { resource } = selectedElement;
@@ -125,9 +131,21 @@ function useVideoTrimMode() {
     if (selectedElement?.type !== 'video' || !selectedElement?.resource) {
       return false;
     }
-    const { local, isExternal } = selectedElement.resource || {};
-    return isVideoTrimEnabled && isTranscodingEnabled && !isExternal && !local;
-  }, [selectedElement, isVideoTrimEnabled, isTranscodingEnabled]);
+
+    const { id, isExternal } = selectedElement.resource;
+
+    return (
+      isVideoTrimEnabled &&
+      isTranscodingEnabled &&
+      !isExternal &&
+      !isCurrentResourceUploading(id)
+    );
+  }, [
+    selectedElement,
+    isVideoTrimEnabled,
+    isTranscodingEnabled,
+    isCurrentResourceUploading,
+  ]);
 
   return {
     isTrimMode: Boolean(isEditing && isTrimMode),

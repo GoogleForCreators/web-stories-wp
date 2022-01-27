@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
-import { renderWithProviders } from '@web-stories-wp/design-system/src/testUtils';
+import { renderWithProviders } from '@googleforcreators/design-system/src/testUtils';
 
 /**
  * Internal dependencies

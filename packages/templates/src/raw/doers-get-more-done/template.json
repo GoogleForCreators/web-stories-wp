@@ -1,5 +1,5 @@
 {
-  "version": 36,
+  "version": 38,
   "pages": [
     {
       "elements": [
@@ -37,13 +37,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#ccc7c3",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/doers-get-more-done/page1_bg.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
             "id": 0,
             "alt": "page1_bg",
-            "local": false,
             "sizes": [],
             "isExternal": true
           }
@@ -180,13 +180,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#bbb7b5",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/doers-get-more-done/page2_bg.jpg",
             "width": 220,
             "height": 330,
             "posterId": 0,
             "id": 0,
             "alt": "page2_bg",
-            "local": false,
             "sizes": [],
             "isExternal": true
           }
@@ -307,13 +307,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#413d3c",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/doers-get-more-done/page3_image1.jpg",
             "width": 220,
             "height": 147,
             "posterId": 0,
             "id": 0,
             "alt": "page3_image1",
-            "local": false,
             "sizes": [],
             "isExternal": true
           }
@@ -513,13 +513,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#141513",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/doers-get-more-done/page4_page5_bg.jpg",
             "width": 220,
             "height": 275,
             "posterId": 0,
             "id": 0,
             "alt": "page4_page5_bg",
-            "local": false,
             "sizes": [],
             "isExternal": true
           }
@@ -637,13 +637,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#141513",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/doers-get-more-done/page4_page5_bg.jpg",
             "width": 220,
             "height": 275,
             "posterId": 0,
             "id": 0,
             "alt": "page4_page5_bg",
-            "local": false,
             "sizes": [],
             "isExternal": true
           }
@@ -836,13 +836,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#292524",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/doers-get-more-done/page6_bg.jpg",
             "width": 220,
             "height": 147,
             "posterId": 0,
             "id": 0,
             "alt": "page6_bg",
-            "local": false,
             "sizes": [],
             "isExternal": true
           },
@@ -1065,12 +1065,12 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#c8bfb5",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/doers-get-more-done/page7_bg.jpg",
             "width": 330,
             "height": 442,
             "id": 0,
             "alt": "page7_bg",
-            "local": false,
             "sizes": [],
             "isExternal": true
           }
@@ -1283,13 +1283,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#a29594",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/doers-get-more-done/page8_image1.jpg",
             "width": 220,
             "height": 131,
             "posterId": 0,
             "id": 0,
             "alt": "page8_image1",
-            "local": false,
             "sizes": [],
             "isExternal": true
           }
@@ -1312,13 +1312,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#8d7565",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/doers-get-more-done/page8_image2.jpg",
             "width": 220,
             "height": 147,
             "posterId": 0,
             "id": 0,
             "alt": "page8_image2",
-            "local": false,
             "sizes": [],
             "isExternal": true
           },
@@ -1344,13 +1344,13 @@
           "resource": {
             "type": "image",
             "mimeType": "image/jpeg",
+            "baseColor": "#3b3635",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/doers-get-more-done/page8_image3.jpg",
             "width": 220,
             "height": 147,
             "posterId": 0,
             "id": 0,
             "alt": "page8_image3",
-            "local": false,
             "sizes": [],
             "isExternal": true
           }
@@ -1681,13 +1681,13 @@
             "type": "image",
             "mimeType": "image/jpeg",
             "creationDate": "2020-06-22T16:42:02",
+            "baseColor": "#c8bfb5",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/doers-get-more-done/page7_bg.jpg",
             "width": 330,
             "height": 442,
             "posterId": 0,
             "id": 0,
             "alt": "page7_bg",
-            "local": false,
             "sizes": [],
             "isExternal": true
           },
@@ -2100,13 +2100,13 @@
             "type": "image",
             "mimeType": "image/jpeg",
             "creationDate": "2020-06-22T17:12:23",
+            "baseColor": "#eee1e3",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/doers-get-more-done/page10_image1.jpg",
             "width": 330,
             "height": 235,
             "posterId": 0,
             "id": 0,
             "alt": "page10_image1",
-            "local": false,
             "sizes": [],
             "isExternal": true
           }
@@ -2132,13 +2132,13 @@
             "type": "image",
             "mimeType": "image/jpeg",
             "creationDate": "2020-06-22T17:12:21",
+            "baseColor": "#303944",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/doers-get-more-done/page10_image2.jpg",
             "width": 330,
             "height": 498,
             "posterId": 0,
             "id": 0,
             "alt": "page10_image2",
-            "local": false,
             "sizes": [],
             "isExternal": true
           }
@@ -2164,13 +2164,13 @@
             "type": "image",
             "mimeType": "image/jpeg",
             "creationDate": "2020-06-22T17:12:19",
+            "baseColor": "#e3dcdc",
             "src": "__WEB_STORIES_TEMPLATE_BASE_URL__/images/templates/doers-get-more-done/page10_image3.jpg",
             "width": 330,
             "height": 220,
             "posterId": 0,
             "id": 0,
             "alt": "page10_image3",
-            "local": false,
             "sizes": [],
             "isExternal": true
           }

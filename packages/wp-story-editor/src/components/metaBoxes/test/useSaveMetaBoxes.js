@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { renderHook } from '@testing-library/react-hooks';
-import { ConfigContext } from '@web-stories-wp/story-editor';
+import { ConfigContext } from '@googleforcreators/story-editor';
 
 /**
  * Internal dependencies

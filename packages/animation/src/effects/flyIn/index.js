@@ -80,15 +80,12 @@ export function EffectFlyIn({
 
   return {
     id,
-    // eslint-disable-next-line react/prop-types
-    WAAPIAnimation: function WAAPIAnimation({ children, hoistAnimation }) {
-      return (
-        <FadeWAAPIAnimation hoistAnimation={hoistAnimation}>
-          <MoveWAAPIAnimation hoistAnimation={hoistAnimation}>
-            {children}
-          </MoveWAAPIAnimation>
-        </FadeWAAPIAnimation>
-      );
+    WAAPIAnimation: {
+      ...MoveWAAPIAnimation,
+      keyframes: {
+        ...MoveWAAPIAnimation.keyframes,
+        ...FadeWAAPIAnimation.keyframes,
+      },
     },
     // eslint-disable-next-line react/prop-types
     AMPTarget: function AMPTarget({ children, style }) {

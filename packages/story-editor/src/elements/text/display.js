@@ -18,10 +18,10 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useEffect, useRef, useMemo } from '@web-stories-wp/react';
+import { useEffect, useRef, useMemo } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
-import { createSolid } from '@web-stories-wp/patterns';
-import { useUnits } from '@web-stories-wp/units';
+import { createSolid } from '@googleforcreators/patterns';
+import { useUnits } from '@googleforcreators/units';
 /**
  * Internal dependencies
  */
@@ -192,8 +192,7 @@ function TextDisplay({
       (x) => `${dataToEditorX(x)}px`,
       (y) => `${dataToEditorY(y)}px`,
       dataToEditorY,
-      element,
-      dataToEditorY
+      element
     ),
     horizontalPadding: dataToEditorX(rest.padding?.horizontal || 0),
     verticalPadding: dataToEditorX(rest.padding?.vertical || 0),

@@ -5,7 +5,7 @@
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/google/web-stories-wp
+ * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -38,6 +38,15 @@ use WP_REST_Response;
  * Class Jetpack.
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
+ *
+ * @phpstan-type EnhancedAttachmentMetadata false|array{
+ *   width: int,
+ *   height: int,
+ *   file: string,
+ *   sizes: array,
+ *   image_meta: array,
+ *   videopress: array,
+ * }
  */
 class Jetpack extends Service_Base {
 
@@ -222,6 +231,11 @@ class Jetpack extends Service_Base {
 		// Mark video as optimized.
 		$data[ $this->media_source_taxonomy::MEDIA_SOURCE_KEY ] = 'video-optimization';
 
+		/**
+		 * Jetpack adds an additional field to regular attachment metadata.
+		 *
+		 * @var EnhancedAttachmentMetadata $metadata
+		 */
 		$metadata = wp_get_attachment_metadata( $attachment->ID );
 
 		if ( $metadata && isset( $metadata['videopress']['duration'], $data['media_details'] ) && is_array( $data['media_details'] ) ) {
@@ -277,6 +291,11 @@ class Jetpack extends Service_Base {
 		// Mark video as optimized.
 		$data[ $this->media_source_taxonomy::MEDIA_SOURCE_KEY ] = 'video-optimization';
 
+		/**
+		 * Jetpack adds an additional field to regular attachment metadata.
+		 *
+		 * @var EnhancedAttachmentMetadata $metadata
+		 */
 		$metadata = wp_get_attachment_metadata( $post->ID );
 
 		if ( $metadata && isset( $metadata['videopress']['duration'], $data['media_details'] ) && is_array( $data['media_details'] ) ) {

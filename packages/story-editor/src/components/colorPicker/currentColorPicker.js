@@ -24,10 +24,10 @@ import {
   useState,
   lazy,
   Suspense,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 
 const Saturation = lazy(() =>
   import(
@@ -54,7 +54,7 @@ import {
   BUTTON_SIZES,
   BUTTON_VARIANTS,
   BUTTON_TYPES,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import CircularProgress from '../circularProgress';
 import useEyedropper from '../eyedropper';
 import Pointer from './pointer';

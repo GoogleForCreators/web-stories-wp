@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from '@web-stories-wp/react';
+import { useCallback, useMemo } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -28,7 +28,7 @@ import { DESIGN_COPY, MAX_VIDEO_LENGTH_SECONDS } from '../constants';
 import { filterStoryElements } from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
-import VideoChecklistCard from './shared/videoChecklistCard';
+import { VideoChecklistCard } from './shared';
 
 export function videoElementLength(element) {
   return (
@@ -40,7 +40,6 @@ export function videoElementLength(element) {
 const VideoElementLength = () => {
   const isChecklistMounted = useIsChecklistMounted();
   const pages = useStory(({ state }) => state?.pages);
-
   const elements = useMemo(
     () => filterStoryElements(pages, videoElementLength),
     [pages]
@@ -54,6 +53,7 @@ const VideoElementLength = () => {
       }),
     [setHighlights]
   );
+
   const { footer, title } = DESIGN_COPY.videoTooLong;
 
   const isRendered = elements.length > 0;
@@ -66,7 +66,7 @@ const VideoElementLength = () => {
         title={title}
         elements={elements}
         footer={footer}
-        handleClick={handleClick}
+        onThumbnailClick={handleClick}
       />
     )
   );

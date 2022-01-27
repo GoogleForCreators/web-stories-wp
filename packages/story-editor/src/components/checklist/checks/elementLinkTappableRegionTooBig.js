@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { useCallback, useMemo } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
+import { useCallback, useMemo } from '@googleforcreators/react';
+import { __ } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies
@@ -32,7 +32,7 @@ import {
   DefaultFooterText,
 } from '../../checklistCard';
 import { LayerThumbnail, Thumbnail, THUMBNAIL_TYPES } from '../../thumbnail';
-import { filterStoryElements, getVisibleThumbnails } from '../utils';
+import { filterStoryElements } from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
 
@@ -81,6 +81,17 @@ const ElementLinkTappableRegionTooBig = () => {
   useRegisterCheck('ElementLinkTappableRegionTooBig', isRendered);
 
   const { title, footer } = ACCESSIBILITY_COPY.linkTappableRegionTooBig;
+
+  const thumbnails = (elements || []).map((element) => (
+    <Thumbnail
+      key={element.id}
+      onClick={() => handleClick(element.id, element.pageId)}
+      type={THUMBNAIL_TYPES.TEXT}
+      displayBackground={<LayerThumbnail page={element} />}
+      aria-label={__('Go to offending link', 'web-stories')}
+    />
+  ));
+
   return (
     isRendered &&
     isChecklistMounted && (
@@ -92,20 +103,7 @@ const ElementLinkTappableRegionTooBig = () => {
             : CARD_TYPE.SINGLE_ISSUE
         }
         footer={<DefaultFooterText>{footer}</DefaultFooterText>}
-        thumbnailCount={elements.length}
-        thumbnail={
-          <>
-            {getVisibleThumbnails(elements).map((element) => (
-              <Thumbnail
-                key={element.id}
-                onClick={() => handleClick(element.id, element.pageId)}
-                type={THUMBNAIL_TYPES.TEXT}
-                displayBackground={<LayerThumbnail page={element} />}
-                aria-label={__('Go to offending link', 'web-stories')}
-              />
-            ))}
-          </>
-        }
+        thumbnails={thumbnails}
       />
     )
   );

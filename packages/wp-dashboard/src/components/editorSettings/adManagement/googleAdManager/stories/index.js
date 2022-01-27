@@ -17,7 +17,6 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-import { text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
@@ -27,15 +26,23 @@ import GoogleAdManager from '..';
 export default {
   title: 'Dashboard/Views/EditorSettings/AdManagement/GoogleAdManager',
   component: GoogleAdManager,
+  args: {
+    slotId: '',
+  },
+  parameters: {
+    controls: {
+      include: ['slotId'],
+    },
+  },
 };
 
-export const _default = () => {
+export const _default = (args) => {
   return (
     <GoogleAdManager
-      slotId={text('slotId', '')}
       handleUpdate={(newSlotId) =>
         action('update google ad manager')(newSlotId)
       }
+      {...args}
     />
   );
 };

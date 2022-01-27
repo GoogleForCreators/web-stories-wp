@@ -18,14 +18,15 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback } from '@web-stories-wp/react';
-import styled, { css } from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
-import { LockToggle, Icons } from '@web-stories-wp/design-system';
+import { useCallback } from '@googleforcreators/react';
+import styled from 'styled-components';
+import { __ } from '@googleforcreators/i18n';
+import { LockToggle, Icons } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
+import { canSupportMultiBorder } from '../../../../masks';
 import { StackableGroup, StackableInput } from '../../../form/stackable';
 import Tooltip from '../../../tooltip';
 import { focusStyle, useCommonObjectValue } from '../../shared';
@@ -46,9 +47,9 @@ const ToggleWrapper = styled.div`
   padding-top: 2px;
   ${({ locked }) =>
     locked &&
-    css`
-      padding-left: 8px;
-    `};
+    `
+    padding-left: 8px;
+  `}
   align-self: stretch;
 `;
 
@@ -71,8 +72,11 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
     DEFAULT_BORDER
   );
 
+  // Some shapes i.e all non-rectangular shapes only support a single border width value
+  const hasMultiBorderSupport = selectedElements.every(canSupportMultiBorder);
+
   // Only if true for all selected elements.
-  const lockBorder = border.lockedWidth === true;
+  const lockBorder = border.lockedWidth === true || !hasMultiBorderSupport;
 
   const handleChange = useCallback(
     (name) => (evt, value) => {
@@ -150,29 +154,31 @@ function WidthControls({ selectedElements, pushUpdateForObject }) {
           </>
         )}
       </StackableGroup>
-      <ToggleWrapper locked={lockBorder}>
-        <Tooltip title={__('Toggle consistent border', 'web-stories')}>
-          <StyledLockToggle
-            isLocked={lockBorder}
-            onClick={() => {
-              let args = {
-                lockedWidth: !lockBorder,
-              };
-              // If the border width wasn't locked before (and is now), unify all the values.
-              if (!lockBorder) {
-                args = {
-                  ...args,
-                  top: border.left,
-                  right: border.left,
-                  bottom: border.left,
+      {hasMultiBorderSupport && (
+        <ToggleWrapper locked={lockBorder}>
+          <Tooltip title={__('Toggle consistent border', 'web-stories')}>
+            <StyledLockToggle
+              isLocked={lockBorder}
+              onClick={() => {
+                let args = {
+                  lockedWidth: !lockBorder,
                 };
-              }
-              handleLockChange(args);
-            }}
-            aria-label={__('Toggle consistent border', 'web-stories')}
-          />
-        </Tooltip>
-      </ToggleWrapper>
+                // If the border width wasn't locked before (and is now), unify all the values.
+                if (!lockBorder) {
+                  args = {
+                    ...args,
+                    top: border.left,
+                    right: border.left,
+                    bottom: border.left,
+                  };
+                }
+                handleLockChange(args);
+              }}
+              aria-label={__('Toggle consistent border', 'web-stories')}
+            />
+          </Tooltip>
+        </ToggleWrapper>
+      )}
     </BorderInputsFlexContainer>
   );
 }

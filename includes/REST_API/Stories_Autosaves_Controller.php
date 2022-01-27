@@ -5,7 +5,7 @@
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/google/web-stories-wp
+ * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -215,7 +215,7 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller implemen
 			}
 		}
 
-		/* This filter is documented in wp-includes/rest-api/endpoints/class-wp-rest-autosaves-controller.php */
+		/** This filter is documented in wp-includes/rest-api/endpoints/class-wp-rest-autosaves-controller.php */
 		return apply_filters( 'rest_prepare_autosave', $response, $post, $request );
 	}
 

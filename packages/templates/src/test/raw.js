@@ -19,8 +19,8 @@
  */
 import { readdirSync, readFileSync } from 'fs';
 import { resolve } from 'path';
-import stickers from '@web-stories-wp/stickers';
-import { isValid } from '@web-stories-wp/date';
+import stickers from '@googleforcreators/stickers';
+import { isValid } from '@googleforcreators/date';
 
 describe('raw template files', () => {
   const templates = readdirSync(
@@ -38,7 +38,7 @@ describe('raw template files', () => {
       templateData = _templateData;
     });
 
-    // @see https://github.com/google/web-stories-wp/issues/2473#issuecomment-651509687
+    // @see https://github.com/googleforcreators/web-stories-wp/issues/2473#issuecomment-651509687
     it('should not contain invisible characters', () => {
       const templateContent = readFileSync(
         resolve(
@@ -51,8 +51,8 @@ describe('raw template files', () => {
       expect(templateContent).not.toContain('\u2028');
     });
 
-    // @see https://github.com/google/web-stories-wp/pull/4516
-    // @see https://github.com/google/web-stories-wp/pull/6159
+    // @see https://github.com/googleforcreators/web-stories-wp/pull/4516
+    // @see https://github.com/googleforcreators/web-stories-wp/pull/6159
     it('should contain replaceable URLs', () => {
       for (const { elements } of templateData.pages) {
         for (const element of elements) {
@@ -83,7 +83,7 @@ describe('raw template files', () => {
       }
     });
 
-    // @see https://github.com/google/web-stories-wp/pull/7944#pullrequestreview-686071526
+    // @see https://github.com/googleforcreators/web-stories-wp/pull/7944#pullrequestreview-686071526
     it('images and video ids should default to 0', () => {
       for (const { elements } of templateData.pages) {
         for (const element of elements) {
@@ -103,7 +103,7 @@ describe('raw template files', () => {
       }
     });
 
-    // @see https://github.com/google/web-stories-wp/pull/5889
+    // @see https://github.com/googleforcreators/web-stories-wp/pull/5889
     it('should contain pageTemplateType', () => {
       for (const page of templateData.pages) {
         expect(page).toStrictEqual(
@@ -114,7 +114,7 @@ describe('raw template files', () => {
       }
     });
 
-    // @see https://github.com/google/web-stories-wp/issues/7227
+    // @see https://github.com/googleforcreators/web-stories-wp/issues/7227
     it('should not contain extraneous properties', () => {
       expect(templateData.current).toBeNull();
       expect(templateData.selection).toStrictEqual([]);
@@ -148,6 +148,21 @@ describe('raw template files', () => {
       }
     });
 
+    it('images and videos should have baseColor', () => {
+      for (const { elements } of templateData.pages) {
+        for (const element of elements) {
+          // eslint-disable-next-line jest/no-if
+          if (!['image', 'video', 'gif'].includes(element?.type)) {
+            continue;
+          }
+
+          expect(element?.resource?.baseColor).toStrictEqual(
+            expect.stringMatching(/^#(?:[0-9a-fA-F]{3}){1,2}$/)
+          );
+        }
+      }
+    });
+
     it('should contain only valid stickers', () => {
       for (const { elements } of templateData.pages) {
         for (const element of elements) {
@@ -165,7 +180,7 @@ describe('raw template files', () => {
       }
     });
 
-    // @see https://github.com/google/web-stories-wp/pull/8692
+    // @see https://github.com/googleforcreators/web-stories-wp/pull/8692
     it('should contain a slug for screenshot referencing', () => {
       expect(templateData.slug).toBeString();
     });

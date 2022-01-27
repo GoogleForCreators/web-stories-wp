@@ -17,8 +17,7 @@
 /**
  * External dependencies
  */
-import { number } from '@storybook/addon-knobs';
-import { useState } from '@web-stories-wp/react';
+import { useState } from '@googleforcreators/react';
 import styled from 'styled-components';
 
 /**
@@ -37,27 +36,30 @@ const Container = styled.div`
 export default {
   title: 'DesignSystem/Components/Slider',
   component: Slider,
+  args: {
+    thumbSize: 24,
+    min: 0,
+    max: 100,
+    majorStep: 10,
+    minorStep: 1,
+  },
+  parameters: {
+    controls: {
+      exclude: ['handleChange', 'value', 'suffix'],
+    },
+  },
 };
 
-export const _default = () => {
+export const _default = (args) => {
   const [lightValue, setLightValue] = useState(0);
   const [darkValue, setDarkValue] = useState(0);
-  const thumbSize = number('Thumb size', 24);
-  const min = number('Min value', 0);
-  const max = number('Max value', 100);
-  const majorStep = number('Major step', 10);
-  const minorStep = number('Minor step', 1);
 
   return (
     <>
       <Container>
         <Text>{'Percentage:'}</Text>
         <Slider
-          thumbSize={thumbSize}
-          min={min}
-          max={max}
-          majorStep={majorStep}
-          minorStep={minorStep}
+          {...args}
           handleChange={setLightValue}
           value={lightValue}
           suffix="%"
@@ -67,11 +69,7 @@ export const _default = () => {
         <Container>
           <Text>{'Milliseconds:'}</Text>
           <Slider
-            thumbSize={thumbSize}
-            min={min}
-            max={max}
-            majorStep={majorStep}
-            minorStep={minorStep}
+            {...args}
             handleChange={setDarkValue}
             value={darkValue}
             suffix="ms"

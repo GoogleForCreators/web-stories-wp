@@ -6,7 +6,7 @@ Web Stories exists as two apps right now, the editor and the dashboard. Both hav
 
 ## What goes in the design system?
 
-The Design System is **only** for shared basics and components. In [atomic design terms](https://bradfrost.com/blog/post/atomic-web-design) we are sharing atoms, molecules and (some) organisms.  If it is a small pattern that’s repeated in a more complicated structure (like a menu that’s used in a dropDown, a search component and a popover menu) then that structure should exist in the design system. If it’s shared across both the editor and the dashboard, it should exist in the design system - like a button or a dialog. 
+The Design System is **only** for shared basics and components. In [atomic design terms](https://bradfrost.com/blog/post/atomic-web-design) we are sharing atoms, molecules and (some) organisms.  If it is a small pattern that’s repeated in a more complicated structure (like a menu that’s used in a dropDown, a search component and a popover menu) then that structure should exist in the design system. If it’s shared across both the editor and the dashboard, it should exist in the design system - like a button or a dialog.
 
 If it’s something complex only used by the editor, say the color picker, which uses a slider and some other smaller components in the design system, the color picker would live in the editor because it is not shared by the dashboard. Things that are not easily generalized should not live in the design system.
 
@@ -34,7 +34,7 @@ The hope here is to make the transition to using the components in the design sy
 
 ### How to add components to the design system
 
-There are going to be things missing from the design system. Designs have been in flux and we’ve been adding things as we need them in the redesign. That said, feel free to add missing components. Components live in [design-system/components](../packages/design-system/src/components/index.js). This directory’s pretty flat so that things are easy to find at 1 level.  The general rule here, as with any shared design system, is that we keep things generic and non-opinionated as much as possible so that the usability remains flexible. All components have storybook demos that allow all props passed to the component to be seen as knobs as well as dark and light versions so that theme colors can be checked.
+There are going to be things missing from the design system. Designs have been in flux and we’ve been adding things as we need them in the redesign. That said, feel free to add missing components. Components live in [design-system/components](../packages/design-system/src/components/index.js). This directory’s pretty flat so that things are easy to find at 1 level.  The general rule here, as with any shared design system, is that we keep things generic and non-opinionated as much as possible so that the usability remains flexible. All components have storybook demos that allow all props passed to the component to be seen as `controls` as well as dark and light versions so that theme colors can be checked.
 
 ### Some caveats
 
@@ -44,7 +44,7 @@ Buttons!
 - There’s a 4th type of button in the design system called Plain - this button type has no styles, it’s just a reset button without any outline or background color that can be used when we need something to semantically be a button but the designs disagree. This shouldn’t happen often and should be a bit of an escape hatch.
 - Button variants in the designs are square and rectangle. The additional variants of circle and icon were added because there are occasions in the editor and dashboard where there are no shared button styles but the element is expected to behave as a button. By having a button variant of icon we can eliminate the need of having specific exportable buttons like `ArrowDown`.
 - Button types, sizes, and variants (circle, rectangle, square, icon) are all available as [constants](../packages/design-system/src/components/button/constants.js) and importable via `BUTTON_TYPES`, `BUTTON_SIZES`, `BUTTON_VARIANTS` so that we don’t have to worry about miscellaneous strings.
-- Every button combination has a [demo in storybook](https://google.github.io/web-stories-wp/storybook/?path=/story/designsystem-components-button--default).
+- Every button combination has a [demo in storybook](https://googleforcreators.github.io/web-stories-wp/storybook/?path=/story/designsystem-components-button--default).
 
 Typography
 
@@ -53,7 +53,7 @@ Typography
 - The typography components are `<Display />`, `<Headline />`, `<Link />`, `<Text />`, found [here](../packages/design-system/src/components/typography/index.js).
 - Each is a styled component and can be passed whatever element you want it to be with `as` or `forwardedAs` depending on your situation.
 - These are meant to decrease our need to individually style text elements and ensure consistency.
-- There’s a demo for every [type setting in storybook](https://google.github.io/web-stories-wp/storybook/?path=/story/designsystem-components-typography-display--default).
+- There’s a demo for every [type setting in storybook](https://googleforcreators.github.io/web-stories-wp/storybook/?path=/story/designsystem-components-typography-display--default).
 
 Circular dependencies
 

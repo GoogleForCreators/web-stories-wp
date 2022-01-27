@@ -24,8 +24,8 @@ import {
   BUTTON_VARIANTS,
   BUTTON_TYPES,
   BUTTON_SIZES,
-} from '@web-stories-wp/design-system';
-import { forwardRef } from '@web-stories-wp/react';
+} from '@googleforcreators/design-system';
+import { forwardRef } from '@googleforcreators/react';
 
 /**
  * Internal dependencies

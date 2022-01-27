@@ -117,7 +117,17 @@ describe('getUsedAmpExtensions', () => {
         elements: [
           {
             type: 'video',
-            tracks: [{ track: 'https://example.com/track.vtt', id: 1 }],
+            tracks: [
+              {
+                track: 'https://example.com/track.vtt',
+                trackId: 123,
+                trackName: 'track.vtt',
+                id: 'rersd-fdfd-fdfd-fdfd',
+                srcLang: '',
+                label: '',
+                kind: 'captions',
+              },
+            ],
           },
         ],
       },
@@ -128,6 +138,44 @@ describe('getUsedAmpExtensions', () => {
     expect(actual).toHaveLength(4);
     expect(actual).toStrictEqual(
       expect.arrayContaining([
+        {
+          name: 'amp-story-captions',
+          src: 'https://cdn.ampproject.org/v0/amp-story-captions-0.1.js',
+        },
+      ])
+    );
+  });
+
+  it('should include the amp-stroy-captions script if there is a background audio with tracks', () => {
+    const pages = [
+      {
+        backgroundAudio: {
+          resource: { src: 'https://example.com/audio.mp3' },
+          tracks: [
+            {
+              track: 'https://example.com/track.vtt',
+              trackId: 123,
+              trackName: 'track.vtt',
+              id: 'rersd-fdfd-fdfd-fdfd',
+              srcLang: '',
+              label: '',
+              kind: 'captions',
+            },
+          ],
+        },
+        elements: [],
+      },
+    ];
+
+    const actual = getUsedAmpExtensions(pages);
+
+    expect(actual).toHaveLength(4);
+    expect(actual).toStrictEqual(
+      expect.arrayContaining([
+        {
+          name: 'amp-video',
+          src: 'https://cdn.ampproject.org/v0/amp-video-0.1.js',
+        },
         {
           name: 'amp-story-captions',
           src: 'https://cdn.ampproject.org/v0/amp-story-captions-0.1.js',

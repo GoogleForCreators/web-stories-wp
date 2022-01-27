@@ -25,7 +25,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { DEFAULT_ATTRIBUTES_FOR_MEDIA } from '../../../../constants';
 import objectPick from '../../../../utils/objectPick';
 import objectWithout from '../../../../utils/objectWithout';
-import { canMaskHaveBorder } from '../../../../masks';
+import { canMaskHaveBorder, canSupportMultiBorder } from '../../../../masks';
 import { removeAnimationsWithElementIds } from './utils';
 
 /**
@@ -102,7 +102,9 @@ function combineElements(
     // If relevant, maintain border, too.
     if (canMaskHaveBorder(secondElement)) {
       propsFromFirst.push('border');
-      propsFromFirst.push('borderRadius');
+      if (canSupportMultiBorder(secondElement)) {
+        propsFromFirst.push('borderRadius');
+      }
     }
   } else {
     // If we're dropping into background, maintain the flip and overlay, too.

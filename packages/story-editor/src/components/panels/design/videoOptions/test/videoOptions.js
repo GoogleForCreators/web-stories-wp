@@ -24,6 +24,9 @@ import { screen } from '@testing-library/react';
  */
 import VideoOptions from '../videoOptions';
 import { renderPanel } from '../../../shared/test/_utils';
+import { useLocalMedia } from '../../../../../app/media';
+
+jest.mock('../../../../../app/media');
 
 jest.mock('../../../../../app/config', () => ({
   useConfig: jest.fn(() => ({
@@ -56,6 +59,12 @@ describe('Panels/VideoOptions', () => {
       'web_stories_ui_panel_settings:videoOptions',
       JSON.stringify({ isCollapsed: false })
     );
+
+    useLocalMedia.mockReturnValue({
+      isResourceTrimming: jest.fn(),
+      isNewResourceMuting: jest.fn(),
+      canTranscodeResource: jest.fn(),
+    });
   });
 
   afterAll(() => {

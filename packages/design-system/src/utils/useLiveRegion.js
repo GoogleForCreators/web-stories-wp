@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useEffect, useRef } from '@web-stories-wp/react';
+import { useCallback, useEffect, useRef } from '@googleforcreators/react';
 
 /**
  * Add messages to an ARIA live region.

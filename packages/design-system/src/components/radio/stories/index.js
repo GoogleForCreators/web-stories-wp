@@ -17,11 +17,10 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useState } from '@web-stories-wp/react';
+import { useState } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import { text } from '@storybook/addon-knobs';
 import { Radio } from '../radio';
 import { DarkThemeProvider } from '../../../storybookUtils';
 import { Headline } from '../../typography';
@@ -29,6 +28,14 @@ import { Headline } from '../../typography';
 export default {
   title: 'DesignSystem/Components/Radio',
   component: Radio,
+  args: {
+    label1: 'One',
+    label2: 'Two',
+    label3: 'Disabled',
+    hint1: 'Hint 1',
+    hint2: 'Hint 2',
+    hint3: 'Hint 3',
+  },
 };
 
 const Container = styled.div`
@@ -40,7 +47,7 @@ const Container = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.standard.black};
 `;
 
-export const _default = () => {
+export const _default = (args) => {
   const [inputState, setInputState] = useState({
     radioOne: '1',
     radioTwo: '1',
@@ -65,21 +72,21 @@ export const _default = () => {
           value="1"
           onChange={handleChange}
           checked={inputState.radioOne === '1'}
-          label={text('Radio Button One Label', 'One')}
+          label={args.label1}
         />
         <Radio
           name="radioOne"
           value="2"
           onChange={handleChange}
           checked={inputState.radioOne === '2'}
-          label={text('Radio Button Two Label', 'Two')}
+          label={args.label2}
         />
         <Radio
           name="radioOne"
           value="3"
           onChange={handleChange}
           checked={inputState.radioOne === '3'}
-          label={text('Radio Button Three Label', 'Three (Disabled)')}
+          label={args.label3}
           disabled
         />
       </Container>
@@ -90,21 +97,21 @@ export const _default = () => {
             onChange={handleChange}
             value="1"
             checked={inputState.radioTwo === '1'}
-            label={text('Radio Button One Label', 'One')}
+            label={args.label1}
           />
           <Radio
             name="radioTwo"
             onChange={handleChange}
             value="2"
             checked={inputState.radioTwo === '2'}
-            label={text('Radio Button Two Label', 'Two')}
+            label={args.label2}
           />
           <Radio
             name="radioTwo"
             value="3"
             onChange={handleChange}
             checked={inputState.radioTwo === '3'}
-            label={text('Radio Button Three Label', 'Three (Disabled)')}
+            label={args.label3}
             disabled
           />
         </Container>
@@ -118,24 +125,24 @@ export const _default = () => {
           value="1"
           onChange={handleChange}
           checked={inputState.radioThree === '1'}
-          label={text('Radio Button One Label', 'One')}
-          hint={text('Radio Button One Hint', 'Hint One')}
+          label={args.label1}
+          hint={args.hint1}
         />
         <Radio
           name="radioThree"
           value="2"
           onChange={handleChange}
           checked={inputState.radioThree === '2'}
-          label={text('Radio Button Two Label', 'Two')}
-          hint={text('Radio Button Two Hint', 'Hint Two')}
+          label={args.label2}
+          hint={args.hint2}
         />
         <Radio
           name="radioThree"
           value="3"
           onChange={handleChange}
           checked={inputState.radioThree === '3'}
-          label={text('Radio Button Three Label', 'Three (Disabled)')}
-          hint={text('Radio Button Three Hint', 'Hint Three')}
+          label={args.label3}
+          hint={args.hint3}
           disabled
         />
       </Container>
@@ -146,24 +153,24 @@ export const _default = () => {
             onChange={handleChange}
             value="1"
             checked={inputState.radioFour === '1'}
-            label={text('Radio Button One Label', 'One')}
-            hint={text('Radio Button One Hint', 'Hint One')}
+            label={args.label1}
+            hint={args.hint1}
           />
           <Radio
             name="radioFour"
             onChange={handleChange}
             value="2"
             checked={inputState.radioFour === '2'}
-            label={text('Radio Button Two Label', 'Two')}
-            hint={text('Radio Button Two Hint', 'Hint Two')}
+            label={args.label2}
+            hint={args.hint2}
           />
           <Radio
             name="radioFour"
             value="3"
             onChange={handleChange}
             checked={inputState.radioFour === '3'}
-            label={text('Radio Button Three Label', 'Three (Disabled)')}
-            hint={text('Radio Button Three Hint', 'Hint Three')}
+            label={args.label3}
+            hint={args.hint3}
             disabled
           />
         </Container>
@@ -177,24 +184,24 @@ export const _default = () => {
           value="1"
           onChange={handleChange}
           checked={inputState.radioFive === '1'}
-          label={text('Radio Button One Label', 'One')}
-          hint={text('Radio Button One Hint', 'Hint One')}
+          label={args.label1}
+          hint={args.hint1}
         />
         <Radio
           name="radioFive"
           value="2"
           onChange={handleChange}
           checked={inputState.radioFive === '2'}
-          label={text('Radio Button Two Label', 'Two')}
-          hint={text('Radio Button Two Hint', 'Hint Two')}
+          label={args.label2}
+          hint={args.hint2}
         />
         <Radio
           name="radioFive"
           value="3"
           onChange={handleChange}
           checked={inputState.radioFive === '3'}
-          label={text('Radio Button Three Label', 'Three (Disabled)')}
-          hint={text('Radio Button Three Hint', 'Hint Three')}
+          label={args.label3}
+          hint={args.hint3}
           disabled
         />
       </Container>
@@ -205,24 +212,24 @@ export const _default = () => {
             onChange={handleChange}
             value="1"
             checked={inputState.radioSix === '1'}
-            label={text('Radio Button One Label', 'One')}
-            hint={text('Radio Button One Hint', 'Hint One')}
+            label={args.label1}
+            hint={args.hint1}
           />
           <Radio
             name="radioSix"
             onChange={handleChange}
             value="2"
             checked={inputState.radioSix === '2'}
-            label={text('Radio Button Two Label', 'Two')}
-            hint={text('Radio Button Two Hint', 'Hint Two')}
+            label={args.label2}
+            hint={args.hint2}
           />
           <Radio
             name="radioSix"
             value="3"
             onChange={handleChange}
             checked={inputState.radioSix === '3'}
-            label={text('Radio Button Three Label', 'Three (Disabled)')}
-            hint={text('Radio Button Three Hint', 'Hint Three')}
+            label={args.label3}
+            hint={args.hint3}
             disabled
           />
         </Container>

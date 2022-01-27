@@ -18,16 +18,15 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
-import { useRef } from '@web-stories-wp/react';
-import STICKERS from '@web-stories-wp/stickers';
+import { __ } from '@googleforcreators/i18n';
+import { useRef } from '@googleforcreators/react';
+import STICKERS from '@googleforcreators/stickers';
 
 /**
  * Internal dependencies
  */
-import { useFeatures } from 'flagged';
 import { MASKS } from '../../../../masks/constants';
-import { Section, SearchInput } from '../../common';
+import { Section } from '../../common';
 import { Pane } from '../shared';
 import useRovingTabIndex from '../../../../utils/useRovingTabIndex';
 import ShapePreview from './shapePreview';
@@ -54,8 +53,6 @@ const SectionContent = styled.div`
 const STICKER_TYPES = Object.keys(STICKERS);
 
 function ShapesPane(props) {
-  const { showTextAndShapesSearchInput } = useFeatures();
-
   const ref = useRef();
   useRovingTabIndex({ ref });
 
@@ -63,14 +60,6 @@ function ShapesPane(props) {
   useRovingTabIndex({ ref: stickersRef });
   return (
     <Pane id={paneId} {...props} isOverflowScrollable>
-      {showTextAndShapesSearchInput && (
-        <SearchInput
-          initialValue={''}
-          placeholder={__('Search', 'web-stories')}
-          onSearch={() => {}}
-          disabled
-        />
-      )}
       <Section
         data-testid="shapes-library-pane"
         title={__('Shapes', 'web-stories')}

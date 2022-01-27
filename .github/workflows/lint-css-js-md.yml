@@ -10,6 +10,7 @@ on:
       - 'packages/**/*.md'
       - '.eslint*'
       - '.markdownlint*'
+      - '.npmpackagejsonlintrc.json'
       - '.nvmrc'
       - '.prettier*'
       - '.stylelint*'
@@ -27,6 +28,7 @@ on:
       - 'packages/**/*.md'
       - '.eslint*'
       - '.markdownlint*'
+      - '.npmpackagejsonlintrc.json'
       - '.nvmrc'
       - '.prettier*'
       - '.stylelint*'
@@ -50,7 +52,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Setup Node
-        uses: actions/setup-node@v2.5.0
+        uses: actions/setup-node@v2.5.1
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -65,6 +67,9 @@ jobs:
 
       - name: CSS Lint
         run: npm run lint:css
+
+      - name: package.json Lint
+        run: npm run lint:package-json
 
       - name: JS Lint
         run: npm run lint:js

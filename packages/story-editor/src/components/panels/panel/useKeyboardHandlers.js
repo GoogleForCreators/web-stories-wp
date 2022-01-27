@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useKeyEffect } from '@web-stories-wp/design-system';
+import { useKeyEffect } from '@googleforcreators/design-system';
 
 const DELTA_CHANGE = 20; // change in pixels when pressing arrow keys
 

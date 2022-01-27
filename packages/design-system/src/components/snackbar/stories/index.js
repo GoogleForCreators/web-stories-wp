@@ -16,9 +16,8 @@
 /**
  * External dependencies
  */
-import { boolean, number, text } from '@storybook/addon-knobs';
 import { action } from '@storybook/addon-actions';
-import { useState } from '@web-stories-wp/react';
+import { useState } from '@googleforcreators/react';
 import styled, { ThemeProvider } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -52,25 +51,26 @@ const Container = styled.div`
 
 export default {
   title: 'DesignSystem/Components/Snackbar',
+  args: {
+    actionLabel: '',
+    customZIndex: 1,
+    dismissible: true,
+    preventAutoDismiss: true,
+    message: 'Sorry! File failed to upload.',
+  },
 };
 
-export const _default = () => (
+export const _default = (args) => (
   <ThemeProvider theme={theme}>
     <Container>
       <SnackbarContainer
         notifications={[
           {
-            actionLabel: text('actionLabel', ''),
-            'aria-label': text(
-              'aria-label',
-              'this is my aria label giving my message context for screen reader users'
-            ),
-            customZIndex: number('customZIndex'),
-            dismissible: boolean('dismissible'),
-            preventAutoDismiss: boolean('preventAutoDismiss'),
-            message: text('message', 'Sorry! File failed to upload.'),
+            'aria-label':
+              'this is my aria label giving my message context for screen reader users',
             onAction: action('on action clicked'),
             onDismiss: action('on dismiss fired'),
+            ...args,
           },
         ]}
       />
@@ -78,95 +78,84 @@ export const _default = () => (
   </ThemeProvider>
 );
 
-export const LightThemeDefault = () => (
+export const LightThemeDefault = (args) => (
   <SnackbarContainer
     notifications={[
       {
-        actionLabel: text('actionLabel', ''),
-        customZIndex: number('customZIndex'),
-        dismissible: boolean('dismissible'),
         onAction: action('on action clicked'),
         onDismiss: action('on dismiss fired'),
-        preventAutoDismiss: boolean('preventAutoDismiss'),
-        message: text('message', 'Sorry! File failed to upload.'),
+        ...args,
       },
     ]}
   />
 );
 
-export const Action = () => (
+export const Action = (args) => (
   <SnackbarContainer
     notifications={[
       {
-        actionLabel: text('actionLabel', 'Retry'),
-        customZIndex: number('customZIndex'),
-        dismissible: boolean('dismissible'),
         onAction: action('on action clicked'),
         onDismiss: action('on dismiss fired'),
-        preventAutoDismiss: boolean('preventAutoDismiss'),
-        message: text('message', 'Sorry! File failed to upload.'),
+        ...args,
         timeout: 80000,
       },
     ]}
   />
 );
+Action.args = {
+  actionLabel: 'Retry',
+};
 
-export const EarlyDismissWithAction = () => (
+export const EarlyDismissWithAction = (args) => (
   <SnackbarContainer
     notifications={[
       {
-        actionLabel: text('actionLabel', 'Retry'),
-        customZIndex: number('customZIndex'),
-        dismissible: boolean('dismissible'),
         onAction: action('on action clicked'),
         onDismiss: action('on dismiss fired'),
-        preventAutoDismiss: boolean('preventAutoDismiss'),
-        message: text('message', 'Sorry! File failed to upload.'),
         timeout: 80000,
+        ...args,
       },
     ]}
   />
 );
+EarlyDismissWithAction.args = {
+  actionLabel: 'Retry',
+};
 
-export const NoActionWithRemoveMessageTimingOverride = () => (
+export const NoActionWithRemoveMessageTimingOverride = (args) => (
   <SnackbarContainer
     notifications={[
       {
-        actionLabel: text('actionLabel', ''),
-        customZIndex: number('customZIndex'),
-        dismissible: boolean('dismissible'),
         onAction: action('on action clicked'),
         onDismiss: action('on dismiss fired'),
-        preventAutoDismiss: boolean('preventAutoDismiss'),
-        message: text('message', 'Sorry! File failed to upload.'),
         timeout: 80000,
+        ...args,
       },
     ]}
   />
 );
 
-export const LongMessage = () => (
+export const LongMessage = (args) => (
   <SnackbarContainer
     notifications={[
       {
-        actionLabel: text('actionLabel', 'Retry'),
-        customZIndex: number('customZIndex'),
-        dismissible: boolean('dismissible'),
         onAction: action('on action clicked'),
         onDismiss: action('on dismiss fired'),
-        preventAutoDismiss: boolean('preventAutoDismiss'),
-        message: text(
-          'message',
-          'Sorry! File failed to upload because it is way too big. Try optimizing it and upload again.'
-        ),
+        ...args,
       },
     ]}
   />
 );
+LongMessage.args = {
+  actionLabel: 'Retry',
+  message:
+    'Sorry! File failed to upload because it is way too big. Try optimizing it and upload again.',
+};
 
-export const ThumbnailMessage = () => {
-  const success = boolean('success');
-  const landscape = boolean('landscape');
+// eslint-disable-next-line react/prop-types
+export const ThumbnailMessage = ({ successBool, landscapeBool, ...args }) => {
+  const success = successBool;
+  const landscape = landscapeBool;
 
   return (
     <DarkThemeProvider>
@@ -174,16 +163,9 @@ export const ThumbnailMessage = () => {
         <SnackbarContainer
           notifications={[
             {
-              actionLabel: text('actionLabel', 'Retry'),
-              customZIndex: number('customZIndex'),
-              dismissible: boolean('dismissible'),
               onAction: action('on action clicked'),
               onDismiss: action('on dismiss fired'),
-              preventAutoDismiss: boolean('preventAutoDismiss'),
-              message: text(
-                'message',
-                'Optimization failed. Try uploading a different file.'
-              ),
+
               thumbnail: {
                 src: `https://picsum.photos/${landscape ? '90/60' : '60/90'}`,
                 alt: 'test',
@@ -191,6 +173,7 @@ export const ThumbnailMessage = () => {
                   ? THUMBNAIL_STATUS.SUCCESS
                   : THUMBNAIL_STATUS.ERROR,
               },
+              ...args,
             },
           ]}
         />
@@ -198,8 +181,14 @@ export const ThumbnailMessage = () => {
     </DarkThemeProvider>
   );
 };
+ThumbnailMessage.args = {
+  actionLabel: 'Retry',
+  message: 'Optimization failed. Try uploading a different file.',
+  successBool: true,
+  landscapeBool: true,
+};
 
-export const ShowSnackbarByClickingButton = () => {
+export const ShowSnackbarByClickingButton = (args) => {
   const [messageQueue, setMessageQueue] = useState([]);
 
   const handleRemoveMessage = ({ id }) => {
@@ -228,13 +217,12 @@ export const ShowSnackbarByClickingButton = () => {
 
       let notification = {
         id: newId,
-        'aria-label': text(
-          'aria-label',
-          'this is my aria label giving my message context for screen reader users'
-        ),
-        customZIndex: number('customZIndex'),
-        dismissible: boolean('dismissible'),
-        preventAutoDismiss: boolean('preventAutoDismiss'),
+        'aria-label':
+          'this is my aria label giving my message context for screen reader users',
+
+        customZIndex: args.customZIndex,
+        dismissible: args.dismissible,
+        preventAutoDismiss: args.preventAutoDismiss,
         message: randomMessage,
         onDismiss: (evt) => handleOnDismiss(evt, { id: newId }),
         timeout: 5000,
@@ -243,12 +231,9 @@ export const ShowSnackbarByClickingButton = () => {
       if (hasAction) {
         notification = {
           ...notification,
-          actionLabel: text('actionLabel', 'Undo'),
+          actionLabel: args.actionLabel,
           onAction: action('on action clicked'),
-          actionHelpText: text(
-            'actionHelpText',
-            'Click this button to get instant cheese'
-          ),
+          actionHelpText: args.actionHelpText,
         };
       }
 
@@ -266,4 +251,8 @@ export const ShowSnackbarByClickingButton = () => {
       </Container>
     </ThemeProvider>
   );
+};
+ShowSnackbarByClickingButton.args = {
+  actionLabel: 'Undo',
+  actionHelpText: 'Click this button to get instant cheese',
 };

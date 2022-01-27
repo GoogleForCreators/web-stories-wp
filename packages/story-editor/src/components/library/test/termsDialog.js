@@ -35,7 +35,7 @@ import { waitFor, fireEvent, screen } from '@testing-library/react';
 import {
   localStore,
   LOCAL_STORAGE_PREFIX,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -43,9 +43,9 @@ import {
 import TermsDialog from '../panes/media/media3p/termsDialog';
 import { renderWithTheme } from '../../../testUtils';
 
-jest.mock('@web-stories-wp/design-system', () => ({
+jest.mock('@googleforcreators/design-system', () => ({
   __esModule: true,
-  ...jest.requireActual('@web-stories-wp/design-system'),
+  ...jest.requireActual('@googleforcreators/design-system'),
   localStore: {
     setItemByKey: jest.fn(),
     getItemByKey: jest.fn(() => false),

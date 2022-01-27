@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,15 +17,13 @@
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
-import { boolean, text } from '@storybook/addon-knobs';
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   Text,
   THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -35,18 +33,30 @@ import Dialog from '../dialog';
 export default {
   title: 'Dashboard/Components/Dialog/Base',
   component: Dialog,
+  args: {
+    isOpen: true,
+    title: 'my dialog title',
+    secondaryText: 'cancel action',
+    primaryText: 'confirm action',
+  },
+  argTypes: {
+    onClose: {
+      action: 'closed',
+    },
+    onPrimary: {
+      action: 'confirmed',
+    },
+  },
+  parameters: {
+    controls: {
+      include: ['isOpen', 'title', 'secondaryText', 'primaryText'],
+    },
+  },
 };
 
-export const _default = () => {
+export const _default = (args) => {
   return (
-    <Dialog
-      isOpen={boolean('isOpen', true)}
-      onClose={action('closed')}
-      title={text('title', 'my dialog title')}
-      onPrimary={action('confirmed')}
-      secondaryText={text('secondaryText', 'cancel action')}
-      primaryText={text('primaryText', 'confirm action')}
-    >
+    <Dialog {...args}>
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
@@ -56,31 +66,30 @@ export const _default = () => {
   );
 };
 
-export const WithCustomAction = () => {
+// eslint-disable-next-line react/prop-types
+export const WithCustomAction = ({ onClickButton, onConfirmed, ...args }) => {
   return (
     <Dialog
-      isOpen={boolean('isOpen', true)}
-      onClose={action('closed')}
-      title={text('title', 'my dialog title')}
       actions={
         <>
           <Button
             type={BUTTON_TYPES.TERTIARY}
             size={BUTTON_SIZES.SMALL}
-            onClick={action('closed')}
+            onClick={onClickButton}
           >
             {'Dismiss'}
           </Button>
           <Button
             type={BUTTON_TYPES.PRIMARY}
             size={BUTTON_SIZES.SMALL}
-            href={text('Confirmation as Link', 'https://example.com')}
-            onClick={action('confirmed')}
+            href={args.href}
+            onClick={onConfirmed}
           >
             {'Add to new post'}
           </Button>
         </>
       }
+      {...args}
     >
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {
@@ -89,4 +98,34 @@ export const WithCustomAction = () => {
       </Text>
     </Dialog>
   );
+};
+WithCustomAction.args = {
+  isOpen: true,
+  title: 'my dialog title',
+  href: 'https://example.com',
+};
+WithCustomAction.argTypes = {
+  onClose: {
+    action: 'closed',
+  },
+  onClickButton: {
+    action: 'closed',
+    name: 'dismiss click',
+  },
+  onConfirmed: {
+    action: 'confirmed',
+    name: 'confirm click',
+  },
+};
+WithCustomAction.parameters = {
+  controls: {
+    include: [
+      'isOpen',
+      'title',
+      'href',
+      'onClose',
+      'dismiss click',
+      'confirm click',
+    ],
+  },
 };

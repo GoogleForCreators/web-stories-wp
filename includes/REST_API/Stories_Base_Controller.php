@@ -5,7 +5,7 @@
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/google/web-stories-wp
+ * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -59,9 +59,12 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 */
 	public function __construct( $post_type ) {
 		parent::__construct( $post_type );
-		$obj             = get_post_type_object( $post_type );
-		$this->namespace = ! empty( $obj->rest_namespace ) ? $obj->rest_namespace : 'web-stories/v1';
-		$injector        = Services::get_injector();
+		$post_type_object = get_post_type_object( $post_type );
+		$this->namespace  = isset( $post_type_object, $post_type_object->rest_namespace ) && is_string( $post_type_object->rest_namespace ) ?
+			$post_type_object->rest_namespace :
+			'web-stories/v1';
+
+		$injector = Services::get_injector();
 		if ( ! method_exists( $injector, 'make' ) ) {
 			return;
 		}
@@ -155,7 +158,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			}
 		}
 
-		/* This filter is documented in wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php */
+		/** This filter is documented in wp-includes/rest-api/endpoints/class-wp-rest-posts-controller.php */
 		return apply_filters( "rest_prepare_{$this->post_type}", $response, $post, $request );
 	}
 

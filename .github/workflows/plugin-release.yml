@@ -84,7 +84,7 @@ jobs:
 
   # Get the current CDN assets version.
   # If the static assets on the CDN have changed since the last release,
-  # bump the assets version accordingly in the `static-site` branch.
+  # bump the assets version accordingly in the GoogleForCreators/wp.stories.google repo.
   assets-version:
     name: Prepare static assets
     runs-on: ubuntu-latest
@@ -125,13 +125,19 @@ jobs:
       #     env:
       #       ASSETS_VERSION_REGEX: "https://wp.stories.google/static/([^']+)"
 
-      - name: Checkout static-site
+      - name: Checkout wp.stories.google
         uses: actions/checkout@v2
         with:
-          ref: static-site
+          repository: GoogleForCreators/wp.stories.google
           lfs: true
           # Needed so the below commits will trigger a website deployment.
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
+
+      - name: Setup Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.4.0
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
 
       # For release candidates of new major releases:
       #
@@ -145,17 +151,31 @@ jobs:
       - name: Prepare assets for RC
         if: ${{ contains(github.event.inputs.version, 'rc') && ! startsWith(github.ref, 'refs/heads/release/') }}
         run: |
-          LATEST_ASSETS_VERSION=$(ls | sort -n | tail -1)
+          LATEST_ASSETS_VERSION=$(gsutil ls gs://web-stories-wp-cdn-assets/ | sed 's/gs:\/\/web-stories-wp-cdn-assets\///' | sed 's/\///' | sort -n | tail -1)
           NEW_ASSETS_VERSION=$LATEST_ASSETS_VERSION
-          if ! diff -qr $BASE_ASSETS_VERSION $LATEST_ASSETS_VERSION &>/dev/null; then
+
+          NUMBER_OF_NEW_ASSETS=$(ls main | wc -l)
+
+          if [[ "0" -eq NUMBER_OF_NEW_ASSETS ]]; then
+            echo "No new assets found. Not uploading anything."
+          else
+            echo "New assets found."
             NEW_ASSETS_VERSION=$((LATEST_ASSETS_VERSION+1))
-            cp -r $BASE_ASSETS_VERSION $NEW_ASSETS_VERSION
+
+            echo "Copying existing assets over to new version"
+
+            gsutil -m rsync -r gs://web-stories-wp-cdn-assets/$LATEST_ASSETS_VERSION gs://web-stories-wp-cdn-assets/$NEW_ASSETS_VERSION
+
+            echo "Uploading new assets to new version"
+            gsutil -m rsync -r -x '(^|/)\.' main gs://web-stories-wp-cdn-assets/$NEW_ASSETS_VERSION
+
+            rm -rf static/main/*
 
             git add .
             git status
-            git commit -m "Bump static assets for plugin release $PLUGIN_VERSION"
+            git commit -m "Preparing assets for plugin release $PLUGIN_VERSION"
             git pull --rebase
-            git push origin static-site
+            git push origin main
           fi
 
           echo "Assets version for this release: $NEW_ASSETS_VERSION"
@@ -195,7 +215,7 @@ jobs:
           fetch-depth: 0 # 0 indicates all history for all branches and tags.
 
       - name: Setup Node
-        uses: actions/setup-node@v2.5.0
+        uses: actions/setup-node@v2.5.1
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -279,7 +299,7 @@ jobs:
         continue-on-error: true
 
       - name: Setup Node
-        uses: actions/setup-node@v2.5.0
+        uses: actions/setup-node@v2.5.1
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -490,7 +510,7 @@ jobs:
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       - name: Setup Node
-        uses: actions/setup-node@v2.5.0
+        uses: actions/setup-node@v2.5.1
         with:
           node-version-file: '.nvmrc'
           cache: npm

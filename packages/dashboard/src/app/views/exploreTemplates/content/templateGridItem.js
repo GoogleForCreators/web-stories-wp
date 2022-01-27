@@ -17,14 +17,14 @@
 /**
  * External dependencies
  */
-import { __, sprintf } from '@web-stories-wp/i18n';
+import { __, sprintf } from '@googleforcreators/i18n';
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   noop,
-} from '@web-stories-wp/design-system';
-import { forwardRef } from '@web-stories-wp/react';
+} from '@googleforcreators/design-system';
+import { forwardRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -56,7 +56,6 @@ const SeeDetailsButton = styled(Button).attrs({
 const TemplateGridItem = forwardRef(
   (
     {
-      detailLink,
       onCreateStory,
       onFocus,
       height,
@@ -94,6 +93,7 @@ const TemplateGridItem = forwardRef(
               <img
                 src={posterSrc?.png}
                 alt={posterAltText}
+                decoding="async"
                 width={DEFAULT_GRID_IMG_WIDTH}
                 height={DEFAULT_GRID_IMG_HEIGHT}
               />
@@ -110,9 +110,7 @@ const TemplateGridItem = forwardRef(
                     __('Go to detail view of %s', 'web-stories'),
                     title
                   )}
-                  href={detailLink}
-                  onClick={onSeeDetailsClick}
-                  disabled={!detailLink}
+                  onClick={() => onSeeDetailsClick(id, title)}
                   className={FOCUS_TEMPLATE_CLASS}
                   tabIndex={tabIndex}
                 >

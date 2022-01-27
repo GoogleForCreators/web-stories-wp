@@ -5,7 +5,7 @@
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/google/web-stories-wp
+ * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -199,7 +199,7 @@ class KSES extends Service_Base implements HasRequirements {
 
 		$css_array = explode( ';', trim( $css ) );
 
-		/* This filter is documented in wp-includes/kses.php */
+		/** This filter is documented in wp-includes/kses.php */
 		$allowed_attr = apply_filters(
 			'safe_style_css',
 			[
@@ -474,7 +474,7 @@ class KSES extends Service_Base implements HasRequirements {
 				// except for url(), calc(), or var() usage checked above.
 				$allow_css = ! preg_match( '%[\\\(&=}]|/\*%', $css_test_string );
 
-				/* This filter is documented in wp-includes/kses.php */
+				/** This filter is documented in wp-includes/kses.php */
 				$allow_css = apply_filters( 'safecss_filter_attr_allow_css', $allow_css, $css_test_string );
 
 				// Only add the CSS part if it passes the regex check.

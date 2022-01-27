@@ -17,9 +17,8 @@
 /**
  * External dependencies
  */
-import { useState } from '@web-stories-wp/react';
+import { useState } from '@googleforcreators/react';
 import { action } from '@storybook/addon-actions';
-import { text } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 /**
  * Internal dependencies
@@ -33,6 +32,16 @@ import { DarkThemeProvider } from '../../../storybookUtils/darkThemeProvider';
 export default {
   title: 'DesignSystem/Components/Dialog',
   component: Dialog,
+  args: {
+    title: 'Headline',
+    message:
+      'Duka din veranda till fest, för en långväga gäst, i landet lagom är bäst.',
+  },
+  parameters: {
+    controls: {
+      include: ['title', 'message'],
+    },
+  },
 };
 
 const InvertedWrapper = styled.div`
@@ -40,7 +49,8 @@ const InvertedWrapper = styled.div`
   height: 100vh;
   background-color: ${({ theme }) => theme.colors.inverted.bg.primary};
 `;
-export const _default = () => {
+// eslint-disable-next-line react/prop-types
+export const _default = ({ message, ...args }) => {
   const [toggleDialog, setToggleDialog] = useState(false);
 
   const ActionsNode = (
@@ -70,22 +80,20 @@ export const _default = () => {
           setToggleDialog(!toggleDialog);
         }}
         isOpen={toggleDialog}
-        title={text('title', 'Headline')}
         contentLabel={'Dialog content Label for modal'}
         actions={ActionsNode}
+        {...args}
       >
         <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-          {text(
-            'body text',
-            'Duka din veranda till fest, för en långväga gäst, i landet lagom är bäst.'
-          )}
+          {message}
         </Text>
       </Dialog>
     </InvertedWrapper>
   );
 };
 
-export const With2Actions = () => {
+// eslint-disable-next-line react/prop-types
+export const With2Actions = ({ message, ...args }) => {
   const [toggleDialog, setToggleDialog] = useState(false);
 
   const ActionsNode = (
@@ -126,22 +134,20 @@ export const With2Actions = () => {
           setToggleDialog(!toggleDialog);
         }}
         isOpen={toggleDialog}
-        title={text('title', 'Headline')}
         contentLabel={'Dialog content Label for modal'}
         actions={ActionsNode}
+        {...args}
       >
         <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-          {text(
-            'body text',
-            'Duka din veranda till fest, för en långväga gäst, i landet lagom är bäst.'
-          )}
+          {message}
         </Text>
       </Dialog>
     </InvertedWrapper>
   );
 };
 
-export const With2ActionsDarkTheme = () => {
+// eslint-disable-next-line react/prop-types
+export const With2ActionsDarkTheme = ({ message, ...args }) => {
   const [toggleDialog, setToggleDialog] = useState(false);
 
   const ActionsNode = (
@@ -183,15 +189,12 @@ export const With2ActionsDarkTheme = () => {
             setToggleDialog(!toggleDialog);
           }}
           isOpen={toggleDialog}
-          title={text('title', 'Headline')}
           contentLabel={'Dialog content Label for modal'}
           actions={ActionsNode}
+          {...args}
         >
           <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-            {text(
-              'body text',
-              'Duka din veranda till fest, för en långväga gäst, i landet lagom är bäst.'
-            )}
+            {message}
           </Text>
         </Dialog>
       </InvertedWrapper>

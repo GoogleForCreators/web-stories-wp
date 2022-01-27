@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { within } from '@testing-library/react';
-import { getRelativeDisplayDate } from '@web-stories-wp/date';
+import { getRelativeDisplayDate } from '@googleforcreators/date';
 
 /**
  * Internal dependencies

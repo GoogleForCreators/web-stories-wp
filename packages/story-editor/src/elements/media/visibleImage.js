@@ -30,12 +30,14 @@ const Image = styled.img`
 
 function VisibleImage({ ...attrs }) {
   // eslint-disable-next-line styled-components-a11y/alt-text
-  return <Image {...attrs} crossOrigin="anonymous" />;
+  return <Image {...attrs} decoding="async" crossOrigin="anonymous" />;
 }
 
 VisibleImage.propTypes = {
   src: PropTypes.string.isRequired,
   alt: PropTypes.string.isRequired,
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
 };
 
 export default VisibleImage;

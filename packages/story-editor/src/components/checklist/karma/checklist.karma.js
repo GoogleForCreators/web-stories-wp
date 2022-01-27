@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { waitFor } from '@testing-library/react';
-import { DATA_VERSION } from '@web-stories-wp/migration';
+import { DATA_VERSION } from '@googleforcreators/migration';
 /**
  * Internal dependencies
  */
@@ -51,6 +51,9 @@ describe('Checklist integration', () => {
       await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
       // eslint-disable-next-line no-await-in-loop, no-loop-func
       await waitFor(() => {
+        if (!fixture.editor.footer.carousel.pages.length) {
+          throw new Error('page not yet added');
+        }
         expect(fixture.editor.footer.carousel.pages.length).toBe(
           clickCount + 1
         );
@@ -82,6 +85,10 @@ describe('Checklist integration', () => {
           type: 'image',
           mimeType: 'image/jpg',
           src: 'http://localhost:9876/__static__/earth.jpg',
+          alt: '',
+          width: 640,
+          height: 529,
+          baseColor: '#734727',
         },
       })
     );
@@ -395,10 +402,13 @@ describe('Checklist integration - Card visibility', () => {
           first: () => ({
             toJSON: () => ({
               id: 10,
-              url: 'http://localhost:9876/__static__/earth.jpg',
-              mime: 'image/jpeg',
-              width: 400,
-              height: 480,
+              type: 'image',
+              mimeType: 'image/jpg',
+              src: 'http://localhost:9876/__static__/earth.jpg',
+              alt: 'earth',
+              width: 640,
+              height: 529,
+              baseColor: '#734727',
             }),
           }),
         }),
@@ -407,10 +417,13 @@ describe('Checklist integration - Card visibility', () => {
       once: (_type, callback) =>
         callback({
           id: 10,
-          url: 'http://localhost:9876/__static__/earth.jpg',
-          mime: 'image/jpeg',
-          width: 400,
-          height: 480,
+          type: 'image',
+          mimeType: 'image/jpg',
+          src: 'http://localhost:9876/__static__/earth.jpg',
+          alt: 'earth',
+          width: 640,
+          height: 529,
+          baseColor: '#734727',
         }),
       open: () => {},
       close: () => {},
@@ -445,6 +458,9 @@ describe('Checklist integration - Card visibility', () => {
       await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
       // eslint-disable-next-line no-await-in-loop, no-loop-func
       await waitFor(() => {
+        if (!fixture.editor.footer.carousel.pages.length) {
+          throw new Error('page not yet added');
+        }
         expect(fixture.editor.footer.carousel.pages.length).toBe(
           clickCount + 1
         );
@@ -476,11 +492,14 @@ describe('Checklist integration - Card visibility', () => {
         width: 640 / 2,
         height: 529 / 2,
         resource: {
+          id: 10,
           type: 'image',
           mimeType: 'image/jpg',
           src: 'http://localhost:9876/__static__/earth.jpg',
-          width: 300,
-          height: 400,
+          alt: 'earth',
+          width: 640,
+          height: 529,
+          baseColor: '#734727',
         },
       })
     );
@@ -514,7 +533,6 @@ describe('Checklist integration - Card visibility', () => {
           lengthFormatted: '0:06',
           title: 'small-video',
           alt: 'small-video',
-          local: false,
           isOptimized: false,
           baseColor: '#734727',
         },
@@ -543,18 +561,18 @@ describe('Checklist integration - Card visibility', () => {
               author: 1,
               slug: '',
               date: '2020-05-06T22:32:37',
-              date_gmt: '2020-05-06T22:32:37',
+              dateGmt: '2020-05-06T22:32:37',
               modified: '2020-05-06T22:32:37',
               excerpt: { raw: '' },
               link: 'http://stories.local/?post_type=web-story&p=1',
-              preview_link: 'http://stories.local/?post_type=web-story&p=1',
-              story_data: {
+              previewLink: 'http://stories.local/?post_type=web-story&p=1',
+              storyData: {
                 version: DATA_VERSION,
                 pages: [],
               },
-              featured_media: 2,
-              permalink_template: 'http://stories3.local/stories/%pagename%/',
-              style_presets: { textStyles: [], colors: [] },
+              featuredMedia: 2,
+              permalinkTemplate: 'http://stories3.local/stories/%pagename%/',
+              stylePresets: { textStyles: [], colors: [] },
               password: '',
             }),
         },

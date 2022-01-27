@@ -15,3 +15,4 @@
  */
 export * from './textConstants';
 export * from './settings';
+export * from './wpAdmin';

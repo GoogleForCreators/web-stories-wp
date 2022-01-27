@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState } from '@web-stories-wp/react';
+import { useState } from '@googleforcreators/react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 

@@ -1,0 +1,22 @@
+version: 2
+snapshot:
+  widths:
+    - 1600
+  min-height: 1000
+  percy-css: >
+    body {
+      margin: 0;
+      width: 100vw;
+      height: 100vh;
+    }
+    .i__karma__snapshot__hide {
+      display: none !important;
+    }
+
+    .story-media-display-element {
+      background-color: transparent !important;
+    }
+
+    video::-webkit-media-controls {
+      display: none;
+    }

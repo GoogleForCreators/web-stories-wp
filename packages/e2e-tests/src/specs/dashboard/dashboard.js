@@ -17,8 +17,11 @@
 /**
  * External dependencies
  */
-import percySnapshot from '@percy/puppeteer';
-import { withRTL, visitDashboard } from '@web-stories-wp/e2e-test-utils';
+import {
+  takeSnapshot,
+  withRTL,
+  visitDashboard,
+} from '@web-stories-wp/e2e-test-utils';
 
 const percyCSS = `.dashboard-grid-item-date { display: none; }`;
 
@@ -26,9 +29,17 @@ describe('Stories Dashboard', () => {
   it('should be able to open the dashboard', async () => {
     await visitDashboard();
 
-    await expect(page).toMatchElement('h2', { text: 'Dashboard' });
+    // If there are no existing stories, the app goes to the templates page instead.
+    // Account for both here, but then force-visit the dashboard.
+    await expect(page).toMatchElement('h2', {
+      text: /(Dashboard|Explore Templates)/,
+    });
 
-    await percySnapshot(page, 'Stories Dashboard', { percyCSS });
+    await expect(page).toClick('[aria-label="Main dashboard navigation"] a', {
+      text: 'Dashboard',
+    });
+
+    await takeSnapshot(page, 'Stories Dashboard', { percyCSS });
   });
 
   describe('RTL', () => {
@@ -37,9 +48,15 @@ describe('Stories Dashboard', () => {
     it('should be able to open the dashboard', async () => {
       await visitDashboard();
 
-      await expect(page).toMatchElement('h2', { text: 'Dashboard' });
+      await expect(page).toMatchElement('h2', {
+        text: /(Dashboard|Explore Templates)/,
+      });
 
-      await percySnapshot(page, 'Stories Dashboard on RTL', { percyCSS });
+      await expect(page).toClick('[aria-label="Main dashboard navigation"] a', {
+        text: 'Dashboard',
+      });
+
+      await takeSnapshot(page, 'Stories Dashboard on RTL', { percyCSS });
     });
   });
 });

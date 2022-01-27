@@ -17,18 +17,24 @@
 /**
  * External dependencies
  */
-import { useCallback, useState } from '@web-stories-wp/react';
-import { toDate, isAfter, subMinutes, getOptions } from '@web-stories-wp/date';
-import { __ } from '@web-stories-wp/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { useCallback, useState } from '@googleforcreators/react';
+import {
+  toDate,
+  isAfter,
+  subMinutes,
+  getOptions,
+} from '@googleforcreators/date';
+import { __ } from '@googleforcreators/i18n';
+import { trackEvent } from '@googleforcreators/tracking';
 import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { useStory, useLocalMedia } from '../../../app';
+import { useStory } from '../../../app';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
 import { useCheckpoint, ReviewChecklistDialog } from '../../checklist';
+import useIsUploadingToStory from '../../../utils/useIsUploadingToStory';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
 function PublishButton({ forceIsSaving }) {
@@ -60,9 +66,7 @@ function PublishButton({ forceIsSaving }) {
       canPublish: Boolean(capabilities?.publish),
     })
   );
-  const { isUploading } = useLocalMedia((state) => ({
-    isUploading: state.state.isUploading,
-  }));
+  const isUploading = useIsUploadingToStory();
 
   const { shouldReviewDialogBeSeen } = useCheckpoint(
     ({ state: { shouldReviewDialogBeSeen } }) => ({

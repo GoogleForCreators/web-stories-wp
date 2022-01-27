@@ -25,9 +25,10 @@ import {
   useMemo,
   useBatchingCallback,
   useCombinedRefs,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import classnames from 'classnames';
-import { useUnits } from '@web-stories-wp/units';
+import { useUnits } from '@googleforcreators/units';
+import { useGlobalIsKeyPressed } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -53,30 +54,25 @@ function SingleSelectionMoveable({
   const moveable = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
 
-  const { nodesById } = useCanvas(({ state: { nodesById } }) => ({
-    nodesById,
+  const nodesById = useCanvas(({ state }) => state.nodesById);
+  const getBox = useUnits(({ actions }) => actions.getBox);
+  const pushTransform = useTransform(({ actions }) => actions.pushTransform);
+  const { zoomSetting, scrollLeft, scrollTop } = useLayout(({ state }) => ({
+    zoomSetting: state.zoomSetting,
+    scrollLeft: state.scrollLeft,
+    scrollTop: state.scrollTop,
   }));
-  const { getBox } = useUnits(({ actions: { getBox } }) => ({
-    getBox,
-  }));
-  const {
-    actions: { pushTransform },
-  } = useTransform();
-  const { zoomSetting, scrollLeft, scrollTop } = useLayout(
-    ({ state: { zoomSetting, scrollLeft, scrollTop } }) => ({
-      zoomSetting,
-      scrollLeft,
-      scrollTop,
-    })
-  );
 
   const actionsEnabled = !selectedElement.isBackground;
 
   const latestEvent = useRef();
 
-  const { backgroundElement } = useStory(({ state: { currentPage } }) => ({
-    backgroundElement: currentPage.elements[0] ?? {},
-  }));
+  const backgroundElementId = useStory(
+    ({ state }) => state.currentPage?.elements[0]?.id
+  );
+
+  // ⇧ key throttles rotating 30 degrees at a time / forces locking ratio when resizing.
+  const isShiftPressed = useGlobalIsKeyPressed('shift');
 
   useWindowResizeHandler(moveable);
 
@@ -154,6 +150,10 @@ function SingleSelectionMoveable({
    */
   const resetMoveable = useBatchingCallback(
     (target) => {
+      if (!moveable.current) {
+        return;
+      }
+
       frame.direction = [0, 0];
       frame.translate = [0, 0];
       frame.resize = [0, 0];
@@ -164,9 +164,7 @@ function SingleSelectionMoveable({
       target.style.transform = '';
       target.style.width = '';
       target.style.height = '';
-      if (moveable.current) {
-        moveable.current.updateRect();
-      }
+      moveable.current.updateRect();
     },
     [frame, pushTransform, selectedElement.id]
   );
@@ -202,6 +200,7 @@ function SingleSelectionMoveable({
     isEditMode,
     pushTransform,
     classNames,
+    forceLockRatio: isShiftPressed,
   });
 
   const rotateProps = useRotate({
@@ -211,11 +210,12 @@ function SingleSelectionMoveable({
     frame,
     setTransformStyle,
     resetMoveable,
+    throttleRotation: isShiftPressed,
   });
 
   // Get a list of all the other non-bg nodes
   const otherNodes = Object.values(
-    objectWithout(nodesById, [selectedElement.id, backgroundElement.id])
+    objectWithout(nodesById, [selectedElement.id, backgroundElementId])
   );
 
   const snapProps = useSnapping({

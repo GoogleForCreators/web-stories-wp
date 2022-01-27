@@ -17,9 +17,9 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
-import { Icons, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { Icons, Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

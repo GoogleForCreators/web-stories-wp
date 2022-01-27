@@ -18,7 +18,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 const StyledText = styled(Text)`
   color: inherit;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,27 +20,25 @@
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { addDecorator, addParameters } from '@storybook/react';
-import { withKnobs } from '@storybook/addon-knobs';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
-import { useDirection } from 'storybook-rtl-addon';
 import {
   theme as designSystemTheme,
   lightMode,
   ThemeGlobals,
   ModalGlobalStyle,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import {
   theme,
   GlobalStyle,
   CropMoveableGlobalStyle,
   EditorConfigProvider,
-} from '@web-stories-wp/story-editor';
+} from '@googleforcreators/story-editor';
 import {
   DashboardGlobalStyle,
   DashboardKeyboardOnlyOutline,
   ConfigProvider as DashboardConfigProvider,
   ApiProvider,
-} from '@web-stories-wp/dashboard';
+} from '@googleforcreators/dashboard';
 
 // @todo: Find better way to mock these.
 const wp = {};
@@ -80,13 +78,10 @@ addParameters({
   },
 });
 
-addDecorator(withKnobs);
-
 addDecorator((story, context) => {
   const { id } = context;
-
-  const direction = useDirection(context);
-  const isRTL = 'rtl' === direction;
+  // TODO(#10380): Replacement add-on for RTL feature
+  const isRTL = false;
 
   const isDesignSystemStorybook = id.startsWith('designsystem');
   const isDashboardStorybook = id.startsWith('dashboard');
@@ -107,6 +102,9 @@ addDecorator((story, context) => {
             },
             editStoryURL: 'editStory',
             isRTL,
+            styleConstants: {
+              topOffset: 0,
+            },
           }}
         >
           <ApiProvider>

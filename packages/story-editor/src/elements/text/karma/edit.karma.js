@@ -82,7 +82,7 @@ describe('TextEdit integration', () => {
         boldToggle = fixture.editor.inspector.designPanel.textStyle.bold;
       });
 
-      // TODO https://github.com/google/web-stories-wp/issues/9930
+      // TODO https://github.com/googleforcreators/web-stories-wp/issues/9930
       // eslint-disable-next-line jasmine/no-disabled-tests
       xit('should mount editor', async () => {
         expect(editor).toBeTruthy();
@@ -90,7 +90,7 @@ describe('TextEdit integration', () => {
         await fixture.snapshot();
       });
 
-      // TODO https://github.com/google/web-stories-wp/issues/9930
+      // TODO https://github.com/googleforcreators/web-stories-wp/issues/9930
       // eslint-disable-next-line jasmine/no-disabled-tests
       xit('should handle a command, exit and save', async () => {
         // Increase the font size for ensuring the clicks to be in correct places.

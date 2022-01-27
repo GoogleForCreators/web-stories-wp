@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { UnitsProvider, getBox, PAGE_RATIO } from '@web-stories-wp/units';
+import { UnitsProvider, getBox, PAGE_RATIO } from '@googleforcreators/units';
 
 /**
  * Internal dependencies

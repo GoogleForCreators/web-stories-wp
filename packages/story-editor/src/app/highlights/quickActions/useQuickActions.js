@@ -18,16 +18,16 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useMemo, useRef } from '@web-stories-wp/react';
-import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
+import { useCallback, useMemo, useRef } from '@googleforcreators/react';
+import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import {
   prettifyShortcut,
   useSnackbar,
   PLACEMENT,
   Icons,
-} from '@web-stories-wp/design-system';
-import { trackEvent } from '@web-stories-wp/tracking';
-import { canTranscodeResource, resourceList } from '@web-stories-wp/media';
+} from '@googleforcreators/design-system';
+import { trackEvent } from '@googleforcreators/tracking';
+import { resourceList } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -82,24 +82,29 @@ export const MediaPicker = ({ render, ...props }) => {
       updateElementsById,
     })
   );
-  const { resetWithFetch, postProcessingResource, optimizeVideo, optimizeGif } =
-    useLocalMedia(
-      ({
-        actions: {
-          resetWithFetch,
-          postProcessingResource,
-          optimizeVideo,
-          optimizeGif,
-        },
-      }) => {
-        return {
-          resetWithFetch,
-          postProcessingResource,
-          optimizeVideo,
-          optimizeGif,
-        };
-      }
-    );
+  const {
+    resetWithFetch,
+    postProcessingResource,
+    optimizeVideo,
+    optimizeGif,
+    canTranscodeResource,
+  } = useLocalMedia(
+    ({
+      state: { canTranscodeResource },
+      actions: {
+        resetWithFetch,
+        postProcessingResource,
+        optimizeVideo,
+        optimizeGif,
+      },
+    }) => ({
+      canTranscodeResource,
+      resetWithFetch,
+      postProcessingResource,
+      optimizeVideo,
+      optimizeGif,
+    })
+  );
 
   const { isTranscodingEnabled } = useFFmpeg();
   const { showSnackbar } = useSnackbar();
@@ -159,10 +164,10 @@ export const MediaPicker = ({ render, ...props }) => {
             optimizeGif({ resource });
           }
         }
-        // WordPress media picker event, sizes.medium.source_url is the smallest image
+        // WordPress media picker event, sizes.medium.sourceUrl is the smallest image
         insertMediaElement(
           resource,
-          resource.sizes?.medium?.source_url || resource.src
+          resource.sizes?.medium?.sourceUrl || resource.src
         );
 
         postProcessingResource(resource);
@@ -174,13 +179,14 @@ export const MediaPicker = ({ render, ...props }) => {
       }
     },
     [
-      insertMediaElement,
       isTranscodingEnabled,
-      optimizeGif,
-      optimizeVideo,
-      showSnackbar,
-      transcodableMimeTypes,
+      canTranscodeResource,
+      insertMediaElement,
       postProcessingResource,
+      transcodableMimeTypes,
+      optimizeVideo,
+      optimizeGif,
+      showSnackbar,
     ]
   );
   return (
@@ -214,16 +220,13 @@ MediaPicker.propTypes = {
   ]),
 };
 
-/** @typedef {import('@web-stories-wp/design-system').MenuItemProps} MenuItemProps */
-
 /**
  * Determines the quick actions to display in the quick
  * actions menu from the selected element.
  *
- * Quick actions should have the same shape as items in
- * the design system's context menu.
+ * Quick actions should follow the `quickActionPropType` definition.
  *
- * @return {Array.<MenuItemProps>} an array of quick action objects
+ * @return {Array.<{ Icon: Node, label: string, onClick: Function, separator: string, tooltipPlacement: string, wrapWithMediaPicker: boolean }>} an array of quick action objects
  */
 const useQuickActions = () => {
   const {
@@ -258,6 +261,12 @@ const useQuickActions = () => {
     ({ state: { hasTrimMode }, actions: { toggleTrimMode } }) => ({
       hasTrimMode,
       toggleTrimMode,
+    })
+  );
+
+  const { canTranscodeResource } = useLocalMedia(
+    ({ state: { canTranscodeResource } }) => ({
+      canTranscodeResource,
     })
   );
 
@@ -552,7 +561,7 @@ const useQuickActions = () => {
             element: selectedElement?.type,
           });
         },
-        ItemWrapper: MediaPicker,
+        wrapWithMediaPicker: true,
         ...actionMenuProps,
       });
     }
@@ -673,11 +682,12 @@ const useQuickActions = () => {
         ]
       : [];
   }, [
-    actionMenuProps,
-    hasTrimMode,
-    selectedElement,
-    toggleTrimMode,
     selectedElements,
+    selectedElement,
+    canTranscodeResource,
+    hasTrimMode,
+    actionMenuProps,
+    toggleTrimMode,
   ]);
 
   const videoActions = useMemo(() => {
@@ -746,7 +756,7 @@ const useQuickActions = () => {
             isBackground: true,
           });
         },
-        ItemWrapper: MediaPicker,
+        wrapWithMediaPicker: true,
         ...actionMenuProps,
       });
     }

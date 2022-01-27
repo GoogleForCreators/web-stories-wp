@@ -23,10 +23,10 @@ import {
   useMemo,
   useState,
   useEffect,
-} from '@web-stories-wp/react';
-import { __, sprintf, _n } from '@web-stories-wp/i18n';
+} from '@googleforcreators/react';
+import { __, sprintf, _n } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
-import { useLiveRegion } from '@web-stories-wp/design-system';
+import { useLiveRegion } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
@@ -161,7 +161,7 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
       <ContentHeading>{taxonomy.labels.name}</ContentHeading>
       <div key={taxonomy.slug}>
         <Tags.Label htmlFor={`${taxonomy.slug}-input`}>
-          {taxonomy.labels.add_new_item}
+          {taxonomy.labels.addNewItem}
         </Tags.Label>
         <Tags.Input
           id={`${taxonomy.slug}-input`}
@@ -173,14 +173,14 @@ function FlatTermSelector({ taxonomy, canCreateTerms }) {
           tokens={tokens}
           onUndo={undo}
           suggestedTerms={searchResults}
-          suggestedTermsLabel={taxonomy?.labels?.items_list}
+          suggestedTermsLabel={taxonomy?.labels?.itemsList}
         />
         <Tags.Description id={`${taxonomy.slug}-description`}>
-          {taxonomy.labels.separate_items_with_commas}
+          {taxonomy.labels.separateItemsWithCommas}
         </Tags.Description>
         {mostUsed.length > 0 && (
           <WordCloud.Wrapper data-testid={`${taxonomy.slug}-most-used`}>
-            <WordCloud.Heading>{taxonomy.labels.most_used}</WordCloud.Heading>
+            <WordCloud.Heading>{taxonomy.labels.mostUsed}</WordCloud.Heading>
             <WordCloud.List>
               {mostUsed.map((term, i) => (
                 <WordCloud.ListItem key={term.id}>

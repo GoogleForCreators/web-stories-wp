@@ -17,25 +17,26 @@
 /**
  * External dependencies
  */
-import { useCallback, useState } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { useCallback, useState } from '@googleforcreators/react';
+import { __ } from '@googleforcreators/i18n';
+import { trackEvent } from '@googleforcreators/tracking';
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Icons,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { useStory, useLocalMedia } from '../../../app';
+import { useStory } from '../../../app';
 import escapeHTML from '../../../utils/escapeHTML';
 import PreviewErrorDialog from '../previewErrorDialog';
 import Tooltip from '../../tooltip';
+import useIsUploadingToStory from '../../../utils/useIsUploadingToStory';
 
 const PREVIEW_TARGET = 'story-preview';
 
@@ -49,9 +50,7 @@ function PreviewButton({ forceIsSaving = false }) {
       actions: { autoSave, saveStory },
     }) => ({ isSaving, status, previewLink, autoSave, saveStory })
   );
-  const { isUploading } = useLocalMedia((state) => ({
-    isUploading: state.state.isUploading,
-  }));
+  const isUploading = useIsUploadingToStory();
 
   const [previewLinkToOpenViaDialog, setPreviewLinkToOpenViaDialog] =
     useState(null);
@@ -117,7 +116,7 @@ function PreviewButton({ forceIsSaving = false }) {
           if (popup.location.href) {
             // Auto-save sends an updated preview link, use that instead if available.
             const updatedPreviewLink = decoratePreviewLink(
-              update?.preview_link ?? previewLink
+              update?.previewLink ?? previewLink
             );
             popup.location.replace(updatedPreviewLink);
           }

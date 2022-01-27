@@ -20,14 +20,14 @@
 import styled, { css } from 'styled-components';
 import { rgba } from 'polished';
 import PropTypes from 'prop-types';
-import { generatePatternStyles } from '@web-stories-wp/patterns';
-import { UnitsProvider } from '@web-stories-wp/units';
+import { generatePatternStyles } from '@googleforcreators/patterns';
+import { UnitsProvider } from '@googleforcreators/units';
 import {
   useState,
   useRef,
   useCallback,
   useEffect,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { useFeature } from 'flagged';
 
 /**
@@ -178,6 +178,7 @@ function PagePreview({
                 width={width}
                 height={height}
                 alt={label}
+                decoding="async"
               />
             ) : (
               page.elements.map((element) => (
@@ -185,7 +186,6 @@ function PagePreview({
                   key={element.id}
                   previewMode
                   element={element}
-                  page={page}
                 />
               ))
             )}
@@ -200,7 +200,7 @@ PagePreview.propTypes = {
   page: StoryPropTypes.page.isRequired,
   label: PropTypes.string,
   isCacheable: PropTypes.bool,
-  cachedImage: PropTypes.object,
+  cachedImage: PropTypes.string,
   setCachedImage: PropTypes.func,
   pageImageData: PropTypes.string,
   width: PropTypes.number.isRequired,

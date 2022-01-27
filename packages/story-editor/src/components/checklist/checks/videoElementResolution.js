@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useMemo, useCallback } from '@web-stories-wp/react';
+import { useMemo, useCallback } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -28,7 +28,7 @@ import { DESIGN_COPY, MIN_VIDEO_HEIGHT, MIN_VIDEO_WIDTH } from '../constants';
 import { filterStoryElements } from '../utils';
 import { useRegisterCheck } from '../countContext';
 import { useIsChecklistMounted } from '../popupMountedContext';
-import VideoChecklistCard from './shared/videoChecklistCard';
+import { VideoChecklistCard } from './shared';
 
 export function videoElementResolution(element) {
   if (element.type !== 'video') {
@@ -58,6 +58,7 @@ const VideoElementResolution = () => {
       }),
     [setHighlights]
   );
+
   const { footer, title } = DESIGN_COPY.videoResolutionTooLow;
 
   const isRendered = elements.length > 0;
@@ -70,7 +71,7 @@ const VideoElementResolution = () => {
         title={title}
         elements={elements}
         footer={footer}
-        handleClick={handleClick}
+        onThumbnailClick={handleClick}
       />
     )
   );

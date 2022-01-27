@@ -18,10 +18,24 @@
  * External dependencies
  */
 import { createGlobalStyle } from 'styled-components';
-import { themeHelpers } from '@web-stories-wp/design-system';
+import { themeHelpers, OVERLAY_CLASS } from '@googleforcreators/design-system';
+
+/**
+ * Internal dependencies
+ */
+import { TOOLBAR_HEIGHT, MENU_WIDTH, MENU_FOLDED_WIDTH } from './constants';
 
 export const GlobalStyle = createGlobalStyle`
   body.web-story_page_stories-dashboard #wpbody {
     ${themeHelpers.scrollbarCSS};
+  }
+
+  .${OVERLAY_CLASS} {
+    top: ${TOOLBAR_HEIGHT}px !important;
+    left: ${MENU_WIDTH}px !important;
+  }
+
+  body.folded .${OVERLAY_CLASS} {
+    left: ${MENU_FOLDED_WIDTH}px !important;
   }
 `;

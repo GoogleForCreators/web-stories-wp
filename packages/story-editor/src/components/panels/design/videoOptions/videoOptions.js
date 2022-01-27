@@ -18,8 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { canTranscodeResource } from '@web-stories-wp/media';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
 import {
@@ -32,8 +31,8 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   useLiveRegion,
-} from '@web-stories-wp/design-system';
-import { useCallback, useEffect } from '@web-stories-wp/react';
+} from '@googleforcreators/design-system';
+import { useCallback, useEffect } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -88,11 +87,26 @@ const HelperText = styled(Text).attrs({
 
 function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   const { isTranscodingEnabled } = useFFmpeg();
-  const { muteExistingVideo } = useLocalMedia((state) => ({
-    muteExistingVideo: state.actions.muteExistingVideo,
-  }));
+  const {
+    muteExistingVideo,
+    isResourceTrimming,
+    isNewResourceMuting,
+    canTranscodeResource,
+  } = useLocalMedia(
+    ({
+      state: { canTranscodeResource, isNewResourceMuting, isResourceTrimming },
+      actions: { muteExistingVideo },
+    }) => ({
+      canTranscodeResource,
+      isNewResourceMuting,
+      isResourceTrimming,
+      muteExistingVideo,
+    })
+  );
   const resource = getCommonValue(selectedElements, 'resource');
-  const { isMuting, isMuted, isTrimming } = resource;
+  const { isMuted, id: resourceId = 0 } = resource;
+  const isTrimming = isResourceTrimming(resourceId);
+  const isMuting = isNewResourceMuting(resourceId);
   const loop = getCommonValue(selectedElements, 'loop');
   const isSingleElement = selectedElements.length === 1;
 

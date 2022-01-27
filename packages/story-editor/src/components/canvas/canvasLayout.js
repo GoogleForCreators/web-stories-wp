@@ -18,14 +18,19 @@
  * External dependencies
  */
 import styled, { StyleSheetManager } from 'styled-components';
-import { memo, useRef, useCallback } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
+import { memo, useRef, useCombinedRefs } from '@googleforcreators/react';
+import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import { useCanvas, useLayout } from '../../app';
+import {
+  CANVAS_BOUNDING_BOX_IDS,
+  useCanvas,
+  useCanvasBoundingBoxRef,
+  useLayout,
+} from '../../app';
 import EditLayer from './editLayer';
 import DisplayLayer from './displayLayer';
 import FramesLayer from './framesLayer';
@@ -37,7 +42,7 @@ import CanvasElementDropzone from './canvasElementDropzone';
 import EyedropperLayer from './eyedropperLayer';
 
 // data-fix-caret is for allowing caretRangeFromPoint to work in Safari.
-// See https://github.com/google/web-stories-wp/issues/7745.
+// See https://github.com/googleforcreators/web-stories-wp/issues/7745.
 const Background = styled.section.attrs({
   'aria-label': __('Canvas', 'web-stories'),
   'data-fix-caret': true,
@@ -50,18 +55,19 @@ const Background = styled.section.attrs({
 `;
 
 function CanvasLayout({ header, footer }) {
+  const boundingBoxTrackingRef = useCanvasBoundingBoxRef(
+    CANVAS_BOUNDING_BOX_IDS.CANVAS_CONTAINER
+  );
   const { setCanvasContainer } = useCanvas((state) => ({
     setCanvasContainer: state.actions.setCanvasContainer,
   }));
 
   const backgroundRef = useRef(null);
 
-  const setBackgroundRef = useCallback(
-    (ref) => {
-      backgroundRef.current = ref;
-      setCanvasContainer(ref);
-    },
-    [setCanvasContainer]
+  const setBackgroundRef = useCombinedRefs(
+    backgroundRef,
+    setCanvasContainer,
+    boundingBoxTrackingRef
   );
 
   useLayoutParams(backgroundRef);

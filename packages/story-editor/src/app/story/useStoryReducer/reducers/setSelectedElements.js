@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
+import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
 /**
  * Internal dependencies
  */
@@ -26,7 +26,7 @@ import { intersect } from './utils';
 /**
  * Set selected elements to the given list of ids.
  *
- * If given list is not a list, do nothing.
+ * If given `elementIds` is not a list, do nothing.
  *
  * If given list matches (ignoring permutations) the current selection,
  * nothing happens.
@@ -41,11 +41,14 @@ import { intersect } from './utils';
  * @return {Object} New state
  */
 function setSelectedElements(state, { elementIds }) {
-  if (!Array.isArray(elementIds)) {
+  const newElementIds =
+    typeof elementIds === 'function' ? elementIds(state.selection) : elementIds;
+
+  if (!Array.isArray(newElementIds)) {
     return state;
   }
 
-  const uniqueElementIds = [...new Set(elementIds)];
+  const uniqueElementIds = [...new Set(newElementIds)];
 
   // They can only be similar if they have the same length
   if (state.selection.length === uniqueElementIds.length) {

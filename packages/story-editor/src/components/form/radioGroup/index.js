@@ -17,14 +17,14 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo, useRef } from '@web-stories-wp/react';
+import { useMemo, useRef } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import {
   Radio,
   ThemeGlobals,
   themeHelpers,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -64,7 +64,7 @@ function RadioGroup({
       aria-labelledby={groupId}
     >
       <VisuallyHiddenLabel id={groupId}>{groupLabel}</VisuallyHiddenLabel>
-      {options.map(({ helper = '', label, value }) => (
+      {options.map(({ helper = '', label, value, disabled }) => (
         <StyledRadio
           key={value}
           name={name}
@@ -72,6 +72,7 @@ function RadioGroup({
           checked={value === selectedValue}
           label={label}
           hint={helper}
+          disabled={disabled}
           {...radioButtonProps}
         />
       ))}

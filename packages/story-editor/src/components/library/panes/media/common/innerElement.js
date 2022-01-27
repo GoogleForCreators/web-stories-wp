@@ -17,19 +17,19 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
-import { useEffect, useRef, memo } from '@web-stories-wp/react';
+import { useEffect, useRef, memo } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import {
   getSmallestUrlForWidth,
   resourceList,
   ResourcePropTypes,
-} from '@web-stories-wp/media';
+} from '@googleforcreators/media';
 import {
   Icons,
   Text,
   THEME_CONSTANTS,
   noop,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -82,10 +82,6 @@ const Duration = styled(Text).attrs({
 })`
   color: ${({ theme }) => theme.colors.fg.primary};
   display: block;
-`;
-
-const HiddenPosterImage = styled.img`
-  display: none;
 `;
 
 const CloneImg = styled.img`
@@ -142,7 +138,7 @@ function InnerElement({
 
   useEffect(() => {
     // assign display poster for videos
-    if (resource.poster && resource.poster.includes('blob')) {
+    if (resource.poster) {
       newVideoPosterRef.current = resource.poster;
     }
   }, [resource.poster]);
@@ -155,9 +151,11 @@ function InnerElement({
   };
 
   let media;
-  const thumbnailURL = getSmallestUrlForWidth(width, resource);
   const { lengthFormatted, poster, mimeType } = resource;
   const displayPoster = poster ?? newVideoPosterRef.current;
+  const thumbnailURL = displayPoster
+    ? displayPoster
+    : getSmallestUrlForWidth(width, resource);
 
   const commonProps = {
     width,
@@ -170,6 +168,7 @@ function InnerElement({
     ...commonProps,
     onLoad: makeMediaVisible,
     loading: 'lazy',
+    decoding: 'async',
     draggable: false,
   };
 
@@ -190,7 +189,7 @@ function InnerElement({
     muted: true,
     preload: 'metadata',
     poster: displayPoster,
-    showWithoutDelay: !poster || Boolean(newVideoPosterRef.current),
+    showWithoutDelay: active,
   };
 
   if (type === ContentType.IMAGE) {
@@ -200,25 +199,26 @@ function InnerElement({
   } else if ([ContentType.VIDEO, ContentType.GIF].includes(type)) {
     media = (
       <>
-        {/* eslint-disable-next-line styled-components-a11y/media-has-caption,jsx-a11y/media-has-caption -- No captions/tracks because video is muted. */}
-        <Video key={src} {...videoProps} ref={mediaElement}>
-          {type === ContentType.GIF ? (
-            resource.output.src && (
-              <source
-                src={resource.output.src}
-                type={resource.output.mimeType}
-              />
-            )
-          ) : (
-            <source
-              src={getSmallestUrlForWidth(width, resource)}
-              type={mimeType}
-            />
-          )}
-        </Video>
-        {displayPoster && (
+        {poster && !active ? (
           /* eslint-disable-next-line styled-components-a11y/alt-text -- False positive. */
-          <HiddenPosterImage src={poster} {...commonImageProps} />
+          <Image key={src} {...imageProps} ref={mediaElement} />
+        ) : (
+          // eslint-disable-next-line jsx-a11y/media-has-caption,styled-components-a11y/media-has-caption -- No captions/tracks because video is muted.
+          <Video key={src} {...videoProps} ref={mediaElement}>
+            {type === ContentType.GIF ? (
+              resource.output.src && (
+                <source
+                  src={resource.output.src}
+                  type={resource.output.mimeType}
+                />
+              )
+            ) : (
+              <source
+                src={getSmallestUrlForWidth(width, resource)}
+                type={mimeType}
+              />
+            )}
+          </Video>
         )}
         {type === ContentType.VIDEO && showVideoDetail && lengthFormatted && (
           <DurationWrapper>
@@ -240,12 +240,6 @@ function InnerElement({
   }
 
   const dragHandler = (event) => {
-    if (
-      [ContentType.VIDEO, ContentType.GIF].includes(type) &&
-      !mediaElement.current?.paused
-    ) {
-      mediaElement.current?.pause();
-    }
     if (!hasSetResourceTracker.current) {
       // Drop-targets handling.
       resourceList.set(resource.id, {

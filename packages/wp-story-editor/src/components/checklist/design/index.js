@@ -25,7 +25,7 @@ import {
   VideoElementResolution,
   ImageElementResolution,
   StoryPagesCount,
-} from '@web-stories-wp/story-editor';
+} from '@googleforcreators/story-editor';
 
 function Design() {
   const { hasUploadMediaAction } = useConfig(({ capabilities }) => ({

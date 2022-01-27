@@ -17,13 +17,13 @@
 /**
  * External dependencies
  */
-import { useRef, useState, useEffect } from '@web-stories-wp/react';
+import { useRef, useState, useEffect } from '@googleforcreators/react';
 import styled from 'styled-components';
-import { DATA_VERSION } from '@web-stories-wp/migration';
+import { DATA_VERSION } from '@googleforcreators/migration';
 import {
   useGlobalKeyDownEffect,
   useSnackbar,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -130,7 +130,7 @@ const getResourceFileName = (src) => {
  * Resource ids and posterIds are reset to 0 and replaces the resource URL with
  * replaceable path.
  *
- * @see https://github.com/google/web-stories-wp/issues/7227
+ * @see https://github.com/googleforcreators/web-stories-wp/issues/7227
  * @param {*} state Current story.
  * @return {*} Updated state for Template.
  */

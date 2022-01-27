@@ -24,18 +24,24 @@ import {
   useState,
   useDebouncedCallback,
   useBatchingCallback,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
-import { Input, Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { __ } from '@googleforcreators/i18n';
+import {
+  isValidUrl,
+  withProtocol,
+  Input,
+  Text,
+  THEME_CONSTANTS,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 
 import { useStory, useAPI, useCanvas } from '../../../../app';
-import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../../utils/url';
+import { toAbsoluteUrl } from '../../../../utils/url';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { Row, LinkInput, LinkIcon } from '../../../form';
@@ -184,7 +190,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     /**
      * Handle link icon change.
      *
-     * @param {import('@web-stories-wp/media').Resource} resource The new image.
+     * @param {import('@googleforcreators/media').Resource} resource The new image.
      */
     (resource) => {
       handleChange({ icon: resource?.src }, true);
@@ -249,7 +255,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
         onFocus={() => {
           setIsLinkFocused(true);
         }}
-        value={url}
+        value={url || ''}
         placeholder={
           isMultipleUrl
             ? MULTIPLE_DISPLAY_VALUE

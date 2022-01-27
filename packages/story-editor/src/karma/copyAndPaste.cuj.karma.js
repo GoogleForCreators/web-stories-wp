@@ -121,7 +121,7 @@ function sequencedForEach(htmlCollection, op) {
     });
 
     // Disable reason: flakey tests.
-    // See https://github.com/google/web-stories-wp/pull/6162
+    // See https://github.com/googleforcreators/web-stories-wp/pull/6162
     // eslint-disable-next-line jasmine/no-disabled-tests
     xit('retains all foreground animations', async () => {
       // open effect chooser
@@ -234,13 +234,10 @@ describe('Background Copy & Paste', () => {
     // Navigate back to previous page and add Background image
     await goToPreviousPage();
     const bgMedia = fixture.editor.library.media.item(0);
-    const canvas = fixture.editor.canvas.framesLayer.fullbleed;
-    await fixture.events.mouse.seq(({ down, moveRel, up }) => [
-      moveRel(bgMedia, 20, 20),
-      down(),
-      moveRel(canvas, 5, 5),
-      up(),
-    ]);
+    await fixture.events.click(bgMedia);
+    await fixture.events.click(
+      fixture.editor.inspector.designPanel.sizePosition.setAsBackground
+    );
 
     // we want to zoom in a little bit so background
     // is big enough for all background animations.
@@ -270,9 +267,7 @@ describe('Background Copy & Paste', () => {
     fixture.restore();
   });
 
-  // TODO https://github.com/google/web-stories-wp/issues/9910
-  // eslint-disable-next-line jasmine/no-disabled-tests
-  xit('works for all background animations', async () => {
+  it('works for all background animations', async () => {
     // open effect chooser
     await openEffectChooser();
 
@@ -333,7 +328,7 @@ describe('Background Copy & Paste', () => {
       } = pasted.elementAnimations[0] || {};
 
       // animation properties are explicitly passed as of #6888
-      // https://github.com/google/web-stories-wp/pull/6888/files#diff-e2509f6271734915fc6fb3d6b0fd1a78d6d34df81e215f0a79f2fce50586bb86R119
+      // https://github.com/googleforcreators/web-stories-wp/pull/6888/files#diff-e2509f6271734915fc6fb3d6b0fd1a78d6d34df81e215f0a79f2fce50586bb86R119
       // so undefined properties are removed to check for object equality
       Object.keys(cPersisted).forEach((key) =>
         cPersisted[key] === undefined ? delete cPersisted[key] : {}

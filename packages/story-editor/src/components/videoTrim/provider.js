@@ -18,9 +18,9 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback } from '@web-stories-wp/react';
-import { formatMsToHMS, getVideoLengthDisplay } from '@web-stories-wp/media';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { useCallback } from '@googleforcreators/react';
+import { formatMsToHMS, getVideoLengthDisplay } from '@googleforcreators/media';
+import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
@@ -31,9 +31,11 @@ import useVideoTrimMode from './useVideoTrimMode';
 import useVideoNode from './useVideoNode';
 
 function VideoTrimProvider({ children }) {
-  const { trimExistingVideo } = useLocalMedia((state) => ({
-    trimExistingVideo: state.actions.trimExistingVideo,
-  }));
+  const { trimExistingVideo } = useLocalMedia(
+    ({ actions: { trimExistingVideo } }) => ({
+      trimExistingVideo,
+    })
+  );
   const { isTrimMode, hasTrimMode, toggleTrimMode, videoData } =
     useVideoTrimMode();
   const {

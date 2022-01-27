@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,11 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
-import { boolean, select, text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
@@ -28,26 +23,39 @@ import { AD_NETWORK_TYPE } from '../../../../constants';
 export default {
   title: 'Dashboard/Views/EditorSettings/AdManagement',
   component: AdManagement,
+  args: {
+    publisherId: 'publisher Id',
+    adSenseSlotId: 'ad sense slot id',
+    adManagerSlotId: 'ad manager slot id',
+    installed: false,
+    active: false,
+    adsenseActive: false,
+    adsenseLink: '',
+  },
+  argTypes: {
+    updateSettings: { action: 'trigger ad update' },
+    adNetwork: {
+      options: Object.values(AD_NETWORK_TYPE),
+      control: 'radio',
+    },
+  },
+  parameters: {
+    controls: {
+      exclude: ['siteKitStatus'],
+    },
+  },
 };
 
-export const _default = () => {
+export const _default = (args) => {
   return (
     <AdManagement
-      adNetwork={select(
-        'adNetwork',
-        Object.values(AD_NETWORK_TYPE),
-        AD_NETWORK_TYPE.NONE
-      )}
-      updateSettings={(adUpdate) => action('trigger ad update')(adUpdate)}
-      publisherId={text('publisher Id')}
-      adSenseSlotId={text('ad sense slot id')}
-      adManagerSlotId={text('ad manager slot id')}
       siteKitStatus={{
-        installed: boolean('installed', false),
-        active: boolean('siteKitActive', false),
-        adsenseActive: boolean('adsenseActive', false),
-        adsenseLink: text('adsenseLink', ''),
+        installed: args.installed,
+        active: args.active,
+        adsenseActive: args.adsenseActive,
+        adsenseLink: args.adsenseLink,
       }}
+      {...args}
     />
   );
 };
