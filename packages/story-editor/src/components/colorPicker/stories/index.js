@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { object, boolean } from '@storybook/addon-knobs';
-
-/**
  * Internal dependencies
  */
 import ColorPicker from '..';
@@ -27,35 +22,36 @@ import ColorPicker from '..';
 export default {
   title: 'Stories Editor/Components/Color Picker',
   component: ColorPicker,
+  args: {
+    hasGradient: false,
+    hasOpacity: true,
+    initialColor: {
+      type: 'linear',
+      stops: [
+        {
+          color: { r: 255, g: 0, b: 0 },
+          position: 0,
+        },
+        {
+          color: { r: 0, g: 255, b: 0 },
+          position: 0.5,
+        },
+        {
+          color: { r: 0, g: 0, b: 255 },
+          position: 1,
+        },
+      ],
+    },
+  },
+  parameters: {
+    controls: {
+      include: ['initialColor', 'hasGradient', 'hasOpacity'],
+    },
+  },
 };
 
-export const _default = () => {
-  const initialColor = object('Initial Color', {
-    type: 'linear',
-    stops: [
-      {
-        color: { r: 255, g: 0, b: 0 },
-        position: 0,
-      },
-      {
-        color: { r: 0, g: 255, b: 0 },
-        position: 0.5,
-      },
-      {
-        color: { r: 0, g: 0, b: 255 },
-        position: 1,
-      },
-    ],
-  });
-  const hasGradient = boolean('Has Gradients', false);
-  const hasOpacity = boolean('Has Opacity', true);
-
+export const _default = (args) => {
   return (
-    <ColorPicker
-      color={initialColor}
-      onChange={() => {}}
-      hasGradient={hasGradient}
-      hasOpacity={hasOpacity}
-    />
+    <ColorPicker color={args.initialColor} onChange={() => {}} {...args} />
   );
 };

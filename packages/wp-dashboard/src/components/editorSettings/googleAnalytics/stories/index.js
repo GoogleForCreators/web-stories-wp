@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
-import { boolean, text } from '@storybook/addon-knobs';
-
-/**
  * Internal dependencies
  */
 import GoogleAnalyticsSettings from '..';
@@ -28,19 +22,40 @@ import GoogleAnalyticsSettings from '..';
 export default {
   title: 'Dashboard/Views/EditorSettings/GoogleAnalytics',
   component: GoogleAnalyticsSettings,
+  args: {
+    googleAnalyticsId: 'UA-000000-98',
+    installed: false,
+    active: false,
+    analyticsActive: false,
+    analyticsLink: '',
+  },
+  argTypes: {
+    onUpdateGoogleAnalyticsId: {
+      action: 'update google analytics id submitted',
+    },
+    handleUpdateAnalyticsId: { action: 'handleUpdateAnalyticsId' },
+  },
+  parameters: {
+    controls: {
+      exclude: [
+        'siteKitStatus',
+        'usingLegacyAnalytics',
+        'handleMigrateLegacyAnalytics',
+      ],
+    },
+  },
 };
 
-export const _default = () => {
+export const _default = (args) => {
   return (
     <GoogleAnalyticsSettings
-      onUpdateGoogleAnalyticsId={action('update google analytics id submitted')}
-      googleAnalyticsId={text('googleAnalyticsId', 'UA-000000-98')}
       siteKitStatus={{
-        installed: boolean('installed', false),
-        active: boolean('siteKitActive', false),
-        analyticsActive: boolean('analyticsActive', false),
-        analyticsLink: text('analyticsLink', ''),
+        installed: args.installed,
+        active: args.active,
+        analyticsActive: args.analyticsActive,
+        analyticsLink: args.analyticsLink,
       }}
+      {...args}
     />
   );
 };

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
@@ -30,6 +29,9 @@ import CardGrid from '..';
 export default {
   title: 'Dashboard/Components/CardGrid',
   component: CardGrid,
+  args: {
+    message: 'Sample Story Content',
+  },
 };
 
 const Card = styled.div`
@@ -40,15 +42,15 @@ const Card = styled.div`
   background-color: orange;
 `;
 
-const StorybookGridItem = (
-  <CardGridItem>
-    <Card>{text('Sample Story Content', 'Sample Story')}</Card>
-  </CardGridItem>
-);
+export const _default = (args) => {
+  const StorybookGridItem = (
+    <CardGridItem>
+      <Card>{args.message}</Card>
+    </CardGridItem>
+  );
 
-const itemArray = new Array(12).fill(StorybookGridItem);
+  const itemArray = new Array(12).fill(StorybookGridItem);
 
-export const _default = () => {
   return (
     <CardGrid pageSize={STORYBOOK_PAGE_SIZE}>
       {itemArray.map((gridItem, index) => (

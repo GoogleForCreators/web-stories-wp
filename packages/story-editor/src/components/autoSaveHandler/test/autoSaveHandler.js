@@ -25,8 +25,10 @@ import { render } from '@testing-library/react';
 import HistoryContext from '../../../app/history/context';
 import StoryContext from '../../../app/story/context';
 import ConfigContext from '../../../app/config/context';
-import MediaContext from '../../../app/media/context';
 import AutoSaveHandler from '..';
+import useIsUploadingToStory from '../../../utils/useIsUploadingToStory';
+
+jest.mock('../../../utils/useIsUploadingToStory');
 
 function setup({
   hasNewChanges = true,
@@ -45,18 +47,14 @@ function setup({
     },
     actions: { saveStory },
   };
-  const mediaContextValue = {
-    local: {
-      state: { isUploading },
-    },
-  };
+
+  useIsUploadingToStory.mockImplementation(() => isUploading);
+
   const { rerender } = render(
     <ConfigContext.Provider value={configValue}>
       <HistoryContext.Provider value={historyContextValue}>
         <StoryContext.Provider value={storyContextValue}>
-          <MediaContext.Provider value={mediaContextValue}>
-            <AutoSaveHandler />
-          </MediaContext.Provider>
+          <AutoSaveHandler />
         </StoryContext.Provider>
       </HistoryContext.Provider>
     </ConfigContext.Provider>
@@ -73,9 +71,7 @@ function setup({
       <ConfigContext.Provider value={configValue}>
         <HistoryContext.Provider value={historyContextValue}>
           <StoryContext.Provider value={secondaryStoryContextValue}>
-            <MediaContext.Provider value={mediaContextValue}>
-              <AutoSaveHandler />
-            </MediaContext.Provider>
+            <AutoSaveHandler />
           </StoryContext.Provider>
         </HistoryContext.Provider>
       </ConfigContext.Provider>

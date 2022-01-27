@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
-import { boolean, text } from '@storybook/addon-knobs';
-
-/**
  * Internal dependencies
  */
 import { THEME_CONSTANTS } from '../../../theme';
@@ -32,54 +26,62 @@ const demoBgUrl = 'https://picsum.photos/id/240/1500/160';
 export default {
   title: 'DesignSystem/Components/Banner',
   component: Banner,
+  args: {
+    title: 'my banner',
+    isDashboard: false,
+    message: 'I am a banner child',
+  },
+  argTypes: {
+    onClose: { action: 'close banner clicked' },
+  },
 };
 
-export const _default = () => {
+// eslint-disable-next-line react/prop-types
+export const _default = ({ message, ...args }) => {
   return (
     <Banner
       closeButtonLabel={'Dismiss storybook banner'}
-      title={text('title', 'my banner')}
-      onClose={action('close banner clicked')}
-      isDashboard={boolean('isDashboard', false)}
       backgroundUrl={demoBgUrl}
+      {...args}
     >
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-        {text('children', 'I am a banner child')}
+        {message}
       </Text>
     </Banner>
   );
 };
-
-export const EditorBanner = () => {
+// eslint-disable-next-line react/prop-types
+export const EditorBanner = ({ message, ...args }) => {
   return (
     <Banner
       closeButtonLabel={'Dismiss storybook banner'}
-      title={'Animations are here!'}
-      onClose={(e) => action('close banner clicked')(e)}
+      onClose={(e) => args.onClose(e)}
       backgroundUrl={demoBgUrl}
+      {...args}
     >
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-        {
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-        }
+        {message}
       </Text>
     </Banner>
   );
 };
-
-export const DashboardBanner = () => {
+EditorBanner.args = {
+  title: 'Animations are here!',
+  isDashboard: false,
+  message:
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+};
+// eslint-disable-next-line react/prop-types
+export const DashboardBanner = ({ message, ...args }) => {
   return (
     <Banner
       closeButtonLabel={'Dismiss storybook banner'}
-      title={'Help improve the editor!'}
-      onClose={(e) => action('close banner clicked')(e)}
-      isDashboard
+      onClose={(e) => args.onClose(e)}
       backgroundUrl={demoBgUrl}
+      {...args}
     >
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-        {
-          'Check the box to help us improve the Web Stories plugin by allowing tracking of product usage stats. All data are treated in accordance with '
-        }
+        {message}
         <Link
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
           href="https://policies.google.com/privacy"
@@ -90,20 +92,29 @@ export const DashboardBanner = () => {
     </Banner>
   );
 };
-
-export const BannerNoBackgroundImage = () => {
+DashboardBanner.args = {
+  title: 'Help improve the editor!',
+  isDashboard: true,
+  message:
+    'Check the box to help us improve the Web Stories plugin by allowing tracking of product usage stats. All data are treated in accordance with ',
+};
+// eslint-disable-next-line react/prop-types
+export const BannerNoBackgroundImage = ({ message, ...args }) => {
   return (
     <Banner
       closeButtonLabel={'Dismiss storybook banner'}
-      title={text('title', 'New Feature!')}
-      onClose={(e) => action('close banner clicked')(e)}
-      isDashboard={boolean('isDashboard', true)}
+      onClose={(e) => args.onClose(e)}
+      {...args}
     >
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-        {
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-        }
+        {message}
       </Text>
     </Banner>
   );
+};
+BannerNoBackgroundImage.args = {
+  title: 'New Feature!',
+  isDashboard: true,
+  message:
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
 };
