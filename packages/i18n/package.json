@@ -26,7 +26,9 @@
   "exports": {
     "default": "./src/index.js"
   },
-  "main": "./src/index.js",
+  "main": "./dist/index.js",
+  "module": "./dist-module/index.js",
+  "source": "./src/index.js",
   "sideEffects": false,
   "dependencies": {
     "@googleforcreators/react": "*",
