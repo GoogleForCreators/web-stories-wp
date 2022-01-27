@@ -30,7 +30,6 @@ import { COPIED_ELEMENT, ELEMENT } from './constants';
 
 jest.mock('@googleforcreators/design-system', () => ({
   ...jest.requireActual('@googleforcreators/design-system'),
-  isPlatformMacOS: jest.fn(),
   useSnackbar: jest.fn(),
 }));
 jest.mock('@googleforcreators/tracking'); // should be mocked in the testing env.

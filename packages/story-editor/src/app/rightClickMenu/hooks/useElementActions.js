@@ -114,7 +114,7 @@ const useElementActions = () => {
   const handleSetPageBackground = useCallback(() => {
     const selectedElement = selectedElements?.[0];
 
-    if (selectedElement) {
+    if (selectedElement && !selectedElement.isBackground) {
       setBackgroundElement({ elementId: selectedElement.id });
 
       showSnackbar({
