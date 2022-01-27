@@ -84,6 +84,11 @@ const useElementActions = () => {
       },
       actionHelpText: UNDO_HELP_TEXT,
     });
+
+    trackEvent('context_menu_action', {
+      name: 'duplicate_elements',
+      elements: selectedElements.map((element) => element.type),
+    });
   }, [duplicateElementsById, selectedElements, showSnackbar]);
 
   /**
