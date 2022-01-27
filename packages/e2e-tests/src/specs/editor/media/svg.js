@@ -31,22 +31,49 @@ const MODAL = '.media-modal';
 describe('SVG', () => {
   withExperimentalFeatures(['enableSVG']);
 
-  it('should insert an existing SVG from media dialog', async () => {
-    await createNewStory();
+  describe('Usage', () => {
+    it('should insert an existing SVG from media dialog', async () => {
+      await createNewStory();
 
-    await expect(page).toClick('button[aria-label="Upload"]');
-    await expect(page).toMatch('Upload to Story');
-    await expect(page).toClick('button', { text: 'Media Library' });
+      await expect(page).toClick('button[aria-label="Upload"]');
+      await expect(page).toMatch('Upload to Story');
+      await expect(page).toClick('button', { text: 'Media Library' });
 
-    await expect(page).toClick(
-      '.attachments-browser .attachments .attachment[aria-label="video-play"]'
-    );
+      await expect(page).toClick(
+        '.attachments-browser .attachments .attachment[aria-label="video-play"]'
+      );
 
-    await expect(page).toClick('button', { text: 'Insert into page' });
+      await expect(page).toClick('button', { text: 'Insert into page' });
 
-    await expect(page).toMatchElement('[data-testid="imageElement"]');
+      await expect(page).toMatchElement('[data-testid="imageElement"]');
 
-    await takeSnapshot(page, 'Inserting SVG from Dialog');
+      await takeSnapshot(page, 'Inserting SVG from Dialog');
+    });
+
+    it('should not allow selecting an SVG file as publisher logo', async () => {
+      await createNewStory();
+
+      await expect(page).toClick('li[role="tab"]', { text: 'Document' });
+      await expect(page).toClick('[aria-label="Publisher Logo"]');
+      await expect(page).toClick('[aria-label="Add new"]');
+
+      await page.waitForSelector(MODAL, {
+        visible: true,
+      });
+
+      await expect(page).toMatch('Select as publisher logo');
+      await expect(page).toClick('button', { text: 'Media Library' });
+
+      await expect(page).not.toMatchElement(
+        '.attachments-browser .attachments .attachment[aria-label="video-play"]'
+      );
+
+      await page.keyboard.press('Escape');
+
+      await page.waitForSelector(MODAL, {
+        visible: false,
+      });
+    });
   });
 
   describe('Upload', () => {
@@ -75,31 +102,6 @@ describe('SVG', () => {
       await expect(page).toMatchElement('[data-testid="imageElement"]');
 
       await takeSnapshot(page, 'Uploading SVG to editor');
-    });
-  });
-
-  it('should not allow selecting an SVG file as publisher logo', async () => {
-    await createNewStory();
-
-    await expect(page).toClick('li[role="tab"]', { text: 'Document' });
-    await expect(page).toClick('[aria-label="Publisher Logo"]');
-    await expect(page).toClick('[aria-label="Add new"]');
-
-    await page.waitForSelector(MODAL, {
-      visible: true,
-    });
-
-    await expect(page).toMatch('Select as publisher logo');
-    await expect(page).toClick('button', { text: 'Media Library' });
-
-    await expect(page).not.toMatchElement(
-      '.attachments-browser .attachments .attachment[aria-label="video-play"]'
-    );
-
-    await page.keyboard.press('Escape');
-
-    await page.waitForSelector(MODAL, {
-      visible: false,
     });
   });
 });
