@@ -46,7 +46,6 @@ describe('Text Style Panel', () => {
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
       );
-      // @todo Chenge the text to "Fill in some text" first.
     });
 
     it('should have the style panel always expanded', async () => {
