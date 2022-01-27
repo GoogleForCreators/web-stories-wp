@@ -93,7 +93,6 @@ const ButtonWrapper = styled.div`
   top: calc(50% - 16px);
   right: calc(50% - 16px);
   z-index: 1;
-  padding: 8px;
 `;
 
 const PageTemplateTitle = styled.div`
