@@ -46,7 +46,9 @@ describe('Styling single text field', () => {
   });
 
   it('should have the correct initial text and no formatting', () => {
-    expect(getTextContent()).toBe('Fill in some text');
+    expect(getTextContent()).toBe(
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+    );
   });
 
   describe('CUJ: Creator Can Style Text: Apply B, Apply U, Apply I, Set text color, Set kerning', () => {
@@ -112,7 +114,7 @@ describe('Styling single text field', () => {
         'letter-spacing: 0.5em',
         'text-transform: uppercase',
       ].join('; ');
-      const expected = `<span style="${css}">Fill in some text</span>`;
+      const expected = `<span style="${css}">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>`;
       expect(actual).toBe(expected);
     });
 
@@ -129,7 +131,7 @@ describe('Styling single text field', () => {
 
       // First enter edit mode, select something, style it with all styles and exit edit mode
       await data.fixture.events.keyboard.press('Enter');
-      await setSelection(5, 7);
+      await setSelection(6, 8);
       await data.fixture.events.click(letterSpacing, { clickCount: 3 });
       await data.fixture.events.keyboard.type('50');
       await data.fixture.events.keyboard.press('Enter');
@@ -200,7 +202,7 @@ describe('Styling single text field', () => {
         'letter-spacing: 1em',
         'text-transform: uppercase',
       ].join('; ');
-      const expected = `<span style="${css}">Fill in some text</span>`;
+      const expected = `<span style="${css}">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>`;
       expect(actual).toBe(expected);
     });
   });
@@ -234,7 +236,7 @@ describe('Styling single text field', () => {
         'font-style: italic',
         'text-decoration: underline',
       ].join('; ');
-      const expected = `<span style="${firstCSS}">Fill in some text</span>`;
+      const expected = `<span style="${firstCSS}">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>`;
       expect(actual).toBe(expected);
     });
   });
@@ -252,7 +254,10 @@ describe('Styling single text field', () => {
       await data.fixture.events.click(await fontWeight.option('Black'));
       await data.fixture.events.sleep(300);
       await richTextHasFocus();
-      await setSelection(1, 'Fill in some text'.length);
+      await setSelection(
+        1,
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'.length
+      );
       await data.fixture.events.click(fontWeight.select);
       await data.fixture.events.sleep(300);
       await data.fixture.events.click(await fontWeight.option('Bold'));
@@ -273,7 +278,7 @@ describe('Styling single text field', () => {
 
       // Assume text content to now be formatting-free
       const actual = getTextContent();
-      const expected = `Fill in some text`;
+      const expected = `Lorem ipsum dolor sit amet, consectetur adipiscing elit.`;
       expect(actual).toBe(expected);
     });
 
@@ -304,7 +309,7 @@ describe('Styling single text field', () => {
 
       // Assume text content to now be correctly bold
       const actual = getTextContent();
-      const expected = `<span style="font-weight: 700">Fill in some text</span>`;
+      const expected = `<span style="font-weight: 700">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>`;
       expect(actual).toBe(expected);
     });
 
@@ -347,7 +352,7 @@ describe('Styling single text field', () => {
 
       // Assume text content to now be correctly bold
       const actual = getTextContent();
-      const expected = `<span style="font-weight: 700">Fill in some text</span>`;
+      const expected = `<span style="font-weight: 700">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>`;
       expect(actual).toBe(expected);
     });
   });
