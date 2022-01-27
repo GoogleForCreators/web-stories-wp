@@ -30,11 +30,8 @@ import css from 'rollup-plugin-import-css';
 import url from '@rollup/plugin-url';
 import json from 'rollup-plugin-json';
 import license from 'rollup-plugin-license';
+import del from 'rollup-plugin-delete';
 import workspacesRun from 'workspaces-run';
-
-/**
- * Internal dependencies
- */
 
 const plugins = [
   resolve({
@@ -99,7 +96,14 @@ export default (async () => {
       ]),
     ];
 
-    console.log(external);
+    plugins.unshift(
+      del({
+        targets: [
+          dirname(resolvePath(pkg.dir, pkg.config.module)),
+          dirname(resolvePath(pkg.dir, pkg.config.main)),
+        ],
+      })
+    );
 
     entries.push({
       input,
