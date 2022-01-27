@@ -130,31 +130,39 @@ function PageAttachmentPanel() {
   const debouncedUpdate = useDebouncedCallback(updatePageAttachment, 300);
   const { getProxiedUrl, checkResourceAccess } = useCORSProxy();
 
-  const populateUrlData = useDebouncedCallback(async (value) => {
-    // Nothing to fetch for tel: or mailto: links.
-    if (!value.startsWith('http://') && !value.startsWith('https://')) {
-      return;
-    }
+  const populateUrlData = useDebouncedCallback(
+    useCallback(
+      async (value) => {
+        // Nothing to fetch for tel: or mailto: links.
+        if (!value.startsWith('http://') && !value.startsWith('https://')) {
+          return;
+        }
 
-    setFetchingMetadata(true);
-    try {
-      const { image } = getLinkMetadata ? await getLinkMetadata(value) : {};
-      const iconUrl = image ? toAbsoluteUrl(value, image) : '';
-      const needsProxy = iconUrl ? await checkResourceAccess(iconUrl) : false;
+        setFetchingMetadata(true);
+        try {
+          const { image } = getLinkMetadata ? await getLinkMetadata(value) : {};
+          const iconUrl = image ? toAbsoluteUrl(value, image) : '';
+          const needsProxy = iconUrl
+            ? await checkResourceAccess(iconUrl)
+            : false;
 
-      updatePageAttachment({
-        url: value,
-        icon: iconUrl,
-        needsProxy,
-      });
-    } catch (e) {
-      // We're allowing to save invalid URLs, however, remove icon in this case.
-      updatePageAttachment({ url: value, icon: '', needsProxy: false });
-      setIsInvalidUrl(true);
-    } finally {
-      setFetchingMetadata(false);
-    }
-  }, 1200);
+          updatePageAttachment({
+            url: value,
+            icon: iconUrl,
+            needsProxy,
+          });
+        } catch (e) {
+          // We're allowing to save invalid URLs, however, remove icon in this case.
+          updatePageAttachment({ url: value, icon: '', needsProxy: false });
+          setIsInvalidUrl(true);
+        } finally {
+          setFetchingMetadata(false);
+        }
+      },
+      [checkResourceAccess, getLinkMetadata, updatePageAttachment]
+    ),
+    1200
+  );
 
   const [isInvalidUrl, setIsInvalidUrl] = useState(
     url && !isValidUrl(withProtocol(url).trim())
@@ -165,6 +173,8 @@ function PageAttachmentPanel() {
 
   const handleChangeUrl = useCallback(
     (value) => {
+      populateUrlData.cancel();
+
       _setUrl(value);
       setIsInvalidUrl(false);
       const urlWithProtocol = withProtocol(value.trim());
