@@ -218,6 +218,12 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       await fixture.events.keyboard.press('Tab');
 
       // Should be added with white style on black background.
+      await fixture.events.mouse.moveRel(
+        fixture.editor.library.text.preset('Paragraph'),
+        10,
+        10
+      );
+      await fixture.events.sleep(800);
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
       );
