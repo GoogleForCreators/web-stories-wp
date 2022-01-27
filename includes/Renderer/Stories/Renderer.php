@@ -618,7 +618,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * Allows customization of html attributes in the web stories widget anchor tag loop
 	 * Converts array into escaped inline html attributes.
 	 *
-	 * @since 1.16.0
+	 * @since 1.17.0
 	 *
 	 * @return void
 	 */
@@ -626,7 +626,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		/**
 		  * Filters the link attributes added to a story's <a> tag.
 		  *
-		  * @since 1.16.0
+		  * @since 1.17.0
 		  *
 		  * @param array  $attributes Key value array of attribute name to attribute value.
 		  * @param Story  $story      The current story instance.
