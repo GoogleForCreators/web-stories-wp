@@ -14,3 +14,5 @@
  * limitations under the License.
  */
 export { default as PublishModal } from './publishModal';
+
+// This whole directory of components in /publishModal is a work in progress!

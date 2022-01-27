@@ -14,10 +14,6 @@
  * limitations under the License.
  */
 /**
- * External dependencies
- */
-import styled from 'styled-components';
-/**
  * Internal dependencies
  */
 import PublishModal from '../publishModal';
@@ -27,15 +23,4 @@ export default {
   component: PublishModal,
 };
 
-const Container = styled.div`
-  height: 100vh;
-  background-color: salmon;
-  display: block;
-`;
-export const _default = () => {
-  return (
-    <Container>
-      <PublishModal />
-    </Container>
-  );
-};
+export const _default = () => <PublishModal />;

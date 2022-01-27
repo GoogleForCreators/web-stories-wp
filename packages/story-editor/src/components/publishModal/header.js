@@ -33,6 +33,7 @@ const _Header = styled.header`
   height: 44px;
   display: flex;
   align-items: center;
+  margin-bottom: 1px;
   background-color: ${({ theme }) => theme.colors.bg.secondary};
 
   & > button:first-of-type {
