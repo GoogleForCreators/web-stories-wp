@@ -36,6 +36,7 @@ const __dirname = fileURLToPath(dirname(import.meta.url));
 
 const plugins = [
   resolve({
+    browser: true, // To correctly import browser version of @ffmpeg/ffmpeg for example.
     preferBuiltins: true,
     dedupe: [],
   }),
