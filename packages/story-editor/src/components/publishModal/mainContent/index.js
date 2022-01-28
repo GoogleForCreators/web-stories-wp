@@ -31,7 +31,6 @@ import MandatoryStoryInfo from './mandatoryStoryInfo';
 import StoryPreview from './storyPreview';
 
 const Main = styled.div`
-  position: absolute;
   display: grid;
   min-width: 917px;
   width: 100%;
@@ -48,7 +47,6 @@ const Main = styled.div`
 
 const _StoryPreview = styled.div`
   grid-area: preview;
-  display: block;
   padding-top: 20px;
 `;
 
