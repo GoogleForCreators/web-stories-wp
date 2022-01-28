@@ -27,7 +27,7 @@ import { __ } from '@googleforcreators/i18n';
 import { useConfig } from '../../../app';
 import cleanForSlug from '../../../utils/cleanForSlug';
 import { INPUT_KEYS } from '../constants';
-import FormHeadline from './formHeadline';
+import FormLabel from './formLabel';
 
 const FormSection = styled.div`
   margin: 20px 0 22px;
@@ -51,7 +51,7 @@ const MandatoryStoryInfo = ({ handleUpdateStoryInfo, inputValues }) => {
   return (
     <>
       <FormSection>
-        <FormHeadline
+        <FormLabel
           htmlFor={INPUT_KEYS.TITLE}
           copy={__('Story Title', 'web-stories')}
         />
@@ -67,7 +67,7 @@ const MandatoryStoryInfo = ({ handleUpdateStoryInfo, inputValues }) => {
         />
       </FormSection>
       <FormSection>
-        <FormHeadline
+        <FormLabel
           htmlFor={INPUT_KEYS.EXCERPT}
           copy={__('Story Description', 'web-stories')}
         />

@@ -24,15 +24,12 @@ import {
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 /**
- * External dependencies
- */
-/**
  * Internal dependencies
  */
 import Tooltip from '../../tooltip';
 import { REQUIRED_INPUTS } from '../constants';
 
-const FormHeadline = ({ htmlFor, copy }) => {
+const FormLabel = ({ htmlFor, copy }) => {
   return REQUIRED_INPUTS.indexOf(htmlFor) > -1 ? (
     <Tooltip
       title={__('Required', 'web-stories')}
@@ -43,7 +40,7 @@ const FormHeadline = ({ htmlFor, copy }) => {
         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL}
         htmlFor={htmlFor}
       >
-        {copy} {'*'}
+        {`${copy} *`}
       </Headline>
     </Tooltip>
   ) : (
@@ -57,9 +54,9 @@ const FormHeadline = ({ htmlFor, copy }) => {
   );
 };
 
-export default FormHeadline;
+export default FormLabel;
 
-FormHeadline.propTypes = {
+FormLabel.propTypes = {
   htmlFor: PropTypes.string.isRequired,
   copy: PropTypes.string.isRequired,
 };
