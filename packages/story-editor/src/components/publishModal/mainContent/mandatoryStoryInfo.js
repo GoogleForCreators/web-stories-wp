@@ -16,13 +16,18 @@
 /**
  * External dependencies
  */
-import {
-  Headline,
-  TextArea,
-  THEME_CONSTANTS,
-} from '@googleforcreators/design-system';
+import PropTypes from 'prop-types';
+import { useCallback } from '@googleforcreators/react';
+import { TextArea } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
+/**
+ * Internal dependencies
+ */
+import { useConfig } from '../../../app';
+import cleanForSlug from '../../../utils/cleanForSlug';
+import { INPUT_KEYS } from '../constants';
+import FormHeadline from './formHeadline';
 
 const FormSection = styled.div`
   margin: 20px 0 22px;
@@ -32,44 +37,52 @@ const _TextArea = styled(TextArea)`
   margin: 8px 0;
 `;
 
-const MandatoryStoryInfo = () => {
+const MandatoryStoryInfo = ({ handleUpdateStoryInfo, inputValues }) => {
+  const storyId = useConfig(({ storyId }) => storyId);
+
+  const onTitleBlur = useCallback(() => {
+    if (!inputValues.slug || inputValues.slug === storyId) {
+      const cleanSlug =
+        encodeURIComponent(cleanForSlug(inputValues.title)) || storyId;
+      handleUpdateStoryInfo({ target: { name: 'slug', value: cleanSlug } });
+    }
+  }, [inputValues, storyId, handleUpdateStoryInfo]);
+
   return (
     <>
       <FormSection>
-        <Headline
-          as="label"
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL}
-          htmlFor="story-title"
-        >
-          {__('Story Title', 'web-stories')}
-        </Headline>
+        <FormHeadline
+          htmlFor={INPUT_KEYS.TITLE}
+          copy={__('Story Title', 'web-stories')}
+        />
         <_TextArea
-          name="story-title"
+          name={INPUT_KEYS.TITLE}
           id="story-title"
           showCount
           maxLength={300}
-          value="The best places for a California sunset"
+          value={inputValues[INPUT_KEYS.TITLE]}
+          onChange={handleUpdateStoryInfo}
+          onBlur={onTitleBlur}
+          placeholder={__('Add title', 'web-stories')}
         />
       </FormSection>
       <FormSection>
-        <Headline
-          as="label"
-          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL}
-          htmlFor="story-description"
-        >
-          {__('Story Description', 'web-stories')}
-        </Headline>
+        <FormHeadline
+          htmlFor={INPUT_KEYS.EXCERPT}
+          copy={__('Story Description', 'web-stories')}
+        />
         <_TextArea
-          name="story-description"
-          id="story-description"
+          name={INPUT_KEYS.EXCERPT}
+          id="story-excerpt"
           showCount
           maxLength={100}
-          value=""
+          value={inputValues[INPUT_KEYS.EXCERPT]}
           placeholder={__('Write an excerpt', 'web-stories')}
           hint={__(
-            'Stories with excerpts tend to do better on search and have a wider reach',
+            'Stories with a description tend to do better on search and have a wider reach',
             'web-stories'
           )}
+          onChange={handleUpdateStoryInfo}
         />
       </FormSection>
     </>
@@ -77,3 +90,13 @@ const MandatoryStoryInfo = () => {
 };
 
 export default MandatoryStoryInfo;
+
+MandatoryStoryInfo.propTypes = {
+  handleUpdateStoryInfo: PropTypes.func,
+  inputValues: PropTypes.shape({
+    // todo pull this out and reuse
+    excerpt: PropTypes.string,
+    title: PropTypes.string,
+    slug: PropTypes.string,
+  }),
+};

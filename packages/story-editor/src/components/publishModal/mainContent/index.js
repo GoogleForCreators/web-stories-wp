@@ -16,6 +16,7 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import {
   Button,
   BUTTON_SIZES,
@@ -63,14 +64,17 @@ const Footer = styled.div`
   grid-area: footer;
 `;
 
-const MainContent = () => {
+const MainContent = ({ handleUpdateStoryInfo, inputValues }) => {
   return (
     <Main>
       <_StoryPreview>
         <StoryPreview />
       </_StoryPreview>
       <_MandatoryStoryInfo>
-        <MandatoryStoryInfo />
+        <MandatoryStoryInfo
+          handleUpdateStoryInfo={handleUpdateStoryInfo}
+          inputValues={inputValues}
+        />
       </_MandatoryStoryInfo>
       <PanelContainer>
         <Text>{__('Panels go here', 'web-stories')}</Text>
@@ -85,3 +89,12 @@ const MainContent = () => {
 };
 
 export default MainContent;
+
+MainContent.propTypes = {
+  handleUpdateStoryInfo: PropTypes.func,
+  inputValues: PropTypes.shape({
+    // todo pull this out and reuse
+    excerpt: PropTypes.string,
+    title: PropTypes.string,
+  }),
+};
