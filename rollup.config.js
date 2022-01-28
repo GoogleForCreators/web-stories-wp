@@ -28,6 +28,7 @@ import filesize from 'rollup-plugin-filesize';
 import css from 'rollup-plugin-import-css';
 import url from '@rollup/plugin-url';
 import json from '@rollup/plugin-json';
+import dynamicImportVars from '@rollup/plugin-dynamic-import-vars';
 import license from 'rollup-plugin-license';
 import del from 'rollup-plugin-delete';
 import workspacesRun from 'workspaces-run';
@@ -55,6 +56,7 @@ const plugins = [
   json({
     compact: true,
   }),
+  dynamicImportVars(),
   css(),
   terser(),
   license({
