@@ -20,13 +20,14 @@
 import PropTypes from 'prop-types';
 import { useRef, useEffect, useState } from '@googleforcreators/react';
 import { useUnits } from '@googleforcreators/units';
+import { useTransform } from '@googleforcreators/transform';
+
 /**
  * Internal dependencies
  */
 import Moveable from '../../moveable';
 import { useStory, useCanvas, useLayout } from '../../../app';
 import objectWithout from '../../../utils/objectWithout';
-import { useTransform } from '../../transform';
 import { getDefinitionForType } from '../../../elements';
 import isTargetOutOfContainer from '../../../utils/isTargetOutOfContainer';
 import useSnapping from '../utils/useSnapping';

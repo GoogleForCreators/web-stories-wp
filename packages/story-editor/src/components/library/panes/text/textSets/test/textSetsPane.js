@@ -19,12 +19,12 @@
  */
 import { useRef } from '@googleforcreators/react';
 import { screen } from '@testing-library/react';
+import { TransformContext } from '@googleforcreators/transform';
 
 /**
  * Internal dependencies
  */
 import LibraryContext from '../../../../context';
-import TransformContext from '../../../../../transform/context';
 import FontContext from '../../../../../../app/font/context';
 import APIContext from '../../../../../../app/api/context';
 import ConfigContext from '../../../../../../app/config/context';
