@@ -1578,6 +1578,35 @@ describe('Page output', () => {
 
       await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
     });
+
+    // TODO(#10338): Resolve question about poster requirement.
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip('should produce valid output with none looping background audio', async () => {
+      const props = {
+        id: '123',
+        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          backgroundAudio: {
+            resource: {
+              src: 'https://example.com/audio.mp3',
+              id: 123,
+              mimeType: 'audio/mpeg',
+              length: 100,
+              lengthFormatted: '1:40',
+            },
+            tracks: [],
+            loop: false,
+          },
+          animations: [],
+          elements: [],
+        },
+        autoAdvance: true,
+        defaultPageDuration: 11,
+      };
+
+      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+    });
   });
 });
 
