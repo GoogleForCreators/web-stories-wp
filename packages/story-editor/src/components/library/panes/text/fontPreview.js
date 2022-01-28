@@ -24,6 +24,7 @@ import {
   useLayoutEffect,
   useCallback,
   useRef,
+  useState,
 } from '@googleforcreators/react';
 import { Text, useKeyDownEffect } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
@@ -39,6 +40,7 @@ import { focusStyle } from '../../../panels/shared';
 import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
 import useLibrary from '../../useLibrary';
 import LibraryMoveable from '../shared/libraryMoveable';
+import AddIcon from '../shared/addIcon';
 
 const Preview = styled.button`
   position: relative;
@@ -191,9 +193,20 @@ function FontPreview({ title, element, insertPreset, getPosition }) {
     [onClick]
   );
 
+  const [active, setActive] = useState(false);
+  const makeActive = useCallback(() => setActive(true), []);
+  const makeInactive = useCallback(() => setActive(false), []);
+
   return (
-    <Preview ref={buttonRef}>
+    <Preview
+      ref={buttonRef}
+      onPointerEnter={makeActive}
+      onFocus={makeActive}
+      onPointerLeave={makeInactive}
+      onBlur={makeInactive}
+    >
       {getTextDisplay()}
+      {active && <AddIcon />}
       <LibraryMoveable
         cloneElement={DragContainer}
         cloneProps={{

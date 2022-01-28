@@ -20,7 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { trackEvent } from '@googleforcreators/tracking';
-import { useCallback, forwardRef } from '@googleforcreators/react';
+import { useCallback, forwardRef, useState } from '@googleforcreators/react';
 import { dataToEditorX, dataToEditorY } from '@googleforcreators/units';
 import {
   BUTTON_TRANSITION_TIMING,
@@ -36,6 +36,7 @@ import useLibrary from '../../../useLibrary';
 import LibraryMoveable from '../../shared/libraryMoveable';
 import { focusStyle } from '../../../../panels/shared';
 import { useConfig } from '../../../../../app';
+import AddIcon from '../../shared/addIcon';
 import TextSetElements from './textSetElements';
 
 const TextSetItem = styled.button`
@@ -113,6 +114,10 @@ function TextSet({ id, elements, translateY, translateX, ...rest }, ref) {
     [onClick]
   );
 
+  const [active, setActive] = useState(false);
+  const makeActive = useCallback(() => setActive(true), []);
+  const makeInactive = useCallback(() => setActive(false), []);
+
   const renderImages = process.env.DISABLE_OPTIMIZED_RENDERING !== 'true';
 
   const { textSetHeight, textSetWidth } = elements[0];
@@ -124,6 +129,10 @@ function TextSet({ id, elements, translateY, translateX, ...rest }, ref) {
       translateY={translateY}
       ref={ref}
       onKeyUp={handleKeyboardPageClick}
+      onPointerEnter={makeActive}
+      onFocus={makeActive}
+      onPointerLeave={makeInactive}
+      onBlur={makeInactive}
       {...rest}
     >
       {renderImages ? (
@@ -136,6 +145,7 @@ function TextSet({ id, elements, translateY, translateX, ...rest }, ref) {
       ) : (
         <TextSetElements isForDisplay elements={elements} />
       )}
+      {active && <AddIcon />}
       <LibraryMoveable
         type={'textSet'}
         elements={elements}
