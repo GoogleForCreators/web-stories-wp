@@ -40,7 +40,7 @@ import { focusStyle } from '../../../panels/shared';
 import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
 import useLibrary from '../../useLibrary';
 import LibraryMoveable from '../shared/libraryMoveable';
-import AddIcon from '../shared/addIcon';
+import InsertionOverlay from '../shared/insertionOverlay';
 
 const Preview = styled.button`
   position: relative;
@@ -206,7 +206,7 @@ function FontPreview({ title, element, insertPreset, getPosition }) {
       onBlur={makeInactive}
     >
       {getTextDisplay()}
-      {active && <AddIcon />}
+      {active && <InsertionOverlay />}
       <LibraryMoveable
         cloneElement={DragContainer}
         cloneProps={{

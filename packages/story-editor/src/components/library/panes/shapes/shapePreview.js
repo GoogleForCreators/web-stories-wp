@@ -41,7 +41,7 @@ import useLibrary from '../../useLibrary';
 import LibraryMoveable from '../shared/libraryMoveable';
 import { focusStyle } from '../../../panels/shared';
 import { MaskTypes } from '../../../../masks/constants';
-import AddIcon from '../shared/addIcon';
+import InsertionOverlay from '../shared/insertionOverlay';
 
 // By default, the element should be 33% of the page.
 export const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 3;
@@ -197,7 +197,7 @@ function ShapePreview({ mask, isPreview, index }) {
           <ShapePreviewSizer />
           {getSVG()}
         </ShapePreviewContainer>
-        {active && <AddIcon />}
+        {active && <InsertionOverlay />}
       </AspectInner>
       <LibraryMoveable
         type={'shape'}

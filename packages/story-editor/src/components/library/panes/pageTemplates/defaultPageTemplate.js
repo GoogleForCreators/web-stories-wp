@@ -27,9 +27,11 @@ import {
   THEME_CONSTANTS,
   Text,
 } from '@googleforcreators/design-system';
+
 /**
  * Internal dependencies
  */
+import InsertionOverlay from '../shared/insertionOverlay';
 import { PAGE_TEMPLATE_TYPES } from './constants';
 
 const PageTemplateWrapper = styled.div``;

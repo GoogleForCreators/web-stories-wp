@@ -36,7 +36,7 @@ import useLibrary from '../../../useLibrary';
 import LibraryMoveable from '../../shared/libraryMoveable';
 import { focusStyle } from '../../../../panels/shared';
 import { useConfig } from '../../../../../app';
-import AddIcon from '../../shared/addIcon';
+import InsertionOverlay from '../../shared/insertionOverlay';
 import TextSetElements from './textSetElements';
 
 const TextSetItem = styled.button`
@@ -145,7 +145,7 @@ function TextSet({ id, elements, translateY, translateX, ...rest }, ref) {
       ) : (
         <TextSetElements isForDisplay elements={elements} />
       )}
-      {active && <AddIcon />}
+      {active && <InsertionOverlay />}
       <LibraryMoveable
         type={'textSet'}
         elements={elements}

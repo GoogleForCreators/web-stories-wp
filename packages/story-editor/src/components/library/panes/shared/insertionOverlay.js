@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import { Icons } from '@googleforcreators/design-system';
+import { rgba } from 'polished';
 
 const IconContainer = styled.div`
   height: 32px;
@@ -26,15 +27,24 @@ const IconContainer = styled.div`
   position: absolute;
   top: calc(50% - 16px);
   left: calc(50% - 16px);
-  color: ${({ theme }) => 'none' /*theme.colors.fg.primary*/};
+  color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
-function AddIcon() {
+const Wrapper = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: ${({ theme }) => rgba(theme.colors.standard.black, 0.5)};
+`;
+
+function InsertionOverlay() {
   return (
-    <IconContainer>
-      <Icons.PlusFilled />
-    </IconContainer>
+    <Wrapper>
+      <IconContainer>
+        <Icons.PlusFilled />
+      </IconContainer>
+    </Wrapper>
   );
 }
 
-export default AddIcon;
+export default InsertionOverlay;
