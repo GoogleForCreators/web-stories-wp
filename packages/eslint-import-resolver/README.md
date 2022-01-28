@@ -1,5 +1,21 @@
-# Jest Parallel Sequencer
+# eslint-import-resolver
 
-Simple custom [test sequencer](https://jestjs.io/docs/configuration#testsequencer-string) for Jest to allow for sharding on CI since Jest [does not support this out of the box](https://github.com/facebook/jest/issues/11252).
+Custom resolver for [eslint-plugin-import](https://www.npmjs.com/package/eslint-plugin-import) to resolve packages locally in a monorepo.
 
-Requires the `SHARD` environment variable to be set.
+Example usage:
+
+```json
+{
+  "settings": {
+    "import/resolver": {
+      "@web-stories-wp/eslint-import-resolver": {
+        "mapping": {
+          "^@foo\\/(.*)": "./packages/$1/src/",
+        }
+      }
+    }
+  }
+}
+```
+
+With this config, a package named `@foo/bar` will be looked up in `packages/bar/src`.
