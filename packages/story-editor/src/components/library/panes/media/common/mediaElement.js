@@ -255,6 +255,8 @@ function Element({
             onMenuOpen={onMenuOpen}
             onMenuCancelled={onMenuCancelled}
             onMenuSelected={onMenuSelected}
+            onInsert={onInsert}
+            width={width}
           />
         )}
       </InnerContainer>

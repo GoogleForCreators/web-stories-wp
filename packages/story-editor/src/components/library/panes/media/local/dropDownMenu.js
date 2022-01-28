@@ -35,11 +35,14 @@ import {
   PLACEMENT,
   Popup,
 } from '@googleforcreators/design-system';
+import { getSmallestUrlForWidth } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
  */
 import { useLocalMedia } from '../../../../../app';
+import getElementProperties from '../../../../canvas/utils/getElementProperties';
+import useStory from '../../../../../app/story/useStory';
 import DeleteDialog from './deleteDialog';
 import MediaEditDialog from './mediaEditDialog';
 
@@ -83,24 +86,37 @@ const menuStylesOverride = css`
  * @param {Object} props.resource Selected media element's resource object.
  * @param {boolean} props.display Whether the more icon should be displayed.
  * @param {boolean} props.isMenuOpen If the dropdown menu is open.
+ * @param {Function} props.onInsert Callback for inserting media.
  * @param {Function} props.onMenuOpen Callback for when menu is opened.
  * @param {Function} props.onMenuCancelled Callback for when menu is closed without any selections.
  * @param {Function} props.onMenuSelected Callback for when menu is closed and an option selected.
+ * @param {number} props.width Media width.
  * @return {null|*} Element or null if should not display the More icon.
  */
 function DropDownMenu({
   resource,
   display,
   isMenuOpen,
+  onInsert,
   onMenuOpen,
   onMenuCancelled,
   onMenuSelected,
+  width,
 }) {
+  const { type, poster } = resource;
+  const insertLabel = ['image', 'gif'].includes(type)
+    ? __('Insert image', 'web-stories')
+    : __('Insert video', 'web-stories');
   const options = [
     {
       group: [
-        { label: __('Edit', 'web-stories'), value: 'edit' },
-        { label: __('Delete', 'web-stories'), value: 'delete' },
+        { label: insertLabel, value: 'insert' },
+        {
+          label: __('Add as background', 'web-stories'),
+          value: 'addBackground',
+        },
+        { label: __('Edit meta data', 'web-stories'), value: 'edit' },
+        { label: __('Delete from library', 'web-stories'), value: 'delete' },
       ],
     },
   ];
@@ -109,6 +125,10 @@ function DropDownMenu({
   const [showEditDialog, setShowEditDialog] = useState(false);
   const moreButtonRef = useRef();
 
+  const { currentBackgroundId, combineElements } = useStory((state) => ({
+    currentBackgroundId: state.state.currentPage?.elements?.[0].id,
+    combineElements: state.actions.combineElements,
+  }));
   const { canTranscodeResource } = useLocalMedia(
     ({ state: { canTranscodeResource } }) => ({
       canTranscodeResource,
@@ -117,12 +137,28 @@ function DropDownMenu({
 
   const handleCurrentValue = (evt, value) => {
     onMenuSelected();
+
+    const thumbnailUrl = poster
+      ? poster
+      : getSmallestUrlForWidth(width, resource);
+    const newElement = getElementProperties(resource.type, {
+      resource,
+    });
     switch (value) {
       case 'edit':
         setShowEditDialog(true);
         break;
       case 'delete':
         setShowDeleteDialog(true);
+        break;
+      case 'insert':
+        onInsert(resource, thumbnailUrl);
+        break;
+      case 'addBackground':
+        combineElements({
+          firstElement: newElement,
+          secondId: currentBackgroundId,
+        });
         break;
       default:
         break;
@@ -203,9 +239,11 @@ DropDownMenu.propTypes = {
   resource: PropTypes.object.isRequired,
   display: PropTypes.bool.isRequired,
   isMenuOpen: PropTypes.bool.isRequired,
+  onInsert: PropTypes.func.isRequired,
   onMenuOpen: PropTypes.func.isRequired,
   onMenuCancelled: PropTypes.func.isRequired,
   onMenuSelected: PropTypes.func.isRequired,
+  width: PropTypes.number.isRequired,
 };
 
 export default DropDownMenu;
