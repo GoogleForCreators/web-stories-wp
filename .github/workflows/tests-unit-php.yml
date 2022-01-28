@@ -115,15 +115,24 @@ jobs:
         with:
           composer-options: '--prefer-dist --no-progress --no-interaction --no-scripts'
 
-      # Installs PHPUnit 9.5+ for tests against trunk and PHPUnit 7.5.x for older versions,
-      # because WordPress 5.8 and below don't support newer PHPUnit versions.
-      # PHPUnit 7.5 does support PHP 7.0 though, so we don't run an update there.
+      # Installs a different PHPUnit version depending on the WP/PHP version combo we're testing against.
+      #
+      # | WP  / PHP | PHPUnit |
+      # |-----------|---------|
+      # | 5.5 / 7.2 | 7       |
+      # | 5.9 / 7.2 | 8       |
+      # | 5.9 / 7.4 | 9       |
+      # | *   / 8   | 9       |
+      #
+      # See https://make.wordpress.org/core/handbook/references/phpunit-compatibility-and-wordpress-versions/
       - name: Update PHPUnit
         run: |
-          if [[ $WP_VERSION == "trunk" ]]; then
-            composer update --ignore-platform-reqs --no-interaction --no-scripts yoast/phpunit-polyfills --with-dependencies
-          elif [[ $PHP_VERSION != "7.0" ]]; then
+          if [[ $WP_VERSION == "5.5" && $PHP_VERSION == "7.2" ]]; then
             composer require --ignore-platform-reqs --no-interaction --no-scripts phpunit/phpunit:^7.5 --with-dependencies
+          elif [[ $PHP_VERSION == "7.2" ]]; then
+            composer require --ignore-platform-reqs --no-interaction --no-scripts phpunit/phpunit:^8.5 --with-dependencies
+          elif [[ $WP_VERSION == "latest" || $WP_VERSION == "trunk" || $PHP_VERSION == "7.4" ]]; then
+            composer update --ignore-platform-reqs --no-interaction --no-scripts yoast/phpunit-polyfills --with-dependencies
           fi
         env:
           WP_VERSION: ${{ matrix.wp }}
