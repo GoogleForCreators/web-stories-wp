@@ -20,10 +20,6 @@
     "node": ">= 16",
     "npm": ">= 7.3"
   },
-  "type": "module","exports": {
-    ".": "./src/index.js",
-    "./": "./src"
-  },
   "main": "dist/index.js",
   "module": "dist-module/index.js",
   "source": "src/index.js",
