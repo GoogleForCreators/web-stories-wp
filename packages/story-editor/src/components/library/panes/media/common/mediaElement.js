@@ -247,18 +247,17 @@ function Element({
           isCurrentResourceUploading(resourceId)) && (
           <LoadingBar loadingMessage={__('Uploading media…', 'web-stories')} />
         )}
-        {providerType === 'local' && canEditMedia && (
-          <DropDownMenu
-            resource={resource}
-            display={active}
-            isMenuOpen={isMenuOpen}
-            onMenuOpen={onMenuOpen}
-            onMenuCancelled={onMenuCancelled}
-            onMenuSelected={onMenuSelected}
-            onInsert={onInsert}
-            width={width}
-          />
-        )}
+        <DropDownMenu
+          resource={resource}
+          display={active}
+          isMenuOpen={isMenuOpen}
+          onMenuOpen={onMenuOpen}
+          onMenuCancelled={onMenuCancelled}
+          onMenuSelected={onMenuSelected}
+          onInsert={onInsert}
+          width={width}
+          displayEditOptions={providerType === 'local' && canEditMedia}
+        />
       </InnerContainer>
     </Container>
   );

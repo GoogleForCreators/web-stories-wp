@@ -37,6 +37,7 @@ import {
 import LibraryMoveable from '../../shared/libraryMoveable';
 import { useDropTargets } from '../../../../dropTargets';
 import { ContentType } from '../../../../../app/media';
+import InsertionOverlay from '../../shared/insertionOverlay';
 
 const styledTiles = css`
   width: 100%;
@@ -257,6 +258,7 @@ function InnerElement({
   return (
     <>
       {media}
+      {active && <InsertionOverlay showIcon={false} />}
       <LibraryMoveable
         active={active}
         handleDrag={dragHandler}

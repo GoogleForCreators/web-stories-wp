@@ -37,12 +37,14 @@ const Wrapper = styled.div`
   background-color: ${({ theme }) => rgba(theme.colors.standard.black, 0.5)};
 `;
 
-function InsertionOverlay() {
+function InsertionOverlay({ showIcon = true }) {
   return (
     <Wrapper>
-      <IconContainer>
-        <Icons.PlusFilled />
-      </IconContainer>
+      {showIcon && (
+        <IconContainer>
+          <Icons.PlusFilled />
+        </IconContainer>
+      )}
     </Wrapper>
   );
 }

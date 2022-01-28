@@ -102,25 +102,8 @@ function DropDownMenu({
   onMenuCancelled,
   onMenuSelected,
   width,
+  displayEditOptions,
 }) {
-  const { type, poster } = resource;
-  const insertLabel = ['image', 'gif'].includes(type)
-    ? __('Insert image', 'web-stories')
-    : __('Insert video', 'web-stories');
-  const options = [
-    {
-      group: [
-        { label: insertLabel, value: 'insert' },
-        {
-          label: __('Add as background', 'web-stories'),
-          value: 'addBackground',
-        },
-        { label: __('Edit meta data', 'web-stories'), value: 'edit' },
-        { label: __('Delete from library', 'web-stories'), value: 'delete' },
-      ],
-    },
-  ];
-
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [showEditDialog, setShowEditDialog] = useState(false);
   const moreButtonRef = useRef();
@@ -134,6 +117,28 @@ function DropDownMenu({
       canTranscodeResource,
     })
   );
+
+  const { type, poster } = resource;
+  const insertLabel = ['image', 'gif'].includes(type)
+    ? __('Insert image', 'web-stories')
+    : __('Insert video', 'web-stories');
+  const editOptions = [
+    { label: __('Edit meta data', 'web-stories'), value: 'edit' },
+    { label: __('Delete from library', 'web-stories'), value: 'delete' },
+  ];
+  // Don't show edit options if resource is being processed.
+  const options = [
+    {
+      group: [
+        { label: insertLabel, value: 'insert' },
+        {
+          label: __('Add as background', 'web-stories'),
+          value: 'addBackground',
+        },
+        ...(displayEditOptions && canTranscodeResource(resource) ? editOptions : []),
+      ],
+    },
+  ];
 
   const handleCurrentValue = (evt, value) => {
     onMenuSelected();
@@ -182,56 +187,54 @@ function DropDownMenu({
 
   // Keep icon and menu displayed if menu is open (even if user's mouse leaves the area).
   return (
-    canTranscodeResource(resource) && ( // Don't show menu if resource is being processed.
-      <MenuContainer>
-        {(display || isMenuOpen) && (
-          <>
-            <AddButton
-              ref={moreButtonRef}
-              onClick={onMenuOpen}
-              aria-label={__('More', 'web-stories')}
-              aria-pressed={isMenuOpen}
-              aria-haspopup
-              aria-expanded={isMenuOpen}
-              aria-owns={isMenuOpen ? listId : null}
-              id={buttonId}
-            >
-              <IconContainer>
-                <Icons.PlusFilled />
-              </IconContainer>
-            </AddButton>
-            <Popup
-              anchor={moreButtonRef}
-              placement={PLACEMENT.BOTTOM_START}
-              isOpen={isMenuOpen}
-              width={160}
-            >
-              <DropDownContainer>
-                <Menu
-                  parentId={buttonId}
-                  listId={listId}
-                  onMenuItemClick={handleCurrentValue}
-                  options={options}
-                  onDismissMenu={onMenuCancelled}
-                  hasMenuRole
-                  menuStylesOverride={menuStylesOverride}
-                />
-              </DropDownContainer>
-            </Popup>
-          </>
-        )}
-        {showDeleteDialog && (
-          <DeleteDialog
-            mediaId={resource.id}
-            type={resource.type}
-            onClose={onDeleteDialogClose}
-          />
-        )}
-        {showEditDialog && (
-          <MediaEditDialog resource={resource} onClose={onEditDialogClose} />
-        )}
-      </MenuContainer>
-    )
+    <MenuContainer>
+      {(display || isMenuOpen) && (
+        <>
+          <AddButton
+            ref={moreButtonRef}
+            onClick={onMenuOpen}
+            aria-label={__('More', 'web-stories')}
+            aria-pressed={isMenuOpen}
+            aria-haspopup
+            aria-expanded={isMenuOpen}
+            aria-owns={isMenuOpen ? listId : null}
+            id={buttonId}
+          >
+            <IconContainer>
+              <Icons.PlusFilled />
+            </IconContainer>
+          </AddButton>
+          <Popup
+            anchor={moreButtonRef}
+            placement={PLACEMENT.BOTTOM_START}
+            isOpen={isMenuOpen}
+            width={160}
+          >
+            <DropDownContainer>
+              <Menu
+                parentId={buttonId}
+                listId={listId}
+                onMenuItemClick={handleCurrentValue}
+                options={options}
+                onDismissMenu={onMenuCancelled}
+                hasMenuRole
+                menuStylesOverride={menuStylesOverride}
+              />
+            </DropDownContainer>
+          </Popup>
+        </>
+      )}
+      {showDeleteDialog && (
+        <DeleteDialog
+          mediaId={resource.id}
+          type={resource.type}
+          onClose={onDeleteDialogClose}
+        />
+      )}
+      {showEditDialog && (
+        <MediaEditDialog resource={resource} onClose={onEditDialogClose} />
+      )}
+    </MenuContainer>
   );
 }
 
@@ -244,6 +247,7 @@ DropDownMenu.propTypes = {
   onMenuCancelled: PropTypes.func.isRequired,
   onMenuSelected: PropTypes.func.isRequired,
   width: PropTypes.number.isRequired,
+  displayEditOptions: PropTypes.bool.isRequired,
 };
 
 export default DropDownMenu;
