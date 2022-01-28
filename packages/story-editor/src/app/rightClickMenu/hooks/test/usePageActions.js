@@ -108,7 +108,7 @@ describe('usePageActions', () => {
       });
       expect(mockAddPageAt).toHaveBeenCalledWith({
         page: { id: 'duplicated-page', elements: [ELEMENT] },
-        position: 9,
+        position: null,
       });
     });
   });
