@@ -446,7 +446,7 @@
         "__mocks__/**/*.js",
         "bin/**/*.js",
         "babel.config.cjs",
-        "rollup.config.migrate.cjs",
+        "rollup.config.js",
         "jest-puppeteer.config.cjs",
         "karma-*.config.cjs",
         "webpack.*.cjs",
