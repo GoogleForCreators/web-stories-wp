@@ -122,22 +122,18 @@ async function config(cliArgs) {
       ]),
     ];
 
-    plugins.unshift(
-      del({
-        targets: [
-          dirname(resolvePath(pkg.dir, pkg.config.module)),
-          dirname(resolvePath(pkg.dir, pkg.config.main)),
-        ],
-      })
-    );
-
     entries.push({
       input,
       output: {
         dir: dirname(resolvePath(pkg.dir, pkg.config.module)),
         format: 'es',
       },
-      plugins,
+      plugins: [
+        ...plugins,
+        del({
+          targets: [dirname(resolvePath(pkg.dir, pkg.config.module))],
+        }),
+      ],
       external,
     });
 
@@ -148,7 +144,12 @@ async function config(cliArgs) {
         format: 'cjs',
         exports: 'auto',
       },
-      plugins,
+      plugins: [
+        ...plugins,
+        del({
+          targets: [dirname(resolvePath(pkg.dir, pkg.config.main))],
+        }),
+      ],
       external,
     });
   }
