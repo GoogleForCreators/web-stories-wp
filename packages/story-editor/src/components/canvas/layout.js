@@ -32,13 +32,13 @@ import { FULLBLEED_RATIO } from '@googleforcreators/units';
 import {
   THEME_CONSTANTS,
   themeHelpers,
+  pointerEventsCss,
 } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 import { HEADER_HEIGHT } from '../../constants';
-import pointerEventsCss from '../../utils/pointerEventsCss';
 import { useLayout } from '../../app';
 import useFooterHeight from '../footer/useFooterHeight';
 import { FOOTER_BOTTOM_MARGIN } from '../footer/constants';

@@ -19,11 +19,11 @@
  */
 import styled from 'styled-components';
 import { forwardRef, useContext, createPortal } from '@googleforcreators/react';
+import { pointerEventsCss } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
-import pointerEventsCss from '../utils/pointerEventsCss';
 import Context from './context';
 
 const Wrapper = styled.div`
