@@ -20,10 +20,6 @@
     "node": ">= 16",
     "npm": ">= 7.3"
   },
-  "exports": {
-    ".": "./src/index.js",
-    "./": "./src"
-  },
   "main": "./src/index.js",
   "dependencies": {
     "@ampproject/toolbox-optimizer": "^2.8.7",

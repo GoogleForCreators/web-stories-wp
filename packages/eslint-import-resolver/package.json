@@ -19,9 +19,6 @@
     "node": ">= 16",
     "npm": ">= 7.3"
   },
-  "exports": {
-    "default": "./src/index.cjs"
-  },
   "main": "./src/index.cjs",
   "dependencies": {
     "eslint-import-resolver-node": "^0.3.6"
