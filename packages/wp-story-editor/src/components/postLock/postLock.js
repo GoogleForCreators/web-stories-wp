@@ -58,10 +58,7 @@ function PostLock() {
   const { previewLink, lockUser } = useStory(
     ({
       state: {
-        story: {
-          previewLink,
-          extras: { lockUser = {} } = {},
-        },
+        story: { previewLink, extras: { lockUser = {} } = {} },
       },
     }) => ({
       previewLink,
