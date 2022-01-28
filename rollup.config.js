@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-/* global __dirname */
-
 /**
  * External dependencies
  */
 import { resolve as resolvePath, dirname } from 'path';
+import { fileURLToPath } from 'url';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import { babel } from '@rollup/plugin-babel';
@@ -32,6 +31,8 @@ import json from 'rollup-plugin-json';
 import license from 'rollup-plugin-license';
 import del from 'rollup-plugin-delete';
 import workspacesRun from 'workspaces-run';
+
+const __dirname = fileURLToPath(dirname(import.meta.url));
 
 const plugins = [
   resolve({
@@ -72,7 +73,23 @@ const plugins = [
   filesize(),
 ];
 
-export default (async () => {
+/**
+ * @typedef {Object} CustomInputOptions
+ * @property {string} configPackages Comma-separated list of package names to include.
+ * @typedef {import('rollup').RollupOptions & CustomInputOptions} CustomInputOptions
+ */
+
+/**
+ * Main rollup configuration for building npm packages.
+ *
+ * To build only a subset of all public packages, run:
+ *
+ * `npx rollup --configPackages=i18n,fonts`
+ *
+ * @param {CustomInputOptions} cliArgs CLI arguments.
+ * @return {import('rollup').RollupOptions} Rollup configuration.
+ */
+async function config(cliArgs) {
   const packages = [];
   const entries = [];
 
@@ -83,7 +100,16 @@ export default (async () => {
     }
   });
 
+  const allPackageNames = packages.map(({ name }) => name.split('/')[1]);
+  const packagesToBuild = cliArgs?.configPackages
+    ? cliArgs.configPackages.split(',')
+    : allPackageNames;
+
   for (const pkg of packages) {
+    if (!packagesToBuild.includes(pkg.name.split('/')[1])) {
+      continue;
+    }
+
     const input = resolvePath(pkg.dir, pkg.config.source);
 
     const external = [
@@ -128,4 +154,6 @@ export default (async () => {
   }
 
   return entries;
-})();
+}
+
+export default config;
