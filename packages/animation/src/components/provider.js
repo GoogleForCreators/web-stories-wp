@@ -159,6 +159,11 @@ function Provider({
     elementsInstanceMapRef.current = elementsInstanceMap;
     animationPartsMapRef.current = _animationPartsMap;
 
+    // console.log(
+    //   'Animation Entry Update: ',
+    //   [..._animationPartsMap.values()]?.[0]?.[0].id
+    // );
+
     return _animationPartsMap;
   }, [animationsInstanceMap, elementsInstanceMap]);
 

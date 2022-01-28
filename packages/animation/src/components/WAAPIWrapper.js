@@ -58,12 +58,13 @@ function WAAPIAnimationWrapper({
 WAAPIAnimationWrapper.propTypes = WAAPIAnimationProps;
 
 function WAAPIWrapper({ children, target }) {
-  const { hoistWAAPIAnimation, AnimationParts } = useStoryAnimationContext(
-    ({ actions }) => ({
-      hoistWAAPIAnimation: actions.hoistWAAPIAnimation,
-      AnimationParts: actions.getAnimationParts(target),
-    })
+  const hoistWAAPIAnimation = useStoryAnimationContext(
+    ({ actions }) => actions.hoistWAAPIAnimation
   );
+  const AnimationParts = useStoryAnimationContext(({ actions }) =>
+    actions.getAnimationParts(target)
+  );
+
   const WAAPIAnimationParts = AnimationParts?.map(
     (anim) => anim.WAAPIAnimation
   );

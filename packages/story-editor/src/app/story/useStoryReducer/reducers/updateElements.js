@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { shallowEqual } from '@googleforcreators/react';
 import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
 /**
  * Internal dependencies
@@ -90,6 +91,8 @@ function updateElements(
           propertiesOrUpdater
         );
 
+        const newElement = shallowEqual(elem, element) ? element : elem;
+
         const animLookup = animation
           ? { [animation.id]: { ...animation, targets: [elem.id] } }
           : {};
@@ -99,7 +102,7 @@ function updateElements(
             ...animationLookup,
             ...animLookup,
           },
-          elements: [...elements, elem],
+          elements: [...elements, newElement],
         };
       },
       {
