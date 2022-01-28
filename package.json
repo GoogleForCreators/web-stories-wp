@@ -76,6 +76,7 @@
     "@web-stories-wp/eslint-import-resolver": "*",
     "@web-stories-wp/jest-amp": "*",
     "@web-stories-wp/jest-parallel-sequencer": "*",
+    "@web-stories-wp/jest-resolver": "*",
     "@web-stories-wp/karma-failed-tests-reporter": "*",
     "@web-stories-wp/karma-puppeteer-client": "*",
     "@web-stories-wp/karma-puppeteer-launcher": "*",

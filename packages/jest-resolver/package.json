@@ -1,0 +1,28 @@
+{
+  "name": "@web-stories-wp/jest-resolver",
+  "description": "Custom Jest resolver for monorepos",
+  "private": true,
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "jest"
+  ],
+  "homepage": "https://github.com/googleforcreators/web-stories-wp/",
+  "repository": "git+https://github.com/GoogleForCreators/web-stories-wp.git",
+  "bugs": {
+    "url": "https://github.com/googleforcreators/web-stories-wp/issues"
+  },
+  "engines": {
+    "node": ">= 16",
+    "npm": ">= 7.3"
+  },
+  "exports": {
+    "default": "./src/index.cjs"
+  },
+  "main": "./src/index.cjs",
+  "dependencies": {
+  }
+}
