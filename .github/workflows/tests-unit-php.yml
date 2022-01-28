@@ -49,27 +49,26 @@ jobs:
         ports:
           - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-    continue-on-error: ${{ matrix.experimental == true }}
+    continue-on-error: ${{ matrix.experimental }}
     strategy:
       matrix:
-        php: ['7.0', '8.0']
-
-        # Using a branch instead instead of 'latest' or a specific version ensures we
-        # get the latest test utils from that branch that includes the PHPUnit polyfills.
-        # TODO: Switch to 'latest' once a new minor release is out.
-        wp: ['5.8']
+        php: ['7.2', '8.0']
+        wp: ['latest']
         coverage: [false]
+        experimental: [false]
         include:
           # Using PHP 7.4 for code coverage run as 8.0 throws errors.
           - php: '7.4'
-            wp: '5.8'
+            wp: 'latest'
             coverage: true
+            experimental: false
 
-          - php: '7.0'
+          - php: '7.2'
             wp: '5.5'
+            experimental: false
 
           - php: '8.0'
-            wp: '5.8'
+            wp: 'latest'
             random: true
             experimental: true
 
