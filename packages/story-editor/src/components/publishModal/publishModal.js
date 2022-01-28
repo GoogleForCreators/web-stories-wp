@@ -20,12 +20,19 @@ import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import { Modal } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
-import { useCallback, useEffect, useState } from '@googleforcreators/react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
+import { useStory } from '../../app';
 import Header from './header';
 import MainContent from './mainContent';
+import { INPUT_KEYS, REQUIRED_INPUTS } from './constants';
 
 const Container = styled.div`
   position: relative;
@@ -38,7 +45,15 @@ const Container = styled.div`
 `;
 
 function PublishModal() {
+  const updateStory = useStory(({ actions }) => actions.updateStory);
+  const inputValues = useStory(({ state: { story } }) => ({
+    [INPUT_KEYS.EXCERPT]: story.excerpt,
+    [INPUT_KEYS.TITLE]: story.title || '',
+    [INPUT_KEYS.SLUG]: story.slug,
+  }));
+
   const [isOpen, setIsOpen] = useState(true);
+
   useEffect(() => {
     if (isOpen) {
       trackEvent('publish_modal');
@@ -48,6 +63,24 @@ function PublishModal() {
   const onClose = useCallback(() => {
     setIsOpen(false);
   }, []);
+
+  const handleUpdateStoryInfo = useCallback(
+    ({ target }) => {
+      const { value, name } = target;
+      updateStory({
+        properties: { [name]: value },
+      });
+    },
+    [updateStory]
+  );
+
+  const isAllRequiredInputsFulfilled = useMemo(
+    () =>
+      REQUIRED_INPUTS.every(
+        (requiredInput) => inputValues?.[requiredInput]?.length > 0
+      ),
+    [inputValues]
+  );
 
   return (
     <Modal
@@ -63,8 +96,14 @@ function PublishModal() {
       }}
     >
       <Container>
-        <Header />
-        <MainContent />
+        <Header
+          onClose={onClose}
+          isPublishEnabled={isAllRequiredInputsFulfilled}
+        />
+        <MainContent
+          inputValues={inputValues}
+          handleUpdateStoryInfo={handleUpdateStoryInfo}
+        />
       </Container>
     </Modal>
   );

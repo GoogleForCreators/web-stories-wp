@@ -16,6 +16,7 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import {
@@ -48,13 +49,14 @@ const PublishButton = styled(Button)`
   height: 32px;
 `;
 
-const Header = () => {
+const Header = ({ isPublishEnabled, onClose }) => {
   return (
     <_Header>
       <PublishButton
         variant={BUTTON_VARIANTS.SQUARE}
         size={BUTTON_SIZES.SMALL}
         type={BUTTON_TYPES.TERTIARY}
+        onClick={onClose}
       >
         <Icons.Cross />
       </PublishButton>
@@ -68,6 +70,7 @@ const Header = () => {
         variant={BUTTON_VARIANTS.RECTANGLE}
         size={BUTTON_SIZES.SMALL}
         type={BUTTON_TYPES.PRIMARY}
+        disabled={!isPublishEnabled}
       >
         {__('Publish', 'web-stories')}
       </Button>
@@ -76,3 +79,8 @@ const Header = () => {
 };
 
 export default Header;
+
+Header.propTypes = {
+  isPublishEnabled: PropTypes.boolean,
+  onClose: PropTypes.func.isRequired,
+};
