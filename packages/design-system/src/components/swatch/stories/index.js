@@ -18,7 +18,6 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { boolean } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
@@ -52,6 +51,14 @@ const Cell = styled.div`
 export default {
   title: 'DesignSystem/Components/Swatch',
   component: Swatch,
+  args: {
+    isDisabled: false,
+  },
+  parameters: {
+    controls: {
+      include: ['isDisabled'],
+    },
+  },
 };
 
 const DEMO_COLORS = [
@@ -158,7 +165,7 @@ const VARIANTS = [
   },
 ];
 
-function _default() {
+function _default(args) {
   return (
     <DarkThemeProvider>
       <Container>
@@ -190,11 +197,7 @@ function _default() {
             {VARIANTS.map(({ variant, Icon, ...props }) => (
               <Tooltip title={variant} key={variant}>
                 <Cell>
-                  <Swatch
-                    pattern={pattern}
-                    isDisabled={boolean('tooltip variant disable state', false)}
-                    {...props}
-                  >
+                  <Swatch pattern={pattern} {...args} {...props}>
                     {Icon && <Icon />}
                   </Swatch>
                 </Cell>

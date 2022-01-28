@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,20 +15,17 @@
  */
 
 /**
- * External dependencies
- */
-import { text } from '@storybook/addon-knobs';
-
-/**
  * Internal dependencies
  */
 import { EmptyContentMessage } from '..';
 
 export default {
   title: 'Dashboard/Views/Shared/EmptyContentMessage',
+  args: {
+    message: 'default content to display',
+  },
 };
 
-export const _default = () => {
-  const message = text('display message', 'default content to display');
-  return <EmptyContentMessage>{message}</EmptyContentMessage>;
+export const _default = (args) => {
+  return <EmptyContentMessage>{args.message}</EmptyContentMessage>;
 };

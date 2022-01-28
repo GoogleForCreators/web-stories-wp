@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-import { boolean, number, text } from '@storybook/addon-knobs';
 import styled, { css } from 'styled-components';
 import { useState, forwardRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
@@ -38,6 +37,13 @@ import { getOptions } from '../utils';
 
 export default {
   title: 'DesignSystem/Components/Menu',
+  args: {
+    dropDownHeight: 100,
+    hasMenuRole: true,
+    isRTL: false,
+    menuAriaLabel: 'default aria label',
+    parentId: 'id-menu-associates-with',
+  },
 };
 
 const STANDARD_WIDTH = 400;
@@ -88,7 +94,7 @@ const _effectChooserOptions = getOptions(effectChooserOptions);
 const _nestedDropDownOptions = getOptions(nestedDropDownOptions);
 const _reallyLongOptions = getOptions(reallyLongOptions);
 
-export const _default = () => {
+export const _default = (args) => {
   const [selectedValue, setSelectedValue] = useState(
     basicDropDownOptions[2].value
   );
@@ -96,10 +102,6 @@ export const _default = () => {
     <DarkThemeProvider>
       <Container>
         <Menu
-          dropDownHeight={number('dropDownHeight')}
-          emptyText={'No options available'}
-          hasMenuRole={boolean('hasMenuRole')}
-          isRTL={boolean('isRTL')}
           options={_basicDropDownOptions}
           listId={'list-id'}
           onMenuItemClick={(event, newValue) => {
@@ -110,24 +112,20 @@ export const _default = () => {
             action('onDismissMenu occured')(event);
           }}
           activeValue={selectedValue}
-          menuAriaLabel={text('menuAriaLabel', 'default aria label')}
-          parentId={text('parentId', 'id-menu-associates-with')}
+          {...args}
         />
       </Container>
     </DarkThemeProvider>
   );
 };
 
-export const LightTheme = () => {
+export const LightTheme = (args) => {
   const [selectedValue, setSelectedValue] = useState(null);
 
   return (
     <Container>
       <Menu
-        dropDownHeight={number('dropDownHeight')}
         emptyText={'No options available'}
-        hasMenuRole={boolean('hasMenuRole')}
-        isRTL={boolean('isRTL')}
         options={_basicDropDownOptions}
         listId={'list-id'}
         onMenuItemClick={(event, newValue) => {
@@ -138,23 +136,19 @@ export const LightTheme = () => {
           action('onDismissMenu occured')(event);
         }}
         activeValue={selectedValue}
-        menuAriaLabel={text('menuAriaLabel', 'default aria label')}
-        parentId={text('parentId', 'id-menu-associates-with')}
+        {...args}
       />
     </Container>
   );
 };
 
-export const NoOptionsMenu = () => {
+export const NoOptionsMenu = (args) => {
   const [selectedValue, setSelectedValue] = useState(null);
 
   return (
     <Container>
       <Menu
-        dropDownHeight={number('dropDownHeight')}
         emptyText={'No options available'}
-        hasMenuRole={boolean('hasMenuRole')}
-        isRTL={boolean('isRTL')}
         options={[]}
         listId={'list-id'}
         onMenuItemClick={(event, newValue) => {
@@ -165,23 +159,19 @@ export const NoOptionsMenu = () => {
           action('onDismissMenu occured')(event);
         }}
         activeValue={selectedValue}
-        menuAriaLabel={text('menuAriaLabel', 'default aria label')}
-        parentId={text('parentId', 'id-menu-associates-with')}
+        {...args}
       />
     </Container>
   );
 };
 
-export const ReallyLongLabelsMenu = () => {
+export const ReallyLongLabelsMenu = (args) => {
   const [selectedValue, setSelectedValue] = useState(null);
 
   return (
     <Container narrow>
       <Menu
-        dropDownHeight={number('dropDownHeight')}
         emptyText={'No options available'}
-        hasMenuRole={boolean('hasMenuRole')}
-        isRTL={boolean('isRTL')}
         options={_reallyLongOptions}
         listId={'list-id'}
         onMenuItemClick={(event, newValue) => {
@@ -192,23 +182,19 @@ export const ReallyLongLabelsMenu = () => {
           action('onDismissMenu occured')(event);
         }}
         activeValue={selectedValue}
-        menuAriaLabel={text('menuAriaLabel', 'default aria label')}
-        parentId={text('parentId', 'id-menu-associates-with')}
+        {...args}
       />
     </Container>
   );
 };
 
-export const SubMenus = () => {
+export const SubMenus = (args) => {
   const [selectedValue, setSelectedValue] = useState('dog-2');
 
   return (
     <Container>
       <Menu
-        dropDownHeight={number('dropDownHeight')}
         emptyText={'No options available'}
-        hasMenuRole={boolean('hasMenuRole')}
-        isRTL={boolean('isRTL')}
         options={_nestedDropDownOptions}
         listId={'list-id'}
         onMenuItemClick={(event, newValue) => {
@@ -219,8 +205,7 @@ export const SubMenus = () => {
           action('onDismissMenu occured')(event);
         }}
         activeValue={selectedValue}
-        menuAriaLabel={text('menuAriaLabel', 'default aria label')}
-        parentId={text('parentId', 'id-menu-associates-with')}
+        {...args}
       />
     </Container>
   );
@@ -243,16 +228,13 @@ RenderItemOverride.propTypes = {
   isSelected: PropTypes.bool,
 };
 
-export const OverriddenAnimationProofOfConcept = () => {
+export const OverriddenAnimationProofOfConcept = (args) => {
   const [selectedValue, setSelectedValue] = useState(null);
   return (
     <DarkThemeProvider>
       <Container>
         <Menu
-          dropDownHeight={number('dropDownHeight')}
           emptyText={'No options available'}
-          hasMenuRole={boolean('hasMenuRole')}
-          isRTL={boolean('isRTL')}
           options={_effectChooserOptions}
           listId={'list-id'}
           onMenuItemClick={(event, newValue) => {
@@ -263,10 +245,9 @@ export const OverriddenAnimationProofOfConcept = () => {
             action('onDismissMenu occured')(event);
           }}
           activeValue={selectedValue}
-          menuAriaLabel={text('menuAriaLabel', 'default aria label')}
-          parentId={text('parentId', 'id-menu-associates-with')}
           menuStylesOverride={styleOverrideForAnimationEffectMenu}
           renderItem={RenderItemOverride}
+          {...args}
         />
       </Container>
     </DarkThemeProvider>
