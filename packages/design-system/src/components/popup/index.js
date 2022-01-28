@@ -32,7 +32,6 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { themeHelpers } from '../../theme';
 import { noop } from '../../utils';
 import { getTransforms, getOffset } from './utils';
 import { PLACEMENT } from './constants';
@@ -61,7 +60,6 @@ const Container = styled.div.attrs(
   z-index: 2;
   ${({ noOverFlow }) => (noOverFlow ? `` : `overflow-y: auto;`)};
   max-height: ${({ topOffset }) => `calc(100vh - ${topOffset}px)`};
-  ${themeHelpers.scrollbarCSS}
 `;
 function Popup({
   isRTL = false,
@@ -173,6 +171,7 @@ function Popup({
           invisible={invisible}
           topOffset={topOffset}
           noOverFlow={noOverFlow}
+          isRTL={isRTL}
         >
           {renderContents
             ? renderContents({ propagateDimensionChange: positionPopup })
