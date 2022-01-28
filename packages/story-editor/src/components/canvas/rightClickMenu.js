@@ -95,65 +95,69 @@ const RightClickMenu = () => {
                 separator,
                 subMenuItems,
                 closeSubMenu,
+                enrich,
                 ...buttonProps
-              }) => (
-                <Fragment key={label}>
-                  {separator === 'top' && (
-                    <ContextMenuComponents.MenuSeparator />
-                  )}
-                  {!subMenuItems && (
-                    <ContextMenuComponents.MenuItem
-                      label={label}
-                      {...buttonProps}
-                    />
-                  )}
-                  {subMenuItems && (
-                    <>
-                      <ContextMenuComponents.SubMenuTrigger
-                        isMenuOpen={isMenuOpen}
-                        closeSubMenu={closeSubMenu}
-                        subMenuRef={subMenuRef}
-                        parentMenuRef={ref}
-                        label={label}
-                        isRTL={isRTL}
-                        {...buttonProps}
-                      />
-                      {Boolean(subMenuItems.length) && (
-                        <RightClickMenuContainer
-                          position={{
-                            y: 0,
-                            x: ref.current.firstChild.offsetWidth + 2,
-                          }}
-                          ref={subMenuRef}
-                        >
-                          <ContextMenu
-                            isOpen
-                            onDismiss={onCloseMenu}
-                            onCloseSubMenu={closeSubMenu}
-                            aria-label={__('Select a layer', 'web-stories')}
-                            isRTL={isRTL}
-                            isSubMenu
-                            parentMenuRef={ref}
+              }) => {
+                const MenuItem = (
+                  <ContextMenuComponents.MenuItem
+                    label={label}
+                    {...buttonProps}
+                  />
+                );
+                return (
+                  <Fragment key={label}>
+                    {separator === 'top' && (
+                      <ContextMenuComponents.MenuSeparator />
+                    )}
+                    {!subMenuItems && (enrich ? enrich(MenuItem) : MenuItem)}
+                    {subMenuItems && (
+                      <>
+                        <ContextMenuComponents.SubMenuTrigger
+                          isMenuOpen={isMenuOpen}
+                          closeSubMenu={closeSubMenu}
+                          subMenuRef={subMenuRef}
+                          parentMenuRef={ref}
+                          label={label}
+                          isRTL={isRTL}
+                          {...buttonProps}
+                        />
+                        {Boolean(subMenuItems.length) && (
+                          <RightClickMenuContainer
+                            position={{
+                              y: 0,
+                              x: ref.current.firstChild.offsetWidth + 2,
+                            }}
+                            ref={subMenuRef}
                           >
-                            {subMenuItems.map(
-                              ({ label: subLabel, ...item }) => (
-                                <ContextMenuComponents.MenuItem
-                                  key={subLabel}
-                                  label={subLabel}
-                                  {...item}
-                                />
-                              )
-                            )}
-                          </ContextMenu>
-                        </RightClickMenuContainer>
-                      )}
-                    </>
-                  )}
-                  {separator === 'bottom' && (
-                    <ContextMenuComponents.MenuSeparator />
-                  )}
-                </Fragment>
-              )
+                            <ContextMenu
+                              isOpen
+                              onDismiss={onCloseMenu}
+                              onCloseSubMenu={closeSubMenu}
+                              aria-label={__('Select a layer', 'web-stories')}
+                              isRTL={isRTL}
+                              isSubMenu
+                              parentMenuRef={ref}
+                            >
+                              {subMenuItems.map(
+                                ({ label: subLabel, ...item }) => (
+                                  <ContextMenuComponents.MenuItem
+                                    key={subLabel}
+                                    label={subLabel}
+                                    {...item}
+                                  />
+                                )
+                              )}
+                            </ContextMenu>
+                          </RightClickMenuContainer>
+                        )}
+                      </>
+                    )}
+                    {separator === 'bottom' && (
+                      <ContextMenuComponents.MenuSeparator />
+                    )}
+                  </Fragment>
+                );
+              }
             )}
           </ContextMenu>
         </DirectionAware>

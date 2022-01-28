@@ -18,6 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { cloneElement } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -28,26 +29,25 @@ import { MediaUploadButton } from '../../../components/form';
 import LibraryProvider from '../../../components/library/libraryProvider';
 import useOnMediaSelect from '../../../components/library/panes/media/local/useOnMediaSelect';
 
-const MediaButton = () => {
+const MediaButton = ({ OriginalButton }) => {
   const { onSelect } = useOnMediaSelect();
 
   return (
     <MediaUploadButton
-      renderButton={(open) => (
-        // Disable reason: Parent menu item is a button
-        // eslint-disable-next-line jsx-a11y/click-events-have-key-events,jsx-a11y/no-static-element-interactions
-        <span onClick={open}>
-          {RIGHT_CLICK_MENU_LABELS.UPLOAD_IMAGE_OR_VIDEO}
-        </span>
-      )}
+      renderButton={(open) => {
+        return cloneElement(OriginalButton, { onClick: open });
+      }}
       onInsert={onSelect}
     />
   );
 };
+MediaButton.propTypes = {
+  OriginalButton: PropTypes.func,
+};
 
-const Wrapper = () => (
+const Wrapper = (props) => (
   <LibraryProvider>
-    <MediaButton />
+    <MediaButton {...props} />
   </LibraryProvider>
 );
 
@@ -67,8 +67,8 @@ function EmptyStateMenu({ menuItemProps }) {
       ...menuItemProps,
     },
     {
-      label: <Wrapper />,
-      onClick: () => {},
+      label: RIGHT_CLICK_MENU_LABELS.UPLOAD_IMAGE_OR_VIDEO,
+      enrich: (OriginalButton) => <Wrapper OriginalButton={OriginalButton} />,
       ...menuItemProps,
     },
     {
