@@ -66,6 +66,7 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
         elements,
         defaultPageDuration,
         backgroundAudio,
+        id,
       })
     : undefined;
 

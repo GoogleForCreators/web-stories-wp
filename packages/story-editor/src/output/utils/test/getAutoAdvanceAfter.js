@@ -26,20 +26,21 @@ describe('getAutoAdvanceAfter', () => {
       { id: 789, type: 'video', resource: { length: 15 } },
     ];
 
-    expect(getAutoAdvanceAfter({ elements, defaultPageDuration: 7 })).toBe(
-      'el-789-media'
-    );
+    expect(
+      getAutoAdvanceAfter({ id: 999, elements, defaultPageDuration: 7 })
+    ).toBe('el-789-media');
   });
 
   it('should return default value', () => {
-    expect(getAutoAdvanceAfter({ elements: [], defaultPageDuration: 7 })).toBe(
-      '7s'
-    );
+    expect(
+      getAutoAdvanceAfter({ id: 999, elements: [], defaultPageDuration: 7 })
+    ).toBe('7s');
   });
 
   it('should return background audio length', () => {
     expect(
       getAutoAdvanceAfter({
+        id: 999,
         elements: [],
         defaultPageDuration: 7,
         backgroundAudio: {
@@ -47,12 +48,13 @@ describe('getAutoAdvanceAfter', () => {
           loop: false,
         },
       })
-    ).toBe('15s');
+    ).toBe('page-999-background-audio');
   });
 
   it('should return not background audio length as not looping', () => {
     expect(
       getAutoAdvanceAfter({
+        id: 999,
         elements: [],
         defaultPageDuration: 7,
         backgroundAudio: {
@@ -67,6 +69,7 @@ describe('getAutoAdvanceAfter', () => {
     const elements = [{ id: 456, type: 'video', resource: { length: 10 } }];
     expect(
       getAutoAdvanceAfter({
+        id: 999,
         elements,
         defaultPageDuration: 7,
         backgroundAudio: {
@@ -75,5 +78,20 @@ describe('getAutoAdvanceAfter', () => {
         },
       })
     ).toBe('el-456-media');
+  });
+
+  it('should return background audio length with video elements', () => {
+    const elements = [{ id: 456, type: 'video', resource: { length: 10 } }];
+    expect(
+      getAutoAdvanceAfter({
+        id: 999,
+        elements,
+        defaultPageDuration: 7,
+        backgroundAudio: {
+          resource: { length: 15 },
+          loop: false,
+        },
+      })
+    ).toBe('page-999-background-audio');
   });
 });

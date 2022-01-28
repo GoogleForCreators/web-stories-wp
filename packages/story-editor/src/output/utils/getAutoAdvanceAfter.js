@@ -27,6 +27,7 @@ function getAutoAdvanceAfter({
   defaultPageDuration,
   elements,
   backgroundAudio,
+  id,
 }) {
   const { resource, loop } = backgroundAudio || {};
 
@@ -45,9 +46,12 @@ function getAutoAdvanceAfter({
     elements,
     Math.max(animationDuration || 1, backgroundAudioDuration)
   );
-  return longestMediaElement?.id
-    ? `el-${longestMediaElement?.id}-media`
-    : `${nonMediaPageDuration}s`;
+  if (longestMediaElement?.id) {
+    return `el-${longestMediaElement?.id}-media`;
+  }
+  return nonMediaPageDuration > backgroundAudioDuration
+    ? `${nonMediaPageDuration}s`
+    : `page-${id}-background-audio`;
 }
 
 export default getAutoAdvanceAfter;
