@@ -459,6 +459,7 @@
         "packages/story-editor/src/karma-tests.cjs",
         "packages/migration/src/**/*.js",
         "packages/eslint-import-resolver/**/*.cjs",
+        "packages/jest-resolver/**/*.cjs",
         "packages/fonts/**/*.js",
         "packages/commander/**/*.js",
         "packages/templates/scripts/cli.js",

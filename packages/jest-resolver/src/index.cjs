@@ -14,14 +14,20 @@
  * limitations under the License.
  */
 
+const isLocalRepo = (name) =>
+  name.startsWith('@googleforcreators/') || name.startsWith('@web-stories-wp/');
+
 // See https://jestjs.io/docs/configuration#resolver-string
 module.exports = (request, options) => {
+  if (!isLocalRepo(request)) {
+    return options.defaultResolver(request, options);
+  }
+
   // Call the defaultResolver, so we leverage its cache, error handling, etc.
   return options.defaultResolver(request, {
     ...options,
-    // Use packageFilter to process parsed `package.json` before the resolution (see https://www.npmjs.com/package/resolve#resolveid-opts-cb)
-    packageFilter: pkg => {
-      if (pkg.name.startsWith('@googleforcreators/') || pkg.name.startsWith('@web-stories-wp/')) {
+    packageFilter: (pkg) => {
+      if (isLocalRepo(pkg.name)) {
         return {
           ...pkg,
           // Alter the value of `main` before resolving the package
