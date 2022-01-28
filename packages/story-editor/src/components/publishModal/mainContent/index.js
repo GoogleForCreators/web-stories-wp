@@ -41,8 +41,8 @@ const Main = styled.div`
   grid-template-columns: 25% 30% 34%;
   grid-template-rows: auto;
   grid-template-areas:
-    'preview mandatory platform'
-    'footer footer platform';
+    'preview mandatory panel'
+    'footer footer panel';
 `;
 
 const _StoryPreview = styled.div`
@@ -54,8 +54,8 @@ const _MandatoryStoryInfo = styled.div`
   grid-area: mandatory;
 `;
 
-const PlatformSpecificStoryInfo = styled.div`
-  grid-area: platform;
+const PanelContainer = styled.div`
+  grid-area: panel;
   background-color: ${({ theme }) => theme.colors.bg.secondary};
 `;
 
@@ -72,9 +72,9 @@ const MainContent = () => {
       <_MandatoryStoryInfo>
         <MandatoryStoryInfo />
       </_MandatoryStoryInfo>
-      <PlatformSpecificStoryInfo>
+      <PanelContainer>
         <Text>{__('Panels go here', 'web-stories')}</Text>
-      </PlatformSpecificStoryInfo>
+      </PanelContainer>
       <Footer>
         <Button type={BUTTON_TYPES.PRIMARY} size={BUTTON_SIZES.SMALL}>
           {__('Checklist', 'web-stories')}
