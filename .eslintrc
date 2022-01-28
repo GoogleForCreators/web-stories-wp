@@ -458,7 +458,7 @@
         "packages/dashboard/src/karma-tests.cjs",
         "packages/story-editor/src/karma-tests.cjs",
         "packages/migration/src/**/*.js",
-        "packages/eslint-import-resolver/src/*.js",
+        "packages/eslint-import-resolver/**/*.cjs",
         "packages/fonts/**/*.js",
         "packages/commander/**/*.js",
         "packages/templates/scripts/cli.js",
