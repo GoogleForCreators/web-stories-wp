@@ -23,7 +23,6 @@ import { useState } from '@googleforcreators/react';
  * Internal dependencies
  */
 import { action } from '@storybook/addon-actions';
-import { text } from '@storybook/addon-knobs';
 import { Switch } from '..';
 import { Headline, Text } from '../../typography';
 import { DarkThemeProvider } from '../../../storybookUtils';
@@ -31,6 +30,10 @@ import { DarkThemeProvider } from '../../../storybookUtils';
 export default {
   title: 'DesignSystem/Components/Switch',
   component: Switch,
+  args: {
+    offLabel: 'OFF',
+    onLabel: 'ON',
+  },
 };
 
 const Container = styled.div`
@@ -48,7 +51,7 @@ const Container = styled.div`
   }
 `;
 
-export const _default = () => {
+export const _default = (args) => {
   const [switchState, setSwitchState] = useState({
     radioOne: true,
     radioTwo: false,
@@ -75,10 +78,9 @@ export const _default = () => {
           <Switch
             name="radioOne"
             groupLabel="radio one"
-            offLabel={text('Off Label', 'OFF')}
-            onLabel={text('On Label', 'ON')}
             onChange={handleChange}
             value={switchState.radioOne}
+            {...args}
           />
         </div>
         <div>
@@ -86,11 +88,10 @@ export const _default = () => {
           <Switch
             name="radioOneDisabled"
             groupLabel="radio one disabled"
-            offLabel={text('Off Label', 'OFF')}
-            onLabel={text('On Label', 'ON')}
             onChange={handleChange}
             value={switchState.radioOneDisabled}
             disabled
+            {...args}
           />
         </div>
       </Container>
@@ -101,10 +102,9 @@ export const _default = () => {
             <Switch
               name="radioTwo"
               groupLabel="radio two"
-              offLabel={text('Off Label', 'OFF')}
-              onLabel={text('On Label', 'ON')}
               onChange={handleChange}
               value={switchState.radioTwo}
+              {...args}
             />
           </div>
           <div>
@@ -112,11 +112,10 @@ export const _default = () => {
             <Switch
               name="radioTwoDisabled"
               groupLabel="radio two disabled"
-              offLabel={text('Off Label', 'OFF')}
-              onLabel={text('On Label', 'ON')}
               onChange={handleChange}
               value={switchState.radioTwoDisabled}
               disabled
+              {...args}
             />
           </div>
         </Container>

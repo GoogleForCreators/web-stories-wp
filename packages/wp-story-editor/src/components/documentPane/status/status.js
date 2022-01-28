@@ -30,6 +30,7 @@ import {
   useStory,
   useCheckpoint,
   useRefreshPostEditURL,
+  useIsUploadingToStory,
 } from '@googleforcreators/story-editor';
 
 const InputRow = styled(Row)`
@@ -74,6 +75,8 @@ function StatusPanel() {
     })
   );
 
+  const isUploading = useIsUploadingToStory();
+
   const [hasPassword, setHasPassword] = useState(Boolean(password));
 
   const visibility = useMemo(() => {
@@ -101,6 +104,7 @@ function StatusPanel() {
       value: 'private',
       label: __('Private', 'web-stories'),
       helper: __('Visible to site admins & editors only', 'web-stories'),
+      disabled: isUploading && visibility !== 'private',
     });
     visibilityOptions.push({
       value: 'protected',

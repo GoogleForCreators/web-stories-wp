@@ -28,6 +28,7 @@ import {
 } from '@googleforcreators/react';
 import classnames from 'classnames';
 import { useUnits } from '@googleforcreators/units';
+import { useGlobalIsKeyPressed } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -69,6 +70,9 @@ function SingleSelectionMoveable({
   const backgroundElementId = useStory(
     ({ state }) => state.currentPage?.elements[0]?.id
   );
+
+  // ⇧ key throttles rotating 30 degrees at a time / forces locking ratio when resizing.
+  const isShiftPressed = useGlobalIsKeyPressed('shift');
 
   useWindowResizeHandler(moveable);
 
@@ -196,6 +200,7 @@ function SingleSelectionMoveable({
     isEditMode,
     pushTransform,
     classNames,
+    forceLockRatio: isShiftPressed,
   });
 
   const rotateProps = useRotate({
@@ -205,6 +210,7 @@ function SingleSelectionMoveable({
     frame,
     setTransformStyle,
     resetMoveable,
+    throttleRotation: isShiftPressed,
   });
 
   // Get a list of all the other non-bg nodes

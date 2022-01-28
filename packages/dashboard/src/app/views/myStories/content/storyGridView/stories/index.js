@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,12 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { text } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
-
-/**
  * Internal dependencies
  */
 
@@ -34,20 +28,39 @@ import StoryGridView from '..';
 export default {
   title: 'Dashboard/Views/MyStories/Content/GridView',
   component: StoryGridView,
+  args: {
+    bottomActionLabel: 'MY CTA',
+  },
+  argTypes: {
+    handleMenuToggle: {
+      action: 'handleMenuToggle',
+    },
+    handleMenuItemSelected: {
+      action: 'handleMenuItemSelected',
+    },
+  },
+  parameters: {
+    controls: {
+      include: [
+        'bottomActionLabel',
+        'handleMenuToggle',
+        'handleMenuItemSelected',
+      ],
+    },
+  },
 };
-
-export const _default = () => {
+export const _default = (args) => {
   return (
     <StoryGridView
       stories={formattedStoriesArray}
-      bottomActionLabel={text('bottomActionLabel', 'MY CTA')}
       storyMenu={{
-        handleMenuToggle: action('handleMenuToggle'),
+        handleMenuToggle: args.handleMenuToggle,
         contextMenuId: -1,
         menuItems: STORY_CONTEXT_MENU_ITEMS,
-        handleMenuItemSelected: action('handleMenuItemSelected'),
+        handleMenuItemSelected: args.handleMenuItemSelected,
       }}
       pageSize={STORYBOOK_PAGE_SIZE}
+      {...args}
     />
   );
 };

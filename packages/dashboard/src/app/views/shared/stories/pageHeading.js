@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,6 @@
 /**
  * External dependencies
  */
-import { boolean, text } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 
 /**
@@ -30,6 +28,22 @@ import { NavProvider, LeftRail } from '../../../../components';
 export default {
   title: 'Dashboard/Views/Shared/PageHeading',
   component: PageHeading,
+  args: {
+    showSearch: false,
+    searchValue: 'value',
+    heading: 'Dashboard',
+    searchPlaceholder: 'Find Stories',
+  },
+  argTypes: {
+    handleSearchChange: {
+      action: 'Search with value',
+    },
+  },
+  parameters: {
+    controls: {
+      exclude: ['searchOptions', 'children', 'onClear'],
+    },
+  },
 };
 
 const InnerContent = styled.div`
@@ -38,17 +52,14 @@ const InnerContent = styled.div`
   height: 50%;
 `;
 
-export const _default = () => {
+export const _default = (args) => {
   return (
     <NavProvider>
       <LeftRail />
       <PageHeading
-        showSearch={boolean('Show Search', false)}
         searchOptions={[]}
-        searchValue={text('Search Value', '')}
-        handleSearchChange={(value) => action('Search with value: ', value)}
-        heading={text('Heading', 'Dashboard')}
-        searchPlaceholder={text('Search Placeholder', 'Find Stories')}
+        handleSearchChange={(value) => args.handleSearchChange(value)}
+        {...args}
       >
         <InnerContent />
       </PageHeading>
