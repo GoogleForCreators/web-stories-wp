@@ -135,6 +135,7 @@ async function config(cliArgs) {
         }),
       ],
       external,
+      context: 'window',
     });
 
     entries.push({
@@ -151,6 +152,7 @@ async function config(cliArgs) {
         }),
       ],
       external,
+      context: 'window',
     });
   }
 
