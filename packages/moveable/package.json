@@ -28,8 +28,8 @@
 	"dependencies": {
 		"@googleforcreators/design-system": "*",
 		"@googleforcreators/react": "*",
-		"react-moveable": "^0.30.3",
 		"prop-types": "^15.7.2",
+		"react-moveable": "^0.30.3",
 		"styled-components": "^5.3.3"
 	},
 	"devDependencies": {
