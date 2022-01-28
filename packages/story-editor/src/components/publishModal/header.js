@@ -44,16 +44,20 @@ const _Header = styled.header`
   }
 `;
 
+const PublishButton = styled(Button)`
+  height: 32px;
+`;
+
 const Header = () => {
   return (
     <_Header>
-      <Button
-        variant={BUTTON_VARIANTS.ICON}
+      <PublishButton
+        variant={BUTTON_VARIANTS.SQUARE}
         size={BUTTON_SIZES.SMALL}
         type={BUTTON_TYPES.TERTIARY}
       >
         <Icons.Cross />
-      </Button>
+      </PublishButton>
       <Headline
         as="h2"
         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL}
