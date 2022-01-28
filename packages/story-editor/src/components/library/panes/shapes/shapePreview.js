@@ -23,6 +23,7 @@ import {
   useCallback,
   useMemo,
   useRef,
+  useState,
 } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { trackEvent } from '@googleforcreators/tracking';
@@ -32,6 +33,7 @@ import {
   ThemeGlobals,
   BUTTON_TRANSITION_TIMING,
 } from '@googleforcreators/design-system';
+
 /**
  * Internal dependencies
  */
@@ -39,6 +41,7 @@ import useLibrary from '../../useLibrary';
 import LibraryMoveable from '../shared/libraryMoveable';
 import { focusStyle } from '../../../panels/shared';
 import { MaskTypes } from '../../../../masks/constants';
+import AddIcon from '../shared/addIcon';
 
 // By default, the element should be 33% of the page.
 export const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 3;
@@ -123,6 +126,10 @@ function ShapePreview({ mask, isPreview, index }) {
     dataToEditorY: state.actions.dataToEditorY,
   }));
 
+  const [active, setActive] = useState(false);
+  const makeActive = useCallback(() => setActive(true), []);
+  const makeInactive = useCallback(() => setActive(false), []);
+
   const ref = useRef();
   // Creating a ref to the Path so that it can be used as a drag icon.
   // This avoids the drag image that follows the cursor from being the whole
@@ -180,12 +187,17 @@ function ShapePreview({ mask, isPreview, index }) {
       onClick={onClick}
       tabIndex={index === 0 ? 0 : -1}
       aria-label={mask.name}
+      onPointerEnter={makeActive}
+      onFocus={makeActive}
+      onPointerLeave={makeInactive}
+      onBlur={makeInactive}
     >
       <AspectInner>
         <ShapePreviewContainer key={mask.type}>
           <ShapePreviewSizer />
           {getSVG()}
         </ShapePreviewContainer>
+        {active && <AddIcon />}
       </AspectInner>
       <LibraryMoveable
         type={'shape'}
