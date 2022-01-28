@@ -22,6 +22,7 @@ import styled from 'styled-components';
 import { memo, useEffect, useRef } from '@googleforcreators/react';
 import { _x, __ } from '@googleforcreators/i18n';
 import { useKeyDownEffect } from '@googleforcreators/design-system';
+import { withOverlay } from '@googleforcreators/moveable';
 
 /**
  * Internal dependencies
@@ -29,7 +30,6 @@ import { useKeyDownEffect } from '@googleforcreators/design-system';
 import StoryPropTypes from '../../types';
 import { getDefinitionForType } from '../../elements';
 import { useStory, useCanvas } from '../../app';
-import withOverlay from '../overlay/withOverlay';
 import EditElement from './editElement';
 import { Layer, PageArea, FooterArea, Z_INDEX } from './layout';
 import useFocusCanvas from './useFocusCanvas';

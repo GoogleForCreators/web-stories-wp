@@ -21,11 +21,11 @@ import PropTypes from 'prop-types';
 import { useRef, useEffect, useState } from '@googleforcreators/react';
 import { useUnits } from '@googleforcreators/units';
 import { useTransform } from '@googleforcreators/transform';
+import { Moveable } from '@googleforcreators/moveable';
 
 /**
  * Internal dependencies
  */
-import Moveable from '../../moveable';
 import { useStory, useCanvas, useLayout } from '../../../app';
 import objectWithout from '../../../utils/objectWithout';
 import { getDefinitionForType } from '../../../elements';

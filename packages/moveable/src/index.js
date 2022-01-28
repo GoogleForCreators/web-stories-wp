@@ -13,32 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
-import { forwardRef } from '@googleforcreators/react';
-import Moveable from 'react-moveable';
+//eslint-disable-next-line import/named
+import { MockMoveable } from 'react-moveable';
 
-/**
- * Internal dependencies
- */
-import InOverlay from '../overlay';
-
-const DEFAULT_Z_INDEX = 10;
-
-// eslint-disable-next-line react/prop-types
-function MoveableWithRef({ onContextMenu, ...moveableProps }, ref) {
-  return (
-    <InOverlay
-      onContextMenu={onContextMenu}
-      zIndex={DEFAULT_Z_INDEX}
-      pointerEvents="initial"
-      render={({ container }) => {
-        return <Moveable ref={ref} container={container} {...moveableProps} />;
-      }}
-    />
-  );
-}
-
-export default forwardRef(MoveableWithRef);
+export { default as Moveable } from './moveable.js';
+export { MockMoveable };
+export { GlobalStyle as CropMoveableGlobalStyle } from './cropStyle.js';
+export { GlobalStyle as DefaultMoveableGlobalStyle } from './moveStyle.js';
+export { default as InOverlay } from './overlay';
+export { default as withOverlay } from './overlay/withOverlay';

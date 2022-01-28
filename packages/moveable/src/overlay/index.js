@@ -23,7 +23,7 @@ import { forwardRef, useContext, createPortal } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import pointerEventsCss from '../../utils/pointerEventsCss';
+import pointerEventsCss from '../utils/pointerEventsCss';
 import Context from './context';
 
 const Wrapper = styled.div`
