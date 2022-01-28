@@ -52,8 +52,8 @@ function TemplateDetailsModal({
       }}
       contentStyles={{
         display: 'block',
-        height: '80vh',
-        width: '80vw',
+        height: '90vh',
+        width: '90vw',
         backgroundColor: `${theme.colors.standard.white}`,
       }}
     >
