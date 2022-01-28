@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
-import { getTotalDuration, StoryAnimation } from '@googleforcreators/animation';
+import { StoryAnimation } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies
@@ -30,12 +30,11 @@ import StoryPropTypes from '../types';
 import isElementBelowLimit from '../utils/isElementBelowLimit';
 import { ELEMENT_TYPES } from '../elements';
 import OutputElement from './element';
-import getLongestMediaElement from './utils/getLongestMediaElement';
 import HiddenAudio from './utils/HiddenAudio';
+import getAutoAdvanceAfter from './utils/getAutoAdvanceAfter';
 
 const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 
-// eslint-disable-next-line complexity
 function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
   const {
     id,
@@ -61,28 +60,14 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
     ? { backgroundColor: baseColor }
     : { backgroundColor: 'white', ...generatePatternStyles(backgroundColor) };
 
-  const animationDuration = getTotalDuration({ animations }) / 1000;
-  const isNotLoopingBackgroundAudio =
-    backgroundAudioResource?.length && !backgroundAudioLoop;
-  const backgroundAudioDuration =
-    isNotLoopingBackgroundAudio && backgroundAudioResource?.length
-      ? backgroundAudioResource.length
-      : 0;
-  // If the page doesn't have media, take either the animations time or the configured default duration time.
-  const nonMediaPageDuration = Math.max(
-    animationDuration || 0,
-    backgroundAudioDuration,
-    defaultPageDuration
-  );
-  // If we have media, take the media time for advancement time and ignore the default,
-  // but still consider animation time as the minimum, too.
-  const longestMediaElement = getLongestMediaElement(
-    elements,
-    Math.max(animationDuration || 1, backgroundAudioDuration)
-  );
-  const autoAdvanceAfter = longestMediaElement?.id
-    ? `el-${longestMediaElement?.id}-media`
-    : `${nonMediaPageDuration}s`;
+  const autoAdvanceAfter = autoAdvance
+    ? getAutoAdvanceAfter({
+        animations,
+        elements,
+        defaultPageDuration,
+        backgroundAudio,
+      })
+    : undefined;
 
   // Remove invalid links, @todo this should come from the pre-publish checklist in the future.
   const validElements = regularElements.map((element) =>
@@ -112,10 +97,13 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
       ? backgroundAudioResource.src
       : undefined;
 
+  const isNotLoopingBackgroundAudio =
+    backgroundAudioResource?.length && !backgroundAudioLoop;
+
   return (
     <amp-story-page
       id={id}
-      auto-advance-after={autoAdvance ? autoAdvanceAfter : undefined}
+      auto-advance-after={autoAdvanceAfter}
       background-audio={backgroundAudioSrc}
     >
       <StoryAnimation.Provider animations={animations} elements={elements}>
