@@ -23,7 +23,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import { usePageActions } from '..';
 import { useStory } from '../../..';
 import { createPage, duplicatePage } from '../../../../elements';
-import { ELEMENT } from './constants';
+import { ELEMENT } from './testUtils';
 
 jest.mock('@googleforcreators/tracking'); // should be mocked in the testing env.
 jest.mock('../../../../elements/utils/createPage');

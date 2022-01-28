@@ -24,7 +24,7 @@ import { renderHook } from '@testing-library/react-hooks';
  */
 import { useElementActions } from '..';
 import { useCanvas, useStory } from '../../..';
-import { ELEMENT } from './constants';
+import { ELEMENT } from './testUtils';
 
 jest.mock('@googleforcreators/design-system', () => ({
   ...jest.requireActual('@googleforcreators/design-system'),

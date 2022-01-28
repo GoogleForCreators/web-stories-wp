@@ -25,7 +25,7 @@ import { useCopyPasteActions } from '..';
 import { useStory } from '../../..';
 import { ACTION_TYPES } from '../../reducer';
 import { getElementStyles } from '../utils';
-import { COPIED_ELEMENT, ELEMENT } from './constants';
+import { COPIED_ELEMENT, ELEMENT } from './testUtils';
 
 jest.mock('@googleforcreators/design-system', () => ({
   ...jest.requireActual('@googleforcreators/design-system'),

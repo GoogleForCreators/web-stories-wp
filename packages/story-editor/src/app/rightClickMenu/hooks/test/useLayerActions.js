@@ -22,7 +22,7 @@ import { renderHook } from '@testing-library/react-hooks';
  */
 import { useLayerActions } from '..';
 import { useStory } from '../../..';
-import { ELEMENT } from './constants';
+import { ELEMENT } from './testUtils';
 
 jest.mock('@googleforcreators/tracking'); // should be mocked in the testing env.
 jest.mock('../../../story/useStory');

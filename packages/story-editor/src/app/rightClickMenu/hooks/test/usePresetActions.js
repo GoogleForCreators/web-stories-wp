@@ -25,7 +25,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import useAddPreset from '../../../../utils/useAddPreset';
 import { useStory } from '../../..';
 import { usePresetActions } from '..';
-import { ELEMENT } from './constants';
+import { ELEMENT } from './testUtils';
 
 jest.mock('@googleforcreators/design-system', () => ({
   ...jest.requireActual('@googleforcreators/design-system'),

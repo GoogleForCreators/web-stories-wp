@@ -76,8 +76,8 @@ const usePageActions = () => {
    * Duplicate the current page.
    */
   const handleDuplicatePage = useCallback(() => {
-    addPageAt({ page: duplicatePage(currentPage), position: pageLength - 1 });
-  }, [addPageAt, currentPage, pageLength]);
+    addPageAt({ page: duplicatePage(currentPage), position: null });
+  }, [addPageAt, currentPage]);
 
   /**
    * Delete the current page.
