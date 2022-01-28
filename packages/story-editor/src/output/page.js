@@ -92,13 +92,15 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
     videoCaptions.push(`el-${id}-captions`);
   }
 
-  const backgroundAudioSrc =
-    !hasBackgroundAudioWithTracks && backgroundAudioResource?.src
-      ? backgroundAudioResource.src
-      : undefined;
-
   const isNotLoopingBackgroundAudio =
     backgroundAudioResource?.length && !backgroundAudioLoop;
+
+  const backgroundAudioSrc =
+    !hasBackgroundAudioWithTracks &&
+    backgroundAudioLoop &&
+    backgroundAudioResource?.src
+      ? backgroundAudioResource.src
+      : undefined;
 
   return (
     <amp-story-page
@@ -143,10 +145,9 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
           </div>
         </amp-story-grid-layer>
       </StoryAnimation.Provider>
-      {hasBackgroundAudioWithTracks ||
-        (isNotLoopingBackgroundAudio && (
-          <HiddenAudio backgroundAudio={backgroundAudio} id={id} />
-        ))}
+      {(hasBackgroundAudioWithTracks || isNotLoopingBackgroundAudio) && (
+        <HiddenAudio backgroundAudio={backgroundAudio} id={id} />
+      )}
       {videoCaptions.length > 0 && (
         <amp-story-grid-layer
           template="vertical"
