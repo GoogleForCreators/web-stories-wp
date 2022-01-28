@@ -20,9 +20,13 @@
     "node": ">= 16",
     "npm": ">= 7.3"
   },
-  "type": "module",  "main": "dist/index.js",
+  "type": "module","exports": {
+    ".": "./src/index.js",
+    "./": "./src"
+  },
+  "main": "dist/index.js",
   "module": "dist-module/index.js",
-  "source": "./src/index.js",
+  "source": "src/index.js",
   "dependencies": {
     "polished": "^4.1.4",
     "uuid": "^8.3.2"

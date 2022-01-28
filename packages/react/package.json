@@ -20,9 +20,13 @@
     "node": ">= 16",
     "npm": ">= 7.3"
   },
+  "exports": {
+    ".": "./src/index.js",
+    "./": "./src"
+  },
   "main": "dist/index.js",
   "module": "dist-module/index.js",
-  "source": "./src/index.js",
+  "source": "src/index.js",
   "dependencies": {
     "prop-types": "^15.8.1",
     "resize-observer-polyfill": "^1.5.1",
