@@ -267,29 +267,19 @@ describe('Media3pPane fetching', () => {
   }
 
   async function waitForInitialMediaLoad() {
-    await waitFor(
-      () => {
-        const mediaElements = within(
-          fixture.editor.library.media3p.unsplashSection
-        ).queryAllByTestId(/^mediaElement/);
-
-        if (!mediaElements || mediaElements.length === 0) {
-          throw new Error('mediaElements did not load');
-        }
-      },
-      { timeout: 5000 }
-    );
+    const mediaElements = await within(
+      fixture.editor.library.media3p.unsplashSection
+    ).findAllByTestId(/^mediaElement/, { timeout: 5000 });
+    expect(mediaElements).toBeTruthy();
   }
 
   it('should render no results message', async () => {
     listMediaSpy.and.callFake(() => ({ media: [] }));
     await fixture.events.click(fixture.editor.library.media3pTab);
 
-    await waitFor(() => {
-      expect(
-        fixture.screen.getByText(new RegExp('^No media found.$'))
-      ).toBeTruthy();
-    });
+    await expect(
+      fixture.screen.findByText(new RegExp('^No media found.$'))
+    ).toBeTruthy();
 
     await fixture.snapshot();
   });
@@ -399,7 +389,12 @@ describe('Media3pPane fetching', () => {
 
     await fixture.events.click(fixture.editor.library.media3p.mediaElements[0]);
 
-    expect(mediaGallery.scrollTop).toBe(0);
+    await waitFor(() => {
+      if (mediaGallery.scrollTop !== 0) {
+        throw new Error('still scrolling');
+      }
+      expect(mediaGallery.scrollTop).toBe(0);
+    });
   });
   // TODO: https://github.com/googleforcreators/web-stories-wp/issues/10144
   // eslint-disable-next-line jasmine/no-disabled-tests

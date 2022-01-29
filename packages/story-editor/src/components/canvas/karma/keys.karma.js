@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { waitFor } from '@testing-library/react';
-
-/**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
@@ -112,16 +107,8 @@ describe('Canvas keys integration', () => {
     await fixture.events.click(colorButton);
     expect(await getSelection()).toEqual([element1.id]);
 
-    await waitFor(
-      () => {
-        const dialog = fixture.container.querySelector('[role="dialog"]');
-        if (!dialog) {
-          throw new Error('dialog not ready');
-        }
-        expect(dialog).toBeTruthy();
-      }
-      // { timeout: 4000 }
-    );
+    const dialog = fixture.screen.findByRole('dialog');
+    expect(dialog).toBeTruthy();
 
     await fixture.snapshot('color picker open');
 

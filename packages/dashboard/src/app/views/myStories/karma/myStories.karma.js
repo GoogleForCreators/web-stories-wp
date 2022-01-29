@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { waitFor, within } from '@testing-library/react';
+import { within } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -126,10 +126,9 @@ describe('CUJ: Creator can view their stories in grid view', () => {
       expect(exploreTemplatesMenuItem).toBeTruthy();
 
       await fixture.events.click(exploreTemplatesMenuItem);
-      const templatesGridEl = await waitFor(() =>
-        fixture.screen.findByText('Viewing all templates')
+      const templatesGridEl = await fixture.screen.findByText(
+        'Viewing all templates'
       );
-
       expect(templatesGridEl).toBeTruthy();
     });
   });
@@ -287,8 +286,8 @@ describe('CUJ: Creator can view their stories in grid view', () => {
       // Wait for the debounce
       await fixture.events.sleep(500);
 
-      const storyElements = await waitFor(() =>
-        fixture.screen.findAllByTestId(/^story-context-menu-/)
+      const storyElements = await fixture.screen.findAllByTestId(
+        /^story-context-menu-/
       );
 
       expect(storyElements.length).toEqual(
