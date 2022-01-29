@@ -40,12 +40,9 @@ describe('MediaPane fetching', () => {
   });
 
   it('should fetch additional pages', async () => {
-    const localPane = await waitFor(() => {
-      if (!fixture.querySelector('#library-pane-media')) {
-        throw new Error('media pane not ready');
-      }
-      expect(fixture.querySelector('#library-pane-media')).toBeDefined();
-    });
+    const localPane = await waitFor(() =>
+      fixture.querySelector('#library-pane-media')
+    );
     const mediaGallery = await within(localPane).findByTestId(
       'media-gallery-container'
     );
