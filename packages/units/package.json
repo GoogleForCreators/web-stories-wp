@@ -27,6 +27,9 @@
   "main": "dist/index.js",
   "module": "dist-module/index.js",
   "source": "src/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "sideEffects": false,
   "dependencies": {
     "@googleforcreators/react": "*",

@@ -29,6 +29,9 @@
   "main": "dist/index.js",
   "module": "dist-module/index.js",
   "source": "src/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@googleforcreators/i18n": "*",
     "@googleforcreators/media": "*",

@@ -28,6 +28,9 @@
   "main": "dist/index.js",
   "module": "dist-module/index.js",
   "source": "src/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "polished": "^4.1.4",
     "uuid": "^8.3.2"

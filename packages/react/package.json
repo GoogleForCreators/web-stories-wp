@@ -27,6 +27,9 @@
   "main": "dist/index.js",
   "module": "dist-module/index.js",
   "source": "src/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "prop-types": "^15.8.1",
     "resize-observer-polyfill": "^1.5.1",

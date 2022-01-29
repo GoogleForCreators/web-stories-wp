@@ -28,6 +28,9 @@
   "main": "dist/index.js",
   "module": "dist-module/index.js",
   "source": "src/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@googleforcreators/i18n": "*",
     "date-fns": "^2.28.0",
