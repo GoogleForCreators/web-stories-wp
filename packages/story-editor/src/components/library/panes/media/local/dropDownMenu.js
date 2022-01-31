@@ -134,13 +134,13 @@ function DropDownMenu({
     () => setShowDeleteDialog(false),
     [setShowDeleteDialog]
   );
-  const { isRTL } = useConfig();
   // On Edit dialog closing.
   const onEditDialogClose = useCallback(
     () => setShowEditDialog(false),
     [setShowEditDialog]
   );
   const {
+    isRTL,
     styleConstants: { topOffset },
   } = useConfig();
   const listId = useMemo(() => `list-${uuidv4()}`, []);
