@@ -86,10 +86,10 @@ function OutputPage({
   );
 
   const regularElements = otherElements.map((element) => {
-    const { id: elementId, type, tagName } = element;
+    const { id: elementId, type, tagName = 'auto' } = element;
 
     if (flags?.semanticHeadingTags) {
-      if ('text' === type && (!tagName || 'auto' === tagName)) {
+      if ('text' === type && 'auto' === tagName) {
         element.tagName = tagNamesMap.get(elementId);
       }
     }
