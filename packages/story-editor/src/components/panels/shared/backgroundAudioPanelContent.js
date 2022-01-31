@@ -91,9 +91,12 @@ function BackgroundAudioPanelContent({
       if (showCaptions) {
         updatedBackgroundAudio.tracks = [];
       }
+      if (showLoopControl) {
+        updatedBackgroundAudio.loop = true;
+      }
       updateBackgroundAudio(updatedBackgroundAudio);
     },
-    [showCaptions, updateBackgroundAudio]
+    [showCaptions, showLoopControl, updateBackgroundAudio]
   );
 
   const updateTracks = useCallback(
