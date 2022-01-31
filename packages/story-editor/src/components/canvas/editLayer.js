@@ -119,54 +119,49 @@ function EditLayerForElement({ element, showOverflow }) {
   const { hasEditModeMoveable } = getDefinitionForType(element.type);
 
   return (
-    <div>
-      <LayerWithGrayout
-        ref={ref}
-        aria-label={_x('Edit layer', 'compound noun', 'web-stories')}
-        data-testid="editLayer"
-        grayout={editModeGrayout}
-        zIndex={Z_INDEX.EDIT}
-        onPointerDown={(evt) => {
-          if (
-            evt.target === ref.current ||
-            evt.target === pageAreaRef.current
-          ) {
-            clearEditing();
-          }
-        }}
+    <LayerWithGrayout
+      ref={ref}
+      aria-label={_x('Edit layer', 'compound noun', 'web-stories')}
+      data-testid="editLayer"
+      grayout={editModeGrayout}
+      zIndex={Z_INDEX.EDIT}
+      onPointerDown={(evt) => {
+        if (evt.target === ref.current || evt.target === pageAreaRef.current) {
+          clearEditing();
+        }
+      }}
+    >
+      <EditPageArea
+        ref={pageAreaRef}
+        fullBleedContainerLabel={__(
+          'Fullbleed area (Edit layer)',
+          'web-stories'
+        )}
+        isControlled
+        showOverflow={showOverflow}
+        overflow={showOverflow ? 'visible' : 'hidden'}
       >
-        <EditPageArea
-          ref={pageAreaRef}
-          fullBleedContainerLabel={__(
-            'Fullbleed area (Edit layer)',
-            'web-stories'
-          )}
-          isControlled
-          showOverflow={showOverflow}
-          overflow={showOverflow ? 'visible' : 'hidden'}
-        >
-          <EditElement
-            editWrapper={hasEditModeMoveable && editWrapper}
-            onResize={onResize}
-            element={element}
-            ref={setEditWrapper}
-          />
-        </EditPageArea>
-        {hasEditModeMoveable && editWrapper && (
-          <SingleSelectionMoveable
-            selectedElement={element}
-            targetEl={editWrapper}
-            isEditMode
-            ref={setRef}
-          />
-        )}
-        {EditMenu && (
-          <FooterArea showOverflow>
-            <EditMenu />
-          </FooterArea>
-        )}
-      </LayerWithGrayout>
-    </div>
+        <EditElement
+          editWrapper={hasEditModeMoveable && editWrapper}
+          onResize={onResize}
+          element={element}
+          ref={setEditWrapper}
+        />
+      </EditPageArea>
+      {hasEditModeMoveable && editWrapper && (
+        <SingleSelectionMoveable
+          selectedElement={element}
+          targetEl={editWrapper}
+          isEditMode
+          ref={setRef}
+        />
+      )}
+      {EditMenu && (
+        <FooterArea showOverflow>
+          <EditMenu />
+        </FooterArea>
+      )}
+    </LayerWithGrayout>
   );
 }
 
