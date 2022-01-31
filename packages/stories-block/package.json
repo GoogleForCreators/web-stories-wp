@@ -32,7 +32,7 @@
     "@googleforcreators/tracking": "*",
     "@web-stories-wp/glider": "*",
     "@wordpress/api-fetch": "^5.2.6",
-    "@wordpress/block-editor": "^8.0.13",
+    "@wordpress/block-editor": "^8.1.0",
     "@wordpress/blocks": "^11.0.0",
     "@wordpress/components": "^19.2.0",
     "@wordpress/compose": "^5.0.0",
