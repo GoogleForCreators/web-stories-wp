@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
-import { getTotalDuration, StoryAnimation } from '@googleforcreators/animation';
+import { StoryAnimation } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies
@@ -29,13 +29,18 @@ import { getTotalDuration, StoryAnimation } from '@googleforcreators/animation';
 import StoryPropTypes from '../types';
 import isElementBelowLimit from '../utils/isElementBelowLimit';
 import { ELEMENT_TYPES } from '../elements';
+import { DEFAULT_AUTO_ADVANCE, DEFAULT_PAGE_DURATION } from '../constants';
 import OutputElement from './element';
-import getLongestMediaElement from './utils/getLongestMediaElement';
 import HiddenAudio from './utils/HiddenAudio';
+import getAutoAdvanceAfter from './utils/getAutoAdvanceAfter';
 
 const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 
-function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
+function OutputPage({
+  page,
+  autoAdvance = DEFAULT_AUTO_ADVANCE,
+  defaultPageDuration = DEFAULT_PAGE_DURATION,
+}) {
   const {
     id,
     animations,
@@ -49,6 +54,7 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
   const {
     resource: backgroundAudioResource,
     tracks: backgroundAudioTracks = [],
+    loop: backgroundAudioLoop = true,
   } = backgroundAudio || {};
 
   const [backgroundElement, ...regularElements] = elements;
@@ -59,21 +65,15 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
     ? { backgroundColor: baseColor }
     : { backgroundColor: 'white', ...generatePatternStyles(backgroundColor) };
 
-  const animationDuration = getTotalDuration({ animations }) / 1000;
-  // If the page doesn't have media, take either the animations time or the configured default duration time.
-  const nonMediaPageDuration = Math.max(
-    animationDuration || 0,
-    defaultPageDuration
-  );
-  // If we have media, take the media time for advancement time and ignore the default,
-  // but still consider animation time as the minimum, too.
-  const longestMediaElement = getLongestMediaElement(
-    elements,
-    animationDuration || 1
-  );
-  const autoAdvanceAfter = longestMediaElement?.id
-    ? `el-${longestMediaElement?.id}-media`
-    : `${nonMediaPageDuration}s`;
+  const autoAdvanceAfter = autoAdvance
+    ? getAutoAdvanceAfter({
+        animations,
+        elements,
+        defaultPageDuration,
+        backgroundAudio,
+        id,
+      })
+    : undefined;
 
   // Remove invalid links, @todo this should come from the pre-publish checklist in the future.
   const validElements = regularElements.map((element) =>
@@ -98,15 +98,20 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
     videoCaptions.push(`el-${id}-captions`);
   }
 
+  const isNonLoopingBackgroundAudio =
+    backgroundAudioResource?.length && !backgroundAudioLoop;
+
   const backgroundAudioSrc =
-    !hasBackgroundAudioWithTracks && backgroundAudioResource?.src
+    !hasBackgroundAudioWithTracks &&
+    backgroundAudioLoop &&
+    backgroundAudioResource?.src
       ? backgroundAudioResource.src
       : undefined;
 
   return (
     <amp-story-page
       id={id}
-      auto-advance-after={autoAdvance ? autoAdvanceAfter : undefined}
+      auto-advance-after={autoAdvanceAfter}
       background-audio={backgroundAudioSrc}
     >
       <StoryAnimation.Provider animations={animations} elements={elements}>
@@ -146,7 +151,7 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
           </div>
         </amp-story-grid-layer>
       </StoryAnimation.Provider>
-      {hasBackgroundAudioWithTracks && (
+      {(hasBackgroundAudioWithTracks || isNonLoopingBackgroundAudio) && (
         <HiddenAudio backgroundAudio={backgroundAudio} id={id} />
       )}
       {videoCaptions.length > 0 && (
