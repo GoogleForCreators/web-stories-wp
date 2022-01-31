@@ -18,6 +18,8 @@
  */
 import getAutoAdvanceAfter from '../getAutoAdvanceAfter';
 
+const id = 999;
+
 describe('getAutoAdvanceAfter', () => {
   it('should return the media element with the longest duration', () => {
     const elements = [
@@ -40,9 +42,8 @@ describe('getAutoAdvanceAfter', () => {
   it('should return background audio length', () => {
     expect(
       getAutoAdvanceAfter({
-        id: 999,
+        id,
         elements: [],
-        defaultPageDuration: 7,
         backgroundAudio: {
           resource: { length: 15 },
           loop: false,
@@ -54,7 +55,7 @@ describe('getAutoAdvanceAfter', () => {
   it('should return not background audio length as not looping', () => {
     expect(
       getAutoAdvanceAfter({
-        id: 999,
+        id,
         elements: [],
         defaultPageDuration: 7,
         backgroundAudio: {
@@ -67,11 +68,19 @@ describe('getAutoAdvanceAfter', () => {
 
   it('should return not background audio length has elements', () => {
     const elements = [{ id: 456, type: 'video', resource: { length: 10 } }];
+    const animations = [
+      {
+        id: '1',
+        targets: ['456'],
+        type: 'wild_wacky_animation',
+        duration: 1000,
+      },
+    ];
     expect(
       getAutoAdvanceAfter({
-        id: 999,
+        id,
         elements,
-        defaultPageDuration: 7,
+        animations,
         backgroundAudio: {
           resource: { length: 15 },
           loop: true,
@@ -82,16 +91,110 @@ describe('getAutoAdvanceAfter', () => {
 
   it('should return background audio length with video elements', () => {
     const elements = [{ id: 456, type: 'video', resource: { length: 10 } }];
+    const animations = [
+      {
+        id: '1',
+        targets: ['456'],
+        type: 'wild_wacky_animation',
+        duration: 1000,
+      },
+    ];
     expect(
       getAutoAdvanceAfter({
-        id: 999,
+        id,
         elements,
-        defaultPageDuration: 7,
+        animations,
         backgroundAudio: {
           resource: { length: 15 },
           loop: false,
         },
       })
     ).toBe('page-999-background-audio');
+  });
+
+  it('should return animation time', () => {
+    const elements = [
+      { id: '123', type: 'video', loop: true, resource: { length: 1 } },
+      { id: '456', x: 0, y: 0, type: 'shape' },
+    ];
+
+    const animations = [
+      {
+        id: '1',
+        targets: ['456'],
+        duration: 10000,
+        zoomFrom: 1,
+        zoomTo: 2,
+      },
+      {
+        id: '2',
+        targets: ['123'],
+        duration: 10000,
+        zoomFrom: 2,
+        zoomTo: 1,
+      },
+    ];
+
+    const backgroundAudio = {
+      resource: { length: 15 },
+      loop: true,
+    };
+    expect(
+      getAutoAdvanceAfter({
+        id,
+        elements,
+        backgroundAudio,
+        animations,
+      })
+    ).toBe('10s');
+  });
+
+  it('should return animation time none looping media', () => {
+    const elements = [
+      { id: '123', type: 'video', loop: false, resource: { length: 5 } },
+      { id: '456', x: 0, y: 0, type: 'shape' },
+    ];
+
+    const animations = [
+      {
+        id: '1',
+        targets: ['456'],
+        duration: 10000,
+        zoomFrom: 1,
+        zoomTo: 2,
+      },
+      {
+        id: '2',
+        targets: ['123'],
+        duration: 10000,
+        zoomFrom: 2,
+        zoomTo: 1,
+      },
+    ];
+
+    const backgroundAudio = {
+      resource: { length: 8 },
+      loop: false,
+    };
+    expect(
+      getAutoAdvanceAfter({
+        id,
+        elements,
+        backgroundAudio,
+        animations,
+      })
+    ).toBe('10s');
+  });
+
+  it('should return default page duration', () => {
+    const elements = [{ id: '456', x: 0, y: 0, type: 'shape' }];
+    expect(
+      getAutoAdvanceAfter({
+        id,
+        elements,
+        backgroundAudio: {},
+        animations: [],
+      })
+    ).toBe('7s');
   });
 });
