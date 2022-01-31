@@ -17,8 +17,7 @@
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE } from '../../../constants';
-import { NONE, WEIGHT } from '../customConstants';
+import { NONE, WEIGHT, MULTIPLE_VALUE } from '../customConstants';
 import {
   togglePrefixStyle,
   getPrefixStylesInSelection,

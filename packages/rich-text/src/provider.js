@@ -29,7 +29,6 @@ import { EditorState } from 'draft-js';
 /**
  * Internal dependencies
  */
-import { useCanvas } from '../../app';
 import RichTextContext from './context';
 import {
   getSelectionForAll,
@@ -44,11 +43,7 @@ import customExport from './customExport';
 import useHandlePastedText from './useHandlePastedText';
 import useSelectionManipulation from './useSelectionManipulation';
 
-function RichTextProvider({ children }) {
-  const { editingElementState } = useCanvas((state) => ({
-    editingElementState: state.state.editingElementState,
-  }));
-
+function RichTextProvider({ children, editingElementState }) {
   const [editorState, setEditorState] = useState(null);
   const lastKnownStyle = useRef(null);
 
@@ -156,6 +151,7 @@ function RichTextProvider({ children }) {
 
 RichTextProvider.propTypes = {
   children: PropTypes.node.isRequired,
+  editingElementState: PropTypes.object,
 };
 
 export default RichTextProvider;

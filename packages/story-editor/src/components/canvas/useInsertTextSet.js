@@ -23,6 +23,7 @@ import {
   FULLBLEED_HEIGHT,
   PAGE_WIDTH,
 } from '@googleforcreators/units';
+import { getHTMLFormatters } from '@googleforcreators/rich-text';
 
 /**
  * Internal dependencies
@@ -30,7 +31,6 @@ import {
 import objectWithout from '../../utils/objectWithout';
 import { ELEMENT_TYPES } from '../../elements';
 import { useStory } from '../../app/story';
-import { getHTMLFormatters } from '../richText/htmlManipulation';
 import usePageAsCanvas from '../../utils/usePageAsCanvas';
 import useInsertElement from './useInsertElement';
 
