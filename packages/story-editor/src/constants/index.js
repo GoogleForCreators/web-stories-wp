@@ -29,6 +29,7 @@ export const INSPECTOR_MAX_WIDTH = 308;
 export const PAGE_NAV_PADDING = 60;
 export const PAGE_NAV_BUTTON_SIZE = 40;
 export const PAGE_NAV_WIDTH = PAGE_NAV_PADDING + PAGE_NAV_BUTTON_SIZE;
+export const FLOATING_MENU_DISTANCE = 10;
 
 export const ZOOM_SETTING = {
   FILL: 'FILL',

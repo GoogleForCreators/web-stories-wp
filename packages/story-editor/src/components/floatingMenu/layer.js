@@ -23,6 +23,7 @@ import { useEffect, useRef, useState } from '@googleforcreators/react';
  * Internal dependencies
  */
 import { useCanvas, useLayout } from '../../app';
+import { FLOATING_MENU_DISTANCE } from '../../constants';
 import FloatingMenu from './menu';
 
 // Note that this has to work for a lot of different types of moveable
@@ -55,6 +56,9 @@ function FloatingMenuLayer() {
   const workspaceSize = useRef();
 
   // Whenever the selection frame (un)mounts, update the reference to moveable
+  // This happens when selection changes between the three possible states: None,
+  // single, multiple. If the selection merely changes inside one of those (so
+  // from single to another single), this function is not invoked.
   useEffect(() => {
     setMoveableMount(() => setMoveable);
     return () => setMoveableMount(null);
@@ -81,7 +85,7 @@ function FloatingMenuLayer() {
       menu.style.display = 'flex';
       const centerX = frameRect.left + frameRect.width / 2;
       menu.style.left = `clamp(0px, ${centerX}px - (var(--width) / 2), ${width}px - var(--width))`;
-      const bottomX = frameRect.top + frameRect.height + 10;
+      const bottomX = frameRect.top + frameRect.height + FLOATING_MENU_DISTANCE;
       menu.style.top = `clamp(0px, ${bottomX}px, ${height}px - var(--height))`;
     };
 
