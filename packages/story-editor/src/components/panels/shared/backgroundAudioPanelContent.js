@@ -58,7 +58,7 @@ const UploadButton = styled(StyledButton)`
 function BackgroundAudioPanelContent({
   backgroundAudio,
   updateBackgroundAudio,
-  showCpations = false,
+  showCaptions = false,
   showLoopControl = false,
 }) {
   const {
@@ -88,12 +88,12 @@ function BackgroundAudioPanelContent({
         },
       };
 
-      if (showCpations) {
+      if (showCaptions) {
         updatedBackgroundAudio.tracks = [];
       }
       updateBackgroundAudio(updatedBackgroundAudio);
     },
-    [showCpations, updateBackgroundAudio]
+    [showCaptions, updateBackgroundAudio]
   );
 
   const updateTracks = useCallback(
@@ -207,7 +207,7 @@ function BackgroundAudioPanelContent({
               </StyledButton>
             </Tooltip>
           </Row>
-          {showCpations && (
+          {showCaptions && (
             <CaptionsPanelContent
               captionText={captionText}
               tracks={tracks || []}
@@ -234,7 +234,7 @@ BackgroundAudioPanelContent.propTypes = {
     tracks: PropTypes.arrayOf(ResourcePropTypes.trackResource),
   }),
   updateBackgroundAudio: PropTypes.func.isRequired,
-  showCpations: PropTypes.bool,
+  showCaptions: PropTypes.bool,
   showLoopControl: PropTypes.bool,
 };
 
