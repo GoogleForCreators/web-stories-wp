@@ -385,9 +385,9 @@ class Experiments extends Service_Base implements HasRequirements {
 			 * Creation date: 2022-01-27
 			 */
 			[
-				'name'        => 'newDesignPanel',
-				'label'       => __( 'New Design Panel', 'web-stories' ),
-				'description' => __( 'Enable the new design panel integrated in the left-side menu including floating design bar', 'web-stories' ),
+				'name'        => 'floatingMenu',
+				'label'       => __( 'Floating Menu', 'web-stories' ),
+				'description' => __( 'Enable the new floating design menu', 'web-stories' ),
 				'group'       => 'editor',
 			],
 		];

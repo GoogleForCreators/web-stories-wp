@@ -82,7 +82,7 @@ function CanvasLayout({ header, footer }) {
     })
   );
 
-  const isFloatingMenuEnabled = useFeature('newDesignPanel');
+  const isFloatingMenuEnabled = useFeature('floatingMenu');
 
   // If we don't have proper canvas dimensions yet, don't bother rendering element layers.
   const hasDimensions = pageWidth !== 0 && pageHeight !== 0;
