@@ -127,6 +127,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
       refreshPostEditURL,
       showSnackbar,
       resetNewChanges,
+      flags,
     ]
   );
 
