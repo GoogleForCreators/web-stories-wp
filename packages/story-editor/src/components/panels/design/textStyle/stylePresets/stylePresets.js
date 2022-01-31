@@ -166,6 +166,7 @@ function PresetPanel({ pushUpdate }) {
             isOpen={isPopupOpen}
             placement={PLACEMENT.LEFT_START}
             spacing={SPACING}
+            shouldHaveDifferentOffset
             renderContents={() => (
               <StyleManager
                 styles={textStyles}
