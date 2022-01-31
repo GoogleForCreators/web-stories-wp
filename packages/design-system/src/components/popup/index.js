@@ -182,20 +182,23 @@ function Popup({
 }
 
 Popup.propTypes = {
+  isRTL: PropTypes.bool,
   anchor: PropTypes.shape({ current: PropTypes.instanceOf(Element) })
     .isRequired,
   dock: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
   children: PropTypes.node,
   renderContents: PropTypes.func,
   placement: PropTypes.oneOf(Object.values(PLACEMENT)),
-  zIndex: PropTypes.number,
   spacing: PropTypes.object,
   isOpen: PropTypes.bool,
-  noOverFlow: PropTypes.bool,
+  invisible: PropTypes.bool,
   fillWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   fillHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   onPositionUpdate: PropTypes.func,
   refCallback: PropTypes.func,
+  topOffset: PropTypes.number,
+  noOverFlow: PropTypes.bool,
+  shouldHaveDifferentOffset: PropTypes.bool,
 };
 
 export { Popup, PLACEMENT };
