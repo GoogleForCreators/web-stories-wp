@@ -82,7 +82,7 @@ function EditElement({ element }) {
           selectedElement={element}
           targetEl={editWrapper}
           isEditMode
-          editMoveableRef={moveable}
+          ref={moveable}
         />
       )}
     </>
