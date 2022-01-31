@@ -56,8 +56,8 @@ const plugins = [
   json({
     compact: true,
   }),
-  dynamicImportVars(),
   css(),
+  dynamicImportVars(),
   terser(),
   license({
     sourcemap: true,
