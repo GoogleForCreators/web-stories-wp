@@ -93,7 +93,7 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
     videoCaptions.push(`el-${id}-captions`);
   }
 
-  const isNotLoopingBackgroundAudio =
+  const isNonLoopingBackgroundAudio =
     backgroundAudioResource?.length && !backgroundAudioLoop;
 
   const backgroundAudioSrc =
@@ -146,7 +146,7 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
           </div>
         </amp-story-grid-layer>
       </StoryAnimation.Provider>
-      {(hasBackgroundAudioWithTracks || isNotLoopingBackgroundAudio) && (
+      {(hasBackgroundAudioWithTracks || isNonLoopingBackgroundAudio) && (
         <HiddenAudio backgroundAudio={backgroundAudio} id={id} />
       )}
       {videoCaptions.length > 0 && (
