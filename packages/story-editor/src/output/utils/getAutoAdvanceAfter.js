@@ -34,12 +34,7 @@ function getAutoAdvanceAfter({
   const animationDuration = getTotalDuration({ animations }) / 1000;
   const backgroundAudioDuration =
     !loop && resource?.length ? resource.length : 0;
-  // If the page doesn't have media, take either the animations time or the configured default duration time.
-  const nonMediaPageDuration = Math.max(
-    animationDuration || 0,
-    backgroundAudioDuration,
-    defaultPageDuration
-  );
+
   // If we have media, take the media time for advancement time and ignore the default,
   // but still consider animation time as the minimum, too.
   const longestMediaElement = getLongestMediaElement(
@@ -49,6 +44,13 @@ function getAutoAdvanceAfter({
   if (longestMediaElement?.id) {
     return `el-${longestMediaElement?.id}-media`;
   }
+
+  // If the page doesn't have media, take either the animations time or the configured default duration time.
+  const nonMediaPageDuration = Math.max(
+    animationDuration || 0,
+    backgroundAudioDuration,
+    defaultPageDuration
+  );
   return nonMediaPageDuration > backgroundAudioDuration
     ? `${nonMediaPageDuration}s`
     : `page-${id}-background-audio`;
