@@ -17,12 +17,7 @@
 /**
  * External dependencies
  */
-import {
-  Button,
-  BUTTON_VARIANTS,
-  Icons,
-  themeHelpers,
-} from '@googleforcreators/design-system';
+import { themeHelpers } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import {
   forwardRef,
@@ -47,6 +42,8 @@ import { useUploader } from '../../../../app/uploader';
 import { PageSizePropType } from '../../../../types';
 import { focusStyle } from '../../../panels/shared';
 import DisplayElement from '../../../canvas/displayElement';
+import InsertionOverlay from '../shared/insertionOverlay';
+import DropDownMenu from './dropDownMenu';
 
 const TemplateImage = styled.img`
   width: 100%;
@@ -87,13 +84,6 @@ const PreviewPageWrapper = styled.div`
 PreviewPageWrapper.propTypes = {
   pageSize: PageSizePropType.isRequired,
 };
-
-const ButtonWrapper = styled.div`
-  position: absolute;
-  top: calc(50% - 16px);
-  right: calc(50% - 16px);
-  z-index: 1;
-`;
 
 const PageTemplateTitle = styled.div`
   position: absolute;
@@ -139,7 +129,7 @@ function PageTemplate(
 
   useFocusOut(ref, () => setIsHover(false), []);
 
-  const { highlightedTemplate } = rest;
+  const { highlightedTemplate, onClick } = rest;
 
   const handleSetHoverActive = useCallback(() => setIsHover(true), []);
 
@@ -195,6 +185,7 @@ function PageTemplate(
     queuePageImageGeneration(page);
   }, [imageUrl, queuePageImageGeneration, page, hasUploadMediaAction]);
 
+  const hasMenu = Boolean(handleDelete);
   return (
     <PageTemplateWrapper
       pageSize={pageSize}
@@ -225,16 +216,12 @@ function PageTemplate(
             <DisplayElement key={element.id} previewMode element={element} />
           ))
         )}
-        {isActivePage && handleDelete && (
-          <ButtonWrapper>
-            <Button
-              variant={BUTTON_VARIANTS.ICON}
-              onClick={(e) => handleDelete(page, e)}
-              aria-label={__('Delete Page Template', 'web-stories')}
-            >
-              <Icons.PlusFilled />
-            </Button>
-          </ButtonWrapper>
+        {isActivePage && <InsertionOverlay showIcon={!hasMenu} />}
+        {isActivePage && hasMenu && (
+          <DropDownMenu
+            onDelete={(e) => handleDelete(page, e)}
+            onInsert={onClick}
+          />
         )}
       </PreviewPageWrapper>
 

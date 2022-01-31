@@ -20,6 +20,7 @@
 import styled from 'styled-components';
 import { Icons } from '@googleforcreators/design-system';
 import { rgba } from 'polished';
+import PropTypes from 'prop-types';
 
 const IconContainer = styled.div`
   height: 32px;
@@ -34,6 +35,8 @@ const Wrapper = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
+  top: 0;
+  left: 0;
   background-color: ${({ theme }) => rgba(theme.colors.standard.black, 0.5)};
 `;
 
@@ -48,5 +51,9 @@ function InsertionOverlay({ showIcon = true }) {
     </Wrapper>
   );
 }
+
+InsertionOverlay.propTypes = {
+  showIcon: PropTypes.bool,
+};
 
 export default InsertionOverlay;
