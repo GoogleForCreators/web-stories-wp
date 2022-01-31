@@ -141,6 +141,7 @@ async function config(cliArgs) {
           ...plugins,
           del({
             targets: [dirname(resolvePath(pkg.dir, pkg.config.module))],
+            runOnce: false !== cliArgs.watch,
           }),
         ],
         external,
@@ -160,6 +161,7 @@ async function config(cliArgs) {
           ...plugins,
           del({
             targets: [dirname(resolvePath(pkg.dir, pkg.config.main))],
+            runOnce: false !== cliArgs.watch,
           }),
         ],
         external,
