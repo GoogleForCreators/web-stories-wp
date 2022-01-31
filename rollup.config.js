@@ -109,6 +109,9 @@ async function config(cliArgs) {
   const packagesToBuild = cliArgs?.configPackages
     ? cliArgs.configPackages.split(',')
     : allPackageNames;
+  const entriesToBuild = cliArgs?.configEntries
+    ? cliArgs.configEntries.split(',')
+    : ['es', 'cjs'];
 
   for (const pkg of packages) {
     if (!packagesToBuild.includes(pkg.name.split('/')[1])) {
@@ -127,38 +130,42 @@ async function config(cliArgs) {
       ]),
     ];
 
-    entries.push({
-      input,
-      output: {
-        dir: dirname(resolvePath(pkg.dir, pkg.config.module)),
-        format: 'es',
-      },
-      plugins: [
-        ...plugins,
-        del({
-          targets: [dirname(resolvePath(pkg.dir, pkg.config.module))],
-        }),
-      ],
-      external,
-      context: 'window',
-    });
+    if (entriesToBuild.includes('es')) {
+      entries.push({
+        input,
+        output: {
+          dir: dirname(resolvePath(pkg.dir, pkg.config.module)),
+          format: 'es',
+        },
+        plugins: [
+          ...plugins,
+          del({
+            targets: [dirname(resolvePath(pkg.dir, pkg.config.module))],
+          }),
+        ],
+        external,
+        context: 'window',
+      });
+    }
 
-    entries.push({
-      input,
-      output: {
-        dir: dirname(resolvePath(pkg.dir, pkg.config.main)),
-        format: 'cjs',
-        exports: 'auto',
-      },
-      plugins: [
-        ...plugins,
-        del({
-          targets: [dirname(resolvePath(pkg.dir, pkg.config.main))],
-        }),
-      ],
-      external,
-      context: 'window',
-    });
+    if (entriesToBuild.includes('cjs')) {
+      entries.push({
+        input,
+        output: {
+          dir: dirname(resolvePath(pkg.dir, pkg.config.main)),
+          format: 'cjs',
+          exports: 'auto',
+        },
+        plugins: [
+          ...plugins,
+          del({
+            targets: [dirname(resolvePath(pkg.dir, pkg.config.main))],
+          }),
+        ],
+        external,
+        context: 'window',
+      });
+    }
   }
 
   return entries;
