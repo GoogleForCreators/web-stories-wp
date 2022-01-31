@@ -39,6 +39,8 @@ const StoryPropTypes = {};
 export const BackgroundAudioPropType = PropTypes.shape({
   id: PropTypes.number,
   src: PropTypes.string,
+  length: PropTypes.number,
+  lengthFormatted: PropTypes.string,
   mimeType: PropTypes.string,
 });
 

@@ -14,25 +14,5 @@
  * limitations under the License.
  */
 
-export function isValidUrl(url) {
-  try {
-    // eslint-disable-next-line no-new
-    new URL(url);
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-/**
- * Prepends a protocol (default https) to a URL that doesn't have one
- *
- * @param {string} url URL.
- * @param {string} [protocol=https] default protocol to prepend
- * @return {string} the url with the protocol prepended to it
- */
-export function withProtocol(url, protocol = 'https') {
-  return /^(http:\/\/|https:\/\/|tel:|mailto:)/.test(url)
-    ? url
-    : `${protocol}://${url}`;
-}
+export { default as FloatingMenuLayer } from './layer';
+export { default as FloatingMenu } from './menu';

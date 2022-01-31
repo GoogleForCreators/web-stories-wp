@@ -32947,7 +32947,7 @@
   },
   {
     "family": "Sawarabi Mincho",
-    "fallbacks": ["sans-serif"],
+    "fallbacks": ["serif"],
     "weights": [400],
     "styles": ["regular"],
     "variants": [[0, 400]],

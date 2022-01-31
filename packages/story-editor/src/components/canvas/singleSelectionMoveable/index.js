@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import {
+  forwardRef,
   useRef,
   useEffect,
   useState,
@@ -28,6 +29,7 @@ import {
 } from '@googleforcreators/react';
 import classnames from 'classnames';
 import { useUnits } from '@googleforcreators/units';
+import { useGlobalIsKeyPressed } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -43,13 +45,10 @@ import useDrag from './useDrag';
 import useResize from './useResize';
 import useRotate from './useRotate';
 
-function SingleSelectionMoveable({
-  selectedElement,
-  targetEl,
-  pushEvent,
-  isEditMode,
-  editMoveableRef,
-}) {
+const SingleSelectionMoveable = forwardRef(function SingleSelectionMoveable(
+  { selectedElement, targetEl, pushEvent, isEditMode, ...props },
+  ref
+) {
   const moveable = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
 
@@ -69,6 +68,9 @@ function SingleSelectionMoveable({
   const backgroundElementId = useStory(
     ({ state }) => state.currentPage?.elements[0]?.id
   );
+
+  // ⇧ key throttles rotating 30 degrees at a time / forces locking ratio when resizing.
+  const isShiftPressed = useGlobalIsKeyPressed('shift');
 
   useWindowResizeHandler(moveable);
 
@@ -196,6 +198,7 @@ function SingleSelectionMoveable({
     isEditMode,
     pushTransform,
     classNames,
+    forceLockRatio: isShiftPressed,
   });
 
   const rotateProps = useRotate({
@@ -205,6 +208,7 @@ function SingleSelectionMoveable({
     frame,
     setTransformStyle,
     resetMoveable,
+    throttleRotation: isShiftPressed,
   });
 
   // Get a list of all the other non-bg nodes
@@ -220,9 +224,10 @@ function SingleSelectionMoveable({
 
   return (
     <Moveable
+      {...props}
       className={classNames}
       zIndex={0}
-      ref={useCombinedRefs(moveable, editMoveableRef)}
+      ref={useCombinedRefs(moveable, ref)}
       target={targetEl}
       edge
       draggable={actionsEnabled}
@@ -236,7 +241,7 @@ function SingleSelectionMoveable({
       pinchable
     />
   );
-}
+});
 
 SingleSelectionMoveable.propTypes = {
   selectedElement: PropTypes.object.isRequired,

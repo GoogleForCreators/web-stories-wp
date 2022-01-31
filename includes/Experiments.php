@@ -378,6 +378,18 @@ class Experiments extends Service_Base implements HasRequirements {
 				'description' => __( 'Enable adding captions to background audio', 'web-stories' ),
 				'group'       => 'editor',
 			],
+
+			/**
+			 * Author: @barklund
+			 * Issue: #10112
+			 * Creation date: 2022-01-27
+			 */
+			[
+				'name'        => 'floatingMenu',
+				'label'       => __( 'Floating Menu', 'web-stories' ),
+				'description' => __( 'Enable the new floating design menu', 'web-stories' ),
+				'group'       => 'editor',
+			],
 		];
 	}
 
