@@ -46,7 +46,7 @@ define( 'WEBSTORIES_AMP_VERSION', '2.3.0-alpha' ); // Version of the AMP library
 define( 'WEBSTORIES_PLUGIN_FILE', __FILE__ );
 define( 'WEBSTORIES_PLUGIN_DIR_PATH', plugin_dir_path( WEBSTORIES_PLUGIN_FILE ) );
 define( 'WEBSTORIES_PLUGIN_DIR_URL', plugin_dir_url( WEBSTORIES_PLUGIN_FILE ) );
-define( 'WEBSTORIES_MINIMUM_PHP_VERSION', '7.0.21' );
+define( 'WEBSTORIES_MINIMUM_PHP_VERSION', '7.2.24' );
 define( 'WEBSTORIES_MINIMUM_WP_VERSION', '5.5' );
 define( 'WEBSTORIES_CDN_URL', 'https://wp.stories.google/static/main' );
 

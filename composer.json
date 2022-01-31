@@ -27,6 +27,7 @@
     "php-stubs/wordpress-stubs": "^v5.9.0",
     "phpcompatibility/phpcompatibility-wp": "^2.1",
     "phpmd/phpmd": "^2.9",
+    "phpstan/phpstan": "^1.4",
     "roave/security-advisories": "dev-latest",
     "sirbrillig/phpcs-variable-analysis": "^2.8",
     "wp-coding-standards/wpcs": "^2.3",
@@ -70,7 +71,7 @@
     },
     "discard-changes": true,
     "platform": {
-      "php": "7.0.21"
+      "php": "7.2.24"
     },
     "sort-packages": true
   },
@@ -85,11 +86,6 @@
         "path": "vendor/bin/php-scoper",
         "type": "phar",
         "url": "https://github.com/humbug/php-scoper/releases/download/0.15.0/php-scoper.phar"
-      },
-      "phpstan": {
-        "path": "vendor/bin/phpstan",
-        "type": "phar",
-        "url": "https://github.com/phpstan/phpstan/releases/download/1.4.2/phpstan.phar"
       }
     },
     "enable-patching": true,
