@@ -85,7 +85,6 @@ function Popup({
 
   useEffect(() => {
     isMounted.current = true;
-
     return () => {
       isMounted.current = false;
     };
@@ -93,7 +92,7 @@ function Popup({
 
   const positionPopup = useCallback(
     (evt) => {
-      if (!isMounted.current) {
+      if (!isMounted.current || !anchor?.current) {
         return;
       }
       // If scrolling within the popup, ignore.
