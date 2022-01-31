@@ -41,6 +41,13 @@ describe('Right Click Menu integration', () => {
     await fixture.collapseHelpCenter();
 
     insertElement = await fixture.renderHook(() => useInsertElement());
+
+    // Remove empty state message by changing the background
+    await fixture.events.click(
+      fixture.editor.canvas.quickActionMenu.changeBackgroundColorButton
+    );
+    await fixture.events.keyboard.type('ef');
+    await fixture.events.keyboard.press('Tab');
   });
 
   afterEach(async () => {

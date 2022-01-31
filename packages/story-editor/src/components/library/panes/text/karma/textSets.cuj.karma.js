@@ -168,9 +168,8 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     it('should add text color based on background', async () => {
       fixture.editor.library.text.smartColorToggle.click();
 
-      await fixture.events.click(fixture.screen.getByTestId('FramesLayer'));
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.pageBackground.backgroundColorInput
+        fixture.editor.canvas.quickActionMenu.changeBackgroundColorButton
       );
       await fixture.events.keyboard.type('000');
       await fixture.events.keyboard.press('Tab');
