@@ -36,6 +36,7 @@ import {
   Row,
   useStory,
   focusStyle,
+  useConfig,
 } from '@googleforcreators/story-editor';
 
 /**
@@ -63,7 +64,7 @@ function PublishTime() {
     })
   );
   const use12HourFormat = is12Hour();
-
+  const { isRTL } = useConfig();
   /* translators: Date format, see https://www.php.net/manual/en/datetime.format.php */
   const shortDateFormat = __('d/m/Y', 'web-stories');
 
@@ -136,6 +137,7 @@ function PublishTime() {
         anchor={dateFieldRef}
         isOpen={showDatePicker}
         placement={PLACEMENT.BOTTOM_END}
+        isRTL={isRTL}
         renderContents={({ propagateDimensionChange }) => (
           <DateTime
             value={floatingDate ? displayDate : date}
