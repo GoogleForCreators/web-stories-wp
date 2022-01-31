@@ -19,7 +19,13 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { memo, useEffect, useRef } from '@googleforcreators/react';
+import {
+  memo,
+  useEffect,
+  useRef,
+  useCallback,
+  useState,
+} from '@googleforcreators/react';
 import { _x, __ } from '@googleforcreators/i18n';
 import { useKeyDownEffect } from '@googleforcreators/design-system';
 
@@ -33,11 +39,12 @@ import withOverlay from '../overlay/withOverlay';
 import EditElement from './editElement';
 import { Layer, PageArea, FooterArea, Z_INDEX } from './layout';
 import useFocusCanvas from './useFocusCanvas';
+import SingleSelectionMoveable from './singleSelectionMoveable';
 
-const LayerWithGrayout = styled(Layer)`
+const LayerWithGrayout = withOverlay(styled(Layer)`
   background-color: ${({ grayout, theme }) =>
     grayout ? theme.colors.opacity.overlayDark : 'transparent'};
-`;
+`);
 
 const EditPageArea = withOverlay(PageArea);
 
@@ -74,11 +81,14 @@ function EditLayerForElement({ element, showOverflow }) {
   const pageAreaRef = useRef(null);
   const { editModeGrayout, EditMenu } = getDefinitionForType(element.type);
 
-  const { clearEditing } = useCanvas((state) => ({
+  const { clearEditing, onMoveableMount } = useCanvas((state) => ({
     clearEditing: state.actions.clearEditing,
+    onMoveableMount: state.state.onMoveableMount,
   }));
 
   const focusCanvas = useFocusCanvas();
+
+  const [editWrapper, setEditWrapper] = useState(null);
 
   useKeyDownEffect(ref, { key: 'esc', editable: true }, () => clearEditing(), [
     clearEditing,
@@ -90,37 +100,73 @@ function EditLayerForElement({ element, showOverflow }) {
     return () => focusCanvas(/* force */ false);
   }, [focusCanvas]);
 
+  const moveable = useRef(null);
+  const setRef = useCallback(
+    (moveableRef) => {
+      moveable.current = moveableRef;
+      onMoveableMount?.(moveableRef);
+    },
+    [onMoveableMount]
+  );
+
+  const onResize = () => {
+    // Update moveable when resizing.
+    if (moveable.current) {
+      moveable.current.updateRect();
+    }
+  };
+
+  const { hasEditModeMoveable } = getDefinitionForType(element.type);
+
   return (
-    <LayerWithGrayout
-      ref={ref}
-      aria-label={_x('Edit layer', 'compound noun', 'web-stories')}
-      data-testid="editLayer"
-      grayout={editModeGrayout}
-      zIndex={Z_INDEX.EDIT}
-      onPointerDown={(evt) => {
-        if (evt.target === ref.current || evt.target === pageAreaRef.current) {
-          clearEditing();
-        }
-      }}
-    >
-      <EditPageArea
-        ref={pageAreaRef}
-        fullBleedContainerLabel={__(
-          'Fullbleed area (Edit layer)',
-          'web-stories'
-        )}
-        isControlled
-        showOverflow={showOverflow}
-        overflow={showOverflow ? 'visible' : 'hidden'}
+    <div>
+      <LayerWithGrayout
+        ref={ref}
+        aria-label={_x('Edit layer', 'compound noun', 'web-stories')}
+        data-testid="editLayer"
+        grayout={editModeGrayout}
+        zIndex={Z_INDEX.EDIT}
+        onPointerDown={(evt) => {
+          if (
+            evt.target === ref.current ||
+            evt.target === pageAreaRef.current
+          ) {
+            clearEditing();
+          }
+        }}
       >
-        <EditElement element={element} />
-      </EditPageArea>
-      {EditMenu && (
-        <FooterArea showOverflow>
-          <EditMenu />
-        </FooterArea>
-      )}
-    </LayerWithGrayout>
+        <EditPageArea
+          ref={pageAreaRef}
+          fullBleedContainerLabel={__(
+            'Fullbleed area (Edit layer)',
+            'web-stories'
+          )}
+          isControlled
+          showOverflow={showOverflow}
+          overflow={showOverflow ? 'visible' : 'hidden'}
+        >
+          <EditElement
+            editWrapper={hasEditModeMoveable && editWrapper}
+            onResize={onResize}
+            element={element}
+            ref={setEditWrapper}
+          />
+        </EditPageArea>
+        {hasEditModeMoveable && editWrapper && (
+          <SingleSelectionMoveable
+            selectedElement={element}
+            targetEl={editWrapper}
+            isEditMode
+            ref={setRef}
+          />
+        )}
+        {EditMenu && (
+          <FooterArea showOverflow>
+            <EditMenu />
+          </FooterArea>
+        )}
+      </LayerWithGrayout>
+    </div>
   );
 }
 
