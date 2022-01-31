@@ -70,7 +70,7 @@ function Popup({
   placement = PLACEMENT.BOTTOM,
   spacing,
   isOpen,
-  invisible,
+  invisible = false,
   fillWidth = false,
   fillHeight = false,
   onPositionUpdate = noop,
