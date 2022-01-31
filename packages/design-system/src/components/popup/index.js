@@ -77,7 +77,7 @@ function Popup({
   refCallback = noop,
   topOffset = DEFAULT_TOPOFFSET,
   noOverFlow = false,
-  shouldHaveDifferentoffset = false,
+  shouldHaveDifferentOffset = false,
 }) {
   const [popupState, setPopupState] = useState(null);
   const isMounted = useRef(false);
@@ -110,7 +110,7 @@ function Popup({
               popup,
               isRTL,
               topOffset,
-              shouldHaveDifferentoffset
+              shouldHaveDifferentOffset
             )
           : {},
         height: popup.current?.getBoundingClientRect()?.height,
@@ -121,7 +121,7 @@ function Popup({
       dock,
       isRTL,
       placement,
-      shouldHaveDifferentoffset,
+      shouldHaveDifferentOffset,
       spacing,
       topOffset,
     ]
