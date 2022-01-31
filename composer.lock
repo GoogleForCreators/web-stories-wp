@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0bd8440fbfdd6622b3d1c274bd9786b6",
+    "content-hash": "1dbcd6cf6ed3bb03ab8ac7c4aa1c65d2",
     "packages": [
         {
             "name": "ampproject/amp-toolbox",
@@ -4817,7 +4817,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.0 || ^8.0",
+        "php": "^7.2 || ^8.0",
         "ext-dom": "*",
         "ext-iconv": "*",
         "ext-json": "*",

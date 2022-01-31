@@ -14,7 +14,7 @@
  * Author URI: https://opensource.google.com/
  * Version: 1.17.0-alpha.0
  * Requires at least: 5.5
- * Requires PHP: 7.0
+ * Requires PHP: 7.2
  * Text Domain: web-stories
  * License: Apache License 2.0
  * License URI: https://www.apache.org/licenses/LICENSE-2.0
