@@ -1581,7 +1581,7 @@ describe('Page output', () => {
 
     // TODO(#10338): Resolve question about poster requirement.
     // eslint-disable-next-line jest/no-disabled-tests
-    it.skip('should produce valid output with none looping background audio', async () => {
+    it.skip('should produce valid output with non-looping background audio', async () => {
       const props = {
         id: '123',
         backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
