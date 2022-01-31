@@ -135,7 +135,9 @@ function DropDownMenu({
           label: __('Add as background', 'web-stories'),
           value: 'addBackground',
         },
-        ...(displayEditOptions && canTranscodeResource(resource) ? editOptions : []),
+        ...(displayEditOptions && canTranscodeResource(resource)
+          ? editOptions
+          : []),
       ],
     },
   ];
