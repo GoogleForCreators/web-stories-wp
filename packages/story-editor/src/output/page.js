@@ -32,10 +32,16 @@ import { ELEMENT_TYPES } from '../elements';
 import OutputElement from './element';
 import getLongestMediaElement from './utils/getLongestMediaElement';
 import HiddenAudio from './utils/HiddenAudio';
+import getTextElementTagNames from './utils/getTextElementTagNames';
 
 const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 
-function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
+function OutputPage({
+  page,
+  autoAdvance = true,
+  defaultPageDuration = 7,
+  flags,
+}) {
   const {
     id,
     animations,
@@ -51,7 +57,7 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
     tracks: backgroundAudioTracks = [],
   } = backgroundAudio || {};
 
-  const [backgroundElement, ...regularElements] = elements;
+  const [backgroundElement, ...otherElements] = elements;
 
   // If the background element has base color set, it's media, use that.
   const baseColor = backgroundElement?.resource?.baseColor;
@@ -75,15 +81,27 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
     ? `el-${longestMediaElement?.id}-media`
     : `${nonMediaPageDuration}s`;
 
-  // Remove invalid links, @todo this should come from the pre-publish checklist in the future.
-  const validElements = regularElements.map((element) =>
-    !url || !isElementBelowLimit(element)
-      ? element
-      : {
-          ...element,
-          link: null,
-        }
+  const tagNamesMap = getTextElementTagNames(
+    otherElements.filter(({ type }) => 'text' === type)
   );
+
+  const regularElements = otherElements.map((element) => {
+    const { id: elementId, type, tagName } = element;
+
+    if (flags?.semanticHeadingTags) {
+      if ('text' === type && (!tagName || 'auto' === tagName)) {
+        element.tagName = tagNamesMap.get(elementId);
+      }
+    }
+
+    // Remove invalid links.
+    // TODO: this should come from the pre-publish checklist in the future.
+    if (url && isElementBelowLimit(element)) {
+      delete element.link;
+    }
+
+    return element;
+  });
 
   const videoCaptions = elements
     .filter(
@@ -139,7 +157,7 @@ function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
         >
           <div className="page-fullbleed-area">
             <div className="page-safe-area">
-              {validElements.map((element) => (
+              {regularElements.map((element) => (
                 <OutputElement key={element.id} element={element} />
               ))}
             </div>
@@ -187,6 +205,7 @@ OutputPage.propTypes = {
   page: StoryPropTypes.page.isRequired,
   autoAdvance: PropTypes.bool,
   defaultPageDuration: PropTypes.number,
+  flags: PropTypes.object,
 };
 
 export default OutputPage;

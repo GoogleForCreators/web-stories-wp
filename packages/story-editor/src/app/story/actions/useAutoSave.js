@@ -39,7 +39,7 @@ function useAutoSave({ storyId, pages, story }) {
   const {
     actions: { autoSaveById },
   } = useAPI();
-  const { metadata } = useConfig();
+  const { metadata, flags } = useConfig();
   const [isAutoSaving, setIsAutoSaving] = useState(false);
 
   const autoSave = useCallback(
@@ -51,6 +51,7 @@ function useAutoSave({ storyId, pages, story }) {
           story,
           pages,
           metadata,
+          flags,
         }),
         ...props,
       }).finally(() => setIsAutoSaving(false));

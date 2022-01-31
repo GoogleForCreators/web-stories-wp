@@ -207,6 +207,7 @@ const StoryTextElementPropTypes = {
   lineHeight: PropTypes.number,
   padding: PaddingPropType,
   textAlign: PropTypes.string,
+  tagName: PropTypes.oneOf(['h1', 'h2', 'h3', 'p', 'auto']),
 };
 
 StoryPropTypes.textContent = PropTypes.shape({

@@ -48,7 +48,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
   const {
     actions: { resetNewChanges },
   } = useHistory();
-  const { metadata } = useConfig();
+  const { metadata, flags } = useConfig();
   const { showSnackbar } = useSnackbar();
   const [isSaving, setIsSaving] = useState(false);
   const [isFreshlyPublished, setIsFreshlyPublished] = useState(false);
@@ -72,6 +72,7 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
           story,
           pages,
           metadata,
+          flags,
         }),
         ...props,
       })
