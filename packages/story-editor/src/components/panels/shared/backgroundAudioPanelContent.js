@@ -58,8 +58,8 @@ const UploadButton = styled(StyledButton)`
 function BackgroundAudioPanelContent({
   backgroundAudio,
   updateBackgroundAudio,
-  supportsCaptions = false,
-  supportsLooping = false,
+  showCpations = false,
+  showLoopControl = false,
 }) {
   const {
     allowedAudioMimeTypes,
@@ -88,12 +88,12 @@ function BackgroundAudioPanelContent({
         },
       };
 
-      if (supportsCaptions) {
+      if (showCpations) {
         updatedBackgroundAudio.tracks = [];
       }
       updateBackgroundAudio(updatedBackgroundAudio);
     },
-    [supportsCaptions, updateBackgroundAudio]
+    [showCpations, updateBackgroundAudio]
   );
 
   const updateTracks = useCallback(
@@ -207,7 +207,7 @@ function BackgroundAudioPanelContent({
               </StyledButton>
             </Tooltip>
           </Row>
-          {supportsCaptions && (
+          {showCpations && (
             <CaptionsPanelContent
               captionText={captionText}
               tracks={tracks || []}
@@ -216,7 +216,7 @@ function BackgroundAudioPanelContent({
               renderUploadButton={renderUploadCaptionButton}
             />
           )}
-          {supportsLooping && resource?.length && (
+          {showLoopControl && resource?.length && (
             <Row spaceBetween={false}>
               <LoopPanelContent loop={loop} onChange={onChangeLoop} />
             </Row>
@@ -234,8 +234,8 @@ BackgroundAudioPanelContent.propTypes = {
     tracks: PropTypes.arrayOf(ResourcePropTypes.trackResource),
   }),
   updateBackgroundAudio: PropTypes.func.isRequired,
-  supportsCaptions: PropTypes.bool,
-  supportsLooping: PropTypes.bool,
+  showCpations: PropTypes.bool,
+  showLoopControl: PropTypes.bool,
 };
 
 export default BackgroundAudioPanelContent;
