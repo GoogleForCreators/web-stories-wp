@@ -47,7 +47,7 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     await waitFor(
       () => {
         if (fixture.editor.library.text.textSets.length === 0) {
-          throw new Error('test sets not ready');
+          throw new Error('text sets not ready');
         }
         expect(fixture.editor.library.text.textSets.length).toBeTruthy();
       },
@@ -59,7 +59,7 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     await waitFor(
       () => {
         if (fixture.editor.library.text.textSets.length === 0) {
-          throw new Error('test sets not ready');
+          throw new Error('text sets not ready');
         }
         expect(fixture.editor.library.text.textSets.length).toBeTruthy();
       },
@@ -83,7 +83,7 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     await waitFor(
       () => {
         if (fixture.editor.library.text.textSets.length === 0) {
-          throw new Error('test sets not ready');
+          throw new Error('text sets not ready');
         }
         expect(fixture.editor.library.text.textSets.length).toBeTruthy();
       },
@@ -116,7 +116,7 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     await waitFor(
       () => {
         if (fixture.editor.library.text.textSets.length === 0) {
-          throw new Error('test sets not ready');
+          throw new Error('text sets not ready');
         }
         expect(fixture.editor.library.text.textSets.length).toBeTruthy();
       },

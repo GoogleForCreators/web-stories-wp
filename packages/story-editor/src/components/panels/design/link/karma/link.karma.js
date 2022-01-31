@@ -162,16 +162,13 @@ describe('Link Panel', () => {
       const frame = fixture.editor.canvas.framesLayer.frames[1].node;
       await fixture.events.mouse.moveRel(frame, 10, 10);
 
-      await waitFor(
-        () => {
-          const tooltip = fixture.screen.findByText(linkDescription);
-          if (!tooltip) {
-            throw new Error('tooltip not ready');
-          }
-          expect(tooltip).toHaveTextContent(linkDescription);
-        },
-        { timeout: 5000 }
-      );
+      await waitFor(() => {
+        const tooltip = fixture.screen.findByText(linkDescription);
+        if (!tooltip) {
+          throw new Error('tooltip not ready');
+        }
+        expect(tooltip).toHaveTextContent(linkDescription);
+      });
       await fixture.snapshot(
         'Element is hovered on. The link tooltip is visible'
       );
