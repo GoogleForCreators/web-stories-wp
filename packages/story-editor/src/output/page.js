@@ -29,13 +29,18 @@ import { StoryAnimation } from '@googleforcreators/animation';
 import StoryPropTypes from '../types';
 import isElementBelowLimit from '../utils/isElementBelowLimit';
 import { ELEMENT_TYPES } from '../elements';
+import { DEFAULT_AUTO_ADVANCE, DEFAULT_PAGE_DURATION } from '../constants';
 import OutputElement from './element';
 import HiddenAudio from './utils/HiddenAudio';
 import getAutoAdvanceAfter from './utils/getAutoAdvanceAfter';
 
 const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 
-function OutputPage({ page, autoAdvance = true, defaultPageDuration = 7 }) {
+function OutputPage({
+  page,
+  autoAdvance = DEFAULT_AUTO_ADVANCE,
+  defaultPageDuration = DEFAULT_PAGE_DURATION,
+}) {
   const {
     id,
     animations,

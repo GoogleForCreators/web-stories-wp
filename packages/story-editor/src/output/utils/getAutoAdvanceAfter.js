@@ -20,11 +20,12 @@ import { getTotalDuration } from '@googleforcreators/animation';
 /**
  * Internal dependencies
  */
+import { DEFAULT_PAGE_DURATION } from '../../constants';
 import getLongestMediaElement from './getLongestMediaElement';
 
 function getAutoAdvanceAfter({
   animations,
-  defaultPageDuration,
+  defaultPageDuration = DEFAULT_PAGE_DURATION,
   elements,
   backgroundAudio,
   id,

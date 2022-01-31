@@ -100,3 +100,6 @@ export const PRESET_TYPES = {
 };
 
 export const STABLE_ARRAY = [];
+
+export const DEFAULT_AUTO_ADVANCE = true;
+export const DEFAULT_PAGE_DURATION = 7;
