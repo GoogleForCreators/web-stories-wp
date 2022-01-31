@@ -82,6 +82,7 @@ const defaultConfig = {
   cdnURL: 'https://cdn.example.com/',
   version: '1.0.0-alpha.9',
   archiveURL: 'https://example.com/',
+  archiveURLRaw: 'https://example.com/',
   api: {
     stories: '/web-stories/v1/web-story',
   },
