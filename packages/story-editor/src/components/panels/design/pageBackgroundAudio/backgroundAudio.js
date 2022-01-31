@@ -82,7 +82,8 @@ function PageBackgroundAudioPanel() {
       <BackgroundAudioPanelContent
         backgroundAudio={backgroundAudio}
         updateBackgroundAudio={updateBackgroundAudio}
-        supportsCaptions={enhancedPageBackgroundAudio}
+        showCaptions={enhancedPageBackgroundAudio}
+        showLoopControl={enhancedPageBackgroundAudio}
       />
     </SimplePanel>
   );
