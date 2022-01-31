@@ -49,6 +49,7 @@ const INITIAL_STATE = {
   workspaceSize: {
     width: null,
     height: null,
+    availableHeight: null,
   },
   scrollOffset: {
     left: 0,
@@ -83,7 +84,7 @@ const reducer = {
 function calculateViewportProperties(workspaceSize, zoomSetting, zoomLevel) {
   // Calculate page size based on zoom setting
   let maxPageWidth;
-  const workspaceRatio = workspaceSize.width / workspaceSize.height;
+  const workspaceRatio = workspaceSize.width / workspaceSize.availableHeight;
   switch (zoomSetting) {
     case ZOOM_SETTING.FILL: {
       // See how much we can fit inside so all space is used minus gap
@@ -96,7 +97,7 @@ function calculateViewportProperties(workspaceSize, zoomSetting, zoomLevel) {
       } else {
         // workspace is limited in the width, so use the height minus room for scrollbar converted
         maxPageWidth =
-          (workspaceSize.height - themeHelpers.SCROLLBAR_WIDTH) *
+          (workspaceSize.availableHeight - themeHelpers.SCROLLBAR_WIDTH) *
             FULLBLEED_RATIO -
           ZOOM_PADDING_LARGE;
       }
@@ -111,7 +112,7 @@ function calculateViewportProperties(workspaceSize, zoomSetting, zoomLevel) {
         // However, it can never be wider than the max width calculated above
         maxPageWidth = Math.min(
           maxWidth,
-          (workspaceSize.height - ZOOM_PADDING_LARGE) * FULLBLEED_RATIO
+          (workspaceSize.availableHeight - ZOOM_PADDING_LARGE) * FULLBLEED_RATIO
         );
       } else {
         // workspace is limited in the width, so use the width - padding
@@ -146,7 +147,7 @@ function calculateViewportProperties(workspaceSize, zoomSetting, zoomLevel) {
   // Is full height of available area minus gap used (up to two zoom factors off)
   const hasVerticalOverflow =
     pageHeight >=
-    workspaceSize.height - ZOOM_PADDING_LARGE - 2 * PAGE_WIDTH_FACTOR;
+    workspaceSize.availableHeight - ZOOM_PADDING_LARGE - 2 * PAGE_WIDTH_FACTOR;
   const hasAnyOverflow = hasHorizontalOverflow || hasVerticalOverflow;
   const hasPageNavigation =
     !hasAnyOverflow && pageWidth < workspaceSize.width - 2 * PAGE_NAV_WIDTH;
@@ -157,7 +158,7 @@ function calculateViewportProperties(workspaceSize, zoomSetting, zoomLevel) {
     ? workspaceSize.width
     : pageWidth + pagePadding;
   const viewportHeight = hasAnyOverflow
-    ? workspaceSize.height
+    ? workspaceSize.availableHeight
     : fullbleedHeight + pagePadding;
   return {
     pageWidth,
