@@ -296,10 +296,11 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 *
 	 * @global WP_Rewrite $wp_rewrite WordPress rewrite component.
 	 *
+	 * @param  bool $ignore_has_archive Get raw value of get archive link.
 	 * @return string|false The post type archive permalink. False if the post type
 	 *                      does not exist or does not have an archive.
 	 */
-	public function get_archive_link() {
+	public function get_archive_link( $ignore_has_archive = false ) {
 		global $wp_rewrite;
 
 		$post_type_obj = $this->get_object();
@@ -308,7 +309,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 		}
 
 		if ( get_option( 'permalink_structure' ) && is_array( $post_type_obj->rewrite ) ) {
-			$struct = ( true === $post_type_obj->has_archive ) ? $post_type_obj->rewrite['slug'] : $post_type_obj->has_archive;
+			$struct = ( true === $post_type_obj->has_archive || $ignore_has_archive ) ? $post_type_obj->rewrite['slug'] : $post_type_obj->has_archive;
 			if ( $post_type_obj->rewrite['with_front'] ) {
 				$struct = $wp_rewrite->front . $struct;
 			} else {
