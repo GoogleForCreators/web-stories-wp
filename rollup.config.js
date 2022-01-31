@@ -133,6 +133,7 @@ async function config(cliArgs) {
 
     const external = [
       ...new Set([
+        ...Object.keys(pkg.config.dependencies || {}),
         ...Object.keys(pkg.config.peerDependencies || {}),
         'react',
         'react-dom',
