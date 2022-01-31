@@ -181,24 +181,13 @@ function Element({
 
   const onLoad = useCallback(() => setLoaded(true), []);
 
-  const handleKeyDown = useCallback(
-    ({ key }) => {
-      if (key === 'Enter') {
-        onInsert(resource, width, height);
-      } else if (key === ' ') {
-        setIsMenuOpen(true);
-      }
-    },
-    [onInsert, setIsMenuOpen, resource, width, height]
-  );
-
   useKeyDownEffect(
     ref,
     {
       key: ['enter', 'space'],
     },
-    handleKeyDown,
-    [handleKeyDown]
+    () => setIsMenuOpen(true),
+    [setIsMenuOpen]
   );
 
   const isPlaceholder = !isLoaded && !active;

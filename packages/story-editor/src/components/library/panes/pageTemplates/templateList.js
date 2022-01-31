@@ -22,6 +22,7 @@ import {
   useMemo,
   useRef,
   useEffect,
+  useState,
 } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { useVirtual } from 'react-virtual';
@@ -127,17 +128,16 @@ function TemplateList({
     gridItemIds: pageIds,
   });
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const handleKeyboardPageClick = useCallback(
-    ({ code }, page) => {
+    ({ code }) => {
       if (isGridFocused) {
-        if (code === 'Enter') {
-          handlePageClick(page);
-        } else if (code === 'Space') {
-          handleDelete?.(page);
+        if (code === 'Enter' || code === 'Space') {
+          setIsMenuOpen(true);
         }
       }
     },
-    [isGridFocused, handlePageClick, handleDelete]
+    [isGridFocused]
   );
 
   return (
@@ -186,6 +186,8 @@ function TemplateList({
                   onClick={() => handlePageClick(page)}
                   onKeyUp={(event) => handleKeyboardPageClick(event, page)}
                   handleDelete={handleDelete}
+                  isMenuOpen={isMenuOpen}
+                  setIsMenuOpen={setIsMenuOpen}
                   {...rest}
                 />
               );

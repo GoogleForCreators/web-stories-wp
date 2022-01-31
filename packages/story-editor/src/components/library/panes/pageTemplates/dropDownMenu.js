@@ -19,7 +19,7 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { useRef, useState, useMemo } from '@googleforcreators/react';
+import { useRef, useMemo } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -79,12 +79,12 @@ const MENU_WIDTH = 180;
  * @param {Object} props Component props.
  * @param {Function} props.onInsert Callback for using page template.
  * @param {Function} props.onDelete Callback for deleting page template.
+ * @param {boolean} props.isMenuOpen If menu is open.
+ * @param {Function} props.setIsMenuOpen Callback for opening/closing menu.
  * @return {null|*} Element or null if should not display the More icon.
  */
-function DropDownMenu({ onInsert, onDelete }) {
+function DropDownMenu({ onInsert, onDelete, isMenuOpen, setIsMenuOpen }) {
   const moreButtonRef = useRef();
-
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // Don't show edit options if resource is being processed.
   const options = [
@@ -161,6 +161,8 @@ function DropDownMenu({ onInsert, onDelete }) {
 DropDownMenu.propTypes = {
   onDelete: PropTypes.func.isRequired,
   onInsert: PropTypes.func.isRequired,
+  isMenuOpen: PropTypes.bool.isRequired,
+  setIsMenuOpen: PropTypes.func.isRequired,
 };
 
 export default DropDownMenu;

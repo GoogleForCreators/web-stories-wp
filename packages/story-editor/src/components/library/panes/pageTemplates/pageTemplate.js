@@ -106,7 +106,17 @@ PageTemplateTitle.propTypes = {
 };
 
 function PageTemplate(
-  { page, pageSize, translateY, translateX, isActive, handleDelete, ...rest },
+  {
+    page,
+    pageSize,
+    translateY,
+    translateX,
+    isActive,
+    handleDelete,
+    isMenuOpen,
+    setIsMenuOpen,
+    ...rest
+  },
   ref
 ) {
   const queuePageImageGeneration = usePageDataUrls(
@@ -124,6 +134,7 @@ function PageTemplate(
   const {
     actions: { uploadFile },
   } = useUploader();
+
   const [isHover, setIsHover] = useState(false);
   const isActivePage = isHover || isActive;
 
@@ -217,10 +228,12 @@ function PageTemplate(
           ))
         )}
         {isActivePage && <InsertionOverlay showIcon={!hasMenu} />}
-        {isActivePage && hasMenu && (
+        {(isActivePage || isMenuOpen) && hasMenu && (
           <DropDownMenu
             onDelete={(e) => handleDelete(page, e)}
             onInsert={onClick}
+            isMenuOpen={isMenuOpen}
+            setIsMenuOpen={setIsMenuOpen}
           />
         )}
       </PreviewPageWrapper>
@@ -243,6 +256,8 @@ PageTemplate.propTypes = {
   translateY: PropTypes.number.isRequired,
   translateX: PropTypes.number.isRequired,
   handleDelete: PropTypes.func,
+  isMenuOpen: PropTypes.bool,
+  setIsMenuOpen: PropTypes.func,
 };
 
 PageTemplate.displayName = 'PageTemplate';
