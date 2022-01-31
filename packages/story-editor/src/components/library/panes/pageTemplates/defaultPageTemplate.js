@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { forwardRef } from '@googleforcreators/react';
+import { forwardRef, useState } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { _x, sprintf, __ } from '@googleforcreators/i18n';
 import {
@@ -31,6 +31,7 @@ import {
 /**
  * Internal dependencies
  */
+import InsertionOverlay from '../shared/insertionOverlay';
 import { PAGE_TEMPLATE_TYPES } from './constants';
 
 const PageTemplateWrapper = styled.div``;
@@ -70,6 +71,7 @@ const DefaultPageTemplate = forwardRef(
       page.title,
       PAGE_TEMPLATE_TYPES[page.type].name
     );
+    const [isFocused, setIsFocused] = useState(false);
 
     return (
       <PageTemplateWrapper ref={ref} role="listitem">
@@ -77,6 +79,10 @@ const DefaultPageTemplate = forwardRef(
           columnWidth={columnWidth}
           tabIndex={isActive ? 0 : -1}
           aria-label={templateTitle}
+          onPointerEnter={() => setIsFocused(true)}
+          onPointerLeave={() => setIsFocused(false)}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
           {...rest}
         >
           {page.png && (
@@ -92,6 +98,7 @@ const DefaultPageTemplate = forwardRef(
               draggable={false}
             />
           )}
+          {isFocused && <InsertionOverlay />}
           {page.title && (
             <PageTemplateTitleContainer>
               <Text
