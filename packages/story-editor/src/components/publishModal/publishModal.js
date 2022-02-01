@@ -109,6 +109,7 @@ function PublishModal() {
       <Container>
         <Header
           onClose={onClose}
+          onPublish={() => {}}
           isPublishEnabled={isAllRequiredInputsFulfilled}
         />
         <MainContent
