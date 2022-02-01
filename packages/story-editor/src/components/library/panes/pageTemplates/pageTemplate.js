@@ -113,8 +113,8 @@ function PageTemplate(
     translateX,
     isActive,
     handleDelete,
-    isMenuOpen,
-    setIsMenuOpen,
+    handleGridBlur,
+    isGridFocused,
     ...rest
   },
   ref
@@ -140,7 +140,7 @@ function PageTemplate(
 
   useFocusOut(ref, () => setIsHover(false), []);
 
-  const { highlightedTemplate, onClick } = rest;
+  const { highlightedTemplate, onClick, onFocus } = rest;
 
   const handleSetHoverActive = useCallback(() => setIsHover(true), []);
 
@@ -196,8 +196,22 @@ function PageTemplate(
     queuePageImageGeneration(page);
   }, [imageUrl, queuePageImageGeneration, page, hasUploadMediaAction]);
 
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const handleKeyboardPageClick = useCallback(
+    ({ code }) => {
+      if (isGridFocused) {
+        if (code === 'Enter' || code === 'Space') {
+          setIsMenuOpen(true);
+        }
+      }
+    },
+    [isGridFocused]
+  );
+
   const hasMenu = Boolean(handleDelete);
   return (
+    // Using custom keyboard navigation also means keyboard event has to be here.
+    // eslint-disable-next-line styled-components-a11y/no-noninteractive-element-interactions
     <PageTemplateWrapper
       pageSize={pageSize}
       role="listitem"
@@ -205,6 +219,7 @@ function PageTemplate(
       // Needed for custom keyboard navigation implementation.
       // eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex
       tabIndex={0}
+      onKeyUp={(event) => handleKeyboardPageClick(event, page)}
       onMouseEnter={handleSetHoverActive}
       onMouseLeave={handleSetHoverFalse}
       aria-label={page.title}
@@ -234,6 +249,8 @@ function PageTemplate(
             onInsert={onClick}
             isMenuOpen={isMenuOpen}
             setIsMenuOpen={setIsMenuOpen}
+            handleFocus={handleGridBlur}
+            handleClose={onFocus}
           />
         )}
       </PreviewPageWrapper>
@@ -256,8 +273,6 @@ PageTemplate.propTypes = {
   translateY: PropTypes.number.isRequired,
   translateX: PropTypes.number.isRequired,
   handleDelete: PropTypes.func,
-  isMenuOpen: PropTypes.bool,
-  setIsMenuOpen: PropTypes.func,
 };
 
 PageTemplate.displayName = 'PageTemplate';

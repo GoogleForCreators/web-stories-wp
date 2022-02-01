@@ -19,7 +19,7 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { useRef, useMemo } from '@googleforcreators/react';
+import { useRef, useMemo, useEffect } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -83,8 +83,9 @@ const MENU_WIDTH = 180;
  * @param {Function} props.setIsMenuOpen Callback for opening/closing menu.
  * @return {null|*} Element or null if should not display the More icon.
  */
-function DropDownMenu({ onInsert, onDelete, isMenuOpen, setIsMenuOpen }) {
+function DropDownMenu({ onInsert, onDelete, isMenuOpen, setIsMenuOpen, handleFocus, handleClose }) {
   const moreButtonRef = useRef();
+  const containerRef = useRef();
 
   // Don't show edit options if resource is being processed.
   const options = [
@@ -95,6 +96,18 @@ function DropDownMenu({ onInsert, onDelete, isMenuOpen, setIsMenuOpen }) {
       ],
     },
   ];
+
+  useEffect(() => {
+    // If we open the menu and it was closed before, let's focus on the first item.
+    if (isMenuOpen && containerRef.current) {
+      handleFocus();
+      const firstMenuItem = containerRef.current.querySelector(
+        '[role="menuitem"][tabindex="0"]'
+      );
+
+      firstMenuItem?.focus();
+    }
+  }, [handleFocus, isMenuOpen]);
 
   const handleCurrentValue = (evt, value) => {
     evt.stopPropagation();
@@ -116,7 +129,7 @@ function DropDownMenu({ onInsert, onDelete, isMenuOpen, setIsMenuOpen }) {
 
   // Keep icon and menu displayed if menu is open (even if user's mouse leaves the area).
   return (
-    <MenuContainer>
+    <MenuContainer onFocus={(e) => e.stopPropagation()}>
       <ButtonWrapper>
         <AddButton
           ref={moreButtonRef}
@@ -142,13 +155,16 @@ function DropDownMenu({ onInsert, onDelete, isMenuOpen, setIsMenuOpen }) {
         isOpen={isMenuOpen}
         width={MENU_WIDTH}
       >
-        <DropDownContainer>
+        <DropDownContainer ref={containerRef}>
           <Menu
             parentId={buttonId}
             listId={listId}
             onMenuItemClick={handleCurrentValue}
             options={options}
-            onDismissMenu={() => setIsMenuOpen(false)}
+            onDismissMenu={() => {
+              handleClose();
+              setIsMenuOpen(false);
+            }}
             hasMenuRole
             menuStylesOverride={menuStylesOverride}
           />
