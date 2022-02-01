@@ -34,7 +34,8 @@ const ContextMenu = ({
   children,
   id,
   isAlwaysVisible,
-  isIconMenu,
+  isIconMenu = false,
+  isHorizontal = false,
   isInline = false,
   onDismiss = noop,
   ...props
@@ -46,7 +47,11 @@ const ContextMenu = ({
   );
 
   return (
-    <ContextMenuProvider isIconMenu={isIconMenu} onDismiss={onDismiss}>
+    <ContextMenuProvider
+      isIconMenu={isIconMenu}
+      isHorizontal={isHorizontal}
+      onDismiss={onDismiss}
+    >
       <Wrapper
         aria-label={ariaLabel}
         isInline={isInline}
@@ -73,6 +78,8 @@ ContextMenu.propTypes = {
   onDismiss: PropTypes.func,
   isAlwaysVisible: PropTypes.bool,
   isRTL: PropTypes.bool,
+  isInline: PropTypes.bool,
+  isHorizontal: PropTypes.bool,
 };
 
 export default ContextMenu;

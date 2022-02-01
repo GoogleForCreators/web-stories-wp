@@ -39,11 +39,24 @@ import { useContextMenu } from './contextMenuProvider';
 
 const MenuWrapper = styled.div(
   ({ theme }) => css`
-    padding: ${({ $isIconMenu }) => ($isIconMenu ? '4px 3px' : '8px 0')};
-    background-color: ${theme.colors.bg.primary};
-    border-radius: ${theme.borders.radius.small};
+    background-color: ${({ $isSecondary }) =>
+      $isSecondary ? theme.colors.bg.secondary : theme.colors.bg.primary};
+    border-radius: ${theme.borders.radius.medium};
     border: 1px solid ${theme.colors.border.disable};
-    width: ${({ $isIconMenu }) => ($isIconMenu ? 40 : 210)}px;
+    gap: 6px;
+    display: flex;
+    ${({ $isHorizontal, $isIconMenu }) =>
+      $isHorizontal
+        ? `
+          height: 52px;
+          padding: 7px 10px;
+          align-items: center;
+        `
+        : `
+          flex-direction: column;
+          width: ${$isIconMenu ? 40 : 210}px;
+          padding: ${$isIconMenu ? '4px 3px' : '8px 0'};
+        `}
 
     *:last-child {
       margin-bottom: 0;
@@ -51,7 +64,8 @@ const MenuWrapper = styled.div(
   `
 );
 MenuWrapper.propTypes = {
-  isIconMenu: PropTypes.bool,
+  $isIconMenu: PropTypes.bool,
+  $isHorizontal: PropTypes.bool,
 };
 
 /**
@@ -80,19 +94,20 @@ const Menu = ({
   isOpen,
   onFocus = noop,
   isSubMenu = false,
+  isSecondary = false,
   parentMenuRef,
   onCloseSubMenu = noop,
   ...props
 }) => {
   const { isRTL } = props;
-  const { focusedId, isIconMenu, onDismiss, setFocusedId } = useContextMenu(
-    ({ state, actions }) => ({
+  const { focusedId, isIconMenu, isHorizontal, onDismiss, setFocusedId } =
+    useContextMenu(({ state, actions }) => ({
       focusedId: state.focusedId,
       isIconMenu: state.isIconMenu,
+      isHorizontal: state.isHorizontal,
       onDismiss: actions.onDismiss,
       setFocusedId: actions.setFocusedId,
-    })
-  );
+    }));
   const mouseDownOutsideRef = useMouseDownOutsideRef(() => {
     isOpen && !isSubMenu && onDismiss();
   });
@@ -218,6 +233,8 @@ const Menu = ({
       data-testid="context-menu-list"
       role="menu"
       $isIconMenu={isIconMenu}
+      $isHorizontal={isHorizontal}
+      $isSecondary={isSecondary}
       // Tabbing out from the list while using 'shift' would
       // focus the list element. Should just travel back to the previous
       // focusable element in the DOM
@@ -237,6 +254,7 @@ export const MenuPropTypes = {
   isOpen: PropTypes.bool,
   onCloseSubMenu: PropTypes.func,
   isSubMenu: PropTypes.bool,
+  isSecondary: PropTypes.bool,
   isRTL: PropTypes.bool,
   parentMenuRef: PropTypes.object,
 };
