@@ -16,9 +16,9 @@
 /**
  * External dependencies
  */
-import { noop, useSnackbar } from '@googleforcreators/design-system';
+import { useSnackbar } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
-import { useCallback, useRef } from '@googleforcreators/react';
+import { useCallback, useRef, useState } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -34,18 +34,15 @@ import useApplyStyle from '../../../components/panels/design/textStyle/stylePres
 import getUpdatedSizeAndPosition from '../../../utils/getUpdatedSizeAndPosition';
 import { getTextPresets } from '../../../utils/presetUtils';
 import { useHistory, useStory } from '../..';
-import { ACTION_TYPES } from '../reducer';
 import { getElementStyles } from './utils';
 import { UNDO_HELP_TEXT } from './constants';
 
 /**
  * Creates the right click menu copy/paste actions.
  *
- * @param {Function} dispatch The right click reducer dispatch function
- * @param {Object} copiedElement Stored element styles
  * @return {Object} Right click menu copy/paste actions
  */
-const useCopyPasteActions = (dispatch = noop, copiedElement) => {
+const useCopyPasteActions = () => {
   const undo = useHistory(({ actions }) => actions.undo);
   const {
     addAnimations,
@@ -65,19 +62,18 @@ const useCopyPasteActions = (dispatch = noop, copiedElement) => {
   const undoRef = useRef(undo);
   undoRef.current = undo;
 
+  const [copiedElement, setCopiedElement] = useState(null);
+
   /**
    * Copy the styles and animations of the selected element.
    */
   const handleCopyStyles = useCallback(() => {
     const oldStyles = { ...copiedElement };
 
-    dispatch({
-      type: ACTION_TYPES.COPY_ELEMENT_STYLES,
-      payload: {
-        animations: selectedElementAnimations,
-        styles: getElementStyles(selectedElement),
-        type: selectedElement?.type,
-      },
+    setCopiedElement({
+      animations: selectedElementAnimations,
+      styles: getElementStyles(selectedElement),
+      type: selectedElement?.type,
     });
 
     showSnackbar({
@@ -85,10 +81,7 @@ const useCopyPasteActions = (dispatch = noop, copiedElement) => {
       dismissible: false,
       message: __('Copied style.', 'web-stories'),
       onAction: () => {
-        dispatch({
-          type: ACTION_TYPES.COPY_ELEMENT_STYLES,
-          payload: oldStyles,
-        });
+        setCopiedElement(oldStyles);
 
         trackEvent('context_menu_action', {
           name: 'undo_copy_styles',
@@ -104,13 +97,7 @@ const useCopyPasteActions = (dispatch = noop, copiedElement) => {
       element: selectedElement?.type,
       isBackground: selectedElement?.isBackground,
     });
-  }, [
-    copiedElement,
-    dispatch,
-    selectedElement,
-    selectedElementAnimations,
-    showSnackbar,
-  ]);
+  }, [copiedElement, selectedElement, selectedElementAnimations, showSnackbar]);
 
   const selectedElementId = selectedElement?.id;
   const pushUpdate = useCallback(
@@ -242,6 +229,7 @@ const useCopyPasteActions = (dispatch = noop, copiedElement) => {
   ]);
 
   return {
+    copiedElementType: copiedElement?.type,
     onCopyStyles: handleCopyStyles,
     onPasteStyles: handlePasteStyles,
   };

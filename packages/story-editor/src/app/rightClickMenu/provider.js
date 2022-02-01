@@ -81,7 +81,7 @@ function RightClickMenuProvider({ children }) {
     })
   );
 
-  const [{ copiedElement, isMenuOpen, menuPosition }, dispatch] = useReducer(
+  const [{ isMenuOpen, menuPosition }, dispatch] = useReducer(
     rightClickMenuReducer,
     DEFAULT_RIGHT_CLICK_MENU_STATE
   );
@@ -104,10 +104,8 @@ function RightClickMenuProvider({ children }) {
     onRemovePageBackground,
   } = useElementActions();
   const { onAddTextPreset, onAddColorPreset } = usePresetActions();
-  const { onCopyStyles, onPasteStyles } = useCopyPasteActions(
-    dispatch,
-    copiedElement
-  );
+  const { copiedElementType, onCopyStyles, onPasteStyles } =
+    useCopyPasteActions();
 
   const selectedElement = selectedElements?.[0];
 
@@ -325,7 +323,7 @@ function RightClickMenuProvider({ children }) {
         label: RIGHT_CLICK_MENU_LABELS.PASTE_STYLES,
         shortcut: RIGHT_CLICK_MENU_SHORTCUTS.PASTE_STYLES,
         onClick: onPasteStyles,
-        disabled: copiedElement.type !== selectedElement?.type,
+        disabled: copiedElementType !== selectedElement?.type,
         ...menuItemProps,
       },
       {
@@ -344,7 +342,7 @@ function RightClickMenuProvider({ children }) {
     }
     return items;
   }, [
-    copiedElement,
+    copiedElementType,
     layerItems,
     layerSelectItem,
     menuItemProps,
@@ -411,7 +409,7 @@ function RightClickMenuProvider({ children }) {
         label: pasteLabel,
         shortcut: RIGHT_CLICK_MENU_SHORTCUTS.PASTE_STYLES,
         onClick: onPasteStyles,
-        disabled: copiedElement.type !== selectedElement?.type,
+        disabled: copiedElementType !== selectedElement?.type,
         ...menuItemProps,
       },
     ];
@@ -421,7 +419,7 @@ function RightClickMenuProvider({ children }) {
     return items;
   }, [
     canTranscodeResource,
-    copiedElement,
+    copiedElementType,
     hasTrimMode,
     layerItems,
     layerSelectItem,
@@ -458,7 +456,7 @@ function RightClickMenuProvider({ children }) {
         label: RIGHT_CLICK_MENU_LABELS.PASTE_SHAPE_STYLES,
         shortcut: RIGHT_CLICK_MENU_SHORTCUTS.PASTE_STYLES,
         onClick: onPasteStyles,
-        disabled: copiedElement.type !== selectedElement?.type,
+        disabled: copiedElementType !== selectedElement?.type,
         ...menuItemProps,
       },
       {
@@ -472,7 +470,7 @@ function RightClickMenuProvider({ children }) {
     }
     return items;
   }, [
-    copiedElement?.type,
+    copiedElementType,
     layerItems,
     layerSelectItem,
     menuItemProps,

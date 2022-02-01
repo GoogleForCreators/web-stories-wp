@@ -17,15 +17,14 @@
  * External dependencies
  */
 import { useSnackbar } from '@googleforcreators/design-system';
-import { renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
 import { useCopyPasteActions } from '..';
 import { useStory } from '../../..';
-import { ACTION_TYPES } from '../../reducer';
 import { getElementStyles } from '../utils';
-import { COPIED_ELEMENT, ELEMENT } from './testUtils';
+import { ELEMENT } from './testUtils';
 
 jest.mock('@googleforcreators/design-system', () => ({
   ...jest.requireActual('@googleforcreators/design-system'),
@@ -37,12 +36,19 @@ jest.mock('../../../story/useStory');
 const mockUseStory = useStory;
 const mockUseSnackbar = useSnackbar;
 
-const mockDispatch = jest.fn();
 const mockShowSnackbar = jest.fn();
 const mockAddAnimations = jest.fn();
 const mockUpdateElementsById = jest.fn();
 
-const ANIMATION = { id: 'animation-1' };
+const ANIMATION = {
+  targets: [ELEMENT.id],
+  id: 'element-animation',
+  type: 'effect-pulse',
+  scale: 0.5,
+  iterations: 1,
+  duration: 1450,
+  delay: 0,
+};
 
 describe('useCopyPasteActions', () => {
   beforeEach(() => {
@@ -60,18 +66,15 @@ describe('useCopyPasteActions', () => {
   });
 
   it('should copy styles and show a confirmation snackbar', () => {
-    const { result } = renderHook(() => useCopyPasteActions(mockDispatch));
+    const { result } = renderHook(() => useCopyPasteActions());
 
-    result.current.onCopyStyles();
+    expect(result.current.copiedElementType).toBeUndefined();
 
-    expect(mockDispatch).toHaveBeenCalledWith({
-      type: ACTION_TYPES.COPY_ELEMENT_STYLES,
-      payload: {
-        animations: [{ id: 'animation-1' }],
-        type: 'image',
-        styles: getElementStyles(ELEMENT),
-      },
+    act(() => {
+      result.current.onCopyStyles();
     });
+
+    expect(result.current.copiedElementType).toStrictEqual(ELEMENT.type);
 
     expect(mockShowSnackbar).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -82,10 +85,14 @@ describe('useCopyPasteActions', () => {
   });
 
   it('should paste styles and show a confirmation snackbar', () => {
-    const { result } = renderHook(() =>
-      useCopyPasteActions(mockDispatch, COPIED_ELEMENT)
-    );
+    const { result } = renderHook(() => useCopyPasteActions());
 
+    // copy element first
+    act(() => {
+      result.current.onCopyStyles();
+    });
+
+    // paste element
     result.current.onPasteStyles();
 
     // Pasting styles is a multiple step process
@@ -105,7 +112,7 @@ describe('useCopyPasteActions', () => {
     // verify old animation deleted
     // verify styles copied
     expect(updatedStyles).toStrictEqual({
-      ...COPIED_ELEMENT.styles,
+      ...getElementStyles(ELEMENT),
       animation: { ...ANIMATION, delete: true },
     });
 
@@ -113,7 +120,7 @@ describe('useCopyPasteActions', () => {
     expect(mockAddAnimations).toHaveBeenCalledWith({
       animations: [
         {
-          ...COPIED_ELEMENT.animations[0],
+          ...ANIMATION,
           id: expect.any(String),
           targets: [ELEMENT.id],
         },
