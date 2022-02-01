@@ -303,6 +303,17 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'general',
 			],
 			/**
+			 * Author: @spacedmonkey
+			 * Issue: #10339
+			 * Creation date: 2022-02-02
+			 */
+			[
+				'name'        => 'enablePostLockingTakeOver',
+				'label'       => __( 'Story locking take over', 'web-stories' ),
+				'description' => __( 'Allow locked stories to be taken over by another authors', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
 			 * Author: @miina
 			 * Issue #471
 			 * Creation date: 2021-08-10

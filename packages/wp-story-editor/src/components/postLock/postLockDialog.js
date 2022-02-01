@@ -40,18 +40,32 @@ import { Img } from './shared';
  * @param {string} props.dashboardLink Link to dashboard.
  * @param {string} props.previewLink Preview link.
  * @param {Function} props.onClose Function when dialog is closed.
+ * @param {boolean} props.showTakeOver Weather or not to show take over button.
  * @return {*} Render.
  */
-function PostLockDialog({ isOpen, onClose, user, dashboardLink, previewLink }) {
+function PostLockDialog({
+  isOpen,
+  onClose,
+  user,
+  dashboardLink,
+  previewLink,
+  showTakeOver = false,
+}) {
   const dialogTile = __('Story is locked', 'web-stories');
-  const dialogContent = sprintf(
-    /* translators: %s: user's name */
-    __(
-      '%s is already editing this story. Do you want to take over?',
-      'web-stories'
-    ),
-    user?.name
-  );
+  const dialogContent = showTakeOver
+    ? sprintf(
+        /* translators: %s: user's name */
+        __(
+          '%s is already editing this story. Do you want to take over?',
+          'web-stories'
+        ),
+        user?.name
+      )
+    : sprintf(
+        /* translators: %s: user's name */
+        __('%s is already editing this story.', 'web-stories'),
+        user?.name
+      );
 
   return (
     <Dialog
@@ -77,13 +91,15 @@ function PostLockDialog({ isOpen, onClose, user, dashboardLink, previewLink }) {
           >
             {__('Preview', 'web-stories')}
           </Button>
-          <Button
-            type={BUTTON_TYPES.TERTIARY}
-            size={BUTTON_SIZES.SMALL}
-            onClick={onClose}
-          >
-            {__('Take over', 'web-stories')}
-          </Button>
+          {showTakeOver && (
+            <Button
+              type={BUTTON_TYPES.TERTIARY}
+              size={BUTTON_SIZES.SMALL}
+              onClick={onClose}
+            >
+              {__('Take over', 'web-stories')}
+            </Button>
+          )}
         </>
       }
     >
@@ -106,6 +122,7 @@ function PostLockDialog({ isOpen, onClose, user, dashboardLink, previewLink }) {
 
 PostLockDialog.propTypes = {
   isOpen: PropTypes.bool.isRequired,
+  showTakeOver: PropTypes.bool,
   user: PropTypes.object,
   dashboardLink: PropTypes.string.isRequired,
   previewLink: PropTypes.string,
