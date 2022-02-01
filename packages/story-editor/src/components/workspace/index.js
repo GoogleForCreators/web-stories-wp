@@ -37,7 +37,7 @@ function Workspace({ header, footer, inspectorTabs }) {
 
   return (
     <VideoTrimProvider>
-      <RichTextProvider editingElementState={editingElementState}>
+      <RichTextProvider editingState={editingElementState}>
         <CanvasArea>
           <ErrorBoundary>
             <Canvas header={header} footer={footer} />

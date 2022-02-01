@@ -43,7 +43,7 @@ import customExport from './customExport';
 import useHandlePastedText from './useHandlePastedText';
 import useSelectionManipulation from './useSelectionManipulation';
 
-function RichTextProvider({ children, editingElementState }) {
+function RichTextProvider({ children, editingState }) {
   const [editorState, setEditorState] = useState(null);
   const lastKnownStyle = useRef(null);
 
@@ -61,7 +61,7 @@ function RichTextProvider({ children, editingElementState }) {
 
   const setStateFromContent = useCallback(
     (content) => {
-      const { offset, clearContent, selectAll } = editingElementState || {};
+      const { offset, clearContent, selectAll } = editingState || {};
       let state = EditorState.createWithContent(customImport(content));
       if (clearContent) {
         // If `clearContent` is specified, push the update to clear content so that
@@ -80,7 +80,7 @@ function RichTextProvider({ children, editingElementState }) {
       lastKnownStyle.current = state.getCurrentInlineStyle();
       setEditorState(state);
     },
-    [editingElementState, setEditorState]
+    [editingState, setEditorState]
   );
 
   useFauxSelection(editorState, setEditorState);
@@ -151,7 +151,7 @@ function RichTextProvider({ children, editingElementState }) {
 
 RichTextProvider.propTypes = {
   children: PropTypes.node.isRequired,
-  editingElementState: PropTypes.object,
+  editingState: PropTypes.object,
 };
 
 export default RichTextProvider;
