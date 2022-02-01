@@ -76,6 +76,7 @@ const defaultConfig = {
     canManageSettings: false,
     canUploadFiles: false,
   },
+  canViewDefaultTemplates: false,
   localeData: [],
   flags: {},
   apiCallbacks: {},

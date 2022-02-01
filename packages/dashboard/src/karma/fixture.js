@@ -51,12 +51,10 @@ if ('true' === process.env.CI) {
     },
   });
 }
-const defaultConfig = {
+export const FIXTURE_DEFAULT_CONFIG = {
   capabilities: {
     canManageSettings: true,
     canUploadFiles: true,
-    canInstallPlugins: true,
-    siteKitPluginStatus: false,
   },
   allowedImageMimeTypes: ['image/png', 'image/jpeg', 'image/gif'],
   canViewDefaultTemplates: true,
@@ -98,7 +96,7 @@ const defaultConfig = {
 
 export default class Fixture {
   constructor({ config = {}, flags = {} } = {}) {
-    this._config = { ...defaultConfig, ...config };
+    this._config = { ...FIXTURE_DEFAULT_CONFIG, ...config };
     this._flags = flags;
     this._container = null;
     this._appFrameStub = null;
@@ -168,6 +166,10 @@ export default class Fixture {
   setFlags(flags) {
     this._flags = { ...this._config.flags, ...flags };
     this._config.flags = this._flags;
+  }
+
+  setConfig(config) {
+    this._config = { ...this._config, ...config };
   }
 
   /**
