@@ -90,7 +90,7 @@ describe('Eyedropper', () => {
     });
     // Click the eyedropper icon in the custom view
     await fixture.events.click(bgPanel.backgroundColor.picker.eyedropper);
-    // The bots are a little to fast, wait for eyedropper
+    // The bots are a little too fast, wait for eyedropper
     await fixture.events.sleep(500);
     const eyeDropperLayer = fixture.screen.findByTestId('eyedropperLayer', {
       timeout: 9000,

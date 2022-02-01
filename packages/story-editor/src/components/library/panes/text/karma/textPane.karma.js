@@ -108,7 +108,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
 
       await waitFor(
         () => {
-          if (fixture.editor.library.text.textSets.length === 0) {
+          if (!fixture.editor.library.text.textSets.length) {
             throw new Error('Text set not ready');
           }
           expect(fixture.editor.library.text.textSets.length).toBeGreaterThan(
@@ -147,8 +147,9 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
         });
         nodeIndex++;
         storyContext = await fixture.renderHook(() => useStory());
-        const element = storyContext.state.selectedElements[0];
+        let element = null;
         await waitFor(() => {
+          element = storyContext.state.selectedElements[0];
           if (!element) {
             throw new Error('story not ready');
           }
@@ -174,8 +175,9 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
         lastY = nextY;
         lastHeight = nextHeight;
         storyContext = await fixture.renderHook(() => useStory());
-        const element = storyContext.state.selectedElements[0];
+        let element = null;
         await waitFor(() => {
+          element = storyContext.state.selectedElements[0];
           if (!element) {
             throw new Error('story not ready');
           }
@@ -195,7 +197,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
 
       await waitFor(
         () => {
-          if (fixture.editor.library.text.textSets.length === 0) {
+          if (!fixture.editor.library.text.textSets.length) {
             throw new Error('text set not ready');
           }
           expect(fixture.editor.library.text.textSets.length).toBeTruthy();
