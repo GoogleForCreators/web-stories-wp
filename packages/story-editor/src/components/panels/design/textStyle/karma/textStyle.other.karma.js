@@ -111,12 +111,12 @@ describe('Text Style Panel', () => {
 
       await waitFor(async () => {
         const texts = await fixture.screen.findAllByText('Fill in some text');
-        expect(texts).toBeDefined();
+        await expect(texts).toBeDefined();
 
         const whiteTexts = texts.filter((text) =>
           text.outerHTML.includes('color: #fff')
         );
-        expect(whiteTexts).toBeDefined();
+        await expect(whiteTexts).toBeDefined();
 
         const html = whiteTexts[0].outerHTML;
         expect(html).toBeDefined();
