@@ -107,7 +107,7 @@ describe('Canvas keys integration', () => {
     await fixture.events.click(colorButton);
     expect(await getSelection()).toEqual([element1.id]);
 
-    const dialog = fixture.screen.findByRole('dialog');
+    const dialog = await fixture.screen.findByRole('dialog');
     expect(dialog).toBeTruthy();
 
     await fixture.snapshot('color picker open');
