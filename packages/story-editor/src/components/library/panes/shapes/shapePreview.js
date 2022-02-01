@@ -29,10 +29,6 @@ import styled from 'styled-components';
 import { trackEvent } from '@googleforcreators/tracking';
 import { createSolidFromString } from '@googleforcreators/patterns';
 import { PAGE_WIDTH, useUnits } from '@googleforcreators/units';
-import {
-  ThemeGlobals,
-  BUTTON_TRANSITION_TIMING,
-} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -56,15 +52,6 @@ const Aspect = styled.button`
 
   border-radius: ${({ theme }) => theme.borders.radius.small};
   background-color: ${({ theme }) => theme.colors.interactiveBg.previewOverlay};
-
-  transition: background-color ${BUTTON_TRANSITION_TIMING};
-
-  &:hover,
-  &:focus,
-  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} {
-    background-color: ${({ theme }) =>
-      theme.colors.interactiveBg.secondaryHover};
-  }
 
   ${focusStyle};
 `;

@@ -37,13 +37,16 @@ import { DEFAULT_ELEMENT_WIDTH } from './shapePreview';
 
 const StickerButton = styled(Button).attrs({
   size: BUTTON_SIZES.SMALL,
-  type: BUTTON_TYPES.SECONDARY,
 })`
   position: relative;
   padding: 0 0 95.5% 0;
   margin: 0;
   height: 60px;
   background-color: ${({ theme }) => theme.colors.interactiveBg.previewOverlay};
+  &:active {
+    background-color: transparent;
+    color: ${({ theme }) => theme.colors.fg.primary};
+  }
 `;
 
 const StickerInner = styled.div`
