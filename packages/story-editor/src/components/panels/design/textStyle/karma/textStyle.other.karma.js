@@ -25,7 +25,7 @@ import { waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import { useStory } from '../../../../../app/story';
 import { Fixture } from '../../../../../karma/fixture';
 
-fdescribe('Text Style Panel', () => {
+describe('Text Style Panel', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -71,7 +71,7 @@ fdescribe('Text Style Panel', () => {
     });
   });
 
-  fdescribe('Adaptive text color', () => {
+  describe('Adaptive text color', () => {
     it('should not allow triggering adaptive text color for multi-selection', async () => {
       // Add 2 text elements.
       await fixture.editor.library.textTab.click();
@@ -90,7 +90,7 @@ fdescribe('Text Style Panel', () => {
       ).toBeTrue();
     });
 
-    fit('should change the text color to white on black background', async () => {
+    it('should change the text color to white on black background', async () => {
       // Assign black color.
       const safezone = fixture.querySelector('[data-testid="safezone"]');
       await fixture.events.click(safezone);
@@ -109,28 +109,42 @@ fdescribe('Text Style Panel', () => {
         fixture.editor.inspector.designPanel.textStyle.adaptiveColor
       );
 
-      await waitFor(async () => {
-        const texts = await fixture.screen.findAllByText('Fill in some text');
-        await expect(texts.length).toBeGreaterThan(0);
+      await waitFor(
+        async () => {
+          const texts = await fixture.screen.findAllByText(
+            'Fill in some text',
+            { timeout: 2000 }
+          );
+          await expect(texts.length).toBeGreaterThan(1);
 
-        const whiteTexts = texts.filter((text) =>
-          text.outerHTML.includes('color: #fff')
-        );
-        await expect(whiteTexts).toBeDefined();
+          const whiteTexts = texts.filter((text) =>
+            text.outerHTML.includes('color: #fff')
+          );
+          await waitFor(
+            () => {
+              if (!whiteTexts.length) {
+                throw new Error('white text not ready');
+              }
+              expect(whiteTexts.length).toBeGreaterThan(0);
+            },
+            { timeout: 3000 }
+          );
 
-        const html = whiteTexts[0].outerHTML;
-        expect(html).toBeDefined();
+          const html = whiteTexts[0].outerHTML;
+          expect(html).toBeDefined();
 
-        expect(html).toContain('color: #fff');
-        const {
-          state: {
-            currentPage: { elements },
-          },
-        } = await fixture.renderHook(() => useStory());
-        expect(elements[1].content).toBe(
-          '<span style="color: #fff">Fill in some text</span>'
-        );
-      });
+          expect(html).toContain('color: #fff');
+          const {
+            state: {
+              currentPage: { elements },
+            },
+          } = await fixture.renderHook(() => useStory());
+          expect(elements[1].content).toBe(
+            '<span style="color: #fff">Fill in some text</span>'
+          );
+        },
+        { timeout: 9000 }
+      );
     });
   });
 
