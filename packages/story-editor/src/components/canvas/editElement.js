@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useState, forwardRef } from '@googleforcreators/react';
+import { memo, useState, forwardRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useUnits } from '@googleforcreators/units';
@@ -39,35 +39,35 @@ const Wrapper = styled.div`
   pointer-events: initial;
 `;
 
-const EditElement = forwardRef(function EditElement(
-  { element, editWrapper, onResize },
-  ref
-) {
-  const { id, type } = element;
-  const { getBox } = useUnits((state) => ({
-    getBox: state.actions.getBox,
-  }));
+const EditElement = memo(
+  forwardRef(function EditElement({ element, editWrapper, onResize }, ref) {
+    const { id, type } = element;
+    const { getBox } = useUnits((state) => ({
+      getBox: state.actions.getBox,
+    }));
 
-  // Needed for elements that can scale in edit mode.
-  const [localProperties, setLocalProperties] = useState(null);
+    // Needed for elements that can scale in edit mode.
+    const [localProperties, setLocalProperties] = useState(null);
 
-  const { Edit } = getDefinitionForType(type);
-  const box = getBox(
-    localProperties ? { ...element, ...localProperties } : element
-  );
+    const { Edit } = getDefinitionForType(type);
+    const elementWithLocal = localProperties
+      ? { ...element, ...localProperties }
+      : element;
+    const box = getBox(elementWithLocal);
 
-  return (
-    <Wrapper aria-labelledby={`layer-${id}`} {...box} ref={ref}>
-      <Edit
-        element={localProperties ? { ...element, ...localProperties } : element}
-        box={box}
-        editWrapper={editWrapper}
-        onResize={onResize}
-        setLocalProperties={setLocalProperties}
-      />
-    </Wrapper>
-  );
-});
+    return (
+      <Wrapper aria-labelledby={`layer-${id}`} {...box} ref={ref}>
+        <Edit
+          element={elementWithLocal}
+          box={box}
+          editWrapper={editWrapper}
+          onResize={onResize}
+          setLocalProperties={setLocalProperties}
+        />
+      </Wrapper>
+    );
+  })
+);
 
 EditElement.propTypes = {
   element: PropTypes.object.isRequired,

@@ -109,12 +109,12 @@ function EditLayerForElement({ element, showOverflow }) {
     [onMoveableMount]
   );
 
-  const onResize = () => {
+  const onResize = useCallback(() => {
     // Update moveable when resizing.
     if (moveable.current) {
       moveable.current.updateRect();
     }
-  };
+  }, []);
 
   const { hasEditModeMoveable } = getDefinitionForType(element.type);
 
