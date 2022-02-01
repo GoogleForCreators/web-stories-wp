@@ -27,7 +27,7 @@
   },
   "type": "module",
   "dependencies": {
-    "commander": "^8.3.0",
+    "commander": "^9.0.0",
     "semver": "^7.3.5"
   },
   "bin": {
