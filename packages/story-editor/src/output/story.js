@@ -42,6 +42,7 @@ function OutputStory({
   },
   pages,
   metadata: { publisher },
+  flags,
 }) {
   const ampExtensions = getUsedAmpExtensions(pages);
   const preloadResources = getPreloadResources(pages);
@@ -87,6 +88,7 @@ function OutputStory({
               page={page}
               autoAdvance={autoAdvance}
               defaultPageDuration={defaultPageDuration}
+              flags={flags}
             />
           ))}
         </amp-story>
@@ -115,6 +117,7 @@ OutputStory.propTypes = {
   metadata: PropTypes.shape({
     publisher: PropTypes.string.isRequired,
   }).isRequired,
+  flags: PropTypes.object,
 };
 
 export default OutputStory;
