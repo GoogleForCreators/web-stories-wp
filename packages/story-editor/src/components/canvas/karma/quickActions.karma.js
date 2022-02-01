@@ -290,15 +290,17 @@ describe('Quick Actions integration', () => {
       ).toBeNull();
 
       // wait for the undo button to appear
-      await waitFor(
-        () =>
-          fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true }),
-        { timeout: 4000 }
-      );
-
+      await fixture.screen.findByRole('button', {
+        name: /^Undo$/,
+        hidden: true,
+        timeout: 400,
+      });
       // click `undo` button on snackbar
       await fixture.events.click(
-        fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true })
+        await fixture.screen.findByRole('button', {
+          name: /^Undo$/,
+          hidden: true,
+        })
       );
 
       // Verify that new animations and styles match original animation
@@ -417,14 +419,13 @@ describe('Quick Actions integration', () => {
       // the bot clicks the clear button too fast
       // the animation does not get removed if it is clicked before it stops playing
       // click "stop playing" and test the animations have been applied
-      await waitFor(
-        async () => {
-          await fixture.events.click(
-            fixture.screen.getByRole('button', { name: 'Stop Page Animations' })
-          );
-        },
-        { timeout: 4000 }
-      );
+      await waitFor(async () => {
+        await fixture.events.click(
+          await fixture.screen.findByRole('button', {
+            name: 'Stop Page Animations',
+          })
+        );
+      });
 
       // add styles to the shape
       await fixture.events.click(
@@ -436,28 +437,25 @@ describe('Quick Actions integration', () => {
       // verify the animations and styles were added
       let originalAnimations = [];
       let originalSelectedElement = null;
-      await waitFor(
-        async () => {
-          const story = await fixture.renderHook(() =>
-            useStory(({ state }) => ({
-              animations: state.pages[0].animations,
-              selectedElement: state.selectedElements[0],
-            }))
-          );
-          ({
-            animations: originalAnimations,
-            selectedElement: originalSelectedElement,
-          } = story);
+      await waitFor(async () => {
+        const story = await fixture.renderHook(() =>
+          useStory(({ state }) => ({
+            animations: state.pages[0].animations,
+            selectedElement: state.selectedElements[0],
+          }))
+        );
+        ({
+          animations: originalAnimations,
+          selectedElement: originalSelectedElement,
+        } = story);
 
-          if (!originalSelectedElement) {
-            throw new Error('story not ready');
-          }
-
-          expect(originalAnimations.length).toEqual(1);
-          expect(originalSelectedElement.opacity).toEqual(99);
+        if (!originalSelectedElement) {
+          throw new Error('story not ready');
         }
-        // { timeout: 4000 }
-      );
+
+        expect(originalAnimations.length).toEqual(1);
+        expect(originalSelectedElement.opacity).toEqual(99);
+      });
 
       // reset the element
       await fixture.events.click(
@@ -478,15 +476,17 @@ describe('Quick Actions integration', () => {
       ).toBeNull();
 
       // wait for the undo button to appear
-      await waitFor(
-        () =>
-          fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true }),
-        { timeout: 4000 }
-      );
-
+      await fixture.screen.findByRole('button', {
+        name: /^Undo$/,
+        hidden: true,
+        timeout: 400,
+      });
       // click `undo` button on snackbar
       await fixture.events.click(
-        fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true })
+        await fixture.screen.findByRole('button', {
+          name: /^Undo$/,
+          hidden: true,
+        })
       );
 
       // Verify that new animations match original animation
@@ -597,14 +597,13 @@ describe('Quick Actions integration', () => {
       // the bot clicks the clear button too fast
       // the animation does not get removed if it is clicked before it stops playing
       // click "stop playing" and test the animations have been applied
-      await waitFor(
-        async () => {
-          await fixture.events.click(
-            fixture.screen.getByRole('button', { name: 'Stop Page Animations' })
-          );
-        },
-        { timeout: 4000 }
-      );
+      await waitFor(async () => {
+        await fixture.events.click(
+          await fixture.screen.findByRole('button', {
+            name: 'Stop Page Animations',
+          })
+        );
+      });
 
       // apply filter
       await fixture.events.click(
@@ -653,15 +652,17 @@ describe('Quick Actions integration', () => {
       ).toBeNull();
 
       // wait for the undo button to appear
-      await waitFor(
-        () =>
-          fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true }),
-        { timeout: 4000 }
-      );
-
+      await fixture.screen.findByRole('button', {
+        name: /^Undo$/,
+        hidden: true,
+        timeout: 400,
+      });
       // click `undo` button on snackbar
       await fixture.events.click(
-        fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true })
+        await fixture.screen.findByRole('button', {
+          name: /^Undo$/,
+          hidden: true,
+        })
       );
 
       // Verify that new animations match original animation
@@ -793,34 +794,30 @@ describe('Quick Actions integration', () => {
       // the bot clicks the clear button too fast
       // the animation does not get removed if it is clicked before it stops playing
       // click "stop playing" and test the animations have been applied
-      await waitFor(
-        async () => {
-          await fixture.events.click(
-            fixture.screen.getByRole('button', { name: 'Stop Page Animations' })
-          );
-        },
-        { timeout: 4000 }
-      );
+      await waitFor(async () => {
+        await fixture.events.click(
+          await fixture.screen.findByRole('button', {
+            name: 'Stop Page Animations',
+          })
+        );
+      });
 
       // verify animations were added
       let originalAnimations = [];
-      await waitFor(
-        async () => {
-          const story = await fixture.renderHook(() =>
-            useStory(({ state }) => ({
-              animations: state.pages[0].animations,
-            }))
-          );
-          ({ animations: originalAnimations } = story);
+      await waitFor(async () => {
+        const story = await fixture.renderHook(() =>
+          useStory(({ state }) => ({
+            animations: state.pages[0].animations,
+          }))
+        );
+        ({ animations: originalAnimations } = story);
 
-          if (originalAnimations.length === 0) {
-            throw new Error('story not ready');
-          }
-
-          expect(originalAnimations.length).toEqual(1);
+        if (originalAnimations.length === 0) {
+          throw new Error('story not ready');
         }
-        // { timeout: 4000 }
-      );
+
+        expect(originalAnimations.length).toEqual(1);
+      });
 
       // reset the element
       await fixture.events.click(
@@ -839,15 +836,18 @@ describe('Quick Actions integration', () => {
       ).toBeNull();
 
       // wait for the undo button to appear
-      await waitFor(
-        () =>
-          fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true }),
-        { timeout: 4000 }
-      );
 
+      await fixture.screen.findByRole('button', {
+        name: /^Undo$/,
+        hidden: true,
+        timeout: 400,
+      });
       // click `undo` button on snackbar
       await fixture.events.click(
-        fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true })
+        await fixture.screen.findByRole('button', {
+          name: /^Undo$/,
+          hidden: true,
+        })
       );
 
       // Verify that new animations match original animation
@@ -1005,14 +1005,13 @@ describe('Quick Actions integration', () => {
       // the bot clicks the clear button too fast
       // the animation does not get removed if it is clicked before it stops playing
       // click "stop playing" and test the animations have been applied
-      await waitFor(
-        async () => {
-          await fixture.events.click(
-            fixture.screen.getByRole('button', { name: 'Stop Page Animations' })
-          );
-        },
-        { timeout: 4000 }
-      );
+      await waitFor(async () => {
+        await fixture.events.click(
+          await fixture.screen.findByRole('button', {
+            name: 'Stop Page Animations',
+          })
+        );
+      });
 
       // apply filter
       await fixture.events.click(
@@ -1061,15 +1060,17 @@ describe('Quick Actions integration', () => {
       ).toBeNull();
 
       // wait for the undo button to appear
-      await waitFor(
-        () =>
-          fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true }),
-        { timeout: 4000 }
-      );
-
+      await fixture.screen.findByRole('button', {
+        name: /^Undo$/,
+        hidden: true,
+        timeout: 400,
+      });
       // click `undo` button on snackbar
       await fixture.events.click(
-        fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true })
+        await fixture.screen.findByRole('button', {
+          name: /^Undo$/,
+          hidden: true,
+        })
       );
 
       // Verify that new animations and styles match original animation
@@ -1171,14 +1172,13 @@ describe('Quick Actions integration', () => {
       // the bot clicks the clear button too fast
       // the animation does not get removed if it is clicked before it stops playing
       // click "stop playing" and test the animations have been applied
-      await waitFor(
-        async () => {
-          await fixture.events.click(
-            fixture.screen.getByRole('button', { name: 'Stop Page Animations' })
-          );
-        },
-        { timeout: 4000 }
-      );
+      await waitFor(async () => {
+        await fixture.events.click(
+          await fixture.screen.findByRole('button', {
+            name: 'Stop Page Animations',
+          })
+        );
+      });
 
       // apply opacity
       await fixture.events.click(
@@ -1229,15 +1229,17 @@ describe('Quick Actions integration', () => {
       ).toBeNull();
 
       // wait for the undo button to appear
-      await waitFor(
-        () =>
-          fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true }),
-        { timeout: 4000 }
-      );
-
+      await fixture.screen.findByRole('button', {
+        name: /^Undo$/,
+        hidden: true,
+        timeout: 400,
+      });
       // click `undo` button on snackbar
       await fixture.events.click(
-        fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true })
+        await fixture.screen.findByRole('button', {
+          name: /^Undo$/,
+          hidden: true,
+        })
       );
 
       // Verify that new animations and styles match original animation
