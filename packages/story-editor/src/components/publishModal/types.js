@@ -13,10 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+/**
+ * Internal dependencies
+ */
+import { INPUT_KEYS } from './constants';
 
-export const REQUIRED_INPUTS = ['excerpt', 'title'];
-export const INPUT_KEYS = {
-  EXCERPT: 'excerpt',
-  SLUG: 'slug',
-  TITLE: 'title',
-};
+export const MANDATORY_INPUT_VALUE_TYPES = PropTypes.shape({
+  [INPUT_KEYS.EXCERPT]: PropTypes.string,
+  [INPUT_KEYS.SLUG]: PropTypes.string,
+  [INPUT_KEYS.TITLE]: PropTypes.string,
+});

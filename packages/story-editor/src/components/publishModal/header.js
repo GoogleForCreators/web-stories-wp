@@ -81,6 +81,6 @@ const Header = ({ isPublishEnabled, onClose }) => {
 export default Header;
 
 Header.propTypes = {
-  isPublishEnabled: PropTypes.boolean,
+  isPublishEnabled: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
 };

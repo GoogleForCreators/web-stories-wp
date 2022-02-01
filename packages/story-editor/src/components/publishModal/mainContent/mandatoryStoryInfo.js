@@ -24,6 +24,7 @@ import { __ } from '@googleforcreators/i18n';
  * Internal dependencies
  */
 import { INPUT_KEYS } from '../constants';
+import { MANDATORY_INPUT_VALUE_TYPES } from '../types';
 import FormLabel from './formLabel';
 
 const FormSection = styled.div`
@@ -54,6 +55,7 @@ const MandatoryStoryInfo = ({
           value={inputValues[INPUT_KEYS.TITLE]}
           onChange={handleUpdateStoryInfo}
           onBlur={handleUpdateSlug}
+          aria-label={__('Story Title', 'web-stories')}
           placeholder={__('Add title', 'web-stories')}
         />
       </FormSection>
@@ -68,6 +70,7 @@ const MandatoryStoryInfo = ({
           showCount
           maxLength={100}
           value={inputValues[INPUT_KEYS.EXCERPT]}
+          aria-label={__('Story Description', 'web-stories')}
           placeholder={__('Write an excerpt', 'web-stories')}
           hint={__(
             'Stories with a description tend to do better on search and have a wider reach',
@@ -85,10 +88,5 @@ export default MandatoryStoryInfo;
 MandatoryStoryInfo.propTypes = {
   handleUpdateStoryInfo: PropTypes.func,
   handleUpdateSlug: PropTypes.func,
-  inputValues: PropTypes.shape({
-    // todo pull this out and reuse
-    excerpt: PropTypes.string,
-    title: PropTypes.string,
-    slug: PropTypes.string,
-  }),
+  inputValues: MANDATORY_INPUT_VALUE_TYPES,
 };

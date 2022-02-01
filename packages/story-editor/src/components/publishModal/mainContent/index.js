@@ -28,6 +28,7 @@ import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
+import { MANDATORY_INPUT_VALUE_TYPES } from '../types';
 import MandatoryStoryInfo from './mandatoryStoryInfo';
 import StoryPreview from './storyPreview';
 
@@ -98,9 +99,5 @@ export default MainContent;
 MainContent.propTypes = {
   handleUpdateStoryInfo: PropTypes.func,
   handleUpdateSlug: PropTypes.func,
-  inputValues: PropTypes.shape({
-    // todo pull this out and reuse
-    excerpt: PropTypes.string,
-    title: PropTypes.string,
-  }),
+  inputValues: MANDATORY_INPUT_VALUE_TYPES, // update types when panel is figured out
 };
