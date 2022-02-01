@@ -54,6 +54,7 @@ describe('Page Attachment', () => {
   });
 
   const moveElementToBottom = async () => {
+    safezone = fixture.querySelector('[data-testid="safezone"]');
     const safezoneHeight = safezone.getBoundingClientRect().height;
     const frameHeight = frame.getBoundingClientRect().height;
     await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
