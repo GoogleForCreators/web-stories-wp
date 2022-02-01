@@ -23,7 +23,6 @@ import STICKERS from '@googleforcreators/stickers';
 import {
   Button,
   BUTTON_SIZES,
-  BUTTON_TYPES,
 } from '@googleforcreators/design-system';
 import { useUnits } from '@googleforcreators/units';
 
@@ -43,10 +42,6 @@ const StickerButton = styled(Button).attrs({
   margin: 0;
   height: 60px;
   background-color: ${({ theme }) => theme.colors.interactiveBg.previewOverlay};
-  &:active {
-    background-color: transparent;
-    color: ${({ theme }) => theme.colors.fg.primary};
-  }
 `;
 
 const StickerInner = styled.div`
