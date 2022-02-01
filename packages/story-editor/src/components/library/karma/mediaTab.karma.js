@@ -56,8 +56,8 @@ describe('Library Media Tab', () => {
     });
   });
 
-  describe('CUJ: Creator Can Add Image/Video to Page: Can edit/delete media', () => {
-    it('should open the edit/delete menu', async () => {
+  describe('CUJ: Creator Can Add Image/Video to Page: Can manage media', () => {
+    it('should open the dropdown menu', async () => {
       const mediaItem = fixture.editor.library.media.item(0);
       // Hover the media
       await fixture.events.mouse.moveRel(mediaItem, 20, 20, { steps: 2 });
@@ -73,10 +73,16 @@ describe('Library Media Tab', () => {
         up(),
       ]);
       expect(
-        fixture.screen.getByRole('menuitem', { name: 'Edit' })
+        fixture.screen.getByRole('menuitem', { name: 'Edit meta data' })
       ).toBeDefined();
       expect(
-        fixture.screen.getByRole('menuitem', { name: 'Delete' })
+        fixture.screen.getByRole('menuitem', { name: 'Delete from library' })
+      ).toBeDefined();
+      expect(
+        fixture.screen.getByRole('menuitem', { name: 'Insert image' })
+      ).toBeDefined();
+      expect(
+        fixture.screen.getByRole('menuitem', { name: 'Add as background' })
       ).toBeDefined();
     });
   });

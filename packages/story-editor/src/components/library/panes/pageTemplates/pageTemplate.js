@@ -252,7 +252,9 @@ function PageTemplate(
             setIsMenuOpen={setIsMenuOpen}
             handleFocus={handleGridBlur}
             handleClose={(e) => {
+              // First let's focus on grid.
               handleGridFocus(e);
+              // And then back on the specific template.
               onFocus(e);
             }}
           />
@@ -277,6 +279,9 @@ PageTemplate.propTypes = {
   translateY: PropTypes.number.isRequired,
   translateX: PropTypes.number.isRequired,
   handleDelete: PropTypes.func,
+  handleGridBlur: PropTypes.func,
+  isGridFocused: PropTypes.bool,
+  handleGridFocus: PropTypes.func,
 };
 
 PageTemplate.displayName = 'PageTemplate';

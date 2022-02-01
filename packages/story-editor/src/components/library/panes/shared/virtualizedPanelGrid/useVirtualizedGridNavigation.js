@@ -81,7 +81,6 @@ export default function useVirtualizedGridNavigation({
     }
 
     if (activeGridItemId && isGridFocused) {
-      console.log('is-focusing');
       gridItemRefs.current?.[activeGridItemId]?.focus();
     }
   }, [activeGridItemId, currentAvailableRows, isGridFocused, gridItemRefs]);
@@ -90,7 +89,6 @@ export default function useVirtualizedGridNavigation({
 
   const handleGridFocus = useCallback(() => {
     if (!isGridFocused) {
-      console.log('is-focusing');
       const newGridItemId = gridItemRefs.current?.[activeGridItemId]
         ? activeGridItemId
         : gridItemIds?.[0];
@@ -102,7 +100,6 @@ export default function useVirtualizedGridNavigation({
   }, [activeGridItemId, isGridFocused, gridItemIds, gridItemRefs]);
 
   const handleGridBlur = useCallback(() => {
-    console.log('blurring');
     if (isGridFocused && window.document.activeElement) {
       setActiveGridItemId(null);
       setIsGridFocused(false);
@@ -115,7 +112,6 @@ export default function useVirtualizedGridNavigation({
   const handleGridItemFocus = useCallback(
     (itemId) => {
       if (activeGridItemId !== itemId) {
-        console.log('is-focusing');
         setActiveGridItemId(itemId);
       }
     },

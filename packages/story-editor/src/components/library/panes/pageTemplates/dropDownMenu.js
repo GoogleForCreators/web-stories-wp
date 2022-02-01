@@ -81,9 +81,18 @@ const MENU_WIDTH = 180;
  * @param {Function} props.onDelete Callback for deleting page template.
  * @param {boolean} props.isMenuOpen If menu is open.
  * @param {Function} props.setIsMenuOpen Callback for opening/closing menu.
+ * @param {Function} props.handleFocus Callback for when focusing on the dropdown.
+ * @param {Function} props.handleClose Callback for when closing the dropdown.
  * @return {null|*} Element or null if should not display the More icon.
  */
-function DropDownMenu({ onInsert, onDelete, isMenuOpen, setIsMenuOpen, handleFocus, handleClose }) {
+function DropDownMenu({
+  onInsert,
+  onDelete,
+  isMenuOpen,
+  setIsMenuOpen,
+  handleFocus,
+  handleClose,
+}) {
   const moreButtonRef = useRef();
   const containerRef = useRef();
 
@@ -179,6 +188,8 @@ DropDownMenu.propTypes = {
   onInsert: PropTypes.func.isRequired,
   isMenuOpen: PropTypes.bool.isRequired,
   setIsMenuOpen: PropTypes.func.isRequired,
+  handleFocus: PropTypes.func.isRequired,
+  handleClose: PropTypes.func.isRequired,
 };
 
 export default DropDownMenu;
