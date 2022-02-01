@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useMemo } from '@googleforcreators/react';
+import { useMemo, useState } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import STICKERS from '@googleforcreators/stickers';
@@ -32,6 +32,7 @@ import { useUnits } from '@googleforcreators/units';
  */
 import useLibrary from '../../useLibrary';
 import LibraryMoveable from '../shared/libraryMoveable';
+import InsertionOverlay from '../shared/insertionOverlay';
 import { DEFAULT_ELEMENT_WIDTH } from './shapePreview';
 
 const StickerButton = styled(Button).attrs({
@@ -88,6 +89,10 @@ function StickerPreview({ stickerType, index }) {
     [aspectRatio, stickerType]
   );
 
+  const [isActive, setIsActive] = useState(false);
+  const makeActive = () => setIsActive(true);
+  const makeInactive = () => setIsActive(false);
+
   const Svg = sticker.svg;
   return (
     <StickerButton
@@ -99,6 +104,10 @@ function StickerPreview({ stickerType, index }) {
         })
       }
       tabIndex={index === 0 ? 0 : -1}
+      onPointerEnter={makeActive}
+      onFocus={makeActive}
+      onPointerLeave={makeInactive}
+      onBlur={makeInactive}
     >
       <StickerInner>
         <Svg
@@ -107,6 +116,7 @@ function StickerPreview({ stickerType, index }) {
             width: aspectRatio < 0.955 ? 'auto' : '60%',
           }}
         />
+        {isActive && <InsertionOverlay />}
         <LibraryMoveable
           type={'sticker'}
           elementProps={stickerData}
