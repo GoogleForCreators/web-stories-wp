@@ -221,7 +221,7 @@ export default function ArchiveSettings({
                 ),
               }}
             >
-              {archivePageId
+              {archivePageId && archiveURL !== archiveURLRaw
                 ? sprintf(
                     /* translators: 1. archive url, 2. archive url. */
                     __(
