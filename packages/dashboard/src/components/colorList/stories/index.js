@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { number } from '@storybook/addon-knobs';
-
-/**
  * Internal dependencies
  */
 import ColorList from '..';
@@ -27,9 +22,18 @@ import ColorList from '..';
 export default {
   title: 'Dashboard/Components/ColorList',
   component: ColorList,
+  args: {
+    size: 50,
+    spacing: 10,
+  },
+  parameters: {
+    controls: {
+      exclude: ['colors'],
+    },
+  },
 };
 
-export const _default = () => {
+export const _default = (args) => {
   const colors = [
     { label: 'Red', color: 'red' },
     { label: 'Blue', color: 'blue' },
@@ -37,11 +41,5 @@ export const _default = () => {
     { label: 'White', color: 'white' },
   ];
 
-  return (
-    <ColorList
-      colors={colors}
-      size={number('Size', 50) || 0}
-      spacing={number('Spacing', 10) || 10}
-    />
-  );
+  return <ColorList colors={colors} {...args} />;
 };

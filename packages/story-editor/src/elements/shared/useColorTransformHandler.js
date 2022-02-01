@@ -17,7 +17,10 @@
 /**
  * External dependencies
  */
-import { generatePatternStyles, convertToCSS } from '@web-stories-wp/patterns';
+import {
+  generatePatternStyles,
+  convertToCSS,
+} from '@googleforcreators/patterns';
 /**
  * Internal dependencies
  */

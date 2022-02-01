@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
+import { useCallback } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 
 /**
@@ -45,6 +45,7 @@ const PHOTO_MARGIN = 4;
  */
 function MediaGallery({ resources, onInsert, providerType, canEditMedia }) {
   const photos = resources.map((resource) => ({
+    id: resource.id,
     src: resource.src,
     width: resource.width,
     height: resource.height,
@@ -53,7 +54,7 @@ function MediaGallery({ resources, onInsert, providerType, canEditMedia }) {
   const imageRenderer = useCallback(
     ({ index, photo }) => (
       <MediaElement
-        key={index}
+        key={photo.id}
         index={index}
         margin={PHOTO_MARGIN + 'px'}
         resource={resources[index]}

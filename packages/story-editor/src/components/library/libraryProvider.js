@@ -18,10 +18,17 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useEffect, useRef, useMemo, useState } from '@web-stories-wp/react';
+import {
+  useEffect,
+  useRef,
+  useMemo,
+  useState,
+  useCallback,
+} from '@googleforcreators/react';
 import { useFeatures } from 'flagged';
-import { getTimeTracker, trackEvent } from '@web-stories-wp/tracking';
-import { loadTextSets } from '@web-stories-wp/text-sets';
+import { getTimeTracker, trackEvent } from '@googleforcreators/tracking';
+import { loadTextSets } from '@googleforcreators/text-sets';
+import { uniqueEntriesByKey } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -44,18 +51,34 @@ const LIBRARY_TAB_IDS = new Set(
 );
 
 function LibraryProvider({ children }) {
-  const { showMedia3p } = useConfig();
+  const { showMedia3p, canViewDefaultTemplates } = useConfig();
   const {
-    actions: { getMedia },
+    actions: { getMedia, getCustomPageTemplates },
   } = useAPI();
+
+  const supportsCustomTemplates = Boolean(getCustomPageTemplates);
+  const showPageTemplates = canViewDefaultTemplates || supportsCustomTemplates;
+
   const showMedia = Boolean(getMedia); // Do not show media tab if getMedia api callback is not provided.
   const [textSets, setTextSets] = useState({});
   const [areTextSetsLoading, setAreTextSetsLoading] = useState({});
-  const [savedTemplates, setSavedTemplates] = useState(null);
+  const [savedTemplates, _setSavedTemplates] = useState(null);
+
   // The first page of templates to fetch is 1.
   const [nextTemplatesToFetch, setNextTemplatesToFetch] = useState(1);
   // If to use smart colors with text and text sets.
   const [shouldUseSmartColor, setShouldUseSmartColor] = useState(false);
+
+  const setSavedTemplates = useCallback(
+    (t) =>
+      _setSavedTemplates((_savedTemplates) =>
+        uniqueEntriesByKey(
+          typeof t === 'function' ? t(_savedTemplates) : t,
+          'templateId'
+        )
+      ),
+    []
+  );
 
   const { showElementsTab } = useFeatures();
 
@@ -68,9 +91,9 @@ function LibraryProvider({ children }) {
         TEXT,
         SHAPES,
         showElementsTab && ELEMS,
-        PAGE_TEMPLATES,
+        showPageTemplates && PAGE_TEMPLATES,
       ].filter(Boolean),
-    [showMedia3p, showElementsTab, showMedia]
+    [showMedia3p, showElementsTab, showMedia, showPageTemplates]
   );
 
   const [tab, setTab] = useState(tabs[0].id);
@@ -148,20 +171,34 @@ function LibraryProvider({ children }) {
       nextTemplatesToFetch,
       setNextTemplatesToFetch,
       shouldUseSmartColor,
+      setSavedTemplates,
     ]
   );
   useEffect(() => {
+    let mounted = true;
+
     async function getTextSets() {
       const trackTiming = getTimeTracker('load_text_sets');
       setAreTextSetsLoading(true);
-      setTextSets(await loadTextSets());
+      const newTextSets = await loadTextSets();
       trackTiming();
+
+      if (!mounted) {
+        return;
+      }
+
+      setTextSets(newTextSets);
       setAreTextSetsLoading(false);
     }
+
     // if text sets have not been loaded but are needed fetch dynamically imported text sets
     if (tab === TEXT.id && !Object.keys(textSets).length) {
       getTextSets();
     }
+
+    return () => {
+      mounted = false;
+    };
   }, [tab, textSets]);
 
   return <Context.Provider value={state}>{children}</Context.Provider>;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,9 +17,7 @@
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
-import { object } from '@storybook/addon-knobs';
-import { SnackbarContext } from '@web-stories-wp/design-system';
+import { SnackbarContext } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
@@ -31,36 +29,43 @@ import testImage from './test-image.jpg';
 export default {
   title: 'Stories Editor/Components/Dialog/Edit Media',
   component: MediaEditDialog,
-};
-
-const apiValue = {
-  actions: { updateMedia: action('update server') },
-};
-const mediaValue = {
-  local: {
-    actions: { updateMediaElement: action('update state') },
+  args: {
+    resource: {
+      id: 123,
+      type: 'image',
+      mimeType: 'image/png',
+      creationDate: '2019-11-13T18:15:52Z',
+      src: testImage,
+      width: 910,
+      height: 675,
+      alt: 'my image',
+      sizes: {},
+    },
+  },
+  argTypes: {
+    onClose: { action: 'closed' },
+    updateMedia: { action: 'update server' },
+    updateMediaElement: { action: 'update state' },
+    showSnackbar: { action: 'show snackbar' },
   },
 };
-const snackbarValue = { showSnackbar: action('show snackbar') };
 
-export const _default = () => {
-  const resource = object('Image Resource', {
-    id: 123,
-    type: 'image',
-    mimeType: 'image/png',
-    creationDate: '2019-11-13T18:15:52Z',
-    src: testImage,
-    width: 910,
-    height: 675,
-    alt: 'my image',
-    sizes: {},
-  });
+export const _default = (args) => {
+  const apiValue = {
+    actions: args.updateMedia,
+  };
+  const mediaValue = {
+    local: {
+      actions: args.updateMediaElement,
+    },
+  };
+  const snackbarValue = { showSnackbar: args.showSnackbar };
 
   return (
     <SnackbarContext.Provider value={snackbarValue}>
       <MediaContext.Provider value={mediaValue}>
         <ApiContext.Provider value={apiValue}>
-          <MediaEditDialog resource={resource} onClose={action('closed')} />
+          <MediaEditDialog resource={args.resource} onClose={args.onClose} />
         </ApiContext.Provider>
       </MediaContext.Provider>
     </SnackbarContext.Provider>

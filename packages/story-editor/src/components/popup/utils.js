@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { THEME_CONSTANTS } from '@web-stories-wp/design-system';
-
-/**
  * Internal dependencies
  */
 import { Placement } from './constants';
@@ -127,7 +122,15 @@ export function getYOffset(placement, spacing = 0, anchorRect) {
   }
 }
 
-export function getOffset(placement, spacing, anchor, dock, popup, isRTL) {
+export function getOffset(
+  placement,
+  spacing,
+  anchor,
+  dock,
+  popup,
+  isRTL,
+  topOffset
+) {
   const anchorRect = anchor.current.getBoundingClientRect();
   const bodyRect = document.body.getBoundingClientRect();
   const popupRect = popup.current?.getBoundingClientRect();
@@ -161,10 +164,7 @@ export function getOffset(placement, spacing, anchor, dock, popup, isRTL) {
   // Clamp values
   return {
     x: Math.max(0, Math.min(offsetX, maxOffsetX)),
-    y: Math.max(
-      THEME_CONSTANTS.WP_ADMIN.TOOLBAR_HEIGHT,
-      Math.min(offsetY, maxOffsetY)
-    ),
+    y: Math.max(topOffset, Math.min(offsetY, maxOffsetY)),
     width: anchorRect.width,
     height: anchorRect.height,
   };

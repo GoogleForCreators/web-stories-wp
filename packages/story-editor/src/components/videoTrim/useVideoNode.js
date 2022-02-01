@@ -23,7 +23,7 @@ import {
   useCallback,
   useMemo,
   useRef,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 
 /**
  * Internal dependencies

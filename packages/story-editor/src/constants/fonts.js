@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { _x } from '@web-stories-wp/i18n';
+import { _x } from '@googleforcreators/i18n';
 
 export const FONT_WEIGHT_NAMES = {
   100: _x('Thin', 'font weight', 'web-stories'),

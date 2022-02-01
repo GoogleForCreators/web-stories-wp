@@ -19,9 +19,9 @@
  */
 jest.mock('flagged');
 import { useFeature } from 'flagged';
-import { renderToStaticMarkup } from '@web-stories-wp/react';
+import { renderToStaticMarkup } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
-import { StoryAnimation } from '@web-stories-wp/animation';
+import { StoryAnimation } from '@googleforcreators/animation';
 
 /**
  * Internal dependencies

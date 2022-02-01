@@ -5,7 +5,7 @@
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/google/web-stories-wp
+ * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -80,6 +80,7 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 		'3.0.11' => Migrations\Add_Media_Source_Source_Image::class,
 		'3.0.12' => Migrations\Set_Legacy_Analytics_Usage_Flag::class,
 		'3.0.13' => Migrations\Add_Stories_Caps::class,
+		'3.0.14' => Migrations\Add_Media_Source_Page_Template::class,
 	];
 
 	/**

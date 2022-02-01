@@ -5,7 +5,7 @@
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/google/web-stories-wp
+ * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -52,7 +52,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 		parent::__construct( $post_type );
 
 		$post_type_object = get_post_type_object( $post_type );
-		$this->namespace  = $post_type_object && ! empty( $post_type_object->rest_namespace ) ?
+		$this->namespace  = isset( $post_type_object, $post_type_object->rest_namespace ) && is_string( $post_type_object->rest_namespace ) ?
 			$post_type_object->rest_namespace :
 			'web-stories/v1';
 	}

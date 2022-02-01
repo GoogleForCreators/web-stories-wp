@@ -1,6 +1,20 @@
 {
   "name": "@web-stories-wp/e2e-test-utils",
+  "description": "Utils for running e2e tests for the WordPress Web Stories editor",
   "private": true,
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "web stories"
+  ],
+  "homepage": "https://github.com/googleforcreators/web-stories-wp/",
+  "repository": "git+https://github.com/GoogleForCreators/web-stories-wp.git",
+  "bugs": {
+    "url": "https://github.com/googleforcreators/web-stories-wp/issues"
+  },
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"
@@ -11,11 +25,10 @@
   },
   "main": "./src/index.js",
   "dependencies": {
-    "@wordpress/e2e-test-utils": "^5.4.10",
+    "@wordpress/e2e-test-utils": "^6.0.0",
     "@wordpress/url": "^3.2.1"
   },
   "devDependencies": {
-    "@percy/cli": "^1.0.0-beta.71",
     "@percy/puppeteer": "^2.0.0"
   }
 }

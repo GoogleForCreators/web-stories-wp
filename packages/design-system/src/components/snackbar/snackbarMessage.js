@@ -18,10 +18,10 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useRef, useEffect, useCallback } from '@web-stories-wp/react';
+import { useRef, useEffect, useCallback } from '@googleforcreators/react';
 import { rgba } from 'polished';
 import styled, { css } from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies
@@ -271,7 +271,7 @@ const SnackbarMessage = ({
 };
 
 SnackbarMessage.propTypes = {
-  'aria-label': PropTypes.string.isRequired,
+  'aria-label': PropTypes.string,
   customZIndex: PropTypes.number,
   message: PropTypes.string.isRequired,
   onDismiss: PropTypes.func.isRequired,

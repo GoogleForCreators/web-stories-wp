@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,8 @@
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
-import { boolean, text } from '@storybook/addon-knobs';
 import styled from 'styled-components';
-import { Tooltip, Icons } from '@web-stories-wp/design-system';
+import { Tooltip, Icons } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
@@ -29,6 +27,21 @@ import { THUMBNAIL_BG } from './demoThumbnails';
 export default {
   title: 'Stories Editor/Components/Thumbnail',
   component: Thumbnail,
+  args: {
+    isError: false,
+    isLoading: false,
+    loadingMessage: 'some aria specific loading copy',
+    ariaLabel:
+      'I am some helper text for screen readers. If a tooltip is present, that content should also go here',
+  },
+  argTypes: {
+    onClick: { action: 'button clicked' },
+  },
+  parameters: {
+    controls: {
+      exclude: ['displayBackground', 'type', 'children'],
+    },
+  },
 };
 const Container = styled.div`
   background-color: #28292b;
@@ -47,23 +60,15 @@ const StyledVideoOptimizationIcon = styled(Icons.GearWithGauge)`
   }
 `;
 
-export const _default = () => {
+export const _default = (args) => {
   const thumbnails = Object.values(THUMBNAIL_TYPES).map((thumbnailType) => (
     <Thumbnail
       key={`${thumbnailType}_key`}
       type={thumbnailType}
       displayBackground={THUMBNAIL_BG[thumbnailType]}
-      isError={boolean(`${thumbnailType}_isError`, false)}
-      aria-label={text(
-        `${thumbnailType}_aria-label`,
-        'I am some helper text for screen readers. If a tooltip is present, that content should also go here'
-      )}
-      onClick={() => action(`${thumbnailType} button clicked`)()}
-      isLoading={boolean(`${thumbnailType}_isLoading`, false)}
-      loadingMessage={text(
-        `${thumbnailType}_loadingMessage`,
-        'some aria specific loading copy'
-      )}
+      {...args}
+      aria-label={args.ariaLabel}
+      onClick={() => args.onClick(thumbnailType)}
     >
       {thumbnailType === THUMBNAIL_TYPES.VIDEO && (
         <Tooltip title="test tooltip">

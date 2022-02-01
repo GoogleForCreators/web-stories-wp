@@ -19,8 +19,8 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { useRef, useEffect } from '@web-stories-wp/react';
-import { useUnits } from '@web-stories-wp/units';
+import { useRef, useEffect } from '@googleforcreators/react';
+import { useUnits } from '@googleforcreators/units';
 
 /**
  * Internal dependencies
@@ -144,7 +144,7 @@ function TextFrame({ element, element: { id, content, ...rest }, wrapperRef }) {
   }, [id, wrapperRef, isElementOnlySelection, setEditingElementWithState]);
 
   // data-fix-caret is for allowing caretRangeFromPoint to work in Safari.
-  // See https://github.com/google/web-stories-wp/issues/7745.
+  // See https://github.com/googleforcreators/web-stories-wp/issues/7745.
   return (
     <Element
       ref={elementRef}

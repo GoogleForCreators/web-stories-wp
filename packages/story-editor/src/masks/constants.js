@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { _x } from '@web-stories-wp/i18n';
+import { _x } from '@googleforcreators/i18n';
 
 export const MaskTypes = {
   HEART: 'heart',
@@ -189,6 +189,7 @@ export const MASKS = [
     name: _x('Circle', 'shape/mask name', 'web-stories'),
     path: CLIP_PATHS[MaskTypes.CIRCLE],
     ratio: 1,
+    supportsBorder: true,
   },
   {
     type: MaskTypes.TRIANGLE,
@@ -196,6 +197,7 @@ export const MASKS = [
     name: _x('Triangle', 'shape/mask name', 'web-stories'),
     path: CLIP_PATHS[MaskTypes.TRIANGLE],
     ratio: 1,
+    supportsBorder: true,
   },
   {
     type: MaskTypes.HEART,
@@ -203,6 +205,7 @@ export const MASKS = [
     name: _x('Heart', 'shape/mask name', 'web-stories'),
     path: CLIP_PATHS[MaskTypes.HEART],
     ratio: 1.075533375284871,
+    supportsBorder: true,
   },
   {
     type: MaskTypes.STAR,
@@ -210,6 +213,7 @@ export const MASKS = [
     name: _x('Star', 'shape/mask name', 'web-stories'),
     path: CLIP_PATHS[MaskTypes.STAR],
     ratio: 1.051524710830705,
+    supportsBorder: true,
   },
   {
     type: MaskTypes.PENTAGON,
@@ -217,6 +221,7 @@ export const MASKS = [
     name: _x('Pentagon', 'shape/mask name', 'web-stories'),
     path: CLIP_PATHS[MaskTypes.PENTAGON],
     ratio: 1.051524710830705,
+    supportsBorder: true,
   },
   {
     type: MaskTypes.HEXAGON,
@@ -224,6 +229,7 @@ export const MASKS = [
     name: _x('Hexagon', 'shape/mask name', 'web-stories'),
     path: CLIP_PATHS[MaskTypes.HEXAGON],
     ratio: 1.15473441108545,
+    supportsBorder: true,
   },
   {
     type: MaskTypes.BLOB_1,
@@ -231,6 +237,7 @@ export const MASKS = [
     name: _x('Blob 1', 'shape/mask name', 'web-stories'),
     path: CLIP_PATHS[MaskTypes.BLOB_1],
     ratio: 1,
+    supportsBorder: true,
   },
   {
     type: MaskTypes.BLOB_2,
@@ -238,6 +245,7 @@ export const MASKS = [
     name: _x('Blob 2', 'shape/mask name', 'web-stories'),
     path: CLIP_PATHS[MaskTypes.BLOB_2],
     ratio: 1.01704694,
+    supportsBorder: true,
   },
   {
     type: MaskTypes.BLOB_3,
@@ -245,6 +253,7 @@ export const MASKS = [
     name: _x('Blob 3', 'shape/mask name', 'web-stories'),
     path: CLIP_PATHS[MaskTypes.BLOB_3],
     ratio: 0.89949881,
+    supportsBorder: true,
   },
   {
     type: MaskTypes.BLOB_4,
@@ -252,6 +261,7 @@ export const MASKS = [
     name: _x('Blob 4', 'shape/mask name', 'web-stories'),
     path: CLIP_PATHS[MaskTypes.BLOB_4],
     ratio: 1.04561993,
+    supportsBorder: true,
   },
   {
     type: MaskTypes.BLOB_5,
@@ -259,6 +269,7 @@ export const MASKS = [
     name: _x('Blob 5', 'shape/mask name', 'web-stories'),
     path: CLIP_PATHS[MaskTypes.BLOB_5],
     ratio: 0.93316195,
+    supportsBorder: true,
   },
   {
     type: MaskTypes.BLOB_6,

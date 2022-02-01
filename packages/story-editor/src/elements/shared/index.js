@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { css } from 'styled-components';
-import { generatePatternStyles } from '@web-stories-wp/patterns';
+import { generatePatternStyles } from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies
@@ -68,12 +68,13 @@ export const elementWithHighlightBorderRadius = ({
   `;
 
 export const elementWithBorder = css`
-  ${({ border, borderRadius, width, height }) =>
+  ${({ border, borderRadius, width, height, mask }) =>
     getBorderStyle({
       border,
       borderRadius,
       width,
       height,
+      mask,
     })}
   background-clip: padding-box;
 `;

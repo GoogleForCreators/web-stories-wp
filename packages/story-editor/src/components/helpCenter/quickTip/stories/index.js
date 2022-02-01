@@ -16,11 +16,13 @@
 /**
  * External dependencies
  */
-import { boolean } from '@storybook/addon-knobs';
-import { useState } from '@web-stories-wp/react';
+import { useState } from '@googleforcreators/react';
 import { TransitionGroup } from 'react-transition-group';
 import styled, { ThemeProvider } from 'styled-components';
-import { theme as dsTheme, ThemeGlobals } from '@web-stories-wp/design-system';
+import {
+  theme as dsTheme,
+  ThemeGlobals,
+} from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
@@ -29,6 +31,9 @@ import { QuickTip as HelpCenterQuickTip } from '..';
 
 export default {
   title: 'Stories Editor/Components/Help Center/Quick Tip',
+  args: {
+    isLeftToRightTransition: true,
+  },
 };
 
 const Bg = styled.div`
@@ -48,7 +53,7 @@ const Container = styled.div`
 `;
 
 const [tip] = Object.values(TIPS);
-export const QuickTip = () => {
+export const QuickTip = (args) => {
   const [toggled, setToggled] = useState(true);
   return (
     <ThemeProvider theme={dsTheme}>
@@ -61,7 +66,7 @@ export const QuickTip = () => {
               key={toggled ? 'key1' : 'key2'}
               title={tip.title}
               description={tip.description}
-              isLeftToRightTransition={boolean('isLeftToRightTransition')}
+              {...args}
             />
           </TransitionGroup>
         </Container>

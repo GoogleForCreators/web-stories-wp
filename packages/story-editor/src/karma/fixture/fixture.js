@@ -27,9 +27,9 @@ import {
   screen,
   waitFor,
 } from '@testing-library/react';
-import { setAppElement } from '@web-stories-wp/design-system';
-import { FixtureEvents } from '@web-stories-wp/karma-fixture';
-import { DATA_VERSION } from '@web-stories-wp/migration';
+import { setAppElement } from '@googleforcreators/design-system';
+import { FixtureEvents } from '@googleforcreators/karma-fixture';
+import { DATA_VERSION } from '@googleforcreators/migration';
 
 /**
  * Internal dependencies
@@ -70,6 +70,15 @@ function MediaUpload({ render: _render, onSelect }) {
     const image = {
       type: 'image',
       src: 'http://localhost:9876/__static__/saturn.jpg',
+      baseColor: '#734727',
+      id: 4,
+      guid: {
+        rendered: 'http://localhost:9876/__static__/saturn.jpg',
+      },
+      alt: 'saturn',
+      mimeType: 'image/jpeg',
+      width: 634,
+      height: 640,
     };
     onSelect(image);
   };
@@ -77,7 +86,7 @@ function MediaUpload({ render: _render, onSelect }) {
   return _render(open);
 }
 
-const DEFAULT_CONFIG = {
+export const FIXTURE_DEFAULT_CONFIG = {
   storyId: 1,
   api: {},
   allowedMimeTypes: {
@@ -111,14 +120,11 @@ const DEFAULT_CONFIG = {
   capabilities: {
     hasUploadMediaAction: true,
   },
-  postLock: {
-    interval: 150,
-    showLockedDialog: true,
-  },
   nonce: '123456789',
   version: '1.0.0-alpha.9',
   isRTL: false,
   showMedia3p: true,
+  canViewDefaultTemplates: true,
   locale: {
     dateFormat: 'F j, Y',
     timeFormat: 'g:i a',
@@ -160,7 +166,7 @@ export class Fixture {
    * @param {Object} config.mocks An object containing functions to be used as stubs for the api.
    */
   constructor({ mocks } = {}) {
-    this._config = { ...DEFAULT_CONFIG };
+    this._config = { ...FIXTURE_DEFAULT_CONFIG };
 
     this._componentStubs = new Map();
     const origCreateElement = React.createElement;
@@ -627,7 +633,7 @@ class APIProviderFixture {
         () =>
           asyncResponse({
             ...storyResponse,
-            story_data: {
+            storyData: {
               version: DATA_VERSION,
               pages: this._pages,
             },
@@ -646,7 +652,7 @@ class APIProviderFixture {
 
       const getMedia = useCallback(({ mediaType, searchTerm, pagingNum }) => {
         const filterByMediaType = mediaType
-          ? ({ mime_type }) => mime_type.startsWith(mediaType)
+          ? ({ mimeType }) => mimeType.startsWith(mediaType)
           : () => true;
         const filterBySearchTerm = searchTerm
           ? ({ alt_text }) => alt_text.includes(searchTerm)
@@ -690,9 +696,9 @@ class APIProviderFixture {
         () =>
           asyncResponse({
             ext: 'jpg',
-            mime_type: 'image/jpeg',
+            mimeType: 'image/jpeg',
             type: 'image',
-            file_name: 'example.jpg',
+            fileName: 'example.jpg',
           }),
         []
       );
@@ -882,6 +888,34 @@ class APIProviderFixture {
             },
           },
           {
+            value: 'Overpass Regular',
+            name: 'Overpass Regular',
+            family: 'Overpass Regular',
+            fallbacks: ['sans-serif'],
+            weights: [400],
+            styles: ['regular'],
+            variants: [[0, 400]],
+            url: 'https://overpass-30e2.kxcdn.com/overpass-regular.ttf',
+            service: 'custom',
+            metrics: {
+              upm: 1000,
+              asc: 982,
+              des: -284,
+              tAsc: 750,
+              tDes: -250,
+              tLGap: 266,
+              wAsc: 1062,
+              wDes: 378,
+              xH: 511,
+              capH: 700,
+              yMin: -378,
+              yMax: 1062,
+              hAsc: 982,
+              hDes: -284,
+              lGap: 266,
+            },
+          },
+          {
             ...TEXT_ELEMENT_DEFAULT_FONT,
             name: TEXT_ELEMENT_DEFAULT_FONT.family,
             value: TEXT_ELEMENT_DEFAULT_FONT.family,
@@ -995,6 +1029,34 @@ class APIProviderFixture {
             },
           },
           {
+            name: 'Vazir Regular',
+            value: 'Vazir Regular',
+            family: 'Vazir Regular',
+            fallbacks: ['sans-serif'],
+            weights: [400],
+            styles: ['regular'],
+            variants: [[0, 400]],
+            url: 'https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/Vazir-Regular.ttf',
+            service: 'custom',
+            metrics: {
+              upm: 2048,
+              asc: 2200,
+              des: -1100,
+              tAsc: 2200,
+              tDes: -1100,
+              tLGap: 0,
+              wAsc: 2200,
+              wDes: 1100,
+              xH: 1082,
+              capH: 1638,
+              yMin: -1116,
+              yMax: 2163,
+              hAsc: 2200,
+              hDes: -1100,
+              lGap: 0,
+            },
+          },
+          {
             name: 'Yrsa',
             value: 'Yrsa',
             family: 'Yrsa',
@@ -1042,6 +1104,19 @@ class APIProviderFixture {
           fonts = fonts.filter(({ family }) =>
             family.toLowerCase().includes(params.search.toLowerCase())
           );
+        }
+
+        // If we're getting custom fonts, return custom only.
+        if (params.service) {
+          fonts = fonts.filter(({ service }) => {
+            if ('custom' === params.service) {
+              return service === params.service;
+            }
+            if ('builtin' === params.service) {
+              return 'fonts.google.com' === params.service;
+            }
+            return [];
+          });
         }
 
         return asyncResponse(fonts);

@@ -17,9 +17,8 @@
 /**
  * External dependencies
  */
-import { boolean, text, select } from '@storybook/addon-knobs';
 import styled, { ThemeProvider } from 'styled-components';
-import { useCallback, useEffect, useState } from '@web-stories-wp/react';
+import { useCallback, useEffect, useState } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -37,6 +36,40 @@ import { Text } from '../../typography';
 
 export default {
   title: 'DesignSystem/Components/Tooltip',
+  args: {
+    hasTail: true,
+    placement: TOOLTIP_PLACEMENT.BOTTOM,
+    colorShortcut: 'mod+z',
+    colorTitle: 'Page background colors cannot have opacity',
+    iconShortcut: 'Shortcut for icon',
+    iconTitle: 'To save draft click enter',
+    buttonShortcut: 'Shortcut for button',
+    buttonTitle: 'Tooltip message over a button',
+  },
+  argTypes: {
+    placement: {
+      options: Object.values(TOOLTIP_PLACEMENT),
+      control: 'select',
+    },
+    colorShortcut: {
+      name: 'Shortcut for color',
+    },
+    colorTitle: {
+      name: 'Title for color',
+    },
+    iconShortcut: {
+      name: 'Shortcut for icon',
+    },
+    iconTitle: {
+      name: 'Title for icon',
+    },
+    buttonShortcut: {
+      name: 'Shortcut for button',
+    },
+    buttonTitle: {
+      name: 'Title for button',
+    },
+  },
 };
 
 const Container = styled.div`
@@ -60,34 +93,23 @@ const Color = styled.div`
   background-color: red;
 `;
 
-export const _default = () => (
+export const _default = (args) => (
   <ThemeProvider theme={theme}>
     <Container>
       <Tooltip
-        hasTail={boolean('Tooltip for color - hasTail', true)}
-        placement={select(
-          'Tooltip for color - position',
-          TOOLTIP_PLACEMENT,
-          TOOLTIP_PLACEMENT.LEFT
-        )}
-        shortcut={text('Shortcut', 'mod+z')}
-        title={text(
-          'Tooltip for color - content',
-          'Page background colors cannot have opacity'
-        )}
+        hasTail={args.hasTail}
+        placement={args.placement}
+        shortcut={args.colorShortcut}
+        title={args.colorTitle}
       >
         <Color />
       </Tooltip>
 
       <Tooltip
-        hasTail={boolean('Tooltip for icon - hasTail', true)}
-        placement={select(
-          'Tooltip for icon - position',
-          TOOLTIP_PLACEMENT,
-          TOOLTIP_PLACEMENT.BOTTOM
-        )}
-        shortcut={text('Shortcut for icon')}
-        title={text('Tooltip for icon - content', 'To save draft click enter')}
+        hasTail={args.hasTail}
+        placement={args.placement}
+        shortcut={args.iconShortcut}
+        title={args.iconTitle}
       >
         <Button type={BUTTON_TYPES.PRIMARY} variant={BUTTON_VARIANTS.ICON}>
           <Table aria-hidden />
@@ -95,17 +117,10 @@ export const _default = () => (
       </Tooltip>
 
       <Tooltip
-        hasTail={boolean('Tooltip for standard button - hasTail', false)}
-        placement={select(
-          'Tooltip for standard button - position',
-          TOOLTIP_PLACEMENT,
-          TOOLTIP_PLACEMENT.TOP
-        )}
-        shortcut={text('Shortcut for icon')}
-        title={text(
-          'Tooltip for standard button - content',
-          'Tooltip message over a button'
-        )}
+        hasTail={args.hasTail}
+        placement={args.placement}
+        shortcut={args.buttonShortcut}
+        title={args.buttonTitle}
       >
         <Button type={BUTTON_TYPES.PRIMARY} size={BUTTON_SIZES.SMALL}>
           {'I am just a normal button'}
@@ -115,33 +130,22 @@ export const _default = () => (
   </ThemeProvider>
 );
 
-export const LightMode = () => (
+export const LightMode = (args) => (
   <Container>
     <Tooltip
-      hasTail={boolean('Tooltip for color - hasTail', true)}
-      placement={select(
-        'Tooltip for color - position',
-        TOOLTIP_PLACEMENT,
-        TOOLTIP_PLACEMENT.LEFT
-      )}
-      shortcut={text('Shortcut', 'mod+z')}
-      title={text(
-        'Tooltip for color - content',
-        'Page background colors cannot have opacity'
-      )}
+      hasTail={args.hasTail}
+      placement={args.placement}
+      shortcut={args.colorShortcut}
+      title={args.colorTitle}
     >
       <Color />
     </Tooltip>
 
     <Tooltip
-      hasTail={boolean('Tooltip for icon - hasTail', true)}
-      placement={select(
-        'Tooltip for icon - position',
-        TOOLTIP_PLACEMENT,
-        TOOLTIP_PLACEMENT.BOTTOM
-      )}
-      shortcut={text('Shortcut for icon')}
-      title={text('Tooltip for icon - content', 'To save draft click enter')}
+      hasTail={args.hasTail}
+      placement={args.placement}
+      shortcut={args.iconShortcut}
+      title={args.iconTitle}
     >
       <Button type={BUTTON_TYPES.PRIMARY} variant={BUTTON_VARIANTS.ICON}>
         <Table aria-hidden />
@@ -149,17 +153,10 @@ export const LightMode = () => (
     </Tooltip>
 
     <Tooltip
-      hasTail={boolean('Tooltip for standard button - hasTail', false)}
-      placement={select(
-        'Tooltip for standard button - position',
-        TOOLTIP_PLACEMENT,
-        TOOLTIP_PLACEMENT.TOP
-      )}
-      shortcut={text('Shortcut for icon')}
-      title={text(
-        'Tooltip for standard button - content',
-        'Tooltip message over a button'
-      )}
+      hasTail={args.hasTail}
+      placement={args.placement}
+      shortcut={args.buttonShortcut}
+      title={args.buttonTitle}
     >
       <Button type={BUTTON_TYPES.PRIMARY} size={BUTTON_SIZES.SMALL}>
         {'I am just a normal button'}
@@ -173,7 +170,7 @@ const tooltipTitles = [
   'secondary tooltip title but quite a bit longer',
 ];
 
-export const TooltipWithChangingTextOnClick = () => {
+export const TooltipWithChangingTextOnClick = (args) => {
   const [currentTooltipIndex, setCurrentTooltipIndex] = useState(0);
 
   const handleTooltipTextChange = useCallback(() => {
@@ -184,13 +181,9 @@ export const TooltipWithChangingTextOnClick = () => {
     <Container>
       <Text>{'Click button to change tooltip title.'}</Text>
       <Tooltip
-        hasTail={boolean('hasTail', false)}
-        placement={select(
-          'placement',
-          TOOLTIP_PLACEMENT,
-          TOOLTIP_PLACEMENT.TOP
-        )}
-        shortcut={text('Shortcut for icon', 'mod+z')}
+        hasTail={args.hasTail}
+        placement={args.placement}
+        shortcut={args.iconShortcut}
         title={tooltipTitles[currentTooltipIndex]}
       >
         <Button
@@ -204,8 +197,13 @@ export const TooltipWithChangingTextOnClick = () => {
     </Container>
   );
 };
+TooltipWithChangingTextOnClick.parameters = {
+  controls: {
+    include: ['hasTail', 'placement', 'Shortcut for icon'],
+  },
+};
 
-export const TooltipWithChangingTextOnInterval = () => {
+export const TooltipWithChangingTextOnInterval = (args) => {
   const [currentTooltipIndex, setCurrentTooltipIndex] = useState(0);
   const [isTooltipIntervalActive, setIsTooltipIntervalActive] = useState(false);
 
@@ -238,13 +236,9 @@ export const TooltipWithChangingTextOnInterval = () => {
         }
       </Text>
       <Tooltip
-        hasTail={boolean('hasTail', false)}
-        placement={select(
-          'placement',
-          TOOLTIP_PLACEMENT,
-          TOOLTIP_PLACEMENT.TOP
-        )}
-        shortcut={text('Shortcut for icon')}
+        hasTail={args.hasTail}
+        placement={args.placement}
+        shortcut={args.iconShortcut}
         title={tooltipTitles[currentTooltipIndex]}
       >
         <Button
@@ -258,4 +252,9 @@ export const TooltipWithChangingTextOnInterval = () => {
       </Tooltip>
     </Container>
   );
+};
+TooltipWithChangingTextOnInterval.parameters = {
+  controls: {
+    include: ['hasTail', 'placement', 'Shortcut for icon'],
+  },
 };

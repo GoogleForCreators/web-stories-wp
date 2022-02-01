@@ -17,9 +17,9 @@
 /**
  * External dependencies
  */
-import { Component } from '@web-stories-wp/react';
+import { Component } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
-import { trackError } from '@web-stories-wp/tracking';
+import { trackError } from '@googleforcreators/tracking';
 /**
  * Internal dependencies
  */

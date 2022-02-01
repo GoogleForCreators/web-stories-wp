@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import { rgba } from 'polished';
-import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

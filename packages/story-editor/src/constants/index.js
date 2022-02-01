@@ -20,6 +20,7 @@ export * from './multipleValue';
 
 export const ADMIN_TOOLBAR_HEIGHT = 32;
 export const HEADER_HEIGHT = 64;
+export const HEADER_GAP = 16;
 export const CANVAS_MIN_WIDTH = 570;
 export const LIBRARY_MIN_WIDTH = 220;
 export const LIBRARY_MAX_WIDTH = 360;
@@ -28,6 +29,7 @@ export const INSPECTOR_MAX_WIDTH = 308;
 export const PAGE_NAV_PADDING = 60;
 export const PAGE_NAV_BUTTON_SIZE = 40;
 export const PAGE_NAV_WIDTH = PAGE_NAV_PADDING + PAGE_NAV_BUTTON_SIZE;
+export const FLOATING_MENU_DISTANCE = 10;
 
 export const ZOOM_SETTING = {
   FILL: 'FILL',
@@ -88,15 +90,6 @@ export const HIDDEN_PADDING = {
 export const SAVED_COLOR_SIZE = 32;
 export const SAVED_STYLE_HEIGHT = 64;
 
-export const FOCUSABLE_SELECTORS = [
-  'button',
-  '[href]',
-  'input',
-  'select',
-  'textarea',
-  '[tabindex]:not([tabindex="-1"])',
-];
-
 export const OUTLINK_THEME = {
   DARK: 'dark',
   LIGHT: 'light',
@@ -107,3 +100,8 @@ export const PRESET_TYPES = {
   STYLE: 'style',
   COLOR: 'colors',
 };
+
+export const STABLE_ARRAY = [];
+
+export const DEFAULT_AUTO_ADVANCE = true;
+export const DEFAULT_PAGE_DURATION = 7;

@@ -18,16 +18,16 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useMemo, useRef } from '@web-stories-wp/react';
-import { __, sprintf, translateToExclusiveList } from '@web-stories-wp/i18n';
+import { useCallback, useMemo, useRef } from '@googleforcreators/react';
+import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import {
   prettifyShortcut,
   useSnackbar,
   PLACEMENT,
   Icons,
-} from '@web-stories-wp/design-system';
-import { trackEvent } from '@web-stories-wp/tracking';
-import { resourceList } from '@web-stories-wp/media';
+} from '@googleforcreators/design-system';
+import { trackEvent } from '@googleforcreators/tracking';
+import { resourceList } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -164,10 +164,10 @@ export const MediaPicker = ({ render, ...props }) => {
             optimizeGif({ resource });
           }
         }
-        // WordPress media picker event, sizes.medium.source_url is the smallest image
+        // WordPress media picker event, sizes.medium.sourceUrl is the smallest image
         insertMediaElement(
           resource,
-          resource.sizes?.medium?.source_url || resource.src
+          resource.sizes?.medium?.sourceUrl || resource.src
         );
 
         postProcessingResource(resource);
@@ -220,16 +220,13 @@ MediaPicker.propTypes = {
   ]),
 };
 
-/** @typedef {import('@web-stories-wp/design-system').MenuItemProps} MenuItemProps */
-
 /**
  * Determines the quick actions to display in the quick
  * actions menu from the selected element.
  *
- * Quick actions should have the same shape as items in
- * the design system's context menu.
+ * Quick actions should follow the `quickActionPropType` definition.
  *
- * @return {Array.<MenuItemProps>} an array of quick action objects
+ * @return {Array.<{ Icon: Node, label: string, onClick: Function, separator: string, tooltipPlacement: string, wrapWithMediaPicker: boolean }>} an array of quick action objects
  */
 const useQuickActions = () => {
   const {
@@ -564,7 +561,7 @@ const useQuickActions = () => {
             element: selectedElement?.type,
           });
         },
-        ItemWrapper: MediaPicker,
+        wrapWithMediaPicker: true,
         ...actionMenuProps,
       });
     }
@@ -759,7 +756,7 @@ const useQuickActions = () => {
             isBackground: true,
           });
         },
-        ItemWrapper: MediaPicker,
+        wrapWithMediaPicker: true,
         ...actionMenuProps,
       });
     }

@@ -23,13 +23,13 @@ import {
   theme as externalDesignSystemTheme,
   ThemeGlobals,
   deepMerge,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 Object.defineProperty(stylisRTLPlugin, 'name', { value: 'stylisRTLPlugin' });
 import PropTypes from 'prop-types';
 import { FlagsProvider } from 'flagged';
-import { useMemo } from '@web-stories-wp/react';
+import { useMemo } from '@googleforcreators/react';
 
 /**
  * Internal dependencies

@@ -4,7 +4,7 @@
 .DS_Store
 node_modules
 /assets
-/packages/migration/src/module.js
+/packages/migration/scripts/module.js
 /build
 /bin/build
 /bin/local-env/data
@@ -18,3 +18,4 @@ node_modules
 phpcs.xml
 phpunit.xml
 .phpunit.result.cache
+/packages/*/package-lock.json

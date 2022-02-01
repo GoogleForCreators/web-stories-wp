@@ -55,6 +55,8 @@ import removeUnusedBackgroundProps from './migrations/v0034_removeUnusedBackgrou
 import markVideoAsExternal from './migrations/v0035_markVideoAsExternal';
 import changeBaseColorToHex from './migrations/v0036_changeBaseColorToHex';
 import removeTransientMediaProperties from './migrations/v0037_removeTransientMediaProperties';
+import camelCaseResourceSizes from './migrations/v0038_camelCaseResourceSizes';
+import backgroundAudioFormatting from './migrations/v0039_backgroundAudioFormatting';
 
 const MIGRATIONS = {
   1: [storyDataArrayToObject],
@@ -94,6 +96,8 @@ const MIGRATIONS = {
   35: [markVideoAsExternal],
   36: [changeBaseColorToHex],
   37: [removeTransientMediaProperties],
+  38: [camelCaseResourceSizes],
+  39: [backgroundAudioFormatting],
 };
 
 export const DATA_VERSION = Math.max.apply(

@@ -19,7 +19,7 @@
  */
 jest.mock('flagged');
 import { useFeature } from 'flagged';
-import { renderToStaticMarkup } from '@web-stories-wp/react';
+import { renderToStaticMarkup } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -169,9 +169,11 @@ describe('Story output', () => {
         link: 'https://example.com/story',
         autoAdvance: false,
         backgroundAudio: {
-          src: 'https://example.com/audio.mp3',
-          id: 123,
-          mimeType: 'audio/mpeg',
+          resource: {
+            src: 'https://example.com/audio.mp3',
+            id: 123,
+            mimeType: 'audio/mpeg',
+          },
         },
       },
       pages: [
@@ -459,9 +461,11 @@ describe('Story output', () => {
           link: 'https://example.com/story',
           autoAdvance: false,
           backgroundAudio: {
-            src: 'https://example.com/audio.mp3',
-            id: 123,
-            mimeType: 'audio/mpeg',
+            resource: {
+              src: 'https://example.com/audio.mp3',
+              id: 123,
+              mimeType: 'audio/mpeg',
+            },
           },
         },
         pages: [

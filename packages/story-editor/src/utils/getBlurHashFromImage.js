@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { preloadImage } from '@web-stories-wp/media';
-import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
+import { preloadImage } from '@googleforcreators/media';
+import { getTimeTracker, trackError } from '@googleforcreators/tracking';
 
 const getImageData = (image) => {
   const { width, height } = image;

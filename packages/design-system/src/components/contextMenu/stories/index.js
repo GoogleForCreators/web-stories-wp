@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +18,14 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-import { boolean } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 import {
   useCallback,
   useState,
   useRef,
   useEffect,
-} from '@web-stories-wp/react';
-import { _x, __ } from '@web-stories-wp/i18n';
+} from '@googleforcreators/react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -36,64 +35,30 @@ import { DarkThemeProvider } from '../../../storybookUtils';
 import {
   Bucket,
   Captions,
+  CheckmarkSmall,
+  ChevronRightSmall,
   CircleSpeed,
   Eraser,
   LetterTLargeLetterTSmall,
   LetterTPlus,
-  Link,
+  Link as IconLink,
   Media,
   PictureSwap,
 } from '../../../icons';
 import { Text } from '../../typography';
-
-const items = [
-  {
-    label: 'Bring to front',
-    shortcut: {
-      display: '⌥ ⌘ [',
-      title: 'my aria label for this shortcut!',
-    },
-    separator: 'bottom',
-  },
-  {
-    label: 'Clear text styles',
-    shortcut: {
-      display: '⌥ ⌘ ]',
-      title: 'my aria label for this shortcut!',
-    },
-    disabled: true,
-  },
-  { label: 'Add style to "Saved style"' },
-  { label: 'Add color to "Saved colors"' },
-];
-
-const randomItems = [
-  { label: 'one' },
-  { label: 'two' },
-  { label: 'i am a button!' },
-  { label: 'neither a button nor a link' },
-  { label: 'this is disabled', disabled: true },
-  { label: 'three', separator: 'top' },
-  {
-    label: 'i am a link!',
-    href: 'https://www.google.com/',
-    shortcut: {
-      title: 'option command and the letter A',
-      display: '⌥ ⌘ A',
-    },
-  },
-  {
-    label: 'i am a very very very very very very very long label',
-    separator: 'bottom',
-  },
-  { label: 'lions' },
-  { label: 'tigers', separator: 'top' },
-  { label: 'bears' },
-];
+import * as MenuItems from '../components';
 
 export default {
   title: 'DesignSystem/Components/ContextMenu',
   component: ContextMenu,
+  args: {
+    isOpen: true,
+  },
+  parameters: {
+    controls: {
+      include: ['isOpen'],
+    },
+  },
 };
 
 const ViewportContainer = styled.div`
@@ -110,361 +75,486 @@ const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.primary};
 `;
 
-const AnimatedContainerWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-`;
-
 const Grid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
 
   ${Container} {
+    height: 500px;
     width: 300px;
     margin: 0 auto;
+
+    div {
+      transform: translate(0, 0);
+    }
   }
 `;
 
-export const _default = () => {
-  const itemsWithEventHandlers = items.map((item) => ({
-    ...item,
-    onClick: action(`Clicked on \`${item.label}\``),
-  }));
-
+export const _default = (args) => {
   return (
     <Container>
-      <ContextMenu
-        items={itemsWithEventHandlers}
-        isOpen={boolean('isOpen', true)}
-      />
+      <ContextMenu {...args}>
+        <MenuItems.MenuButton onClick={action('Clicked on `one`')}>
+          {'one'}
+        </MenuItems.MenuButton>
+        <MenuItems.MenuButton onClick={action('Clicked on `two`')}>
+          {'two'}
+        </MenuItems.MenuButton>
+        <MenuItems.MenuButton
+          onClick={action('Clicked on `disabled`')}
+          disabled
+        >
+          {'this is disabled'}
+        </MenuItems.MenuButton>
+        <MenuItems.MenuSeparator />
+        <MenuItems.MenuLabel>
+          {'i am neither a button nor a link'}
+        </MenuItems.MenuLabel>
+        <MenuItems.MenuSeparator />
+        <MenuItems.MenuButton onClick={action('Clicked on `i am a button`')}>
+          {'i am a button!'}
+          <MenuItems.MenuShortcut>{'⌥ ⌘ A'}</MenuItems.MenuShortcut>
+        </MenuItems.MenuButton>
+        <MenuItems.MenuButton
+          onClick={action(
+            'Clicked on `i am a very very very very very very very long label`'
+          )}
+        >
+          {'i am a very very very very very very very long label'}
+        </MenuItems.MenuButton>
+        <MenuItems.MenuLink href="https://www.google.com/">
+          {'i am a link!'}
+        </MenuItems.MenuLink>
+        <MenuItems.MenuLink href="https://www.google.com/" openNewTab>
+          {'i am a link that opens a new tab!'}
+        </MenuItems.MenuLink>
+        <MenuItems.MenuSeparator />
+        <MenuItems.MenuGroup label="The oh my section">
+          <MenuItems.MenuButton onClick={action('Clicked on `lions`')}>
+            {'lions'}
+          </MenuItems.MenuButton>
+          <MenuItems.MenuButton onClick={action('Clicked on `tigers`')}>
+            {'tigers'}
+          </MenuItems.MenuButton>
+          <MenuItems.MenuButton onClick={action('Clicked on `bears`')}>
+            {'bears'}
+          </MenuItems.MenuButton>
+        </MenuItems.MenuGroup>
+      </ContextMenu>
     </Container>
   );
 };
 
-export const DarkMode = () => {
-  const itemsWithEventHandlers = items.map((item) => ({
-    ...item,
-    onClick: action(`Clicked on \`${item.label}\``),
-  }));
-
+export const DarkMode = (args) => {
   return (
     <DarkThemeProvider>
       <Container>
-        <ContextMenu
-          items={itemsWithEventHandlers}
-          isOpen={boolean('isOpen', true)}
-        />
+        <Container>
+          <ContextMenu {...args}>
+            <MenuItems.MenuButton onClick={action('Clicked on `one`')}>
+              {'one'}
+            </MenuItems.MenuButton>
+            <MenuItems.MenuButton onClick={action('Clicked on `two`')}>
+              {'two'}
+            </MenuItems.MenuButton>
+            <MenuItems.MenuButton
+              onClick={action('Clicked on `disabled`')}
+              disabled
+            >
+              {'this is disabled'}
+            </MenuItems.MenuButton>
+            <MenuItems.MenuSeparator />
+            <MenuItems.MenuLabel>
+              {'i am neither a button nor a link'}
+            </MenuItems.MenuLabel>
+            <MenuItems.MenuSeparator />
+            <MenuItems.MenuButton
+              onClick={action('Clicked on `i am a button`')}
+            >
+              {'i am a button!'}
+              <MenuItems.MenuShortcut>{'⌥ ⌘ A'}</MenuItems.MenuShortcut>
+            </MenuItems.MenuButton>
+            <MenuItems.MenuButton
+              onClick={action(
+                'Clicked on `i am a very very very very very very very long label`'
+              )}
+            >
+              {'i am a very very very very very very very long label'}
+            </MenuItems.MenuButton>
+            <MenuItems.MenuLink href="https://www.google.com/">
+              {'i am a link!'}
+            </MenuItems.MenuLink>
+            <MenuItems.MenuLink href="https://www.google.com/" openNewTab>
+              {'i am a link that opens a new tab!'}
+            </MenuItems.MenuLink>
+            <MenuItems.MenuSeparator />
+            <MenuItems.MenuGroup label="The oh my section">
+              <MenuItems.MenuButton onClick={action('Clicked on `lions`')}>
+                {'lions'}
+              </MenuItems.MenuButton>
+              <MenuItems.MenuButton onClick={action('Clicked on `tigers`')}>
+                {'tigers'}
+              </MenuItems.MenuButton>
+              <MenuItems.MenuButton onClick={action('Clicked on `bears`')}>
+                {'bears'}
+              </MenuItems.MenuButton>
+            </MenuItems.MenuGroup>
+          </ContextMenu>
+        </Container>
       </Container>
     </DarkThemeProvider>
   );
 };
 
-export const RandomItemsInMenu = () => {
-  const itemsWithEventHandlers = randomItems.map((item) => {
-    if (
-      item.href === undefined &&
-      item.label !== 'neither a button nor a link'
-    ) {
-      return { ...item, onClick: action(`Clicked on \`${item.label}\``) };
-    }
-
-    return item;
-  });
-
-  return (
-    <Container>
-      <ContextMenu
-        items={itemsWithEventHandlers}
-        isOpen={boolean('isOpen', true)}
-      />
-    </Container>
-  );
-};
-
-export const Animated = () => {
-  const itemsWithEventHandlers = items.map((item) => ({
-    ...item,
-    onClick: action(`Clicked on \`${item.label}\``),
-  }));
-
-  return (
-    <ViewportContainer>
-      <AnimatedContainerWrapper>
-        <ContextMenu
-          animate
-          items={itemsWithEventHandlers}
-          isOpen={boolean('isOpen', true)}
-        />
-      </AnimatedContainerWrapper>
-    </ViewportContainer>
-  );
-};
-
-const blankPageItems = [
-  { label: 'Change background color', Icon: Bucket },
-  { label: 'Insert media', Icon: Media, separator: 'top' },
-  { label: 'Insert text', Icon: LetterTPlus },
-];
-
-const backgroundImageItems = [
-  { label: 'Replace background', Icon: PictureSwap },
-  { label: 'Add animation', Icon: CircleSpeed },
-  { label: 'Clear filters and animation', Icon: Eraser, separator: 'top' },
-];
-
-const foregroundImageItems = [
-  { label: 'Replace media', Icon: PictureSwap },
-  { label: 'Add animation', Icon: CircleSpeed },
-  { label: 'Add link', Icon: Link },
-  { label: 'Clear filters and animation', Icon: Eraser, separator: 'top' },
-];
-
-const videoItems = [
-  { label: 'Replace media', Icon: PictureSwap },
-  { label: 'Add animation', Icon: CircleSpeed },
-  { label: 'Add link', Icon: Link },
-  { label: 'Add captions', Icon: Captions },
-  { label: 'Clear filters and animation', Icon: Eraser, separator: 'top' },
-];
-
-const shapeItems = [
-  { label: 'Change color', Icon: Bucket },
-  { label: 'Add animation', Icon: CircleSpeed },
-  { label: 'Add link', Icon: Link },
-  { label: 'Clear filters and animation', Icon: Eraser, separator: 'top' },
-];
-
-const textItems = [
-  { label: 'Change color', Icon: Bucket },
-  { label: 'Edit text', Icon: LetterTLargeLetterTSmall },
-  { label: 'Add animation', Icon: CircleSpeed },
-  { label: 'Add link', Icon: Link },
-  { label: 'Clear filters and animation', Icon: Eraser, separator: 'top' },
-];
-
-export const QuickActionMenu = () => {
-  const generateMenuItemsWithEventHandler = (i) =>
-    i.map((item) => ({
-      ...item,
-      onClick: () => action(`Clicked on \`${item.label}\``)(),
-    }));
-
+export const QuickActionMenu = (args) => {
   return (
     <Grid>
       <Container>
         <Text>{'Blank page; no item selected'}</Text>
-        <ContextMenu
-          items={generateMenuItemsWithEventHandler(blankPageItems)}
-          isIconMenu
-          isAlwaysVisible
-        />
+        <ContextMenu isIconMenu {...args}>
+          <MenuItems.MenuButton onClick={action('Clicked on the first action')}>
+            <MenuItems.MenuIcon title="Change background color">
+              <Bucket />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+          <MenuItems.MenuSeparator />
+          <MenuItems.MenuButton
+            onClick={action('Clicked on the second action')}
+          >
+            <MenuItems.MenuIcon title="Insert media">
+              <Media />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+          <MenuItems.MenuButton onClick={action('Clicked on the third action')}>
+            <MenuItems.MenuIcon title="Insert text">
+              <LetterTPlus />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+        </ContextMenu>
       </Container>
       <Container>
         <Text>{'Background Image selected'}</Text>
-        <ContextMenu
-          items={generateMenuItemsWithEventHandler(backgroundImageItems)}
-          isIconMenu
-          isAlwaysVisible
-        />
+        <ContextMenu isIconMenu {...args}>
+          <MenuItems.MenuButton onClick={action('Clicked on the first action')}>
+            <MenuItems.MenuIcon title="Replace background">
+              <PictureSwap />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+          <MenuItems.MenuButton
+            onClick={action('Clicked on the second action')}
+          >
+            <MenuItems.MenuIcon title="Add animation">
+              <CircleSpeed />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+          <MenuItems.MenuSeparator />
+          <MenuItems.MenuButton onClick={action('Clicked on the third action')}>
+            <MenuItems.MenuIcon title="Clear filters and animation">
+              <Eraser />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+        </ContextMenu>
       </Container>
       <Container>
         <Text>{'Foreground Image selected'}</Text>
-        <ContextMenu
-          items={generateMenuItemsWithEventHandler(foregroundImageItems)}
-          isIconMenu
-          isAlwaysVisible
-        />
+        <ContextMenu isIconMenu {...args}>
+          <MenuItems.MenuButton onClick={action('Clicked on the first action')}>
+            <MenuItems.MenuIcon title="Replace media">
+              <PictureSwap />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+          <MenuItems.MenuButton
+            onClick={action('Clicked on the second action')}
+          >
+            <MenuItems.MenuIcon title="Add animation">
+              <CircleSpeed />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+          <MenuItems.MenuButton onClick={action('Clicked on the third action')}>
+            <MenuItems.MenuIcon title="Add link">
+              <IconLink />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+          <MenuItems.MenuSeparator />
+          <MenuItems.MenuButton
+            onClick={action('Clicked on the fourth action')}
+          >
+            <MenuItems.MenuIcon title="Clear filters and animation">
+              <Eraser />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+        </ContextMenu>
       </Container>
       <Container>
         <Text>{'Video selected'}</Text>
-        <ContextMenu
-          items={generateMenuItemsWithEventHandler(videoItems)}
-          isIconMenu
-          isAlwaysVisible
-        />
+        <ContextMenu isIconMenu {...args}>
+          <MenuItems.MenuButton onClick={action('Clicked on the first action')}>
+            <MenuItems.MenuIcon title="Replace media">
+              <PictureSwap />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+          <MenuItems.MenuButton
+            onClick={action('Clicked on the second action')}
+          >
+            <MenuItems.MenuIcon title="Add animation">
+              <CircleSpeed />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+          <MenuItems.MenuButton onClick={action('Clicked on the third action')}>
+            <MenuItems.MenuIcon title="Add link">
+              <IconLink />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+          <MenuItems.MenuButton onClick={action('Clicked on the third action')}>
+            <MenuItems.MenuIcon title="Add captions">
+              <Captions />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+          <MenuItems.MenuSeparator />
+          <MenuItems.MenuButton
+            onClick={action('Clicked on the fourth action')}
+          >
+            <MenuItems.MenuIcon title="Clear filters and animation">
+              <Eraser />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+        </ContextMenu>
       </Container>
       <Container>
         <Text>{'Shape selected'}</Text>
-        <ContextMenu
-          items={generateMenuItemsWithEventHandler(shapeItems)}
-          isIconMenu
-          isAlwaysVisible
-        />
+        <ContextMenu isIconMenu {...args}>
+          <MenuItems.MenuButton onClick={action('Clicked on the first action')}>
+            <MenuItems.MenuIcon title="Change color">
+              <Bucket />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+          <MenuItems.MenuButton
+            onClick={action('Clicked on the second action')}
+          >
+            <MenuItems.MenuIcon title="Add animation">
+              <CircleSpeed />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+          <MenuItems.MenuButton onClick={action('Clicked on the third action')}>
+            <MenuItems.MenuIcon title="Add link">
+              <IconLink />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+          <MenuItems.MenuSeparator />
+          <MenuItems.MenuButton
+            onClick={action('Clicked on the fourth action')}
+          >
+            <MenuItems.MenuIcon title="Clear filters and animation">
+              <Eraser />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+        </ContextMenu>
       </Container>
       <Container>
         <Text>{'Text selected'}</Text>
-        <ContextMenu
-          items={generateMenuItemsWithEventHandler(textItems)}
-          isIconMenu
-          isAlwaysVisible
-        />
+        <ContextMenu isIconMenu {...args}>
+          <MenuItems.MenuButton onClick={action('Clicked on the first action')}>
+            <MenuItems.MenuIcon title="Change color">
+              <Bucket />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+          <MenuItems.MenuButton
+            onClick={action('Clicked on the second action')}
+          >
+            <MenuItems.MenuIcon title="Edit text">
+              <LetterTLargeLetterTSmall />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+          <MenuItems.MenuButton onClick={action('Clicked on the third action')}>
+            <MenuItems.MenuIcon title="Add animation">
+              <CircleSpeed />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+          <MenuItems.MenuButton onClick={action('Clicked on the third action')}>
+            <MenuItems.MenuIcon title="Add link">
+              <IconLink />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+          <MenuItems.MenuSeparator />
+          <MenuItems.MenuButton
+            onClick={action('Clicked on the fourth action')}
+          >
+            <MenuItems.MenuIcon title="Clear filters and animation">
+              <Eraser />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+        </ContextMenu>
       </Container>
     </Grid>
   );
 };
 
-const rightClickMenuMainOptions = [
-  {
-    label: __('Copy', 'web-stories'),
-    ariaLabel: __('Copy element', 'web-stories'),
-    shortcut: {
-      display: '⌘X',
-      title: _x(
-        'Command X',
-        'The keyboard keys "Command" and "X"',
-        'web-stories'
-      ),
-    },
-  },
-  {
-    label: __('Paste', 'web-stories'),
-    ariaLabel: __('Paste element', 'web-stories'),
-    shortcut: {
-      display: '⌘C',
-      title: _x(
-        'Command C',
-        'The keyboard keys "Command" and "C"',
-        'web-stories'
-      ),
-    },
-  },
-  {
-    label: __('Delete', 'web-stories'),
-    ariaLabel: __('Delete element', 'web-stories'),
-    shortcut: {
-      display: 'DEL',
-      title: _x('Delete', 'The keyboard key "Delete"', 'web-stories'),
-    },
-  },
-];
+const rightClickMenuMainOptions = (
+  <>
+    <MenuItems.MenuButton onClick={action('Clicked on `Copy`')}>
+      {'Copy'}
+      <MenuItems.MenuShortcut>{'⌘C'}</MenuItems.MenuShortcut>
+    </MenuItems.MenuButton>
+    <MenuItems.MenuButton onClick={action('Clicked on `Paste`')}>
+      {'Paste'}
+      <MenuItems.MenuShortcut>{'⌘V'}</MenuItems.MenuShortcut>
+    </MenuItems.MenuButton>
+    <MenuItems.MenuButton onClick={action('Clicked on `Delete`')}>
+      {'Delete'}
+      <MenuItems.MenuShortcut>{'DEL'}</MenuItems.MenuShortcut>
+    </MenuItems.MenuButton>
+  </>
+);
 
-const rightClickMenuLayeringOptions = [
-  {
-    label: __('Send to Back', 'web-stories'),
-    separator: 'top',
-    shortcut: {
-      display: '⌥⌘[',
-      title: _x(
-        'Option Command Left Square Bracket',
-        'The keyboard keys "Option", "Command" and "Left Square Bracket"',
-        'web-stories'
-      ),
-    },
-  },
-  {
-    label: __('Send Backwards', 'web-stories'),
-    shortcut: {
-      display: '⌘[',
-      title: _x(
-        'Command Left Square Bracket',
-        'The keyboard keys "Command" and "Left Square Bracket"',
-        'web-stories'
-      ),
-    },
-  },
-  {
-    label: __('Bring Forward', 'web-stories'),
-    shortcut: {
-      display: '⌘]',
-      title: _x(
-        'Command Right Square Bracket',
-        'The keyboard keys "Command" and "Right Square Bracket"',
-        'web-stories'
-      ),
-    },
-  },
-  {
-    label: __('Bring to Front', 'web-stories'),
-    shortcut: {
-      display: '⌥⌘]',
-      title: _x(
-        'Option Command Right Square Bracket',
-        'The keyboard keys "Option" "Command" and "Right Square Bracket"',
-        'web-stories'
-      ),
-    },
-  },
-];
+const rightClickMenuLayeringOptions = (
+  <>
+    <MenuItems.MenuButton onClick={action('Clicked on `Send to back`')}>
+      {'Send to back'}
+      <MenuItems.MenuShortcut>{'⌥⌘['}</MenuItems.MenuShortcut>
+    </MenuItems.MenuButton>
+    <MenuItems.MenuButton onClick={action('Clicked on `Send backwards`')}>
+      {'Send backwards'}
+      <MenuItems.MenuShortcut>{'⌘['}</MenuItems.MenuShortcut>
+    </MenuItems.MenuButton>
+    <MenuItems.MenuButton onClick={action('Clicked on `Bring forward`')}>
+      {'Bring forward'}
+      <MenuItems.MenuShortcut>{'⌘]'}</MenuItems.MenuShortcut>
+    </MenuItems.MenuButton>
+    <MenuItems.MenuButton onClick={action('Clicked on `Bring to front`')}>
+      {'Bring to front'}
+      <MenuItems.MenuShortcut>{'⌥⌘]'}</MenuItems.MenuShortcut>
+    </MenuItems.MenuButton>
+  </>
+);
 
-const rightClickMenuPageAddOptions = [
-  { label: __('Add new page before', 'web-stories'), separator: 'top' },
-  { label: __('Add new page after', 'web-stories') },
-];
+const rightClickMenuPageAddOptions = (
+  <>
+    <MenuItems.MenuButton onClick={action('Clicked on `Add new page before`')}>
+      {'Add new page before'}
+    </MenuItems.MenuButton>
+    <MenuItems.MenuButton onClick={action('Clicked on `Add new page after`')}>
+      {'Add new page after'}
+    </MenuItems.MenuButton>
+  </>
+);
 
-const rightClickMenuPageDeleteOptions = [
-  { label: __('Duplicate page', 'web-stories') },
-  { label: __('Delete page', 'web-stories') },
-];
+const rightClickMenuPageDeleteOptions = (
+  <>
+    <MenuItems.MenuButton onClick={action('Clicked on `Duplicate page`')}>
+      {'Duplicate page'}
+    </MenuItems.MenuButton>
+    <MenuItems.MenuButton onClick={action('Clicked on `Delete page`')}>
+      {'Delete page'}
+    </MenuItems.MenuButton>
+  </>
+);
 
-const rightClickMenuStyleOptions = [
-  {
-    label: __('Copy style', 'web-stories'),
-    separator: 'top',
-    shortcut: {
-      display: '⌥⌘C',
-      title: _x(
-        'Option Command C',
-        'The keyboard keys "Option" "Command" and the letter "C"',
-        'web-stories'
-      ),
-    },
-  },
-  {
-    label: __('Paste style', 'web-stories'),
-    shortcut: {
-      display: '⌥⌘V',
-      title: _x(
-        'Option Command V',
-        'The keyboard keys "Option" "Command" and the letter "V"',
-        'web-stories'
-      ),
-    },
-  },
-  { label: __('Clear style', 'web-stories') },
-];
+const rightClickMenuStyleOptions = (
+  <>
+    <MenuItems.MenuButton onClick={action('Clicked on `Copy style`')}>
+      {'Copy style'}
+      <MenuItems.MenuShortcut>{'⌥⌘C'}</MenuItems.MenuShortcut>
+    </MenuItems.MenuButton>
+    <MenuItems.MenuButton onClick={action('Clicked on `Paste style`')}>
+      {'Paste style'}
+      <MenuItems.MenuShortcut>{'⌥⌘V'}</MenuItems.MenuShortcut>
+    </MenuItems.MenuButton>
+    <MenuItems.MenuButton onClick={action('Clicked on `Clear style`')}>
+      {'Clear style'}
+    </MenuItems.MenuButton>
+  </>
+);
 
-const pageElement = [
-  ...rightClickMenuMainOptions,
-  ...rightClickMenuPageAddOptions,
-  ...rightClickMenuPageDeleteOptions,
-];
+const pageMenu = (
+  <>
+    {rightClickMenuMainOptions}
+    <MenuItems.MenuSeparator />
+    {rightClickMenuPageAddOptions}
+    {rightClickMenuPageDeleteOptions}
+  </>
+);
 
-const shapeElement = [
-  ...rightClickMenuMainOptions,
-  ...rightClickMenuLayeringOptions,
-  ...rightClickMenuStyleOptions,
-  { label: __('Add color to "Saved colors"', 'web-stories') },
-];
+const shapeMenu = (
+  <>
+    {rightClickMenuMainOptions}
+    <MenuItems.MenuSeparator />
+    {rightClickMenuLayeringOptions}
+    <MenuItems.MenuSeparator />
+    {rightClickMenuStyleOptions}
+    <MenuItems.MenuButton
+      onClick={action('Clicked on `Add color to "Saved colors"`')}
+    >
+      {'Add color to "Saved colors"'}
+    </MenuItems.MenuButton>
+  </>
+);
 
-const foregroundMediaElement = [
-  ...rightClickMenuMainOptions,
-  ...rightClickMenuLayeringOptions,
-  { label: __('Set as page background', 'web-stories'), separator: 'top' },
-  { label: __('Scale & crop image', 'web-stories') },
-  ...rightClickMenuStyleOptions,
-];
+const foregroundMediaMenu = (
+  <>
+    {rightClickMenuMainOptions}
+    <MenuItems.MenuSeparator />
+    {rightClickMenuLayeringOptions}
+    <MenuItems.MenuSeparator />
+    <MenuItems.MenuButton
+      onClick={action('Clicked on `Set as page background`')}
+    >
+      {'Set as page background'}
+    </MenuItems.MenuButton>
+    <MenuItems.MenuButton onClick={action('Clicked on `Scale & crop image`')}>
+      {'Scale & crop image'}
+    </MenuItems.MenuButton>
+    <MenuItems.MenuSeparator />
+    {rightClickMenuStyleOptions}
+  </>
+);
 
-const backgroundMediaElement = [
-  ...rightClickMenuMainOptions,
-  {
-    label: __('Detach image from background', 'web-stories'),
-    separator: 'top',
-  },
-  { label: __('Replace background image', 'web-stories') },
-  { label: __('Scale & crop background image', 'web-stories') },
-  { label: __('Clear style', 'web-stories') },
-  ...rightClickMenuPageAddOptions,
-  ...rightClickMenuPageDeleteOptions,
-];
+const backgroundMediaMenu = (
+  <>
+    {rightClickMenuMainOptions}
+    <MenuItems.MenuSeparator />
+    <MenuItems.MenuButton
+      onClick={action('Clicked on `Detach image from background`')}
+    >
+      {'Detach image from background'}
+    </MenuItems.MenuButton>
+    <MenuItems.MenuButton
+      onClick={action('Clicked on `Replace background image`')}
+    >
+      {'Replace background image'}
+    </MenuItems.MenuButton>
+    <MenuItems.MenuButton
+      onClick={action('Clicked on `Scale & crop background image`')}
+    >
+      {'Scale & crop background image'}
+    </MenuItems.MenuButton>
+    <MenuItems.MenuButton onClick={action('Clicked on `Clear style`')}>
+      {'Clear style'}
+    </MenuItems.MenuButton>
+    <MenuItems.MenuSeparator />
+    {rightClickMenuPageAddOptions}
+    {rightClickMenuPageDeleteOptions}
+  </>
+);
 
-const textElement = [
-  ...rightClickMenuMainOptions,
-  ...rightClickMenuLayeringOptions,
-  ...rightClickMenuStyleOptions,
-  { label: __('Add style to "Saved styles"', 'web-stories') },
-  { label: __('Add color to "Saved colors"', 'web-stories') },
-];
+const textMenu = (
+  <>
+    {rightClickMenuMainOptions}
+    <MenuItems.MenuSeparator />
+    {rightClickMenuLayeringOptions}
+    <MenuItems.MenuSeparator />
+    {rightClickMenuStyleOptions}
+    <MenuItems.MenuButton
+      onClick={action('Clicked on `Add style to "Saved styles"`')}
+    >
+      {'Add style to "Saved styles"'}
+    </MenuItems.MenuButton>
+    <MenuItems.MenuButton
+      onClick={action('Clicked on `Add color to "Saved colors"`')}
+    >
+      {'Add color to "Saved colors"'}
+    </MenuItems.MenuButton>
+  </>
+);
 
 const SampleLayout = styled.div`
   display: block;
@@ -472,26 +562,143 @@ const SampleLayout = styled.div`
   height: 800px;
   border: 1px solid black;
 `;
-
 const RightClickContextMenuContainer = styled.div`
   position: absolute;
   top: ${({ position }) => position?.y ?? 0}px;
   left: ${({ position }) => position?.x ?? 0}px;
 `;
 
-export const RightClickMenu = () => {
+const RightClickMenuOnShapeAndBackground = ({ children, ...args }) => {
+  const ref = useRef();
+  const subMenuRef = useRef();
+  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
+  return (
+    <Container ref={ref}>
+      {children}
+      <ContextMenu {...args}>
+        <MenuItems.SubMenuTrigger
+          subMenuRef={subMenuRef}
+          isSubMenuOpen={isSubMenuOpen}
+          parentMenuRef={ref}
+          closeSubMenu={() => setIsSubMenuOpen(false)}
+          openSubMenu={() => setIsSubMenuOpen(true)}
+          label="Select Layer"
+          SuffixIcon={ChevronRightSmall}
+        />
+        <RightClickContextMenuContainer
+          position={{
+            y: 0,
+            x: 212,
+          }}
+          ref={subMenuRef}
+        >
+          <ContextMenu
+            isOpen={isSubMenuOpen}
+            onCloseSubMenu={() => setIsSubMenuOpen(false)}
+            isSubMenu
+            parentMenuRef={ref}
+          >
+            <MenuItems.MenuItem
+              supportsIcon
+              dismissOnClick={false}
+              onClick={() => () => setIsSubMenuOpen(false)}
+              icon={<CheckmarkSmall />}
+              label={<span>{'Select rectangle'}</span>}
+            />
+            <MenuItems.MenuItem
+              supportsIcon
+              dismissOnClick={false}
+              onClick={() => setIsSubMenuOpen(false)}
+              label={<span>{'Select background'}</span>}
+            />
+          </ContextMenu>
+        </RightClickContextMenuContainer>
+        <MenuItems.MenuSeparator />
+        {shapeMenu}
+      </ContextMenu>
+    </Container>
+  );
+};
+
+RightClickMenuOnShapeAndBackground.propTypes = {
+  children: PropTypes.node,
+};
+
+export const WithSubMenu = (args) => {
+  const ref = useRef();
+  const subMenuRef = useRef();
+  const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
+  return (
+    <Container ref={ref}>
+      <ContextMenu {...args}>
+        <MenuItems.MenuButton onClick={action('Clicked on `one`')}>
+          {'one'}
+        </MenuItems.MenuButton>
+        <MenuItems.MenuButton onClick={action('Clicked on `two`')}>
+          {'two'}
+        </MenuItems.MenuButton>
+        <MenuItems.MenuButton
+          onClick={action('Clicked on `disabled`')}
+          disabled
+        >
+          {'this is disabled'}
+        </MenuItems.MenuButton>
+        <MenuItems.MenuSeparator />
+        <MenuItems.SubMenuTrigger
+          subMenuRef={subMenuRef}
+          isSubMenuOpen={isSubMenuOpen}
+          parentMenuRef={ref}
+          closeSubMenu={() => setIsSubMenuOpen(false)}
+          openSubMenu={() => setIsSubMenuOpen(true)}
+          label="More items"
+          SuffixIcon={ChevronRightSmall}
+        />
+        <RightClickContextMenuContainer
+          position={{
+            y: 102,
+            x: 212,
+          }}
+          ref={subMenuRef}
+        >
+          <ContextMenu
+            isOpen={isSubMenuOpen}
+            onCloseSubMenu={() => setIsSubMenuOpen(false)}
+            isSubMenu
+            parentMenuRef={ref}
+          >
+            <MenuItems.MenuButton
+              dismissOnClick={false}
+              onClick={() => () => setIsSubMenuOpen(false)}
+            >
+              {'Select layer 1'}
+            </MenuItems.MenuButton>
+            <MenuItems.MenuSeparator />
+            <MenuItems.MenuButton
+              dismissOnClick={false}
+              onClick={() => setIsSubMenuOpen(false)}
+            >
+              {'Select background'}
+            </MenuItems.MenuButton>
+          </ContextMenu>
+        </RightClickContextMenuContainer>
+        <MenuItems.MenuLabel>
+          {'i am neither a button nor a link'}
+        </MenuItems.MenuLabel>
+        <MenuItems.MenuSeparator />
+        <MenuItems.MenuButton onClick={action('Clicked on `i am a button`')}>
+          {'i am a button!'}
+          <MenuItems.MenuShortcut>{'⌥ ⌘ A'}</MenuItems.MenuShortcut>
+        </MenuItems.MenuButton>
+      </ContextMenu>
+    </Container>
+  );
+};
+
+export const RightClickMenu = (args) => {
   const [isOpen, setIsOpen] = useState(false);
   const [menuPosition, setMenuPosition] = useState({});
   const layoutRef = useRef();
 
-  const generateMenuItemsWithEventHandler = (i) =>
-    i.map((item) => ({
-      ...item,
-      onClick: () => {
-        action(`Clicked on \`${item.label}\``)();
-        setIsOpen(false);
-      },
-    }));
   const handleMenu = useCallback((e) => {
     e.preventDefault();
     const layoutRect = layoutRef?.current?.getBoundingClientRect();
@@ -520,69 +727,46 @@ export const RightClickMenu = () => {
   return (
     <ViewportContainer>
       {/*eslint-disable-next-line styled-components-a11y/no-noninteractive-element-interactions*/}
-      <SampleLayout
-        ref={layoutRef}
-        // TODO: confirm we don't need this menu to show up for keyboards since they have a separate menu
-        role="region"
-        onKeyDown={() => {}}
-      />
+      <SampleLayout ref={layoutRef} role="region" onKeyDown={() => {}} />
       <RightClickContextMenuContainer position={menuPosition}>
         <ContextMenu
-          animate
           isOpen={isOpen}
           onDismiss={() => setIsOpen(false)}
-          items={generateMenuItemsWithEventHandler(pageElement)}
-        />
+          {...args}
+        >
+          {pageMenu}
+        </ContextMenu>
       </RightClickContextMenuContainer>
     </ViewportContainer>
   );
 };
+RightClickMenu.parameters = { controls: { include: [] } };
 
-export const RightClickMenuStaticValues = () => {
-  const generateMenuItemsWithEventHandler = (i) =>
-    i.map((item) => ({
-      ...item,
-      onClick: () => {
-        action(`Clicked on \`${item.label}\``)();
-      },
-    }));
-
+export const RightClickMenuStaticValues = (args) => {
   return (
     <Grid>
+      <RightClickMenuOnShapeAndBackground>
+        <Text>{'Right click menu on top of shape and background'}</Text>
+      </RightClickMenuOnShapeAndBackground>
       <Container>
         <Text>{'Right click on page element'}</Text>
-        <ContextMenu
-          isOpen={boolean('isOpen', true)}
-          items={generateMenuItemsWithEventHandler(pageElement)}
-        />
+        <ContextMenu {...args}>{pageMenu}</ContextMenu>
       </Container>
       <Container>
         <Text>{'Right click on shape element'}</Text>
-        <ContextMenu
-          isOpen={boolean('isOpen', true)}
-          items={generateMenuItemsWithEventHandler(shapeElement)}
-        />
+        <ContextMenu {...args}>{shapeMenu}</ContextMenu>
       </Container>
       <Container>
         <Text>{'Right click on foreground media element'}</Text>
-        <ContextMenu
-          isOpen={boolean('isOpen', true)}
-          items={generateMenuItemsWithEventHandler(foregroundMediaElement)}
-        />
+        <ContextMenu {...args}>{foregroundMediaMenu}</ContextMenu>
       </Container>
       <Container>
         <Text>{'Right click on background element'}</Text>
-        <ContextMenu
-          isOpen={boolean('isOpen', true)}
-          items={generateMenuItemsWithEventHandler(backgroundMediaElement)}
-        />
+        <ContextMenu {...args}>{backgroundMediaMenu}</ContextMenu>
       </Container>
       <Container>
         <Text>{'Right click on text element'}</Text>
-        <ContextMenu
-          isOpen={boolean('isOpen', true)}
-          items={generateMenuItemsWithEventHandler(textElement)}
-        />
+        <ContextMenu {...args}>{textMenu}</ContextMenu>
       </Container>
     </Grid>
   );

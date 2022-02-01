@@ -25,8 +25,8 @@ import {
   SnackbarProvider,
   ModalGlobalStyle,
   deepMerge,
-} from '@web-stories-wp/design-system';
-import { useMemo } from '@web-stories-wp/react';
+} from '@googleforcreators/design-system';
+import { useMemo } from '@googleforcreators/react';
 import { FlagsProvider } from 'flagged';
 
 /**
@@ -47,6 +47,7 @@ import AutoSaveHandler from './components/autoSaveHandler';
 import { TransformProvider } from './components/transform';
 import { DropTargetsProvider } from './components/dropTargets';
 import { HelpCenterProvider } from './app/helpCenter';
+import { PageDataUrlProvider } from './app/pageDataUrls';
 import DevTools from './components/devTools';
 import { GlobalStyle as DefaultMoveableGlobalStyle } from './components/moveable/moveStyle';
 import { GlobalStyle as CropMoveableGlobalStyle } from './components/moveable/cropStyle';
@@ -80,14 +81,16 @@ function StoryEditor({ config, initialEdits, children }) {
                                 <TransformProvider>
                                   <DropTargetsProvider>
                                     <HelpCenterProvider>
-                                      <GlobalStyle />
-                                      <DevTools />
-                                      <DefaultMoveableGlobalStyle />
-                                      <CropMoveableGlobalStyle />
-                                      <ModalGlobalStyle />
-                                      <CalendarStyle />
-                                      <KeyboardOnlyOutlines />
-                                      {children}
+                                      <PageDataUrlProvider>
+                                        <GlobalStyle />
+                                        <DevTools />
+                                        <DefaultMoveableGlobalStyle />
+                                        <CropMoveableGlobalStyle />
+                                        <ModalGlobalStyle />
+                                        <CalendarStyle />
+                                        <KeyboardOnlyOutlines />
+                                        {children}
+                                      </PageDataUrlProvider>
                                     </HelpCenterProvider>
                                   </DropTargetsProvider>
                                 </TransformProvider>

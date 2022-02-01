@@ -19,7 +19,7 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { Button, BUTTON_TYPES } from '@web-stories-wp/design-system';
+import { Button, BUTTON_TYPES } from '@googleforcreators/design-system';
 
 const pictureCss = css`
   picture {

@@ -17,8 +17,13 @@
 /**
  * External dependencies
  */
-import { useEffect, useMemo, useCallback } from '@web-stories-wp/react';
-import { noop } from '@web-stories-wp/design-system';
+import {
+  useEffect,
+  useMemo,
+  useCallback,
+  useRef,
+} from '@googleforcreators/react';
+import { noop } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -74,7 +79,17 @@ function MyStories() {
       getAuthors,
     })
   );
-  const { apiCallbacks } = useConfig();
+  const { apiCallbacks, canViewDefaultTemplates } = useConfig();
+
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    isMounted.current = true;
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
 
   const {
     filter,
@@ -95,6 +110,10 @@ function MyStories() {
   let queryAuthorsBySearch = useCallback(
     (authorSearchTerm) => {
       return getAuthors(authorSearchTerm).then((data) => {
+        if (!isMounted.current) {
+          return;
+        }
+
         const userData = data.map(({ id, name }) => ({
           id,
           name,
@@ -164,6 +183,7 @@ function MyStories() {
 
       <Content
         allPagesFetched={allPagesFetched}
+        canViewDefaultTemplates={canViewDefaultTemplates}
         filter={filter}
         loading={{ isLoading, showStoriesWhileLoading }}
         page={page}

@@ -21,7 +21,7 @@ import { waitFor, within } from '@testing-library/react';
 import {
   localStore,
   LOCAL_STORAGE_PREFIX,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -71,13 +71,13 @@ const RESOURCE_BUILDERS = {
         url: 'http://localhost:9876/__static__/beach.mp4',
         width: 1920,
         height: 1080,
-        mimeType: 'image/mp4',
+        mimeType: 'video/mp4',
       },
       {
         url: 'http://localhost:9876/__static__/beach.mp4',
         width: 640,
         height: 360,
-        mimeType: 'image/jpg',
+        mimeType: 'video/mp4',
       },
     ],
     imageUrls: [
@@ -403,7 +403,7 @@ describe('Media3pPane fetching', () => {
       expect(mediaGallery.scrollTop).toBe(0);
     });
   });
-  // TODO: https://github.com/google/web-stories-wp/issues/10144
+  // TODO: https://github.com/googleforcreators/web-stories-wp/issues/10144
   // eslint-disable-next-line jasmine/no-disabled-tests
   xit('should have a delay before autoplaying videos', async () => {
     await fixture.events.click(fixture.editor.library.media3pTab);

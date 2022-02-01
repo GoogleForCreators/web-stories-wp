@@ -18,9 +18,9 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { useCallback } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
-import { Text, THEME_CONSTANTS } from '@web-stories-wp/design-system';
+import { useCallback } from '@googleforcreators/react';
+import { __ } from '@googleforcreators/i18n';
+import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -52,8 +52,10 @@ function BackgroundAudioPanel() {
   );
 
   const updateBackgroundAudio = useCallback(
-    (audioResource) => {
-      updateStory({ properties: { backgroundAudio: audioResource } });
+    (updatedBackgroundAudio) => {
+      updateStory({
+        properties: { backgroundAudio: updatedBackgroundAudio },
+      });
     },
     [updateStory]
   );

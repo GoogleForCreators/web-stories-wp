@@ -7,7 +7,7 @@
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/google/web-stories-wp
+ * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -34,6 +34,7 @@ use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Locale;
 use Google\Web_Stories\Tracking;
 use Google\Web_Stories\Media\Types;
+use Google\Web_Stories\Font_Post_Type;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Integrations\Site_Kit;
@@ -108,6 +109,13 @@ class Dashboard extends Service_Base {
 	private $story_post_type;
 
 	/**
+	 * Font_Post_Type instance.
+	 *
+	 * @var Font_Post_Type Font_Post_Type instance.
+	 */
+	private $font_post_type;
+
+	/**
 	 * Context instance.
 	 *
 	 * @var Context Context instance.
@@ -124,6 +132,8 @@ class Dashboard extends Service_Base {
 	/**
 	 * Dashboard constructor.
 	 *
+	 * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+	 *
 	 * @since 1.0.0
 	 *
 	 * @param Experiments     $experiments     Experiments instance.
@@ -132,6 +142,7 @@ class Dashboard extends Service_Base {
 	 * @param Locale          $locale          Locale instance.
 	 * @param Google_Fonts    $google_fonts    Google_Fonts instance.
 	 * @param Assets          $assets          Assets instance.
+	 * @param Font_Post_Type  $font_post_type  Font_Post_Type instance.
 	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
 	 * @param Context         $context         Context instance.
 	 * @param Types           $types           Types instance.
@@ -143,6 +154,7 @@ class Dashboard extends Service_Base {
 		Locale $locale,
 		Google_Fonts $google_fonts,
 		Assets $assets,
+		Font_Post_Type $font_post_type,
 		Story_Post_Type $story_post_type,
 		Context $context,
 		Types $types
@@ -153,6 +165,7 @@ class Dashboard extends Service_Base {
 		$this->locale          = $locale;
 		$this->google_fonts    = $google_fonts;
 		$this->assets          = $assets;
+		$this->font_post_type  = $font_post_type;
 		$this->story_post_type = $story_post_type;
 		$this->context         = $context;
 		$this->types           = $types;
@@ -196,6 +209,8 @@ class Dashboard extends Service_Base {
 	public function add_menu_page() {
 		$parent = 'edit.php?post_type=' . $this->story_post_type->get_slug();
 
+		$settings = $this->get_dashboard_settings();
+
 		$this->hook_suffix['stories-dashboard'] = add_submenu_page(
 			$parent,
 			__( 'Dashboard', 'web-stories' ),
@@ -206,15 +221,17 @@ class Dashboard extends Service_Base {
 			0
 		);
 
-		$this->hook_suffix['stories-dashboard-explore'] = add_submenu_page(
-			$parent,
-			__( 'Explore Templates', 'web-stories' ),
-			__( 'Explore Templates', 'web-stories' ),
-			'edit_web-stories',
-			'stories-dashboard#/templates-gallery',
-			'__return_null',
-			1
-		);
+		if ( isset( $settings['canViewDefaultTemplates'] ) && $settings['canViewDefaultTemplates'] ) {
+			$this->hook_suffix['stories-dashboard-explore'] = add_submenu_page(
+				$parent,
+				__( 'Explore Templates', 'web-stories' ),
+				__( 'Explore Templates', 'web-stories' ),
+				'edit_web-stories',
+				'stories-dashboard#/templates-gallery',
+				'__return_null',
+				1
+			);
+		}
 
 		$this->hook_suffix['stories-dashboard-settings'] = add_submenu_page(
 			$parent,
@@ -382,7 +399,7 @@ class Dashboard extends Service_Base {
 			]
 		);
 
-		// Dequeue forms.css, see https://github.com/google/web-stories-wp/issues/349 .
+		// Dequeue forms.css, see https://github.com/googleforcreators/web-stories-wp/issues/349 .
 		$this->assets->remove_admin_style( [ 'forms' ] );
 	}
 
@@ -410,32 +427,34 @@ class Dashboard extends Service_Base {
 		}
 
 		$settings = [
-			'isRTL'                 => is_rtl(),
-			'userId'                => get_current_user_id(),
-			'locale'                => $this->locale->get_locale_settings(),
-			'newStoryURL'           => $new_story_url,
-			'archiveURL'            => $this->story_post_type->get_archive_link(),
-			'cdnURL'                => trailingslashit( WEBSTORIES_CDN_URL ),
-			'allowedImageMimeTypes' => $this->types->get_allowed_image_mime_types(),
-			'version'               => WEBSTORIES_VERSION,
-			'encodeMarkup'          => $this->decoder->supports_decoding(),
-			'api'                   => [
+			'isRTL'                   => is_rtl(),
+			'userId'                  => get_current_user_id(),
+			'locale'                  => $this->locale->get_locale_settings(),
+			'newStoryURL'             => $new_story_url,
+			'archiveURL'              => $this->story_post_type->get_archive_link(),
+			'cdnURL'                  => trailingslashit( WEBSTORIES_CDN_URL ),
+			'allowedImageMimeTypes'   => $this->types->get_allowed_image_mime_types(),
+			'version'                 => WEBSTORIES_VERSION,
+			'encodeMarkup'            => $this->decoder->supports_decoding(),
+			'api'                     => [
 				'stories'        => trailingslashit( $this->story_post_type->get_rest_url() ),
 				'media'          => '/web-stories/v1/media/',
 				'currentUser'    => '/web-stories/v1/users/me/',
+				'fonts'          => trailingslashit( $this->font_post_type->get_rest_url() ),
 				'users'          => '/web-stories/v1/users/',
 				'settings'       => '/web-stories/v1/settings/',
 				'pages'          => '/wp/v2/pages/',
 				'publisherLogos' => '/web-stories/v1/publisher-logos/',
 			],
-			'maxUpload'             => $max_upload_size,
-			'maxUploadFormatted'    => size_format( $max_upload_size ),
-			'capabilities'          => [
+			'maxUpload'               => $max_upload_size,
+			'maxUploadFormatted'      => size_format( $max_upload_size ),
+			'capabilities'            => [
 				'canManageSettings' => current_user_can( 'manage_options' ),
 				'canUploadFiles'    => current_user_can( 'upload_files' ),
 			],
-			'siteKitStatus'         => $this->site_kit->get_plugin_status(),
-			'flags'                 => array_merge(
+			'canViewDefaultTemplates' => true,
+			'siteKitStatus'           => $this->site_kit->get_plugin_status(),
+			'flags'                   => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),
 				$this->experiments->get_experiment_statuses( 'dashboard' )
 			),

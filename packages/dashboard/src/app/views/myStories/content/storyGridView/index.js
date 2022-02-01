@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 /**
  * External dependencies
  */
@@ -29,8 +29,8 @@ import {
   useMemo,
   useCallback,
   useFocusOut,
-} from '@web-stories-wp/react';
-import { useGridViewKeys } from '@web-stories-wp/design-system';
+} from '@googleforcreators/react';
+import { useGridViewKeys } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
@@ -137,30 +137,31 @@ const StoryGridView = ({
   useFocusOut(containerRef, () => setActiveGridItemId(null), []);
 
   const modifiedStoryMenu = useMemo(() => {
+    const actions = [
+      STORY_CONTEXT_MENU_ACTIONS.DELETE,
+      STORY_CONTEXT_MENU_ACTIONS.RENAME,
+      STORY_CONTEXT_MENU_ACTIONS.DUPLICATE,
+    ];
+
+    const menuItems = storyMenu.menuItems.map((item) => {
+      const _item = { ...item };
+
+      if (actions.includes(item?.value)) {
+        _item.action = (story) => {
+          manuallySetFocusOut();
+          item.action(story);
+        };
+      }
+
+      return _item;
+    });
+
     return {
       ...storyMenu,
       handleMenuToggle,
-      menuItemActions: {
-        ...storyMenu.menuItemActions,
-        [STORY_CONTEXT_MENU_ACTIONS.DELETE]: (story) => {
-          manuallySetFocusOut();
-          storyMenu.menuItemActions[STORY_CONTEXT_MENU_ACTIONS.DELETE](story);
-        },
-        [STORY_CONTEXT_MENU_ACTIONS.DUPLICATE]: (story) => {
-          manuallySetFocusOut();
-          storyMenu.menuItemActions[STORY_CONTEXT_MENU_ACTIONS.DUPLICATE](
-            story
-          );
-        },
-        [STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK]: (story) => {
-          manuallySetFocusOut();
-          storyMenu.menuItemActions[STORY_CONTEXT_MENU_ACTIONS.COPY_STORY_LINK](
-            story
-          );
-        },
-      },
+      menuItems,
     };
-  }, [handleMenuToggle, manuallySetFocusOut, storyMenu]);
+  }, [handleMenuToggle, storyMenu, manuallySetFocusOut]);
 
   const memoizedStoryGrid = useMemo(
     () =>

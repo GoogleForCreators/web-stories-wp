@@ -134,9 +134,14 @@ describe('Quick Actions integration', () => {
           width: 640 / 2,
           height: 529 / 2,
           resource: {
+            id: 10,
             type: 'image',
             mimeType: 'image/jpg',
             src: 'http://localhost:9876/__static__/earth.jpg',
+            alt: 'earth',
+            width: 640,
+            height: 529,
+            baseColor: '#734727',
           },
         })
       );
@@ -194,6 +199,7 @@ describe('Quick Actions integration', () => {
 
     it(`clicking the \`${ACTIONS.ADD_LINK.text}\` button should select the link panel and focus the input`, async () => {
       // click quick menu button
+
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.addLinkButton
       );

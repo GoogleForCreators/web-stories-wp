@@ -24,7 +24,7 @@ import {
   THEME_CONSTANTS,
   Text,
   themeHelpers,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -100,24 +100,9 @@ export const CheckboxCtaContainer = styled.div`
   }
 `;
 
-export const ThumbnailWrapper = styled.div`
-  grid-area: thumbnail;
-
-  ${({ $isMultiple, $colCount }) =>
-    $isMultiple &&
-    css`
-      display: grid;
-      grid-gap: 8px;
-      grid-template-columns: repeat(${$colCount}, 52px);
-      overflow: hidden;
-      grid-auto-flow: column;
-    `}
-`;
-
 export const StyledOverflowThumbnail = styled(OverflowThumbnail)`
-  grid-area: thumbnail-overflow;
   width: 52px;
-  cursor: default;
+  cursor: pointer;
 `;
 
 export const Footer = styled.div`

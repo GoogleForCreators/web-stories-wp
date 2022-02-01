@@ -18,21 +18,18 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { __ } from '@web-stories-wp/i18n';
-import { v4 as uuidv4 } from 'uuid';
+import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import {
-  Checkbox,
   Text,
   THEME_CONSTANTS,
-  ThemeGlobals,
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   useLiveRegion,
-} from '@web-stories-wp/design-system';
-import { useCallback, useEffect } from '@web-stories-wp/react';
+} from '@googleforcreators/design-system';
+import { useCallback, useEffect } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -44,6 +41,7 @@ import { getCommonValue } from '../../shared';
 import useFFmpeg from '../../../../app/media/utils/useFFmpeg';
 import { useLocalMedia } from '../../../../app';
 import CircularProgress from '../../../circularProgress';
+import LoopPanelContent from '../../shared/loopPanelContent';
 
 const Row = styled(DefaultRow)`
   margin-top: 2px;
@@ -55,18 +53,6 @@ const StyledButton = styled(Button)`
 
 const TrimButton = styled(StyledButton)`
   margin-left: 20px;
-`;
-
-const Label = styled.label`
-  margin-left: 12px;
-`;
-
-const StyledCheckbox = styled(Checkbox)`
-  ${({ theme }) => `
-    input[type='checkbox']&.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} ~ div, input[type='checkbox']:focus ~ div {
-      box-shadow: 0px 0px 0 2px ${theme.colors.bg.secondary}, 0px 0px 0 4px ${theme.colors.border.focus} !important;
-    }
-  `}
 `;
 
 const TrimWrapper = styled.div`
@@ -149,7 +135,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     }
   }, [isTrimming, trimButtonText, speak]);
 
-  const checkboxId = `cb-${uuidv4()}`;
+  const onChange = (evt) => pushUpdate({ loop: evt.target.checked }, true);
 
   const Processing = () => {
     return (
@@ -165,16 +151,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
       title={__('Video Settings', 'web-stories')}
     >
       <Row spaceBetween={false}>
-        <StyledCheckbox
-          id={checkboxId}
-          checked={loop}
-          onChange={(evt) => pushUpdate({ loop: evt.target.checked }, true)}
-        />
-        <Label htmlFor={checkboxId}>
-          <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-            {__('Loop', 'web-stories')}
-          </Text>
-        </Label>
+        <LoopPanelContent loop={loop} onChange={onChange} />
         {hasTrimMode && (
           <TrimWrapper>
             <TrimButton

@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { act, renderHook } from '@testing-library/react-hooks';
-import { isPlatformMacOS, useSnackbar } from '@web-stories-wp/design-system';
+import { isPlatformMacOS, useSnackbar } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -41,13 +41,13 @@ jest.mock(
   () => (cb) => mockVideoTrim(cb)
 );
 
-jest.mock('@web-stories-wp/design-system', () => ({
-  ...jest.requireActual('@web-stories-wp/design-system'),
+jest.mock('@googleforcreators/design-system', () => ({
+  ...jest.requireActual('@googleforcreators/design-system'),
   isPlatformMacOS: jest.fn(),
   useSnackbar: jest.fn(),
 }));
 
-jest.mock('@web-stories-wp/tracking');
+jest.mock('@googleforcreators/tracking');
 
 const mockEvent = {
   preventDefault: jest.fn(),
@@ -211,7 +211,6 @@ describe('useRightClickMenu', () => {
       expect(labels).toStrictEqual([
         RIGHT_CLICK_MENU_LABELS.DETACH_IMAGE_FROM_BACKGROUND,
         RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND_IMAGE,
-        RIGHT_CLICK_MENU_LABELS.CLEAR_STYLES(1),
         RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER,
         RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_BEFORE,
         RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE,
@@ -224,7 +223,7 @@ describe('useRightClickMenu', () => {
         wrapper: RightClickMenuProvider,
       });
 
-      const backgroundImageItems = result.current.menuItems.slice(0, 3);
+      const backgroundImageItems = result.current.menuItems.slice(0, 2);
       backgroundImageItems.map((item) => {
         expect(item.disabled).toBeTrue();
       });
@@ -307,7 +306,6 @@ describe('useRightClickMenu', () => {
       expect(labels).toStrictEqual([
         RIGHT_CLICK_MENU_LABELS.DETACH_IMAGE_FROM_BACKGROUND,
         RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND_IMAGE,
-        RIGHT_CLICK_MENU_LABELS.CLEAR_STYLES(1),
         RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER,
         RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_BEFORE,
         RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE,
@@ -339,7 +337,6 @@ describe('useRightClickMenu', () => {
       expect(labels).toStrictEqual([
         RIGHT_CLICK_MENU_LABELS.DETACH_VIDEO_FROM_BACKGROUND,
         RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_BACKGROUND_VIDEO,
-        RIGHT_CLICK_MENU_LABELS.CLEAR_STYLES(1),
         RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER,
         RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_BEFORE,
         RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE,
@@ -438,12 +435,11 @@ describe('useRightClickMenu', () => {
         RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_IMAGE,
         RIGHT_CLICK_MENU_LABELS.COPY_IMAGE_STYLES,
         RIGHT_CLICK_MENU_LABELS.PASTE_IMAGE_STYLES,
-        RIGHT_CLICK_MENU_LABELS.CLEAR_IMAGE_STYLES,
       ]);
     });
 
-    describe('copying, pasting, and clearing styles', () => {
-      it('should show a snackbar when copying, pasting, and clearing styles', () => {
+    describe('copying and pasting styles', () => {
+      it('should show a snackbar when copying and pasting styles', () => {
         const { result } = renderHook(() => useRightClickMenu(), {
           wrapper: RightClickMenuProvider,
         });
@@ -473,20 +469,6 @@ describe('useRightClickMenu', () => {
           expect.objectContaining({
             actionLabel: 'Undo',
             message: 'Pasted style.',
-          })
-        );
-
-        const clear = result.current.menuItems.find(
-          (item) => item.label === RIGHT_CLICK_MENU_LABELS.CLEAR_IMAGE_STYLES
-        );
-        act(() => {
-          clear.onClick();
-        });
-
-        expect(mockShowSnackbar).toHaveBeenCalledWith(
-          expect.objectContaining({
-            actionLabel: 'Undo',
-            message: 'Cleared style.',
           })
         );
       });
@@ -523,7 +505,6 @@ describe('useRightClickMenu', () => {
         RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_VIDEO,
         RIGHT_CLICK_MENU_LABELS.COPY_VIDEO_STYLES,
         RIGHT_CLICK_MENU_LABELS.PASTE_VIDEO_STYLES,
-        RIGHT_CLICK_MENU_LABELS.CLEAR_VIDEO_STYLES,
       ]);
     });
 
@@ -590,8 +571,8 @@ describe('useRightClickMenu', () => {
       });
     });
 
-    describe('copying, pasting, and clearing styles', () => {
-      it('should show a snackbar when copying, pasting, and clearing styles', () => {
+    describe('copying and pasting styles', () => {
+      it('should show a snackbar when copying and pasting styles', () => {
         const { result } = renderHook(() => useRightClickMenu(), {
           wrapper: RightClickMenuProvider,
         });
@@ -623,20 +604,6 @@ describe('useRightClickMenu', () => {
             message: 'Pasted style.',
           })
         );
-
-        const clear = result.current.menuItems.find(
-          (item) => item.label === RIGHT_CLICK_MENU_LABELS.CLEAR_VIDEO_STYLES
-        );
-        act(() => {
-          clear.onClick();
-        });
-
-        expect(mockShowSnackbar).toHaveBeenCalledWith(
-          expect.objectContaining({
-            actionLabel: 'Undo',
-            message: 'Cleared style.',
-          })
-        );
       });
     });
   });
@@ -665,7 +632,6 @@ describe('useRightClickMenu', () => {
         ...expectedLayerActions,
         RIGHT_CLICK_MENU_LABELS.COPY_SHAPE_STYLES,
         RIGHT_CLICK_MENU_LABELS.PASTE_SHAPE_STYLES,
-        RIGHT_CLICK_MENU_LABELS.CLEAR_SHAPE_STYLES,
         RIGHT_CLICK_MENU_LABELS.ADD_TO_COLOR_PRESETS,
       ]);
     });
@@ -731,7 +697,6 @@ describe('useRightClickMenu', () => {
       const labels = result.current.menuItems.map((item) => item.label);
       expect(labels).toStrictEqual([
         RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(2),
-        RIGHT_CLICK_MENU_LABELS.CLEAR_STYLES(2),
       ]);
     });
   });

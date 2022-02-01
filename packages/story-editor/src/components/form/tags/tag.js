@@ -23,9 +23,9 @@ import {
   THEME_CONSTANTS,
   Tooltip,
   TOOLTIP_PLACEMENT,
-} from '@web-stories-wp/design-system';
-import { __ } from '@web-stories-wp/i18n';
-import { useMemo } from '@web-stories-wp/react';
+} from '@googleforcreators/design-system';
+import { __ } from '@googleforcreators/i18n';
+import { useMemo } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,11 +17,9 @@
 /**
  * External dependencies
  */
-import { useCallback, useState } from '@web-stories-wp/react';
-import { boolean, text } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
-import { createBlob, createFileReader } from '@web-stories-wp/media';
-import { ConfigProvider } from '@web-stories-wp/dashboard';
+import { useCallback, useState } from '@googleforcreators/react';
+import { createBlob, createFileReader } from '@googleforcreators/media';
+import { ConfigProvider } from '@googleforcreators/dashboard';
 
 /**
  * Internal dependencies
@@ -32,53 +30,71 @@ import PublisherLogoSettings from '..';
 export default {
   title: 'Dashboard/Views/EditorSettings/PublisherLogo',
   component: PublisherLogoSettings,
+  args: {
+    canUploadFiles: true,
+    isLoading: false,
+    uploadError: '',
+  },
+  argTypes: {
+    onAddLogos: { action: 'onSubmit fired' },
+    onRemoveLogo: { action: 'onDelete fired' },
+  },
+  parameters: {
+    controls: {
+      exclude: ['publisherLogos'],
+    },
+  },
 };
 
-export const _default = () => {
+export const _default = (args) => {
   const [uploadedContent, setUploadedContent] = useState(rawPublisherLogos);
 
-  const handleAddLogos = useCallback(async (newPublisherLogos) => {
-    action('onSubmit fired')(newPublisherLogos);
+  const handleAddLogos = useCallback(
+    async (newPublisherLogos) => {
+      args.onAddLogos(newPublisherLogos);
 
-    // this is purely for the sake of storybook demoing
-    const newUploads = await Promise.all(
-      newPublisherLogos.map(async (file) => {
-        const reader = await createFileReader(file);
-        const src = createBlob(
-          new window.Blob([reader.result], { type: file.type })
-        );
-        return {
-          id: src,
-          url: src,
-          title: file.name,
-        };
-      })
-    );
-    setUploadedContent((existingUploads) => [
-      ...existingUploads,
-      ...newUploads,
-    ]);
-  }, []);
-
-  const handleRemoveLogo = useCallback((deleteLogo) => {
-    action('onDelete fired')(deleteLogo);
-
-    setUploadedContent((existingUploadedContent) => {
-      return existingUploadedContent.filter(
-        (uploadedLogo) => uploadedLogo.id !== deleteLogo.id
+      // this is purely for the sake of storybook demoing
+      const newUploads = await Promise.all(
+        newPublisherLogos.map(async (file) => {
+          const reader = await createFileReader(file);
+          const src = createBlob(
+            new window.Blob([reader.result], { type: file.type })
+          );
+          return {
+            id: src,
+            url: src,
+            title: file.name,
+          };
+        })
       );
-    });
-  }, []);
+      setUploadedContent((existingUploads) => [
+        ...existingUploads,
+        ...newUploads,
+      ]);
+    },
+    [args]
+  );
+
+  const handleRemoveLogo = useCallback(
+    (deleteLogo) => {
+      args.onRemoveLogo(deleteLogo);
+
+      setUploadedContent((existingUploadedContent) => {
+        return existingUploadedContent.filter(
+          (uploadedLogo) => uploadedLogo.id !== deleteLogo.id
+        );
+      });
+    },
+    [args]
+  );
 
   return (
     <ConfigProvider config={{ allowedImageMimeTypes: {} }}>
       <PublisherLogoSettings
-        canUploadFiles={boolean('canUploadFile', true)}
         onAddLogos={handleAddLogos}
         onRemoveLogo={handleRemoveLogo}
-        isLoading={boolean('isLoading', false)}
         publisherLogos={uploadedContent}
-        uploadError={text('uploadError', '')}
+        {...args}
       />
     </ConfigProvider>
   );

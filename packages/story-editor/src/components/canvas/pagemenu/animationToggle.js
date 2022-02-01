@@ -17,11 +17,11 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
-import { Icons } from '@web-stories-wp/design-system';
-import { STORY_ANIMATION_STATE } from '@web-stories-wp/animation';
+import { useCallback } from '@googleforcreators/react';
+import { __ } from '@googleforcreators/i18n';
+import { trackEvent } from '@googleforcreators/tracking';
+import { Icons } from '@googleforcreators/design-system';
+import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
 /**
  * Internal dependencies
  */

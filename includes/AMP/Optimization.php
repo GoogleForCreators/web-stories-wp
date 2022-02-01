@@ -5,7 +5,7 @@
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/google/web-stories-wp
+ * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -30,13 +30,14 @@ use Google\Web_Stories_Dependencies\AmpProject\AmpWP\RemoteRequest\CachedRemoteG
 use Google\Web_Stories_Dependencies\AmpProject\AmpWP\RemoteRequest\WpHttpRemoteGetRequest;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Configuration;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Configuration\AmpStoryCssOptimizerConfiguration;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\DefaultConfiguration;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Error;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\ErrorCollection;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\LocalFallback;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\TransformationEngine;
-use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\MinifyHtml;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpRuntimeCss;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpStoryCssOptimizer;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\OptimizeHeroImages;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\OptimizeAmpBind;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\RewriteAmpUrls;
@@ -97,7 +98,7 @@ class Optimization {
 	 *
 	 * @return TransformationEngine Optimizer transformation engine to use.
 	 */
-	private function get_optimizer() {
+	private function get_optimizer(): TransformationEngine {
 		$configuration = self::get_optimizer_configuration();
 
 		$fallback_remote_request_pipeline = new FallbackRemoteGetRequest(
@@ -126,6 +127,8 @@ class Optimization {
 	private static function get_optimizer_configuration() {
 		$transformers = Configuration::DEFAULT_TRANSFORMERS;
 
+		$transformers[] = AmpStoryCssOptimizer::class;
+
 		/**
 		 * Filter whether the AMP Optimizer should use server-side rendering or not.
 		 *
@@ -146,12 +149,16 @@ class Optimization {
 					RewriteAmpUrls::class,
 					ServerSideRendering::class,
 					TransformedIdentifier::class,
+					AmpStoryCssOptimizer::class,
 				]
 			);
 		}
 
 		$configuration = [
 			Configuration::KEY_TRANSFORMERS => $transformers,
+			AmpStoryCssOptimizer::class     => [
+				AmpStoryCssOptimizerConfiguration::OPTIMIZE_AMP_STORY => true,
+			],
 		];
 
 		/**

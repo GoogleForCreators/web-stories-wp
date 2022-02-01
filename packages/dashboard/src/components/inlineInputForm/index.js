@@ -23,10 +23,10 @@ import {
   useRef,
   useState,
   useFocusOut,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { Input } from '@web-stories-wp/design-system';
+import { Input } from '@googleforcreators/design-system';
 
 const StyledInput = styled(Input)`
   div {

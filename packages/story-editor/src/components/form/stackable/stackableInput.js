@@ -19,7 +19,7 @@
  */
 
 import styled, { css } from 'styled-components';
-import { NumericInput, themeHelpers } from '@web-stories-wp/design-system';
+import { NumericInput, themeHelpers } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */

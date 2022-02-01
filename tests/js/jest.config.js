@@ -48,6 +48,11 @@ export default {
     WEB_STORIES_DISABLE_QUICK_TIPS: true,
     WEB_STORIES_DISABLE_OPTIMIZED_RENDERING: true,
   },
+  // @jest/test-sequencer is the default.
+  testSequencer:
+    'true' === process.env.CI
+      ? '@web-stories-wp/jest-parallel-sequencer'
+      : undefined,
   setupFilesAfterEnv: ['jest-extended/all', '<rootDir>/tests/js/jest.setup'],
   testPathIgnorePatterns: [
     '<rootDir>/.git',

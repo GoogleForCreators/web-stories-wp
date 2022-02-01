@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { migrate } from '@web-stories-wp/migration';
+import { migrate } from '@googleforcreators/migration';
 
 function updateMinMax(minMax, element) {
   // Purposely mutating object so passed

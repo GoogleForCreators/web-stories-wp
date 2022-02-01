@@ -19,8 +19,8 @@
  */
 import { CSSTransition } from 'react-transition-group';
 import styled from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
-import { useRef } from '@web-stories-wp/react';
+import { __ } from '@googleforcreators/i18n';
+import { useRef } from '@googleforcreators/react';
 
 /**
  * Internal dependencies

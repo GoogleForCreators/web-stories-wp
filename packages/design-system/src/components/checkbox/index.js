@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { forwardRef } from '@web-stories-wp/react';
+import { forwardRef } from '@googleforcreators/react';
 import propTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 /**
@@ -95,7 +95,7 @@ const BaseCheckbox = ({ checked, disabled, className = '', ...props }, ref) => (
     <input
       type="checkbox"
       ref={ref}
-      checked={checked}
+      checked={Boolean(checked)}
       disabled={disabled}
       aria-checked={checked}
       {...props}

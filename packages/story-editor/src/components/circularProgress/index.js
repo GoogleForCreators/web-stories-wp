@@ -20,7 +20,7 @@
 import PropTypes from 'prop-types';
 import styled, { keyframes } from 'styled-components';
 import { CSSTransition } from 'react-transition-group';
-import { useRef } from '@web-stories-wp/react';
+import { useRef } from '@googleforcreators/react';
 
 const wrapperRotation = keyframes`
     100% { transform: rotate(360deg) }

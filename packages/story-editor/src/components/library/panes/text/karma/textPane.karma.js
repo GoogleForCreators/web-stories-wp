@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { waitFor } from '@testing-library/react';
-import { dataFontEm, dataPixels } from '@web-stories-wp/units';
+import { dataFontEm, dataPixels } from '@googleforcreators/units';
 /**
  * Internal dependencies
  */

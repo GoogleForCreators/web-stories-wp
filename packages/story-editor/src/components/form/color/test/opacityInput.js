@@ -21,7 +21,7 @@ import { waitFor, act, fireEvent, screen } from '@testing-library/react';
 import {
   createSolid,
   getPreviewText as getPreviewTextMock,
-} from '@web-stories-wp/patterns';
+} from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies
@@ -31,8 +31,8 @@ import getPreviewOpacityMock from '../getPreviewOpacity';
 import { renderWithTheme } from '../../../../testUtils';
 
 jest.mock('../getPreviewOpacity', () => jest.fn());
-jest.mock('@web-stories-wp/patterns', () => ({
-  ...jest.requireActual('@web-stories-wp/patterns'),
+jest.mock('@googleforcreators/patterns', () => ({
+  ...jest.requireActual('@googleforcreators/patterns'),
   getPreviewText: jest.fn(),
 }));
 

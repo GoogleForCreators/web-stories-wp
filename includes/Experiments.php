@@ -5,7 +5,7 @@
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/google/web-stories-wp
+ * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -259,17 +259,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'dashboard',
 			],
 			/**
-			 * Author: @dmmulroy
-			 * Issue: #2098
-			 * Creation date: 2020-06-04
-			 */
-			[
-				'name'        => 'showTextAndShapesSearchInput',
-				'label'       => __( 'Library search', 'web-stories' ),
-				'description' => __( 'Enable search input on text and shapes tabs', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
 			 * Author: @diegovar
 			 * Issue: #2616
 			 * Creation date: 2020-06-23
@@ -327,19 +316,6 @@ class Experiments extends Service_Base implements HasRequirements {
 			],
 
 			/**
-			 * Author: @spacedmonkey
-			 * Issue #9039
-			 * Creation date: 2021-09-29
-			 */
-			[
-				'name'        => 'enableCORSProxy',
-				'label'       => __( 'CORS Proxy', 'web-stories' ),
-				'description' => __( 'Enable inserting media element without CORS headers', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-
-			/**
 			 * Author: @barklund
 			 * Issue: #8877
 			 * Creation date: 2021-09-01
@@ -364,8 +340,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'editor',
 				'default'     => true,
 			],
-
-
 			/**
 			 * Author: @swissspidy
 			 * Issue: #9344
@@ -375,6 +349,51 @@ class Experiments extends Service_Base implements HasRequirements {
 				'name'        => 'customVideoCaptionsInEditor',
 				'label'       => __( 'Video Captions', 'web-stories' ),
 				'description' => __( 'Improve video captions appearance in the editor', 'web-stories' ),
+				'group'       => 'editor',
+				'default'     => true,
+			],
+			/**
+			 * Author: @miina
+			 * Issue: #9880
+			 * Creation date: 2021-12-15
+			 */
+			[
+				'name'        => 'customFonts',
+				'label'       => __( 'Custom Fonts', 'web-stories' ),
+				'description' => __( 'Enable adding custom fonts', 'web-stories' ),
+				'group'       => 'general',
+			],
+			/**
+			 * Author: @spacedmonkey
+			 * Issue: #8821
+			 * Creation date: 2022-01-19
+			 */
+			[
+				'name'        => 'enhancedPageBackgroundAudio',
+				'label'       => __( 'Page Background Audio', 'web-stories' ),
+				'description' => __( 'Enable adding captions to background audio', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @barklund
+			 * Issue: #10112
+			 * Creation date: 2022-01-27
+			 */
+			[
+				'name'        => 'floatingMenu',
+				'label'       => __( 'Floating Menu', 'web-stories' ),
+				'description' => __( 'Enable the new floating design menu', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @swissspidy
+			 * Issue: #10394
+			 * Creation date: 2022-01-32
+			 */
+			[
+				'name'        => 'semanticHeadingTags',
+				'label'       => __( 'Semantic Headings', 'web-stories' ),
+				'description' => __( 'Automatically use semantic heading tags for text elements', 'web-stories' ),
 				'group'       => 'editor',
 			],
 		];

@@ -23,8 +23,8 @@ import {
   useEffect,
   useState,
   useRef,
-} from '@web-stories-wp/react';
-import { useGlobalKeyDownEffect } from '@web-stories-wp/design-system';
+} from '@googleforcreators/react';
+import { useGlobalKeyDownEffect } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -38,6 +38,7 @@ function HistoryProvider({ children, size }) {
     requestedState,
     stateToHistory,
     clearHistory,
+    currentEntry,
     offset,
     historyLength,
     undo,
@@ -67,6 +68,7 @@ function HistoryProvider({ children, size }) {
 
   const state = {
     state: {
+      currentEntry,
       hasNewChanges,
       requestedState,
       canUndo: offset < historyLength - 1,

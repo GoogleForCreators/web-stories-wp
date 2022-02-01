@@ -34,6 +34,8 @@ web-stories-scraper
 .lgtm.yml
 .markdownlint.json
 .markdownlintignore
+.npmignore
+.npmpackagejsonlintrc.json
 .npmrc
 .nvmrc
 .phpstorm.meta.php
@@ -51,6 +53,7 @@ karma-story-editor.config.cjs
 karma-dashboard.config.cjs
 package.json
 package-lock.json
+percy.config.karma.yml
 percy.config.yml
 phpcs.xml.dist
 phpmd.xml

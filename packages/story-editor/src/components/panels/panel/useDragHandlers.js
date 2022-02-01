@@ -22,7 +22,7 @@ import {
   useState,
   useCallback,
   useLayoutEffect,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 
 function useDragHandlers(handle, onDrag, onDragEnd) {
   const lastPosition = useRef();

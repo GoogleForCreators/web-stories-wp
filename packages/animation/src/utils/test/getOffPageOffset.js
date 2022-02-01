@@ -21,7 +21,7 @@ import {
   PAGE_HEIGHT,
   PAGE_WIDTH,
   DANGER_ZONE_HEIGHT,
-} from '@web-stories-wp/units';
+} from '@googleforcreators/units';
 /**
  * Internal dependencies
  */

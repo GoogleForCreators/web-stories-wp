@@ -15,10 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { useGlobalIsKeyPressed } from '@web-stories-wp/design-system';
-/**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
@@ -32,12 +28,11 @@ function useSingleSelectionRotate({
   frame,
   setTransformStyle,
   resetMoveable,
+  throttleRotation,
 }) {
   const { updateSelectedElements } = useStory((state) => ({
     updateSelectedElements: state.actions.updateSelectedElements,
   }));
-  // ⇧ key rotates the element 30 degrees at a time
-  const throttleRotation = useGlobalIsKeyPressed('shift');
 
   const { handleElementOutOfCanvas } = useElementOutOfCanvas();
 

@@ -23,18 +23,18 @@ import {
   useEffect,
   useState,
   useDebouncedCallback,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { __ } from '@googleforcreators/i18n';
+import { trackEvent } from '@googleforcreators/tracking';
 import {
   NumericInput,
   Text,
   THEME_CONSTANTS,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -44,6 +44,10 @@ import { useStory } from '../../../../app/story';
 import { Row, Switch } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { inputContainerStyleOverride } from '../../shared';
+import {
+  DEFAULT_AUTO_ADVANCE,
+  DEFAULT_PAGE_DURATION,
+} from '../../../../constants';
 
 const SwitchRow = styled.div`
   margin-bottom: 16px;
@@ -55,8 +59,6 @@ const MutedText = styled(Text).attrs({
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
-const DEFAULT_AUTO_ADVANCE = true;
-const DEFAULT_PAGE_DURATION = 7;
 const MIN_MAX = {
   PAGE_DURATION: {
     MIN: 1,

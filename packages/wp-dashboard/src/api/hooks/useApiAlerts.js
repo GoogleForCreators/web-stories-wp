@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { useEffect, useDebouncedCallback } from '@web-stories-wp/react';
-import { useSnackbar } from '@web-stories-wp/design-system';
+import { useEffect, useDebouncedCallback } from '@googleforcreators/react';
+import { useSnackbar } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -48,7 +48,7 @@ function useApiAlerts() {
   const { showSnackbar } = useSnackbar();
 
   const debouncedShowSnackbar = useDebouncedCallback((message) => {
-    return showSnackbar({ message, dismissible: true });
+    return showSnackbar({ 'aria-label': message, message, dismissible: true });
   }, 200);
 
   // if there is an API error, display a snackbar

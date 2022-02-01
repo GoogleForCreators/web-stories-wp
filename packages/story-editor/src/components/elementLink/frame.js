@@ -20,8 +20,8 @@
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import PropTypes from 'prop-types';
-import { __ } from '@web-stories-wp/i18n';
-import { TOOLTIP_PLACEMENT } from '@web-stories-wp/design-system';
+import { __ } from '@googleforcreators/i18n';
+import { TOOLTIP_PLACEMENT } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -78,6 +78,7 @@ function WithLink({ element, active, children, anchorRef }) {
         <LinkDesc>{link.desc || link.url}</LinkDesc>
       </>
     ) : null;
+
   return (
     <StyledTooltip
       forceAnchorRef={anchorRef}

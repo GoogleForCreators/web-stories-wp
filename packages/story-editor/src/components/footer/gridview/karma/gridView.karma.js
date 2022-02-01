@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { waitForElementToBeRemoved } from '@testing-library/react';
-import { createSolid } from '@web-stories-wp/patterns';
+import { createSolid } from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies
@@ -201,7 +201,7 @@ describe('GridView integration', () => {
     expect(fixture.editor.gridView.close).toHaveFocus();
   });
 
-  // TODO: https://github.com/google/web-stories-wp/issues/10146
+  // TODO: https://github.com/googleforcreators/web-stories-wp/issues/10146
   // eslint-disable-next-line jasmine/no-disabled-tests
   xit('should use "Esc" to exit the dialog', async () => {
     const { gridView } = fixture.editor;

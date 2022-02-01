@@ -17,8 +17,8 @@
 /**
  * External dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
-import { Modal, theme } from '@web-stories-wp/design-system';
+import { __ } from '@googleforcreators/i18n';
+import { Modal, theme } from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';
 
 /**
@@ -52,8 +52,8 @@ function TemplateDetailsModal({
       }}
       contentStyles={{
         display: 'block',
-        height: '80vh',
-        width: '80vw',
+        height: '90vh',
+        width: '90vw',
         backgroundColor: `${theme.colors.standard.white}`,
       }}
     >

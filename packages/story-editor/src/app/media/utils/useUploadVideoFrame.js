@@ -17,13 +17,13 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@web-stories-wp/react';
-import { getTimeTracker, trackError } from '@web-stories-wp/tracking';
+import { useCallback } from '@googleforcreators/react';
+import { getTimeTracker, trackError } from '@googleforcreators/tracking';
 import {
   preloadImage,
   getFirstFrameOfVideo,
   getFileNameFromUrl,
-} from '@web-stories-wp/media';
+} from '@googleforcreators/media';
 /**
  * Internal dependencies
  */

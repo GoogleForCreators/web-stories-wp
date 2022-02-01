@@ -35,5 +35,6 @@ export { default as ChecklistIcon } from './checklistIcon';
 export {
   PPC_CHECKPOINT_STATE,
   PRIORITY_COPY as CHECKLIST_PRIORITY_COPY,
+  ACCESSIBILITY_COPY,
 } from './constants';
 export { useIsChecklistMounted } from './popupMountedContext';

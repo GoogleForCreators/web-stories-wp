@@ -19,19 +19,15 @@ module.exports = {
     './stories/**/*.js',
     '../packages/dashboard/src/**/stories/*.@(js|mdx)',
     '../packages/story-editor/src/**/stories/*.@(js|mdx)',
+    '../packages/wp-dashboard/src/**/stories/*.@(js|mdx)',
     '../packages/wp-story-editor/src/**/stories/*.@(js|mdx)',
     '../packages/activation-notice/src/**/stories/*.@(js|mdx)',
     '../packages/design-system/src/**/stories/*.@(js|mdx)',
   ],
   addons: [
     '@storybook/addon-a11y/register',
-    '@storybook/addon-actions',
-    '@storybook/addon-docs',
-    '@storybook/addon-knobs',
+    '@storybook/addon-essentials',
     '@storybook/addon-storysource/register',
-    '@storybook/addon-viewport/register',
-    '@storybook/addon-backgrounds/register',
-    'storybook-rtl-addon',
   ],
   core: {
     builder: 'webpack5',
@@ -119,7 +115,7 @@ module.exports = {
                     removeViewBox: false,
                     removeDimensions: true,
                     convertColors: {
-                      // See https://github.com/google/web-stories-wp/pull/6361
+                      // See https://github.com/googleforcreators/web-stories-wp/pull/6361
                       currentColor: false,
                     },
                   },

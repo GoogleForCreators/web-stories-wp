@@ -18,8 +18,8 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useState, useMemo, useCallback } from '@web-stories-wp/react';
-import { trackEvent } from '@web-stories-wp/tracking';
+import { useState, useMemo, useCallback } from '@googleforcreators/react';
+import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies

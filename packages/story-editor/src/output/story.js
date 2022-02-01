@@ -42,6 +42,7 @@ function OutputStory({
   },
   pages,
   metadata: { publisher },
+  flags,
 }) {
   const ampExtensions = getUsedAmpExtensions(pages);
   const preloadResources = getPreloadResources(pages);
@@ -79,7 +80,7 @@ function OutputStory({
           publisher-logo-src={publisherLogoUrl}
           title={title}
           poster-portrait-src={featuredMediaUrl}
-          background-audio={backgroundAudio?.src ?? undefined}
+          background-audio={backgroundAudio?.resource?.src ?? undefined}
         >
           {pages.map((page) => (
             <OutputPage
@@ -87,6 +88,7 @@ function OutputStory({
               page={page}
               autoAdvance={autoAdvance}
               defaultPageDuration={defaultPageDuration}
+              flags={flags}
             />
           ))}
         </amp-story>
@@ -101,7 +103,9 @@ OutputStory.propTypes = {
     title: PropTypes.string.isRequired,
     autoAdvance: PropTypes.bool,
     defaultPageDuration: PropTypes.number,
-    backgroundAudio: BackgroundAudioPropType,
+    backgroundAudio: PropTypes.shape({
+      resource: BackgroundAudioPropType,
+    }),
     publisherLogo: PropTypes.shape({
       url: PropTypes.string.isRequired,
     }),
@@ -113,6 +117,7 @@ OutputStory.propTypes = {
   metadata: PropTypes.shape({
     publisher: PropTypes.string.isRequired,
   }).isRequired,
+  flags: PropTypes.object,
 };
 
 export default OutputStory;

@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { waitFor } from '@testing-library/react';
-import { createSolidFromString } from '@web-stories-wp/patterns';
+import { createSolidFromString } from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies

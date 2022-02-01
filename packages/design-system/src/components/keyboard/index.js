@@ -25,11 +25,11 @@ import {
   useState,
   useContext,
   useBatchingCallback,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import Context from './context';
 
 const PROP = '__WEB_STORIES_MT__';

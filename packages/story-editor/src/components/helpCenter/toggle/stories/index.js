@@ -16,10 +16,12 @@
 /**
  * External dependencies
  */
-import { useState } from '@web-stories-wp/react';
-import { number } from '@storybook/addon-knobs';
+import { useState } from '@googleforcreators/react';
 import styled, { ThemeProvider } from 'styled-components';
-import { theme as dsTheme, ThemeGlobals } from '@web-stories-wp/design-system';
+import {
+  theme as dsTheme,
+  ThemeGlobals,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -28,6 +30,9 @@ import { Toggle as HelpCenterToggle } from '..';
 
 export default {
   title: 'Stories Editor/Components/Help Center',
+  args: {
+    notificationCount: 6,
+  },
 };
 
 const Bg = styled.div`
@@ -39,7 +44,7 @@ const Bg = styled.div`
   padding: 50px;
 `;
 
-export const Toggle = () => {
+export const Toggle = (args) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <ThemeProvider theme={dsTheme}>
@@ -48,7 +53,7 @@ export const Toggle = () => {
         <HelpCenterToggle
           isOpen={isOpen}
           onClick={() => setIsOpen((v) => !v)}
-          notificationCount={number('notificationCount')}
+          {...args}
         />
       </Bg>
     </ThemeProvider>

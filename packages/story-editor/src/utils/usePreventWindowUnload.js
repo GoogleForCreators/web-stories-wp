@@ -17,7 +17,11 @@
 /**
  * External dependencies
  */
-import { useCallback, createContext, useContext } from '@web-stories-wp/react';
+import {
+  useCallback,
+  createContext,
+  useContext,
+} from '@googleforcreators/react';
 
 const PreventUnloadContext = createContext({ listeners: new Map() });
 

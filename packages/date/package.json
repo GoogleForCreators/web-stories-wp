@@ -1,19 +1,35 @@
 {
-  "name": "@web-stories-wp/date",
-  "private": true,
+  "name": "@googleforcreators/date",
+  "description": "Date-handling package, a tiny wrapper around date-fns.",
+  "private": false,
+  "version": "0.0.1",
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "web stories",
+    "datetime"
+  ],
+  "homepage": "https://github.com/googleforcreators/web-stories-wp/",
+  "repository": "git+https://github.com/GoogleForCreators/web-stories-wp.git",
+  "bugs": {
+    "url": "https://github.com/googleforcreators/web-stories-wp/issues"
+  },
   "engines": {
     "node": ">= 16",
     "npm": ">= 7.3"
   },
+  "type": "module",
   "exports": {
     "default": "./src/index.js"
   },
   "main": "./src/index.js",
-  "type": "module",
   "dependencies": {
-    "@web-stories-wp/i18n": "*",
+    "@googleforcreators/i18n": "*",
     "date-fns": "^2.28.0",
-    "date-fns-tz": "^1.1.6"
+    "date-fns-tz": "^1.2.2"
   },
   "devDependencies": {
     "mockdate": "^3.0.5"

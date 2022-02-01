@@ -25,20 +25,20 @@ import {
   useState,
   useRef,
   useUnmount,
-} from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
+} from '@googleforcreators/react';
+import { __ } from '@googleforcreators/i18n';
 import {
   getPreviewText,
   getOpaquePattern,
   PatternPropType,
-} from '@web-stories-wp/patterns';
+} from '@googleforcreators/patterns';
 import {
   HexInput,
   Text,
   THEME_CONSTANTS,
   Swatch,
   PLACEMENT,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -145,9 +145,10 @@ const ColorInput = forwardRef(function ColorInput(
   const isMixed = value === MULTIPLE_VALUE;
   value = isMixed ? '' : value;
 
-  const previewPattern = isMixed
-    ? { color: { r: 0, g: 0, b: 0, a: 0 } }
-    : getOpaquePattern(value);
+  const previewPattern =
+    isMixed || !value
+      ? { color: { r: 0, g: 0, b: 0, a: 0 } }
+      : getOpaquePattern(value);
   const previewText = getPreviewText(value);
 
   const [pickerOpen, setPickerOpen] = useState(false);

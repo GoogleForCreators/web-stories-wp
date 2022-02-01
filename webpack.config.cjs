@@ -70,6 +70,15 @@ const sharedConfig = {
         enforce: 'pre',
         resolve: {
           fullySpecified: false,
+        }
+      },
+      {
+        test: /\.worker\.js$/,
+        use: {
+          loader: 'worker-loader',
+          options: {
+            inline: 'fallback',
+          },
         },
       },
       {
@@ -134,7 +143,7 @@ const sharedConfig = {
                     removeViewBox: false,
                     removeDimensions: true,
                     convertColors: {
-                      // See https://github.com/google/web-stories-wp/pull/6361
+                      // See https://github.com/googleforcreators/web-stories-wp/pull/6361
                       currentColor: false,
                     },
                   },

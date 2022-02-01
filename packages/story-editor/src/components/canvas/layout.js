@@ -25,16 +25,19 @@ import {
   useRef,
   useEffect,
   useResizeEffect,
-} from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
-import { generatePatternStyles } from '@web-stories-wp/patterns';
-import { FULLBLEED_RATIO } from '@web-stories-wp/units';
-import { THEME_CONSTANTS, themeHelpers } from '@web-stories-wp/design-system';
+} from '@googleforcreators/react';
+import { __ } from '@googleforcreators/i18n';
+import { generatePatternStyles } from '@googleforcreators/patterns';
+import { FULLBLEED_RATIO } from '@googleforcreators/units';
+import {
+  THEME_CONSTANTS,
+  themeHelpers,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
-import { HEADER_HEIGHT } from '../../constants';
+import { HEADER_HEIGHT, HEADER_GAP } from '../../constants';
 import pointerEventsCss from '../../utils/pointerEventsCss';
 import { useLayout } from '../../app';
 import useFooterHeight from '../footer/useFooterHeight';
@@ -51,7 +54,6 @@ export const Z_INDEX = {
   EDIT: 3,
 };
 
-const HEADER_GAP = 16;
 // 8px extra is for the focus outline to display.
 const PAGE_NAV_WIDTH = THEME_CONSTANTS.LARGE_BUTTON_SIZE + 8;
 const PAGE_NAV_GAP = 20;
@@ -126,10 +128,15 @@ const PageAreaContainer = styled(Area).attrs({
   overflow: ${({ showOverflow }) =>
     showOverflow ? 'visible' : 'var(--overflow-x) var(--overflow-y)'};
 
-  ${({ isControlled, hasVerticalOverflow, hasHorizontalOverflow }) =>
+  ${({
+    isControlled,
+    hasVerticalOverflow,
+    hasHorizontalOverflow,
+    showOverflow,
+  }) =>
     isControlled &&
     `
-      overflow: ${({ showOverflow }) => (showOverflow ? 'visible' : 'hidden')};
+      overflow: ${showOverflow ? 'visible' : 'hidden'};
       width: calc(
         100% - ${hasVerticalOverflow ? themeHelpers.SCROLLBAR_WIDTH : 0}px
       );
@@ -286,15 +293,14 @@ function useLayoutParams(containerRef) {
     ({ width, height }) => {
       // See Layer's `grid` CSS above. Per the layout, the maximum available
       // space for the page is:
-      const maxWidth = width;
-      const maxHeight =
+      const availableHeight =
         height -
         HEADER_HEIGHT -
         HEADER_GAP -
         footerHeight -
         FOOTER_BOTTOM_MARGIN;
 
-      setWorkspaceSize({ width: maxWidth, height: maxHeight });
+      setWorkspaceSize({ width, height, availableHeight });
     },
     [setWorkspaceSize, footerHeight]
   );
@@ -351,8 +357,8 @@ function useLayoutParamsCssVars() {
     '--viewport-height-px': `${viewportHeight}px`,
     '--overflow-x': hasHorizontalOverflow ? 'scroll' : 'visible',
     '--overflow-y': hasVerticalOverflow ? 'scroll' : 'visible',
-    '--scroll-left-px': `-${scrollLeft}px`,
-    '--scroll-top-px': `-${scrollTop}px`,
+    '--scroll-left-px': `${-scrollLeft}px`,
+    '--scroll-top-px': `${-scrollTop}px`,
   };
 }
 

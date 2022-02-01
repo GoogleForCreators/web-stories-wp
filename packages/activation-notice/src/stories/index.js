@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,27 +15,21 @@
  */
 
 /**
- * External dependencies
- */
-import { text } from '@storybook/addon-knobs';
-
-/**
  * Internal dependencies
  */
 import App from '../app';
 
 export default {
   title: 'WordPress/Plugin Activation',
+  args: {
+    cdnURL: 'https://wp.stories.google/static/main/',
+    demoStoryURL: 'https://example:com',
+    dashboardURL: 'https://example:com',
+    isRTL: false,
+  },
 };
 
-// TODO: Support RTL using something like @pxblue/storybook-rtl-addon;
-export const _default = () => {
-  const config = {
-    cdnURL: text('CDN URL', 'https://wp.stories.google/static/main/'),
-    demoStoryURL: text('Demo Story URL', 'https://example:com'),
-    dashboardURL: text('Dashboard URL', 'https://example:com'),
-    isRTL: false,
-  };
-
-  return <App config={config} />;
+// TODO (#10380): Support RTL using something like @pxblue/storybook-rtl-addon;
+export const _default = (args) => {
+  return <App config={args} {...args} />;
 };

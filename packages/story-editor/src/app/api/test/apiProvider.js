@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { act, renderHook } from '@testing-library/react-hooks';
-import getAllTemplatesMock from '@web-stories-wp/templates';
+import getAllTemplatesMock from '@googleforcreators/templates';
 
 /**
  * Internal dependencies
@@ -26,7 +26,7 @@ import useAPI from '../useAPI';
 import ApiProvider from '../apiProvider';
 import { ConfigProvider } from '../../config';
 
-jest.mock('@web-stories-wp/templates');
+jest.mock('@googleforcreators/templates');
 
 const renderApiProvider = ({ configValue }) => {
   return renderHook(() => useAPI(), {
@@ -53,7 +53,6 @@ describe('APIProvider', () => {
         api: {},
         apiCallbacks: {},
         cdnURL,
-        postLock: { api: '' },
       },
     });
 
@@ -75,7 +74,6 @@ describe('APIProvider', () => {
         api: {},
         apiCallbacks: {},
         cdnURL,
-        postLock: { api: '' },
       },
     });
 

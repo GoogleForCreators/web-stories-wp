@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { PatternPropType } from '@web-stories-wp/patterns';
+import { PatternPropType } from '@googleforcreators/patterns';
 import {
   THEME_CONSTANTS,
   Button,
@@ -30,9 +30,9 @@ import {
   BUTTON_VARIANTS,
   localStore,
   LOCAL_STORAGE_PREFIX,
-} from '@web-stories-wp/design-system';
-import { __ } from '@web-stories-wp/i18n';
-import { useState } from '@web-stories-wp/react';
+} from '@googleforcreators/design-system';
+import { __ } from '@googleforcreators/i18n';
+import { useState } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -102,6 +102,7 @@ function BasicColorPicker({
   handleClose,
   showDialog,
   setShowDialog,
+  changedStyle,
 }) {
   const { savedColors, storyColors } = useStory((state) => ({
     savedColors: state.state.story?.globalStoryStyles?.colors || [],
@@ -188,6 +189,7 @@ function BasicColorPicker({
                 aria-labelledby="colorpicker-story-colors-title"
                 isEditMode={isEditMode}
                 data-testid="saved-story-colors"
+                changedStyle={changedStyle}
               />
               <Label id="colorpicker-saved-colors-title">
                 {__('Saved colors', 'web-stories')}
@@ -201,6 +203,7 @@ function BasicColorPicker({
                 allowsGradient={allowsGradient}
                 aria-labelledby="colorpicker-saved-colors-title"
                 isEditMode={isEditMode}
+                changedStyle={changedStyle}
               />
             </>
           )}
@@ -256,6 +259,7 @@ BasicColorPicker.propTypes = {
   color: PatternPropType,
   showDialog: PropTypes.bool,
   setShowDialog: PropTypes.func,
+  changedStyle: PropTypes.string,
 };
 
 export default BasicColorPicker;

@@ -17,12 +17,12 @@
 /**
  * External dependencies
  */
-import { calculateSrcSet, isBlobURL } from '@web-stories-wp/media';
+import { calculateSrcSet, isBlobURL } from '@googleforcreators/media';
 import {
   PAGE_WIDTH,
   FULLBLEED_HEIGHT,
   FULLBLEED_RATIO,
-} from '@web-stories-wp/units';
+} from '@googleforcreators/units';
 
 /**
  * Internal dependencies
@@ -72,7 +72,7 @@ function ImageOutput({ element, box }) {
 
     // Prevent inline `width` style from being inserted by AMP (due to presence of `sizes` attribute),
     // which avoids an undesirable interaction between AMP and the Optimizer's SSR transforms.
-    // See https://github.com/google/web-stories-wp/pull/8099#issuecomment-870987667.
+    // See https://github.com/googleforcreators/web-stories-wp/pull/8099#issuecomment-870987667.
     props['disable-inline-width'] = true;
   }
 

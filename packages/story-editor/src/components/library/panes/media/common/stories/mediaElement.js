@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,9 +18,8 @@
  * External dependencies
  */
 import { action } from '@storybook/addon-actions';
-import { object } from '@storybook/addon-knobs';
 import styled from 'styled-components';
-import { SnackbarContext } from '@web-stories-wp/design-system';
+import { SnackbarContext } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
@@ -55,20 +54,26 @@ const apiValue = {
 export default {
   title: 'Stories Editor/Components/Media Element',
   component: MediaElement,
+  args: {
+    resource: {
+      id: 123,
+      type: 'image',
+      mimeType: 'image/png',
+      creationDate: '2019-11-13T18:15:52Z',
+      src: testImage,
+      width: 910,
+      height: 675,
+      alt: 'my image',
+      sizes: {},
+    },
+  },
+  argTypes: {
+    onInsert: { action: 'insert into canvas' },
+  },
 };
 
-export const _Image = () => {
-  const resource = object('Image Resource', {
-    id: 123,
-    type: 'image',
-    mimeType: 'image/png',
-    creationDate: '2019-11-13T18:15:52Z',
-    src: testImage,
-    width: 910,
-    height: 675,
-    alt: 'my image',
-    sizes: {},
-  });
+export const _Image = (args) => {
+  const resource = args.resource;
 
   return (
     <SnackbarContext.Provider value={snackbarValue}>
@@ -80,7 +85,7 @@ export const _Image = () => {
                 index={0}
                 resource={resource}
                 width={150}
-                onInsert={action('insert into canvas')}
+                onInsert={args.onInsert}
               />
             </Column>
           </CanvasProvider>
@@ -90,8 +95,30 @@ export const _Image = () => {
   );
 };
 
-export const _Image_With_Attribution = () => {
-  const resource = object('Image Resource', {
+export const _Image_With_Attribution = (args) => {
+  const resource = args.resource;
+
+  return (
+    <SnackbarContext.Provider value={snackbarValue}>
+      <MediaContext.Provider value={mediaValue}>
+        <ApiContext.Provider value={apiValue}>
+          <CanvasProvider>
+            <Column>
+              <MediaElement
+                index={0}
+                resource={resource}
+                width={150}
+                onInsert={args.onInsert}
+              />
+            </Column>
+          </CanvasProvider>
+        </ApiContext.Provider>
+      </MediaContext.Provider>
+    </SnackbarContext.Provider>
+  );
+};
+_Image_With_Attribution.args = {
+  resource: {
     id: 123,
     type: 'image',
     mimeType: 'image/png',
@@ -107,7 +134,11 @@ export const _Image_With_Attribution = () => {
         url: 'http://www.google.com',
       },
     },
-  });
+  },
+};
+
+export const _Video = (args) => {
+  const resource = args.resource;
 
   return (
     <SnackbarContext.Provider value={snackbarValue}>
@@ -119,7 +150,7 @@ export const _Image_With_Attribution = () => {
                 index={0}
                 resource={resource}
                 width={150}
-                onInsert={action('insert into canvas')}
+                onInsert={args.onInsert}
               />
             </Column>
           </CanvasProvider>
@@ -128,9 +159,8 @@ export const _Image_With_Attribution = () => {
     </SnackbarContext.Provider>
   );
 };
-
-export const _Video = () => {
-  const resource = object('Video Resource', {
+_Video.args = {
+  resource: {
     id: 456,
     type: 'video',
     mimeType: 'video/mp4',
@@ -143,7 +173,11 @@ export const _Video = () => {
     lengthFormatted: '0:26',
     alt: 'my video',
     sizes: {},
-  });
+  },
+};
+
+export const _Video_With_Attribution = (args) => {
+  const resource = args.resource;
 
   return (
     <SnackbarContext.Provider value={snackbarValue}>
@@ -164,9 +198,8 @@ export const _Video = () => {
     </SnackbarContext.Provider>
   );
 };
-
-export const _Video_With_Attribution = () => {
-  const resource = object('Video Resource', {
+_Video_With_Attribution.args = {
+  resource: {
     id: 456,
     type: 'video',
     mimeType: 'video/mp4',
@@ -185,24 +218,5 @@ export const _Video_With_Attribution = () => {
         url: 'http://www.google.com',
       },
     },
-  });
-
-  return (
-    <SnackbarContext.Provider value={snackbarValue}>
-      <MediaContext.Provider value={mediaValue}>
-        <ApiContext.Provider value={apiValue}>
-          <CanvasProvider>
-            <Column>
-              <MediaElement
-                index={0}
-                resource={resource}
-                width={150}
-                onInsert={action('insert into canvas')}
-              />
-            </Column>
-          </CanvasProvider>
-        </ApiContext.Provider>
-      </MediaContext.Provider>
-    </SnackbarContext.Provider>
-  );
+  },
 };

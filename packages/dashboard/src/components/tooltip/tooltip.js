@@ -22,7 +22,7 @@ import {
   Tooltip as BaseTooltip,
   TooltipPropTypes,
   TOOLTIP_PLACEMENT,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

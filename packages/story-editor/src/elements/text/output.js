@@ -18,13 +18,16 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useMemo } from '@web-stories-wp/react';
-import { createSolid, generatePatternStyles } from '@web-stories-wp/patterns';
+import { useMemo } from '@googleforcreators/react';
+import {
+  createSolid,
+  generatePatternStyles,
+} from '@googleforcreators/patterns';
 import {
   dataToEditorX,
   dataToEditorY,
   dataToFontSizeY as dataToFontSize,
-} from '@web-stories-wp/units';
+} from '@googleforcreators/units';
 import classnames from 'classnames';
 
 /**
@@ -67,6 +70,7 @@ export function TextOutputWithUnits({
     backgroundTextMode,
     padding,
     borderRadius,
+    tagName: TagName = 'p',
     ...rest
   } = element;
   if (!dataToFontSizeY) {
@@ -191,7 +195,7 @@ export function TextOutputWithUnits({
   if (backgroundTextMode === BACKGROUND_TEXT_MODE.HIGHLIGHT) {
     return (
       <>
-        <p className={className} style={highlightStyle}>
+        <TagName className={className} style={highlightStyle}>
           <span style={marginStyle(element)}>
             <span
               style={backgroundTextStyle}
@@ -200,8 +204,12 @@ export function TextOutputWithUnits({
               }}
             />
           </span>
-        </p>
-        <p className={className} style={highlightCloneStyle} aria-hidden="true">
+        </TagName>
+        <TagName
+          className={className}
+          style={highlightCloneStyle}
+          aria-hidden="true"
+        >
           <span style={marginStyle(element)}>
             <span
               style={foregroundTextStyle}
@@ -210,14 +218,14 @@ export function TextOutputWithUnits({
               }}
             />
           </span>
-        </p>
+        </TagName>
       </>
     );
   }
   return (
-    <p className={className} style={fillStyle}>
+    <TagName className={className} style={fillStyle}>
       <span dangerouslySetInnerHTML={{ __html: content }} />
-    </p>
+    </TagName>
   );
 }
 

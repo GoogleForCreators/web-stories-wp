@@ -30,14 +30,21 @@ import {
   getImageFromVideo,
   seekVideo,
   preloadVideo,
-} from '@web-stories-wp/media';
+  blobToFile,
+} from '@googleforcreators/media';
 import { v4 as uuidv4 } from 'uuid';
+
+/**
+ * Internal dependencies
+ */
+import { MEDIA_POSTER_IMAGE_MIME_TYPE } from '../../../constants';
+import getPosterName from './getPosterName';
 
 /**
  * Generates a image resource object from a local File object.
  *
  * @param {File} file File object.
- * @return {Promise<import('@web-stories-wp/media').Resource>} Local image resource object.
+ * @return {Promise<import('@googleforcreators/media').Resource>} Local image resource object.
  */
 const getImageResource = async (file) => {
   const alt = getFileName(file);
@@ -61,7 +68,7 @@ const getImageResource = async (file) => {
  * Generates a video resource object from a local File object.
  *
  * @param {File} file File object.
- * @return {Promise<import('@web-stories-wp/media').Resource>} Local video resource object.
+ * @return {Promise<import('@googleforcreators/media').Resource>} Local video resource object.
  */
 const getVideoResource = async (file) => {
   const alt = getFileName(file);
@@ -81,7 +88,11 @@ const getVideoResource = async (file) => {
 
   await seekVideo(videoEl);
   const hasAudio = hasVideoGotAudio(videoEl);
-  const posterFile = await getImageFromVideo(videoEl);
+  const posterFile = blobToFile(
+    await getImageFromVideo(videoEl),
+    getPosterName(getFileName(file)),
+    MEDIA_POSTER_IMAGE_MIME_TYPE
+  );
   const poster = createBlob(posterFile);
   const { width, height } = await getImageDimensions(poster);
 
@@ -123,7 +134,7 @@ const getPlaceholderResource = (file) => {
  * Generates a resource object from a local File object.
  *
  * @param {File} file File object.
- * @return {Promise<Object<{resource: import('@web-stories-wp/media').Resource, posterFile: File}>>} Object containing resource object and poster file.
+ * @return {Promise<Object<{resource: import('@googleforcreators/media').Resource, posterFile: File}>>} Object containing resource object and poster file.
  */
 const getResourceFromLocalFile = async (file) => {
   const type = getTypeFromMime(file.type);

@@ -5,7 +5,7 @@
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/google/web-stories-wp
+ * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -45,7 +45,7 @@ use WP_Post;
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
- * @implements Iterator<int, \WP_Post>
+ * @implements Iterator<int, Story>
  */
 abstract class Renderer implements RenderingInterface, Iterator {
 	/**
@@ -200,11 +200,11 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @return mixed|void
+	 * @return Story|null
 	 */
 	#[\ReturnTypeWillChange]
 	public function current() {
-		return $this->stories[ $this->position ];
+		return $this->stories[ $this->position ] ?? null;
 	}
 
 	/**
@@ -581,7 +581,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			?>
 			<div class="web-stories-list__story-poster">
 				<div class="web-stories-list__story-poster-placeholder">
-					<a href="<?php echo esc_url( $story->get_url() ); ?>">
+					<a href="<?php echo esc_url( $story->get_url() ); ?>" <?php $this->render_link_attributes(); ?>>
 						<?php echo esc_html( $story->get_title() ); ?>
 					</a>
 				</div>
@@ -590,27 +590,15 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		} else {
 			?>
 			<div class="web-stories-list__story-poster">
-				<a href="<?php echo esc_url( $story->get_url() ); ?>">
-					<?php
-					if ( $this->context->is_amp() ) {
-						// Set the dimensions to '0' so that we can handle image ratio/size by CSS per view type.
-						?>
-						<amp-img
-							src="<?php echo esc_url( $poster_url ); ?>"
-							layout="responsive"
-							width="0"
-							height="0"
-							alt="<?php echo esc_attr( $story->get_title() ); ?>"
-						>
-						</amp-img>
-	<?php } else { ?>
-						<img
-							src="<?php echo esc_url( $poster_url ); ?>"
-							alt="<?php echo esc_attr( $story->get_title() ); ?>"
-							width="<?php echo absint( $this->width ); ?>"
-							height="<?php echo absint( $this->height ); ?>"
-						>
-					<?php } ?>
+				<a href="<?php echo esc_url( $story->get_url() ); ?>" <?php $this->render_link_attributes(); ?>>
+					<img
+						src="<?php echo esc_url( $poster_url ); ?>"
+						alt="<?php echo esc_attr( $story->get_title() ); ?>"
+						width="<?php echo absint( $this->width ); ?>"
+						height="<?php echo absint( $this->height ); ?>"
+						loading="lazy"
+						decoding="async"
+					>
 				</a>
 			</div>
 			<?php
@@ -622,6 +610,50 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		} else {
 			$this->generate_amp_lightbox_html_amp( $story );
 		}
+	}
+
+	/**
+	 * Render additional link attributes.
+	 *
+	 * Allows customization of html attributes in the web stories widget anchor tag loop
+	 * Converts array into escaped inline html attributes.
+	 *
+	 * @since 1.17.0
+	 *
+	 * @return void
+	 */
+	protected function render_link_attributes() {
+		/**
+		 * The current story.
+		 *
+		 * @var Story $story
+		 */
+		$story = $this->current();
+
+		/**
+		 * Filters the link attributes added to a story's <a> tag.
+		 *
+		 * @since 1.17.0
+		 *
+		 * @param array  $attributes Key value array of attribute name to attribute value.
+		 * @param Story  $story      The current story instance.
+		 * @param int    $position   The current story's position within the list.
+		 * @param string $view_type  The current view type.
+		 */
+		$attributes = apply_filters( 'web_stories_renderer_link_attributes', [], $story, $this->position, $this->get_view_type() );
+
+		$attrs = [];
+
+		if ( ! empty( $attributes ) ) {
+			foreach ( $attributes as $attribute => $value ) {
+				$attrs[] = wp_kses_one_attr( $attribute . '="' . esc_attr( $value ) . '"', 'a' );
+			}
+		}
+
+		$attrs = array_filter( $attrs ); // Filter out empty values rejected by KSES.
+
+		//phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo implode( ' ', $attrs );
 	}
 
 	/**
@@ -692,7 +724,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 		// Collect story links to fill-in non-AMP lightbox 'amp-story-player'.
 		?>
-			<a href="<?php echo esc_url( $story->get_url() ); ?>"><?php echo esc_html( $story->get_title() ); ?></a>
+			<a href="<?php echo esc_url( $story->get_url() ); ?>" <?php $this->render_link_attributes(); ?>><?php echo esc_html( $story->get_title() ); ?></a>
 		<?php
 
 		$this->lightbox_html .= ob_get_clean();
@@ -734,7 +766,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 					height="6"
 					layout="responsive"
 				>
-					<a href="<?php echo( esc_url( $story->get_url() ) ); ?>"><?php echo esc_html( $story->get_title() ); ?></a>
+					<a href="<?php echo( esc_url( $story->get_url() ) ); ?>" <?php $this->render_link_attributes(); ?>><?php echo esc_html( $story->get_title() ); ?></a>
 				</amp-story-player>
 			</div>
 		</amp-lightbox>

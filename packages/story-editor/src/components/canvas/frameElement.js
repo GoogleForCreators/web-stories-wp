@@ -23,13 +23,14 @@ import {
   useLayoutEffect,
   useRef,
   useState,
-} from '@web-stories-wp/react';
-import { useUnits } from '@web-stories-wp/units';
+  memo,
+} from '@googleforcreators/react';
+import { useUnits } from '@googleforcreators/units';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../types';
 import { getDefinitionForType } from '../../elements';
 import { useStory, useTransform, useCanvas } from '../../app';
 import {
@@ -78,45 +79,42 @@ const EmptyFrame = styled.div`
 
 const NOOP = () => {};
 
-function FrameElement({ element }) {
-  const { setEditingElement } = useCanvas((state) => ({
-    setEditingElement: state.actions.setEditingElement,
-  }));
-  const { id, type, flip } = element;
+function FrameElement({ id }) {
+  const { isSelected, isSingleElement, isBackground, element } = useStory(
+    ({ state }) => ({
+      isSelected: state.selectedElementIds.includes(id),
+      isSingleElement: state.selectedElementIds.length === 1,
+      isBackground: state.currentPage?.elements[0].id === id,
+      element: state.currentPage?.elements.find((el) => el.id === id),
+    })
+  );
+  const setEditingElement = useCanvas(
+    ({ actions }) => actions.setEditingElement
+  );
+  const { type, flip } = element;
   const { Frame, isMaskable, Controls } = getDefinitionForType(type);
   const elementRef = useRef();
   const [hovering, setHovering] = useState(false);
-  const {
-    state: { isAnythingTransforming },
-  } = useTransform();
 
   const onPointerEnter = () => setHovering(true);
   const onPointerLeave = () => setHovering(false);
 
+  const isLinkActive = useTransform(
+    ({ state }) => !isSelected && hovering && !state.isAnythingTransforming
+  );
   const { setNodeForElement, handleSelectElement, isEditing } = useCanvas(
-    (state) => ({
-      setNodeForElement: state.actions.setNodeForElement,
-      handleSelectElement: state.actions.handleSelectElement,
-      isEditing: state.state.isEditing,
+    ({ state, actions }) => ({
+      setNodeForElement: actions.setNodeForElement,
+      handleSelectElement: actions.handleSelectElement,
+      isEditing: state.isEditing,
     })
   );
-  const { selectedElementIds, currentPage, isAnimating } = useStory(
-    (state) => ({
-      selectedElementIds: state.state.selectedElementIds,
-      currentPage: state.state.currentPage,
-    })
-  );
-  const { getBox } = useUnits((state) => ({
-    getBox: state.actions.getBox,
-  }));
+  const getBox = useUnits(({ actions }) => actions.getBox);
 
   useLayoutEffect(() => {
     setNodeForElement(id, elementRef.current);
   }, [id, setNodeForElement]);
-  const isSelected = selectedElementIds.includes(id);
-  const isSingleElement = selectedElementIds.length === 1;
   const box = getBox(element);
-  const isBackground = currentPage?.elements[0].id === id;
 
   const [isTransforming, setIsTransforming] = useState(false);
 
@@ -175,11 +173,7 @@ function FrameElement({ element }) {
   });
 
   return (
-    <WithLink
-      element={element}
-      active={!isSelected && hovering && !isAnythingTransforming}
-      anchorRef={elementRef}
-    >
+    <WithLink element={element} active={isLinkActive} anchorRef={elementRef}>
       {Controls && (
         <Controls
           isTransforming={isTransforming}
@@ -200,7 +194,6 @@ function FrameElement({ element }) {
         tabIndex={0}
         aria-labelledby={`layer-${id}`}
         hasMask={isMaskable}
-        isAnimating={isAnimating}
         data-testid="frameElement"
         maskDisabled={maskDisabled}
         {...(maskDisabled ? eventHandlers : null)}
@@ -223,7 +216,7 @@ function FrameElement({ element }) {
 }
 
 FrameElement.propTypes = {
-  element: StoryPropTypes.element.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
-export default FrameElement;
+export default memo(FrameElement);

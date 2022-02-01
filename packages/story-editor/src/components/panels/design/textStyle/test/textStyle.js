@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { act, fireEvent, screen } from '@testing-library/react';
-import { createSolid } from '@web-stories-wp/patterns';
+import { createSolid } from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies
@@ -40,8 +40,10 @@ import { renderPanel } from '../../../shared/test/_utils';
 
 let mockControls;
 jest.mock('../../../../../utils/textMeasurements');
-jest.mock('@web-stories-wp/design-system', () => {
-  const React = require('@web-stories-wp/react');
+jest.mock('@googleforcreators/design-system', () => {
+  // eslint-disable-next-line no-undef
+  const React = require('@googleforcreators/react');
+  // eslint-disable-next-line no-undef
   const _PropTypes = require('prop-types');
   const FakeControl = React.forwardRef(function FakeControl(props, ref) {
     mockControls[props['data-testid']] = props;
@@ -52,14 +54,15 @@ jest.mock('@web-stories-wp/design-system', () => {
   };
   return {
     __esModule: true,
-    ...jest.requireActual('@web-stories-wp/design-system'),
+    ...jest.requireActual('@googleforcreators/design-system'),
     Datalist: {
       DropDown: FakeControl,
     },
   };
 });
 jest.mock('../../../../form/color/color', () => {
-  const React = require('@web-stories-wp/react');
+  const React = require('@googleforcreators/react');
+  // eslint-disable-next-line no-undef
   const _PropTypes = require('prop-types');
   const FakeControl = React.forwardRef(function FakeControl(props, ref) {
     mockControls[props['data-testid']] = props;

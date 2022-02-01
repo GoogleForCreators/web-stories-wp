@@ -7,7 +7,7 @@
  * @package   Google\Web_Stories\classs
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/google/web-stories-wp
+ * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -159,10 +159,12 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * @return string REST base.
 	 */
 	public function get_rest_base(): string {
-		$post_type_obj = $this->get_object();
-		$rest_base     = $this->get_slug();
-		if ( $post_type_obj instanceof WP_Post_Type ) {
-			$rest_base = ( ! empty( $post_type_obj->rest_base ) && is_string( $post_type_obj->rest_base ) ) ? $post_type_obj->rest_base : $post_type_obj->name;
+		$post_type_object = $this->get_object();
+		$rest_base        = $this->get_slug();
+		if ( $post_type_object instanceof WP_Post_Type ) {
+			$rest_base = ! empty( $post_type_object->rest_base ) && is_string( $post_type_object->rest_base ) ?
+				$post_type_object->rest_base :
+				$post_type_object->name;
 		}
 
 		return (string) $rest_base;
@@ -176,11 +178,10 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * @return string REST base.
 	 */
 	public function get_rest_namespace(): string {
-		$post_type_obj  = $this->get_object();
-		$rest_namespace = self::REST_NAMESPACE;
-		if ( $post_type_obj instanceof WP_Post_Type ) {
-			$rest_namespace = ( ! empty( $post_type_obj->rest_namespace ) && is_string( $post_type_obj->rest_namespace ) ) ? $post_type_obj->rest_namespace : self::REST_NAMESPACE;
-		}
+		$post_type_object = $this->get_object();
+		$rest_namespace   = isset( $post_type_object, $post_type_object->rest_namespace ) && is_string( $post_type_object->rest_namespace ) ?
+			$post_type_object->rest_namespace :
+			self::REST_NAMESPACE;
 
 		return (string) $rest_namespace;
 	}

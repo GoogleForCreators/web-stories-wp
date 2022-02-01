@@ -23,7 +23,7 @@ import {
   BUTTON_SIZES,
   Icons,
   themeHelpers,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
@@ -66,7 +66,7 @@ const ArrowWrap = styled.div`
   width: 32px;
   margin: -9px;
   transform-origin: 50% 50%;
-  transform: ${({ isRTL }) => (isRTL ? 'none' : 'rotate(180deg)')};
+  transform: ${({ $isRTL }) => ($isRTL ? 'none' : 'rotate(180deg)')};
 `;
 
 const StyledArrow = styled(Icons.ArrowLeft)`
@@ -78,7 +78,7 @@ function Tip({ children, onClick, unread = true }) {
   return (
     <StyledButton size={BUTTON_SIZES.SMALL} onClick={onClick}>
       <ButtonText unread={unread}>{children}</ButtonText>
-      <ArrowWrap isRTL={isRTL}>
+      <ArrowWrap $isRTL={isRTL}>
         <StyledArrow />
       </ArrowWrap>
     </StyledButton>

@@ -25,7 +25,8 @@ import {
   useMemo,
   useCallback,
   useDebouncedCallback,
-} from '@web-stories-wp/react';
+  useEffect,
+} from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -86,7 +87,7 @@ let lastVisibleDelayedTooltip = null;
  * @param {Function} props.onPointerLeave Pointer leave event callback function
  * @param {string} props.placement Where to place the tooltip {@link: PLACEMENT}
  * @param {string} props.shortcut Shortcut text to display in tooltip
- * @param {string} props.title Text to display in tooltip
+ * @param {import('react').ReactNode|string|null} props.title Text to display in tooltip
  * @param {Object} props.tooltipProps Props for <Tooltip /> component
  * @param {string} props.className Classname.
  * @param {string} props.isDelayed If this tooltip is to be displayed instantly on hover (default) or by a short delay.
@@ -114,6 +115,15 @@ function Tooltip({
   const tooltipRef = useRef(null);
   const placementRef = useRef(placement);
   const [dynamicPlacement, setDynamicPlacement] = useState(placement);
+  const isMounted = useRef(false);
+
+  useEffect(() => {
+    isMounted.current = true;
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
 
   const spacing = useMemo(
     () => ({
@@ -208,9 +218,14 @@ function Tooltip({
   const onHover = useCallback(
     (evt) => {
       const handle = () => {
+        if (!isMounted.current) {
+          return;
+        }
+
         setShown(true);
         onPointerEnter(evt);
       };
+
       if (isDelayed) {
         const now = performance.now();
         if (now - lastVisibleDelayedTooltip < REPEAT_DELAYED_MS) {
@@ -306,7 +321,7 @@ const TooltipPropTypes = {
   onPointerEnter: PropTypes.func,
   onPointerLeave: PropTypes.func,
   shortcut: PropTypes.string,
-  title: PropTypes.string,
+  title: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   forceAnchorRef: PropTypes.object,
   tooltipProps: PropTypes.object,
   className: PropTypes.string,

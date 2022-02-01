@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useState } from '@web-stories-wp/react';
+import { useCallback, useState } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -39,7 +39,7 @@ function useAutoSave({ storyId, pages, story }) {
   const {
     actions: { autoSaveById },
   } = useAPI();
-  const { metadata } = useConfig();
+  const { metadata, flags } = useConfig();
   const [isAutoSaving, setIsAutoSaving] = useState(false);
 
   const autoSave = useCallback(
@@ -51,11 +51,12 @@ function useAutoSave({ storyId, pages, story }) {
           story,
           pages,
           metadata,
+          flags,
         }),
         ...props,
       }).finally(() => setIsAutoSaving(false));
     },
-    [story, pages, metadata, autoSaveById, storyId]
+    [story, pages, metadata, autoSaveById, storyId, flags]
   );
 
   return { autoSave, isAutoSaving };

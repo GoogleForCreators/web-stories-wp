@@ -23,14 +23,14 @@ import {
   useMemo,
   useRef,
   useState,
-} from '@web-stories-wp/react';
+} from '@googleforcreators/react';
 import { useFeatures } from 'flagged';
-import { trackError } from '@web-stories-wp/tracking';
+import { trackError } from '@googleforcreators/tracking';
 import {
   useStory,
   useConfig,
   useCurrentUser,
-} from '@web-stories-wp/story-editor';
+} from '@googleforcreators/story-editor';
 
 /**
  * Internal dependencies
@@ -58,7 +58,7 @@ function PostLock() {
   const { previewLink, lockUser } = useStory(
     ({
       state: {
-        story: { previewLink, lockUser },
+        story: { previewLink, extras: { lockUser = {} } = {} },
       },
     }) => ({
       previewLink,

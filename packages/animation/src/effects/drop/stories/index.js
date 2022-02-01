@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { PAGE_HEIGHT, PAGE_WIDTH, getBox } from '@web-stories-wp/units';
+import { PAGE_HEIGHT, PAGE_WIDTH, getBox } from '@googleforcreators/units';
 /**
  * Internal dependencies
  */

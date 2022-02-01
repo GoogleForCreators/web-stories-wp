@@ -22,15 +22,17 @@ import {
   useState,
   useEffect,
   useDebouncedCallback,
-} from '@web-stories-wp/react';
-import { __ } from '@web-stories-wp/i18n';
+} from '@googleforcreators/react';
+import { __ } from '@googleforcreators/i18n';
 import {
   Checkbox,
   Input,
+  isValidUrl,
+  withProtocol,
   Text,
   THEME_CONSTANTS,
   ThemeGlobals,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 import { v4 as uuidv4 } from 'uuid';
 import styled from 'styled-components';
 
@@ -38,7 +40,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { useStory, useCanvas, useAPI } from '../../../../app';
-import { isValidUrl, toAbsoluteUrl, withProtocol } from '../../../../utils/url';
+import { toAbsoluteUrl } from '../../../../utils/url';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
 import { LinkIcon, LinkInput, Row } from '../../../form';
 import { SimplePanel } from '../../panel';
@@ -128,26 +130,39 @@ function PageAttachmentPanel() {
   const debouncedUpdate = useDebouncedCallback(updatePageAttachment, 300);
   const { getProxiedUrl, checkResourceAccess } = useCORSProxy();
 
-  const populateUrlData = useDebouncedCallback(async (value) => {
-    setFetchingMetadata(true);
-    try {
-      const { image } = getLinkMetadata ? await getLinkMetadata(value) : {};
-      const iconUrl = image ? toAbsoluteUrl(value, image) : '';
-      const needsProxy = iconUrl ? await checkResourceAccess(iconUrl) : false;
+  const populateUrlData = useDebouncedCallback(
+    useCallback(
+      async (value) => {
+        // Nothing to fetch for tel: or mailto: links.
+        if (!value.startsWith('http://') && !value.startsWith('https://')) {
+          return;
+        }
 
-      updatePageAttachment({
-        url: value,
-        icon: iconUrl,
-        needsProxy,
-      });
-    } catch (e) {
-      // We're allowing to save invalid URLs, however, remove icon in this case.
-      updatePageAttachment({ url: value, icon: '', needsProxy: false });
-      setIsInvalidUrl(true);
-    } finally {
-      setFetchingMetadata(false);
-    }
-  }, 1200);
+        setFetchingMetadata(true);
+        try {
+          const { image } = getLinkMetadata ? await getLinkMetadata(value) : {};
+          const iconUrl = image ? toAbsoluteUrl(value, image) : '';
+          const needsProxy = iconUrl
+            ? await checkResourceAccess(iconUrl)
+            : false;
+
+          updatePageAttachment({
+            url: value,
+            icon: iconUrl,
+            needsProxy,
+          });
+        } catch (e) {
+          // We're allowing to save invalid URLs, however, remove icon in this case.
+          updatePageAttachment({ url: value, icon: '', needsProxy: false });
+          setIsInvalidUrl(true);
+        } finally {
+          setFetchingMetadata(false);
+        }
+      },
+      [checkResourceAccess, getLinkMetadata, updatePageAttachment]
+    ),
+    1200
+  );
 
   const [isInvalidUrl, setIsInvalidUrl] = useState(
     url && !isValidUrl(withProtocol(url).trim())
@@ -158,6 +173,8 @@ function PageAttachmentPanel() {
 
   const handleChangeUrl = useCallback(
     (value) => {
+      populateUrlData.cancel();
+
       _setUrl(value);
       setIsInvalidUrl(false);
       const urlWithProtocol = withProtocol(value.trim());
@@ -183,7 +200,7 @@ function PageAttachmentPanel() {
     /**
      * Handle page attachment icon change.
      *
-     * @param {import('@web-stories-wp/media').Resource} resource The new image.
+     * @param {import('@googleforcreators/media').Resource} resource The new image.
      */
     (resource) => {
       updatePageAttachment({ icon: resource?.src }, true);

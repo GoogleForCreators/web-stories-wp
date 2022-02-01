@@ -17,10 +17,9 @@
 /**
  * External dependencies
  */
-import { useState } from '@web-stories-wp/react';
+import { useState } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { action } from '@storybook/addon-actions';
-import { boolean, text } from '@storybook/addon-knobs';
 import styled, { ThemeProvider } from 'styled-components';
 /**
  * Internal dependencies
@@ -30,6 +29,14 @@ import { Pill, PillGroup } from '..';
 
 export default {
   title: 'DesignSystem/Components/Pill',
+  args: {
+    pill1isActive: true,
+    pill2isActive: true,
+    pill3isActive: true,
+    pill1: 'pill 1 text',
+    pill2: 'pill 2 text',
+    pill3: 'pill 3 text',
+  },
 };
 
 const Container = styled.div`
@@ -39,18 +46,42 @@ const Container = styled.div`
   gap: 12px;
 `;
 
-function PillContainer({ prefix }) {
+function PillContainer({ prefix, ...args }) {
+  let message;
+  let active;
+
   return (
     <Container>
-      {[1, 2, 3].map((i) => (
-        <Pill
-          key={i}
-          isActive={boolean(`${prefix}: isActive ${i}`, false)}
-          onClick={(e) => action(`${prefix}: click on pill ${i}`)(e)}
-        >
-          {text(`${prefix}: pill text ${i}`, `${prefix} pill ${i}`)}
-        </Pill>
-      ))}
+      {[1, 2, 3].map((i) => {
+        switch (i) {
+          case 1:
+            message = args.pill1;
+            active = args.pill1isActive;
+            break;
+          case 2:
+            message = args.pill2;
+            active = args.pill2isActive;
+
+            break;
+          case 3:
+            message = args.pill3;
+            active = args.pill3isActive;
+
+            break;
+
+          default:
+            break;
+        }
+        return (
+          <Pill
+            key={i}
+            isActive={active}
+            onClick={(e) => action(`${prefix}: click on pill ${i}`)(e)}
+          >
+            {message}
+          </Pill>
+        );
+      })}
     </Container>
   );
 }
@@ -60,11 +91,11 @@ PillContainer.propTypes = {
 };
 
 // Override light theme because this component is only set up for dark theme right now given fg and bg coloring
-export const _default = () => (
+export const _default = (args) => (
   <>
-    <PillContainer prefix="Light" />
+    <PillContainer prefix="Light" {...args} />
     <ThemeProvider theme={theme}>
-      <PillContainer prefix="Dark" />
+      <PillContainer prefix="Dark" {...args} />
     </ThemeProvider>
   </>
 );
@@ -76,21 +107,27 @@ const PILL_OPTIONS = [
   { id: 4, label: 'John' },
 ];
 
-function PillGroupContainer() {
+function PillGroupContainer(args) {
   const [active, setActive] = useState(1);
   return (
     <Container>
-      <PillGroup options={PILL_OPTIONS} value={active} onSelect={setActive} />
+      <PillGroup
+        options={PILL_OPTIONS}
+        value={active}
+        onSelect={setActive}
+        {...args}
+      />
     </Container>
   );
 }
 
 // Override light theme because this component is only set up for dark theme right now given fg and bg coloring
-export const PillGroups = () => (
+export const PillGroups = (args) => (
   <>
     <PillGroupContainer />
     <ThemeProvider theme={theme}>
-      <PillGroupContainer />
+      <PillGroupContainer {...args} />
     </ThemeProvider>
   </>
 );
+PillGroups.parameters = { controls: { include: [] } };

@@ -28,84 +28,32 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import StoryPropTypes from '../types';
-import getTransformFlip from '../elements/shared/getTransformFlip';
+import BorderedMaskedElement from './borderedMaskedElement';
 import { DEFAULT_MASK } from './constants';
-import { getElementMask } from '.';
-
-const FILL_STYLE = {
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-};
 
 export default function WithMask({
   element,
   fill,
-  style,
-  children,
+  skipDefaultMask = false,
   box,
-  skipDefaultMask,
   ...rest
 }) {
-  const mask = getElementMask(element);
-  const { flip, isBackground } = element;
-
-  const transformFlip = getTransformFlip(flip);
-  if (transformFlip) {
-    style.transform = style.transform
-      ? `${style.transform} ${transformFlip}`
-      : transformFlip;
-  }
-
-  if (
-    !mask?.type ||
-    (skipDefaultMask && mask.type === DEFAULT_MASK.type) ||
-    isBackground
-  ) {
-    return (
-      <div
-        style={{
-          ...(fill ? FILL_STYLE : {}),
-          ...style,
-        }}
-        {...rest}
-      >
-        {children}
-      </div>
-    );
-  }
-
-  // @todo: Chrome cannot do inline clip-path using data: URLs.
-  // See https://bugs.chromium.org/p/chromium/issues/detail?id=1041024.
-
-  const maskId = `mask-${mask.type}-${element.id}-output`;
+  const getBorderWidth = () => element.border?.left;
+  const elementWidth = element.width;
+  const elementHeight = element.height;
+  const forceRectangularMask =
+    skipDefaultMask && element.mask?.type === DEFAULT_MASK.type;
 
   return (
-    <div
-      style={{
-        ...(fill ? FILL_STYLE : {}),
-        ...style,
-        clipPath: `url(#${maskId})`,
-        // stylelint-disable-next-line
-        WebkitClipPath: `url(#${maskId})`,
-      }}
+    <BorderedMaskedElement
+      element={element}
+      hasFill={fill}
+      getBorderWidth={getBorderWidth}
+      elementWidth={elementWidth}
+      elementHeight={elementHeight}
+      forceRectangularMask={forceRectangularMask}
       {...rest}
-    >
-      <svg width={0} height={0}>
-        <defs>
-          <clipPath
-            id={maskId}
-            transform={`scale(1 ${mask.ratio})`}
-            clipPathUnits="objectBoundingBox"
-          >
-            <path d={mask.path} />
-          </clipPath>
-        </defs>
-      </svg>
-      {children}
-    </div>
+    />
   );
 }
 
@@ -116,8 +64,4 @@ WithMask.propTypes = {
   children: PropTypes.node.isRequired,
   box: StoryPropTypes.box.isRequired,
   skipDefaultMask: PropTypes.bool,
-};
-
-WithMask.defaultProps = {
-  skipDefaultMask: false,
 };

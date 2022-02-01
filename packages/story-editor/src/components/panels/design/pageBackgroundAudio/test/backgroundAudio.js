@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
+import { FlagsProvider } from 'flagged';
 
 /**
  * Internal dependencies
@@ -32,7 +33,11 @@ function MediaUpload({ render }) {
   return render(open);
 }
 
-function arrange({ backgroundAudio, hasUploadMediaAction = true } = {}) {
+function arrange({
+  backgroundAudio,
+  hasUploadMediaAction = true,
+  enhancedPageBackgroundAudio = false,
+} = {}) {
   const updateStory = jest.fn();
 
   const configValue = {
@@ -59,11 +64,17 @@ function arrange({ backgroundAudio, hasUploadMediaAction = true } = {}) {
   };
 
   return renderWithTheme(
-    <ConfigContext.Provider value={configValue}>
-      <StoryContext.Provider value={storyContextValue}>
-        <BackgroundAudioPanel />
-      </StoryContext.Provider>
-    </ConfigContext.Provider>
+    <FlagsProvider
+      features={{
+        enhancedPageBackgroundAudio,
+      }}
+    >
+      <ConfigContext.Provider value={configValue}>
+        <StoryContext.Provider value={storyContextValue}>
+          <BackgroundAudioPanel />
+        </StoryContext.Provider>
+      </ConfigContext.Provider>
+    </FlagsProvider>
   );
 }
 
@@ -100,9 +111,12 @@ describe('BackgroundAudioPanel', () => {
   it('should render button to play and delete audio', () => {
     arrange({
       backgroundAudio: {
-        src: 'https://example.com/audio.mp3',
-        id: 123,
-        mimeType: 'audio/mpeg',
+        resource: {
+          src: 'https://example.com/audio.mp3',
+          id: 123,
+          mimeType: 'audio/mpeg',
+        },
+        loop: true,
       },
     });
     expect(
@@ -115,5 +129,125 @@ describe('BackgroundAudioPanel', () => {
         name: 'Play',
       })
     ).toBeInTheDocument();
+  });
+
+  it('should render loop button', () => {
+    arrange({
+      backgroundAudio: {
+        resource: {
+          src: 'https://example.com/audio.mp3',
+          id: 123,
+          mimeType: 'audio/mpeg',
+          length: 60,
+          lengthFormatted: '1:00',
+        },
+        loop: true,
+      },
+      enhancedPageBackgroundAudio: true,
+    });
+    expect(
+      screen.getByRole('button', {
+        name: 'Remove file',
+      })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', {
+        name: 'Play',
+      })
+    ).toBeInTheDocument();
+
+    expect(screen.getByText('Loop')).toBeInTheDocument();
+  });
+
+  it('should render existing captions', () => {
+    arrange({
+      backgroundAudio: {
+        resource: {
+          src: 'https://example.com/audio.mp3',
+          id: 123,
+          mimeType: 'audio/mpeg',
+        },
+        tracks: [
+          {
+            track: 'https://example.com/track.vtt',
+            trackId: 123,
+            trackName: 'track.vtt',
+            id: 'rersd-fdfd-fdfd-fdfd',
+            srcLang: '',
+            label: '',
+            kind: 'captions',
+          },
+        ],
+        loop: true,
+      },
+      enhancedPageBackgroundAudio: true,
+    });
+    const input = screen.getByRole('textbox', { name: 'Filename' });
+    expect(input).toHaveValue('track.vtt');
+  });
+
+  it('should render upload button for captions', () => {
+    arrange({
+      backgroundAudio: {
+        resource: {
+          src: 'https://example.com/audio.mp3',
+          id: 123,
+          mimeType: 'audio/mpeg',
+        },
+        tracks: [],
+        loop: true,
+      },
+      enhancedPageBackgroundAudio: true,
+    });
+    expect(
+      screen.getByRole('button', { name: 'Upload audio captions' })
+    ).toBeInTheDocument();
+  });
+
+  it('should not render upload button for captions without hasUploadMediaAction', () => {
+    arrange({
+      backgroundAudio: {
+        resource: {
+          src: 'https://example.com/audio.mp3',
+          id: 123,
+          mimeType: 'audio/mpeg',
+        },
+        tracks: [],
+        loop: true,
+      },
+      enhancedPageBackgroundAudio: true,
+      hasUploadMediaAction: false,
+    });
+    expect(
+      screen.queryByRole('button', { name: 'Upload audio captions' })
+    ).not.toBeInTheDocument();
+  });
+
+  it('should render existing captions without hasUploadMediaAction', () => {
+    arrange({
+      backgroundAudio: {
+        resource: {
+          src: 'https://example.com/audio.mp3',
+          id: 123,
+          mimeType: 'audio/mpeg',
+        },
+        tracks: [
+          {
+            track: 'https://example.com/track.vtt',
+            trackId: 123,
+            trackName: 'track.vtt',
+            id: 'rersd-fdfd-fdfd-fdfd',
+            srcLang: '',
+            label: '',
+            kind: 'captions',
+          },
+        ],
+        loop: true,
+      },
+      enhancedPageBackgroundAudio: true,
+      hasUploadMediaAction: false,
+    });
+    const input = screen.getByRole('textbox', { name: 'Filename' });
+    expect(input).toHaveValue('track.vtt');
   });
 });

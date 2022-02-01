@@ -16,10 +16,10 @@
 /**
  * External dependencies
  */
-import { useCallback, useState, useEffect } from '@web-stories-wp/react';
-import { enableTracking, disableTracking } from '@web-stories-wp/tracking';
-import { useSnackbar, localStore } from '@web-stories-wp/design-system';
-import { useRouteHistory } from '@web-stories-wp/dashboard';
+import { useCallback, useState, useEffect } from '@googleforcreators/react';
+import { enableTracking, disableTracking } from '@googleforcreators/tracking';
+import { useSnackbar, localStore } from '@googleforcreators/design-system';
+import { useRouteHistory } from '@googleforcreators/dashboard';
 /**
  * Internal dependencies
  */
@@ -76,7 +76,11 @@ export default function useTelemetryOptIn() {
     toggleWebStoriesTrackingOptIn();
     localStore.setItemByKey(LOCAL_STORAGE_KEY, true);
     setOptInCheckboxClicked(true);
-    showSnackbar({ message: SUCCESS.SETTINGS.UPDATED, dismissible: true });
+    showSnackbar({
+      'aria-label': SUCCESS.SETTINGS.UPDATED,
+      message: SUCCESS.SETTINGS.UPDATED,
+      dismissible: true,
+    });
   }, [showSnackbar, toggleWebStoriesTrackingOptIn]);
 
   const closeBanner = useCallback(() => {

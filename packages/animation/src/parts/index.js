@@ -78,7 +78,7 @@ export function throughput() {
   return {
     id: -1,
     generatedKeyframes: {},
-    WAAPIAnimation: ({ children }) => children,
+    WAAPIAnimation: {},
     AMPTarget: EmptyAMPTarget,
     AMPAnimation: () => null,
   };

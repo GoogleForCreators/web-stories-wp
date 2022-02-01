@@ -18,14 +18,14 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { __ } from '@web-stories-wp/i18n';
+import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
-} from '@web-stories-wp/design-system';
+} from '@googleforcreators/design-system';
 
 const Message = styled.div`
   color: #fff;
@@ -38,6 +38,11 @@ const Message = styled.div`
   }
 `;
 
+const TextArea = styled.textarea`
+  width: 100%;
+  min-height: 200px;
+`;
+
 const P = styled.p`
   margin: 0 0 8px 0;
 `;
@@ -47,8 +52,9 @@ const Wrapper = styled.div`
 `;
 
 function ErrorActions({ error, errorInfo }) {
-  const body = encodeURIComponent(`${error}${errorInfo.componentStack}`);
-  const reportUrl = `https://github.com/google/web-stories-wp/issues/new?labels=Type%3A+Bug&template=bug_report.md&title=${error}&body=${body}`;
+  const textAreaContent = `${error}\n${errorInfo.componentStack}`;
+  const reportUrl =
+    'https://wordpress.org/support/plugin/web-stories/#new-topic-0';
 
   const reload = () => {
     window.location.reload(true);
@@ -64,6 +70,12 @@ function ErrorActions({ error, errorInfo }) {
         )}
       </P>
       <P>{__('Apologies for the inconvenience.', 'web-stories')}</P>
+      <P>
+        <TextArea
+          value={textAreaContent}
+          onFocus={(e) => e.target.setSelectionRange(0, textAreaContent.length)}
+        />
+      </P>
       <Wrapper>
         <Button
           variant={BUTTON_VARIANTS.RECTANGLE}

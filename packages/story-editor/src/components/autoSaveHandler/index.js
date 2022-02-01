@@ -17,12 +17,13 @@
 /**
  * External dependencies
  */
-import { useEffect, useRef } from '@web-stories-wp/react';
+import { useEffect, useRef } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
  */
-import { useConfig, useHistory, useLocalMedia, useStory } from '../../app';
+import { useConfig, useHistory, useStory } from '../../app';
+import useIsUploadingToStory from '../../utils/useIsUploadingToStory';
 
 function AutoSaveHandler() {
   const { autoSaveInterval } = useConfig();
@@ -40,9 +41,7 @@ function AutoSaveHandler() {
       saveStory,
     })
   );
-  const { isUploading } = useLocalMedia(({ state: { isUploading } }) => ({
-    isUploading,
-  }));
+  const isUploading = useIsUploadingToStory();
 
   const isDraft = 'draft' === status || !status;
 

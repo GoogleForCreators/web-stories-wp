@@ -17,9 +17,8 @@
 /**
  * External dependencies
  */
-import { useState } from '@web-stories-wp/react';
 import classnames from 'classnames';
-import { useUnits } from '@web-stories-wp/units';
+import { useUnits } from '@googleforcreators/units';
 
 /**
  * Internal dependencies
@@ -49,6 +48,7 @@ function useSingleSelectionResize({
   isEditMode,
   pushTransform,
   classNames,
+  forceLockRatio,
 }) {
   const { updateSelectedElements } = useStory((state) => ({
     updateSelectedElements: state.actions.updateSelectedElements,
@@ -68,10 +68,18 @@ function useSingleSelectionResize({
       })
     );
 
-  const { resizeRules = {}, updateForResizeEvent } = getDefinitionForType(
-    selectedElement.type
-  );
-  const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
+  const { lockAspectRatio: elementLockRatio, type } = selectedElement;
+  const lockAspectRatio = forceLockRatio || elementLockRatio;
+  const {
+    resizeRules: defaultResizeRules = {},
+    unlockedResizeRules,
+    updateForResizeEvent,
+  } = getDefinitionForType(type);
+  // If the ratio is unlocked and we have rules for it, use those rules.
+  const resizeRules =
+    !lockAspectRatio && unlockedResizeRules
+      ? unlockedResizeRules
+      : defaultResizeRules;
 
   const minWidth = dataToEditorX(resizeRules.minWidth);
   const minHeight = dataToEditorY(resizeRules.minHeight);
@@ -82,7 +90,7 @@ function useSingleSelectionResize({
     let newHeight = height;
     let updates = null;
 
-    if (isResizingFromCorner) {
+    if (lockAspectRatio) {
       if (newWidth < minWidth) {
         newWidth = minWidth;
         newHeight = newWidth / aspectRatio;
@@ -101,7 +109,8 @@ function useSingleSelectionResize({
         selectedElement,
         direction,
         editorToDataX(newWidth, false),
-        editorToDataY(newHeight, false)
+        editorToDataY(newHeight, false),
+        lockAspectRatio
       );
     }
     if (updates && updates.height) {
@@ -122,17 +131,10 @@ function useSingleSelectionResize({
     setTransformStyle(target, frame);
   };
 
-  const onResizeStart = ({ setOrigin, dragStart, direction }) => {
+  const onResizeStart = ({ setOrigin, dragStart }) => {
     setOrigin(['%', '%']);
     if (dragStart) {
       dragStart.set(frame.translate);
-    }
-    // Lock ratio for diagonal directions (nw, ne, sw, se). Both
-    // `direction[]` values for diagonals are either 1 or -1. Non-diagonal
-    // directions have 0s.
-    const newResizingMode = direction[0] !== 0 && direction[1] !== 0;
-    if (isResizingFromCorner !== newResizingMode) {
-      setIsResizingFromCorner(newResizingMode);
     }
     if (isEditMode) {
       // In edit mode, we need to signal right away that the action started.
@@ -159,12 +161,17 @@ function useSingleSelectionResize({
       if (updateForResizeEvent) {
         Object.assign(
           properties,
-          updateForResizeEvent(selectedElement, direction, newWidth, newHeight)
+          updateForResizeEvent(
+            selectedElement,
+            direction,
+            newWidth,
+            newHeight,
+            lockAspectRatio
+          )
         );
       }
       updateSelectedElements({ properties });
     }
-    setIsResizingFromCorner(true);
     resetMoveable(target);
   };
 
@@ -176,7 +183,7 @@ function useSingleSelectionResize({
     onResize,
     onResizeStart,
     onResizeEnd,
-    keepRatio: isResizingFromCorner || selectedElement?.type === 'sticker',
+    keepRatio: lockAspectRatio,
     renderDirections: getRenderDirections(resizeRules),
     className: classnames(classNames, {
       'visually-hide-handles': visuallyHideHandles,
