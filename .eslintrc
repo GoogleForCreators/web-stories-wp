@@ -432,7 +432,7 @@
       "files": [
         "packages/commander/**/*.js",
         "packages/fonts/scripts/cli.js",
-        "packages/migration/src/cli.js",
+        "packages/migration/scripts/cli.js",
         "packages/templates/scripts/cli.js",
         "packages/text-sets/scripts/cli.js"
       ],
@@ -458,11 +458,11 @@
         "packages/e2e-tests/src/config/*.js",
         "packages/dashboard/src/karma-tests.cjs",
         "packages/story-editor/src/karma-tests.cjs",
-        "packages/migration/src/**/*.js",
         "packages/fonts/**/*.js",
         "packages/commander/**/*.js",
-        "packages/templates/scripts/cli.js",
-        "packages/text-sets/scripts/cli.js"
+        "packages/migration/scripts/**/*.js",
+        "packages/templates/scripts/**/*.js",
+        "packages/text-sets/scripts/**/*.js"
       ],
       "extends": [
         "plugin:node/recommended",
