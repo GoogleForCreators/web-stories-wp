@@ -126,9 +126,7 @@ describe('Link Panel', () => {
       expect(linkPanel.address.value).toBe('https://example.com');
     });
 
-    // TODO(#10428): Fix broken/flakey test
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should display the link tooltip correctly', async () => {
+    it('should display the link tooltip correctly', async () => {
       const linkDescription = 'Example description';
       // make sure address input exists
       await waitFor(() => {
@@ -177,12 +175,7 @@ describe('Link Panel', () => {
       });
 
       await fixture.events.mouse.moveRel(frame, 10, 10);
-      await fixture.events.sleep(500);
-      // TODO(#10428): the "tooltip" should appear when hovering, however that feature seems to be a regression
-      // Maybe We should grab "tooltip" by role here, since the text will be in the sidebar as well. However,
-      // this is currently grabbing the checklist companion. Or if grabbing by text, the number of
-      // times that text appears should take into account the sidebar.
-      const tooltip = await fixture.screen.findByRole('dialog');
+      const tooltip = await fixture.screen.findByText(linkDescription);
       expect(tooltip).toHaveTextContent(linkDescription);
       await fixture.snapshot(
         'Element is hovered on. The link tooltip is visible'

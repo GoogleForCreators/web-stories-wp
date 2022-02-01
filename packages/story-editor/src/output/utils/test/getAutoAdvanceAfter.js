@@ -149,7 +149,7 @@ describe('getAutoAdvanceAfter', () => {
     ).toBe('10s');
   });
 
-  it('should return animation time none looping media', () => {
+  it('should return animation time non-looping media', () => {
     const elements = [
       { id: '123', type: 'video', loop: false, resource: { length: 5 } },
       { id: '456', x: 0, y: 0, type: 'shape' },
