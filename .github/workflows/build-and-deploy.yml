@@ -97,6 +97,10 @@ jobs:
     name: Package ZIP files
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    if: >
+      github.event.pull_request.draft == false &&
+      github.event.pull_request.head.repo.fork == false &&
+      github.event.pull_request.user.login != 'dependabot[bot]'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -115,8 +119,7 @@ jobs:
           tools: composer
 
       - name: Install dependencies
-        run: |
-          npm ci
+        run: npm ci
         env:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
@@ -154,6 +157,32 @@ jobs:
         with:
           name: web-stories-dev
           path: build/web-stories-dev
+
+  bundle:
+    name: Bundle npm packages
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    if: >
+      github.event.pull_request.draft == false &&
+      github.event.pull_request.head.repo.fork == false &&
+      github.event.pull_request.user.login != 'dependabot[bot]'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2.5.1
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+        env:
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+
+      - name: Bundle packages
+        run: npm run bundle
 
   upload-artifacts:
     name: Upload ZIP files to storage
