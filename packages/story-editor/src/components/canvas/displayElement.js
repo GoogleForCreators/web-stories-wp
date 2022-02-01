@@ -24,19 +24,19 @@ import { generatePatternStyles } from '@googleforcreators/patterns';
 import { useUnits } from '@googleforcreators/units';
 import { StoryAnimation } from '@googleforcreators/animation';
 import { useTransformHandler } from '@googleforcreators/transform';
-
-/**
- * Internal dependencies
- */
-import { getDefinitionForType } from '../../elements';
+import { getDefinitionForType } from '@googleforcreators/elements';
 import {
   elementWithPosition,
   elementWithRotation,
   elementWithSize,
-} from '../../elements/shared';
+  useColorTransformHandler
+} from '@googleforcreators/element-library';
+
+/**
+ * Internal dependencies
+ */
 import WithMask from '../../masks/display';
 import StoryPropTypes from '../../types';
-import useColorTransformHandler from '../../elements/shared/useColorTransformHandler';
 import {
   getBorderPositionCSS,
   getResponsiveBorder,

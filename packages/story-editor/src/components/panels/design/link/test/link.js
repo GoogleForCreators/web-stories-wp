@@ -30,7 +30,7 @@ import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
 import LinkPanel from '../link';
 
-jest.mock('../../../../../elements');
+jest.mock('@googleforcreators/element-library');
 
 function MediaUpload({ render }) {
   const open = jest.fn();

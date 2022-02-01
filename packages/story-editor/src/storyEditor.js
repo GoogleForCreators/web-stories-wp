@@ -25,13 +25,15 @@ import {
   ModalGlobalStyle,
   deepMerge,
 } from '@googleforcreators/design-system';
-import { useMemo } from '@googleforcreators/react';
+import { useMemo, useEffect } from '@googleforcreators/react';
 import { FlagsProvider } from 'flagged';
 import { TransformProvider } from '@googleforcreators/transform';
 import {
   DefaultMoveableGlobalStyle,
   CropMoveableGlobalStyle,
 } from '@googleforcreators/moveable';
+import { registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
@@ -59,6 +61,10 @@ import defaultConfig from './defaultConfig';
 function StoryEditor({ config, initialEdits, children }) {
   const _config = useMemo(() => deepMerge(defaultConfig, config), [config]);
   const { storyId, isRTL, flags } = _config;
+
+  useEffect( () => {
+    elementTypes.forEach( registerElementType );
+  }, [] );
 
   return (
     <FlagsProvider features={flags}>

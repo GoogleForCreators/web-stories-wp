@@ -1,0 +1,30 @@
+{
+	"name": "@googleforcreators/masks",
+	"description": "tbd",
+	"private": true,
+	"engines": {
+		"node": ">= 16",
+		"npm": "~7.3"
+	},
+	"exports": {
+		"default": "./src/index.js"
+	},
+	"main": "./src/index.js",
+	"type": "module",
+	"dependencies": {
+		"@googleforcreators/elements":"*",
+		"@googleforcreators/fonts": "*",
+		"@googleforcreators/i18n": "*",
+		"@googleforcreators/media":"*",
+		"@googleforcreators/patterns": "*",
+		"@googleforcreators/react": "*",
+		"@googleforcreators/transform": "*",
+		"@googleforcreators/units": "*",
+		"styled-components": "^5.2.1",
+		"uuid": "^8.3.2"
+	},
+	"devDependencies": {
+		"@testing-library/react": "^11.2.3",
+		"prop-types": "^15.8.0"
+	}
+}

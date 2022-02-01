@@ -19,22 +19,33 @@
  */
 import PropTypes from 'prop-types';
 import { useCallback } from '@googleforcreators/react';
-
-/**
- * External dependencies
- */
-import { __, sprintf } from '@googleforcreators/i18n';
+import { OverlayType } from '@googleforcreators/design-system';
+import { __, _x, sprintf } from '@googleforcreators/i18n';
+import { getDefinitionForType } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { OverlayPreset, OverlayType } from '../../../../utils/overlay';
 import { Row, Color, FilterToggle } from '../../../form';
 import { SimplePanel } from '../../panel';
-import { getDefinitionForType } from '../../../../elements';
 import { useCommonColorValue } from '../../shared';
 import { MULTIPLE_VALUE } from '../../../../constants';
 import convertOverlay from './convertOverlay';
+
+export const OverlayPreset = {
+  [OverlayType.NONE]: {
+    label: _x('None', 'overlay', 'web-stories'),
+  },
+  [OverlayType.SOLID]: {
+    label: __('Tint', 'web-stories'),
+  },
+  [OverlayType.LINEAR]: {
+    label: __('Linear', 'web-stories'),
+  },
+  [OverlayType.RADIAL]: {
+    label: __('Vignette', 'web-stories'),
+  },
+};
 
 function FilterPanel({ selectedElements, pushUpdate }) {
   const overlay = useCommonColorValue(selectedElements, 'overlay');

@@ -36,12 +36,12 @@ import {
   BUTTON_VARIANTS,
   Tooltip,
 } from '@googleforcreators/design-system';
+import { getDefinitionForType } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
-import { getDefinitionForType } from '../../../../elements';
 import { SimplePanel } from '../../panel';
 import FlipControls from '../../shared/flipControls';
 import {

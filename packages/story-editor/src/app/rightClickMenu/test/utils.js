@@ -14,9 +14,13 @@
  * limitations under the License.
  */
 /**
+ * External dependencies.
+ */
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
+
+/**
  * Internal dependencies
  */
-import { ELEMENT_TYPES } from '../../../elements';
 import objectPick from '../../../utils/objectPick';
 import { getElementStyles } from '../utils';
 

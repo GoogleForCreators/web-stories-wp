@@ -19,11 +19,11 @@
  */
 import STICKERS from '@googleforcreators/stickers';
 import { dataPixels } from '@googleforcreators/units';
+import { getDefinitionForType } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { getDefinitionForType } from '../../../elements';
 import getInsertedElementSize from '../../../utils/getInsertedElementSize';
 import { DEFAULT_MASK } from '../../../masks/constants';
 

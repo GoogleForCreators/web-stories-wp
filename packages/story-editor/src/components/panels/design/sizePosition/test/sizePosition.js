@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
+import { getDefinitionForType } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -27,12 +28,11 @@ import {
   MULTIPLE_VALUE,
   MULTIPLE_DISPLAY_VALUE,
 } from '../../../../../constants';
-import { getDefinitionForType } from '../../../../../elements';
 import { renderPanel } from '../../../shared/test/_utils';
 
 import SizePosition from '../sizePosition';
 
-jest.mock('../../../../../elements');
+jest.mock('@googleforcreators/element-library');
 
 describe('panels/SizePosition', () => {
   let defaultElement, defaultImage, defaultText, unlockAspectRatioElement;

@@ -18,11 +18,11 @@
  * External dependencies
  */
 import { createSolid } from '@googleforcreators/patterns';
+import { createPage } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { createPage } from '../../elements';
 import isDefaultPage from '../isDefaultPage';
 
 describe('isDefaultPage', () => {

@@ -15,13 +15,18 @@
  */
 
 /**
+ * External dependencies.
+ */
+import { MULTIPLE_VALUE } from '@googleforcreators/design-system';
+
+/**
  * Internal dependencies
  */
 import {
   togglePrefixStyle,
   getPrefixStylesInSelection,
 } from '../../styleManipulation';
-import { NONE, WEIGHT, MULTIPLE_VALUE } from '../../customConstants';
+import { NONE, WEIGHT } from '../../customConstants';
 import formatter from '../weight';
 import { getDOMElement } from './_utils';
 

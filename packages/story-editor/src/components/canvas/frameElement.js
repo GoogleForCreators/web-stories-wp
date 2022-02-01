@@ -28,17 +28,17 @@ import {
 import { useUnits } from '@googleforcreators/units';
 import { useTransformHandler } from '@googleforcreators/transform';
 import PropTypes from 'prop-types';
-
-/**
- * Internal dependencies
- */
-import { getDefinitionForType } from '../../elements';
-import { useStory, useTransform, useCanvas } from '../../app';
+import { getDefinitionForType } from '@googleforcreators/elements';
 import {
   elementWithPosition,
   elementWithSize,
   elementWithRotation,
-} from '../../elements/shared';
+} from '@googleforcreators/element-library';
+
+/**
+ * Internal dependencies
+ */
+import { useStory, useTransform, useCanvas } from '../../app';
 import WithMask from '../../masks/frame';
 import WithLink from '../elementLink/frame';
 import { getElementMask } from '../../masks';

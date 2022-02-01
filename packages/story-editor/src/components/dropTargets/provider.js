@@ -21,13 +21,13 @@ import PropTypes from 'prop-types';
 import { useState, useMemo, useCallback } from '@googleforcreators/react';
 import { noop, useGlobalIsKeyPressed } from '@googleforcreators/design-system';
 import { useTransform } from '@googleforcreators/transform';
+import { getDefinitionForType } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../app/story';
 import getElementProperties from '../canvas/utils/getElementProperties';
-import { getDefinitionForType } from '../../elements';
 import Context from './context';
 
 const DROP_SOURCE_ALLOWED_TYPES = ['image', 'gif', 'video'];

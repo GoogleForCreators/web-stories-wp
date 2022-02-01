@@ -19,14 +19,14 @@
  */
 import { createSolid } from '@googleforcreators/patterns';
 import { PAGE_WIDTH } from '@googleforcreators/units';
+import { getDefinitionForType } from '@googleforcreators/elements';
+import { SHARED_DEFAULT_ATTRIBUTES, MEDIA_DEFAULT_ATTRIBUTES } from '@googleforcreators/element-library';
+
 /**
  * Internal dependencies
  */
 import { addElementsToClipboard, processPastedElements } from '../copyPaste';
-import { SHARED_DEFAULT_ATTRIBUTES } from '../../elements/shared/constants';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
-import { getDefinitionForType } from '../../elements';
-import { MEDIA_DEFAULT_ATTRIBUTES } from '../../elements/media/constants';
 
 describe('copyPaste utils', () => {
   const PAGE = {

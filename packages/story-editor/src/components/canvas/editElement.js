@@ -20,17 +20,17 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useUnits } from '@googleforcreators/units';
+import { getDefinitionForType } from '@googleforcreators/elements';
+import {
+  elementWithPosition,
+  elementWithSize,
+  elementWithRotation,
+} from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
  */
 import { useState, useRef } from '@googleforcreators/react';
-import { getDefinitionForType } from '../../elements';
-import {
-  elementWithPosition,
-  elementWithSize,
-  elementWithRotation,
-} from '../../elements/shared';
 import SingleSelectionMoveable from './singleSelectionMoveable';
 
 const Wrapper = styled.div`

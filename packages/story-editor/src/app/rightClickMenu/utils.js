@@ -13,11 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies.
+ */
+import { getDefinitionForType, ELEMENT_TYPES } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { getDefinitionForType, ELEMENT_TYPES } from '../../elements';
 import objectPick from '../../utils/objectPick';
 
 const elementTypes = Object.values(ELEMENT_TYPES);

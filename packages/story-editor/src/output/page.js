@@ -22,13 +22,13 @@ import { __ } from '@googleforcreators/i18n';
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
 import { getTotalDuration, StoryAnimation } from '@googleforcreators/animation';
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../types';
 import isElementBelowLimit from '../utils/isElementBelowLimit';
-import { ELEMENT_TYPES } from '../elements';
 import OutputElement from './element';
 import getLongestMediaElement from './utils/getLongestMediaElement';
 import HiddenAudio from './utils/HiddenAudio';

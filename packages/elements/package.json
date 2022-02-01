@@ -1,0 +1,30 @@
+{
+	"name": "@googleforcreators/elements",
+	"description": "Provides various APIs to register & retrieve element types.",
+	"private": false,
+	"engines": {
+		"node": ">= 16",
+		"npm": ">= 7.3"
+	},
+	"exports": {
+		"default": "./src/index.js"
+	},
+	"main": "./src/index.js",
+	"type": "module",
+	"dependencies": {
+		"@googleforcreators/animation": "*",
+		"@googleforcreators/i18n": "*",
+		"@googleforcreators/fonts": "*",
+		"@googleforcreators/media": "*",
+		"@googleforcreators/react": "*",
+		"@googleforcreators/rich-text": "*",
+		"@googleforcreators/patterns": "*",
+		"@googleforcreators/transform": "*",
+		"@googleforcreators/units": "*",
+		"styled-components": "^5.3.3",
+		"uuid": "^8.3.2"
+	},
+	"devDependencies": {
+		"prop-types": "^15.8.1"
+	}
+}

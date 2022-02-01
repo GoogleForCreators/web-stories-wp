@@ -13,11 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies.
+ */
+import { PanelTypes } from '@googleforcreators/design-system';
+import { elementTypes } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { elementTypes } from '../../../elements';
 import {
   AnimationPanel,
   BorderStylePanel,
@@ -35,7 +39,6 @@ import {
   VideoOptionsPanel,
   PageBackgroundAudioPanel,
 } from '../../panels/design';
-import PanelTypes from '../../panels/design/types';
 
 const ALL = Object.values(PanelTypes);
 

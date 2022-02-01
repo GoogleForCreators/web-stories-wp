@@ -23,12 +23,12 @@ import { memo, useEffect, useRef } from '@googleforcreators/react';
 import { _x, __ } from '@googleforcreators/i18n';
 import { useKeyDownEffect } from '@googleforcreators/design-system';
 import { withOverlay } from '@googleforcreators/moveable';
+import { getDefinitionForType } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import { getDefinitionForType } from '../../elements';
 import { useStory, useCanvas } from '../../app';
 import EditElement from './editElement';
 import { Layer, PageArea, FooterArea, Z_INDEX } from './layout';

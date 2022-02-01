@@ -31,6 +31,7 @@ import {
   useRef,
 } from '@googleforcreators/react';
 import { v4 as uuidv4 } from 'uuid';
+import { createPage, duplicatePage, ELEMENT_TYPES } from '@googleforcreators/elements';
 
 /** @typedef {import('react')} Node */
 
@@ -39,7 +40,6 @@ import { v4 as uuidv4 } from 'uuid';
  */
 import useStory from '../story/useStory';
 import { useLocalMedia } from '../media';
-import { createPage, duplicatePage, ELEMENT_TYPES } from '../../elements';
 import updateProperties from '../../components/inspector/design/updateProperties';
 import useAddPreset from '../../utils/useAddPreset';
 import useApplyStyle from '../../components/panels/design/textStyle/stylePresets/useApplyStyle';

@@ -32,3 +32,16 @@ export const FOCUSABLE_SELECTORS = [
   'textarea:not(:disabled)',
   '[tabindex]:not([tabindex="-1"])',
 ];
+
+export const BACKGROUND_TEXT_MODE = {
+  NONE: 'NONE',
+  FILL: 'FILL',
+  HIGHLIGHT: 'HIGHLIGHT',
+};
+
+export const OverlayType = {
+  NONE: 'none',
+  SOLID: 'solid',
+  LINEAR: 'linear',
+  RADIAL: 'radial',
+};

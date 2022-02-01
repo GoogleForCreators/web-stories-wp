@@ -68,12 +68,6 @@ export const Z_INDEX_CANVAS = {
   FLOAT_PANEL: 11,
 };
 
-export const BACKGROUND_TEXT_MODE = {
-  NONE: 'NONE',
-  FILL: 'FILL',
-  HIGHLIGHT: 'HIGHLIGHT',
-};
-
 export const FONT_WEIGHT = {
   NORMAL: 400,
   MEDIUM: 500,

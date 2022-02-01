@@ -17,10 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-/**
- * Internal dependencies
- */
-import { getDefinitionForType } from '../../../elements';
+import { getDefinitionForType } from '@googleforcreators/elements';
 
 export const LayerThumbnail = ({ page }) => {
   const { LayerIcon } = getDefinitionForType(page?.type);

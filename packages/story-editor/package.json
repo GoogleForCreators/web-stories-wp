@@ -31,6 +31,8 @@
     "@googleforcreators/animation": "*",
     "@googleforcreators/date": "*",
     "@googleforcreators/design-system": "*",
+    "@googleforcreators/elements": "*",
+    "@googleforcreators/element-library": "*",
     "@googleforcreators/fonts": "*",
     "@googleforcreators/i18n": "*",
     "@googleforcreators/media": "*",

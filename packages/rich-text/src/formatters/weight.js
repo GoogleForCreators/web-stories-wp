@@ -13,11 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies.
+ */
+import { MULTIPLE_VALUE } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
-import { NONE, WEIGHT, MULTIPLE_VALUE } from '../customConstants';
+import { NONE, WEIGHT } from '../customConstants';
 import {
   togglePrefixStyle,
   getPrefixStylesInSelection,

@@ -29,6 +29,7 @@ import { __ } from '@googleforcreators/i18n';
 import { trackEvent } from '@googleforcreators/tracking';
 import { UnitsProvider } from '@googleforcreators/units';
 import { useSnackbar } from '@googleforcreators/design-system';
+import { duplicatePage } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -41,7 +42,6 @@ import {
   PANEL_GRID_ROW_GAP,
   VirtualizedWrapper,
 } from '../shared/virtualizedPanelGrid';
-import { duplicatePage } from '../../../../elements';
 import { useStory } from '../../../../app/story';
 import PageTemplate from './pageTemplate';
 
