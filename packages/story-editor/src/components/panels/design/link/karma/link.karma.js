@@ -198,7 +198,7 @@ describe('Link Panel', () => {
       // Verify that the description is not displayed when hovering without url.
       await fixture.events.mouse.click(left - 5, top - 5);
       await fixture.events.mouse.moveRel(frame, 50, 10);
-      const removedDescription = fixture.screen.queryByRole(tooltip);
+      const removedDescription = fixture.screen.queryByText(linkDescription);
       expect(removedDescription).toBeNull();
       await fixture.snapshot(
         'Element is hovered on. The link tooltip is not visible'
