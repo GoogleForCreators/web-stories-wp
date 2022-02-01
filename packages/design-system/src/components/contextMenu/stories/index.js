@@ -38,6 +38,7 @@ import {
   CheckmarkSmall,
   ChevronRightSmall,
   CircleSpeed,
+  Cross,
   Eraser,
   LetterTLargeLetterTSmall,
   LetterTPlus,
@@ -381,6 +382,45 @@ export const QuickActionMenu = (args) => {
           >
             <MenuItems.MenuIcon title="Clear filters and animation">
               <Eraser />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+        </ContextMenu>
+      </Container>
+    </Grid>
+  );
+};
+
+export const HorizontalMenu = (args) => {
+  return (
+    <Grid>
+      <Container>
+        <Text>{'Dummy horizontal menu'}</Text>
+        <ContextMenu isHorizontal {...args}>
+          <MenuItems.MenuButton>
+            <MenuItems.MenuIcon>
+              <Bucket />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+          <MenuItems.MenuButton>
+            <MenuItems.MenuIcon>
+              <IconLink />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+          <MenuItems.MenuButton>
+            <MenuItems.MenuIcon>
+              <Captions />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+          <MenuItems.MenuSeparator />
+          <MenuItems.MenuButton>
+            <MenuItems.MenuIcon>
+              <CircleSpeed />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+          <MenuItems.MenuSeparator />
+          <MenuItems.MenuButton>
+            <MenuItems.MenuIcon>
+              <Cross />
             </MenuItems.MenuIcon>
           </MenuItems.MenuButton>
         </ContextMenu>
