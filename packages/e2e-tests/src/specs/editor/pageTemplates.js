@@ -22,9 +22,13 @@ import {
   addTextElement,
   clearLocalStorage,
   createNewStory,
+  skipSuiteOnFirefox,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Page Templates', () => {
+  // Test is quite flakey on Firefox.
+  skipSuiteOnFirefox();
+
   beforeAll(async () => {
     // force to load default templates in the page template pane.
     await clearLocalStorage();
