@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { waitFor } from '@testing-library/react';
+import { waitFor, within } from '@testing-library/react';
 import { createSolidFromString } from '@googleforcreators/patterns';
 
 /**
@@ -126,7 +126,7 @@ describe('Link Panel', () => {
       expect(linkPanel.address.value).toBe('https://example.com');
     });
 
-    // TODO: Fix broken/flakey test.
+    // TODO(#10428): Fix broken/flakey test
     // eslint-disable-next-line jasmine/no-disabled-tests
     xit('should display the link tooltip correctly', async () => {
       const linkDescription = 'Example description';
@@ -149,26 +149,41 @@ describe('Link Panel', () => {
         }
       });
       await fixture.events.click(linkPanel.description, { clickCount: 3 });
+      // needed to ensure all text gets entered otherwise the click event can
+      // overlap the text input and we end up not typing all letters.
+      await fixture.events.sleep(500);
       await fixture.events.keyboard.type(linkDescription);
       await fixture.events.keyboard.press('tab');
+      const container = fixture.container;
       // Unselect element.
-      const fullbleed = fixture.container.querySelector(
-        '[data-testid="fullbleed"]'
+      const fullbleedElements = await within(container).findAllByTestId(
+        'fullbleed',
+        {
+          timeout: 2000,
+        }
       );
-      const { left, top } = fullbleed.getBoundingClientRect();
+      // There are three fullbleed elements; [0](Display layer), [1](Frames layer), and [2](Edit layer),
+      const { left, top } = fullbleedElements[1].getBoundingClientRect();
       await fixture.events.mouse.click(left - 5, top - 5);
 
       // Move mouse to hover over the element.
-      const frame = fixture.editor.canvas.framesLayer.frames[1].node;
-      await fixture.events.mouse.moveRel(frame, 10, 10);
-
-      await waitFor(() => {
-        const tooltip = fixture.screen.findByText(linkDescription);
-        if (!tooltip) {
-          throw new Error('tooltip not ready');
+      const frame = await waitFor(() => {
+        const frameNode = fixture.editor.canvas.framesLayer.frames[1].node;
+        if (!frameNode) {
+          throw new Error('node not ready');
         }
-        expect(tooltip).toHaveTextContent(linkDescription);
+        expect(frameNode).toBeTruthy();
+        return frameNode;
       });
+
+      await fixture.events.mouse.moveRel(frame, 10, 10);
+      await fixture.events.sleep(500);
+      // TODO(#10428): the "tooltip" should appear when hovering, however that feature seems to be a regression
+      // Maybe We should grab "tooltip" by role here, since the text will be in the sidebar as well. However,
+      // this is currently grabbing the checklist companion. Or if grabbing by text, the number of
+      // times that text appears should take into account the sidebar.
+      const tooltip = await fixture.screen.findByRole('dialog');
+      expect(tooltip).toHaveTextContent(linkDescription);
       await fixture.snapshot(
         'Element is hovered on. The link tooltip is visible'
       );
@@ -184,12 +199,13 @@ describe('Link Panel', () => {
         fixture.editor.inspector.designPanel.link.address,
         { clickCount: 3 }
       );
+      await fixture.events.sleep(500);
       await fixture.events.keyboard.press('del');
 
       // Verify that the description is not displayed when hovering without url.
       await fixture.events.mouse.click(left - 5, top - 5);
       await fixture.events.mouse.moveRel(frame, 50, 10);
-      const removedDescription = fixture.screen.queryByText(linkDescription);
+      const removedDescription = fixture.screen.queryByRole(tooltip);
       expect(removedDescription).toBeNull();
       await fixture.snapshot(
         'Element is hovered on. The link tooltip is not visible'
