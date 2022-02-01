@@ -30,7 +30,7 @@ import cleanForSlug from './cleanForSlug';
  * @param {Object} args Necessary data for update.
  * @param {string} args.currentSlug The currently assigned value to story's slug.
  * @param {string} args.currentTitle The currently assigned value to story's title.
- * @param {string} args.storyId The currently assigned value to story's id.
+ * @param {number} args.storyId The currently assigned value to story's id.
  * @param {Function} args.updateStory The callback to useStory's action for updating the story with new slug.
  * @return {void}
  */
@@ -40,11 +40,7 @@ export const updateSlug = ({
   storyId,
   updateStory,
 }) => {
-  if (!updateStory) {
-    return;
-  }
-
-  if (!currentSlug || currentSlug === storyId) {
+  if (!currentSlug || parseInt(currentSlug) === storyId) {
     const cleanSlug = encodeURIComponent(cleanForSlug(currentTitle)) || storyId;
     updateStory({ properties: { slug: cleanSlug } });
   }
