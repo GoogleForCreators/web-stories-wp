@@ -79,10 +79,6 @@ function WithLink({ element, active, children, anchorRef }) {
       </>
     ) : null;
 
-  if (!tooltipContent) {
-    return children;
-  }
-
   return (
     <StyledTooltip
       forceAnchorRef={anchorRef}
