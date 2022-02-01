@@ -224,30 +224,28 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
 
   describe('Easier/smarter text set color', () => {
     it('should add text color based on background', async () => {
-      fixture.editor.library.text.smartColorToggle.click();
+      await fixture.editor.library.text.smartColorToggle.click();
 
-      await fixture.events.click(fixture.screen.getByTestId('FramesLayer'));
+      await fixture.events.click(
+        await fixture.screen.findByTestId('FramesLayer')
+      );
       await fixture.events.click(
         fixture.editor.inspector.designPanel.pageBackground.backgroundColorInput
       );
       await fixture.events.keyboard.type('000');
       await fixture.events.keyboard.press('Tab');
 
-      await waitFor(
+      const textSets = await waitFor(
         () => {
-          if (fixture.editor.library.text.textSets.length === 0) {
-            throw new Error('text sets not ready');
+          if (!fixture.editor.library.text.textSets.length) {
+            throw new Error('text set not ready');
           }
           expect(fixture.editor.library.text.textSets.length).toBeTruthy();
+
+          return fixture.editor.library.text.textSets;
         },
         { timeout: 2000 }
       );
-      const textSets = await waitFor(() => {
-        if (!fixture.editor.library.text.textSets) {
-          throw new Error('text set not ready');
-        }
-        return fixture.editor.library.text.textSets;
-      });
       // First hover text set to trigger image generation
       await fixture.events.mouse.moveRel(textSets[1], 10, 10);
 
