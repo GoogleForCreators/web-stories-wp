@@ -20,10 +20,7 @@ import { useMemo, useState } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import STICKERS from '@googleforcreators/stickers';
-import {
-  Button,
-  BUTTON_SIZES,
-} from '@googleforcreators/design-system';
+import { Button, BUTTON_SIZES } from '@googleforcreators/design-system';
 import { useUnits } from '@googleforcreators/units';
 
 /**
