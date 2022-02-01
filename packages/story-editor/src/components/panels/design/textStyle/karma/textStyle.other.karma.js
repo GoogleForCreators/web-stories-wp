@@ -25,7 +25,7 @@ import { waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import { useStory } from '../../../../../app/story';
 import { Fixture } from '../../../../../karma/fixture';
 
-describe('Text Style Panel', () => {
+fdescribe('Text Style Panel', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -71,7 +71,7 @@ describe('Text Style Panel', () => {
     });
   });
 
-  describe('Adaptive text color', () => {
+  fdescribe('Adaptive text color', () => {
     it('should not allow triggering adaptive text color for multi-selection', async () => {
       // Add 2 text elements.
       await fixture.editor.library.textTab.click();
@@ -90,7 +90,7 @@ describe('Text Style Panel', () => {
       ).toBeTrue();
     });
 
-    it('should change the text color to white on black background', async () => {
+    fit('should change the text color to white on black background', async () => {
       // Assign black color.
       const safezone = fixture.querySelector('[data-testid="safezone"]');
       await fixture.events.click(safezone);
@@ -111,7 +111,7 @@ describe('Text Style Panel', () => {
 
       await waitFor(async () => {
         const texts = await fixture.screen.findAllByText('Fill in some text');
-        await expect(texts).toBeDefined();
+        await expect(texts.length).toBeGreaterThan(0);
 
         const whiteTexts = texts.filter((text) =>
           text.outerHTML.includes('color: #fff')
