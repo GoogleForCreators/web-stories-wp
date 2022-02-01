@@ -31,6 +31,7 @@ import json from '@rollup/plugin-json';
 import dynamicImportVars from '@rollup/plugin-dynamic-import-vars';
 import license from 'rollup-plugin-license';
 import del from 'rollup-plugin-delete';
+import webWorkerLoader from 'rollup-plugin-web-worker-loader';
 import workspacesRun from 'workspaces-run';
 
 const __dirname = fileURLToPath(dirname(import.meta.url));
@@ -58,6 +59,11 @@ const plugins = [
   }),
   css(),
   dynamicImportVars(),
+  webWorkerLoader({
+    inline: true,
+    preserveSource: true,
+    'web-worker': /\.worker\.js$/,
+  }),
   terser({
     // We preserve function names that start with capital letters as
     // they're _likely_ component names, and these are useful to have
