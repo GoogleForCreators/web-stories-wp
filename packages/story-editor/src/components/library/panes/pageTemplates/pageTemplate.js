@@ -115,6 +115,7 @@ function PageTemplate(
     handleDelete,
     handleGridBlur,
     isGridFocused,
+    handleGridFocus,
     ...rest
   },
   ref
@@ -250,7 +251,10 @@ function PageTemplate(
             isMenuOpen={isMenuOpen}
             setIsMenuOpen={setIsMenuOpen}
             handleFocus={handleGridBlur}
-            handleClose={onFocus}
+            handleClose={(e) => {
+              handleGridFocus(e);
+              onFocus(e);
+            }}
           />
         )}
       </PreviewPageWrapper>

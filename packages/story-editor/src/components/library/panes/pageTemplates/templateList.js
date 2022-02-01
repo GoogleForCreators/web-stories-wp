@@ -175,6 +175,7 @@ function TemplateList({
                   handleDelete={handleDelete}
                   isGridFocused={isGridFocused}
                   handleGridBlur={handleGridBlur}
+                  handleGridFocus={handleGridFocus}
                   {...rest}
                 />
               );
