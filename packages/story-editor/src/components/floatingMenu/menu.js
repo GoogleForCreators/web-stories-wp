@@ -25,6 +25,7 @@ import {
   ContextMenu,
   ContextMenuComponents,
   Icons,
+  TOOLTIP_PLACEMENT,
 } from '@googleforcreators/design-system';
 
 const MenuWrapper = styled.section`
@@ -56,29 +57,44 @@ const FloatingMenu = forwardRef(function FloatingMenu(props, ref) {
         }}
       >
         <ContextMenuComponents.MenuButton>
-          <ContextMenuComponents.MenuIcon>
+          <ContextMenuComponents.MenuIcon
+            title="Exclaim!"
+            placement={TOOLTIP_PLACEMENT.BOTTOM}
+          >
             <Icons.ExclamationOutline />
           </ContextMenuComponents.MenuIcon>
         </ContextMenuComponents.MenuButton>
         <ContextMenuComponents.MenuButton>
-          <ContextMenuComponents.MenuIcon>
+          <ContextMenuComponents.MenuIcon
+            title="Bucket!"
+            placement={TOOLTIP_PLACEMENT.BOTTOM}
+          >
             <Icons.ColorBucket />
           </ContextMenuComponents.MenuIcon>
         </ContextMenuComponents.MenuButton>
         <ContextMenuComponents.MenuButton>
-          <ContextMenuComponents.MenuIcon>
+          <ContextMenuComponents.MenuIcon
+            title="Letter Arrow!"
+            placement={TOOLTIP_PLACEMENT.BOTTOM}
+          >
             <Icons.LetterTArrow />
           </ContextMenuComponents.MenuIcon>
         </ContextMenuComponents.MenuButton>
         <ContextMenuComponents.MenuSeparator />
         <ContextMenuComponents.MenuButton>
-          <ContextMenuComponents.MenuIcon>
+          <ContextMenuComponents.MenuIcon
+            title="Pipette!"
+            placement={TOOLTIP_PLACEMENT.BOTTOM}
+          >
             <Icons.Pipette />
           </ContextMenuComponents.MenuIcon>
         </ContextMenuComponents.MenuButton>
         <ContextMenuComponents.MenuSeparator />
         <ContextMenuComponents.MenuButton>
-          <ContextMenuComponents.MenuIcon>
+          <ContextMenuComponents.MenuIcon
+            title="Dismiss menu"
+            placement={TOOLTIP_PLACEMENT.BOTTOM}
+          >
             <Icons.Cross />
           </ContextMenuComponents.MenuIcon>
         </ContextMenuComponents.MenuButton>

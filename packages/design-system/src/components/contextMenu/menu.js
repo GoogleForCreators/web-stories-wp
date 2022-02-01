@@ -157,9 +157,12 @@ const Menu = ({
         prevIndex = 0;
       }
 
-      // If we're moving up-down.
-      if ([KEYS.UP, KEYS.DOWN].includes(key)) {
-        const isAscending = KEYS.UP === key;
+      const keyBackward = isHorizontal ? KEYS.LEFT : KEYS.UP;
+      const keyForward = isHorizontal ? KEYS.RIGHT : KEYS.DOWN;
+
+      // If we're moving through this menu (up/down in vertical, left/right in horizontal).
+      if ([keyBackward, keyForward].includes(key)) {
+        const isAscending = keyBackward === key;
         let newIndex = prevIndex + (isAscending ? -1 : 1);
 
         if (newIndex === -1) {
@@ -174,11 +177,12 @@ const Menu = ({
         setFocusedId(newSelectedElement?.id || -1);
         return;
       }
+
+      // The direction to move out of a submenu depends on horizontal/vertical and RTL/LTR
+      const keyOut = isHorizontal ? KEYS.UP : isRTL ? KEYS.RIGHT : KEYS.LEFT;
+
       // Maybe move from submenu to parent menu.
-      if (
-        isSubMenu &&
-        ((!isRTL && KEYS.LEFT === key) || (isRTL && KEYS.RIGHT === key))
-      ) {
+      if (isSubMenu && keyOut === key) {
         // Get the button with expanded popup.
         const parentButton = parentMenuRef.current.querySelector(
           'button[aria-expanded="true"]'
@@ -193,6 +197,7 @@ const Menu = ({
       setFocusedId,
       isRTL,
       isSubMenu,
+      isHorizontal,
       onCloseSubMenu,
       parentMenuRef,
     ]
