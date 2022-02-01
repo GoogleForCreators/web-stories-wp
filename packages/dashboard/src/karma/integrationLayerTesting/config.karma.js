@@ -17,7 +17,6 @@
 /**
  * Internal dependencies
  */
-
 import Fixture from '../fixture';
 import defaultConfig from '../../defaultConfig';
 
