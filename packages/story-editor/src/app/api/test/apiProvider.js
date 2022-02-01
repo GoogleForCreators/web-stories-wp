@@ -53,7 +53,6 @@ describe('APIProvider', () => {
         api: {},
         apiCallbacks: {},
         cdnURL,
-        postLock: { api: '' },
       },
     });
 
@@ -75,7 +74,6 @@ describe('APIProvider', () => {
         api: {},
         apiCallbacks: {},
         cdnURL,
-        postLock: { api: '' },
       },
     });
 
