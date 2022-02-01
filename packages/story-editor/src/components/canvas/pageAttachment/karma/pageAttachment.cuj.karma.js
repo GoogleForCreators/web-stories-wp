@@ -46,7 +46,6 @@ describe('Page Attachment', () => {
     );
     await fixture.events.keyboard.type('ef');
     await fixture.events.keyboard.press('Tab');
-    await fixture.events.sleep(200);
   });
 
   afterEach(() => {
