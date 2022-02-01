@@ -30,7 +30,12 @@ describe('Snapping integration', () => {
     await fixture.render();
     await fixture.collapseHelpCenter();
 
-    await fixture.events.click(fixture.editor.library.media.item(0));
+    const mediaItem = fixture.editor.library.media.item(0);
+    await fixture.events.mouse.seq(({ moveRel, down, up }) => [
+      moveRel(mediaItem, 20, 20),
+      down(),
+      up(),
+    ]);
 
     const {
       state: {

@@ -34,7 +34,12 @@ describe('Carousel Drawer', () => {
     await fixture.render();
     await fixture.collapseHelpCenter();
     // We add some content to the first page to make the thumbnail more interesting
-    await fixture.events.click(fixture.editor.library.media.item(0));
+    const mediaItem = fixture.editor.library.media.item(0);
+    await fixture.events.mouse.seq(({ moveRel, down, up }) => [
+      moveRel(mediaItem, 20, 20),
+      down(),
+      up(),
+    ]);
 
     await waitFor(() => {
       if (fixture.editor.footer.carousel.pages.length === 0) {

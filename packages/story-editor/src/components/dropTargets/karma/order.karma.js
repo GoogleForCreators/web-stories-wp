@@ -38,6 +38,15 @@ describe('Drop-Target order', () => {
     fixture.restore();
   });
 
+  async function insertMediaByIndex(index) {
+    const mediaItem = fixture.editor.library.media.item(index);
+    await fixture.events.mouse.seq(({ moveRel, down, up }) => [
+      moveRel(mediaItem, 20, 20),
+      down(),
+      up(),
+    ]);
+  }
+
   it('should replace top image when bg image is set and another one is on top', async () => {
     // Drag first media element straight to canvas edge to set as background
     const bgMedia = fixture.editor.library.media.item(0);
@@ -51,7 +60,7 @@ describe('Drop-Target order', () => {
     ]);
 
     // Add one more element
-    await fixture.events.click(fixture.editor.library.media.item(1));
+    await insertMediaByIndex(1);
 
     // Get the elements
     const [bgImage, topImage] = await getElements(fixture);
@@ -67,7 +76,7 @@ describe('Drop-Target order', () => {
     ]);
 
     // Now add one more element
-    await fixture.events.click(fixture.editor.library.media.item(2));
+    await insertMediaByIndex(2);
 
     // Get the new element
     const otherImage = (await getElements(fixture))[2];
@@ -105,9 +114,9 @@ describe('Drop-Target order', () => {
 
   it('should replace the top image when two images are in the same place on canvas', async () => {
     // Add three images - will be added on top of each other
-    await fixture.events.click(fixture.editor.library.media.item(0));
-    await fixture.events.click(fixture.editor.library.media.item(1));
-    await fixture.events.click(fixture.editor.library.media.item(2));
+    await insertMediaByIndex(0);
+    await insertMediaByIndex(1);
+    await insertMediaByIndex(2);
 
     // Get the elements
     const elements = await getElements(fixture);

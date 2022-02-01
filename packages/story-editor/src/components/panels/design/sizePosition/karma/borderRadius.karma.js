@@ -85,7 +85,12 @@ describe('Border Radius', () => {
     });
 
     it('should allow user to add border radius for media', async () => {
-      await fixture.events.click(fixture.editor.library.media.item(0));
+      const mediaItem = fixture.editor.library.media.item(0);
+      await fixture.events.mouse.seq(({ moveRel, down, up }) => [
+        moveRel(mediaItem, 20, 20),
+        down(),
+        up(),
+      ]);
       const panel = fixture.editor.inspector.designPanel.sizePosition;
 
       // Take off lock.

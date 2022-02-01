@@ -454,7 +454,12 @@ describe('Right Click Menu integration', () => {
   describe('Right click menu: Select Layer', () => {
     it('should allow selecting a layer from the point where the menu was opened from', async () => {
       // Add a Triangle and an image to the same place.
-      await fixture.events.click(fixture.editor.library.media.item(0));
+      const mediaItem = fixture.editor.library.media.item(0);
+      await fixture.events.mouse.seq(({ moveRel, down, up }) => [
+        moveRel(mediaItem, 20, 20),
+        down(),
+        up(),
+      ]);
       await fixture.events.click(fixture.editor.library.shapesTab);
       await fixture.events.click(
         fixture.editor.library.shapes.shape('Triangle')
