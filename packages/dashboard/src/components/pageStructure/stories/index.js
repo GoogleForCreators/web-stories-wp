@@ -18,6 +18,7 @@
  * Internal dependencies
  */
 import { AppFrame, PageContent, LeftRail } from '..';
+import NavProvider from '../../navProvider';
 
 export default {
   title: 'Dashboard/Components/LeftRail',
@@ -26,8 +27,10 @@ export default {
 export const _default = () => {
   return (
     <AppFrame>
-      <LeftRail />
-      <PageContent />
+      <NavProvider>
+        <LeftRail />
+        <PageContent />
+      </NavProvider>
     </AppFrame>
   );
 };
