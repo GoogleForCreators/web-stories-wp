@@ -432,11 +432,7 @@ describe('Taxonomies Panel', () => {
       await fixture.events.focus(tagsInput);
       await fixture.events.keyboard.type(tag1Name);
       await fixture.events.keyboard.press('Enter');
-      await waitFor(
-        () =>
-          fixture.screen.getAllByTestId(/^flat-term-token/).length ===
-          initialTagsLength + 1
-      );
+
       // See that terms are persisted on the story
       await waitFor(async () => {
         currentStoryTerms = await getStoryTerms();
@@ -447,11 +443,7 @@ describe('Taxonomies Panel', () => {
       // enter in a second tag
       await fixture.events.keyboard.type(tag2Name);
       await fixture.events.keyboard.press('Enter');
-      await waitFor(
-        () =>
-          fixture.screen.getAllByTestId(/^flat-term-token/).length ===
-          initialTagsLength + 2
-      );
+
       // See that terms are persisted on the story
       await waitFor(async () => {
         currentStoryTerms = await getStoryTerms();
@@ -503,11 +495,7 @@ describe('Taxonomies Panel', () => {
       await fixture.events.focus(tagsInput);
       await fixture.events.keyboard.press('ArrowLeft');
       await fixture.events.keyboard.press('Backspace');
-      await waitFor(
-        () =>
-          fixture.screen.getAllByTestId(/^flat-term-token/).length ===
-          initialTagsLength - 1
-      );
+
       // See that terms are persisted on the story
       await waitFor(async () => {
         currentStoryTerms = await getStoryTerms();
@@ -530,11 +518,7 @@ describe('Taxonomies Panel', () => {
       // delete tag with mouse
       const removeTagButtons = taxonomies.tagTokenRemoveButtons;
       await fixture.events.click(removeTagButtons[0]);
-      await waitFor(
-        () =>
-          fixture.screen.getAllByTestId(/^flat-term-token/).length ===
-          initialTagsLength - 1
-      );
+
       // See that terms are persisted on the story
       await waitFor(async () => {
         currentStoryTerms = await getStoryTerms();

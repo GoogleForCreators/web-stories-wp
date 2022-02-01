@@ -47,8 +47,8 @@ describe('Text Panel: Contrast Warning', () => {
     await fixture.events.click(
       fixture.editor.inspector.designPanel.textStyle.fontColor.button
     );
-    await waitFor(() =>
-      fixture.events.click(fixture.screen.getByRole('option', { name: '#fff' }))
+    await fixture.events.click(
+      fixture.screen.getByRole('option', { name: '#fff' })
     );
 
     const contrastWarning = fixture.screen.getByTestId('warningContainer');
