@@ -17,15 +17,12 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback } from '@googleforcreators/react';
 import { TextArea } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
-import { useConfig } from '../../../app';
-import cleanForSlug from '../../../utils/cleanForSlug';
 import { INPUT_KEYS } from '../constants';
 import FormLabel from './formLabel';
 
@@ -37,17 +34,11 @@ const _TextArea = styled(TextArea)`
   margin: 8px 0;
 `;
 
-const MandatoryStoryInfo = ({ handleUpdateStoryInfo, inputValues }) => {
-  const storyId = useConfig(({ storyId }) => storyId);
-
-  const onTitleBlur = useCallback(() => {
-    if (!inputValues.slug || inputValues.slug === storyId) {
-      const cleanSlug =
-        encodeURIComponent(cleanForSlug(inputValues.title)) || storyId;
-      handleUpdateStoryInfo({ target: { name: 'slug', value: cleanSlug } });
-    }
-  }, [inputValues, storyId, handleUpdateStoryInfo]);
-
+const MandatoryStoryInfo = ({
+  handleUpdateStoryInfo,
+  handleUpdateSlug,
+  inputValues,
+}) => {
   return (
     <>
       <FormSection>
@@ -62,7 +53,7 @@ const MandatoryStoryInfo = ({ handleUpdateStoryInfo, inputValues }) => {
           maxLength={300}
           value={inputValues[INPUT_KEYS.TITLE]}
           onChange={handleUpdateStoryInfo}
-          onBlur={onTitleBlur}
+          onBlur={handleUpdateSlug}
           placeholder={__('Add title', 'web-stories')}
         />
       </FormSection>
@@ -93,6 +84,7 @@ export default MandatoryStoryInfo;
 
 MandatoryStoryInfo.propTypes = {
   handleUpdateStoryInfo: PropTypes.func,
+  handleUpdateSlug: PropTypes.func,
   inputValues: PropTypes.shape({
     // todo pull this out and reuse
     excerpt: PropTypes.string,

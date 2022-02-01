@@ -29,7 +29,8 @@ import {
 /**
  * Internal dependencies
  */
-import { useStory } from '../../app';
+import { useConfig, useStory } from '../../app';
+import { updateSlug } from '../../utils/storyUpdates';
 import Header from './header';
 import MainContent from './mainContent';
 import { INPUT_KEYS, REQUIRED_INPUTS } from './constants';
@@ -45,6 +46,7 @@ const Container = styled.div`
 `;
 
 function PublishModal() {
+  const storyId = useConfig(({ storyId }) => storyId);
   const updateStory = useStory(({ actions }) => actions.updateStory);
   const inputValues = useStory(({ state: { story } }) => ({
     [INPUT_KEYS.EXCERPT]: story.excerpt,
@@ -73,6 +75,15 @@ function PublishModal() {
     },
     [updateStory]
   );
+
+  const handleUpdateSlug = useCallback(() => {
+    updateSlug({
+      currentSlug: inputValues.slug,
+      currentTitle: inputValues.title,
+      storyId,
+      updateStory,
+    });
+  }, [inputValues, storyId, updateStory]);
 
   const isAllRequiredInputsFulfilled = useMemo(
     () =>
@@ -103,6 +114,7 @@ function PublishModal() {
         <MainContent
           inputValues={inputValues}
           handleUpdateStoryInfo={handleUpdateStoryInfo}
+          handleUpdateSlug={handleUpdateSlug}
         />
       </Container>
     </Modal>

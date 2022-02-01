@@ -64,7 +64,11 @@ const Footer = styled.div`
   grid-area: footer;
 `;
 
-const MainContent = ({ handleUpdateStoryInfo, inputValues }) => {
+const MainContent = ({
+  handleUpdateStoryInfo,
+  handleUpdateSlug,
+  inputValues,
+}) => {
   return (
     <Main>
       <_StoryPreview>
@@ -73,6 +77,7 @@ const MainContent = ({ handleUpdateStoryInfo, inputValues }) => {
       <_MandatoryStoryInfo>
         <MandatoryStoryInfo
           handleUpdateStoryInfo={handleUpdateStoryInfo}
+          handleUpdateSlug={handleUpdateSlug}
           inputValues={inputValues}
         />
       </_MandatoryStoryInfo>
@@ -92,6 +97,7 @@ export default MainContent;
 
 MainContent.propTypes = {
   handleUpdateStoryInfo: PropTypes.func,
+  handleUpdateSlug: PropTypes.func,
   inputValues: PropTypes.shape({
     // todo pull this out and reuse
     excerpt: PropTypes.string,
