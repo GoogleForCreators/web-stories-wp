@@ -40,13 +40,22 @@ function Selection(props) {
       STORY_ANIMATION_STATE.SCRUBBING,
     ].includes(state.state.animationState),
   }));
-  const { editingElement, lastSelectionEvent, nodesById } = useCanvas(
-    ({ state: { editingElement, lastSelectionEvent, nodesById } }) => ({
-      editingElement,
-      lastSelectionEvent,
-      nodesById,
-    })
-  );
+  const { editingElement, lastSelectionEvent, nodesById, onMoveableMount } =
+    useCanvas(
+      ({
+        state: {
+          editingElement,
+          lastSelectionEvent,
+          nodesById,
+          onMoveableMount,
+        },
+      }) => ({
+        editingElement,
+        lastSelectionEvent,
+        nodesById,
+        onMoveableMount,
+      })
+    );
 
   // No selection.
   if (selectedElements.length === 0) {
@@ -82,13 +91,19 @@ function Selection(props) {
         selectedElement={selectedElement}
         targetEl={target}
         pushEvent={lastSelectionEvent}
+        {...props}
+        {...(onMoveableMount && { ref: onMoveableMount })}
       />
     );
   }
 
   // Multi-selection.
   return (
-    <MultiSelectionMoveable {...props} selectedElements={selectedElements} />
+    <MultiSelectionMoveable
+      selectedElements={selectedElements}
+      {...props}
+      {...(onMoveableMount && { ref: onMoveableMount })}
+    />
   );
 }
 

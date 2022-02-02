@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import {
+  forwardRef,
   useRef,
   useEffect,
   useState,
@@ -44,13 +45,10 @@ import useDrag from './useDrag';
 import useResize from './useResize';
 import useRotate from './useRotate';
 
-function SingleSelectionMoveable({
-  selectedElement,
-  targetEl,
-  pushEvent,
-  isEditMode,
-  editMoveableRef,
-}) {
+const SingleSelectionMoveable = forwardRef(function SingleSelectionMoveable(
+  { selectedElement, targetEl, pushEvent, isEditMode, ...props },
+  ref
+) {
   const moveable = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
 
@@ -226,9 +224,10 @@ function SingleSelectionMoveable({
 
   return (
     <Moveable
+      {...props}
       className={classNames}
       zIndex={0}
-      ref={useCombinedRefs(moveable, editMoveableRef)}
+      ref={useCombinedRefs(moveable, ref)}
       target={targetEl}
       edge
       draggable={actionsEnabled}
@@ -242,7 +241,7 @@ function SingleSelectionMoveable({
       pinchable
     />
   );
-}
+});
 
 SingleSelectionMoveable.propTypes = {
   selectedElement: PropTypes.object.isRequired,
