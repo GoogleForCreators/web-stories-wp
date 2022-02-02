@@ -65,6 +65,7 @@ const IconContainer = styled.div`
 
 const DropDownContainer = styled.div`
   margin-top: 10px;
+  min-width: 160px;
 `;
 
 const MenuContainer = styled.div`
@@ -210,7 +211,6 @@ function DropDownMenu({
             anchor={moreButtonRef}
             placement={PLACEMENT.BOTTOM_START}
             isOpen={isMenuOpen}
-            width={160}
           >
             <DropDownContainer>
               <Menu

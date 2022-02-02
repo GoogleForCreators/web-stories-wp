@@ -50,6 +50,7 @@ const IconContainer = styled.div`
 
 const DropDownContainer = styled.div`
   margin-top: 10px;
+  min-width: 160px;
 `;
 
 const MenuContainer = styled.div`
@@ -70,8 +71,6 @@ const ButtonWrapper = styled.div`
   right: 50%;
   z-index: 1;
 `;
-
-const MENU_WIDTH = 180;
 
 /**
  * Get a More icon that displays a dropdown menu on click.
@@ -162,7 +161,6 @@ function DropDownMenu({
         anchor={moreButtonRef}
         placement={PLACEMENT.BOTTOM_START}
         isOpen={isMenuOpen}
-        width={MENU_WIDTH}
       >
         <DropDownContainer ref={containerRef}>
           <Menu
