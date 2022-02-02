@@ -46,7 +46,7 @@ const useElementActions = () => {
     setBackgroundElement: actions.setBackgroundElement,
     updateElementsById: actions.updateElementsById,
   }));
-  const { showSnackbar } = useSnackbar();
+  const showSnackbar = useSnackbar((value) => value.showSnackbar);
   const setEditingElement = useCanvas(
     ({ actions }) => actions.setEditingElement
   );

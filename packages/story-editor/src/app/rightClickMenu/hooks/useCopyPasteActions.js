@@ -56,7 +56,7 @@ const useCopyPasteActions = () => {
     updateElementsById: actions.updateElementsById,
   }));
 
-  const { showSnackbar } = useSnackbar();
+  const showSnackbar = useSnackbar((value) => value.showSnackbar);
 
   // Needed to not pass stale refs of `undo` to snackbar
   const undoRef = useRef(undo);

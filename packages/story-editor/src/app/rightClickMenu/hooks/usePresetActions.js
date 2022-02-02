@@ -52,7 +52,7 @@ const usePresetActions = () => {
   });
   const selectedElement = useStory(({ state }) => state.selectedElements?.[0]);
 
-  const { showSnackbar } = useSnackbar();
+  const showSnackbar = useSnackbar((value) => value.showSnackbar);
 
   const undo = useHistory(({ actions }) => actions.undo);
 

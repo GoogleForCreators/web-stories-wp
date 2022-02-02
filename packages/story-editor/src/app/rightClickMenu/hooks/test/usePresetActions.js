@@ -55,7 +55,7 @@ describe('usePresetActions', () => {
 
     mockUseStory.mockReturnValue(ELEMENT);
     mockUseAddPreset.mockReturnValue({ addGlobalPreset: mockAddGlobalPreset });
-    mockUseSnackbar.mockReturnValue({ showSnackbar: mockShowSnackbar });
+    mockUseSnackbar.mockReturnValue(mockShowSnackbar);
   });
 
   it('should add a text preset and show a confirmation snackbar', () => {

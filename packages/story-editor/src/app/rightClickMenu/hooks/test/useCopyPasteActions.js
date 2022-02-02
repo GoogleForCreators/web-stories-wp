@@ -62,7 +62,7 @@ describe('useCopyPasteActions', () => {
       // needed for `useRichTextFormatting`
       selectedElements: [ELEMENT],
     });
-    mockUseSnackbar.mockReturnValue({ showSnackbar: mockShowSnackbar });
+    mockUseSnackbar.mockReturnValue(mockShowSnackbar);
   });
 
   it('should copy styles and show a confirmation snackbar', () => {

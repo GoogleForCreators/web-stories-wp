@@ -59,7 +59,7 @@ describe('useElementActions', () => {
 
     mockUseStory.mockReturnValue(defaultStoryContext);
     mockUseCanvas.mockReturnValue(mockSetEditingElement);
-    mockUseSnackbar.mockReturnValue({ showSnackbar: mockShowSnackbar });
+    mockUseSnackbar.mockReturnValue(mockShowSnackbar);
   });
 
   describe('element duplication', () => {
