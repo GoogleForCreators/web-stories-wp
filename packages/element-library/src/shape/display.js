@@ -34,9 +34,9 @@ import {
   elementFillContent,
   elementWithBackgroundColor,
   elementWithBorder,
+  useColorTransformHandler
 } from '../shared';
 import { StoryPropTypes } from '../types';
-import { useColorTransformHandler } from '../shared';
 
 const Element = styled.div`
   ${elementFillContent}

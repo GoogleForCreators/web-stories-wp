@@ -21,13 +21,13 @@ import { createSolid } from '@googleforcreators/patterns';
 import {
   PanelTypes,
   BACKGROUND_TEXT_MODE,
+  TEXT_ELEMENT_DEFAULT_FONT
 } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 
 export const defaultAttributes = {
   ...SHARED_DEFAULT_ATTRIBUTES,

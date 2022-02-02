@@ -13,17 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * Internal dependencies
+ * External dependencies.
  */
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import {
   createNewElement,
   createPage,
   duplicatePage,
   duplicateElement,
-} from '..';
+} from '@googleforcreators/elements';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/design-system';
 
 describe('Element', () => {
   describe('createNewElement', () => {

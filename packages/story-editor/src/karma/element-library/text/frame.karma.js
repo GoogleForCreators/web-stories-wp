@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies.
+ */
+import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -20,7 +24,6 @@
 import { Fixture } from '../../fixture';
 import { useStory } from '../../../app/story';
 import { useInsertElement } from '../../../components/canvas';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 
 describe('TextFrame integration', () => {
   let fixture;

@@ -24,12 +24,12 @@ import {
   SHARED_DEFAULT_ATTRIBUTES,
   MEDIA_DEFAULT_ATTRIBUTES,
 } from '@googleforcreators/element-library';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 import { addElementsToClipboard, processPastedElements } from '../copyPaste';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 
 describe('copyPaste utils', () => {
   const PAGE = {

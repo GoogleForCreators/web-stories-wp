@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { waitFor } from '@testing-library/react';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -25,7 +26,6 @@ import { waitFor } from '@testing-library/react';
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
 import { useInsertElement } from '..';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 
 describe('Canvas keys integration', () => {
   let fixture;

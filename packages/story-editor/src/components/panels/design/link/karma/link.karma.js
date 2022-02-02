@@ -18,13 +18,13 @@
  */
 import { waitFor } from '@testing-library/react';
 import { createSolidFromString } from '@googleforcreators/patterns';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 import { Fixture } from '../../../../../karma';
 import useInsertElement from '../../../../canvas/useInsertElement';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../../app/font/defaultFonts';
 
 describe('Link Panel', () => {
   let fixture;

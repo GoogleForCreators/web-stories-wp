@@ -21,12 +21,12 @@ import {
   imageAttributeDefaults,
   textAttributeDefaults,
 } from '@googleforcreators/element-library';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 import { Fixture } from '../../../karma';
 import objectPick from '../../../utils/objectPick';
 import useInsertElement from '../useInsertElement';

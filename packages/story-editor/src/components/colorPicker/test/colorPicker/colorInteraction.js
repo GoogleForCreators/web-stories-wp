@@ -21,6 +21,7 @@ import { fireEvent, screen } from '@testing-library/react';
 import {
   setAppElement,
   BACKGROUND_TEXT_MODE,
+  TEXT_ELEMENT_DEFAULT_FONT
 } from '@googleforcreators/design-system';
 
 /**
@@ -35,7 +36,6 @@ import {
   areAllType,
 } from '../../../../utils/presetUtils';
 import { renderWithTheme } from '../../../../testUtils';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
 
 jest.mock('../../../../utils/presetUtils');
 
