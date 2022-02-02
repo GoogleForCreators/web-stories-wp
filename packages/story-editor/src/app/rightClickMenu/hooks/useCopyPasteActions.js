@@ -21,10 +21,6 @@ import { __ } from '@googleforcreators/i18n';
 import { useCallback, useRef, useState } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
 import { v4 as uuidv4 } from 'uuid';
-
-/**
- * Internal dependencies
- */
 /**
  * Internal dependencies
  */
