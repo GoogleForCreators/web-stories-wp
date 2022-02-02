@@ -24,6 +24,7 @@ import { RichTextContext } from '@googleforcreators/rich-text';
 import {
   BACKGROUND_TEXT_MODE,
   calcRotatedResizeOffset,
+  calculateTextHeight
 } from '@googleforcreators/design-system';
 
 /**
@@ -32,7 +33,6 @@ import {
 import TextStyle from '../textStyle';
 import FontContext from '../../../../../app/font/context';
 import { StoryContext } from '../../../../../app/story';
-import { calculateTextHeight } from '../../../../../utils/textMeasurements';
 import CanvasContext from '../../../../../app/canvas/context';
 import {
   MULTIPLE_VALUE,
@@ -41,7 +41,6 @@ import {
 import { renderPanel } from '../../../shared/test/_utils';
 
 let mockControls;
-jest.mock('../../../../../utils/textMeasurements');
 jest.mock('@googleforcreators/design-system', () => {
   // eslint-disable-next-line no-undef
   const React = require('@googleforcreators/react');

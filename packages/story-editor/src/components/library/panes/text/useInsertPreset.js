@@ -24,7 +24,7 @@ import {
 } from '@googleforcreators/react';
 import { dataFontEm, PAGE_HEIGHT } from '@googleforcreators/units';
 import { getHTMLFormatters } from '@googleforcreators/rich-text';
-import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
+import { BACKGROUND_TEXT_MODE, calculateTextHeight } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -34,7 +34,6 @@ import useLibrary from '../../useLibrary';
 import { useHistory } from '../../../../app';
 import { applyHiddenPadding } from '../../../panels/design/textStyle/utils';
 import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
-import { calculateTextHeight } from '../../../../utils/textMeasurements';
 
 const POSITION_MARGIN = dataFontEm(1);
 const TYPE = 'text';

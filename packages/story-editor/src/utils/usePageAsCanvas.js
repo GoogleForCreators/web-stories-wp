@@ -18,6 +18,7 @@
  */
 import { useCallback } from '@googleforcreators/react';
 import { FULLBLEED_RATIO, getBox, PAGE_RATIO } from '@googleforcreators/units';
+import { calculateTextHeight } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -25,7 +26,6 @@ import { FULLBLEED_RATIO, getBox, PAGE_RATIO } from '@googleforcreators/units';
 import { useCanvas, useLayout, useStory } from '../app';
 import { ZOOM_SETTING } from '../constants';
 import { getAccessibleTextColorsFromPixels } from './contrastUtils';
-import { calculateTextHeight } from './textMeasurements';
 
 function usePageAsCanvas(skipSelectedElement) {
   const {
