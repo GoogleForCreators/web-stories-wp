@@ -25,6 +25,9 @@ export default {
   args: {
     showOnlyOnSmallViewport: true,
   },
+  argTypes: {
+    showOnlyOnSmallViewport: { name: 'Show only on Small (Mobile) Viewort' },
+  },
 };
 
 const Status = () => {

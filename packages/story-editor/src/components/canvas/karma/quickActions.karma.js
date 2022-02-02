@@ -293,7 +293,7 @@ describe('Quick Actions integration', () => {
       await fixture.screen.findByRole('button', {
         name: /^Undo$/,
         hidden: true,
-        timeout: 400,
+        timeout: 4000,
       });
       // click `undo` button on snackbar
       await fixture.events.click(
@@ -479,7 +479,7 @@ describe('Quick Actions integration', () => {
       await fixture.screen.findByRole('button', {
         name: /^Undo$/,
         hidden: true,
-        timeout: 400,
+        timeout: 4000,
       });
       // click `undo` button on snackbar
       await fixture.events.click(
