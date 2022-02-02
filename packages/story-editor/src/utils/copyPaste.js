@@ -20,7 +20,7 @@
 import { renderToStaticMarkup } from '@googleforcreators/react';
 import {
   getDefinitionForType,
-  duplicatePage,
+  duplicateElement,
   getOffsetCoordinates,
 } from '@googleforcreators/elements';
 

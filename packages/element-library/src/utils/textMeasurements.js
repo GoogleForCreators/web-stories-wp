@@ -21,11 +21,9 @@ import { renderToStaticMarkup } from '@googleforcreators/react';
 import { dataPixels, PAGE_HEIGHT } from '@googleforcreators/units';
 
 /**
- * Internal dependencies.
+ * Internal dependencies
  */
-import {
-  TextOutputWithUnits,
-} from '../text/output';
+import { TextOutputWithUnits } from '../text/output';
 import { calcFontMetrics } from '../text/util';
 
 const MEASURER_STYLES = {

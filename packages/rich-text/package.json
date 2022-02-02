@@ -26,6 +26,7 @@
 	},
 	"main": "./src/index.js",
 	"dependencies": {
+		"@googleforcreators/design-system": "*",
 		"@googleforcreators/patterns": "*",
 		"@googleforcreators/react": "*",
 		"draft-js": "^0.11.7",

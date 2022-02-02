@@ -67,6 +67,13 @@ export const AnimationPropType = PropTypes.shape(AnimationProps);
 export default StoryPropTypes;
 
 /**
+ * Page object.
+ *
+ * @typedef {Page} Page
+ * @property {Element[]} elements Array of all elements.
+ */
+
+/**
  * Story object.
  *
  * @typedef {Story} Story

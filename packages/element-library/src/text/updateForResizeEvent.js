@@ -19,9 +19,12 @@
 import { dataPixels } from '@googleforcreators/units';
 
 /**
- * Internal dependencies.
+ * Internal dependencies
  */
-import { calculateFitTextFontSize, calculateTextHeight } from '../utils/textMeasurements';
+import {
+  calculateFitTextFontSize,
+  calculateTextHeight,
+} from '../utils/textMeasurements';
 
 function updateForResizeEvent(
   element,
