@@ -313,7 +313,6 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 		return $this->get_archive_link_data( true );
 	}
 
-
 	/**
 	 * Retrieves the permalink for a post type archive.
 	 *
