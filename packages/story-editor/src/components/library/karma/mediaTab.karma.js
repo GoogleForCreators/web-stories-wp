@@ -23,6 +23,7 @@ import { waitFor } from '@testing-library/react';
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
+import { useStory } from '../../../app';
 
 describe('Library Media Tab', () => {
   let fixture;
@@ -84,6 +85,34 @@ describe('Library Media Tab', () => {
       expect(
         fixture.screen.getByRole('menuitem', { name: 'Add as background' })
       ).toBeDefined();
+    });
+
+    it('should allow setting media as background from the dropdown menu', async () => {
+      const mediaItem = fixture.editor.library.media.item(0);
+      // Hover the media
+      await fixture.events.mouse.moveRel(mediaItem, 20, 20, { steps: 2 });
+      await waitFor(() =>
+        expect(
+          fixture.screen.getByRole('button', { name: 'More' })
+        ).toBeDefined()
+      );
+      const moreButton = fixture.screen.getByRole('button', { name: 'More' });
+      await fixture.events.mouse.seq(({ moveRel, down, up }) => [
+        moveRel(moreButton, 20, 20),
+        down(),
+        up(),
+      ]);
+
+      await fixture.events.click(
+        fixture.screen.getByRole('menuitem', { name: 'Add as background' })
+      );
+
+      const storyContext = await fixture.renderHook(() => useStory());
+      const [background] = storyContext.state.selectedElements;
+      await waitFor(() => expect(background.type).toBe('image'));
+      await waitFor(() =>
+        expect(background.resource.src).toMatch(/^http.+\/blue-marble.jpg$/)
+      );
     });
   });
 });
