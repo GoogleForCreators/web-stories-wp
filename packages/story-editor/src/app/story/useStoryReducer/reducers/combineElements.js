@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
+import { canSupportMultiBorder, canMaskHaveBorder } from '@googleforcreators/masks';
 
 /**
  * Internal dependencies
@@ -25,7 +26,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { DEFAULT_ATTRIBUTES_FOR_MEDIA } from '../../../../constants';
 import objectPick from '../../../../utils/objectPick';
 import objectWithout from '../../../../utils/objectWithout';
-import { canMaskHaveBorder, canSupportMultiBorder } from '../../../../masks';
 import { removeAnimationsWithElementIds } from './utils';
 
 /**

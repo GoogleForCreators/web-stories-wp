@@ -18,11 +18,11 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { getMaskByType } from '@googleforcreators/masks';
 
 /**
  * Internal dependencies
  */
-import { getMaskByType } from '../../masks';
 import { elementWithBackgroundColor } from '../shared';
 import { StoryPropTypes } from '../types';
 import { useStory } from '../../app';

@@ -14,4 +14,9 @@
  * limitations under the License.
  */
 
-export * from './masks.js';
+export * from './masks';
+export * from './constants';
+export { default as DisplayWithMask } from './display';
+export { default as FrameWithMask } from './frame';
+export { default as OutputWithMask } from './output';
+

@@ -19,11 +19,11 @@
  */
 import PropTypes from 'prop-types';
 import { useUnits } from '@googleforcreators/units';
+import { StoryPropTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../types';
 import { shouldDisplayBorder } from '../utils/elementBorder';
 import BorderedMaskedElement from './borderedMaskedElement';
 

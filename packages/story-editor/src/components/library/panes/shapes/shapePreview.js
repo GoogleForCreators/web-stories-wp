@@ -32,13 +32,14 @@ import {
   ThemeGlobals,
   BUTTON_TRANSITION_TIMING,
 } from '@googleforcreators/design-system';
+import { MaskTypes } from '@googleforcreators/masks';
+
 /**
  * Internal dependencies
  */
 import useLibrary from '../../useLibrary';
 import LibraryMoveable from '../shared/libraryMoveable';
 import { focusStyle } from '../../../panels/shared';
-import { MaskTypes } from '../../../../masks/constants';
 
 // By default, the element should be 33% of the page.
 export const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 3;

@@ -23,11 +23,11 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { StoryPropTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../types';
 import BorderedMaskedElement from './borderedMaskedElement';
 import { DEFAULT_MASK } from './constants';
 

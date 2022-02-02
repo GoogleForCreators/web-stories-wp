@@ -20,12 +20,11 @@
 import { useMemo } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
+import { StoryPropTypes, getTransformFlip } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../types';
-import getTransformFlip from '../elements/shared/getTransformFlip';
 import { getBorderColor } from '../utils/elementBorder';
 import { MaskTypes } from './constants';
 import {

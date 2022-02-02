@@ -32,6 +32,7 @@ import {
   calculateSrcSet,
 } from '@googleforcreators/media';
 import { BG_MIN_SCALE, BG_MAX_SCALE } from '@googleforcreators/animation';
+import { DisplayWithMask as WithMask } from '@googleforcreators/masks';
 
 /**
  * Internal dependencies
@@ -39,7 +40,6 @@ import { BG_MIN_SCALE, BG_MAX_SCALE } from '@googleforcreators/animation';
 import { elementFillContent, elementWithFlip } from '../shared';
 import { useStory } from '../../app';
 import { StoryPropTypes } from '../types';
-import WithMask from '../../masks/display';
 import getTransformFlip from '../shared/getTransformFlip';
 import { shouldDisplayBorder } from '../../utils/elementBorder';
 import useCORSProxy from '../../utils/useCORSProxy';

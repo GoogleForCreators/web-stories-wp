@@ -21,6 +21,7 @@ import { renderToStaticMarkup } from '@googleforcreators/react';
 import { render } from '@testing-library/react';
 import { useFeature } from 'flagged';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '@googleforcreators/units';
+import { MaskTypes } from '@googleforcreators/masks';
 
 /**
  * Internal dependencies
@@ -32,7 +33,6 @@ import {
   queryById,
   getById,
 } from '../../testUtils';
-import { MaskTypes } from '../../masks/constants';
 
 jest.mock('flagged');
 

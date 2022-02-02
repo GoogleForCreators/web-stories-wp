@@ -20,12 +20,12 @@
 import STICKERS from '@googleforcreators/stickers';
 import { dataPixels } from '@googleforcreators/units';
 import { getDefinitionForType } from '@googleforcreators/elements';
+import { DEFAULT_MASK } from '@googleforcreators/masks';
 
 /**
  * Internal dependencies
  */
 import getInsertedElementSize from '../../../utils/getInsertedElementSize';
-import { DEFAULT_MASK } from '../../../masks/constants';
 
 /**
  * @param {?number|undefined} value The value.

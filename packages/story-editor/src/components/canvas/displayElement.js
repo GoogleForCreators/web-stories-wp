@@ -31,11 +31,11 @@ import {
   elementWithSize,
   useColorTransformHandler
 } from '@googleforcreators/element-library';
+import { DisplayWithMask as WithMask } from '@googleforcreators/masks';
 
 /**
  * Internal dependencies
  */
-import WithMask from '../../masks/display';
 import StoryPropTypes from '../../types';
 import {
   getBorderPositionCSS,

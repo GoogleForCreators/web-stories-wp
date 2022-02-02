@@ -14,9 +14,13 @@
  * limitations under the License.
  */
 /**
+ * External dependencies.
+ */
+import { getDefinitionForType } from '@googleforcreators/elements';
+
+/**
  * Internal dependencies
  */
-import { getDefinitionForType } from '../elements';
 import { DEFAULT_MASK, MASKS } from './constants';
 
 export function getElementMask({ type, mask }) {
