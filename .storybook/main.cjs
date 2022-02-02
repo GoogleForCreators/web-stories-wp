@@ -74,6 +74,10 @@ module.exports = {
     // These should be sync'd with the config in `webpack.config.cjs`.
     config.module.rules.unshift(
       {
+        type: 'asset',
+        resourceQuery: /react/,
+      },
+      {
         test: /\.svg$/,
         use: [
           {
@@ -95,7 +99,6 @@ module.exports = {
               },
             },
           },
-          'url-loader',
           assetLoader,
         ],
         exclude: [/images\/.*\.svg$/],
@@ -123,7 +126,6 @@ module.exports = {
               },
             },
           },
-          'url-loader',
         ],
         include: [/images\/.*\.svg$/],
       },
