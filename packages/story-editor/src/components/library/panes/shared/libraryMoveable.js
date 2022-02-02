@@ -24,7 +24,8 @@ import { editorToDataX, editorToDataY } from '@googleforcreators/units';
 import {
   useKeyDownEffect,
   areEventsDragging,
-  usePerformanceTracking
+  usePerformanceTracking,
+  TRACKING_EVENTS,
 } from '@googleforcreators/design-system';
 import { Moveable, InOverlay } from '@googleforcreators/moveable';
 
@@ -41,7 +42,6 @@ import useSnapping from '../../../canvas/utils/useSnapping';
 import { useStory, useCanvas } from '../../../../app';
 import objectWithout from '../../../../utils/objectWithout';
 import { noop } from '../../../../utils/noop';
-import { TRACKING_EVENTS } from '../../../../constants/performanceTrackingEvents';
 
 const TargetBox = styled.div`
   position: absolute;

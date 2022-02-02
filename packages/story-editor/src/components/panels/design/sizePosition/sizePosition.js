@@ -34,8 +34,9 @@ import {
   BUTTON_TYPES,
   BUTTON_SIZES,
   BUTTON_VARIANTS,
+  TRACKING_EVENTS,
   Tooltip,
-  usePerformanceTracking
+  usePerformanceTracking,
 } from '@googleforcreators/design-system';
 import { getDefinitionForType } from '@googleforcreators/elements';
 
@@ -52,7 +53,6 @@ import {
   useCommonObjectValue,
 } from '../../shared';
 import useStory from '../../../../app/story/useStory';
-import { TRACKING_EVENTS } from '../../../../constants/performanceTrackingEvents';
 import usePresubmitHandlers from './usePresubmitHandlers';
 import { getMultiSelectionMinMaxXY, isNum } from './utils';
 import { MIN_MAX, DEFAULT_FLIP } from './constants';

@@ -23,10 +23,11 @@ import { __ } from '@googleforcreators/i18n';
 import {
   Button,
   BUTTON_TYPES,
+  TRACKING_EVENTS,
   Icons,
   themeHelpers,
   Tooltip,
-  usePerformanceTracking
+  usePerformanceTracking,
 } from '@googleforcreators/design-system';
 import { useRef, memo } from '@googleforcreators/react';
 import { getDefinitionForType } from '@googleforcreators/elements';
@@ -37,7 +38,6 @@ import { LayerText } from '@googleforcreators/element-library';
  */
 import StoryPropTypes from '../../../../types';
 import { useStory } from '../../../../app';
-import { TRACKING_EVENTS } from '../../../../constants/performanceTrackingEvents';
 import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';
 

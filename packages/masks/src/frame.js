@@ -24,15 +24,17 @@ import {
   StoryPropTypes,
   getTransformFlip,
 } from '@googleforcreators/element-library';
-import { usePerformanceTracking } from '@googleforcreators/design-system';
+import {
+  usePerformanceTracking,
+  TRACKING_EVENTS,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 import { useDropTargets } from '../app';
-import { TRACKING_EVENTS } from '../constants/performanceTrackingEvents';
 import { MaskTypes } from './constants';
-import { getElementMask } from '.';
+import { getElementMask } from './masks';
 
 const FILL_STYLE = {
   position: 'absolute',

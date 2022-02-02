@@ -30,7 +30,10 @@ import {
 } from '@googleforcreators/react';
 import { useFeature } from 'flagged';
 import { TransformProvider } from '@googleforcreators/transform';
-import { usePerformanceTracking } from '@googleforcreators/design-system';
+import {
+  usePerformanceTracking,
+  TRACKING_EVENTS,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -41,7 +44,6 @@ import {
   cancelIdleCallback,
 } from '../../../utils/idleCallback';
 import DisplayElement from '../../canvas/displayElement';
-import { TRACKING_EVENTS } from '../../../constants/performanceTrackingEvents';
 
 const Page = styled.button`
   display: block;

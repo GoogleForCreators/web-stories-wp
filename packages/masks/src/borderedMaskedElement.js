@@ -24,7 +24,6 @@ import {
   StoryPropTypes,
   getTransformFlip,
 } from '@googleforcreators/element-library';
-import { getBorderColor } from '@googleforcreators/masks';
 
 /**
  * Internal dependencies
@@ -34,7 +33,8 @@ import {
   getElementMask,
   canSupportMultiBorder,
   getBorderedMaskProperties,
-} from '.';
+} from './masks';
+import { getBorderColor } from './utils/elementBorder';
 
 const FILL_STYLE = {
   position: 'absolute',
