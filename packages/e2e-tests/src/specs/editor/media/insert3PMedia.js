@@ -63,6 +63,7 @@ describe('Inserting 3P Media', () => {
     await expect(page).toClick(
       '#library-pane-media3p [data-testid="mediaElement-image"]'
     );
+    await expect(page).toClick('menuitem', { text: 'Insert image' });
 
     await page.waitForSelector('[data-testid="imageElement"]');
     await expect(page).toMatchElement('[data-testid="imageElement"]');
@@ -86,6 +87,7 @@ describe('Inserting 3P Media', () => {
     await expect(page).toClick(
       '#library-pane-media3p [data-testid="mediaElement-video"]'
     );
+    await expect(page).toClick('menuitem', { text: 'Insert video' });
 
     await page.waitForSelector('[data-testid="videoElement"]');
     await expect(page).toMatchElement('[data-testid="videoElement"]');
@@ -109,6 +111,7 @@ describe('Inserting 3P Media', () => {
     await expect(page).toClick(
       '#library-pane-media3p [data-testid="mediaElement-gif"]'
     );
+    await expect(page).toClick('menuitem', { text: 'Insert image' });
 
     await page.waitForSelector('[data-testid="imageElement"]');
     await expect(page).toMatchElement('[data-testid="imageElement"]');
