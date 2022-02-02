@@ -266,4 +266,4 @@ TextOutput.propTypes = {
   element: StoryPropTypes.elements.text.isRequired,
 };
 
-export { TextOutput };
+export default TextOutput;

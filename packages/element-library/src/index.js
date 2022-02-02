@@ -20,5 +20,5 @@ export * from './media';
 export { elementTypes } from './elementTypes';
 export { copyableAttributes as imageAttributeDefaults } from './image/constants';
 export { copyableAttributes as textAttributeDefaults } from './text/constants';
-export { TextOutput, TextOutputWithUnits } from './text/output';
+export { default as TextOutput, TextOutputWithUnits } from './text/output';
 export { calcFontMetrics } from './text/util';
