@@ -85,6 +85,7 @@ const renderMediaElement = (resource, providerType, canEditMedia = true) => {
     },
     actions: {
       addElement: jest.fn(),
+      combineElements: jest.fn(),
     },
   };
   return renderWithTheme(

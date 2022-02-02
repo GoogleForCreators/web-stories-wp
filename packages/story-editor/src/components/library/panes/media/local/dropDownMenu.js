@@ -110,7 +110,7 @@ function DropDownMenu({
   const moreButtonRef = useRef();
 
   const { currentBackgroundId, combineElements } = useStory((state) => ({
-    currentBackgroundId: state.state.currentPage?.elements?.[0].id,
+    currentBackgroundId: state.state.currentPage?.elements?.[0]?.id,
     combineElements: state.actions.combineElements,
   }));
   const { canTranscodeResource } = useLocalMedia(

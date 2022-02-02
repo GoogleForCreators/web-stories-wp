@@ -319,6 +319,7 @@ describe('Media3pPane', () => {
       key: 'Enter',
       which: 13,
     });
+    fireEvent.click(screen.getByText('Insert image'));
 
     expect(registerUsage).toHaveBeenCalledWith({
       registerUsageUrl: 'https://registerUsageUrl.com/register',
