@@ -61,9 +61,11 @@ function setup(_storyContextValue = {}) {
     state: {
       story: {
         previewLink: 'http://www.example.com/preview',
-        lockUser: {
-          id: 150,
-          name: 'John Doe',
+        extras: {
+          lockUser: {
+            id: 150,
+            name: 'John Doe',
+          },
         },
       },
     },
@@ -114,9 +116,11 @@ describe('PostLock', () => {
       state: {
         story: {
           previewLink: 'http://www.example.com/preview',
-          lockUser: {
-            id: 123,
-            name: 'John Doe',
+          extras: {
+            lockUser: {
+              id: 123,
+              name: 'John Doe',
+            },
           },
         },
       },

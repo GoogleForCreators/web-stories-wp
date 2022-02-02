@@ -25,12 +25,12 @@ import {
 } from '@googleforcreators/patterns';
 import { getHTMLInfo } from '@googleforcreators/rich-text';
 import { generateFontFamily } from '@googleforcreators/element-library';
+import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 import {
-  BACKGROUND_TEXT_MODE,
   MULTIPLE_VALUE,
   PRESET_TYPES,
 } from '../constants';

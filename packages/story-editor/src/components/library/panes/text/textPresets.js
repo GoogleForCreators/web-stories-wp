@@ -19,11 +19,12 @@
  */
 import { __, _x } from '@googleforcreators/i18n';
 import { dataFontEm, PAGE_HEIGHT } from '@googleforcreators/units';
+import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
-import { FONT_WEIGHT, BACKGROUND_TEXT_MODE } from '../../../../constants';
+import { FONT_WEIGHT } from '../../../../constants';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
 
 // Measured in editor. As small as you can make

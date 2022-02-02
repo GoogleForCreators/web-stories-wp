@@ -18,11 +18,12 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { BackgroundAudioPropType } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
  */
-import StoryPropTypes, { BackgroundAudioPropType } from '../types';
+import StoryPropTypes from '../types';
 import getUsedAmpExtensions from './utils/getUsedAmpExtensions';
 import Boilerplate from './utils/ampBoilerplate';
 import CustomCSS from './utils/styles';
@@ -42,6 +43,7 @@ function OutputStory({
   },
   pages,
   metadata: { publisher },
+  flags,
 }) {
   const ampExtensions = getUsedAmpExtensions(pages);
   const preloadResources = getPreloadResources(pages);
@@ -87,6 +89,7 @@ function OutputStory({
               page={page}
               autoAdvance={autoAdvance}
               defaultPageDuration={defaultPageDuration}
+              flags={flags}
             />
           ))}
         </amp-story>
@@ -115,6 +118,7 @@ OutputStory.propTypes = {
   metadata: PropTypes.shape({
     publisher: PropTypes.string.isRequired,
   }).isRequired,
+  flags: PropTypes.object,
 };
 
 export default OutputStory;

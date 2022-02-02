@@ -21,6 +21,7 @@ import { generatePatternStyles } from '@googleforcreators/patterns';
 import { getBox } from '@googleforcreators/units';
 import { StoryAnimation } from '@googleforcreators/animation';
 import { getDefinitionForType } from '@googleforcreators/elements';
+import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -34,7 +35,6 @@ import {
   getBorderStyle,
   shouldDisplayBorder,
 } from '../utils/elementBorder';
-import { BACKGROUND_TEXT_MODE } from '../constants';
 
 function OutputElement({ element }) {
   const {

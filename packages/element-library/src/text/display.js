@@ -24,6 +24,7 @@ import { createSolid } from '@googleforcreators/patterns';
 import { useUnits } from '@googleforcreators/units';
 import { useTransformHandler } from '@googleforcreators/transform';
 import { getHTMLFormatters, getHTMLInfo } from '@googleforcreators/rich-text';
+import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -38,7 +39,6 @@ import {
   elementWithHighlightBorderRadius,
 } from '../shared';
 import { StoryPropTypes } from '../types';
-import { BACKGROUND_TEXT_MODE } from '../../constants';
 import stripHTML from '../../utils/stripHTML';
 import {
   getResponsiveBorder,

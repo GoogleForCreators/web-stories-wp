@@ -21,6 +21,7 @@ import PropTypes from 'prop-types';
 import { act, fireEvent, screen } from '@testing-library/react';
 import { createSolid } from '@googleforcreators/patterns';
 import { RichTextContext } from '@googleforcreators/rich-text';
+import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -34,7 +35,6 @@ import CanvasContext from '../../../../../app/canvas/context';
 import {
   MULTIPLE_VALUE,
   MULTIPLE_DISPLAY_VALUE,
-  BACKGROUND_TEXT_MODE,
 } from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
 

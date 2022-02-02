@@ -116,6 +116,7 @@ describe('BackgroundAudioPanel', () => {
           id: 123,
           mimeType: 'audio/mpeg',
         },
+        loop: true,
       },
     });
     expect(
@@ -128,6 +129,34 @@ describe('BackgroundAudioPanel', () => {
         name: 'Play',
       })
     ).toBeInTheDocument();
+  });
+
+  it('should render loop button', () => {
+    arrange({
+      backgroundAudio: {
+        resource: {
+          src: 'https://example.com/audio.mp3',
+          id: 123,
+          mimeType: 'audio/mpeg',
+          length: 60,
+          lengthFormatted: '1:00',
+        },
+        loop: true,
+      },
+      enhancedPageBackgroundAudio: true,
+    });
+    expect(
+      screen.getByRole('button', {
+        name: 'Remove file',
+      })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', {
+        name: 'Play',
+      })
+    ).toBeInTheDocument();
+
+    expect(screen.getByText('Loop')).toBeInTheDocument();
   });
 
   it('should render existing captions', () => {
@@ -149,6 +178,7 @@ describe('BackgroundAudioPanel', () => {
             kind: 'captions',
           },
         ],
+        loop: true,
       },
       enhancedPageBackgroundAudio: true,
     });
@@ -165,6 +195,7 @@ describe('BackgroundAudioPanel', () => {
           mimeType: 'audio/mpeg',
         },
         tracks: [],
+        loop: true,
       },
       enhancedPageBackgroundAudio: true,
     });
@@ -182,6 +213,7 @@ describe('BackgroundAudioPanel', () => {
           mimeType: 'audio/mpeg',
         },
         tracks: [],
+        loop: true,
       },
       enhancedPageBackgroundAudio: true,
       hasUploadMediaAction: false,
@@ -210,6 +242,7 @@ describe('BackgroundAudioPanel', () => {
             kind: 'captions',
           },
         ],
+        loop: true,
       },
       enhancedPageBackgroundAudio: true,
       hasUploadMediaAction: false,

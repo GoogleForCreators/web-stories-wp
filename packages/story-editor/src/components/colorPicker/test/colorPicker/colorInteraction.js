@@ -18,14 +18,13 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
-import { setAppElement } from '@googleforcreators/design-system';
+import { setAppElement, BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 import ColorPicker from '../../colorPicker';
 import { StoryContext } from '../../../../app/story';
-import { BACKGROUND_TEXT_MODE } from '../../../../constants';
 import {
   getShapePresets,
   getTextPresets,

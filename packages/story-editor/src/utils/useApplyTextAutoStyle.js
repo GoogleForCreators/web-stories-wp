@@ -18,11 +18,11 @@
  * External dependencies
  */
 import { getHTMLFormatters } from '@googleforcreators/rich-text';
+import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
-import { BACKGROUND_TEXT_MODE } from '../constants';
 import { applyHiddenPadding } from '../components/panels/design/textStyle/utils';
 import usePageAsCanvas from './usePageAsCanvas';
 

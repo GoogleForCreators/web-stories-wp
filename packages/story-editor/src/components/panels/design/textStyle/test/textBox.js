@@ -19,13 +19,13 @@
  */
 import PropTypes from 'prop-types';
 import { fireEvent, screen } from '@testing-library/react';
+import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 import TextStyle from '../textStyle';
 import {
-  BACKGROUND_TEXT_MODE,
   HIDDEN_PADDING,
   MULTIPLE_DISPLAY_VALUE,
 } from '../../../../../constants';

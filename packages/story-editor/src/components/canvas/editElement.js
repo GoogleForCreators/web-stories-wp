@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { memo, useState, forwardRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useUnits } from '@googleforcreators/units';
@@ -27,70 +28,47 @@ import {
   elementWithRotation,
 } from '@googleforcreators/element-library';
 
-/**
- * Internal dependencies
- */
-import { useState, useRef } from '@googleforcreators/react';
-import SingleSelectionMoveable from './singleSelectionMoveable';
-
 const Wrapper = styled.div`
   ${elementWithPosition}
   ${elementWithSize}
-	${elementWithRotation}
-	pointer-events: initial;
+  ${elementWithRotation}
+  pointer-events: initial;
 `;
 
-function EditElement({ element }) {
-  const { id, type } = element;
-  const { getBox } = useUnits((state) => ({
-    getBox: state.actions.getBox,
-  }));
+const EditElement = memo(
+  forwardRef(function EditElement({ element, editWrapper, onResize }, ref) {
+    const { id, type } = element;
+    const { getBox } = useUnits((state) => ({
+      getBox: state.actions.getBox,
+    }));
 
-  const [editWrapper, setEditWrapper] = useState(null);
-  // Needed for elements that can scale in edit mode.
-  const [localProperties, setLocalProperties] = useState(null);
+    // Needed for elements that can scale in edit mode.
+    const [localProperties, setLocalProperties] = useState(null);
 
-  const { Edit, hasEditModeMoveable } = getDefinitionForType(type);
-  const box = getBox(
-    localProperties ? { ...element, ...localProperties } : element
-  );
+    const { Edit } = getDefinitionForType(type);
+    const elementWithLocal = localProperties
+      ? { ...element, ...localProperties }
+      : element;
+    const box = getBox(elementWithLocal);
 
-  const moveable = useRef(null);
-
-  const onResize = () => {
-    // Update moveable when resizing.
-    if (moveable.current) {
-      moveable.current.updateRect();
-    }
-  };
-
-  return (
-    <>
-      <Wrapper aria-labelledby={`layer-${id}`} {...box} ref={setEditWrapper}>
+    return (
+      <Wrapper aria-labelledby={`layer-${id}`} {...box} ref={ref}>
         <Edit
-          element={
-            localProperties ? { ...element, ...localProperties } : element
-          }
+          element={elementWithLocal}
           box={box}
-          editWrapper={hasEditModeMoveable && editWrapper}
+          editWrapper={editWrapper}
           onResize={onResize}
           setLocalProperties={setLocalProperties}
         />
       </Wrapper>
-      {hasEditModeMoveable && editWrapper && (
-        <SingleSelectionMoveable
-          selectedElement={element}
-          targetEl={editWrapper}
-          isEditMode
-          editMoveableRef={moveable}
-        />
-      )}
-    </>
-  );
-}
+    );
+  })
+);
 
 EditElement.propTypes = {
   element: PropTypes.object.isRequired,
+  editWrapper: PropTypes.object,
+  onResize: PropTypes.func,
 };
 
 export default EditElement;
