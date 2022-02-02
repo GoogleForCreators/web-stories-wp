@@ -65,7 +65,7 @@ const defaultConfig = {
   },
   newStoryURL: '',
   archiveURL: '',
-  archiveURLRaw: '',
+  defaultArchiveURL: '',
   cdnURL: 'https://wp.stories.google/static/main/',
   allowedImageMimeTypes: ['image/webp', 'image/png', 'image/jpeg', 'image/gif'],
   version: '',

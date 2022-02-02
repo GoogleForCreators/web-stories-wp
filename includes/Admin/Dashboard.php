@@ -432,7 +432,7 @@ class Dashboard extends Service_Base {
 			'locale'                  => $this->locale->get_locale_settings(),
 			'newStoryURL'             => $new_story_url,
 			'archiveURL'              => $this->story_post_type->get_archive_link(),
-			'archiveURLRaw'           => $this->story_post_type->get_archive_link( true ),
+			'defaultArchiveURL'       => $this->story_post_type->get_archive_link( true ),
 			'cdnURL'                  => trailingslashit( WEBSTORIES_CDN_URL ),
 			'allowedImageMimeTypes'   => $this->types->get_allowed_image_mime_types(),
 			'version'                 => WEBSTORIES_VERSION,

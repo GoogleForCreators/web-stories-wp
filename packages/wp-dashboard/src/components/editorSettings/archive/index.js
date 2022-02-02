@@ -84,7 +84,7 @@ const SearchWrapper = styled.div`
 export default function ArchiveSettings({
   archive = ARCHIVE_TYPE.DEFAULT,
   archiveURL: _archiveURL,
-  archiveURLRaw,
+  defaultArchiveURL,
   archivePageId,
   updateSettings,
   searchPages,
@@ -221,7 +221,7 @@ export default function ArchiveSettings({
                 ),
               }}
             >
-              {archivePageId && archiveURL !== archiveURLRaw
+              {archivePageId && archiveURL !== defaultArchiveURL
                 ? sprintf(
                     /* translators: 1. archive url, 2. archive url. */
                     __(
@@ -229,7 +229,7 @@ export default function ArchiveSettings({
                       'web-stories'
                     ),
                     archiveURL,
-                    archiveURLRaw
+                    defaultArchiveURL
                   )
                 : sprintf(
                     /* translators: 1. archive url */
@@ -247,7 +247,7 @@ export default function ArchiveSettings({
 ArchiveSettings.propTypes = {
   archive: PropTypes.string.isRequired,
   archiveURL: PropTypes.string.isRequired,
-  archiveURLRaw: PropTypes.string.isRequired,
+  defaultArchiveURL: PropTypes.string.isRequired,
   updateSettings: PropTypes.func.isRequired,
   searchPages: PropTypes.func.isRequired,
   archivePageId: PropTypes.number.isRequired,

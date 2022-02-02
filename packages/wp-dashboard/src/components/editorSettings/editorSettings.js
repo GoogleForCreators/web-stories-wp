@@ -139,7 +139,7 @@ function EditorSettings() {
     maxUploadFormatted,
     allowedImageMimeTypes,
     archiveURL,
-    archiveURLRaw,
+    defaultArchiveURL,
   } = useConfig();
 
   const {
@@ -365,7 +365,7 @@ function EditorSettings() {
                 <ArchiveSettings
                   archive={archive}
                   archiveURL={archiveURL}
-                  archiveURLRaw={archiveURLRaw}
+                  defaultArchiveURL={defaultArchiveURL}
                   updateSettings={updateSettings}
                   searchPages={searchPages}
                   archivePageId={archivePageId}
