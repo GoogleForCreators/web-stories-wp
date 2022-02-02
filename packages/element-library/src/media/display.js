@@ -32,12 +32,12 @@ import {
   elementFillContent,
   elementWithBorder,
   elementWithBackgroundColor,
+  useColorTransformHandler
 } from '../shared';
 import {
   getResponsiveBorder,
   shouldDisplayBorder,
 } from '../../utils/elementBorder';
-import useColorTransformHandler from '../shared/useColorTransformHandler';
 import { getMediaWithScaleCss } from './util';
 
 const Element = styled.div.attrs({ className: 'story-media-display-element' })`

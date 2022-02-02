@@ -23,7 +23,7 @@ import { PanelTypes, BACKGROUND_TEXT_MODE } from '@googleforcreators/design-syst
 /**
  * Internal dependencies
  */
-import { SHARED_DEFAULT_ATTRIBUTES } from '../shared/constants';
+import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 
 export const defaultAttributes = {

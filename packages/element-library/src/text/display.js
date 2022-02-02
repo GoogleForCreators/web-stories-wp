@@ -44,7 +44,7 @@ import {
   getResponsiveBorder,
   shouldDisplayBorder,
 } from '../../utils/elementBorder';
-import useColorTransformHandler from '../shared/useColorTransformHandler';
+import { useColorTransformHandler } from '../shared';
 import {
   getHighlightLineheight,
   generateParagraphTextStyle,

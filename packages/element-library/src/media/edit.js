@@ -37,10 +37,9 @@ import { DisplayWithMask as WithMask } from '@googleforcreators/masks';
 /**
  * Internal dependencies
  */
-import { elementFillContent, elementWithFlip } from '../shared';
+import { elementFillContent, elementWithFlip, getTransformFlip } from '../shared';
 import { useStory } from '../../app';
 import { StoryPropTypes } from '../types';
-import getTransformFlip from '../shared/getTransformFlip';
 import { shouldDisplayBorder } from '../../utils/elementBorder';
 import useCORSProxy from '../../utils/useCORSProxy';
 import EditCropMoveable from './editCropMoveable';

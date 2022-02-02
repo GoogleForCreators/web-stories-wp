@@ -23,7 +23,7 @@ import stickers from '@googleforcreators/stickers';
  * Internal dependencies
  */
 import { StoryPropTypes } from '../types';
-import { LayerText } from '../shared/layerText';
+import { LayerText } from '../shared';
 
 function StickerLayerContent({ element }) {
   const { sticker } = element;

@@ -19,7 +19,7 @@
  */
 import stripHTML from '../../utils/stripHTML';
 import { StoryPropTypes } from '../types';
-import { LayerText } from '../shared/layerText';
+import { LayerText } from '../shared';
 
 function TextLayerContent({ element: { content } }) {
   // Remove all tags

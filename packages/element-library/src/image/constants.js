@@ -24,7 +24,7 @@ import { PanelTypes } from '@googleforcreators/design-system';
 import {
   SHARED_DEFAULT_ATTRIBUTES,
   SHARED_DEFAULT_CLEARABLE_ATTRIBUTES,
-} from '../shared/constants';
+} from '../shared';
 import {
   MEDIA_DEFAULT_ATTRIBUTES,
   MEDIA_DEFAULT_CLEARABLE_ATTRIBUTES,

@@ -22,7 +22,7 @@ import { __ } from '@googleforcreators/i18n';
  * Internal dependencies
  */
 import { StoryPropTypes } from '../types';
-import { LayerText } from '../shared/layerText';
+import { LayerText } from '../shared';
 
 function VideoLayerContent({ element }) {
   const { alt } = element?.resource || {};

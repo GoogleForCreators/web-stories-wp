@@ -25,7 +25,7 @@ import { PanelTypes } from '@googleforcreators/design-system';
 import {
   SHARED_DEFAULT_ATTRIBUTES,
   SHARED_DEFAULT_CLEARABLE_ATTRIBUTES,
-} from '../shared/constants';
+} from '../shared';
 
 const defaultBackgroundColor = createSolidFromString('#c4c4c4');
 

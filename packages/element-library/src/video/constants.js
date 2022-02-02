@@ -30,7 +30,7 @@ import {
 import {
   SHARED_DEFAULT_ATTRIBUTES,
   SHARED_DEFAULT_CLEARABLE_ATTRIBUTES,
-} from '../shared/constants';
+} from '../shared';
 
 export {
   canFlip,

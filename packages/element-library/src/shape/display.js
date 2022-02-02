@@ -36,7 +36,7 @@ import {
   getResponsiveBorder,
   shouldDisplayBorder,
 } from '../../utils/elementBorder';
-import useColorTransformHandler from '../shared/useColorTransformHandler';
+import { useColorTransformHandler } from '../shared';
 
 const Element = styled.div`
   ${elementFillContent}
