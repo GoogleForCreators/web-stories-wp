@@ -74,7 +74,10 @@ describe('Inserting WebM Video', () => {
     await page.waitForSelector('[data-testid="mediaElement-video"]');
     // Clicking will only act on the first element.
     await expect(page).toClick('[data-testid="mediaElement-video"]');
-    await expect(page).toClick('menuitem', { text: 'Insert video' });
+    const insertButton = await page.waitForXPath(
+      `//li//span[contains(text(), 'Insert video')]`
+    );
+    await insertButton.click();
 
     await page.waitForSelector('[data-testid="videoElement"]');
     await expect(page).toMatchElement('[data-testid="videoElement"]');
@@ -96,7 +99,10 @@ describe('Inserting WebM Video', () => {
     await page.waitForSelector('[data-testid="mediaElement-video"]');
     // Clicking will only act on the first element.
     await expect(page).toClick('[data-testid="mediaElement-video"]');
-    await expect(page).toClick('menuitem', { text: 'Insert video' });
+    const insertButton = await page.waitForXPath(
+      `//li//span[contains(text(), 'Insert video')]`
+    );
+    await insertButton.click();
 
     await page.waitForSelector('[data-testid="videoElement"]');
     await expect(page).toMatchElement('[data-testid="videoElement"]');
