@@ -66,7 +66,7 @@ function copyElementById(state, { elementId }) {
   const element = page.elements[elementIndex];
 
   // find related animations
-  const elementAnimations = page.animations.filter(({ targets }) =>
+  const elementAnimations = (page.animations || []).filter(({ targets }) =>
     targets.includes(element.id)
   );
 
