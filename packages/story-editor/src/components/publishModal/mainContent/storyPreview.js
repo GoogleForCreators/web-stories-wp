@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,35 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
+import { Headline, THEME_CONSTANTS } from '@googleforcreators/design-system';
 import styled from 'styled-components';
+import { __ } from '@googleforcreators/i18n';
 
-/**
- * Internal dependencies
- */
-import ScrollToTop from '..';
-import Layout from '../../layout';
-
-export default {
-  title: 'Dashboard/Components/ScrollToTop',
-  component: ScrollToTop,
-};
-
-const Container = styled.div`
+const PreviewContainer = styled.div`
+  margin: 8px 0;
+  object-fit: contain;
   width: 100%;
-  height: 3000px;
-  overflow: scroll;
-  background-color: blue;
-  opacity: 0.25;
+  & > img {
+    border-radius: ${({ theme }) => theme.borders.radius.medium};
+  }
 `;
-export const _default = () => {
+
+const StoryPreview = () => {
   return (
-    <Layout.Provider>
-      <Container />
-      <ScrollToTop />
-    </Layout.Provider>
+    <>
+      <Headline
+        as="label"
+        size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL}
+      >
+        {__('Cover Preview', 'web-stories')}
+      </Headline>
+      <PreviewContainer>
+        <img src="http://placekitten.com/230/342" alt="" />
+      </PreviewContainer>
+    </>
   );
 };
+
+export default StoryPreview;

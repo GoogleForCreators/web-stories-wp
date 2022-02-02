@@ -66,16 +66,19 @@ function PostLock() {
     })
   );
 
-  const { enablePostLocking } = useFeatures();
+  const { enablePostLocking, enablePostLockingTakeOver } = useFeatures();
   const [isFirstTime, setIsFirstTime] = useState(true);
   const [user, setUser] = useState({});
   const [nonce, setNonce] = useState(firstNonce);
 
   // When dialog is closed, then set current user to lock owner.
   const closeDialog = useCallback(() => {
+    if (!enablePostLockingTakeOver) {
+      return;
+    }
     setUser({});
     setStoryLockById(storyId, stories);
-  }, [storyId, stories]);
+  }, [enablePostLockingTakeOver, storyId, stories]);
 
   const currentUserLoaded = useMemo(
     () => Boolean(Object.keys(currentUser).length),
@@ -177,19 +180,24 @@ function PostLock() {
         onClose={closeDialog}
         previewLink={previewLink}
         dashboardLink={dashboardLink}
+        showTakeOver={enablePostLockingTakeOver}
       />
     );
   }
 
   // Second time around, show message that story was taken over.
-  return (
-    <PostTakeOverDialog
-      isOpen={Boolean(user?.id)}
-      user={user}
-      dashboardLink={dashboardLink}
-      onClose={closeDialog}
-    />
-  );
+  if (enablePostLockingTakeOver) {
+    return (
+      <PostTakeOverDialog
+        isOpen={Boolean(user?.id)}
+        user={user}
+        dashboardLink={dashboardLink}
+        onClose={closeDialog}
+      />
+    );
+  }
+
+  return null;
 }
 
 export default PostLock;
