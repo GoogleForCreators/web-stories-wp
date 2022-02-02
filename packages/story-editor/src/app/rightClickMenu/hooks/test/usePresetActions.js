@@ -61,7 +61,7 @@ describe('usePresetActions', () => {
   it('should add a text preset and show a confirmation snackbar', () => {
     const { result } = renderHook(() => usePresetActions());
 
-    result.current.onAddTextPreset();
+    result.current.handleAddTextPreset();
 
     expect(mockAddGlobalPreset).toHaveBeenCalledTimes(1);
 
@@ -76,7 +76,7 @@ describe('usePresetActions', () => {
   it('should add a color preset and show a confirmation snackbar', () => {
     const { result } = renderHook(() => usePresetActions());
 
-    result.current.onAddColorPreset(4);
+    result.current.handleAddColorPreset(4);
 
     expect(mockAddGlobalPreset).toHaveBeenCalledTimes(1);
 

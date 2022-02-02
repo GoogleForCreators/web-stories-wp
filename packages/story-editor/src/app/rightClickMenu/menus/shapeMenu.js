@@ -31,9 +31,14 @@ import {
   useLayerActions,
   usePresetActions,
 } from '../hooks';
+import { useStory } from '../../..';
 
 function ShapeMenu() {
-  const { handleCopyStyles } = useCopyPasteActions();
+  const { copiedElementType, selectedElementType } = useStory(({ state }) => ({
+    copiedElementType: state.copiedElementState.type,
+    selectedElementType: state.selectedElements?.[0].type,
+  }));
+  const { handleCopyStyles, handlePasteStyles } = useCopyPasteActions();
   const { handleDuplicateSelectedElements } = useElementActions();
   const {
     canElementMoveBackwards,
@@ -103,8 +108,8 @@ function ShapeMenu() {
         </ContextMenuComponents.MenuShortcut>
       </ContextMenuComponents.MenuButton>
       <ContextMenuComponents.MenuButton
-        // disabled={copiedElementType !== selectedElement?.type}
-        onClick={handleCopyStyles}
+        disabled={copiedElementType !== selectedElementType}
+        onClick={handlePasteStyles}
       >
         {RIGHT_CLICK_MENU_LABELS.PASTE_SHAPE_STYLES}
         <ContextMenuComponents.MenuShortcut>

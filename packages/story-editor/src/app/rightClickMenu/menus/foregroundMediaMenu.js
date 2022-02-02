@@ -35,8 +35,11 @@ import { useLocalMedia } from '../..';
 import useVideoTrim from '../../../components/videoTrim/useVideoTrim';
 
 function ForegroundMediaMenu() {
-  const selectedElement = useStory((value) => value.state.selectedElement);
-  const { handleCopyStyles } = useCopyPasteActions();
+  const { copiedElementType, selectedElement } = useStory(({ state }) => ({
+    copiedElementType: state.copiedElementState.type,
+    selectedElement: state.selectedElements?.[0],
+  }));
+  const { handleCopyStyles, handlePasteStyles } = useCopyPasteActions();
   const {
     handleDuplicateSelectedElements,
     handleOpenScaleAndCrop,
@@ -128,10 +131,7 @@ function ForegroundMediaMenu() {
       <ContextMenuComponents.MenuButton onClick={handleSetPageBackground}>
         {RIGHT_CLICK_MENU_LABELS.SET_AS_PAGE_BACKGROUND}
       </ContextMenuComponents.MenuButton>
-      <ContextMenuComponents.MenuButton
-        // disabled={copiedElementType !== selectedElement?.type}
-        onClick={handleOpenScaleAndCrop}
-      >
+      <ContextMenuComponents.MenuButton onClick={handleOpenScaleAndCrop}>
         {scaleLabel}
       </ContextMenuComponents.MenuButton>
       {showToggleTrimMode && (
@@ -150,8 +150,8 @@ function ForegroundMediaMenu() {
         </ContextMenuComponents.MenuShortcut>
       </ContextMenuComponents.MenuButton>
       <ContextMenuComponents.MenuButton
-        // disabled={copiedElementType !== selectedElement?.type}
-        onClick={handleCopyStyles}
+        disabled={copiedElementType !== selectedElement?.type}
+        onClick={handlePasteStyles}
       >
         {pasteLabel}
         <ContextMenuComponents.MenuShortcut>

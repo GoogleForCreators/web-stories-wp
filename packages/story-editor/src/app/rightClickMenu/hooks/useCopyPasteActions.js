@@ -18,7 +18,7 @@
  */
 import { useSnackbar } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
-import { useCallback, useRef, useState } from '@googleforcreators/react';
+import { useCallback, useRef } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
 import { v4 as uuidv4 } from 'uuid';
 /**
@@ -30,7 +30,6 @@ import useApplyStyle from '../../../components/panels/design/textStyle/stylePres
 import getUpdatedSizeAndPosition from '../../../utils/getUpdatedSizeAndPosition';
 import { getTextPresets } from '../../../utils/presetUtils';
 import { useHistory, useStory } from '../..';
-import { getElementStyles } from './utils';
 import { UNDO_HELP_TEXT } from './constants';
 
 /**
@@ -42,11 +41,15 @@ const useCopyPasteActions = () => {
   const undo = useHistory(({ actions }) => actions.undo);
   const {
     addAnimations,
+    copyElementById,
+    copiedElementState,
     selectedElement,
     selectedElementAnimations,
     updateElementsById,
   } = useStory(({ state, actions }) => ({
     addAnimations: actions.addAnimations,
+    copiedElementState: state.copiedElementState,
+    copyElementById: actions.copyElementById,
     selectedElement: state.selectedElements?.[0],
     selectedElementAnimations: state.selectedElementAnimations,
     updateElementsById: actions.updateElementsById,
@@ -58,26 +61,22 @@ const useCopyPasteActions = () => {
   const undoRef = useRef(undo);
   undoRef.current = undo;
 
-  const [copiedElement, setCopiedElement] = useState(null);
-
   /**
    * Copy the styles and animations of the selected element.
    */
   const handleCopyStyles = useCallback(() => {
-    const oldStyles = { ...copiedElement };
+    if (!selectedElement?.id) {
+      return;
+    }
 
-    setCopiedElement({
-      animations: selectedElementAnimations,
-      styles: getElementStyles(selectedElement),
-      type: selectedElement?.type,
-    });
+    copyElementById({ elementId: selectedElement?.id });
 
     showSnackbar({
       actionLabel: __('Undo', 'web-stories'),
       dismissible: false,
       message: __('Copied style.', 'web-stories'),
       onAction: () => {
-        setCopiedElement(oldStyles);
+        undoRef.current();
 
         trackEvent('context_menu_action', {
           name: 'undo_copy_styles',
@@ -93,7 +92,7 @@ const useCopyPasteActions = () => {
       element: selectedElement?.type,
       isBackground: selectedElement?.isBackground,
     });
-  }, [copiedElement, selectedElement, selectedElementAnimations, showSnackbar]);
+  }, [copyElementById, selectedElement, showSnackbar]);
 
   const selectedElementId = selectedElement?.id;
   const pushUpdate = useCallback(
@@ -129,7 +128,7 @@ const useCopyPasteActions = () => {
   const handlePasteStyles = useCallback(() => {
     const id = selectedElement?.id;
 
-    if (!id || selectedElement?.type !== copiedElement.type) {
+    if (!id || selectedElement?.type !== copiedElementState.type) {
       return;
     }
 
@@ -139,7 +138,7 @@ const useCopyPasteActions = () => {
       : undefined;
 
     // Create new animations
-    const newAnimations = copiedElement.animations.map((animation) => ({
+    const newAnimations = copiedElementState.animations.map((animation) => ({
       ...animation,
       id: uuidv4(),
       targets: [selectedElement.id],
@@ -149,9 +148,12 @@ const useCopyPasteActions = () => {
 
     // Text elements need the text styles extracted from content before
     // applying to the other text
-    if (copiedElement.type === 'text' && copiedElement.styles.content) {
+    if (
+      copiedElementState.type === 'text' &&
+      copiedElementState.styles.content
+    ) {
       const { textStyles } = getTextPresets(
-        [copiedElement.styles],
+        [copiedElementState.styles],
         {
           textStyles: [],
           colors: [],
@@ -159,14 +161,14 @@ const useCopyPasteActions = () => {
         PRESET_TYPES.STYLE
       );
       const { colors } = getTextPresets(
-        [copiedElement.styles],
+        [copiedElementState.styles],
         {
           textStyles: [],
           colors: [],
         },
-        PRESET_TYPES.Color
+        PRESET_TYPES.COLOR
       );
-      const { content, ...copiedElementStyles } = copiedElement.styles;
+      const { content, ...copiedElementStyles } = copiedElementState.styles;
       const updatedElementStyles = {
         ...copiedElementStyles,
         ...textStyles[0],
@@ -183,7 +185,7 @@ const useCopyPasteActions = () => {
           updateProperties(
             currentProperties,
             {
-              ...copiedElement.styles,
+              ...copiedElementState.styles,
               animation: oldAnimationToDelete,
             },
             /* commitValues */ true
@@ -216,7 +218,7 @@ const useCopyPasteActions = () => {
     });
   }, [
     addAnimations,
-    copiedElement,
+    copiedElementState,
     handleApplyStyle,
     selectedElement,
     selectedElementAnimations,
@@ -225,7 +227,7 @@ const useCopyPasteActions = () => {
   ]);
 
   return {
-    copiedElementType: copiedElement?.type,
+    copiedElementType: copiedElementState?.type,
     handleCopyStyles,
     handlePasteStyles,
   };

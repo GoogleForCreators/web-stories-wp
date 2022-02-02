@@ -50,8 +50,15 @@ function StoryProvider({ storyId, initialEdits, children }) {
   } = useStoryReducer({
     current: hashPageId,
   });
-  const { pages, current, selection, story, animationState, capabilities } =
-    reducerState;
+  const {
+    pages,
+    current,
+    selection,
+    story,
+    animationState,
+    capabilities,
+    copiedElementState,
+  } = reducerState;
 
   useEffect(() => setHashPageId(current), [current, setHashPageId]);
 
@@ -121,7 +128,7 @@ function StoryProvider({ storyId, initialEdits, children }) {
     };
   }, [currentPage, selection]);
 
-  // This effect loads and initialises the story on first load (when there's no pages).
+  // This effect loads and initializes the story on first load (when there's no pages).
   const shouldLoad = pages.length === 0;
   useLoadStory({ restore, shouldLoad, storyId, story: initialEdits?.story });
 
@@ -167,6 +174,7 @@ function StoryProvider({ storyId, initialEdits, children }) {
         isAutoSavingStory: isAutoSaving,
         isFreshlyPublished,
       },
+      copiedElementState,
     }),
     [
       pages,
@@ -185,6 +193,7 @@ function StoryProvider({ storyId, initialEdits, children }) {
       isSaving,
       isAutoSaving,
       isFreshlyPublished,
+      copiedElementState,
     ]
   );
 

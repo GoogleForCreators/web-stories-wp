@@ -71,14 +71,14 @@ describe('useElementActions', () => {
 
       const { result } = renderHook(() => useElementActions());
 
-      result.current.onDuplicateSelectedElements();
+      result.current.handleDuplicateSelectedElements();
 
       expect(mockDuplicateElementsById).not.toHaveBeenCalled();
     });
     it('should duplicate the selected element', () => {
       const { result } = renderHook(() => useElementActions());
 
-      result.current.onDuplicateSelectedElements();
+      result.current.handleDuplicateSelectedElements();
 
       expect(mockDuplicateElementsById).toHaveBeenCalledWith({
         elementIds: [ELEMENT.id],
@@ -94,7 +94,7 @@ describe('useElementActions', () => {
 
       const { result } = renderHook(() => useElementActions());
 
-      result.current.onDuplicateSelectedElements();
+      result.current.handleDuplicateSelectedElements();
 
       expect(mockDuplicateElementsById).toHaveBeenCalledWith({
         elementIds: ['1', 'potato', '3'],
@@ -104,7 +104,7 @@ describe('useElementActions', () => {
     it('should show a snackbar', () => {
       const { result } = renderHook(() => useElementActions());
 
-      result.current.onDuplicateSelectedElements();
+      result.current.handleDuplicateSelectedElements();
 
       expect(mockShowSnackbar).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -124,7 +124,7 @@ describe('useElementActions', () => {
 
       const { result } = renderHook(() => useElementActions());
 
-      result.current.onOpenScaleAndCrop();
+      result.current.handleOpenScaleAndCrop();
 
       expect(mockSetEditingElement).not.toHaveBeenCalled();
     });
@@ -132,7 +132,7 @@ describe('useElementActions', () => {
     it('should set the editing element', () => {
       const { result } = renderHook(() => useElementActions());
 
-      result.current.onOpenScaleAndCrop({ type: 'event' });
+      result.current.handleOpenScaleAndCrop({ type: 'event' });
 
       expect(mockSetEditingElement).toHaveBeenCalledWith(ELEMENT.id, {
         type: 'event',
@@ -149,7 +149,7 @@ describe('useElementActions', () => {
 
       const { result } = renderHook(() => useElementActions());
 
-      result.current.onSetPageBackground();
+      result.current.handleSetPageBackground();
 
       expect(mockSetBackgroundElement).not.toHaveBeenCalled();
     });
@@ -162,7 +162,7 @@ describe('useElementActions', () => {
 
       const { result } = renderHook(() => useElementActions());
 
-      result.current.onSetPageBackground();
+      result.current.handleSetPageBackground();
 
       expect(mockSetBackgroundElement).not.toHaveBeenCalled();
     });
@@ -170,7 +170,7 @@ describe('useElementActions', () => {
     it('should set the page background', () => {
       const { result } = renderHook(() => useElementActions());
 
-      result.current.onSetPageBackground();
+      result.current.handleSetPageBackground();
 
       expect(mockSetBackgroundElement).toHaveBeenCalledWith({
         elementId: ELEMENT.id,
@@ -180,7 +180,7 @@ describe('useElementActions', () => {
     it('should show a snackbar', () => {
       const { result } = renderHook(() => useElementActions());
 
-      result.current.onSetPageBackground();
+      result.current.handleSetPageBackground();
 
       expect(mockShowSnackbar).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -207,7 +207,7 @@ describe('useElementActions', () => {
 
       const { result } = renderHook(() => useElementActions());
 
-      result.current.onRemovePageBackground();
+      result.current.handleRemovePageBackground();
 
       expect(mockClearBackgroundElement).not.toHaveBeenCalled();
     });
@@ -220,7 +220,7 @@ describe('useElementActions', () => {
 
       const { result } = renderHook(() => useElementActions());
 
-      result.current.onRemovePageBackground();
+      result.current.handleRemovePageBackground();
 
       expect(mockClearBackgroundElement).not.toHaveBeenCalled();
     });
@@ -228,7 +228,7 @@ describe('useElementActions', () => {
     it('should set the page background', () => {
       const { result } = renderHook(() => useElementActions());
 
-      result.current.onRemovePageBackground();
+      result.current.handleRemovePageBackground();
 
       expect(mockUpdateElementsById).toHaveBeenCalledWith({
         elementIds: [ELEMENT.id],
@@ -254,7 +254,7 @@ describe('useElementActions', () => {
     it('should show a snackbar', () => {
       const { result } = renderHook(() => useElementActions());
 
-      result.current.onRemovePageBackground();
+      result.current.handleRemovePageBackground();
 
       expect(mockShowSnackbar).toHaveBeenCalledWith(
         expect.objectContaining({

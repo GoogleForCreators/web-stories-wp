@@ -17,13 +17,14 @@
  * External dependencies
  */
 import { useSnackbar } from '@googleforcreators/design-system';
-import { act, renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
 import { useCopyPasteActions } from '..';
+import objectPick from '../../../../utils/objectPick';
 import { useStory } from '../../..';
-import { getElementStyles } from '../utils';
+import { ATTRIBUTES_TO_COPY } from '../../../story/useStoryReducer/reducers/copyElementById';
 import { ELEMENT } from './testUtils';
 
 jest.mock('@googleforcreators/design-system', () => ({
@@ -36,6 +37,7 @@ jest.mock('../../../story/useStory');
 const mockUseStory = useStory;
 const mockUseSnackbar = useSnackbar;
 
+const mockCopyElementById = jest.fn();
 const mockShowSnackbar = jest.fn();
 const mockAddAnimations = jest.fn();
 const mockUpdateElementsById = jest.fn();
@@ -50,18 +52,21 @@ const ANIMATION = {
   delay: 0,
 };
 
+const defaultStoryState = {
+  addAnimations: mockAddAnimations,
+  copyElementById: mockCopyElementById,
+  selectedElement: ELEMENT,
+  selectedElementAnimations: [ANIMATION],
+  updateElementsById: mockUpdateElementsById,
+  // needed for `useRichTextFormatting`
+  selectedElements: [ELEMENT],
+};
+
 describe('useCopyPasteActions', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    mockUseStory.mockReturnValue({
-      addAnimations: mockAddAnimations,
-      selectedElement: ELEMENT,
-      selectedElementAnimations: [ANIMATION],
-      updateElementsById: mockUpdateElementsById,
-      // needed for `useRichTextFormatting`
-      selectedElements: [ELEMENT],
-    });
+    mockUseStory.mockReturnValue(defaultStoryState);
     mockUseSnackbar.mockReturnValue(mockShowSnackbar);
   });
 
@@ -70,11 +75,9 @@ describe('useCopyPasteActions', () => {
 
     expect(result.current.copiedElementType).toBeUndefined();
 
-    act(() => {
-      result.current.onCopyStyles();
-    });
+    result.current.handleCopyStyles();
 
-    expect(result.current.copiedElementType).toStrictEqual(ELEMENT.type);
+    expect(mockCopyElementById).toHaveBeenCalledWith({ elementId: ELEMENT.id });
 
     expect(mockShowSnackbar).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -85,15 +88,27 @@ describe('useCopyPasteActions', () => {
   });
 
   it('should paste styles and show a confirmation snackbar', () => {
-    const { result } = renderHook(() => useCopyPasteActions());
-
-    // copy element first
-    act(() => {
-      result.current.onCopyStyles();
+    const styles = objectPick(ELEMENT, ATTRIBUTES_TO_COPY);
+    // Set copied element in state
+    mockUseStory.mockReturnValue({
+      ...defaultStoryState,
+      copiedElementState: {
+        type: ELEMENT.type,
+        animations: [ANIMATION],
+        styles,
+      },
+      selectedElement: { id: 'new-element', type: 'image' },
+      selectedElementAnimations: [
+        { id: 'other-animation', targets: ['new-element'] },
+      ],
+      // needed for `useRichTextFormatting`
+      selectedElements: [{ id: 'new-element', type: 'image' }],
     });
 
+    const { result } = renderHook(() => useCopyPasteActions());
+
     // paste element
-    result.current.onPasteStyles();
+    result.current.handlePasteStyles();
 
     // Pasting styles is a multiple step process
     // 1. Update styles on element in story
@@ -101,7 +116,7 @@ describe('useCopyPasteActions', () => {
     // 3. Add new animations
 
     expect(mockUpdateElementsById).toHaveBeenCalledWith({
-      elementIds: [ELEMENT.id],
+      elementIds: ['new-element'],
       properties: expect.any(Function),
     });
 
@@ -112,8 +127,12 @@ describe('useCopyPasteActions', () => {
     // verify old animation deleted
     // verify styles copied
     expect(updatedStyles).toStrictEqual({
-      ...getElementStyles(ELEMENT),
-      animation: { ...ANIMATION, delete: true },
+      ...styles,
+      animation: {
+        id: 'other-animation',
+        targets: ['new-element'],
+        delete: true,
+      },
     });
 
     // verify new animation added
@@ -122,7 +141,7 @@ describe('useCopyPasteActions', () => {
         {
           ...ANIMATION,
           id: expect.any(String),
-          targets: [ELEMENT.id],
+          targets: ['new-element'],
         },
       ],
     });

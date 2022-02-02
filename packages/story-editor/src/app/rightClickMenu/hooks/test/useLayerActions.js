@@ -61,10 +61,10 @@ describe('useLayerActions', () => {
     expect(result.current.canElementMoveForwards).toBe(false);
     expect(result.current.canElementMoveBackwards).toBe(false);
 
-    result.current.onSendBackward();
-    result.current.onSendToBack();
-    result.current.onBringForward();
-    result.current.onBringToFront();
+    result.current.handleSendBackward();
+    result.current.handleSendToBack();
+    result.current.handleBringForward();
+    result.current.handleBringToFront();
 
     expect(mockArrangeElement).not.toHaveBeenCalled();
   });
@@ -77,7 +77,7 @@ describe('useLayerActions', () => {
 
     const { result } = renderHook(() => useLayerActions());
 
-    result.current.onSendBackward();
+    result.current.handleSendBackward();
 
     expect(result.current.canElementMoveBackwards).toBe(false);
     expect(result.current.canElementMoveForwards).toBe(false);
@@ -87,7 +87,7 @@ describe('useLayerActions', () => {
     it('should move the selected layer backwards', () => {
       const { result } = renderHook(() => useLayerActions());
 
-      result.current.onSendBackward();
+      result.current.handleSendBackward();
 
       expect(mockArrangeElement).toHaveBeenCalledWith({
         elementId: ELEMENT.id,
@@ -98,7 +98,7 @@ describe('useLayerActions', () => {
     it('should move the selected layer all the way back', () => {
       const { result } = renderHook(() => useLayerActions());
 
-      result.current.onSendToBack();
+      result.current.handleSendToBack();
 
       expect(mockArrangeElement).toHaveBeenCalledWith({
         elementId: ELEMENT.id,
@@ -121,7 +121,7 @@ describe('useLayerActions', () => {
 
       const { result } = renderHook(() => useLayerActions());
 
-      result.current.onSendBackward();
+      result.current.handleSendBackward();
 
       expect(result.current.canElementMoveBackwards).toBe(false);
     });
@@ -131,7 +131,7 @@ describe('useLayerActions', () => {
     it('should move the selected layer forwards', () => {
       const { result } = renderHook(() => useLayerActions());
 
-      result.current.onBringForward();
+      result.current.handleBringForward();
 
       expect(mockArrangeElement).toHaveBeenCalledWith({
         elementId: ELEMENT.id,
@@ -142,7 +142,7 @@ describe('useLayerActions', () => {
     it('should move the selected layer all the way forward', () => {
       const { result } = renderHook(() => useLayerActions());
 
-      result.current.onBringToFront();
+      result.current.handleBringToFront();
 
       expect(mockArrangeElement).toHaveBeenCalledWith({
         elementId: ELEMENT.id,
@@ -165,7 +165,7 @@ describe('useLayerActions', () => {
 
       const { result } = renderHook(() => useLayerActions());
 
-      result.current.onSendBackward();
+      result.current.handleSendBackward();
 
       expect(result.current.canElementMoveForwards).toBe(false);
     });

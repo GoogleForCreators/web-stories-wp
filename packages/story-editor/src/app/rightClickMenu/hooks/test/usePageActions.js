@@ -65,7 +65,7 @@ describe('usePageActions', () => {
     it('should add a page at a specific position', () => {
       const { result } = renderHook(() => usePageActions());
 
-      result.current.onAddPageAtPosition(4);
+      result.current.handleAddPageAtPosition(4);
 
       expect(mockAddPageAt).toHaveBeenCalledWith({
         page: { id: 'new-page', elements: [] },
@@ -76,7 +76,7 @@ describe('usePageActions', () => {
     it('should add a position at the end if there are less pages than specified', () => {
       const { result } = renderHook(() => usePageActions());
 
-      result.current.onAddPageAtPosition(10000);
+      result.current.handleAddPageAtPosition(10000);
 
       expect(mockAddPageAt).toHaveBeenCalledWith({
         page: { id: 'new-page', elements: [] },
@@ -87,7 +87,7 @@ describe('usePageActions', () => {
     it('should add a position at the start if a negative number is specified', () => {
       const { result } = renderHook(() => usePageActions());
 
-      result.current.onAddPageAtPosition(-1);
+      result.current.handleAddPageAtPosition(-1);
 
       expect(mockAddPageAt).toHaveBeenCalledWith({
         page: expect.any(Object),
@@ -100,7 +100,7 @@ describe('usePageActions', () => {
     it('should duplicate the current page and put it at the end of all existing pages', () => {
       const { result } = renderHook(() => usePageActions());
 
-      result.current.onDuplicatePage();
+      result.current.handleDuplicatePage();
 
       expect(mockDuplicatePage).toHaveBeenCalledWith({
         id: 'current-page',
@@ -117,7 +117,7 @@ describe('usePageActions', () => {
     it('should delete the current page', () => {
       const { result } = renderHook(() => usePageActions());
 
-      result.current.onDeletePage();
+      result.current.handleDeletePage();
 
       expect(mockDeleteCurrentPage).toHaveBeenCalledTimes(1);
     });
