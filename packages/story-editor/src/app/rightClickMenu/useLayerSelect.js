@@ -87,6 +87,9 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
   }, [currentPage, x, y, nodesById]);
 
   const subMenuItems = useMemo(() => {
+    if (!isMenuOpen) {
+      return [];
+    }
     const intersectingElements = getIntersectingElements();
     // If the only intersecting element is the selected element, don't display the menu.
     if (
@@ -120,6 +123,7 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
     });
   }, [
     getIntersectingElements,
+    isMenuOpen,
     menuItemProps,
     setSelectedElementsById,
     selectedElements,
