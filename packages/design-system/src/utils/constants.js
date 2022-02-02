@@ -45,3 +45,9 @@ export const OverlayType = {
   LINEAR: 'linear',
   RADIAL: 'radial',
 };
+
+export const DEFAULT_ATTRIBUTES_FOR_MEDIA = {
+  scale: 100,
+  focalX: 50,
+  focalY: 50,
+};

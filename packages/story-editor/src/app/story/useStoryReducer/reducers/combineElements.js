@@ -22,11 +22,11 @@ import {
   canSupportMultiBorder,
   canMaskHaveBorder,
 } from '@googleforcreators/masks';
+import { DEFAULT_ATTRIBUTES_FOR_MEDIA } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
-import { DEFAULT_ATTRIBUTES_FOR_MEDIA } from '../../../../constants';
 import objectPick from '../../../../utils/objectPick';
 import objectWithout from '../../../../utils/objectWithout';
 import { removeAnimationsWithElementIds } from './utils';

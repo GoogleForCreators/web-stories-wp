@@ -16,12 +16,7 @@
 /**
  * External dependencies
  */
-import { PanelTypes } from '@googleforcreators/design-system';
-
-/**
- * Internal dependencies
- */
-import { DEFAULT_ATTRIBUTES_FOR_MEDIA } from '../../constants';
+import { PanelTypes, DEFAULT_ATTRIBUTES_FOR_MEDIA } from '@googleforcreators/design-system';
 
 export const MEDIA_DEFAULT_ATTRIBUTES = {
   ...DEFAULT_ATTRIBUTES_FOR_MEDIA,
