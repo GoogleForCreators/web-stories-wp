@@ -189,10 +189,11 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
       // Then click the text set
       await fixture.events.click(textSets[1]);
       await waitFor(
-        () =>
-          expect(
-            fixture.editor.canvas.framesLayer.frames[1].node
-          ).toBeDefined(),
+        () => {
+          if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+            throw new Error('node not ready');
+          }
+        },
         { timeout: 5000 }
       );
       const selection = await getSelection();
