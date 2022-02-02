@@ -24,11 +24,10 @@ import { Slider } from '@googleforcreators/design-system';
 import { BG_MIN_SCALE, BG_MAX_SCALE } from '@googleforcreators/animation';
 import { InOverlay } from '@googleforcreators/moveable';
 
-/**
- * Internal dependencies
- */
-import { Z_INDEX_CANVAS } from '../../constants';
-
+const Z_INDEX_CANVAS = {
+  MOVABLE: 10,
+  FLOAT_PANEL: 11,
+};
 const MIN_WIDTH = 165;
 const HEIGHT = 36;
 const OFFSET_Y = 8;

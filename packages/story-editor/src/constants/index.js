@@ -59,11 +59,6 @@ export const LAYER_DIRECTIONS = {
   BACKWARD: 'BACKWARD',
 };
 
-export const Z_INDEX_CANVAS = {
-  MOVABLE: 10,
-  FLOAT_PANEL: 11,
-};
-
 export const FONT_WEIGHT = {
   NORMAL: 400,
   MEDIUM: 500,
