@@ -104,13 +104,18 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
         fixture.editor.library.pageTemplatesPane.pageTemplates.length
       ).toBe(1);
 
-      // Hover the added template to reveal the delete button.
+      // Hover the added template to reveal the menu.
       await fixture.events.hover(
         fixture.editor.library.pageTemplatesPane.pageTemplates[0]
       );
+      // Open the menu and choose "Delete" option.
       await fixture.events.click(
-        fixture.editor.library.pageTemplatesPane.deleteTemplateBtn
+        fixture.editor.library.pageTemplatesPane.menuBtn
       );
+      await fixture.events.click(
+        fixture.screen.getByRole('menuitem', { name: 'Delete' })
+      );
+
       await waitFor(() => {
         expect(fixture.screen.getByRole('dialog')).toBeTruthy();
       });
@@ -142,9 +147,13 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
         fixture.editor.library.pageTemplatesPane.pageTemplates.length
       ).toBe(1);
 
-      await fixture.events.click(
-        fixture.editor.library.pageTemplatesPane.pageTemplates[0]
-      );
+      const template =
+        fixture.editor.library.pageTemplatesPane.pageTemplates[0];
+      await fixture.events.mouse.seq(({ moveRel, down, up }) => [
+        moveRel(template, 20, 20),
+        down(),
+        up(),
+      ]);
       await fixture.events.sleep(200);
       const { pages, currentPage } = await fixture.renderHook(() =>
         useStory(({ state }) => {
@@ -182,6 +191,14 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
       await fixture.events.keyboard.press('Tab');
       await fixture.events.keyboard.press('Tab');
       await fixture.events.keyboard.press('Space');
+
+      await waitFor(() => {
+        expect(
+          fixture.screen.getByRole('menuitem', { name: 'Delete' })
+        ).toBeTruthy();
+      });
+      await fixture.events.keyboard.press('down');
+      await fixture.events.keyboard.press('Enter');
 
       await fixture.events.sleep(200);
 
