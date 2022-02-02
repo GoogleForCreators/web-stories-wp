@@ -23,7 +23,7 @@ import { resourceList } from '@googleforcreators/media';
 /**
  * Internal dependencies
  */
-import { TestDisplayElement } from '../../../components/canvas/test/_utils';
+import { TestDisplayElement } from './_utils';
 
 /* eslint-disable testing-library/no-node-access, testing-library/no-container */
 
