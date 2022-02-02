@@ -25,6 +25,10 @@ import { useUnits } from '@googleforcreators/units';
 import { useTransformHandler } from '@googleforcreators/transform';
 import { getHTMLFormatters, getHTMLInfo } from '@googleforcreators/rich-text';
 import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
+import {
+  getResponsiveBorder,
+  shouldDisplayBorder,
+} from '@googleforcreators/masks';
 
 /**
  * Internal dependencies
@@ -40,10 +44,6 @@ import {
 } from '../shared';
 import { StoryPropTypes } from '../types';
 import stripHTML from '../../utils/stripHTML';
-import {
-  getResponsiveBorder,
-  shouldDisplayBorder,
-} from '../../utils/elementBorder';
 import { useColorTransformHandler } from '../shared';
 import {
   getHighlightLineheight,

@@ -16,7 +16,7 @@
 /**
  * External dependencies.
  */
-import { canMaskHaveBorder, canSupportMultiBorder } from '@googleforcreators/masks';
+import { canMaskHaveBorder, canSupportMultiBorder } from '..';
 
 function hasBorder({ border }) {
   if (!border) {

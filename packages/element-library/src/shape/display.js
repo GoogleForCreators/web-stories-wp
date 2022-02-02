@@ -22,6 +22,10 @@ import { useRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { useUnits } from '@googleforcreators/units';
 import { useTransformHandler } from '@googleforcreators/transform';
+import {
+  getResponsiveBorder,
+  shouldDisplayBorder,
+} from '@googleforcreators/masks';
 
 /**
  * Internal dependencies
@@ -32,10 +36,6 @@ import {
   elementWithBorder,
 } from '../shared';
 import { StoryPropTypes } from '../types';
-import {
-  getResponsiveBorder,
-  shouldDisplayBorder,
-} from '../../utils/elementBorder';
 import { useColorTransformHandler } from '../shared';
 
 const Element = styled.div`

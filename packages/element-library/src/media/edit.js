@@ -32,7 +32,7 @@ import {
   calculateSrcSet,
 } from '@googleforcreators/media';
 import { BG_MIN_SCALE, BG_MAX_SCALE } from '@googleforcreators/animation';
-import { DisplayWithMask as WithMask } from '@googleforcreators/masks';
+import { DisplayWithMask as WithMask, shouldDisplayBorder } from '@googleforcreators/masks';
 
 /**
  * Internal dependencies
@@ -40,7 +40,6 @@ import { DisplayWithMask as WithMask } from '@googleforcreators/masks';
 import { elementFillContent, elementWithFlip, getTransformFlip } from '../shared';
 import { useStory } from '../../app';
 import { StoryPropTypes } from '../types';
-import { shouldDisplayBorder } from '../../utils/elementBorder';
 import useCORSProxy from '../../utils/useCORSProxy';
 import EditCropMoveable from './editCropMoveable';
 import { mediaWithScale } from './util';

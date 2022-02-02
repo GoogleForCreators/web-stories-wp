@@ -19,14 +19,18 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { useRef } from '@googleforcreators/react';
+import { useUnits } from '@googleforcreators/units';
 import { getMediaSizePositionProps } from '@googleforcreators/media';
 import { useTransformHandler } from '@googleforcreators/transform';
+import {
+  getResponsiveBorder,
+  shouldDisplayBorder,
+} from '@googleforcreators/masks';
 
 /**
  * Internal dependencies
  */
-import { useRef } from '@googleforcreators/react';
-import { useUnits } from '@googleforcreators/units';
 import { StoryPropTypes } from '../types';
 import {
   elementFillContent,
@@ -34,10 +38,6 @@ import {
   elementWithBackgroundColor,
   useColorTransformHandler
 } from '../shared';
-import {
-  getResponsiveBorder,
-  shouldDisplayBorder,
-} from '../../utils/elementBorder';
 import { getMediaWithScaleCss } from './util';
 
 const Element = styled.div.attrs({ className: 'story-media-display-element' })`

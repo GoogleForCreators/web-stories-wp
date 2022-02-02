@@ -36,6 +36,10 @@ import {
   useRichText,
 } from '@googleforcreators/rich-text';
 import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
+import {
+  getBorderPositionCSS,
+  shouldDisplayBorder,
+} from '@googleforcreators/masks';
 
 /**
  * Internal dependencies
@@ -52,10 +56,6 @@ import {
 import { StoryPropTypes } from '../types';
 import stripHTML from '../../utils/stripHTML';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
-import {
-  getBorderPositionCSS,
-  shouldDisplayBorder,
-} from '../../utils/elementBorder';
 import useCSSVarColorTransformHandler from '../shared/useCSSVarColorTransformHandler';
 import useColorTransformHandler from '../shared/useColorTransformHandler';
 import {

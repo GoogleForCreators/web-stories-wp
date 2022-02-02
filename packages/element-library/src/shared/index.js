@@ -19,12 +19,12 @@
  */
 import { css } from 'styled-components';
 import { generatePatternStyles } from '@googleforcreators/patterns';
+import { getBorderStyle, getBorderRadius } from '@googleforcreators/masks';
 
 /**
  * Internal dependencies
  */
 import { generateFontFamily } from '../text/util';
-import { getBorderStyle, getBorderRadius } from '../../utils/elementBorder';
 
 export const elementFillContent = css`
   position: absolute;

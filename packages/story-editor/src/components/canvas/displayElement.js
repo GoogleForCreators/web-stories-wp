@@ -31,17 +31,17 @@ import {
   elementWithSize,
   useColorTransformHandler
 } from '@googleforcreators/element-library';
-import { DisplayWithMask as WithMask } from '@googleforcreators/masks';
+import {
+  DisplayWithMask as WithMask,
+  getBorderPositionCSS,
+  getResponsiveBorder,
+  shouldDisplayBorder,
+} from '@googleforcreators/masks';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import {
-  getBorderPositionCSS,
-  getResponsiveBorder,
-  shouldDisplayBorder,
-} from '../../utils/elementBorder';
 
 // Using attributes to avoid creation of hundreds of classes by styled components for previewMode.
 const Wrapper = styled.div.attrs(
