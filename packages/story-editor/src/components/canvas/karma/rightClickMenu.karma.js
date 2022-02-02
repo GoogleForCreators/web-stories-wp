@@ -17,7 +17,10 @@
  * External dependencies
  */
 import { waitFor, within } from '@testing-library/react';
-import { imageAttributeDefaults, textAttributeDefaults } from '@googleforcreators/element-library';
+import {
+  imageAttributeDefaults,
+  textAttributeDefaults,
+} from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies

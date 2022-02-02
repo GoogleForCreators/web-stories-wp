@@ -20,7 +20,10 @@
 import PropTypes from 'prop-types';
 import { useCallback } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
-import { canSupportMultiBorder, canMaskHaveBorder } from '@googleforcreators/masks';
+import {
+  canSupportMultiBorder,
+  canMaskHaveBorder,
+} from '@googleforcreators/masks';
 
 /**
  * Internal dependencies

@@ -16,6 +16,9 @@
 /**
  * External dependencies.
  */
+/**
+ * Internal dependencies
+ */
 import { canMaskHaveBorder, canSupportMultiBorder } from '..';
 
 function hasBorder({ border }) {

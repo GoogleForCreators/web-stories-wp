@@ -21,7 +21,7 @@ import { resourceList } from '@googleforcreators/media';
 /**
  * Internal dependencies
  */
-import { Fixture } from '../../../karma';
+import { Fixture } from '../../fixture';
 import { useStory } from '../../../app/story';
 
 describe('Image resource loading integration', () => {

@@ -20,7 +20,10 @@
 import { createSolid } from '@googleforcreators/patterns';
 import { PAGE_WIDTH } from '@googleforcreators/units';
 import { getDefinitionForType } from '@googleforcreators/elements';
-import { SHARED_DEFAULT_ATTRIBUTES, MEDIA_DEFAULT_ATTRIBUTES } from '@googleforcreators/element-library';
+import {
+  SHARED_DEFAULT_ATTRIBUTES,
+  MEDIA_DEFAULT_ATTRIBUTES,
+} from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies

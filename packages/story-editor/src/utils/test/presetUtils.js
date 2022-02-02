@@ -15,7 +15,7 @@
  */
 
 /**
- * External dependencies.
+ * External dependencies
  */
 import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
 

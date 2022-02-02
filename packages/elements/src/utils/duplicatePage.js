@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * External dependencies.
+ * External dependencies
  */
 import { objectWithout } from '@googleforcreators/design-system';
 

@@ -18,7 +18,11 @@
  * External dependencies
  */
 import { renderToStaticMarkup } from '@googleforcreators/react';
-import { getDefinitionForType, duplicatePage, getOffsetCoordinates } from '@googleforcreators/elements';
+import {
+  getDefinitionForType,
+  duplicatePage,
+  getOffsetCoordinates,
+} from '@googleforcreators/elements';
 
 const DOUBLE_DASH_ESCAPE = '_DOUBLEDASH_';
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * External dependencies.
+ * External dependencies
  */
 import { PanelTypes } from '@googleforcreators/design-system';
 import { elementTypes } from '@googleforcreators/elements';

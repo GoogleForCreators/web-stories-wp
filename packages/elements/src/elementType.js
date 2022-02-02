@@ -16,11 +16,8 @@
 
 const elementTypes = [];
 
-function registerElementType( elementType ) {
-  elementTypes.push( elementType );
+function registerElementType(elementType) {
+  elementTypes.push(elementType);
 }
 
-export {
-  registerElementType,
-  elementTypes
-};
+export { registerElementType, elementTypes };

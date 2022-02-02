@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * External dependencies.
+ * External dependencies
  */
 import { getDefinitionForType } from '@googleforcreators/elements';
 

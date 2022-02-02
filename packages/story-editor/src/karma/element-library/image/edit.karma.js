@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { Fixture } from '../../../karma';
+import { Fixture } from '../../fixture';
 import { useStory } from '../../../app/story';
 
 describe('Image Editor', () => {

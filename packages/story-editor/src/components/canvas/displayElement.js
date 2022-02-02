@@ -29,7 +29,7 @@ import {
   elementWithPosition,
   elementWithRotation,
   elementWithSize,
-  useColorTransformHandler
+  useColorTransformHandler,
 } from '@googleforcreators/element-library';
 import {
   DisplayWithMask as WithMask,

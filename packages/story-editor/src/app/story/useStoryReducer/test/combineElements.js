@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * External dependencies.
+ * External dependencies
  */
 import { MaskTypes } from '@googleforcreators/masks';
 

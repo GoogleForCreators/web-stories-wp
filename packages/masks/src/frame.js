@@ -20,7 +20,10 @@
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { useRef, useEffect, useState } from '@googleforcreators/react';
-import { StoryPropTypes, getTransformFlip } from '@googleforcreators/element-library';
+import {
+  StoryPropTypes,
+  getTransformFlip,
+} from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies

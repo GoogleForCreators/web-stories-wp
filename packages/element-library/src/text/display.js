@@ -41,10 +41,10 @@ import {
   elementWithTextParagraphStyle,
   elementWithBorder,
   elementWithHighlightBorderRadius,
+  useColorTransformHandler,
 } from '../shared';
 import { StoryPropTypes } from '../types';
 import stripHTML from '../../utils/stripHTML';
-import { useColorTransformHandler } from '../shared';
 import {
   getHighlightLineheight,
   generateParagraphTextStyle,

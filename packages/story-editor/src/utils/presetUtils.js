@@ -30,10 +30,7 @@ import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import {
-  MULTIPLE_VALUE,
-  PRESET_TYPES,
-} from '../constants';
+import { MULTIPLE_VALUE, PRESET_TYPES } from '../constants';
 import objectPick from './objectPick';
 
 const TEXT_PRESET_STYLES = [

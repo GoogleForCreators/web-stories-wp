@@ -62,9 +62,9 @@ function StoryEditor({ config, initialEdits, children }) {
   const _config = useMemo(() => deepMerge(defaultConfig, config), [config]);
   const { storyId, isRTL, flags } = _config;
 
-  useEffect( () => {
-    elementTypes.forEach( registerElementType );
-  }, [] );
+  useEffect(() => {
+    elementTypes.forEach(registerElementType);
+  }, []);
 
   return (
     <FlagsProvider features={flags}>

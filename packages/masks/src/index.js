@@ -20,4 +20,3 @@ export * from './utils/elementBorder';
 export { default as DisplayWithMask } from './display';
 export { default as FrameWithMask } from './frame';
 export { default as OutputWithMask } from './output';
-

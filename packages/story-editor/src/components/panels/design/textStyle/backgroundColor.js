@@ -21,7 +21,10 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useCallback, useRef } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
-import { PillGroup, BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
+import {
+  PillGroup,
+  BACKGROUND_TEXT_MODE,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

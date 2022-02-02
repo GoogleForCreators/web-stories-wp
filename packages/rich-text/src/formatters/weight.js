@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * External dependencies.
+ * External dependencies
  */
 import { MULTIPLE_VALUE } from '@googleforcreators/design-system';
 

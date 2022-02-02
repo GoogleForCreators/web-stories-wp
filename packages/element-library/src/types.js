@@ -21,7 +21,11 @@ import PropTypes from 'prop-types';
 import { PatternPropType } from '@googleforcreators/patterns';
 import { ResourcePropTypes } from '@googleforcreators/media';
 import { AnimationProps } from '@googleforcreators/animation';
-import { BACKGROUND_TEXT_MODE, MULTIPLE_VALUE, OverlayType } from '@googleforcreators/design-system';
+import {
+  BACKGROUND_TEXT_MODE,
+  MULTIPLE_VALUE,
+  OverlayType,
+} from '@googleforcreators/design-system';
 
 const StoryPropTypes = {};
 

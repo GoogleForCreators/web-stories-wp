@@ -18,7 +18,10 @@
  * External dependencies
  */
 import { createSolid } from '@googleforcreators/patterns';
-import { PanelTypes, BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
+import {
+  PanelTypes,
+  BACKGROUND_TEXT_MODE,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

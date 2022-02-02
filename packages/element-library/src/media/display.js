@@ -36,7 +36,7 @@ import {
   elementFillContent,
   elementWithBorder,
   elementWithBackgroundColor,
-  useColorTransformHandler
+  useColorTransformHandler,
 } from '../shared';
 import { getMediaWithScaleCss } from './util';
 

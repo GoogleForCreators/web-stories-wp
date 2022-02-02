@@ -34,7 +34,11 @@ import {
   elementWithSize,
   elementWithRotation,
 } from '@googleforcreators/element-library';
-import { FrameWithMask as WithMask, getElementMask, MaskTypes } from '@googleforcreators/masks';
+import {
+  FrameWithMask as WithMask,
+  getElementMask,
+  MaskTypes,
+} from '@googleforcreators/masks';
 
 /**
  * Internal dependencies

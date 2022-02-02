@@ -31,7 +31,11 @@ import {
   useRef,
 } from '@googleforcreators/react';
 import { v4 as uuidv4 } from 'uuid';
-import { createPage, duplicatePage, ELEMENT_TYPES } from '@googleforcreators/elements';
+import {
+  createPage,
+  duplicatePage,
+  ELEMENT_TYPES,
+} from '@googleforcreators/elements';
 
 /** @typedef {import('react')} Node */
 

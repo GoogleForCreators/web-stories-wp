@@ -109,7 +109,7 @@ export const elementWithFlip = css`
   transform: ${({ transformFlip }) => transformFlip};
 `;
 
-export * from './constants'
+export * from './constants';
 export { LayerText } from './layerText';
 export { default as useColorTransformHandler } from './useColorTransformHandler';
 export { default as getTransformFlip } from './getTransformFlip';

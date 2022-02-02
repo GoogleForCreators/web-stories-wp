@@ -32,7 +32,10 @@ import {
   Tooltip,
 } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
-import { getDefinitionForType, createNewElement } from '@googleforcreators/elements';
+import {
+  getDefinitionForType,
+  createNewElement,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies

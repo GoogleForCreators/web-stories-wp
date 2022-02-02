@@ -18,7 +18,10 @@
  * External dependencies
  */
 import { v4 as uuidv4 } from 'uuid';
-import { canSupportMultiBorder, canMaskHaveBorder } from '@googleforcreators/masks';
+import {
+  canSupportMultiBorder,
+  canMaskHaveBorder,
+} from '@googleforcreators/masks';
 
 /**
  * Internal dependencies
