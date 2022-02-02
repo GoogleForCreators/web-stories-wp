@@ -27,9 +27,9 @@
     "php-stubs/wordpress-stubs": "^v5.9.0",
     "phpcompatibility/phpcompatibility-wp": "^2.1",
     "phpmd/phpmd": "^2.9",
-    "phpstan/phpstan": "^1.4",
     "roave/security-advisories": "dev-latest",
     "sirbrillig/phpcs-variable-analysis": "^2.8",
+    "szepeviktor/phpstan-wordpress": "^1.0",
     "wp-coding-standards/wpcs": "^2.3",
     "yoast/wp-test-utils": "^1.0.0"
   },

@@ -1,18 +1,6 @@
 services:
   -
-    class: SzepeViktor\PHPStan\WordPress\IsWpErrorFunctionTypeSpecifyingExtension
-    tags:
-      - phpstan.typeSpecifier.functionTypeSpecifyingExtension
-  -
-    class: SzepeViktor\PHPStan\WordPress\GetPostDynamicFunctionReturnTypeExtension
-    tags:
-      - phpstan.broker.dynamicFunctionReturnTypeExtension
-  -
     class: SzepeViktor\PHPStan\WordPress\GetTermsDynamicFunctionReturnTypeExtension
-    tags:
-      - phpstan.broker.dynamicFunctionReturnTypeExtension
-  -
-    class: SzepeViktor\PHPStan\WordPress\GetPostsDynamicFunctionReturnTypeExtension
     tags:
       - phpstan.broker.dynamicFunctionReturnTypeExtension
   -
@@ -23,13 +11,9 @@ services:
     class: SzepeViktor\PHPStan\WordPress\ServicesDynamicReturnTypeExtension
     tags:
       - phpstan.broker.dynamicStaticMethodReturnTypeExtension
-  -
-    class: SzepeViktor\PHPStan\WordPress\ApplyFiltersDynamicFunctionReturnTypeExtension
-    tags:
-      - phpstan.broker.dynamicFunctionReturnTypeExtension
 
-rules:
-  - SzepeViktor\PHPStan\WordPress\HookDocsRule
+includes:
+    - vendor/szepeviktor/phpstan-wordpress/extension.neon
 
 parameters:
   level: 9
@@ -52,7 +36,6 @@ parameters:
     - tests/phpstan/stubs/wordpress-override.php
   bootstrapFiles:
     - vendor/php-stubs/wordpress-stubs/wordpress-stubs.php
-    - tests/phpstan/stubs/wordpress-defines.php
     - tests/phpstan/bootstrap.php
     - third-party/vendor/ampproject/amp-wp/includes/sanitizers/class-amp-base-sanitizer.php
     - third-party/vendor/ampproject/amp-wp/includes/sanitizers/class-amp-meta-sanitizer.php
