@@ -296,11 +296,9 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 *
 	 * @global WP_Rewrite $wp_rewrite WordPress rewrite component.
 	 *
-	 * @param  mixed $has_archive Has archive override.
-	 * @return string|false The post type archive permalink. False if the post type
-	 *                      does not exist or does not have an archive.
+	 * @return string|false The post type archive permalink. False if the post type does not exist.
 	 */
-	public function get_archive_link( $has_archive = null ) {
+	public function get_archive_link() {
 		global $wp_rewrite;
 
 		$post_type_obj = $this->get_object();
@@ -308,9 +306,45 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 			return false;
 		}
 
-		if ( get_option( 'permalink_structure' ) && is_array( $post_type_obj->rewrite ) ) {
-			$has_archive = null === $has_archive ? $post_type_obj->has_archive : $has_archive;
-			$struct      = ( true === $has_archive ) ? $post_type_obj->rewrite['slug'] : $has_archive;
+		if ( is_array( $post_type_obj->rewrite ) && get_option( 'permalink_structure' ) ) {
+			$struct = true === $post_type_obj->has_archive ? $post_type_obj->rewrite['slug'] : $post_type_obj->has_archive;
+			if ( $post_type_obj->rewrite['with_front'] ) {
+				$struct = $wp_rewrite->front . $struct;
+			} else {
+				$struct = $wp_rewrite->root . $struct;
+			}
+			$link = home_url( user_trailingslashit( $struct, 'post_type_archive' ) );
+		} else {
+			$link = home_url( '?post_type=' . $this->get_slug() );
+		}
+
+		/** This filter is documented in wp-includes/link-template.php */
+		return apply_filters( 'post_type_archive_link', $link, $this->get_slug() );
+	}
+
+	/**
+	 * Retrieves the default permalink for a post type archive.
+	 *
+	 * Identical to {@see get_post_type_archive_link()}, but also returns a URL
+	 * if the archive page has been disabled.
+	 * Returns the default archive URL even if it was changed by the user.
+	 *
+	 * @since 1.18.0
+	 *
+	 * @global WP_Rewrite $wp_rewrite WordPress rewrite component.
+	 *
+	 * @return string|false The post type archive permalink. False if the post type does not exist.
+	 */
+	public function get_default_archive_link() {
+		global $wp_rewrite;
+
+		$post_type_obj = $this->get_object();
+		if ( ! $post_type_obj instanceof WP_Post_Type ) {
+			return false;
+		}
+
+		if ( is_array( $post_type_obj->rewrite ) && get_option( 'permalink_structure' ) ) {
+			$struct = $post_type_obj->rewrite['slug'];
 			if ( $post_type_obj->rewrite['with_front'] ) {
 				$struct = $wp_rewrite->front . $struct;
 			} else {
