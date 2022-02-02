@@ -28,9 +28,9 @@ function MultipleElementsMenu() {
   const { handleDuplicateSelectedElements } = useElementActions();
 
   return (
-    <ContextMenuComponents.MenuItem onClick={handleDuplicateSelectedElements}>
+    <ContextMenuComponents.MenuButton onClick={handleDuplicateSelectedElements}>
       {RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(1)}
-    </ContextMenuComponents.MenuItem>
+    </ContextMenuComponents.MenuButton>
   );
 }
 

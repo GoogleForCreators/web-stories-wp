@@ -42,48 +42,50 @@ function StickerMenu() {
     <>
       {/* TODO: Layer select items */}
 
-      <ContextMenuComponents.MenuItem onClick={handleDuplicateSelectedElements}>
+      <ContextMenuComponents.MenuButton
+        onClick={handleDuplicateSelectedElements}
+      >
         {RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(1)}
-      </ContextMenuComponents.MenuItem>
+      </ContextMenuComponents.MenuButton>
 
       <ContextMenuComponents.MenuSeparator />
 
-      <ContextMenuComponents.MenuItem
+      <ContextMenuComponents.MenuButton
         disabled={!canElementMoveBackwards}
         onClick={handleSendBackward}
       >
         {RIGHT_CLICK_MENU_LABELS.SEND_BACKWARD}
-        <ContextMenuComponents.Shortcut>
+        <ContextMenuComponents.MenuShortcut>
           {RIGHT_CLICK_MENU_SHORTCUTS.SEND_BACKWARD.display}
-        </ContextMenuComponents.Shortcut>
-      </ContextMenuComponents.MenuItem>
-      <ContextMenuComponents.MenuItem
+        </ContextMenuComponents.MenuShortcut>
+      </ContextMenuComponents.MenuButton>
+      <ContextMenuComponents.MenuButton
         disabled={!canElementMoveBackwards}
         onClick={handleSendToBack}
       >
         {RIGHT_CLICK_MENU_LABELS.SEND_TO_BACK}
-        <ContextMenuComponents.Shortcut>
+        <ContextMenuComponents.MenuShortcut>
           {RIGHT_CLICK_MENU_SHORTCUTS.SEND_TO_BACK.display}
-        </ContextMenuComponents.Shortcut>
-      </ContextMenuComponents.MenuItem>
-      <ContextMenuComponents.MenuItem
+        </ContextMenuComponents.MenuShortcut>
+      </ContextMenuComponents.MenuButton>
+      <ContextMenuComponents.MenuButton
         disabled={!canElementMoveForwards}
         onClick={handleBringForward}
       >
         {RIGHT_CLICK_MENU_LABELS.BRING_FORWARD}
-        <ContextMenuComponents.Shortcut>
+        <ContextMenuComponents.MenuShortcut>
           {RIGHT_CLICK_MENU_SHORTCUTS.BRING_FORWARD.display}
-        </ContextMenuComponents.Shortcut>
-      </ContextMenuComponents.MenuItem>
-      <ContextMenuComponents.MenuItem
+        </ContextMenuComponents.MenuShortcut>
+      </ContextMenuComponents.MenuButton>
+      <ContextMenuComponents.MenuButton
         disabled={!canElementMoveForwards}
         onClick={handleBringToFront}
       >
         {RIGHT_CLICK_MENU_LABELS.BRING_TO_FRONT}
-        <ContextMenuComponents.Shortcut>
+        <ContextMenuComponents.MenuShortcut>
           {RIGHT_CLICK_MENU_SHORTCUTS.BRING_TO_FRONT.display}
-        </ContextMenuComponents.Shortcut>
-      </ContextMenuComponents.MenuItem>
+        </ContextMenuComponents.MenuShortcut>
+      </ContextMenuComponents.MenuButton>
     </>
   );
 }

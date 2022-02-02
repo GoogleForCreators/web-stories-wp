@@ -27,12 +27,12 @@ import { useElementActions, usePageActions } from '../hooks';
 import { useStory } from '../../..';
 import { useLocalMedia } from '../..';
 
-function ForegroundMediaMenu() {
+function PageMenu() {
   const { currentPageIndex, canDeletePage, selectedElement } = useStory(
     ({ state }) => ({
       currentPageIndex: state.currentPageIndex,
       canDeletePage: state.pages.length > 1,
-      selectedElement: state.selectedElement,
+      selectedElement: state.selectedElements?.[0],
     })
   );
   const { handleOpenScaleAndCrop, handleRemovePageBackground } =
@@ -65,55 +65,55 @@ function ForegroundMediaMenu() {
     <>
       {/* TODO: Layer select items */}
 
-      <ContextMenuComponents.MenuItem
+      <ContextMenuComponents.MenuButton
         disabled={disableBackgroundMediaActions}
         onClick={handleRemovePageBackground}
       >
         {detachLabel}
-      </ContextMenuComponents.MenuItem>
+      </ContextMenuComponents.MenuButton>
 
-      <ContextMenuComponents.MenuItem
+      <ContextMenuComponents.MenuButton
         disabled={disableBackgroundMediaActions}
         onClick={handleOpenScaleAndCrop}
       >
         {scaleLabel}
-      </ContextMenuComponents.MenuItem>
+      </ContextMenuComponents.MenuButton>
 
       <ContextMenuComponents.MenuSeparator />
 
       {showTrimModeAction && (
         <>
-          <ContextMenuComponents.MenuItem
+          <ContextMenuComponents.MenuButton
             disabled={!canTranscodeResource(selectedElement?.resource)}
             onClick={toggleTrimMode}
           >
             {detachLabel}
-          </ContextMenuComponents.MenuItem>
+          </ContextMenuComponents.MenuButton>
           <ContextMenuComponents.MenuSeparator />
         </>
       )}
 
-      <ContextMenuComponents.MenuItem
+      <ContextMenuComponents.MenuButton
         onClick={() => handleAddPageAtPosition(currentPageIndex + 1)}
       >
         {RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_AFTER}
-      </ContextMenuComponents.MenuItem>
-      <ContextMenuComponents.MenuItem
+      </ContextMenuComponents.MenuButton>
+      <ContextMenuComponents.MenuButton
         onClick={() => handleAddPageAtPosition(currentPageIndex)}
       >
         {RIGHT_CLICK_MENU_LABELS.ADD_NEW_PAGE_BEFORE}
-      </ContextMenuComponents.MenuItem>
-      <ContextMenuComponents.MenuItem onClick={handleDuplicatePage}>
+      </ContextMenuComponents.MenuButton>
+      <ContextMenuComponents.MenuButton onClick={handleDuplicatePage}>
         {RIGHT_CLICK_MENU_LABELS.DUPLICATE_PAGE}
-      </ContextMenuComponents.MenuItem>
-      <ContextMenuComponents.MenuItem
+      </ContextMenuComponents.MenuButton>
+      <ContextMenuComponents.MenuButton
         disabled={!canDeletePage}
         onClick={handleDeletePage}
       >
         {RIGHT_CLICK_MENU_LABELS.DELETE_PAGE}
-      </ContextMenuComponents.MenuItem>
+      </ContextMenuComponents.MenuButton>
     </>
   );
 }
 
-export default ForegroundMediaMenu;
+export default PageMenu;
