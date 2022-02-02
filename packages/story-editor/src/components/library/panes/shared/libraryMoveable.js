@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 import { useCallback, useRef, useState } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { editorToDataX, editorToDataY } from '@googleforcreators/units';
-import { useKeyDownEffect } from '@googleforcreators/design-system';
+import { useKeyDownEffect, areEventsDragging } from '@googleforcreators/design-system';
 import { Moveable, InOverlay } from '@googleforcreators/moveable';
 /**
  * Internal dependencies
@@ -31,7 +31,6 @@ import { useDropTargets } from '../../../dropTargets';
 import { useLayout } from '../../../../app/layout';
 import useInsertElement from '../../../canvas/useInsertElement';
 import { useInsertTextSet } from '../../../canvas';
-import areEventsDragging from '../../../../utils/areEventsDragging';
 import isTargetOutOfContainer from '../../../../utils/isTargetOutOfContainer';
 import useSnapping from '../../../canvas/utils/useSnapping';
 import { useStory, useCanvas } from '../../../../app';
