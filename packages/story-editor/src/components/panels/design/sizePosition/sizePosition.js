@@ -35,9 +35,9 @@ import {
   BUTTON_SIZES,
   BUTTON_VARIANTS,
   Tooltip,
+  usePerformanceTracking
 } from '@googleforcreators/design-system';
 import { getDefinitionForType } from '@googleforcreators/elements';
-import { usePerformanceTracking } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies

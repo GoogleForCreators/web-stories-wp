@@ -26,11 +26,11 @@ import {
   Icons,
   themeHelpers,
   Tooltip,
+  usePerformanceTracking
 } from '@googleforcreators/design-system';
 import { useRef, memo } from '@googleforcreators/react';
 import { getDefinitionForType } from '@googleforcreators/elements';
 import { LayerText } from '@googleforcreators/element-library';
-import { usePerformanceTracking } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies

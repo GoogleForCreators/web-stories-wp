@@ -28,6 +28,7 @@ export { default as objectWithout } from './objectWithout';
 export { default as calcRotatedResizeOffset } from './calcRotatedResizeOffset';
 export { default as getKeyboardMovement } from './getKeyboardMovement';
 export { default as areEventsDragging } from './areEventsDragging';
+export { default as usePerformanceTracking } from './usePerformanceTracking';
 export { default as stripHTML } from './stripHTML';
 export { default as PanelTypes } from './panelTypes';
 export * from './multipleValue';

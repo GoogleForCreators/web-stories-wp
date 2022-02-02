@@ -24,7 +24,7 @@ import {
   StoryPropTypes,
   getTransformFlip,
 } from '@googleforcreators/element-library';
-import { usePerformanceTracking } from '@googleforcreators/tracking';
+import { usePerformanceTracking } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

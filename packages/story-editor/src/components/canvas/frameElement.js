@@ -39,7 +39,7 @@ import {
   getElementMask,
   MaskTypes,
 } from '@googleforcreators/masks';
-import { usePerformanceTracking } from '@googleforcreators/tracking';
+import { usePerformanceTracking } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

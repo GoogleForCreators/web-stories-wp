@@ -27,8 +27,8 @@ import {
   BUTTON_VARIANTS,
   BUTTON_TYPES,
   BUTTON_SIZES,
+  usePerformanceTracking
 } from '@googleforcreators/design-system';
-import { usePerformanceTracking } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies

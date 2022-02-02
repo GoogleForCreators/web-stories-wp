@@ -27,8 +27,8 @@ import {
   THEME_CONSTANTS,
   themeHelpers,
   ThemeGlobals,
+  usePerformanceTracking
 } from '@googleforcreators/design-system';
-import { usePerformanceTracking } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies

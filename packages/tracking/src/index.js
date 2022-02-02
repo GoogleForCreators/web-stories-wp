@@ -27,7 +27,6 @@ import trackEvent from './trackEvent';
 import trackTiming from './trackTiming';
 import trackScreenView from './trackScreenView';
 import getTimeTracker from './getTimeTracker';
-import usePerformanceTracking from './usePerformanceTracking';
 
 export {
   initializeTracking,
@@ -40,5 +39,4 @@ export {
   trackEvent,
   trackTiming,
   getTimeTracker,
-  usePerformanceTracking,
 };

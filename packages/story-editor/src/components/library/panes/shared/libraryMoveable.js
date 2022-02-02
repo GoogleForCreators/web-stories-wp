@@ -24,9 +24,9 @@ import { editorToDataX, editorToDataY } from '@googleforcreators/units';
 import {
   useKeyDownEffect,
   areEventsDragging,
+  usePerformanceTracking
 } from '@googleforcreators/design-system';
 import { Moveable, InOverlay } from '@googleforcreators/moveable';
-import { usePerformanceTracking } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies

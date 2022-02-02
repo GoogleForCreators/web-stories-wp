@@ -30,7 +30,7 @@ import {
 } from '@googleforcreators/react';
 import { useFeature } from 'flagged';
 import { TransformProvider } from '@googleforcreators/transform';
-import { usePerformanceTracking } from '@googleforcreators/tracking';
+import { usePerformanceTracking } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
