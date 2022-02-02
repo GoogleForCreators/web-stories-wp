@@ -35,7 +35,7 @@ import {
   getHTMLInfo,
   useRichText,
 } from '@googleforcreators/rich-text';
-import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
+import { BACKGROUND_TEXT_MODE, calcRotatedResizeOffset } from '@googleforcreators/design-system';
 import {
   getBorderPositionCSS,
   shouldDisplayBorder,
@@ -55,7 +55,6 @@ import {
 } from '../shared';
 import { StoryPropTypes } from '../types';
 import stripHTML from '../../utils/stripHTML';
-import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import useCSSVarColorTransformHandler from '../shared/useCSSVarColorTransformHandler';
 import useColorTransformHandler from '../shared/useColorTransformHandler';
 import {

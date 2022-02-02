@@ -25,6 +25,7 @@ export { default as deepMerge } from './deepMerge';
 export { default as useMouseDownOutsideRef } from './useMouseDownOutsideRef';
 export { default as pointerEventsCss } from './pointerEventsCss';
 export { default as objectWithout } from './objectWithout';
+export { default as calcRotatedResizeOffset } from './calcRotatedResizeOffset';
 export { default as PanelTypes } from './panelTypes';
 export * from './multipleValue';
 export * from './constants';
