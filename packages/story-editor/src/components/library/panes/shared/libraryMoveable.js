@@ -21,7 +21,10 @@ import PropTypes from 'prop-types';
 import { useCallback, useRef, useState } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { editorToDataX, editorToDataY } from '@googleforcreators/units';
-import { useKeyDownEffect, areEventsDragging } from '@googleforcreators/design-system';
+import {
+  useKeyDownEffect,
+  areEventsDragging,
+} from '@googleforcreators/design-system';
 import { Moveable, InOverlay } from '@googleforcreators/moveable';
 /**
  * Internal dependencies
