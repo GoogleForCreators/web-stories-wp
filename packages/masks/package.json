@@ -13,6 +13,7 @@
 	"type": "module",
 	"dependencies": {
 		"@googleforcreators/elements":"*",
+		"@googleforcreators/element-library": "*",
 		"@googleforcreators/fonts": "*",
 		"@googleforcreators/i18n": "*",
 		"@googleforcreators/masks":"*",

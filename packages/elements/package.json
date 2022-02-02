@@ -13,6 +13,7 @@
 	"type": "module",
 	"dependencies": {
 		"@googleforcreators/animation": "*",
+		"@googleforcreators/design-system": "*",
 		"@googleforcreators/i18n": "*",
 		"@googleforcreators/fonts": "*",
 		"@googleforcreators/media": "*",

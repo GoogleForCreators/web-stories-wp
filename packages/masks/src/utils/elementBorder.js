@@ -14,12 +14,9 @@
  * limitations under the License.
  */
 /**
- * External dependencies.
- */
-/**
  * Internal dependencies
  */
-import { canMaskHaveBorder, canSupportMultiBorder } from '..';
+import { canMaskHaveBorder, canSupportMultiBorder } from '../masks';
 
 function hasBorder({ border }) {
   if (!border) {

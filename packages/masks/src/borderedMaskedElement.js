@@ -24,11 +24,11 @@ import {
   StoryPropTypes,
   getTransformFlip,
 } from '@googleforcreators/element-library';
+import { getBorderColor } from '@googleforcreators/masks';
 
 /**
  * Internal dependencies
  */
-import { getBorderColor } from '../utils/elementBorder';
 import { MaskTypes } from './constants';
 import {
   getElementMask,
