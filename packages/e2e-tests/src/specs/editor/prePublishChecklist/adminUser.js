@@ -52,6 +52,10 @@ describe('Pre-Publish Checklist : Admin User', () => {
 
   it('should show that there is no poster attached to the story', async () => {
     await expect(page).toClick('[data-testid^="mediaElement"]');
+    const insertButton = await page.waitForXPath(
+      `//li//span[contains(text(), 'Insert image')]`
+    );
+    await insertButton.click();
     await expect(page).toMatchElement('[data-testid="imageElement"]');
 
     await publishStory();
