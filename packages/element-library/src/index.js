@@ -17,6 +17,7 @@
 export * from './types.js';
 export * from './shared';
 export * from './media';
+export * from './utils/textMeasurements';
 export { elementTypes } from './elementTypes';
 export { copyableAttributes as imageAttributeDefaults } from './image/constants';
 export { copyableAttributes as textAttributeDefaults } from './text/constants';

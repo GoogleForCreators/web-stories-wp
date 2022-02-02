@@ -19,10 +19,14 @@
  */
 import { renderToStaticMarkup } from '@googleforcreators/react';
 import { dataPixels, PAGE_HEIGHT } from '@googleforcreators/units';
+
+/**
+ * Internal dependencies.
+ */
 import {
   TextOutputWithUnits,
-  calcFontMetrics,
-} from '@googleforcreators/element-library';
+} from '../text/output';
+import { calcFontMetrics } from '../text/util';
 
 const MEASURER_STYLES = {
   boxSizing: 'border-box',

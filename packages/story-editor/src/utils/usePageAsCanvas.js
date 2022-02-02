@@ -18,7 +18,7 @@
  */
 import { useCallback } from '@googleforcreators/react';
 import { FULLBLEED_RATIO, getBox, PAGE_RATIO } from '@googleforcreators/units';
-import { calculateTextHeight } from '@googleforcreators/design-system';
+import { calculateTextHeight } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies

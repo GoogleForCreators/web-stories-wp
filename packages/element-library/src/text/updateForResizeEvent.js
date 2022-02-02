@@ -17,10 +17,11 @@
  * External dependencies
  */
 import { dataPixels } from '@googleforcreators/units';
-import {
-  calculateFitTextFontSize,
-  calculateTextHeight,
-} from '@googleforcreators/design-system';
+
+/**
+ * Internal dependencies.
+ */
+import { calculateFitTextFontSize, calculateTextHeight } from '../utils/textMeasurements';
 
 function updateForResizeEvent(
   element,

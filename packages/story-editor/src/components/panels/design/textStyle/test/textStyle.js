@@ -24,8 +24,8 @@ import { RichTextContext } from '@googleforcreators/rich-text';
 import {
   BACKGROUND_TEXT_MODE,
   calcRotatedResizeOffset,
-  calculateTextHeight,
 } from '@googleforcreators/design-system';
+import { calculateTextHeight } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies

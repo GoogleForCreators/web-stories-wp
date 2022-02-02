@@ -34,4 +34,3 @@ export * from './multipleValue';
 export * from './constants';
 export * from './directions';
 export * from './url';
-export * from './textMeasurements';

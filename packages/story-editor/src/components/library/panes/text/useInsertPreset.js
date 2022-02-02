@@ -26,8 +26,8 @@ import { dataFontEm, PAGE_HEIGHT } from '@googleforcreators/units';
 import { getHTMLFormatters } from '@googleforcreators/rich-text';
 import {
   BACKGROUND_TEXT_MODE,
-  calculateTextHeight,
 } from '@googleforcreators/design-system';
+import { calculateTextHeight } from '@googleforcreators/element-library'
 
 /**
  * Internal dependencies

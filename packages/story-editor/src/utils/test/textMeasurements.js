@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { calculateTextHeight } from '@googleforcreators/design-system';
+import { calculateTextHeight } from '@googleforcreators/element-library';
 
 describe('textMeasurements', () => {
   let element;
