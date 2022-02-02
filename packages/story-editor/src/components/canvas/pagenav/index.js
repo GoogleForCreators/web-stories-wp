@@ -28,12 +28,12 @@ import {
   BUTTON_TYPES,
   BUTTON_SIZES,
 } from '@googleforcreators/design-system';
+import { usePerformanceTracking } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
  */
 import { useConfig, useStory, useLayout } from '../../../app';
-import usePerformanceTracking from '../../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../../constants/performanceTrackingEvents';
 
 const Wrapper = styled.div`

@@ -24,13 +24,13 @@ import {
   StoryPropTypes,
   getTransformFlip,
 } from '@googleforcreators/element-library';
+import { usePerformanceTracking } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
  */
 import { useDropTargets } from '../app';
 import { TRACKING_EVENTS } from '../constants/performanceTrackingEvents';
-import usePerformanceTracking from '../utils/usePerformanceTracking';
 import { MaskTypes } from './constants';
 import { getElementMask } from '.';
 

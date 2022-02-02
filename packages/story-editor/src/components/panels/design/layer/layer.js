@@ -30,13 +30,13 @@ import {
 import { useRef, memo } from '@googleforcreators/react';
 import { getDefinitionForType } from '@googleforcreators/elements';
 import { LayerText } from '@googleforcreators/element-library';
+import { usePerformanceTracking } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../../../types';
 import { useStory } from '../../../../app';
-import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../../../constants/performanceTrackingEvents';
 import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';

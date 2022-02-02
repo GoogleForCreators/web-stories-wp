@@ -39,6 +39,7 @@ import {
   getElementMask,
   MaskTypes,
 } from '@googleforcreators/masks';
+import { usePerformanceTracking } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
@@ -46,7 +47,6 @@ import {
 import { useStory, useTransform, useCanvas } from '../../app';
 import WithLink from '../elementLink/frame';
 import useDoubleClick from '../../utils/useDoubleClick';
-import usePerformanceTracking from '../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../constants/performanceTrackingEvents';
 
 // @todo: should the frame borders follow clip lines?

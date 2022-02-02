@@ -28,13 +28,13 @@ import {
   themeHelpers,
   ThemeGlobals,
 } from '@googleforcreators/design-system';
+import { usePerformanceTracking } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
  */
 import { useConfig } from '../../app';
 import Tooltip from '../tooltip';
-import usePerformanceTracking from '../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../constants/performanceTrackingEvents';
 
 const ALERT_ICON_SIZE = 28;

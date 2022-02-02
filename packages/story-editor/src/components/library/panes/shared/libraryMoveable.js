@@ -26,6 +26,8 @@ import {
   areEventsDragging,
 } from '@googleforcreators/design-system';
 import { Moveable, InOverlay } from '@googleforcreators/moveable';
+import { usePerformanceTracking } from '@googleforcreators/tracking';
+
 /**
  * Internal dependencies
  */
@@ -39,7 +41,6 @@ import useSnapping from '../../../canvas/utils/useSnapping';
 import { useStory, useCanvas } from '../../../../app';
 import objectWithout from '../../../../utils/objectWithout';
 import { noop } from '../../../../utils/noop';
-import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../../../constants/performanceTrackingEvents';
 
 const TargetBox = styled.div`

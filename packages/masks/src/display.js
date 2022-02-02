@@ -24,7 +24,7 @@ import { StoryPropTypes } from '@googleforcreators/element-library';
 /**
  * Internal dependencies
  */
-import { shouldDisplayBorder } from '../utils/elementBorder';
+import { shouldDisplayBorder } from './utils/elementBorder';
 import BorderedMaskedElement from './borderedMaskedElement';
 
 export default function WithMask({

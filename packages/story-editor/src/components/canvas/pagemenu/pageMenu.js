@@ -22,12 +22,12 @@ import { memo, useCallback, useRef } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { Icons } from '@googleforcreators/design-system';
 import { createPage, duplicatePage } from '@googleforcreators/elements';
+import { usePerformanceTracking } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
-import usePerformanceTracking from '../../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../../constants/performanceTrackingEvents';
 import PageMenuButton from './pageMenuButton';
 import AnimationToggle from './animationToggle';

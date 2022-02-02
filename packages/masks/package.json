@@ -20,6 +20,7 @@
 		"@googleforcreators/media":"*",
 		"@googleforcreators/patterns": "*",
 		"@googleforcreators/react": "*",
+		"@googleforcreators/tracking": "*",
 		"@googleforcreators/transform": "*",
 		"@googleforcreators/units": "*",
 		"styled-components": "^5.2.1",
