@@ -25,7 +25,7 @@ import {
   useCallback,
   useRef,
 } from '@googleforcreators/react';
-import { Text, useKeyDownEffect } from '@googleforcreators/design-system';
+import { Text, useKeyDownEffect, stripHTML } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import { useUnits } from '@googleforcreators/units';
 
@@ -34,7 +34,6 @@ import { useUnits } from '@googleforcreators/units';
  */
 import { useFont, useHistory } from '../../../../app';
 import StoryPropTypes from '../../../../types';
-import stripHTML from '../../../../utils/stripHTML';
 import { focusStyle } from '../../../panels/shared';
 import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
 import useLibrary from '../../useLibrary';

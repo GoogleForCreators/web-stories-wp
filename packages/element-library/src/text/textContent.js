@@ -15,9 +15,9 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies.
  */
-import stripHTML from '../../utils/stripHTML';
+import { stripHTML } from '@googleforcreators/design-system';
 
 function TextContent({ content }) {
   return stripHTML(content);

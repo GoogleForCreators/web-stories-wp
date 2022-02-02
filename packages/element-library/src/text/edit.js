@@ -35,7 +35,7 @@ import {
   getHTMLInfo,
   useRichText,
 } from '@googleforcreators/rich-text';
-import { BACKGROUND_TEXT_MODE, calcRotatedResizeOffset } from '@googleforcreators/design-system';
+import { BACKGROUND_TEXT_MODE, calcRotatedResizeOffset, stripHTML } from '@googleforcreators/design-system';
 import {
   getBorderPositionCSS,
   shouldDisplayBorder,
@@ -54,7 +54,6 @@ import {
   elementWithHighlightBorderRadius,
 } from '../shared';
 import { StoryPropTypes } from '../types';
-import stripHTML from '../../utils/stripHTML';
 import useCSSVarColorTransformHandler from '../shared/useCSSVarColorTransformHandler';
 import useColorTransformHandler from '../shared/useColorTransformHandler';
 import {

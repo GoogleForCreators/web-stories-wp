@@ -22,6 +22,7 @@ import styled from 'styled-components';
 import { useCallback } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import {
+  stripHTML,
   NumericInput,
   Icons,
   ToggleButton,
@@ -33,7 +34,6 @@ import {
  * Internal dependencies
  */
 import { useFont } from '../../../../app/font';
-import stripHTML from '../../../../utils/stripHTML';
 import clamp from '../../../../utils/clamp';
 import { Row, usePresubmitHandler } from '../../../form';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
