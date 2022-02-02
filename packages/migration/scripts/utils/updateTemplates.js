@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { readdirSync, readFileSync, writeFileSync, lstatSync } from 'fs';
-import { join } from 'path';
+import { join, resolve } from 'path';
 
 /**
  * Internal dependencies
@@ -36,7 +36,11 @@ function updateTemplates(templatesDir) {
         : join(dir, fileOrDir)
     );
 
-  const templateFiles = getFiles(templatesDir)
+  // templatesDir is relative from the project root,
+  // heence going two levels up.
+  const templateFiles = getFiles(
+    resolve(process.cwd(), '..', '..', templatesDir)
+  )
     .flat()
     .filter((file) => fileNamePattern.test(file));
 
