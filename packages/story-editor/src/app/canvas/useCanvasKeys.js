@@ -19,7 +19,10 @@
  */
 import { useCallback, useEffect, useRef } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
-import { useGlobalKeyDownEffect, getKeyboardMovement } from '@googleforcreators/design-system';
+import {
+  useGlobalKeyDownEffect,
+  getKeyboardMovement,
+} from '@googleforcreators/design-system';
 import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
 import { useTransform } from '@googleforcreators/transform';
 import { getDefinitionForType } from '@googleforcreators/elements';

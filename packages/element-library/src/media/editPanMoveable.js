@@ -20,7 +20,10 @@
 import PropTypes from 'prop-types';
 import { useEffect, useRef, useCallback } from '@googleforcreators/react';
 import { getFocalFromOffset } from '@googleforcreators/media';
-import { useKeyDownEffect, getKeyboardMovement } from '@googleforcreators/design-system';
+import {
+  useKeyDownEffect,
+  getKeyboardMovement,
+} from '@googleforcreators/design-system';
 import { Moveable } from '@googleforcreators/moveable';
 
 /**

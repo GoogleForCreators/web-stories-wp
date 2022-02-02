@@ -21,7 +21,7 @@ import { fireEvent, screen } from '@testing-library/react';
 import {
   setAppElement,
   BACKGROUND_TEXT_MODE,
-  TEXT_ELEMENT_DEFAULT_FONT
+  TEXT_ELEMENT_DEFAULT_FONT,
 } from '@googleforcreators/design-system';
 
 /**

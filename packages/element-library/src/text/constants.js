@@ -21,7 +21,7 @@ import { createSolid } from '@googleforcreators/patterns';
 import {
   PanelTypes,
   BACKGROUND_TEXT_MODE,
-  TEXT_ELEMENT_DEFAULT_FONT
+  TEXT_ELEMENT_DEFAULT_FONT,
 } from '@googleforcreators/design-system';
 
 /**

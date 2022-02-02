@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { Fixture } from '../../../karma';
+import { Fixture } from '../..';
 import { useInsertElement } from '../../../components/canvas';
 
 describe('Element min size and playback', () => {

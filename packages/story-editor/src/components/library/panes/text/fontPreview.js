@@ -25,7 +25,11 @@ import {
   useCallback,
   useRef,
 } from '@googleforcreators/react';
-import { Text, useKeyDownEffect, stripHTML } from '@googleforcreators/design-system';
+import {
+  Text,
+  useKeyDownEffect,
+  stripHTML,
+} from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import { useUnits } from '@googleforcreators/units';
 

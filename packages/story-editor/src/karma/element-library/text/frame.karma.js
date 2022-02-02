@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 /**
- * External dependencies.
+ * External dependencies
  */
 import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/design-system';
 

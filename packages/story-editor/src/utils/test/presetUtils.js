@@ -17,7 +17,10 @@
 /**
  * External dependencies
  */
-import { BACKGROUND_TEXT_MODE, TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/design-system';
+import {
+  BACKGROUND_TEXT_MODE,
+  TEXT_ELEMENT_DEFAULT_FONT,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

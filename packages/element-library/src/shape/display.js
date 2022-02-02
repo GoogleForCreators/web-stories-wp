@@ -34,7 +34,7 @@ import {
   elementFillContent,
   elementWithBackgroundColor,
   elementWithBorder,
-  useColorTransformHandler
+  useColorTransformHandler,
 } from '../shared';
 import { StoryPropTypes } from '../types';
 

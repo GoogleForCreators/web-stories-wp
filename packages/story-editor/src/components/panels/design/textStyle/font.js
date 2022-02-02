@@ -21,7 +21,11 @@ import PropTypes from 'prop-types';
 import { useMemo, useCallback } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
-import { DropDown, NumericInput, stripHTML } from '@googleforcreators/design-system';
+import {
+  DropDown,
+  NumericInput,
+  stripHTML,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

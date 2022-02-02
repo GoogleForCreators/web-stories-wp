@@ -25,7 +25,7 @@ import { useUnits } from '@googleforcreators/units';
 /**
  * Internal dependencies
  */
-import getCaretCharacterOffsetWithin from '../../utils/getCaretCharacterOffsetWithin';
+import getCaretCharacterOffsetWithin from '../utils/getCaretCharacterOffsetWithin';
 import { useStory, useCanvas } from '../../app';
 import {
   elementFillContent,

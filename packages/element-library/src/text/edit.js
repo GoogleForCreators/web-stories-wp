@@ -35,7 +35,11 @@ import {
   getHTMLInfo,
   useRichText,
 } from '@googleforcreators/rich-text';
-import { BACKGROUND_TEXT_MODE, calcRotatedResizeOffset, stripHTML } from '@googleforcreators/design-system';
+import {
+  BACKGROUND_TEXT_MODE,
+  calcRotatedResizeOffset,
+  stripHTML,
+} from '@googleforcreators/design-system';
 import {
   getBorderPositionCSS,
   shouldDisplayBorder,

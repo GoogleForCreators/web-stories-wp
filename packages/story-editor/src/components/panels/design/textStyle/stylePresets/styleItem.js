@@ -21,7 +21,11 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
 import { generatePatternStyles } from '@googleforcreators/patterns';
-import { Icons, BACKGROUND_TEXT_MODE, stripHTML } from '@googleforcreators/design-system';
+import {
+  Icons,
+  BACKGROUND_TEXT_MODE,
+  stripHTML,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

@@ -15,7 +15,7 @@
  */
 
 /**
- * External dependencies.
+ * External dependencies
  */
 import { stripHTML } from '@googleforcreators/design-system';
 
