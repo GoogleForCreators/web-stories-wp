@@ -289,18 +289,49 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	/**
 	 * Retrieves the permalink for a post type archive.
 	 *
-	 * Identical to {@see get_post_type_archive_link()}, but also returns a URL
-	 * if the archive page has been disabled.
-	 *
 	 * @since 1.14.0
 	 *
-	 * @global WP_Rewrite $wp_rewrite WordPress rewrite component.
-	 *
-	 * @param  mixed $has_archive Has archive override.
 	 * @return string|false The post type archive permalink. False if the post type
 	 *                      does not exist or does not have an archive.
 	 */
-	public function get_archive_link( $has_archive = null ) {
+	public function get_archive_link() {
+		$post_type_obj = $this->get_object();
+		if ( ! $post_type_obj instanceof WP_Post_Type ) {
+			return false;
+		}
+
+		return $this->get_archive_link_data( $post_type_obj->has_archive );
+	}
+
+	/**
+	 * Calls get_archive_link_data method to get the value of archive by forcing has_archive to true.
+	 *
+	 * @since 1.17.0
+	 *
+	 * @return string|false The post type archive permalink. False if the post type
+	 *                      does not exist or does not have an archive.
+	 */
+	public function get_default_archive_link() {
+		return $this->get_archive_link_data( true );
+	}
+
+
+	/**
+	 * Retrieves the permalink for a post type archive.
+	 *
+	 * Identical to {@see get_post_type_archive_link()}, but also returns a URL
+	 * if the archive page has been disabled.
+	 *
+	 * @since 1.17.0
+	 *
+	 * @global WP_Rewrite $wp_rewrite WordPress rewrite component.
+	 *
+	 * @param bool|string $has_archive Override the has_archive property found on the WP_Post_Type object.
+	 *
+	 * @return string|false The post type archive permalink. False if the post type
+	 *                      does not exist or does not have an archive.
+	 */
+	protected function get_archive_link_data( $has_archive ) {
 		global $wp_rewrite;
 
 		$post_type_obj = $this->get_object();
@@ -309,8 +340,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 		}
 
 		if ( get_option( 'permalink_structure' ) && is_array( $post_type_obj->rewrite ) ) {
-			$has_archive = null === $has_archive ? $post_type_obj->has_archive : $has_archive;
-			$struct      = ( true === $has_archive ) ? $post_type_obj->rewrite['slug'] : $has_archive;
+			$struct = ( true === $has_archive ) ? $post_type_obj->rewrite['slug'] : $has_archive;
 			if ( $post_type_obj->rewrite['with_front'] ) {
 				$struct = $wp_rewrite->front . $struct;
 			} else {
