@@ -96,11 +96,6 @@ export default {
     'assign-web_story_category': true,
     'create-web_story_category': true,
   },
-  lockUser: {
-    id: 0,
-    name: '',
-    avatar: '',
-  },
   featuredMedia: {
     id: 0,
     height: 0,

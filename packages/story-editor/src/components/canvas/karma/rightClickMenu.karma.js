@@ -426,7 +426,13 @@ describe('Right Click Menu integration', () => {
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
       );
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      await waitFor(() => {
+        const node = fixture.editor.canvas.framesLayer.frames[1].node;
+        if (!node) {
+          throw new Error('node not ready');
+        }
+        expect(node).toBeTruthy();
+      });
       const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
 
       // only possible if element in canvas is focused

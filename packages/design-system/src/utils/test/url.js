@@ -28,6 +28,8 @@ describe('isValidUrl', () => {
     expect(isValidUrl('https://foo-bar.com/test.jpg')).toBeTrue();
     expect(isValidUrl('https://foo-bar.com/example.html')).toBeTrue();
     expect(isValidUrl('https://foo-bar.com/font.ttf')).toBeTrue();
+    expect(isValidUrl('tel:1234567')).toBeTrue();
+    expect(isValidUrl('mailto:example@example.com')).toBeTrue();
   });
 });
 

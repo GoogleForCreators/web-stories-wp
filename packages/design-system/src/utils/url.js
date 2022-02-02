@@ -32,5 +32,7 @@ export function isValidUrl(url) {
  * @return {string} the url with the protocol prepended to it
  */
 export function withProtocol(url, protocol = 'https') {
-  return /^(?:f|ht)tps?:\/\//.test(url) ? url : `${protocol}://${url}`;
+  return /^(http:\/\/|https:\/\/|tel:|mailto:)/.test(url)
+    ? url
+    : `${protocol}://${url}`;
 }

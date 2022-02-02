@@ -52,7 +52,11 @@ describe('Alignment Panel', () => {
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
       );
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      await waitFor(() => {
+        if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+          throw new Error('node not ready');
+        }
+      });
 
       // It will correctly be selected now
     });

@@ -63,7 +63,13 @@ describe('CUJ: Creator can Transform an Element: Selection integration', () => {
   it('should have the last element selected by default', async () => {
     await fixture.editor.library.textTab.click();
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
-    await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+    await waitFor(() => {
+      const node = fixture.editor.canvas.framesLayer.frames[1].node;
+      if (!node) {
+        throw new Error('node not ready');
+      }
+      expect(node).toBeTruthy();
+    });
     const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
     expect(await getSelection()).toEqual([frame1.dataset.elementId]);
   });
@@ -88,7 +94,13 @@ describe('CUJ: Creator can Transform an Element: Selection integration', () => {
   it('should show the selection lines when an element is being selected', async () => {
     await fixture.editor.library.textTab.click();
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
-    await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+    await waitFor(() => {
+      const node = fixture.editor.canvas.framesLayer.frames[1].node;
+      if (!node) {
+        throw new Error('node not ready');
+      }
+      expect(node).toBeTruthy();
+    });
     const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
     // De-select element by clicking somewhere else.
     const { x, y } = fullbleed.getBoundingClientRect();
@@ -105,7 +117,13 @@ describe('CUJ: Creator can Transform an Element: Selection integration', () => {
   it('should show the selection lines when out of page area', async () => {
     await fixture.editor.library.textTab.click();
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
-    await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+    await waitFor(() => {
+      const node = fixture.editor.canvas.framesLayer.frames[1].node;
+      if (!node) {
+        throw new Error('node not ready');
+      }
+      expect(node).toBeTruthy();
+    });
     await setFontSize('30');
     const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
     const resizeW = fixture
@@ -127,7 +145,13 @@ describe('CUJ: Creator can Transform an Element: Selection integration', () => {
 
     await fixture.editor.library.textTab.click();
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
-    await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+    await waitFor(() => {
+      const node = fixture.editor.canvas.framesLayer.frames[1].node;
+      if (!node) {
+        throw new Error('node not ready');
+      }
+      expect(node).toBeTruthy();
+    });
     await setFontSize('30');
 
     const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
@@ -150,7 +174,13 @@ describe('CUJ: Creator can Transform an Element: Selection integration', () => {
   it('should return focus to selection when pressing mod+alt+2', async () => {
     await fixture.editor.library.textTab.click();
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
-    await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+    await waitFor(() => {
+      const node = fixture.editor.canvas.framesLayer.frames[1].node;
+      if (!node) {
+        throw new Error('node not ready');
+      }
+      expect(node).toBeTruthy();
+    });
     // NB: We can't actually validate that the frame has focus, as that's a bit flaky,
     // But as long as the focus moves in the shortcut press, it's fair to assume that it has
     // Move to the canvas selection.

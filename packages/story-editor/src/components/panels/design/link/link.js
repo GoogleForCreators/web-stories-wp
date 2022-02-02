@@ -134,30 +134,45 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     !isValidUrl(withProtocol(url))
   );
 
-  const populateMetadata = useDebouncedCallback(async (newUrl) => {
-    setFetchingMetadata(true);
-    try {
-      const { title: newTitle, image: newIcon } = getLinkMetadata
-        ? await getLinkMetadata(newUrl)
-        : {};
-      const needsProxy = newIcon ? await checkResourceAccess(newIcon) : false;
+  const populateMetadata = useDebouncedCallback(
+    useCallback(
+      async (newUrl) => {
+        // Nothing to fetch for tel: or mailto: links.
+        if (!newUrl.startsWith('http://') && !newUrl.startsWith('https://')) {
+          return;
+        }
 
-      updateLinkFromMetadataApi({
-        newUrl,
-        newTitle,
-        newIcon,
-        needsProxy,
-      });
-    } catch (e) {
-      setIsInvalidUrl(true);
-    } finally {
-      setFetchingMetadata(false);
-    }
-  }, 1200);
+        setFetchingMetadata(true);
+        try {
+          const { title: newTitle, image: newIcon } = getLinkMetadata
+            ? await getLinkMetadata(newUrl)
+            : {};
+          const needsProxy = newIcon
+            ? await checkResourceAccess(newIcon)
+            : false;
+
+          updateLinkFromMetadataApi({
+            newUrl,
+            newTitle,
+            newIcon,
+            needsProxy,
+          });
+        } catch (e) {
+          setIsInvalidUrl(true);
+        } finally {
+          setFetchingMetadata(false);
+        }
+      },
+      [checkResourceAccess, getLinkMetadata, updateLinkFromMetadataApi]
+    ),
+    1200
+  );
 
   const handleChange = useCallback(
     (properties, submit) => {
       clearEditing();
+
+      populateMetadata.cancel();
 
       if (properties.url) {
         // Don't submit any changes in case of multiple value.

@@ -37,7 +37,7 @@ import {
 /**
  * Internal dependencies
  */
-import { HEADER_HEIGHT } from '../../constants';
+import { HEADER_HEIGHT, HEADER_GAP } from '../../constants';
 import pointerEventsCss from '../../utils/pointerEventsCss';
 import { useLayout } from '../../app';
 import useFooterHeight from '../footer/useFooterHeight';
@@ -54,7 +54,6 @@ export const Z_INDEX = {
   EDIT: 3,
 };
 
-const HEADER_GAP = 16;
 // 8px extra is for the focus outline to display.
 const PAGE_NAV_WIDTH = THEME_CONSTANTS.LARGE_BUTTON_SIZE + 8;
 const PAGE_NAV_GAP = 20;
@@ -294,15 +293,14 @@ function useLayoutParams(containerRef) {
     ({ width, height }) => {
       // See Layer's `grid` CSS above. Per the layout, the maximum available
       // space for the page is:
-      const maxWidth = width;
-      const maxHeight =
+      const availableHeight =
         height -
         HEADER_HEIGHT -
         HEADER_GAP -
         footerHeight -
         FOOTER_BOTTOM_MARGIN;
 
-      setWorkspaceSize({ width: maxWidth, height: maxHeight });
+      setWorkspaceSize({ width, height, availableHeight });
     },
     [setWorkspaceSize, footerHeight]
   );

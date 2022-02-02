@@ -87,7 +87,7 @@ let lastVisibleDelayedTooltip = null;
  * @param {Function} props.onPointerLeave Pointer leave event callback function
  * @param {string} props.placement Where to place the tooltip {@link: PLACEMENT}
  * @param {string} props.shortcut Shortcut text to display in tooltip
- * @param {string} props.title Text to display in tooltip
+ * @param {import('react').ReactNode|string|null} props.title Text to display in tooltip
  * @param {Object} props.tooltipProps Props for <Tooltip /> component
  * @param {string} props.className Classname.
  * @param {string} props.isDelayed If this tooltip is to be displayed instantly on hover (default) or by a short delay.
@@ -321,7 +321,7 @@ const TooltipPropTypes = {
   onPointerEnter: PropTypes.func,
   onPointerLeave: PropTypes.func,
   shortcut: PropTypes.string,
-  title: PropTypes.node,
+  title: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   forceAnchorRef: PropTypes.object,
   tooltipProps: PropTypes.object,
   className: PropTypes.string,

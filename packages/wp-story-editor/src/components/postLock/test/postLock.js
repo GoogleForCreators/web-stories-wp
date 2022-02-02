@@ -39,7 +39,7 @@ import PostLock from '../postLock';
 
 jest.mock('../../../api/storyLock');
 
-function setup(_storyContextValue = {}) {
+function setup(_storyContextValue = {}, _configValue = {}) {
   const configValue = {
     storyId: 123,
     dashboardLink: 'http://www.example.com/dashboard',
@@ -54,16 +54,20 @@ function setup(_storyContextValue = {}) {
     },
     flags: {
       enablePostLocking: true,
+      enablePostLockingTakeOver: true,
     },
+    ..._configValue,
   };
 
   const storyContextValue = {
     state: {
       story: {
         previewLink: 'http://www.example.com/preview',
-        lockUser: {
-          id: 150,
-          name: 'John Doe',
+        extras: {
+          lockUser: {
+            id: 150,
+            name: 'John Doe',
+          },
         },
       },
     },
@@ -114,9 +118,11 @@ describe('PostLock', () => {
       state: {
         story: {
           previewLink: 'http://www.example.com/preview',
-          lockUser: {
-            id: 123,
-            name: 'John Doe',
+          extras: {
+            lockUser: {
+              id: 123,
+              name: 'John Doe',
+            },
           },
         },
       },
@@ -141,6 +147,49 @@ describe('PostLock', () => {
 
     const takeOverButton = screen.getByRole('button', { name: 'Take over' });
     expect(takeOverButton).toBeInTheDocument();
+  });
+
+  it('should display take over dialog with no take over', async () => {
+    const storyContextValue = {
+      state: {
+        story: {
+          previewLink: 'http://www.example.com/preview',
+          extras: {
+            lockUser: {
+              id: 123,
+              name: 'John Doe',
+            },
+          },
+        },
+      },
+    };
+
+    getStoryLockById.mockReturnValue(
+      Promise.resolve({
+        locked: true,
+        user: 123,
+        nonce: 'fsdfds',
+        _embedded: { author: [{ id: 123, name: 'John Doe' }] },
+      })
+    );
+
+    const configValue = {
+      flags: {
+        enablePostLocking: true,
+        enablePostLockingTakeOver: false,
+      },
+    };
+
+    setup(storyContextValue, configValue);
+
+    const dialog = await screen.findByRole('dialog');
+    expect(dialog).toBeInTheDocument();
+
+    const dashboardButton = screen.getByRole('link', { name: 'Dashboard' });
+    expect(dashboardButton).toBeInTheDocument();
+
+    const takeOverButton = screen.queryByRole('button', { name: 'Take over' });
+    expect(takeOverButton).not.toBeInTheDocument();
   });
 
   // TODO: Investigate issues with timer in test.

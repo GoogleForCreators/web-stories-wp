@@ -107,6 +107,9 @@ describe('Drop-Target order', () => {
       .node.querySelector('img');
 
     await waitFor(() => {
+      if (!topImageImg || !backgroundImg) {
+        throw new Error('image not ready');
+      }
       expect(topImageImg.src).toBe(otherImage.resource.src);
       expect(backgroundImg.src).toBe(bgImage.resource.src);
     });
