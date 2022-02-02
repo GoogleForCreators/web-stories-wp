@@ -1231,6 +1231,8 @@ describe('Page output', () => {
               src: 'https://example.com/audio.mp3',
               id: 123,
               mimeType: 'audio/mpeg',
+              length: 100,
+              lengthFormatted: '1:40',
             },
             tracks: [],
           },
@@ -1255,6 +1257,8 @@ describe('Page output', () => {
               src: 'https://example.com/audio.mp3',
               id: 123,
               mimeType: 'audio/mpeg',
+              length: 100,
+              lengthFormatted: '1:40',
             },
             tracks: [
               {
@@ -1267,6 +1271,7 @@ describe('Page output', () => {
                 kind: 'captions',
               },
             ],
+            loop: true,
           },
           id: '123',
           elements: [],
@@ -1286,6 +1291,40 @@ describe('Page output', () => {
       await expect(video).toBeInTheDocument();
       expect(video).toMatchSnapshot();
       expect(video).toHaveAttribute('captions-id', 'el-123-captions');
+
+      const page = container.querySelector('amp-story-page');
+      await expect(page).toBeInTheDocument();
+      expect(page).not.toContain(
+        'background-audio="https://example.com/audio.mp3"'
+      );
+    });
+
+    it('should add background audio on non-looping use amp-video', async () => {
+      const props = {
+        id: '123',
+        page: {
+          backgroundAudio: {
+            resource: {
+              src: 'https://example.com/audio.mp3',
+              id: 123,
+              mimeType: 'audio/mpeg',
+              length: 100,
+              lengthFormatted: '1:40',
+            },
+            tracks: [],
+            loop: false,
+          },
+          id: '123',
+          elements: [],
+        },
+        autoAdvance: false,
+        defaultPageDuration: 7,
+      };
+
+      const { container } = render(<PageOutput {...props} />);
+      const video = container.querySelector('amp-video');
+      await expect(video).toBeInTheDocument();
+      expect(video).toMatchSnapshot();
 
       const page = container.querySelector('amp-story-page');
       await expect(page).toBeInTheDocument();
@@ -1529,6 +1568,35 @@ describe('Page output', () => {
                 kind: 'captions',
               },
             ],
+          },
+          animations: [],
+          elements: [],
+        },
+        autoAdvance: true,
+        defaultPageDuration: 11,
+      };
+
+      await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
+    });
+
+    // TODO(#10338): Resolve question about poster requirement.
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip('should produce valid output with non-looping background audio', async () => {
+      const props = {
+        id: '123',
+        backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
+        page: {
+          id: '123',
+          backgroundAudio: {
+            resource: {
+              src: 'https://example.com/audio.mp3',
+              id: 123,
+              mimeType: 'audio/mpeg',
+              length: 100,
+              lengthFormatted: '1:40',
+            },
+            tracks: [],
+            loop: false,
           },
           animations: [],
           elements: [],
