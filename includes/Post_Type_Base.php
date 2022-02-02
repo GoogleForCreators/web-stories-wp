@@ -291,8 +291,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 *
 	 * @since 1.14.0
 	 *
-	 * @return string|false The post type archive permalink. False if the post type
-	 *                      does not exist or does not have an archive.
+	 * @return string|false The post type archive permalink. False if the post type does not exist.
 	 */
 	public function get_archive_link() {
 		$post_type_obj = $this->get_object();
@@ -304,12 +303,11 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	}
 
 	/**
-	 * Calls get_archive_link_data method to get the value of archive by forcing has_archive to true.
+	 * Retrieves the default permalink for a post type archive.
 	 *
-	 * @since 1.17.0
+	 * @since 1.18.0
 	 *
-	 * @return string|false The post type archive permalink. False if the post type
-	 *                      does not exist or does not have an archive.
+	 * @return string|false The post type archive permalink. False if the post type does not exist.
 	 */
 	public function get_default_archive_link() {
 		return $this->get_archive_link_data( true );
@@ -321,8 +319,9 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 *
 	 * Identical to {@see get_post_type_archive_link()}, but also returns a URL
 	 * if the archive page has been disabled.
+	 * Returns the default archive URL even if it was changed by the user.
 	 *
-	 * @since 1.17.0
+	 * @since 1.18.0
 	 *
 	 * @global WP_Rewrite $wp_rewrite WordPress rewrite component.
 	 *
