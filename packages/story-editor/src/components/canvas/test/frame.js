@@ -22,7 +22,7 @@ import { createSolid } from '@googleforcreators/patterns';
 /**
  * Internal dependencies
  */
-import { TestFrameElement } from '../../../components/canvas/test/_utils';
+import { TestFrameElement } from './_utils';
 
 jest.useFakeTimers();
 
