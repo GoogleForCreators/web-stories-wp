@@ -25,10 +25,16 @@ import PublishModal from '../publishModal';
 
 export default {
   title: 'Stories Editor/Components/Dialog/Publish Modal',
-  component: PublishModal,
+  args: {
+    isOpen: true,
+  },
+  argTypes: {
+    onPublish: { action: 'onPublish clicked' },
+    onClose: { action: 'onClose clicked' },
+  },
 };
 
-export const _default = () => {
+export const _default = (args) => {
   const [inputValues, setInputValues] = useState({
     excerpt: '',
     title: '',
@@ -49,7 +55,7 @@ export const _default = () => {
         },
       }}
     >
-      <PublishModal />
+      <PublishModal {...args} />
     </StoryContext.Provider>
   );
 };

@@ -16,16 +16,12 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import { Modal } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from '@googleforcreators/react';
+import { useCallback, useEffect, useMemo } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
@@ -43,7 +39,7 @@ const Container = styled.div`
   border-radius: ${({ theme }) => theme.borders.radius.medium};
 `;
 
-function PublishModal() {
+function PublishModal({ isOpen, onPublish, onClose }) {
   const storyId = useConfig(({ storyId }) => storyId);
   const updateStory = useStory(({ actions }) => actions.updateStory);
   const inputValues = useStory(({ state: { story } }) => ({
@@ -52,17 +48,11 @@ function PublishModal() {
     [INPUT_KEYS.SLUG]: story.slug,
   }));
 
-  const [isOpen, setIsOpen] = useState(true);
-
   useEffect(() => {
     if (isOpen) {
       trackEvent('publish_modal');
     }
   }, [isOpen]);
-
-  const onClose = useCallback(() => {
-    setIsOpen(false);
-  }, []);
 
   const handleUpdateStoryInfo = useCallback(
     ({ target }) => {
@@ -107,7 +97,7 @@ function PublishModal() {
       <Container>
         <Header
           onClose={onClose}
-          onPublish={() => {}}
+          onPublish={onPublish}
           isPublishEnabled={isAllRequiredInputsFulfilled}
         />
         <MainContent
@@ -121,3 +111,9 @@ function PublishModal() {
 }
 
 export default PublishModal;
+
+PublishModal.propTypes = {
+  isOpen: PropTypes.bool,
+  onPublish: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
