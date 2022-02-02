@@ -396,7 +396,7 @@ export const HorizontalMenu = (args) => {
     <Grid>
       <Container>
         <Text>{'Dummy horizontal menu'}</Text>
-        <ContextMenu isHorizontal {...args}>
+        <ContextMenu isHorizontal isInline isSecondary {...args}>
           <MenuItems.MenuButton onClick={action('Clicked on bucket')}>
             <MenuItems.MenuIcon
               title="Bucket"

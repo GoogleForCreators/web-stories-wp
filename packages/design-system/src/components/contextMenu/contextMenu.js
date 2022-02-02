@@ -63,7 +63,7 @@ const ContextMenu = ({
           {children}
         </Menu>
         {/* <AnimationContainer /> has a <Shadow />. Don't double the shadow. */}
-        {!animate && <Shadow />}
+        {!animate && <Shadow $isHorizontal={isHorizontal} />}
       </Wrapper>
     </ContextMenuProvider>
   );

@@ -39,7 +39,8 @@ export const Shadow = styled.div`
   right: 0;
   bottom: 0;
   left: 0;
-  border-radius: ${({ theme }) => theme.borders.radius.medium};
+  border-radius: ${({ theme, $isHorizontal }) =>
+    $isHorizontal ? theme.borders.radius.medium : theme.borders.radius.small};
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   pointer-events: none;
 `;

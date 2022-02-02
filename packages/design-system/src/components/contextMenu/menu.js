@@ -41,7 +41,8 @@ const MenuWrapper = styled.div(
   ({ theme }) => css`
     background-color: ${({ $isSecondary }) =>
       $isSecondary ? theme.colors.bg.secondary : theme.colors.bg.primary};
-    border-radius: ${theme.borders.radius.medium};
+    border-radius: ${({ $isHorizontal }) =>
+      $isHorizontal ? theme.borders.radius.medium : theme.borders.radius.small};
     border: 1px solid ${theme.colors.border.disable};
     gap: 6px;
     display: flex;
