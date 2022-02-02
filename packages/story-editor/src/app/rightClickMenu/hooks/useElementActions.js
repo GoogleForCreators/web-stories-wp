@@ -204,9 +204,9 @@ const useElementActions = () => {
 
   return {
     onDuplicateSelectedElements: handleDuplicateSelectedElements,
-    onOpenScaleAndCrop: handleOpenScaleAndCrop,
-    onSetPageBackground: handleSetPageBackground,
-    onRemovePageBackground: handleRemovePageBackground,
+    handleOpenScaleAndCrop,
+    handleSetPageBackground,
+    handleRemovePageBackground,
   };
 };
 

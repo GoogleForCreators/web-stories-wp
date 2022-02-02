@@ -154,10 +154,10 @@ const useLayerActions = () => {
   return {
     canElementMoveBackwards,
     canElementMoveForwards,
-    onBringForward: handleBringForward,
-    onBringToFront: handleBringToFront,
-    onSendBackward: handleSendBackward,
-    onSendToBack: handleSendToBack,
+    handleBringForward,
+    handleBringToFront,
+    handleSendBackward,
+    handleSendToBack,
   };
 };
 

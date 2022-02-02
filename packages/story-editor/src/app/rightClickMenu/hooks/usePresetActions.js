@@ -135,8 +135,8 @@ const usePresetActions = () => {
   );
 
   return {
-    onAddTextPreset: handleAddTextPreset,
-    onAddColorPreset: handleAddColorPreset,
+    handleAddTextPreset,
+    handleAddColorPreset,
   };
 };
 

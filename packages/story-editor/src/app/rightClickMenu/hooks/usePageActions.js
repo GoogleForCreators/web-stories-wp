@@ -93,9 +93,9 @@ const usePageActions = () => {
   }, [deleteCurrentPage, isSelectedElementBackground, selectedElementType]);
 
   return {
-    onAddPageAtPosition: handleAddPageAtPosition,
-    onDuplicatePage: handleDuplicatePage,
-    onDeletePage: handleDeletePage,
+    handleAddPageAtPosition,
+    handleDuplicatePage,
+    handleDeletePage,
   };
 };
 

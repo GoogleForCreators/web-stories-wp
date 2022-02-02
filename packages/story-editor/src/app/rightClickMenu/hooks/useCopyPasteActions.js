@@ -230,8 +230,8 @@ const useCopyPasteActions = () => {
 
   return {
     copiedElementType: copiedElement?.type,
-    onCopyStyles: handleCopyStyles,
-    onPasteStyles: handlePasteStyles,
+    handleCopyStyles,
+    handlePasteStyles,
   };
 };
 
