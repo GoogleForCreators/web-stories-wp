@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1dbcd6cf6ed3bb03ab8ac7c4aa1c65d2",
+    "content-hash": "cbffa07e92634edd69075385e3e6b795",
     "packages": [
         {
             "name": "ampproject/amp-toolbox",
@@ -62,12 +62,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "AmpProject\\": "src/"
-                },
                 "files": [
                     "include/compatibility-fixes.php"
-                ]
+                ],
+                "psr-4": {
+                    "AmpProject\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -86,12 +86,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ampproject/amp-wp",
-                "reference": "a0705cd409025a0fdf91c6434b49d04e7174260f"
+                "reference": "b3a1ed63779efbebb03095d857eff759cd350e52"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/a0705cd409025a0fdf91c6434b49d04e7174260f",
-                "reference": "a0705cd409025a0fdf91c6434b49d04e7174260f",
+                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/b3a1ed63779efbebb03095d857eff759cd350e52",
+                "reference": "b3a1ed63779efbebb03095d857eff759cd350e52",
                 "shasum": ""
             },
             "require": {
@@ -118,7 +118,7 @@
                 "mikey179/vfsstream": "1.6.9",
                 "mustache/mustache": "^2",
                 "php-stubs/wordpress-stubs": "^5.3.2",
-                "phpcompatibility/phpcompatibility-wp": "2.1.1",
+                "phpcompatibility/phpcompatibility-wp": "2.1.3",
                 "phpdocumentor/reflection": "~3.0",
                 "roave/security-advisories": "dev-latest",
                 "sirbrillig/phpcs-variable-analysis": "2.11.2",
@@ -194,7 +194,7 @@
             ],
             "description": "WordPress plugin for adding AMP support.",
             "homepage": "https://github.com/ampproject/amp-wp",
-            "time": "2022-01-29T00:35:35+00:00"
+            "time": "2022-02-02T23:37:11+00:00"
         },
         {
             "name": "civicrm/composer-downloads-plugin",
@@ -2052,17 +2052,62 @@
             "time": "2021-12-08T12:19:24+00:00"
         },
         {
-            "name": "phpstan/phpstan",
-            "version": "1.4.3",
+            "name": "phpstan/extension-installer",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "89d10839dbfc95eeb7da656578b4a899ad2b59b1"
+                "url": "https://github.com/phpstan/extension-installer.git",
+                "reference": "66c7adc9dfa38b6b5838a9fb728b68a7d8348051"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/89d10839dbfc95eeb7da656578b4a899ad2b59b1",
-                "reference": "89d10839dbfc95eeb7da656578b4a899ad2b59b1",
+                "url": "https://api.github.com/repos/phpstan/extension-installer/zipball/66c7adc9dfa38b6b5838a9fb728b68a7d8348051",
+                "reference": "66c7adc9dfa38b6b5838a9fb728b68a7d8348051",
+                "shasum": ""
+            },
+            "require": {
+                "composer-plugin-api": "^1.1 || ^2.0",
+                "php": "^7.1 || ^8.0",
+                "phpstan/phpstan": ">=0.11.6"
+            },
+            "require-dev": {
+                "composer/composer": "^1.8",
+                "phing/phing": "^2.16.3",
+                "php-parallel-lint/php-parallel-lint": "^1.2.0",
+                "phpstan/phpstan-strict-rules": "^0.11 || ^0.12"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "PHPStan\\ExtensionInstaller\\Plugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "PHPStan\\ExtensionInstaller\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Composer plugin for automatic installation of PHPStan extensions",
+            "support": {
+                "issues": "https://github.com/phpstan/extension-installer/issues",
+                "source": "https://github.com/phpstan/extension-installer/tree/1.1.0"
+            },
+            "time": "2020-12-13T13:06:13+00:00"
+        },
+        {
+            "name": "phpstan/phpstan",
+            "version": "1.4.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpstan.git",
+                "reference": "150d1fbd82fb71ff76b3bd7f6ea6006d89c5f0c3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/150d1fbd82fb71ff76b3bd7f6ea6006d89c5f0c3",
+                "reference": "150d1fbd82fb71ff76b3bd7f6ea6006d89c5f0c3",
                 "shasum": ""
             },
             "require": {
@@ -2093,7 +2138,7 @@
             "description": "PHPStan - PHP Static Analysis Tool",
             "support": {
                 "issues": "https://github.com/phpstan/phpstan/issues",
-                "source": "https://github.com/phpstan/phpstan/tree/1.4.3"
+                "source": "https://github.com/phpstan/phpstan/tree/1.4.5"
             },
             "funding": [
                 {
@@ -2113,7 +2158,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-28T16:27:17+00:00"
+            "time": "2022-02-02T19:35:10+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -2613,12 +2658,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "f2fdb4f34a593f9435ff6f994a4ca47600f285d9"
+                "reference": "fa60732bcafd446e9ff858eefa06cdcbae8d9823"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/f2fdb4f34a593f9435ff6f994a4ca47600f285d9",
-                "reference": "f2fdb4f34a593f9435ff6f994a4ca47600f285d9",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/fa60732bcafd446e9ff858eefa06cdcbae8d9823",
+                "reference": "fa60732bcafd446e9ff858eefa06cdcbae8d9823",
                 "shasum": ""
             },
             "conflict": {
@@ -2764,7 +2809,7 @@
                 "klaviyo/magento2-extension": ">=1,<3",
                 "kreait/firebase-php": ">=3.2,<3.8.1",
                 "la-haute-societe/tcpdf": "<6.2.22",
-                "laminas/laminas-form": "<3.1.1",
+                "laminas/laminas-form": "<2.17.2|>=3,<3.0.2|>=3.1,<3.1.1",
                 "laminas/laminas-http": "<2.14.2",
                 "laravel/framework": "<6.20.42|>=7,<7.30.6|>=8,<8.75",
                 "laravel/socialite": ">=1,<1.0.99|>=2,<2.0.10",
@@ -2871,7 +2916,7 @@
                 "shopware/platform": "<=6.4.6",
                 "shopware/production": "<=6.3.5.2",
                 "shopware/shopware": "<5.7.7",
-                "showdoc/showdoc": "<2.10",
+                "showdoc/showdoc": "<2.10.2",
                 "silverstripe/admin": ">=1,<1.8.1",
                 "silverstripe/assets": ">=1,<1.4.7|>=1.5,<1.5.2",
                 "silverstripe/cms": "<4.3.6|>=4.4,<4.4.4",
@@ -2917,7 +2962,7 @@
                 "symfony/dependency-injection": ">=2,<2.0.17|>=2.7,<2.7.51|>=2.8,<2.8.50|>=3,<3.4.26|>=4,<4.1.12|>=4.2,<4.2.7",
                 "symfony/error-handler": ">=4.4,<4.4.4|>=5,<5.0.4",
                 "symfony/form": ">=2.3,<2.3.35|>=2.4,<2.6.12|>=2.7,<2.7.50|>=2.8,<2.8.49|>=3,<3.4.20|>=4,<4.0.15|>=4.1,<4.1.9|>=4.2,<4.2.1",
-                "symfony/framework-bundle": ">=2,<2.3.18|>=2.4,<2.4.8|>=2.5,<2.5.2|>=2.7,<2.7.51|>=2.8,<2.8.50|>=3,<3.4.26|>=4,<4.1.12|>=4.2,<4.2.7|>=5.3.14,<=5.3.14|>=5.4.3,<=5.4.3|>=6.0.3,<=6.0.3",
+                "symfony/framework-bundle": "<5.3.15|>=5.4,<5.4.4|>=6,<6.0.4",
                 "symfony/http-foundation": ">=2,<2.8.52|>=3,<3.4.35|>=4,<4.2.12|>=4.3,<4.3.8|>=4.4,<4.4.7|>=5,<5.0.7",
                 "symfony/http-kernel": ">=2,<2.8.52|>=3,<3.4.35|>=4,<4.2.12|>=4.3,<4.4.13|>=5,<5.1.5|>=5.2,<5.3.12",
                 "symfony/intl": ">=2.7,<2.7.38|>=2.8,<2.8.31|>=3,<3.2.14|>=3.3,<3.3.13",
@@ -3052,7 +3097,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-01-29T19:13:00+00:00"
+            "time": "2022-02-01T15:19:50+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
@@ -4274,6 +4319,85 @@
             "time": "2021-10-20T20:35:02+00:00"
         },
         {
+            "name": "symfony/polyfill-php73",
+            "version": "v1.24.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-php73.git",
+                "reference": "cc5db0e22b3cb4111010e48785a97f670b350ca5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-php73/zipball/cc5db0e22b3cb4111010e48785a97f670b350ca5",
+                "reference": "cc5db0e22b3cb4111010e48785a97f670b350ca5",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.23-dev"
+                },
+                "thanks": {
+                    "name": "symfony/polyfill",
+                    "url": "https://github.com/symfony/polyfill"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Polyfill\\Php73\\": ""
+                },
+                "files": [
+                    "bootstrap.php"
+                ],
+                "classmap": [
+                    "Resources/stubs"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill backporting some PHP 7.3+ features to lower PHP versions",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/polyfill-php73/tree/v1.24.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2021-06-05T21:20:04+00:00"
+        },
+        {
             "name": "symfony/polyfill-php80",
             "version": "v1.24.0",
             "source": {
@@ -4517,6 +4641,71 @@
                 }
             ],
             "time": "2021-11-04T16:48:04+00:00"
+        },
+        {
+            "name": "szepeviktor/phpstan-wordpress",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/szepeviktor/phpstan-wordpress.git",
+                "reference": "d44b5abcaa529698e138b2d21bc2a7cf9834039c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/szepeviktor/phpstan-wordpress/zipball/d44b5abcaa529698e138b2d21bc2a7cf9834039c",
+                "reference": "d44b5abcaa529698e138b2d21bc2a7cf9834039c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1 || ^8.0",
+                "php-stubs/wordpress-stubs": "^4.7 || ^5.0",
+                "phpstan/phpstan": "^1.0",
+                "symfony/polyfill-php73": "^1.12.0"
+            },
+            "require-dev": {
+                "composer/composer": "^1.10.23",
+                "dealerdirect/phpcodesniffer-composer-installer": "^0.7",
+                "php-parallel-lint/php-parallel-lint": "^1.1",
+                "phpstan/phpstan-strict-rules": "^1.0",
+                "phpunit/phpunit": "^7 || ^9",
+                "szepeviktor/phpcs-psr-12-neutron-hybrid-ruleset": "^0.6"
+            },
+            "type": "phpstan-extension",
+            "extra": {
+                "phpstan": {
+                    "includes": [
+                        "extension.neon"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "SzepeViktor\\PHPStan\\WordPress\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "WordPress extensions for PHPStan",
+            "keywords": [
+                "PHPStan",
+                "code analyse",
+                "code analysis",
+                "static analysis",
+                "wordpress"
+            ],
+            "support": {
+                "issues": "https://github.com/szepeviktor/phpstan-wordpress/issues",
+                "source": "https://github.com/szepeviktor/phpstan-wordpress/tree/v1.0.2"
+            },
+            "funding": [
+                {
+                    "url": "https://www.paypal.me/szepeviktor",
+                    "type": "custom"
+                }
+            ],
+            "time": "2021-11-19T12:47:11+00:00"
         },
         {
             "name": "theseer/tokenizer",

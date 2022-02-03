@@ -88,7 +88,8 @@
 	</rule>
 
 	<rule ref="WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid">
-		<exclude-pattern>tests/phpunit/integration/includes/REST_Setup.php</exclude-pattern>
+		<exclude-pattern
+    >tests/phpunit/integration/includes/REST_Setup.php</exclude-pattern>
 	</rule>
 
 	<!-- Show details about violated sniffs -->

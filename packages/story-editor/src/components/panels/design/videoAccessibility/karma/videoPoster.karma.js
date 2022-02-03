@@ -14,11 +14,6 @@
  * limitations under the License.
  */
 /**
- * External dependencies
- */
-import { waitFor } from '@testing-library/react';
-
-/**
  * Internal dependencies
  */
 import { Fixture } from '../../../../../karma';
@@ -98,7 +93,7 @@ describe('Video Accessibility Panel', () => {
       expect(vaPanel.posterMenuButton).toHaveFocus();
 
       await fixture.events.keyboard.press('Enter');
-      await waitFor(() => expect(vaPanel.posterMenuEdit).toBeDefined());
+      expect(vaPanel.posterMenuEdit).toBeDefined();
       await fixture.snapshot('Menu open');
 
       // And click on edit

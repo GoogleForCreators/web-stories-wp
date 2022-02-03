@@ -109,10 +109,8 @@ describe('Library Media Tab', () => {
 
       const storyContext = await fixture.renderHook(() => useStory());
       const [background] = storyContext.state.selectedElements;
-      await waitFor(() => expect(background.type).toBe('image'));
-      await waitFor(() =>
-        expect(background.resource.src).toMatch(/^http.+\/blue-marble.jpg$/)
-      );
+      expect(background.type).toBe('image');
+      expect(background.resource.src).toMatch(/^http.+\/blue-marble.jpg$/);
     });
   });
 });
