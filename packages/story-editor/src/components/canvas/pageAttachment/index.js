@@ -20,12 +20,12 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
+import { Popup } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 import { useCanvas } from '../../../app';
-import Popup from '../../popup';
 import useElementsWithLinks from '../../../utils/useElementsWithLinks';
 import { OUTLINK_THEME } from '../../../constants';
 import { ReactComponent as DefaultIcon } from './defaultIcon.svg';

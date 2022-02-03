@@ -38,18 +38,18 @@ import {
   THEME_CONSTANTS,
   Swatch,
   PLACEMENT,
+  Popup,
 } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../constants';
-import Popup from '../../popup';
 import ColorPicker from '../../colorPicker';
 import useInspector from '../../inspector/useInspector';
 import DefaultTooltip from '../../tooltip';
 import { focusStyle, inputContainerStyleOverride } from '../../panels/shared';
-import { useCanvas } from '../../../app';
+import { useCanvas, useConfig } from '../../../app';
 
 const Preview = styled.div`
   height: 36px;
@@ -142,6 +142,8 @@ const ColorInput = forwardRef(function ColorInput(
   },
   ref
 ) {
+  const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
+
   const isMixed = value === MULTIPLE_VALUE;
   value = isMixed ? '' : value;
 
@@ -229,6 +231,8 @@ const ColorInput = forwardRef(function ColorInput(
         isOpen={pickerOpen}
         placement={PLACEMENT.LEFT_START}
         spacing={SPACING}
+        topOffset={topOffset}
+        isRTL={isRTL}
         invisible={isEyedropperActive}
         renderContents={({ propagateDimensionChange }) => (
           <ColorPicker

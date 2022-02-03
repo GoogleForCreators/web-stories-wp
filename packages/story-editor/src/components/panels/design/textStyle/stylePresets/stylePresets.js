@@ -27,6 +27,7 @@ import {
   Icons,
   Button,
   PLACEMENT,
+  Popup,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
@@ -35,11 +36,10 @@ import { useRef, useState } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../../../app';
+import { useConfig, useStory } from '../../../../../app';
 import { PRESET_TYPES } from '../../../../../constants';
 import useAddPreset from '../../../../../utils/useAddPreset';
 import { focusStyle } from '../../../shared';
-import Popup from '../../../../popup';
 import useInspector from '../../../../inspector/useInspector';
 import useApplyStyle from './useApplyStyle';
 import StyleGroup from './styleGroup';
@@ -93,6 +93,7 @@ const NoStylesText = styled(Text)`
 
 const SPACING = { x: 20 };
 function PresetPanel({ pushUpdate }) {
+  const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
   const { globalStoryStyles } = useStory(
     ({
       state: {
@@ -159,6 +160,8 @@ function PresetPanel({ pushUpdate }) {
             anchor={buttonRef}
             dock={inspector}
             isOpen={isPopupOpen}
+            isRTL={isRTL}
+            topOffset={topOffset}
             placement={PLACEMENT.LEFT_START}
             spacing={SPACING}
             renderContents={() => (

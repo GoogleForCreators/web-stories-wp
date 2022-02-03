@@ -32,12 +32,10 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { themeHelpers } from '../../theme';
 import { noop } from '../../utils';
 import { getTransforms, getOffset } from './utils';
 import { PLACEMENT } from './constants';
 
-// TODO scrollbar update, commented out until design updates are done
 const DEFAULT_POPUP_Z_INDEX = 11;
 
 const Container = styled.div.attrs(
@@ -46,12 +44,15 @@ const Container = styled.div.attrs(
     fillWidth,
     fillHeight,
     placement,
+    isRTL,
     zIndex,
+    invisible,
   }) => ({
     style: {
-      transform: `translate(${x}px, ${y}px) ${getTransforms(placement)}`,
+      transform: `translate(${x}px, ${y}px) ${getTransforms(placement, isRTL)}`,
       ...(fillWidth ? { width: `${width}px` } : {}),
       ...(fillHeight ? { height: `${height}px` } : {}),
+      ...(invisible ? { visibility: 'hidden' } : {}),
       zIndex,
     },
   })
@@ -60,10 +61,30 @@ const Container = styled.div.attrs(
   left: 0px;
   top: 0px;
   position: fixed;
-
-  ${themeHelpers.scrollbarCSS};
+  overflow-y: auto;
+  max-height: ${({ topOffset }) => `calc(100vh - ${topOffset}px)`};
 `;
 
+/**
+ *
+ * @param {Object} args Named arguments
+ * @param {Object} args.anchor Required, Ref that controls the position of Popup.
+ * @param {Object} args.dock Optional, Ref that controls optional additional positioning of Popup.
+ * @param {Node} args.children Rendered contents of Popup.
+ * @param {Object} args.renderContents Optional, replacement to rendered contents of Popup.
+ * @param {string} args.placement Optional, decides direction of popup, overridden when space doesn't permit designated value. Defaults to bottom.
+ * @param {number} args.zIndex Optional, ability to override z index for special cases.
+ * @param {Object} args.spacing Optional, spacing override for Popup positioning.
+ * @param {boolean} args.isOpen When true, Popup renders.
+ * @param {boolean} args.fillWidth Optional, sets a width for Popup to take or tells it to take up a designated container's full width.
+ * @param {boolean} args.fillHeight Optional, sets a height for Popup to take or tells it to take up a designated container's full height.
+ * @param {Function} args.onPositionUpdate Optional, override for triggering update when position changes.
+ * @param {Function} args.refCallback Optional, override for cases where popup contents and position change (totally new popup) to prevent stale content.
+ * @param {boolean} args.invisible Optional, allows popups to build on each other for edge cases.
+ * @param {boolean} args.isRTL Optional, tells Popup which y coordinates to take to keep perspective.
+ * @param {number} args.topOffset Optional, tells offset values where the true end of available space is in CMS that have their own forced heading we can't control.
+ * @return
+ */
 function Popup({
   anchor,
   dock,
@@ -72,11 +93,14 @@ function Popup({
   placement = PLACEMENT.BOTTOM,
   zIndex = DEFAULT_POPUP_Z_INDEX,
   spacing,
+  invisible,
   isOpen,
   fillWidth = false,
   fillHeight = false,
   onPositionUpdate = noop,
   refCallback = noop,
+  isRTL,
+  topOffset = 0,
 }) {
   const [popupState, setPopupState] = useState(null);
   const isMounted = useRef(false);
@@ -91,7 +115,7 @@ function Popup({
   }, []);
 
   const positionPopup = useCallback(
-    async (evt) => {
+    (evt) => {
       if (!isMounted.current) {
         return;
       }
@@ -101,13 +125,25 @@ function Popup({
         return;
       }
 
-      await setPopupState({
-        offset:
-          anchor?.current && getOffset(placement, spacing, anchor, dock, popup),
+      setPopupState({
+        offset: anchor?.current
+          ? getOffset(placement, spacing, anchor, dock, popup, isRTL, topOffset)
+          : {},
+        height: popup.current?.getBoundingClientRect()?.height,
       });
     },
-    [anchor, dock, placement, spacing]
+    [anchor, dock, placement, spacing, isRTL, topOffset]
   );
+
+  useEffect(() => {
+    // If the popup height changes meanwhile, let's update the popup, too.
+    if (
+      popupState?.height &&
+      popupState.height !== popup.current?.getBoundingClientRect()?.height
+    ) {
+      positionPopup();
+    }
+  }, [popupState?.height, positionPopup]);
 
   useLayoutEffect(() => {
     if (!isOpen) {
@@ -143,6 +179,9 @@ function Popup({
           placement={placement}
           zIndex={zIndex}
           $offset={popupState.offset}
+          isRTL={isRTL}
+          topOffset={topOffset}
+          invisible={invisible}
         >
           {renderContents
             ? renderContents({ propagateDimensionChange: positionPopup })
@@ -167,6 +206,9 @@ Popup.propTypes = {
   fillHeight: PropTypes.oneOfType([PropTypes.number, PropTypes.bool]),
   onPositionUpdate: PropTypes.func,
   refCallback: PropTypes.func,
+  invisible: PropTypes.bool,
+  isRTL: PropTypes.bool,
+  topOffset: PropTypes.number,
 };
 
 export { Popup, PLACEMENT };
