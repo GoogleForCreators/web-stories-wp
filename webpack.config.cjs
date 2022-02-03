@@ -70,7 +70,7 @@ const sharedConfig = {
         enforce: 'pre',
         resolve: {
           fullySpecified: false,
-        }
+        },
       },
       {
         test: /\.worker\.js$/,
@@ -103,6 +103,10 @@ const sharedConfig = {
       },
       // These should be sync'd with the config in `.storybook/main.cjs`.
       {
+        type: 'asset',
+        resourceQuery: /react/,
+      },
+      {
         test: /\.svg$/,
         use: [
           {
@@ -124,7 +128,6 @@ const sharedConfig = {
               },
             },
           },
-          'url-loader',
         ],
         exclude: [/images\/.*\.svg$/],
       },
@@ -151,7 +154,6 @@ const sharedConfig = {
               },
             },
           },
-          'url-loader',
         ],
         include: [/images\/.*\.svg$/],
       },

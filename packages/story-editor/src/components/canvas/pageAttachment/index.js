@@ -28,8 +28,8 @@ import { useCanvas } from '../../../app';
 import Popup from '../../popup';
 import useElementsWithLinks from '../../../utils/useElementsWithLinks';
 import { OUTLINK_THEME } from '../../../constants';
-import { ReactComponent as DefaultIcon } from './defaultIcon.svg';
-import { ReactComponent as ArrowIcon } from './arrowBar.svg';
+import { default as DefaultIcon } from './defaultIcon.svg?react';
+import { default as ArrowIcon } from './arrowBar.svg?react';
 
 const Wrapper = styled.div`
   position: absolute;
