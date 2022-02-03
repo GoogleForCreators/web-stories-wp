@@ -36,7 +36,6 @@ import { Icons, useKeyDownEffect } from '@googleforcreators/design-system';
  */
 import { StoryPropTypes } from '../types';
 import Popup from '../../components/popup';
-import { useConfig } from '../../app/config';
 
 const PLAY_BUTTON_SIZE = 82;
 const ICON_SVG_SIZE = 72;
@@ -120,8 +119,8 @@ function PlayPauseButton({
   elementRef,
   element,
   videoRef = null,
+  isRTL
 }) {
-  const { isRTL } = useConfig();
   const hasVideoSrc = Boolean(element.resource.src);
   const isPlayAbove =
     element.width < PLAY_ABOVE_BREAKPOINT_WIDTH ||

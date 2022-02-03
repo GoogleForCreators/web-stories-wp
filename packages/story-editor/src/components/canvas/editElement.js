@@ -32,6 +32,7 @@ import {
  * Internal dependencies.
  */
 import useCORSProxy from '../../utils/useCORSProxy';
+import { useConfig } from '../../app';
 
 const Wrapper = styled.div`
   ${elementWithPosition}
@@ -47,6 +48,7 @@ const EditElement = memo(
       getBox: state.actions.getBox,
     }));
     const { getProxiedUrl } = useCORSProxy();
+    const { isRTL } = useConfig();
 
     // Needed for elements that can scale in edit mode.
     const [localProperties, setLocalProperties] = useState(null);
@@ -66,6 +68,7 @@ const EditElement = memo(
           onResize={onResize}
           setLocalProperties={setLocalProperties}
           getProxiedUrl={ getProxiedUrl }
+          isRTL={ isRTL }
         />
       </Wrapper>
     );

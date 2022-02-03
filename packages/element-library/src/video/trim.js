@@ -55,7 +55,7 @@ const Spinner = styled.div`
   align-items: center;
 `;
 
-function VideoTrim({ box, element }) {
+function VideoTrim({ box, element, isRTL }) {
   const { width, height } = box;
   const { poster, tracks, isBackground, scale, flip, focalX, focalY } = element;
   const wrapperRef = useRef();
@@ -156,6 +156,7 @@ function VideoTrim({ box, element }) {
         elementRef={wrapperRef}
         videoRef={videoRef}
         shouldResetOnEnd={false}
+        isRTL={ isRTL }
       />
     </>
   );

@@ -33,6 +33,7 @@ function VideoControls({
   isTransforming,
   elementRef,
   element,
+  isRTL
 }) {
   const isActive =
     isSelected && !isTransforming && isSingleElement && !isEditing;
@@ -44,6 +45,7 @@ function VideoControls({
       isTransforming={isTransforming}
       elementRef={elementRef}
       element={element}
+      isRTL={ isRTL }
     />
   );
 }

@@ -47,7 +47,7 @@ import {
 /**
  * Internal dependencies
  */
-import { useStory, useTransform, useCanvas } from '../../app';
+import { useStory, useTransform, useCanvas, useConfig } from '../../app';
 import WithLink from '../elementLink/frame';
 import useDoubleClick from '../../utils/useDoubleClick';
 
@@ -99,6 +99,7 @@ function FrameElement({ id }) {
   const { Frame, isMaskable, Controls } = getDefinitionForType(type);
   const elementRef = useRef();
   const [hovering, setHovering] = useState(false);
+  const { isRTL } = useConfig();
 
   const onPointerEnter = () => setHovering(true);
   const onPointerLeave = () => setHovering(false);
@@ -187,6 +188,7 @@ function FrameElement({ id }) {
           box={box}
           elementRef={elementRef}
           element={element}
+          isRTL={ isRTL }
         />
       )}
       <Wrapper
