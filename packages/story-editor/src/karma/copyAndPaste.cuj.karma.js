@@ -130,7 +130,7 @@ function sequencedForEach(htmlCollection, op) {
       await fixture.events.click(effectChooserToggle, { clickCount: 1 });
 
       // see that effect chooser is open
-      const effectChooser = fixture.screen.getByRole('list', {
+      const effectChooser = await fixture.screen.findByRole('list', {
         name: /Available Animations To Select/,
       });
 
@@ -251,7 +251,11 @@ describe('Background Copy & Paste', () => {
     // Click twice to enter edit mode
     await fixture.events.click(bgFrame);
     await fixture.events.click(bgFrame);
-    await waitFor(() => fixture.editor.canvas.editLayer.sizeSlider);
+    await waitFor(() => {
+      if (!fixture.editor.canvas.editLayer.sizeSlider) {
+        throw new Error('sizeSlider not ready');
+      }
+    });
     const slider = fixture.editor.canvas.editLayer.sizeSlider;
     await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
       moveRel(slider, 5, 5),

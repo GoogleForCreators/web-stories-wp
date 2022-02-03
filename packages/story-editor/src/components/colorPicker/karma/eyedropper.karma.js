@@ -40,6 +40,7 @@ describe('Eyedropper', () => {
 
   const getElements = async () => {
     const storyContext = await fixture.renderHook(() => useStory());
+
     return storyContext.state.currentPage.elements;
   };
 
@@ -72,18 +73,30 @@ describe('Eyedropper', () => {
     // Use eyedropper to select the color
     const bgPanel = fixture.editor.inspector.designPanel.pageBackground;
     await fixture.events.click(bgPanel.backgroundColor.button);
-    await waitFor(() => expect(bgPanel.backgroundColor.picker).toBeDefined());
+    await waitFor(() => {
+      if (!bgPanel.backgroundColor.picker) {
+        throw new Error('picker not ready');
+      }
+      expect(bgPanel.backgroundColor.picker).toBeDefined();
+    });
     // Go to the custom color view
     await fixture.events.click(bgPanel.backgroundColor.picker.custom);
     // Contents of the color picker are lazy loaded
-    await waitFor(() =>
-      expect(bgPanel.backgroundColor.picker.eyedropper).toBeDefined()
-    );
+    await waitFor(() => {
+      if (!bgPanel.backgroundColor.picker.eyedropper) {
+        throw new Error('eyedropper not ready');
+      }
+      expect(bgPanel.backgroundColor.picker.eyedropper).toBeDefined();
+    });
     // Click the eyedropper icon in the custom view
     await fixture.events.click(bgPanel.backgroundColor.picker.eyedropper);
-    await waitFor(() => fixture.screen.getByTestId('eyedropperLayer'), {
-      timeout: 9000,
-    });
+    // The bots are a little too fast, wait for eyedropper
+    await fixture.events.sleep(500);
+    const eyeDropperLayer = await fixture.screen.findByTestId(
+      'eyedropperLayer'
+    );
+    expect(eyeDropperLayer).toBeTruthy();
+
     const imageOnCanvas = (await getElements(fixture))[1];
     const imageOnCanvasRect = (
       await getCanvasElementWrapperById(imageOnCanvas.id)
@@ -92,8 +105,16 @@ describe('Eyedropper', () => {
       imageOnCanvasRect.right - 2,
       imageOnCanvasRect.top + 8
     );
-
     await fixture.snapshot('BG color from image');
-    expect(bgPanel.backgroundColor.hex.value).toBe('DBB198');
+
+    await waitFor(() => {
+      if (bgPanel.backgroundColor.hex.value !== 'DBB198') {
+        throw new Error('bg color not updated yet');
+      }
+      expect(
+        fixture.editor.inspector.designPanel.pageBackground.backgroundColor.hex
+          .value
+      ).toBe('DBB198');
+    });
   });
 });

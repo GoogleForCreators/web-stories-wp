@@ -303,6 +303,17 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'general',
 			],
 			/**
+			 * Author: @spacedmonkey
+			 * Issue: #10339
+			 * Creation date: 2022-02-02
+			 */
+			[
+				'name'        => 'enablePostLockingTakeOver',
+				'label'       => __( 'Story locking take over', 'web-stories' ),
+				'description' => __( 'Allow locked stories to be taken over by another authors', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
 			 * Author: @miina
 			 * Issue #471
 			 * Creation date: 2021-08-10
@@ -340,8 +351,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'editor',
 				'default'     => true,
 			],
-
-
 			/**
 			 * Author: @swissspidy
 			 * Issue: #9344
@@ -354,7 +363,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'editor',
 				'default'     => true,
 			],
-
 			/**
 			 * Author: @miina
 			 * Issue: #9880
@@ -366,7 +374,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'description' => __( 'Enable adding custom fonts', 'web-stories' ),
 				'group'       => 'general',
 			],
-
 			/**
 			 * Author: @spacedmonkey
 			 * Issue: #8821
@@ -376,6 +383,28 @@ class Experiments extends Service_Base implements HasRequirements {
 				'name'        => 'enhancedPageBackgroundAudio',
 				'label'       => __( 'Page Background Audio', 'web-stories' ),
 				'description' => __( 'Enable adding captions to background audio', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @barklund
+			 * Issue: #10112
+			 * Creation date: 2022-01-27
+			 */
+			[
+				'name'        => 'floatingMenu',
+				'label'       => __( 'Floating Menu', 'web-stories' ),
+				'description' => __( 'Enable the new floating design menu', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @swissspidy
+			 * Issue: #10394
+			 * Creation date: 2022-01-32
+			 */
+			[
+				'name'        => 'semanticHeadingTags',
+				'label'       => __( 'Semantic Headings', 'web-stories' ),
+				'description' => __( 'Automatically use semantic heading tags for text elements', 'web-stories' ),
 				'group'       => 'editor',
 			],
 		];
