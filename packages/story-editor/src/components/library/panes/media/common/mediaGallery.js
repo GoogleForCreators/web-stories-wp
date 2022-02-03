@@ -19,7 +19,7 @@
  */
 import { useCallback } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
-import PhotoAlbum from 'react-photo-album';
+import { default as PhotoAlbum } from 'react-photo-album';
 
 /**
  * Internal dependencies
