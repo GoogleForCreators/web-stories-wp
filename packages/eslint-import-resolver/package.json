@@ -1,6 +1,6 @@
 {
-  "name": "@web-stories-wp/glider",
-  "description": "Patched version of Glider.js",
+  "name": "@web-stories-wp/eslint-import-resolver",
+  "description": "Custom resolver for eslint-plugin-import for monorepos",
   "private": true,
   "author": {
     "name": "Google",
@@ -8,13 +8,13 @@
   },
   "license": "Apache-2.0",
   "keywords": [
-    "glider"
+    "jest"
   ],
   "homepage": "https://github.com/googleforcreators/web-stories-wp/",
   "repository": {
     "type": "git",
     "url": "https://github.com/GoogleForCreators/web-stories-wp.git",
-    "directory": "packages/glider"
+    "directory": "packages/eslint-plugin-resolver"
   },
   "bugs": {
     "url": "https://github.com/googleforcreators/web-stories-wp/issues"
@@ -23,10 +23,8 @@
     "node": ">= 16",
     "npm": ">= 7.3"
   },
-  "type": "module",
-  "main": "./src/index.js",
+  "main": "./src/index.cjs",
   "dependencies": {
-    "glider-js": "^1.7.3"
-  },
-  "devDependencies": {}
+    "eslint-import-resolver-node": "^0.3.6"
+  }
 }

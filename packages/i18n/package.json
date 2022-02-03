@@ -14,7 +14,11 @@
     "gettext"
   ],
   "homepage": "https://github.com/googleforcreators/web-stories-wp/",
-  "repository": "git+https://github.com/GoogleForCreators/web-stories-wp.git",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GoogleForCreators/web-stories-wp.git",
+    "directory": "packages/i18n"
+  },
   "bugs": {
     "url": "https://github.com/googleforcreators/web-stories-wp/issues"
   },
@@ -22,11 +26,12 @@
     "node": ">= 16",
     "npm": ">= 7.3"
   },
-  "type": "module",
-  "exports": {
-    "default": "./src/index.js"
+  "main": "dist/index.js",
+  "module": "dist-module/index.js",
+  "source": "src/index.js",
+  "publishConfig": {
+    "access": "public"
   },
-  "main": "./src/index.js",
   "sideEffects": false,
   "dependencies": {
     "@googleforcreators/react": "*",
