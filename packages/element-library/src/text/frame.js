@@ -44,7 +44,13 @@ const Element = styled.p`
   user-select: none;
 `;
 
-function TextFrame({ element, element: { id, content, ...rest }, wrapperRef, setEditingElementWithState, selectedElementIds }) {
+function TextFrame({
+  element,
+  element: { id, content, ...rest },
+  wrapperRef,
+  setEditingElementWithState,
+  selectedElementIds,
+}) {
   const { dataToEditorX, dataToEditorY } = useUnits((state) => ({
     dataToEditorX: state.actions.dataToEditorX,
     dataToEditorY: state.actions.dataToEditorY,

@@ -324,7 +324,7 @@ TextDisplay.propTypes = {
   element: StoryPropTypes.elements.text.isRequired,
   box: StoryPropTypes.box.isRequired,
   previewMode: PropTypes.bool,
-  maybeEnqueueFontStyle: PropTypes.func
+  maybeEnqueueFontStyle: PropTypes.func,
 };
 
 export default TextDisplay;

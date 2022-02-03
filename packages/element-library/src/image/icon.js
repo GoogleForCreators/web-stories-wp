@@ -31,7 +31,7 @@ function ImageLayerIcon({
     resource,
     resource: { alt },
   },
-  getProxiedUrl
+  getProxiedUrl,
 }) {
   const url = getSmallestUrlForWidth(0, resource);
   const src = getProxiedUrl(resource, url);

@@ -21,7 +21,10 @@ import { useRef, useFocusOut } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { rgba, readableColor } from 'polished';
 import { FULLBLEED_RATIO } from '@googleforcreators/units';
-import { useGlobalKeyDownEffect, CircularProgress } from '@googleforcreators/design-system';
+import {
+  useGlobalKeyDownEffect,
+  CircularProgress,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

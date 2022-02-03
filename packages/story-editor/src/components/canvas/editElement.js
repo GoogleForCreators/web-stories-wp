@@ -29,12 +29,11 @@ import {
 } from '@googleforcreators/element-library';
 
 /**
- * Internal dependencies.
+ * Internal dependencies
  */
 import useCORSProxy from '../../utils/useCORSProxy';
-import { useConfig } from '../../app';
+import { useConfig, useStory, useFont } from '../../app';
 import useVideoTrim from '../videoTrim/useVideoTrim';
-import { useStory, useFont } from '../../app';
 
 const Wrapper = styled.div`
   ${elementWithPosition}
@@ -85,11 +84,11 @@ const EditElement = memo(
           editWrapper={editWrapper}
           onResize={onResize}
           setLocalProperties={setLocalProperties}
-          getProxiedUrl={ getProxiedUrl }
-          isRTL={ isRTL }
-          isTrimMode={ isTrimMode }
-          resource={ resource }
-          setVideoNode={ setVideoNode }
+          getProxiedUrl={getProxiedUrl}
+          isRTL={isRTL}
+          isTrimMode={isTrimMode}
+          resource={resource}
+          setVideoNode={setVideoNode}
           updateElementById={updateElementById}
           maybeEnqueueFontStyle={maybeEnqueueFontStyle}
         />

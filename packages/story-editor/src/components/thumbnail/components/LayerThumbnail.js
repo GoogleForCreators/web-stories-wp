@@ -20,7 +20,7 @@ import PropTypes from 'prop-types';
 import { getDefinitionForType } from '@googleforcreators/elements';
 
 /**
- * Internal dependencies.
+ * Internal dependencies
  */
 import useCORSProxy from '../../../utils/useCORSProxy';
 import { useStory } from '../../../app';

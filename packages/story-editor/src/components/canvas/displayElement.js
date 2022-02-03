@@ -223,9 +223,9 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
             element={element}
             previewMode={previewMode}
             box={box}
-            getProxiedUrl={ getProxiedUrl }
-            isCurrentResourceProcessing={ isCurrentResourceProcessing }
-            isCurrentResourceUploading={ isCurrentResourceUploading }
+            getProxiedUrl={getProxiedUrl}
+            isCurrentResourceProcessing={isCurrentResourceProcessing}
+            isCurrentResourceUploading={isCurrentResourceUploading}
             maybeEnqueueFontStyle={maybeEnqueueFontStyle}
           />
         </WithMask>
@@ -244,9 +244,9 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
                 <Replacement
                   element={replacementElement}
                   box={box}
-                  getProxiedUrl={ getProxiedUrl }
-                  isCurrentResourceProcessing={ isCurrentResourceProcessing }
-                  isCurrentResourceUploading={ isCurrentResourceUploading }
+                  getProxiedUrl={getProxiedUrl}
+                  isCurrentResourceProcessing={isCurrentResourceProcessing}
+                  isCurrentResourceUploading={isCurrentResourceUploading}
                   maybeEnqueueFontStyle={maybeEnqueueFontStyle}
                 />
               </WithMask>

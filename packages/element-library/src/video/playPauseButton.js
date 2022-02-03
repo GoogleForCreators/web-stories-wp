@@ -29,7 +29,11 @@ import {
 import { CSSTransition } from 'react-transition-group';
 import { __ } from '@googleforcreators/i18n';
 import { rgba } from 'polished';
-import { Icons, useKeyDownEffect, Popup } from '@googleforcreators/design-system';
+import {
+  Icons,
+  useKeyDownEffect,
+  Popup,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -118,7 +122,7 @@ function PlayPauseButton({
   elementRef,
   element,
   videoRef = null,
-  isRTL
+  isRTL,
 }) {
   const hasVideoSrc = Boolean(element.resource.src);
   const isPlayAbove =

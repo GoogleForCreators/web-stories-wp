@@ -107,13 +107,14 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
     currentPage,
     clearBackgroundElement,
     updateCurrentPageProperties,
-    currentPageBackgroundColor
+    currentPageBackgroundColor,
   } = useStory(({ state, actions }) => ({
     currentPage: state.currentPage,
     clearBackgroundElement: actions.clearBackgroundElement,
     combineElements: actions.combineElements,
     updateCurrentPageProperties: actions.updateCurrentPageProperties,
-    currentPageBackgroundColor: !isDefaultBackground || state.currentPage?.backgroundColor
+    currentPageBackgroundColor:
+      !isDefaultBackground || state.currentPage?.backgroundColor,
   }));
   const { getProxiedUrl } = useCORSProxy();
 
@@ -242,7 +243,11 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
         <Row expand={false}>
           <SelectedMedia>
             <MediaWrapper>
-              <LayerIcon element={backgroundEl} getProxiedUrl={ getProxiedUrl } currentPageBackgroundColor={currentPageBackgroundColor} />
+              <LayerIcon
+                element={backgroundEl}
+                getProxiedUrl={getProxiedUrl}
+                currentPageBackgroundColor={currentPageBackgroundColor}
+              />
             </MediaWrapper>
             <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
               {__('Media', 'web-stories')}

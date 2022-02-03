@@ -29,7 +29,10 @@ import {
 import PropTypes from 'prop-types';
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import { useUnits } from '@googleforcreators/units';
-import { useTransformHandler, useTransform } from '@googleforcreators/transform';
+import {
+  useTransformHandler,
+  useTransform,
+} from '@googleforcreators/transform';
 import {
   RichTextEditor,
   getHTMLInfo,

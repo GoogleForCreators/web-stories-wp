@@ -30,9 +30,9 @@ import { Row, Color, FilterToggle } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { useCommonColorValue } from '../../shared';
 import { MULTIPLE_VALUE } from '../../../../constants';
-import convertOverlay from './convertOverlay';
 import useCORSProxy from '../../../../utils/useCORSProxy';
 import { useStory } from '../../../../app';
+import convertOverlay from './convertOverlay';
 
 export const OverlayPreset = {
   [OverlayType.NONE]: {
@@ -94,7 +94,11 @@ function FilterPanel({ selectedElements, pushUpdate }) {
                   label
                 )}
               >
-                <LayerIcon element={selectedElements[0]} getProxiedUrl={ getProxiedUrl } currentPageBackgroundColor={currentPageBackgroundColor} />
+                <LayerIcon
+                  element={selectedElements[0]}
+                  getProxiedUrl={getProxiedUrl}
+                  currentPageBackgroundColor={currentPageBackgroundColor}
+                />
               </FilterToggle>
             );
           })}

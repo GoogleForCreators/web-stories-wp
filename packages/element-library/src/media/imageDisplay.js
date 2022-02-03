@@ -40,7 +40,14 @@ const Img = styled.img`
   ${mediaWithScale}
 `;
 
-function ImageDisplay({ element, box, previewMode, getProxiedUrl, isCurrentResourceProcessing, isCurrentResourceUploading }) {
+function ImageDisplay({
+  element,
+  box,
+  previewMode,
+  getProxiedUrl,
+  isCurrentResourceProcessing,
+  isCurrentResourceUploading,
+}) {
   const { resource, scale, focalX, focalY } = element;
   const { id: resourceId, alt } = resource;
   const { width, height } = box;

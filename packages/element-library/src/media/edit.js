@@ -45,7 +45,6 @@ import {
   elementWithFlip,
   getTransformFlip,
 } from '../shared';
-import { useStory } from '../../app';
 import { StoryPropTypes } from '../types';
 import EditCropMoveable from './editCropMoveable';
 import { mediaWithScale } from './util';
@@ -104,7 +103,13 @@ const CropVideo = styled.video`
   max-height: initial;
 `;
 
-function MediaEdit({ element, box, setLocalProperties, getProxiedUrl, updateElementById }) {
+function MediaEdit({
+  element,
+  box,
+  setLocalProperties,
+  getProxiedUrl,
+  updateElementById,
+}) {
   const {
     id,
     resource,

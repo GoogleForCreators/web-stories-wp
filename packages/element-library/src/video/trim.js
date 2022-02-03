@@ -149,7 +149,7 @@ function VideoTrim({ box, element, isRTL, resource, setVideoNode }) {
         elementRef={wrapperRef}
         videoRef={videoRef}
         shouldResetOnEnd={false}
-        isRTL={ isRTL }
+        isRTL={isRTL}
       />
     </>
   );

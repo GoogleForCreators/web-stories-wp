@@ -36,12 +36,12 @@ import { getDefinitionForType } from '@googleforcreators/elements';
  */
 import StoryPropTypes from '../../types';
 import { useStory, useCanvas } from '../../app';
+import useVideoTrim from '../videoTrim/useVideoTrim';
+import VideoTrimmer from '../videoTrim/videoTrimmer';
 import EditElement from './editElement';
 import { Layer, PageArea, FooterArea, Z_INDEX } from './layout';
 import useFocusCanvas from './useFocusCanvas';
 import SingleSelectionMoveable from './singleSelectionMoveable';
-import useVideoTrim from '../videoTrim/useVideoTrim';
-import VideoTrimmer from '../videoTrim/videoTrimmer';
 
 const LayerWithGrayout = withOverlay(styled(Layer)`
   background-color: ${({ grayout, theme }) =>

@@ -47,7 +47,12 @@ const Image = styled.img`
   max-width: ${({ isBackground }) => (isBackground ? 'initial' : null)};
 `;
 
-function VideoDisplay({ previewMode, box: { width, height }, element, getProxiedUrl }) {
+function VideoDisplay({
+  previewMode,
+  box: { width, height },
+  element,
+  getProxiedUrl,
+}) {
   const {
     id,
     poster,

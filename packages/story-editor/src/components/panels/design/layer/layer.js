@@ -38,9 +38,9 @@ import { LayerText } from '@googleforcreators/element-library';
  */
 import StoryPropTypes from '../../../../types';
 import { useStory } from '../../../../app';
+import useCORSProxy from '../../../../utils/useCORSProxy';
 import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';
-import useCORSProxy from '../../../../utils/useCORSProxy';
 
 const ActionsContainer = styled.div`
   position: absolute;
@@ -257,13 +257,16 @@ function Layer({ element }) {
   const { LayerIcon, LayerContent } = getDefinitionForType(element.type);
   const { isSelected, handleClick } = useLayerSelection(element);
   const { isDefaultBackground } = element;
-  const { duplicateElementsById, deleteElementById, currentPageBackgroundColor } = useStory(
-    ({ actions, state }) => ({
-      duplicateElementsById: actions.duplicateElementsById,
-      deleteElementById: actions.deleteElementById,
-      currentPageBackgroundColor: !isDefaultBackground || state.currentPage?.backgroundColor
-    })
-  );
+  const {
+    duplicateElementsById,
+    deleteElementById,
+    currentPageBackgroundColor,
+  } = useStory(({ actions, state }) => ({
+    duplicateElementsById: actions.duplicateElementsById,
+    deleteElementById: actions.deleteElementById,
+    currentPageBackgroundColor:
+      !isDefaultBackground || state.currentPage?.backgroundColor,
+  }));
 
   const { getProxiedUrl } = useCORSProxy();
   const layerRef = useRef(null);
@@ -289,7 +292,11 @@ function Layer({ element }) {
         isSelected={isSelected}
       >
         <LayerIconWrapper>
-          <LayerIcon element={element} getProxiedUrl={ getProxiedUrl } currentPageBackgroundColor={currentPageBackgroundColor} />
+          <LayerIcon
+            element={element}
+            getProxiedUrl={getProxiedUrl}
+            currentPageBackgroundColor={currentPageBackgroundColor}
+          />
         </LayerIconWrapper>
         <LayerDescription>
           <LayerContentContainer>

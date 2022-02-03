@@ -58,7 +58,7 @@ https://caniuse.com/css-clip-path
 
 function ShapeLayerIcon({
   element: { id, mask, backgroundColor, isDefaultBackground },
-  currentPageBackgroundColor
+  currentPageBackgroundColor,
 }) {
   const maskDef = getMaskByType(mask.type);
 
