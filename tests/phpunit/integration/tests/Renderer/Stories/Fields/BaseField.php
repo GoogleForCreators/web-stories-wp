@@ -14,7 +14,6 @@ use Google\Web_Stories\Tests\Integration\TestCase;
  * Class BaseField.
  *
  * @package Google\Web_Stories\Tests\Stories\Fields
- *
  * @coversDefaultClass \Google\Web_Stories\Renderer\Stories\Fields\BaseField
  */
 class BaseField extends TestCase {

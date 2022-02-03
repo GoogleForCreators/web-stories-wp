@@ -2,10 +2,11 @@
 /**
  * Class Migration_Meta_To_Term
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -23,7 +24,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 
 namespace Google\Web_Stories\Migrations;
 
@@ -73,7 +73,7 @@ abstract class Migration_Meta_To_Term extends Migrate_Base {
 			)
 		);
 
-		if ( is_array( $post_ids ) && ! empty( $post_ids ) ) {
+		if ( \is_array( $post_ids ) && ! empty( $post_ids ) ) {
 			foreach ( $post_ids as $post_id ) {
 				wp_set_object_terms( (int) $post_id, $this->get_term_name(), $this->media_source_taxonomy->get_taxonomy_slug() );
 			}

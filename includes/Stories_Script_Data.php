@@ -4,10 +4,11 @@
  *
  * Stories data which will be required by various JS scripts.
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -61,7 +62,7 @@ class Stories_Script_Data {
 	 *
 	 * @return array
 	 */
-	public function get_script_data() : array {
+	public function get_script_data(): array {
 		$views      = $this->get_layouts();
 		$view_types = [];
 
@@ -90,7 +91,7 @@ class Stories_Script_Data {
 	 *
 	 * @return array
 	 */
-	public function fields_states() : array {
+	public function fields_states(): array {
 		$field_states = [];
 		/**
 		 * Factory instance.

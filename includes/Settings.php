@@ -4,10 +4,11 @@
  *
  * Responsible for adding the stories Settings to WordPress admin.
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -34,99 +35,71 @@ namespace Google\Web_Stories;
 class Settings extends Service_Base {
 	/**
 	 * Settings group.
-	 *
-	 * @var string
 	 */
 	const SETTING_GROUP = 'web-stories';
 
 	/**
 	 * Experiments settings group.
-	 *
-	 * @var string
 	 */
 	const SETTING_GROUP_EXPERIMENTS = 'web-stories-experiments';
 
 	/**
 	 * Experiments setting name.
-	 *
-	 * @var string
 	 */
 	const SETTING_NAME_EXPERIMENTS = 'web_stories_experiments';
 
 	/**
 	 * GA Tracking ID setting name.
-	 *
-	 * @var string
 	 */
 	const SETTING_NAME_TRACKING_ID = 'web_stories_ga_tracking_id';
 
 	/**
 	 * Legacy analytics usage flag.
-	 *
-	 * @var string
 	 */
 	const SETTING_NAME_USING_LEGACY_ANALYTICS = 'web_stories_using_legacy_analytics';
 
 	/**
 	 * Type of adloader.
-	 *
-	 * @var string
 	 */
 	const SETTING_NAME_AD_NETWORK = 'web_stories_ad_network';
 
 	/**
 	 * AdSense Publisher ID setting name.
-	 *
-	 * @var string
 	 */
 	const SETTING_NAME_ADSENSE_PUBLISHER_ID = 'web_stories_adsense_publisher_id';
 
 	/**
 	 * AdSense Slot ID setting name.
-	 *
-	 * @var string
 	 */
 	const SETTING_NAME_ADSENSE_SLOT_ID = 'web_stories_adsense_slot_id';
 
 	/**
 	 * Ad Manager Slot ID setting name.
-	 *
-	 * @var string
 	 */
 	const SETTING_NAME_AD_MANAGER_SLOT_ID = 'web_stories_ad_manager_slot_id';
 
 	/**
 	 * Active publisher logo setting name.
-	 *
-	 * @var string
 	 */
 	const SETTING_NAME_ACTIVE_PUBLISHER_LOGO = 'web_stories_active_publisher_logo';
 
 	/**
 	 * Publisher logos setting name.
-	 *
-	 * @var string
 	 */
 	const SETTING_NAME_PUBLISHER_LOGOS = 'web_stories_publisher_logos';
 
 	/**
 	 * Video cache setting name.
-	 *
-	 * @var string
 	 */
 	const SETTING_NAME_VIDEO_CACHE = 'web_stories_video_cache';
 
 	/**
 	 * Web Stories archive setting name.
-	 *
-	 * @var string
 	 */
 	const SETTING_NAME_ARCHIVE = 'web_stories_archive';
 
 	/**
 	 * Web Stories archive page ID setting name.
-	 *
-	 * @var string
 	 */
 	const SETTING_NAME_ARCHIVE_PAGE_ID = 'web_stories_archive_page_id';
 

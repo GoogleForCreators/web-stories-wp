@@ -2,10 +2,11 @@
 /**
  * Class Site_Kit
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -82,7 +83,7 @@ class Site_Kit extends Service_Base {
 	 * @return bool Whether Site Kit is active.
 	 */
 	protected function is_plugin_active(): bool {
-		return defined( 'GOOGLESITEKIT_VERSION' );
+		return \defined( 'GOOGLESITEKIT_VERSION' );
 	}
 
 
@@ -94,7 +95,7 @@ class Site_Kit extends Service_Base {
 	 * @return bool Whether Site Kit's analytics module is active.
 	 */
 	protected function is_adsense_module_active(): bool {
-		$adsense_module_active       = in_array( 'adsense', $this->get_site_kit_active_modules_option(), true );
+		$adsense_module_active       = \in_array( 'adsense', $this->get_site_kit_active_modules_option(), true );
 		$adsense_options             = (array) get_option( 'googlesitekit_adsense_settings' );
 		$adsense_options_client_id   = ! empty( $adsense_options['clientID'] );
 		$adsense_options_use_snippet = ! empty( $adsense_options['useSnippet'] );
@@ -111,7 +112,7 @@ class Site_Kit extends Service_Base {
 	 * @return bool Whether Site Kit's analytics module is active.
 	 */
 	protected function is_analytics_module_active(): bool {
-		$analytics_module_active = in_array( 'analytics', $this->get_site_kit_active_modules_option(), true );
+		$analytics_module_active = \in_array( 'analytics', $this->get_site_kit_active_modules_option(), true );
 		$analytics_options       = (array) get_option( 'googlesitekit_analytics_settings' );
 		$analytics_use_snippet   = ! empty( $analytics_options['useSnippet'] );
 
@@ -124,12 +125,11 @@ class Site_Kit extends Service_Base {
 	 * @since 1.2.0
 	 *
 	 * @param array|mixed $gtag_opt Array of gtag configuration options.
-	 *
 	 * @return array|mixed Modified configuration options.
 	 */
 	public function filter_site_kit_gtag_opt( $gtag_opt ) {
 		if (
-			! is_array( $gtag_opt ) ||
+			! \is_array( $gtag_opt ) ||
 			! isset( $gtag_opt['vars']['gtag_id'] ) ||
 			! $this->context->is_web_story()
 		) {
@@ -155,9 +155,9 @@ class Site_Kit extends Service_Base {
 	 *
 	 * Bails early if the Site Kit plugin itself is not active.
 	 *
-	 * @see \Google\Site_Kit\Core\Modules\Modules::get_active_modules_option
-	 *
 	 * @since 1.2.0
+	 *
+	 * @see \Google\Site_Kit\Core\Modules\Modules::get_active_modules_option
 	 *
 	 * @return array List of active module slugs.
 	 */
@@ -168,13 +168,13 @@ class Site_Kit extends Service_Base {
 
 		$option = get_option( 'googlesitekit_active_modules' );
 
-		if ( is_array( $option ) ) {
+		if ( \is_array( $option ) ) {
 			return $option;
 		}
 
 		$legacy_option = get_option( 'googlesitekit-active-modules' );
 
-		if ( is_array( $legacy_option ) ) {
+		if ( \is_array( $legacy_option ) ) {
 			return $legacy_option;
 		}
 
@@ -189,7 +189,7 @@ class Site_Kit extends Service_Base {
 	 * @return array Plugin status.
 	 */
 	public function get_plugin_status(): array {
-		$is_installed        = array_key_exists( 'google-site-kit/google-site-kit.php', get_plugins() );
+		$is_installed        = \array_key_exists( 'google-site-kit/google-site-kit.php', get_plugins() );
 		$is_active           = $this->is_plugin_active();
 		$is_analytics_active = $this->is_analytics_module_active();
 		$is_adsense_active   = $this->is_adsense_module_active();

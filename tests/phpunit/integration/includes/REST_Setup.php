@@ -4,10 +4,11 @@
  *
  * Add method assertErrorResponse to any test class.
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -28,9 +29,9 @@
 
 namespace Google\Web_Stories\Tests\Integration;
 
+use Spy_REST_Server;
 use WP_Error;
 use WP_REST_Response;
-use Spy_REST_Server;
 
 /**
  * trait REST_Setup
@@ -67,7 +68,6 @@ trait REST_Setup {
 	 * @param string                    $code     Status code.
 	 * @param WP_REST_Response|WP_Error $response Response object.
 	 * @param int|null                  $status   Status code.
-	 *
 	 * @return void
 	 */
 	protected function assertErrorResponse( $code, $response, $status = null ) {

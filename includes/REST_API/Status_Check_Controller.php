@@ -2,10 +2,11 @@
 /**
  * Class Status_Check_Controller
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -28,10 +29,10 @@ namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Story_Post_Type;
-use WP_REST_Server;
+use WP_Error;
 use WP_REST_Request;
 use WP_REST_Response;
-use WP_Error;
+use WP_REST_Server;
 
 /**
  * API endpoint check status.
@@ -106,7 +107,6 @@ class Status_Check_Controller extends REST_Controller implements HasRequirements
 	 * @since 1.1.0
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
-	 *
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function status_check( $request ) {
@@ -189,7 +189,7 @@ class Status_Check_Controller extends REST_Controller implements HasRequirements
 	 */
 	public function status_check_permissions_check() {
 		if ( ! $this->story_post_type->has_cap( 'edit_posts' ) ) {
-			return new WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed run status check.', 'web-stories' ), [ 'status' => rest_authorization_required_code() ] );
+			return new \WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed run status check.', 'web-stories' ), [ 'status' => rest_authorization_required_code() ] );
 		}
 
 		return true;

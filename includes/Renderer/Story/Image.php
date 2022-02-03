@@ -2,10 +2,11 @@
 /**
  * Class Image
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories\Renderer\Story
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -23,7 +24,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 
 namespace Google\Web_Stories\Renderer\Story;
 
@@ -60,7 +60,6 @@ class Image {
 	 * @since 1.0.0
 	 *
 	 * @param array $args Array of Argument to render.
-	 *
 	 * @return string Rendered block type output.
 	 */
 	public function render( array $args = [] ): string {

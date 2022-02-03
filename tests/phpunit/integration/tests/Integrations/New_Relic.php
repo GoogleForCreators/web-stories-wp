@@ -17,8 +17,8 @@
 
 namespace Google\Web_Stories\Tests\Integration\Integrations;
 
-use Google\Web_Stories\Tests\Integration\TestCase;
 use Google\Web_Stories\Integrations\New_Relic as New_Relic_Integration;
+use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Integrations\New_Relic

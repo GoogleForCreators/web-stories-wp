@@ -2,10 +2,11 @@
 /**
  * Class Font_Post_Type.
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Templates
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -36,8 +37,6 @@ class Font_Post_Type extends Post_Type_Base implements HasRequirements {
 
 	/**
 	 * The slug of the font post type.
-	 *
-	 * @var string
 	 */
 	const POST_TYPE_SLUG = 'web-story-font';
 

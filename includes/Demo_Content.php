@@ -4,10 +4,11 @@
  *
  * Used for getting demo content.
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -63,7 +64,6 @@ class Demo_Content {
 	 * Updates URLs to media assets in demo content.
 	 *
 	 * @param string $content Original content.
-	 *
 	 * @return string Modified content.
 	 */
 	private function update_assets_urls( string $content ): string {
@@ -80,7 +80,6 @@ class Demo_Content {
 	 * Localizes demo content.
 	 *
 	 * @param string $content Original content.
-	 *
 	 * @return string Localized text.
 	 */
 	private function localize_texts( string $content ): string {

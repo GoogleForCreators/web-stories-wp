@@ -2,10 +2,11 @@
 /**
  * Class Meta_Boxes.
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -35,15 +36,11 @@ use Google\Web_Stories\Story_Post_Type;
 class Meta_Boxes extends Service_Base {
 	/**
 	 * Supported meta box locations.
-	 *
-	 * @var string[]
 	 */
 	const LOCATIONS = [ 'normal', 'advanced', 'side' ];
 
 	/**
 	 * Meta box priorities.
-	 *
-	 * @var string[]
 	 */
 	const PRIORITIES = [ 'high', 'sorted', 'core', 'default', 'low' ];
 
@@ -66,9 +63,9 @@ class Meta_Boxes extends Service_Base {
 	 *
 	 * Mimics what do_meta_boxes() does for the block editor.
 	 *
-	 * @see do_meta_boxes()
-	 *
 	 * @since 1.2.0
+	 *
+	 * @see do_meta_boxes()
 	 *
 	 * @return void
 	 */
@@ -99,7 +96,7 @@ class Meta_Boxes extends Service_Base {
 					if (
 						// We don't currently support the 'Custom Fields' meta box.
 						'postcustom' === $meta_box['id'] ||
-						( is_array( $meta_box['args'] ) && ! empty( $meta_box['args']['__back_compat_meta_box'] ) )
+						( \is_array( $meta_box['args'] ) && ! empty( $meta_box['args']['__back_compat_meta_box'] ) )
 					) {
 						remove_meta_box( $meta_box['id'], $screen, $context );
 					}
@@ -114,7 +111,6 @@ class Meta_Boxes extends Service_Base {
 	 * @since 1.2.0
 	 *
 	 * @param int $story_id Story ID.
-	 *
 	 * @return string Meta box URL.
 	 */
 	public function get_meta_box_url( $story_id ): string {
@@ -137,9 +133,9 @@ class Meta_Boxes extends Service_Base {
 	 *
 	 * Used to disable empty meta boxes in the editor.
 	 *
-	 * @see the_block_editor_meta_boxes()
-	 *
 	 * @since 1.2.0
+	 *
+	 * @see the_block_editor_meta_boxes()
 	 *
 	 * @return array List of meta boxes per location.
 	 */

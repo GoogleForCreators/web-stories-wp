@@ -26,7 +26,6 @@ use WP_REST_Server;
  * Class Hotlinking_Controller
  *
  * @package Google\Web_Stories\Tests\REST_API
- *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Hotlinking_Controller
  */
 class Hotlinking_Controller extends DependencyInjectedRestTestCase {

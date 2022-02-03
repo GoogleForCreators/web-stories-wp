@@ -19,15 +19,14 @@ namespace Google\Web_Stories\Tests\Integration\REST_API;
 
 use DateTime;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Tests\Integration\RestTestCase;
 use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
+use Google\Web_Stories\Tests\Integration\RestTestCase;
 use WP_REST_Request;
 
 /**
  * Class Stories_Controller
  *
  * @package Google\Web_Stories\Tests\REST_API
- *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Controller
  */
 class Stories_Controller extends RestTestCase {

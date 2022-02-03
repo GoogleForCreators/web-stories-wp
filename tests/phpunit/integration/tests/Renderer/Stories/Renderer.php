@@ -2,10 +2,11 @@
 /**
  * Generic_Renderer class.
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -27,10 +28,10 @@
 namespace Google\Web_Stories\Tests\Integration\Renderer\Stories;
 
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\Tests\Integration\TestCase;
-use Google\Web_Stories\Tests\Integration\Test_Renderer;
-use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Renderer\Stories\Renderer as AbstractRenderer;
+use Google\Web_Stories\Story_Query;
+use Google\Web_Stories\Tests\Integration\Test_Renderer;
+use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
  * Generic_Renderer class.

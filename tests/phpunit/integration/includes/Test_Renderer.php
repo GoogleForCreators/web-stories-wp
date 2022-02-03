@@ -2,10 +2,11 @@
 /**
  * Test_Renderer class.
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -37,9 +38,8 @@ class Test_Renderer extends Renderer {
 	 * Render method
 	 *
 	 * @param array $args Rendering args.
-	 *
 	 * @return void
 	 */
-	public function render( array $args = [] ) : string {}
+	public function render( array $args = [] ): string {}
 
 }

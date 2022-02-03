@@ -2,10 +2,11 @@
 /**
  * Class Trimming
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -38,15 +39,11 @@ class Trimming extends Service_Base implements HasMeta {
 
 	/**
 	 * The trim video post meta key.
-	 *
-	 * @var string
 	 */
 	const TRIM_POST_META_KEY = 'web_stories_trim_data';
 
 	/**
 	 * Is trim.
-	 *
-	 * @var string
 	 */
 	const TRIM_DATA_KEY = 'trim_data';
 
@@ -110,11 +107,10 @@ class Trimming extends Service_Base implements HasMeta {
 	 * @since 1.12.0
 	 *
 	 * @param array|mixed $response   Array of prepared attachment data.
-	 *
 	 * @return array|mixed $response;
 	 */
 	public function wp_prepare_attachment_for_js( $response ) {
-		if ( ! is_array( $response ) ) {
+		if ( ! \is_array( $response ) ) {
 			return $response;
 		}
 		if ( 'video' === $response['type'] ) {

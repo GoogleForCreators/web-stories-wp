@@ -2,10 +2,11 @@
 /**
  * Stories Renderer Base class.
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -26,14 +27,14 @@
 
 namespace Google\Web_Stories\Renderer\Stories;
 
+use Google\Web_Stories\AMP_Story_Player_Assets;
+use Google\Web_Stories\Assets;
 use Google\Web_Stories\Context;
 use Google\Web_Stories\Interfaces\Renderer as RenderingInterface;
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\AMP_Story_Player_Assets;
 use Google\Web_Stories\Services;
-use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Assets;
+use Google\Web_Stories\Story_Query;
 use Iterator;
 use WP_Post;
 
@@ -45,6 +46,7 @@ use WP_Post;
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
+ *
  * @implements Iterator<int, Story>
  */
 abstract class Renderer implements RenderingInterface, Iterator {
@@ -64,15 +66,11 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 	/**
 	 * Web Stories stylesheet handle.
-	 *
-	 * @var string
 	 */
 	const STYLE_HANDLE = 'web-stories-list-styles';
 
 	/**
 	 * Web Stories stylesheet handle.
-	 *
-	 * @var string
 	 */
 	const LIGHTBOX_SCRIPT_HANDLE = 'lightbox';
 
@@ -179,7 +177,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @since 1.5.0
 	 *
 	 * @param array $args Array of rendering arguments.
-	 *
 	 * @return string
 	 */
 	public function render( array $args = [] ): string {
@@ -288,7 +285,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		// Web Stories lightbox script.
 		$this->assets->register_script_asset( self::LIGHTBOX_SCRIPT_HANDLE, [ AMP_Story_Player_Assets::SCRIPT_HANDLE ] );
 
-		if ( defined( 'AMPFORWP_VERSION' ) ) {
+		if ( \defined( 'AMPFORWP_VERSION' ) ) {
 			add_action( 'amp_post_template_css', [ $this, 'add_amp_post_template_css' ] );
 		}
 	}
@@ -312,12 +309,11 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	/**
 	 * Returns story item data.
 	 *
-	 * @since 1.5.0
-	 *
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 *
-	 * @param object $post Array of post objects.
+	 * @since 1.5.0
 	 *
+	 * @param object $post Array of post objects.
 	 * @return Story|null Story object or null if given post
 	 */
 	public function prepare_stories( $post ) {
@@ -355,7 +351,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @since 1.5.0
 	 *
 	 * @param string $view_type View type to check.
-	 *
 	 * @return bool Whether or not current view type matches the one passed.
 	 */
 	protected function is_view_type( $view_type ): bool {
@@ -532,7 +527,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		$single_story_classes = $this->get_single_story_classes();
 		$lightbox_state       = 'lightbox' . $story->get_id() . $this->instance_id;
 		// No need to load these styles on admin as editor styles are being loaded by the block.
-		if ( ! is_admin() || ( defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST ) ) {
+		if ( ! is_admin() || ( \defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST ) ) {
 			// Web Stories Styles for AMP and non-AMP pages.
 			$this->assets->enqueue_style_asset( self::STYLE_HANDLE );
 		}
@@ -713,10 +708,10 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	/**
 	 * Generate HTML for the non-AMP page request.
 	 *
-	 * @param Story $story Current Story.
-	 *
-	 * @return void
 	 * @since 1.5.0
+	 *
+	 * @param Story $story Current Story.
+	 * @return void
 	 */
 	protected function generate_lightbox_html( $story ) {
 		// Start collecting markup for the lightbox stories. This way we don't have to re-run the loop.
@@ -733,10 +728,10 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	/**
 	 * Markup for the lightbox used on AMP pages.
 	 *
-	 * @param Story $story Current Story.
-	 *
-	 * @return void
 	 * @since 1.5.0
+	 *
+	 * @param Story $story Current Story.
+	 * @return void
 	 */
 	protected function generate_amp_lightbox_html_amp( $story ) {
 		// Start collecting markup for the lightbox stories. This way we don't have to re-run the loop.

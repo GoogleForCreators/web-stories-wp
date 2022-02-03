@@ -2,10 +2,11 @@
 /**
  * Class Meta_Sanitizer.
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -26,9 +27,9 @@
 
 namespace Google\Web_Stories\AMP;
 
+use Google\Web_Stories_Dependencies\AMP_Meta_Sanitizer;
 use Google\Web_Stories_Dependencies\AmpProject\Html\Attribute;
 use Google\Web_Stories_Dependencies\AmpProject\Html\Tag;
-use Google\Web_Stories_Dependencies\AMP_Meta_Sanitizer;
 
 /**
  * Meta sanitizer.
@@ -37,10 +38,10 @@ use Google\Web_Stories_Dependencies\AMP_Meta_Sanitizer;
  *
  * This version avoids using amp_get_boilerplate_stylesheets().
  *
+ * @since 1.1.0
+ *
  * @see amp_get_boilerplate_stylesheets()
  * @see AMP_Meta_Sanitizer
- *
- * @since 1.1.0
  */
 class Meta_Sanitizer extends AMP_Meta_Sanitizer {
 	/**
@@ -50,12 +51,12 @@ class Meta_Sanitizer extends AMP_Meta_Sanitizer {
 	 * "Finally, specify the AMP boilerplate code. By putting the boilerplate code last, it prevents custom styles from
 	 * accidentally overriding the boilerplate css rules."
 	 *
-	 * @link https://amp.dev/documentation/guides-and-tutorials/learn/spec/amp-boilerplate/?format=websites
-	 * @link https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/optimize_amp/#optimize-the-amp-runtime-loading
-	 *
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 *
 	 * @since 1.1.0
+	 *
+	 * @link https://amp.dev/documentation/guides-and-tutorials/learn/spec/amp-boilerplate/?format=websites
+	 * @link https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/optimize_amp/#optimize-the-amp-runtime-loading
 	 *
 	 * @return void
 	 */
@@ -109,11 +110,12 @@ class Meta_Sanitizer extends AMP_Meta_Sanitizer {
 	 *
 	 * Clone of amp_get_boilerplate_stylesheets().
 	 *
-	 * @return string[] Stylesheets, where first is contained in style[amp-boilerplate] and the second in noscript>style[amp-boilerplate].
+	 * @since 1.1.0
+	 *
 	 * @link https://www.ampproject.org/docs/reference/spec#boilerplate
 	 * @see amp_get_boilerplate_stylesheets()
 	 *
-	 * @since 1.1.0
+	 * @return string[] Stylesheets, where first is contained in style[amp-boilerplate] and the second in noscript>style[amp-boilerplate].
 	 */
 	protected function get_boilerplate_stylesheets() {
 		return [

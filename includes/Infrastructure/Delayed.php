@@ -2,10 +2,11 @@
 /**
  * Interface Delayed.
  *
+ * @link      https://www.mwpd.io/
+ *
  * @package   Google\Web_Stories
  * @copyright 2019 Alain Schlesser
  * @license   MIT
- * @link      https://www.mwpd.io/
  */
 
 /**
@@ -27,8 +28,9 @@ namespace Google\Web_Stories\Infrastructure;
  * requirements are met, like registering a frontend rendering service only
  * after the loop has been set up.
  *
- * @since 1.6.0
  * @internal
+ *
+ * @since 1.6.0
  */
 interface Delayed {
 

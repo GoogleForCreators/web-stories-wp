@@ -2,10 +2,11 @@
 /**
  * Class Replace_Conic_Style_Presets
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -44,7 +45,7 @@ class Replace_Conic_Style_Presets extends Migrate_Base {
 	public function migrate() {
 		$style_presets = get_option( Story_Post_Type::STYLE_PRESETS_OPTION, false );
 		// Nothing to do if style presets don't exist.
-		if ( ! $style_presets || ! is_array( $style_presets ) ) {
+		if ( ! $style_presets || ! \is_array( $style_presets ) ) {
 			return;
 		}
 

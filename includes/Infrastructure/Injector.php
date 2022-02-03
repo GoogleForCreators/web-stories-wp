@@ -2,10 +2,11 @@
 /**
  * Interface Injector.
  *
+ * @link      https://www.mwpd.io/
+ *
  * @package   Google\Web_Stories
  * @copyright 2019 Alain Schlesser
  * @license   MIT
- * @link      https://www.mwpd.io/
  */
 
 /**
@@ -34,8 +35,9 @@ namespace Google\Web_Stories\Infrastructure;
  * (always returning a fresh new instance on each subsequent call). This
  * effectively gets rid of the dreaded Singletons.
  *
- * @since 1.6.0
  * @internal
+ *
+ * @since 1.6.0
  */
 interface Injector extends Service {
 
@@ -76,7 +78,6 @@ interface Injector extends Service {
 	 *                                   for.
 	 * @param string $argument_name      Argument name to bind a value to.
 	 * @param mixed  $value              Value to bind the argument to.
-	 *
 	 * @return Injector
 	 */
 	public function bind_argument(

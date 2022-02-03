@@ -25,7 +25,6 @@ use WP_REST_Request;
  * Class Page_Template_Controller
  *
  * @package Google\Web_Stories\Tests\REST_API
- *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Page_Template_Controller
  */
 class Page_Template_Controller extends RestTestCase {

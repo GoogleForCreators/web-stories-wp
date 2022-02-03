@@ -2,15 +2,15 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
-use Google\Web_Stories\Tests\Integration\RestTestCase;
 use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
+use Google\Web_Stories\Tests\Integration\RestTestCase;
 use WP_REST_Request;
 use WP_REST_Server;
+
 /**
  * Class Stories_Terms_Controller
  *
  * @package Google\Web_Stories\Tests\REST_API
- *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Terms_Controller
  */
 class Stories_Terms_Controller extends RestTestCase {

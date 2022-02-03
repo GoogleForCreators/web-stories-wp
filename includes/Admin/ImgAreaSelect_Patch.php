@@ -2,10 +2,11 @@
 /**
  * Class ImgAreaSelect_Patch.
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -40,8 +41,6 @@ use Google\Web_Stories\Infrastructure\Service;
 class ImgAreaSelect_Patch implements Conditional, Service, Registerable {
 	/**
 	 * Web Stories editor script handle.
-	 *
-	 * @var string
 	 */
 	const SCRIPT_HANDLE = 'imgareaselect';
 
@@ -103,11 +102,10 @@ class ImgAreaSelect_Patch implements Conditional, Service, Registerable {
 	 * @param string|mixed $tag    The `<script>` tag for the enqueued script.
 	 * @param string       $handle The script's registered handle.
 	 * @param string       $src    The script's source URL.
-	 *
 	 * @return string|mixed The filtered script tag.
 	 */
 	public function script_loader_tag( $tag, $handle, $src ) {
-		if ( ! is_string( $tag ) || self::SCRIPT_HANDLE !== $handle || ! $this->context->is_story_editor() ) {
+		if ( ! \is_string( $tag ) || self::SCRIPT_HANDLE !== $handle || ! $this->context->is_story_editor() ) {
 			return $tag;
 		}
 

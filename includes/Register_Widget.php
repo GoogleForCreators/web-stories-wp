@@ -2,10 +2,11 @@
 /**
  * Class Register_Widget.
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -82,11 +83,10 @@ class Register_Widget implements Service, Registerable {
 	 * @since 1.9.0
 	 *
 	 * @param array|mixed $widget_types An array of excluded widget-type IDs.
-	 *
 	 * @return array|mixed
 	 */
 	public function hide_widget( $widget_types ) {
-		if ( ! is_array( $widget_types ) ) {
+		if ( ! \is_array( $widget_types ) ) {
 			return $widget_types;
 		}
 		$widget_types[] = $this->stories->id_base;
@@ -100,14 +100,13 @@ class Register_Widget implements Service, Registerable {
 	 * @since 1.9.0
 	 *
 	 * @param string[]|mixed $classes An array of body class names.
-	 *
 	 * @return array|mixed
 	 */
 	public function body_class( $classes ) {
-		if ( ! is_array( $classes ) ) {
+		if ( ! \is_array( $classes ) ) {
 			return $classes;
 		}
-		if ( is_admin() && defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST ) {
+		if ( is_admin() && \defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST ) {
 			$classes[] = 'ws-legacy-widget-preview';
 		}
 

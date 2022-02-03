@@ -2,10 +2,11 @@
 /**
  * Class Story_Post_Type.
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -38,29 +39,21 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 
 	/**
 	 * The slug of the stories post type.
-	 *
-	 * @var string
 	 */
 	const POST_TYPE_SLUG = 'web-story';
 
 	/**
 	 * The rewrite slug for this post type.
-	 *
-	 * @var string
 	 */
 	const REWRITE_SLUG = 'web-stories';
 
 	/**
 	 * Style Present options name.
-	 *
-	 * @var string
 	 */
 	const STYLE_PRESETS_OPTION = 'web_stories_style_presets';
 
 	/**
 	 * Publisher logo meta key.
-	 *
-	 * @var string
 	 */
 	const PUBLISHER_LOGO_META_KEY = 'web_stories_publisher_logo';
 
@@ -78,7 +71,6 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	 * @since 1.12.0
 	 *
 	 * @param Settings $settings Settings instance.
-	 *
 	 * @return void
 	 */
 	public function __construct( Settings $settings ) {
@@ -88,11 +80,11 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	/**
 	 * Registers the post type for stories.
 	 *
-	 * @todo  refactor
-	 *
 	 * @since 1.0.0
 	 *
 	 * @return void
+	 *
+	 * @todo  refactor
 	 */
 	public function register() {
 		$this->register_post_type();
@@ -244,11 +236,10 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	 *
 	 * @param array|mixed $fields Array of allowed revision fields.
 	 * @param array       $story  Story post array.
-	 *
 	 * @return array|mixed Array of allowed fields.
 	 */
 	public function filter_revision_fields( $fields, $story ) {
-		if ( ! is_array( $fields ) ) {
+		if ( ! \is_array( $fields ) ) {
 			return $fields;
 		}
 
@@ -268,11 +259,10 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	 *                                     keyed with 'updated', 'locked', 'deleted', 'trashed', and 'untrashed'.
 	 * @param int[]         $bulk_counts   Array of item counts for each message, used to build internationalized
 	 *                                     strings.
-	 *
 	 * @return array|mixed Bulk counts.
 	 */
 	public function bulk_post_updated_messages( $bulk_messages, $bulk_counts ) {
-		if ( ! is_array( $bulk_messages ) ) {
+		if ( ! \is_array( $bulk_messages ) ) {
 			return $bulk_messages;
 		}
 		$bulk_messages[ $this->get_slug() ] = [
@@ -298,11 +288,10 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	 * @since 1.0.0
 	 *
 	 * @param array|mixed $data Array of data to save.
-	 *
 	 * @return array|mixed
 	 */
 	public function change_default_title( $data ) {
-		if ( ! is_array( $data ) ) {
+		if ( ! \is_array( $data ) ) {
 			return $data;
 		}
 		if ( $this->get_slug() === $data['post_type'] && 'auto-draft' === $data['post_status'] ) {
@@ -319,7 +308,6 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	 *
 	 * @param int     $post_id Post ID.
 	 * @param WP_Post $post    Post object.
-	 *
 	 * @return void
 	 */
 	public function clear_user_posts_count( $post_id, $post ) {
@@ -367,7 +355,6 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	 * @since 1.16.0
 	 *
 	 * @param int $num Number of revisions to store.
-	 *
 	 * @return int  Number of revisions to store.
 	 */
 	public function revisions_to_keep( $num ) {

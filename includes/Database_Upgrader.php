@@ -2,10 +2,11 @@
 /**
  * Class Database_Upgrader
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -26,10 +27,10 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Infrastructure\PluginActivationAware;
 use Google\Web_Stories\Infrastructure\Injector;
-use Google\Web_Stories\Infrastructure\Service;
+use Google\Web_Stories\Infrastructure\PluginActivationAware;
 use Google\Web_Stories\Infrastructure\Registerable;
+use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Infrastructure\SiteInitializationAware;
 use WP_Site;
 
@@ -42,22 +43,16 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 
 	/**
 	 * The slug of database option.
-	 *
-	 * @var string
 	 */
 	const OPTION = 'web_stories_db_version';
 
 	/**
 	 * The slug of database option.
-	 *
-	 * @var string
 	 */
 	const PREVIOUS_OPTION = 'web_stories_previous_db_version';
 
 	/**
 	 * Array of classes to run migration routines.
-	 *
-	 * @var array
 	 */
 	const ROUTINES = [
 		'1.0.0'  => Migrations\Update_1::class,
@@ -166,7 +161,6 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 	 * @param string $class           The Class to call.
 	 * @param string $version         The new version.
 	 * @param string $current_version The current set version.
-	 *
 	 * @return void
 	 */
 	protected function run_upgrade_routine( string $class, string $version, string $current_version ) {
@@ -185,7 +179,6 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 	 * @since 1.0.0
 	 *
 	 * @param string $previous_version The previous version.
-	 *
 	 * @return void
 	 */
 	protected function finish_up( string $previous_version ) {

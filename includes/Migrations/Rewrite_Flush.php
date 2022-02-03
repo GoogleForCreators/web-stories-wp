@@ -2,10 +2,11 @@
 /**
  * Class Rewrite_Flush
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -43,7 +44,7 @@ class Rewrite_Flush extends Migrate_Base {
 	 * @return void
 	 */
 	public function migrate() {
-		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === WPCOM_IS_VIP_ENV ) {
+		if ( ! \defined( '\WPCOM_IS_VIP_ENV' ) || false === WPCOM_IS_VIP_ENV ) {
 			flush_rewrite_rules( false );
 		}
 	}

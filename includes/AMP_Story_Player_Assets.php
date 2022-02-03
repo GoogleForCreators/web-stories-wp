@@ -2,10 +2,11 @@
 /**
  * Class AMP_Story_Player_Assets.
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -28,8 +29,8 @@ namespace Google\Web_Stories;
 
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
-use WP_Styles;
 use WP_Scripts;
+use WP_Styles;
 
 /**
  * Class AMP_Story_Player_Assets
@@ -39,8 +40,6 @@ use WP_Scripts;
 class AMP_Story_Player_Assets implements Service, Registerable {
 	/**
 	 * Script handle.
-	 *
-	 * @var string
 	 */
 	const SCRIPT_HANDLE = 'standalone-amp-story-player';
 
@@ -62,7 +61,6 @@ class AMP_Story_Player_Assets implements Service, Registerable {
 	 * @since 1.8.0
 	 *
 	 * @param WP_Styles $wp_styles WP_Styles instance.
-	 *
 	 * @return void
 	 */
 	public function register_style( WP_Styles $wp_styles ) {
@@ -80,7 +78,6 @@ class AMP_Story_Player_Assets implements Service, Registerable {
 	 * @since 1.8.0
 	 *
 	 * @param WP_Scripts $wp_scripts WP_Scripts instance.
-	 *
 	 * @return void
 	 */
 	public function register_script( WP_Scripts $wp_scripts ) {

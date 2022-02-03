@@ -2,10 +2,11 @@
 /**
  * Class SVG.
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -28,10 +29,10 @@ namespace Google\Web_Stories\Media;
 
 use DOMDocument;
 use DOMElement;
-use WP_Error;
-use Google\Web_Stories_Dependencies\enshrined\svgSanitize\Sanitizer;
-use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Experiments;
+use Google\Web_Stories\Service_Base;
+use Google\Web_Stories_Dependencies\enshrined\svgSanitize\Sanitizer;
+use WP_Error;
 
 /**
  * Class SVG
@@ -45,8 +46,6 @@ class SVG extends Service_Base {
 	 * File extension.
 	 *
 	 * @since 1.3.0
-	 *
-	 * @var string
 	 */
 	const EXT = 'svg';
 
@@ -54,8 +53,6 @@ class SVG extends Service_Base {
 	 * Mime type.
 	 *
 	 * @since 1.3.0
-	 *
-	 * @var string
 	 */
 	const MIME_TYPE = 'image/svg+xml';
 
@@ -84,7 +81,6 @@ class SVG extends Service_Base {
 	 * @since 1.3.0
 	 *
 	 * @param Experiments $experiments Experiments instance.
-	 *
 	 * @return void
 	 */
 	public function __construct( Experiments $experiments ) {
@@ -130,7 +126,7 @@ class SVG extends Service_Base {
 		$allowed_mime_types = get_allowed_mime_types();
 		$mime_types         = array_values( $allowed_mime_types );
 
-		return in_array( self::MIME_TYPE, $mime_types, true );
+		return \in_array( self::MIME_TYPE, $mime_types, true );
 	}
 
 	/**
@@ -139,7 +135,6 @@ class SVG extends Service_Base {
 	 * @since 1.3.0
 	 *
 	 * @param array $mime_types Mime types keyed by the file extension regex corresponding to those types.
-	 *
 	 * @return array
 	 */
 	public function upload_mimes_add_svg( array $mime_types ): array {
@@ -157,7 +152,6 @@ class SVG extends Service_Base {
 	 *
 	 * @param string[] $mime_types     Mime types keyed by the file extension regex
 	 *                                 corresponding to those types.
-	 *
 	 * @return array
 	 */
 	public function mime_types_add_svg( array $mime_types ): array {
@@ -173,7 +167,6 @@ class SVG extends Service_Base {
 	 * @since 1.3.0
 	 *
 	 * @param array $mime_types Associative array of allowed mime types per media type (image, audio, video).
-	 *
 	 * @return array
 	 */
 	public function web_stories_allowed_mime_types( array $mime_types ): array {
@@ -188,12 +181,11 @@ class SVG extends Service_Base {
 	 * @since 1.3.0
 	 *
 	 * @param string $value List of allowed file types.
-	 *
 	 * @return string List of allowed file types.
 	 */
 	public function filter_list_of_allowed_filetypes( $value ): string {
 		$filetypes = explode( ' ', $value );
-		if ( ! in_array( self::EXT, $filetypes, true ) ) {
+		if ( ! \in_array( self::EXT, $filetypes, true ) ) {
 			$filetypes[] = self::EXT;
 			$value       = implode( ' ', $filetypes );
 		}
@@ -210,7 +202,6 @@ class SVG extends Service_Base {
 	 * @param int    $attachment_id Current attachment ID.
 	 * @param string $context       Additional context. Can be 'create' when metadata was initially created for new
 	 *                              attachment.
-	 *
 	 * @return array
 	 */
 	public function wp_generate_attachment_metadata( $metadata, $attachment_id, $context ): array {
@@ -255,7 +246,6 @@ class SVG extends Service_Base {
 	 *      @type string $url    URL of the newly-uploaded file.
 	 *      @type string $type   Mime type of the newly-uploaded file.
 	 * }
-	 *
 	 * @return string[]
 	 */
 	public function wp_handle_upload( $upload ): array {
@@ -280,12 +270,11 @@ class SVG extends Service_Base {
 	/**
 	 * Get SVG image size.
 	 *
-	 * @since 1.3.0
-	 *
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 *
-	 * @param string $file Path to SVG file.
+	 * @since 1.3.0
 	 *
+	 * @param string $file Path to SVG file.
 	 * @return array|WP_Error
 	 */
 	protected function get_svg_size( string $file ) {
@@ -293,7 +282,7 @@ class SVG extends Service_Base {
 		$xml = $this->get_xml( $svg );
 
 		if ( false === $xml ) {
-			return new WP_Error( 'invalid_xml_svg', __( 'Invalid XML in SVG.', 'web-stories' ) );
+			return new \WP_Error( 'invalid_xml_svg', __( 'Invalid XML in SVG.', 'web-stories' ) );
 		}
 
 		$width  = (int) $xml->getAttribute( 'width' );
@@ -306,13 +295,13 @@ class SVG extends Service_Base {
 				$view_box = $xml->getAttribute( 'viewbox' );
 			}
 			$pieces = explode( ' ', $view_box );
-			if ( 4 === count( $pieces ) ) {
+			if ( 4 === \count( $pieces ) ) {
 				list (, , $width, $height ) = $pieces;
 			}
 		}
 
 		if ( ! $width || ! $height ) {
-			return new WP_Error( 'invalid_svg_size', __( 'Unable to generate SVG image size.', 'web-stories' ) );
+			return new \WP_Error( 'invalid_svg_size', __( 'Unable to generate SVG image size.', 'web-stories' ) );
 		}
 
 		return array_map( 'absint', compact( 'width', 'height' ) );
@@ -324,7 +313,6 @@ class SVG extends Service_Base {
 	 * @since 1.3.0
 	 *
 	 * @param string $file File path.
-	 *
 	 * @return true|WP_Error
 	 */
 	protected function sanitize( string $file ) {
@@ -333,12 +321,12 @@ class SVG extends Service_Base {
 		$clean     = $sanitizer->sanitize( $dirty );
 
 		if ( empty( $clean ) ) {
-			return new WP_Error( 'invalid_xml_svg', __( 'Invalid XML in SVG.', 'web-stories' ) );
+			return new \WP_Error( 'invalid_xml_svg', __( 'Invalid XML in SVG.', 'web-stories' ) );
 		}
 
 		$errors = $sanitizer->getXmlIssues();
-		if ( count( $errors ) > 1 ) {
-			return new WP_Error( 'insecure_svg_file', __( "Sorry, this file couldn't be sanitized so for security reasons wasn't uploaded.", 'web-stories' ) );
+		if ( \count( $errors ) > 1 ) {
+			return new \WP_Error( 'insecure_svg_file', __( "Sorry, this file couldn't be sanitized so for security reasons wasn't uploaded.", 'web-stories' ) );
 		}
 
 		return true;
@@ -357,13 +345,11 @@ class SVG extends Service_Base {
 	 * @type string|false $proper_filename           File name with its correct extension, or false if it cannot be
 	 *       determined.
 	 * }
-	 *
 	 * @param string      $file                      Full path to the file.
 	 * @param string      $filename                  The name of the file (may differ from $file due to
 	 *                                               $file being in a tmp directory).
 	 * @param string[]    $mimes                     Array of mime types keyed by their file extension regex.
 	 * @param string|bool $real_mime                 The actual mime type or false if the type cannot be determined.
-	 *
 	 * @return array
 	 */
 	public function wp_check_filetype_and_ext( $wp_check_filetype_and_ext, $file, $filename, $mimes, $real_mime ): array {
@@ -384,7 +370,6 @@ class SVG extends Service_Base {
 	 * @since 1.3.0
 	 *
 	 * @param string $svg String of xml.
-	 *
 	 * @return DOMElement|false
 	 */
 	protected function get_xml( string $svg ) {
@@ -416,7 +401,6 @@ class SVG extends Service_Base {
 	 * @since 1.3.0
 	 *
 	 * @param string $file File path.
-	 *
 	 * @return string File contents.
 	 */
 	protected function get_svg_data( string $file ): string {

@@ -4,10 +4,11 @@
  *
  * Responsible for adding the stories dashboard to WordPress admin.
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -28,17 +29,17 @@
 
 namespace Google\Web_Stories\Admin;
 
+use Google\Web_Stories\Assets;
 use Google\Web_Stories\Context;
 use Google\Web_Stories\Decoder;
 use Google\Web_Stories\Experiments;
-use Google\Web_Stories\Locale;
-use Google\Web_Stories\Tracking;
-use Google\Web_Stories\Media\Types;
 use Google\Web_Stories\Font_Post_Type;
-use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Integrations\Site_Kit;
-use Google\Web_Stories\Assets;
+use Google\Web_Stories\Locale;
+use Google\Web_Stories\Media\Types;
+use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Tracking;
 
 /**
  * Dashboard class.
@@ -47,8 +48,6 @@ class Dashboard extends Service_Base {
 
 	/**
 	 * Script handle.
-	 *
-	 * @var string
 	 */
 	const SCRIPT_HANDLE = 'wp-dashboard';
 
@@ -192,7 +191,6 @@ class Dashboard extends Service_Base {
 	 * @since 1.0.0
 	 *
 	 * @param string $key The current admin page key.
-	 *
 	 * @return string|false|null The dashboard page's hook_suffix, or false if the user does not have the capability required.
 	 */
 	public function get_hook_suffix( $key ) {
@@ -378,7 +376,6 @@ class Dashboard extends Service_Base {
 	 * @since 1.0.0
 	 *
 	 * @param string $hook_suffix The current admin page.
-	 *
 	 * @return void
 	 */
 	public function enqueue_assets( $hook_suffix ) {

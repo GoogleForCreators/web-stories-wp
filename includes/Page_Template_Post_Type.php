@@ -2,10 +2,11 @@
 /**
  * Class Page_Template_Post_Type.
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Templates
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -37,8 +38,6 @@ class Page_Template_Post_Type extends Post_Type_Base implements HasRequirements 
 	/**
 	 * The slug of the page template post type.
 	 * Limited to web-story-page as web-story-page-template goes over character limit.
-	 *
-	 * @var string
 	 */
 	const POST_TYPE_SLUG = 'web-story-page';
 
@@ -181,7 +180,6 @@ class Page_Template_Post_Type extends Post_Type_Base implements HasRequirements 
 	 * @since 1.14.0
 	 *
 	 * @param int $post_id Post ID.
-	 *
 	 * @return void
 	 */
 	public function delete_poster_image( int $post_id ) {

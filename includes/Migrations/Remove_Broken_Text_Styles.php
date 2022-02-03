@@ -2,10 +2,11 @@
 /**
  * Class Remove_Broken_Text_Styles
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -23,7 +24,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 
 namespace Google\Web_Stories\Migrations;
 
@@ -45,7 +45,7 @@ class Remove_Broken_Text_Styles extends Migrate_Base {
 	public function migrate() {
 		$style_presets = get_option( Story_Post_Type::STYLE_PRESETS_OPTION, false );
 		// Nothing to do if style presets don't exist.
-		if ( ! $style_presets || ! is_array( $style_presets ) ) {
+		if ( ! $style_presets || ! \is_array( $style_presets ) ) {
 			return;
 		}
 

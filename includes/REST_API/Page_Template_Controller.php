@@ -2,10 +2,11 @@
 /**
  * Class Page_Template_Controller
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -40,7 +41,6 @@ class Page_Template_Controller extends Stories_Base_Controller {
 	 * @since 1.7.0
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
-	 *
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_items( $request ) {
@@ -127,7 +127,7 @@ class Page_Template_Controller extends Stories_Base_Controller {
 		$post_type = get_post_type_object( $this->post_type );
 
 		if ( ! $post_type || ! current_user_can( $post_type->cap->edit_posts ) ) {
-			return new WP_Error(
+			return new \WP_Error(
 				'rest_forbidden_context',
 				__( 'Sorry, you are not allowed to edit page templates.', 'web-stories' ),
 				[ 'status' => rest_authorization_required_code() ]
@@ -155,7 +155,7 @@ class Page_Template_Controller extends Stories_Base_Controller {
 		$post_type = get_post_type_object( $this->post_type );
 
 		if ( ! $post_type || ! current_user_can( $post_type->cap->edit_posts ) ) {
-			return new WP_Error(
+			return new \WP_Error(
 				'rest_forbidden_context',
 				__( 'Sorry, you are not allowed to edit page templates.', 'web-stories' ),
 				[ 'status' => rest_authorization_required_code() ]

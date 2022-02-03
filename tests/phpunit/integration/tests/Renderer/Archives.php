@@ -23,7 +23,6 @@ use Google\Web_Stories\Tests\Integration\TestCase;
  * Class Archives
  *
  * @package Google\Web_Stories\Tests\Renderer
- *
  * @coversDefaultClass \Google\Web_Stories\Renderer\Archives
  */
 class Archives extends TestCase {

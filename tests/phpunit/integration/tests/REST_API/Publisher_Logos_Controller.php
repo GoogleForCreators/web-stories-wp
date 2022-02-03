@@ -11,7 +11,6 @@ use WP_REST_Server;
  * Class Publisher_Logos_Controller
  *
  * @package Google\Web_Stories\Tests\REST_API
- *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Publisher_Logos_Controller
  */
 class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {

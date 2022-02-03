@@ -17,7 +17,6 @@
 
 namespace Google\Web_Stories\Tests\Integration\Migrations;
 
-use Google\Web_Stories\Media\Media_Source_Taxonomy;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 
 /**

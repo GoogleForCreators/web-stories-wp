@@ -48,7 +48,6 @@ final class Services {
 	 * @since 1.6.0
 	 *
 	 * @param string $service Service ID to retrieve.
-	 *
 	 * @return Service
 	 */
 	public static function get( $service ): Service {

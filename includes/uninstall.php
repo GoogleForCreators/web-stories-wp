@@ -2,10 +2,11 @@
 /**
  * Uninstall helpers.
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -28,14 +29,14 @@ namespace Google\Web_Stories;
 
 use Google\Web_Stories\Media\Base_Color;
 use Google\Web_Stories\Media\Blurhash;
+use Google\Web_Stories\Media\Media_Source_Taxonomy;
+use Google\Web_Stories\Media\Video\Muting;
+use Google\Web_Stories\Media\Video\Optimization;
+use Google\Web_Stories\Media\Video\Poster;
+use Google\Web_Stories\Media\Video\Trimming;
 use Google\Web_Stories\Taxonomy\Category_Taxonomy;
 use Google\Web_Stories\Taxonomy\Tag_Taxonomy;
 use Google\Web_Stories\User\Preferences;
-use Google\Web_Stories\Media\Media_Source_Taxonomy;
-use Google\Web_Stories\Media\Video\Optimization;
-use Google\Web_Stories\Media\Video\Muting;
-use Google\Web_Stories\Media\Video\Poster;
-use Google\Web_Stories\Media\Video\Trimming;
 use WP_Term;
 use WP_Term_Query;
 
@@ -200,7 +201,7 @@ function delete_terms() {
 		]
 	);
 
-	if ( empty( $terms ) || ! is_array( $terms ) ) {
+	if ( empty( $terms ) || ! \is_array( $terms ) ) {
 		return;
 	}
 

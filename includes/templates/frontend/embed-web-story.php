@@ -2,14 +2,15 @@
 /**
  * Template for embedded web-story.
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
-use Google\Web_Stories\Renderer\Story\Image;
 use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Renderer\Story\Image;
 
 /**
  * Copyright 2021 Google LLC

@@ -2,10 +2,11 @@
 /**
  * Class Stories_Lock_Controller
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -28,11 +29,11 @@ namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Story_Post_Type;
-use WP_REST_Controller;
-use WP_REST_Response;
-use WP_REST_Request;
-use WP_REST_Server;
 use WP_Error;
+use WP_REST_Controller;
+use WP_REST_Request;
+use WP_REST_Response;
+use WP_REST_Server;
 
 /**
  * Class Stories_Lock_Controller
@@ -276,8 +277,8 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 		$post_id = $request['id'];
 
 		$lock = $this->get_lock( $post_id );
-		if ( is_array( $lock ) && isset( $lock['user'] ) && get_current_user_id() !== (int) $lock['user'] ) {
-			return new WP_Error(
+		if ( \is_array( $lock ) && isset( $lock['user'] ) && get_current_user_id() !== (int) $lock['user'] ) {
+			return new \WP_Error(
 				'rest_cannot_delete_others_lock',
 				__( 'Sorry, you are not allowed delete others lock.', 'web-stories' ),
 				[ 'status' => rest_authorization_required_code() ]
@@ -294,7 +295,6 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 	 *
 	 * @param array|false     $lock Lock value, default to false is not set.
 	 * @param WP_REST_Request $request Request object.
-	 *
 	 * @return WP_REST_Response|WP_Error Response object.
 	 */
 	public function prepare_item_for_response( $lock, $request ) {

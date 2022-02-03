@@ -2,10 +2,11 @@
 /**
  * Carousel_Renderer class.
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -37,8 +38,6 @@ class Carousel_Renderer extends Renderer {
 
 	/**
 	 * Script handle.
-	 *
-	 * @var string
 	 */
 	const SCRIPT_HANDLE = 'carousel-view';
 
@@ -94,15 +93,14 @@ class Carousel_Renderer extends Renderer {
 	/**
 	 * Renders the stories output for given attributes.
 	 *
-	 * @since 1.5.0
-	 *
 	 * @SuppressWarnings(PHPMD.UnusedLocalVariable)
 	 *
-	 * @param array $args Array of rendering arguments.
+	 * @since 1.5.0
 	 *
+	 * @param array $args Array of rendering arguments.
 	 * @return string Rendered stories output.
 	 */
-	public function render( array $args = [] ) : string {
+	public function render( array $args = [] ): string {
 		if ( ! $this->valid() ) {
 			return '';
 		}

@@ -11,7 +11,6 @@ use WP_REST_Server;
  * Class Link_Controller
  *
  * @package Google\Web_Stories\Tests\REST_API
- *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Link_Controller
  */
 class Link_Controller extends DependencyInjectedRestTestCase {
@@ -94,7 +93,7 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 		}
 
 		if ( false !== strpos( $url, self::URL_500 ) ) {
-			return new WP_Error( 'http_request_failed', 'A valid URL was not provided.' );
+			return new \WP_Error( 'http_request_failed', 'A valid URL was not provided.' );
 		}
 
 		if ( false !== strpos( $url, self::URL_EMPTY_DOCUMENT ) ) {

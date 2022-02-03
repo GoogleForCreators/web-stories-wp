@@ -2,10 +2,11 @@
 /**
  * Field state factory.
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -27,7 +28,6 @@
 namespace Google\Web_Stories\Renderer\Stories\FieldStateFactory;
 
 use Google\Web_Stories\Infrastructure\Injector;
-use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Interfaces\FieldState;
 use Google\Web_Stories\Interfaces\FieldStateFactory;
 use Google\Web_Stories\Renderer\Stories\FieldState\CarouselView;
@@ -64,7 +64,6 @@ class Factory implements FieldStateFactory {
 	 * @since 1.5.0
 	 *
 	 * @param string $view View Type.
-	 *
 	 * @return FieldState
 	 */
 	public function get_field( $view = 'grid' ) {

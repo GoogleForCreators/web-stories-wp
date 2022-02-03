@@ -2,10 +2,11 @@
 /**
  * Class Stories_Taxonomies_Controller
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -29,9 +30,9 @@ namespace Google\Web_Stories\REST_API;
 use Google\Web_Stories\Infrastructure\Delayed;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
-use WP_REST_Taxonomies_Controller;
-use WP_REST_Response;
 use WP_REST_Request;
+use WP_REST_Response;
+use WP_REST_Taxonomies_Controller;
 use WP_Taxonomy;
 
 /**

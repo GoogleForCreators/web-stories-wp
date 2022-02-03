@@ -2,10 +2,11 @@
 /**
  * Class Hotlinking_Controller
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -27,8 +28,8 @@
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Infrastructure\HasRequirements;
-use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Media\Types;
+use Google\Web_Stories\Story_Post_Type;
 use WP_Error;
 use WP_Http;
 use WP_REST_Request;
@@ -74,7 +75,6 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
 	 * @param Types           $types Types instance.
-	 *
 	 * @return void
 	 */
 	public function __construct( Story_Post_Type $story_post_type, Types $types ) {
@@ -159,7 +159,6 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 * @since 1.11.0
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
-	 *
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function parse_url( $request ) {
@@ -183,7 +182,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		$cache_key = 'web_stories_url_data_' . md5( $url );
 
 		$data = get_transient( $cache_key );
-		if ( is_string( $data ) && ! empty( $data ) ) {
+		if ( \is_string( $data ) && ! empty( $data ) ) {
 			/**
 			 * Decoded cached link data.
 			 *
@@ -205,11 +204,11 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 			]
 		);
 		if ( is_wp_error( $response ) && 'http_request_failed' === $response->get_error_code() ) {
-			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
+			return new \WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
 		}
 
 		if ( WP_Http::OK !== wp_remote_retrieve_response_code( $response ) ) {
-			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
+			return new \WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
 		}
 
 		$headers   = wp_remote_retrieve_headers( $response );
@@ -223,8 +222,8 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		 */
 		$path = wp_parse_url( $url, PHP_URL_PATH );
 
-		if ( ! is_string( $path ) ) {
-			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
+		if ( ! \is_string( $path ) ) {
+			return new \WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
 		}
 
 		$file_name = basename( $path );
@@ -238,7 +237,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		$allowed_mime_types = $this->types->get_allowed_mime_types();
 		$type               = '';
 		foreach ( $allowed_mime_types as $key => $mime_types ) {
-			if ( in_array( $mime_type, $mime_types, true ) ) {
+			if ( \in_array( $mime_type, $mime_types, true ) ) {
 				$type = $key;
 				break;
 			}
@@ -262,14 +261,14 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	/**
 	 * Parses a URL to return proxied file.
 	 *
-	 * @todo Forward the Range request header.
-	 *
 	 * @SuppressWarnings(PHPMD.ErrorControlOperator)
 	 *
 	 * @since 1.13.0
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
 	 * @return void
+	 *
+	 * @todo Forward the Range request header.
 	 */
 	public function proxy_url( $request ) {
 		/**
@@ -386,7 +385,6 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @param array           $link URL data value, default to false is not set.
 	 * @param WP_REST_Request $request Request object.
-	 *
 	 * @return WP_REST_Response|WP_Error Response object.
 	 */
 	public function prepare_item_for_response( $link, $request ) {
@@ -395,7 +393,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 
 		$data = [];
 
-		$error = new WP_Error();
+		$error = new \WP_Error();
 		foreach ( $schema['properties'] as $field => $args ) {
 			if ( ! rest_is_field_included( $field, $fields ) || ! isset( $link[ $field ] ) ) {
 				continue;
@@ -492,7 +490,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 */
 	public function parse_url_permissions_check() {
 		if ( ! $this->story_post_type->has_cap( 'edit_posts' ) ) {
-			return new WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to insert external media.', 'web-stories' ), [ 'status' => rest_authorization_required_code() ] );
+			return new \WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to insert external media.', 'web-stories' ), [ 'status' => rest_authorization_required_code() ] );
 		}
 
 		return true;
@@ -504,20 +502,19 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 * @since 1.11.0
 	 *
 	 * @param string $value Value to be validated.
-	 *
 	 * @return true|WP_Error
 	 */
 	public function validate_url( $value ) {
 		$url = untrailingslashit( $value );
 
 		if ( empty( $url ) || ! wp_http_validate_url( $url ) ) {
-			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 400 ] );
+			return new \WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 400 ] );
 		}
 
 		$path = wp_parse_url( $url, PHP_URL_PATH );
 
 		if ( ! $path ) {
-			return new WP_Error( 'rest_invalid_url_path', __( 'Invalid URL Path', 'web-stories' ), [ 'status' => 400 ] );
+			return new \WP_Error( 'rest_invalid_url_path', __( 'Invalid URL Path', 'web-stories' ), [ 'status' => 400 ] );
 		}
 
 		return true;
@@ -569,7 +566,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		if ( 0 === strpos( $header, 'HTTP/' ) ) {
 			$status = explode( ' ', $header );
 			http_response_code( (int) $status[1] );
-			return strlen( $header );
+			return \strlen( $header );
 		}
 
 		foreach ( self::PROXY_HEADERS_ALLOWLIST as $_header ) {
@@ -578,6 +575,6 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 			}
 		}
 
-		return strlen( $header );
+		return \strlen( $header );
 	}
 }

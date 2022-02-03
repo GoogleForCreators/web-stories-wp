@@ -2,10 +2,11 @@
 /**
  * Class Stories_Shortcode.
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -26,8 +27,8 @@
 
 namespace Google\Web_Stories\Shortcode;
 
-use Google\Web_Stories\Story_Query as Stories;
 use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Story_Query as Stories;
 
 /**
  * Class Stories_Shortcode
@@ -38,8 +39,6 @@ class Stories_Shortcode extends Service_Base {
 
 	/**
 	 * Shortcode name.
-	 *
-	 * @var string
 	 */
 	const SHORTCODE_NAME = 'web_stories';
 
@@ -63,7 +62,6 @@ class Stories_Shortcode extends Service_Base {
 	 * @since 1.5.0
 	 *
 	 * @param array $attrs Shortcode attributes.
-	 *
 	 * @return string Story markup.
 	 */
 	public function render_stories( array $attrs ): string {
@@ -100,7 +98,6 @@ class Stories_Shortcode extends Service_Base {
 	 * @since 1.5.0
 	 *
 	 * @param array $attributes Shortcode attributes.
-	 *
 	 * @return array Attributes to pass to Story_Query class.
 	 */
 	private function prepare_story_attrs( array $attributes ): array {
@@ -126,7 +123,6 @@ class Stories_Shortcode extends Service_Base {
 	 * @since 1.5.0
 	 *
 	 * @param array $attributes Array of arguments for Story Query.
-	 *
 	 * @return array Array of story arguments to pass to Story_Query.
 	 */
 	private function prepare_story_args( array $attributes ): array {

@@ -2,9 +2,6 @@
 /**
  * Main plugin file.
  *
- * @package   Google\Web_Stories
- * @copyright 2020 Google LLC
- * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
  * Plugin Name: Web Stories
@@ -18,6 +15,10 @@
  * Text Domain: web-stories
  * License: Apache License 2.0
  * License URI: https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * @package   Google\Web_Stories
+ * @copyright 2020 Google LLC
+ * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
 
 /**
@@ -64,7 +65,7 @@ if ( ! defined( 'WEBSTORIES_DEV_MODE' ) ) {
  * @return Web_Stories_Compatibility
  */
 function web_stories_get_compat_instance() {
-	$error      = new WP_Error();
+	$error      = new \WP_Error();
 	$extensions = array(
 		'date'   => array(
 			'classes' => array(

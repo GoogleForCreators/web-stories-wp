@@ -18,7 +18,6 @@
 namespace Google\Web_Stories\Tests\Integration\Renderer;
 
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
-use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
  * Class Single

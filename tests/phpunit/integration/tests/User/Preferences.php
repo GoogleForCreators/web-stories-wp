@@ -17,12 +17,8 @@
 
 namespace Google\Web_Stories\Tests\Integration\User;
 
-use Google\Web_Stories\REST_API\Stories_Users_Controller;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
-use Google\Web_Stories\Tests\Integration\TestCase;
-use Spy_REST_Server;
 use WP_REST_Request;
-use WP_REST_Server;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\User\Preferences

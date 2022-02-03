@@ -2,10 +2,11 @@
 /**
  * Interface Instantiator.
  *
+ * @link      https://www.mwpd.io/
+ *
  * @package   Google\Web_Stories
  * @copyright 2019 Alain Schlesser
  * @license   MIT
- * @link      https://www.mwpd.io/
  */
 
 /**
@@ -23,8 +24,9 @@ namespace Google\Web_Stories\Infrastructure;
  * This way, a more elaborate mechanism can be plugged in, like using
  * ProxyManager to instantiate proxies instead of actual objects.
  *
- * @since 1.6.0
  * @internal
+ *
+ * @since 1.6.0
  */
 interface Instantiator {
 

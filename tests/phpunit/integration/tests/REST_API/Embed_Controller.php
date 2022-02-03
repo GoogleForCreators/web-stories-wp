@@ -26,7 +26,6 @@ use WP_REST_Server;
  * Class Embed_Controller
  *
  * @package Google\Web_Stories\Tests\REST_API
- *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Embed_Controller
  */
 class Embed_Controller extends DependencyInjectedRestTestCase {

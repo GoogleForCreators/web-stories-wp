@@ -2,10 +2,11 @@
 /**
  * Class Optimization
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -38,8 +39,6 @@ class Optimization extends Service_Base implements HasMeta {
 
 	/**
 	 * The optimized video id post meta key.
-	 *
-	 * @var string
 	 */
 	const OPTIMIZED_ID_POST_META_KEY = 'web_stories_optimized_id';
 

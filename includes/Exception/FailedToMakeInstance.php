@@ -2,10 +2,11 @@
 /**
  * Exception FailedToMakeInstance.
  *
+ * @link      https://www.mwpd.io/
+ *
  * @package   Google\Web_Stories
  * @copyright 2019 Alain Schlesser
  * @license   MIT
- * @link      https://www.mwpd.io/
  */
 
 /**
@@ -33,8 +34,9 @@ use RuntimeException;
  * Exception thrown when the injector couldn't instantiate a given class or
  * interface.
  *
- * @since 1.6.0
  * @internal
+ *
+ * @since 1.6.0
  */
 final class FailedToMakeInstance
 	extends RuntimeException
@@ -86,7 +88,6 @@ final class FailedToMakeInstance
 	 * @since 1.6.0
 	 *
 	 * @param string $interface Interface that was left unresolved.
-	 *
 	 * @return self
 	 */
 	public static function for_unresolved_interface( $interface ): self {
@@ -106,7 +107,6 @@ final class FailedToMakeInstance
 	 *
 	 * @param string $interface_or_class Interface or class that could not be
 	 *                                   reflected upon.
-	 *
 	 * @return self
 	 */
 	public static function for_unreflectable_class( $interface_or_class ): self {
@@ -147,7 +147,6 @@ final class FailedToMakeInstance
 	 * @since 1.6.0
 	 *
 	 * @param string $class Class that was not yet instantiated.
-	 *
 	 * @return self
 	 */
 	public static function for_uninstantiated_shared_instance( $class ): self {
@@ -166,7 +165,6 @@ final class FailedToMakeInstance
 	 * @since 1.6.0
 	 *
 	 * @param string $class Class for which there is no delegate.
-	 *
 	 * @return self
 	 */
 	public static function for_invalid_delegate( $class ): self {

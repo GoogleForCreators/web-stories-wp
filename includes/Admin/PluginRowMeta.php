@@ -4,10 +4,11 @@
  *
  * Updates the plugin row meta for the plugin.
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -65,14 +66,13 @@ class PluginRowMeta extends Service_Base {
 	 * @param string[]|mixed $meta        An array of the plugin's metadata, including the version, author, author URI,
 	 *                              and plugin URI.
 	 * @param string         $plugin_file Path to the plugin file relative to the plugins directory.
-	 *
 	 * @return string[]|mixed Plugin row meta.
 	 */
 	public function get_plugin_row_meta( $meta, $plugin_file ) {
 		if ( plugin_basename( WEBSTORIES_PLUGIN_FILE ) !== $plugin_file ) {
 			return $meta;
 		}
-		if ( ! is_array( $meta ) ) {
+		if ( ! \is_array( $meta ) ) {
 			return $meta;
 		}
 		$additional_meta = [

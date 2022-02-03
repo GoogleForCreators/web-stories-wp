@@ -2,10 +2,11 @@
 /**
  * Class Embed_Block.
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -27,8 +28,8 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\Renderer\Story\Image;
 use Google\Web_Stories\Renderer\Story\Embed;
+use Google\Web_Stories\Renderer\Story\Image;
 
 /**
  * Embed block class.
@@ -36,8 +37,6 @@ use Google\Web_Stories\Renderer\Story\Embed;
 abstract class Embed_Base extends Service_Base {
 	/**
 	 * Script handle for frontend assets.
-	 *
-	 * @var string
 	 */
 	const SCRIPT_HANDLE = 'web-stories-embed';
 
@@ -82,7 +81,7 @@ abstract class Embed_Base extends Service_Base {
 
 		$this->assets->register_style_asset( self::SCRIPT_HANDLE );
 
-		if ( defined( 'AMPFORWP_VERSION' ) ) {
+		if ( \defined( 'AMPFORWP_VERSION' ) ) {
 			add_action( 'amp_post_template_css', [ $this, 'add_amp_post_template_css' ] );
 		}
 
@@ -122,11 +121,10 @@ abstract class Embed_Base extends Service_Base {
 	 * @since 1.0.0
 	 *
 	 * @param array|string $allowed_tags Allowed tags.
-	 *
 	 * @return array|string Allowed tags.
 	 */
 	public function filter_kses_allowed_html( $allowed_tags ) {
-		if ( ! is_array( $allowed_tags ) ) {
+		if ( ! \is_array( $allowed_tags ) ) {
 			return $allowed_tags;
 		}
 
@@ -172,7 +170,6 @@ abstract class Embed_Base extends Service_Base {
 	 * @since 1.1.0
 	 *
 	 * @param array $attributes Embed render attributes.
-	 *
 	 * @return string Rendered embed output.
 	 */
 	public function render( array $attributes ): string {

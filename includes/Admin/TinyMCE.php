@@ -4,10 +4,11 @@
  *
  * Necessary operations for classic editor compatibility.
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -28,9 +29,9 @@
 
 namespace Google\Web_Stories\Admin;
 
+use Google\Web_Stories\Assets;
 use Google\Web_Stories\Context;
 use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Assets;
 use Google\Web_Stories\Stories_Script_Data;
 
 /**
@@ -41,8 +42,6 @@ use Google\Web_Stories\Stories_Script_Data;
 class TinyMCE extends Service_Base {
 	/**
 	 * Web Stories tinymce script handle.
-	 *
-	 * @var string
 	 */
 	const SCRIPT_HANDLE = 'tinymce-button';
 
@@ -120,11 +119,10 @@ class TinyMCE extends Service_Base {
 	 * @since 1.5.0
 	 *
 	 * @param array|mixed $buttons Array of TinyMCE buttons.
-	 *
 	 * @return array|mixed
 	 */
 	public function tinymce_web_stories_button( $buttons ) {
-		if ( ! is_array( $buttons ) ) {
+		if ( ! \is_array( $buttons ) ) {
 			return $buttons;
 		}
 		$buttons[] = 'web_stories';
@@ -138,11 +136,10 @@ class TinyMCE extends Service_Base {
 	 * @since 1.5.0
 	 *
 	 * @param array|mixed $plugins Array of TinyMCE plugin scripts.
-	 *
 	 * @return array|mixed
 	 */
 	public function web_stories_mce_plugin( $plugins ) {
-		if ( ! is_array( $plugins ) ) {
+		if ( ! \is_array( $plugins ) ) {
 			return $plugins;
 		}
 		$plugins['web_stories'] = $this->assets->get_base_url( 'assets/js/tinymce-button.js' );
@@ -176,11 +173,10 @@ class TinyMCE extends Service_Base {
 	 * @param string|mixed $tag    The `<script>` tag for the enqueued script.
 	 * @param string       $handle The script's registered handle.
 	 * @param string       $src    The script's source URL.
-	 *
 	 * @return string|mixed The filtered script tag.
 	 */
 	public function script_loader_tag( $tag, $handle, $src ) {
-		if ( ! is_string( $tag ) ) {
+		if ( ! \is_string( $tag ) ) {
 			return $tag;
 		}
 

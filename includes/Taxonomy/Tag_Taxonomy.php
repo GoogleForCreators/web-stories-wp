@@ -2,10 +2,11 @@
 /**
  * Class Tag_Taxonomy.
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -70,7 +71,7 @@ class Tag_Taxonomy extends Taxonomy_Base implements HasRequirements {
 	 *
 	 * @return array
 	 */
-	protected function taxonomy_args() : array {
+	protected function taxonomy_args(): array {
 		$labels = [
 			'name'                       => _x( 'Tags', 'taxonomy general name', 'web-stories' ),
 			'singular_name'              => _x( 'Tag', 'taxonomy singular name', 'web-stories' ),

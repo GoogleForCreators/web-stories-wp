@@ -2,10 +2,11 @@
 /**
  * PluginActionLinks class.
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -30,10 +31,9 @@ use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
  * Class PluginActionLinks
+ *
  * @package Google\Web_Stories\Tests\Admin
- *
  * @coversDefaultClass \Google\Web_Stories\Admin\PluginActionLinks
- *
  */
 class PluginActionLinks extends TestCase {
 	/**

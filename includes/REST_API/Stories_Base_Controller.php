@@ -2,10 +2,11 @@
 /**
  * Class Stories_Base_Controller
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -60,7 +61,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	public function __construct( $post_type ) {
 		parent::__construct( $post_type );
 		$post_type_object = get_post_type_object( $post_type );
-		$this->namespace  = isset( $post_type_object, $post_type_object->rest_namespace ) && is_string( $post_type_object->rest_namespace ) ?
+		$this->namespace  = isset( $post_type_object, $post_type_object->rest_namespace ) && \is_string( $post_type_object->rest_namespace ) ?
 			$post_type_object->rest_namespace :
 			'web-stories/v1';
 
@@ -77,7 +78,6 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 * @since 1.0.0
 	 *
 	 * @param WP_REST_Request $request Request object.
-	 *
 	 * @return stdClass|WP_Error Post object or WP_Error.
 	 */
 	protected function prepare_item_for_database( $request ) {
@@ -96,7 +96,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 				( ! empty( $request['story_data'] ) && empty( $request['content'] ) ) ||
 				( ! empty( $request['content'] ) && empty( $request['story_data'] ) )
 			) {
-				return new WP_Error( 'rest_empty_content', __( 'content and story_data should always be updated together.', 'web-stories' ), [ 'status' => 412 ] );
+				return new \WP_Error( 'rest_empty_content', __( 'content and story_data should always be updated together.', 'web-stories' ), [ 'status' => 412 ] );
 			}
 
 			if ( isset( $request['content'] ) ) {
@@ -121,7 +121,6 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @param WP_Post         $post Post object.
 	 * @param WP_REST_Request $request Request object.
-	 *
 	 * @return WP_REST_Response Response object.
 	 */
 	public function prepare_item_for_response( $post, $request ) {
@@ -189,7 +188,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 		}
 
 		if ( ! $this->check_read_permission( $original_post ) ) {
-			return new WP_Error(
+			return new \WP_Error(
 				'rest_cannot_create',
 				__( 'Sorry, you are not allowed to duplicate this story.', 'web-stories' ),
 				[ 'status' => rest_authorization_required_code() ]
@@ -259,7 +258,6 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 * @since 1.10.0
 	 *
 	 * @param WP_Post $post Post object.
-	 *
 	 * @return array Links for the given post.
 	 */
 	protected function prepare_links( $post ): array {
@@ -283,7 +281,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 			];
 		}
 
-		if ( ! in_array( $post->post_type, [ 'attachment', 'nav_menu_item', 'revision' ], true ) ) {
+		if ( ! \in_array( $post->post_type, [ 'attachment', 'nav_menu_item', 'revision' ], true ) ) {
 			$attachments_url = rest_url( sprintf( '%s/%s', $this->namespace, 'media' ) );
 			$attachments_url = add_query_arg( 'parent', $post->ID, $attachments_url );
 
@@ -304,7 +302,6 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @param array   $links Links for the given post.
 	 * @param WP_Post $post Post object.
-	 *
 	 * @return array Modified list of links.
 	 */
 	private function add_taxonomy_links( array $links, WP_Post $post ): array {
@@ -376,7 +373,7 @@ class Stories_Base_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @return string
 	 */
-	public function get_namespace() : string {
+	public function get_namespace(): string {
 		return $this->namespace;
 	}
 }

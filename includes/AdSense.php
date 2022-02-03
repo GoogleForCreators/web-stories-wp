@@ -2,10 +2,11 @@
 /**
  * Class AdSense
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -45,7 +46,6 @@ class AdSense extends Service_Base implements HasRequirements {
 	 * @since 1.12.0
 	 *
 	 * @param Settings $settings Settings instance.
-	 *
 	 * @return void
 	 */
 	public function __construct( Settings $settings ) {

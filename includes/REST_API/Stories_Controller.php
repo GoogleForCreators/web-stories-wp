@@ -2,10 +2,11 @@
 /**
  * Class Stories_Controller
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -28,12 +29,12 @@ namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Demo_Content;
 use Google\Web_Stories\Story_Post_Type;
-use WP_Query;
 use WP_Error;
 use WP_Post;
+use WP_Post_Type;
+use WP_Query;
 use WP_REST_Request;
 use WP_REST_Response;
-use WP_Post_Type;
 
 /**
  * Stories_Controller class.
@@ -67,7 +68,6 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @param WP_Post         $post Post object.
 	 * @param WP_REST_Request $request Request object.
-	 *
 	 * @return WP_REST_Response Response object.
 	 */
 	public function prepare_item_for_response( $post, $request ) {
@@ -99,7 +99,7 @@ class Stories_Controller extends Stories_Base_Controller {
 
 		if ( rest_is_field_included( 'style_presets', $fields ) ) {
 			$style_presets         = get_option( Story_Post_Type::STYLE_PRESETS_OPTION, self::EMPTY_STYLE_PRESETS );
-			$data['style_presets'] = is_array( $style_presets ) ? $style_presets : self::EMPTY_STYLE_PRESETS;
+			$data['style_presets'] = \is_array( $style_presets ) ? $style_presets : self::EMPTY_STYLE_PRESETS;
 		}
 
 		if ( rest_is_field_included( 'preview_link', $fields ) ) {
@@ -163,7 +163,6 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @since 1.0.0
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
-	 *
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function update_item( $request ) {
@@ -175,7 +174,7 @@ class Stories_Controller extends Stories_Base_Controller {
 
 		// If style presets are set.
 		$style_presets = $request->get_param( 'style_presets' );
-		if ( is_array( $style_presets ) ) {
+		if ( \is_array( $style_presets ) ) {
 			update_option( Story_Post_Type::STYLE_PRESETS_OPTION, $style_presets );
 		}
 
@@ -240,7 +239,6 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @param string[] $clauses Associative array of the clauses for the query.
 	 * @param WP_Query $query   The WP_Query instance.
-	 *
 	 * @return array Filtered query clauses.
 	 */
 	public function filter_posts_clauses( $clauses, $query ) {
@@ -273,7 +271,6 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @param array           $args    WP_Query arguments.
 	 * @param WP_REST_Request $request Full details about the request.
-	 *
 	 * @return array Current args.
 	 */
 	public function filter_query( $args, $request ) {
@@ -287,7 +284,6 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @since 1.0.0
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
-	 *
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_items( $request ) {
@@ -327,8 +323,6 @@ class Stories_Controller extends Stories_Base_Controller {
 	/**
 	 * Prepares the 'tax_query' for a collection of posts.
 	 *
-	 * @todo Remove this method once WordPress 5.7 becomes minimum required version.
-	 *
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 *
 	 * @since 1.12.0
@@ -336,6 +330,8 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @param array           $args    WP_Query arguments.
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return array Updated query arguments.
+	 *
+	 * @todo Remove this method once WordPress 5.7 becomes minimum required version.
 	 */
 	private function prepare_tax_query( array $args, WP_REST_Request $request ) {
 		$relation = $request['tax_relation'];
@@ -428,7 +424,6 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @param WP_REST_Response $response Response object.
 	 * @param WP_REST_Request  $request Request object.
-	 *
 	 * @return WP_REST_Response|WP_Error
 	 */
 	protected function add_response_headers( WP_REST_Response $response, WP_REST_Request $request ) {
@@ -471,7 +466,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		foreach ( $statuses as $key => $status ) {
 			$posts_query               = new WP_Query();
 			$query_args['post_status'] = $status;
-			if ( in_array( $status, [ 'draft', 'future', 'pending' ], true ) && ! $edit_others_posts ) {
+			if ( \in_array( $status, [ 'draft', 'future', 'pending' ], true ) && ! $edit_others_posts ) {
 				$query_args['author'] = get_current_user_id();
 			}
 			if ( 'private' === $status && ! $edit_private_posts ) {
@@ -480,7 +475,7 @@ class Stories_Controller extends Stories_Base_Controller {
 			$posts_query->query( $query_args );
 			$statuses_count[ $key ] = absint( $posts_query->found_posts );
 			$statuses_count['all'] += $statuses_count[ $key ];
-			if ( in_array( $status, $this->args['post_status'], true ) ) {
+			if ( \in_array( $status, $this->args['post_status'], true ) ) {
 				$total_posts += $statuses_count[ $key ];
 			}
 		}
@@ -495,7 +490,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		$max_pages = ceil( $total_posts / (int) $this->args['posts_per_page'] );
 
 		if ( $page > $max_pages && $total_posts > 0 ) {
-			return new WP_Error(
+			return new \WP_Error(
 				'rest_post_invalid_page_number',
 				__( 'The page number requested is larger than the number of pages available.', 'web-stories' ),
 				[ 'status' => 400 ]
@@ -512,7 +507,6 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * Prepares links for the request.
 	 *
 	 * @param WP_Post $post Post object.
-	 *
 	 * @return array Links for the given post.
 	 */
 	protected function prepare_links( $post ): array {
@@ -565,7 +559,6 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @param array   $links Links for the given post.
 	 * @param WP_Post $post Post object.
-	 *
 	 * @return array Modified list of links.
 	 */
 	private function add_post_locking_link( array $links, WP_Post $post ): array {
@@ -608,7 +601,6 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @param array   $links Links for the given post.
 	 * @param WP_Post $post Post object.
-	 *
 	 * @return array Modified list of links.
 	 */
 	private function add_publisher_logo_link( array $links, WP_Post $post ): array {

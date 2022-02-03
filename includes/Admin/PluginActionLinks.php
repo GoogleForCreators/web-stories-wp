@@ -4,10 +4,11 @@
  *
  * Updates the plugin action links for the plugin.
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -28,8 +29,8 @@
 
 namespace Google\Web_Stories\Admin;
 
-use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Story_Post_Type;
 
 /**
  * Updates the plugin action links for the plugin.
@@ -64,11 +65,10 @@ class PluginActionLinks extends Service_Base {
 	 * @since 1.6.0
 	 *
 	 * @param  array|mixed $links Plugin action links.
-	 *
 	 * @return array|mixed
 	 */
 	public function action_links( $links ) {
-		if ( ! is_array( $links ) ) {
+		if ( ! \is_array( $links ) ) {
 			return $links;
 		}
 		$slug    = sprintf( 'edit.php?post_type=%s&page=stories-dashboard#/editor-settings', Story_Post_Type::POST_TYPE_SLUG );

@@ -2,10 +2,11 @@
 /**
  * Class Image_Size
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -37,43 +38,31 @@ use WP_Post;
 class Image_Sizes extends Service_Base {
 	/**
 	 * The image size for the poster-portrait-src.
-	 *
-	 * @var string
 	 */
 	const POSTER_PORTRAIT_IMAGE_SIZE = 'web-stories-poster-portrait';
 
 	/**
 	 * The image dimensions for the poster-portrait-src.
-	 *
-	 * @var int[]
 	 */
 	const POSTER_PORTRAIT_IMAGE_DIMENSIONS = [ 640, 853 ];
 
 	/**
 	 * Name of size used in media library.
-	 *
-	 * @var string
 	 */
 	const STORY_THUMBNAIL_IMAGE_SIZE = 'web-stories-thumbnail';
 
 	/**
 	 * The image dimensions for media library thumbnails.
-	 *
-	 * @var int[]
 	 */
 	const STORY_THUMBNAIL_IMAGE_DIMENSIONS = [ 150, 9999 ];
 
 	/**
 	 * The image size for the publisher logo.
-	 *
-	 * @var string
 	 */
 	const PUBLISHER_LOGO_IMAGE_SIZE = 'web-stories-publisher-logo';
 
 	/**
 	 * The image dimensions for the publisher logo.
-	 *
-	 * @var int[]
 	 */
 	const PUBLISHER_LOGO_IMAGE_DIMENSIONS = [ 96, 96 ];
 
@@ -92,9 +81,9 @@ class Image_Sizes extends Service_Base {
 	/**
 	 * Add image sizes.
 	 *
-	 * @link https://amp.dev/documentation/components/amp-story/#poster-guidelines-for-poster-portrait-src-poster-landscape-src-and-poster-square-src.
-	 *
 	 * @since 1.10.0
+	 *
+	 * @link https://amp.dev/documentation/components/amp-story/#poster-guidelines-for-poster-portrait-src-poster-landscape-src-and-poster-square-src.
 	 *
 	 * @return void
 	 */
@@ -132,11 +121,10 @@ class Image_Sizes extends Service_Base {
 	 *
 	 * @param array|mixed $response   Array of prepared attachment data.
 	 * @param WP_Post     $attachment Attachment object.
-	 *
 	 * @return array|mixed $response;
 	 */
 	public function wp_prepare_attachment_for_js( $response, $attachment ) {
-		if ( ! is_array( $response ) ) {
+		if ( ! \is_array( $response ) ) {
 			return $response;
 		}
 		// See https://github.com/WordPress/wordpress-develop/blob/d28766f8f2ecf2be02c2520cdf0cc3b51deb9e1b/src/wp-includes/rest-api/endpoints/class-wp-rest-attachments-controller.php#L753-L791 .

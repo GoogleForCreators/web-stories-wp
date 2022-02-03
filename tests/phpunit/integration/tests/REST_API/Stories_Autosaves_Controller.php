@@ -24,7 +24,6 @@ use WP_REST_Request;
  * Class Stories_Autosaves_Controller
  *
  * @package Google\Web_Stories\Tests\REST_API
- *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Autosaves_Controller
  */
 class Stories_Autosaves_Controller extends DependencyInjectedRestTestCase {

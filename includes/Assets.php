@@ -2,10 +2,11 @@
 /**
  * Class Assets
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -52,7 +53,6 @@ class Assets {
 	 * @since 1.8.0
 	 *
 	 * @param string $path Path.
-	 *
 	 * @return string
 	 */
 	public function get_base_path( string $path ): string {
@@ -65,7 +65,6 @@ class Assets {
 	 * @since 1.8.0
 	 *
 	 * @param string $path Path.
-	 *
 	 * @return string
 	 */
 	public function get_base_url( string $path ): string {
@@ -78,7 +77,6 @@ class Assets {
 	 * @since 1.8.0
 	 *
 	 * @param string $handle Script handle.
-	 *
 	 * @return array Array containing combined contents of "<$handle>.asset.php" and "<$handle>.chunks.php".
 	 */
 	public function get_asset_metadata( string $handle ): array {
@@ -115,7 +113,6 @@ class Assets {
 	 * @param string $script_handle Handle of script.
 	 * @param array  $script_dependencies Array of extra dependencies.
 	 * @param bool   $with_i18n Optional. Whether to setup i18n for this asset. Default true.
-	 *
 	 * @return void
 	 */
 	public function register_script_asset( string $script_handle, array $script_dependencies = [], bool $with_i18n = true ) {
@@ -185,7 +182,6 @@ class Assets {
 	 * @param string $script_handle Handle of script.
 	 * @param array  $script_dependencies Array of extra dependencies.
 	 * @param bool   $with_i18n Optional. Whether to setup i18n for this asset. Default true.
-	 *
 	 * @return void
 	 */
 	public function enqueue_script_asset( string $script_handle, array $script_dependencies = [], bool $with_i18n = true ) {
@@ -200,7 +196,6 @@ class Assets {
 	 *
 	 * @param string $style_handle Handle of style.
 	 * @param array  $style_dependencies Array of extra dependencies.
-	 *
 	 * @return void
 	 */
 	public function register_style_asset( string $style_handle, array $style_dependencies = [] ) {
@@ -242,7 +237,6 @@ class Assets {
 	 *
 	 * @param string $style_handle Handle of style.
 	 * @param array  $style_dependencies Array of extra dependencies.
-	 *
 	 * @return void
 	 */
 	public function enqueue_style_asset( string $style_handle, array $style_dependencies = [] ) {
@@ -366,7 +360,6 @@ class Assets {
 	 * @since 1.8.0
 	 *
 	 * @param array $styles Array to style to be removed.
-	 *
 	 * @return void
 	 */
 	public function remove_admin_style( array $styles ) {
@@ -389,7 +382,7 @@ class Assets {
 		 */
 		$chunks = wp_scripts()->get_data( $script_handle, 'chunks' );
 
-		if ( ! is_array( $chunks ) ) {
+		if ( ! \is_array( $chunks ) ) {
 			return [];
 		}
 

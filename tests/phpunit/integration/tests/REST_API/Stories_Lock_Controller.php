@@ -24,7 +24,6 @@ use WP_REST_Request;
  * Class Lock_Controller
  *
  * @package Google\Web_Stories\Tests\REST_API
- *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Lock_Controller
  */
 class Stories_Lock_Controller extends DependencyInjectedRestTestCase {

@@ -2,10 +2,11 @@
 /**
  * Class AMP
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -31,9 +32,9 @@ use Google\Web_Stories\AMP\Integration\AMP_Story_Sanitizer;
 use Google\Web_Stories\Context;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Service_Base;
 use WP_Post;
 
 /**
@@ -44,8 +45,6 @@ use WP_Post;
 class AMP extends Service_Base implements HasRequirements {
 	/**
 	 * Slug of the AMP validated URL post type.
-	 *
-	 * @var string
 	 */
 	const AMP_VALIDATED_URL_POST_TYPE = 'amp_validated_url';
 
@@ -78,7 +77,6 @@ class AMP extends Service_Base implements HasRequirements {
 	 * @param Settings        $settings        Settings instance.
 	 * @param Story_Post_Type $story_post_type Experiments instance.
 	 * @param Context         $context Context instance.
-	 *
 	 * @return void
 	 */
 	public function __construct( Settings $settings, Story_Post_Type $story_post_type, Context $context ) {
@@ -125,11 +123,10 @@ class AMP extends Service_Base implements HasRequirements {
 	 * @since 1.2.0
 	 *
 	 * @param array|mixed $options Options.
-	 *
 	 * @return array|mixed Filtered options.
 	 */
 	public function filter_amp_options( $options ) {
-		if ( ! is_array( $options ) ) {
+		if ( ! \is_array( $options ) ) {
 			return $options;
 		}
 		if ( $this->get_request_post_type() === $this->story_post_type->get_slug() ) {
@@ -149,11 +146,10 @@ class AMP extends Service_Base implements HasRequirements {
 	 * @since 1.2.0
 	 *
 	 * @param string[]|mixed $post_types Supportable post types.
-	 *
 	 * @return array|mixed Supportable post types.
 	 */
 	public function filter_supportable_post_types( $post_types ) {
-		if ( ! is_array( $post_types ) ) {
+		if ( ! \is_array( $post_types ) ) {
 			return $post_types;
 		}
 
@@ -186,7 +182,7 @@ class AMP extends Service_Base implements HasRequirements {
 			return $sanitizers;
 		}
 
-		if ( ! is_array( $sanitizers ) ) {
+		if ( ! \is_array( $sanitizers ) ) {
 			return $sanitizers;
 		}
 
@@ -230,6 +226,7 @@ class AMP extends Service_Base implements HasRequirements {
 	 * The same is done for <amp-video> elements, for example when they have missing poster images.
 	 *
 	 * @since 1.1.1
+	 *
 	 * @link https://github.com/ampproject/amp-wp/blob/c6aed8f/includes/validation/class-amp-validation-manager.php#L1777-L1809
 	 *
 	 * @param null|bool $sanitized Whether sanitized. Null means sanitization is not overridden.
@@ -290,13 +287,12 @@ class AMP extends Service_Base implements HasRequirements {
 	 * Prevents issues where this plugin uses newer features that the plugin doesn't know about yet,
 	 * causing false positives with validation.
 	 *
-	 * @link https://github.com/googleforcreators/web-stories-wp/issues/7131
-	 *
 	 * @since 1.6.0
+	 *
+	 * @link https://github.com/googleforcreators/web-stories-wp/issues/7131
 	 *
 	 * @param bool|mixed $skipped Whether the post should be skipped from AMP.
 	 * @param int        $post    Post ID.
-	 *
 	 * @return bool|mixed Whether post should be skipped from AMP.
 	 */
 	public function filter_amp_skip_post( $skipped, $post ) {
@@ -304,7 +300,7 @@ class AMP extends Service_Base implements HasRequirements {
 		if (
 			$this->story_post_type->get_slug() === get_post_type( $post )
 			&&
-			defined( '\AMP__VERSION' )
+			\defined( '\AMP__VERSION' )
 			&&
 			version_compare( WEBSTORIES_AMP_VERSION, AMP__VERSION, '>' )
 		) {
@@ -373,7 +369,6 @@ class AMP extends Service_Base implements HasRequirements {
 	 * @since 1.0.0
 	 *
 	 * @param int $post_id Post ID for Validated URL Post.
-	 *
 	 * @return string|null Post type or null if validated URL is not for a singular post.
 	 */
 	protected function get_validated_url_post_type( $post_id ) {
@@ -397,7 +392,7 @@ class AMP extends Service_Base implements HasRequirements {
 		 */
 		$queried_object = get_post_meta( $post->ID, '_amp_queried_object', true );
 
-		if ( ! is_array( $queried_object ) ) {
+		if ( ! \is_array( $queried_object ) ) {
 			return null;
 		}
 

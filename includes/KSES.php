@@ -2,10 +2,11 @@
 /**
  * Class KSES.
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -97,7 +98,7 @@ class KSES extends Service_Base implements HasRequirements {
 	 * @return array|mixed Filtered post data.
 	 */
 	public function filter_insert_post_data( $data, $postarr, $unsanitized_postarr ) {
-		if ( ! is_array( $data ) || current_user_can( 'unfiltered_html' ) ) {
+		if ( ! \is_array( $data ) || current_user_can( 'unfiltered_html' ) ) {
 			return $data;
 		}
 
@@ -148,7 +149,7 @@ class KSES extends Service_Base implements HasRequirements {
 	 * @return array|mixed Filtered list of CSS attributes.
 	 */
 	public function filter_safe_style_css( $attr ) {
-		if ( ! is_array( $attr ) ) {
+		if ( ! \is_array( $attr ) ) {
 			return $attr;
 		}
 
@@ -181,14 +182,13 @@ class KSES extends Service_Base implements HasRequirements {
 	 *
 	 * A few more allowed attributes are added via the safe_style_css filter.
 	 *
-	 * @see safecss_filter_attr()
-	 *
 	 * @SuppressWarnings(PHPMD)
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param string $css A string of CSS rules.
+	 * @see safecss_filter_attr()
 	 *
+	 * @param string $css A string of CSS rules.
 	 * @return string Filtered string of CSS rules.
 	 */
 	public function safecss_filter_attr( $css ): string {
@@ -391,11 +391,11 @@ class KSES extends Service_Base implements HasRequirements {
 			} else {
 				$css_selector = trim( $parts[0] );
 
-				if ( in_array( $css_selector, $allowed_attr, true ) ) {
+				if ( \in_array( $css_selector, $allowed_attr, true ) ) {
 					$found         = true;
-					$url_attr      = in_array( $css_selector, $css_url_data_types, true );
-					$gradient_attr = in_array( $css_selector, $css_gradient_data_types, true );
-					$color_attr    = in_array( $css_selector, $css_color_data_types, true );
+					$url_attr      = \in_array( $css_selector, $css_url_data_types, true );
+					$gradient_attr = \in_array( $css_selector, $css_gradient_data_types, true );
+					$color_attr    = \in_array( $css_selector, $css_color_data_types, true );
 
 					// --initial-transform is a special custom property used by the story editor.
 					$transform_attr = 'transform' === $css_selector || '--initial-transform' === $css_selector;
@@ -499,11 +499,10 @@ class KSES extends Service_Base implements HasRequirements {
 	 * @since 1.0.0
 	 *
 	 * @param array|mixed $allowed_tags Allowed tags.
-	 *
 	 * @return array|mixed Allowed tags.
 	 */
 	public function filter_kses_allowed_html( $allowed_tags ) {
-		if ( ! is_array( $allowed_tags ) ) {
+		if ( ! \is_array( $allowed_tags ) ) {
 			return $allowed_tags;
 		}
 
@@ -721,11 +720,10 @@ class KSES extends Service_Base implements HasRequirements {
 	 * @since 1.5.0
 	 *
 	 * @param array ...$arrays [optional] Variable list of arrays to recursively merge.
-	 *
 	 * @return array An array of values resulted from merging the arguments together.
 	 */
 	protected function array_merge_recursive_distinct( array ...$arrays ): array {
-		if ( count( $arrays ) < 2 ) {
+		if ( \count( $arrays ) < 2 ) {
 			if ( [] === $arrays ) {
 				return $arrays;
 			}
@@ -737,7 +735,7 @@ class KSES extends Service_Base implements HasRequirements {
 
 		foreach ( $arrays as $array ) {
 			foreach ( $array as $key => $value ) {
-				if ( is_array( $value ) && ( isset( $merged[ $key ] ) && is_array( $merged[ $key ] ) ) ) {
+				if ( \is_array( $value ) && ( isset( $merged[ $key ] ) && \is_array( $merged[ $key ] ) ) ) {
 					$merged[ $key ] = $this->array_merge_recursive_distinct( $merged[ $key ], $value );
 				} else {
 					$merged[ $key ] = $value;
@@ -788,7 +786,6 @@ class KSES extends Service_Base implements HasRequirements {
 	 * @since 1.0.0
 	 *
 	 * @param string $post_content Post content.
-	 *
 	 * @return string Filtered post content.
 	 */
 	public function filter_content_save_pre_before_kses( $post_content ): string {
@@ -807,7 +804,6 @@ class KSES extends Service_Base implements HasRequirements {
 	 * @since 1.0.0
 	 *
 	 * @param string $post_content Post content.
-	 *
 	 * @return string Filtered post content.
 	 */
 	public function filter_content_save_pre_after_kses( $post_content ): string {

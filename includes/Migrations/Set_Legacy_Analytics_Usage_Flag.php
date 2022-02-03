@@ -2,10 +2,11 @@
 /**
  * Class Set_Legacy_Analytics_Usage_Flag
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -47,7 +48,6 @@ class Set_Legacy_Analytics_Usage_Flag extends Migrate_Base {
 	 * @since 1.12.0
 	 *
 	 * @param Settings $settings Settings instance.
-	 *
 	 * @return void
 	 */
 	public function __construct( Settings $settings ) {

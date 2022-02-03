@@ -2,10 +2,11 @@
 /**
  * Class Link_Controller
  *
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -118,7 +119,6 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 	 * @since 1.0.0
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
-	 *
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function parse_link( $request ) {
@@ -142,7 +142,7 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 		$cache_key = 'web_stories_link_data_' . md5( $url );
 
 		$data = get_transient( $cache_key );
-		if ( is_string( $data ) && ! empty( $data ) ) {
+		if ( \is_string( $data ) && ! empty( $data ) ) {
 			/**
 			 * Decoded cached link data.
 			 *
@@ -182,7 +182,7 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 		$response = wp_safe_remote_get( $url, $args );
 
 		if ( is_wp_error( $response ) && 'http_request_failed' === $response->get_error_code() ) {
-			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
+			return new \WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
 		}
 
 		if ( WP_Http::OK !== wp_remote_retrieve_response_code( $response ) ) {
@@ -286,7 +286,6 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @param array           $link Link value, default to false is not set.
 	 * @param WP_REST_Request $request Request object.
-	 *
 	 * @return WP_REST_Response|WP_Error Response object.
 	 */
 	public function prepare_item_for_response( $link, $request ) {
@@ -365,7 +364,7 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 	 */
 	public function parse_link_permissions_check() {
 		if ( ! $this->story_post_type->has_cap( 'edit_posts' ) ) {
-			return new WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to process links.', 'web-stories' ), [ 'status' => rest_authorization_required_code() ] );
+			return new \WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to process links.', 'web-stories' ), [ 'status' => rest_authorization_required_code() ] );
 		}
 
 		return true;
@@ -377,14 +376,13 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 	 * @since 1.11.0
 	 *
 	 * @param string $value Value to be validated.
-	 *
 	 * @return true|WP_Error
 	 */
 	public function validate_url( $value ) {
 		$url = untrailingslashit( $value );
 
 		if ( empty( $url ) || ! wp_http_validate_url( $url ) ) {
-			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 400 ] );
+			return new \WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 400 ] );
 		}
 
 		return true;
@@ -397,7 +395,6 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @param DOMNodeList<DOMElement>|false $query XPath query result.
 	 * @param string                        $attribute Attribute name.
-	 *
 	 * @return string|false Attribute content on success, false otherwise.
 	 */
 	protected function get_dom_attribute_content( $query, string $attribute ) {
