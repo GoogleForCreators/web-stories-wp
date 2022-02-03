@@ -47,7 +47,13 @@ import {
 /**
  * Internal dependencies
  */
-import { useStory, useTransform, useCanvas, useConfig } from '../../app';
+import {
+  useStory,
+  useTransform,
+  useCanvas,
+  useConfig,
+  useDropTargets,
+} from '../../app';
 import WithLink from '../elementLink/frame';
 import useDoubleClick from '../../utils/useDoubleClick';
 
@@ -84,19 +90,41 @@ const EmptyFrame = styled.div`
 const NOOP = () => {};
 
 function FrameElement({ id }) {
-  const { isSelected, isSingleElement, selectedElementIds, isBackground, element } = useStory(
-    ({ state }) => ({
-      isSelected: state.selectedElementIds.includes(id),
-      isSingleElement: state.selectedElementIds.length === 1,
-      isBackground: state.currentPage?.elements[0].id === id,
-      element: state.currentPage?.elements.find((el) => el.id === id),
-      selectedElementIds: state.state.selectedElementIds,
-    })
-  );
+  const {
+    isSelected,
+    isSingleElement,
+    selectedElementIds,
+    isBackground,
+    element,
+  } = useStory(({ state }) => ({
+    isSelected: state.selectedElementIds.includes(id),
+    isSingleElement: state.selectedElementIds.length === 1,
+    isBackground: state.currentPage?.elements[0].id === id,
+    element: state.currentPage?.elements.find((el) => el.id === id),
+    selectedElementIds: state.state.selectedElementIds,
+  }));
   const { setEditingElement, setEditingElementWithState } = useCanvas(
     ({ actions }) => ({
       setEditingElement: actions.setEditingElement,
       setEditingElementWithState: actions.setEditingElementWithState,
+    })
+  );
+  const {
+    draggingResource,
+    activeDropTargetId,
+    isDropSource,
+    registerDropTarget,
+    unregisterDropTarget,
+  } = useDropTargets(
+    ({
+      state: { draggingResource, activeDropTargetId },
+      actions: { isDropSource, registerDropTarget, unregisterDropTarget },
+    }) => ({
+      draggingResource,
+      activeDropTargetId,
+      isDropSource,
+      registerDropTarget,
+      unregisterDropTarget,
     })
   );
   const { type, flip } = element;
@@ -192,7 +220,7 @@ function FrameElement({ id }) {
           box={box}
           elementRef={elementRef}
           element={element}
-          isRTL={ isRTL }
+          isRTL={isRTL}
         />
       )}
       <Wrapper
@@ -213,9 +241,20 @@ function FrameElement({ id }) {
           fill
           flip={flip}
           eventHandlers={!maskDisabled ? eventHandlers : null}
+          draggingResource={draggingResource}
+          activeDropTargetId={activeDropTargetId}
+          isDropSource={isDropSource}
+          registerDropTarget={registerDropTarget}
+          unregisterDropTarget={unregisterDropTarget}
         >
           {Frame ? (
-            <Frame wrapperRef={elementRef} element={element} box={box} selectedElementIds={selectedElementIds} setEditingElementWithState={setEditingElementWithState} />
+            <Frame
+              wrapperRef={elementRef}
+              element={element}
+              box={box}
+              selectedElementIds={selectedElementIds}
+              setEditingElementWithState={setEditingElementWithState}
+            />
           ) : (
             <EmptyFrame />
           )}

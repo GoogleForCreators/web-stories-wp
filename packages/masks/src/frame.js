@@ -32,7 +32,6 @@ import {
 /**
  * Internal dependencies
  */
-import { useDropTargets } from '../app';
 import { MaskTypes } from './constants';
 import { getElementMask } from './masks';
 
@@ -92,27 +91,17 @@ const Wrapper = styled.div`
   }
 `;
 
-function WithDropTarget({ element, children, hover }) {
+function WithDropTarget({
+  element,
+  children,
+  hover,
+  draggingResource,
+  activeDropTargetId,
+  isDropSource,
+  registerDropTarget,
+  unregisterDropTarget,
+}) {
   const pathRef = useRef(null);
-
-  const {
-    draggingResource,
-    activeDropTargetId,
-    isDropSource,
-    registerDropTarget,
-    unregisterDropTarget,
-  } = useDropTargets(
-    ({
-      state: { draggingResource, activeDropTargetId },
-      actions: { isDropSource, registerDropTarget, unregisterDropTarget },
-    }) => ({
-      draggingResource,
-      activeDropTargetId,
-      isDropSource,
-      registerDropTarget,
-      unregisterDropTarget,
-    })
-  );
 
   const { id, resource, isBackground } = element;
   const mask = getElementMask(element);
@@ -176,6 +165,11 @@ WithDropTarget.propTypes = {
   element: StoryPropTypes.element,
   children: PropTypes.node.isRequired,
   hover: PropTypes.bool,
+  draggingResource: PropTypes.object,
+  activeDropTargetId: PropTypes.string,
+  isDropSource: PropTypes.bool,
+  registerDropTarget: PropTypes.func,
+  unregisterDropTarget: PropTypes.func,
 };
 
 export default function WithMask({
@@ -254,7 +248,7 @@ export default function WithMask({
       >
         <FillerPath fill="none" d={mask?.path} />
       </Filler>
-      <WithDropTarget element={element} hover={hover}>
+      <WithDropTarget element={element} hover={hover} {...rest}>
         {children}
       </WithDropTarget>
     </div>
