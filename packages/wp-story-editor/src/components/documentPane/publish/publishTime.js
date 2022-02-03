@@ -28,12 +28,12 @@ import { __ } from '@googleforcreators/i18n';
 import {
   DropDownSelect,
   PLACEMENT,
+  Popup,
   useKeyDownEffect,
 } from '@googleforcreators/design-system';
 import {
   DateTime,
   Row,
-  Popup,
   useStory,
   focusStyle,
 } from '@googleforcreators/story-editor';
