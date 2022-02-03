@@ -25,6 +25,7 @@ import { useBatchingCallback } from '@googleforcreators/react';
 import { useDropTargets } from '../../dropTargets';
 import { useStory } from '../../../app';
 import useElementOutOfCanvas from '../utils/useElementOutOfCanvas';
+import useFullbleedMediaAsBackground from '../utils/useFullbleedMediaAsBackground';
 
 function useSingleSelectionDrag({
   setIsDragging,
@@ -46,6 +47,9 @@ function useSingleSelectionDrag({
     );
 
   const { handleElementOutOfCanvas } = useElementOutOfCanvas();
+  const { handleFullbleedMediaAsBackground } = useFullbleedMediaAsBackground({
+    selectedElement,
+  });
 
   const { updateSelectedElements } = useStory((state) => ({
     updateSelectedElements: state.actions.updateSelectedElements,
@@ -116,6 +120,7 @@ function useSingleSelectionDrag({
       }
     }
     resetDragging(target);
+    handleFullbleedMediaAsBackground(target);
     return undefined;
   };
 

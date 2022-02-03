@@ -26,6 +26,7 @@ import { useUnits } from '@googleforcreators/units';
 import { useStory } from '../../../app';
 import { getDefinitionForType } from '../../../elements';
 import useElementOutOfCanvas from '../utils/useElementOutOfCanvas';
+import useFullbleedMediaAsBackground from '../utils/useFullbleedMediaAsBackground';
 
 const EMPTY_HANDLES = [];
 const VERTICAL_HANDLES = ['n', 's'];
@@ -55,6 +56,9 @@ function useSingleSelectionResize({
   }));
 
   const { handleElementOutOfCanvas } = useElementOutOfCanvas();
+  const { handleFullbleedMediaAsBackground } = useFullbleedMediaAsBackground({
+    selectedElement,
+  });
 
   const { editorToDataX, editorToDataY, dataToEditorY, dataToEditorX } =
     useUnits(
@@ -144,6 +148,9 @@ function useSingleSelectionResize({
 
   const onResizeEnd = ({ target }) => {
     if (handleElementOutOfCanvas(target)) {
+      return;
+    }
+    if (handleFullbleedMediaAsBackground(target)) {
       return;
     }
     const [editorWidth, editorHeight] = frame.resize;
