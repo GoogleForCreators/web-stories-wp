@@ -141,6 +141,7 @@ VideoDisplay.propTypes = {
   previewMode: PropTypes.bool,
   element: StoryPropTypes.elements.video.isRequired,
   box: StoryPropTypes.box.isRequired,
+  getProxiedUrl: PropTypes.func.isRequired,
 };
 
 export default VideoDisplay;

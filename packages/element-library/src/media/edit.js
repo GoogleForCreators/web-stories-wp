@@ -315,6 +315,7 @@ MediaEdit.propTypes = {
   element: StoryPropTypes.elements.media.isRequired,
   box: StoryPropTypes.box.isRequired,
   setLocalProperties: PropTypes.func.isRequired,
+  getProxiedUrl: PropTypes.func
 };
 
 export default MediaEdit;

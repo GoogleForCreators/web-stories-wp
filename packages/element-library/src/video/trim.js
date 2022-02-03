@@ -166,6 +166,7 @@ VideoTrim.propTypes = {
   previewMode: PropTypes.bool,
   element: StoryPropTypes.elements.video.isRequired,
   box: StoryPropTypes.box.isRequired,
+  isRTL: PropTypes.bool,
 };
 
 export default VideoTrim;

@@ -288,6 +288,7 @@ PlayPauseButton.propTypes = {
   elementRef: PropTypes.object.isRequired,
   element: StoryPropTypes.element.isRequired,
   videoRef: PropTypes.object,
+  isRTL: PropTypes.bool,
 };
 
 export default PlayPauseButton;

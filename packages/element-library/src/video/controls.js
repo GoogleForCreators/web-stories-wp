@@ -58,6 +58,7 @@ VideoControls.propTypes = {
   isTransforming: PropTypes.bool.isRequired,
   elementRef: PropTypes.object.isRequired,
   element: StoryPropTypes.element.isRequired,
+  isRTL: PropTypes.bool,
 };
 
 export default VideoControls;

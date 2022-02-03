@@ -41,7 +41,7 @@ const Img = styled.img`
   ${mediaWithScale}
 `;
 
-function ImageDisplay({ element, box, previewMode, getProxiedUrl }) {
+function ImageDisplay({ element, box, previewMode, getProxiedUrl, isCurrentResourceProcessing, isCurrentResourceUploading }) {
   const { resource, scale, focalX, focalY } = element;
   const { id: resourceId, alt } = resource;
   const { width, height } = box;
@@ -143,6 +143,9 @@ ImageDisplay.propTypes = {
   element: StoryPropTypes.elements.image.isRequired,
   box: StoryPropTypes.box.isRequired,
   previewMode: PropTypes.bool,
+  getProxiedUrl: PropTypes.func.isRequired,
+  isCurrentResourceProcessing: PropTypes.bool,
+  isCurrentResourceUploading: PropTypes.bool,
 };
 
 export default ImageDisplay;

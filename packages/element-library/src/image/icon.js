@@ -18,6 +18,8 @@
  * External dependencies
  */
 import { getSmallestUrlForWidth } from '@googleforcreators/media';
+import PropTypes from 'prop-types';
+
 /**
  * Internal dependencies
  */
@@ -38,6 +40,7 @@ function ImageLayerIcon({
 
 ImageLayerIcon.propTypes = {
   element: StoryPropTypes.element.isRequired,
+  getProxiedUrl: PropTypes.func.isRequired,
 };
 
 export default ImageLayerIcon;
