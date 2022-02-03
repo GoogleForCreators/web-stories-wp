@@ -69,7 +69,7 @@ describe('storyUpdates', () => {
       updateSlug({
         currentSlug: '10-reasons-to-go-for-a-walk',
         currentTitle: '',
-        storyId: 59,
+        storyId: 10,
         updateStory,
       });
 

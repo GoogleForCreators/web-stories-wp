@@ -36,8 +36,7 @@ describe('publishModal/mainContent', () => {
     [INPUT_KEYS.SLUG]: '2001-space-odyssey',
   };
   afterEach(() => {
-    mockHandleUpdateStoryInfo.mockReset();
-    mockHandleUpdateSlug.mockReset();
+    jest.clearAllMocks();
   });
   it('should have no accessibility issues', async () => {
     const { container } = renderWithTheme(

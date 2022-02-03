@@ -40,7 +40,7 @@ export const updateSlug = ({
   storyId,
   updateStory,
 }) => {
-  if (!currentSlug || parseInt(currentSlug) === storyId) {
+  if (!currentSlug || Number(currentSlug) === storyId) {
     const cleanSlug = encodeURIComponent(cleanForSlug(currentTitle)) || storyId;
     updateStory({ properties: { slug: cleanSlug } });
   }

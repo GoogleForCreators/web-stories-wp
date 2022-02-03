@@ -29,8 +29,7 @@ describe('publishModal/header', () => {
   const mockOnPublish = jest.fn();
 
   afterEach(() => {
-    mockOnClose.mockReset();
-    mockOnPublish.mockReset();
+    jest.clearAllMocks();
   });
 
   it('should have no accessibility issues', async () => {
