@@ -32,7 +32,7 @@ import {
 } from '../constants';
 import { useElementActions, useLayerActions } from '../hooks';
 import useLayerSelect from '../useLayerSelect';
-import { useRightClickMenu } from '..';
+import useRightClickMenu from '../useRightClickMenu';
 import { MenuPropType, SubMenuContainer, SUB_MENU_ARIA_LABEL } from './shared';
 
 function StickerMenu({ parentMenuRef }) {

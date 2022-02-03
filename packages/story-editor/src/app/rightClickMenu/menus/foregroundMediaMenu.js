@@ -37,7 +37,7 @@ import {
 import { useStory } from '../../..';
 import { useLocalMedia } from '../..';
 import useVideoTrim from '../../../components/videoTrim/useVideoTrim';
-import { useRightClickMenu } from '..';
+import useRightClickMenu from '../useRightClickMenu';
 import useLayerSelect from '../useLayerSelect';
 import { MenuPropType, SubMenuContainer, SUB_MENU_ARIA_LABEL } from './shared';
 

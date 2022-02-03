@@ -37,7 +37,7 @@ import {
 } from '../hooks';
 import useLayerSelect from '../useLayerSelect';
 import { useStory } from '../../..';
-import { useRightClickMenu } from '..';
+import useRightClickMenu from '../useRightClickMenu';
 import { MenuPropType, SubMenuContainer, SUB_MENU_ARIA_LABEL } from './shared';
 
 function ShapeMenu({ parentMenuRef }) {

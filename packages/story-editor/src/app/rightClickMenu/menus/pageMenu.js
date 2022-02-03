@@ -30,7 +30,7 @@ import { RIGHT_CLICK_MENU_LABELS } from '../constants';
 import { useElementActions, usePageActions } from '../hooks';
 import { useStory } from '../../..';
 import { useLocalMedia } from '../..';
-import { useRightClickMenu } from '..';
+import useRightClickMenu from '../useRightClickMenu';
 import useLayerSelect from '../useLayerSelect';
 import { MenuPropType, SubMenuContainer, SUB_MENU_ARIA_LABEL } from './shared';
 
