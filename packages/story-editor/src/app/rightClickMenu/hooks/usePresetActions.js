@@ -47,7 +47,7 @@ const usePresetActions = () => {
   const deleteGlobalTextPreset = useDeleteStyle({
     onEmpty: noop,
   });
-  const { deleteGlobalPreset: deleteGlobalColorPreset } = useDeleteColor({
+  const { deleteGlobalColor: deleteGlobalColorPreset } = useDeleteColor({
     onEmpty: noop,
   });
   const selectedElement = useStory(({ state }) => state.selectedElements?.[0]);

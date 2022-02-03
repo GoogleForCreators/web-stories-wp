@@ -31,7 +31,8 @@ export const SubMenuContainer = styled.div`
 export const SUB_MENU_ARIA_LABEL = __('Select a layer', 'web-stories');
 
 export const MenuPropType = {
-  parentMenuRef: PropTypes.shape({
-    current: PropTypes.node,
-  }).isRequired,
+  parentMenuRef: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+  ]).isRequired,
 };
