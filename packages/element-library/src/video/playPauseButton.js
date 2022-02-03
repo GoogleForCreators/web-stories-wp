@@ -29,13 +29,12 @@ import {
 import { CSSTransition } from 'react-transition-group';
 import { __ } from '@googleforcreators/i18n';
 import { rgba } from 'polished';
-import { Icons, useKeyDownEffect } from '@googleforcreators/design-system';
+import { Icons, useKeyDownEffect, Popup } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 import { StoryPropTypes } from '../types';
-import Popup from '../../components/popup';
 
 const PLAY_BUTTON_SIZE = 82;
 const ICON_SVG_SIZE = 72;
