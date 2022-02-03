@@ -22,7 +22,7 @@ export function getTemplateMetaData() {
   return Promise.all(
     TEMPLATE_NAMES.map((title) =>
       import(
-        /* webpackChunkName: "chunk-web-stories-template-[index]-metaData" */ `./raw/${title}/metaData`
+        /* webpackChunkName: "chunk-web-stories-template-[index]-metaData" */ `./raw/${title}/metaData.js`
       ).then((data) => data.default)
     )
   );

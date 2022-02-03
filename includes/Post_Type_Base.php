@@ -287,14 +287,16 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * Identical to {@see get_post_type_archive_link()}, but also returns a URL
 	 * if the archive page has been disabled.
 	 *
+	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 *
 	 * @since 1.14.0
 	 *
 	 * @global WP_Rewrite $wp_rewrite WordPress rewrite component.
 	 *
-	 * @return string|false The post type archive permalink. False if the post type
-	 *                      does not exist or does not have an archive.
+	 * @param  bool $ignore_has_archive Ignore 'has_archive' value to get default permalink.
+	 * @return string|false The post type archive permalink. False if the post type does not exist.
 	 */
-	public function get_archive_link() {
+	public function get_archive_link( bool $ignore_has_archive = false ) {
 		global $wp_rewrite;
 
 		$post_type_obj = $this->get_object();
@@ -303,7 +305,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 		}
 
 		if ( get_option( 'permalink_structure' ) && \is_array( $post_type_obj->rewrite ) ) {
-			$struct = ( true === $post_type_obj->has_archive ) ? $post_type_obj->rewrite['slug'] : $post_type_obj->has_archive;
+			$struct = ( true === $post_type_obj->has_archive || $ignore_has_archive ) ? $post_type_obj->rewrite['slug'] : $post_type_obj->has_archive;
 			if ( $post_type_obj->rewrite['with_front'] ) {
 				$struct = $wp_rewrite->front . $struct;
 			} else {
