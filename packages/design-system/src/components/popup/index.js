@@ -100,7 +100,7 @@ function Popup({
         return;
       }
       setPopupState({
-        offset: anchor?.current
+        offset: anchor.current
           ? getOffset(
               placement,
               spacing,
