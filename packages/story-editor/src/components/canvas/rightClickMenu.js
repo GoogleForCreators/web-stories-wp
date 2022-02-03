@@ -55,7 +55,6 @@ const RightClickMenu = () => {
   const { isMenuOpen, menuPosition, onCloseMenu, maskRef } =
     useRightClickMenu();
   const ref = useRef();
-  // const subMenuRef = useRef();
 
   /**
    * Prevent browser's context menu when right clicking on custom ContextMenu
@@ -119,7 +118,7 @@ const RightClickMenu = () => {
             onMouseDown={(evt) => evt.stopPropagation()}
             isRTL={isRTL}
           >
-            <Menu />
+            <Menu parentMenuRef={ref} />
           </ContextMenu>
         </DirectionAware>
       </RightClickMenuContainer>

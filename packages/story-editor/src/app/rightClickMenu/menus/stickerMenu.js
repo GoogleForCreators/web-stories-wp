@@ -17,7 +17,12 @@
 /**
  * External dependencies
  */
-import { ContextMenuComponents } from '@googleforcreators/design-system';
+
+import {
+  ContextMenu,
+  ContextMenuComponents,
+} from '@googleforcreators/design-system';
+import { useRef } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
@@ -26,8 +31,11 @@ import {
   RIGHT_CLICK_MENU_SHORTCUTS,
 } from '../constants';
 import { useElementActions, useLayerActions } from '../hooks';
+import useLayerSelect from '../useLayerSelect';
+import { useRightClickMenu } from '..';
+import { MenuPropType, SubMenuContainer, SUB_MENU_ARIA_LABEL } from './shared';
 
-function StickerMenu() {
+function StickerMenu({ parentMenuRef }) {
   const { handleDuplicateSelectedElements } = useElementActions();
   const {
     canElementMoveBackwards,
@@ -38,9 +46,50 @@ function StickerMenu() {
     handleBringToFront,
   } = useLayerActions();
 
+  const subMenuRef = useRef();
+  const { menuPosition, onCloseMenu } = useRightClickMenu();
+  const layerSelectProps = useLayerSelect({
+    menuPosition,
+    isMenuOpen: true,
+  });
+
+  const { closeSubMenu, isSubMenuOpen, subMenuItems, ...subMenuTriggerProps } =
+    layerSelectProps || {};
+
   return (
     <>
-      {/* TODO: Layer select items */}
+      {layerSelectProps && (
+        <>
+          <ContextMenuComponents.SubMenuTrigger
+            closeSubMenu={closeSubMenu}
+            parentMenuRef={parentMenuRef}
+            subMenuRef={subMenuRef}
+            isSubMenuOpen={isSubMenuOpen}
+            {...subMenuTriggerProps}
+          />
+          <SubMenuContainer
+            ref={subMenuRef}
+            position={{
+              x: 210,
+              y: 0,
+            }}
+          >
+            <ContextMenu
+              onDismiss={onCloseMenu}
+              isOpen={isSubMenuOpen}
+              onCloseSubMenu={closeSubMenu}
+              aria-label={SUB_MENU_ARIA_LABEL}
+              isSubMenu
+              parentMenuRef={parentMenuRef}
+            >
+              {subMenuItems.map(({ key, ...menuItemProps }) => (
+                <ContextMenuComponents.MenuItem key={key} {...menuItemProps} />
+              ))}
+            </ContextMenu>
+          </SubMenuContainer>
+          <ContextMenuComponents.MenuSeparator />
+        </>
+      )}
 
       <ContextMenuComponents.MenuButton
         onClick={handleDuplicateSelectedElements}
@@ -89,5 +138,6 @@ function StickerMenu() {
     </>
   );
 }
+StickerMenu.propTypes = MenuPropType;
 
 export default StickerMenu;

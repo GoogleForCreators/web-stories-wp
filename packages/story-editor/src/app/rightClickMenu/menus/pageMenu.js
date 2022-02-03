@@ -17,7 +17,11 @@
 /**
  * External dependencies
  */
-import { ContextMenuComponents } from '@googleforcreators/design-system';
+import {
+  ContextMenu,
+  ContextMenuComponents,
+} from '@googleforcreators/design-system';
+import { useRef } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
@@ -26,8 +30,11 @@ import { RIGHT_CLICK_MENU_LABELS } from '../constants';
 import { useElementActions, usePageActions } from '../hooks';
 import { useStory } from '../../..';
 import { useLocalMedia } from '../..';
+import { useRightClickMenu } from '..';
+import useLayerSelect from '../useLayerSelect';
+import { MenuPropType, SubMenuContainer, SUB_MENU_ARIA_LABEL } from './shared';
 
-function PageMenu() {
+function PageMenu({ parentMenuRef }) {
   const { currentPageIndex, canDeletePage, selectedElement } = useStory(
     ({ state }) => ({
       currentPageIndex: state.currentPageIndex,
@@ -50,6 +57,16 @@ function PageMenu() {
     })
   );
 
+  const subMenuRef = useRef();
+  const { menuPosition, onCloseMenu } = useRightClickMenu();
+  const layerSelectProps = useLayerSelect({
+    menuPosition,
+    isMenuOpen: true,
+  });
+
+  const { closeSubMenu, isSubMenuOpen, subMenuItems, ...subMenuTriggerProps } =
+    layerSelectProps || {};
+
   const disableBackgroundMediaActions = selectedElement?.isDefaultBackground;
   const isVideo = selectedElement?.type === 'video';
   const detachLabel = isVideo
@@ -63,7 +80,38 @@ function PageMenu() {
 
   return (
     <>
-      {/* TODO: Layer select items */}
+      {layerSelectProps && (
+        <>
+          <ContextMenuComponents.SubMenuTrigger
+            closeSubMenu={closeSubMenu}
+            parentMenuRef={parentMenuRef}
+            subMenuRef={subMenuRef}
+            isSubMenuOpen={isSubMenuOpen}
+            {...subMenuTriggerProps}
+          />
+          <SubMenuContainer
+            ref={subMenuRef}
+            position={{
+              x: 210,
+              y: 0,
+            }}
+          >
+            <ContextMenu
+              onDismiss={onCloseMenu}
+              isOpen={isSubMenuOpen}
+              onCloseSubMenu={closeSubMenu}
+              aria-label={SUB_MENU_ARIA_LABEL}
+              isSubMenu
+              parentMenuRef={parentMenuRef}
+            >
+              {subMenuItems.map(({ key, ...menuItemProps }) => (
+                <ContextMenuComponents.MenuItem key={key} {...menuItemProps} />
+              ))}
+            </ContextMenu>
+          </SubMenuContainer>
+          <ContextMenuComponents.MenuSeparator />
+        </>
+      )}
 
       <ContextMenuComponents.MenuButton
         disabled={disableBackgroundMediaActions}
@@ -115,5 +163,6 @@ function PageMenu() {
     </>
   );
 }
+PageMenu.propTypes = MenuPropType;
 
 export default PageMenu;

@@ -17,7 +17,11 @@
 /**
  * External dependencies
  */
-import { ContextMenuComponents } from '@googleforcreators/design-system';
+import {
+  ContextMenu,
+  ContextMenuComponents,
+} from '@googleforcreators/design-system';
+import { useRef } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
@@ -33,8 +37,11 @@ import {
 import { useStory } from '../../..';
 import { useLocalMedia } from '../..';
 import useVideoTrim from '../../../components/videoTrim/useVideoTrim';
+import { useRightClickMenu } from '..';
+import useLayerSelect from '../useLayerSelect';
+import { MenuPropType, SubMenuContainer, SUB_MENU_ARIA_LABEL } from './shared';
 
-function ForegroundMediaMenu() {
+function ForegroundMediaMenu({ parentMenuRef }) {
   const { copiedElementType, selectedElement } = useStory(({ state }) => ({
     copiedElementType: state.copiedElementState.type,
     selectedElement: state.selectedElements?.[0],
@@ -64,6 +71,16 @@ function ForegroundMediaMenu() {
     })
   );
 
+  const subMenuRef = useRef();
+  const { menuPosition, onCloseMenu } = useRightClickMenu();
+  const layerSelectProps = useLayerSelect({
+    menuPosition,
+    isMenuOpen: true,
+  });
+
+  const { closeSubMenu, isSubMenuOpen, subMenuItems, ...subMenuTriggerProps } =
+    layerSelectProps || {};
+
   const isVideo = selectedElement?.type === 'video';
   const scaleLabel = isVideo
     ? RIGHT_CLICK_MENU_LABELS.SCALE_AND_CROP_VIDEO
@@ -79,7 +96,38 @@ function ForegroundMediaMenu() {
 
   return (
     <>
-      {/* TODO: Layer select items */}
+      {layerSelectProps && (
+        <>
+          <ContextMenuComponents.SubMenuTrigger
+            closeSubMenu={closeSubMenu}
+            parentMenuRef={parentMenuRef}
+            subMenuRef={subMenuRef}
+            isSubMenuOpen={isSubMenuOpen}
+            {...subMenuTriggerProps}
+          />
+          <SubMenuContainer
+            ref={subMenuRef}
+            position={{
+              x: 210,
+              y: 0,
+            }}
+          >
+            <ContextMenu
+              onDismiss={onCloseMenu}
+              isOpen={isSubMenuOpen}
+              onCloseSubMenu={closeSubMenu}
+              aria-label={SUB_MENU_ARIA_LABEL}
+              isSubMenu
+              parentMenuRef={parentMenuRef}
+            >
+              {subMenuItems.map(({ key, ...menuItemProps }) => (
+                <ContextMenuComponents.MenuItem key={key} {...menuItemProps} />
+              ))}
+            </ContextMenu>
+          </SubMenuContainer>
+          <ContextMenuComponents.MenuSeparator />
+        </>
+      )}
 
       <ContextMenuComponents.MenuButton
         onClick={handleDuplicateSelectedElements}
@@ -161,5 +209,6 @@ function ForegroundMediaMenu() {
     </>
   );
 }
+ForegroundMediaMenu.propTypes = MenuPropType;
 
 export default ForegroundMediaMenu;

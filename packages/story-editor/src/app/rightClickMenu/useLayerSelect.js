@@ -133,7 +133,6 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
   return subMenuItems.length > 0
     ? {
         label: __('Select Layer', 'web-stories'),
-        separator: 'bottom',
         openSubMenu: () => setIsSubMenuOpen(true),
         closeSubMenu: () => setIsSubMenuOpen(false),
         isSubMenuOpen,
