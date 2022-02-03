@@ -14,6 +14,8 @@
 	<rule ref="WordPress-Docs">
 		<type>error</type>
 		<exclude-pattern>tests/*</exclude-pattern>
+		<!-- Documentation is organized with the use of namespaces. -->
+    <exclude name="Squiz.Commenting.FileComment.MissingPackageTag"/>
 	</rule>
 
 	<rule ref="WordPress-Extra">
