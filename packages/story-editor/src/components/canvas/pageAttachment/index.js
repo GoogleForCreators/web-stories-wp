@@ -25,7 +25,7 @@ import { Popup } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import { useCanvas } from '../../../app';
+import { useCanvas, useConfig } from '../../../app';
 import useElementsWithLinks from '../../../utils/useElementsWithLinks';
 import { OUTLINK_THEME } from '../../../constants';
 import { ReactComponent as DefaultIcon } from './defaultIcon.svg';
@@ -126,6 +126,8 @@ const LIGHT_COLOR = '#FFFFFF';
 const DARK_COLOR = '#000000';
 
 function PageAttachment({ pageAttachment = {} }) {
+  const { isRTL } = useConfig();
+
   const {
     displayLinkGuidelines,
     pageAttachmentContainer,
@@ -168,6 +170,7 @@ function PageAttachment({ pageAttachment = {} }) {
                 isOpen
                 placement={'left'}
                 spacing={spacing}
+                isRTL={isRTL}
               >
                 <Tooltip>
                   {__(
