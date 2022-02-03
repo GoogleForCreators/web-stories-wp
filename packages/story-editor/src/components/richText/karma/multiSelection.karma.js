@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { waitFor } from '@testing-library/react';
-
-/**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
@@ -165,7 +160,6 @@ describe('Styling multiple text fields', () => {
       await data.fixture.events.click(await fontWeight.option('Bold'));
       await data.fixture.events.sleep(300);
       await data.fixture.events.click(fontColor.button);
-      waitFor(() => fontColor.picker);
       await data.fixture.events.click(fontColor.picker.custom);
       await data.fixture.events.click(fontColor.picker.hexButton);
       await data.fixture.events.keyboard.type('00FF00');

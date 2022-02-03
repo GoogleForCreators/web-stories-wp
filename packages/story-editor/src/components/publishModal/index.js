@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,24 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+export { default as PublishModal } from './publishModal';
 
-/**
- * Internal dependencies
- */
-import { AppFrame, PageContent, LeftRail } from '..';
-import NavProvider from '../../navProvider';
-
-export default {
-  title: 'Dashboard/Components/LeftRail',
-};
-
-export const _default = () => {
-  return (
-    <AppFrame>
-      <NavProvider>
-        <LeftRail />
-        <PageContent />
-      </NavProvider>
-    </AppFrame>
-  );
-};
+// This whole directory of components in /publishModal is a work in progress!
