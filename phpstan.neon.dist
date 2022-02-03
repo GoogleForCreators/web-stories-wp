@@ -1,18 +1,6 @@
 services:
   -
-    class: SzepeViktor\PHPStan\WordPress\IsWpErrorFunctionTypeSpecifyingExtension
-    tags:
-      - phpstan.typeSpecifier.functionTypeSpecifyingExtension
-  -
-    class: SzepeViktor\PHPStan\WordPress\GetPostDynamicFunctionReturnTypeExtension
-    tags:
-      - phpstan.broker.dynamicFunctionReturnTypeExtension
-  -
     class: SzepeViktor\PHPStan\WordPress\GetTermsDynamicFunctionReturnTypeExtension
-    tags:
-      - phpstan.broker.dynamicFunctionReturnTypeExtension
-  -
-    class: SzepeViktor\PHPStan\WordPress\GetPostsDynamicFunctionReturnTypeExtension
     tags:
       - phpstan.broker.dynamicFunctionReturnTypeExtension
   -
@@ -23,13 +11,6 @@ services:
     class: SzepeViktor\PHPStan\WordPress\ServicesDynamicReturnTypeExtension
     tags:
       - phpstan.broker.dynamicStaticMethodReturnTypeExtension
-  -
-    class: SzepeViktor\PHPStan\WordPress\ApplyFiltersDynamicFunctionReturnTypeExtension
-    tags:
-      - phpstan.broker.dynamicFunctionReturnTypeExtension
-
-rules:
-  - SzepeViktor\PHPStan\WordPress\HookDocsRule
 
 parameters:
   level: 9
@@ -51,34 +32,18 @@ parameters:
   stubFiles:
     - tests/phpstan/stubs/wordpress-override.php
   bootstrapFiles:
-    - vendor/php-stubs/wordpress-stubs/wordpress-stubs.php
-    - tests/phpstan/stubs/wordpress-defines.php
     - tests/phpstan/bootstrap.php
     - third-party/vendor/ampproject/amp-wp/includes/sanitizers/class-amp-base-sanitizer.php
     - third-party/vendor/ampproject/amp-wp/includes/sanitizers/class-amp-meta-sanitizer.php
   dynamicConstantNames:
-    - WP_DEBUG
-    - WP_DEBUG_LOG
-    - EMPTY_TRASH_DAYS
-    - WP_CLI
     - WEBSTORIES_DEV_MODE
     - WPCOM_IS_VIP_ENV
     - IS_WPCOM
     - GOOGLESITEKIT_VERSION
     - AMP__VERSION
-  earlyTerminatingFunctionCalls:
-    - wp_die
-    - wp_send_json
-    - wp_send_json_success
-    - wp_send_json_error
-    - wp_nonce_ays
-    - dead_db
   ignoreErrors:
     # Uses func_get_args()
     - '#^Function apply_filters(_ref_array)? invoked with [34567] parameters, 2 required\.$#'
-
-    # False positive for wp_unslash()
-    - '#^Cannot cast array\|string to string.$#'
 
     # Core issue - https://core.trac.wordpress.org/ticket/54015
     - '#^Parameter \#2 \$embed of method WP_REST_Server::envelope_response\(\) expects bool, array<string>\|bool given.$#'

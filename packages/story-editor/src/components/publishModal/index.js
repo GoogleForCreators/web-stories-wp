@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,21 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+export { default as PublishModal } from './publishModal';
 
-/* global __dirname */
-
-/**
- * External dependencies
- */
-import { resolve as resolvePath } from 'path';
-import resolve from '@rollup/plugin-node-resolve';
-
-export default {
-  input: resolvePath(__dirname, 'src/index.js'),
-  output: {
-    file: resolvePath(__dirname, 'scripts/module.js'),
-    format: 'es',
-  },
-  plugins: [resolve()],
-  external: ['crypto'],
-};
+// This whole directory of components in /publishModal is a work in progress!

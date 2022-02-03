@@ -17,8 +17,9 @@
 /**
  * Internal dependencies
  */
-import StoryEditor from './storyEditor';
 import Dialog from './components/dialog';
+
+export { default as StoryEditor } from './storyEditor';
 
 export * from './components/transform';
 export * from './components/previewPage';
@@ -48,6 +49,7 @@ export { default as Tooltip } from './components/tooltip';
 export { default as Popup } from './components/popup';
 export { default as useInspector } from './components/inspector/useInspector';
 export { default as InspectorContext } from './components/inspector/context';
+export { default as useIsUploadingToStory } from './utils/useIsUploadingToStory';
 export {
   styles as highlightStyles,
   states as highlightStates,
@@ -56,4 +58,3 @@ export {
 export { ConfigProvider as EditorConfigProvider } from './app/config';
 
 export { Dialog };
-export default StoryEditor;

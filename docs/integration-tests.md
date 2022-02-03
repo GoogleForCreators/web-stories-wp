@@ -54,6 +54,30 @@ Plus another custom async matcher inspired by [`jest-axe`](https://github.com/ni
 
 ## Writing Tests
 
+There will be times when test must wait for an async function or process. The `waitFor` util from react test library may be used to wait for a condition to be satisfied before running the next part of the test.
+
+When an `expect` or any other function within the `waitFor` block throws an error, this util will wait `50ms` before trying again. The `waitFor` helper needs to receive an error in order for it to re-poll.
+
+`waitFor` will continue to re-poll until the timeout limit is reached. By default, the timeout is `1000ms`. `timeout`, `interval` and other `waitFor` options are customizable. [More configuration options](https://testing-library.com/docs/dom-testing-library/api-async/);
+
+The `findBy` query method is preferred, when applicable, since `findBy` is a combination of the `getBy` query and the `waitFor` util. `findBy` accepts the `waitFor` options as the last argument.
+
+If `findBy` doesn’t fit your use case, throw an error in the body of `waitFor` while waiting for a condition to be met.
+Examples
+
+```javascript
+  const dialogs = await fixture.screen.findAllByRole('dialog', { timeout: 2000 });
+```
+
+```javascript
+await waitFor(() => {
+  if (!node) {
+    throw new Error('this will make it so that the waitFor polls until no error is thrown');
+  }
+  expect(node).toBeTruthy();
+});
+```
+
 ### Useful Resources
 
 * [DOM Testing Library](https://testing-library.com/docs/dom-testing-library/intro)

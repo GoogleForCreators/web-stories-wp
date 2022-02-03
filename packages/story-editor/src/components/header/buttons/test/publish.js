@@ -29,11 +29,13 @@ import { setAppElement } from '@googleforcreators/design-system';
  * Internal dependencies
  */
 import StoryContext from '../../../../app/story/context';
+import useIsUploadingToStory from '../../../../utils/useIsUploadingToStory';
 import ConfigContext from '../../../../app/config/context';
-import MediaContext from '../../../../app/media/context';
 import { renderWithTheme } from '../../../../testUtils';
 import { CheckpointContext } from '../../../checklist';
 import PublishButton from '../publish';
+
+jest.mock('../../../../utils/useIsUploadingToStory');
 
 function arrange({
   props: extraButtonProps,
@@ -46,6 +48,8 @@ function arrange({
 } = {}) {
   const saveStory = jest.fn();
   const onReviewDialogRequest = jest.fn();
+
+  useIsUploadingToStory.mockImplementation(() => extraMediaProps?.isUploading);
 
   const storyContextValue = {
     state: {
@@ -72,11 +76,6 @@ function arrange({
   const configValue = {
     ...extraConfigProps,
   };
-  const mediaContextValue = {
-    local: {
-      state: { ...extraMediaProps },
-    },
-  };
   const prepublishChecklistContextValue = {
     state: {
       shouldReviewDialogBeSeen: false,
@@ -90,9 +89,7 @@ function arrange({
     <ConfigContext.Provider value={configValue}>
       <StoryContext.Provider value={storyContextValue}>
         <CheckpointContext.Provider value={prepublishChecklistContextValue}>
-          <MediaContext.Provider value={mediaContextValue}>
-            <PublishButton {...extraButtonProps} />
-          </MediaContext.Provider>
+          <PublishButton {...extraButtonProps} />
         </CheckpointContext.Provider>
       </StoryContext.Provider>
     </ConfigContext.Provider>

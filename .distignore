@@ -53,6 +53,7 @@ karma-story-editor.config.cjs
 karma-dashboard.config.cjs
 package.json
 package-lock.json
+percy.config.karma.yml
 percy.config.yml
 phpcs.xml.dist
 phpmd.xml
@@ -61,6 +62,7 @@ phpunit.xml.dist
 phpunit-integration.xml.dist
 phpunit-integration-multisite.xml.dist
 README.md
+rollup.config.js
 scoper.inc.php
 SECURITY.md
 webpack.config.cjs

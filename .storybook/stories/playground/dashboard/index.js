@@ -17,10 +17,10 @@
 /**
  * External dependencies
  */
-import Dashboard, { InterfaceSkeleton } from '@googleforcreators/dashboard';
 import styled from 'styled-components';
 import { useRef } from 'react';
 import { toId } from '@storybook/csf';
+import { Dashboard, InterfaceSkeleton } from '@googleforcreators/dashboard';
 
 /**
  * Internal dependencies

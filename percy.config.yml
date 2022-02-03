@@ -20,5 +20,3 @@ snapshot:
     video::-webkit-media-controls {
       display: none;
     }
-discovery:
-  disable-cache: true

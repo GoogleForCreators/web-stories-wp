@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,11 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
-import { select } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
@@ -28,17 +23,18 @@ import { AD_NETWORK_TYPE } from '../../../../../constants';
 export default {
   title: 'Dashboard/Views/EditorSettings/AdManagement/AdNetwork',
   component: AdNetwork,
+  args: {
+    adNetwork: AD_NETWORK_TYPE.NONE,
+  },
+  argTypes: {
+    adNetwork: {
+      options: Object.values(AD_NETWORK_TYPE),
+      control: 'select',
+    },
+    handleUpdate: { action: 'update ad network' },
+  },
 };
 
-export const _default = () => {
-  return (
-    <AdNetwork
-      adNetwork={select(
-        'adNetwork',
-        Object.values(AD_NETWORK_TYPE),
-        AD_NETWORK_TYPE.NONE
-      )}
-      handleUpdate={(newAdNetwork) => action('update ad network')(newAdNetwork)}
-    />
-  );
+export const _default = (args) => {
+  return <AdNetwork {...args} />;
 };

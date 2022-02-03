@@ -26,13 +26,8 @@ module.exports = {
   ],
   addons: [
     '@storybook/addon-a11y/register',
-    '@storybook/addon-actions',
-    '@storybook/addon-docs',
-    '@storybook/addon-knobs',
+    '@storybook/addon-essentials',
     '@storybook/addon-storysource/register',
-    '@storybook/addon-viewport/register',
-    '@storybook/addon-backgrounds/register',
-    'storybook-rtl-addon',
   ],
   reactOptions: {
     fastRefresh: true,

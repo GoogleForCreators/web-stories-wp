@@ -64,7 +64,7 @@ function RadioGroup({
       aria-labelledby={groupId}
     >
       <VisuallyHiddenLabel id={groupId}>{groupLabel}</VisuallyHiddenLabel>
-      {options.map(({ helper = '', label, value }) => (
+      {options.map(({ helper = '', label, value, disabled }) => (
         <StyledRadio
           key={value}
           name={name}
@@ -72,6 +72,7 @@ function RadioGroup({
           checked={value === selectedValue}
           label={label}
           hint={helper}
+          disabled={disabled}
           {...radioButtonProps}
         />
       ))}

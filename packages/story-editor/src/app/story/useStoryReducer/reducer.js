@@ -95,8 +95,8 @@ function reducer(state, { type, payload }) {
       return reducers.toggleLayer(state, payload);
     }
 
-    case types.DUPLICATE_ELEMENT_BY_ID: {
-      return reducers.duplicateElementById(state, payload);
+    case types.DUPLICATE_ELEMENTS_BY_ID: {
+      return reducers.duplicateElementsById(state, payload);
     }
 
     case types.UPDATE_STORY: {

@@ -20,7 +20,6 @@
 import { useState } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { action } from '@storybook/addon-actions';
-import { boolean, number, text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
@@ -34,6 +33,16 @@ import { AlignCenter } from '../../../icons';
 export default {
   title: 'DesignSystem/Components/Input',
   component: Input,
+  args: {
+    label1: 'Normal',
+    label2: 'Suffix',
+    label3: 'Error',
+    label4: 'Disabled',
+
+    hint: 'Hint',
+    placeholder: 'placeholder',
+    suffix: 'Suffix',
+  },
 };
 
 const Container = styled.div`
@@ -62,7 +71,8 @@ const IconContainer = styled.div`
   margin-right: -8px;
 `;
 
-export const _default = () => {
+// eslint-disable-next-line react/prop-types
+export const _default = ({ label1, label2, label3, label4, ...args }) => {
   const [inputState, setInputState] = useState({
     oneLight: '600',
     twoLight: 'we have an error',
@@ -97,11 +107,9 @@ export const _default = () => {
             name="oneLight"
             value={inputState.oneLight}
             onChange={handleChange}
-            label={text('Input 1 Label', 'Normal')}
-            hint={text('Hint', 'Hint')}
-            placeholder="placeholder"
-            suffix={text('Suffix')}
             unit="ms"
+            label={label1}
+            {...args}
           />
           <Input
             aria-label="input-two"
@@ -109,10 +117,8 @@ export const _default = () => {
             name="twoLight"
             value={inputState.twoLight}
             onChange={handleChange}
-            label={text('Input 2 Label', 'Suffix')}
-            hint={text('Hint', 'Hint')}
-            placeholder="placeholder"
-            suffix={text('Suffix', 'Duration')}
+            label={label2}
+            {...args}
           />
           <Input
             aria-label="input-three"
@@ -120,10 +126,8 @@ export const _default = () => {
             name="threeLight"
             value={inputState.threeLight}
             onChange={handleChange}
-            label={text('Input 3 Label', 'Error')}
-            hint={text('Hint', 'Hint')}
-            placeholder="placeholder"
-            suffix={text('Suffix')}
+            label={label3}
+            {...args}
             hasError
           />
           <Input
@@ -132,10 +136,8 @@ export const _default = () => {
             name="fourLight"
             value={inputState.fourLight}
             onChange={handleChange}
-            label={text('Input 4 Label', 'Disabled')}
-            hint={text('Hint', 'Hint')}
-            placeholder="placeholder"
-            suffix={text('Suffix')}
+            label={label4}
+            {...args}
             disabled
           />
         </Row>
@@ -149,10 +151,8 @@ export const _default = () => {
               name="oneDark"
               value={inputState.oneDark}
               onChange={handleChange}
-              label={text('Input 1 Label', 'Normal')}
-              hint={text('Hint', 'Hint')}
-              placeholder="placeholder"
-              suffix={text('Suffix')}
+              label={label1}
+              {...args}
             />
             <Input
               aria-label="input-five"
@@ -160,9 +160,8 @@ export const _default = () => {
               name="twoDark"
               value={inputState.twoDark}
               onChange={handleChange}
-              label={text('Input 2 Label', 'Suffix')}
-              hint={text('Hint', 'Hint')}
-              placeholder="placeholder"
+              label={label2}
+              {...args}
               suffix={
                 <IconContainer>
                   <AlignCenter />
@@ -175,10 +174,8 @@ export const _default = () => {
               name="threeDark"
               value={inputState.threeDark}
               onChange={handleChange}
-              label={text('Input 3 Label', 'Error')}
-              hint={text('Hint', 'Hint')}
-              placeholder="placeholder"
-              suffix={text('Suffix')}
+              label={label3}
+              {...args}
               hasError
             />
             <Input
@@ -187,10 +184,8 @@ export const _default = () => {
               name="fourDark"
               value={inputState.fourDark}
               onChange={handleChange}
-              label={text('Input 4 Label', 'Disabled')}
-              hint={text('Hint', 'Hint')}
-              placeholder="placeholder"
-              suffix={text('Suffix')}
+              label={label4}
+              {...args}
               disabled
             />
           </Row>
@@ -200,7 +195,8 @@ export const _default = () => {
   );
 };
 
-export const Numeric = () => {
+// eslint-disable-next-line react/prop-types
+export const Numeric = ({ label1, label2, label3, label4, ...args }) => {
   const [inputState, setInputState] = useState({
     oneLight: 600,
     twoLight: 0,
@@ -231,14 +227,8 @@ export const Numeric = () => {
             name="oneLight"
             value={inputState.oneLight}
             onChange={handleChange}
-            label={text('Input 1 Label', 'Normal')}
-            hint={text('Hint', 'Hint')}
-            placeholder="placeholder"
-            suffix={text('Suffix')}
-            min={number('min')}
-            max={number('max')}
-            allowEmpty={boolean('Allow Empty', false)}
-            isFloat={boolean('isFloat', false)}
+            label={label1}
+            {...args}
           />
           <NumericInput
             aria-label="input-two"
@@ -246,15 +236,10 @@ export const Numeric = () => {
             name="twoLight"
             value={inputState.twoLight}
             onChange={handleChange}
-            label={text('Input 2 Label', 'Unit and Suffix')}
-            hint={text('Hint', 'Hint')}
-            placeholder="placeholder"
-            suffix="Duration"
-            min={number('min')}
-            max={number('max')}
+            label={label2}
+            {...args}
             unit="ms"
-            allowEmpty={boolean('Allow Empty', false)}
-            isFloat={boolean('isFloat', false)}
+            suffix="Duration"
           />
           <NumericInput
             aria-label="disabled-input-one"
@@ -262,15 +247,9 @@ export const Numeric = () => {
             name="threeLight"
             value={inputState.threeLight}
             onChange={handleChange}
-            label={text('Input 4 Label', 'Disabled')}
-            hint={text('Hint', 'Hint')}
-            placeholder="placeholder"
-            suffix={text('Suffix')}
-            min={number('min')}
-            max={number('max')}
+            label={label4}
+            {...args}
             disabled
-            allowEmpty={boolean('Allow Empty', false)}
-            isFloat={boolean('isFloat', false)}
           />
         </Row>
       </Container>
@@ -283,14 +262,8 @@ export const Numeric = () => {
               name="oneDark"
               value={inputState.oneDark}
               onChange={handleChange}
-              label={text('Input 1 Label', 'Normal')}
-              hint={text('Hint', 'Hint')}
-              placeholder="placeholder"
-              min={number('min')}
-              max={number('max')}
-              suffix={text('Suffix')}
-              allowEmpty={boolean('Allow Empty', false)}
-              isFloat={boolean('isFloat', false)}
+              label={label1}
+              {...args}
             />
             <NumericInput
               aria-label="input-four"
@@ -298,15 +271,10 @@ export const Numeric = () => {
               name="twoDark"
               value={inputState.twoDark}
               onChange={handleChange}
-              label={text('Input 2 Label', 'Suffix')}
-              hint={text('Hint', 'Hint')}
-              placeholder="placeholder"
-              suffix="Temp"
-              min={number('min')}
-              max={number('max')}
+              label={label2}
+              {...args}
               unit="°"
-              allowEmpty={boolean('Allow Empty', false)}
-              isFloat={boolean('isFloat', false)}
+              suffix="Temp"
             />
             <NumericInput
               aria-label="disabled-input-two"
@@ -314,19 +282,20 @@ export const Numeric = () => {
               name="threeDark"
               value={inputState.threeDark}
               onChange={handleChange}
-              label={text('Input 4 Label', 'Disabled')}
-              hint={text('Hint', 'Hint')}
-              placeholder="placeholder"
-              suffix={text('Suffix')}
-              min={number('min')}
-              max={number('max')}
+              label={label4}
+              {...args}
               disabled
-              allowEmpty={boolean('Allow Empty', false)}
-              isFloat={boolean('isFloat', false)}
             />
           </Row>
         </Container>
       </DarkThemeProvider>
     </>
   );
+};
+Numeric.args = {
+  label2: 'Unit and Suffix',
+  min: 0,
+  max: 100,
+  allowEmpty: false,
+  isFloat: false,
 };

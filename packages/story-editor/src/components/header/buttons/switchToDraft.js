@@ -31,8 +31,9 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { useStory, useLocalMedia } from '../../../app';
+import { useStory } from '../../../app';
 import Tooltip from '../../tooltip';
+import useIsUploadingToStory from '../../../utils/useIsUploadingToStory';
 
 function SwitchToDraftButton({ forceIsSaving = false }) {
   const { isSaving, saveStory } = useStory(
@@ -43,9 +44,7 @@ function SwitchToDraftButton({ forceIsSaving = false }) {
       actions: { saveStory },
     }) => ({ isSaving, saveStory })
   );
-  const { isUploading } = useLocalMedia(({ state: { isUploading } }) => ({
-    isUploading,
-  }));
+  const isUploading = useIsUploadingToStory();
 
   const handleUnPublish = useCallback(() => {
     saveStory({ status: 'draft' });
