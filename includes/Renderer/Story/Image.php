@@ -24,7 +24,6 @@
  * limitations under the License.
  */
 
-
 namespace Google\Web_Stories\Renderer\Story;
 
 use Google\Web_Stories\Model\Story;

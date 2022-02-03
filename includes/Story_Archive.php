@@ -26,7 +26,6 @@
 
 namespace Google\Web_Stories;
 
-use WP_Post;
 use WP_Query;
 use WP_Rewrite;
 

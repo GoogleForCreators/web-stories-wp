@@ -28,7 +28,6 @@ namespace Google\Web_Stories\REST_API;
 
 use stdClass;
 use WP_Error;
-use WP_Post;
 use WP_Query;
 use WP_REST_Posts_Controller;
 use WP_REST_Request;

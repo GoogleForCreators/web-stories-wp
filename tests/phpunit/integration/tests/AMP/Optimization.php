@@ -17,17 +17,17 @@
 
 namespace Google\Web_Stories\Tests\Integration\AMP;
 
+use Google\Web_Stories\Tests\Integration\TestCase;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Configuration;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpBoilerplate;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpBoilerplateErrorHandler;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpRuntimePreloads;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpStoryCssOptimizer;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\GoogleFontsPreconnect;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\MinifyHtml;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\OptimizeViewport;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\ReorderHead;
-use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\GoogleFontsPreconnect;
-use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Optimization

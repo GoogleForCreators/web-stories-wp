@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 namespace Google\Web_Stories\Tests\Integration\Admin;
 
 use Google\Web_Stories\Admin\Customizer as TheCustomizer;

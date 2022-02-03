@@ -30,9 +30,6 @@ use Google\Web_Stories\Infrastructure\Delayed;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
 use WP_REST_Taxonomies_Controller;
-use WP_REST_Response;
-use WP_REST_Request;
-use WP_Taxonomy;
 
 /**
  * Stories_Taxonomies_Controller class.

@@ -27,14 +27,13 @@
 namespace Google\Web_Stories\Admin;
 
 use Google\Web_Stories\Infrastructure\Conditional;
+use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Stories_Script_Data;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Story_Query;
-use Google\Web_Stories\Service_Base;
 use WP_Customize_Manager;
 use WP_Customize_Setting;
-use WP_Error;
 
 /**
  * Class customizer settings.

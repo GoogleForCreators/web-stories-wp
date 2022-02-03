@@ -24,12 +24,10 @@
  * limitations under the License.
  */
 
-
 namespace Google\Web_Stories\Renderer;
 
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
-use WP_Post;
 
 /**
  * Class Oembed

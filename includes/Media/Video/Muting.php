@@ -26,8 +26,8 @@
 
 namespace Google\Web_Stories\Media\Video;
 
-use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Infrastructure\HasMeta;
+use Google\Web_Stories\Service_Base;
 use WP_Error;
 
 /**

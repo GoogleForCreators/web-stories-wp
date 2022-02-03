@@ -26,11 +26,11 @@
 
 namespace Google\Web_Stories\AMP;
 
+use DOMElement;
 use DOMNodeList;
 use Google\Web_Stories_Dependencies\AMP_Base_Sanitizer;
 use Google\Web_Stories_Dependencies\AmpProject\Html\Attribute;
 use Google\Web_Stories_Dependencies\AmpProject\Html\Tag;
-use DOMElement;
 
 /**
  * Canonical sanitizer class.

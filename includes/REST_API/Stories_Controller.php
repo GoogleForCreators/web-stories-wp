@@ -28,12 +28,12 @@ namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Demo_Content;
 use Google\Web_Stories\Story_Post_Type;
-use WP_Query;
 use WP_Error;
 use WP_Post;
+use WP_Post_Type;
+use WP_Query;
 use WP_REST_Request;
 use WP_REST_Response;
-use WP_Post_Type;
 
 /**
  * Stories_Controller class.

@@ -26,8 +26,8 @@
 
 namespace Google\Web_Stories\Media;
 
-use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Infrastructure\HasMeta;
+use Google\Web_Stories\Service_Base;
 
 /**
  * Class Blurhash

@@ -34,10 +34,7 @@ use Google\Web_Stories\Infrastructure\SiteInitializationAware;
 use WP_Post_Type;
 use WP_REST_Controller;
 use WP_REST_Posts_Controller;
-use WP_Rewrite;
 use WP_Site;
-use WP_Error;
-
 
 /**
  * Class Post_Type_Base.

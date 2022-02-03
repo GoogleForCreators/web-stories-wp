@@ -28,9 +28,9 @@
 
 namespace Google\Web_Stories\Admin;
 
+use Google\Web_Stories\Assets;
 use Google\Web_Stories\Context;
 use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Assets;
 use Google\Web_Stories\Stories_Script_Data;
 
 /**

@@ -14,8 +14,6 @@
 	<rule ref="WordPress-Docs">
 		<type>error</type>
 		<exclude-pattern>tests/*</exclude-pattern>
-		<!-- Documentation is organized with the use of namespaces. -->
-    <exclude name="Squiz.Commenting.FileComment.MissingPackageTag"/>
 	</rule>
 
 	<rule ref="WordPress-Extra">
@@ -94,49 +92,8 @@
     >tests/phpunit/integration/includes/REST_Setup.php</exclude-pattern>
 	</rule>
 
-  <!-- Requires return typehints and reports useless @return annotations. -->
-  <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint"/>
-  <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingTraversableTypeHintSpecification">
-    <type>warning</type>
-  </rule>
-  <!-- Requires parameter typehints and reports useless @param annotations. -->
-  <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint"/>
-  <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingTraversableTypeHintSpecification">
-    <type>warning</type>
-  </rule>
-  <!-- Checks whether the nullablity ? symbol is present before each nullable and optional parameter. -->
-  <rule ref="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue"/>
-  <!-- Enforce no space between closing brace and colon of return typehint. -->
-  <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing">
-    <properties>
-      <property name="spacesCountBeforeColon" value="0"/>
-    </properties>
-  </rule>
-  <!-- Checks that there's no whitespace between a nullability symbol and a typehint. -->
-  <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing"/>
-  <!-- Enforces using shorthand scalar typehint variants in phpDocs. -->
-  <rule ref="SlevomatCodingStandard.TypeHints.LongTypeHints"/>
-  <!-- Reports useless @var annotation for constants because the type of constant is always clear. -->
-  <rule ref="SlevomatCodingStandard.TypeHints.UselessConstantTypeHint"/>
-
-  <!-- Requires arrow functions if possible. -->
-  <rule ref="SlevomatCodingStandard.Functions.RequireArrowFunction"/>
-  <!-- Enforces correct space usage in array functions. -->
-  <rule ref="SlevomatCodingStandard.Functions.ArrowFunctionDeclaration">
-    <properties>
-      <property name="spacesCountAfterKeyword" value="0"/>
-      <property name="spacesCountBeforeArrow" value="1"/>
-      <property name="spacesCountAfterArrow" value="1"/>
-      <property name="allowMultiLine" value="true"/>
-    </properties>
-  </rule>
-
-  <!-- Disallows grouped use declarations. -->
-  <rule ref="SlevomatCodingStandard.Namespaces.DisallowGroupUse"/>
   <!-- Disallows leading backslash in use statement. -->
   <rule ref="SlevomatCodingStandard.Namespaces.UseDoesNotStartWithBackslash"/>
-  <!-- Enforces fully qualified names of classes and interfaces in annotations. -->
-  <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedClassNameInAnnotation"/>
   <!-- Checks whether uses at the top of a file are alphabetically sorted. -->
   <rule ref="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses"/>
   <!-- Enforces one space after namespace, disallows content between namespace name and semicolon and disallows use of bracketed syntax. -->
@@ -160,71 +117,8 @@
   </rule>
   <!-- Prohibits uses from the same namespace. -->
   <rule ref="SlevomatCodingStandard.Namespaces.UseFromSameNamespace"/>
-  <!-- All references to types named Exception or ending with Exception must be referenced via a fully qualified name. -->
-  <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedExceptions"/>
   <!-- Looks for unused imports from other namespaces. -->
   <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses"/>
-  <!-- Require root namespace for special compiled PHP functions. -->
-  <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalFunctions">
-    <properties>
-      <property name="includeSpecialFunctions" value="true"/>
-    </properties>
-  </rule>
-
-  <!-- Class names should be referenced via ::class constant when possible. -->
-  <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference"/>
-  <!-- Requires declaring visibility for class constants. -->
-  <rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility"/>
-
-  <!-- Requires use of null coalesce operator (??) when possible. -->
-  <rule ref="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceOperator"/>
-
-  <!-- Reports forbidden annotations. -->
-  <rule ref="SlevomatCodingStandard.Commenting.ForbiddenAnnotations">
-    <properties>
-      <property name="forbiddenAnnotations" type="array">
-        <element value="@package"/>
-        <element value="@subpackage"/>
-        <element value="@author"/>
-        <element value="@created"/>
-        <element value="@copyright"/>
-        <element value="@license"/>
-        <element value="@access"/>
-        <element value="@version"/>
-      </property>
-    </properties>
-  </rule>
-  <!-- Require specific order of PHPDoc annotations with empty newline between specific groups. -->
-  <rule ref="SlevomatCodingStandard.Commenting.DocCommentSpacing">
-    <properties>
-      <property name="linesCountBeforeFirstContent" value="0"/>
-      <property name="linesCountAfterLastContent" value="0"/>
-      <property name="linesCountBetweenDescriptionAndAnnotations" value="1"/>
-      <property name="linesCountBetweenAnnotationsGroups" value="1"/>
-      <property name="annotationsGroups" type="array">
-        <element value="@internal"/>
-        <element value="
-          @since,
-          @deprecated,
-        "/>
-        <element value="
-          @link,
-          @see,
-          @uses,
-        "/>
-        <element value="
-          @global,
-        "/>
-        <element value="
-          @throws,
-        "/>
-        <element value="
-          @param,
-          @return,
-        "/>
-      </property>
-    </properties>
-  </rule>
 
 	<!-- Show details about violated sniffs -->
 	<arg value="s" />

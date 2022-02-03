@@ -17,8 +17,6 @@
 
 namespace Google\Web_Stories\Tests\Integration;
 
-use Google\Web_Stories\Integrations\Site_Kit;
-
 /**
  * @coversDefaultClass \Google\Web_Stories\Tracking
  */

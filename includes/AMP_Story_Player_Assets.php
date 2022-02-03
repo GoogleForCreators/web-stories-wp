@@ -28,8 +28,8 @@ namespace Google\Web_Stories;
 
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
-use WP_Styles;
 use WP_Scripts;
+use WP_Styles;
 
 /**
  * Class AMP_Story_Player_Assets

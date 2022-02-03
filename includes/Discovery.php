@@ -31,7 +31,6 @@ namespace Google\Web_Stories;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Media\Image_Sizes;
 use Google\Web_Stories\Model\Story;
-
 use WP_Post;
 
 /**

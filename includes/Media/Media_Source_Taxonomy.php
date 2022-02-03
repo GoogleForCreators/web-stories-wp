@@ -29,8 +29,6 @@ namespace Google\Web_Stories\Media;
 use Google\Web_Stories\Context;
 use Google\Web_Stories\REST_API\Stories_Terms_Controller;
 use Google\Web_Stories\Taxonomy\Taxonomy_Base;
-use WP_Query;
-use WP_Post;
 
 /**
  * Class Media_Source_Taxonomy

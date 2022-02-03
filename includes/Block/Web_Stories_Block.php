@@ -28,12 +28,12 @@ namespace Google\Web_Stories\Block;
 
 use Google\Web_Stories\AMP_Story_Player_Assets;
 use Google\Web_Stories\Assets;
+use Google\Web_Stories\Context;
 use Google\Web_Stories\Embed_Base;
+use Google\Web_Stories\Stories_Script_Data;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Tracking;
-use Google\Web_Stories\Stories_Script_Data;
-use Google\Web_Stories\Context;
 
 /**
  * Latest Stories block class.

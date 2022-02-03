@@ -27,7 +27,6 @@
 namespace Google\Web_Stories\Media;
 
 use Google\Web_Stories\Service_Base;
-use WP_Post;
 
 /**
  * Class Image_Sizes

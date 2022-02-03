@@ -24,10 +24,8 @@
  * limitations under the License.
  */
 
-
 namespace Google\Web_Stories\Migrations;
 
-use Google\Web_Stories\Media\Media_Source_Taxonomy;
 use Google\Web_Stories\Media\Video\Poster;
 
 /**

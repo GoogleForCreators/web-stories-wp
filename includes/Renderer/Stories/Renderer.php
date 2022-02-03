@@ -26,14 +26,14 @@
 
 namespace Google\Web_Stories\Renderer\Stories;
 
+use Google\Web_Stories\AMP_Story_Player_Assets;
+use Google\Web_Stories\Assets;
 use Google\Web_Stories\Context;
 use Google\Web_Stories\Interfaces\Renderer as RenderingInterface;
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\AMP_Story_Player_Assets;
 use Google\Web_Stories\Services;
-use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Assets;
+use Google\Web_Stories\Story_Query;
 use Iterator;
 use WP_Post;
 

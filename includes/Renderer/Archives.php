@@ -29,10 +29,10 @@ namespace Google\Web_Stories\Renderer;
 use Google\Web_Stories\AMP_Story_Player_Assets;
 use Google\Web_Stories\Assets;
 use Google\Web_Stories\Context;
-use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Renderer\Story\Embed;
 use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Story_Post_Type;
 use WP_Post;
 
 /**

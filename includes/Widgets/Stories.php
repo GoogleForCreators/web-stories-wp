@@ -23,11 +23,11 @@
 
 namespace Google\Web_Stories\Widgets;
 
-use WP_Widget;
-use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Assets;
 use Google\Web_Stories\Stories_Script_Data;
+use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Story_Query;
+use WP_Widget;
 
 /**
  * Class Stories

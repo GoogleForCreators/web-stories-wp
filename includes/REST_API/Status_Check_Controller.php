@@ -28,10 +28,8 @@ namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Story_Post_Type;
-use WP_REST_Server;
-use WP_REST_Request;
-use WP_REST_Response;
 use WP_Error;
+use WP_REST_Server;
 
 /**
  * API endpoint check status.

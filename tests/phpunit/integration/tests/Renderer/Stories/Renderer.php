@@ -27,10 +27,10 @@
 namespace Google\Web_Stories\Tests\Integration\Renderer\Stories;
 
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\Tests\Integration\TestCase;
-use Google\Web_Stories\Tests\Integration\Test_Renderer;
-use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Renderer\Stories\Renderer as AbstractRenderer;
+use Google\Web_Stories\Story_Query;
+use Google\Web_Stories\Tests\Integration\Test_Renderer;
+use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
  * Generic_Renderer class.

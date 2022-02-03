@@ -26,10 +26,10 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Infrastructure\PluginActivationAware;
 use Google\Web_Stories\Infrastructure\Injector;
-use Google\Web_Stories\Infrastructure\Service;
+use Google\Web_Stories\Infrastructure\PluginActivationAware;
 use Google\Web_Stories\Infrastructure\Registerable;
+use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Infrastructure\SiteInitializationAware;
 use WP_Site;
 

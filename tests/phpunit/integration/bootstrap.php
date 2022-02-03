@@ -25,6 +25,7 @@
  */
 
 use DG\BypassFinals;
+
 BypassFinals::enable();
 
 require_once dirname( __DIR__, 3 ) . '/vendor/yoast/wp-test-utils/src/WPIntegration/bootstrap-functions.php';

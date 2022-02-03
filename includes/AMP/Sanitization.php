@@ -42,7 +42,6 @@ use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories_Dependencies\AmpProject\Extension;
 use Google\Web_Stories_Dependencies\AmpProject\Html\Attribute;
 use Google\Web_Stories_Dependencies\AmpProject\Html\Tag;
-use DOMElement;
 
 /**
  * Sanitization class.

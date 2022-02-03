@@ -28,9 +28,8 @@
 
 namespace Google\Web_Stories\Tests\Integration;
 
-use WP_Error;
-use WP_REST_Response;
 use Spy_REST_Server;
+use WP_REST_Response;
 
 /**
  * trait REST_Setup

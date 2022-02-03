@@ -23,9 +23,8 @@
 
 namespace Google\Web_Stories\Renderer\Stories\FieldState;
 
-use Google\Web_Stories\Interfaces\Field;
-use Google\Web_Stories\Renderer\Stories\Fields\BaseField;
 use Google\Web_Stories\Interfaces\FieldState;
+use Google\Web_Stories\Renderer\Stories\Fields\BaseField;
 use Google\Web_Stories\Story_Post_Type;
 
 /**

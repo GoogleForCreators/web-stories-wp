@@ -27,8 +27,6 @@
 namespace Google\Web_Stories\Renderer\Stories\FieldStateFactory;
 
 use Google\Web_Stories\Infrastructure\Injector;
-use Google\Web_Stories\Infrastructure\Service;
-use Google\Web_Stories\Interfaces\FieldState;
 use Google\Web_Stories\Interfaces\FieldStateFactory;
 use Google\Web_Stories\Renderer\Stories\FieldState\CarouselView;
 use Google\Web_Stories\Renderer\Stories\FieldState\CircleView;

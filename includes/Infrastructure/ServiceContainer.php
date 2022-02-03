@@ -17,7 +17,6 @@
 
 namespace Google\Web_Stories\Infrastructure;
 
-use Google\Web_Stories\Exception\InvalidService;
 use ArrayAccess;
 use Countable;
 use Traversable;

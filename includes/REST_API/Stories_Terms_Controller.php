@@ -27,7 +27,6 @@
 namespace Google\Web_Stories\REST_API;
 
 use WP_REST_Terms_Controller;
-use WP_Term;
 
 /**
  * Stories_Terms_Controller class.

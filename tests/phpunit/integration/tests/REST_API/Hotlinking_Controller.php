@@ -18,7 +18,6 @@
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
 use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
-use WP_Error;
 use WP_REST_Request;
 use WP_REST_Server;
 

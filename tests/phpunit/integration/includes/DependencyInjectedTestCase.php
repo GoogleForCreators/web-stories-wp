@@ -10,8 +10,6 @@
 
 namespace Google\Web_Stories\Tests\Integration;
 
-use Google\Web_Stories\Infrastructure\Injector;
-use Google\Web_Stories\Infrastructure\ServiceContainer;
 use Google\Web_Stories\Plugin;
 use Google\Web_Stories\Services;
 

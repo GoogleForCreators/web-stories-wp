@@ -17,8 +17,8 @@
 
 namespace Google\Web_Stories\Tests\Integration\Admin;
 
-use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 use Google\Web_Stories\Tests\Integration\Capabilities_Setup;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Editor

@@ -29,12 +29,9 @@ namespace Google\Web_Stories\REST_API;
 use Google\Web_Stories\Infrastructure\Delayed;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
-use Google\Web_Stories\Media\Types;
 use Google\Web_Stories\Media\Base_Color;
+use Google\Web_Stories\Media\Types;
 use WP_Post;
-use WP_Error;
-use WP_REST_Request;
-use WP_REST_Response;
 use WP_REST_Attachments_Controller;
 
 /**

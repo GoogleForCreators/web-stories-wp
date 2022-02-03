@@ -30,8 +30,6 @@ use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
 use WP_Error;
-use WP_Post;
-use WP_REST_Request;
 use WP_REST_Response;
 use WP_REST_Server;
 

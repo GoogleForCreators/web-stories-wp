@@ -26,17 +26,15 @@
 
 namespace Google\Web_Stories\REST_API;
 
+use DOMElement;
 use DOMNodeList;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
-use DOMElement;
 use WP_Error;
 use WP_Http;
 use WP_Network;
 use WP_Post;
-use WP_REST_Request;
-use WP_REST_Response;
 use WP_REST_Server;
 
 /**

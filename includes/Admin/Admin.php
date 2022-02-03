@@ -29,12 +29,11 @@
 namespace Google\Web_Stories\Admin;
 
 use Google\Web_Stories\Context;
-use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Renderer\Story\Image;
+use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Story_Post_Type;
 use WP_Post;
-
 
 /**
  * Admin class.

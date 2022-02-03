@@ -28,8 +28,6 @@ namespace Google\Web_Stories;
 
 use Google\Web_Stories\Renderer\Stories\Carousel_Renderer;
 use Google\Web_Stories\Renderer\Stories\Generic_Renderer;
-use Google\Web_Stories\Renderer\Stories\Renderer;
-use WP_Post;
 use WP_Query;
 
 /**

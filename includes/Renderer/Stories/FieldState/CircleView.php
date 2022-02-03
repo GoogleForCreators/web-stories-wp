@@ -23,8 +23,6 @@
 
 namespace Google\Web_Stories\Renderer\Stories\FieldState;
 
-use Google\Web_Stories\Renderer\Stories\Fields\BaseField;
-
 /**
  * Class CircleView.
  */

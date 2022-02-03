@@ -28,7 +28,6 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\User\Preferences;
 

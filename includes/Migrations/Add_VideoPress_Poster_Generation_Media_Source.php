@@ -24,7 +24,6 @@
  * limitations under the License.
  */
 
-
 namespace Google\Web_Stories\Migrations;
 
 use Google\Web_Stories\Integrations\Jetpack;

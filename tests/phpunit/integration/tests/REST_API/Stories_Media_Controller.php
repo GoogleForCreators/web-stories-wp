@@ -17,8 +17,8 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
-use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
+use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
 use WP_REST_Request;
 
 /**

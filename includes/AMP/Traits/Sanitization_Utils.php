@@ -28,8 +28,6 @@ namespace Google\Web_Stories\AMP\Traits;
 
 use DOMElement;
 use DOMNodeList;
-use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
-use \AmpProject\Dom\Document as AMP_Document;
 
 /**
  * Trait Sanitization_Utils
