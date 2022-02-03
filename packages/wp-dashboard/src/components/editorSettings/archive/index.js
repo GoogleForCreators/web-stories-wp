@@ -175,14 +175,20 @@ export default function ArchiveSettings({
           <TextInputHelperText
             size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
           >
-            {sprintf(
-              /* translators: %s: archive url. */
-              __(
-                'Turn off the default archive page at %s. Users will see a 404 Not Found page when trying to access the default archive page.',
-                'web-stories'
-              ),
-              archiveURL
-            )}
+            <TranslateWithMarkup
+              mapping={{
+                code: <code />,
+              }}
+            >
+              {sprintf(
+                /* translators: %s: archive url. */
+                __(
+                  'Turn off the default archive page at <code>%s</code>. Users will see a 404 Not Found page when trying to access the default archive page.',
+                  'web-stories'
+                ),
+                archiveURL
+              )}
+            </TranslateWithMarkup>
           </TextInputHelperText>
         )}
         {ARCHIVE_TYPE.CUSTOM === archive && (
@@ -219,13 +225,14 @@ export default function ArchiveSettings({
                     as="a"
                   />
                 ),
+                code: <code />,
               }}
             >
               {archivePageId && archiveURL !== defaultArchiveURL
                 ? sprintf(
                     /* translators: 1. current archive url, 2. default archive url. */
                     __(
-                      'Visit archive page at <a>%1$s</a>. %2$s will automatically redirect to this page.',
+                      'Visit archive page at <a>%1$s</a>. <code>%2$s</code> will automatically redirect to this page.',
                       'web-stories'
                     ),
                     archiveURL,
