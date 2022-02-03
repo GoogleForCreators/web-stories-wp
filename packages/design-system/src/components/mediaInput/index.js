@@ -41,7 +41,7 @@ import { Pencil } from '../../icons';
 import { Menu } from '../menu';
 import { Tooltip } from '../tooltip';
 import { PLACEMENT, Popup } from '../popup';
-import { default as Landscape } from './landscape.svg?react';
+import { ReactComponent as Landscape } from './landscape.svg';
 import { MEDIA_VARIANTS } from './constants';
 
 export { MEDIA_VARIANTS };

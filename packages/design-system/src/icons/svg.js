@@ -17,5 +17,4 @@
 /**
  * Internal dependencies
  */
-export { default as ArrowCircle } from './arrow_circle.svg?react';
-export { default as SVGArrowCircle } from './arrow_circle.svg';
+export { default as ArrowCircle } from './arrow_circle.svg';
