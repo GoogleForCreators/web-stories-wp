@@ -33,7 +33,9 @@ import { useUnits } from '@googleforcreators/units';
 /**
  * Internal dependencies
  */
-import { useStory, useFont, useTransform } from '../../app';
+import { useStory } from '../../app/story';
+import { useFont } from '../../app/font';
+import { useTransform, useTransformHandler } from '../../components/transform';
 import RichTextEditor from '../../components/richText/editor';
 import { getHTMLInfo } from '../../components/richText/htmlManipulation';
 import {
@@ -49,7 +51,6 @@ import { BACKGROUND_TEXT_MODE } from '../../constants';
 import stripHTML from '../../utils/stripHTML';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import useRichText from '../../components/richText/useRichText';
-import { useTransformHandler } from '../../components/transform';
 import {
   getBorderPositionCSS,
   shouldDisplayBorder,

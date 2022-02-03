@@ -22,7 +22,7 @@ To ensure the migrations can be run via Node.js on CI, [Rollup](https://rollupjs
 Usage:
 
 ```bash
-$ npx rollup --config rollup.config.migrate.js
+$ npx rollup --config rollup.config.js
 index.js → module.js...
 created module.js in 123ms
 ```
