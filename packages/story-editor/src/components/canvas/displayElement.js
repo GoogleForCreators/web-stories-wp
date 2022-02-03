@@ -42,6 +42,7 @@ import {
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
+import useCORSProxy from '../../utils/useCORSProxy';
 
 // Using attributes to avoid creation of hundreds of classes by styled components for previewMode.
 const Wrapper = styled.div.attrs(
@@ -106,6 +107,7 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
     getBox: state.actions.getBox,
     dataToEditorX: state.actions.dataToEditorX,
   }));
+  const { getProxiedUrl } = useCORSProxy();
 
   const [replacement, setReplacement] = useState(null);
 
@@ -208,7 +210,12 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
           previewMode={previewMode}
           responsiveBorder={responsiveBorder}
         >
-          <Display element={element} previewMode={previewMode} box={box} />
+          <Display
+            element={element}
+            previewMode={previewMode}
+            box={box}
+            getProxiedUrl={ getProxiedUrl }
+          />
         </WithMask>
         {!previewMode && (
           <ReplacementContainer hasReplacement={hasReplacement}>
@@ -222,7 +229,11 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
                 }}
                 previewMode={previewMode}
               >
-                <Replacement element={replacementElement} box={box} />
+                <Replacement
+                  element={replacementElement}
+                  box={box}
+                  getProxiedUrl={ getProxiedUrl }
+                />
               </WithMask>
             )}
           </ReplacementContainer>

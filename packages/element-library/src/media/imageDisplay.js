@@ -32,7 +32,6 @@ import {
  * Internal dependencies
  */
 import { StoryPropTypes } from '../types';
-import useCORSProxy from '../../utils/useCORSProxy';
 import { useLocalMedia } from '../../app';
 import { mediaWithScale } from './util';
 import MediaDisplay from './display';
@@ -42,7 +41,7 @@ const Img = styled.img`
   ${mediaWithScale}
 `;
 
-function ImageDisplay({ element, box, previewMode }) {
+function ImageDisplay({ element, box, previewMode, getProxiedUrl }) {
   const { resource, scale, focalX, focalY } = element;
   const { id: resourceId, alt } = resource;
   const { width, height } = box;
@@ -71,7 +70,6 @@ function ImageDisplay({ element, box, previewMode }) {
     initialSrc = resource.src;
   }
 
-  const { getProxiedUrl } = useCORSProxy();
   initialSrc = getProxiedUrl(resource, initialSrc);
 
   const [srcType, setSrcType] = useState(initialSrcType);

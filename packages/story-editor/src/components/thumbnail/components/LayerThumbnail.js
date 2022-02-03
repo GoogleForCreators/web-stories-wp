@@ -19,10 +19,16 @@
 import PropTypes from 'prop-types';
 import { getDefinitionForType } from '@googleforcreators/elements';
 
+/**
+ * Internal dependencies.
+ */
+import useCORSProxy from '../../../utils/useCORSProxy';
+
 export const LayerThumbnail = ({ page }) => {
   const { LayerIcon } = getDefinitionForType(page?.type);
+  const { getProxiedUrl } = useCORSProxy();
 
-  const props = { element: page };
+  const props = { element: page, getProxiedUrl };
 
   if (page?.type === 'video') {
     props.showVideoPreviewAsBackup = true;

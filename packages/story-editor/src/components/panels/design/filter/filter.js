@@ -31,6 +31,7 @@ import { SimplePanel } from '../../panel';
 import { useCommonColorValue } from '../../shared';
 import { MULTIPLE_VALUE } from '../../../../constants';
 import convertOverlay from './convertOverlay';
+import useCORSProxy from '../../../../utils/useCORSProxy';
 
 export const OverlayPreset = {
   [OverlayType.NONE]: {
@@ -53,6 +54,7 @@ function FilterPanel({ selectedElements, pushUpdate }) {
   const overlayType = !overlay
     ? OverlayType.NONE
     : overlay.type || OverlayType.SOLID;
+  const { getProxiedUrl } = useCORSProxy();
 
   const updateOverlay = useCallback(
     (value) => pushUpdate({ overlay: value }, true),
@@ -87,7 +89,7 @@ function FilterPanel({ selectedElements, pushUpdate }) {
                   label
                 )}
               >
-                <LayerIcon element={selectedElements[0]} />
+                <LayerIcon element={selectedElements[0]} getProxiedUrl={ getProxiedUrl } />
               </FilterToggle>
             );
           })}

@@ -40,6 +40,7 @@ import StoryPropTypes from '../../../../types';
 import { useStory } from '../../../../app';
 import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';
+import useCORSProxy from '../../../../utils/useCORSProxy';
 
 const ActionsContainer = styled.div`
   position: absolute;
@@ -262,6 +263,7 @@ function Layer({ element }) {
     })
   );
 
+  const { getProxiedUrl } = useCORSProxy();
   const layerRef = useRef(null);
   usePerformanceTracking({
     node: layerRef.current,
@@ -285,7 +287,7 @@ function Layer({ element }) {
         isSelected={isSelected}
       >
         <LayerIconWrapper>
-          <LayerIcon element={element} />
+          <LayerIcon element={element} getProxiedUrl={ getProxiedUrl } />
         </LayerIconWrapper>
         <LayerDescription>
           <LayerContentContainer>

@@ -47,7 +47,6 @@ import {
 } from '../shared';
 import { useStory } from '../../app';
 import { StoryPropTypes } from '../types';
-import useCORSProxy from '../../utils/useCORSProxy';
 import EditCropMoveable from './editCropMoveable';
 import { mediaWithScale } from './util';
 import EditPanMoveable from './editPanMoveable';
@@ -105,7 +104,7 @@ const CropVideo = styled.video`
   max-height: initial;
 `;
 
-function MediaEdit({ element, box, setLocalProperties }) {
+function MediaEdit({ element, box, setLocalProperties, getProxiedUrl }) {
   const {
     id,
     resource,
@@ -123,7 +122,6 @@ function MediaEdit({ element, box, setLocalProperties }) {
   const [croppedMedia, setCroppedMedia] = useState(null);
   const [cropBox, setCropBox] = useState(null);
   const elementRef = useRef();
-  const { getProxiedUrl } = useCORSProxy();
 
   const isUpdatedLocally = useRef(false);
   const lastLocalProperties = useRef({ scale });

@@ -28,6 +28,11 @@ import {
   elementWithRotation,
 } from '@googleforcreators/element-library';
 
+/**
+ * Internal dependencies.
+ */
+import useCORSProxy from '../../utils/useCORSProxy';
+
 const Wrapper = styled.div`
   ${elementWithPosition}
   ${elementWithSize}
@@ -41,6 +46,7 @@ const EditElement = memo(
     const { getBox } = useUnits((state) => ({
       getBox: state.actions.getBox,
     }));
+    const { getProxiedUrl } = useCORSProxy();
 
     // Needed for elements that can scale in edit mode.
     const [localProperties, setLocalProperties] = useState(null);
@@ -59,6 +65,7 @@ const EditElement = memo(
           editWrapper={editWrapper}
           onResize={onResize}
           setLocalProperties={setLocalProperties}
+          getProxiedUrl={ getProxiedUrl }
         />
       </Wrapper>
     );

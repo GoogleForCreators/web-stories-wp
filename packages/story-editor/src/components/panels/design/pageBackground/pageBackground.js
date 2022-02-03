@@ -51,6 +51,7 @@ import { FlipControls } from '../../shared';
 import { states, styles, useHighlights } from '../../../../app/highlights';
 import getElementProperties from '../../../canvas/utils/getElementProperties';
 import Warning from '../warning';
+import useCORSProxy from '../../../../utils/useCORSProxy';
 
 const DEFAULT_FLIP = { horizontal: false, vertical: false };
 
@@ -111,6 +112,7 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
     combineElements: actions.combineElements,
     updateCurrentPageProperties: actions.updateCurrentPageProperties,
   }));
+  const { getProxiedUrl } = useCORSProxy();
 
   const {
     capabilities: { hasUploadMediaAction },
@@ -238,7 +240,7 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
         <Row expand={false}>
           <SelectedMedia>
             <MediaWrapper>
-              <LayerIcon element={backgroundEl} />
+              <LayerIcon element={backgroundEl} getProxiedUrl={ getProxiedUrl } />
             </MediaWrapper>
             <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
               {__('Media', 'web-stories')}

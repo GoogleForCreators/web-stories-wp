@@ -28,7 +28,6 @@ import { useFeature } from 'flagged';
  */
 import { StoryPropTypes } from '../types';
 import MediaDisplay from '../media/display';
-import useCORSProxy from '../../utils/useCORSProxy';
 import { getBackgroundStyle, videoWithScale } from './util';
 
 const Video = styled.video`
@@ -48,7 +47,7 @@ const Image = styled.img`
   max-width: ${({ isBackground }) => (isBackground ? 'initial' : null)};
 `;
 
-function VideoDisplay({ previewMode, box: { width, height }, element }) {
+function VideoDisplay({ previewMode, box: { width, height }, element, getProxiedUrl }) {
   const {
     id,
     poster,
@@ -61,7 +60,6 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
     loop,
   } = element;
   const ref = useRef();
-  const { getProxiedUrl } = useCORSProxy();
   const hasCustomCaptions = useFeature('customVideoCaptionsInEditor');
 
   let style = {};
