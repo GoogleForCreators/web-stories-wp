@@ -289,47 +289,20 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	/**
 	 * Retrieves the permalink for a post type archive.
 	 *
-	 * @since 1.14.0
-	 *
-	 * @return string|false The post type archive permalink. False if the post type does not exist.
-	 */
-	public function get_archive_link() {
-		$post_type_obj = $this->get_object();
-		if ( ! $post_type_obj instanceof WP_Post_Type ) {
-			return false;
-		}
-
-		return $this->get_archive_link_data( $post_type_obj->has_archive );
-	}
-
-	/**
-	 * Retrieves the default permalink for a post type archive.
-	 *
-	 * @since 1.18.0
-	 *
-	 * @return string|false The post type archive permalink. False if the post type does not exist.
-	 */
-	public function get_default_archive_link() {
-		return $this->get_archive_link_data( true );
-	}
-
-	/**
-	 * Retrieves the permalink for a post type archive.
-	 *
 	 * Identical to {@see get_post_type_archive_link()}, but also returns a URL
 	 * if the archive page has been disabled.
-	 * Returns the default archive URL even if it was changed by the user.
 	 *
-	 * @since 1.18.0
+	 * @since 1.14.0
+	 *
+	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
 	 *
 	 * @global WP_Rewrite $wp_rewrite WordPress rewrite component.
 	 *
-	 * @param bool|string $has_archive Override the has_archive property found on the WP_Post_Type object.
-	 *
+	 * @param  bool $ignore_has_archive Get raw value of get archive link.
 	 * @return string|false The post type archive permalink. False if the post type
 	 *                      does not exist or does not have an archive.
 	 */
-	protected function get_archive_link_data( $has_archive ) {
+	public function get_archive_link( bool $ignore_has_archive = false ) {
 		global $wp_rewrite;
 
 		$post_type_obj = $this->get_object();
@@ -338,7 +311,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 		}
 
 		if ( get_option( 'permalink_structure' ) && is_array( $post_type_obj->rewrite ) ) {
-			$struct = ( true === $has_archive ) ? $post_type_obj->rewrite['slug'] : $has_archive;
+			$struct = ( true === $post_type_obj->has_archive || $ignore_has_archive ) ? $post_type_obj->rewrite['slug'] : $post_type_obj->has_archive;
 			if ( $post_type_obj->rewrite['with_front'] ) {
 				$struct = $wp_rewrite->front . $struct;
 			} else {

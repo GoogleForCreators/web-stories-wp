@@ -63,7 +63,6 @@ class Post_Type_Base extends DependencyInjectedTestCase {
 
 	/**
 	 * @covers ::get_archive_link
-	 * @covers ::get_archive_link_data
 	 */
 	public function test_get_archive_link_no_archive_pretty_permalinks() {
 		$this->set_permalink_structure( '/%postname%/' );
@@ -78,7 +77,6 @@ class Post_Type_Base extends DependencyInjectedTestCase {
 
 	/**
 	 * @covers ::get_archive_link
-	 * @covers ::get_archive_link_data
 	 */
 	public function test_get_archive_link_custom_archive() {
 		$link = self::$cpt_custom_archive->get_archive_link();
@@ -87,7 +85,6 @@ class Post_Type_Base extends DependencyInjectedTestCase {
 
 	/**
 	 * @covers ::get_archive_link
-	 * @covers ::get_archive_link_data
 	 */
 	public function test_get_archive_link_custom_archive_pretty_permalinks() {
 		$this->set_permalink_structure( '/%postname%/' );
@@ -101,17 +98,15 @@ class Post_Type_Base extends DependencyInjectedTestCase {
 	}
 
 	/**
-	 * @covers ::get_default_archive_link
-	 * @covers ::get_archive_link_data
+	 * @covers ::get_archive_link
 	 */
 	public function test_get_default_archive_link_no_archive() {
-		$link = self::$cpt_no_archive->get_default_archive_link();
+		$link = self::$cpt_no_archive->get_archive_link( true );
 		$this->assertSame( home_url( '?post_type=cpt-without-archive' ), $link );
 	}
 
 	/**
-	 * @covers ::get_default_archive_link
-	 * @covers ::get_archive_link_data
+	 * @covers ::get_archive_link
 	 */
 	public function test_get_default_archive_link_no_archive_pretty_permalinks() {
 		$this->set_permalink_structure( '/%postname%/' );
@@ -120,21 +115,19 @@ class Post_Type_Base extends DependencyInjectedTestCase {
 		self::$cpt_no_archive = new DummyPostTypeWithoutArchive();
 		self::$cpt_no_archive->register();
 
-		$link = self::$cpt_no_archive->get_default_archive_link();
+		$link = self::$cpt_no_archive->get_archive_link( true );
 		$this->assertSame( home_url( '/cpt-without-archive/' ), $link );
 	}
 
 	/**
-	 * @covers ::get_default_archive_link
-	 * @covers ::get_archive_link_data
+	 * @covers ::get_archive_link
 	 */
 	public function test_get_default_archive_link_custom_archive() {
-		$link = self::$cpt_custom_archive->get_default_archive_link();
+		$link = self::$cpt_custom_archive->get_archive_link( true );
 		$this->assertSame( home_url( '?post_type=cpt-custom-archive' ), $link );
 	}
 	/**
-	 * @covers ::get_default_archive_link
-	 * @covers ::get_archive_link_data
+	 * @covers ::get_archive_link
 	 */
 	public function test_get_default_archive_link_custom_archive_pretty_permalinks() {
 		$this->set_permalink_structure( '/%postname%/' );
@@ -143,7 +136,7 @@ class Post_Type_Base extends DependencyInjectedTestCase {
 		self::$cpt_custom_archive = new DummyPostTypeWithCustomArchive();
 		self::$cpt_custom_archive->register();
 
-		$link = self::$cpt_custom_archive->get_default_archive_link();
+		$link = self::$cpt_custom_archive->get_archive_link( true );
 		$this->assertSame( home_url( '/cpt-custom-archive/' ), $link );
 	}
 }
