@@ -13,24 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * Internal dependencies
  */
-import { AppFrame, PageContent, LeftRail } from '..';
-import NavProvider from '../../navProvider';
+import PublishModal from '../publishModal';
 
 export default {
-  title: 'Dashboard/Components/LeftRail',
+  title: 'Stories Editor/Components/Dialog/Publish Modal',
+  component: PublishModal,
 };
 
-export const _default = () => {
-  return (
-    <AppFrame>
-      <NavProvider>
-        <LeftRail />
-        <PageContent />
-      </NavProvider>
-    </AppFrame>
-  );
-};
+export const _default = () => <PublishModal />;

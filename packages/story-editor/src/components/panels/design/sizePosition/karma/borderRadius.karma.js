@@ -44,7 +44,11 @@ describe('Border Radius', () => {
   describe('CUJ: Creator can Manipulate Shape: Border Radius', () => {
     it('should allow the user to add border radius for text element', async () => {
       await fixture.events.click(fixture.editor.library.textAdd);
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      await waitFor(() => {
+        if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+          throw new Error('node not ready');
+        }
+      });
       // Choose Fill as background for visibility.
       await fixture.events.click(
         fixture.editor.inspector.designPanel.textStyle.fill
@@ -100,20 +104,18 @@ describe('Border Radius', () => {
         borderRadius: { topLeft, topRight, bottomLeft, bottomRight },
       } = element;
 
-      await waitFor(() => {
-        expect(topLeft).toBe(0);
-        expect(topRight).toBe(0);
-        expect(bottomLeft).toBe(50);
-        expect(bottomRight).toBe(0);
-        expect(element.borderRadius).toEqual(
-          jasmine.objectContaining({
-            topLeft: 0,
-            topRight: 0,
-            bottomLeft: 50,
-            bottomRight: 0,
-          })
-        );
-      });
+      expect(topLeft).toBe(0);
+      expect(topRight).toBe(0);
+      expect(bottomLeft).toBe(50);
+      expect(bottomRight).toBe(0);
+      expect(element.borderRadius).toEqual(
+        jasmine.objectContaining({
+          topLeft: 0,
+          topRight: 0,
+          bottomLeft: 50,
+          bottomRight: 0,
+        })
+      );
 
       await fixture.snapshot('Media element with bottom left corner radius');
     });
