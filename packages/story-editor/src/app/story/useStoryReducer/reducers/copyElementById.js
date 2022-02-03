@@ -59,7 +59,7 @@ function copyElementById(state, { elementId }) {
   const elementIndex = page.elements.findIndex(({ id }) => id === elementId);
 
   // Do nothing if element does not exist on the current page
-  if (!elementIndex) {
+  if (elementIndex === -1) {
     return state;
   }
 
