@@ -298,9 +298,8 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 *
 	 * @global WP_Rewrite $wp_rewrite WordPress rewrite component.
 	 *
-	 * @param  bool $ignore_has_archive Get raw value of get archive link.
-	 * @return string|false The post type archive permalink. False if the post type
-	 *                      does not exist or does not have an archive.
+	 * @param  bool $ignore_has_archive Ignore 'has_archive' value to get default permalink.
+	 * @return string|false The post type archive permalink. False if the post type does not exist.
 	 */
 	public function get_archive_link( bool $ignore_has_archive = false ) {
 		global $wp_rewrite;

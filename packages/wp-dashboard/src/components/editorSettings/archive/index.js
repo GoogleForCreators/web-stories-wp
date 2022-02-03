@@ -176,9 +176,9 @@ export default function ArchiveSettings({
             size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
           >
             {sprintf(
-              /* translators: %s: web stories archive. */
+              /* translators: %s: archive url. */
               __(
-                'Turn off the default archive page at %s. Users will receive your 404 page when they go to the default archive page.',
+                'Turn off the default archive page at %s. Users will see a 404 Not Found page when trying to access the default archive page.',
                 'web-stories'
               ),
               archiveURL
@@ -223,7 +223,7 @@ export default function ArchiveSettings({
             >
               {archivePageId && archiveURL !== defaultArchiveURL
                 ? sprintf(
-                    /* translators: 1. archive url, 2. archive url. */
+                    /* translators: 1. current archive url, 2. default archive url. */
                     __(
                       'Visit archive page at <a>%1$s</a>. %2$s will automatically redirect to this page.',
                       'web-stories'
@@ -232,7 +232,7 @@ export default function ArchiveSettings({
                     defaultArchiveURL
                   )
                 : sprintf(
-                    /* translators: 1. archive url */
+                    /* translators: %s: archive url. */
                     __('Visit archive page at <a>%1$s</a>.', 'web-stories'),
                     archiveURL
                   )}
