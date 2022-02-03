@@ -28,6 +28,7 @@ import {
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
+import { CircularProgress } from '@googleforcreators/design-system';
 
 const Saturation = lazy(() =>
   import(
@@ -55,7 +56,6 @@ import {
   BUTTON_VARIANTS,
   BUTTON_TYPES,
 } from '@googleforcreators/design-system';
-import CircularProgress from '../circularProgress';
 import useEyedropper from '../eyedropper';
 import Pointer from './pointer';
 import EditablePreview from './editablePreview';

@@ -21,12 +21,13 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useRef, useMemo, useCallback } from '@googleforcreators/react';
 import { getMediaSizePositionProps } from '@googleforcreators/media';
+import { CircularProgress } from '@googleforcreators/design-system';
+
 /**
  * Internal dependencies
  */
 import { StoryPropTypes } from '../types';
 import MediaDisplay from '../media/display';
-import CircularProgress from '../../components/circularProgress';
 import { elementWithFlip, getTransformFlip } from '../shared';
 import PlayPauseButton from './playPauseButton';
 import { getBackgroundStyle, videoWithScale } from './util';

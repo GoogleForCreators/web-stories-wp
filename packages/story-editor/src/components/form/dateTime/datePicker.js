@@ -29,11 +29,7 @@ import {
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { _x } from '@googleforcreators/i18n';
-
-/**
- * Internal dependencies
- */
-import CircularProgress from '../../circularProgress';
+import { CircularProgress } from '@googleforcreators/design-system';
 
 const Calendar = lazy(() =>
   import(/* webpackChunkName: "chunk-react-calendar" */ 'react-calendar')

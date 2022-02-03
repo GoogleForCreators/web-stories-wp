@@ -45,3 +45,4 @@ export { Toggle } from './toggle';
 export { Display, Headline, Link, List, Text } from './typography';
 export { VisuallyHidden } from './visuallyHidden';
 export { default as Datalist } from './datalist';
+export { default as CircularProgress } from './circularProgress';
