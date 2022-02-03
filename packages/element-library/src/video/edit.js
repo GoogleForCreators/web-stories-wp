@@ -13,20 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies.
+ */
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import useVideoTrim from '../../components/videoTrim/useVideoTrim';
 import { StoryPropTypes } from '../types';
 import MediaEdit from '../media/edit';
 import Trim from './trim';
 
-function VideoEdit({ element, box, ...rest }) {
-  const { isTrimMode } = useVideoTrim(({ state: { isTrimMode } }) => ({
-    isTrimMode,
-  }));
-
+function VideoEdit({ element, box, isTrimMode, ...rest }) {
   if (isTrimMode) {
     return <Trim element={element} box={box} {...rest} />;
   }
@@ -37,6 +36,7 @@ function VideoEdit({ element, box, ...rest }) {
 VideoEdit.propTypes = {
   element: StoryPropTypes.elements.video.isRequired,
   box: StoryPropTypes.box.isRequired,
+  isTrimMode: PropTypes.bool,
 };
 
 export default VideoEdit;

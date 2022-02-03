@@ -26,7 +26,6 @@ import { getMediaSizePositionProps } from '@googleforcreators/media';
  */
 import { StoryPropTypes } from '../types';
 import MediaDisplay from '../media/display';
-import useVideoTrim from '../../components/videoTrim/useVideoTrim';
 import CircularProgress from '../../components/circularProgress';
 import { elementWithFlip, getTransformFlip } from '../shared';
 import PlayPauseButton from './playPauseButton';
@@ -55,7 +54,7 @@ const Spinner = styled.div`
   align-items: center;
 `;
 
-function VideoTrim({ box, element, isRTL }) {
+function VideoTrim({ box, element, isRTL, resource, setVideoNode }) {
   const { width, height } = box;
   const { poster, tracks, isBackground, scale, flip, focalX, focalY } = element;
   const wrapperRef = useRef();
@@ -68,13 +67,6 @@ function VideoTrim({ box, element, isRTL }) {
       ...styleProps,
     };
   }
-
-  const { resource, setVideoNode } = useVideoTrim(
-    ({ state: { videoData }, actions: { setVideoNode } }) => ({
-      setVideoNode,
-      resource: videoData?.resource,
-    })
-  );
 
   const boxAtOrigin = useMemo(
     () => ({
@@ -167,6 +159,8 @@ VideoTrim.propTypes = {
   element: StoryPropTypes.elements.video.isRequired,
   box: StoryPropTypes.box.isRequired,
   isRTL: PropTypes.bool,
+  resource: PropTypes.object,
+  setVideoNode: PropTypes.func,
 };
 
 export default VideoTrim;

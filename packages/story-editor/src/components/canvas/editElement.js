@@ -33,6 +33,7 @@ import {
  */
 import useCORSProxy from '../../utils/useCORSProxy';
 import { useConfig } from '../../app';
+import useVideoTrim from '../videoTrim/useVideoTrim';
 
 const Wrapper = styled.div`
   ${elementWithPosition}
@@ -49,6 +50,13 @@ const EditElement = memo(
     }));
     const { getProxiedUrl } = useCORSProxy();
     const { isRTL } = useConfig();
+    const { isTrimMode, resource, setVideoNode } = useVideoTrim(
+      ({ state: { isTrimMode, videoData }, actions: { setVideoNode } }) => ({
+        isTrimMode,
+        setVideoNode,
+        resource: videoData?.resource,
+      })
+    );
 
     // Needed for elements that can scale in edit mode.
     const [localProperties, setLocalProperties] = useState(null);
@@ -69,6 +77,9 @@ const EditElement = memo(
           setLocalProperties={setLocalProperties}
           getProxiedUrl={ getProxiedUrl }
           isRTL={ isRTL }
+          isTrimMode={ isTrimMode }
+          resource={ resource }
+          setVideoNode={ setVideoNode }
         />
       </Wrapper>
     );
