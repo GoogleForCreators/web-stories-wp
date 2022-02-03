@@ -144,8 +144,8 @@ ImageDisplay.propTypes = {
   box: StoryPropTypes.box.isRequired,
   previewMode: PropTypes.bool,
   getProxiedUrl: PropTypes.func.isRequired,
-  isCurrentResourceProcessing: PropTypes.bool,
-  isCurrentResourceUploading: PropTypes.bool,
+  isCurrentResourceProcessing: PropTypes.func.isRequired,
+  isCurrentResourceUploading: PropTypes.func.isRequired,
 };
 
 export default ImageDisplay;

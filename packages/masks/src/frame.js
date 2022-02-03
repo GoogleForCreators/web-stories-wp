@@ -167,7 +167,7 @@ WithDropTarget.propTypes = {
   hover: PropTypes.bool,
   draggingResource: PropTypes.object,
   activeDropTargetId: PropTypes.string,
-  isDropSource: PropTypes.bool,
+  isDropSource: PropTypes.func.isRequired,
   registerDropTarget: PropTypes.func,
   unregisterDropTarget: PropTypes.func,
 };

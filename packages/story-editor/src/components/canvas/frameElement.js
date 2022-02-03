@@ -101,7 +101,7 @@ function FrameElement({ id }) {
     isSingleElement: state.selectedElementIds.length === 1,
     isBackground: state.currentPage?.elements[0].id === id,
     element: state.currentPage?.elements.find((el) => el.id === id),
-    selectedElementIds: state.state.selectedElementIds,
+    selectedElementIds: state.selectedElementIds,
   }));
   const { setEditingElement, setEditingElementWithState } = useCanvas(
     ({ actions }) => ({
