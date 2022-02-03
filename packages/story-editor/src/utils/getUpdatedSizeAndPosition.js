@@ -20,8 +20,8 @@
 import { dataPixels } from '@googleforcreators/units';
 import {
   calcRotatedResizeOffset,
-  calculateTextHeight,
 } from '@googleforcreators/design-system';
+import { calculateTextHeight } from '@googleforcreators/element-library';
 
 /**
  * Gets updated size and position of the element if relevant properties have changed.

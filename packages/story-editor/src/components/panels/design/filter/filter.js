@@ -32,6 +32,7 @@ import { useCommonColorValue } from '../../shared';
 import { MULTIPLE_VALUE } from '../../../../constants';
 import convertOverlay from './convertOverlay';
 import useCORSProxy from '../../../../utils/useCORSProxy';
+import { useStory } from '../../../../app';
 
 export const OverlayPreset = {
   [OverlayType.NONE]: {
@@ -55,6 +56,10 @@ function FilterPanel({ selectedElements, pushUpdate }) {
     ? OverlayType.NONE
     : overlay.type || OverlayType.SOLID;
   const { getProxiedUrl } = useCORSProxy();
+  const { isDefaultBackground } = selectedElements[0];
+  const currentPageBackgroundColor = useStory(
+    (v) => !isDefaultBackground || v.state.currentPage?.backgroundColor
+  );
 
   const updateOverlay = useCallback(
     (value) => pushUpdate({ overlay: value }, true),
@@ -89,7 +94,7 @@ function FilterPanel({ selectedElements, pushUpdate }) {
                   label
                 )}
               >
-                <LayerIcon element={selectedElements[0]} getProxiedUrl={ getProxiedUrl } />
+                <LayerIcon element={selectedElements[0]} getProxiedUrl={ getProxiedUrl } currentPageBackgroundColor={currentPageBackgroundColor} />
               </FilterToggle>
             );
           })}

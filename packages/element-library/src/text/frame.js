@@ -27,7 +27,6 @@ import { areEventsDragging } from '@googleforcreators/design-system';
  * Internal dependencies
  */
 import getCaretCharacterOffsetWithin from '../utils/getCaretCharacterOffsetWithin';
-import { useStory, useCanvas } from '../../app';
 import {
   elementFillContent,
   elementWithFont,
@@ -45,7 +44,7 @@ const Element = styled.p`
   user-select: none;
 `;
 
-function TextFrame({ element, element: { id, content, ...rest }, wrapperRef }) {
+function TextFrame({ element, element: { id, content, ...rest }, wrapperRef, setEditingElementWithState, selectedElementIds }) {
   const { dataToEditorX, dataToEditorY } = useUnits((state) => ({
     dataToEditorX: state.actions.dataToEditorX,
     dataToEditorY: state.actions.dataToEditorY,
@@ -57,13 +56,6 @@ function TextFrame({ element, element: { id, content, ...rest }, wrapperRef }) {
     dataToEditorY,
     element
   );
-  const { selectedElementIds } = useStory((state) => ({
-    selectedElementIds: state.state.selectedElementIds,
-  }));
-
-  const { setEditingElementWithState } = useCanvas((state) => ({
-    setEditingElementWithState: state.actions.setEditingElementWithState,
-  }));
   const isElementSelected = selectedElementIds.includes(id);
   const isElementOnlySelection =
     isElementSelected && selectedElementIds.length === 1;
@@ -161,6 +153,8 @@ function TextFrame({ element, element: { id, content, ...rest }, wrapperRef }) {
 TextFrame.propTypes = {
   element: StoryPropTypes.elements.text.isRequired,
   wrapperRef: PropTypes.object.isRequired,
+  setEditingElementWithState: PropTypes.func,
+  selectedElementIds: PropTypes.array,
 };
 
 export default TextFrame;

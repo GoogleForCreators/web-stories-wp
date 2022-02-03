@@ -104,7 +104,7 @@ const CropVideo = styled.video`
   max-height: initial;
 `;
 
-function MediaEdit({ element, box, setLocalProperties, getProxiedUrl }) {
+function MediaEdit({ element, box, setLocalProperties, getProxiedUrl, updateElementById }) {
   const {
     id,
     resource,
@@ -141,11 +141,6 @@ function MediaEdit({ element, box, setLocalProperties, getProxiedUrl }) {
     [setLocalProperties]
   );
 
-  // Update the true global properties of the current element
-  // This now only happens on unmount
-  const { updateElementById } = useStory((state) => ({
-    updateElementById: state.actions.updateElementById,
-  }));
   const updateProperties = useCallback(() => {
     if (!isUpdatedLocally.current) {
       return;
@@ -315,7 +310,8 @@ MediaEdit.propTypes = {
   element: StoryPropTypes.elements.media.isRequired,
   box: StoryPropTypes.box.isRequired,
   setLocalProperties: PropTypes.func.isRequired,
-  getProxiedUrl: PropTypes.func
+  getProxiedUrl: PropTypes.func,
+  updateElementById: PropTypes.func,
 };
 
 export default MediaEdit;

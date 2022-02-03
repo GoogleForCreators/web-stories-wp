@@ -43,7 +43,7 @@ import {
  */
 import StoryPropTypes from '../../types';
 import useCORSProxy from '../../utils/useCORSProxy';
-import { useLocalMedia } from '../../app';
+import { useLocalMedia, useFont } from '../../app';
 
 // Using attributes to avoid creation of hundreds of classes by styled components for previewMode.
 const Wrapper = styled.div.attrs(
@@ -114,6 +114,9 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
       isCurrentResourceProcessing: state.isCurrentResourceProcessing,
       isCurrentResourceUploading: state.isCurrentResourceUploading,
     }));
+  const {
+    actions: { maybeEnqueueFontStyle },
+  } = useFont();
 
   const [replacement, setReplacement] = useState(null);
 
@@ -223,6 +226,7 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
             getProxiedUrl={ getProxiedUrl }
             isCurrentResourceProcessing={ isCurrentResourceProcessing }
             isCurrentResourceUploading={ isCurrentResourceUploading }
+            maybeEnqueueFontStyle={maybeEnqueueFontStyle}
           />
         </WithMask>
         {!previewMode && (
@@ -243,6 +247,7 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
                   getProxiedUrl={ getProxiedUrl }
                   isCurrentResourceProcessing={ isCurrentResourceProcessing }
                   isCurrentResourceUploading={ isCurrentResourceUploading }
+                  maybeEnqueueFontStyle={maybeEnqueueFontStyle}
                 />
               </WithMask>
             )}

@@ -84,16 +84,20 @@ const EmptyFrame = styled.div`
 const NOOP = () => {};
 
 function FrameElement({ id }) {
-  const { isSelected, isSingleElement, isBackground, element } = useStory(
+  const { isSelected, isSingleElement, selectedElementIds, isBackground, element } = useStory(
     ({ state }) => ({
       isSelected: state.selectedElementIds.includes(id),
       isSingleElement: state.selectedElementIds.length === 1,
       isBackground: state.currentPage?.elements[0].id === id,
       element: state.currentPage?.elements.find((el) => el.id === id),
+      selectedElementIds: state.state.selectedElementIds,
     })
   );
-  const setEditingElement = useCanvas(
-    ({ actions }) => actions.setEditingElement
+  const { setEditingElement, setEditingElementWithState } = useCanvas(
+    ({ actions }) => ({
+      setEditingElement: actions.setEditingElement,
+      setEditingElementWithState: actions.setEditingElementWithState,
+    })
   );
   const { type, flip } = element;
   const { Frame, isMaskable, Controls } = getDefinitionForType(type);
@@ -211,7 +215,7 @@ function FrameElement({ id }) {
           eventHandlers={!maskDisabled ? eventHandlers : null}
         >
           {Frame ? (
-            <Frame wrapperRef={elementRef} element={element} box={box} />
+            <Frame wrapperRef={elementRef} element={element} box={box} selectedElementIds={selectedElementIds} setEditingElementWithState={setEditingElementWithState} />
           ) : (
             <EmptyFrame />
           )}

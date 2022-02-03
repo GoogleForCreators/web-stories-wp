@@ -12,6 +12,7 @@
 	"main": "./src/index.js",
 	"type": "module",
 	"dependencies": {
+		"@googleforcreators/design-system": "*",
 		"@googleforcreators/elements":"*",
 		"@googleforcreators/element-library": "*",
 		"@googleforcreators/fonts": "*",

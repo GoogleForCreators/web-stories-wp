@@ -36,7 +36,6 @@ import {
 /**
  * Internal dependencies
  */
-import { useFont } from '../../app';
 import {
   elementFillContent,
   elementWithFont,
@@ -158,6 +157,7 @@ function TextDisplay({
     ...rest
   },
   previewMode,
+  maybeEnqueueFontStyle,
 }) {
   const ref = useRef(null);
   const outerBorderRef = useRef(null);
@@ -197,9 +197,6 @@ function TextDisplay({
     horizontalPadding: dataToEditorX(rest.padding?.horizontal || 0),
     verticalPadding: dataToEditorX(rest.padding?.vertical || 0),
   };
-  const {
-    actions: { maybeEnqueueFontStyle },
-  } = useFont();
   useEffect(() => {
     maybeEnqueueFontStyle([{ ...fontFaceSetConfigs, font }]);
   }, [font, fontFaceSetConfigs, maybeEnqueueFontStyle]);
@@ -327,6 +324,7 @@ TextDisplay.propTypes = {
   element: StoryPropTypes.elements.text.isRequired,
   box: StoryPropTypes.box.isRequired,
   previewMode: PropTypes.bool,
+  maybeEnqueueFontStyle: PropTypes.func
 };
 
 export default TextDisplay;

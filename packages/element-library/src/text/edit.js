@@ -48,7 +48,6 @@ import {
 /**
  * Internal dependencies
  */
-import { useStory, useFont } from '../../app';
 import {
   elementFillContent,
   elementWithFont,
@@ -129,6 +128,8 @@ function TextEdit({
   box: { x, y, height, rotationAngle },
   editWrapper,
   onResize,
+  updateElementById,
+  maybeEnqueueFontStyle,
 }) {
   const {
     id,
@@ -190,13 +191,6 @@ function TextEdit({
   };
 
   const { padding: _, ...highlightTextProps } = textProps;
-
-  const {
-    actions: { maybeEnqueueFontStyle },
-  } = useFont();
-  const { updateElementById } = useStory((state) => ({
-    updateElementById: state.actions.updateElementById,
-  }));
 
   const { isAnythingTransforming } = useTransform((state) => ({
     isAnythingTransforming: state.state.isAnythingTransforming,
@@ -432,6 +426,8 @@ TextEdit.propTypes = {
   box: StoryPropTypes.box.isRequired,
   onResize: PropTypes.func,
   editWrapper: PropTypes.object,
+  updateElementById: PropTypes.func,
+  maybeEnqueueFontStyle: PropTypes.func,
 };
 
 export default TextEdit;

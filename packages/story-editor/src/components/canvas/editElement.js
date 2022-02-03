@@ -34,6 +34,7 @@ import {
 import useCORSProxy from '../../utils/useCORSProxy';
 import { useConfig } from '../../app';
 import useVideoTrim from '../videoTrim/useVideoTrim';
+import { useStory, useFont } from '../../app';
 
 const Wrapper = styled.div`
   ${elementWithPosition}
@@ -50,6 +51,15 @@ const EditElement = memo(
     }));
     const { getProxiedUrl } = useCORSProxy();
     const { isRTL } = useConfig();
+    const {
+      actions: { maybeEnqueueFontStyle },
+    } = useFont();
+
+    // Update the true global properties of the current element
+    // This now only happens on unmount
+    const { updateElementById } = useStory((state) => ({
+      updateElementById: state.actions.updateElementById,
+    }));
     const { isTrimMode, resource, setVideoNode } = useVideoTrim(
       ({ state: { isTrimMode, videoData }, actions: { setVideoNode } }) => ({
         isTrimMode,
@@ -80,6 +90,8 @@ const EditElement = memo(
           isTrimMode={ isTrimMode }
           resource={ resource }
           setVideoNode={ setVideoNode }
+          updateElementById={updateElementById}
+          maybeEnqueueFontStyle={maybeEnqueueFontStyle}
         />
       </Wrapper>
     );

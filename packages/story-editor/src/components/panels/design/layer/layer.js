@@ -256,10 +256,12 @@ function preventReorder(e) {
 function Layer({ element }) {
   const { LayerIcon, LayerContent } = getDefinitionForType(element.type);
   const { isSelected, handleClick } = useLayerSelection(element);
-  const { duplicateElementsById, deleteElementById } = useStory(
-    ({ actions }) => ({
+  const { isDefaultBackground } = element;
+  const { duplicateElementsById, deleteElementById, currentPageBackgroundColor } = useStory(
+    ({ actions, state }) => ({
       duplicateElementsById: actions.duplicateElementsById,
       deleteElementById: actions.deleteElementById,
+      currentPageBackgroundColor: !isDefaultBackground || state.currentPage?.backgroundColor
     })
   );
 
@@ -287,7 +289,7 @@ function Layer({ element }) {
         isSelected={isSelected}
       >
         <LayerIconWrapper>
-          <LayerIcon element={element} getProxiedUrl={ getProxiedUrl } />
+          <LayerIcon element={element} getProxiedUrl={ getProxiedUrl } currentPageBackgroundColor={currentPageBackgroundColor} />
         </LayerIconWrapper>
         <LayerDescription>
           <LayerContentContainer>
