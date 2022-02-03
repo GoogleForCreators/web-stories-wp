@@ -40,22 +40,11 @@ parameters:
     - third-party/vendor/ampproject/amp-wp/includes/sanitizers/class-amp-base-sanitizer.php
     - third-party/vendor/ampproject/amp-wp/includes/sanitizers/class-amp-meta-sanitizer.php
   dynamicConstantNames:
-    - WP_DEBUG
-    - WP_DEBUG_LOG
-    - EMPTY_TRASH_DAYS
-    - WP_CLI
     - WEBSTORIES_DEV_MODE
     - WPCOM_IS_VIP_ENV
     - IS_WPCOM
     - GOOGLESITEKIT_VERSION
     - AMP__VERSION
-  earlyTerminatingFunctionCalls:
-    - wp_die
-    - wp_send_json
-    - wp_send_json_success
-    - wp_send_json_error
-    - wp_nonce_ays
-    - dead_db
   ignoreErrors:
     # Uses func_get_args()
     - '#^Function apply_filters(_ref_array)? invoked with [34567] parameters, 2 required\.$#'
