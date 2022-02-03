@@ -50,7 +50,7 @@ function RightClickMenuProvider({ children }) {
     DEFAULT_RIGHT_CLICK_MENU_STATE
   );
 
-  const { onCopyStyles, onPasteStyles } = useCopyPasteActions();
+  const { handleCopyStyles, handlePasteStyles } = useCopyPasteActions();
 
   /**
    * Open the menu at the position from the click event.
@@ -95,18 +95,18 @@ function RightClickMenuProvider({ children }) {
     { key: ['mod+alt+o'] },
     (evt) => {
       evt.preventDefault();
-      onCopyStyles();
+      handleCopyStyles();
     },
-    [onCopyStyles]
+    [handleCopyStyles]
   );
 
   useGlobalKeyDownEffect(
     { key: ['mod+alt+p'] },
     (evt) => {
       evt.preventDefault();
-      onPasteStyles();
+      handlePasteStyles();
     },
-    [onPasteStyles]
+    [handlePasteStyles]
   );
 
   const value = useMemo(
