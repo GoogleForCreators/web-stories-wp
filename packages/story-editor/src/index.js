@@ -45,7 +45,6 @@ export { GlobalStyle as CropMoveableGlobalStyle } from './components/moveable/cr
 export { default as CircularProgress } from './components/circularProgress';
 export { default as InterfaceSkeleton } from './components/layout';
 export { default as Tooltip } from './components/tooltip';
-export { default as Popup } from './components/popup';
 export { default as useInspector } from './components/inspector/useInspector';
 export { default as InspectorContext } from './components/inspector/context';
 export { default as useIsUploadingToStory } from './utils/useIsUploadingToStory';
