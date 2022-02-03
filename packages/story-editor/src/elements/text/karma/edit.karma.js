@@ -114,6 +114,7 @@ describe('TextEdit integration', () => {
         await fixture.events.mouse.clickOn(frame, 30, 5);
         await repeatPress('ArrowUp', 10);
         await fixture.events.keyboard.down('shift');
+        await repeatPress('ArrowDown', 3);
         await repeatPress('ArrowRight', 20);
         await fixture.events.keyboard.up('shift');
 
