@@ -26,6 +26,7 @@
     "dg/bypass-finals": "1.1.3",
     "phpcompatibility/phpcompatibility-wp": "^2.1",
     "phpmd/phpmd": "^2.9",
+    "phpstan/extension-installer": "^1.1",
     "roave/security-advisories": "dev-latest",
     "sirbrillig/phpcs-variable-analysis": "^2.8",
     "szepeviktor/phpstan-wordpress": "^1.0",
@@ -66,7 +67,8 @@
       "dealerdirect/phpcodesniffer-composer-installer": true,
       "civicrm/composer-downloads-plugin": true,
       "cweagans/composer-patches": true,
-      "mcaskill/composer-exclude-files": true
+      "mcaskill/composer-exclude-files": true,
+      "phpstan/extension-installer": true
     },
     "discard-changes": true,
     "platform": {

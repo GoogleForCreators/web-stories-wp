@@ -12,9 +12,6 @@ services:
     tags:
       - phpstan.broker.dynamicStaticMethodReturnTypeExtension
 
-includes:
-    - vendor/szepeviktor/phpstan-wordpress/extension.neon
-
 parameters:
   level: 9
   inferPrivatePropertyTypeFromConstructor: true
@@ -35,7 +32,6 @@ parameters:
   stubFiles:
     - tests/phpstan/stubs/wordpress-override.php
   bootstrapFiles:
-    - vendor/php-stubs/wordpress-stubs/wordpress-stubs.php
     - tests/phpstan/bootstrap.php
     - third-party/vendor/ampproject/amp-wp/includes/sanitizers/class-amp-base-sanitizer.php
     - third-party/vendor/ampproject/amp-wp/includes/sanitizers/class-amp-meta-sanitizer.php
