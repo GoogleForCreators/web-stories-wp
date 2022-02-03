@@ -32,7 +32,7 @@ import {
 import { useRightClickMenu, useConfig } from '../../app';
 import DirectionAware from '../directionAware';
 import { ELEMENT_TYPES } from '../../elements';
-import { useStory } from '../..';
+import { useStory } from '../../app/story';
 import {
   ForegroundMediaMenu,
   MultipleElementsMenu,
