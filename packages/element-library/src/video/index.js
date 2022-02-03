@@ -19,7 +19,6 @@
  */
 export { default as Display } from './display';
 export { default as Edit } from './edit';
-export { default as EditMenu } from './editMenu';
 export { default as Frame } from './frame';
 export { default as Controls } from './controls';
 export { default as Output } from './output';

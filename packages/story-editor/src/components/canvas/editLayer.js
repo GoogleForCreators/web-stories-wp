@@ -40,6 +40,8 @@ import EditElement from './editElement';
 import { Layer, PageArea, FooterArea, Z_INDEX } from './layout';
 import useFocusCanvas from './useFocusCanvas';
 import SingleSelectionMoveable from './singleSelectionMoveable';
+import useVideoTrim from '../videoTrim/useVideoTrim';
+import VideoTrimmer from '../videoTrim/videoTrimmer';
 
 const LayerWithGrayout = withOverlay(styled(Layer)`
   background-color: ${({ grayout, theme }) =>
@@ -79,7 +81,10 @@ function EditLayer() {
 function EditLayerForElement({ element, showOverflow }) {
   const ref = useRef(null);
   const pageAreaRef = useRef(null);
-  const { editModeGrayout, EditMenu } = getDefinitionForType(element.type);
+  const { editModeGrayout } = getDefinitionForType(element.type);
+  const { isTrimMode } = useVideoTrim(({ state: { isTrimMode } }) => ({
+    isTrimMode,
+  }));
 
   const { clearEditing, onMoveableMount } = useCanvas((state) => ({
     clearEditing: state.actions.clearEditing,
@@ -156,9 +161,9 @@ function EditLayerForElement({ element, showOverflow }) {
           ref={setRef}
         />
       )}
-      {EditMenu && (
+      {isTrimMode && (
         <FooterArea showOverflow>
-          <EditMenu />
+          <VideoTrimmer />
         </FooterArea>
       )}
     </LayerWithGrayout>
