@@ -43,6 +43,7 @@ import {
  */
 import StoryPropTypes from '../../types';
 import useCORSProxy from '../../utils/useCORSProxy';
+import { useLocalMedia } from '../../app';
 
 // Using attributes to avoid creation of hundreds of classes by styled components for previewMode.
 const Wrapper = styled.div.attrs(
@@ -108,6 +109,11 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
     dataToEditorX: state.actions.dataToEditorX,
   }));
   const { getProxiedUrl } = useCORSProxy();
+  const { isCurrentResourceProcessing, isCurrentResourceUploading } =
+    useLocalMedia(({ state }) => ({
+      isCurrentResourceProcessing: state.isCurrentResourceProcessing,
+      isCurrentResourceUploading: state.isCurrentResourceUploading,
+    }));
 
   const [replacement, setReplacement] = useState(null);
 
@@ -215,6 +221,8 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
             previewMode={previewMode}
             box={box}
             getProxiedUrl={ getProxiedUrl }
+            isCurrentResourceProcessing={ isCurrentResourceProcessing }
+            isCurrentResourceUploading={ isCurrentResourceUploading }
           />
         </WithMask>
         {!previewMode && (
@@ -233,6 +241,8 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
                   element={replacementElement}
                   box={box}
                   getProxiedUrl={ getProxiedUrl }
+                  isCurrentResourceProcessing={ isCurrentResourceProcessing }
+                  isCurrentResourceUploading={ isCurrentResourceUploading }
                 />
               </WithMask>
             )}

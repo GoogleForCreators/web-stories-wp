@@ -32,7 +32,6 @@ import {
  * Internal dependencies
  */
 import { StoryPropTypes } from '../types';
-import { useLocalMedia } from '../../app';
 import { mediaWithScale } from './util';
 import MediaDisplay from './display';
 
@@ -54,12 +53,6 @@ function ImageDisplay({ element, box, previewMode, getProxiedUrl, isCurrentResou
     initialSrcType = 'cached';
     initialSrc = resourceList.get(resourceId).url;
   }
-
-  const { isCurrentResourceProcessing, isCurrentResourceUploading } =
-    useLocalMedia(({ state }) => ({
-      isCurrentResourceProcessing: state.isCurrentResourceProcessing,
-      isCurrentResourceUploading: state.isCurrentResourceUploading,
-    }));
 
   if (
     resourceList.get(resourceId)?.type === 'fullsize' ||
