@@ -99,9 +99,7 @@ describe('Integration Layer tests : EditorConfig Params :', () => {
 
     //do not close helpcenter, check for additional tip
 
-    await waitFor(() => {
-      expect(fixture.screen.getByText(exampleTip.title)).toBeTruthy();
-    });
+    await expect(fixture.screen.findByText(exampleTip.title)).toBeTruthy();
   });
 
   it('should call getStoryById with storyId passed in editorConfig', async () => {
@@ -144,15 +142,11 @@ describe('Integration Layer tests : EditorConfig Params :', () => {
 
     await fixture.collapseHelpCenter();
 
-    await waitFor(() => {
-      const uploadButton = fixture.screen.queryByRole('button', {
-        name: 'Upload',
-      });
-      if (!uploadButton) {
-        throw new Error("Can't find upload button");
-      }
-      expect(uploadButton).toBeTruthy();
+    const uploadButton = await fixture.screen.findByRole('button', {
+      name: 'Upload',
     });
+
+    expect(uploadButton).toBeTruthy();
   });
 
   it('should not render upload button if capabilities.hasUploadMediaAction is false', async () => {
@@ -224,6 +218,9 @@ describe('Integration Layer tests : EditorConfig Params :', () => {
       const insertByLinkButton = fixture.querySelector(
         `[aria-label="Insert by link"]`
       );
+      if (!insertByLinkButton) {
+        throw new Error('insertByLinkButton not ready');
+      }
       expect(insertByLinkButton).toBeTruthy();
     });
   });

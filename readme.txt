@@ -109,9 +109,19 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/googleforcreators/web-stories-wp/releases).
 
+= 1.17.0 =
+
+**Release Date:** February 1, 2022.
+
+* New feature: border support for shapes.
+* Enhancement: added contrast check to color picker.
+* Enhancement: added support for `tel:` and `mailto:` links.
+* Enhancement: improved element resizing handling.
+* Bug fixes and performance improvements.
+
 = 1.16.0 =
 
-**Release Date:** January 18, 2021.
+**Release Date:** January 18, 2022.
 
 * Compatibility with WordPress 5.9
 * New feature: improved video captions appearance in the editor.
@@ -128,17 +138,11 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Fixes an issue with mangled Unicode characters.
 * Fixes an issue with styling differences between the editor and the preview.
 
-= 1.15.0 =
-
-**Release Date:** November 30, 2021.
-
-* New feature: external media hotlinking.
-* New feature: templates search form in the dashboard.
-* New feature: ability to qualify links as "nofollow" or "sponsored".
-* New feature: added support for password protected stories.
-* Bug fixes and performance improvements.
-
 == Upgrade Notice ==
+
+= 1.17.0 =
+
+Various smaller enhancements throughout the editor, plus several bug fixes and performance improvements.
 
 = 1.16.0 =
 
@@ -148,6 +152,3 @@ WordPress 5.9 compatibility, various UI refinements, right-click menu element du
 
 Several bug fixes to address the editor crashing and styling differences between editor and preview.
 
-= 1.15.0 =
-
-Media hotlinking, templates search, link qualification, and several bug fixes and performance improvements.
