@@ -4,7 +4,6 @@
  *
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
- * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
@@ -31,8 +30,6 @@ use Google\Web_Stories\Media\Video\Poster;
 
 /**
  * Class Remove_Unneeded_Attachment_Meta
- *
- * @package Google\Web_Stories\Migrations
  */
 class Remove_Unneeded_Attachment_Meta extends Migrate_Base {
 	/**

@@ -4,7 +4,6 @@
  *
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
- * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
@@ -31,8 +30,6 @@ use Google\Web_Stories\Media\Video\Poster;
 
 /**
  * Class Add_Poster_Generation_Media_Source
- *
- * @package Google\Web_Stories\Migrations
  */
 class Add_Poster_Generation_Media_Source extends Migration_Meta_To_Term {
 

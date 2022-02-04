@@ -6,7 +6,6 @@
  *
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
- * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
@@ -38,8 +37,6 @@ use WP_Styles;
  * Class Google_Fonts
  *
  * Enqueue Google Fonts stylesheet.
- *
- * @package Google\Web_Stories\Admin
  */
 class Google_Fonts implements Conditional, Service, Registerable {
 	/**

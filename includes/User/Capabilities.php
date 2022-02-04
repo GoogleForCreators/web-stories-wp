@@ -4,7 +4,6 @@
  *
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
- * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
@@ -38,8 +37,6 @@ use WP_Site;
 
 /**
  * Class Capabilities
- *
- * @package Google\Web_Stories\User
  */
 class Capabilities implements Service, PluginActivationAware, SiteInitializationAware, SiteRemovalAware {
 	/**

@@ -4,7 +4,6 @@
  *
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
- * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
@@ -29,8 +28,6 @@ namespace Google\Web_Stories\Tests\Integration;
 
 /**
  * Class DependencyInjectedRestTestCase
- *
- * @package Google\Web_Stories\Tests
  */
 abstract class DependencyInjectedRestTestCase extends DependencyInjectedTestCase {
 	use REST_Setup;

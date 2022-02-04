@@ -4,7 +4,6 @@
  *
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
- * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
@@ -31,8 +30,6 @@ use Google\Web_Stories\Service_Base;
 
 /**
  * Class Captions
- *
- * @package Google\Web_Stories\Media\Video
  */
 class Captions extends Service_Base {
 	/**

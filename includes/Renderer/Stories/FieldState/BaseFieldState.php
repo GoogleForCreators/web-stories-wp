@@ -1,8 +1,6 @@
 <?php
 /**
  * Class BaseFieldState.
- *
- * @package Google\Web_Stories
  */
 
 /**

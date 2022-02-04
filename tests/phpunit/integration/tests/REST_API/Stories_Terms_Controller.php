@@ -10,7 +10,6 @@ use WP_REST_Server;
 /**
  * Class Stories_Terms_Controller
  *
- * @package Google\Web_Stories\Tests\REST_API
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Terms_Controller
  */
 class Stories_Terms_Controller extends RestTestCase {

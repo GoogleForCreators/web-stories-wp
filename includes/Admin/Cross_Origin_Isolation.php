@@ -6,7 +6,6 @@
  *
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
- * @package   Google\Web_Stories\Traits
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
@@ -36,8 +35,6 @@ use Google\Web_Stories\User\Preferences;
 
 /**
  * Class Cross_Origin_Isolation
- *
- * @package Google\Web_Stories
  */
 class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 	/**

@@ -4,7 +4,6 @@
  *
  * @link      https://www.mwpd.io/
  *
- * @package   Google\Web_Stories
  * @copyright 2019 Alain Schlesser
  * @license   MIT
  */

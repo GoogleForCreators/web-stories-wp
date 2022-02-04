@@ -4,7 +4,6 @@
  *
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
- * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
@@ -34,8 +33,6 @@ use WP_Styles;
 
 /**
  * Class AMP_Story_Player_Assets
- *
- * @package Google\Web_Stories
  */
 class AMP_Story_Player_Assets implements Service, Registerable {
 	/**

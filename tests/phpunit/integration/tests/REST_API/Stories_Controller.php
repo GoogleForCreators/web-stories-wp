@@ -26,7 +26,6 @@ use WP_REST_Request;
 /**
  * Class Stories_Controller
  *
- * @package Google\Web_Stories\Tests\REST_API
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Controller
  */
 class Stories_Controller extends RestTestCase {

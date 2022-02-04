@@ -4,7 +4,6 @@
  *
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
- * @package   Google\Web_Stories
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
@@ -29,8 +28,6 @@
  * Class Compatibility
  *
  * @since 1.2.0
- *
- * @package Google\Web_Stories
  */
 class Web_Stories_Compatibility {
 

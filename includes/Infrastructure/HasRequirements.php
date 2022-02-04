@@ -1,8 +1,6 @@
 <?php
 /**
  * Interface HasRequirements.
- *
- * @package Google\Web_Stories
  */
 
 /**

@@ -1,8 +1,6 @@
 <?php
 /**
  * Class Services.
- *
- * @package Google\Web_Stories
  */
 
 namespace Google\Web_Stories;
@@ -16,8 +14,6 @@ use Google\Web_Stories\Infrastructure\ServiceContainer;
  *
  * Using this should always be the last resort.
  * Always prefer to use constructor injection instead.
- *
- * @package Google\Web_Stories
  */
 final class Services {
 

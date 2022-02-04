@@ -21,8 +21,6 @@ namespace Google\Web_Stories\Tests\Integration;
  * Trait Kses_Setup
  *
  * Helper trait to setup KSES. This is normally setup on init but needed to be manually fired in tests.
- *
- * @package Google\Web_Stories\Tests
  */
 trait Kses_Setup {
 	/**

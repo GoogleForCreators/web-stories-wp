@@ -6,7 +6,6 @@
  *
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
- * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
@@ -33,8 +32,6 @@ use Google\Web_Stories\Interfaces\Migration;
 
 /**
  * Class Migrate_Base
- *
- * @package Google\Web_Stories\Migrations
  */
 abstract class Migrate_Base implements Migration {
 

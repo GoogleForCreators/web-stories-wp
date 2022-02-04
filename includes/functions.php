@@ -2,8 +2,6 @@
 /**
  * Miscellaneous functions.
  * These are mostly utility or wrapper functions.
- *
- * @package Google\Web_Stories
  */
 
 /**

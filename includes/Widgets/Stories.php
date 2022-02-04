@@ -1,8 +1,6 @@
 <?php
 /**
  * Stories Widgets.
- *
- * @package Google\Web_Stories
  */
 
 /**

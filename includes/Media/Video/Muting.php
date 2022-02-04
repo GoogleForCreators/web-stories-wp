@@ -4,7 +4,6 @@
  *
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
- * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
@@ -33,8 +32,6 @@ use WP_Error;
 
 /**
  * Class Muting
- *
- * @package Google\Web_Stories\Media\Video
  */
 class Muting extends Service_Base implements HasMeta {
 

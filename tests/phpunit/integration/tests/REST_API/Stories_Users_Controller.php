@@ -22,7 +22,6 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
 /**
  * Class Stories_Users_Controller
  *
- * @package Google\Web_Stories\Tests\REST_API
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Users_Controller
  */
 class Stories_Users_Controller extends DependencyInjectedRestTestCase {

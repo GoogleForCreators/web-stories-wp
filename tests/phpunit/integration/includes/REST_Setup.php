@@ -6,7 +6,6 @@
  *
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
- * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
@@ -35,8 +34,6 @@ use WP_REST_Response;
 
 /**
  * trait REST_Setup
- *
- * @package Google\Web_Stories\Tests
  */
 trait REST_Setup {
 	use Capabilities_Setup, Kses_Setup;

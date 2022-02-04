@@ -22,7 +22,6 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 /**
  * Class Single
  *
- * @package Google\Web_Stories\Tests
  * @coversDefaultClass \Google\Web_Stories\Renderer\Single
  */
 class Single extends DependencyInjectedTestCase {

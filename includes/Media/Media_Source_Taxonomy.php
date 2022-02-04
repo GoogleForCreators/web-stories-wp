@@ -4,7 +4,6 @@
  *
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
- * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
@@ -35,8 +34,6 @@ use WP_Query;
 
 /**
  * Class Media_Source_Taxonomy
- *
- * @package Google\Web_Stories\Media
  */
 class Media_Source_Taxonomy extends Taxonomy_Base {
 	/**

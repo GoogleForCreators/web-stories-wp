@@ -6,7 +6,6 @@
  *
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
- * @package   Google\Web_Stories\classs
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
@@ -41,8 +40,6 @@ use WP_Site;
 
 /**
  * Class Post_Type_Base.
- *
- * @package Google\Web_Stories
  */
 abstract class Post_Type_Base extends Service_Base implements PluginActivationAware, PluginDeactivationAware, SiteInitializationAware {
 

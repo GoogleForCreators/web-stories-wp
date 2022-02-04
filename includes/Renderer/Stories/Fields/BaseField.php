@@ -1,8 +1,6 @@
 <?php
 /**
  * Base field class.
- *
- * @package Google\Web_Stories
  */
 
 /**
@@ -27,8 +25,6 @@ use Google\Web_Stories\Interfaces\Field;
 
 /**
  * Class BaseField.
- *
- * @package Google\Web_Stories\Renderer\Stories\Fields
  */
 class BaseField implements Field {
 	/**

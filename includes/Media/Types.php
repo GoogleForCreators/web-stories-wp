@@ -4,7 +4,6 @@
  *
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
- * @package   Google\Web_Stories\Media
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
@@ -29,8 +28,6 @@ namespace Google\Web_Stories\Media;
 
 /**
  * Class Types
- *
- * @package Google\Web_Stories\Media
  */
 class Types {
 	/**

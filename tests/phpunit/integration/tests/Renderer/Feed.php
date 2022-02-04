@@ -22,7 +22,6 @@ use Google\Web_Stories\Tests\Integration\TestCase;
 /**
  * Class Feed
  *
- * @package Google\Web_Stories\Tests
  * @coversDefaultClass \Google\Web_Stories\Renderer\Feed
  */
 class Feed extends TestCase {

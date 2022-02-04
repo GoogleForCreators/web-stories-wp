@@ -4,7 +4,6 @@
  *
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
- * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
@@ -32,8 +31,6 @@ use Google\Web_Stories\Service_Base;
 
 /**
  * Class Optimization
- *
- * @package Google\Web_Stories\Media\Video
  */
 class Optimization extends Service_Base implements HasMeta {
 

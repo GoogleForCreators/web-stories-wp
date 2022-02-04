@@ -4,7 +4,6 @@
  *
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
- * @package   Google\Web_Stories
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
@@ -29,8 +28,6 @@ namespace Google\Web_Stories\Migrations;
 
 /**
  * Class Update_1
- *
- * @package Google\Web_Stories\Migrations
  */
 class Update_1 extends Migrate_Base {
 	/**

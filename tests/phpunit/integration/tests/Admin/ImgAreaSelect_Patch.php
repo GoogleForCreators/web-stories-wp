@@ -26,7 +26,6 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 /**
  * Class ImgAreaSelect_Patch
  *
- * @package Google\Web_Stories\Tests\Admin
  * @coversDefaultClass \Google\Web_Stories\Admin\ImgAreaSelect_Patch
  */
 class ImgAreaSelect_Patch extends DependencyInjectedTestCase {
