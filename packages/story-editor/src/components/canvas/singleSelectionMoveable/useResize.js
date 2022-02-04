@@ -150,9 +150,6 @@ function useSingleSelectionResize({
     if (handleElementOutOfCanvas(target)) {
       return;
     }
-    if (handleFullbleedMediaAsBackground(target)) {
-      return;
-    }
     const [editorWidth, editorHeight] = frame.resize;
     if (editorWidth !== 0 && editorHeight !== 0) {
       const { direction } = frame;
@@ -180,6 +177,7 @@ function useSingleSelectionResize({
       updateSelectedElements({ properties });
     }
     resetMoveable(target);
+    handleFullbleedMediaAsBackground(target);
   };
 
   const visuallyHideHandles =
