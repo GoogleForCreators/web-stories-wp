@@ -1,6 +1,6 @@
 {
 	"name": "@googleforcreators/moveable",
-	"description": "Package that provides a wrapper around react-moveable.",
+	"description": "Provides a wrapper around react-moveable.",
 	"private": false,
 	"version": "0.0.1",
 	"author": {
@@ -20,11 +20,12 @@
 		"node": ">= 16",
 		"npm": ">= 7.3"
 	},
-	"type": "module",
-	"exports": {
-		"default": "./src/index.js"
+	"main": "dist/index.js",
+	"module": "dist-module/index.js",
+	"source": "src/index.js",
+	"publishConfig": {
+		"access": "public"
 	},
-	"main": "./src/index.js",
 	"dependencies": {
 		"@googleforcreators/design-system": "*",
 		"@googleforcreators/react": "*",
