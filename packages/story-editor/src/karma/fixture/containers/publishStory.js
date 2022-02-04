@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,17 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import PropTypes from 'prop-types';
+
 /**
  * Internal dependencies
  */
-import { INPUT_KEYS } from './constants';
+import { Container } from './container';
 
-export const MANDATORY_INPUT_VALUE_TYPES = PropTypes.shape({
-  [INPUT_KEYS.EXCERPT]: PropTypes.string,
-  [INPUT_KEYS.SLUG]: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  [INPUT_KEYS.TITLE]: PropTypes.string,
-});
+/**
+ * The Publish Story dialog.
+ */
+export class PublishStory extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get dialog() {
+    return this.getByRole('dialog', { name: /Story details/ });
+  }
+
+  get close() {
+    return this.getByRole('button', { name: 'Close' });
+  }
+
+  get publish() {
+    return this.getByRole('button', { name: 'Publish' });
+  }
+}
