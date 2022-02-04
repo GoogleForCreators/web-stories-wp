@@ -155,6 +155,7 @@ async function config(cliArgs) {
         output: {
           dir: dirname(resolvePath(pkg.dir, pkg.config.module)),
           format: 'es',
+          preserveModules: true,
         },
         plugins: [
           ...plugins,
@@ -175,6 +176,7 @@ async function config(cliArgs) {
           dir: dirname(resolvePath(pkg.dir, pkg.config.main)),
           format: 'cjs',
           exports: 'auto',
+          preserveModules: true,
         },
         plugins: [
           ...plugins,
