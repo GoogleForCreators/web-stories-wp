@@ -58,17 +58,15 @@ export default {
       exclude: [
         'pageValue',
         'templates',
-        'totalTemplates',
         'page',
         'search',
-        'searchKeyword',
         'view',
         'templateActions',
       ],
     },
   },
 };
-export const Default = (args) => {
+export const _default = (args) => {
   const { pageSize } = usePagePreviewSize({
     isGrid: true,
   });
@@ -106,16 +104,7 @@ export const Default = (args) => {
   );
 };
 
-export const AllTemplatesFetched = Default.bind({});
-AllTemplatesFetched.args = {
-  allPagesFetched: true,
-};
-export const NoTemplates = Default.bind({});
-NoTemplates.args = {
-  allPagesFetched: true,
-  totalTemplates: 0,
-};
-export const NoSearchResults = Default.bind({});
+export const NoSearchResults = _default.bind({});
 NoSearchResults.args = {
   allPagesFetched: true,
   totalTemplates: 0,

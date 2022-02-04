@@ -67,6 +67,7 @@ export default {
         'publish',
         'setSort',
         'toggleStyle',
+        'keyword',
       ],
     },
   },
@@ -112,18 +113,4 @@ export const _default = (args) => {
       <Header {...args} {...defaultProps} />
     </Layout.Provider>
   );
-};
-
-export const ActiveSearch = _default.bind({});
-ActiveSearch.args = {
-  keyword: 'demo search',
-};
-export const ViewingDrafts = _default.bind({});
-ViewingDrafts.args = {
-  status: 'DRAFT',
-  statusValue: STORY_STATUS.DRAFT,
-};
-export const ViewingList = _default.bind({});
-ViewingList.args = {
-  style: VIEW_STYLE.LIST,
 };

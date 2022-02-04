@@ -39,7 +39,7 @@ export default {
     sortValue: TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR,
     filterValue: TEMPLATES_GALLERY_STATUS.ALL,
     keyword: '',
-    enableInProgressTemplateActions: false,
+    enableInProgressTemplateActions: true,
   },
   argTypes: {
     style: { options: VIEW_STYLE, control: 'radio' },
@@ -102,5 +102,4 @@ export const _default = (args) => {
 export const ActiveSearch = _default.bind({});
 ActiveSearch.args = {
   keyword: 'demo search',
-  enableInProgressTemplateActions: true,
 };

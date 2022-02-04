@@ -175,24 +175,8 @@ export const NoStories = _default.bind({});
 NoStories.args = {
   stories: [],
 };
-export const AllDataFetched = _default.bind({});
-AllDataFetched.args = {
-  allPagesFetched: true,
-};
-export const AllDataFetchedAsList = _default.bind({});
-AllDataFetchedAsList.args = {
-  allPagesFetched: true,
-  isGrid: false,
-  isThumbnail: true,
-  style: VIEW_STYLE.LIST,
-};
 export const NoSearchResult = _default.bind({});
 NoSearchResult.args = {
   stories: [],
   keyword: 'koalas',
-};
-export const EnablePostLockingList = _default.bind({});
-EnablePostLockingList.args = {
-  style: VIEW_STYLE.LIST,
-  enablePostLocking: true,
 };
