@@ -92,7 +92,7 @@ function PageMenu({ parentMenuRef }) {
           <SubMenuContainer
             ref={subMenuRef}
             position={{
-              x: 210,
+              x: parentMenuRef.current.firstChild.offsetWidth + 2,
               y: 0,
             }}
           >
