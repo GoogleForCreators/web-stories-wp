@@ -27,7 +27,7 @@ import { useTransformHandler } from '@googleforcreators/transform';
 /**
  * Internal dependencies
  */
-import { useFont } from '../../app';
+import { useFont } from '../../app/font';
 import {
   elementFillContent,
   elementWithFont,
