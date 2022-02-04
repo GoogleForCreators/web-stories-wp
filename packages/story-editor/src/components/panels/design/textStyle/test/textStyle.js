@@ -37,8 +37,6 @@ import {
   BACKGROUND_TEXT_MODE,
 } from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
-import { ConfigProvider } from '../../../../../app/config';
-import defaultConfig from '../../../../../defaultConfig';
 
 let mockControls;
 jest.mock('../../../../../utils/textMeasurements');
@@ -103,49 +101,32 @@ function Wrapper({ children }) {
     actions: { updateStory: jest.fn(), updateElementsById: jest.fn() },
   };
   return (
-    <ConfigProvider config={defaultConfig}>
-      <StoryContext.Provider value={storyContextValue}>
-        <CanvasContext.Provider
+    <StoryContext.Provider value={storyContextValue}>
+      <CanvasContext.Provider
+        value={{
+          state: {},
+          actions: {
+            clearEditing: jest.fn(),
+          },
+        }}
+      >
+        <FontContext.Provider
           value={{
-            state: {},
-            actions: {
-              clearEditing: jest.fn(),
-            },
-          }}
-        >
-          <FontContext.Provider
-            value={{
-              state: {
-                fonts: [
-                  {
-                    name: 'ABeeZee',
-                    value: 'ABeeZee',
-                    service: 'foo.bar.baz',
-                    weights: [400],
-                    styles: ['italic', 'regular'],
-                    variants: [
-                      [0, 400],
-                      [1, 400],
-                    ],
-                    fallbacks: ['serif'],
-                  },
-                  {
-                    name: 'Neu Font',
-                    value: 'Neu Font',
-                    service: 'foo.bar.baz',
-                    weights: [400],
-                    styles: ['italic', 'regular'],
-                    variants: [
-                      [0, 400],
-                      [1, 400],
-                    ],
-                    fallbacks: ['fallback1'],
-                  },
-                ],
-              },
-              actions: {
-                maybeEnqueueFontStyle: () => Promise.resolve(),
-                getFontByName: () => ({
+            state: {
+              fonts: [
+                {
+                  name: 'ABeeZee',
+                  value: 'ABeeZee',
+                  service: 'foo.bar.baz',
+                  weights: [400],
+                  styles: ['italic', 'regular'],
+                  variants: [
+                    [0, 400],
+                    [1, 400],
+                  ],
+                  fallbacks: ['serif'],
+                },
+                {
                   name: 'Neu Font',
                   value: 'Neu Font',
                   service: 'foo.bar.baz',
@@ -156,20 +137,35 @@ function Wrapper({ children }) {
                     [1, 400],
                   ],
                   fallbacks: ['fallback1'],
-                }),
-                addRecentFont: jest.fn(),
-              },
-            }}
+                },
+              ],
+            },
+            actions: {
+              maybeEnqueueFontStyle: () => Promise.resolve(),
+              getFontByName: () => ({
+                name: 'Neu Font',
+                value: 'Neu Font',
+                service: 'foo.bar.baz',
+                weights: [400],
+                styles: ['italic', 'regular'],
+                variants: [
+                  [0, 400],
+                  [1, 400],
+                ],
+                fallbacks: ['fallback1'],
+              }),
+              addRecentFont: jest.fn(),
+            },
+          }}
+        >
+          <RichTextContext.Provider
+            value={{ state: {}, actions: { selectionActions: {} } }}
           >
-            <RichTextContext.Provider
-              value={{ state: {}, actions: { selectionActions: {} } }}
-            >
-              {children}
-            </RichTextContext.Provider>
-          </FontContext.Provider>
-        </CanvasContext.Provider>
-      </StoryContext.Provider>
-    </ConfigProvider>
+            {children}
+          </RichTextContext.Provider>
+        </FontContext.Provider>
+      </CanvasContext.Provider>
+    </StoryContext.Provider>
   );
 }
 

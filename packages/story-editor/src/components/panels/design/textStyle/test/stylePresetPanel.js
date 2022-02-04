@@ -28,8 +28,6 @@ import { BACKGROUND_TEXT_MODE } from '../../../../../constants';
 import { getTextPresets, areAllType } from '../../../../../utils/presetUtils';
 import { renderWithTheme } from '../../../../../testUtils';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../../app/font/defaultFonts';
-import { ConfigProvider } from '../../../../../app/config';
-import defaultConfig from '../../../../../defaultConfig';
 jest.mock('../../../../../utils/presetUtils');
 
 function arrange(extraStylePresets, extraStateProps) {
@@ -78,11 +76,9 @@ function arrange(extraStylePresets, extraStateProps) {
     queryByText,
     queryAllByLabelText,
   } = renderWithTheme(
-    <ConfigProvider config={defaultConfig}>
-      <StoryContext.Provider value={storyContextValue}>
-        <StylePresetPanel pushUpdate={pushUpdate} />
-      </StoryContext.Provider>
-    </ConfigProvider>
+    <StoryContext.Provider value={storyContextValue}>
+      <StylePresetPanel pushUpdate={pushUpdate} />
+    </StoryContext.Provider>
   );
   return {
     getAllByRole,
