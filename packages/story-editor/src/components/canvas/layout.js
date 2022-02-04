@@ -365,7 +365,7 @@ function useLayoutParamsCssVars() {
 const PageArea = forwardRef(function PageArea(
   {
     children,
-    fullbleedRef = createRef(),
+    fullbleedRef: _fullbleedRef = null,
     fullBleedContainerLabel = __('Fullbleed area', 'web-stories'),
     overlay = [],
     background,
@@ -379,6 +379,8 @@ const PageArea = forwardRef(function PageArea(
   },
   ref
 ) {
+  const internalFullblledRef = useRef();
+  const fullbleedRef = _fullbleedRef || internalFullblledRef;
   const {
     hasVerticalOverflow,
     hasHorizontalOverflow,

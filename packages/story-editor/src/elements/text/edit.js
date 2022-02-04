@@ -29,7 +29,10 @@ import {
 import PropTypes from 'prop-types';
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import { useUnits } from '@googleforcreators/units';
-import { useTransformHandler } from '@googleforcreators/transform';
+import {
+  useTransformHandler,
+  useTransform,
+} from '@googleforcreators/transform';
 import {
   RichTextEditor,
   getHTMLInfo,
@@ -39,7 +42,7 @@ import {
 /**
  * Internal dependencies
  */
-import { useStory, useFont, useTransform } from '../../app';
+import { useStory, useFont } from '../../app';
 import {
   elementFillContent,
   elementWithFont,

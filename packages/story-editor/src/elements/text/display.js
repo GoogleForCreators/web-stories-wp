@@ -28,7 +28,7 @@ import { getHTMLFormatters, getHTMLInfo } from '@googleforcreators/rich-text';
 /**
  * Internal dependencies
  */
-import { useFont } from '../../app';
+import { useFont } from '../../app/font';
 import {
   elementFillContent,
   elementWithFont,

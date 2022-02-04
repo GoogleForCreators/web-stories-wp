@@ -1,5 +1,6 @@
+<?php
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,20 +15,20 @@
  * limitations under the License.
  */
 
-/* global __dirname */
+namespace Google\Web_Stories\Tests\Integration\Fixture;
 
-/**
- * External dependencies
- */
-import { resolve as resolvePath } from 'path';
-import resolve from '@rollup/plugin-node-resolve';
+use Google\Web_Stories\Post_Type_Base;
 
-export default {
-  input: resolvePath(__dirname, 'src/index.js'),
-  output: {
-    file: resolvePath(__dirname, 'scripts/module.js'),
-    format: 'es',
-  },
-  plugins: [resolve()],
-  external: ['crypto'],
-};
+class DummyPostTypeWithoutArchive extends Post_Type_Base {
+	public function get_slug(): string {
+		return 'cpt-without-archive';
+	}
+
+	public function get_args(): array {
+		return [
+			'public'      => true,
+			'rewrite'     => true,
+			'has_archive' => false,
+		];
+	}
+}
