@@ -38,7 +38,7 @@ import {
 /**
  * Internal dependencies
  */
-import { useConfig, useLocalMedia } from '../../../../../app';
+import { useLocalMedia } from '../../../../../app';
 import DeleteDialog from './deleteDialog';
 import MediaEditDialog from './mediaEditDialog';
 
@@ -139,7 +139,6 @@ function DropDownMenu({
     () => setShowEditDialog(false),
     [setShowEditDialog]
   );
-  const { isRTL } = useConfig();
   const listId = useMemo(() => `list-${uuidv4()}`, []);
   const buttonId = useMemo(() => `button-${uuidv4()}`, []);
 
@@ -164,7 +163,6 @@ function DropDownMenu({
               </IconContainer>
             </MoreButton>
             <Popup
-              isRTL={isRTL}
               anchor={moreButtonRef}
               placement={PLACEMENT.BOTTOM_START}
               isOpen={isMenuOpen}
