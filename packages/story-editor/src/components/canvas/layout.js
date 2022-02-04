@@ -32,7 +32,6 @@ import { FULLBLEED_RATIO } from '@googleforcreators/units';
 import {
   THEME_CONSTANTS,
   themeHelpers,
-  pointerEventsCss,
 } from '@googleforcreators/design-system';
 
 /**
@@ -42,6 +41,7 @@ import { HEADER_HEIGHT, HEADER_GAP } from '../../constants';
 import { useLayout } from '../../app';
 import useFooterHeight from '../footer/useFooterHeight';
 import { FOOTER_BOTTOM_MARGIN } from '../footer/constants';
+import pointerEventsCss from '../../utils/pointerEventsCss';
 import usePinchToZoom from './usePinchToZoom';
 
 /**

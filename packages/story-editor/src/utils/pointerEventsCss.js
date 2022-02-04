@@ -15,6 +15,17 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-export { default as ArrowCircle } from './arrow_circle.svg';
+import { css } from 'styled-components';
+
+const pointerEventsCss = css`
+  ${({ pointerEvents }) => {
+    if (pointerEvents && typeof pointerEvents === 'string') {
+      return `pointer-events: ${pointerEvents};`;
+    }
+    return '';
+  }}
+`;
+
+export default pointerEventsCss;
