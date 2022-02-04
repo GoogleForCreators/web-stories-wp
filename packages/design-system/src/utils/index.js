@@ -23,7 +23,6 @@ export { default as uniqueEntriesByKey } from './uniqueEntriesByKey';
 export { default as domReady } from './domReady';
 export { default as deepMerge } from './deepMerge';
 export { default as useMouseDownOutsideRef } from './useMouseDownOutsideRef';
-export { default as pointerEventsCss } from './pointerEventsCss';
 export * from './constants';
 export * from './directions';
 export * from './url';

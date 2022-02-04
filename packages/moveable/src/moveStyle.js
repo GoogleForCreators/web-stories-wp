@@ -18,7 +18,11 @@
  * External dependencies
  */
 import { createGlobalStyle } from 'styled-components';
-import { SVGIcons } from '@googleforcreators/design-system';
+
+/**
+ * Internal dependencies
+ */
+import ArrowCircle from './icons/arrow_circle.svg';
 
 export const GlobalStyle = createGlobalStyle`
   .default-moveable .moveable-control,
@@ -124,7 +128,7 @@ export const GlobalStyle = createGlobalStyle`
     height: 28px;
     left: -1px;
     top: -1px;
-    background-image: url('${SVGIcons.ArrowCircle}');
+    background-image: url('${ArrowCircle}');
     background-size: 100%;
     /* The icon is black and we can't use color because it's not inline so invert it is */
     filter: invert(100%);
