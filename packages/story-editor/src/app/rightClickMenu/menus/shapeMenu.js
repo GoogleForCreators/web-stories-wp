@@ -81,7 +81,7 @@ function ShapeMenu({ parentMenuRef }) {
           <SubMenuContainer
             ref={subMenuRef}
             position={{
-              x: parentMenuRef.current.firstChild.offsetWidth + 2,
+              x: (parentMenuRef.current.firstChild?.offsetWidth || 210) + 2,
               y: 0,
             }}
           >
