@@ -28,8 +28,6 @@ import { renderWithTheme } from '../../../testUtils';
 import CanvasContext from '../../../app/canvas/context';
 import StoryContext from '../../../app/story/context';
 import { useLocalMedia } from '../../../app/media';
-import { ConfigProvider } from '../../../app/config';
-import defaultConfig from '../../../defaultConfig';
 jest.mock('../../../app/media');
 
 const IMAGE_RESOURCE = {
@@ -90,21 +88,19 @@ const renderMediaElement = (resource, providerType, canEditMedia = true) => {
     },
   };
   return renderWithTheme(
-    <ConfigProvider config={defaultConfig}>
-      <StoryContext.Provider value={storyContext}>
-        <CanvasContext.Provider value={canvasContext}>
-          <MediaElement
-            index={0}
-            resource={resource}
-            onInsert={() => {}}
-            providerType={providerType}
-            width={150}
-            height={150}
-            canEditMedia={canEditMedia}
-          />
-        </CanvasContext.Provider>
-      </StoryContext.Provider>
-    </ConfigProvider>
+    <StoryContext.Provider value={storyContext}>
+      <CanvasContext.Provider value={canvasContext}>
+        <MediaElement
+          index={0}
+          resource={resource}
+          onInsert={() => {}}
+          providerType={providerType}
+          width={150}
+          height={150}
+          canEditMedia={canEditMedia}
+        />
+      </CanvasContext.Provider>
+    </StoryContext.Provider>
   );
 };
 

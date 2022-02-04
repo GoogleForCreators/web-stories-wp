@@ -28,6 +28,7 @@ import { BACKGROUND_TEXT_MODE } from '../../../../../constants';
 import { getTextPresets, areAllType } from '../../../../../utils/presetUtils';
 import { renderWithTheme } from '../../../../../testUtils';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../../app/font/defaultFonts';
+
 jest.mock('../../../../../utils/presetUtils');
 
 function arrange(extraStylePresets, extraStateProps) {

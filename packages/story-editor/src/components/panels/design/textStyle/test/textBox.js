@@ -32,6 +32,7 @@ import {
 import { renderPanel } from '../../../shared/test/_utils';
 import FontContext from '../../../../../app/font/context';
 import { StoryContext } from '../../../../../app/story';
+
 let mockControls;
 jest.mock('../../../../form/color/color', () => {
   // eslint-disable-next-line no-undef
