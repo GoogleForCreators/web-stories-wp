@@ -16,6 +16,7 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import {
   Button,
   BUTTON_SIZES,
@@ -27,6 +28,7 @@ import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
+import { MANDATORY_INPUT_VALUE_TYPES } from '../types';
 import MandatoryStoryInfo from './mandatoryStoryInfo';
 import StoryPreview from './storyPreview';
 
@@ -63,14 +65,22 @@ const Footer = styled.div`
   grid-area: footer;
 `;
 
-const MainContent = () => {
+const MainContent = ({
+  handleUpdateStoryInfo,
+  handleUpdateSlug,
+  inputValues,
+}) => {
   return (
     <Main>
       <_StoryPreview>
         <StoryPreview />
       </_StoryPreview>
       <_MandatoryStoryInfo>
-        <MandatoryStoryInfo />
+        <MandatoryStoryInfo
+          handleUpdateStoryInfo={handleUpdateStoryInfo}
+          handleUpdateSlug={handleUpdateSlug}
+          inputValues={inputValues}
+        />
       </_MandatoryStoryInfo>
       <PanelContainer>
         <Text>{__('Panels go here', 'web-stories')}</Text>
@@ -85,3 +95,9 @@ const MainContent = () => {
 };
 
 export default MainContent;
+
+MainContent.propTypes = {
+  handleUpdateStoryInfo: PropTypes.func,
+  handleUpdateSlug: PropTypes.func,
+  inputValues: MANDATORY_INPUT_VALUE_TYPES, // update types when panel is figured out
+};
