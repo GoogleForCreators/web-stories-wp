@@ -169,8 +169,8 @@ jobs:
           git status
           git log -n 1
           git show --pretty=%gd --stat
-      env:
-        PACKAGE_VERSION: ${{ needs.prepare.outputs.package_version }}
+        env:
+          PACKAGE_VERSION: ${{ needs.prepare.outputs.package_version }}
 
       # Dry-run releasing
       - name: Dry-run production release
