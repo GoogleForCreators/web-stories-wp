@@ -46,7 +46,8 @@
     "history": "^5.2.0",
     "prop-types": "^15.8.1",
     "query-string": "^7.1.0",
-    "styled-components": "^5.3.3"
+    "styled-components": "^5.3.3",
+    "stylis-plugin-rtl": "^1.0.0"
   },
   "devDependencies": {
     "@googleforcreators/karma-fixture": "*",
@@ -55,7 +56,6 @@
     "@testing-library/react-hooks": "^7.0.2",
     "@testing-library/user-event": "^13.5.0",
     "jest": "^27.4.7",
-    "react": "^17.0.2",
-    "stylis-plugin-rtl": "^1.0.0"
+    "react": "^17.0.2"
   }
 }
