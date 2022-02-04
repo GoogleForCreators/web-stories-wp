@@ -34,7 +34,7 @@ const percyCSS = `.dashboard-grid-item-date { display: none; }`;
 const storyTitle = 'Test post lock';
 
 describe('Post Locking', () => {
-  withExperimentalFeatures(['enablePostLocking']);
+  withExperimentalFeatures(['enablePostLocking', 'enablePostLockingTakeOver']);
 
   beforeAll(async () => {
     await createNewStory();

@@ -17,10 +17,11 @@
 /**
  * External dependencies
  */
-import StoryEditor, {
+import styled from 'styled-components';
+import {
+  StoryEditor,
   InterfaceSkeleton,
 } from '@googleforcreators/story-editor';
-import styled from 'styled-components';
 
 /**
  * Internal dependencies

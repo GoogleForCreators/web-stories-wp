@@ -13,12 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-import { waitFor } from '@testing-library/react';
-
 /**
  * Internal dependencies
  */
@@ -73,9 +67,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
 
       // Enter edit-mode
       await data.fixture.events.keyboard.press('Enter');
-      await waitFor(() =>
-        data.fixture.querySelector('[data-testid="textEditor"]')
-      );
+      await data.fixture.screen.findByTestId('textEditor');
 
       await setFontSize('30');
 
@@ -161,7 +153,6 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
 
       // We have to open the color picker, as there's no direct hex input when "multiple"
       await data.fixture.events.click(fontColor.button);
-      await waitFor(() => fontColor.picker);
       await data.fixture.events.click(fontColor.picker.applySavedColor('#eee'));
       // Wait for debounce in color picker (100ms)
       await data.fixture.events.sleep(100);

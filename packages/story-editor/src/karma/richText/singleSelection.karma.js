@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { waitFor } from '@testing-library/react';
-
-/**
  * Internal dependencies
  */
 import { Fixture } from '../fixture';
@@ -72,8 +67,11 @@ describe('Styling single text field', () => {
 
       // Toggle italic, underline, and uppercase
       await data.fixture.events.click(italic.button);
+      await data.fixture.events.sleep(300);
       await data.fixture.events.click(underline.button, { clickCount: 1 });
+      await data.fixture.events.sleep(300);
       await data.fixture.events.click(uppercase.button, { clickCount: 1 });
+      await data.fixture.events.sleep(300);
       // Set font weight (should also toggle bold, as "Black" is >700)
       await data.fixture.events.click(fontWeight.select);
       await data.fixture.events.sleep(300);
@@ -81,6 +79,7 @@ describe('Styling single text field', () => {
       await data.fixture.events.sleep(300);
       // Set letter spacing
       await data.fixture.events.click(letterSpacing, { clickCount: 3 });
+      await data.fixture.events.sleep(300);
       await data.fixture.events.keyboard.type('50');
       await data.fixture.events.keyboard.press('Enter');
       // Press escape to leave input field (does not unselect element)
@@ -88,6 +87,7 @@ describe('Styling single text field', () => {
 
       // Set color using hex input
       await data.fixture.events.click(fontColor.hex, { clickCount: 3 });
+      await data.fixture.events.sleep(300);
       await data.fixture.events.keyboard.type('A40');
       await data.fixture.events.keyboard.press('Tab');
       // Press escape to leave input field (does not unselect element)
@@ -169,7 +169,6 @@ describe('Styling single text field', () => {
       await data.fixture.events.click(await fontWeight.option('Bold'));
       await data.fixture.events.sleep(300);
       await data.fixture.events.click(fontColor.button);
-      waitFor(() => fontColor.picker);
       await data.fixture.events.click(fontColor.picker.custom);
       await data.fixture.events.click(fontColor.picker.hexButton);
       await data.fixture.events.keyboard.type('00FF00');

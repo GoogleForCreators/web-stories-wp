@@ -49,8 +49,11 @@ describe('Alignment Panel', () => {
     beforeEach(async () => {
       // Add first text element
       await fixture.events.click(fixture.editor.library.textAdd);
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
-
+      await waitFor(() => {
+        if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+          throw new Error('node not ready');
+        }
+      });
       // It will correctly be selected now
     });
 

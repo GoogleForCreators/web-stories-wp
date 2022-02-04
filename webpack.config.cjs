@@ -53,6 +53,11 @@ const isProduction = process.env.NODE_ENV === 'production';
 const mode = isProduction ? 'production' : 'development';
 
 const sharedConfig = {
+  resolve: {
+    // Fixes resolving packages in the monorepo so we use the "src" folder, not "dist".
+    // TODO: Revisit after upgrading to webpack v5 or when splitting repository.
+    mainFields: ['browser', 'module', 'main', 'source'],
+  },
   mode,
   devtool: !isProduction ? 'source-map' : undefined,
   output: {
@@ -77,7 +82,7 @@ const sharedConfig = {
       // See https://github.com/googleforcreators/web-stories-wp/pull/9001 for context.
       // TODO(#5792): Use `mangleExports` option in webpack v5 instead.
       {
-        test: require.resolve('@googleforcreators/i18n'), // eslint-disable-line node/no-extraneous-require
+        test: require.resolve('./packages/i18n/src'),
         loader: 'expose-loader',
         options: {
           exposes: [

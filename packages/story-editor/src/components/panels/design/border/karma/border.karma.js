@@ -46,7 +46,11 @@ describe('Border Panel', () => {
   describe('CUJ: Creator can Manipulate Shape: Border', () => {
     it('should allow the user to add border for text element', async () => {
       await fixture.events.click(fixture.editor.library.textAdd);
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      await waitFor(() => {
+        if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+          throw new Error('node not ready');
+        }
+      });
       const panel = fixture.editor.inspector.designPanel.border;
 
       await fixture.events.click(panel.width(), { clickCount: 3 });
@@ -90,6 +94,9 @@ describe('Border Panel', () => {
       await fixture.events.keyboard.press('Tab');
 
       await waitFor(() => {
+        if (borderColor.opacity.getAttribute('value') !== '30%') {
+          throw new Error('opacity not set yet');
+        }
         expect(borderColor.opacity.getAttribute('value')).toBe('30%');
       });
 
