@@ -77,7 +77,7 @@ function MediaGallery({ resources, onInsert, providerType, canEditMedia }) {
         layout="rows"
         photos={photos}
         renderPhoto={imageRenderer}
-        targetRowHeight={110}
+        targetRowHeight={150}
         // This should match the actual margin the element is styled with.
         spacing={PHOTO_MARGIN}
       />
