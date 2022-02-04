@@ -180,6 +180,7 @@ function Tooltip({
       // check that the tooltip isn't cutoff on the left edge of the screen.
       // right-cutoff is already taken care of with `getOffset`
       const isOverFlowingLeft = offset.popupLeft < 0;
+
       if (shouldMoveToTop && !isOverFlowingLeft) {
         setDynamicPlacement(PLACEMENT.TOP);
       } else if (shouldMoveToTop && isOverFlowingLeft) {
@@ -254,6 +255,7 @@ function Tooltip({
     },
     [onPointerLeave, resetPlacement, isDelayed, shown]
   );
+
   return (
     <>
       <Wrapper
