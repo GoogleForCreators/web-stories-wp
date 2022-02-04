@@ -30,12 +30,12 @@ import {
 import { __ } from '@googleforcreators/i18n';
 import { PatternPropType, hasGradient } from '@googleforcreators/patterns';
 import { useKeyDownEffect } from '@googleforcreators/design-system';
+import { useTransform } from '@googleforcreators/transform';
 
 /**
  * Internal dependencies
  */
 import useFocusTrapping from '../../utils/useFocusTrapping';
-import { useTransform } from '../transform';
 import useStory from '../../app/story/useStory';
 import CustomColorPicker from './customColorPicker';
 import BasicColorPicker from './basicColorPicker';

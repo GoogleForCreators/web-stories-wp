@@ -17,3 +17,4 @@
 export { default as TransformProvider } from './transformProvider';
 export { default as useTransform } from './useTransform';
 export { default as useTransformHandler } from './useTransformHandler';
+export { default as TransformContext } from './context';

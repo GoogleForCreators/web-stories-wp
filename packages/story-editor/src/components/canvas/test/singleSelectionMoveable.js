@@ -23,6 +23,7 @@ import { MockMoveable } from 'react-moveable';
 import PropTypes from 'prop-types';
 import { forwardRef } from '@googleforcreators/react';
 import { UnitsProvider } from '@googleforcreators/units';
+import { TransformProvider } from '@googleforcreators/transform';
 
 /**
  * Internal dependencies
@@ -31,7 +32,6 @@ import withOverlay from '../../overlay/withOverlay';
 import CanvasContext from '../../../app/canvas/context';
 import Selection from '../selection';
 import StoryContext from '../../../app/story/context';
-import TransformProvider from '../../transform/transformProvider';
 
 const pageSize = { width: 100, height: 100 };
 
