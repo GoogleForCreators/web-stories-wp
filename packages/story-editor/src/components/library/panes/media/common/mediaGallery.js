@@ -19,7 +19,7 @@
  */
 import { useCallback } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
-import { default as PhotoAlbum } from 'react-photo-album';
+import { default as Gallery } from 'react-photo-album';
 
 /**
  * Internal dependencies
@@ -73,7 +73,7 @@ function MediaGallery({ resources, onInsert, providerType, canEditMedia }) {
 
   return (
     <div>
-      <PhotoAlbum
+      <Gallery
         layout="rows"
         photos={photos}
         renderPhoto={imageRenderer}
