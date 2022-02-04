@@ -30,12 +30,12 @@ const Line = styled.div`
     $isHorizontal
       ? `
         width: 1px;
-        height: 86%; /* 31px out of 36px */
+        height: 89%; /* 32px out of 36px */
         margin: auto 2px; /* there's an extra 6px horizontal flexbox gap */
       `
       : `
         height: 1px;
-        margin: 2px auto; /* there's an extra 6p vertical flexbox gap */
+        margin: 2px auto; /* there's an extra 6px vertical flexbox gap */
         width: ${$isIconMenu ? 40 : 100}%;
       `}
 `;
