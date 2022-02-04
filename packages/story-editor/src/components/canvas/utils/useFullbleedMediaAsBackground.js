@@ -18,6 +18,7 @@
  */
 import isTargetCoveringContainer from '../../../utils/isTargetCoveringContainer';
 import { useStory, useCanvas } from '../../../app';
+import { MEDIA_ELEMENT_TYPES } from '../../../elements';
 
 function useFullbleedMediaAsBackground({ selectedElement }) {
   const { setBackgroundElement, isDefaultBackground } = useStory((state) => ({
@@ -35,7 +36,7 @@ function useFullbleedMediaAsBackground({ selectedElement }) {
     if (!isDefaultBackground) {
       return false;
     }
-    if (selectedElement.type !== 'image' && selectedElement.type !== 'video') {
+    if (!MEDIA_ELEMENT_TYPES.includes(selectedElement.type)) {
       return false;
     }
     if (isTargetCoveringContainer(target, fullbleedContainer)) {
