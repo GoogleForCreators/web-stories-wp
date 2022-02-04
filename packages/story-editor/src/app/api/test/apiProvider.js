@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { act, renderHook } from '@testing-library/react-hooks';
-import getAllTemplatesMock from '@googleforcreators/templates';
+import { getAllTemplates } from '@googleforcreators/templates';
 
 /**
  * Internal dependencies
@@ -45,7 +45,7 @@ describe('APIProvider', () => {
 
   it('getPageTemplates gets pageTemplates with cdnURL', async () => {
     const pageTemplates = [{ id: 'templateid' }];
-    getAllTemplatesMock.mockReturnValue(pageTemplates);
+    getAllTemplates.mockReturnValue(pageTemplates);
 
     const cdnURL = 'https://test.url';
     const { result } = renderApiProvider({
@@ -66,7 +66,7 @@ describe('APIProvider', () => {
 
   it('getPageTemplates should memoize the templates if they have already been fetched', async () => {
     const pageTemplates = [{ id: 'templateid' }];
-    getAllTemplatesMock.mockReturnValue(pageTemplates);
+    getAllTemplates.mockReturnValue(pageTemplates);
 
     const cdnURL = 'https://test.url';
     const { result } = renderApiProvider({
@@ -82,14 +82,14 @@ describe('APIProvider', () => {
       pageTemplatesResult = await result.current.actions.getPageTemplates();
     });
 
-    expect(getAllTemplatesMock).toHaveBeenCalledTimes(1);
+    expect(getAllTemplates).toHaveBeenCalledTimes(1);
     expect(pageTemplatesResult).toStrictEqual(pageTemplates);
 
     await act(async () => {
       pageTemplatesResult = await result.current.actions.getPageTemplates();
     });
 
-    expect(getAllTemplatesMock).toHaveBeenCalledTimes(1);
+    expect(getAllTemplates).toHaveBeenCalledTimes(1);
     expect(pageTemplatesResult).toStrictEqual(pageTemplates);
   });
 });
