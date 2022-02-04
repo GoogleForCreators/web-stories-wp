@@ -5,7 +5,7 @@ name: npm Release
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 3 * * 1'
+    - cron: '0 12 * * 1'
   # TODO: Just for testing. Remove after testing.
   pull_request:
     branches:
