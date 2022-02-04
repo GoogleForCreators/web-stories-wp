@@ -187,11 +187,9 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      # TODO: Re-enable once ready
       - name: Push version bumps
         run: git push origin main
 
-      # TODO: Re-enable once ready
       # Do the actual publishing to npmjs.com.
       - name: Publish packages to production
         run: npm publish --workspaces
