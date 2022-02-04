@@ -27,6 +27,7 @@ import { useCallback, useEffect, useMemo } from '@googleforcreators/react';
  */
 import { useConfig, useStory } from '../../app';
 import { updateSlug } from '../../utils/storyUpdates';
+import { useCheckpoint } from '../checklist';
 import Header from './header';
 import MainContent from './mainContent';
 import { INPUT_KEYS, REQUIRED_INPUTS } from './constants';
@@ -47,6 +48,9 @@ function PublishModal({ isOpen, onPublish, onClose }) {
     [INPUT_KEYS.TITLE]: story.title || '',
     [INPUT_KEYS.SLUG]: story.slug,
   }));
+  const openChecklist = useCheckpoint(
+    ({ actions }) => actions.onPublishDialogChecklistRequest
+  );
 
   useEffect(() => {
     if (isOpen) {
@@ -81,6 +85,12 @@ function PublishModal({ isOpen, onPublish, onClose }) {
     [inputValues]
   );
 
+  const handleReviewChecklist = useCallback(() => {
+    trackEvent('review_prepublish_checklist');
+    onClose();
+    openChecklist();
+  }, [onClose, openChecklist]);
+
   return (
     <Modal
       isOpen={isOpen}
@@ -104,6 +114,7 @@ function PublishModal({ isOpen, onPublish, onClose }) {
           inputValues={inputValues}
           handleUpdateStoryInfo={handleUpdateStoryInfo}
           handleUpdateSlug={handleUpdateSlug}
+          handleReviewChecklist={handleReviewChecklist}
         />
       </Container>
     </Modal>

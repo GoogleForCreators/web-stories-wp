@@ -21,6 +21,8 @@ import { useCallback, useState } from '@googleforcreators/react';
  * Internal dependencies
  */
 import StoryContext from '../../../app/story/context';
+import { noop } from '../../../utils/noop';
+import { CheckpointContext } from '../../checklist';
 import PublishModal from '../publishModal';
 
 export default {
@@ -55,7 +57,15 @@ export const _default = (args) => {
         },
       }}
     >
-      <PublishModal {...args} />
+      <CheckpointContext.Provider
+        value={{
+          actions: {
+            onPublishDialogChecklistRequest: noop,
+          },
+        }}
+      >
+        <PublishModal {...args} />
+      </CheckpointContext.Provider>
     </StoryContext.Provider>
   );
 };
