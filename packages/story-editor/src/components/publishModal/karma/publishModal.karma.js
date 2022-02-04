@@ -37,7 +37,6 @@ describe('Publish Story Modal', () => {
     fixture = new Fixture();
     fixture.setFlags({ enableUpdatedPublishStoryModal: true });
     await fixture.render();
-    await fixture.collapseHelpCenter();
 
     await openPublishModal();
     publishModal = await fixture.screen.findByRole('dialog', {
