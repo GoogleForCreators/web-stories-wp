@@ -1,31 +1,27 @@
 {
-	"name": "@googleforcreators/elements",
-	"description": "Provides various APIs to register & retrieve element types.",
-	"private": false,
-	"engines": {
-		"node": ">= 16",
-		"npm": ">= 7.3"
-	},
-	"exports": {
-		"default": "./src/index.js"
-	},
-	"main": "./src/index.js",
-	"type": "module",
-	"dependencies": {
-		"@googleforcreators/animation": "*",
-		"@googleforcreators/design-system": "*",
-		"@googleforcreators/i18n": "*",
-		"@googleforcreators/fonts": "*",
-		"@googleforcreators/media": "*",
-		"@googleforcreators/react": "*",
-		"@googleforcreators/rich-text": "*",
-		"@googleforcreators/patterns": "*",
-		"@googleforcreators/transform": "*",
-		"@googleforcreators/units": "*",
-		"styled-components": "^5.3.3",
-		"uuid": "^8.3.2"
-	},
-	"devDependencies": {
-		"prop-types": "^15.8.1"
-	}
+  "name": "@googleforcreators/elements",
+  "description": "Provides various APIs to register & retrieve element types.",
+  "private": false,
+  "engines": {
+    "node": ">= 16",
+    "npm": ">= 7.3"
+  },
+  "main": "dist/index.js",
+  "module": "dist-module/index.js",
+  "source": "src/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GoogleForCreators/web-stories-wp.git",
+    "directory": "packages/elements"
+  },
+  "dependencies": {
+    "@googleforcreators/design-system": "*",
+    "@googleforcreators/patterns": "*",
+    "@googleforcreators/units": "*",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {}
 }
