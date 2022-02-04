@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 
 /**
@@ -25,43 +24,9 @@ import styled from 'styled-components';
  */
 import { Layout } from '../../../../../components';
 import { VIEW_STYLE } from '../../../../../constants';
-import {
-  STORYBOOK_PAGE_SIZE,
-  formattedTemplatesArray,
-} from '../../../../../storybookUtils';
+import { formattedTemplatesArray } from '../../../../../storybookUtils';
 import { usePagePreviewSize } from '../../../../../utils';
 import Content from '..';
-
-const search = {
-  keyword: '',
-  setKeyword: action('set search'),
-};
-const view = {
-  style: VIEW_STYLE.GRID,
-  pageSize: STORYBOOK_PAGE_SIZE,
-};
-const page = {
-  value: 1,
-  set: action('set page number'),
-  requestNextPage: action('request next page clicked'),
-};
-
-const templateActions = {
-  createStoryFromTemplate: action('create story from template clicked'),
-  handleDetailsToggle: action('modal was toggled'),
-  switchToTemplateByOffset: action('switched to prev/next template'),
-};
-
-const defaultProps = {
-  allPagesFetched: false,
-  isLoading: false,
-  page: page,
-  search: search,
-  templates: formattedTemplatesArray,
-  view: view,
-  totalTemplates: 3,
-  templateActions,
-};
 
 const StorybookLayoutContainer = styled.div`
   margin-top: 40px;
@@ -71,59 +36,77 @@ const StorybookLayoutContainer = styled.div`
 export default {
   title: 'Dashboard/Views/ExploreTemplates/Content',
   component: Content,
+  args: {
+    allPagesFetched: false,
+    isLoading: false,
+    pageValue: 1,
+    searchKeyword: '',
+    templates: formattedTemplatesArray,
+    viewStyle: VIEW_STYLE.GRID,
+    totalTemplates: 3,
+  },
+  argTypes: {
+    handleDetailsToggle: { action: 'modal was toggled' },
+    switchToTemplateByOffset: { action: 'switched to prev/next template' },
+    set: { action: 'set page number' },
+    requestNextPage: { action: 'request next page clicked' },
+    setKeyword: { action: 'set search' },
+    viewStyle: { options: VIEW_STYLE, control: 'radio' },
+  },
+  parameters: {
+    controls: {
+      exclude: [
+        'pageValue',
+        'templates',
+        'page',
+        'search',
+        'view',
+        'templateActions',
+      ],
+    },
+  },
 };
-export const _default = () => {
+export const _default = (args) => {
   const { pageSize } = usePagePreviewSize({
     isGrid: true,
   });
+  const templateActions = {
+    handleDetailsToggle: args.handleDetailsToggle,
+    switchToTemplateByOffset: args.switchToTemplateByOffset,
+  };
+  const page = {
+    set: args.set,
+    requestNextPage: args.requestNextPage,
+    value: args.pageValue,
+  };
+  const search = {
+    setKeyword: args.setKeyword,
+    keyword: args.searchKeyword,
+  };
+  const view = {
+    pageSize,
+    style: args.viewStyle,
+  };
+
+  const defaultNestedProps = {
+    templateActions,
+    page,
+    search,
+    view,
+  };
 
   return (
     <Layout.Provider>
       <StorybookLayoutContainer>
-        <Content {...defaultProps} view={{ ...view, pageSize }} />
+        <Content {...args} {...defaultNestedProps} />
       </StorybookLayoutContainer>
     </Layout.Provider>
   );
 };
 
-export const AllTemplatesFetched = () => {
-  const { pageSize } = usePagePreviewSize({
-    isGrid: true,
-  });
-  return (
-    <Layout.Provider>
-      <StorybookLayoutContainer>
-        <Content
-          {...defaultProps}
-          allPagesFetched
-          view={{ ...view, pageSize }}
-        />
-      </StorybookLayoutContainer>
-    </Layout.Provider>
-  );
-};
-
-export const NoTemplates = () => {
-  return (
-    <Layout.Provider>
-      <StorybookLayoutContainer>
-        <Content {...defaultProps} allPagesFetched totalTemplates={0} />
-      </StorybookLayoutContainer>
-    </Layout.Provider>
-  );
-};
-
-export const NoSearchResults = () => {
-  return (
-    <Layout.Provider>
-      <StorybookLayoutContainer>
-        <Content
-          {...defaultProps}
-          allPagesFetched
-          totalTemplates={0}
-          search={{ ...search, keyword: 'polar bears' }}
-        />
-      </StorybookLayoutContainer>
-    </Layout.Provider>
-  );
+export const NoSearchResults = _default.bind({});
+NoSearchResults.args = {
+  allPagesFetched: true,
+  totalTemplates: 0,
+  searchKeyword: 'polar bears',
 };
