@@ -145,6 +145,7 @@ async function config(cliArgs) {
         'react-dom',
         'react-dom/server',
         /@babel\/runtime/,
+        /node_modules/,
       ]),
     ];
 
