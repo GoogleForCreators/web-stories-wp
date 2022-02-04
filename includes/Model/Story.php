@@ -2,10 +2,10 @@
 /**
  * Class Story
  *
- * @package   Google\Web_Stories\Model
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -32,8 +32,6 @@ use WP_Post;
 
 /**
  * Class Story
- *
- * @package Google\Web_Stories\Model
  */
 class Story {
 	/**
@@ -134,7 +132,6 @@ class Story {
 	 * @since 1.0.0
 	 *
 	 * @param int|null|WP_Post $_post Post id or Post object.
-	 *
 	 * @return bool
 	 */
 	public function load_from_post( $_post ): bool {

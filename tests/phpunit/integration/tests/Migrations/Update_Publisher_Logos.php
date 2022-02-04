@@ -18,13 +18,11 @@
 namespace Google\Web_Stories\Tests\Integration\Migrations;
 
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
-use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
  * Class Update_Publisher_Logos
  *
  * @coversDefaultClass \Google\Web_Stories\Migrations\Update_Publisher_Logos
- *
  */
 class Update_Publisher_Logos extends DependencyInjectedTestCase {
 	public function tear_down() {

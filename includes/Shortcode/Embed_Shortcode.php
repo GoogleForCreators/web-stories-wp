@@ -2,10 +2,10 @@
 /**
  * Class Embed_Shortcode.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -34,8 +34,6 @@ use Google\Web_Stories\Embed_Base;
 class Embed_Shortcode extends Embed_Base {
 	/**
 	 * Shortcode name.
-	 *
-	 * @var string
 	 */
 	const SHORTCODE_NAME = 'web_stories_embed';
 
@@ -57,7 +55,6 @@ class Embed_Shortcode extends Embed_Base {
 	 *
 	 * @param array  $attributes Shortcode attributes.
 	 * @param string $content Shortcode content.
-	 *
 	 * @return string Rendered Shortcode
 	 */
 	public function render_shortcode( array $attributes, $content ): string { // phpcs:ignore VariableAnalysis.CodeAnalysis.VariableAnalysis.UnusedVariable

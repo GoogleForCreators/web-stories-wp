@@ -308,11 +308,11 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	/**
 	 * Testing the revisions_to_keep() method.
 	 *
-	 * @dataProvider data_test_revisions_to_keep
-	 * @covers ::revisions_to_keep
-	 *
 	 * @param int $num      Number of revisions
 	 * @param int $expected Expected string of CSS rules.
+	 *
+	 * @dataProvider data_test_revisions_to_keep
+	 * @covers ::revisions_to_keep
 	 */
 	public function test_revisions_to_keep( $num, $expected ) {
 		$this->assertSame( $expected, $this->instance->revisions_to_keep( $num ) );

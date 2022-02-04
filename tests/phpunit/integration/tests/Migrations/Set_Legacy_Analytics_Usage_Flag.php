@@ -18,13 +18,11 @@
 namespace Google\Web_Stories\Tests\Integration\Migrations;
 
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
-use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
  * Class Set_Legacy_Analytics_Usage_Flag
  *
  * @coversDefaultClass \Google\Web_Stories\Migrations\Set_Legacy_Analytics_Usage_Flag
- *
  */
 class Set_Legacy_Analytics_Usage_Flag extends DependencyInjectedTestCase {
 	/**

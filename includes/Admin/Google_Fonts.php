@@ -4,10 +4,10 @@
  *
  * Registers Google fonts for admin screens.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -37,14 +37,10 @@ use WP_Styles;
  * Class Google_Fonts
  *
  * Enqueue Google Fonts stylesheet.
- *
- * @package Google\Web_Stories\Admin
  */
 class Google_Fonts implements Conditional, Service, Registerable {
 	/**
 	 * Script handle.
-	 *
-	 * @var string
 	 */
 	const SCRIPT_HANDLE = 'web-stories-fonts';
 
@@ -76,7 +72,6 @@ class Google_Fonts implements Conditional, Service, Registerable {
 	 * @since 1.8.0
 	 *
 	 * @param WP_Styles $wp_styles WP_Styles instance.
-	 *
 	 * @return void
 	 */
 	public function register_style( WP_Styles $wp_styles ) {

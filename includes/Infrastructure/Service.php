@@ -2,10 +2,10 @@
 /**
  * Interface Service.
  *
- * @package   Google\Web_Stories
+ * @link      https://www.mwpd.io/
+ *
  * @copyright 2019 Alain Schlesser
  * @license   MIT
- * @link      https://www.mwpd.io/
  */
 
 /**
@@ -24,8 +24,9 @@ namespace Google\Web_Stories\Infrastructure;
  * assembling a plugin more systematic and scalable and lowers the cognitive
  * load when the code base increases in size.
  *
- * @since 1.6.0
  * @internal
+ *
+ * @since 1.6.0
  */
 interface Service {
 
