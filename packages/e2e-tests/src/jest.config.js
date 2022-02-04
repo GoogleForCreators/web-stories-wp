@@ -29,6 +29,7 @@ process.env.WP_PASSWORD = WP_PASSWORD;
 process.env.WP_BASE_URL = WP_BASE_URL;
 
 export default {
+  resolver: '@web-stories-wp/jest-resolver',
   preset: 'jest-puppeteer',
   transform: {
     '^.+\\.[jt]sx?$': 'babel-jest',
