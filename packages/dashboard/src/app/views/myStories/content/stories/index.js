@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 import { FlagsProvider } from 'flagged';
 import { SnackbarProvider } from '@googleforcreators/design-system';
@@ -31,50 +30,9 @@ import {
   VIEW_STYLE,
   STORY_STATUS,
 } from '../../../../../constants';
-import {
-  formattedStoriesArray,
-  STORYBOOK_PAGE_SIZE,
-} from '../../../../../storybookUtils';
+import { formattedStoriesArray } from '../../../../../storybookUtils';
 import { usePagePreviewSize } from '../../../../../utils';
 import Content from '..';
-import StoriesView from '../storiesView';
-
-export default {
-  title: 'Dashboard/Views/MyStories/Content',
-  component: Content,
-};
-
-const filter = {
-  status: 'all',
-  value: STORY_STATUS.ALL,
-  set: action('set filter'),
-};
-const sort = {
-  value: STORY_SORT_OPTIONS.NAME,
-  set: action('set sort'),
-  direction: SORT_DIRECTION.ASC,
-  setDirection: action('set sort direction'),
-};
-const search = {
-  keyword: '',
-  setKeyword: action('set search'),
-};
-const view = {
-  style: VIEW_STYLE.GRID,
-  toggleStyle: action('toggle view style'),
-  pageSize: STORYBOOK_PAGE_SIZE,
-};
-const page = {
-  value: 1,
-  set: action('set page number'),
-  requestNextPage: action('request next page clicked'),
-};
-
-const storyActions = {
-  duplicateStory: action('duplicate story clicked'),
-  trashStory: action('trash story clicked'),
-  updateStory: action('update story clicked'),
-};
 
 // Prevents storybook from shouting a bunch of console warnings about duplicate ids
 function forceUniqueIds(stories) {
@@ -89,136 +47,136 @@ const longerListOfStories = forceUniqueIds(
     .concat(formattedStoriesArray)
 );
 
-const defaultProps = {
-  allPagesFetched: false,
-  filter: filter,
-  isLoading: false,
-  page: page,
-  search: search,
-  sort: sort,
-  stories: longerListOfStories,
-  storyActions: storyActions,
-  view: view,
+export default {
+  title: 'Dashboard/Views/MyStories/Content',
+  component: Content,
+  args: {
+    filterStatus: 'all',
+    statusValue: STORY_STATUS.ALL,
+    sortValue: STORY_SORT_OPTIONS.NAME,
+    direction: SORT_DIRECTION.ASC,
+    keyword: '',
+    style: VIEW_STYLE.GRID,
+    stories: longerListOfStories,
+    allPagesFetched: false,
+    thumbnailMode: false,
+    isGrid: true,
+    enablePostLocking: false,
+    isLoading: false,
+    canViewDefaultTemplates: true,
+  },
+  argTypes: {
+    setFilter: { action: 'set filter' },
+    setSort: { action: 'set sort' },
+    setDirection: { action: 'set sort direction' },
+    setKeyword: { action: 'set search' },
+    toggleStyle: { action: 'toggle view style' },
+    statusValue: { options: STORY_STATUS, control: 'select' },
+    sortValue: {
+      options: STORY_SORT_OPTIONS,
+      control: 'radio',
+      name: 'Story sort options',
+    },
+    direction: { options: SORT_DIRECTION, control: 'radio' },
+    style: { options: VIEW_STYLE, control: 'radio' },
+    setPage: { action: 'set page number' },
+    requestNextPage: { action: 'request next page clicked' },
+    duplicateStory: { action: 'duplicate story clicked' },
+    trashStory: { action: 'trash story clicked' },
+    updateStory: { action: 'update story clicked' },
+  },
+  parameters: {
+    controls: {
+      include: [
+        'style',
+        'requestNextPage',
+        'duplicateStory',
+        'updateStory',
+        'trashStory',
+        'enablePostLocking',
+        'isGrid',
+        'isThumbnailMode',
+        'isLoading',
+        'Story sort options',
+        'direction',
+        'allPagesFetched',
+        'statusValue',
+        'canViewDefaultTemplates',
+      ],
+    },
+  },
 };
 
 const StorybookLayoutContainer = styled.div`
   margin-top: 40px;
   height: 100vh;
 `;
-export const _default = () => {
+export const _default = (args) => {
   const { pageSize } = usePagePreviewSize({
-    isGrid: true,
+    isGrid: args.isGrid,
+    thumbnailMode: args.thumbnailMode,
   });
+  const filter = {
+    status: args.filterStatus,
+    value: args.statusValue,
+    set: args.setFilter,
+  };
+  const sort = {
+    value: args.sortValue,
+    direction: args.direction,
+    set: args.setSort,
+    setDirection: args.setDirection,
+  };
+  const search = {
+    keyword: args.keyword,
+    setKeyword: args.setKeyword,
+  };
+  const view = {
+    style: args.style,
+    toggleStyle: args.toggleStyle,
+    pageSize,
+  };
+  const page = {
+    value: 1,
+    set: args.setPage,
+    requestNextPage: args.requestNextPage,
+  };
+  const storyActions = {
+    duplicateStory: args.duplicateStory,
+    trashStory: args.trashStory,
+    updateStory: args.updateStory,
+  };
 
+  const defaultProps = {
+    allPagesFetched: args.allPagesFetched,
+    filter: filter,
+    isLoading: args.isLoading,
+    page: page,
+    search: search,
+    sort: sort,
+    stories: args.stories,
+    storyActions: storyActions,
+    view: view,
+  };
   return (
-    <SnackbarProvider>
-      <Layout.Provider>
-        <StorybookLayoutContainer>
-          <Content {...defaultProps} view={{ ...view, pageSize }} />
-        </StorybookLayoutContainer>
-      </Layout.Provider>
-    </SnackbarProvider>
+    <FlagsProvider features={{ ...args.enablePostLocking }}>
+      <SnackbarProvider>
+        <Layout.Provider>
+          <StorybookLayoutContainer>
+            <Content {...args} {...defaultProps} />
+          </StorybookLayoutContainer>
+        </Layout.Provider>
+      </SnackbarProvider>
+    </FlagsProvider>
   );
 };
 
-export const NoStories = () => (
-  <Layout.Provider>
-    <SnackbarProvider>
-      <StorybookLayoutContainer>
-        <Content {...defaultProps} stories={[]} />
-      </StorybookLayoutContainer>
-    </SnackbarProvider>
-  </Layout.Provider>
-);
-
-export const AllDataFetched = () => {
-  const { pageSize } = usePagePreviewSize({
-    isGrid: true,
-  });
-  return (
-    <SnackbarProvider>
-      <Layout.Provider>
-        <StorybookLayoutContainer>
-          <Content
-            {...defaultProps}
-            allPagesFetched
-            view={{ ...view, pageSize }}
-          />
-        </StorybookLayoutContainer>
-      </Layout.Provider>
-    </SnackbarProvider>
-  );
+export const NoStories = _default.bind({});
+NoStories.args = {
+  stories: [],
 };
-
-export const AllDataFetchedAsList = () => {
-  const { pageSize } = usePagePreviewSize({
-    thumbnailMode: true,
-  });
-  return (
-    <SnackbarProvider>
-      <Layout.Provider>
-        <StorybookLayoutContainer>
-          <Content
-            {...defaultProps}
-            allPagesFetched
-            view={{ ...view, style: VIEW_STYLE.LIST, pageSize }}
-          />
-        </StorybookLayoutContainer>
-      </Layout.Provider>
-    </SnackbarProvider>
-  );
-};
-
-export const _StoriesViewGrid = () => {
-  const { pageSize } = usePagePreviewSize({
-    isGrid: true,
-  });
-  return (
-    <SnackbarProvider>
-      <StoriesView
-        filterValue={STORY_STATUS.ALL}
-        sort={sort}
-        storyActions={storyActions}
-        stories={formattedStoriesArray}
-        view={{ ...view, pageSize }}
-      />
-    </SnackbarProvider>
-  );
-};
-
-export const _StoriesViewList = () => (
-  <FlagsProvider features={{ enablePostLocking: true }}>
-    <SnackbarProvider>
-      <StoriesView
-        filterValue={STORY_STATUS.ALL}
-        sort={sort}
-        storyActions={storyActions}
-        stories={formattedStoriesArray}
-        view={{ ...view, style: VIEW_STYLE.LIST }}
-      />
-    </SnackbarProvider>
-  </FlagsProvider>
-);
-
-export const NoSearchResults = () => {
-  const { pageSize } = usePagePreviewSize({
-    isGrid: true,
-  });
-  return (
-    <SnackbarProvider>
-      <Layout.Provider>
-        <StorybookLayoutContainer>
-          <Content
-            {...defaultProps}
-            stories={[]}
-            search={{
-              keyword: 'koalas',
-            }}
-            allPagesFetched
-            view={{ ...view, pageSize }}
-          />
-        </StorybookLayoutContainer>
-      </Layout.Provider>
-    </SnackbarProvider>
-  );
+export const NoSearchResult = _default.bind({});
+NoSearchResult.args = {
+  stories: [],
+  keyword: 'koalas',
 };

@@ -47,7 +47,11 @@ export default {
     'true' === process.env.CI
       ? '@web-stories-wp/jest-parallel-sequencer'
       : undefined,
-  setupFilesAfterEnv: ['jest-extended/all', '<rootDir>/tests/js/jest.setup'],
+  setupFilesAfterEnv: [
+    'jest-extended/all',
+    '<rootDir>/tests/js/jest.setup',
+    '@wordpress/jest-console',
+  ],
   testPathIgnorePatterns: [
     '<rootDir>/.git',
     '<rootDir>/build',
@@ -62,6 +66,7 @@ export default {
     'testUtils',
     '_utils',
     'types.js',
+    'rollup.config.js',
   ],
   coverageReporters: ['lcov'],
   coverageDirectory: '<rootDir>/build/logs',
