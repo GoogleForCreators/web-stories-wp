@@ -44,7 +44,7 @@ jobs:
       - name: Bundle packages
         run: npm run bundle
 
-      # For the time being, using incremental versions like v0.1.202111302140
+      # For the time being, using incremental versions like 0.1.202111302140
       # `npm version` updates all packages, even the ones we don't intend to publish.
       # To address this, we undo the version change for private packages.
       # We're doing the commit ourselves since we only need it later on and
@@ -149,8 +149,10 @@ jobs:
       # For the time being, using incremental versions like v0.1.202111302140
       # `npm version` updates all packages, even the ones we don't intend to publish.
       # To address this, we undo the version change for private packages.
-      # We're doing the commit ourselves since committing doesn't work properly when using workspaces.
+      # We're doing the commit ourselves since committing doesn't yet work properly when using workspaces.
       # See https://github.com/npm/cli/issues/4017
+      # Creates tags like @googleforcreators/<packagename>@0.1.202111302140 for *every* package,
+      # e.g. @googleforcreators/dashboard@0.1.202111302140
       - name: Commit version bumps
         run: |
           OUTPUT=$(npm version --no-git-tag-version --workspaces "0.1.$(date -u +%Y%m%d%H%M)")
@@ -164,8 +166,14 @@ jobs:
             fi
           done
           git add packages/*/package.json
-          git commit -m "Tagging npm package version $NEW_VERSION"
-          git tag $NEW_VERSION
+          git commit -m "Releasing npm packages version $NEW_VERSION"
+
+          PUBLIC_PACKAGES=$(jq -r 'select(.private == false) | .name' $(find packages -name "package.json"))
+          for package in $PUBLIC_PACKAGES; do
+            echo $package
+            git tag "$package@$NEW_VERSION"
+          done
+
           git status
           git log -n 1
           git show --pretty=%gd --stat
@@ -176,7 +184,7 @@ jobs:
       - name: Dry-run production release
         run: npm publish --workspaces --dry-run
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISHING_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
 # TODO: Re-enable once ready
 #      - name: Push version bumps
@@ -187,5 +195,5 @@ jobs:
 #      - name: Publish packages to production
 #        run: npm publish --workspaces
 #        env:
-#          NODE_AUTH_TOKEN: ${{ secrets.NPM_PUBLISHING_TOKEN }}
+#          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
