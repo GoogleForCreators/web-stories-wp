@@ -31,6 +31,8 @@ SubMenuContainer.propTypes = {
   position: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
 };
 
+export const DEFAULT_DISPLACEMENT = 210;
+
 export const SUB_MENU_ARIA_LABEL = __('Select a layer', 'web-stories');
 
 export const MenuPropType = {

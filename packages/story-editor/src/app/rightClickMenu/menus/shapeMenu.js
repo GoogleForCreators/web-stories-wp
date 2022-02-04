@@ -38,7 +38,12 @@ import {
 import useLayerSelect from '../useLayerSelect';
 import { useStory } from '../../..';
 import useRightClickMenu from '../useRightClickMenu';
-import { MenuPropType, SubMenuContainer, SUB_MENU_ARIA_LABEL } from './shared';
+import {
+  DEFAULT_DISPLACEMENT,
+  MenuPropType,
+  SubMenuContainer,
+  SUB_MENU_ARIA_LABEL,
+} from './shared';
 
 function ShapeMenu({ parentMenuRef }) {
   const { copiedElementType, selectedElementType } = useStory(({ state }) => ({
@@ -81,7 +86,9 @@ function ShapeMenu({ parentMenuRef }) {
           <SubMenuContainer
             ref={subMenuRef}
             position={{
-              x: (parentMenuRef.current.firstChild?.offsetWidth || 210) + 2,
+              x:
+                (parentMenuRef.current.firstChild?.offsetWidth ||
+                  DEFAULT_DISPLACEMENT) + 2,
               y: 0,
             }}
           >

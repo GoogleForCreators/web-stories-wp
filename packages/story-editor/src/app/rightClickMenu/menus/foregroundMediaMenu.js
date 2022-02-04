@@ -39,7 +39,12 @@ import { useLocalMedia } from '../..';
 import useVideoTrim from '../../../components/videoTrim/useVideoTrim';
 import useRightClickMenu from '../useRightClickMenu';
 import useLayerSelect from '../useLayerSelect';
-import { MenuPropType, SubMenuContainer, SUB_MENU_ARIA_LABEL } from './shared';
+import {
+  DEFAULT_DISPLACEMENT,
+  MenuPropType,
+  SubMenuContainer,
+  SUB_MENU_ARIA_LABEL,
+} from './shared';
 
 function ForegroundMediaMenu({ parentMenuRef }) {
   const { copiedElementType, selectedElement } = useStory(({ state }) => ({
@@ -108,7 +113,9 @@ function ForegroundMediaMenu({ parentMenuRef }) {
           <SubMenuContainer
             ref={subMenuRef}
             position={{
-              x: (parentMenuRef.current.firstChild?.offsetWidth || 210) + 2,
+              x:
+                (parentMenuRef.current.firstChild?.offsetWidth ||
+                  DEFAULT_DISPLACEMENT) + 2,
               y: 0,
             }}
           >
