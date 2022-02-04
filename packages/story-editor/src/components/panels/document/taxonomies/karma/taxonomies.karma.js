@@ -432,11 +432,8 @@ describe('Taxonomies Panel', () => {
       await fixture.events.focus(tagsInput);
       await fixture.events.keyboard.type(tag1Name);
       await fixture.events.keyboard.press('Enter');
-      await waitFor(
-        () =>
-          fixture.screen.getAllByTestId(/^flat-term-token/).length ===
-          initialTagsLength + 1
-      );
+      let tags = await fixture.screen.findAllByTestId(/^flat-term-token/);
+      await expect(tags.length).toBe(initialTagsLength + 1);
       // See that terms are persisted on the story
       await waitFor(async () => {
         currentStoryTerms = await getStoryTerms();
@@ -447,11 +444,8 @@ describe('Taxonomies Panel', () => {
       // enter in a second tag
       await fixture.events.keyboard.type(tag2Name);
       await fixture.events.keyboard.press('Enter');
-      await waitFor(
-        () =>
-          fixture.screen.getAllByTestId(/^flat-term-token/).length ===
-          initialTagsLength + 2
-      );
+      tags = await fixture.screen.findAllByTestId(/^flat-term-token/);
+      await expect(tags.length).toBe(initialTagsLength + 2);
       // See that terms are persisted on the story
       await waitFor(async () => {
         currentStoryTerms = await getStoryTerms();

@@ -22,7 +22,6 @@ import { getTimeTracker, trackError } from '@googleforcreators/tracking';
 /**
  * Internal dependencies
  */
-// eslint-disable-next-line import/default
 import Worker from './generateBlurhash.worker';
 
 const getImageData = (image) => {

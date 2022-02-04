@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { waitFor, within } from '@testing-library/react';
+import { within } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -78,7 +78,7 @@ describe('Help Center integration', () => {
       );
       expect(exposedCropTip).toBeDefined();
 
-      waitFor(() => expect(toggleButton).toHaveTextContent('6'));
+      expect(toggleButton).toHaveTextContent('6');
     });
   });
 
@@ -127,19 +127,17 @@ describe('Help Center integration', () => {
       let clickCount = 1;
       const totalTipCount = Object.keys(TIPS).length;
       while (clickCount <= totalTipCount) {
-        // eslint-disable-next-line no-loop-func
-        waitFor(() => {
-          expect(toggleButton).toHaveTextContent(
-            `${7 - clickCount <= 0 ? '' : 7 - clickCount}`
-          );
-        });
+        expect(toggleButton).toHaveTextContent(
+          `${7 - clickCount <= 0 ? '' : 7 - clickCount}`
+        );
+
         // eslint-disable-next-line no-await-in-loop
         await fixture.events.click(nextButton);
         clickCount++;
       }
 
       // disabled is null before this, we're just seeing it's present.
-      waitFor(() => expect(nextButton.getAttribute('disabled')).toBe(''));
+      expect(nextButton.getAttribute('disabled')).toBe('');
 
       // now that we have gone through all the tips we should see a "done" screen
       expect(
