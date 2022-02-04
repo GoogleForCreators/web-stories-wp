@@ -23,6 +23,7 @@ import styled, { css } from 'styled-components';
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import { useUnits } from '@googleforcreators/units';
 import { StoryAnimation } from '@googleforcreators/animation';
+import { useTransformHandler } from '@googleforcreators/transform';
 
 /**
  * Internal dependencies
@@ -35,7 +36,6 @@ import {
 } from '../../elements/shared';
 import WithMask from '../../masks/display';
 import StoryPropTypes from '../../types';
-import { useTransformHandler } from '../transform';
 import useColorTransformHandler from '../../elements/shared/useColorTransformHandler';
 import {
   getBorderPositionCSS,

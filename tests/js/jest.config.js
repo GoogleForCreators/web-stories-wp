@@ -62,6 +62,7 @@ export default {
     'testUtils',
     '_utils',
     'types.js',
+    'rollup.config.js',
   ],
   coverageReporters: ['lcov'],
   coverageDirectory: '<rootDir>/build/logs',

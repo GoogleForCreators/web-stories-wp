@@ -21,10 +21,7 @@ import {
   generatePatternStyles,
   convertToCSS,
 } from '@googleforcreators/patterns';
-/**
- * Internal dependencies
- */
-import { useTransformHandler } from '../../components/transform';
+import { useTransformHandler } from '@googleforcreators/transform';
 
 function useColorTransformHandler({
   id,

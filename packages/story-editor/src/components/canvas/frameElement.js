@@ -26,6 +26,7 @@ import {
   memo,
 } from '@googleforcreators/react';
 import { useUnits } from '@googleforcreators/units';
+import { useTransformHandler } from '@googleforcreators/transform';
 import PropTypes from 'prop-types';
 
 /**
@@ -40,7 +41,6 @@ import {
 } from '../../elements/shared';
 import WithMask from '../../masks/frame';
 import WithLink from '../elementLink/frame';
-import { useTransformHandler } from '../transform';
 import { getElementMask } from '../../masks';
 import { MaskTypes } from '../../masks/constants';
 import useDoubleClick from '../../utils/useDoubleClick';

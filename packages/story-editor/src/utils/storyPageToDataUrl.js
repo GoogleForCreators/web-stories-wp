@@ -30,13 +30,13 @@ import {
 } from '@googleforcreators/units';
 import styled, { ThemeProvider } from 'styled-components';
 import { generatePatternStyles } from '@googleforcreators/patterns';
+import { TransformProvider } from '@googleforcreators/transform';
 
 /**
  * Internal dependencies
  */
 import { FontProvider } from '../app/font';
 import DisplayElement from '../components/canvas/displayElement';
-import { TransformProvider } from '../components/transform';
 
 const Page = styled.div`
   display: block;
