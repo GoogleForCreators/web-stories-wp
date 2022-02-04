@@ -42,7 +42,6 @@
     "styled-components": "^5.3.3"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^6.3.6",
     "@testing-library/react": "^12.1.2",
     "@testing-library/react-hooks": "^7.0.1",
     "mockdate": "^3.0.5",

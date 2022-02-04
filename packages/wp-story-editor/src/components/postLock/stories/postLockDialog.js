@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
-
-/**
  * Internal dependencies
  */
 import PostLockDialog from '../postLockDialog';
@@ -28,18 +23,26 @@ export default {
   title: 'Stories Editor/Components/Dialog/Post Lock Dialog',
   component: PostLockDialog,
   args: {
-    user: {
-      name: 'Matt Mullenweg',
-      avatar:
-        'http://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?size=48',
-    },
+    name: 'Matt Mullenweg',
+    avatar:
+      'http://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?size=48',
     dashboardLink: 'http://www.example.com/dashboard',
     previewLink: 'http://www.example.com/preview',
     showTakeOver: false,
     isOpen: true,
   },
+  argTypes: {
+    onClose: { action: 'onClose' },
+  },
+  parameters: {
+    controls: { exclude: ['user'] },
+  },
 };
 
 export const _default = (args) => {
-  return <PostLockDialog onClose={action('closed')} {...args} />;
+  const user = {
+    name: args.name,
+    avatar: args.avatar,
+  };
+  return <PostLockDialog user={user} {...args} />;
 };
