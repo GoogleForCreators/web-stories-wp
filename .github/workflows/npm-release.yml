@@ -166,16 +166,29 @@ jobs:
             fi
           done
           git add packages/*/package.json
+
+          echo "Committing version bump"
+          echo
+
           git commit -m "Releasing npm packages version $NEW_VERSION"
+
+          echo "Adding tags"
+          echo
 
           PUBLIC_PACKAGES=$(jq -r 'select(.private == false) | .name' $(find packages -name "package.json"))
           for package in $PUBLIC_PACKAGES; do
-            echo $package
+            echo "Adding tag: $package@$NEW_VERSION"
+            echo
+
             git tag "$package@$NEW_VERSION"
           done
 
+          echo "Result:"
+          echo
+
           git status
           git log -n 1
+          git tag --points-at HEAD
           git show --pretty=%gd --stat
         env:
           PACKAGE_VERSION: ${{ needs.prepare.outputs.package_version }}
