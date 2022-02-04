@@ -29,13 +29,16 @@ import {
 import PropTypes from 'prop-types';
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import { useUnits } from '@googleforcreators/units';
+import {
+  useTransformHandler,
+  useTransform,
+} from '@googleforcreators/transform';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../app/story';
 import { useFont } from '../../app/font';
-import { useTransform, useTransformHandler } from '../../components/transform';
 import RichTextEditor from '../../components/richText/editor';
 import { getHTMLInfo } from '../../components/richText/htmlManipulation';
 import {
