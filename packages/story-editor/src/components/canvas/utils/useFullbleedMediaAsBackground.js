@@ -20,9 +20,10 @@ import isTargetCoveringContainer from '../../../utils/isTargetCoveringContainer'
 import { useStory, useCanvas } from '../../../app';
 
 function useFullbleedMediaAsBackground({ selectedElement }) {
-  const { setBackgroundElement, currentPage } = useStory((state) => ({
+  const { setBackgroundElement, isDefaultBackground } = useStory((state) => ({
     setBackgroundElement: state.actions.setBackgroundElement,
-    currentPage: state.state.currentPage,
+    isDefaultBackground:
+      state.state.currentPage?.elements[0]?.isDefaultBackground,
   }));
   const { fullbleedContainer } = useCanvas(
     ({ state: { fullbleedContainer } }) => ({
@@ -31,7 +32,7 @@ function useFullbleedMediaAsBackground({ selectedElement }) {
   );
 
   const handleFullbleedMediaAsBackground = (target) => {
-    if (!currentPage?.elements[0]?.isDefaultBackground) {
+    if (!isDefaultBackground) {
       return false;
     }
     if (selectedElement.type !== 'image' && selectedElement.type !== 'video') {

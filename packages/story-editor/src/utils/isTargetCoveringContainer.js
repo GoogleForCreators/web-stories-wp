@@ -33,14 +33,6 @@ function isTargetCoveringContainer(target, container) {
   const containerArea = containerBox.width * containerBox.height;
   const coverRatio = intersectionArea / containerArea;
 
-  // We can also use unionRatio, the difference is: when the element is bigger
-  // than the container then coverRatio = 1, while unionRatio will be < 1 and only
-  // be 1 if they both are equal in size/position.
-  // const targetArea = targetBox.width * targetBox.height;
-  // const unionArea = targetArea + containerArea - intersectionArea;
-  // const unionRatio = intersectionArea / unionArea;
-  // return unionArea > 0.99;
-
   return coverRatio > 0.995;
 }
 
