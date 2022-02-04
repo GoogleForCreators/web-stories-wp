@@ -47,7 +47,11 @@ export default {
     'true' === process.env.CI
       ? '@web-stories-wp/jest-parallel-sequencer'
       : undefined,
-  setupFilesAfterEnv: ['jest-extended/all', '<rootDir>/tests/js/jest.setup'],
+  setupFilesAfterEnv: [
+    'jest-extended/all',
+    '<rootDir>/tests/js/jest.setup',
+    '@wordpress/jest-console',
+  ],
   testPathIgnorePatterns: [
     '<rootDir>/.git',
     '<rootDir>/build',
