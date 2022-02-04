@@ -27,11 +27,15 @@ import { noop, useGlobalIsKeyPressed } from '@googleforcreators/design-system';
 import { useStory } from '../../app/story';
 import { useTransform } from '../transform';
 import getElementProperties from '../canvas/utils/getElementProperties';
-import { getDefinitionForType } from '../../elements';
+import {
+  ELEMENT_TYPES,
+  getDefinitionForType,
+  MEDIA_ELEMENT_TYPES,
+} from '../../elements';
 import Context from './context';
 
-const DROP_SOURCE_ALLOWED_TYPES = ['image', 'gif', 'video'];
-const DROP_TARGET_ALLOWED_TYPES = ['image', 'gif', 'video', 'shape'];
+const DROP_SOURCE_ALLOWED_TYPES = MEDIA_ELEMENT_TYPES;
+const DROP_TARGET_ALLOWED_TYPES = [...MEDIA_ELEMENT_TYPES, ELEMENT_TYPES.SHAPE];
 
 const isDropSource = (type) => DROP_SOURCE_ALLOWED_TYPES.includes(type);
 const isDropTarget = (type) => DROP_TARGET_ALLOWED_TYPES.includes(type);
