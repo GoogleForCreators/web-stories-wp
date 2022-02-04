@@ -33,6 +33,7 @@ const INITIAL_STATE = {
   selection: [],
   story: {},
   animationState: STORY_ANIMATION_STATE.RESET,
+  copiedElementState: {},
 };
 
 /**
