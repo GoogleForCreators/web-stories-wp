@@ -133,10 +133,6 @@ export const FIXTURE_DEFAULT_CONFIG = {
     weekStartsOn: 0,
   },
   flags: {},
-  styleConstants: {
-    topOffset: 0,
-    leftOffset: 0,
-  },
   MediaUpload,
 };
 

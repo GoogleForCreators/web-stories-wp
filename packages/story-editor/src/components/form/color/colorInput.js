@@ -157,10 +157,7 @@ const ColorInput = forwardRef(function ColorInput(
       isEyedropperActive,
     })
   );
-  const {
-    isRTL,
-    styleConstants: { topOffset },
-  } = useConfig();
+  const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
   const {
     refs: { inspector },
   } = useInspector();

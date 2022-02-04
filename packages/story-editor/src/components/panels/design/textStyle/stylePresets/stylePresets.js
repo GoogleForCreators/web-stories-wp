@@ -110,10 +110,7 @@ function PresetPanel({ pushUpdate }) {
   } = useInspector();
   const buttonRef = useRef(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const {
-    isRTL,
-    styleConstants: { topOffset },
-  } = useConfig();
+  const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
   const { textStyles } = globalStoryStyles;
   const hasPresets = textStyles.length > 0;
 

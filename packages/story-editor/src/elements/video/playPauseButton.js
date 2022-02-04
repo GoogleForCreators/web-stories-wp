@@ -124,10 +124,7 @@ function PlayPauseButton({
   element,
   videoRef = null,
 }) {
-  const {
-    isRTL,
-    styleConstants: { topOffset },
-  } = useConfig();
+  const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
   const hasVideoSrc = Boolean(element.resource.src);
   const isPlayAbove =
     element.width < PLAY_ABOVE_BREAKPOINT_WIDTH ||
