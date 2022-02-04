@@ -30,6 +30,7 @@ import {
 import classnames from 'classnames';
 import { useUnits } from '@googleforcreators/units';
 import { useGlobalIsKeyPressed } from '@googleforcreators/design-system';
+import { useTransform } from '@googleforcreators/transform';
 
 /**
  * Internal dependencies
@@ -37,7 +38,6 @@ import { useGlobalIsKeyPressed } from '@googleforcreators/design-system';
 import { useStory, useCanvas, useLayout } from '../../../app';
 import Moveable from '../../moveable';
 import objectWithout from '../../../utils/objectWithout';
-import { useTransform } from '../../transform';
 import useSnapping from '../utils/useSnapping';
 import useUpdateSelectionRectangle from '../utils/useUpdateSelectionRectangle';
 import useWindowResizeHandler from '../useWindowResizeHandler';

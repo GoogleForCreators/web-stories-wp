@@ -21,7 +21,6 @@ import Dialog from './components/dialog';
 
 export { default as StoryEditor } from './storyEditor';
 
-export * from './components/transform';
 export * from './components/previewPage';
 export * from './app/config';
 export * from './app/story';

@@ -27,6 +27,7 @@ import {
 } from '@googleforcreators/design-system';
 import { useMemo } from '@googleforcreators/react';
 import { FlagsProvider } from 'flagged';
+import { TransformProvider } from '@googleforcreators/transform';
 
 /**
  * Internal dependencies
@@ -43,7 +44,6 @@ import { MediaProvider } from './app/media';
 import { CurrentUserProvider } from './app/currentUser';
 import { TaxonomyProvider } from './app/taxonomy';
 import AutoSaveHandler from './components/autoSaveHandler';
-import { TransformProvider } from './components/transform';
 import { DropTargetsProvider } from './components/dropTargets';
 import { HelpCenterProvider } from './app/helpCenter';
 import { PageDataUrlProvider } from './app/pageDataUrls';
