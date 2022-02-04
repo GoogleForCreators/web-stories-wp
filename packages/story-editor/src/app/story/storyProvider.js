@@ -128,7 +128,7 @@ function StoryProvider({ storyId, initialEdits, children }) {
     };
   }, [currentPage, selection]);
 
-  // This effect loads and initializes the story on first load (when there's no pages).
+  // This effect loads and initialises the story on first load (when there's no pages).
   const shouldLoad = pages.length === 0;
   useLoadStory({ restore, shouldLoad, storyId, story: initialEdits?.story });
 

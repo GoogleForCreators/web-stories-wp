@@ -1091,9 +1091,8 @@ describe('Right Click Menu integration', () => {
       );
       expect(copiedProperties).toEqual(pastedProperties);
 
-      // TODO: Make sure bounding box height changes to correct size
       // should update bounding box size when updating fontSize
-      // expect(textB.height).not.toBe(textElements[1].height);
+      expect(textB.height).not.toBe(textElements[1].height);
     });
 
     it('should add color to "Saved Colors"', async () => {

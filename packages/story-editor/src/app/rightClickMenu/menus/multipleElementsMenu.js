@@ -29,7 +29,7 @@ function MultipleElementsMenu() {
 
   return (
     <ContextMenuComponents.MenuButton onClick={handleDuplicateSelectedElements}>
-      {RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(1)}
+      {RIGHT_CLICK_MENU_LABELS.DUPLICATE_ELEMENTS(2)}
     </ContextMenuComponents.MenuButton>
   );
 }

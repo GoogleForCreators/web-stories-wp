@@ -27,6 +27,9 @@ export const SubMenuContainer = styled.div`
   left: ${({ position }) => position?.x ?? 0}px;
   z-index: 9999;
 `;
+SubMenuContainer.propTypes = {
+  position: PropTypes.shape({ x: PropTypes.number, y: PropTypes.number }),
+};
 
 export const SUB_MENU_ARIA_LABEL = __('Select a layer', 'web-stories');
 
