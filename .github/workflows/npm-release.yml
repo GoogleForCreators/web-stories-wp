@@ -2,14 +2,11 @@
 
 name: npm Release
 
+# TODO: Maybe only allow manual runs with environment protection.
 on:
   workflow_dispatch:
   schedule:
     - cron: '0 12 * * 1'
-  # TODO: Just for testing. Remove after testing.
-  pull_request:
-    branches:
-      - main
 
 env:
   PRODUCTION_REGISTRY_URL: https://wombat-dressing-room.appspot.com
@@ -163,17 +160,23 @@ jobs:
           PUBLIC_PACKAGES=$(jq -r 'select(.private == false) | .name' $(find packages -name "package.json"))
           for package in $PUBLIC_PACKAGES; do
             echo "Adding tag: $package@$PACKAGE_VERSION"
-            echo
-
             git tag "$package@$PACKAGE_VERSION"
           done
 
-          echo "Result:"
+          echo "Commit details:"
           echo
 
           git status
           git log -n 1
+
+          echo "Added tags:"
+          echo
+
           git tag --points-at HEAD
+
+          echo "Changed files:"
+          echo
+
           git show --pretty=%gd --stat
         env:
           PACKAGE_VERSION: ${{ needs.prepare.outputs.package_version }}
@@ -184,14 +187,13 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-# TODO: Re-enable once ready
-#      - name: Push version bumps
-#        run: git push origin main
+      # TODO: Re-enable once ready
+      - name: Push version bumps
+        run: git push origin main
 
-# TODO: Re-enable once ready
-#      # Do the actual publishing to npmjs.com.
-#      - name: Publish packages to production
-#        run: npm publish --workspaces
-#        env:
-#          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
+      # TODO: Re-enable once ready
+      # Do the actual publishing to npmjs.com.
+      - name: Publish packages to production
+        run: npm publish --workspaces
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
