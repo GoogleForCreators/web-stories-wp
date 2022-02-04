@@ -134,11 +134,13 @@ function DropDownMenu({
     () => setShowDeleteDialog(false),
     [setShowDeleteDialog]
   );
+
   // On Edit dialog closing.
   const onEditDialogClose = useCallback(
     () => setShowEditDialog(false),
     [setShowEditDialog]
   );
+
   const listId = useMemo(() => `list-${uuidv4()}`, []);
   const buttonId = useMemo(() => `button-${uuidv4()}`, []);
 
