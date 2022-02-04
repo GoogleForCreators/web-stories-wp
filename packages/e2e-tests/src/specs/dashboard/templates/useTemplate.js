@@ -47,7 +47,7 @@ describe('Template', () => {
     // Get count of template colors to compare to 'saved colors' in the editor.
     const templateDetailsColors = await page.evaluate(() => {
       const elements = document.querySelectorAll(
-        'div[data-testid="detail-template-color"]'
+        'li[data-testid="detail-template-color"]'
       );
       const count = elements.length;
       const colors = [];
