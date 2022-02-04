@@ -5,6 +5,8 @@
 node_modules
 /assets
 /packages/migration/scripts/module.js
+/packages/*/dist
+/packages/*/dist-module
 /build
 /bin/build
 /bin/local-env/data
