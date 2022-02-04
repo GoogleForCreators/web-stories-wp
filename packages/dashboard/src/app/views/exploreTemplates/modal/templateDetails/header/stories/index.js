@@ -17,8 +17,6 @@
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
-
 import styled from 'styled-components';
 
 /**
@@ -30,6 +28,10 @@ import { Layout } from '../../../../../../../components';
 export default {
   title: 'Dashboard/Views/TemplateDetails/Header',
   component: Header,
+  argTypes: {
+    createStoryFromTemplate: { action: 'create story from template clicked' },
+    handleDetailsToggle: { action: 'modal was toggled' },
+  },
 };
 
 const StorybookLayoutContainer = styled.div`
@@ -37,15 +39,12 @@ const StorybookLayoutContainer = styled.div`
   height: 100vh;
 `;
 
-const templateActions = {
-  createStoryFromTemplate: action('create story from template clicked'),
-  handleDetailsToggle: action('modal was toggled'),
+export const _default = (args) => {
+  return (
+    <Layout.Provider>
+      <StorybookLayoutContainer>
+        <Header templateActions={{ ...args }} canCreateStory />
+      </StorybookLayoutContainer>
+    </Layout.Provider>
+  );
 };
-
-export const _default = () => (
-  <Layout.Provider>
-    <StorybookLayoutContainer>
-      <Header templateActions={templateActions} canCreateStory />
-    </StorybookLayoutContainer>
-  </Layout.Provider>
-);

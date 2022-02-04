@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
-
-/**
  * Internal dependencies
  */
 import Header from '..';
@@ -35,76 +30,87 @@ import { Layout } from '../../../../../components';
 export default {
   title: 'Dashboard/Views/MyStories/Header',
   component: Header,
+  args: {
+    status: 'all',
+    statusValue: STORY_STATUS.ALL,
+    value: STORY_SORT_OPTIONS.NAME,
+    direction: SORT_DIRECTION.ASC,
+    keyword: '',
+    style: VIEW_STYLE.GRID,
+    all: 32,
+    draft: 19,
+    publish: 13,
+  },
+  argTypes: {
+    setFilter: { action: 'set filter' },
+    setSort: { action: 'set sort' },
+    setDirection: { action: 'set sort direction' },
+    setKeyword: { action: 'set search' },
+    toggleStyle: { action: 'toggle view style' },
+    statusValue: { options: STORY_STATUS, control: 'select' },
+    value: {
+      options: STORY_SORT_OPTIONS,
+      control: 'radio',
+      name: 'Story sort options',
+    },
+    direction: { options: SORT_DIRECTION, control: 'radio' },
+    style: { options: VIEW_STYLE, control: 'radio' },
+  },
+  parameters: {
+    controls: {
+      include: [
+        'statusValue',
+        'Story sort options',
+        'direction',
+        'style',
+        'draft',
+        'publish',
+        'setSort',
+        'toggleStyle',
+        'keyword',
+      ],
+    },
+  },
 };
 
-const filter = {
-  status: 'all',
-  value: STORY_STATUS.ALL,
-  set: action('set filter'),
-};
-const sort = {
-  value: STORY_SORT_OPTIONS.NAME,
-  set: action('set sort'),
-  direction: SORT_DIRECTION.ASC,
-  setDirection: action('set sort direction'),
-};
-const search = {
-  keyword: '',
-  setKeyword: action('set search'),
-};
-const view = {
-  style: VIEW_STYLE.GRID,
-  toggleStyle: action('toggle view style'),
-  pageSize: { width: 309, height: 206 },
-};
-const totalStoriesByStatus = {
-  all: 32,
-  draft: 19,
-  publish: 13,
-};
+export const _default = (args) => {
+  const filter = {
+    status: args.status,
+    value: args.statusValue,
+    set: args.setFilter,
+  };
+  const sort = {
+    value: args.value,
+    direction: args.direction,
+    set: args.setSort,
+    setDirection: args.setDirection,
+  };
+  const search = {
+    keyword: args.keyword,
+    setKeyword: args.setKeyword,
+  };
+  const view = {
+    style: args.style,
+    toggleStyle: args.toggleStyle,
+    pageSize: { width: 309, height: 206 },
+  };
+  const totalStoriesByStatus = {
+    all: args.all,
+    draft: args.draft,
+    publish: args.publish,
+  };
 
-const defaultProps = {
-  filter,
-  view,
-  search,
-  stories: formattedStoriesArray,
-  sort,
-  totalStoriesByStatus,
+  const defaultProps = {
+    filter,
+    view,
+    search,
+    stories: formattedStoriesArray,
+    sort,
+    totalStoriesByStatus,
+  };
+  return (
+    <Layout.Provider>
+      <Header {...args} {...defaultProps} />
+    </Layout.Provider>
+  );
 };
-
-export const _default = () => (
-  <Layout.Provider>
-    <Header {...defaultProps} />
-  </Layout.Provider>
-);
-
-export const ActiveSearch = () => (
-  <Layout.Provider>
-    <Header
-      {...defaultProps}
-      search={{
-        ...search,
-        keyword: 'demo search',
-      }}
-    />
-  </Layout.Provider>
-);
-
-export const ViewingDrafts = () => (
-  <Layout.Provider>
-    <Header
-      {...defaultProps}
-      filter={{
-        ...filter,
-        status: 'DRAFT',
-        value: STORY_STATUS.DRAFT,
-      }}
-    />
-  </Layout.Provider>
-);
-
-export const ViewingList = () => (
-  <Layout.Provider>
-    <Header {...defaultProps} view={{ ...view, style: VIEW_STYLE.LIST }} />
-  </Layout.Provider>
-);

@@ -1,5 +1,6 @@
+<?php
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +15,20 @@
  * limitations under the License.
  */
 
-export { default as TransformProvider } from './transformProvider';
-export { default as useTransform } from './useTransform';
-export { default as useTransformHandler } from './useTransformHandler';
+namespace Google\Web_Stories\Tests\Integration\Fixture;
+
+use Google\Web_Stories\Post_Type_Base;
+
+class DummyPostTypeWithoutArchive extends Post_Type_Base {
+	public function get_slug(): string {
+		return 'cpt-without-archive';
+	}
+
+	public function get_args(): array {
+		return [
+			'public'      => true,
+			'rewrite'     => true,
+			'has_archive' => false,
+		];
+	}
+}

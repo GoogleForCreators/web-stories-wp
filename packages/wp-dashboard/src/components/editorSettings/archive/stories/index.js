@@ -47,6 +47,7 @@ export const _default = (args) => {
     <FlagsProvider>
       <ArchiveSettings
         archiveURL={'http://www.example.com/web-stories'}
+        defaultArchiveURL={'http://www.example.com/web-stories'}
         archivePageId={0}
         getPageById={() => ({ value: 1, label: 'Page 1' })}
         searchPages={() => [

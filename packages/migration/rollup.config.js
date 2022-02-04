@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-/* global __dirname */
-
 /**
  * External dependencies
  */
-import { resolve as resolvePath } from 'path';
+import { dirname, resolve as resolvePath } from 'path';
+import { fileURLToPath } from 'url';
 import resolve from '@rollup/plugin-node-resolve';
+
+const __dirname = fileURLToPath(dirname(import.meta.url));
 
 export default {
   input: resolvePath(__dirname, 'src/index.js'),
