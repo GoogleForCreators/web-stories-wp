@@ -39,7 +39,7 @@ jobs:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: Bundle packages
-        run: npm run bundle
+        run: npm run workflow:bundle-packages
 
       # For the time being, using incremental versions like 0.1.202111302140
       # `npm version` updates all packages, even the ones we don't intend to publish.
@@ -92,7 +92,7 @@ jobs:
 
       # Set up a local npm registry with Verdaccio.
       - name: Set up local registry
-        run: bash bin/setup-local-npm-registry.sh
+        run: npm run local-registry:start
 
       # Using Verdaccio
       - name: Publish packages locally
@@ -115,7 +115,7 @@ jobs:
           npm --registry=$LOCAL_REGISTRY_URL install $PUBLIC_PACKAGES
 
       - name: Stop local registry
-        run: bash bin/stop-local-npm-registry.sh
+        run: npm run local-registry:stop
 
   release:
     name: Release
