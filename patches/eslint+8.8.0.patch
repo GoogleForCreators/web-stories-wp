@@ -1,5 +1,5 @@
 diff --git a/node_modules/eslint/lib/rules/no-shadow.js b/node_modules/eslint/lib/rules/no-shadow.js
-index a0b1db5..8d6730f 100644
+index bd61923..98f576e 100644
 --- a/node_modules/eslint/lib/rules/no-shadow.js
 +++ b/node_modules/eslint/lib/rules/no-shadow.js
 @@ -162,7 +162,99 @@ module.exports = {
