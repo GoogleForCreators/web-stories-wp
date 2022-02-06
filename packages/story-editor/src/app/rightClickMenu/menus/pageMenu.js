@@ -22,14 +22,14 @@ import {
   ContextMenuComponents,
 } from '@googleforcreators/design-system';
 import { useRef } from '@googleforcreators/react';
+
 /**
  * Internal dependencies
  */
 import useVideoTrim from '../../../components/videoTrim/useVideoTrim';
 import { RIGHT_CLICK_MENU_LABELS } from '../constants';
 import { useElementActions, usePageActions } from '../hooks';
-import { useStory } from '../../..';
-import { useLocalMedia } from '../..';
+import { useStory, useLocalMedia } from '../..';
 import useRightClickMenu from '../useRightClickMenu';
 import useLayerSelect from '../useLayerSelect';
 import {

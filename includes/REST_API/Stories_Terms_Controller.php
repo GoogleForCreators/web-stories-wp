@@ -2,10 +2,10 @@
 /**
  * Class Stories_Terms_Controller
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -41,13 +41,12 @@ class Stories_Terms_Controller extends WP_REST_Terms_Controller {
 	 * @since 1.12.0
 	 *
 	 * @param string $taxonomy Taxonomy key.
-	 *
 	 * @return void
 	 */
 	public function __construct( $taxonomy ) {
 		parent::__construct( $taxonomy );
 		$taxonomy_object = get_taxonomy( $taxonomy );
-		$this->namespace = $taxonomy_object && is_string( $taxonomy_object->rest_namespace ) ?
+		$this->namespace = $taxonomy_object && \is_string( $taxonomy_object->rest_namespace ) ?
 			$taxonomy_object->rest_namespace :
 			'web-stories/v1';
 	}
@@ -59,7 +58,7 @@ class Stories_Terms_Controller extends WP_REST_Terms_Controller {
 	 *
 	 * @return string
 	 */
-	public function get_namespace() : string {
+	public function get_namespace(): string {
 		return $this->namespace;
 	}
 

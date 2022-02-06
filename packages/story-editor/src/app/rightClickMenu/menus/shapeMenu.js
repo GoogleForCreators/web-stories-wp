@@ -22,6 +22,7 @@ import {
   ContextMenuComponents,
 } from '@googleforcreators/design-system';
 import { useRef } from '@googleforcreators/react';
+
 /**
  * Internal dependencies
  */
@@ -36,7 +37,7 @@ import {
   usePresetActions,
 } from '../hooks';
 import useLayerSelect from '../useLayerSelect';
-import { useStory } from '../../..';
+import { useStory } from '../..';
 import useRightClickMenu from '../useRightClickMenu';
 import {
   DEFAULT_DISPLACEMENT,

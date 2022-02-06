@@ -2,10 +2,10 @@
 /**
  * Interface Registerable.
  *
- * @package   Google\Web_Stories
+ * @link      https://www.mwpd.io/
+ *
  * @copyright 2019 Alain Schlesser
  * @license   MIT
- * @link      https://www.mwpd.io/
  */
 
 /**
@@ -29,8 +29,9 @@ namespace Google\Web_Stories\Infrastructure;
  * Registering such an object is the explicit act of making it known to the
  * overarching system.
  *
- * @since 1.6.0
  * @internal
+ *
+ * @since 1.6.0
  */
 interface Registerable {
 

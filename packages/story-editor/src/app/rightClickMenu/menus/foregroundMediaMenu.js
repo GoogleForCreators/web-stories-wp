@@ -34,8 +34,7 @@ import {
   useElementActions,
   useLayerActions,
 } from '../hooks';
-import { useStory } from '../../..';
-import { useLocalMedia } from '../..';
+import { useStory, useLocalMedia } from '../..';
 import useVideoTrim from '../../../components/videoTrim/useVideoTrim';
 import useRightClickMenu from '../useRightClickMenu';
 import useLayerSelect from '../useLayerSelect';

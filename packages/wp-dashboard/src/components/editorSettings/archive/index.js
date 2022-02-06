@@ -102,9 +102,12 @@ export default function ArchiveSettings({
       // This way, when changing from "Custom" to "Default", we can display
       // the default "/web-stories/" URL again. Otherwise that's not possible.
       setArchiveURL(_archiveURL);
+      const newArchivePageId =
+        newArchive === ARCHIVE_TYPE.CUSTOM ? archivePageId : 0;
+      setSelectedPage(newArchivePageId);
       updateSettings({
         archive: newArchive,
-        archivePageId: newArchive === ARCHIVE_TYPE.CUSTOM ? archivePageId : 0,
+        archivePageId: newArchivePageId,
       });
     },
     [updateSettings, archivePageId, _archiveURL]

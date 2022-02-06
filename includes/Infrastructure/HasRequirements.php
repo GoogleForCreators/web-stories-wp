@@ -1,8 +1,6 @@
 <?php
 /**
  * Interface HasRequirements.
- *
- * @package Google\Web_Stories
  */
 
 /**
@@ -29,8 +27,9 @@ namespace Google\Web_Stories\Infrastructure;
  * A class marked as having requirements can return the list of services it requires
  * to be available before it can be registered.
  *
- * @since 1.10.0
  * @internal
+ *
+ * @since 1.10.0
  */
 interface HasRequirements {
 

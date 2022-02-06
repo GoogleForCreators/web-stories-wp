@@ -17,13 +17,13 @@
 
 namespace Google\Web_Stories\Tests\Unit\AMP;
 
-use AMP_Tag_And_Attribute_Sanitizer;
 use AMP_Allowed_Tags_Generated;
-use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
+use AMP_Tag_And_Attribute_Sanitizer;
+use Brain\Monkey;
 use Google\Web_Stories\Tests\Unit\MarkupComparison;
 use Google\Web_Stories\Tests\Unit\ScriptHash;
 use Google\Web_Stories\Tests\Unit\TestCase;
-use Brain\Monkey;
+use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Meta_Sanitizer
@@ -246,11 +246,11 @@ class Meta_Sanitizer extends TestCase {
 	/**
 	 * Tests the sanitize method.
 	 *
-	 * @dataProvider get_data_for_sanitize
-	 * @covers ::sanitize()
-	 *
 	 * @param string  $source_content   Source DOM content.
 	 * @param string  $expected_content Expected content after sanitization.
+	 *
+	 * @dataProvider get_data_for_sanitize
+	 * @covers ::sanitize()
 	 */
 	public function test_sanitize( $source_content, $expected_content ) {
 		$dom       = Document::fromHtml( $source_content );
