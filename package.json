@@ -71,7 +71,7 @@
     "@stylelint/postcss-css-in-js": "^0.37.2",
     "@svgr/rollup": "^6.2.0",
     "@svgr/webpack": "^5.5.0",
-    "@testing-library/dom": "^8.10.1",
+    "@testing-library/dom": "^8.11.3",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/react-hooks": "^7.0.2",
