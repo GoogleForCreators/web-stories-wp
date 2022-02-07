@@ -161,7 +161,7 @@ jobs:
 
       # Dry-run releasing
       - name: Dry-run production release
-        run: npm publish --workspaces --dry-run
+        run: npm --registry=$PRODUCTION_REGISTRY_URL --workspaces publish --dry-run
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -170,6 +170,6 @@ jobs:
 
       # Do the actual publishing to npmjs.com.
       - name: Publish packages to production
-        run: npm publish --workspaces
+        run: npm --registry=$PRODUCTION_REGISTRY_URL --workspaces  publish --workspaces
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
