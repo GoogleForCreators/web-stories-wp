@@ -21,11 +21,11 @@ import PropTypes from 'prop-types';
 import { useEffect, useRef } from '@googleforcreators/react';
 import { useUnits } from '@googleforcreators/units';
 import { getFocalFromOffset } from '@googleforcreators/media';
+import { Moveable } from '@googleforcreators/moveable';
 
 /**
  * Internal dependencies
  */
-import Moveable from '../../components/moveable';
 import StoryPropTypes from '../../types';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import getTransformFlip from '../shared/getTransformFlip';

@@ -31,12 +31,12 @@ import classnames from 'classnames';
 import { useUnits } from '@googleforcreators/units';
 import { useGlobalIsKeyPressed } from '@googleforcreators/design-system';
 import { useTransform } from '@googleforcreators/transform';
+import { Moveable } from '@googleforcreators/moveable';
 
 /**
  * Internal dependencies
  */
 import { useStory, useCanvas, useLayout } from '../../../app';
-import Moveable from '../../moveable';
 import objectWithout from '../../../utils/objectWithout';
 import useSnapping from '../utils/useSnapping';
 import useUpdateSelectionRectangle from '../utils/useUpdateSelectionRectangle';
