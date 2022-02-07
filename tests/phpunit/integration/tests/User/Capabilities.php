@@ -17,8 +17,8 @@
 
 namespace Google\Web_Stories\Tests\Integration\User;
 
-use Google\Web_Stories\Tests\Integration\TestCase;
 use Google\Web_Stories\Tests\Integration\Capabilities_Setup;
+use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\User\Capabilities

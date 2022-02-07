@@ -13,10 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
 
 /**
  * Internal dependencies
@@ -27,21 +23,14 @@ export default {
   title: 'Dashboard/Views/EditorSettings/MediaOptimization',
   component: MediaOptimizationSettings,
   args: {
-    disabled: true,
+    disabled: false,
     selected: true,
   },
-  parameters: {
-    controls: {
-      exclude: ['onCheckboxSelected'],
-    },
+  argTypes: {
+    onCheckboxSelected: { action: 'onCheckboxSelected fired' },
   },
 };
 
 export const _default = (args) => {
-  return (
-    <MediaOptimizationSettings
-      onCheckboxSelected={action('onCheckboxSelected fired')}
-      {...args}
-    />
-  );
+  return <MediaOptimizationSettings {...args} />;
 };

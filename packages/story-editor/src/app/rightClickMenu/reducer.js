@@ -15,18 +15,12 @@
  */
 
 export const ACTION_TYPES = {
-  COPY_ELEMENT_STYLES: 'COPY_ELEMENT_STYLES',
   OPEN_MENU: 'OPEN_MENU',
   CLOSE_MENU: 'CLOSE_MENU',
   RESET: 'RESET',
 };
 
 export const DEFAULT_RIGHT_CLICK_MENU_STATE = {
-  copiedElement: {
-    animations: null,
-    styles: null,
-    type: null,
-  },
   isMenuOpen: false,
   menuPosition: {
     x: 0,
@@ -42,15 +36,6 @@ function rightClickMenuReducer(state, action) {
         ...state,
         isMenuOpen: false,
         menuPosition: DEFAULT_RIGHT_CLICK_MENU_STATE.menuPosition,
-      };
-    case ACTION_TYPES.COPY_ELEMENT_STYLES:
-      return {
-        ...state,
-        copiedElement: {
-          animations: action.payload.animations,
-          styles: action.payload.styles,
-          type: action.payload.type,
-        },
       };
     case ACTION_TYPES.OPEN_MENU:
       return {

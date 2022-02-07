@@ -18,21 +18,26 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { RichTextProvider } from '@googleforcreators/rich-text';
 
 /**
  * Internal dependencies
  */
 import Inspector from '../inspector';
 import Canvas from '../canvas';
-import { RichTextProvider } from '../richText';
 import { VideoTrimProvider } from '../videoTrim';
 import ErrorBoundary from '../errorBoundary';
+import { useCanvas } from '../../app';
 import { CanvasArea, InspectorArea } from './layout';
 
 function Workspace({ header, footer, inspectorTabs }) {
+  const { editingElementState } = useCanvas((state) => ({
+    editingElementState: state.state.editingElementState,
+  }));
+
   return (
     <VideoTrimProvider>
-      <RichTextProvider>
+      <RichTextProvider editingState={editingElementState}>
         <CanvasArea>
           <ErrorBoundary>
             <Canvas header={header} footer={footer} />
