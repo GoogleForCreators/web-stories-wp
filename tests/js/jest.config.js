@@ -43,7 +43,6 @@ export default {
     '**/?(*.)test.[jt]s',
   ],
   globals: {
-    WEB_STORIES_CI: 'development',
     WEB_STORIES_ENV: 'development',
     WEB_STORIES_DISABLE_ERROR_BOUNDARIES: true,
     WEB_STORIES_DISABLE_OPTIMIZED_RENDERING: true,
