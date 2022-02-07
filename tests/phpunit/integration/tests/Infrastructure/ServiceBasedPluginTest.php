@@ -6,10 +6,10 @@ use Google\Web_Stories\Infrastructure\Injector;
 use Google\Web_Stories\Infrastructure\ServiceBasedPlugin;
 use Google\Web_Stories\Infrastructure\ServiceContainer;
 use Google\Web_Stories\Infrastructure\ServiceContainer\SimpleServiceContainer;
-use Google\Web_Stories\Tests\Integration\Fixture\DummyServiceWithDelay;
-use Google\Web_Stories\Tests\Integration\Fixture\DummyServiceWithRequirements;
 use Google\Web_Stories\Tests\Integration\Fixture\DummyService;
 use Google\Web_Stories\Tests\Integration\Fixture\DummyServiceBasedPlugin;
+use Google\Web_Stories\Tests\Integration\Fixture\DummyServiceWithDelay;
+use Google\Web_Stories\Tests\Integration\Fixture\DummyServiceWithRequirements;
 use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**

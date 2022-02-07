@@ -18,15 +18,12 @@
  */
 import styled, { StyleSheetManager } from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
-import {
-  ContextMenu,
-  ContextMenuComponents,
-} from '@googleforcreators/design-system';
+import { ContextMenu } from '@googleforcreators/design-system';
 import {
   createPortal,
-  Fragment,
-  useRef,
   useEffect,
+  useMemo,
+  useRef,
 } from '@googleforcreators/react';
 
 /**
@@ -34,6 +31,16 @@ import {
  */
 import { useRightClickMenu, useConfig } from '../../app';
 import DirectionAware from '../directionAware';
+import { ELEMENT_TYPES } from '../../elements';
+import { useStory } from '../../app/story';
+import {
+  ForegroundMediaMenu,
+  MultipleElementsMenu,
+  PageMenu,
+  ShapeMenu,
+  StickerMenu,
+  TextMenu,
+} from '../../app/rightClickMenu';
 
 const RightClickMenuContainer = styled.div`
   position: absolute;
@@ -44,15 +51,10 @@ const RightClickMenuContainer = styled.div`
 
 const RightClickMenu = () => {
   const { isRTL } = useConfig();
-  const {
-    isMenuOpen,
-    menuItems: rightClickMenuItems,
-    menuPosition,
-    onCloseMenu,
-    maskRef,
-  } = useRightClickMenu();
+  const selectedElements = useStory((value) => value.state.selectedElements);
+  const { isMenuOpen, menuPosition, onCloseMenu, maskRef } =
+    useRightClickMenu();
   const ref = useRef();
-  const subMenuRef = useRef();
 
   /**
    * Prevent browser's context menu when right clicking on custom ContextMenu
@@ -63,6 +65,33 @@ const RightClickMenu = () => {
     evt.preventDefault();
     evt.stopPropagation();
   };
+
+  const Menu = useMemo(() => {
+    if (selectedElements.length > 1) {
+      return MultipleElementsMenu;
+    }
+
+    const selectedElement = selectedElements?.[0];
+
+    if (selectedElement?.isDefaultBackground) {
+      return PageMenu;
+    }
+
+    switch (selectedElement?.type) {
+      case ELEMENT_TYPES.IMAGE:
+      case ELEMENT_TYPES.VIDEO:
+      case ELEMENT_TYPES.GIF:
+        return selectedElement?.isBackground ? PageMenu : ForegroundMediaMenu;
+      case ELEMENT_TYPES.SHAPE:
+        return ShapeMenu;
+      case ELEMENT_TYPES.TEXT:
+        return TextMenu;
+      case ELEMENT_TYPES.STICKER:
+        return StickerMenu;
+      default:
+        return PageMenu;
+    }
+  }, [selectedElements]);
 
   useEffect(() => {
     const node = ref.current;
@@ -89,72 +118,7 @@ const RightClickMenu = () => {
             onMouseDown={(evt) => evt.stopPropagation()}
             isRTL={isRTL}
           >
-            {rightClickMenuItems.map(
-              ({
-                label,
-                separator,
-                subMenuItems,
-                closeSubMenu,
-                ...buttonProps
-              }) => (
-                <Fragment key={label}>
-                  {separator === 'top' && (
-                    <ContextMenuComponents.MenuSeparator />
-                  )}
-                  {!subMenuItems && (
-                    <ContextMenuComponents.MenuItem
-                      label={label}
-                      {...buttonProps}
-                    />
-                  )}
-                  {subMenuItems && (
-                    <>
-                      <ContextMenuComponents.SubMenuTrigger
-                        isMenuOpen={isMenuOpen}
-                        closeSubMenu={closeSubMenu}
-                        subMenuRef={subMenuRef}
-                        parentMenuRef={ref}
-                        label={label}
-                        isRTL={isRTL}
-                        {...buttonProps}
-                      />
-                      {Boolean(subMenuItems.length) && (
-                        <RightClickMenuContainer
-                          position={{
-                            y: 0,
-                            x: ref.current.firstChild.offsetWidth + 2,
-                          }}
-                          ref={subMenuRef}
-                        >
-                          <ContextMenu
-                            isOpen
-                            onDismiss={onCloseMenu}
-                            onCloseSubMenu={closeSubMenu}
-                            aria-label={__('Select a layer', 'web-stories')}
-                            isRTL={isRTL}
-                            isSubMenu
-                            parentMenuRef={ref}
-                          >
-                            {subMenuItems.map(
-                              ({ label: subLabel, ...item }) => (
-                                <ContextMenuComponents.MenuItem
-                                  key={subLabel}
-                                  label={subLabel}
-                                  {...item}
-                                />
-                              )
-                            )}
-                          </ContextMenu>
-                        </RightClickMenuContainer>
-                      )}
-                    </>
-                  )}
-                  {separator === 'bottom' && (
-                    <ContextMenuComponents.MenuSeparator />
-                  )}
-                </Fragment>
-              )
-            )}
+            <Menu parentMenuRef={ref} />
           </ContextMenu>
         </DirectionAware>
       </RightClickMenuContainer>

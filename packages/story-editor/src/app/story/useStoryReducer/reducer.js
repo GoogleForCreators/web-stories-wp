@@ -111,6 +111,10 @@ function reducer(state, { type, payload }) {
       return reducers.addAnimations(state, payload);
     }
 
+    case types.COPY_ELEMENT_BY_ID: {
+      return reducers.copyElementById(state, payload);
+    }
+
     case types.RESTORE: {
       return reducers.restore(state, payload);
     }

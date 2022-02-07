@@ -12,6 +12,7 @@
   <rule ref="rulesets/codesize.xml">
     <exclude name="CyclomaticComplexity" />
   </rule>
+
   <rule ref="rulesets/codesize.xml/CyclomaticComplexity">
     <properties>
       <property name="reportLevel" value="20" />
@@ -21,6 +22,13 @@
   <rule ref="rulesets/cleancode.xml">
     <exclude name="ElseExpression" />
     <exclude name="StaticAccess" />
+    <exclude name="MissingImport" />
+  </rule>
+
+  <rule ref="rulesets/cleancode.xml/MissingImport">
+    <properties>
+      <property name="ignore-global" value="true" />
+    </properties>
   </rule>
 
   <rule ref="rulesets/unusedcode.xml">

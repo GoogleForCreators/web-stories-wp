@@ -72,6 +72,7 @@ function ErrorActions({ error, errorInfo }) {
       <P>{__('Apologies for the inconvenience.', 'web-stories')}</P>
       <P>
         <TextArea
+          readOnly
           value={textAreaContent}
           onFocus={(e) => e.target.setSelectionRange(0, textAreaContent.length)}
         />

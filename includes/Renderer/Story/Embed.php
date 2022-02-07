@@ -2,10 +2,10 @@
 /**
  * Class Embed
  *
- * @package   Google\Web_Stories\Renderer\Story
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -26,16 +26,14 @@
 
 namespace Google\Web_Stories\Renderer\Story;
 
+use Google\Web_Stories\AMP_Story_Player_Assets;
 use Google\Web_Stories\Assets;
 use Google\Web_Stories\Context;
 use Google\Web_Stories\Embed_Base;
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\AMP_Story_Player_Assets;
 
 /**
  * Class Embed
- *
- * @package Google\Web_Stories\Renderer\Story
  */
 class Embed {
 	/**
@@ -80,7 +78,6 @@ class Embed {
 	 * @since 1.0.0
 	 *
 	 * @param array $args Array of Argument to render.
-	 *
 	 * @return string Rendered block type output.
 	 */
 	public function render( array $args = [] ): string {
