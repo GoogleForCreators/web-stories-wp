@@ -246,7 +246,7 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
       // First hover text set to trigger image generation
       await fixture.events.mouse.moveRel(textSets[1], 10, 10);
 
-      await fixture.events.sleep(1500);
+      await fixture.events.sleep(800);
       // Then click the text set
       await fixture.events.click(textSets[1]);
 
