@@ -151,7 +151,7 @@ const EmbedControls = (props) => {
                       )}
                 </p>
                 {hasPoster && (
-                  <Button onClick={onRemovePoster} isTertiary>
+                  <Button className="remove" onClick={onRemovePoster}>
                     {__('Remove', 'web-stories')}
                   </Button>
                 )}
