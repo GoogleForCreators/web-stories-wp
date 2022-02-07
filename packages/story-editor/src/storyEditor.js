@@ -24,7 +24,6 @@ import {
   SnackbarProvider,
   ModalGlobalStyle,
   deepMerge,
-  setAppElement,
 } from '@googleforcreators/design-system';
 import { useMemo } from '@googleforcreators/react';
 import { FlagsProvider } from 'flagged';
@@ -60,9 +59,6 @@ import defaultConfig from './defaultConfig';
 function StoryEditor({ config, initialEdits, children }) {
   const _config = useMemo(() => deepMerge(defaultConfig, config), [config]);
   const { storyId, isRTL, flags } = _config;
-
-  // Tell modals where to set aria-hidden when modals are open
-  setAppElement('body > div:first-of-type');
 
   return (
     <FlagsProvider features={flags}>
