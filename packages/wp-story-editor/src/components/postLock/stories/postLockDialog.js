@@ -23,9 +23,11 @@ export default {
   title: 'Stories Editor/Components/Dialog/Post Lock Dialog',
   component: PostLockDialog,
   args: {
-    name: 'Matt Mullenweg',
-    avatar:
-      'http://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?size=48',
+    user: {
+      name: 'Matt Mullenweg',
+      avatar:
+        'http://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?size=48',
+    },
     dashboardLink: 'http://www.example.com/dashboard',
     previewLink: 'http://www.example.com/preview',
     showTakeOver: false,
@@ -34,15 +36,8 @@ export default {
   argTypes: {
     onClose: { action: 'onClose' },
   },
-  parameters: {
-    controls: { exclude: ['user'] },
-  },
 };
 
 export const _default = (args) => {
-  const user = {
-    name: args.name,
-    avatar: args.avatar,
-  };
-  return <PostLockDialog user={user} {...args} />;
+  return <PostLockDialog {...args} />;
 };

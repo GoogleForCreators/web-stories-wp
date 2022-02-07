@@ -24,24 +24,18 @@ export default {
   component: PostTakeOverDialog,
   args: {
     isOpen: true,
-    name: 'Matt Mullenweg',
-    avatar:
-      'http://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?size=48',
+    user: {
+      name: 'Matt Mullenweg',
+      avatar:
+        'http://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?size=48',
+    },
     dashboardLink: 'http://www.example.com/dashboard',
   },
   argTypes: {
     onClose: { action: 'onClose' },
   },
-  parameters: {
-    controls: { exclude: ['user'] },
-  },
 };
 
 export const _default = (args) => {
-  const user = {
-    name: args.name,
-    avatar: args.avatar,
-  };
-
-  return <PostTakeOverDialog user={user} {...args} />;
+  return <PostTakeOverDialog {...args} />;
 };
