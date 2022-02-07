@@ -2,10 +2,10 @@
 /**
  * Class Types
  *
- * @package   Google\Web_Stories\Media
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -28,8 +28,6 @@ namespace Google\Web_Stories\Media;
 
 /**
  * Class Types
- *
- * @package Google\Web_Stories\Media
  */
 class Types {
 	/**
@@ -39,7 +37,7 @@ class Types {
 	 *
 	 * @return array List of allowed file types.
 	 */
-	public function get_allowed_file_types() : array {
+	public function get_allowed_file_types(): array {
 		$allowed_mime_types = $this->get_allowed_mime_types();
 		$mime_types         = [];
 
@@ -59,15 +57,14 @@ class Types {
 	 * @since 1.5.0
 	 *
 	 * @param array $mime_types Array of mime types.
-	 *
 	 * @return array
 	 */
-	public function get_file_type_exts( array $mime_types = [] ) : array {
+	public function get_file_type_exts( array $mime_types = [] ): array {
 		$allowed_file_types = [];
 		$all_mime_types     = get_allowed_mime_types();
 
 		foreach ( $all_mime_types as $ext => $mime ) {
-			if ( in_array( $mime, $mime_types, true ) ) {
+			if ( \in_array( $mime, $mime_types, true ) ) {
 				array_push( $allowed_file_types, ...explode( '|', $ext ) );
 			}
 		}
@@ -83,7 +80,7 @@ class Types {
 	 *
 	 * @return array<string, array> List of allowed mime types.
 	 */
-	public function get_allowed_mime_types() : array {
+	public function get_allowed_mime_types(): array {
 		$default_allowed_mime_types = [
 			'image' => [
 				'image/webp',
@@ -113,7 +110,7 @@ class Types {
 		$allowed_mime_types = apply_filters( 'web_stories_allowed_mime_types', $default_allowed_mime_types );
 
 		foreach ( array_keys( $default_allowed_mime_types ) as $media_type ) {
-			if ( ! is_array( $allowed_mime_types[ $media_type ] ) || empty( $allowed_mime_types[ $media_type ] ) ) {
+			if ( ! \is_array( $allowed_mime_types[ $media_type ] ) || empty( $allowed_mime_types[ $media_type ] ) ) {
 				$allowed_mime_types[ $media_type ] = $default_allowed_mime_types[ $media_type ];
 			}
 
@@ -131,7 +128,7 @@ class Types {
 	 *
 	 * @return array List of allowed mime types.
 	 */
-	public function get_allowed_image_mime_types() : array {
+	public function get_allowed_image_mime_types(): array {
 		$mime_type         = $this->get_allowed_mime_types();
 		$allowed_mime_type = $mime_type['image'];
 		$image_mime_type   = [
@@ -182,7 +179,7 @@ class Types {
 	 *
 	 * @return array List of allowed transcodable mime types.
 	 */
-	public function get_allowed_transcodable_mime_types() : array {
+	public function get_allowed_transcodable_mime_types(): array {
 		return [
 			'video/3gpp',
 			'video/3gpp2',

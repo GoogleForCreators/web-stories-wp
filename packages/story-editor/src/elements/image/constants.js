@@ -17,15 +17,8 @@
  * Internal dependencies
  */
 import PanelTypes from '../../components/panels/design/types';
-import {
-  SHARED_DEFAULT_ATTRIBUTES,
-  SHARED_DEFAULT_CLEARABLE_ATTRIBUTES,
-} from '../shared/constants';
-import {
-  MEDIA_DEFAULT_ATTRIBUTES,
-  MEDIA_DEFAULT_CLEARABLE_ATTRIBUTES,
-  MEDIA_PANELS,
-} from '../media/constants';
+import { SHARED_DEFAULT_ATTRIBUTES } from '../shared/constants';
+import { MEDIA_DEFAULT_ATTRIBUTES, MEDIA_PANELS } from '../media/constants';
 
 export {
   canFlip,
@@ -40,11 +33,6 @@ export const defaultAttributes = {
   ...SHARED_DEFAULT_ATTRIBUTES,
   ...MEDIA_DEFAULT_ATTRIBUTES,
   lockAspectRatio: false,
-};
-
-export const copyableAttributes = {
-  ...SHARED_DEFAULT_CLEARABLE_ATTRIBUTES,
-  ...MEDIA_DEFAULT_CLEARABLE_ATTRIBUTES,
 };
 
 export const panels = [

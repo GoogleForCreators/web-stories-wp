@@ -19,7 +19,6 @@ namespace Google\Web_Stories\Tests\Integration;
 
 use Google\Web_Stories\Tests\Integration\Fixture\DummyPostTypeWithCustomArchive;
 use Google\Web_Stories\Tests\Integration\Fixture\DummyPostTypeWithoutArchive;
-use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Post_Type_Base

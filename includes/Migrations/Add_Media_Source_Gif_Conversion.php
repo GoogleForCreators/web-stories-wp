@@ -2,10 +2,10 @@
 /**
  * Class Add_Media_Source_Gif_Conversion
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -24,13 +24,10 @@
  * limitations under the License.
  */
 
-
 namespace Google\Web_Stories\Migrations;
 
 /**
  * Class Add_Media_Source_Gif_Conversion
- *
- * @package Google\Web_Stories\Migrations
  */
 class Add_Media_Source_Gif_Conversion extends Add_Media_Source {
 	/**

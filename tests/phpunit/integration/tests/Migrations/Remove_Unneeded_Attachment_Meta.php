@@ -23,7 +23,6 @@ use Google\Web_Stories\Tests\Integration\TestCase;
  * Class Remove_Unneeded_Attachment_Meta
  *
  * @coversDefaultClass \Google\Web_Stories\Migrations\Remove_Unneeded_Attachment_Meta
-*
  */
 class Remove_Unneeded_Attachment_Meta extends TestCase {
 	/**

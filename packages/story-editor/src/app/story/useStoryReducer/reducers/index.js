@@ -30,6 +30,7 @@ export { default as setBackgroundElement } from './setBackgroundElement';
 export { default as arrangeElement } from './arrangeElement';
 export { default as combineElements } from './combineElements';
 export { default as duplicateElementsById } from './duplicateElementsById';
+export { default as copyElementById } from './copyElementById';
 
 // Manipulate current page.
 export { default as setCurrentPage } from './setCurrentPage';

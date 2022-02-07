@@ -18,10 +18,6 @@
  * External dependencies
  */
 import styled from 'styled-components';
-
-/**
- * Internal dependencies
- */
 /**
  * Internal dependencies
  */
