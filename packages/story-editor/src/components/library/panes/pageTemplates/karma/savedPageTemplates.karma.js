@@ -72,7 +72,12 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
       );
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      await waitFor(() => {
+        if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+          throw new Error('node not ready');
+        }
+        expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
+      });
 
       await openSavedTemplates();
       await fixture.events.click(
@@ -92,7 +97,12 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
       );
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      await waitFor(() => {
+        if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+          throw new Error('node not ready');
+        }
+        expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
+      });
 
       await openSavedTemplates();
 
@@ -131,7 +141,12 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
       );
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      await waitFor(() => {
+        if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+          throw new Error('node not ready');
+        }
+        expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
+      });
 
       await openSavedTemplates();
       await fixture.events.click(
@@ -165,7 +180,12 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
       );
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      await waitFor(() => {
+        if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+          throw new Error('node not ready');
+        }
+        expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
+      });
       await fixture.events.click(fixture.editor.library.pageTemplatesTab);
       // navigate to Save current page a template button and save
       await fixture.events.keyboard.press('Tab');

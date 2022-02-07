@@ -1,8 +1,6 @@
 <?php
 /**
  * Stories Widgets.
- *
- * @package Google\Web_Stories
  */
 
 /**
@@ -23,11 +21,11 @@
 
 namespace Google\Web_Stories\Widgets;
 
-use WP_Widget;
-use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Assets;
 use Google\Web_Stories\Stories_Script_Data;
+use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Story_Query;
+use WP_Widget;
 
 /**
  * Class Stories
@@ -79,7 +77,6 @@ class Stories extends WP_Widget {
 	 * @param Assets              $assets Assets instance.
 	 * @param Story_Post_Type     $story_post_type Story_Post_Type instance.
 	 * @param Stories_Script_Data $stories_script_data Stories_Script_Data instance.
-	 *
 	 * @return void
 	 */
 	public function __construct( Assets $assets, Story_Post_Type $story_post_type, Stories_Script_Data $stories_script_data ) {
@@ -100,14 +97,13 @@ class Stories extends WP_Widget {
 	/**
 	 * Output widget.
 	 *
-	 * phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
-	 *
 	 * @since 1.5.0
 	 *
 	 * @param array $args Widget args.
 	 * @param array $instance Widget instance.
-	 *
 	 * @return void
+	 *
+     * phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 	 */
 	public function widget( $args, $instance ) {
 		echo $args['before_widget'];
@@ -157,13 +153,12 @@ class Stories extends WP_Widget {
 	/**
 	 * Display widget form.
 	 *
-	 * @since 1.5.0
-	 *
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
 	 *
-	 * @param array $instance Widget instance.
+	 * @since 1.5.0
 	 *
+	 * @param array $instance Widget instance.
 	 * @return string
 	 */
 	public function form( $instance ) {
@@ -401,13 +396,12 @@ class Stories extends WP_Widget {
 	/**
 	 * Update widget settings.
 	 *
-	 * @since 1.5.0
-	 *
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 *
+	 * @since 1.5.0
 	 *
 	 * @param array $new_instance New instance.
 	 * @param array $old_instance Old instance.
-	 *
 	 * @return array
 	 */
 	public function update( $new_instance, $old_instance ) {
@@ -489,7 +483,6 @@ class Stories extends WP_Widget {
 	 * @since 1.5.0
 	 *
 	 * @param array $args Field args.
-	 *
 	 * @return void
 	 */
 	private function dropdown( array $args ) {
@@ -537,7 +530,6 @@ class Stories extends WP_Widget {
 	 * @since 1.5.0
 	 *
 	 * @param array $args Field args.
-	 *
 	 * @return void
 	 */
 	private function radio( array $args ) {
@@ -586,7 +578,6 @@ class Stories extends WP_Widget {
 	 * @since 1.5.0
 	 *
 	 * @param array $args Field args.
-	 *
 	 * @return void
 	 */
 	private function input( array $args ) {
@@ -614,7 +605,7 @@ class Stories extends WP_Widget {
 
 			$extra_attrs = '';
 
-			if ( ! empty( $args['attributes'] ) && is_array( $args['attributes'] ) ) {
+			if ( ! empty( $args['attributes'] ) && \is_array( $args['attributes'] ) ) {
 				foreach ( $args['attributes'] as $attr_key => $attr_val ) {
 					$extra_attrs .= sprintf( ' %1s=%2s', $attr_key, esc_attr( $attr_val ) );
 				}
@@ -651,7 +642,6 @@ class Stories extends WP_Widget {
 	 * @since 1.5.0
 	 *
 	 * @param array $args Label args.
-	 *
 	 * @return string
 	 */
 	private function label( array $args ) {

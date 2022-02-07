@@ -53,6 +53,7 @@ function restore(state, { pages, current, selection, story, capabilities }) {
     story: newStory,
     animationState: state.animationState,
     capabilities: newCapabilities,
+    copiedElementState: {},
   };
 }
 

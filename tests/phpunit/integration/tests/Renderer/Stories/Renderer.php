@@ -2,10 +2,10 @@
 /**
  * Generic_Renderer class.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -27,10 +27,10 @@
 namespace Google\Web_Stories\Tests\Integration\Renderer\Stories;
 
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\Tests\Integration\TestCase;
-use Google\Web_Stories\Tests\Integration\Test_Renderer;
-use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Renderer\Stories\Renderer as AbstractRenderer;
+use Google\Web_Stories\Story_Query;
+use Google\Web_Stories\Tests\Integration\Test_Renderer;
+use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
  * Generic_Renderer class.
@@ -156,7 +156,7 @@ class Renderer extends TestCase {
 			]
 		);
 
-		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->story_query, $this->assets, $this->register_global_assets ], '', true, true, true, [ 'is_amp_request' ] );
+		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->story_query ], '', true, true, true, [ 'is_amp_request' ] );
 		$renderer->expects( $this->any() )->method( 'is_amp_request' )->willReturn( false );
 		$this->set_private_property( $renderer, 'stories', [ $this->story_model ] );
 
@@ -171,7 +171,7 @@ class Renderer extends TestCase {
 	 * @covers ::get_content_overlay
 	 */
 	public function test_get_content_overlay() {
-		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->story_query, $this->assets, $this->register_global_assets ], '', true, true, true, [ 'is_amp_request' ] );
+		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->story_query ], '', true, true, true, [ 'is_amp_request' ] );
 		$renderer->method( 'is_amp_request' )->willReturn( false );
 		$this->set_private_property( $renderer, 'stories', [ $this->story_model ] );
 		$this->set_private_property( $renderer, 'content_overlay', false );
@@ -202,7 +202,7 @@ class Renderer extends TestCase {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $this->story_query, $this->assets, $this->register_global_assets );
+		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $this->story_query );
 		$expected = 'web-stories-list__story';
 
 		$output = $this->call_private_method( $renderer, 'get_single_story_classes' );
@@ -224,7 +224,7 @@ class Renderer extends TestCase {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $story_query, $this->assets, $this->register_global_assets );
+		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $story_query );
 
 		$expected = 'web-stories-list alignnone test is-view-type-circles is-style-default has-title is-carousel';
 
@@ -247,7 +247,7 @@ class Renderer extends TestCase {
 			]
 		);
 
-		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $story_query, $this->assets, $this->register_global_assets );
+		$renderer = new \Google\Web_Stories\Renderer\Stories\Generic_Renderer( $story_query );
 
 		$archive_link = get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		ob_start();
@@ -274,10 +274,35 @@ class Renderer extends TestCase {
 			]
 		);
 
-		$renderer = new Test_Renderer( $story_query, $this->assets, $this->register_global_assets );
+		$renderer = new Test_Renderer( $story_query );
 
 		$overlay = $this->get_private_property( $renderer, 'content_overlay' );
 
 		$this->assertTrue( $overlay );
+	}
+
+	public function test_render_link_attributes() {
+		$filter = static function( $attrs, $story, $position ) {
+			return [
+				'class'                              => '123',
+				'foo'                                => 'bar',
+				'"><script>console.log(1)</script>>' => 'bar',
+				'data-tgev'                          => 'event1234',
+				'data-tgev-metric'                   => 'ev',
+				'data-tgev-order'                    => $position,
+			];
+		};
+
+		add_filter( 'web_stories_renderer_link_attributes', $filter, 10, 3 );
+
+		$renderer = new Test_Renderer( $this->story_query );
+
+		ob_start();
+		$this->call_private_method( $renderer, 'render_link_attributes' );
+		$expected = ob_get_clean();
+
+		remove_filter( 'web_stories_renderer_link_attributes', $filter );
+
+		$this->assertSame( 'class="123" data-tgev="event1234" data-tgev-metric="ev" data-tgev-order="0"', $expected );
 	}
 }

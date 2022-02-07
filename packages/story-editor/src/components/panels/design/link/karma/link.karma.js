@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { waitFor } from '@testing-library/react';
+import { waitFor, within } from '@testing-library/react';
 import { createSolidFromString } from '@googleforcreators/patterns';
 
 /**
@@ -81,7 +81,11 @@ describe('Link Panel', () => {
     beforeEach(async () => {
       await fixture.editor.library.textTab.click();
       await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      await waitFor(() => {
+        if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+          throw new Error('node not ready');
+        }
+      });
       linkPanel = fixture.editor.inspector.designPanel.link;
     });
 
@@ -122,12 +126,14 @@ describe('Link Panel', () => {
       expect(linkPanel.address.value).toBe('https://example.com');
     });
 
-    // TODO: Fix broken/flakey test.
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should display the link tooltip correctly', async () => {
+    it('should display the link tooltip correctly', async () => {
       const linkDescription = 'Example description';
       // make sure address input exists
-      await waitFor(() => linkPanel.address);
+      await waitFor(() => {
+        if (!linkPanel.address) {
+          throw new Error('address input not ready');
+        }
+      });
 
       await fixture.events.click(linkPanel.address);
       await fixture.events.keyboard.type('example.com');
@@ -135,36 +141,58 @@ describe('Link Panel', () => {
       // Debounce time for populating meta-data.
       await fixture.events.keyboard.press('tab');
       // make sure description input exists
-      await waitFor(() => linkPanel.description, { timeout: 1500 });
+      await waitFor(() => {
+        if (!linkPanel.description) {
+          throw new Error('description input not ready');
+        }
+      });
       await fixture.events.click(linkPanel.description, { clickCount: 3 });
+      // needed to ensure all text gets entered otherwise the click event can
+      // overlap the text input and we end up not typing all letters.
+      await fixture.events.sleep(500);
       await fixture.events.keyboard.type(linkDescription);
       await fixture.events.keyboard.press('tab');
+      const container = fixture.container;
       // Unselect element.
-      const fullbleed = fixture.container.querySelector(
-        '[data-testid="fullbleed"]'
+      const fullbleedElements = await within(container).findAllByTestId(
+        'fullbleed',
+        {
+          timeout: 2000,
+        }
       );
-      const { left, top } = fullbleed.getBoundingClientRect();
+      // There are three fullbleed elements; [0](Display layer), [1](Frames layer), and [2](Edit layer),
+      const { left, top } = fullbleedElements[1].getBoundingClientRect();
       await fixture.events.mouse.click(left - 5, top - 5);
 
       // Move mouse to hover over the element.
-      const frame = fixture.editor.canvas.framesLayer.frames[1].node;
-      await fixture.events.mouse.moveRel(frame, 10, 10);
-
-      await waitFor(() => {
-        const tooltip = fixture.screen.getByText(linkDescription);
-        expect(tooltip.textContent).toBe(linkDescription);
+      const frame = await waitFor(() => {
+        const frameNode = fixture.editor.canvas.framesLayer.frames[1].node;
+        if (!frameNode) {
+          throw new Error('node not ready');
+        }
+        expect(frameNode).toBeTruthy();
+        return frameNode;
       });
+
+      await fixture.events.mouse.moveRel(frame, 10, 10);
+      const tooltip = await fixture.screen.findByText(linkDescription);
+      expect(tooltip).toHaveTextContent(linkDescription);
       await fixture.snapshot(
         'Element is hovered on. The link tooltip is visible'
       );
 
       // Select the element again.
       await fixture.events.click(frame);
-      await waitFor(() => fixture.editor.inspector.designPanel.link.address);
+      await waitFor(() => {
+        if (!fixture.editor.inspector.designPanel.link.address) {
+          throw new Error('address element not ready');
+        }
+      });
       await fixture.events.click(
         fixture.editor.inspector.designPanel.link.address,
         { clickCount: 3 }
       );
+      await fixture.events.sleep(500);
       await fixture.events.keyboard.press('del');
 
       // Verify that the description is not displayed when hovering without url.
@@ -355,7 +383,11 @@ describe('Link Panel', () => {
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
       );
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      await waitFor(() => {
+        if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+          throw new Error('node not ready');
+        }
+      });
       linkPanel = fixture.editor.inspector.designPanel.link;
       await fixture.events.click(linkPanel.address);
       await fixture.events.keyboard.type('http://google.com');

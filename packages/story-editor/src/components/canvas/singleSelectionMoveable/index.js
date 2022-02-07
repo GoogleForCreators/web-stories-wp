@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import {
+  forwardRef,
   useRef,
   useEffect,
   useState,
@@ -29,6 +30,7 @@ import {
 import classnames from 'classnames';
 import { useUnits } from '@googleforcreators/units';
 import { useGlobalIsKeyPressed } from '@googleforcreators/design-system';
+import { useTransform } from '@googleforcreators/transform';
 
 /**
  * Internal dependencies
@@ -36,7 +38,6 @@ import { useGlobalIsKeyPressed } from '@googleforcreators/design-system';
 import { useStory, useCanvas, useLayout } from '../../../app';
 import Moveable from '../../moveable';
 import objectWithout from '../../../utils/objectWithout';
-import { useTransform } from '../../transform';
 import useSnapping from '../utils/useSnapping';
 import useUpdateSelectionRectangle from '../utils/useUpdateSelectionRectangle';
 import useWindowResizeHandler from '../useWindowResizeHandler';
@@ -44,13 +45,10 @@ import useDrag from './useDrag';
 import useResize from './useResize';
 import useRotate from './useRotate';
 
-function SingleSelectionMoveable({
-  selectedElement,
-  targetEl,
-  pushEvent,
-  isEditMode,
-  editMoveableRef,
-}) {
+const SingleSelectionMoveable = forwardRef(function SingleSelectionMoveable(
+  { selectedElement, targetEl, pushEvent, isEditMode, ...props },
+  ref
+) {
   const moveable = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
 
@@ -226,9 +224,10 @@ function SingleSelectionMoveable({
 
   return (
     <Moveable
+      {...props}
       className={classNames}
       zIndex={0}
-      ref={useCombinedRefs(moveable, editMoveableRef)}
+      ref={useCombinedRefs(moveable, ref)}
       target={targetEl}
       edge
       draggable={actionsEnabled}
@@ -242,7 +241,7 @@ function SingleSelectionMoveable({
       pinchable
     />
   );
-}
+});
 
 SingleSelectionMoveable.propTypes = {
   selectedElement: PropTypes.object.isRequired,

@@ -52,9 +52,12 @@ describe('ColorPicker', () => {
         // Click the background page panel color preview
         await fixture.events.click(bgPanel.backgroundColor.button);
 
-        await waitFor(() =>
-          expect(bgPanel.backgroundColor.picker).toBeDefined()
-        );
+        await waitFor(() => {
+          if (!bgPanel.backgroundColor.picker) {
+            throw new Error('picker not ready');
+          }
+          expect(bgPanel.backgroundColor.picker).toBeDefined();
+        });
 
         // Verify there are no aXe violations within the color picker.
         await expectAsync(

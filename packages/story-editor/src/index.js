@@ -17,10 +17,10 @@
 /**
  * Internal dependencies
  */
-import StoryEditor from './storyEditor';
 import Dialog from './components/dialog';
 
-export * from './components/transform';
+export { default as StoryEditor } from './storyEditor';
+
 export * from './components/previewPage';
 export * from './app/config';
 export * from './app/story';
@@ -57,4 +57,3 @@ export {
 export { ConfigProvider as EditorConfigProvider } from './app/config';
 
 export { Dialog };
-export default StoryEditor;

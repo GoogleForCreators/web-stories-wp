@@ -22,7 +22,7 @@
  */
 import { mkdirSync, rmdirSync, existsSync } from 'fs';
 import { relative } from 'path';
-import program from 'commander';
+import { Command } from 'commander';
 import semver from 'semver';
 const { inc: semverInc } = semver;
 
@@ -40,6 +40,8 @@ import {
 const PLUGIN_DIR = process.cwd();
 const PLUGIN_FILE = 'web-stories.php';
 const BUILD_DIR = 'build/web-stories';
+
+const program = new Command();
 
 program
   .command('version')

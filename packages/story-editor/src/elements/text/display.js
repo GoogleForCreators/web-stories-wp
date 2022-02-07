@@ -22,10 +22,12 @@ import { useEffect, useRef, useMemo } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { createSolid } from '@googleforcreators/patterns';
 import { useUnits } from '@googleforcreators/units';
+import { useTransformHandler } from '@googleforcreators/transform';
+
 /**
  * Internal dependencies
  */
-import { useFont } from '../../app';
+import { useFont } from '../../app/font';
 import {
   elementFillContent,
   elementWithFont,
@@ -36,7 +38,6 @@ import {
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
-import { useTransformHandler } from '../../components/transform';
 import {
   getHTMLFormatters,
   getHTMLInfo,

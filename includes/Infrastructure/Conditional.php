@@ -2,10 +2,10 @@
 /**
  * Interface Conditional.
  *
- * @package   Google\Web_Stories
+ * @link      https://www.mwpd.io/
+ *
  * @copyright 2019 Alain Schlesser
  * @license   MIT
- * @link      https://www.mwpd.io/
  */
 
 /**
@@ -27,8 +27,9 @@ namespace Google\Web_Stories\Infrastructure;
  * This allows for a more systematic and automated optimization of how the
  * different parts of the plugin are enabled or disabled.
  *
- * @since 1.6.0
  * @internal
+ *
+ * @since 1.6.0
  */
 interface Conditional {
 

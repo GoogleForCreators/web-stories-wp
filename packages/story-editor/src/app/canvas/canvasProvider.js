@@ -195,6 +195,8 @@ function CanvasProvider({ children }) {
 
   useCanvasCopyPaste();
 
+  const [onMoveableMount, setMoveableMount] = useState(null);
+
   const state = useMemo(
     () => ({
       state: {
@@ -217,6 +219,7 @@ function CanvasProvider({ children }) {
         pageCanvasPromise,
         boundingBoxes,
         clientRectObserver,
+        onMoveableMount,
       },
       actions: {
         setPageContainer,
@@ -238,6 +241,7 @@ function CanvasProvider({ children }) {
         setEyedropperPixelData,
         setPageCanvasData,
         setPageCanvasPromise,
+        setMoveableMount,
       },
     }),
     [
@@ -266,6 +270,8 @@ function CanvasProvider({ children }) {
       clearEditing,
       handleSelectElement,
       selectIntersection,
+      onMoveableMount,
+      setMoveableMount,
     ]
   );
   return (

@@ -29,10 +29,12 @@ function transformStoryResponse(post) {
       name: embedded?.author?.[0].name || '',
     },
     capabilities: {},
-    lockUser: {
-      id: embedded?.['wp:lockuser']?.[0].id || 0,
-      name: embedded?.['wp:lockuser']?.[0].name || '',
-      avatar: embedded?.['wp:lockuser']?.[0].avatar_urls?.['96'] || '',
+    extras: {
+      lockUser: {
+        id: embedded?.['wp:lockuser']?.[0].id || 0,
+        name: embedded?.['wp:lockuser']?.[0].name || '',
+        avatar: embedded?.['wp:lockuser']?.[0].avatar_urls?.['96'] || '',
+      },
     },
     featuredMedia: {
       id: embedded?.['wp:featuredmedia']?.[0].id || 0,

@@ -20,9 +20,6 @@ import { renderHook } from '@testing-library/react-hooks';
 /**
  * Internal dependencies
  */
-/**
- * Internal dependencies
- */
 import LayoutProvider from '../provider';
 import useLayoutContext from '../useLayoutContext';
 
