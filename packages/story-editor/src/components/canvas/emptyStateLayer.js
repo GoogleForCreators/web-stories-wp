@@ -34,7 +34,7 @@ import {
  */
 import { __ } from '@googleforcreators/i18n';
 import { CONTEXT_MENU_WIDTH } from '@googleforcreators/design-system/src/components/contextMenu/menu';
-import { useDropTargets, useRightClickMenu } from '../../app';
+import { useConfig, useDropTargets, useRightClickMenu } from '../../app';
 import useStory from '../../app/story/useStory';
 import isEmptyStory from '../../app/story/utils/isEmptyStory';
 import { Layer, PageArea } from './layout';
@@ -59,6 +59,7 @@ const EmptyStateMessage = styled.div`
 `;
 
 function EmptyStateLayer() {
+  const { isRTL } = useConfig();
   const { isMenuOpen, onOpenMenu } = useRightClickMenu(
     ({ isMenuOpen, onOpenMenu }) => ({
       isMenuOpen,
@@ -80,7 +81,8 @@ function EmptyStateLayer() {
 
   const onButtonClick = (e) => {
     const bb = e.target.getBoundingClientRect();
-    e.clientX = bb.left - CONTEXT_MENU_WIDTH / 2 + bb.width / 2;
+    e.clientX =
+      bb.left - ((isRTL ? -1 : 1) * CONTEXT_MENU_WIDTH) / 2 + bb.width / 2;
     // Hardcoded because it's not trivial to get the menu height here.
     const EMPTY_STATE_CONTEXT_MENU_HEIGHT = 132;
     e.clientY = bb.top - EMPTY_STATE_CONTEXT_MENU_HEIGHT + bb.height;
