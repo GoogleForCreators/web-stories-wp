@@ -205,8 +205,8 @@ function DropTargetsProvider({ children }) {
     [activeDropTargetId, combineElements, elements, dropTargets, pushTransform]
   );
 
-  // ⌘ key disables drop-targeting.
-  const isDropTargetingDisabled = useGlobalIsKeyPressed('meta');
+  // mod key (⌘ on macOS, Ctrl on Windows) disables drop-targeting.
+  const isDropTargetingDisabled = useGlobalIsKeyPressed('mod');
 
   const state = {
     state: {
