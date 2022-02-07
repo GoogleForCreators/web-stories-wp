@@ -27,7 +27,7 @@ import {
 /**
  * Internal dependencies
  */
-import { SHARED_DEFAULT_ATTRIBUTES } from '..';
+import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
 
 export const defaultAttributes = {
   ...SHARED_DEFAULT_ATTRIBUTES,

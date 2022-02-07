@@ -24,7 +24,7 @@ import { dataPixels, PAGE_HEIGHT } from '@googleforcreators/units';
  * Internal dependencies
  */
 import { TextOutputWithUnits } from '../text/output';
-import { calcFontMetrics } from '..';
+import { calcFontMetrics } from '../text/util';
 
 const MEASURER_STYLES = {
   boxSizing: 'border-box',

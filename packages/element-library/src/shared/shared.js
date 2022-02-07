@@ -24,7 +24,7 @@ import { getBorderStyle, getBorderRadius } from '@googleforcreators/masks';
 /**
  * Internal dependencies
  */
-import { generateFontFamily } from '..';
+import { generateFontFamily } from '../text/util';
 
 export const elementFillContent = css`
   position: absolute;
