@@ -127,10 +127,12 @@ jobs:
 
           git add packages/*/package.json
 
+          npm install
+
           echo "Committing version bump"
           echo
 
-          git commit -m "Releasing npm packages version $NEW_VERSION"
+          git commit -m "Bumping npm packages version to $NEW_VERSION"
 
           echo "Adding tags"
           echo
