@@ -121,7 +121,7 @@ jobs:
     name: Percy
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    if: always()
+    if: always() && github.event.pull_request.draft == false
     needs: [karma, nonce]
     steps:
       - name: Checkout

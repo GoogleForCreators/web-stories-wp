@@ -15,18 +15,17 @@
  * limitations under the License.
  */
 
-
 namespace Google\Web_Stories\Tests\Integration\Admin;
 
 use Google\Web_Stories\Admin\Google_Fonts;
 use Google\Web_Stories\Assets;
 use Google\Web_Stories\Context;
 use Google\Web_Stories\Decoder;
+use Google\Web_Stories\Font_Post_Type;
 use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\Locale;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Font_Post_Type;
 use Google\Web_Stories\Tests\Integration\Capabilities_Setup;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 

@@ -182,7 +182,7 @@ jobs:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: Bundle packages
-        run: npm run bundle
+        run: npm run workflow:bundle-packages
 
   upload-artifacts:
     name: Upload ZIP files to storage
@@ -208,7 +208,7 @@ jobs:
         working-directory: ${{ github.ref }}
 
       - name: Setup Cloud SDK
-        uses: google-github-actions/setup-gcloud@v0.4.0
+        uses: google-github-actions/setup-gcloud@v0.5.0
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           service_account_key: ${{ secrets.GCP_SA_KEY }}

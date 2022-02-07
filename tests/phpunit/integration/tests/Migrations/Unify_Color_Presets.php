@@ -23,7 +23,6 @@ use Google\Web_Stories\Tests\Integration\TestCase;
  * Class Unify_Color_Presets
  *
  * @coversDefaultClass \Google\Web_Stories\Migrations\Unify_Color_Presets
-*
  */
 class Unify_Color_Presets extends TestCase {
 	/**

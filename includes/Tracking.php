@@ -4,10 +4,10 @@
  *
  * Used for setting up telemetry.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -28,7 +28,6 @@
 
 namespace Google\Web_Stories;
 
-use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Integrations\Site_Kit;
 use Google\Web_Stories\User\Preferences;
 
@@ -38,22 +37,16 @@ use Google\Web_Stories\User\Preferences;
 class Tracking extends Service_Base {
 	/**
 	 * Web Stories tracking script handle.
-	 *
-	 * @var string
 	 */
 	const SCRIPT_HANDLE = 'web-stories-tracking';
 
 	/**
 	 * Google Analytics property ID.
-	 *
-	 * @var string
 	 */
 	const TRACKING_ID = 'UA-168571240-1';
 
 	/**
 	 * Google Analytics 4 measurement ID.
-	 *
-	 * @var string
 	 */
 	const TRACKING_ID_GA4 = 'G-T88C9951CM';
 

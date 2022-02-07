@@ -24,7 +24,6 @@ use Google\Web_Stories_Dependencies\AMP_Layout_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Style_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Tag_And_Attribute_Sanitizer;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
-use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Sanitization
@@ -52,6 +51,7 @@ class Sanitization extends DependencyInjectedTestCase {
 
 	/**
 	 * @see Test_AMP_Theme_Support::test_scripts_get_moved_to_head
+	 *
 	 * @covers ::sanitize_document()
 	 * @covers ::ensure_required_markup()
 	 */
@@ -87,6 +87,7 @@ class Sanitization extends DependencyInjectedTestCase {
 
 	/**
 	 * @see Test_AMP_Theme_Support::test_unneeded_scripts_get_removed
+	 *
 	 * @covers ::ensure_required_markup()
 	 */
 	public function test_unneeded_scripts_get_removed() {
@@ -131,6 +132,7 @@ class Sanitization extends DependencyInjectedTestCase {
 
 	/**
 	 * @see Test_AMP_Theme_Support::test_duplicate_scripts_are_removed
+	 *
 	 * @covers AMP_Theme_Support::prepare_response()
 	 * @covers AMP_Theme_Support::ensure_required_markup()
 	 */
@@ -388,6 +390,7 @@ class Sanitization extends DependencyInjectedTestCase {
 
 	/**
 	 * @see Test_AMP_Helper_Functions::test_amp_is_dev_mode
+	 *
 	 * @covers ::is_amp_dev_mode
 	 */
 	public function test_is_amp_dev_mode() {
@@ -401,6 +404,7 @@ class Sanitization extends DependencyInjectedTestCase {
 
 	/**
 	 * @see Test_AMP_Helper_Functions::test_amp_is_dev_mode
+	 *
 	 * @covers ::is_amp_dev_mode
 	 */
 	public function test_is_amp_dev_mode_authenticated_user_admin_bar_showing() {
@@ -415,6 +419,7 @@ class Sanitization extends DependencyInjectedTestCase {
 
 	/**
 	 * @see Test_AMP_Helper_Functions::test_amp_is_dev_mode
+	 *
 	 * @covers ::is_amp_dev_mode
 	 */
 	public function test_is_amp_dev_mode_unauthenticated_user_admin_bar_forced() {
@@ -429,6 +434,7 @@ class Sanitization extends DependencyInjectedTestCase {
 
 	/**
 	 * @see Test_AMP_Helper_Functions::test_amp_get_content_sanitizers
+	 *
 	 * @covers ::get_sanitizers
 	 */
 	public function test_get_sanitizers() {
@@ -444,15 +450,16 @@ class Sanitization extends DependencyInjectedTestCase {
 		$sanitizers = $this->call_private_method( $this->instance, 'get_sanitizers' );
 
 		$ordered_sanitizers = array_keys( $sanitizers );
-		$this->assertEquals( 'Even_After_Validating_Sanitizer', $ordered_sanitizers[ count( $ordered_sanitizers ) - 5 ] );
-		$this->assertEquals( AMP_Layout_Sanitizer::class, $ordered_sanitizers[ count( $ordered_sanitizers ) - 4 ] );
-		$this->assertEquals( AMP_Style_Sanitizer::class, $ordered_sanitizers[ count( $ordered_sanitizers ) - 3 ] );
-		$this->assertEquals( \Google\Web_Stories\AMP\Meta_Sanitizer::class, $ordered_sanitizers[ count( $ordered_sanitizers ) - 2 ] );
-		$this->assertEquals( AMP_Tag_And_Attribute_Sanitizer::class, $ordered_sanitizers[ count( $ordered_sanitizers ) - 1 ] );
+		$this->assertEquals( 'Even_After_Validating_Sanitizer', $ordered_sanitizers[ \count( $ordered_sanitizers ) - 5 ] );
+		$this->assertEquals( AMP_Layout_Sanitizer::class, $ordered_sanitizers[ \count( $ordered_sanitizers ) - 4 ] );
+		$this->assertEquals( AMP_Style_Sanitizer::class, $ordered_sanitizers[ \count( $ordered_sanitizers ) - 3 ] );
+		$this->assertEquals( \Google\Web_Stories\AMP\Meta_Sanitizer::class, $ordered_sanitizers[ \count( $ordered_sanitizers ) - 2 ] );
+		$this->assertEquals( AMP_Tag_And_Attribute_Sanitizer::class, $ordered_sanitizers[ \count( $ordered_sanitizers ) - 1 ] );
 	}
 
 	/**
 	 * @see Test_AMP_Helper_Functions::test_amp_get_content_sanitizers_with_dev_mode
+	 *
 	 * @covers ::get_sanitizers
 	 */
 	public function test_get_sanitizers_with_dev_mode() {

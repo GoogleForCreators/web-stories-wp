@@ -2,10 +2,10 @@
 /**
  * Exception InvalidEventProperties.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -31,8 +31,9 @@ use InvalidArgumentException;
 /**
  * Exception thrown when an invalid properties are added to an Event.
  *
- * @since 1.6.0
  * @internal
+ *
+ * @since 1.6.0
  */
 final class InvalidEventProperties
 	extends InvalidArgumentException
@@ -45,13 +46,12 @@ final class InvalidEventProperties
 	 * @since 1.6.0
 	 *
 	 * @param mixed $properties Properties value that has the wrong type.
-	 *
 	 * @return self
 	 */
 	public static function from_invalid_type( $properties ): self {
-		$type = is_object( $properties )
-			? get_class( $properties )
-			: gettype( $properties );
+		$type = \is_object( $properties )
+			? \get_class( $properties )
+			: \gettype( $properties );
 
 		$message = sprintf(
 			'The properties argument for adding properties to an event needs to be an array, but is of type %s',
@@ -68,13 +68,12 @@ final class InvalidEventProperties
 	 * @since 1.6.0
 	 *
 	 * @param mixed $property Property element that has the wrong type.
-	 *
 	 * @return self
 	 */
 	public static function from_invalid_element_key_type( $property ): self {
-		$type = is_object( $property )
-			? get_class( $property )
-			: gettype( $property );
+		$type = \is_object( $property )
+			? \get_class( $property )
+			: \gettype( $property );
 
 		$message = sprintf(
 			'Each property element key for adding properties to an event needs to of type string, but found an element key of type %s',
@@ -89,13 +88,12 @@ final class InvalidEventProperties
 	 * the wrong value type for one or more of its elements.
 	 *
 	 * @param mixed $property Property element that has the wrong type.
-	 *
 	 * @return self
 	 */
 	public static function from_invalid_element_value_type( $property ): self {
-		$type = is_object( $property )
-			? get_class( $property )
-			: gettype( $property );
+		$type = \is_object( $property )
+			? \get_class( $property )
+			: \gettype( $property );
 
 		$message = sprintf(
 			'Each property element value for adding properties to an event needs to be a scalar value, but found an element value of type %s',

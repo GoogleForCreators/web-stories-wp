@@ -20,12 +20,12 @@
 import PropTypes from 'prop-types';
 import { useState, useMemo, useCallback } from '@googleforcreators/react';
 import { noop, useGlobalIsKeyPressed } from '@googleforcreators/design-system';
+import { useTransform } from '@googleforcreators/transform';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../app/story';
-import { useTransform } from '../transform';
 import getElementProperties from '../canvas/utils/getElementProperties';
 import { getDefinitionForType } from '../../elements';
 import Context from './context';
@@ -205,8 +205,8 @@ function DropTargetsProvider({ children }) {
     [activeDropTargetId, combineElements, elements, dropTargets, pushTransform]
   );
 
-  // ⌘ key disables drop-targeting.
-  const isDropTargetingDisabled = useGlobalIsKeyPressed('meta');
+  // mod key (⌘ on macOS, Ctrl on Windows) disables drop-targeting.
+  const isDropTargetingDisabled = useGlobalIsKeyPressed('mod');
 
   const state = {
     state: {

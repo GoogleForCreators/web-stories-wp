@@ -4,10 +4,10 @@
  *
  * Base class for other classes to extend.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -26,15 +26,12 @@
  * limitations under the License.
  */
 
-
 namespace Google\Web_Stories\Migrations;
 
 use Google\Web_Stories\Interfaces\Migration;
 
 /**
  * Class Migrate_Base
- *
- * @package Google\Web_Stories\Migrations
  */
 abstract class Migrate_Base implements Migration {
 
