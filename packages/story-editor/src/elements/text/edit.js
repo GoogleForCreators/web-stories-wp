@@ -33,14 +33,16 @@ import {
   useTransformHandler,
   useTransform,
 } from '@googleforcreators/transform';
+import {
+  RichTextEditor,
+  getHTMLInfo,
+  useRichText,
+} from '@googleforcreators/rich-text';
 
 /**
  * Internal dependencies
  */
-import { useStory } from '../../app/story';
-import { useFont } from '../../app/font';
-import RichTextEditor from '../../components/richText/editor';
-import { getHTMLInfo } from '../../components/richText/htmlManipulation';
+import { useStory, useFont } from '../../app';
 import {
   elementFillContent,
   elementWithFont,
@@ -53,7 +55,6 @@ import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
 import stripHTML from '../../utils/stripHTML';
 import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
-import useRichText from '../../components/richText/useRichText';
 import {
   getBorderPositionCSS,
   shouldDisplayBorder,

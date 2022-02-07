@@ -23,7 +23,6 @@ import { useCallback } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import { DEFAULT_PRESET } from '../library/panes/text/textPresets';
 import getPastedBlocks from './getPastedBlocks';
 import customExport from './customExport';
 
@@ -33,7 +32,7 @@ import customExport from './customExport';
  * Compare this with `useHandlePastedText` that handles pasting text while being
  * in text edit-mode.
  */
-function usePasteTextContent(insertElement) {
+function usePasteTextContent(insertElement, preset) {
   return useCallback(
     (html) => {
       const blockMap = getPastedBlocks(html);
@@ -45,12 +44,12 @@ function usePasteTextContent(insertElement) {
         return false;
       }
       insertElement('text', {
-        ...DEFAULT_PRESET,
+        ...preset,
         content: validContent,
       });
       return true;
     },
-    [insertElement]
+    [insertElement, preset]
   );
 }
 

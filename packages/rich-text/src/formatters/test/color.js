@@ -22,12 +22,11 @@ import { createSolid } from '@googleforcreators/patterns';
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE } from '../../../../constants';
 import {
   togglePrefixStyle,
   getPrefixStylesInSelection,
 } from '../../styleManipulation';
-import { NONE, COLOR } from '../../customConstants';
+import { NONE, COLOR, MULTIPLE_VALUE } from '../../customConstants';
 import formatter from '../color';
 import { getDOMElement } from './_utils';
 
