@@ -250,8 +250,6 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
       // Then click the text set
       await fixture.events.click(textSets[1]);
 
-      await fixture.events.sleep(500);
-
       await waitFor(
         () => {
           if (!fixture.editor.canvas.framesLayer.frames[1].node) {
