@@ -229,7 +229,6 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.changeBackgroundColorButton
       );
-      await fixture.events.sleep(500);
       await fixture.events.keyboard.type('000');
       await fixture.events.keyboard.press('Tab');
 
