@@ -28,6 +28,10 @@ import {
 import { useMemo } from '@googleforcreators/react';
 import { FlagsProvider } from 'flagged';
 import { TransformProvider } from '@googleforcreators/transform';
+import {
+  DefaultMoveableGlobalStyle,
+  CropMoveableGlobalStyle,
+} from '@googleforcreators/moveable';
 
 /**
  * Internal dependencies
@@ -48,8 +52,6 @@ import { DropTargetsProvider } from './components/dropTargets';
 import { HelpCenterProvider } from './app/helpCenter';
 import { PageDataUrlProvider } from './app/pageDataUrls';
 import DevTools from './components/devTools';
-import { GlobalStyle as DefaultMoveableGlobalStyle } from './components/moveable/moveStyle';
-import { GlobalStyle as CropMoveableGlobalStyle } from './components/moveable/cropStyle';
 import { GlobalStyle as CalendarStyle } from './components/form/dateTime/calendarStyle';
 import KeyboardOnlyOutlines from './utils/keyboardOnlyOutline';
 import defaultConfig from './defaultConfig';

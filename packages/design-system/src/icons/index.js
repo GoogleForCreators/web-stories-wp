@@ -28,7 +28,6 @@ export { ReactComponent as AlignTextLeft } from './align_text_left.svg';
 export { ReactComponent as AlignTextRight } from './align_text_right.svg';
 export { ReactComponent as AlignTop } from './align_top.svg';
 export { ReactComponent as Angle } from './angle.svg';
-export { ReactComponent as ArrowCircle } from './arrow_circle.svg';
 export { ReactComponent as ArrowCloud } from './arrow_cloud.svg';
 export { ReactComponent as ArrowDown } from './arrow_down.svg';
 export { ReactComponent as ArrowDownLeft } from './arrow_down_left.svg';

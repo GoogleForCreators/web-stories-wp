@@ -17,21 +17,28 @@
 /**
  * External dependencies
  */
-import Modal from 'react-modal';
+import { forwardRef } from '@googleforcreators/react';
+import Moveable from 'react-moveable';
 
 /**
  * Internal dependencies
  */
-import localStore, { LOCAL_STORAGE_PREFIX } from './utils/localStore';
-import * as Icons from './icons';
+import InOverlay from './overlay';
 
-const { setAppElement } = Modal;
+const DEFAULT_Z_INDEX = 10;
 
-export { Icons };
-export { localStore, LOCAL_STORAGE_PREFIX };
-export * from './components';
-export * from './contexts';
-export * from './images';
-export * from './theme';
-export * from './utils';
-export { setAppElement };
+// eslint-disable-next-line react/prop-types
+function MoveableWithRef({ onContextMenu, ...moveableProps }, ref) {
+  return (
+    <InOverlay
+      onContextMenu={onContextMenu}
+      zIndex={DEFAULT_Z_INDEX}
+      pointerEvents="initial"
+      render={({ container }) => {
+        return <Moveable ref={ref} container={container} {...moveableProps} />;
+      }}
+    />
+  );
+}
+
+export default forwardRef(MoveableWithRef);

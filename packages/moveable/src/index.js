@@ -13,8 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * Internal dependencies
+ * External dependencies
  */
-export { default as ArrowCircle } from './arrow_circle.svg';
+//eslint-disable-next-line import/named
+import { MockMoveable } from 'react-moveable';
+
+export { default as Moveable } from './moveable.js';
+export { MockMoveable };
+export { GlobalStyle as CropMoveableGlobalStyle } from './cropStyle';
+export { GlobalStyle as DefaultMoveableGlobalStyle } from './moveStyle';
+export { default as InOverlay } from './overlay';
+export { default as withOverlay } from './overlay/withOverlay';

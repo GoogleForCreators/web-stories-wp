@@ -17,28 +17,15 @@
 /**
  * External dependencies
  */
-import { forwardRef } from '@googleforcreators/react';
-import Moveable from 'react-moveable';
+import { css } from 'styled-components';
 
-/**
- * Internal dependencies
- */
-import InOverlay from '../overlay';
+const pointerEventsCss = css`
+  ${({ pointerEvents }) => {
+    if (pointerEvents && typeof pointerEvents === 'string') {
+      return `pointer-events: ${pointerEvents};`;
+    }
+    return '';
+  }}
+`;
 
-const DEFAULT_Z_INDEX = 10;
-
-// eslint-disable-next-line react/prop-types
-function MoveableWithRef({ onContextMenu, ...moveableProps }, ref) {
-  return (
-    <InOverlay
-      onContextMenu={onContextMenu}
-      zIndex={DEFAULT_Z_INDEX}
-      pointerEvents="initial"
-      render={({ container }) => {
-        return <Moveable ref={ref} container={container} {...moveableProps} />;
-      }}
-    />
-  );
-}
-
-export default forwardRef(MoveableWithRef);
+export default pointerEventsCss;

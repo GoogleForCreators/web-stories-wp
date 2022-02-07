@@ -21,11 +21,11 @@ import PropTypes from 'prop-types';
 import { useEffect, useRef, useCallback } from '@googleforcreators/react';
 import { getFocalFromOffset } from '@googleforcreators/media';
 import { useKeyDownEffect } from '@googleforcreators/design-system';
+import { Moveable } from '@googleforcreators/moveable';
 
 /**
  * Internal dependencies
  */
-import Moveable from '../../components/moveable';
 import StoryPropTypes from '../../types';
 import getTransformFlip from '../shared/getTransformFlip';
 import getKeyboardMovement from '../../utils/getKeyboardMovement';

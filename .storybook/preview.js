@@ -30,9 +30,9 @@ import {
 import {
   theme,
   GlobalStyle,
-  CropMoveableGlobalStyle,
   EditorConfigProvider,
 } from '@googleforcreators/story-editor';
+import { CropMoveableGlobalStyle } from '@googleforcreators/moveable';
 import {
   DashboardGlobalStyle,
   DashboardKeyboardOnlyOutline,
