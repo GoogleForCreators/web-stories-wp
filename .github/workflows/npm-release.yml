@@ -119,12 +119,15 @@ jobs:
           # Just grab the very last one from the last line, since they all should be identical anyway.
           # We then use this to manually commit and tag the version bump
           NEW_VERSION="${OUTPUT##*$'\n'}"
-          for package in ./packages/*/package.json; do
-            if [[ $(cat $package | jq '.private') == true ]]; then
-              git checkout --quiet $package
+
+          # Undo changes to all the private packages.
+          for package_file in ./packages/*/package.json; do
+            if [[ $(cat $package_file | jq '.private') == true ]]; then
+              git checkout --quiet $package_file
             fi
           done
 
+          # Updates the lock file.
           npm install
 
           git add packages/*/package.json
@@ -138,10 +141,14 @@ jobs:
           echo "Adding tags"
           echo
 
-          PUBLIC_PACKAGES=$(jq -r 'select(.private == false) | .name' $(find packages -name "package.json"))
-          for package in $PUBLIC_PACKAGES; do
-            echo "Adding tag: $package@$NEW_VERSION"
-            git tag "$package@$NEW_VERSION"
+          # For every public package, this creates a tag in the form "<package>-v1234".
+          # Example: templates-v1234
+          for package_file in ./packages/*/package.json; do
+            if [[ $(cat $package_file | jq '.private') == false ]]; then
+              package_name=$(basename $(dirname $package_file))
+              echo "Adding tag: $package_name-$NEW_VERSION"
+              git tag "$package_name-$NEW_VERSION"
+            fi
           done
 
           echo "Commit details:"
