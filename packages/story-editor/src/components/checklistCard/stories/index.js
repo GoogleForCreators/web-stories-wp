@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 import {
   THEME_CONSTANTS,
@@ -41,6 +41,16 @@ import { CheckboxCta } from '../checkboxCta';
 export default {
   title: 'Stories Editor/Components/ChecklistCard',
   component: ChecklistCard,
+  argTypes: {
+    onThumbnailClick: { action: 'thumbnail clicked' },
+    titleProps: { action: 'title clicked' },
+    cta: { table: { disable: true } },
+    footer: { table: { disable: true } },
+    thumbnails: { table: { disable: true } },
+    className: { table: { disable: true } },
+    title: { table: { disable: true } },
+    cardType: { table: { disable: true } },
+  },
 };
 
 const Container = styled.div`
@@ -55,16 +65,36 @@ const Container = styled.div`
   }
 `;
 
-export const _default = () => {
+export const _default = (args) => {
+  const getThumbnails = (numOfThumbnails) => {
+    const thumbnails = [];
+    let index = 0;
+    while (numOfThumbnails > index) {
+      thumbnails.push(
+        <Thumbnail
+          key={index}
+          onClick={() => args.onThumbnailClick()}
+          type={THUMBNAIL_TYPES.IMAGE}
+          displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
+          aria-label="my helper text describing this thumbnail image"
+        >
+          <Tooltip title="Optimize">
+            <StyledVideoOptimizationIcon />
+          </Tooltip>
+        </Thumbnail>
+      );
+      index++;
+    }
+    return thumbnails;
+  };
+
   return (
     <Container>
       <div>
         <Text>{'Single Issue'}</Text>
         <ChecklistCard
           title="Add video captions"
-          titleProps={{
-            onClick: () => action('title clicked')(),
-          }}
+          titleProps={{ onClick: () => args.titleProps() }}
           footer={
             <DefaultFooterText>
               {
@@ -80,14 +110,7 @@ export const _default = () => {
           }
           cta={<DefaultCtaButton>{'Replace File'}</DefaultCtaButton>}
           thumbnailCount={1}
-          thumbnails={
-            <Thumbnail
-              onClick={() => action('thumbnail action found')()}
-              type={THUMBNAIL_TYPES.IMAGE}
-              displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-              aria-label="my helper text describing this thumbnail image"
-            />
-          }
+          thumbnails={getThumbnails(1)}
         />
       </div>
       <div>
@@ -108,14 +131,7 @@ export const _default = () => {
             </DefaultFooterText>
           }
           thumbnailCount={1}
-          thumbnails={
-            <Thumbnail
-              onClick={() => action('thumbnail action found')()}
-              type={THUMBNAIL_TYPES.IMAGE}
-              displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-              aria-label="my helper text describing this thumbnail image"
-            />
-          }
+          thumbnails={getThumbnails(1)}
         />
       </div>
       <div>
@@ -196,29 +212,7 @@ export const _default = () => {
           }
           cardType={CARD_TYPE.MULTIPLE_ISSUE}
           thumbnailCount={3}
-          thumbnails={[
-            <Thumbnail
-              key={1}
-              onClick={() => action('thumbnail action found')()}
-              type={THUMBNAIL_TYPES.IMAGE}
-              displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-              aria-label="my helper text describing this thumbnail image"
-            />,
-            <Thumbnail
-              key={2}
-              onClick={() => action('thumbnail action found')()}
-              type={THUMBNAIL_TYPES.IMAGE}
-              displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-              aria-label="my helper text describing this thumbnail image"
-            />,
-            <Thumbnail
-              key={3}
-              onClick={() => action('thumbnail action found')()}
-              type={THUMBNAIL_TYPES.IMAGE}
-              displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-              aria-label="my helper text describing this thumbnail image"
-            />,
-          ]}
+          thumbnails={getThumbnails(3)}
         />
       </div>
       <div>
@@ -241,34 +235,12 @@ export const _default = () => {
           }
           cardType={CARD_TYPE.MULTIPLE_ISSUE}
           thumbnailCount={3}
-          thumbnails={[
-            <Thumbnail
-              key={1}
-              onClick={() => action('thumbnail action found')()}
-              type={THUMBNAIL_TYPES.IMAGE}
-              displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-              aria-label="my helper text describing this thumbnail image"
-            />,
-            <Thumbnail
-              key={2}
-              onClick={() => action('thumbnail action found')()}
-              type={THUMBNAIL_TYPES.IMAGE}
-              displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-              aria-label="my helper text describing this thumbnail image"
-            />,
-            <Thumbnail
-              key={3}
-              onClick={() => action('thumbnail action found')()}
-              type={THUMBNAIL_TYPES.IMAGE}
-              displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-              aria-label="my helper text describing this thumbnail image"
-            />,
-          ]}
+          thumbnails={getThumbnails(3)}
         />
       </div>
 
       <div>
-        <Text>{'Multiple Issues - more than 4'}</Text>
+        <Text>{'Multiple Issues - 4'}</Text>
         <ChecklistCard
           title="Videos not optimized"
           cta={
@@ -296,53 +268,8 @@ export const _default = () => {
             </DefaultFooterText>
           }
           cardType={CARD_TYPE.MULTIPLE_ISSUE}
-          thumbnailCount={6}
-          thumbnails={[
-            <Thumbnail
-              key={1}
-              onClick={() => action('1 thumbnail action found')()}
-              type={THUMBNAIL_TYPES.IMAGE}
-              displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-              aria-label="my helper text describing this thumbnail image"
-            >
-              <Tooltip title="Optimize">
-                <StyledVideoOptimizationIcon />
-              </Tooltip>
-            </Thumbnail>,
-            <Thumbnail
-              key={2}
-              onClick={() => action('2 thumbnail action found')()}
-              type={THUMBNAIL_TYPES.IMAGE}
-              displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-              aria-label="my helper text describing this thumbnail image"
-            >
-              <Tooltip title="Optimize">
-                <StyledVideoOptimizationIcon />
-              </Tooltip>
-            </Thumbnail>,
-            <Thumbnail
-              key={3}
-              onClick={() => action('3 thumbnail action found')()}
-              type={THUMBNAIL_TYPES.IMAGE}
-              displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-              aria-label="my helper text describing this thumbnail image"
-            >
-              <Tooltip title="Optimize">
-                <StyledVideoOptimizationIcon />
-              </Tooltip>
-            </Thumbnail>,
-            <Thumbnail
-              key={4}
-              onClick={() => action('4 thumbnail action found')()}
-              type={THUMBNAIL_TYPES.IMAGE}
-              displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-              aria-label="my helper text describing this thumbnail image"
-            >
-              <Tooltip title="Optimize">
-                <StyledVideoOptimizationIcon />
-              </Tooltip>
-            </Thumbnail>,
-          ]}
+          thumbnailCount={4}
+          thumbnails={getThumbnails(4)}
         />
       </div>
 
@@ -373,20 +300,8 @@ export const _default = () => {
             </DefaultFooterText>
           }
           cardType={CARD_TYPE.MULTIPLE_ISSUE}
-          thumbnailCount={1}
-          thumbnails={[
-            <Thumbnail
-              key={1}
-              onClick={() => action('1 thumbnail action found')()}
-              type={THUMBNAIL_TYPES.IMAGE}
-              displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
-              aria-label="my helper text describing this thumbnail image"
-            >
-              <Tooltip title="Optimize">
-                <StyledVideoOptimizationIcon />
-              </Tooltip>
-            </Thumbnail>,
-          ]}
+          thumbnailCount={6}
+          thumbnails={getThumbnails(6)}
         />
       </div>
     </Container>

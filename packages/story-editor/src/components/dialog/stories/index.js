@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
 import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 /**
@@ -34,20 +33,21 @@ export default {
     title: 'my dialog title',
     isOpen: true,
   },
+  argTypes: {
+    onClose: { action: 'closed' },
+    onPrimary: { action: 'primary clicked' },
+    onSecondary: { action: 'secondary clicked' },
+  },
   parameters: {
     controls: {
-      include: ['primaryText', 'secondaryText', 'title', 'isOpen'],
+      exclude: ['actions', 'children'],
     },
   },
 };
 
 export const _default = (args) => {
   return (
-    <Dialog
-      onClose={action('closed')}
-      onPrimary={action('confirmed')}
-      {...args}
-    >
+    <Dialog {...args}>
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
@@ -56,27 +56,11 @@ export const _default = (args) => {
     </Dialog>
   );
 };
-
-export const WithCustomAction = (args) => {
-  return (
-    <Dialog
-      onClose={action('closed')}
-      onPrimary={action('primary clicked')}
-      primaryRest={{
-        href: 'https://example.com',
-      }}
-      onSecondary={action('secondary clicked')}
-      {...args}
-    >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-        {
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
-        }
-      </Text>
-    </Dialog>
-  );
-};
+export const WithCustomAction = _default.bind({});
 WithCustomAction.args = {
+  primaryRest: {
+    href: 'https://example.com',
+  },
   primaryText: 'primary button',
   secondaryText: 'secondary button',
 };

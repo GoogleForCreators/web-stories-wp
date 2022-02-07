@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 
 /**
@@ -28,6 +27,9 @@ import MediaGallery from '../mediaGallery';
 export default {
   title: 'Stories Editor/Components/Media Gallery',
   component: MediaGallery,
+  argTypes: {
+    onInsert: { action: 'selected' },
+  },
 };
 
 const resources = [
@@ -287,14 +289,10 @@ const Container = styled.div`
   width: 300px;
 `;
 
-export const _default = () => {
+export const _default = (args) => {
   return (
     <Container>
-      <MediaGallery
-        resources={resources}
-        onInsert={action('selected')}
-        providerType={'unsplash'}
-      />
+      <MediaGallery resources={resources} providerType={'unsplash'} {...args} />
     </Container>
   );
 };

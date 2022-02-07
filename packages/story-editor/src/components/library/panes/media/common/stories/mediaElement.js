@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 import { SnackbarContext } from '@googleforcreators/design-system';
 /**
@@ -34,22 +33,6 @@ import testVideo from './test-video.mp4';
 const Column = styled.div`
   width: 150px;
 `;
-
-const snackbarValue = { showSnackbar: action('snow snackbar') };
-const mediaValue = {
-  local: {
-    actions: {
-      deleteMediaElement: action('delete from state'),
-      updateMediaElement: action('update state'),
-    },
-  },
-};
-const apiValue = {
-  actions: {
-    deleteMedia: action('delete from server'),
-    updateMedia: action('update server'),
-  },
-};
 
 export default {
   title: 'Stories Editor/Components/Media Element',
@@ -69,11 +52,49 @@ export default {
   },
   argTypes: {
     onInsert: { action: 'insert into canvas' },
+    showSnackbar: { action: 'show snackbar' },
+    deleteMediaElement: { action: 'delete from state' },
+    updateMediaElement: { action: 'update  state' },
+    deleteMedia: { action: 'delete from server' },
+    updateMedia: { action: 'update  server' },
+    isCurrentResourceProcessing: { action: 'false' },
+    isCurrentResourceUploading: { action: 'false' },
+  },
+  parameters: {
+    controls: {
+      exclude: [
+        'providerType',
+        'canEditMedia',
+        'index',
+        'width',
+        'height',
+        'margin',
+      ],
+    },
   },
 };
 
 export const _Image = (args) => {
   const resource = args.resource;
+  const snackbarValue = { showSnackbar: args.showSnackbar };
+  const mediaValue = {
+    local: {
+      actions: {
+        deleteMediaElement: args.deleteMediaElement,
+        updateMediaElement: args.updateMediaElement,
+      },
+      state: {
+        isCurrentResourceProcessing: args.isCurrentResourceProcessing,
+        isCurrentResourceUploading: args.isCurrentResourceUploading,
+      },
+    },
+  };
+  const apiValue = {
+    actions: {
+      deleteMedia: args.deleteMedia,
+      updateMedia: args.updateMedia,
+    },
+  };
 
   return (
     <SnackbarContext.Provider value={snackbarValue}>
@@ -95,28 +116,7 @@ export const _Image = (args) => {
   );
 };
 
-export const _Image_With_Attribution = (args) => {
-  const resource = args.resource;
-
-  return (
-    <SnackbarContext.Provider value={snackbarValue}>
-      <MediaContext.Provider value={mediaValue}>
-        <ApiContext.Provider value={apiValue}>
-          <CanvasProvider>
-            <Column>
-              <MediaElement
-                index={0}
-                resource={resource}
-                width={150}
-                onInsert={args.onInsert}
-              />
-            </Column>
-          </CanvasProvider>
-        </ApiContext.Provider>
-      </MediaContext.Provider>
-    </SnackbarContext.Provider>
-  );
-};
+export const _Image_With_Attribution = _Image.bind({});
 _Image_With_Attribution.args = {
   resource: {
     id: 123,
@@ -137,28 +137,7 @@ _Image_With_Attribution.args = {
   },
 };
 
-export const _Video = (args) => {
-  const resource = args.resource;
-
-  return (
-    <SnackbarContext.Provider value={snackbarValue}>
-      <MediaContext.Provider value={mediaValue}>
-        <ApiContext.Provider value={apiValue}>
-          <CanvasProvider>
-            <Column>
-              <MediaElement
-                index={0}
-                resource={resource}
-                width={150}
-                onInsert={args.onInsert}
-              />
-            </Column>
-          </CanvasProvider>
-        </ApiContext.Provider>
-      </MediaContext.Provider>
-    </SnackbarContext.Provider>
-  );
-};
+export const _Video = _Image.bind({});
 _Video.args = {
   resource: {
     id: 456,
@@ -176,28 +155,7 @@ _Video.args = {
   },
 };
 
-export const _Video_With_Attribution = (args) => {
-  const resource = args.resource;
-
-  return (
-    <SnackbarContext.Provider value={snackbarValue}>
-      <MediaContext.Provider value={mediaValue}>
-        <ApiContext.Provider value={apiValue}>
-          <CanvasProvider>
-            <Column>
-              <MediaElement
-                index={0}
-                resource={resource}
-                width={150}
-                onInsert={action('insert into canvas')}
-              />
-            </Column>
-          </CanvasProvider>
-        </ApiContext.Provider>
-      </MediaContext.Provider>
-    </SnackbarContext.Provider>
-  );
-};
+export const _Video_With_Attribution = _Image.bind({});
 _Video_With_Attribution.args = {
   resource: {
     id: 456,

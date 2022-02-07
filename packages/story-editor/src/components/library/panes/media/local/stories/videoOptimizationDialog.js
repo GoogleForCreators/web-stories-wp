@@ -16,7 +16,6 @@
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
 import {
   localStore,
   LOCAL_STORAGE_PREFIX,
@@ -32,9 +31,12 @@ import CurrentUserContext from '../../../../../../app/currentUser/context';
 export default {
   title: 'Stories Editor/Components/Dialog/Video Optimization',
   component: VideoOptimizationDialog,
+  argTypes: {
+    updateCurrentUser: { action: 'close dialog' },
+  },
 };
 
-export const _default = () => {
+export const _default = (args) => {
   // Reset local storage for improved testablity.
   const storageKey = LOCAL_STORAGE_PREFIX.VIDEO_OPTIMIZATION_DIALOG_DISMISSED;
   localStore.setItemByKey(storageKey, false);
@@ -46,7 +48,7 @@ export const _default = () => {
   };
 
   const userValue = {
-    actions: { updateCurrentUser: action('close dialog') },
+    actions: { updateCurrentUser: args.updateCurrentUser },
   };
 
   return (
