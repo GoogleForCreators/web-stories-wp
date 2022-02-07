@@ -42,9 +42,8 @@ import { PANEL_STATES } from '../constants';
 export default {
   title: 'Stories Editor/Components/Tablist',
   component: Tablist,
-  argTypes: {
-    titleProps: { action: 'title clicked' },
-    onClick: { action: 'thumbnail action found' },
+  parameters: {
+    controls: { hideNoControlsWarning: true },
   },
 };
 
@@ -62,7 +61,7 @@ const Container = styled.div`
   }
 `;
 
-export const _default = (args) => {
+export const _default = () => {
   const [openPanel, setOpenPanel] = useState(false);
 
   const handleClick = (title) => () => {
@@ -88,9 +87,6 @@ export const _default = (args) => {
         >
           <ChecklistCard
             title="Add video captions"
-            titleProps={{
-              onClick: () => args.titleProps(),
-            }}
             footer={
               <DefaultFooterText>
                 {
@@ -108,7 +104,6 @@ export const _default = (args) => {
             thumbnailCount={1}
             thumbnails={
               <Thumbnail
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
@@ -135,21 +130,18 @@ export const _default = (args) => {
             thumbnails={[
               <Thumbnail
                 key={1}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               />,
               <Thumbnail
                 key={2}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               />,
               <Thumbnail
                 key={3}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
@@ -187,7 +179,6 @@ export const _default = (args) => {
             thumbnails={[
               <Thumbnail
                 key={1}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
@@ -198,7 +189,6 @@ export const _default = (args) => {
               </Thumbnail>,
               <Thumbnail
                 key={2}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
@@ -209,7 +199,6 @@ export const _default = (args) => {
               </Thumbnail>,
               <Thumbnail
                 key={3}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
@@ -220,7 +209,6 @@ export const _default = (args) => {
               </Thumbnail>,
               <Thumbnail
                 key={4}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
@@ -269,7 +257,6 @@ export const _default = (args) => {
             thumbnails={[
               <Thumbnail
                 key={1}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
@@ -280,7 +267,6 @@ export const _default = (args) => {
               </Thumbnail>,
               <Thumbnail
                 key={2}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
@@ -291,7 +277,6 @@ export const _default = (args) => {
               </Thumbnail>,
               <Thumbnail
                 key={3}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
@@ -302,7 +287,6 @@ export const _default = (args) => {
               </Thumbnail>,
               <Thumbnail
                 key={4}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
@@ -322,9 +306,6 @@ export const _default = (args) => {
         >
           <ChecklistCard
             title="Add video captions"
-            titleProps={{
-              onClick: () => args.titleProps(),
-            }}
             footer={
               <DefaultFooterText>
                 {
@@ -342,7 +323,6 @@ export const _default = (args) => {
             thumbnailCount={1}
             thumbnails={
               <Thumbnail
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
@@ -369,21 +349,18 @@ export const _default = (args) => {
             thumbnails={[
               <Thumbnail
                 key={1}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               />,
               <Thumbnail
                 key={2}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               />,
               <Thumbnail
                 key={3}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
@@ -421,7 +398,6 @@ export const _default = (args) => {
             thumbnails={[
               <Thumbnail
                 key={1}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
@@ -432,7 +408,6 @@ export const _default = (args) => {
               </Thumbnail>,
               <Thumbnail
                 key={2}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
@@ -443,7 +418,6 @@ export const _default = (args) => {
               </Thumbnail>,
               <Thumbnail
                 key={3}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
@@ -454,7 +428,6 @@ export const _default = (args) => {
               </Thumbnail>,
               <Thumbnail
                 key={4}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
@@ -467,9 +440,6 @@ export const _default = (args) => {
           />
           <ChecklistCard
             title="Add video captions"
-            titleProps={{
-              onClick: () => args.titleProps(),
-            }}
             footer={
               <DefaultFooterText>
                 {
@@ -487,7 +457,6 @@ export const _default = (args) => {
             thumbnailCount={1}
             thumbnails={
               <Thumbnail
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
@@ -514,21 +483,18 @@ export const _default = (args) => {
             thumbnails={[
               <Thumbnail
                 key={1}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               />,
               <Thumbnail
                 key={2}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               />,
               <Thumbnail
                 key={3}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
@@ -566,7 +532,6 @@ export const _default = (args) => {
             thumbnails={[
               <Thumbnail
                 key={1}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
@@ -577,7 +542,6 @@ export const _default = (args) => {
               </Thumbnail>,
               <Thumbnail
                 key={2}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
@@ -588,7 +552,6 @@ export const _default = (args) => {
               </Thumbnail>,
               <Thumbnail
                 key={3}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
@@ -599,7 +562,6 @@ export const _default = (args) => {
               </Thumbnail>,
               <Thumbnail
                 key={4}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
@@ -612,9 +574,6 @@ export const _default = (args) => {
           />
           <ChecklistCard
             title="Add video captions"
-            titleProps={{
-              onClick: () => args.titleProps(),
-            }}
             footer={
               <DefaultFooterText>
                 {
@@ -633,7 +592,6 @@ export const _default = (args) => {
             thumbnails={[
               <Thumbnail
                 key={1}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
@@ -660,21 +618,18 @@ export const _default = (args) => {
             thumbnails={[
               <Thumbnail
                 key={1}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               />,
               <Thumbnail
                 key={2}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
               />,
               <Thumbnail
                 key={3}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
@@ -712,7 +667,6 @@ export const _default = (args) => {
             thumbnails={[
               <Thumbnail
                 key={1}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
@@ -723,7 +677,6 @@ export const _default = (args) => {
               </Thumbnail>,
               <Thumbnail
                 key={2}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
@@ -734,7 +687,6 @@ export const _default = (args) => {
               </Thumbnail>,
               <Thumbnail
                 key={3}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"
@@ -745,7 +697,6 @@ export const _default = (args) => {
               </Thumbnail>,
               <Thumbnail
                 key={4}
-                onClick={() => args.onClick()}
                 type={THUMBNAIL_TYPES.IMAGE}
                 displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
                 aria-label="my helper text describing this thumbnail image"

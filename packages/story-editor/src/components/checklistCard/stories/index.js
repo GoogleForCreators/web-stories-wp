@@ -41,15 +41,8 @@ import { CheckboxCta } from '../checkboxCta';
 export default {
   title: 'Stories Editor/Components/ChecklistCard',
   component: ChecklistCard,
-  argTypes: {
-    onThumbnailClick: { action: 'thumbnail clicked' },
-    titleProps: { action: 'title clicked' },
-    cta: { table: { disable: true } },
-    footer: { table: { disable: true } },
-    thumbnails: { table: { disable: true } },
-    className: { table: { disable: true } },
-    title: { table: { disable: true } },
-    cardType: { table: { disable: true } },
+  parameters: {
+    controls: { hideNoControlsWarning: true },
   },
 };
 
@@ -65,7 +58,7 @@ const Container = styled.div`
   }
 `;
 
-export const _default = (args) => {
+export const _default = () => {
   const getThumbnails = (numOfThumbnails) => {
     const thumbnails = [];
     let index = 0;
@@ -73,7 +66,6 @@ export const _default = (args) => {
       thumbnails.push(
         <Thumbnail
           key={index}
-          onClick={() => args.onThumbnailClick()}
           type={THUMBNAIL_TYPES.IMAGE}
           displayBackground={THUMBNAIL_BG[THUMBNAIL_TYPES.IMAGE]}
           aria-label="my helper text describing this thumbnail image"
@@ -94,7 +86,6 @@ export const _default = (args) => {
         <Text>{'Single Issue'}</Text>
         <ChecklistCard
           title="Add video captions"
-          titleProps={{ onClick: () => args.titleProps() }}
           footer={
             <DefaultFooterText>
               {
