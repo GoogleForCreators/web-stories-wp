@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-export { default as TenorLogoFull } from './tenor_logo_white.svg?react';
-export { default as UnsplashLogoFull } from './unsplash_logo_full.svg?react';
+export { default as TenorLogoFull } from './tenor_logo_white.svg';
+export { default as UnsplashLogoFull } from './unsplash_logo_full.svg';

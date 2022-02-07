@@ -22,19 +22,19 @@ import { useInstanceId } from '@wordpress/compose';
 /**
  * Internal dependencies
  */
-import { default as CirclesCarouselViewIcon } from './images/view-type/circles-carousel-view.svg?react';
-import { default as CirclesCarouselConfigIcon } from './images/config-panel/circles-carousel-view-panel-icon.svg?react';
-import { default as LatestStoriesBlockIcon } from './icons/block-type/latest-stories-block.svg?react';
-import { default as SelectedStoriesBlockIcon } from './icons/block-type/selected-stories-block.svg?react';
-import { default as EmbedStoriesBlockIcon } from './icons/block-type/embed-story-block.svg?react';
+import { default as CirclesCarouselViewIcon } from './images/view-type/circles-carousel-view.svg';
+import { default as CirclesCarouselConfigIcon } from './images/config-panel/circles-carousel-view-panel-icon.svg';
+import { default as LatestStoriesBlockIcon } from './icons/block-type/latest-stories-block.svg';
+import { default as SelectedStoriesBlockIcon } from './icons/block-type/selected-stories-block.svg';
+import { default as EmbedStoriesBlockIcon } from './icons/block-type/embed-story-block.svg';
 
-import { default as GridViewIcon } from './icons/view-type/grid-view.svg?react';
-import { default as ListViewIcon } from './icons/view-type/list-view.svg?react';
-import { default as BoxCarouselViewIcon } from './icons/view-type/box-carousel-view.svg?react';
+import { default as GridViewIcon } from './icons/view-type/grid-view.svg';
+import { default as ListViewIcon } from './icons/view-type/list-view.svg';
+import { default as BoxCarouselViewIcon } from './icons/view-type/box-carousel-view.svg';
 
-import { default as GridViewConfigIcon } from './icons/config-panel/grid-view-panel-icon.svg?react';
-import { default as ListViewConfigIcon } from './icons/config-panel/list-view-panel-icon.svg?react';
-import { default as BoxCarouselConfigIcon } from './icons/config-panel/box-carousel-view-panel-icon.svg?react';
+import { default as GridViewConfigIcon } from './icons/config-panel/grid-view-panel-icon.svg';
+import { default as ListViewConfigIcon } from './icons/config-panel/list-view-panel-icon.svg';
+import { default as BoxCarouselConfigIcon } from './icons/config-panel/box-carousel-view-panel-icon.svg';
 
 // Icons for block types.
 export const LATEST_STORIES_BLOCK_ICON = (
