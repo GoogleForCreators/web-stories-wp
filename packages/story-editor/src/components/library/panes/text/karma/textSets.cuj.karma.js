@@ -226,9 +226,11 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     it('should add text color based on background', async () => {
       await fixture.editor.library.text.smartColorToggle.click();
 
+      await fixture.events.sleep(500);
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.changeBackgroundColorButton
       );
+      await fixture.events.sleep(500);
       await fixture.events.keyboard.type('000');
       await fixture.events.keyboard.press('Tab');
 
@@ -246,9 +248,11 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
       // First hover text set to trigger image generation
       await fixture.events.mouse.moveRel(textSets[1], 10, 10);
 
-      await fixture.events.sleep(800);
+      await fixture.events.sleep(1500);
       // Then click the text set
       await fixture.events.click(textSets[1]);
+
+      await fixture.events.sleep(500);
 
       await waitFor(
         () => {
