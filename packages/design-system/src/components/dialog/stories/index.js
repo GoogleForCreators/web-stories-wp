@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useState } from '@googleforcreators/react';
-import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 /**
  * Internal dependencies
@@ -37,9 +36,12 @@ export default {
     message:
       'Duka din veranda till fest, för en långväga gäst, i landet lagom är bäst.',
   },
+  argTypes: {
+    onClick: { action: 'clicked' },
+  },
   parameters: {
     controls: {
-      include: ['title', 'message'],
+      include: ['title', 'message', 'onClick'],
     },
   },
 };
@@ -50,7 +52,7 @@ const InvertedWrapper = styled.div`
   background-color: ${({ theme }) => theme.colors.inverted.bg.primary};
 `;
 // eslint-disable-next-line react/prop-types
-export const _default = ({ message, ...args }) => {
+export const _default = ({ message, onClick, ...args }) => {
   const [toggleDialog, setToggleDialog] = useState(false);
 
   const ActionsNode = (
@@ -58,7 +60,7 @@ export const _default = ({ message, ...args }) => {
       size={BUTTON_SIZES.SMALL}
       type={BUTTON_TYPES.PRIMARY}
       onClick={() => {
-        action('button clicked');
+        onClick('button');
         setToggleDialog(!toggleDialog);
       }}
     >
@@ -76,7 +78,7 @@ export const _default = ({ message, ...args }) => {
       </Button>
       <Dialog
         onClose={() => {
-          action('close dialog clicked');
+          onClick('close dialog');
           setToggleDialog(!toggleDialog);
         }}
         isOpen={toggleDialog}
@@ -93,7 +95,7 @@ export const _default = ({ message, ...args }) => {
 };
 
 // eslint-disable-next-line react/prop-types
-export const With2Actions = ({ message, ...args }) => {
+export const With2Actions = ({ message, onClick, ...args }) => {
   const [toggleDialog, setToggleDialog] = useState(false);
 
   const ActionsNode = (
@@ -102,7 +104,7 @@ export const With2Actions = ({ message, ...args }) => {
         size={BUTTON_SIZES.SMALL}
         type={BUTTON_TYPES.TERTIARY}
         onClick={() => {
-          action('cancel button clicked');
+          onClick('cancel button');
           setToggleDialog(!toggleDialog);
         }}
       >
@@ -112,7 +114,7 @@ export const With2Actions = ({ message, ...args }) => {
         size={BUTTON_SIZES.SMALL}
         type={BUTTON_TYPES.PRIMARY}
         onClick={() => {
-          action('button clicked');
+          onClick('primary button');
         }}
       >
         {'Primary'}
@@ -130,7 +132,7 @@ export const With2Actions = ({ message, ...args }) => {
       </Button>
       <Dialog
         onClose={() => {
-          action('close dialog clicked');
+          onClick('close dialog clicked');
           setToggleDialog(!toggleDialog);
         }}
         isOpen={toggleDialog}
@@ -147,7 +149,7 @@ export const With2Actions = ({ message, ...args }) => {
 };
 
 // eslint-disable-next-line react/prop-types
-export const With2ActionsDarkTheme = ({ message, ...args }) => {
+export const With2ActionsDarkTheme = ({ message, onClick, ...args }) => {
   const [toggleDialog, setToggleDialog] = useState(false);
 
   const ActionsNode = (
@@ -156,7 +158,7 @@ export const With2ActionsDarkTheme = ({ message, ...args }) => {
         size={BUTTON_SIZES.SMALL}
         type={BUTTON_TYPES.TERTIARY}
         onClick={() => {
-          action('cancel button clicked');
+          onClick('cancel button ');
           setToggleDialog(!toggleDialog);
         }}
       >
@@ -166,7 +168,7 @@ export const With2ActionsDarkTheme = ({ message, ...args }) => {
         size={BUTTON_SIZES.SMALL}
         type={BUTTON_TYPES.PRIMARY}
         onClick={() => {
-          action('button clicked');
+          onClick('primary button ');
         }}
       >
         {'Primary'}
@@ -185,7 +187,7 @@ export const With2ActionsDarkTheme = ({ message, ...args }) => {
         </Button>
         <Dialog
           onClose={() => {
-            action('close dialog clicked');
+            onClick('close dialog');
             setToggleDialog(!toggleDialog);
           }}
           isOpen={toggleDialog}
