@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
 import { FlagsProvider } from 'flagged';
 
 /**
@@ -32,62 +31,75 @@ import {
 import Header from '..';
 import formattedTemplatesArray from '../../../../../dataUtils/formattedTemplatesArray';
 
-const filter = {
-  value: TEMPLATES_GALLERY_STATUS.ALL,
-};
-const sort = {
-  value: TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR,
-  set: action('set sort'),
-};
-const search = {
-  keyword: '',
-  setKeyword: action('set search'),
-};
-const view = {
-  style: VIEW_STYLE.GRID,
-  pageSize: { width: 210, height: 316 },
-};
-const page = {
-  value: 1,
-  set: action('set page number'),
-  requestNextPage: action('request next page clicked'),
-};
-
-const defaultProps = {
-  allPagesFetched: false,
-  isLoading: false,
-  page: page,
-  search: search,
-  templates: formattedTemplatesArray,
-  sort: sort,
-  filter: filter,
-  view: view,
-  totalTemplates: 3,
-};
-
 export default {
   title: 'Dashboard/Views/ExploreTemplates/Header',
   component: Header,
+  args: {
+    style: VIEW_STYLE.GRID,
+    sortValue: TEMPLATES_GALLERY_SORT_OPTIONS.POPULAR,
+    filterValue: TEMPLATES_GALLERY_STATUS.ALL,
+    keyword: '',
+    enableInProgressTemplateActions: true,
+  },
+  argTypes: {
+    style: { options: VIEW_STYLE, control: 'radio' },
+    sortValue: { options: TEMPLATES_GALLERY_SORT_OPTIONS, control: 'radio' },
+    filterValue: { options: TEMPLATES_GALLERY_STATUS, control: 'radio' },
+    setSort: { action: 'set Sort' },
+    setKeyword: { action: 'set keyword' },
+    setPage: { action: 'set page' },
+    requestNextPage: { action: 'request next page clicked' },
+  },
+  parameters: {
+    controls: {
+      include: ['setKeyword'],
+      hideNoControlsWarning: true,
+    },
+  },
 };
 
-export const _default = () => (
-  <FlagsProvider features={{ enableInProgressTemplateActions: false }}>
-    <Layout.Provider>
-      <Header {...defaultProps} />
-    </Layout.Provider>
-  </FlagsProvider>
-);
+export const _default = (args) => {
+  const filter = {
+    value: args.filterValue,
+  };
+  const sort = {
+    value: args.sortValue,
+    set: args.setSort,
+  };
+  const search = {
+    keyword: args.keyword,
+    setKeyword: args.setKeyword,
+  };
+  const view = {
+    style: args.style,
+    pageSize: { width: 210, height: 316 },
+  };
+  const page = {
+    value: 1,
+    set: args.setPage,
+    requestNextPage: args.requestNextPage,
+  };
 
-export const ActiveSearch = () => (
-  <FlagsProvider features={{ enableInProgressTemplateActions: true }}>
-    <Layout.Provider>
-      <Header
-        {...defaultProps}
-        search={{
-          ...search,
-          keyword: 'demo search',
-        }}
-      />
-    </Layout.Provider>
-  </FlagsProvider>
-);
+  const defaultProps = {
+    allPagesFetched: false,
+    isLoading: false,
+    page: page,
+    search: search,
+    templates: formattedTemplatesArray,
+    sort: sort,
+    filter: filter,
+    view: view,
+    totalTemplates: 3,
+  };
+  return (
+    <FlagsProvider features={args.enableInProgressTemplateActions}>
+      <Layout.Provider>
+        <Header {...args} {...defaultProps} />
+      </Layout.Provider>
+    </FlagsProvider>
+  );
+};
+export const ActiveSearch = _default.bind({});
+ActiveSearch.args = {
+  keyword: 'demo search',
+};

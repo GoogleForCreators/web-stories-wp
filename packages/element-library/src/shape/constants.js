@@ -22,20 +22,12 @@ import { PanelTypes } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import {
-  SHARED_DEFAULT_ATTRIBUTES,
-  SHARED_DEFAULT_CLEARABLE_ATTRIBUTES,
-} from '../shared';
+import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
 
 const defaultBackgroundColor = createSolidFromString('#c4c4c4');
 
 export const defaultAttributes = {
   ...SHARED_DEFAULT_ATTRIBUTES,
-  backgroundColor: defaultBackgroundColor,
-};
-
-export const copyableAttributes = {
-  ...SHARED_DEFAULT_CLEARABLE_ATTRIBUTES,
   backgroundColor: defaultBackgroundColor,
 };
 

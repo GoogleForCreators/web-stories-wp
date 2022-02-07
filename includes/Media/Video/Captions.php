@@ -2,10 +2,10 @@
 /**
  * Class Captions
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -30,8 +30,6 @@ use Google\Web_Stories\Service_Base;
 
 /**
  * Class Captions
- *
- * @package Google\Web_Stories\Media\Video
  */
 class Captions extends Service_Base {
 	/**
@@ -52,12 +50,12 @@ class Captions extends Service_Base {
 	 * @return string|mixed List of allowed file types.
 	 */
 	public function filter_list_of_allowed_filetypes( $value ) {
-		if ( ! is_string( $value ) ) {
+		if ( ! \is_string( $value ) ) {
 			return $value;
 		}
 
 		$filetypes = explode( ' ', $value );
-		if ( ! in_array( 'vtt', $filetypes, true ) ) {
+		if ( ! \in_array( 'vtt', $filetypes, true ) ) {
 			$filetypes[] = 'vtt';
 			$value       = implode( ' ', $filetypes );
 		}

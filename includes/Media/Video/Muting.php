@@ -2,10 +2,10 @@
 /**
  * Class Muting
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -26,35 +26,27 @@
 
 namespace Google\Web_Stories\Media\Video;
 
-use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Infrastructure\HasMeta;
+use Google\Web_Stories\Service_Base;
 use WP_Error;
 
 /**
  * Class Muting
- *
- * @package Google\Web_Stories\Media\Video
  */
 class Muting extends Service_Base implements HasMeta {
 
 	/**
 	 * Is muted.
-	 *
-	 * @var string
 	 */
 	const IS_MUTED_POST_META_KEY = 'web_stories_is_muted';
 
 	/**
 	 * The muted video id post meta key.
-	 *
-	 * @var string
 	 */
 	const MUTED_ID_POST_META_KEY = 'web_stories_muted_id';
 
 	/**
 	 * Is muted.
-	 *
-	 * @var string
 	 */
 	const IS_MUTED_REST_API_KEY = 'web_stories_is_muted';
 
@@ -140,11 +132,10 @@ class Muting extends Service_Base implements HasMeta {
 	 * @since 1.10.0
 	 *
 	 * @param array|mixed $response   Array of prepared attachment data.
-	 *
 	 * @return array|mixed $response;
 	 */
 	public function wp_prepare_attachment_for_js( $response ) {
-		if ( ! is_array( $response ) ) {
+		if ( ! \is_array( $response ) ) {
 			return $response;
 		}
 		if ( 'video' === $response['type'] ) {
@@ -160,7 +151,6 @@ class Muting extends Service_Base implements HasMeta {
 	 * @since 1.10.0
 	 *
 	 * @param array $prepared Array of data to add to.
-	 *
 	 * @return bool|null
 	 */
 	public function get_callback_is_muted( $prepared ) {
@@ -192,7 +182,6 @@ class Muting extends Service_Base implements HasMeta {
 	 *
 	 * @param mixed    $value  Value to updated.
 	 * @param \WP_Post $object Post object to be updated.
-	 *
 	 * @return bool|WP_Error
 	 */
 	public function update_callback_is_muted( $value, $object ) {
@@ -201,7 +190,7 @@ class Muting extends Service_Base implements HasMeta {
 		$meta_key  = self::IS_MUTED_POST_META_KEY;
 
 		if ( ! current_user_can( 'edit_post_meta', $object_id, $meta_key ) ) {
-			return new WP_Error(
+			return new \WP_Error(
 				'rest_cannot_update',
 				/* translators: %s: Custom field key.**/
 				sprintf( __( 'Sorry, you are not allowed to edit the %s custom field.', 'web-stories' ), $name ),

@@ -4,10 +4,10 @@
  *
  * Basic test case for use with a WP Integration test test suite.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 namespace Google\Web_Stories\Tests\Integration;
@@ -16,8 +16,6 @@ use Yoast\WPTestUtils\WPIntegration\TestCase as PolyfilledTestCase;
 
 /**
  * Class TestCase
- *
- * @package Google\Web_Stories\Tests
  */
 abstract class TestCase extends PolyfilledTestCase {
 	use Private_Access;

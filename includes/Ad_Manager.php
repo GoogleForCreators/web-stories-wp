@@ -2,10 +2,10 @@
 /**
  * Class Ad_Manager
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -45,7 +45,6 @@ class Ad_Manager extends Service_Base implements HasRequirements {
 	 * @since 1.12.0
 	 *
 	 * @param Settings $settings Settings instance.
-	 *
 	 * @return void
 	 */
 	public function __construct( Settings $settings ) {

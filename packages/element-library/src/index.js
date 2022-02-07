@@ -14,12 +14,10 @@
  * limitations under the License.
  */
 
-export * from './types.js';
+export * from './types';
 export * from './shared';
 export * from './media';
 export * from './utils/textMeasurements';
 export * from './text/util';
 export { elementTypes } from './elementTypes';
-export { copyableAttributes as imageAttributeDefaults } from './image/constants';
-export { copyableAttributes as textAttributeDefaults } from './text/constants';
 export { default as TextOutput, TextOutputWithUnits } from './text/output';

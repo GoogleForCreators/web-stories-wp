@@ -38,13 +38,13 @@ import useLayout from '../../app/layout/useLayout';
 import useFocusTrapping from '../../utils/useFocusTrapping';
 import useVideoTrim from './useVideoTrim';
 import useRailBackground from './useRailBackground';
+import CurrentTime from './currentTime';
 import {
   Menu,
   RailWrapper,
   Rail,
   Duration,
   Handle,
-  CurrentTime,
   Scrim,
   ButtonWrapper,
 } from './trimmerComponents';
@@ -53,7 +53,6 @@ const BUTTON_SPACE = 130;
 
 function VideoTrimmer() {
   const {
-    currentTime,
     startOffset,
     endOffset,
     maxOffset,
@@ -66,14 +65,7 @@ function VideoTrimmer() {
     videoData,
   } = useVideoTrim(
     ({
-      state: {
-        currentTime,
-        startOffset,
-        endOffset,
-        maxOffset,
-        hasChanged,
-        videoData,
-      },
+      state: { startOffset, endOffset, maxOffset, hasChanged, videoData },
       actions: {
         setStartOffset,
         setEndOffset,
@@ -82,7 +74,6 @@ function VideoTrimmer() {
         setIsDraggingHandles,
       },
     }) => ({
-      currentTime,
       startOffset,
       endOffset,
       maxOffset,
@@ -173,13 +164,7 @@ function VideoTrimmer() {
         >
           <Scrim isLeftAligned width={(startOffset / maxOffset) * railWidth} />
           <Scrim width={((maxOffset - endOffset) / maxOffset) * railWidth} />
-          <CurrentTime
-            railWidth={railWidth}
-            aria-label={__('Current time', 'web-stories')}
-            disabled
-            value={currentTime}
-            {...sliderProps}
-          />
+          <CurrentTime railWidth={railWidth} {...sliderProps} />
           <Handle
             railWidth={railWidth}
             value={startOffset}

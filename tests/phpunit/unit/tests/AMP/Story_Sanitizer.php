@@ -18,8 +18,8 @@
 namespace Google\Web_Stories\Tests\Unit\AMP;
 
 use AMP_DOM_Utils;
-use Google\Web_Stories\Tests\Unit\TestCase;
 use Brain\Monkey;
+use Google\Web_Stories\Tests\Unit\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Story_Sanitizer
@@ -50,6 +50,7 @@ class Story_Sanitizer extends TestCase {
 
 	/**
 	 * Helper method for tests.
+	 *
 	 * @param string $source
 	 * @param array $sanitizer_args
 	 * @return string Sanitized HTML.
@@ -82,12 +83,12 @@ class Story_Sanitizer extends TestCase {
 	}
 
 	/**
+	 * @param string   $source   Source.
+	 * @param string   $expected Expected.
+	 *
 	 * @dataProvider get_publisher_logo_data
 	 * @covers ::sanitize
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher_logo
-	 *
-	 * @param string   $source   Source.
-	 * @param string   $expected Expected.
 	 */
 	public function test_sanitize_publisher_logo( $source, $expected ) {
 		$args = [
@@ -151,13 +152,13 @@ class Story_Sanitizer extends TestCase {
 	}
 
 	/**
-	 * @dataProvider get_poster_image_data
-	 * @covers ::sanitize
-	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_poster_images
-	 *
 	 * @param string $source   Source.
 	 * @param string $expected Expected.
 	 * @param array  $args     Args.
+	 *
+	 * @dataProvider get_poster_image_data
+	 * @covers ::sanitize
+	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_poster_images
 	 */
 	public function test_sanitize_poster_image( $source, $expected, $args ) {
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -251,13 +252,13 @@ class Story_Sanitizer extends TestCase {
 	}
 
 	/**
-	 * @dataProvider get_publisher_data
-	 * @covers ::sanitize
-	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher
-	 *
 	 * @param string $source   Source.
 	 * @param string $expected Expected.
 	 * @param array  $args   Args
+	 *
+	 * @dataProvider get_publisher_data
+	 * @covers ::sanitize
+	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher
 	 */
 	public function test_sanitize_publisher( $source, $expected, $args ) {
 		$actual = $this->sanitize_and_get( $source, $args );

@@ -21,15 +21,8 @@ import { PanelTypes } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import {
-  SHARED_DEFAULT_ATTRIBUTES,
-  SHARED_DEFAULT_CLEARABLE_ATTRIBUTES,
-} from '../shared';
-import {
-  MEDIA_DEFAULT_ATTRIBUTES,
-  MEDIA_DEFAULT_CLEARABLE_ATTRIBUTES,
-  MEDIA_PANELS,
-} from '../media';
+import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
+import { MEDIA_DEFAULT_ATTRIBUTES, MEDIA_PANELS } from '../media';
 
 export {
   canFlip,
@@ -44,11 +37,6 @@ export const defaultAttributes = {
   ...SHARED_DEFAULT_ATTRIBUTES,
   ...MEDIA_DEFAULT_ATTRIBUTES,
   lockAspectRatio: false,
-};
-
-export const copyableAttributes = {
-  ...SHARED_DEFAULT_CLEARABLE_ATTRIBUTES,
-  ...MEDIA_DEFAULT_CLEARABLE_ATTRIBUTES,
 };
 
 export const panels = [

@@ -18,7 +18,6 @@
 namespace Google\Web_Stories\Tests\Integration\Media;
 
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
-use Google\Web_Stories\Tests\Integration\TestCase;
 use WP_Query;
 use WP_REST_Request;
 

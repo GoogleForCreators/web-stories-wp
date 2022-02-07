@@ -2,10 +2,10 @@
 /**
  * Interface Plugin
  *
- * @package   Google\Web_Stories
+ * @link      https://www.mwpd.io/
+ *
  * @copyright 2019 Alain Schlesser
  * @license   MIT
- * @link      https://www.mwpd.io/
  */
 
 /**
@@ -31,8 +31,9 @@ namespace Google\Web_Stories\Infrastructure;
  * collects all the services it is made up of. This allows direct access to the
  * services to outside code if needed.
  *
- * @since 1.6.0
  * @internal
+ *
+ * @since 1.6.0
  */
 interface Plugin extends PluginActivationAware, PluginDeactivationAware, Registerable, SiteInitializationAware, SiteRemovalAware {
 

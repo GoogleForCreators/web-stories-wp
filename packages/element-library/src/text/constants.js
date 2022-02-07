@@ -27,7 +27,7 @@ import {
 /**
  * Internal dependencies
  */
-import { SHARED_DEFAULT_ATTRIBUTES } from '../shared';
+import { SHARED_DEFAULT_ATTRIBUTES } from '..';
 
 export const defaultAttributes = {
   ...SHARED_DEFAULT_ATTRIBUTES,
@@ -42,14 +42,6 @@ export const defaultAttributes = {
     horizontal: 0,
     locked: true,
   },
-};
-
-export const copyableAttributes = {
-  ...defaultAttributes,
-  content: '',
-  border: null,
-  borderRadius: null,
-  lockAspectRatio: undefined,
 };
 
 export const hasEditMode = true;
