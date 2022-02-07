@@ -18,7 +18,7 @@
  */
 import { encode } from 'blurhash';
 
-self.onmessage = function (event) {
+const callback = function (event) {
   const { image, width, height, componentX, componentY } = event.data;
 
   try {
@@ -34,3 +34,8 @@ self.onmessage = function (event) {
     });
   }
 };
+
+self.onmessage = callback;
+
+// Only needed for Rollup, not webpack v4.
+export default { callback };

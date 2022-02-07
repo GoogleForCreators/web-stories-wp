@@ -2,10 +2,10 @@
 /**
  * Trait Sanitization_Utils.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -26,10 +26,10 @@
 
 namespace Google\Web_Stories\AMP\Traits;
 
+use AmpProject\Dom\Document as AMP_Document;
 use DOMElement;
 use DOMNodeList;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
-use \AmpProject\Dom\Document as AMP_Document;
 
 /**
  * Trait Sanitization_Utils
@@ -451,9 +451,9 @@ trait Sanitization_Utils {
 	 * The placeholder functionality was removed in v1.14.0, nevertheless older stories could still
 	 * reference the files.
 	 *
-	 * @link https://github.com/googleforcreators/web-stories-wp/issues/9530
-	 *
 	 * @since 1.14.0
+	 *
+	 * @link https://github.com/googleforcreators/web-stories-wp/issues/9530
 	 *
 	 * @param Document|AMP_Document $document Document instance.
 	 * @return void

@@ -2,10 +2,10 @@
 /**
  * Class HTML
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -26,9 +26,8 @@
 
 namespace Google\Web_Stories\Renderer\Story;
 
-use Google\Web_Stories\KSES;
-use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories\Model\Story;
+use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 
 /**
  * Class HTML
@@ -175,7 +174,6 @@ class HTML {
 	 * @since 1.0.0
 	 *
 	 * @param string $content Story markup.
-	 *
 	 * @return string Filtered content.
 	 */
 	protected function replace_html_head( string $content ): string {
@@ -190,7 +188,7 @@ class HTML {
 		$end_tag_pos   = strpos( $content, $end_tag );
 
 		if ( false !== $start_tag_pos && false !== $end_tag_pos ) {
-			$end_tag_pos += strlen( $end_tag );
+			$end_tag_pos += \strlen( $end_tag );
 			$content      = substr_replace( $content, $this->get_html_head_markup(), $start_tag_pos, $end_tag_pos - $start_tag_pos );
 		}
 
@@ -203,7 +201,6 @@ class HTML {
 	 * @since 1.1.0
 	 *
 	 * @param string $content String to replace.
-	 *
 	 * @return string
 	 */
 	protected function replace_url_scheme( string $content ): string {
@@ -223,7 +220,6 @@ class HTML {
 	 * @since 1.2.0
 	 *
 	 * @param string $content String to replace.
-	 *
 	 * @return string
 	 */
 	protected function print_analytics( string $content ): string {
@@ -249,7 +245,6 @@ class HTML {
 	 * @since 1.6.0
 	 *
 	 * @param string $content String to replace.
-	 *
 	 * @return string
 	 */
 	protected function print_social_share( string $content ): string {

@@ -68,7 +68,16 @@ function useHashState(key, fallback) {
   // update url param when value updates
   useEffect(() => {
     const params = hashToParams(window.location.hash);
-    params.set(key, encodeURI(JSON.stringify(value)));
+    if (!value) {
+      params.delete(key);
+    } else {
+      params.set(key, encodeURI(JSON.stringify(value)));
+    }
+
+    if (!window.location.hash && !params.toString()) {
+      return;
+    }
+
     history.replaceState(history.state, '', `#${params.toString()}`);
   }, [key, value]);
 

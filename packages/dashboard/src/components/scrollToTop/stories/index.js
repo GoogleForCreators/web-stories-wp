@@ -23,6 +23,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import ScrollToTop from '..';
+import Layout from '../../layout';
 
 export default {
   title: 'Dashboard/Components/ScrollToTop',
@@ -38,9 +39,9 @@ const Container = styled.div`
 `;
 export const _default = () => {
   return (
-    <>
+    <Layout.Provider>
       <Container />
       <ScrollToTop />
-    </>
+    </Layout.Provider>
   );
 };

@@ -15,10 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { waitFor } from '@testing-library/react';
-/**
  * Internal dependencies
  */
 
@@ -84,9 +80,9 @@ describe('Integration Layer tests : Optional API Callbacks', () => {
     //clear localStorage to force 3p media usage notice to appear
     localStorage.clear();
 
-    await waitFor(async () => {
-      await fixture.events.click(fixture.screen.getByText('Dismiss'));
-    });
+    const dismiss = await fixture.screen.findByText('Dismiss');
+    await fixture.events.click(dismiss);
+
     await fixture.collapseHelpCenter();
 
     const firstMediaButton = fixture.querySelector(`[id=library-tab-media]`);
@@ -105,9 +101,7 @@ describe('Integration Layer tests : Optional API Callbacks', () => {
 
     await fixture.collapseHelpCenter();
 
-    await waitFor(async () => {
-      await fixture.events.click(fixture.editor.library.pageTemplatesTab);
-    });
+    await fixture.events.click(fixture.editor.library.pageTemplatesTab);
 
     expect(fixture.editor.library.pageTemplatesPane.dropDown).toBeNull();
   });

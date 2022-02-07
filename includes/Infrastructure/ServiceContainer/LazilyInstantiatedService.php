@@ -2,10 +2,10 @@
 /**
  * Final class LazilyInstantiatedService.
  *
- * @package   Google\Web_Stories
+ * @link      https://www.mwpd.io/
+ *
  * @copyright 2019 Alain Schlesser
  * @license   MIT
- * @link      https://www.mwpd.io/
  */
 
 /**
@@ -24,8 +24,9 @@ use Google\Web_Stories\Infrastructure\Service;
  * A service that only gets properly instantiated when it is actually being
  * retrieved from the container.
  *
- * @since 1.6.0
  * @internal
+ *
+ * @since 1.6.0
  */
 final class LazilyInstantiatedService implements Service {
 

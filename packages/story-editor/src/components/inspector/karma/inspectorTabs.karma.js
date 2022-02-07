@@ -56,7 +56,13 @@ describe('Inspector Tabs integration', () => {
 
       // Click document tab
       await fixture.events.click(documentTab);
-      await waitFor(() => fixture.editor.inspector.documentPanel);
+      await waitFor(() => {
+        if (!fixture.editor.inspector.documentPanel) {
+          throw new Error('panel not ready');
+        }
+        expect(fixture.editor.inspector.documentPanel).toBeTruthy();
+      });
+
       expect(documentTab).toHaveFocus();
 
       // Click elsewhere

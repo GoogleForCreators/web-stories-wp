@@ -22,9 +22,7 @@ use Google\Web_Stories\Infrastructure\Injector\SimpleInjector;
 /**
  * Class Database_Upgrader
  *
- * @package Google\Web_Stories\Tests
  * @coversDefaultClass \Google\Web_Stories\Database_Upgrader
- *
  */
 class Database_Upgrader extends TestCase {
 	public function set_up() {

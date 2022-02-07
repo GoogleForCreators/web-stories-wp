@@ -2,10 +2,10 @@
 /**
  * Class Feed
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -26,16 +26,14 @@
 
 namespace Google\Web_Stories\Renderer;
 
-use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Renderer\Story\Image;
 use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Story_Post_Type;
 use WP_Post;
 
 /**
  * Class Feed
- *
- * @package Google\Web_Stories\Single
  */
 class Feed extends Service_Base {
 
@@ -57,7 +55,6 @@ class Feed extends Service_Base {
 	 * @since 1.0.0
 	 *
 	 * @param string|mixed $content Feed content.
-	 *
 	 * @return string|mixed
 	 */
 	public function embed_image( $content ) {

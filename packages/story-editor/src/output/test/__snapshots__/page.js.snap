@@ -29,7 +29,7 @@ exports[`Page output background audio should add background audio as amp-video 2
 </amp-video>
 `;
 
-exports[`Page output background audio should add background audio on none looping use amp-video 1`] = `
+exports[`Page output background audio should add background audio on non-looping use amp-video 1`] = `
 <amp-video
   autoplay="autoplay"
   id="page-123-background-audio"

@@ -58,7 +58,12 @@ describe('Text Style Panel', () => {
 
       // Add a new text now.
       await fixture.events.click(fixture.editor.library.textAdd);
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[2].node);
+      await waitFor(() => {
+        if (!fixture.editor.canvas.framesLayer.frames[2].node) {
+          throw new Error('node not ready');
+        }
+        expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
+      });
       // Expect the inputs to be visible again, since the panel should be expanded again.
       expect(
         fixture.editor.inspector.designPanel.textStyle.lineHeight
@@ -101,13 +106,24 @@ describe('Text Style Panel', () => {
 
       await waitFor(
         async () => {
-          const texts = await fixture.screen.getAllByText('Fill in some text');
-          expect(texts).toBeDefined();
+          const texts = await fixture.screen.findAllByText(
+            'Fill in some text',
+            { timeout: 2000 }
+          );
+          await expect(texts.length).toBeGreaterThan(1);
 
           const whiteTexts = texts.filter((text) =>
             text.outerHTML.includes('color: #fff')
           );
-          expect(whiteTexts).toBeDefined();
+          await waitFor(
+            () => {
+              if (!whiteTexts.length) {
+                throw new Error('white text not ready');
+              }
+              expect(whiteTexts.length).toBeGreaterThan(0);
+            },
+            { timeout: 3000 }
+          );
 
           const html = whiteTexts[0].outerHTML;
           expect(html).toBeDefined();
@@ -122,9 +138,7 @@ describe('Text Style Panel', () => {
             '<span style="color: #fff">Fill in some text</span>'
           );
         },
-        {
-          timeout: 9000,
-        }
+        { timeout: 9000 }
       );
     });
   });
@@ -144,9 +158,7 @@ describe('Text Style Panel', () => {
       await fixture.events.keyboard.type('4');
       await fixture.events.keyboard.press('tab');
 
-      const texts = await waitFor(() =>
-        fixture.screen.getAllByText('Fill in some text')
-      );
+      const texts = await fixture.screen.findAllByText('Fill in some text');
 
       // Display layer.
       const displayStyle = await waitFor(() =>
@@ -389,14 +401,10 @@ describe('Text Style Panel', () => {
           await openFontPicker();
 
           let options = getOptions();
-          await waitFor(() => {
-            expect(options.length).toBe(
-              DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 1
-            );
-            expect(options[DEFAULT_CUSTOM_FONTS].textContent).toBe(
-              'Space Mono'
-            );
-          });
+          expect(options.length).toBe(
+            DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 1
+          );
+          expect(options[DEFAULT_CUSTOM_FONTS].textContent).toBe('Space Mono');
 
           await fixture.events.keyboard.type('Abel');
           // Ensure the debounced callback has taken effect.
@@ -406,11 +414,9 @@ describe('Text Style Panel', () => {
           await fixture.events.sleep(TIMEOUT);
           await openFontPicker();
           options = getOptions();
-          await waitFor(() => {
-            expect(options.length).toBe(
-              DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 2
-            );
-          });
+          expect(options.length).toBe(
+            DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 2
+          );
 
           await fixture.events.keyboard.type('Abhaya Libre');
           // Ensure the debounced callback has taken effect.
@@ -420,11 +426,9 @@ describe('Text Style Panel', () => {
           await fixture.events.sleep(TIMEOUT);
           await openFontPicker();
           options = getOptions();
-          await waitFor(() => {
-            expect(options.length).toBe(
-              DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 3
-            );
-          });
+          expect(options.length).toBe(
+            DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 3
+          );
 
           await fixture.events.keyboard.type('Source Serif Pro');
           // Ensure the debounced callback has taken effect.
@@ -434,11 +438,9 @@ describe('Text Style Panel', () => {
           await fixture.events.sleep(TIMEOUT);
           await openFontPicker();
           options = getOptions();
-          await waitFor(() => {
-            expect(options.length).toBe(
-              DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 4
-            );
-          });
+          expect(options.length).toBe(
+            DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 4
+          );
 
           await fixture.events.keyboard.type('Roboto');
           // Ensure the debounced callback has taken effect.
@@ -448,11 +450,9 @@ describe('Text Style Panel', () => {
           await fixture.events.sleep(TIMEOUT);
           await openFontPicker();
           options = getOptions();
-          await waitFor(() => {
-            expect(options.length).toBe(
-              DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 5
-            );
-          });
+          expect(options.length).toBe(
+            DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 5
+          );
 
           await fixture.events.keyboard.type('Yrsa');
           // Ensure the debounced callback has taken effect.
@@ -465,13 +465,11 @@ describe('Text Style Panel', () => {
           options = getOptions();
 
           // Ensure there are only 5 extra options added.
-          await waitFor(() => {
-            expect(options.length).toBe(
-              DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 5
-            );
-            // Ensure the first one is the last chosen.
-            expect(options[DEFAULT_CUSTOM_FONTS].textContent).toBe('Yrsa');
-          });
+          expect(options.length).toBe(
+            DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 5
+          );
+          // Ensure the first one is the last chosen.
+          expect(options[DEFAULT_CUSTOM_FONTS].textContent).toBe('Yrsa');
         });
 
         it('should display the selected recent font with a tick', async () => {

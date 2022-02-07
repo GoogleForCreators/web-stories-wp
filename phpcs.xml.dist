@@ -1,120 +1,257 @@
 <?xml version="1.0" ?>
 <ruleset name="Web Stories PHP Coding Standards Rules">
-	<config name="minimum_supported_wp_version" value="5.5" />
+  <config name="minimum_supported_wp_version" value="5.5" />
 
-	<rule ref="WordPress-Core">
-		<type>error</type>
-		<exclude name="Generic.Arrays.DisallowShortArraySyntax" />
-		<exclude name="WordPress.PHP.DisallowShortTernary" />
-		<exclude
+  <rule ref="WordPress-Core">
+    <type>error</type>
+    <exclude name="Generic.Arrays.DisallowShortArraySyntax" />
+    <exclude name="WordPress.PHP.DisallowShortTernary" />
+    <exclude
       name="WordPress.NamingConventions.ValidPostTypeSlug.NotStringLiteral"
     />
-	</rule>
+  </rule>
 
-	<rule ref="WordPress-Docs">
-		<type>error</type>
-		<exclude-pattern>tests/*</exclude-pattern>
-	</rule>
+  <rule ref="WordPress-Docs">
+    <type>error</type>
+    <exclude-pattern>tests/*</exclude-pattern>
+    <!-- Documentation is organized with the use of namespaces. -->
+    <exclude name="Squiz.Commenting.FileComment.MissingPackageTag" />
+  </rule>
 
-	<rule ref="WordPress-Extra">
-		<type>error</type>
-		<exclude name="WordPress.Files.FileName" />
-		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
-	</rule>
+  <rule ref="WordPress-Extra">
+    <type>error</type>
+    <exclude name="WordPress.Files.FileName" />
+    <exclude name="WordPress.Files.FileName.NotHyphenatedLowercase" />
+  </rule>
 
-	<rule ref="WordPress-VIP-Go">
-		<type>error</type>
-		<exclude-pattern>tests/*</exclude-pattern>
-		<exclude
+  <rule ref="WordPress-VIP-Go">
+    <type>error</type>
+    <exclude-pattern>tests/*</exclude-pattern>
+    <exclude
       name="WordPressVIPMinimum.Functions.RestrictedFunctions.flush_rewrite_rules_flush_rewrite_rules"
     />
-	</rule>
+  </rule>
 
-	<rule ref="WordPress.Security.NonceVerification">
-		<exclude-pattern>tests/*</exclude-pattern>
-	</rule>
+  <rule ref="WordPress.Security.NonceVerification">
+    <exclude-pattern>tests/*</exclude-pattern>
+  </rule>
 
   <rule ref="WordPress.WP.GlobalVariablesOverride.Prohibited">
-		<exclude-pattern>tests/*</exclude-pattern>
-	</rule>
+    <exclude-pattern>tests/*</exclude-pattern>
+  </rule>
 
-	<rule ref="WordPress.WP.EnqueuedResources">
-		<type>error</type>
-		<exclude-pattern>tests/*</exclude-pattern>
-	</rule>
+  <rule ref="WordPress.WP.EnqueuedResources">
+    <type>error</type>
+    <exclude-pattern>tests/*</exclude-pattern>
+  </rule>
 
-	<rule ref="WordPress.WP.I18n">
-		<properties>
-			<property name="text_domain" type="array">
-				<element value="web-stories" />
-			</property>
-		</properties>
-	</rule>
+  <rule ref="WordPress.WP.I18n">
+    <properties>
+      <property name="text_domain" type="array">
+        <element value="web-stories" />
+      </property>
+    </properties>
+  </rule>
 
-	<rule ref="WordPress.NamingConventions.ValidVariableName">
-		<properties>
-			<property name="customPropertiesWhitelist" type="array">
-				<element value="childNodes" />
-				<element value="tagName" />
-				<element value="textContent" />
-				<element value="parentNode" />
-				<element value="nodeType" />
-				<element value="nodeName" />
-				<element value="nextSibling" />
-				<element value="previousSibling" />
-				<element value="firstChild" />
-				<element value="lastChild" />
-				<element value="nodeValue" />
-				<element value="ownerElement" />
-				<element value="documentElement" />
-				<element value="removeChild" />
-				<element value="ownerDocument" />
-				<element value="strictErrorChecking" />
-				<element value="preserveWhiteSpace" />
-			</property>
-		</properties>
-	</rule>
+  <rule ref="WordPress.NamingConventions.ValidVariableName">
+    <properties>
+      <property name="customPropertiesWhitelist" type="array">
+        <element value="childNodes" />
+        <element value="tagName" />
+        <element value="textContent" />
+        <element value="parentNode" />
+        <element value="nodeType" />
+        <element value="nodeName" />
+        <element value="nextSibling" />
+        <element value="previousSibling" />
+        <element value="firstChild" />
+        <element value="lastChild" />
+        <element value="nodeValue" />
+        <element value="ownerElement" />
+        <element value="documentElement" />
+        <element value="removeChild" />
+        <element value="ownerDocument" />
+        <element value="strictErrorChecking" />
+        <element value="preserveWhiteSpace" />
+      </property>
+    </properties>
+  </rule>
 
-	<rule ref="VariableAnalysis.CodeAnalysis.VariableAnalysis" />
+  <rule ref="VariableAnalysis.CodeAnalysis.VariableAnalysis" />
 
-	<!-- Check for cross-version support for PHP 7.0 and higher. -->
-	<config name="testVersion" value="7.0-" />
-	<rule ref="PHPCompatibilityWP" />
+  <!-- Check for cross-version support for PHP 7.2 and higher. -->
+  <config name="testVersion" value="7.2-" />
+  <rule ref="PHPCompatibilityWP" />
 
-	<!-- The main plugin file should be parsable by PHP < 7.0. -->
-	<rule ref="Generic.Arrays.DisallowLongArraySyntax.Found">
-		<exclude-pattern>web-stories.php</exclude-pattern>
-		<exclude-pattern>includes/compat/Web_Stories_Compatibility.php</exclude-pattern>
-	</rule>
+  <!-- The main plugin file should be parsable by PHP < 7.0. -->
+  <rule ref="Generic.Arrays.DisallowLongArraySyntax.Found">
+    <exclude-pattern>web-stories.php</exclude-pattern>
+    <exclude-pattern
+    >includes/compat/Web_Stories_Compatibility.php</exclude-pattern>
+  </rule>
 
-	<rule ref="WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid">
-		<exclude-pattern>tests/phpunit/integration/includes/REST_Setup.php</exclude-pattern>
-	</rule>
+  <rule ref="WordPress.NamingConventions.ValidFunctionName.MethodNameInvalid">
+    <exclude-pattern
+    >tests/phpunit/integration/includes/REST_Setup.php</exclude-pattern>
+  </rule>
 
-	<!-- Show details about violated sniffs -->
-	<arg value="s" />
+  <!-- Checks whether the nullablity ? symbol is present before each nullable and optional parameter. -->
+  <rule
+    ref="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue"
+  />
+  <!-- Enforce no space between closing brace and colon of return typehint. -->
+  <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHintSpacing">
+    <properties>
+      <property name="spacesCountBeforeColon" value="0" />
+    </properties>
+  </rule>
+  <!-- Checks that there's no whitespace between a nullability symbol and a typehint. -->
+  <rule ref="SlevomatCodingStandard.TypeHints.ParameterTypeHintSpacing" />
+  <!-- Enforces using shorthand scalar typehint variants in phpDocs. -->
+  <rule ref="SlevomatCodingStandard.TypeHints.LongTypeHints" />
+  <!-- Reports useless @var annotation for constants because the type of constant is always clear. -->
+  <rule ref="SlevomatCodingStandard.TypeHints.UselessConstantTypeHint" />
 
-	<!-- Iterate over all PHP files by default -->
-	<arg name="extensions" value="php" />
-	<file>.</file>
+  <!-- Enforces correct space usage in array functions. -->
+  <rule ref="SlevomatCodingStandard.Functions.ArrowFunctionDeclaration">
+    <properties>
+      <property name="spacesCountAfterKeyword" value="0" />
+      <property name="spacesCountBeforeArrow" value="1" />
+      <property name="spacesCountAfterArrow" value="1" />
+      <property name="allowMultiLine" value="true" />
+    </properties>
+  </rule>
 
-	<!-- Strip the filepaths down to the relevant bit. -->
-	<arg name="basepath" value="./" />
+  <!-- Disallows grouped use declarations. -->
+  <rule ref="SlevomatCodingStandard.Namespaces.DisallowGroupUse" />
+  <!-- Disallows leading backslash in use statement. -->
+  <rule ref="SlevomatCodingStandard.Namespaces.UseDoesNotStartWithBackslash" />
+  <!-- Checks whether uses at the top of a file are alphabetically sorted. -->
+  <rule ref="SlevomatCodingStandard.Namespaces.AlphabeticallySortedUses" />
+  <!-- Enforces one space after namespace, disallows content between namespace name and semicolon and disallows use of bracketed syntax. -->
+  <rule ref="SlevomatCodingStandard.Namespaces.NamespaceDeclaration" />
+  <!-- Prohibits multiple uses separated by commas. -->
+  <rule ref="SlevomatCodingStandard.Namespaces.MultipleUsesPerLine" />
+  <!-- Enforces one blank line before and after namespace. -->
+  <rule ref="SlevomatCodingStandard.Namespaces.NamespaceSpacing">
+    <properties>
+      <property name="linesCountBeforeNamespace" value="1" />
+      <property name="linesCountAfterNamespace" value="1" />
+    </properties>
+  </rule>
+  <!-- Enforces one blank before first use, after last use and none between two different types of use. -->
+  <rule ref="SlevomatCodingStandard.Namespaces.UseSpacing">
+    <properties>
+      <property name="linesCountBeforeFirstUse" value="1" />
+      <property name="linesCountBetweenUseTypes" value="0" />
+      <property name="linesCountAfterLastUse" value="1" />
+    </properties>
+  </rule>
+  <!-- Prohibits uses from the same namespace. -->
+  <rule ref="SlevomatCodingStandard.Namespaces.UseFromSameNamespace" />
+  <!-- All references to types named Exception or ending with Exception must be referenced via a fully qualified name. -->
+  <!-- Looks for unused imports from other namespaces. -->
+  <rule ref="SlevomatCodingStandard.Namespaces.UnusedUses">
+    <properties>
+      <property name="searchAnnotations" value="true" />
+    </properties>
+  </rule>
+  <!-- Require root namespace for special compiled PHP functions. -->
+  <rule ref="SlevomatCodingStandard.Namespaces.FullyQualifiedGlobalFunctions">
+    <properties>
+      <property name="includeSpecialFunctions" value="true" />
+    </properties>
+  </rule>
 
-	<!-- Check up to 20 files simultaneously. -->
-	<arg name="parallel" value="20" />
+  <!-- Class names should be referenced via ::class constant when possible. -->
+  <rule ref="SlevomatCodingStandard.Classes.ModernClassNameReference">
+    <properties>
+      <property name="enableOnObjects" value="false" />
+    </properties>
+  </rule>
+  <!-- Requires declaring visibility for class constants. -->
+  <!--  <rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility" />-->
 
-	<!-- Third-party or auto-generated code -->
-	<exclude-pattern>*/build/*</exclude-pattern>
-	<exclude-pattern>*/data/*</exclude-pattern>
-	<exclude-pattern>packages/e2e-tests/src/plugins/*</exclude-pattern>
-	<exclude-pattern>*/node_modules/*</exclude-pattern>
-	<exclude-pattern>*/third-party/*</exclude-pattern>
-	<exclude-pattern>*/vendor/*</exclude-pattern>
-	<exclude-pattern>assets/js/*.asset.php</exclude-pattern>
-	<exclude-pattern>assets/js/*.chunks.php</exclude-pattern>
-	<exclude-pattern>includes/polyfills/mbstring.php</exclude-pattern>
-	<exclude-pattern>tests/phpstan/*</exclude-pattern>
-	<exclude-pattern
+  <!-- Requires use of null coalesce operator (??) when possible. -->
+  <rule
+    ref="SlevomatCodingStandard.ControlStructures.RequireNullCoalesceOperator"
+  />
+
+  <!-- Reports forbidden annotations. -->
+  <rule ref="SlevomatCodingStandard.Commenting.ForbiddenAnnotations">
+    <properties>
+      <property name="forbiddenAnnotations" type="array">
+        <element value="@package" />
+        <element value="@subpackage" />
+        <element value="@author" />
+        <element value="@created" />
+        <element value="@access" />
+        <element value="@version" />
+      </property>
+    </properties>
+  </rule>
+  <!-- Require specific order of PHPDoc annotations with empty newline between specific groups. -->
+  <rule ref="SlevomatCodingStandard.Commenting.DocCommentSpacing">
+    <properties>
+      <property name="linesCountBeforeFirstContent" value="0" />
+      <property name="linesCountAfterLastContent" value="0" />
+      <property name="linesCountBetweenDescriptionAndAnnotations" value="1" />
+      <property name="linesCountBetweenAnnotationsGroups" value="1" />
+      <property name="annotationsGroups" type="array">
+        <element
+          value="
+          @SuppressWarnings,
+          @codeCoverageIgnore
+        "
+        />
+        <element value="@internal" />
+        <element value="
+					@since,
+					@deprecated,
+				" />
+        <element value="
+					@link,
+					@see,
+					@uses,
+				" />
+        <element value="
+					@global,
+				" />
+        <element value="
+					@throws,
+				" />
+        <element value="
+					@param,
+					@return,
+				" />
+      </property>
+    </properties>
+  </rule>
+
+  <!-- Show details about violated sniffs -->
+  <arg value="s" />
+
+  <!-- Iterate over all PHP files by default -->
+  <arg name="extensions" value="php" />
+  <file>.</file>
+
+  <!-- Strip the filepaths down to the relevant bit. -->
+  <arg name="basepath" value="./" />
+
+  <!-- Check up to 20 files simultaneously. -->
+  <arg name="parallel" value="20" />
+
+  <!-- Third-party or auto-generated code -->
+  <exclude-pattern>*/build/*</exclude-pattern>
+  <exclude-pattern>*/data/*</exclude-pattern>
+  <exclude-pattern>packages/e2e-tests/src/plugins/*</exclude-pattern>
+  <exclude-pattern>*/node_modules/*</exclude-pattern>
+  <exclude-pattern>*/third-party/*</exclude-pattern>
+  <exclude-pattern>*/vendor/*</exclude-pattern>
+  <exclude-pattern>assets/js/*.asset.php</exclude-pattern>
+  <exclude-pattern>assets/js/*.chunks.php</exclude-pattern>
+  <exclude-pattern>includes/polyfills/mbstring.php</exclude-pattern>
+  <exclude-pattern>tests/phpstan/*</exclude-pattern>
+  <exclude-pattern
   >tests/phpunit/unit/includes/MarkupComparison.php</exclude-pattern>
 </ruleset>

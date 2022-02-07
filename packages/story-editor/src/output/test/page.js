@@ -1299,7 +1299,7 @@ describe('Page output', () => {
       );
     });
 
-    it('should add background audio on none looping use amp-video', async () => {
+    it('should add background audio on non-looping use amp-video', async () => {
       const props = {
         id: '123',
         page: {

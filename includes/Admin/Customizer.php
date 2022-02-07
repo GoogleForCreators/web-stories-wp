@@ -2,10 +2,10 @@
 /**
  * Class Customizer
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -27,11 +27,11 @@
 namespace Google\Web_Stories\Admin;
 
 use Google\Web_Stories\Infrastructure\Conditional;
+use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Stories_Script_Data;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Story_Query;
-use Google\Web_Stories\Service_Base;
 use WP_Customize_Manager;
 use WP_Customize_Setting;
 use WP_Error;
@@ -40,8 +40,6 @@ use WP_Error;
  * Class customizer settings.
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
- *
- * @package Google\Web_Stories
  */
 class Customizer extends Service_Base implements Conditional {
 
@@ -49,8 +47,6 @@ class Customizer extends Service_Base implements Conditional {
 	 * Customizer section slug.
 	 *
 	 * @since 1.5.0
-	 *
-	 * @var string
 	 */
 	const SECTION_SLUG = 'web_story_options';
 
@@ -58,8 +54,6 @@ class Customizer extends Service_Base implements Conditional {
 	 * Customizer web stories options key.
 	 *
 	 * @since 1.5.0
-	 *
-	 * @var string
 	 */
 	const STORY_OPTION = 'web_stories_customizer_settings';
 
@@ -101,7 +95,6 @@ class Customizer extends Service_Base implements Conditional {
 	 * @param Settings            $settings            Settings instance.
 	 * @param Story_Post_Type     $story_post_type     Story_Post_Type instance.
 	 * @param Stories_Script_Data $stories_script_data Stories_Script_Data instance.
-	 *
 	 * @return void
 	 */
 	public function __construct(
@@ -139,14 +132,13 @@ class Customizer extends Service_Base implements Conditional {
 	/**
 	 * Registers web stories customizer settings.
 	 *
-	 * @since 1.5.0
-	 *
-	 * @param WP_Customize_Manager $wp_customize WP_Customize_Manager instance.
-	 *
 	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
 	 *
+	 * @since 1.5.0
+	 *
+	 * @param WP_Customize_Manager $wp_customize WP_Customize_Manager instance.
 	 * @return void
 	 */
 	public function register_customizer_settings( WP_Customize_Manager $wp_customize ) {
@@ -500,10 +492,9 @@ class Customizer extends Service_Base implements Conditional {
 	 * @since 1.5.0
 	 *
 	 * @param array $view_type View type to check.
-	 *
 	 * @return array An array of view type choices.
 	 */
-	private function get_view_type_choices( array $view_type ) : array {
+	private function get_view_type_choices( array $view_type ): array {
 		$view_type_choices = $this->stories_script_data->get_layouts();
 
 		if ( empty( $view_type ) ) {
@@ -519,8 +510,7 @@ class Customizer extends Service_Base implements Conditional {
 	 * @since 1.5.0
 	 *
 	 * @param string $option_name The name of the option to check.
-	 *
-	 * @return boolean Returns true if the given option is enabled otherwise false.
+	 * @return bool Returns true if the given option is enabled otherwise false.
 	 */
 	private function is_option_enabled( string $option_name ): bool {
 		$setting = $this->wp_customize->get_setting( self::STORY_OPTION . "[{$option_name}]" );
@@ -533,7 +523,6 @@ class Customizer extends Service_Base implements Conditional {
 	 * @since 1.5.0
 	 *
 	 * @param string $view_type View type to check.
-	 *
 	 * @return bool Whether or not current view type matches the one passed.
 	 */
 	private function is_view_type( string $view_type ): bool {
@@ -548,7 +537,6 @@ class Customizer extends Service_Base implements Conditional {
 	 *
 	 * @param WP_Error $validity WP_Error object.
 	 * @param int      $value    Value to be validated.
-	 *
 	 * @return WP_Error
 	 */
 	public function validate_number_of_stories( $validity, $value ) {
@@ -567,7 +555,6 @@ class Customizer extends Service_Base implements Conditional {
 	 *
 	 * @param WP_Error $validity WP_Error object.
 	 * @param int      $value Value to be validated.
-	 *
 	 * @return WP_Error
 	 */
 	public function validate_number_of_columns( $validity, $value ) {
@@ -582,10 +569,10 @@ class Customizer extends Service_Base implements Conditional {
 	/**
 	 * Renders web stories based on the customizer selected options.
 	 *
-	 * @since 1.5.0
-	 *
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+	 *
+	 * @since 1.5.0
 	 *
 	 * @return string
 	 */
@@ -637,11 +624,11 @@ class Customizer extends Service_Base implements Conditional {
 	 * @param array $defaults Optional. Array that serves as the defaults. Default empty array.
 	 * @return array Merged user defined values with defaults.
 	 */
-	private function parse_args( array $args, array $defaults = [] ) : array {
+	private function parse_args( array $args, array $defaults = [] ): array {
 		$parsed_args = $defaults;
 
 		foreach ( $args as $key => $value ) {
-			if ( is_array( $value ) && isset( $parsed_args[ $key ] ) ) {
+			if ( \is_array( $value ) && isset( $parsed_args[ $key ] ) ) {
 				$parsed_args[ $key ] = $this->parse_args( $value, $parsed_args[ $key ] );
 			} else {
 				$parsed_args[ $key ] = $value;
@@ -658,14 +645,14 @@ class Customizer extends Service_Base implements Conditional {
 	 *
 	 * @return array
 	 */
-	public function get_stories_theme_support() : array {
+	public function get_stories_theme_support(): array {
 		/**
 		 * Theme support configuration.
 		 *
 		 * @var array $support
 		 */
 		$support = get_theme_support( 'web-stories' );
-		$support = isset( $support[0] ) && is_array( $support[0] ) ? $support[0] : [];
+		$support = isset( $support[0] ) && \is_array( $support[0] ) ? $support[0] : [];
 
 		$has_archive = (bool) $this->story_post_type->get_has_archive();
 

@@ -1,8 +1,6 @@
 <?php
 /**
  * List view based controls state.
- *
- * @package Google\Web_Stories
  */
 
 /**

@@ -17,10 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\Media\Video;
 
-use Google\Web_Stories\Media\Media_Source_Taxonomy;
-use Google\Web_Stories\Services;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
-use Google\Web_Stories\Tests\Integration\TestCase;
 use WP_REST_Request;
 
 /**

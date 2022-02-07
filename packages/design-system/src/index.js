@@ -24,11 +24,10 @@ import Modal from 'react-modal';
  */
 import localStore, { LOCAL_STORAGE_PREFIX } from './utils/localStore';
 import * as Icons from './icons';
-import * as SVGIcons from './icons/svg';
 
 const { setAppElement } = Modal;
 
-export { Icons, SVGIcons };
+export { Icons };
 export { localStore, LOCAL_STORAGE_PREFIX };
 export * from './components';
 export * from './contexts';

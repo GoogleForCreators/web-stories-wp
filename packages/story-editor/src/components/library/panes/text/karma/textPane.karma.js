@@ -62,7 +62,11 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       await fixture.editor.library.textTab.click();
       // Give some time for everything to be ready for the tests.
       await fixture.events.sleep(800);
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[0].node);
+      await waitFor(() => {
+        if (!fixture.editor.canvas.framesLayer.frames[0].node) {
+          throw new Error('node not ready');
+        }
+      });
     });
 
     it('should add text preset via dragging from the preview', async () => {
@@ -88,7 +92,11 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       await fixture.editor.library.textTab.click();
       // Give some time for everything to be ready for the tests.
       await fixture.events.sleep(800);
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[0].node);
+      await waitFor(() => {
+        if (!fixture.editor.canvas.framesLayer.frames[0].node) {
+          throw new Error('node not ready');
+        }
+      });
     });
 
     it('should add text presets below each other if added consecutively', async () => {
@@ -99,7 +107,14 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       );
 
       await waitFor(
-        () => expect(fixture.editor.library.text.textSets.length).toBeTruthy(),
+        () => {
+          if (!fixture.editor.library.text.textSets.length) {
+            throw new Error('Text set not ready');
+          }
+          expect(fixture.editor.library.text.textSets.length).toBeGreaterThan(
+            0
+          );
+        },
         { timeout: TIMEOUT_INTERVAL / 3 }
       );
 
@@ -122,13 +137,22 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       let nodeIndex = 1;
 
       const verifyDefaultPosition = async (name, content) => {
-        await waitFor(
-          () => fixture.editor.canvas.framesLayer.frames[nodeIndex].node
-        );
+        await waitFor(() => {
+          if (!fixture.editor.canvas.framesLayer.frames[nodeIndex].node) {
+            throw new Error('node not ready');
+          }
+          expect(
+            fixture.editor.canvas.framesLayer.frames[nodeIndex].node
+          ).toBeTruthy();
+        });
         nodeIndex++;
         storyContext = await fixture.renderHook(() => useStory());
-        const element = storyContext.state.selectedElements[0];
+        let element = null;
         await waitFor(() => {
+          element = storyContext.state.selectedElements[0];
+          if (!element) {
+            throw new Error('story not ready');
+          }
           expect(stripHTML(element.content)).toEqual(content);
           const preset = PRESETS.find(({ title }) => name === title);
           expect(element.y).toEqual(dataPixels(preset.element.y));
@@ -138,16 +162,25 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       };
 
       const verifyStaggeredPosition = async (content) => {
-        await waitFor(
-          () => fixture.editor.canvas.framesLayer.frames[nodeIndex].node
-        );
+        await waitFor(() => {
+          if (!fixture.editor.canvas.framesLayer.frames[nodeIndex].node) {
+            throw new Error('node not ready');
+          }
+          expect(
+            fixture.editor.canvas.framesLayer.frames[nodeIndex].node
+          ).toBeTruthy();
+        });
         nodeIndex++;
         // Store both last and next value to ensure incorrect value isn't used within waitFor.
         lastY = nextY;
         lastHeight = nextHeight;
         storyContext = await fixture.renderHook(() => useStory());
-        const element = storyContext.state.selectedElements[0];
+        let element = null;
         await waitFor(() => {
+          element = storyContext.state.selectedElements[0];
+          if (!element) {
+            throw new Error('story not ready');
+          }
           expect(stripHTML(element.content)).toEqual(content);
           expect(element.y).toEqual(
             dataPixels(lastY + lastHeight + POSITION_MARGIN)
@@ -163,7 +196,12 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       );
 
       await waitFor(
-        () => expect(fixture.editor.library.text.textSets.length).toBeTruthy(),
+        () => {
+          if (!fixture.editor.library.text.textSets.length) {
+            throw new Error('text set not ready');
+          }
+          expect(fixture.editor.library.text.textSets.length).toBeTruthy();
+        },
         {
           timeout: TIMEOUT_INTERVAL / 3,
         }
@@ -218,7 +256,11 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
 
       // This text should be added without any changes.
       await fixture.events.click(fixture.editor.library.textAdd);
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      await waitFor(() => {
+        if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+          throw new Error('node not ready');
+        }
+      });
 
       const [text1] = await getSelection();
       expect(text1.content).toEqual('Fill in some text');
@@ -231,7 +273,11 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       await fixture.events.sleep(800);
       // Title is added with white text color since it's using auto styling.
       await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[2].node);
+      await waitFor(() => {
+        if (!fixture.editor.canvas.framesLayer.frames[2].node) {
+          throw new Error('node not ready');
+        }
+      });
       const [title] = await getSelection();
       expect(title.content).toEqual(
         '<span style="font-weight: 700; color: #fff">Title 1</span>'
