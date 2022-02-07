@@ -65,10 +65,14 @@ jobs:
           TMPDIR=${TMPDIR-/tmp}
           TMPDIR=$(echo $TMPDIR | sed -e "s/\/$//")
           TEST_DIR=${TEST_DIR-$TMPDIR/packages-test}
+
           mkdir $TEST_DIR
           cd $TEST_DIR
+
           npm init --yes
           npm --registry=$LOCAL_REGISTRY_URL install $PUBLIC_PACKAGES
+
+          npm ls --depth 0
 
       - name: Stop local registry
         run: npm run local-registry:stop
