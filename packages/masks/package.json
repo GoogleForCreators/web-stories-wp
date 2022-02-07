@@ -30,8 +30,8 @@
   },
   "dependencies": {
     "@googleforcreators/design-system": "*",
-    "@googleforcreators/elements": "*",
     "@googleforcreators/element-library": "*",
+    "@googleforcreators/elements": "*",
     "@googleforcreators/i18n": "*",
     "@googleforcreators/react": "*",
     "@googleforcreators/units": "*",
