@@ -110,8 +110,8 @@ function PublishButton({ forceIsSaving }) {
 
   const handlePublish = useCallback(() => {
     if (
-      (shouldReviewDialogBeSeen && canPublish) ||
-      (isUpdatedPublishModalEnabled && canPublish)
+      canPublish &&
+      (shouldReviewDialogBeSeen || isUpdatedPublishModalEnabled)
     ) {
       setShowDialog(true);
       return;
