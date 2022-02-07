@@ -125,9 +125,10 @@ jobs:
             fi
           done
 
-          git add packages/*/package.json
-
           npm install
+
+          git add packages/*/package.json
+          git add package-lock.json
 
           echo "Committing version bump"
           echo
@@ -166,7 +167,7 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Push version bumps
-        run: git push origin main
+        run: git push origin main --follow-tags
 
       # Do the actual publishing to npmjs.com.
       - name: Publish packages to production
