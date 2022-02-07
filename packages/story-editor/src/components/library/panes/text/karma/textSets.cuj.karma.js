@@ -226,7 +226,6 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
     it('should add text color based on background', async () => {
       await fixture.editor.library.text.smartColorToggle.click();
 
-      await fixture.events.sleep(500);
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.changeBackgroundColorButton
       );
