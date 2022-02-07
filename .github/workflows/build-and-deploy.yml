@@ -182,7 +182,7 @@ jobs:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
       - name: Bundle packages
-        run: npm run bundle
+        run: npm run workflow:bundle-packages
 
   upload-artifacts:
     name: Upload ZIP files to storage
