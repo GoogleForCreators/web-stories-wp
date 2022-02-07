@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { StoryPropTypes } from '../types';
+import { StoryPropTypes } from '@googleforcreators/elements';
 import VideoImage from '../media/videoImage';
 import VisibleImage from '../media/visibleImage';
 

@@ -27,7 +27,7 @@ import { calcRotatedResizeOffset } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import { StoryPropTypes } from '../types';
+import { StoryPropTypes } from '@googleforcreators/elements';
 import { getTransformFlip } from '../shared';
 
 function EditCropMoveable({

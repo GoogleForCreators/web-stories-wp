@@ -22,7 +22,7 @@ import { isBlobURL } from '@googleforcreators/media';
 /**
  * Internal dependencies
  */
-import { StoryPropTypes } from '../types';
+import { StoryPropTypes } from '@googleforcreators/elements';
 import MediaOutput from '../media/output';
 
 function GifOutput({ element, box }) {

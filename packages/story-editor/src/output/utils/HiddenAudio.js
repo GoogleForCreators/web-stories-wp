@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { ResourcePropTypes } from '@googleforcreators/media';
-import { BackgroundAudioPropType } from '@googleforcreators/element-library';
+import { BackgroundAudioPropType } from '@googleforcreators/elements';
 
 function HiddenAudio({ backgroundAudio, id }) {
   const { resource, tracks, loop } = backgroundAudio || {};

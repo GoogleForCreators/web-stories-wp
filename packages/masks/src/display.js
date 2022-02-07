@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { useUnits } from '@googleforcreators/units';
-import { StoryPropTypes } from '@googleforcreators/element-library';
+import { StoryPropTypes } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies

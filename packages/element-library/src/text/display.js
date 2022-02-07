@@ -36,6 +36,7 @@ import {
 /**
  * Internal dependencies
  */
+import { StoryPropTypes } from '@googleforcreators/elements';
 import {
   elementFillContent,
   elementWithFont,
@@ -45,7 +46,6 @@ import {
   elementWithHighlightBorderRadius,
   useColorTransformHandler,
 } from '../shared';
-import { StoryPropTypes } from '../types';
 import {
   getHighlightLineheight,
   generateParagraphTextStyle,

@@ -30,13 +30,13 @@ import {
 /**
  * Internal dependencies
  */
+import { StoryPropTypes } from '@googleforcreators/elements';
 import {
   elementFillContent,
   elementWithBackgroundColor,
   elementWithBorder,
   useColorTransformHandler,
 } from '../shared';
-import { StoryPropTypes } from '../types';
 
 const Element = styled.div`
   ${elementFillContent}

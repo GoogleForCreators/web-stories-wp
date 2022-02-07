@@ -31,7 +31,7 @@ import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import { useCallback } from '@googleforcreators/react';
 import { ResourcePropTypes } from '@googleforcreators/media';
 import { v4 as uuidv4 } from 'uuid';
-import { BackgroundAudioPropType } from '@googleforcreators/element-library';
+import { BackgroundAudioPropType } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies

@@ -27,7 +27,7 @@ import {
 /**
  * Internal dependencies
  */
-import { StoryPropTypes } from '../types';
+import { StoryPropTypes } from '@googleforcreators/elements';
 import MediaOutput from '../media/output';
 
 /**

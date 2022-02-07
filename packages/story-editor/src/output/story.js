@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { BackgroundAudioPropType } from '@googleforcreators/element-library';
+import { BackgroundAudioPropType } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies

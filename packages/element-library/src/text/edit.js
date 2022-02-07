@@ -51,6 +51,7 @@ import {
 /**
  * Internal dependencies
  */
+import { StoryPropTypes } from '@googleforcreators/elements';
 import {
   elementFillContent,
   elementWithFont,
@@ -59,7 +60,6 @@ import {
   elementWithBorder,
   elementWithHighlightBorderRadius,
 } from '../shared';
-import { StoryPropTypes } from '../types';
 import useCSSVarColorTransformHandler from '../shared/useCSSVarColorTransformHandler';
 import useColorTransformHandler from '../shared/useColorTransformHandler';
 import {

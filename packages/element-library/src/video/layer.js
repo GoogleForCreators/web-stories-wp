@@ -21,7 +21,7 @@ import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
-import { StoryPropTypes } from '../types';
+import { StoryPropTypes } from '@googleforcreators/elements';
 import { LayerText } from '../shared';
 
 function VideoLayerContent({ element }) {

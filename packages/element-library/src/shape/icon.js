@@ -24,8 +24,8 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { StoryPropTypes } from '@googleforcreators/elements';
 import { elementWithBackgroundColor } from '../shared';
-import { StoryPropTypes } from '../types';
 
 const Container = styled.div`
   display: flex;

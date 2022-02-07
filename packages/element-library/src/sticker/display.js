@@ -21,7 +21,7 @@ import stickers from '@googleforcreators/stickers';
 /**
  * Internal dependencies
  */
-import { StoryPropTypes } from '../types';
+import { StoryPropTypes } from '@googleforcreators/elements';
 
 const style = {
   display: 'block',

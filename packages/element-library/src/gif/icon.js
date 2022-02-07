@@ -17,7 +17,10 @@
 /**
  * Internal dependencies
  */
-import { StoryPropTypes } from '../types';
+/**
+ * External dependencies
+ */
+import { StoryPropTypes } from '@googleforcreators/elements';
 import VisibleImage from '../media/visibleImage';
 
 function GifLayerIcon({

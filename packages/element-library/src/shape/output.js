@@ -21,7 +21,7 @@ import { generatePatternStyles } from '@googleforcreators/patterns';
 /**
  * Internal dependencies
  */
-import { StoryPropTypes } from '../types';
+import { StoryPropTypes } from '@googleforcreators/elements';
 
 /**
  * Returns AMP HTML for saving into post content for displaying in the FE.

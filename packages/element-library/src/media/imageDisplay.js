@@ -31,7 +31,7 @@ import {
 /**
  * Internal dependencies
  */
-import { StoryPropTypes } from '../types';
+import { StoryPropTypes } from '@googleforcreators/elements';
 import { mediaWithScale } from './util';
 import MediaDisplay from './display';
 

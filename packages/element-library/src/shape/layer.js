@@ -22,7 +22,7 @@ import { getMaskByType } from '@googleforcreators/masks';
 /**
  * Internal dependencies
  */
-import { StoryPropTypes } from '../types';
+import { StoryPropTypes } from '@googleforcreators/elements';
 import { LayerText } from '../shared';
 
 function ShapeLayerContent({ element }) {

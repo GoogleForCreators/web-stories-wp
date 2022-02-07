@@ -21,7 +21,7 @@ import { stripHTML } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import { StoryPropTypes } from '../types';
+import { StoryPropTypes } from '@googleforcreators/elements';
 import { LayerText } from '../shared';
 
 function TextLayerContent({ element: { content } }) {

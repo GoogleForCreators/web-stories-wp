@@ -21,7 +21,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { StoryPropTypes } from '../types';
+import { StoryPropTypes } from '@googleforcreators/elements';
 import MediaEdit from '../media/edit';
 import Trim from './trim';
 

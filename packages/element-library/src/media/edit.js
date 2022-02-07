@@ -40,12 +40,12 @@ import {
 /**
  * Internal dependencies
  */
+import { StoryPropTypes } from '@googleforcreators/elements';
 import {
   elementFillContent,
   elementWithFlip,
   getTransformFlip,
 } from '../shared';
-import { StoryPropTypes } from '../types';
 import EditCropMoveable from './editCropMoveable';
 import { mediaWithScale } from './util';
 import EditPanMoveable from './editPanMoveable';

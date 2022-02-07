@@ -35,7 +35,7 @@ import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import { StoryPropTypes } from '../types';
+import { StoryPropTypes } from '@googleforcreators/elements';
 import {
   generateParagraphTextStyle,
   getHighlightLineheight,

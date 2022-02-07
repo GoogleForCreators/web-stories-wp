@@ -38,7 +38,7 @@ import {
 /**
  * Internal dependencies
  */
-import { StoryPropTypes } from '../types';
+import { StoryPropTypes } from '@googleforcreators/elements';
 
 const PLAY_BUTTON_SIZE = 82;
 const ICON_SVG_SIZE = 72;

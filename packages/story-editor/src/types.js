@@ -22,7 +22,7 @@ import { AnimationProps } from '@googleforcreators/animation';
 import {
   StoryPropTypes,
   BackgroundAudioPropType,
-} from '@googleforcreators/element-library';
+} from '@googleforcreators/elements';
 
 export const PageSizePropType = PropTypes.shape({
   width: PropTypes.number,

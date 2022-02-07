@@ -49,7 +49,5 @@
     "react-transition-group": "^4.4.2",
     "styled-components": "^5.2.1"
   },
-  "devDependencies": {
-    "@testing-library/react": "^11.2.3"
-  }
+  "devDependencies": {}
 }

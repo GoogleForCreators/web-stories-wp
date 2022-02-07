@@ -29,7 +29,7 @@ import { Moveable } from '@googleforcreators/moveable';
 /**
  * Internal dependencies
  */
-import { StoryPropTypes } from '../types';
+import { StoryPropTypes } from '@googleforcreators/elements';
 import { getTransformFlip } from '../shared';
 
 function EditPanMoveable({

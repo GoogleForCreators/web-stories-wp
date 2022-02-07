@@ -25,7 +25,7 @@ import { getMediaSizePositionProps } from '@googleforcreators/media';
 /**
  * Internal dependencies
  */
-import { StoryPropTypes } from '../types';
+import { StoryPropTypes } from '@googleforcreators/elements';
 import MediaDisplay from '../media/display';
 import { getBackgroundStyle, videoWithScale } from './util';
 

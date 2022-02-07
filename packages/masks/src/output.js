@@ -23,7 +23,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { StoryPropTypes } from '@googleforcreators/element-library';
+import { StoryPropTypes } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies

@@ -26,13 +26,13 @@ import { areEventsDragging } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
+import { StoryPropTypes } from '@googleforcreators/elements';
 import getCaretCharacterOffsetWithin from '../utils/getCaretCharacterOffsetWithin';
 import {
   elementFillContent,
   elementWithFont,
   elementWithTextParagraphStyle,
 } from '../shared';
-import { StoryPropTypes } from '../types';
 import { generateParagraphTextStyle } from './util';
 
 const Element = styled.p`
