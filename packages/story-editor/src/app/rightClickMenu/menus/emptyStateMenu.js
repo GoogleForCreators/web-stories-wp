@@ -17,8 +17,7 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
-import { cloneElement } from '@googleforcreators/react';
+import { ContextMenuComponents } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -26,74 +25,65 @@ import { cloneElement } from '@googleforcreators/react';
 import { RIGHT_CLICK_MENU_LABELS } from '../constants';
 import { states, useHighlights } from '../../highlights';
 import { MediaUploadButton } from '../../../components/form';
-import LibraryProvider from '../../../components/library/libraryProvider';
 import useOnMediaSelect from '../../../components/library/panes/media/local/useOnMediaSelect';
+import LibraryProvider from '../../../components/library/libraryProvider';
+import { MenuPropType } from './shared';
 
-const MediaButton = ({ OriginalButton }) => {
+const MediaButton = () => {
   const { onSelect } = useOnMediaSelect();
 
   return (
     <MediaUploadButton
-      renderButton={(open) => {
-        return cloneElement(OriginalButton, { onClick: open });
-      }}
+      renderButton={(open) => (
+        <ContextMenuComponents.MenuButton onClick={open}>
+          {RIGHT_CLICK_MENU_LABELS.UPLOAD_IMAGE_OR_VIDEO}
+        </ContextMenuComponents.MenuButton>
+      )}
       onInsert={onSelect}
     />
   );
 };
-MediaButton.propTypes = {
-  OriginalButton: PropTypes.func,
-};
 
-const Wrapper = (props) => (
-  <LibraryProvider>
-    <MediaButton {...props} />
-  </LibraryProvider>
-);
-
-function EmptyStateMenu({ menuItemProps }) {
+function EmptyStateMenu() {
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
   }));
 
-  return [
-    {
-      label: RIGHT_CLICK_MENU_LABELS.CHOOSE_IMAGE_OR_VIDEO,
-      onClick: () => {
-        setHighlights({
-          highlight: states.MEDIA,
-        });
-      },
-      ...menuItemProps,
-    },
-    {
-      label: RIGHT_CLICK_MENU_LABELS.UPLOAD_IMAGE_OR_VIDEO,
-      enrich: (OriginalButton) => <Wrapper OriginalButton={OriginalButton} />,
-      ...menuItemProps,
-    },
-    {
-      label: RIGHT_CLICK_MENU_LABELS.BROWSE_PAGE_TEMPLATES,
-      onClick: () => {
-        setHighlights({
-          highlight: states.PAGE_TEMPLATES,
-        });
-      },
-      ...menuItemProps,
-    },
-    {
-      label: RIGHT_CLICK_MENU_LABELS.BROWSE_STOCK_IMAGES_AND_VIDEO,
-      onClick: () => {
-        setHighlights({
-          highlight: states.MEDIA3P,
-        });
-      },
-      ...menuItemProps,
-    },
-  ];
+  return (
+    <>
+      <ContextMenuComponents.MenuButton
+        onClick={() => {
+          setHighlights({
+            highlight: states.MEDIA,
+          });
+        }}
+      >
+        {RIGHT_CLICK_MENU_LABELS.CHOOSE_IMAGE_OR_VIDEO}
+      </ContextMenuComponents.MenuButton>
+      <LibraryProvider>
+        <MediaButton />
+      </LibraryProvider>
+      <ContextMenuComponents.MenuButton
+        onClick={() => {
+          setHighlights({
+            highlight: states.PAGE_TEMPLATES,
+          });
+        }}
+      >
+        {RIGHT_CLICK_MENU_LABELS.BROWSE_PAGE_TEMPLATES}
+      </ContextMenuComponents.MenuButton>
+      <ContextMenuComponents.MenuButton
+        onClick={() => {
+          setHighlights({
+            highlight: states.MEDIA3P,
+          });
+        }}
+      >
+        {RIGHT_CLICK_MENU_LABELS.BROWSE_STOCK_IMAGES_AND_VIDEO}
+      </ContextMenuComponents.MenuButton>
+    </>
+  );
 }
-
-EmptyStateMenu.propTypes = {
-  menuItemProps: PropTypes.object,
-};
+EmptyStateMenu.propTypes = MenuPropType;
 
 export default EmptyStateMenu;
