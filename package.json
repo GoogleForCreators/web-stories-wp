@@ -7,12 +7,7 @@
     "url": "https://creators.google/"
   },
   "license": "Apache-2.0",
-  "keywords": [
-    "amp",
-    "stories",
-    "storytelling",
-    "wordpress"
-  ],
+  "keywords": ["amp", "stories", "storytelling", "wordpress"],
   "homepage": "https://github.com/googleforcreators/web-stories-wp/",
   "repository": {
     "type": "git",
@@ -27,9 +22,7 @@
   },
   "type": "module",
   "workspaces": {
-    "packages": [
-      "packages/*"
-    ]
+    "packages": ["packages/*"]
   },
   "devDependencies": {
     "@ampproject/toolbox-optimizer": "^2.8.7",
@@ -270,18 +263,10 @@
     }
   },
   "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "stylelint --fix --allow-empty-input"
-    ],
-    "*.json": [
-      "prettier --write"
-    ],
+    "*.js": ["eslint --fix", "stylelint --fix --allow-empty-input"],
+    "*.json": ["prettier --write"],
     "*.css": "stylelint --fix --allow-empty-input",
-    "*.md": [
-      "eslint --fix",
-      "markdownlint -f"
-    ],
+    "*.md": ["eslint --fix", "markdownlint -f"],
     "*.php": "npm run lint:php:fix",
     "*.(xml|xml.dist)": "prettier --write",
     "*.yml": "prettier --write"
@@ -293,10 +278,6 @@
       "Type: Infrastructure": "🧰 Maintenance",
       "Type: Documentation": ":memo: Documentation"
     },
-    "ignoreCommitters": [
-      "dependabot",
-      "github-actions",
-      "imgbot"
-    ]
+    "ignoreCommitters": ["dependabot", "github-actions", "imgbot"]
   }
 }

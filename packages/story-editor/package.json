@@ -8,9 +8,7 @@
     "url": "https://creators.google/"
   },
   "license": "Apache-2.0",
-  "keywords": [
-    "web stories"
-  ],
+  "keywords": ["web stories"],
   "homepage": "https://github.com/googleforcreators/web-stories-wp/",
   "repository": {
     "type": "git",
@@ -36,8 +34,8 @@
     "@googleforcreators/animation": "*",
     "@googleforcreators/date": "*",
     "@googleforcreators/design-system": "*",
-    "@googleforcreators/elements": "*",
     "@googleforcreators/element-library": "*",
+    "@googleforcreators/elements": "*",
     "@googleforcreators/fonts": "*",
     "@googleforcreators/i18n": "*",
     "@googleforcreators/masks": "*",
