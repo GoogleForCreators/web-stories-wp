@@ -108,7 +108,7 @@ function useMediaPicker({
       }
 
       // Create the media frame.
-      const fileFrame = global.wp.media({
+      const fileFrame = window.wp.media({
         title,
         library: {
           type,
@@ -197,7 +197,7 @@ function useMediaPicker({
       };
 
       // Create the media frame.
-      const fileFrame = global.wp.media({
+      const fileFrame = window.wp.media({
         button,
         states: [
           new wp.media.controller.Library({

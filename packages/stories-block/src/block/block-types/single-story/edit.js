@@ -105,8 +105,8 @@ function StoryEmbedEdit({
   }, [poster]);
 
   useEffect(() => {
-    if (ref.current && global.AmpStoryPlayer) {
-      const player = new global.AmpStoryPlayer(global, ref.current);
+    if (ref.current && window.AmpStoryPlayer) {
+      const player = new window.AmpStoryPlayer(global, ref.current);
       player.load();
     }
   }, [showLoadingIndicator, showPlaceholder, isResizable]);

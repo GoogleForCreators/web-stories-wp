@@ -37,7 +37,7 @@ export default {
   testMatch: ['**/specs/**/*.[jt]s', '**/?(*.)spec.[jt]s'],
   // @jest/test-sequencer is the default.
   testSequencer:
-    'true' === process.env.CI
+    'true' === WEB_STORIES_CI
       ? '@web-stories-wp/jest-parallel-sequencer'
       : undefined,
   testPathIgnorePatterns: [

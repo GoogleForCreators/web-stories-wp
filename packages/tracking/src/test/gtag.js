@@ -24,6 +24,6 @@ describe('gtag', () => {
   it('should push data to the data layer', () => {
     gtag('Foo', 'Bar');
     gtag('Bar', 'Baz');
-    expect(global[DATA_LAYER]).toHaveLength(2);
+    expect(window[DATA_LAYER]).toHaveLength(2);
   });
 });
