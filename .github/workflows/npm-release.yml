@@ -2,7 +2,6 @@
 
 name: npm Release
 
-# TODO: Maybe only allow manual runs with environment protection.
 on:
   workflow_dispatch:
   schedule:
@@ -17,12 +16,13 @@ env:
   GIT_COMMITTER_NAME: googleforcreators-bot
 
 jobs:
-  prepare:
-    name: Prepare
+  dry-run:
+    name: Dry-run release
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    outputs:
-      package_version: ${{ steps.version_bumps.outputs.package_version }}
+    # This step requires additional review
+    # See https://docs.github.com/en/actions/reference/environments
+    environment: Production
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -41,54 +41,10 @@ jobs:
       - name: Bundle packages
         run: npm run workflow:bundle-packages
 
-      # For the time being, using incremental versions like 0.1.202111302140
-      # `npm version` updates all packages, even the ones we don't intend to publish.
-      # To address this, we undo the version change for private packages.
-      # We're doing the commit ourselves since we only need it later on and
-      # since committing doesn't work properly when using workspaces.
-      # See https://github.com/npm/cli/issues/4017
+      # Exact format here doesn't matter for the dry-run, it's gonna be done properly later on.
       - name: Version bumps
         id: version_bumps
-        run: |
-          OUTPUT=$(npm version --no-git-tag-version --workspaces "0.1.$(date -u +%Y%m%d%H%M)")
-          # Workaround: `npm version` returns the new version for *every* package.
-          # Just grab the very last one from the last line, since they all should be identical anyway.
-          # We then use this to manually commit and tag the version bump
-          NEW_VERSION="${OUTPUT##*$'\n'}"
-          for package in ./packages/*/package.json; do
-            if [[ $(cat $package | jq '.private') == true ]]; then
-              git checkout --quiet $package
-            fi
-          done
-
-          echo "::set-output name=package_version::${NEW_VERSION}"
-
-      - name: Upload packages
-        uses: actions/upload-artifact@v2
-        with:
-          name: packages
-          path: packages
-
-  dry-run:
-    name: Dry-run release
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
-    needs: [prepare]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Setup Node
-        uses: actions/setup-node@v2.5.0
-        with:
-          node-version-file: '.nvmrc'
-          cache: npm
-
-      - name: Download packages
-        uses: actions/download-artifact@v2
-        with:
-          name: packages
-          path: packages
+        run: npm version --no-git-tag-version --workspaces "0.1.$(date -u +%Y%m%d%H%M)"
 
       # Set up a local npm registry with Verdaccio.
       - name: Set up local registry
@@ -121,7 +77,7 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    needs: [prepare, dry-run]
+    needs: [dry-run]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -137,30 +93,48 @@ jobs:
           registry-url: ${{ env.PRODUCTION_REGISTRY_URL }}
           scope: '@googleforcreators'
 
-      - name: Download packages
-        uses: actions/download-artifact@v2
-        with:
-          name: packages
-          path: packages
+      - name: Install dependencies
+        run: npm ci
+        env:
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
-      # The version bump was done in the prepare step.
-      # Here we are just committing & tagging it.
-      - name: Commit version bumps
+      - name: Bundle packages
+        run: npm run workflow:bundle-packages
+
+      # For the time being, using incremental versions like 0.1.202111302140
+      # `npm version` updates all packages, even the ones we don't intend to publish.
+      # To address this, we undo the version change for private packages.
+      # We're doing the commit ourselves since we only need it later on and
+      # since committing doesn't work properly when using workspaces.
+      # See https://github.com/npm/cli/issues/4017
+      - name: Version bumps
+        id: version_bumps
         run: |
+          OUTPUT=$(npm version --no-git-tag-version --workspaces "0.1.$(date -u +%Y%m%d%H%M)")
+          # Workaround: `npm version` returns the new version for *every* package.
+          # Just grab the very last one from the last line, since they all should be identical anyway.
+          # We then use this to manually commit and tag the version bump
+          NEW_VERSION="${OUTPUT##*$'\n'}"
+          for package in ./packages/*/package.json; do
+            if [[ $(cat $package | jq '.private') == true ]]; then
+              git checkout --quiet $package
+            fi
+          done
+
           git add packages/*/package.json
 
           echo "Committing version bump"
           echo
 
-          git commit -m "Releasing npm packages version $PACKAGE_VERSION"
+          git commit -m "Releasing npm packages version $NEW_VERSION"
 
           echo "Adding tags"
           echo
 
           PUBLIC_PACKAGES=$(jq -r 'select(.private == false) | .name' $(find packages -name "package.json"))
           for package in $PUBLIC_PACKAGES; do
-            echo "Adding tag: $package@$PACKAGE_VERSION"
-            git tag "$package@$PACKAGE_VERSION"
+            echo "Adding tag: $package@$NEW_VERSION"
+            git tag "$package@$NEW_VERSION"
           done
 
           echo "Commit details:"
@@ -178,8 +152,6 @@ jobs:
           echo
 
           git show --pretty=%gd --stat
-        env:
-          PACKAGE_VERSION: ${{ needs.prepare.outputs.package_version }}
 
       # Dry-run releasing
       - name: Dry-run production release
