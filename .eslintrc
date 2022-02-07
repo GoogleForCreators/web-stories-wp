@@ -450,6 +450,14 @@
     },
     {
       "files": [
+        "packages/jest-parallel-sequencer/**/*.js"
+      ],
+      "env": {
+        "node": true
+      }
+    },
+    {
+      "files": [
         "__mocks__/**/*.js",
         "bin/**/*.js",
         "babel.config.cjs",
