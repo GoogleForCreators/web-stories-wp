@@ -17,10 +17,9 @@
 
 namespace Google\Web_Stories\Tests\Integration\Integrations;
 
-use Google\Web_Stories\Media\Media_Source_Taxonomy;
+use Google\Web_Stories\Integrations\Jetpack as Jetpack_Integration;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
-use Google\Web_Stories\Integrations\Jetpack as Jetpack_Integration;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Integrations\Jetpack
@@ -214,10 +213,10 @@ class Jetpack extends DependencyInjectedTestCase {
 	}
 
 	/**
-	 * @dataProvider get_format_milliseconds_data
-	 *
 	 * @param string $milliseconds
 	 * @param string $string
+	 *
+	 * @dataProvider get_format_milliseconds_data
 	 * @covers ::format_milliseconds
 	 */
 	public function test_format_milliseconds( $milliseconds, $string ) {
@@ -229,7 +228,6 @@ class Jetpack extends DependencyInjectedTestCase {
 	 * @param mixed $value
 	 * @param $object_id
 	 * @param $meta_key
-	 *
 	 * @return \array[][]|mixed
 	 */
 	public function filter_wp_get_attachment_metadata( $value, $object_id, $meta_key ) {

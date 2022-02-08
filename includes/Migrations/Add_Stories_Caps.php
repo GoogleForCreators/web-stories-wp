@@ -2,10 +2,10 @@
 /**
  * Class Add_Stories_Caps
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -30,8 +30,6 @@ use Google\Web_Stories\User\Capabilities;
 
 /**
  * Class Add_Stories_Caps
- *
- * @package Google\Web_Stories\Migrations
  */
 class Add_Stories_Caps extends Migrate_Base {
 	/**

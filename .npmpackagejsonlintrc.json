@@ -56,10 +56,13 @@
         "exports",
         "main",
         "module",
-        "bin",
+        "source",
+        "publishConfig",
+        "sideEffects",
         "dependencies",
         "devDependencies",
         "peerDependencies",
+        "bin",
         "scripts"
       ]
     ],

@@ -2,10 +2,10 @@
 /**
  * Plugin initialization file.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -26,8 +26,8 @@
 
 namespace Google\Web_Stories;
 
-use WP_REST_Request;
 use WP_Error;
+use WP_REST_Request;
 use WP_Site;
 
 /**
@@ -38,7 +38,6 @@ use WP_Site;
  * @since 1.0.0
  *
  * @param bool $network_wide Whether to activate network-wide.
- *
  * @return void
  */
 function activate( $network_wide = false ) {
@@ -64,7 +63,6 @@ register_activation_hook( WEBSTORIES_PLUGIN_FILE, __NAMESPACE__ . '\activate' );
  * @since 1.0.0
  *
  * @param int|WP_Site $site Site ID or object.
- *
  * @return void
  */
 function new_site( $site ) {
@@ -92,7 +90,6 @@ add_action( 'wp_initialize_site', __NAMESPACE__ . '\new_site', PHP_INT_MAX );
  *
  * @param WP_Error    $error Unused.
  * @param int|WP_Site $site Site ID or object.
- *
  * @return void
  */
 function remove_site( $error, $site ) {
@@ -119,7 +116,6 @@ add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\remove_site', PHP_INT
  * @since 1.0.0
  *
  * @param bool $network_wide Whether to deactivate network-wide.
- *
  * @return void
  */
 function deactivate( $network_wide = false ) {
@@ -157,9 +153,9 @@ add_action( 'wp', __NAMESPACE__ . '\load_amp_plugin_compat' );
 /**
  * Load functions for use by plugin developers.
  *
- * @todo Move to autoloader
- *
  * @return void
+ *
+ * @todo Move to autoloader
  */
 function load_functions() {
 	require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/functions.php';
@@ -173,23 +169,22 @@ add_action( 'init', __NAMESPACE__ . '\load_functions' );
  *
  * Like rest_preload_api_request() in core, but embeds links and removes trailing slashes.
  *
- * @link https://core.trac.wordpress.org/ticket/51722
- * @link https://core.trac.wordpress.org/ticket/51636
- *
  * @SuppressWarnings(PHPMD.NPathComplexity)
  *
  * @since 1.2.0
+ *
+ * @link https://core.trac.wordpress.org/ticket/51722
+ * @link https://core.trac.wordpress.org/ticket/51636
  * @see \rest_preload_api_request
  *
  * @param array        $memo Reduce accumulator.
  * @param string|array $path REST API path to preload.
- *
  * @return array Modified reduce accumulator.
  */
 function rest_preload_api_request( $memo, $path ): array {
 	// array_reduce() doesn't support passing an array in PHP 5.2,
 	// so we need to make sure we start with one.
-	if ( ! is_array( $memo ) ) {
+	if ( ! \is_array( $memo ) ) {
 		$memo = [];
 	}
 
@@ -198,21 +193,21 @@ function rest_preload_api_request( $memo, $path ): array {
 	}
 
 	$method = 'GET';
-	if ( is_array( $path ) ) {
-		if ( 2 !== count( $path ) ) {
+	if ( \is_array( $path ) ) {
+		if ( 2 !== \count( $path ) ) {
 			return $memo;
 		}
 
 		$method = end( $path );
 		$path   = (string) reset( $path );
 
-		if ( ! in_array( $method, [ 'GET', 'OPTIONS' ], true ) ) {
+		if ( ! \in_array( $method, [ 'GET', 'OPTIONS' ], true ) ) {
 			$method = 'GET';
 		}
 	}
 
 	$path_parts = wp_parse_url( (string) $path );
-	if ( ! is_array( $path_parts ) ) {
+	if ( ! \is_array( $path_parts ) ) {
 		return $memo;
 	}
 

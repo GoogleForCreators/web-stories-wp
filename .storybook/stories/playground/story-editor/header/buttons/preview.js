@@ -13,9 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
+import { hrefTo } from '@storybook/addon-links';
 import { Tooltip, useStory } from '@googleforcreators/story-editor';
 import {
   Button,
@@ -24,7 +26,6 @@ import {
   BUTTON_VARIANTS,
   Icons,
 } from '@googleforcreators/design-system';
-import { hrefTo } from '@storybook/addon-links';
 
 function PreviewButton() {
   const { isSaving, saveStory } = useStory(

@@ -36,6 +36,7 @@ describe('restore', () => {
     expect(result).toStrictEqual({
       animationState: STORY_ANIMATION_STATE.RESET,
       capabilities: {},
+      copiedElementState: {},
       pages,
       selection: [],
       current: '123',
@@ -100,6 +101,7 @@ describe('restore', () => {
     expect(result).toStrictEqual({
       animationState: STORY_ANIMATION_STATE.RESET,
       capabilities: {},
+      copiedElementState: {},
       pages: [],
       selection: [],
       current: null,
@@ -117,6 +119,7 @@ describe('restore', () => {
     expect(result).toStrictEqual({
       animationState: STORY_ANIMATION_STATE.RESET,
       capabilities: {},
+      copiedElementState: {},
       pages: [],
       selection: [],
       current: null,
@@ -150,6 +153,7 @@ describe('restore', () => {
     expect(result).toStrictEqual({
       animationState: STORY_ANIMATION_STATE.RESET,
       capabilities: {},
+      copiedElementState: {},
       pages,
       selection: [],
       current: '123',
@@ -174,6 +178,7 @@ describe('restore', () => {
     expect(result).toStrictEqual({
       animationState: STORY_ANIMATION_STATE.RESET,
       capabilities: {},
+      copiedElementState: {},
       ...storyWithNoCurrentPage,
       ...currentPage,
     });
@@ -197,6 +202,7 @@ describe('restore', () => {
     expect(result).toStrictEqual({
       animationState: STORY_ANIMATION_STATE.RESET,
       capabilities: {},
+      copiedElementState: {},
       ...storyWithNoCurrentPage,
       current: '111',
     });

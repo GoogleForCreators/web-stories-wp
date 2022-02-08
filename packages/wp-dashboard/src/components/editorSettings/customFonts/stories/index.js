@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useCallback, useRef, useState } from '@googleforcreators/react';
-import { action } from '@storybook/addon-actions';
 
 /**
  * Internal dependencies
@@ -29,15 +28,19 @@ import CustomFontsSettings from '..';
 export default {
   title: 'Dashboard/Views/EditorSettings/CustomFonts',
   component: CustomFontsSettings,
+  argTypes: {
+    onSubmit: { action: 'onSubmitFired' },
+    onDelete: { action: 'onDelete fired' },
+  },
 };
 
-export const _default = () => {
+export const _default = (args) => {
   const [addedFonts, setAddedFonts] = useState(rawCustomFonts);
   const demoId = useRef(4);
 
   const handleAddFont = useCallback(
     ({ url }) => {
-      action('onSubmit fired')(url);
+      args.onSubmit(url);
 
       // For storybook demo only.
       const fontData = {
@@ -48,16 +51,19 @@ export const _default = () => {
       setAddedFonts([fontData, ...addedFonts]);
       demoId.current = demoId.current + 1;
     },
-    [addedFonts]
+    [addedFonts, args]
   );
 
-  const deleteFont = useCallback((toDelete) => {
-    action('onDelete fired')(toDelete);
+  const deleteFont = useCallback(
+    (toDelete) => {
+      args.onDelete(toDelete);
 
-    setAddedFonts((currentFonts) => {
-      return currentFonts.filter(({ id }) => id !== toDelete);
-    });
-  }, []);
+      setAddedFonts((currentFonts) => {
+        return currentFonts.filter(({ id }) => id !== toDelete);
+      });
+    },
+    [args]
+  );
 
   return (
     <CustomFontsSettings

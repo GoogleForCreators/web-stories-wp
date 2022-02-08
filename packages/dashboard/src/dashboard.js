@@ -23,6 +23,7 @@ import {
   theme as externalDesignSystemTheme,
   ThemeGlobals,
   deepMerge,
+  setAppElement,
 } from '@googleforcreators/design-system';
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
@@ -49,6 +50,11 @@ function Dashboard({ config, children }) {
     ...externalDesignSystemTheme,
     colors: lightMode,
   };
+  // Set up modal focus trap on app's mount
+
+  document.body.setAttribute('id', 'dashboardWrapper');
+  setAppElement('#dashboardWrapper > div:first-of-type');
+
   return (
     <FlagsProvider features={flags}>
       <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>

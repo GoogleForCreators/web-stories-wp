@@ -18,12 +18,10 @@
 namespace Google\Web_Stories\Tests\Integration\Renderer;
 
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
-use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
  * Class Single
  *
- * @package Google\Web_Stories\Tests
  * @coversDefaultClass \Google\Web_Stories\Renderer\Single
  */
 class Single extends DependencyInjectedTestCase {

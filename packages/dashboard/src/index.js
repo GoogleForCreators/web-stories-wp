@@ -14,11 +14,7 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import Dashboard from './dashboard';
-
+export { default as Dashboard } from './dashboard';
 export * from './app';
 export * from './app/router';
 export * from './constants';
@@ -27,5 +23,3 @@ export * from './app/views/shared';
 export { GlobalStyle as DashboardGlobalStyle } from './theme';
 export { default as DashboardKeyboardOnlyOutline } from './utils/keyboardOnlyOutline';
 export { default as InterfaceSkeleton } from './components/interfaceSkeleton';
-
-export default Dashboard;

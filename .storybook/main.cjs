@@ -106,6 +106,13 @@ module.exports = {
     );
 
     // These should be sync'd with the config in `webpack.config.cjs`.
+
+    config.resolve = {
+      // Fixes resolving packages in the monorepo so we use the "src" folder, not "dist".
+      // TODO: Revisit after upgrading to webpack v5 or when splitting repository.
+      mainFields: ['browser', 'module', 'main', 'source'],
+    };
+
     config.module.rules.unshift(
       {
         test: /\.svg$/,

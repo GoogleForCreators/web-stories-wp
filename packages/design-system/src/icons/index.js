@@ -28,7 +28,6 @@ export { default as AlignTextLeft } from './align_text_left.svg';
 export { default as AlignTextRight } from './align_text_right.svg';
 export { default as AlignTop } from './align_top.svg';
 export { default as Angle } from './angle.svg';
-export { default as ArrowCircle } from './arrow_circle.svg';
 export { default as ArrowCloud } from './arrow_cloud.svg';
 export { default as ArrowDown } from './arrow_down.svg';
 export { default as ArrowDownLeft } from './arrow_down_left.svg';

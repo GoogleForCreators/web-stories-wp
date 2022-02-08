@@ -26,13 +26,12 @@ import {
   useCallback,
 } from '@googleforcreators/react';
 import { PAGE_RATIO, useUnits } from '@googleforcreators/units';
+import { withOverlay, InOverlay } from '@googleforcreators/moveable';
 
 /**
  * Internal dependencies
  */
 import { useStory, useCanvas } from '../../app';
-import withOverlay from '../overlay/withOverlay';
-import InOverlay from '../overlay';
 
 const LASSO_ACTIVE_THRESHOLD = 10;
 
