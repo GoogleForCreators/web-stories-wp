@@ -52,40 +52,32 @@ function MediaCaptionsLayer() {
     isEditing,
   }));
 
-  const { currentPageId } = useStory(({ state: { currentPage } }) => ({
-    currentPageId: currentPage?.id ? currentPage?.id : '',
-  }));
-
-  const videoElement = useStory(({ state }) => {
-    const { selectedElements } = state;
-
-    if (selectedElements.length !== 1) {
-      return null;
-    }
-
-    const selectedElement = selectedElements[0];
-    const { type, tracks } = selectedElement;
-    if (type === 'video' && tracks?.length > 0) {
-      return selectedElement;
-    }
-
-    return null;
-  });
-
-  const backgroundAudio = useStory(({ state }) => {
-    const { currentPage, selectedElements } = state;
+  const { currentPageId, backgroundAudio, videoElement } = useStory(({ state }) => {
+    const { selectedElements, currentPage } = state;
     const { backgroundAudio: currentPageBackgroundAudio } = currentPage;
-    if (!currentPageBackgroundAudio || selectedElements.length !== 1) {
-      return null;
+
+    let backgroundAudio = null;
+    let videoElement = null;
+
+    if ( selectedElements.length === 1 ) {
+      const selectedElement = selectedElements[0];
+      const { type, tracks, isBackground } = selectedElement;
+      if (isBackground && currentPageBackgroundAudio) {
+        const { tracks } = currentPageBackgroundAudio;
+        if (tracks?.length > 0) {
+          backgroundAudio = currentPageBackgroundAudio;
+        }
+      }
+      if (type === 'video' && tracks?.length > 0) {
+        videoElement = selectedElement;
+      }
     }
 
-    const selectedElement = selectedElements[0];
-    const { tracks } = currentPageBackgroundAudio;
-    if (selectedElement?.isBackground && tracks?.length > 0) {
-      return currentPageBackgroundAudio;
-    }
-
-    return null;
+    return {
+      currentPageId: currentPage?.id,
+      backgroundAudio,
+      videoElement,
+    };
   });
 
   const [mediaTrackCount, setMediaTrackCount] = useState(0);
