@@ -52,33 +52,36 @@ function MediaCaptionsLayer() {
     isEditing,
   }));
 
-  const { currentPageId, backgroundAudio, videoElement } = useStory(({ state }) => {
-    const { selectedElements, currentPage } = state;
-    const { backgroundAudio: currentPageBackgroundAudio } = currentPage;
+  const { currentPageId, backgroundAudio, videoElement } = useStory(
+    ({ state }) => {
+      const { selectedElements, currentPage } = state;
+      const { backgroundAudio: currentPageBackgroundAudio } = currentPage;
 
-    let backgroundAudio = null;
-    let videoElement = null;
+      let backgroundAudio = null;
+      let videoElement = null;
 
-    if ( selectedElements.length === 1 ) {
-      const selectedElement = selectedElements[0];
-      const { type, tracks, isBackground } = selectedElement;
-      if (isBackground && currentPageBackgroundAudio) {
-        const { tracks } = currentPageBackgroundAudio;
-        if (tracks?.length > 0) {
+      if (selectedElements.length === 1) {
+        const selectedElement = selectedElements[0];
+        const { isBackground, type, tracks } = selectedElement;
+        if (
+          isBackground &&
+          currentPageBackgroundAudio &&
+          currentPageBackgroundAudio?.tracks?.length > 0
+        ) {
           backgroundAudio = currentPageBackgroundAudio;
         }
+        if (type === 'video' && tracks?.length > 0) {
+          videoElement = selectedElement;
+        }
       }
-      if (type === 'video' && tracks?.length > 0) {
-        videoElement = selectedElement;
-      }
-    }
 
-    return {
-      currentPageId: currentPage?.id,
-      backgroundAudio,
-      videoElement,
-    };
-  });
+      return {
+        currentPageId: currentPage?.id,
+        backgroundAudio,
+        videoElement,
+      };
+    }
+  );
 
   const [mediaTrackCount, setMediaTrackCount] = useState(0);
   const [mediaElementId, setMediaElementId] = useState('');
@@ -96,17 +99,9 @@ function MediaCaptionsLayer() {
     if (isEditing || !videoElement) {
       return;
     }
-    const elementId = `video-${videoElement.id}`;
-    const video = document.getElementById(elementId);
-    setMediaElementId(elementId);
-    setMediaTrackCount(video.textTracks.length);
-  }, [
-    videoElement,
-    backgroundAudio,
-    currentPageId,
-    setMediaTrackCount,
-    isEditing,
-  ]);
+    setMediaElementId(`video-${videoElement.id}`);
+    setMediaTrackCount(videoElement.tracks.length);
+  }, [videoElement, backgroundAudio, currentPageId, isEditing]);
 
   if (!mediaTrackCount) {
     return null;
