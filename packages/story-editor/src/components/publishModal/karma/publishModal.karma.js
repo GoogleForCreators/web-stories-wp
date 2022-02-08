@@ -49,9 +49,9 @@ describe('Publish Story Modal', () => {
   });
 
   function getPublishModalElement(role, name) {
-    const { getByRole } = within(publishModal);
+    const { findByRole } = within(publishModal);
 
-    return getByRole(role, {
+    return findByRole(role, {
       name,
     });
   }
