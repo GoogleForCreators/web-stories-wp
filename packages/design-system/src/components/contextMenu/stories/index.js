@@ -120,7 +120,7 @@ export const _default = ({ onClick, ...args }) => {
         <MenuItems.MenuButton
           onClick={() =>
             onClick(
-              'Clicked on `i am a very very very very very very very long label'
+              'Clicked on i am a very very very very very very very long label'
             )
           }
         >
@@ -176,7 +176,7 @@ export const DarkMode = ({ onClick, ...args }) => {
           <MenuItems.MenuButton
             onClick={() =>
               onClick(
-                'Clicked on `i am a very very very very very very very long label'
+                'Clicked on i am a very very very very very very very long label'
               )
             }
           >
@@ -370,13 +370,14 @@ export const QuickActionMenu = ({ onClick, ...args }) => {
   );
 };
 
-export const HorizontalMenu = (args) => {
+// eslint-disable-next-line react/prop-types
+export const HorizontalMenu = ({ onClick, ...args }) => {
   return (
     <Grid>
       <Container>
         <Text>{'Dummy horizontal menu'}</Text>
         <ContextMenu isHorizontal isInline isSecondary {...args}>
-          <MenuItems.MenuButton onClick={action('Clicked on bucket')}>
+          <MenuItems.MenuButton onClick={() => onClick('Clicked on bucket')}>
             <MenuItems.MenuIcon
               title="Bucket"
               placement={TOOLTIP_PLACEMENT.BOTTOM}
@@ -384,7 +385,7 @@ export const HorizontalMenu = (args) => {
               <Bucket />
             </MenuItems.MenuIcon>
           </MenuItems.MenuButton>
-          <MenuItems.MenuButton onClick={action('Clicked on link')}>
+          <MenuItems.MenuButton onClick={() => onClick('Clicked on link')}>
             <MenuItems.MenuIcon
               title="Link"
               placement={TOOLTIP_PLACEMENT.BOTTOM}
@@ -392,7 +393,7 @@ export const HorizontalMenu = (args) => {
               <IconLink />
             </MenuItems.MenuIcon>
           </MenuItems.MenuButton>
-          <MenuItems.MenuButton onClick={action('Clicked on captions')}>
+          <MenuItems.MenuButton onClick={() => onClick('Clicked on captions')}>
             <MenuItems.MenuIcon
               title="Captions"
               placement={TOOLTIP_PLACEMENT.BOTTOM}
@@ -401,7 +402,7 @@ export const HorizontalMenu = (args) => {
             </MenuItems.MenuIcon>
           </MenuItems.MenuButton>
           <MenuItems.MenuSeparator />
-          <MenuItems.MenuButton onClick={action('Clicked on animation')}>
+          <MenuItems.MenuButton onClick={() => onClick('Clicked on animation')}>
             <MenuItems.MenuIcon
               title="Animation"
               placement={TOOLTIP_PLACEMENT.BOTTOM}
@@ -410,7 +411,7 @@ export const HorizontalMenu = (args) => {
             </MenuItems.MenuIcon>
           </MenuItems.MenuButton>
           <MenuItems.MenuSeparator />
-          <MenuItems.MenuButton onClick={action('Clicked on cross')}>
+          <MenuItems.MenuButton onClick={() => onClick('Clicked on cross')}>
             <MenuItems.MenuIcon
               title="Cross"
               placement={TOOLTIP_PLACEMENT.BOTTOM}
