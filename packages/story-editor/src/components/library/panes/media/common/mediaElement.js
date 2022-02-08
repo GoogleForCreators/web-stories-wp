@@ -40,6 +40,7 @@ import { ContentType, useLocalMedia } from '../../../../../app/media';
 import Tooltip from '../../../../tooltip';
 import Attribution from './attribution';
 import InnerElement from './innerElement';
+import InsertionMenu from './insertionMenu';
 
 const AUTOPLAY_PREVIEW_VIDEO_DELAY_MS = 600;
 
@@ -236,17 +237,22 @@ function Element({
           isCurrentResourceUploading(resourceId)) && (
           <LoadingBar loadingMessage={__('Uploading media…', 'web-stories')} />
         )}
-        <DropDownMenu
+        <InsertionMenu
           resource={resource}
           display={active}
-          isMenuOpen={isMenuOpen}
-          onMenuOpen={onMenuOpen}
-          onMenuCancelled={onMenuCancelled}
-          onMenuSelected={onMenuSelected}
           onInsert={onInsert}
           width={width}
-          displayEditOptions={providerType === 'local' && canEditMedia}
         />
+        {providerType === 'local' && canEditMedia && (
+          <DropDownMenu
+            resource={resource}
+            display={active}
+            isMenuOpen={isMenuOpen}
+            onMenuOpen={onMenuOpen}
+            onMenuCancelled={onMenuCancelled}
+            onMenuSelected={onMenuSelected}
+          />
+        )}
       </InnerContainer>
     </Container>
   );

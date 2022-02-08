@@ -19,7 +19,12 @@
  */
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { useRef, useMemo } from '@googleforcreators/react';
+import {
+  useRef,
+  useMemo,
+  useCallback,
+  useState,
+} from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { v4 as uuidv4 } from 'uuid';
 import {
@@ -86,17 +91,11 @@ const menuStylesOverride = css`
  * @param {number} props.width Media width.
  * @return {null|*} Element or null if should not display the More icon.
  */
-function InsertionMenu({
-  resource,
-  display,
-  isMenuOpen,
-  onInsert,
-  onMenuOpen,
-  onMenuCancelled,
-  onMenuSelected,
-  width,
-}) {
+function InsertionMenu({ resource, display, onInsert, width }) {
   const insertButtonRef = useRef();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const onMenuOpen = useCallback(() => setIsMenuOpen(true), []);
+  const onMenuCancelled = useCallback(() => setIsMenuOpen(false), []);
 
   const { currentBackgroundId, combineElements } = useStory((state) => ({
     currentBackgroundId: state.state.currentPage?.elements?.[0]?.id,
@@ -120,8 +119,6 @@ function InsertionMenu({
   ];
 
   const handleCurrentValue = (evt, value) => {
-    onMenuSelected();
-
     const thumbnailUrl = poster
       ? poster
       : getSmallestUrlForWidth(width, resource);
@@ -191,11 +188,7 @@ function InsertionMenu({
 InsertionMenu.propTypes = {
   resource: PropTypes.object.isRequired,
   display: PropTypes.bool.isRequired,
-  isMenuOpen: PropTypes.bool.isRequired,
   onInsert: PropTypes.func.isRequired,
-  onMenuOpen: PropTypes.func.isRequired,
-  onMenuCancelled: PropTypes.func.isRequired,
-  onMenuSelected: PropTypes.func.isRequired,
   width: PropTypes.number.isRequired,
 };
 
