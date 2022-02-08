@@ -49,9 +49,9 @@ describe('Publish Story Modal', () => {
   });
 
   function getPublishModalElement(role, name) {
-    const { getByRole } = within(publishModal);
+    const { findByRole } = within(publishModal);
 
-    return getByRole(role, {
+    return findByRole(role, {
       name,
     });
   }
@@ -79,6 +79,23 @@ describe('Publish Story Modal', () => {
 
       publishButton = await getPublishModalElement('button', 'Publish');
       expect(publishButton.getAttribute('disabled')).toBeNull();
+    });
+
+    it('should close publish modal and open the checklist when checklist button is clicked', async () => {
+      const checklistButton = await getPublishModalElement(
+        'button',
+        'Checklist'
+      );
+      await fixture.events.click(checklistButton);
+
+      const updatedPublishModal = await fixture.screen.queryByRole('dialog', {
+        name: /^Story details$/,
+      });
+
+      expect(updatedPublishModal).toBeNull();
+      expect(
+        fixture.editor.checklist.issues.getAttribute('data-isexpanded')
+      ).toBe('true');
     });
   });
 
