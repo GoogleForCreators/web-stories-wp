@@ -20,6 +20,7 @@
 import PropTypes from 'prop-types';
 import { act, fireEvent, screen } from '@testing-library/react';
 import { createSolid } from '@googleforcreators/patterns';
+import { RichTextContext } from '@googleforcreators/rich-text';
 
 /**
  * Internal dependencies
@@ -27,7 +28,6 @@ import { createSolid } from '@googleforcreators/patterns';
 import TextStyle from '../textStyle';
 import FontContext from '../../../../../app/font/context';
 import { StoryContext } from '../../../../../app/story';
-import RichTextContext from '../../../../richText/context';
 import { calculateTextHeight } from '../../../../../utils/textMeasurements';
 import calcRotatedResizeOffset from '../../../../../utils/calcRotatedResizeOffset';
 import CanvasContext from '../../../../../app/canvas/context';

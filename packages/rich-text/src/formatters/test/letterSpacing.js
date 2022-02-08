@@ -17,12 +17,11 @@
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE } from '../../../../constants';
 import {
   togglePrefixStyle,
   getPrefixStylesInSelection,
 } from '../../styleManipulation';
-import { NONE, LETTERSPACING } from '../../customConstants';
+import { NONE, LETTERSPACING, MULTIPLE_VALUE } from '../../customConstants';
 import formatter from '../letterSpacing';
 import { getDOMElement } from './_utils';
 
