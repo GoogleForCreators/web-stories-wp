@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { UnitsProvider, getBox, PAGE_RATIO } from '@googleforcreators/units';
+import { TransformContext } from '@googleforcreators/transform';
 
 /**
  * Internal dependencies
  */
 import LibraryContext from '../../../../context';
-import TransformContext from '../../../../../transform/context';
 import FontContext from '../../../../../../app/font/context';
 import APIContext from '../../../../../../app/api/context';
 import ConfigContext from '../../../../../../app/config/context';

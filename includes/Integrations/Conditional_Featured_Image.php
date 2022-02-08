@@ -2,10 +2,10 @@
 /**
  * Class Conditional_Featured_Image
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -70,7 +70,6 @@ class Conditional_Featured_Image extends Service_Base {
 	 *
 	 * @param bool   $enabled If enabled or not.
 	 * @param string $post_type Post type name.
-	 *
 	 * @return bool
 	 */
 	public function cybocfi_enabled_for_post_type( $enabled, $post_type ) {

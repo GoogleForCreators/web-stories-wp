@@ -2,10 +2,10 @@
 /**
  * Class Activation_Notice.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -26,13 +26,13 @@
 
 namespace Google\Web_Stories\Admin;
 
-use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Tracking;
-use Google\Web_Stories\Infrastructure\Registerable;
+use Google\Web_Stories\Assets;
 use Google\Web_Stories\Infrastructure\PluginActivationAware;
 use Google\Web_Stories\Infrastructure\PluginDeactivationAware;
+use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service as ServiceInterface;
-use Google\Web_Stories\Assets;
+use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Tracking;
 
 /**
  * Class Activation_Notice.
@@ -41,15 +41,11 @@ class Activation_Notice implements ServiceInterface, Registerable, PluginActivat
 
 	/**
 	 * Script handle.
-	 *
-	 * @var string
 	 */
 	const SCRIPT_HANDLE = 'web-stories-activation-notice';
 
 	/**
 	 * Option name.
-	 *
-	 * @var string
 	 */
 	const OPTION_SHOW_ACTIVATION_NOTICE = 'web_stories_show_activation_notice';
 
@@ -90,7 +86,6 @@ class Activation_Notice implements ServiceInterface, Registerable, PluginActivat
 	 * @since 1.13.0
 	 *
 	 * @param bool $network_wide Whether the activation was done network-wide.
-	 *
 	 * @return void
 	 */
 	public function on_plugin_activation( $network_wide ) {
@@ -103,7 +98,6 @@ class Activation_Notice implements ServiceInterface, Registerable, PluginActivat
 	 * @since 1.13.0
 	 *
 	 * @param bool $network_wide Whether the deactivation was done network-wide.
-	 *
 	 * @return void
 	 */
 	public function on_plugin_deactivation( $network_wide ) {
@@ -116,7 +110,6 @@ class Activation_Notice implements ServiceInterface, Registerable, PluginActivat
 	 * @since 1.0.0
 	 *
 	 * @param string $hook_suffix The current admin page.
-	 *
 	 * @return void
 	 */
 	public function enqueue_assets( string $hook_suffix ) {
@@ -225,7 +218,6 @@ class Activation_Notice implements ServiceInterface, Registerable, PluginActivat
 	 * @since 1.0.0
 	 *
 	 * @param string $hook_suffix Current hook_suffix.
-	 *
 	 * @return bool Whether we're on the Plugins page.
 	 */
 	protected function is_plugins_page( $hook_suffix ): bool {
@@ -240,7 +232,6 @@ class Activation_Notice implements ServiceInterface, Registerable, PluginActivat
 	 * @since 1.13.0
 	 *
 	 * @param bool $network_wide Whether the plugin is being activated network-wide.
-	 *
 	 * @return bool
 	 */
 	protected function set_activation_flag( bool $network_wide = false ): bool {
@@ -259,7 +250,6 @@ class Activation_Notice implements ServiceInterface, Registerable, PluginActivat
 	 * @since 1.13.0
 	 *
 	 * @param bool $network_wide Whether to check the flag network-wide.
-	 *
 	 * @return bool True if just activated, false otherwise.
 	 */
 	protected function get_activation_flag( bool $network_wide = false ): bool {
@@ -278,7 +268,6 @@ class Activation_Notice implements ServiceInterface, Registerable, PluginActivat
 	 * @since 1.13.0
 	 *
 	 * @param bool $network_wide Whether the plugin is being deactivated network-wide.
-	 *
 	 * @return bool True if flag deletion is successful, false otherwise.
 	 */
 	protected function delete_activation_flag( bool $network_wide = false ): bool {

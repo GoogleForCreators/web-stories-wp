@@ -41,14 +41,6 @@ export const defaultAttributes = {
   },
 };
 
-export const copyableAttributes = {
-  ...defaultAttributes,
-  content: '',
-  border: null,
-  borderRadius: null,
-  lockAspectRatio: undefined,
-};
-
 export const hasEditMode = true;
 
 export const hasEditModeMoveable = true;

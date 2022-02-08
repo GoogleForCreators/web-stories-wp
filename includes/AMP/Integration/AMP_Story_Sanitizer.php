@@ -2,10 +2,10 @@
 /**
  * Class AMP_Story_Sanitizer.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -34,9 +34,9 @@ use Google\Web_Stories\AMP\Traits\Sanitization_Utils;
  *
  * Like Story_Sanitizer, but for use with the AMP WordPress plugin.
  *
- * @see Story_Sanitizer
- *
  * @since 1.1.0
+ *
+ * @see Story_Sanitizer
  */
 class AMP_Story_Sanitizer extends AMP_Base_Sanitizer {
 	use Sanitization_Utils;

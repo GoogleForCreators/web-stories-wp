@@ -1,8 +1,6 @@
 <?php
 /**
  * Carousel view based controls state.
- *
- * @package Google\Web_Stories
  */
 
 /**

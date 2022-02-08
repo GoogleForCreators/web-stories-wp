@@ -21,7 +21,6 @@ import Dialog from './components/dialog';
 
 export { default as StoryEditor } from './storyEditor';
 
-export * from './components/transform';
 export * from './components/previewPage';
 export * from './app/config';
 export * from './app/story';
@@ -42,7 +41,6 @@ export { default as FontContext } from './app/font/context';
 export { default as useLoadFontFiles } from './app/font/actions/useLoadFontFiles';
 export { default as StoryPropTypes } from './types';
 export { GlobalStyle, default as theme } from './theme'; // @todo To be refactored.
-export { GlobalStyle as CropMoveableGlobalStyle } from './components/moveable/cropStyle';
 export { default as CircularProgress } from './components/circularProgress';
 export { default as InterfaceSkeleton } from './components/layout';
 export { default as Tooltip } from './components/tooltip';

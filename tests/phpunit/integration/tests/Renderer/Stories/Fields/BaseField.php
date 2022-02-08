@@ -1,8 +1,6 @@
 <?php
 /**
  * BaseField Class.
- *
- * @package Google\Web_Stories
  */
 
 namespace Google\Web_Stories\Tests\Integration\Renderer\Stories\Fields;
@@ -12,8 +10,6 @@ use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
  * Class BaseField.
- *
- * @package Google\Web_Stories\Tests\Stories\Fields
  *
  * @coversDefaultClass \Google\Web_Stories\Renderer\Stories\Fields\BaseField
  */

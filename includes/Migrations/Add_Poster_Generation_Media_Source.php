@@ -2,10 +2,10 @@
 /**
  * Class Add_Poster_Generation_Media_Source
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -24,16 +24,12 @@
  * limitations under the License.
  */
 
-
 namespace Google\Web_Stories\Migrations;
 
-use Google\Web_Stories\Media\Media_Source_Taxonomy;
 use Google\Web_Stories\Media\Video\Poster;
 
 /**
  * Class Add_Poster_Generation_Media_Source
- *
- * @package Google\Web_Stories\Migrations
  */
 class Add_Poster_Generation_Media_Source extends Migration_Meta_To_Term {
 

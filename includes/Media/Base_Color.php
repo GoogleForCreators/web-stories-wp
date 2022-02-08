@@ -2,10 +2,10 @@
 /**
  * Class Image_Size
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -26,20 +26,16 @@
 
 namespace Google\Web_Stories\Media;
 
-use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Infrastructure\HasMeta;
+use Google\Web_Stories\Service_Base;
 
 /**
  * Class Base_Color
- *
- * @package Google\Web_Stories\Media
  */
 class Base_Color extends Service_Base implements HasMeta {
 
 	/**
 	 * The base color meta key.
-	 *
-	 * @var string
 	 */
 	const BASE_COLOR_POST_META_KEY = 'web_stories_base_color';
 
@@ -88,11 +84,10 @@ class Base_Color extends Service_Base implements HasMeta {
 	 * @since 1.15.0
 	 *
 	 * @param array|mixed $response   Array of prepared attachment data.
-	 *
 	 * @return array|mixed $response;
 	 */
 	public function wp_prepare_attachment_for_js( $response ) {
-		if ( ! is_array( $response ) ) {
+		if ( ! \is_array( $response ) ) {
 			return $response;
 		}
 

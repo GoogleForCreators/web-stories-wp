@@ -55,7 +55,7 @@ class Stories extends DependencyInjectedTestCase {
 	 * Test ID Base is set.
 	 */
 	public function test_id_base() {
-		$this->assertEquals( 'string', gettype( $this->instance->id_base ) );
+		$this->assertEquals( 'string', \gettype( $this->instance->id_base ) );
 		$this->assertNotEmpty( $this->instance->id_base );
 	}
 
@@ -63,7 +63,7 @@ class Stories extends DependencyInjectedTestCase {
 	 * Test name is set.
 	 */
 	public function test_name() {
-		$this->assertEquals( 'string', gettype( $this->instance->name ) );
+		$this->assertEquals( 'string', \gettype( $this->instance->name ) );
 		$this->assertNotEmpty( $this->instance->name );
 	}
 

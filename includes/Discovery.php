@@ -4,10 +4,10 @@
  *
  * Responsible for improved discovery of stories on the web.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -31,7 +31,6 @@ namespace Google\Web_Stories;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Media\Image_Sizes;
 use Google\Web_Stories\Model\Story;
-
 use WP_Post;
 
 /**
@@ -110,9 +109,9 @@ class Discovery extends Service_Base implements HasRequirements {
 	 *
 	 * Theme support for title tag is implied for stories.
 	 *
-	 * @see _wp_render_title_tag().
-	 *
 	 * @since 1.0.0
+	 *
+	 * @see _wp_render_title_tag().
 	 *
 	 * @return void
 	 */
@@ -420,7 +419,6 @@ class Discovery extends Service_Base implements HasRequirements {
 	 *
 	 * @param int|WP_Post $post Post object to check for poster image attached.
 	 * @param string      $size Image size, default to full.
-	 *
 	 * @return array|false
 	 */
 	protected function get_poster( $post, $size = 'full' ) {

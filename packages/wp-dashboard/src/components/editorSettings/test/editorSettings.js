@@ -115,7 +115,8 @@ function createProviderValues({
       },
       maxUpload: 104857600,
       maxUploadFormatted: '100 MB',
-      archiveURL: 'https://example.com/archive',
+      archiveURL: 'https://example.com/custom-archive/',
+      defaultArchiveURL: 'https://example.com/web-stories/',
       api: {
         currentUser: '/web-stories/v1/users/me/',
         fonts: 'web-stories/v1/fonts',
@@ -197,6 +198,11 @@ const renderEditorSettings = (values) => {
 };
 
 describe('Editor Settings: <Editor Settings />', function () {
+  afterEach(() => {
+    mockFetchSettings.mockReset();
+    mockRemovePublisherLogo.mockReset();
+  });
+
   it('should render settings page with google analytics and publisher logo sections', function () {
     const { container } = renderEditorSettings({
       googleAnalyticsId: 'UA-098909-05',

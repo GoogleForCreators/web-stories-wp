@@ -17,14 +17,12 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
-use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
+use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
 use WP_REST_Request;
 
 /**
  * Class Stories_Media_Controller
- *
- * @package Google\Web_Stories\Tests\REST_API
  *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Media_Controller
  */

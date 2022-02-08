@@ -2,10 +2,10 @@
 /**
  * Final class InjectionChain.
  *
- * @package   Google\Web_Stories
+ * @link      https://www.mwpd.io/
+ *
  * @copyright 2019 Alain Schlesser
  * @license   MIT
- * @link      https://www.mwpd.io/
  */
 
 /**
@@ -17,8 +17,6 @@
 
 namespace Google\Web_Stories\Infrastructure\Injector;
 
-use LogicException;
-
 /**
  * The injection chain is similar to a trace, keeping track of what we have done
  * so far and at what depth within the auto-wiring we currently are.
@@ -26,8 +24,9 @@ use LogicException;
  * It is used to detect circular dependencies, and can also be dumped for
  * debugging information.
  *
- * @since 1.6.0
  * @internal
+ *
+ * @since 1.6.0
  */
 final class InjectionChain {
 
@@ -80,12 +79,13 @@ final class InjectionChain {
 	 *
 	 * @since 1.6.0
 	 *
+	 * @throws \LogicException If the injection chain is accessed too early.
+	 *
 	 * @return string Last class pushed to the injection chain.
-	 * @throws LogicException If the injection chain is accessed too early.
 	 */
 	public function get_class(): string {
 		if ( empty( $this->chain ) ) {
-			throw new LogicException(
+			throw new \LogicException(
 				'Access to injection chain before any resolution was made.'
 			);
 		}
@@ -125,6 +125,6 @@ final class InjectionChain {
 	 * @return bool Whether the given class is already part of the chain.
 	 */
 	public function is_in_chain( $class ): bool {
-		return in_array( $class, $this->chain, true );
+		return \in_array( $class, $this->chain, true );
 	}
 }

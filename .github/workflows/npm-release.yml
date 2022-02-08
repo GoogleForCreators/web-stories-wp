@@ -1,0 +1,176 @@
+# npm packages release automation
+
+name: npm Release
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 12 * * 1'
+
+env:
+  PRODUCTION_REGISTRY_URL: https://wombat-dressing-room.appspot.com
+  LOCAL_REGISTRY_URL: http://localhost:4873
+  GIT_AUTHOR_EMAIL: 94923726+googleforcreators-bot@users.noreply.github.com
+  GIT_AUTHOR_NAME: googleforcreators-bot
+  GIT_COMMITTER_EMAIL: 94923726+googleforcreators-bot@users.noreply.github.com
+  GIT_COMMITTER_NAME: googleforcreators-bot
+
+jobs:
+  dry-run:
+    name: Dry-run release
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    # This step requires additional review
+    # See https://docs.github.com/en/actions/reference/environments
+    environment: Production
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2.5.0
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+        env:
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+
+      - name: Bundle packages
+        run: npm run workflow:bundle-packages
+
+      # Exact format here doesn't matter for the dry-run, it's gonna be done properly later on.
+      - name: Version bumps
+        id: version_bumps
+        run: npm version --no-git-tag-version --workspaces "0.1.$(date -u +%Y%m%d%H%M)"
+
+      # Set up a local npm registry with Verdaccio.
+      - name: Set up local registry
+        run: npm run local-registry:start
+
+      # Using Verdaccio
+      - name: Publish packages locally
+        run: npm --registry=$LOCAL_REGISTRY_URL --workspaces publish
+
+      # Undo the version bumps in Git. We only needed them for testing.
+      - name: Clean up local changes
+        run: git checkout .
+
+      # Verifies that packages can be installed without issues.
+      - name: Install published packages
+        run: |
+          PUBLIC_PACKAGES=$(jq -r 'select(.private == false) | .name' $(find packages -name "package.json"))
+          TMPDIR=${TMPDIR-/tmp}
+          TMPDIR=$(echo $TMPDIR | sed -e "s/\/$//")
+          TEST_DIR=${TEST_DIR-$TMPDIR/packages-test}
+
+          mkdir $TEST_DIR
+          cd $TEST_DIR
+
+          npm init --yes
+          npm --registry=$LOCAL_REGISTRY_URL install $PUBLIC_PACKAGES
+
+          npm ls --depth 0
+
+      - name: Stop local registry
+        run: npm run local-registry:stop
+
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [dry-run]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
+
+      # See go/npm-publish
+      - name: Setup Node
+        uses: actions/setup-node@v2.5.0
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+          registry-url: ${{ env.PRODUCTION_REGISTRY_URL }}
+          scope: '@googleforcreators'
+
+      - name: Install dependencies
+        run: npm ci
+        env:
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+
+      - name: Bundle packages
+        run: npm run workflow:bundle-packages
+
+      # For the time being, using incremental versions like 0.1.202111302140
+      # `npm version` updates all packages, even the ones we don't intend to publish.
+      # To address this, we undo the version change for private packages.
+      # We're doing the commit ourselves since we only need it later on and
+      # since committing doesn't work properly when using workspaces.
+      # See https://github.com/npm/cli/issues/4017
+      - name: Version bumps
+        id: version_bumps
+        run: |
+          OUTPUT=$(npm version --no-git-tag-version --workspaces "0.1.$(date -u +%Y%m%d%H%M)")
+          # Workaround: `npm version` returns the new version for *every* package.
+          # Just grab the very last one from the last line, since they all should be identical anyway.
+          # We then use this to manually commit and tag the version bump
+          NEW_VERSION="${OUTPUT##*$'\n'}"
+
+          # Undo changes to all the private packages.
+          for package_file in ./packages/*/package.json; do
+            if [[ $(cat $package_file | jq '.private') == true ]]; then
+              git checkout --quiet $package_file
+            fi
+          done
+
+          # Updates the lock file.
+          npm install
+
+          git add packages/*/package.json
+          git add package-lock.json
+
+          echo "Committing version bump"
+          echo
+
+          git commit -m "Bumping npm packages version to $NEW_VERSION"
+
+          echo "Adding tags"
+          echo
+
+          # For every public package, this creates a tag in the form "<package>-v1234".
+          # Example: templates-v1234
+          for package_file in ./packages/*/package.json; do
+            if [[ $(cat $package_file | jq '.private') == false ]]; then
+              package_name=$(basename $(dirname $package_file))
+              echo "Adding tag: $package_name-$NEW_VERSION"
+              git tag "$package_name-$NEW_VERSION"
+            fi
+          done
+
+          echo "Commit details:"
+          echo
+
+          git status
+          git log -n 1
+
+          echo "Added tags:"
+          echo
+
+          git tag --points-at HEAD
+
+          echo "Changed files:"
+          echo
+
+          git show --pretty=%gd --stat
+
+          git push origin main --tags
+
+      # Do the actual publishing to npmjs.com via Wombat Dressing Room.
+      - name: Publish packages to production
+        run: npm --registry=$PRODUCTION_REGISTRY_URL --workspaces  publish --workspaces
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

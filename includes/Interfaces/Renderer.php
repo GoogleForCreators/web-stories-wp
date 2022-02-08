@@ -4,10 +4,10 @@
  *
  * Stories renderers should conform to this interface,
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -30,8 +30,6 @@ namespace Google\Web_Stories\Interfaces;
 
 /**
  * Interface Renderer.
- *
- * @package Google\Web_Stories\Interfaces
  */
 interface Renderer {
 
@@ -51,7 +49,6 @@ interface Renderer {
 	 * @since 1.5.0
 	 *
 	 * @param array $args Array of rendering related arguments.
-	 *
 	 * @return string Rendering markup.
 	 */
 	public function render( array $args = [] );

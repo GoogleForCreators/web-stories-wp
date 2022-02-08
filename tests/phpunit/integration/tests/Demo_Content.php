@@ -27,12 +27,12 @@ class Demo_Content extends TestCase {
 
 		foreach ( $story['pages'] as $page ) {
 			foreach ( $page['elements'] as $element ) {
-				if ( ! array_key_exists( 'resource', $element ) ) {
+				if ( ! \array_key_exists( 'resource', $element ) ) {
 					continue;
 				}
 
 				$this->assertStringStartsWith( 'https://replaceme.com/images/demo-story/', $element['resource']['src'] );
-				if ( array_key_exists( 'poster', $element['resource'] ) ) {
+				if ( \array_key_exists( 'poster', $element['resource'] ) ) {
 					$this->assertStringStartsWith( 'https://replaceme.com/images/demo-story/', $element['resource']['poster'] );
 				}
 			}
