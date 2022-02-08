@@ -28,12 +28,14 @@ function isTargetCoveringContainer(target, container) {
   const targetBox = target.getBoundingClientRect();
   const containerBox = container.getBoundingClientRect();
 
+  // Fix for snapping issue: https://github.com/GoogleForCreators/web-stories-wp/pull/10458#discussion_r801633826
+  const tolerance = 2;
   const targetPolygon = createPolygon(
     0,
-    targetBox.x,
-    targetBox.y,
-    targetBox.width,
-    targetBox.height
+    targetBox.x - tolerance,
+    targetBox.y - tolerance,
+    targetBox.width + tolerance * 2,
+    targetBox.height + tolerance * 2
   );
   const containerPolygon = createPolygon(
     0,
@@ -42,26 +44,9 @@ function isTargetCoveringContainer(target, container) {
     containerBox.width,
     containerBox.height
   );
+
   const response = new SAT.Response();
   SAT.testPolygonPolygon(targetPolygon, containerPolygon, response);
-
-  // const intersectionArea =
-  //   Math.max(
-  //     0,
-  //     Math.min(targetBox.right, containerBox.right) -
-  //       Math.max(targetBox.left, containerBox.left)
-  //   ) *
-  //   Math.max(
-  //     0,
-  //     Math.min(targetBox.bottom, containerBox.bottom) -
-  //       Math.max(targetBox.top, containerBox.top)
-  //   );
-  //
-  // const containerArea = containerBox.width * containerBox.height;
-  // const coverRatio = intersectionArea / containerArea;
-  //
-  // return coverRatio > 0.995;
-
   return response.bInA;
 }
 
