@@ -33,17 +33,13 @@ function useFullbleedMediaAsBackground({ selectedElement }) {
   );
 
   const handleFullbleedMediaAsBackground = (target) => {
-    if (!isDefaultBackground) {
-      return false;
-    }
-    if (!MEDIA_ELEMENT_TYPES.includes(selectedElement.type)) {
-      return false;
-    }
-    if (isTargetCoveringContainer(target, fullbleedContainer)) {
+    if (
+      isDefaultBackground &&
+      MEDIA_ELEMENT_TYPES.includes(selectedElement.type) &&
+      isTargetCoveringContainer(target, fullbleedContainer)
+    ) {
       setBackgroundElement({ elementId: selectedElement.id });
-      return true;
     }
-    return false;
   };
 
   return {
