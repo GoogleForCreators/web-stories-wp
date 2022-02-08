@@ -56,7 +56,7 @@ const sharedConfig = {
   resolve: {
     // Fixes resolving packages in the monorepo so we use the "src" folder, not "dist".
     // TODO: Revisit after upgrading to webpack v5 or when splitting repository.
-    mainFields: ['browser', 'module', 'main', 'source'],
+    mainFields: ['exports', 'browser', 'module', 'main', 'source'],
   },
   mode,
   devtool: !isProduction ? 'source-map' : undefined,
