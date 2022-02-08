@@ -116,7 +116,7 @@ const pageEvents = [];
 jest.setTimeout(PUPPETEER_TIMEOUT || 100000);
 
 // Retry flaky tests at most 2 times in CI (off by 1).
-if ('true' === process.env.NODE_ENV) {
+if ('true' === process.env.CI) {
   jest.retryTimes(3);
 }
 
