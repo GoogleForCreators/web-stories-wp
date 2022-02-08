@@ -22,7 +22,7 @@ import { stateFromHTML } from 'draft-js-import-html';
 /**
  * Internal dependencies
  */
-import getValidHTML from '../../utils/getValidHTML';
+import getValidHTML from './utils/getValidHTML';
 import formatters from './formatters';
 
 function customInlineFn(element, { Style }) {

@@ -25,10 +25,19 @@ import { useContextMenu } from '../contextMenuProvider';
 
 const Line = styled.div`
   display: block;
-  height: 1px;
   background-color: ${({ theme }) => theme.colors.divider.primary};
-  margin: 8px auto;
-  width: ${({ $isIconMenu }) => ($isIconMenu ? 40 : 100)}%;
+  ${({ $isHorizontal, $isIconMenu }) =>
+    $isHorizontal
+      ? `
+        width: 1px;
+        height: 89%; /* 32px out of 36px */
+        margin: auto 2px; /* there's an extra 6px horizontal flexbox gap */
+      `
+      : `
+        height: 1px;
+        margin: 2px auto; /* there's an extra 6px vertical flexbox gap */
+        width: ${$isIconMenu ? 40 : 100}%;
+      `}
 `;
 
 /**
@@ -38,9 +47,11 @@ const Line = styled.div`
  * @return {Node} The react node
  */
 function Separator() {
-  const isIconMenu = useContextMenu(({ state }) => state.isIconMenu);
+  const { isIconMenu, isHorizontal } = useContextMenu(
+    ({ state: { isIconMenu, isHorizontal } }) => ({ isIconMenu, isHorizontal })
+  );
 
-  return <Line $isIconMenu={isIconMenu} />;
+  return <Line $isIconMenu={isIconMenu} $isHorizontal={isHorizontal} />;
 }
 
 export default Separator;

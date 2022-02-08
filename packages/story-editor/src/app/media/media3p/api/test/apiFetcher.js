@@ -74,7 +74,7 @@ const REGISTER_USAGE_URL =
   '?payload=02647749feef0d5536c92df1d9cfa38e';
 
 function mockFetch(response, { requestPath, requestMethod }) {
-  jest.spyOn(global, 'fetch').mockImplementation((url, { method }) => {
+  jest.spyOn(window, 'fetch').mockImplementation((url, { method }) => {
     const path = new URL(url).pathname;
     if (path !== requestPath) {
       throw new Error(
@@ -92,8 +92,8 @@ function mockFetch(response, { requestPath, requestMethod }) {
 
 describe('ApiFetcher', () => {
   afterEach(() => {
-    if (global.fetch['mockClear']) {
-      global.fetch.mockClear();
+    if (window.fetch['mockClear']) {
+      window.fetch.mockClear();
     }
   });
 
@@ -130,7 +130,7 @@ describe('ApiFetcher', () => {
         filter,
       });
       expect(result.media[0].name).toBe('photo 29044');
-      expect(global.fetch).toHaveBeenCalledTimes(1);
+      expect(window.fetch).toHaveBeenCalledTimes(1);
       const fetchArg = fetch.mock.calls[0][0];
       const queryString = fetchArg.substring(fetchArg.indexOf('?') + 1);
       const queryParams = queryString.split('&');
@@ -193,7 +193,7 @@ describe('ApiFetcher', () => {
       const escapedFilter = 'cat+and++many+dogs';
 
       await apiFetcher.listMedia({ filter });
-      const fetchArg = global.fetch.mock.calls[0][0];
+      const fetchArg = window.fetch.mock.calls[0][0];
       const queryString = fetchArg.substring(fetchArg.indexOf('?') + 1);
       const queryParams = queryString.split('&');
       expect(queryParams).toStrictEqual(
@@ -208,7 +208,7 @@ describe('ApiFetcher', () => {
       const escapedFilter = 'Tom+%26+Jerry';
 
       await apiFetcher.listMedia({ filter });
-      const fetchArg = global.fetch.mock.calls[0][0];
+      const fetchArg = window.fetch.mock.calls[0][0];
       const queryString = fetchArg.substring(fetchArg.indexOf('?') + 1);
       const queryParams = queryString.split('&');
       expect(queryParams).toStrictEqual(
@@ -255,7 +255,7 @@ describe('ApiFetcher', () => {
       });
 
       expect(result.categories[0].label).toBe('Covid-19');
-      expect(global.fetch).toHaveBeenCalledTimes(1);
+      expect(window.fetch).toHaveBeenCalledTimes(1);
       const fetchArg = fetch.mock.calls[0][0];
       const queryString = fetchArg.substring(fetchArg.indexOf('?') + 1);
       const queryParams = queryString.split('&');

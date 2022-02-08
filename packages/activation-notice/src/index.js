@@ -30,7 +30,7 @@ import { StrictMode, render } from '@wordpress/element';
  */
 import App from './app';
 
-__webpack_public_path__ = global.webStoriesActivationSettings.publicPath;
+__webpack_public_path__ = window.webStoriesActivationSettings.publicPath;
 
 /**
  * Initializes the Web Stories dashboard screen.

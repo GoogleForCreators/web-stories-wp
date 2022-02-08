@@ -15,11 +15,15 @@
  */
 
 /**
+ * External dependencies
+ */
+import { getHTMLFormatters } from '@googleforcreators/rich-text';
+
+/**
  * Internal dependencies
  */
 import { BACKGROUND_TEXT_MODE } from '../constants';
 import { applyHiddenPadding } from '../components/panels/design/textStyle/utils';
-import { getHTMLFormatters } from '../components/richText/htmlManipulation';
 import usePageAsCanvas from './usePageAsCanvas';
 
 function useApplyTextAutoStyle(element, updater) {

@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /*
  * Copyright 2020 Google LLC
  *
