@@ -73,7 +73,7 @@
     "@svgr/rollup": "^6.2.0",
     "@svgr/webpack": "^5.5.0",
     "@testing-library/dom": "^8.11.3",
-    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.2",
     "@testing-library/react-hooks": "^7.0.2",
     "@testing-library/user-event": "^13.5.0",
