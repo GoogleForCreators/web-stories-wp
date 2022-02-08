@@ -16,6 +16,11 @@
 /**
  * Internal dependencies
  */
+/**
+ * External dependencies
+ */
+import { useSnackbar } from '@googleforcreators/design-system';
+import { __ } from '@googleforcreators/i18n';
 import isTargetCoveringContainer from '../../../utils/isTargetCoveringContainer';
 import { useStory, useCanvas } from '../../../app';
 import { MEDIA_ELEMENT_TYPES } from '../../../elements';
@@ -31,6 +36,7 @@ function useFullbleedMediaAsBackground({ selectedElement }) {
       fullbleedContainer,
     })
   );
+  const { showSnackbar } = useSnackbar();
 
   const handleFullbleedMediaAsBackground = (target) => {
     if (
@@ -39,6 +45,13 @@ function useFullbleedMediaAsBackground({ selectedElement }) {
       isTargetCoveringContainer(target, fullbleedContainer)
     ) {
       setBackgroundElement({ elementId: selectedElement.id });
+      showSnackbar({
+        message: __(
+          'Full bleed images and videos are automatically set as background. Double click to scale and position at any time.',
+          'web-stories'
+        ),
+        dismissible: true,
+      });
     }
   };
 
