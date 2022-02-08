@@ -23,13 +23,10 @@ import { waitFor, within } from '@testing-library/react';
  */
 import { useStory } from '../../../app';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
-import { copyableAttributes as imageAttributeDefaults } from '../../../elements/image';
-import { copyableAttributes as textAttributeDefaults } from '../../../elements/text';
+import { ATTRIBUTES_TO_COPY } from '../../../app/story/useStoryReducer/reducers/copyElementById';
 import { Fixture } from '../../../karma';
 import objectPick from '../../../utils/objectPick';
 import useInsertElement from '../useInsertElement';
-
-const copyableImageProperties = Object.keys(imageAttributeDefaults);
 
 describe('Right Click Menu integration', () => {
   let fixture;
@@ -880,6 +877,34 @@ describe('Right Click Menu integration', () => {
           fixture.editor.canvas.framesLayer.frame(earthImage.id).node
         );
 
+        // add animation
+        const effectChooserToggle =
+          fixture.editor.inspector.designPanel.animation.effectChooser;
+
+        await fixture.events.click(effectChooserToggle, { clickCount: 1 });
+
+        // animation
+        const animation = fixture.screen.getByRole('option', {
+          name: '"Pulse" Effect',
+        });
+
+        // apply animation to element
+        await fixture.events.click(animation, { clickCount: 1 });
+
+        // the bot clicks the clear button too fast
+        // the animation does not get removed if it is clicked before it stops playing
+        // click "stop playing" and test the animations have been applied
+        await waitFor(
+          async () => {
+            await fixture.events.click(
+              fixture.screen.getByRole('button', {
+                name: 'Stop Page Animations',
+              })
+            );
+          },
+          { timeout: 4000 }
+        );
+
         // add border
         await fixture.events.click(
           fixture.editor.inspector.designPanel.border.width()
@@ -903,6 +928,18 @@ describe('Right Click Menu integration', () => {
         );
         await fixture.events.keyboard.type('40');
 
+        // track initial animation
+        const { initialAnimations, initialElements } = await fixture.renderHook(
+          () =>
+            useStory(({ state }) => ({
+              initialAnimations: state.currentPage.animations,
+              initialElements: state.currentPage.elements,
+            }))
+        );
+
+        expect(initialAnimations.length).toBe(1);
+        expect(initialElements[1].id).toBe(initialAnimations[0].targets[0]);
+
         // copy earth image styles
         await rightClickOnTarget(
           fixture.editor.canvas.framesLayer.frame(earthImage.id).node
@@ -915,32 +952,36 @@ describe('Right Click Menu integration', () => {
         );
         await fixture.events.click(pasteImageStyles());
 
-        // verify that the styles were copied and pasted
-        const { currentPage } = await fixture.renderHook(() =>
-          useStory(({ state }) => ({
-            currentPage: state.currentPage,
-          }))
+        // verify that the styles and animations were copied and pasted
+        const { finalAnimations, finalElements } = await fixture.renderHook(
+          () =>
+            useStory(({ state }) => ({
+              finalAnimations: state.currentPage.animations,
+              finalElements: state.currentPage.elements,
+            }))
         );
 
-        const images = currentPage.elements.filter(
-          (element) => !element.isBackground
-        );
+        // validate copied styles
+        const images = finalElements.filter((element) => !element.isBackground);
 
-        const copiedProperties = objectPick(images[0], copyableImageProperties);
-        const pastedProperties = objectPick(images[0], copyableImageProperties);
+        const copiedProperties = objectPick(images[0], ATTRIBUTES_TO_COPY);
+        const pastedProperties = objectPick(images[1], ATTRIBUTES_TO_COPY);
 
         expect(copiedProperties).toEqual(pastedProperties);
+
+        // validate copied animations
+        expect(finalAnimations.length).toEqual(2);
+        const { id: id1, targets: targets1, ...anim1 } = finalAnimations[0];
+        const { id: id2, targets: targets2, ...anim2 } = finalAnimations[1];
+
+        expect(anim1).toEqual(anim2);
+        expect(targets1).toEqual([images[0].id]);
+        expect(targets2).toEqual([images[1].id]);
       });
     });
   });
 
   describe('right click menu: text', () => {
-    const { content: _, ...textAttributeDefaultsWithoutContent } =
-      textAttributeDefaults;
-    const copyableTextProperties = Object.keys(
-      textAttributeDefaultsWithoutContent
-    );
-
     it('should duplicate the element', async () => {
       const text = await addText({
         backgroundColor: {
@@ -1049,18 +1090,19 @@ describe('Right Click Menu integration', () => {
         (element) => !element.isBackground
       );
 
-      const copiedProperties = objectPick(
+      const { content: _copiedContent, ...copiedProperties } = objectPick(
         textElements[0],
-        copyableTextProperties
+        ATTRIBUTES_TO_COPY
       );
       const { content, ...pastedProperties } = objectPick(textElements[1], [
-        ...copyableTextProperties,
+        ...ATTRIBUTES_TO_COPY,
         'content',
       ]);
       expect(content).toBe(
         '<span style="color: #ff0110">Another Text Element</span>'
       );
       expect(copiedProperties).toEqual(pastedProperties);
+
       // should update bounding box size when updating fontSize
       expect(textB.height).not.toBe(textElements[1].height);
     });

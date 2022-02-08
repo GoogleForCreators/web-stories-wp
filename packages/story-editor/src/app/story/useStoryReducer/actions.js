@@ -219,9 +219,18 @@ const toggleLayer =
       payload: { metaKey, shiftKey, elementId },
     });
 
+const copyElementById =
+  (dispatch) =>
+  ({ elementId }) =>
+    dispatch({
+      type: types.COPY_ELEMENT_BY_ID,
+      payload: { elementId: elementId },
+    });
+
 export const exposedActions = {
   addPage,
   addPageAt,
+  copyElementById,
   deletePage,
   deleteCurrentPage,
   updatePageProperties,

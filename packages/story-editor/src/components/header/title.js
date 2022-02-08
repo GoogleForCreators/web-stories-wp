@@ -27,7 +27,7 @@ import { themeHelpers } from '@googleforcreators/design-system';
  */
 import { useStory } from '../../app/story';
 import { useConfig } from '../../app/config';
-import cleanForSlug from '../../utils/cleanForSlug';
+import { updateSlug } from '../../utils/storyUpdates';
 import { styles, states, useHighlights } from '../../app/highlights';
 
 const Input = styled.input`
@@ -77,10 +77,12 @@ function HeaderTitle() {
   );
 
   const handleBlur = useCallback(() => {
-    if (!slug || slug === storyId) {
-      const cleanSlug = encodeURIComponent(cleanForSlug(title)) || storyId;
-      updateStory({ properties: { slug: cleanSlug } });
-    }
+    updateSlug({
+      currentSlug: slug,
+      currentTitle: title,
+      storyId,
+      updateStory,
+    });
   }, [slug, storyId, title, updateStory]);
 
   if (typeof title !== 'string') {

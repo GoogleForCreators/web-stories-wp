@@ -2,10 +2,10 @@
 /**
  * Class Core_Themes_Support
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -27,9 +27,9 @@
 namespace Google\Web_Stories\Integrations;
 
 use Google\Web_Stories\Admin\Customizer;
-use Google\Web_Stories\Service_Base;
-use Google\Web_Stories\Renderer\Stories\Renderer;
 use Google\Web_Stories\Assets;
+use Google\Web_Stories\Renderer\Stories\Renderer;
+use Google\Web_Stories\Service_Base;
 use function Google\Web_Stories\render_theme_stories;
 
 /**
@@ -115,11 +115,10 @@ class Core_Themes_Support extends Service_Base {
 	 * @since 1.5.0
 	 *
 	 * @param array|mixed $classes Array of body classes.
-	 *
 	 * @return array|mixed Updated array of classes.
 	 */
 	public function add_core_theme_classes( $classes ) {
-		if ( ! is_array( $classes ) ) {
+		if ( ! \is_array( $classes ) ) {
 			return $classes;
 		}
 		$classes[] = 'has-web-stories';
@@ -136,7 +135,7 @@ class Core_Themes_Support extends Service_Base {
 	 */
 	public function register() {
 
-		if ( ! in_array( get_stylesheet(), self::$supported_themes, true ) ) {
+		if ( ! \in_array( get_stylesheet(), self::$supported_themes, true ) ) {
 			return;
 		}
 
@@ -162,6 +161,7 @@ class Core_Themes_Support extends Service_Base {
 	 * Get the action to use for registering the service.
 	 *
 	 * @since 1.6.0
+	 *
 	 * @return string Registration action to use.
 	 */
 	public static function get_registration_action(): string {

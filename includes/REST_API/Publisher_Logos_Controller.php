@@ -2,10 +2,10 @@
 /**
  * Class Publisher_Logos_Controller
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -146,7 +146,7 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 	 */
 	public function permissions_check() {
 		if ( ! $this->story_post_type->has_cap( 'edit_posts' ) ) {
-			return new WP_Error(
+			return new \WP_Error(
 				'rest_forbidden',
 				__( 'Sorry, you are not allowed to manage publisher logos.', 'web-stories' ),
 				[ 'status' => rest_authorization_required_code() ]
@@ -166,7 +166,7 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 	 */
 	public function update_item_permissions_check( $request ) {
 		if ( ! current_user_can( 'manage_options' ) ) {
-			return new WP_Error(
+			return new \WP_Error(
 				'rest_forbidden',
 				__( 'Sorry, you are not allowed to manage publisher logos.', 'web-stories' ),
 				[ 'status' => rest_authorization_required_code() ]
@@ -232,7 +232,7 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 		$posts = (array) $logo_id;
 
 		if ( empty( $posts ) ) {
-			return new WP_Error(
+			return new \WP_Error(
 				'rest_invalid_id',
 				__( 'Invalid ID', 'web-stories' ),
 				[ 'status' => 400 ]
@@ -243,15 +243,15 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 			$post = get_post( $post_id );
 
 			if ( ! $post || 'attachment' !== $post->post_type ) {
-				return new WP_Error(
+				return new \WP_Error(
 					'rest_invalid_id',
 					__( 'Invalid ID', 'web-stories' ),
 					[ 'status' => 400 ]
 				);
 			}
 
-			if ( in_array( $post->ID, $publisher_logos, true ) ) {
-				return new WP_Error(
+			if ( \in_array( $post->ID, $publisher_logos, true ) ) {
+				return new \WP_Error(
 					'rest_publisher_logo_exists',
 					__( 'Publisher logo already exists', 'web-stories' ),
 					[ 'status' => 400 ]
@@ -265,7 +265,7 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 
 		$active_publisher_logo_id = absint( $this->settings->get_setting( $this->settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO ) );
 
-		if ( 1 === count( $publisher_logos ) || ! in_array( $active_publisher_logo_id, $publisher_logos, true ) ) {
+		if ( 1 === \count( $publisher_logos ) || ! \in_array( $active_publisher_logo_id, $publisher_logos, true ) ) {
 			$this->settings->update_setting( $this->settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, $posts[0] );
 		}
 
@@ -281,7 +281,7 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 
 			$data = $this->prepare_item_for_response( $post, $request );
 
-			if ( 1 === count( $posts ) ) {
+			if ( 1 === \count( $posts ) ) {
 				return $data;
 			}
 
@@ -320,7 +320,7 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 
 		$active_publisher_logo_id = absint( $this->settings->get_setting( $this->settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO ) );
 
-		if ( $post->ID === $active_publisher_logo_id || ! in_array( $active_publisher_logo_id, $publisher_logos, true ) ) {
+		if ( $post->ID === $active_publisher_logo_id || ! \in_array( $active_publisher_logo_id, $publisher_logos, true ) ) {
 			// Mark the first available publisher logo as the new default.
 			$this->settings->update_setting( $this->settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, ! empty( $publisher_logos[0] ) ? $publisher_logos[0] : 0 );
 		}
@@ -379,8 +379,8 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 
 		$post = get_post( $id );
 
-		if ( ! $post || ! in_array( $post->ID, $publisher_logos, true ) ) {
-			return new WP_Error(
+		if ( ! $post || ! \in_array( $post->ID, $publisher_logos, true ) ) {
+			return new \WP_Error(
 				'rest_invalid_id',
 				__( 'Invalid ID', 'web-stories' ),
 				[ 'status' => 400 ]

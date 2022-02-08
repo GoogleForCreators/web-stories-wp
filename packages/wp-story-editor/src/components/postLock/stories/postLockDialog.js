@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
-
-/**
  * Internal dependencies
  */
 import PostLockDialog from '../postLockDialog';
@@ -38,8 +33,11 @@ export default {
     showTakeOver: false,
     isOpen: true,
   },
+  argTypes: {
+    onClose: { action: 'onClose' },
+  },
 };
 
 export const _default = (args) => {
-  return <PostLockDialog onClose={action('closed')} {...args} />;
+  return <PostLockDialog {...args} />;
 };

@@ -2,10 +2,10 @@
 /**
  * Exception SanitizationException.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -31,8 +31,9 @@ use RuntimeException;
 /**
  * Exception thrown when AMP sanitization errors.
  *
- * @since 1.10.0
  * @internal
+ *
+ * @since 1.10.0
  */
 final class SanitizationException
 	extends RuntimeException

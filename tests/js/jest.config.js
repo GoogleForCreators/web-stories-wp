@@ -24,6 +24,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default {
   rootDir: '../../',
+  resolver: '@web-stories-wp/jest-resolver',
   moduleNameMapper: {
     '\\.svg': join(__dirname, '/svgrMock.js'),
     '\\.css': join(__dirname, '/styleMock.js'),
@@ -41,12 +42,23 @@ export default {
     '**/test/**/*.[jt]s',
     '**/?(*.)test.[jt]s',
   ],
+  globals: {
+    WEB_STORIES_ENV: 'development',
+    WEB_STORIES_DISABLE_ERROR_BOUNDARIES: true,
+    WEB_STORIES_DISABLE_OPTIMIZED_RENDERING: true,
+    WEB_STORIES_DISABLE_PREVENT: true,
+    WEB_STORIES_DISABLE_QUICK_TIPS: true,
+  },
   // @jest/test-sequencer is the default.
   testSequencer:
     'true' === process.env.CI
       ? '@web-stories-wp/jest-parallel-sequencer'
       : undefined,
-  setupFilesAfterEnv: ['jest-extended/all', '<rootDir>/tests/js/jest.setup'],
+  setupFilesAfterEnv: [
+    'jest-extended/all',
+    '<rootDir>/tests/js/jest.setup',
+    '@wordpress/jest-console',
+  ],
   testPathIgnorePatterns: [
     '<rootDir>/.git',
     '<rootDir>/build',
@@ -61,6 +73,7 @@ export default {
     'testUtils',
     '_utils',
     'types.js',
+    'rollup.config.js',
   ],
   coverageReporters: ['lcov'],
   coverageDirectory: '<rootDir>/build/logs',

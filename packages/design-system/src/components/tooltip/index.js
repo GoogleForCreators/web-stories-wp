@@ -63,6 +63,8 @@ const TooltipContainer = styled.div`
   z-index: 9999;
   border-radius: 4px;
   background-color: ${({ theme }) => theme.colors.inverted.bg.primary};
+
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 `;
 
 const TooltipText = styled(Text)`

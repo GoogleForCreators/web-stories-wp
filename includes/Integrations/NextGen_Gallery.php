@@ -2,10 +2,10 @@
 /**
  * Class NextGen_Gallery
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -48,6 +48,7 @@ class NextGen_Gallery extends Service_Base {
 	 * Get the action priority to use for registering the service.
 	 *
 	 * @since 1.6.0
+	 *
 	 * @return int Registration action priority to use.
 	 */
 	public static function get_registration_action_priority(): int {
@@ -64,7 +65,6 @@ class NextGen_Gallery extends Service_Base {
 	 * @see https://github.com/imagely/nextgen-gallery/blob/9736cc05e63b6b4cceb10b8a9a1de276f5c1ad4b/non_pope/class.photocrati_resource_manager.php
 	 *
 	 * @param bool|mixed $valid_request Whether NextGEN Gallery's output buffer should run.
-	 *
 	 * @return bool|mixed Whether the output buffer should run.
 	 */
 	public function filter_run_ngg_resource_manager( $valid_request ) {
@@ -103,7 +103,7 @@ class NextGen_Gallery extends Service_Base {
 			return null;
 		}
 
-		if ( ! is_string( $_SERVER['REQUEST_URI'] ) ) {
+		if ( ! \is_string( $_SERVER['REQUEST_URI'] ) ) {
 			return null;
 		}
 

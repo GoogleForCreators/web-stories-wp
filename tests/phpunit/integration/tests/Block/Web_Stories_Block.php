@@ -17,10 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\Block;
 
-use Google\Web_Stories\Assets;
-use Google\Web_Stories\Block\Web_Stories_Block as Block;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
-use Google\Web_Stories\Tests\Integration\TestCase;
 use WP_Block_Type_Registry;
 
 /**

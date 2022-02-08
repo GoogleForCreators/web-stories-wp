@@ -2,10 +2,10 @@
 /**
  * Class Compatibility
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -28,8 +28,6 @@
  * Class Compatibility
  *
  * @since 1.2.0
- *
- * @package Google\Web_Stories
  */
 class Web_Stories_Compatibility {
 
@@ -85,7 +83,7 @@ class Web_Stories_Compatibility {
 	 *
 	 * @param WP_Error $error       WP_Error object passed back.
 	 */
-	public function __construct( WP_Error $error ) {
+	public function __construct( WP_Error $error ) { // phpcs:ignore SlevomatCodingStandard.Namespaces.FullyQualifiedExceptions.NonFullyQualifiedException
 		$this->error = $error;
 	}
 
@@ -291,9 +289,10 @@ class Web_Stories_Compatibility {
 	/**
 	 * Run checks in admin.
 	 *
+	 * @codeCoverageIgnore
+	 *
 	 * @since 1.2.0
 	 *
-	 * @codeCoverageIgnore
 	 * @return void
 	 */
 	public function run_checks() {
@@ -311,7 +310,6 @@ class Web_Stories_Compatibility {
 	 * @param string|int $code    Error code.
 	 * @param string     $message Error message.
 	 * @param mixed      $data    Optional. Error data.
-	 *
 	 * @return void
 	 */
 	protected function add_to_error( $code, $message, $data = '' ) {
@@ -324,6 +322,7 @@ class Web_Stories_Compatibility {
 	 * Get min WP version.
 	 *
 	 * @codeCoverageIgnore
+	 *
 	 * @return string
 	 */
 	public function get_wp_version() {
@@ -333,9 +332,10 @@ class Web_Stories_Compatibility {
 	/**
 	 * Get min PHP version.
 	 *
+	 * @codeCoverageIgnore
+	 *
 	 * @since 1.2.0
 	 *
-	 * @codeCoverageIgnore
 	 * @return string
 	 */
 	public function get_php_version() {
@@ -345,9 +345,10 @@ class Web_Stories_Compatibility {
 	/**
 	 * Array of extensions.
 	 *
+	 * @codeCoverageIgnore
+	 *
 	 * @since 1.2.0
 	 *
-	 * @codeCoverageIgnore
 	 * @return array
 	 */
 	public function get_extensions() {
@@ -357,9 +358,10 @@ class Web_Stories_Compatibility {
 	/**
 	 * Get JavaScript path.
 	 *
+	 * @codeCoverageIgnore
+	 *
 	 * @since 1.2.0
 	 *
-	 * @codeCoverageIgnore
 	 * @return array
 	 */
 	public function get_required_files() {
@@ -369,9 +371,10 @@ class Web_Stories_Compatibility {
 	/**
 	 * Getter to get the error object.
 	 *
+	 * @codeCoverageIgnore
+	 *
 	 * @since 1.2.0
 	 *
-	 * @codeCoverageIgnore
 	 * @return WP_Error
 	 */
 	public function get_error() {
@@ -381,9 +384,10 @@ class Web_Stories_Compatibility {
 	/**
 	 * Set WordPress version.
 	 *
+	 * @codeCoverageIgnore
+	 *
 	 * @since 1.2.0
 	 *
-	 * @codeCoverageIgnore
 	 * @param string $wp_version WordPress version.
 	 * @return void
 	 */
@@ -394,9 +398,10 @@ class Web_Stories_Compatibility {
 	/**
 	 * Set PHP version.
 	 *
+	 * @codeCoverageIgnore
+	 *
 	 * @since 1.2.0
 	 *
-	 * @codeCoverageIgnore
 	 * @param string $php_version PHP version.
 	 * @return void
 	 */
@@ -407,9 +412,10 @@ class Web_Stories_Compatibility {
 	/**
 	 * Set extensions.
 	 *
+	 * @codeCoverageIgnore
+	 *
 	 * @since 1.2.0
 	 *
-	 * @codeCoverageIgnore
 	 * @param array $extensions Array of extensions.
 	 * @return void
 	 */
@@ -420,12 +426,11 @@ class Web_Stories_Compatibility {
 	/**
 	 * Array of require files.
 	 *
-	 * @since 1.2.0
-	 *
 	 * @codeCoverageIgnore
 	 *
-	 * @param array $required_files Array of require files.
+	 * @since 1.2.0
 	 *
+	 * @param array $required_files Array of require files.
 	 * @return void
 	 */
 	public function set_required_files( array $required_files ) {

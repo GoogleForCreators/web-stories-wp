@@ -73,7 +73,7 @@ const PaginationContainer = styled.div`
         `}
 `;
 
-const TemplateTag = styled(Chip).attrs({ forwardedAs: 'div' })`
+const TemplateTag = styled(Chip).attrs({ forwardedAs: 'li' })`
   margin-right: 12px;
   margin-bottom: 12px;
   > span {
@@ -210,7 +210,10 @@ function DetailsContent({
                 {description}
               </DescriptionText>
 
-              <MetadataContainer>
+              <MetadataContainer
+                role="list"
+                aria-label={__('Template tags', 'web-stories')}
+              >
                 {tags.map((tag) => (
                   <TemplateTag key={tag} disabled>
                     {tag}
@@ -218,7 +221,11 @@ function DetailsContent({
                 ))}
               </MetadataContainer>
               <MetadataContainer>
-                <ColorList colors={colors} size={32} />
+                <ColorList
+                  colors={colors}
+                  size={32}
+                  aria-label={__('Template colors', 'web-stories')}
+                />
               </MetadataContainer>
             </DetailContainer>
           </TemplateDetails>

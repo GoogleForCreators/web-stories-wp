@@ -15,10 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
-/**
  * Internal dependencies
  */
 import { TelemetryOptInBanner } from '..';
@@ -31,14 +27,12 @@ export default {
     checked: false,
     disabled: false,
   },
+  argTypes: {
+    onChange: { action: 'onChange' },
+    onClose: { action: 'onClose' },
+  },
 };
 
 export const _default = (args) => {
-  return (
-    <TelemetryOptInBanner
-      onChange={action('onChange')}
-      onClose={action('onClose')}
-      {...args}
-    />
-  );
+  return <TelemetryOptInBanner {...args} />;
 };

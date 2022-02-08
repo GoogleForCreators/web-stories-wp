@@ -2,10 +2,10 @@
 /**
  * PluginFactory class.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -38,9 +38,9 @@ use Google\Web_Stories\Infrastructure\ServiceBasedPlugin;
  *
  * To read more about why this is preferable to a Singleton,
  *
- * @see https://www.alainschlesser.com/singletons-shared-instances/
- *
  * @since 1.11.0
+ *
+ * @see https://www.alainschlesser.com/singletons-shared-instances/
  */
 class PluginFactory extends ServiceBasedPlugin {
 

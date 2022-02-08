@@ -2,10 +2,10 @@
 /**
  * Class New_Relic
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -85,7 +85,7 @@ class New_Relic extends Service_Base implements Conditional {
 		// Run at the same time as the output buffering.
 
 		// phpcs:ignore PHPCompatibility.Constants.NewConstants.php_int_minFound
-		return defined( 'PHP_INT_MIN' ) ? PHP_INT_MIN : ~PHP_INT_MAX;
+		return \defined( 'PHP_INT_MIN' ) ? PHP_INT_MIN : ~PHP_INT_MAX;
 	}
 
 	/**

@@ -20,8 +20,8 @@
 import { getStoryAmpValidationErrors } from '../storyAmpValidationErrors';
 
 describe('getStoryAmpValidationErrors', () => {
-  const fetchSpy = jest.spyOn(global, 'fetch');
-  const windowSpy = jest.spyOn(global, 'window', 'get');
+  const fetchSpy = jest.spyOn(window, 'fetch');
+  const windowSpy = jest.spyOn(window, 'window', 'get');
 
   beforeAll(() => {
     fetchSpy.mockResolvedValue({

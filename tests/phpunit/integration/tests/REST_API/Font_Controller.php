@@ -25,8 +25,6 @@ use WP_REST_Server;
 /**
  * Class Font_Controller
  *
- * @package Google\Web_Stories\Tests\REST_API
- *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Font_Controller
  */
 class Font_Controller extends RestTestCase {

@@ -17,8 +17,8 @@
 
 namespace Google\Web_Stories\Tests\Unit\AMP;
 
-use Google\Web_Stories\Tests\Unit\TestCase;
 use Brain\Monkey;
+use Google\Web_Stories\Tests\Unit\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Output_Buffer
