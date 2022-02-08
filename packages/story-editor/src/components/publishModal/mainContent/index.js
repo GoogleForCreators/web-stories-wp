@@ -73,9 +73,7 @@ const MainContent = ({
   handleUpdateSlug,
   inputValues,
 }) => {
-  const InspectorPane = useInspector(
-    ({ data: { modalInspectorTab } }) => modalInspectorTab
-  );
+  const InspectorPane = useInspector(({ data }) => data?.modalInspectorTab);
 
   return (
     <Main>
@@ -89,15 +87,17 @@ const MainContent = ({
           inputValues={inputValues}
         />
       </_MandatoryStoryInfo>
-      <PanelContainer aria-label={InspectorPane.title} id={InspectorPane.id}>
-        <InspectorPane.Pane
-          variant="publish_modal"
-          hiddenPanels={[
-            DOCUMENT_PANEL_NAMES.EXCERPT,
-            'status', // todo, thread this through config??
-          ]}
-        />
-      </PanelContainer>
+      {InspectorPane?.Pane && (
+        <PanelContainer aria-label={InspectorPane.title} id={InspectorPane.id}>
+          <InspectorPane.Pane
+            variant="publish_modal"
+            hiddenPanels={[
+              DOCUMENT_PANEL_NAMES.EXCERPT,
+              'status', // todo, thread this through config??
+            ]}
+          />
+        </PanelContainer>
+      )}
       <Footer>
         <Button
           type={BUTTON_TYPES.PRIMARY}
