@@ -47,9 +47,13 @@ const CaptionsCanvas = styled.div`
   cursor: default;
 `;
 
-function VideoCaptionsLayer() {
+function MediaCaptionsLayer() {
   const { isEditing } = useCanvas(({ state: { isEditing } }) => ({
     isEditing,
+  }));
+
+  const { currentPageId } = useStory(({ state: { currentPage } }) => ({
+    currentPageId: currentPage?.id ? currentPage?.id : '',
   }));
 
   const videoElement = useStory(({ state }) => {
@@ -68,20 +72,51 @@ function VideoCaptionsLayer() {
     return null;
   });
 
-  const [videoTrackCount, setVideoTrackCount] = useState(0);
+  const backgroundAudio = useStory(({ state }) => {
+    const { currentPage, selectedElements } = state;
+    const { backgroundAudio: currentPageBackgroundAudio } = currentPage;
+    if (!currentPageBackgroundAudio || selectedElements.length !== 1) {
+      return null;
+    }
+
+    const selectedElement = selectedElements[0];
+    const { tracks } = currentPageBackgroundAudio;
+    if (selectedElement?.isBackground && tracks?.length > 0) {
+      return currentPageBackgroundAudio;
+    }
+
+    return null;
+  });
+
+  const [mediaTrackCount, setMediaTrackCount] = useState(0);
+  const [mediaElementId, setMediaElementId] = useState('');
 
   useEffect(() => {
-    setVideoTrackCount(0);
+    setMediaTrackCount(0);
+    setMediaElementId('');
+
+    if (backgroundAudio) {
+      setMediaElementId(`page-${currentPageId}-background-audio`);
+      setMediaTrackCount(backgroundAudio.tracks.length);
+      return;
+    }
 
     if (isEditing || !videoElement) {
       return;
     }
+    const elementId = `video-${videoElement.id}`;
+    const video = document.getElementById(elementId);
+    setMediaElementId(elementId);
+    setMediaTrackCount(video.textTracks.length);
+  }, [
+    videoElement,
+    backgroundAudio,
+    currentPageId,
+    setMediaTrackCount,
+    isEditing,
+  ]);
 
-    const video = document.getElementById(`video-${videoElement.id}`);
-    setVideoTrackCount(video.textTracks.length);
-  }, [videoElement, setVideoTrackCount, isEditing]);
-
-  if (isEditing || !videoElement || !videoTrackCount) {
+  if (!mediaTrackCount) {
     return null;
   }
 
@@ -89,13 +124,13 @@ function VideoCaptionsLayer() {
     <CaptionsLayer>
       <CaptionsPageArea withSafezone={false} showOverflow>
         <CaptionsCanvas>
-          {Array.from({ length: videoTrackCount }).map((_, index) => (
+          {Array.from({ length: mediaTrackCount }).map((_, index) => (
             <TrackRenderer
               key={
                 // eslint-disable-next-line react/no-array-index-key
                 index
               }
-              videoElement={videoElement}
+              elementId={mediaElementId}
               trackIndex={index}
             />
           ))}
@@ -105,4 +140,4 @@ function VideoCaptionsLayer() {
   );
 }
 
-export default VideoCaptionsLayer;
+export default MediaCaptionsLayer;

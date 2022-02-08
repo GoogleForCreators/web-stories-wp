@@ -60,6 +60,7 @@ function BackgroundAudioPanelContent({
   updateBackgroundAudio,
   showCaptions = false,
   showLoopControl = false,
+  audioId,
 }) {
   const {
     allowedAudioMimeTypes,
@@ -197,6 +198,8 @@ function BackgroundAudioPanelContent({
               )}
               src={resource?.src}
               mimeType={resource?.mimeType}
+              tracks={tracks || []}
+              audioId={audioId}
             />
             <Tooltip hasTail title={__('Remove file', 'web-stories')}>
               <StyledButton
@@ -239,6 +242,7 @@ BackgroundAudioPanelContent.propTypes = {
   updateBackgroundAudio: PropTypes.func.isRequired,
   showCaptions: PropTypes.bool,
   showLoopControl: PropTypes.bool,
+  audioId: PropTypes.string,
 };
 
 export default BackgroundAudioPanelContent;
