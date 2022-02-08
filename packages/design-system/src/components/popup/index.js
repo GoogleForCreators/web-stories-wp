@@ -36,6 +36,7 @@ import { noop } from '../../utils';
 import { getTransforms, getOffset } from './utils';
 import { PLACEMENT } from './constants';
 const DEFAULT_TOPOFFSET = 0;
+const DEFAULT_POPUP_Z_INDEX = 2;
 const Container = styled.div.attrs(
   ({
     $offset: { x, y, width, height },
@@ -44,12 +45,14 @@ const Container = styled.div.attrs(
     placement,
     isRTL,
     invisible,
+    zIndex,
   }) => ({
     style: {
       transform: `translate(${x}px, ${y}px) ${getTransforms(placement, isRTL)}`,
       ...(fillWidth ? { width: `${width}px` } : {}),
       ...(fillHeight ? { height: `${height}px` } : {}),
-      ...(invisible ? { visibility: `hidden` } : {}),
+      ...(invisible ? { visibility: 'hidden' } : {}),
+      zIndex,
     },
   })
 )`
@@ -57,8 +60,7 @@ const Container = styled.div.attrs(
   left: 0px;
   top: 0px;
   position: fixed;
-  z-index: 2;
-  ${({ noOverFlow }) => (noOverFlow ? `` : `overflow-y: auto;`)};
+  ${({ noOverFlow }) => (noOverFlow ? '' : `overflow-y: auto;`)};
   max-height: ${({ topOffset }) => `calc(100vh - ${topOffset}px)`};
 `;
 function Popup({
@@ -76,6 +78,7 @@ function Popup({
   onPositionUpdate = noop,
   refCallback = noop,
   topOffset = DEFAULT_TOPOFFSET,
+  zIndex = DEFAULT_POPUP_Z_INDEX,
   noOverFlow = false,
 }) {
   const [popupState, setPopupState] = useState(null);
@@ -153,6 +156,7 @@ function Popup({
           topOffset={topOffset}
           noOverFlow={noOverFlow}
           isRTL={isRTL}
+          zIndex={zIndex}
         >
           {renderContents
             ? renderContents({ propagateDimensionChange: positionPopup })
@@ -179,6 +183,7 @@ Popup.propTypes = {
   onPositionUpdate: PropTypes.func,
   refCallback: PropTypes.func,
   topOffset: PropTypes.number,
+  zIndex: PropTypes.number,
   noOverFlow: PropTypes.bool,
 };
 
