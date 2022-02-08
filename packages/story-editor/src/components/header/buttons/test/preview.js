@@ -112,7 +112,7 @@ describe('PreviewButton', () => {
     }));
 
     const mockedOpen = jest.fn(() => previewPopup);
-    const windowSpy = jest.spyOn(global, 'open').mockImplementation(mockedOpen);
+    const windowSpy = jest.spyOn(window, 'open').mockImplementation(mockedOpen);
 
     fireEvent.click(previewButton);
 
@@ -143,7 +143,7 @@ describe('PreviewButton', () => {
     }));
 
     const mockedOpen = jest.fn(() => previewPopup);
-    const windowSpy = jest.spyOn(global, 'open').mockImplementation(mockedOpen);
+    const windowSpy = jest.spyOn(window, 'open').mockImplementation(mockedOpen);
 
     fireEvent.click(previewButton);
 
