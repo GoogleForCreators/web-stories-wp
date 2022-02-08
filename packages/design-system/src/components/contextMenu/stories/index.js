@@ -38,6 +38,7 @@ import {
   CheckmarkSmall,
   ChevronRightSmall,
   CircleSpeed,
+  Cross,
   Eraser,
   LetterTLargeLetterTSmall,
   LetterTPlus,
@@ -46,6 +47,7 @@ import {
   PictureSwap,
 } from '../../../icons';
 import { Text } from '../../typography';
+import { TOOLTIP_PLACEMENT } from '../../tooltip';
 import * as MenuItems from '../components';
 
 export default {
@@ -381,6 +383,60 @@ export const QuickActionMenu = (args) => {
           >
             <MenuItems.MenuIcon title="Clear filters and animation">
               <Eraser />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+        </ContextMenu>
+      </Container>
+    </Grid>
+  );
+};
+
+export const HorizontalMenu = (args) => {
+  return (
+    <Grid>
+      <Container>
+        <Text>{'Dummy horizontal menu'}</Text>
+        <ContextMenu isHorizontal isInline isSecondary {...args}>
+          <MenuItems.MenuButton onClick={action('Clicked on bucket')}>
+            <MenuItems.MenuIcon
+              title="Bucket"
+              placement={TOOLTIP_PLACEMENT.BOTTOM}
+            >
+              <Bucket />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+          <MenuItems.MenuButton onClick={action('Clicked on link')}>
+            <MenuItems.MenuIcon
+              title="Link"
+              placement={TOOLTIP_PLACEMENT.BOTTOM}
+            >
+              <IconLink />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+          <MenuItems.MenuButton onClick={action('Clicked on captions')}>
+            <MenuItems.MenuIcon
+              title="Captions"
+              placement={TOOLTIP_PLACEMENT.BOTTOM}
+            >
+              <Captions />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+          <MenuItems.MenuSeparator />
+          <MenuItems.MenuButton onClick={action('Clicked on animation')}>
+            <MenuItems.MenuIcon
+              title="Animation"
+              placement={TOOLTIP_PLACEMENT.BOTTOM}
+            >
+              <CircleSpeed />
+            </MenuItems.MenuIcon>
+          </MenuItems.MenuButton>
+          <MenuItems.MenuSeparator />
+          <MenuItems.MenuButton onClick={action('Clicked on cross')}>
+            <MenuItems.MenuIcon
+              title="Cross"
+              placement={TOOLTIP_PLACEMENT.BOTTOM}
+            >
+              <Cross />
             </MenuItems.MenuIcon>
           </MenuItems.MenuButton>
         </ContextMenu>
