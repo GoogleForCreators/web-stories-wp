@@ -23,6 +23,8 @@ import styled from 'styled-components';
 import { editorToDataX, editorToDataY } from '@googleforcreators/units';
 import { useKeyDownEffect } from '@googleforcreators/design-system';
 import { Moveable, InOverlay } from '@googleforcreators/moveable';
+import { useTransform } from '@googleforcreators/transform';
+
 /**
  * Internal dependencies
  */
@@ -131,8 +133,9 @@ function LibraryMoveable({
     // Hide the clone, too.
     cloneRef.current.style.opacity = 0;
     setIsDragging(false);
+    clearTransforms();
     setDraggingResource(null);
-  }, [setDraggingResource]);
+  }, [setDraggingResource, clearTransforms]);
 
   // We only need to use this effect while dragging since the active element is document.body
   // and using just that interferes with other handlers.
@@ -146,7 +149,13 @@ function LibraryMoveable({
     [isDragging, resetMoveable]
   );
 
+  const { clearTransforms, pushTransform } = useTransform((state) => ({
+    clearTransforms: state.actions.clearTransforms,
+    pushTransform: state.actions.pushTransform,
+  }));
+
   const onDrag = ({ beforeTranslate, inputEvent }) => {
+    pushTransform(null, { drag: beforeTranslate });
     // This is needed if the user clicks "Esc" but continues dragging.
     if (didManuallyReset) {
       toggleDesignSpace(false);

@@ -28,13 +28,14 @@ import {
   theme,
   lightMode,
 } from '@googleforcreators/design-system';
+import { useTransform } from '@googleforcreators/transform';
 
 /**
  * Internal dependencies
  */
 import { __ } from '@googleforcreators/i18n';
 import { CONTEXT_MENU_WIDTH } from '@googleforcreators/design-system/src/components/contextMenu/menu';
-import { useConfig, useDropTargets, useRightClickMenu } from '../../app';
+import { useConfig, useRightClickMenu } from '../../app';
 import useStory from '../../app/story/useStory';
 import isEmptyStory from '../../app/story/utils/isEmptyStory';
 import { Layer, PageArea } from './layout';
@@ -69,13 +70,11 @@ function EmptyStateLayer() {
   const { pages } = useStory(({ state: { pages } }) => ({
     pages,
   }));
-  const { activeDropTargetId } = useDropTargets(
-    ({ state: { activeDropTargetId } }) => ({
-      activeDropTargetId,
-    })
-  );
+  const { isAnythingTransforming } = useTransform((state) => ({
+    isAnythingTransforming: state.state.isAnythingTransforming,
+  }));
 
-  if (!isEmptyStory(pages) || activeDropTargetId) {
+  if (!isEmptyStory(pages) || isAnythingTransforming) {
     return null;
   }
 
