@@ -37,7 +37,8 @@ describe('Carousel Navigation', () => {
       { id: 'page4', backgroundColor: createSolid(0, 0, 255) },
     ]);
     await fixture.render();
-    await fixture.events.click(fixture.editor.library.textAdd);
+    await fixture.editor.library.textTab.click();
+    await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
   });
 
   afterEach(() => {

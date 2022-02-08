@@ -53,7 +53,10 @@ describe('Panel: Style Presets', () => {
 
   describe('CUJ: Creator can Apply or Save Text Style from/to Their Preset Library: Save Text Style', () => {
     it('should allow adding new text style from a text element', async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
       await waitFor(() => {
         if (!fixture.editor.canvas.framesLayer.frames[1].node) {
           throw new Error('node not ready');
@@ -101,7 +104,10 @@ describe('Panel: Style Presets', () => {
   describe('CUJ: Creator can Apply or Save Text Style from/to Their Preset Library: Manage Text Style Presets', () => {
     it('should allow deleting a text style preset', async () => {
       // Add text element and style preset.
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
       await waitFor(() => {
         if (!fixture.editor.canvas.framesLayer.frames[1].node) {
           throw new Error('node not ready');
@@ -139,7 +145,10 @@ describe('Panel: Style Presets', () => {
 
   describe('CUJ: Creator can Apply or Save Text Style from/to Their Preset Library: Apply Text Style Presets', () => {
     it('should apply text style to a single text element', async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
       await waitFor(() => {
         if (!fixture.editor.canvas.framesLayer.frames[1].node) {
           throw new Error('node not ready');
