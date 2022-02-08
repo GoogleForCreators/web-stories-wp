@@ -111,6 +111,11 @@ function LibraryMoveable({
     })
   );
 
+  const { clearTransforms, pushTransform } = useTransform((state) => ({
+    clearTransforms: state.actions.clearTransforms,
+    pushTransform: state.actions.pushTransform,
+  }));
+
   const frame = {
     translate: [0, 0],
   };
@@ -148,11 +153,6 @@ function LibraryMoveable({
     },
     [isDragging, resetMoveable]
   );
-
-  const { clearTransforms, pushTransform } = useTransform((state) => ({
-    clearTransforms: state.actions.clearTransforms,
-    pushTransform: state.actions.pushTransform,
-  }));
 
   const onDrag = ({ beforeTranslate, inputEvent }) => {
     pushTransform(null, { drag: beforeTranslate });
