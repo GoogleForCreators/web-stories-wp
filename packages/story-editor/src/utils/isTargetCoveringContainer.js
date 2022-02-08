@@ -14,26 +14,55 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
+import SAT from 'sat';
+
+/**
+ * Internal dependencies
+ */
+import createPolygon from '../app/canvas/utils/createPolygon';
+
 function isTargetCoveringContainer(target, container) {
   const targetBox = target.getBoundingClientRect();
   const containerBox = container.getBoundingClientRect();
 
-  const intersectionArea =
-    Math.max(
-      0,
-      Math.min(targetBox.right, containerBox.right) -
-        Math.max(targetBox.left, containerBox.left)
-    ) *
-    Math.max(
-      0,
-      Math.min(targetBox.bottom, containerBox.bottom) -
-        Math.max(targetBox.top, containerBox.top)
-    );
+  const targetPolygon = createPolygon(
+    0,
+    targetBox.x,
+    targetBox.y,
+    targetBox.width,
+    targetBox.height
+  );
+  const containerPolygon = createPolygon(
+    0,
+    containerBox.x,
+    containerBox.y,
+    containerBox.width,
+    containerBox.height
+  );
+  const response = new SAT.Response();
+  SAT.testPolygonPolygon(targetPolygon, containerPolygon, response);
 
-  const containerArea = containerBox.width * containerBox.height;
-  const coverRatio = intersectionArea / containerArea;
+  // const intersectionArea =
+  //   Math.max(
+  //     0,
+  //     Math.min(targetBox.right, containerBox.right) -
+  //       Math.max(targetBox.left, containerBox.left)
+  //   ) *
+  //   Math.max(
+  //     0,
+  //     Math.min(targetBox.bottom, containerBox.bottom) -
+  //       Math.max(targetBox.top, containerBox.top)
+  //   );
+  //
+  // const containerArea = containerBox.width * containerBox.height;
+  // const coverRatio = intersectionArea / containerArea;
+  //
+  // return coverRatio > 0.995;
 
-  return coverRatio > 0.995;
+  return response.bInA;
 }
 
 export default isTargetCoveringContainer;
