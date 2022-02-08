@@ -34,9 +34,9 @@ const StyledButton = styled(BaseButton)`
   width: 100%;
   background-color: transparent;
 
-  ${({ $isHorizontal, $isIconMenu, theme }) => {
+  ${({ $isHorizontal, $isIconMenu, $forcePadding, theme }) => {
     const hasHeight = $isHorizontal; // In a horizontal menu, all buttons are 32px high
-    const hasNoPadding = $isHorizontal || $isIconMenu;
+    const hasNoPadding = !$forcePadding && ($isHorizontal || $isIconMenu);
     const hasBorderRadius = $isHorizontal || $isIconMenu;
     return {
       height: hasHeight && '32px',
@@ -74,10 +74,19 @@ const StyledButton = styled(BaseButton)`
  * @param {boolean} props.dismissOnClick If to call onDismiss when clicking.
  * @param {Function} props.onFocus Focus event handler.
  * @param {Object} ref Ref object.
+ * @param props.forcePadding
  * @return {Node} The react node
  */
 function ButtonWithRef(
-  { id, onBlur, onClick, onFocus, dismissOnClick = true, ...props },
+  {
+    id,
+    onBlur,
+    onClick,
+    onFocus,
+    forcePadding = false,
+    dismissOnClick = true,
+    ...props
+  },
   ref
 ) {
   const {
@@ -121,6 +130,7 @@ function ButtonWithRef(
       role="menuitem"
       $isIconMenu={isIconMenu}
       $isHorizontal={isHorizontal}
+      $forcePadding={forcePadding}
       onBlur={handleBlur}
       onClick={handleClick}
       onFocus={handleFocus}
@@ -135,6 +145,7 @@ Button.propTypes = {
   onBlur: PropTypes.func,
   onClick: PropTypes.func.isRequired,
   onFocus: PropTypes.func,
+  forcePadding: PropTypes.bool,
   dismissOnClick: PropTypes.bool,
 };
 
