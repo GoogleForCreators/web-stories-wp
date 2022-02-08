@@ -83,7 +83,7 @@ function useMediaPicker({
       // Note: at this point the video has not yet been inserted into the canvas,
       // it's just in the WP media modal.
       // Video poster generation for newly added videos is done in <MediaPane>.
-      wp.Uploader.prototype.success = ({ attributes }) => {
+      window.wp.Uploader.prototype.success = ({ attributes }) => {
         updateMedia(attributes.id, {
           web_stories_media_source: 'editor',
           alt_text: attributes.alt || attributes.title,
@@ -108,7 +108,7 @@ function useMediaPicker({
       }
 
       // Create the media frame.
-      const fileFrame = global.wp.media({
+      const fileFrame = window.wp.media({
         title,
         library: {
           type,
@@ -197,12 +197,12 @@ function useMediaPicker({
       };
 
       // Create the media frame.
-      const fileFrame = global.wp.media({
+      const fileFrame = window.wp.media({
         button,
         states: [
-          new wp.media.controller.Library({
+          new window.wp.media.controller.Library({
             title,
-            library: wp.media.query({ type }),
+            library: window.wp.media.query({ type }),
             button,
             multiple,
             suggestedWidth: params.width,
