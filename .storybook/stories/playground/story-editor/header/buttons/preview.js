@@ -48,7 +48,7 @@ function PreviewButton() {
     // Start a about:blank popup with waiting message until we complete
     // the saving operation. That way we will not bust the popup timeout.
     try {
-      const popup = global.open('about:blank', 'story-preview');
+      const popup = window.open('about:blank', 'story-preview');
 
       if (popup) {
         popup.document.write('<!DOCTYPE html><html><head>');

@@ -17,8 +17,7 @@
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE } from '../../../constants';
-import { NONE, LETTERSPACING } from '../customConstants';
+import { NONE, LETTERSPACING, MULTIPLE_VALUE } from '../customConstants';
 import {
   togglePrefixStyle,
   getPrefixStylesInSelection,

@@ -2,7 +2,7 @@
   "name": "@googleforcreators/story-editor",
   "description": "The core Web Stories editor web application, which is platform-agnostic.",
   "private": false,
-  "version": "0.0.1",
+  "version": "0.1.202202071716",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -43,6 +43,7 @@
     "@googleforcreators/moveable": "*",
     "@googleforcreators/patterns": "*",
     "@googleforcreators/react": "*",
+    "@googleforcreators/rich-text": "*",
     "@googleforcreators/stickers": "*",
     "@googleforcreators/templates": "*",
     "@googleforcreators/text-sets": "*",
@@ -70,6 +71,7 @@
     "react-virtual": "^2.10.4",
     "sat": "^0.9.0",
     "styled-components": "^5.3.3",
+    "stylis-plugin-rtl": "^1.0.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
@@ -77,7 +79,7 @@
     "@storybook/addon-actions": "^6.3.6",
     "@storybook/addon-essentials": "^6.4.13",
     "@testing-library/dom": "^8.11.3",
-    "@testing-library/jest-dom": "^5.16.1",
+    "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.2",
     "@testing-library/react-hooks": "^7.0.2",
     "@testing-library/user-event": "^13.5.0",
@@ -85,7 +87,6 @@
     "jest-axe": "^5.0.1",
     "jest-matcher-deep-close-to": "^3.0.2",
     "mockdate": "^3.0.5",
-    "react": "^17.0.2",
-    "stylis-plugin-rtl": "^1.0.0"
+    "react": "^17.0.2"
   }
 }

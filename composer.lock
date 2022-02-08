@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "04aa80ae774d22473cc5d83c68fb163d",
+    "content-hash": "621ecd976d4596a8f0c67b12a5f08c6b",
     "packages": [
         {
             "name": "ampproject/amp-toolbox",
@@ -1065,23 +1065,24 @@
         },
         {
             "name": "dg/bypass-finals",
-            "version": "v1.1.3",
+            "version": "v1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dg/bypass-finals.git",
-                "reference": "ed66d2f960126d9912d5ce1b0d3671acbfcd0586"
+                "reference": "495f5bc762e7bf30a13ed8253f44bb3a701767bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dg/bypass-finals/zipball/ed66d2f960126d9912d5ce1b0d3671acbfcd0586",
-                "reference": "ed66d2f960126d9912d5ce1b0d3671acbfcd0586",
+                "url": "https://api.github.com/repos/dg/bypass-finals/zipball/495f5bc762e7bf30a13ed8253f44bb3a701767bb",
+                "reference": "495f5bc762e7bf30a13ed8253f44bb3a701767bb",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.6"
+                "php": ">=7.1"
             },
             "require-dev": {
-                "nette/tester": "^2.0.2"
+                "nette/tester": "^2.3",
+                "phpstan/phpstan": "^0.12"
             },
             "type": "library",
             "autoload": {
@@ -1111,9 +1112,9 @@
             ],
             "support": {
                 "issues": "https://github.com/dg/bypass-finals/issues",
-                "source": "https://github.com/dg/bypass-finals/tree/v1.1.3"
+                "source": "https://github.com/dg/bypass-finals/tree/v1.3.1"
             },
-            "time": "2020-05-08T12:36:31+00:00"
+            "time": "2021-04-09T10:42:55+00:00"
         },
         {
             "name": "doctrine/instantiator",

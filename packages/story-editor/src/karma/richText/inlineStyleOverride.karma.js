@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import { Fixture } from '../../../karma';
+import { Fixture } from '../fixture';
 import { initHelpers } from './_utils';
 
 describe('Inline style override', () => {

@@ -42,6 +42,13 @@ export default {
     '**/test/**/*.[jt]s',
     '**/?(*.)test.[jt]s',
   ],
+  globals: {
+    WEB_STORIES_ENV: 'development',
+    WEB_STORIES_DISABLE_ERROR_BOUNDARIES: true,
+    WEB_STORIES_DISABLE_OPTIMIZED_RENDERING: true,
+    WEB_STORIES_DISABLE_PREVENT: true,
+    WEB_STORIES_DISABLE_QUICK_TIPS: true,
+  },
   // @jest/test-sequencer is the default.
   testSequencer:
     'true' === process.env.CI

@@ -66,17 +66,17 @@ function useSaveMetaBoxes({ story, isSavingStory, isAutoSavingStory }) {
 
     async function save() {
       // Saves the wp_editor fields.
-      global.tinyMCE?.triggerSave();
+      window.tinyMCE?.triggerSave();
 
       // We gather all the metaboxes locations data and the base form data.
       const baseFormElement = document.querySelector('.metabox-base-form');
-      const baseFormData = new global.FormData(baseFormElement || undefined);
+      const baseFormData = new window.FormData(baseFormElement || undefined);
 
       const formDataToMerge = [
         baseFormData,
         ...locations.map(
           (location) =>
-            new global.FormData(
+            new window.FormData(
               document.querySelector(`.metabox-location-${location}`) ||
                 undefined
             )
@@ -89,7 +89,7 @@ function useSaveMetaBoxes({ story, isSavingStory, isAutoSavingStory }) {
           acc.append(key, value);
         }
         return acc;
-      }, new global.FormData());
+      }, new window.FormData());
 
       setIsSavingMetaBoxes(true);
       await saveMetaBoxes(story, formData, apiUrl);

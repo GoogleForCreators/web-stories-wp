@@ -22,7 +22,7 @@ import { waitFor } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../app/story';
+import { useStory } from '../../app';
 
 export function initHelpers(data) {
   async function getElements() {

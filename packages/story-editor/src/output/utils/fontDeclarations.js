@@ -19,11 +19,11 @@
  */
 import PropTypes from 'prop-types';
 import { getGoogleFontURL, getFontCSS } from '@googleforcreators/fonts';
+import { getFontVariants } from '@googleforcreators/rich-text';
 
 /**
  * Internal dependencies
  */
-import getFontVariants from '../../components/richText/getFontVariants';
 import StoryPropTypes from '../../types';
 
 const hasTuple = (tuples, tuple) =>

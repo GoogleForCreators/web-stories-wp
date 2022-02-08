@@ -218,11 +218,19 @@ const sharedConfig = {
     new RtlCssPlugin({
       filename: `../css/[name]-rtl.css`,
     }),
-    new webpack.EnvironmentPlugin({
-      DISABLE_PREVENT: false,
-      DISABLE_OPTIMIZED_RENDERING: false,
-      DISABLE_ERROR_BOUNDARIES: false,
-      DISABLE_QUICK_TIPS: false,
+    new webpack.DefinePlugin({
+      WEB_STORIES_CI: JSON.stringify(process.env.CI),
+      WEB_STORIES_ENV: JSON.stringify(process.env.NODE_ENV),
+      WEB_STORIES_DISABLE_ERROR_BOUNDARIES: JSON.stringify(
+        process.env.DISABLE_ERROR_BOUNDARIES
+      ),
+      WEB_STORIES_DISABLE_OPTIMIZED_RENDERING: JSON.stringify(
+        process.env.DISABLE_OPTIMIZED_RENDERING
+      ),
+      WEB_STORIES_DISABLE_PREVENT: JSON.stringify(process.env.DISABLE_PREVENT),
+      WEB_STORIES_DISABLE_QUICK_TIPS: JSON.stringify(
+        process.env.DISABLE_QUICK_TIPS
+      ),
     }),
     new DependencyExtractionWebpackPlugin(),
   ].filter(Boolean),
