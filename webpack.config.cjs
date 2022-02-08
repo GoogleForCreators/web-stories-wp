@@ -120,10 +120,13 @@ const sharedConfig = {
               svgoConfig: {
                 plugins: [
                   {
-                    name: 'removeViewBox',
-                    active: false,
+                    name: 'preset-default',
+                    params: {
+                      overrides: {
+                        removeViewBox: false,
+                      },
+                    },
                   },
-                  { name: 'removeDimensions' },
                   { name: 'convertColors', currentColor: /^(?!url|none)/i },
                 ],
               },
@@ -147,10 +150,13 @@ const sharedConfig = {
               svgoConfig: {
                 plugins: [
                   {
-                    name: 'removeViewBox',
-                    active: false,
+                    name: 'preset-default',
+                    params: {
+                      overrides: {
+                        removeViewBox: false,
+                      },
+                    },
                   },
-                  { name: 'removeDimensions' },
                   // See https://github.com/googleforcreators/web-stories-wp/pull/6361
                   { name: 'convertColors', active: false },
                 ],

@@ -138,12 +138,7 @@ module.exports = {
                       },
                     },
                   },
-                  {
-                    name: 'convertColors',
-                    params: {
-                      currentColor: /^(?!url|none)/i,
-                    },
-                  },
+                  { name: 'convertColors', currentColor: /^(?!url|none)/i },
                 ],
               },
             },
@@ -170,11 +165,11 @@ module.exports = {
                     params: {
                       overrides: {
                         removeViewBox: false,
-                        // See https://github.com/googleforcreators/web-stories-wp/pull/6361
-                        convertColors: false,
                       },
                     },
                   },
+                  // See https://github.com/googleforcreators/web-stories-wp/pull/6361
+                  { name: 'convertColors', active: false },
                 ],
               },
             },
