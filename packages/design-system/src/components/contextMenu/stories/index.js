@@ -651,6 +651,10 @@ export const WithSubMenu = ({ onClick, ...args }) => {
   const ref = useRef();
   const subMenuRef = useRef();
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
+  const handleSubMenuClick = (clicked) => {
+    setIsSubMenuOpen(false);
+    onClick(clicked);
+  };
   return (
     <Container ref={ref}>
       <ContextMenu {...args}>
@@ -688,19 +692,14 @@ export const WithSubMenu = ({ onClick, ...args }) => {
           >
             <MenuItems.MenuButton
               dismissOnClick={false}
-              onClick={
-                (() => () => setIsSubMenuOpen(false), () => onClick('layer 1'))
-              }
+              onClick={() => handleSubMenuClick('layer 1')}
             >
               {'Select layer 1'}
             </MenuItems.MenuButton>
             <MenuItems.MenuSeparator />
             <MenuItems.MenuButton
               dismissOnClick={false}
-              onClick={
-                (() => () => setIsSubMenuOpen(false),
-                () => onClick('select background'))
-              }
+              onClick={() => handleSubMenuClick('select background 1')}
             >
               {'Select background'}
             </MenuItems.MenuButton>
