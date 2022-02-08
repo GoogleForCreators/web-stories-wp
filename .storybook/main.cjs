@@ -131,11 +131,19 @@ module.exports = {
               svgoConfig: {
                 plugins: [
                   {
-                    name: 'removeViewBox',
-                    active: false,
+                    name: 'preset-default',
+                    params: {
+                      overrides: {
+                        removeViewBox: false,
+                      },
+                    },
                   },
-                  { name: 'removeDimensions' },
-                  { name: 'convertColors', currentColor: /^(?!url|none)/i },
+                  {
+                    name: 'convertColors',
+                    params: {
+                      currentColor: /^(?!url|none)/i,
+                    },
+                  },
                 ],
               },
             },
@@ -158,12 +166,15 @@ module.exports = {
               svgoConfig: {
                 plugins: [
                   {
-                    name: 'removeViewBox',
-                    active: false,
+                    name: 'preset-default',
+                    params: {
+                      overrides: {
+                        removeViewBox: false,
+                        // See https://github.com/googleforcreators/web-stories-wp/pull/6361
+                        convertColors: false,
+                      },
+                    },
                   },
-                  { name: 'removeDimensions' },
-                  // See https://github.com/googleforcreators/web-stories-wp/pull/6361
-                  { name: 'convertColors', active: false },
                 ],
               },
             },
