@@ -166,14 +166,10 @@ const sharedConfig = {
       },
       {
         test: /\.(png|jpe?g|gif|webp)$/i,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              outputPath: '../images',
-            },
-          },
-        ],
+        type: 'asset/resource',
+        generator: {
+          outputPath: '../images/',
+        },
       },
     ].filter(Boolean),
   },
