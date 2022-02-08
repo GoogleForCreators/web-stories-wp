@@ -35,14 +35,13 @@
     "@googleforcreators/react": "*",
     "@googleforcreators/story-editor": "*",
     "@googleforcreators/tracking": "*",
-    "@wordpress/api-fetch": "^5.2.6",
+    "@wordpress/api-fetch": "^6.0.0",
     "flagged": "^2.0.1",
     "polished": "^4.1.4",
     "react-calendar": "^3.6.0",
     "styled-components": "^5.3.3"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "^6.3.6",
     "@testing-library/react": "^12.1.2",
     "@testing-library/react-hooks": "^7.0.1",
     "mockdate": "^3.0.5",

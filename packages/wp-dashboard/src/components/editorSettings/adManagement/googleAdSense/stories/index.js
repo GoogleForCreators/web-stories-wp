@@ -13,10 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
 
 /**
  * Internal dependencies
@@ -30,21 +26,12 @@ export default {
     slotId: '',
     publisherId: '',
   },
-  parameters: {
-    controls: {
-      include: ['slotId', 'publisherId'],
-    },
+  argTypes: {
+    handleUpdateSlotId: { action: 'update slot id' },
+    handleUpdatePublisherId: { action: 'update publisher id' },
   },
 };
 
 export const _default = (args) => {
-  return (
-    <GoogleAdSense
-      handleUpdatePublisherId={(newPublisherId) =>
-        action('update publisher id')(newPublisherId)
-      }
-      handleUpdateSlotId={(newSlotId) => action('update slot id')(newSlotId)}
-      {...args}
-    />
-  );
+  return <GoogleAdSense {...args} />;
 };

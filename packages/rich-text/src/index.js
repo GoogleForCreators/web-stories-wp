@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 
-export const NONE = 'NONE';
-export const ITALIC = 'CUSTOM-ITALIC';
-export const UNDERLINE = 'CUSTOM-UNDERLINE';
-export const WEIGHT = 'CUSTOM-WEIGHT';
-export const COLOR = 'CUSTOM-COLOR';
-export const LETTERSPACING = 'CUSTOM-LETTERSPACING';
-export const UPPERCASE = 'CUSTOM-UPPERCASE';
+/**
+ * Internal dependencies
+ */
+export { default as RichTextProvider } from './provider';
+export { default as RichTextEditor } from './editor';
+export { default as RichTextContext } from './context';
+export { default as useRichText } from './useRichText';
+export { default as usePasteTextContent } from './usePasteTextContent';
+export { default as getFontVariants } from './getFontVariants';
+export * from './htmlManipulation';

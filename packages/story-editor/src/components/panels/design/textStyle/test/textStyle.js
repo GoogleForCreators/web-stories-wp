@@ -20,6 +20,7 @@
 import PropTypes from 'prop-types';
 import { act, fireEvent, screen } from '@testing-library/react';
 import { createSolid } from '@googleforcreators/patterns';
+import { RichTextContext } from '@googleforcreators/rich-text';
 
 /**
  * Internal dependencies
@@ -27,7 +28,6 @@ import { createSolid } from '@googleforcreators/patterns';
 import TextStyle from '../textStyle';
 import FontContext from '../../../../../app/font/context';
 import { StoryContext } from '../../../../../app/story';
-import RichTextContext from '../../../../richText/context';
 import { calculateTextHeight } from '../../../../../utils/textMeasurements';
 import calcRotatedResizeOffset from '../../../../../utils/calcRotatedResizeOffset';
 import CanvasContext from '../../../../../app/canvas/context';
@@ -41,9 +41,7 @@ import { renderPanel } from '../../../shared/test/_utils';
 let mockControls;
 jest.mock('../../../../../utils/textMeasurements');
 jest.mock('@googleforcreators/design-system', () => {
-  // eslint-disable-next-line no-undef
   const React = require('@googleforcreators/react');
-  // eslint-disable-next-line no-undef
   const _PropTypes = require('prop-types');
   const FakeControl = React.forwardRef(function FakeControl(props, ref) {
     mockControls[props['data-testid']] = props;
@@ -61,9 +59,7 @@ jest.mock('@googleforcreators/design-system', () => {
   };
 });
 jest.mock('../../../../form/color/color', () => {
-  // eslint-disable-next-line no-undef
   const React = require('@googleforcreators/react');
-  // eslint-disable-next-line no-undef
   const _PropTypes = require('prop-types');
   const FakeControl = React.forwardRef(function FakeControl(props, ref) {
     mockControls[props['data-testid']] = props;
@@ -180,7 +176,7 @@ describe('Panels/TextStyle', () => {
   let textElement;
 
   beforeEach(() => {
-    global.fetch.resetMocks();
+    window.fetch.resetMocks();
 
     textElement = {
       id: '1',

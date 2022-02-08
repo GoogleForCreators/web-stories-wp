@@ -2,13 +2,15 @@
   "name": "@googleforcreators/moveable",
   "description": "Provides a wrapper around react-moveable.",
   "private": false,
-  "version": "0.0.1",
+  "version": "0.1.202202071716",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
   },
   "license": "Apache-2.0",
-  "keywords": ["web stories"],
+  "keywords": [
+    "web stories"
+  ],
   "homepage": "https://github.com/googleforcreators/web-stories-wp/",
   "repository": {
     "type": "git",
