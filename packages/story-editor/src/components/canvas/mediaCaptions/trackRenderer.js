@@ -45,7 +45,7 @@ const Track = styled.div`
  * @param {number} props.trackIndex Video track index in the tracklist.
  * @return {*} Track component.
  */
-function TrackRenderer({ trackIndex, elementId }) {
+function TrackRenderer({ elementId, trackIndex }) {
   const { pageWidth, pageHeight } = useLayout(
     ({ state: { pageWidth, pageHeight } }) => ({
       pageWidth,
