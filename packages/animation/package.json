@@ -21,9 +21,9 @@
   },
   "bugs": {
     "url": "https://github.com/googleforcreators/web-stories-wp/issues"
-  },
+  }, 
   "engines": {
-    "node": ">= 16",
+    "node": ">= 12 || >= 14 || >= 16",
     "npm": ">= 7.3"
   },
   "main": "dist/index.js",
