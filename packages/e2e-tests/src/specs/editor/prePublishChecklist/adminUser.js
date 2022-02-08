@@ -23,15 +23,13 @@ import {
   triggerHighPriorityChecklistSection,
   uploadPublisherLogoEditor,
   takeSnapshot,
+  addTextElement,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Pre-Publish Checklist : Admin User', () => {
-  const addNewTextElement = async () => {
-    await expect(page).toClick('button[aria-label="Add new text element"]');
-  };
   const addNewPage = async () => {
     await expect(page).toClick('button[aria-label="Add New Page"]');
-    await addNewTextElement();
+    await addTextElement();
   };
   const addPages = async (number) => {
     for (let i = 0; i < number; i++) {
@@ -70,7 +68,7 @@ describe('Pre-Publish Checklist : Admin User', () => {
   });
 
   it('should show cards related to poster image issues', async () => {
-    await addNewTextElement();
+    await addTextElement();
     await addPages(3);
 
     await expect(page).toClick('button', { text: 'Publish' });
@@ -99,7 +97,7 @@ describe('Pre-Publish Checklist : Admin User', () => {
   });
 
   it('should focus on media button when poster image issue card is clicked', async () => {
-    await addNewTextElement();
+    await addTextElement();
     await addPages(3);
 
     await expect(page).toClick('button', { text: 'Publish' });

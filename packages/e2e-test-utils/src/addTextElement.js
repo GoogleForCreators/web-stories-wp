@@ -14,8 +14,12 @@
  * limitations under the License.
  */
 export default async function addTextElement() {
-  await expect(page).toClick('button[aria-label="Add new text element"]');
+  await expect(page).toClick('#library-tab-text');
+  const insertButton = await page.waitForXPath(
+    `//button//span[contains(text(), 'Paragraph')]`
+  );
+  await insertButton.click();
   await expect(page).toMatchElement('[data-testid="textFrame"]', {
-    text: 'Fill in some text',
+    text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
   });
 }

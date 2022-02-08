@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useCallback, useBatchingCallback } from '@googleforcreators/react';
+import { usePasteTextContent } from '@googleforcreators/rich-text';
 
 /**
  * Internal dependencies
@@ -28,9 +29,9 @@ import {
   addElementsToClipboard,
   processPastedElements,
 } from '../../utils/copyPaste';
-import usePasteTextContent from '../../components/richText/usePasteTextContent';
 import useUploadWithPreview from '../../components/canvas/useUploadWithPreview';
 import useInsertElement from '../../components/canvas/useInsertElement';
+import { DEFAULT_PRESET } from '../../components/library/panes/text/textPresets';
 import useAddPastedElements from './useAddPastedElements';
 
 function useCanvasGlobalKeys() {
@@ -57,7 +58,7 @@ function useCanvasGlobalKeys() {
 
   const uploadWithPreview = useUploadWithPreview();
   const insertElement = useInsertElement();
-  const pasteTextContent = usePasteTextContent(insertElement);
+  const pasteTextContent = usePasteTextContent(insertElement, DEFAULT_PRESET);
 
   const copyCutHandler = useCallback(
     (evt) => {
