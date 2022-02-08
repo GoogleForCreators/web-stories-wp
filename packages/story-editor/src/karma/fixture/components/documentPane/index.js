@@ -22,17 +22,23 @@ import {
   PageAdvancementPanel,
   BackgroundAudioPanel,
   TaxonomiesPanel,
+  DOCUMENT_PANEL_NAMES,
 } from '../../../../components/panels/document';
 
-function DocumentPane() {
-  return (
-    <>
-      <ExcerptPanel />
-      <SlugPanel />
-      <PageAdvancementPanel />
-      <BackgroundAudioPanel />
-      <TaxonomiesPanel />
-    </>
+const availablePanels = {
+  [DOCUMENT_PANEL_NAMES.EXCERPT]: ExcerptPanel,
+  [DOCUMENT_PANEL_NAMES.SLUG]: SlugPanel,
+  [DOCUMENT_PANEL_NAMES.PAGE_ADVANCEMENT]: PageAdvancementPanel,
+  [DOCUMENT_PANEL_NAMES.BACKGROUND_AUDIO]: BackgroundAudioPanel,
+  [DOCUMENT_PANEL_NAMES.TAXONOMIES]: TaxonomiesPanel,
+};
+
+function DocumentPane({ variant, hiddenPanels = [] }) {
+  return Object.entries(availablePanels).map(
+    ([name, Panel]) =>
+      hiddenPanels.indexOf(name) < 0 && (
+        <Panel key={name} name={variant ? `${variant}_${name}` : name} />
+      )
   );
 }
 
