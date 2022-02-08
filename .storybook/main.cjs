@@ -117,7 +117,6 @@ module.exports = {
       {
         test: /\.svg$/,
         issuer: /\.js?$/,
-        exclude: [/images\/.*\.svg$/],
         use: [
           {
             loader: '@svgr/webpack',
@@ -145,7 +144,6 @@ module.exports = {
         type: 'asset',
         resourceQuery: /url/,
         test: /\.svg$/,
-        include: [/images\/.*\.svg$/],
         use: [
           {
             loader: '@svgr/webpack',
