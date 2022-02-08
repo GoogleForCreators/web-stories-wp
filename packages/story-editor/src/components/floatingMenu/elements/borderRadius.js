@@ -24,15 +24,18 @@ import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
-import { IconButton } from './shared';
+import { IconButton, Separator } from './shared';
 
 const BorderRadius = memo(function BorderRadius() {
   return (
-    <IconButton
-      Icon={Icons.Corner}
-      title={__('Change border radius', 'web-stories')}
-      onClick={() => {}}
-    />
+    <>
+      <IconButton
+        Icon={Icons.Corner}
+        title={__('Change border radius', 'web-stories')}
+        onClick={() => {}}
+      />
+      <Separator />
+    </>
   );
 });
 
