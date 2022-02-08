@@ -37,7 +37,7 @@
     "@googleforcreators/react": "*",
     "@googleforcreators/story-editor": "*",
     "@googleforcreators/tracking": "*",
-    "@wordpress/api-fetch": "^5.2.6",
+    "@wordpress/api-fetch": "^6.0.0",
     "flagged": "^2.0.1",
     "opentype.js": "^1.3.4",
     "prop-types": "^15.8.1",
