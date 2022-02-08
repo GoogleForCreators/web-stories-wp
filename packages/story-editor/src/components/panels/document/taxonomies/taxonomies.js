@@ -26,6 +26,7 @@ import styled from 'styled-components';
 import { useTaxonomy } from '../../../../app/taxonomy';
 import { SimplePanel } from '../../panel';
 import { useStory } from '../../../../app';
+import { DOCUMENT_PANEL_NAMES } from '../constants';
 import HierarchicalTermSelector from './HierarchicalTermSelector';
 import FlatTermSelector from './FlatTermSelector';
 import { SiblingBorder } from './shared';
@@ -63,7 +64,7 @@ function TaxonomiesPanel(props) {
 
   return (
     <StyledSimplePanel
-      name="taxonomies"
+      name={DOCUMENT_PANEL_NAMES.TAXONOMIES}
       title={__('Taxonomies', 'web-stories')}
       {...props}
     >

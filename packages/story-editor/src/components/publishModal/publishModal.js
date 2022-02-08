@@ -104,19 +104,21 @@ function PublishModal({ isOpen, onPublish, onClose }) {
         minHeight: '580px',
       }}
     >
-      <Container>
-        <Header
-          onClose={onClose}
-          onPublish={onPublish}
-          isPublishEnabled={isAllRequiredInputsFulfilled}
-        />
-        <MainContent
-          inputValues={inputValues}
-          handleUpdateStoryInfo={handleUpdateStoryInfo}
-          handleUpdateSlug={handleUpdateSlug}
-          handleReviewChecklist={handleReviewChecklist}
-        />
-      </Container>
+      {isOpen && (
+        <Container>
+          <Header
+            onClose={onClose}
+            onPublish={onPublish}
+            isPublishEnabled={isAllRequiredInputsFulfilled}
+          />
+          <MainContent
+            inputValues={inputValues}
+            handleUpdateStoryInfo={handleUpdateStoryInfo}
+            handleUpdateSlug={handleUpdateSlug}
+            handleReviewChecklist={handleReviewChecklist}
+          />
+        </Container>
+      )}
     </Modal>
   );
 }

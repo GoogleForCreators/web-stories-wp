@@ -33,11 +33,16 @@ import {
   useIsUploadingToStory,
 } from '@googleforcreators/story-editor';
 
+/**
+ * Internal dependencies
+ */
+import { WP_DOCUMENT_PANEL_NAMES } from '../constants';
+
 const InputRow = styled(Row)`
   margin-left: 34px;
 `;
 
-function StatusPanel() {
+function StatusPanel(props) {
   const {
     status = '',
     password,
@@ -203,9 +208,10 @@ function StatusPanel() {
   return (
     <>
       <SimplePanel
-        name="status"
+        name={WP_DOCUMENT_PANEL_NAMES.STATUS}
         title={__('Visibility', 'web-stories')}
         collapsedByDefault={false}
+        {...props}
       >
         <>
           <Row>

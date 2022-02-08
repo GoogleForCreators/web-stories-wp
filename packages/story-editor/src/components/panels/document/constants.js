@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,19 +14,10 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import { UploadDropTarget } from '../uploadDropTarget';
-
-import InspectorLayout from './inspectorLayout';
-
-function Inspector() {
-  return (
-    <UploadDropTarget disabled>
-      <InspectorLayout />
-    </UploadDropTarget>
-  );
-}
-
-export default Inspector;
+export const DOCUMENT_PANEL_NAMES = {
+  BACKGROUND_AUDIO: 'backgroundAudio',
+  PAGE_ADVANCEMENT: 'pageAdvancement',
+  SLUG: 'permalink',
+  EXCERPT: 'excerpt',
+  TAXONOMIES: 'taxonomies',
+};

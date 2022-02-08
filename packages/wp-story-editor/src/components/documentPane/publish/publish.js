@@ -51,6 +51,7 @@ import {
  * Internal dependencies
  */
 import * as apiCallbacks from '../../../api/publisherLogos';
+import { WP_DOCUMENT_PANEL_NAMES } from '../constants';
 import PublishTime from './publishTime';
 import Author from './author';
 
@@ -114,7 +115,7 @@ const LogoImg = styled.img`
   max-height: 96px;
 `;
 
-function PublishPanel() {
+function PublishPanel(props) {
   const {
     state: { users },
   } = useInspector();
@@ -291,9 +292,10 @@ function PublishPanel() {
 
   return (
     <Panel
-      name="publishing"
+      name={WP_DOCUMENT_PANEL_NAMES.PUBLISH}
       collapsedByDefault={false}
       isPersistable={!(highlightLogo || highlightPoster)}
+      {...props}
     >
       <PanelTitle>{__('Publishing', 'web-stories')}</PanelTitle>
       <PanelContent>

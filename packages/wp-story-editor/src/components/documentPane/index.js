@@ -16,12 +16,14 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import {
   ExcerptPanel,
   SlugPanel,
   PageAdvancementPanel,
   BackgroundAudioPanel,
   TaxonomiesPanel,
+  DOCUMENT_PANEL_NAMES,
 } from '@googleforcreators/story-editor';
 
 /**
@@ -29,19 +31,37 @@ import {
  */
 import PublishPanel from './publish';
 import StatusPanel from './status';
+import { WP_DOCUMENT_PANEL_NAMES } from './constants';
 
-function DocumentPane() {
-  return (
-    <>
-      <StatusPanel />
-      <PublishPanel />
-      <ExcerptPanel />
-      <SlugPanel />
-      <PageAdvancementPanel />
-      <BackgroundAudioPanel />
-      <TaxonomiesPanel />
-    </>
+const availablePanels = {
+  [WP_DOCUMENT_PANEL_NAMES.STATUS]: StatusPanel,
+  [WP_DOCUMENT_PANEL_NAMES.PUBLISH]: PublishPanel,
+  [DOCUMENT_PANEL_NAMES.EXCERPT]: ExcerptPanel,
+  [DOCUMENT_PANEL_NAMES.SLUG]: SlugPanel,
+  [DOCUMENT_PANEL_NAMES.PAGE_ADVANCEMENT]: PageAdvancementPanel,
+  [DOCUMENT_PANEL_NAMES.BACKGROUND_AUDIO]: BackgroundAudioPanel,
+  [DOCUMENT_PANEL_NAMES.TAXONOMIES]: TaxonomiesPanel,
+};
+
+/**
+ *
+ * @param {Object} props Props.
+ * @param {string} props.variant When present, will update panel name from default name (key from available panels).
+ * @param {Array.<string>} props.hiddenPanels An array of panel names that when present, will prevent the panel the name corresponds to from rendering.
+ * @return {Node} panel to display.
+ */
+function DocumentPane({ variant, hiddenPanels = [] }) {
+  return Object.entries(availablePanels).map(
+    ([name, Panel]) =>
+      hiddenPanels.indexOf(name) < 0 && (
+        <Panel key={name} name={variant ? `${variant}_${name}` : name} />
+      )
   );
 }
 
 export default DocumentPane;
+
+DocumentPane.propTypes = {
+  variant: PropTypes.string,
+  hiddenPanels: PropTypes.arrayOf(PropTypes.string),
+};

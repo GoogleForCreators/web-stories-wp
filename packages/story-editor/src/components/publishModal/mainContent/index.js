@@ -21,7 +21,6 @@ import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
-  Text,
 } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
@@ -29,6 +28,7 @@ import { __ } from '@googleforcreators/i18n';
  * Internal dependencies
  */
 import { MANDATORY_INPUT_VALUE_TYPES } from '../types';
+import { DOCUMENT_PANEL_NAMES, useInspector } from '../../..';
 import MandatoryStoryInfo from './mandatoryStoryInfo';
 import StoryPreview from './storyPreview';
 
@@ -56,8 +56,10 @@ const _MandatoryStoryInfo = styled.div`
   grid-area: mandatory;
 `;
 
-const PanelContainer = styled.div`
+const PanelContainer = styled.div.attrs({ role: 'tabpanel' })`
   grid-area: panel;
+  overflow: overlay;
+  height: 100%;
   background-color: ${({ theme }) => theme.colors.bg.secondary};
 `;
 
@@ -71,6 +73,10 @@ const MainContent = ({
   handleUpdateSlug,
   inputValues,
 }) => {
+  const InspectorPane = useInspector(
+    ({ data: { modalInspectorTab } }) => modalInspectorTab
+  );
+
   return (
     <Main>
       <_StoryPreview>
@@ -83,8 +89,14 @@ const MainContent = ({
           inputValues={inputValues}
         />
       </_MandatoryStoryInfo>
-      <PanelContainer>
-        <Text>{__('Panels go here', 'web-stories')}</Text>
+      <PanelContainer aria-label={InspectorPane.title} id={InspectorPane.id}>
+        <InspectorPane.Pane
+          variant="publish_modal"
+          hiddenPanels={[
+            DOCUMENT_PANEL_NAMES.EXCERPT,
+            'status', // todo, thread this through config??
+          ]}
+        />
       </PanelContainer>
       <Footer>
         <Button

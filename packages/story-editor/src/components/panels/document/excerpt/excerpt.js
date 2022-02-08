@@ -28,6 +28,7 @@ import { useStory } from '../../../../app/story';
 import { Row, TextArea } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { useHighlights, states, styles } from '../../../../app/highlights';
+import { DOCUMENT_PANEL_NAMES } from '../constants';
 
 // Margin -4px is making up for extra margin added by rows.
 const StyledText = styled(Text)`
@@ -37,7 +38,7 @@ const StyledText = styled(Text)`
 
 export const EXCERPT_MAX_LENGTH = 200;
 
-function ExcerptPanel() {
+function ExcerptPanel(props) {
   const { excerpt, updateStory } = useStory(
     ({
       state: {
@@ -68,10 +69,11 @@ function ExcerptPanel() {
     <SimplePanel
       css={highlight?.showEffect && styles.FLASH}
       onAnimationEnd={() => resetHighlight()}
-      name="excerpt"
+      name={DOCUMENT_PANEL_NAMES.EXCERPT}
       title={__('Story Description', 'web-stories')}
       collapsedByDefault={false}
       isPersistable={!highlight}
+      {...props}
     >
       <Row>
         <TextArea

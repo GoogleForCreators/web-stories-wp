@@ -26,10 +26,11 @@ import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
  * Internal dependencies
  */
 import { useStory } from '../../../../app/story';
+import { useConfig } from '../../../../app';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
-import { useConfig } from '../../../../app';
 import BackgroundAudioPanelContent from '../../shared/backgroundAudioPanelContent';
+import { DOCUMENT_PANEL_NAMES } from '../constants';
 
 const HelperText = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
@@ -37,7 +38,7 @@ const HelperText = styled(Text).attrs({
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
-function BackgroundAudioPanel() {
+function BackgroundAudioPanel(props) {
   const {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
@@ -66,9 +67,10 @@ function BackgroundAudioPanel() {
 
   return (
     <SimplePanel
-      name="backgroundAudio"
+      name={DOCUMENT_PANEL_NAMES.BACKGROUND_AUDIO}
       title={__('Background Audio', 'web-stories')}
       collapsedByDefault
+      {...props}
     >
       <Row>
         <HelperText>

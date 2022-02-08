@@ -36,6 +36,7 @@ import inRange from '../../../../utils/inRange';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { inputContainerStyleOverride } from '../../shared';
+import { DOCUMENT_PANEL_NAMES } from '../constants';
 
 export const MIN_MAX = {
   PERMALINK: {
@@ -62,7 +63,7 @@ const LinkContainer = styled.div`
   margin-bottom: 16px;
 `;
 
-function SlugPanel() {
+function SlugPanel(props) {
   const {
     slug: savedSlug,
     link,
@@ -112,9 +113,10 @@ function SlugPanel() {
   // In case of non-pretty permalinks, we're not showing the input.
   return (
     <SimplePanel
-      name="permalink"
+      name={DOCUMENT_PANEL_NAMES.SLUG}
       title={__('Permalink', 'web-stories')}
       collapsedByDefault={false}
+      {...props}
     >
       {permalinkConfig && (
         <PermalinkRow>

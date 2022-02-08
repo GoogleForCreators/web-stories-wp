@@ -24,10 +24,6 @@ import {
   useState,
   useDebouncedCallback,
 } from '@googleforcreators/react';
-
-/**
- * External dependencies
- */
 import { __ } from '@googleforcreators/i18n';
 import { trackEvent } from '@googleforcreators/tracking';
 import {
@@ -48,6 +44,7 @@ import {
   DEFAULT_AUTO_ADVANCE,
   DEFAULT_PAGE_DURATION,
 } from '../../../../constants';
+import { DOCUMENT_PANEL_NAMES } from '../constants';
 
 const SwitchRow = styled.div`
   margin-bottom: 16px;
@@ -66,7 +63,7 @@ const MIN_MAX = {
   },
 };
 
-function PageAdvancementPanel() {
+function PageAdvancementPanel(props) {
   const { autoAdvance, defaultPageDuration, updateStory } = useStory(
     ({
       state: {
@@ -124,9 +121,10 @@ function PageAdvancementPanel() {
 
   return (
     <SimplePanel
-      name="pageAdvancement"
+      name={DOCUMENT_PANEL_NAMES.PAGE_ADVANCEMENT}
       title={__('Page Advancement', 'web-stories')}
       collapsedByDefault={false}
+      {...props}
     >
       <Row>
         <MutedText>
