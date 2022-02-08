@@ -201,6 +201,7 @@
     "jsdoc/require-param-description": "warn",
     "jsdoc/valid-types": "error",
     "eslint-comments/no-unused-disable": "error",
+    "eslint-comments/require-description": ["error", {"ignore": []}],
     "@wordpress/dependency-group": "error",
     "@wordpress/no-unused-vars-before-return": ["error", {
       "excludePattern": "^use"
