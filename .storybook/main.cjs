@@ -168,15 +168,10 @@ module.exports = {
       },
       {
         test: /\.(png|jpe?g|gif|webp)$/i,
-        use: [
-          {
-            // use asset/resource
-            loader: 'file-loader',
-            options: {
-              outputPath: 'images',
-            },
-          },
-        ],
+        type: 'asset/resource',
+        generator: {
+          outputPath: 'images/',
+        },
       }
     );
 

@@ -108,10 +108,34 @@ const sharedConfig = {
       },
       // These should be sync'd with the config in `.storybook/main.cjs`.
       {
+        test: /\.svg$/,
+        issuer: /\.js?$/,
+        use: [
+          {
+            loader: '@svgr/webpack',
+            options: {
+              titleProp: true,
+              svgo: true,
+              memo: true,
+              svgoConfig: {
+                plugins: [
+                  {
+                    name: 'removeViewBox',
+                    active: false,
+                  },
+                  { name: 'removeDimensions' },
+                  { name: 'convertColors', currentColor: /^(?!url|none)/i },
+                ],
+              },
+            },
+          },
+        ],
+      },
+      // Use asset svg and svgr in same project using resourceQuery
+      // https://react-svgr.com/docs/webpack/#use-svgr-and-asset-svg-in-the-same-project
+      {
         type: 'asset',
-        resourceQuery: /react/,
-      },
-      {
+        resourceQuery: /url/,
         test: /\.svg$/,
         use: [
           {
@@ -123,44 +147,17 @@ const sharedConfig = {
               svgoConfig: {
                 plugins: [
                   {
-                    removeViewBox: false,
-                    removeDimensions: true,
-                    convertColors: {
-                      currentColor: /^(?!url|none)/i,
-                    },
+                    name: 'removeViewBox',
+                    active: false,
                   },
+                  { name: 'removeDimensions' },
+                  // See https://github.com/googleforcreators/web-stories-wp/pull/6361
+                  { name: 'convertColors', active: false },
                 ],
               },
             },
           },
         ],
-        exclude: [/images\/.*\.svg$/],
-      },
-      {
-        test: /\.svg$/,
-        use: [
-          {
-            loader: '@svgr/webpack',
-            options: {
-              titleProp: true,
-              svgo: true,
-              memo: true,
-              svgoConfig: {
-                plugins: [
-                  {
-                    removeViewBox: false,
-                    removeDimensions: true,
-                    convertColors: {
-                      // See https://github.com/googleforcreators/web-stories-wp/pull/6361
-                      currentColor: false,
-                    },
-                  },
-                ],
-              },
-            },
-          },
-        ],
-        include: [/images\/.*\.svg$/],
       },
       {
         test: /\.css$/,
