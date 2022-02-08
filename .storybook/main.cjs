@@ -113,6 +113,10 @@ module.exports = {
       mainFields: ['browser', 'module', 'main', 'source'],
     };
 
+    // ensure svgr is the only loader used for files with .svg extension
+    const assetRule = config.module.rules.find(({ test }) => test.test('.svg'));
+    assetRule.exclude = /\.svg/;
+
     config.module.rules.unshift(
       {
         test: /\.svg$/,
@@ -175,8 +179,8 @@ module.exports = {
       }
     );
 
-    // only the first matching rule is used when there is a match.
-    config.module.rules = [{ oneOf: config.module.rules }];
+    // // only the first matching rule is used when there is a match.
+    // config.module.rules = [{ oneOf: config.module.rules }];
 
     /*
     Storybook 6.4 config doesn't work with .cjs files. 
