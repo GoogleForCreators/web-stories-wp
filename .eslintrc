@@ -625,6 +625,15 @@
       "globals": {
         "tinymce": "readonly"
       }
+    },
+    {
+      "files": [
+        ".storybook/main.cjs"
+      ],
+      "rules": {
+        "import/no-extraneous-dependencies": "off",
+        "node/no-extraneous-require": "off"
+      }
     }
   ]
 }
