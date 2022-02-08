@@ -14,8 +14,13 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { useCallback, useState } from '@googleforcreators/react';
+/**
  * Internal dependencies
  */
+import StoryContext from '../../../app/story/context';
 import PublishModal from '../publishModal';
 
 export default {
@@ -23,4 +28,28 @@ export default {
   component: PublishModal,
 };
 
-export const _default = () => <PublishModal />;
+export const _default = () => {
+  const [inputValues, setInputValues] = useState({
+    excerpt: '',
+    title: '',
+  });
+
+  const handleUpdateStory = useCallback(({ properties }) => {
+    setInputValues((prevVal) => ({
+      ...prevVal,
+      ...properties,
+    }));
+  }, []);
+  return (
+    <StoryContext.Provider
+      value={{
+        actions: { updateStory: handleUpdateStory },
+        state: {
+          story: inputValues,
+        },
+      }}
+    >
+      <PublishModal />
+    </StoryContext.Provider>
+  );
+};

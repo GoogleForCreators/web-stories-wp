@@ -50,8 +50,15 @@ function StoryProvider({ storyId, initialEdits, children }) {
   } = useStoryReducer({
     current: hashPageId,
   });
-  const { pages, current, selection, story, animationState, capabilities } =
-    reducerState;
+  const {
+    pages,
+    current,
+    selection,
+    story,
+    animationState,
+    capabilities,
+    copiedElementState,
+  } = reducerState;
 
   useEffect(() => setHashPageId(current), [current, setHashPageId]);
 
@@ -167,6 +174,7 @@ function StoryProvider({ storyId, initialEdits, children }) {
         isAutoSavingStory: isAutoSaving,
         isFreshlyPublished,
       },
+      copiedElementState,
     }),
     [
       pages,
@@ -185,6 +193,7 @@ function StoryProvider({ storyId, initialEdits, children }) {
       isSaving,
       isAutoSaving,
       isFreshlyPublished,
+      copiedElementState,
     ]
   );
 

@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
-
-/**
  * Internal dependencies
  */
 import PostTakeOverDialog from '../postTakeOverDialog';
@@ -27,21 +22,20 @@ import PostTakeOverDialog from '../postTakeOverDialog';
 export default {
   title: 'Stories Editor/Components/Dialog/Post Take Over Dialog',
   component: PostTakeOverDialog,
+  args: {
+    isOpen: true,
+    user: {
+      name: 'Matt Mullenweg',
+      avatar:
+        'http://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?size=48',
+    },
+    dashboardLink: 'http://www.example.com/dashboard',
+  },
+  argTypes: {
+    onClose: { action: 'onClose' },
+  },
 };
 
-export const _default = () => {
-  const user = {
-    name: 'Matt Mullenweg',
-    avatar:
-      'http://1.gravatar.com/avatar/767fc9c115a1b989744c755db47feb60?size=48',
-  };
-  const dashboardLink = 'http://www.example.com/dashboard';
-  return (
-    <PostTakeOverDialog
-      user={user}
-      isOpen
-      dashboardLink={dashboardLink}
-      onClose={action('closed')}
-    />
-  );
+export const _default = (args) => {
+  return <PostTakeOverDialog {...args} />;
 };

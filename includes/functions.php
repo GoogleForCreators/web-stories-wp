@@ -2,8 +2,6 @@
 /**
  * Miscellaneous functions.
  * These are mostly utility or wrapper functions.
- *
- * @package Google\Web_Stories
  */
 
 /**
@@ -21,6 +19,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 namespace Google\Web_Stories;
 
 /**
@@ -30,7 +29,6 @@ namespace Google\Web_Stories;
  *
  * @param array $attrs Arguments for displaying stories.
  * @param array $query_args Query arguments for stories.
- *
  * @return void
  */
 function render_stories( array $attrs = [], array $query_args = [] ) {
@@ -46,7 +44,6 @@ function render_stories( array $attrs = [], array $query_args = [] ) {
  *
  * @param array $attrs Arguments for displaying stories.
  * @param array $query_args Query arguments for stories.
- *
  * @return array
  */
 function get_stories( array $attrs = [], array $query_args = [] ): array {

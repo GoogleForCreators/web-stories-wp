@@ -2,10 +2,10 @@
 /**
  * Class Story_Archive.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -56,7 +56,6 @@ class Story_Archive extends Service_Base {
 	 *
 	 * @param Settings        $settings        Settings instance.
 	 * @param Story_Post_Type $story_post_type Experiments instance.
-	 *
 	 * @return void
 	 */
 	public function __construct( Settings $settings, Story_Post_Type $story_post_type ) {
@@ -92,13 +91,12 @@ class Story_Archive extends Service_Base {
 	 *
 	 * @param bool|mixed $bypass Pass-through of the pre_handle_404 filter value.
 	 * @param \WP_Query  $query  The WP_Query object.
-	 *
 	 * @return bool|mixed Whether to pass-through or not.
 	 */
 	public function redirect_post_type_archive_urls( $bypass, $query ) {
 		global $wp_rewrite;
 
-		if ( $bypass || ! is_string( $this->story_post_type->get_has_archive() ) || ( ! $wp_rewrite instanceof WP_Rewrite || ! $wp_rewrite->using_permalinks() ) ) {
+		if ( $bypass || ! \is_string( $this->story_post_type->get_has_archive() ) || ( ! $wp_rewrite instanceof WP_Rewrite || ! $wp_rewrite->using_permalinks() ) ) {
 			return $bypass;
 		}
 
@@ -131,7 +129,7 @@ class Story_Archive extends Service_Base {
 		$this->story_post_type->unregister_post_type();
 		$this->story_post_type->register_post_type();
 
-		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
+		if ( ! \defined( '\WPCOM_IS_VIP_ENV' ) || false === \WPCOM_IS_VIP_ENV ) {
 			flush_rewrite_rules( false );
 		}
 	}
@@ -142,11 +140,10 @@ class Story_Archive extends Service_Base {
 	 * @since 1.13.0
 	 *
 	 * @param WP_Query $query Current query instance, passed by reference.
-	 *
 	 * @return void
 	 */
 	public function pre_get_posts( WP_Query $query ) {
-		if ( ! is_string( $this->story_post_type->get_has_archive() ) ) {
+		if ( ! \is_string( $this->story_post_type->get_has_archive() ) ) {
 			return;
 		}
 
@@ -174,7 +171,6 @@ class Story_Archive extends Service_Base {
 	 * @since 1.14.0
 	 *
 	 * @param int $postid Post ID.
-	 *
 	 * @return void
 	 */
 	public function on_remove_archive_page( $postid ) {
@@ -199,15 +195,14 @@ class Story_Archive extends Service_Base {
 	 *
 	 * @param string[]|mixed $post_states An array of post display states.
 	 * @param WP_Post|null   $post        The current post object.
-	 *
 	 * @return string[]|mixed Filtered post display states.
 	 */
 	public function filter_display_post_states( $post_states, $post ) {
-		if ( ! is_array( $post_states ) || ! $post ) {
+		if ( ! \is_array( $post_states ) || ! $post ) {
 			return $post_states;
 		}
 
-		if ( ! is_string( $this->story_post_type->get_has_archive() ) ) {
+		if ( ! \is_string( $this->story_post_type->get_has_archive() ) ) {
 			return $post_states;
 		}
 

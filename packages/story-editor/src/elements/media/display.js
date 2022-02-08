@@ -20,6 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { getMediaSizePositionProps } from '@googleforcreators/media';
+import { useTransformHandler } from '@googleforcreators/transform';
 
 /**
  * Internal dependencies
@@ -32,7 +33,6 @@ import {
   elementWithBorder,
   elementWithBackgroundColor,
 } from '../shared';
-import { useTransformHandler } from '../../components/transform';
 import {
   getResponsiveBorder,
   shouldDisplayBorder,

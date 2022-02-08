@@ -18,7 +18,6 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { actions } from '@storybook/addon-actions';
 /**
  * Internal dependencies
  */
@@ -51,8 +50,7 @@ export const _default = () => {
       <StoryMenu
         onMoreButtonSelected={setContextMenuId}
         contextMenuId={contextMenuId}
-        onMenuItemSelected={(item, story) => {
-          actions('onClick ', item.label, story.id);
+        onMenuItemSelected={() => {
           setContextMenuId(-1);
         }}
         menuItems={STORY_CONTEXT_MENU_ITEMS}

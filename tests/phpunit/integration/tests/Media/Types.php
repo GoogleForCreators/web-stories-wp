@@ -111,6 +111,6 @@ class Types extends TestCase {
 	protected function supportsWebP() {
 		$mime_type = array_values( wp_get_mime_types() );
 
-		return in_array( 'image/webp', $mime_type, true );
+		return \in_array( 'image/webp', $mime_type, true );
 	}
 }

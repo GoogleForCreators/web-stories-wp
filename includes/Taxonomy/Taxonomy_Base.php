@@ -2,10 +2,10 @@
 /**
  * Class Taxonomy_Base.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -46,8 +46,6 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 
 	/**
 	 * Default REST Namespace.
-	 *
-	 * @var string
 	 */
 	const REST_NAMESPACE = 'web-stories/v1';
 
@@ -105,7 +103,7 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	 *
 	 * @return array
 	 */
-	abstract protected function taxonomy_args() : array;
+	abstract protected function taxonomy_args(): array;
 
 	/**
 	 * Act on site initialization.
@@ -113,7 +111,6 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	 * @since 1.12.0
 	 *
 	 * @param WP_Site $site The site being initialized.
-	 *
 	 * @return void
 	 */
 	public function on_site_initialization( WP_Site $site ) {
@@ -138,7 +135,6 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	 * @since 1.12.0
 	 *
 	 * @param bool $network_wide Whether the deactivation was done network-wide.
-	 *
 	 * @return void
 	 */
 	public function on_plugin_deactivation( $network_wide ) {

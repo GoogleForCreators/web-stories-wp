@@ -23,6 +23,7 @@ import {
   generatePatternStyles,
   isPatternEqual,
 } from '@googleforcreators/patterns';
+import { getHTMLInfo } from '@googleforcreators/rich-text';
 
 /**
  * Internal dependencies
@@ -33,7 +34,6 @@ import {
   MULTIPLE_VALUE,
   PRESET_TYPES,
 } from '../constants';
-import { getHTMLInfo } from '../components/richText/htmlManipulation';
 import objectPick from './objectPick';
 
 const TEXT_PRESET_STYLES = [
