@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { memo } from '@googleforcreators/react';
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 
@@ -26,7 +25,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { IconButton } from './shared';
 
-const Loop = memo(function Loop() {
+const Loop = function Loop() {
   return (
     <IconButton
       Icon={Icons.ArrowLeftright}
@@ -34,6 +33,6 @@ const Loop = memo(function Loop() {
       onClick={() => {}}
     />
   );
-});
+};
 
 export default Loop;

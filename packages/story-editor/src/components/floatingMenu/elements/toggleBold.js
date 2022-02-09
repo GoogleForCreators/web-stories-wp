@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { memo } from '@googleforcreators/react';
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 
@@ -26,7 +25,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { IconButton } from './shared';
 
-const ToggleBold = memo(function ToggleBold() {
+const ToggleBold = function ToggleBold() {
   return (
     <IconButton
       Icon={Icons.LetterBBold}
@@ -34,6 +33,6 @@ const ToggleBold = memo(function ToggleBold() {
       onClick={() => {}}
     />
   );
-});
+};
 
 export default ToggleBold;

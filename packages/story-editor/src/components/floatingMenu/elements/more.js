@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { memo } from '@googleforcreators/react';
 import { _x } from '@googleforcreators/i18n';
 
 /**
@@ -25,7 +24,7 @@ import { _x } from '@googleforcreators/i18n';
  */
 import { TextButton } from './shared';
 
-const More = memo(function More() {
+const More = function More() {
   return (
     <TextButton
       text={_x(
@@ -36,6 +35,6 @@ const More = memo(function More() {
       onClick={() => {}}
     />
   );
-});
+};
 
 export default More;

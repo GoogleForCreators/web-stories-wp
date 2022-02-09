@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { memo } from '@googleforcreators/react';
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 
@@ -26,7 +25,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { IconButton } from './shared';
 
-const FontFamily = memo(function FontFamily() {
+const FontFamily = function FontFamily() {
   return (
     <IconButton
       Icon={Icons.LetterTUppercase}
@@ -34,6 +33,6 @@ const FontFamily = memo(function FontFamily() {
       onClick={() => {}}
     />
   );
-});
+};
 
 export default FontFamily;

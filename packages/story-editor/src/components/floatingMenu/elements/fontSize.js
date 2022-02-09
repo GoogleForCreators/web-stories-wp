@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { memo } from '@googleforcreators/react';
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 
@@ -26,7 +25,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { IconButton } from './shared';
 
-const FontSize = memo(function FontSize() {
+const FontSize = function FontSize() {
   return (
     <IconButton
       Icon={Icons.LetterTArrow}
@@ -34,6 +33,6 @@ const FontSize = memo(function FontSize() {
       onClick={() => {}}
     />
   );
-});
+};
 
 export default FontSize;

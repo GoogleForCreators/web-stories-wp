@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { memo } from '@googleforcreators/react';
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 
@@ -26,7 +25,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { IconButton } from './shared';
 
-const TextColor = memo(function TextColor() {
+const TextColor = function TextColor() {
   return (
     <IconButton
       Icon={Icons.Pipette}
@@ -34,6 +33,6 @@ const TextColor = memo(function TextColor() {
       onClick={() => {}}
     />
   );
-});
+};
 
 export default TextColor;

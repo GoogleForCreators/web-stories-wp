@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { memo } from '@googleforcreators/react';
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 
@@ -26,7 +25,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { IconButton } from './shared';
 
-const ToggleItalics = memo(function ToggleItalics() {
+const ToggleItalics = function ToggleItalics() {
   return (
     <IconButton
       Icon={Icons.LetterIItalic}
@@ -34,6 +33,6 @@ const ToggleItalics = memo(function ToggleItalics() {
       onClick={() => {}}
     />
   );
-});
+};
 
 export default ToggleItalics;

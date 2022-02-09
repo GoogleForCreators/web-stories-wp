@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { memo } from '@googleforcreators/react';
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 
@@ -26,7 +25,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { IconButton } from './shared';
 
-const Mute = memo(function Mute() {
+const Mute = function Mute() {
   return (
     <IconButton
       Icon={Icons.Muted}
@@ -34,6 +33,6 @@ const Mute = memo(function Mute() {
       onClick={() => {}}
     />
   );
-});
+};
 
 export default Mute;

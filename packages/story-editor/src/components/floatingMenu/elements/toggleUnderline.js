@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { memo } from '@googleforcreators/react';
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 
@@ -26,7 +25,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { IconButton } from './shared';
 
-const ToggleUnderline = memo(function ToggleUnderline() {
+const ToggleUnderline = function ToggleUnderline() {
   return (
     <IconButton
       Icon={Icons.LetterUUnderline}
@@ -34,6 +33,6 @@ const ToggleUnderline = memo(function ToggleUnderline() {
       onClick={() => {}}
     />
   );
-});
+};
 
 export default ToggleUnderline;

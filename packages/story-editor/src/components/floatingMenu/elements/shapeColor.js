@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { memo } from '@googleforcreators/react';
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 
@@ -26,7 +25,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { IconButton } from './shared';
 
-const ShapeColor = memo(function ShapeColor() {
+const ShapeColor = function ShapeColor() {
   return (
     <IconButton
       Icon={Icons.Shapes}
@@ -34,6 +33,6 @@ const ShapeColor = memo(function ShapeColor() {
       onClick={() => {}}
     />
   );
-});
+};
 
 export default ShapeColor;

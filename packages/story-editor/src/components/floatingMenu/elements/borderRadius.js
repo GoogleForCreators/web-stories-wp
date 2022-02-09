@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { memo } from '@googleforcreators/react';
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 
@@ -26,7 +25,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { IconButton, Separator } from './shared';
 
-const BorderRadius = memo(function BorderRadius() {
+const BorderRadius = function BorderRadius() {
   return (
     <>
       <IconButton
@@ -37,6 +36,6 @@ const BorderRadius = memo(function BorderRadius() {
       <Separator />
     </>
   );
-});
+};
 
 export default BorderRadius;

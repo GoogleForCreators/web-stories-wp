@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { memo } from '@googleforcreators/react';
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 
@@ -26,7 +25,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { IconButton } from './shared';
 
-const SwapImage = memo(function SwapImage() {
+const SwapImage = function SwapImage() {
   return (
     <IconButton
       Icon={Icons.PictureSwap}
@@ -34,6 +33,6 @@ const SwapImage = memo(function SwapImage() {
       onClick={() => {}}
     />
   );
-});
+};
 
 export default SwapImage;

@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { memo } from '@googleforcreators/react';
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 
@@ -26,7 +25,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { IconButton } from './shared';
 
-const FlipVertical = memo(function FlipVertical() {
+const FlipVertical = function FlipVertical() {
   return (
     <IconButton
       Icon={Icons.MirrorUpdown}
@@ -34,6 +33,6 @@ const FlipVertical = memo(function FlipVertical() {
       onClick={() => {}}
     />
   );
-});
+};
 
 export default FlipVertical;

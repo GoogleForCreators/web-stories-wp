@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { memo } from '@googleforcreators/react';
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 
@@ -27,7 +26,7 @@ import { __ } from '@googleforcreators/i18n';
 import { useFloatingMenu } from '../context';
 import { IconButton } from './shared';
 
-const Dismiss = memo(function Dismiss() {
+const Dismiss = function Dismiss() {
   const { dismiss } = useFloatingMenu(({ actions: { dismiss } }) => ({
     dismiss,
   }));
@@ -39,6 +38,6 @@ const Dismiss = memo(function Dismiss() {
       onClick={dismiss}
     />
   );
-});
+};
 
 export default Dismiss;

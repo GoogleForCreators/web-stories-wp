@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { memo } from '@googleforcreators/react';
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 
@@ -26,7 +25,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { IconButton } from './shared';
 
-const FlipHorizontal = memo(function FlipHorizontal() {
+const FlipHorizontal = function FlipHorizontal() {
   return (
     <IconButton
       Icon={Icons.MirrorLeftright}
@@ -34,6 +33,6 @@ const FlipHorizontal = memo(function FlipHorizontal() {
       onClick={() => {}}
     />
   );
-});
+};
 
 export default FlipHorizontal;

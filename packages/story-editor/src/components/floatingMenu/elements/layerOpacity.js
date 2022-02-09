@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { memo } from '@googleforcreators/react';
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 
@@ -26,7 +25,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { IconButton } from './shared';
 
-const LayerOpacity = memo(function LayerOpacity() {
+const LayerOpacity = function LayerOpacity() {
   return (
     <IconButton
       Icon={Icons.ColorDrop}
@@ -34,6 +33,6 @@ const LayerOpacity = memo(function LayerOpacity() {
       onClick={() => {}}
     />
   );
-});
+};
 
 export default LayerOpacity;
