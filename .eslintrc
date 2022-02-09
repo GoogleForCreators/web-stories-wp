@@ -298,6 +298,7 @@
         "node": true
       },
       "rules": {
+        "eslint-comments/no-unused-disable": "off",
         "jest/no-hooks": "off",
         "jest/prefer-expect-assertions": "off",
         "jest/prefer-inline-snapshots": "off",
@@ -318,7 +319,12 @@
         "__mocks__/**/*.js"
       ],
       "rules": {
-      "jest/require-hook":  "off"
+        "jest/require-hook":  "off",
+        "react/prop-types" : "off",
+        "eslint-comments/require-description": "off"
+      },
+      "env": {
+        "node": true
       }
     },
     {
@@ -339,6 +345,7 @@
         "jasmine": true
       },
       "rules": {
+        "eslint-comments/require-description": "off",
         "testing-library/no-debugging-utils": "error",
         "testing-library/no-dom-import": "error",
         "jasmine/new-line-before-expect": "off",
@@ -384,6 +391,7 @@
         "node": true
       },
       "rules": {
+        "eslint-comments/require-description": "off",
         "jest/no-hooks": "off",
         "jest/prefer-expect-assertions": "off",
         "jest/prefer-inline-snapshots": "off",
@@ -418,6 +426,7 @@
         "packages/e2e-test-utils/**/*.js"
       ],
       "rules": {
+        "eslint-comments/require-description": "off",
         "jest/expect-expect": "off",
         "jest/no-export": "off",
         "jest/require-top-level-describe": "off"
@@ -432,6 +441,7 @@
     {
       "files": ["packages/e2e-tests/src/config/**/*.js"],
       "rules": {
+        "eslint-comments/require-description": "off",
         "jest/require-hook": "off"
       }
     },
@@ -492,6 +502,7 @@
         "node": true
       },
       "rules": {
+        "eslint-comments/require-description": "off",
         "node/no-extraneous-import": "off",
         "node/no-missing-import": "off",
         "node/no-unpublished-import": "off",
@@ -511,6 +522,9 @@
         "*.md",
         "**/*.md"
       ],
+      "rules": {
+        "react/prop-types" : "off"
+      }, 
       "processor": "markdown/markdown"
     },
     {
