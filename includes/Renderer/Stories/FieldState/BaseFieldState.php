@@ -54,7 +54,7 @@ class BaseFieldState implements FieldState {
 	 *
 	 * @return Field
 	 */
-	public function image_alignment(): Field {
+	public function image_alignment() {
 		return new BaseField(
 			[
 				'label'  => __( 'Image Alignment', 'web-stories' ),
@@ -71,7 +71,7 @@ class BaseFieldState implements FieldState {
 	 *
 	 * @return Field
 	 */
-	public function excerpt(): Field {
+	public function excerpt() {
 		return new BaseField(
 			[
 				'label'  => __( 'Display Excerpt', 'web-stories' ),
@@ -88,7 +88,7 @@ class BaseFieldState implements FieldState {
 	 *
 	 * @return Field
 	 */
-	public function author(): Field {
+	public function author() {
 		return new BaseField(
 			[
 				'label'  => __( 'Display Author', 'web-stories' ),
@@ -105,7 +105,7 @@ class BaseFieldState implements FieldState {
 	 *
 	 * @return Field
 	 */
-	public function date(): Field {
+	public function date() {
 		return new BaseField(
 			[
 				'label'  => __( 'Display Date', 'web-stories' ),
@@ -122,7 +122,7 @@ class BaseFieldState implements FieldState {
 	 *
 	 * @return Field
 	 */
-	public function archive_link(): Field {
+	public function archive_link() {
 		return new BaseField(
 			[
 				'label'  => __( 'Display Archive Link', 'web-stories' ),
@@ -139,7 +139,7 @@ class BaseFieldState implements FieldState {
 	 *
 	 * @return Field
 	 */
-	public function title(): Field {
+	public function title() {
 		return new BaseField(
 			[
 				'label'  => __( 'Display Title', 'web-stories' ),
@@ -156,7 +156,7 @@ class BaseFieldState implements FieldState {
 	 *
 	 * @return Field
 	 */
-	public function sharp_corners(): Field {
+	public function sharp_corners() {
 		return new BaseField(
 			[
 				'label'  => __( 'Use Sharp Corners', 'web-stories' ),
@@ -173,7 +173,7 @@ class BaseFieldState implements FieldState {
 	 *
 	 * @return BaseField
 	 */
-	public function circle_size(): BaseField {
+	public function circle_size() {
 		return new BaseField(
 			[
 				'label' => __( 'Circle Size', 'web-stories' ),
@@ -189,7 +189,7 @@ class BaseFieldState implements FieldState {
 	 *
 	 * @return BaseField
 	 */
-	public function number_of_columns(): BaseField {
+	public function number_of_columns() {
 		return new BaseField(
 			[
 				'label' => __( 'Number of Columns', 'web-stories' ),
@@ -206,7 +206,7 @@ class BaseFieldState implements FieldState {
 	 * @param array $args Arguments to build field.
 	 * @return BaseField
 	 */
-	protected function prepare_field( array $args ): BaseField {
+	protected function prepare_field( array $args ) {
 		return new BaseField( $args );
 	}
 

@@ -100,8 +100,9 @@
       <property name="enableMixedTypeHint" value="false" />
       <property name="enableUnionTypeHint" value="false" />
     </properties>
-        <exclude-pattern>web-stories.php</exclude-pattern>
-        <exclude-pattern>includes/compat/Web_Stories_Compatibility.php</exclude-pattern>
+    <exclude-pattern>web-stories.php</exclude-pattern>
+    <exclude-pattern>includes/compat/Web_Stories_Compatibility.php</exclude-pattern>
+    <exclude-pattern>includes/Renderer/Stories/*</exclude-pattern>
   </rule>
 
   <!-- Checks whether the nullablity ? symbol is present before each nullable and optional parameter. -->
