@@ -36,9 +36,9 @@ import useTransform from './useTransform';
  * @param {Array} [deps] The effect's dependencies.
  */
 function useTransformHandler(id, handler, deps = undefined) {
-  const registerTransformHandler = useTransform(
-    ({ actions }) => actions.registerTransformHandler
-  );
+  const {
+    actions: { registerTransformHandler },
+  } = useTransform();
 
   useEffect(
     () => registerTransformHandler(id, handler),

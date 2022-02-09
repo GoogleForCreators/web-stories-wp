@@ -48,14 +48,6 @@ function useContextSelector(context, selector, equalityFn = shallowEqual) {
     if (equalityFn(ref.current, selected)) {
       return ref.current;
     }
-    // if (selected?.some?.((a) => a?.WAAPIAnimation)) {
-    //   console.log(
-    //     `${ref.current?.[0]?.id.substring(
-    //       0,
-    //       4
-    //     )} -> ${selected?.[0]?.id.substring(0, 4)}`
-    //   );
-    // }
     ref.current = selected;
     return selected;
   };
