@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback } from '@googleforcreators/react';
+import { useCallback, forwardRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { default as Gallery } from 'react-photo-album';
 
@@ -52,6 +52,26 @@ function MediaGallery({ resources, onInsert, providerType, canEditMedia }) {
     height: resource.height,
   }));
 
+  const containerRenderer = ({ children, containerProps }, ref) => {
+    return (
+      <div
+        ref={ref}
+        {...containerProps}
+        style={{
+          ...containerProps.style,
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          justifyContent: 'space-evenly',
+        }}
+      >
+        {children}
+      </div>
+    );
+  };
+  const rowRenderer = ({ children }) => {
+    return children;
+  };
+
   const imageRenderer = useCallback(
     ({ photo, layout }) => {
       return (
@@ -60,7 +80,7 @@ function MediaGallery({ resources, onInsert, providerType, canEditMedia }) {
           index={photo.index}
           margin={PHOTO_MARGIN + 'px'}
           resource={resources[photo.index]}
-          width={layout.width}
+          width={layout.width - 2 * PHOTO_MARGIN}
           height={layout.height}
           onInsert={onInsert}
           providerType={providerType}
@@ -77,6 +97,8 @@ function MediaGallery({ resources, onInsert, providerType, canEditMedia }) {
         layout="rows"
         photos={photos}
         renderPhoto={imageRenderer}
+        renderRowContainer={rowRenderer}
+        renderContainer={forwardRef(containerRenderer)}
         targetRowHeight={150}
         // This should match the actual margin the element is styled with.
         spacing={PHOTO_MARGIN}
