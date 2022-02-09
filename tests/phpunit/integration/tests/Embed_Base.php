@@ -25,7 +25,7 @@ class Embed_Base extends TestCase {
 	/**
 	 * @covers ::filter_kses_allowed_html
 	 */
-	public function test_adds_amp_story_player_to_list_of_allowed_html() {
+	public function test_adds_amp_story_player_to_list_of_allowed_html(): void {
 		$this->assertArrayHasKey( 'amp-story-player', wp_kses_allowed_html() );
 	}
 }

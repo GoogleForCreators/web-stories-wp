@@ -53,7 +53,7 @@ class Generic_Renderer extends TestCase {
 	 *
 	 * @param \WP_UnitTest_Factory $factory Factory class object.
 	 */
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 
 		self::$story_id = $factory->post->create(
 			[
@@ -69,7 +69,7 @@ class Generic_Renderer extends TestCase {
 	/**
 	 * Runs once before any test in the class run.
 	 */
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->story_model = $this->createMock( Story::class );
@@ -77,7 +77,7 @@ class Generic_Renderer extends TestCase {
 		$this->story_query->method( 'get_stories' )->willReturn( [ get_post( self::$story_id ) ] );
 	}
 
-	public function tear_down() {
+	public function tear_down(): void {
 		wp_dequeue_script( AMP_Story_Player_Assets::SCRIPT_HANDLE );
 		wp_deregister_script( AMP_Story_Player_Assets::SCRIPT_HANDLE );
 
@@ -90,7 +90,7 @@ class Generic_Renderer extends TestCase {
 	/**
 	 * @covers ::load_assets
 	 */
-	public function test_load_assets() {
+	public function test_load_assets(): void {
 
 		$this->story_query->method( 'get_story_attributes' )->willReturn(
 			[
@@ -110,7 +110,7 @@ class Generic_Renderer extends TestCase {
 	/**
 	 * @covers ::render
 	 */
-	public function test_render() {
+	public function test_render(): void {
 
 		$this->story_query->method( 'get_story_attributes' )->willReturn(
 			[

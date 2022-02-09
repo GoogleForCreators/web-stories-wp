@@ -45,7 +45,7 @@ class AMP extends Service_Base implements HasRequirements {
 	/**
 	 * Slug of the AMP validated URL post type.
 	 */
-	const AMP_VALIDATED_URL_POST_TYPE = 'amp_validated_url';
+	public const AMP_VALIDATED_URL_POST_TYPE = 'amp_validated_url';
 
 	/**
 	 * Settings instance.
@@ -91,7 +91,7 @@ class AMP extends Service_Base implements HasRequirements {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_filter( 'option_amp-options', [ $this, 'filter_amp_options' ] );
 		add_filter( 'amp_supportable_post_types', [ $this, 'filter_supportable_post_types' ] );
 		add_filter( 'amp_to_amp_linking_element_excluded', [ $this, 'filter_amp_to_amp_linking_element_excluded' ], 10, 4 );
@@ -232,7 +232,7 @@ class AMP extends Service_Base implements HasRequirements {
 	 * @param array     $error Validation error being sanitized.
 	 * @return null|bool Whether sanitized.
 	 */
-	public function filter_amp_validation_error_sanitized( $sanitized, $error ) {
+	public function filter_amp_validation_error_sanitized( $sanitized, $error ): ?bool {
 		// Skip sanitization for missing publisher logos and poster portrait images.
 		if (
 			( isset( $error['node_type'], $error['node_name'], $error['parent_name'] ) ) &&
@@ -318,7 +318,7 @@ class AMP extends Service_Base implements HasRequirements {
 	 *
 	 * @return string|null
 	 */
-	protected function get_request_post_type() {
+	protected function get_request_post_type(): ?string {
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
 		if ( did_action( 'wp' ) && is_singular() ) {
@@ -370,7 +370,7 @@ class AMP extends Service_Base implements HasRequirements {
 	 * @param int $post_id Post ID for Validated URL Post.
 	 * @return string|null Post type or null if validated URL is not for a singular post.
 	 */
-	protected function get_validated_url_post_type( $post_id ) {
+	protected function get_validated_url_post_type( $post_id ): ?string {
 		if ( empty( $post_id ) ) {
 			return null;
 		}

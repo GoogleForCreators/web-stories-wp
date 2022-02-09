@@ -16,7 +16,7 @@ class Embed extends TestCase {
 	/**
 	 * @covers ::render
 	 */
-	public function test_render() {
+	public function test_render(): void {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_title'   => 'test title',
@@ -44,7 +44,7 @@ class Embed extends TestCase {
 	/**
 	 * @covers ::render
 	 */
-	public function test_render_with_image() {
+	public function test_render_with_image(): void {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_title'   => 'test title',

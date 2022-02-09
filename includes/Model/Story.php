@@ -285,7 +285,7 @@ class Story {
 	 *
 	 * @return string|null Publisher logo URL or null if not set.
 	 */
-	public function get_publisher_logo_url() {
+	public function get_publisher_logo_url(): ?string {
 		/**
 		 * Filters the publisher logo URL.
 		 *

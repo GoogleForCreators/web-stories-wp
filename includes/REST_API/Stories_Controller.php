@@ -52,7 +52,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	/**
 	 * Default style presets to pass if not set.
 	 */
-	const EMPTY_STYLE_PRESETS = [
+	public const EMPTY_STYLE_PRESETS = [
 		'colors'     => [],
 		'textStyles' => [],
 	];
@@ -69,7 +69,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @param WP_REST_Request $request Request object.
 	 * @return WP_REST_Response Response object.
 	 */
-	public function prepare_item_for_response( $post, $request ) {
+	public function prepare_item_for_response( $post, $request ): WP_REST_Response {
 		/**
 		 * Request context.
 		 *
@@ -240,7 +240,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @param WP_Query $query   The WP_Query instance.
 	 * @return array Filtered query clauses.
 	 */
-	public function filter_posts_clauses( $clauses, $query ) {
+	public function filter_posts_clauses( $clauses, $query ): array {
 		global $wpdb;
 
 		if ( $this->post_type !== $query->get( 'post_type' ) ) {
@@ -272,7 +272,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return array Current args.
 	 */
-	public function filter_query( $args, $request ) {
+	public function filter_query( $args, $request ): array {
 		$this->args = $this->prepare_tax_query( $args, $request );
 
 		return $args;
@@ -332,7 +332,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @todo Remove this method once WordPress 5.7 becomes minimum required version.
 	 */
-	private function prepare_tax_query( array $args, WP_REST_Request $request ) {
+	private function prepare_tax_query( array $args, WP_REST_Request $request ): array {
 		$relation = $request['tax_relation'];
 
 		if ( $relation ) {

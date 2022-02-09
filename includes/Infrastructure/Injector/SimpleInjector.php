@@ -37,7 +37,7 @@ final class SimpleInjector implements Injector {
 	/**
 	 * Special-case index key for handling globally defined named arguments.
 	 */
-	const GLOBAL_ARGUMENTS = '__global__';
+	public const GLOBAL_ARGUMENTS = '__global__';
 
 	/**
 	 * Mappings.
@@ -99,7 +99,7 @@ final class SimpleInjector implements Injector {
 	 *                                   empty array.
 	 * @return object Instantiated object.
 	 */
-	public function make( $interface_or_class, $arguments = [] ) {
+	public function make( $interface_or_class, $arguments = [] ): object {
 		$injection_chain = $this->resolve(
 			new InjectionChain(),
 			$interface_or_class
@@ -218,7 +218,7 @@ final class SimpleInjector implements Injector {
 	private function make_dependency(
 		InjectionChain $injection_chain,
 		$interface_or_class
-	) {
+	): object {
 		$injection_chain = $this->resolve(
 			$injection_chain,
 			$interface_or_class
@@ -337,7 +337,7 @@ final class SimpleInjector implements Injector {
 	 * @param ReflectionClass $reflection Reflected class to check.
 	 * @return void
 	 */
-	private function ensure_is_instantiable( ReflectionClass $reflection ) {
+	private function ensure_is_instantiable( ReflectionClass $reflection ): void {
 		if ( ! $reflection->isInstantiable() ) {
 			throw FailedToMakeInstance::for_unresolved_interface( $reflection->getName() );
 		}
@@ -487,7 +487,7 @@ final class SimpleInjector implements Injector {
 	 * @param string $class Class to get the shared instance for.
 	 * @return object Shared instance.
 	 */
-	private function get_shared_instance( $class ) {
+	private function get_shared_instance( $class ): object {
 		if ( ! $this->has_shared_instance( $class ) ) {
 			throw FailedToMakeInstance::for_uninstantiated_shared_instance( $class );
 		}
@@ -535,7 +535,7 @@ final class SimpleInjector implements Injector {
 	 * @param string|class-string $class Class to get the reflection for.
 	 * @return ReflectionClass Class reflection.
 	 */
-	private function get_class_reflection( $class ) {
+	private function get_class_reflection( $class ): ReflectionClass {
 		if ( ! class_exists( $class ) ) {
 			throw FailedToMakeInstance::for_unreflectable_class( $class );
 		}

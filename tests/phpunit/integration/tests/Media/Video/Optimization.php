@@ -30,7 +30,7 @@ class Optimization extends TestCase {
 	 */
 	protected $instance;
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->instance = new \Google\Web_Stories\Media\Video\Optimization();
@@ -39,7 +39,7 @@ class Optimization extends TestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$this->instance->register();
 
 		$this->assertTrue( registered_meta_key_exists( 'post', $this->instance::OPTIMIZED_ID_POST_META_KEY, 'attachment' ) );

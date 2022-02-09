@@ -91,7 +91,7 @@ class Stories_Taxonomies_Controller extends WP_REST_Taxonomies_Controller implem
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		$this->register_routes();
 	}
 

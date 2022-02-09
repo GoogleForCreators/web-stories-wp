@@ -38,7 +38,7 @@ class Carousel_Renderer extends Renderer {
 	/**
 	 * Script handle.
 	 */
-	const SCRIPT_HANDLE = 'carousel-view';
+	public const SCRIPT_HANDLE = 'carousel-view';
 
 	/**
 	 * Perform initial setup for object.
@@ -47,7 +47,7 @@ class Carousel_Renderer extends Renderer {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function init(): void {
 
 		parent::init();
 
@@ -61,7 +61,7 @@ class Carousel_Renderer extends Renderer {
 	 *
 	 * @return void
 	 */
-	public function load_assets() {
+	public function load_assets(): void {
 		parent::load_assets();
 
 		$this->assets->register_script_asset( self::SCRIPT_HANDLE );

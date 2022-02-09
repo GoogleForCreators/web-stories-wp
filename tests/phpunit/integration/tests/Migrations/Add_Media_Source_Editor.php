@@ -32,7 +32,7 @@ class Add_Media_Source_Editor extends DependencyInjectedTestCase {
 	 */
 	protected $instance;
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\Migrations\Add_Media_Source_Editor::class );
@@ -43,7 +43,7 @@ class Add_Media_Source_Editor extends DependencyInjectedTestCase {
 	 * @covers ::get_term
 	 * @covers \Google\Web_Stories\Migrations\Add_Media_Source::migrate
 	 */
-	public function test_migrate() {
+	public function test_migrate(): void {
 		$this->instance->migrate();
 		$term = $this->call_private_method( $this->instance, 'get_term' );
 

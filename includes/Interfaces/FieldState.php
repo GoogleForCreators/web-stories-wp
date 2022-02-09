@@ -25,7 +25,7 @@ interface FieldState {
 	 *
 	 * @return Field
 	 */
-	public function title();
+	public function title(): Field;
 
 	/**
 	 * Get excerpt field along with its state for
@@ -35,7 +35,7 @@ interface FieldState {
 	 *
 	 * @return Field
 	 */
-	public function excerpt();
+	public function excerpt(): Field;
 
 	/**
 	 * Get image alignment field along with its state for
@@ -45,7 +45,7 @@ interface FieldState {
 	 *
 	 * @return Field
 	 */
-	public function image_alignment();
+	public function image_alignment(): Field;
 
 	/**
 	 * Get author field along with its state for
@@ -55,7 +55,7 @@ interface FieldState {
 	 *
 	 * @return Field
 	 */
-	public function author();
+	public function author(): Field;
 
 	/**
 	 * Get date field along with its state for
@@ -65,7 +65,7 @@ interface FieldState {
 	 *
 	 * @return Field
 	 */
-	public function date();
+	public function date(): Field;
 
 	/**
 	 * Get archive link field along with its state for
@@ -75,7 +75,7 @@ interface FieldState {
 	 *
 	 * @return Field
 	 */
-	public function archive_link();
+	public function archive_link(): Field;
 
 	/**
 	 * Get sharp corner field along with its state for
@@ -85,5 +85,5 @@ interface FieldState {
 	 *
 	 * @return Field
 	 */
-	public function sharp_corners();
+	public function sharp_corners(): Field;
 }

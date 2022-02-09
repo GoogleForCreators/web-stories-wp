@@ -41,7 +41,7 @@ interface Renderer {
 	 *
 	 * @return void
 	 */
-	public function init();
+	public function init(): void;
 
 	/**
 	 * Render the markup for story.
@@ -51,7 +51,7 @@ interface Renderer {
 	 * @param array $args Array of rendering related arguments.
 	 * @return string Rendering markup.
 	 */
-	public function render( array $args = [] );
+	public function render( array $args = [] ): string;
 
 	/**
 	 * Render a single story markup.

@@ -33,7 +33,7 @@ class Site_Kit extends DependencyInjectedTestCase {
 	 */
 	protected $instance;
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\Integrations\Site_Kit::class );
@@ -42,7 +42,7 @@ class Site_Kit extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$analytics = $this->container->get( 'analytics' );
 		add_action( 'web_stories_print_analytics', [ $analytics, 'print_analytics_tag' ] );
 
@@ -58,7 +58,7 @@ class Site_Kit extends DependencyInjectedTestCase {
 	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
-	public function test_init_analytics_module_active() {
+	public function test_init_analytics_module_active(): void {
 		define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
 		update_option( 'googlesitekit_active_modules', [ 'analytics' ], false );
 		update_option( 'googlesitekit_analytics_settings', [ 'useSnippet' => true ], false );
@@ -75,7 +75,7 @@ class Site_Kit extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::filter_site_kit_gtag_opt
 	 */
-	public function test_filter_site_kit_gtag_opt() {
+	public function test_filter_site_kit_gtag_opt(): void {
 		$gtag = [
 			'vars'     => [
 				'gtag_id' => 'hello',
@@ -93,7 +93,7 @@ class Site_Kit extends DependencyInjectedTestCase {
 	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
-	public function test_filter_site_kit_gtag_opt_single_story() {
+	public function test_filter_site_kit_gtag_opt_single_story(): void {
 		$gtag = [
 			'vars'     => [
 				'gtag_id' => 'hello',
@@ -138,7 +138,7 @@ class Site_Kit extends DependencyInjectedTestCase {
 	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
-	public function test_get_site_kit_active_modules_option() {
+	public function test_get_site_kit_active_modules_option(): void {
 		define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
 
 		$actual_before = $this->call_private_method( $this->instance, 'get_site_kit_active_modules_option' );
@@ -164,7 +164,7 @@ class Site_Kit extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::get_plugin_status
 	 */
-	public function test_get_plugin_status() {
+	public function test_get_plugin_status(): void {
 		$expected = [
 			'installed'       => false,
 			'active'          => false,
@@ -182,7 +182,7 @@ class Site_Kit extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::get_plugin_status
 	 */
-	public function test_get_plugin_status_plugin_installed() {
+	public function test_get_plugin_status_plugin_installed(): void {
 		wp_cache_set( 'plugins', [ 'google-site-kit/google-site-kit.php' ], 'plugins' );
 
 		$expected = [
@@ -205,7 +205,7 @@ class Site_Kit extends DependencyInjectedTestCase {
 	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
-	public function test_get_plugin_status_plugin_active() {
+	public function test_get_plugin_status_plugin_active(): void {
 		define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
 
 		$expected = [
@@ -229,7 +229,7 @@ class Site_Kit extends DependencyInjectedTestCase {
 	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
-	public function test_get_plugin_status_analytics_module_active() {
+	public function test_get_plugin_status_analytics_module_active(): void {
 		define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
 		update_option( 'googlesitekit_active_modules', [ 'analytics' ], false );
 		update_option( 'googlesitekit_analytics_settings', [ 'useSnippet' => true ], false );
@@ -256,7 +256,7 @@ class Site_Kit extends DependencyInjectedTestCase {
 	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
-	public function test_get_plugin_status_analytics_module_no_snippet() {
+	public function test_get_plugin_status_analytics_module_no_snippet(): void {
 		define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
 		update_option( 'googlesitekit_active_modules', [ 'analytics' ], false );
 
@@ -281,7 +281,7 @@ class Site_Kit extends DependencyInjectedTestCase {
 	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
-	public function test_get_plugin_status_adsense_module_active() {
+	public function test_get_plugin_status_adsense_module_active(): void {
 		define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
 		update_option( 'googlesitekit_active_modules', [ 'adsense' ], false );
 		update_option(
@@ -316,7 +316,7 @@ class Site_Kit extends DependencyInjectedTestCase {
 	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
-	public function test_get_plugin_status_adsense_module_no_snippet() {
+	public function test_get_plugin_status_adsense_module_no_snippet(): void {
 		define( 'GOOGLESITEKIT_VERSION', '1.2.3' );
 		update_option( 'googlesitekit_active_modules', [ 'adsense' ], false );
 

@@ -36,32 +36,32 @@ class Image_Sizes extends Service_Base {
 	/**
 	 * The image size for the poster-portrait-src.
 	 */
-	const POSTER_PORTRAIT_IMAGE_SIZE = 'web-stories-poster-portrait';
+	public const POSTER_PORTRAIT_IMAGE_SIZE = 'web-stories-poster-portrait';
 
 	/**
 	 * The image dimensions for the poster-portrait-src.
 	 */
-	const POSTER_PORTRAIT_IMAGE_DIMENSIONS = [ 640, 853 ];
+	public const POSTER_PORTRAIT_IMAGE_DIMENSIONS = [ 640, 853 ];
 
 	/**
 	 * Name of size used in media library.
 	 */
-	const STORY_THUMBNAIL_IMAGE_SIZE = 'web-stories-thumbnail';
+	public const STORY_THUMBNAIL_IMAGE_SIZE = 'web-stories-thumbnail';
 
 	/**
 	 * The image dimensions for media library thumbnails.
 	 */
-	const STORY_THUMBNAIL_IMAGE_DIMENSIONS = [ 150, 9999 ];
+	public const STORY_THUMBNAIL_IMAGE_DIMENSIONS = [ 150, 9999 ];
 
 	/**
 	 * The image size for the publisher logo.
 	 */
-	const PUBLISHER_LOGO_IMAGE_SIZE = 'web-stories-publisher-logo';
+	public const PUBLISHER_LOGO_IMAGE_SIZE = 'web-stories-publisher-logo';
 
 	/**
 	 * The image dimensions for the publisher logo.
 	 */
-	const PUBLISHER_LOGO_IMAGE_DIMENSIONS = [ 96, 96 ];
+	public const PUBLISHER_LOGO_IMAGE_DIMENSIONS = [ 96, 96 ];
 
 	/**
 	 * Init.
@@ -70,7 +70,7 @@ class Image_Sizes extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		$this->add_image_sizes();
 		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'wp_prepare_attachment_for_js' ], 10, 2 );
 	}
@@ -84,7 +84,7 @@ class Image_Sizes extends Service_Base {
 	 *
 	 * @return void
 	 */
-	protected function add_image_sizes() {
+	protected function add_image_sizes(): void {
 		// Used for amp-story[poster-portrait-src]: The story poster in portrait format (3x4 aspect ratio).
 		add_image_size(
 			self::POSTER_PORTRAIT_IMAGE_SIZE,

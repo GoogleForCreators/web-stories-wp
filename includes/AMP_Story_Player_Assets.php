@@ -38,7 +38,7 @@ class AMP_Story_Player_Assets implements Service, Registerable {
 	/**
 	 * Script handle.
 	 */
-	const SCRIPT_HANDLE = 'standalone-amp-story-player';
+	public const SCRIPT_HANDLE = 'standalone-amp-story-player';
 
 	/**
 	 * Runs on instantiation.
@@ -47,7 +47,7 @@ class AMP_Story_Player_Assets implements Service, Registerable {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_action( 'wp_default_styles', [ $this, 'register_style' ] );
 		add_action( 'wp_default_scripts', [ $this, 'register_script' ] );
 	}
@@ -60,7 +60,7 @@ class AMP_Story_Player_Assets implements Service, Registerable {
 	 * @param WP_Styles $wp_styles WP_Styles instance.
 	 * @return void
 	 */
-	public function register_style( WP_Styles $wp_styles ) {
+	public function register_style( WP_Styles $wp_styles ): void {
 		$wp_styles->add(
 			self::SCRIPT_HANDLE,
 			'https://cdn.ampproject.org/amp-story-player-v0.css',
@@ -77,7 +77,7 @@ class AMP_Story_Player_Assets implements Service, Registerable {
 	 * @param WP_Scripts $wp_scripts WP_Scripts instance.
 	 * @return void
 	 */
-	public function register_script( WP_Scripts $wp_scripts ) {
+	public function register_script( WP_Scripts $wp_scripts ): void {
 		$wp_scripts->add(
 			self::SCRIPT_HANDLE,
 			'https://cdn.ampproject.org/amp-story-player-v0.js',

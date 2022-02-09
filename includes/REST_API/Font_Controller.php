@@ -66,7 +66,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @return void
 	 */
-	public function register_routes() {
+	public function register_routes(): void {
 		register_rest_route(
 			$this->namespace,
 			'/' . $this->rest_base,
@@ -114,7 +114,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @return array List of Google fonts.
 	 */
-	protected function get_builtin_fonts() {
+	protected function get_builtin_fonts(): array {
 		$file = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/data/fonts/fonts.json';
 
 		if ( ! is_readable( $file ) ) {
@@ -502,7 +502,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @return array Collection parameters.
 	 */
-	public function get_collection_params() {
+	public function get_collection_params(): array {
 		$query_params = parent::get_collection_params();
 
 		$query_params['context']['default'] = 'view';

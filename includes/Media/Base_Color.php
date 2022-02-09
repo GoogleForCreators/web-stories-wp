@@ -37,7 +37,7 @@ class Base_Color extends Service_Base implements HasMeta {
 	/**
 	 * The base color meta key.
 	 */
-	const BASE_COLOR_POST_META_KEY = 'web_stories_base_color';
+	public const BASE_COLOR_POST_META_KEY = 'web_stories_base_color';
 
 	/**
 	 * Init.
@@ -46,7 +46,7 @@ class Base_Color extends Service_Base implements HasMeta {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		$this->register_meta();
 
 		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'wp_prepare_attachment_for_js' ] );
@@ -59,7 +59,7 @@ class Base_Color extends Service_Base implements HasMeta {
 	 *
 	 * @return void
 	 */
-	public function register_meta() {
+	public function register_meta(): void {
 		register_meta(
 			'post',
 			self::BASE_COLOR_POST_META_KEY,

@@ -28,7 +28,7 @@ class Analytics extends DependencyInjectedTestCase {
 	 */
 	private $instance;
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\Analytics::class );
@@ -37,7 +37,7 @@ class Analytics extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$this->instance->register();
 
 		$this->assertSame( 10, has_filter( 'web_stories_print_analytics', [ $this->instance, 'print_analytics_tag' ] ) );
@@ -46,7 +46,7 @@ class Analytics extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::get_tracking_id
 	 */
-	public function test_get_tracking_id_casts_to_string() {
+	public function test_get_tracking_id_casts_to_string(): void {
 		update_option( Settings::SETTING_NAME_TRACKING_ID, 123456789, false );
 
 		$this->assertSame( '123456789', $this->instance->get_tracking_id() );
@@ -55,7 +55,7 @@ class Analytics extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::get_default_configuration
 	 */
-	public function test_get_default_configuration() {
+	public function test_get_default_configuration(): void {
 		$tracking_id = '123456789';
 		$actual      = $this->instance->get_default_configuration( $tracking_id );
 		$this->assertArrayHasKey( 'vars', $actual );
@@ -81,7 +81,7 @@ class Analytics extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::print_analytics_tag
 	 */
-	public function test_print_analytics_tag() {
+	public function test_print_analytics_tag(): void {
 		$actual_before = get_echo( [ $this->instance, 'print_analytics_tag' ] );
 
 		update_option( Settings::SETTING_NAME_TRACKING_ID, 123456789, false );
@@ -96,7 +96,7 @@ class Analytics extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::print_analytics_tag
 	 */
-	public function test_print_analytics_tag_legacy() {
+	public function test_print_analytics_tag_legacy(): void {
 		$actual_before = get_echo( [ $this->instance, 'print_analytics_tag' ] );
 
 		update_option( Settings::SETTING_NAME_TRACKING_ID, 123456789, false );

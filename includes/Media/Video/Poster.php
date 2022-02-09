@@ -38,12 +38,12 @@ class Poster extends Service_Base implements HasMeta {
 	/**
 	 * The poster post meta key.
 	 */
-	const POSTER_POST_META_KEY = 'web_stories_is_poster';
+	public const POSTER_POST_META_KEY = 'web_stories_is_poster';
 
 	/**
 	 * The poster id post meta key.
 	 */
-	const POSTER_ID_POST_META_KEY = 'web_stories_poster_id';
+	public const POSTER_ID_POST_META_KEY = 'web_stories_poster_id';
 
 	/**
 	 * Media_Source_Taxonomy instance.
@@ -70,7 +70,7 @@ class Poster extends Service_Base implements HasMeta {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		$this->register_meta();
 		add_action( 'rest_api_init', [ $this, 'rest_api_init' ] );
 		add_action( 'delete_attachment', [ $this, 'delete_video_poster' ] );
@@ -84,7 +84,7 @@ class Poster extends Service_Base implements HasMeta {
 	 *
 	 * @return void
 	 */
-	public function register_meta() {
+	public function register_meta(): void {
 		register_meta(
 			'post',
 			self::POSTER_ID_POST_META_KEY,
@@ -107,7 +107,7 @@ class Poster extends Service_Base implements HasMeta {
 	 *
 	 * @return void
 	 */
-	public function rest_api_init() {
+	public function rest_api_init(): void {
 		register_rest_field(
 			'attachment',
 			'featured_media',
@@ -225,7 +225,7 @@ class Poster extends Service_Base implements HasMeta {
 	 * @param int $attachment_id ID of the attachment to be deleted.
 	 * @return void
 	 */
-	public function delete_video_poster( int $attachment_id ) {
+	public function delete_video_poster( int $attachment_id ): void {
 		/**
 		 * Post ID.
 		 *

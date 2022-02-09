@@ -57,7 +57,7 @@ abstract class Add_Media_Source extends Migrate_Base {
 	 *
 	 * @return void
 	 */
-	public function migrate() {
+	public function migrate(): void {
 		wp_insert_term( $this->get_term(), $this->media_source_taxonomy->get_taxonomy_slug() );
 	}
 

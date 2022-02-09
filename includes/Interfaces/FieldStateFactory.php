@@ -24,5 +24,5 @@ interface FieldStateFactory {
 	 *
 	 * @return FieldState
 	 */
-	public function get_field();
+	public function get_field(): FieldState;
 }

@@ -12,7 +12,7 @@ class Image extends TestCase {
 	/**
 	 * @covers ::render
 	 */
-	public function test_render() {
+	public function test_render(): void {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_title'   => 'test title',

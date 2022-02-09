@@ -35,7 +35,7 @@ class Embed_Shortcode extends Embed_Base {
 	/**
 	 * Shortcode name.
 	 */
-	const SHORTCODE_NAME = 'web_stories_embed';
+	public const SHORTCODE_NAME = 'web_stories_embed';
 
 	/**
 	 * Initializes the Web Stories embed shortcode.
@@ -44,7 +44,7 @@ class Embed_Shortcode extends Embed_Base {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_shortcode( self::SHORTCODE_NAME, [ $this, 'render_shortcode' ] );
 	}
 

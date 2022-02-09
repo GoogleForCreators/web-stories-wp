@@ -63,7 +63,7 @@ class Factory implements FieldStateFactory {
 	 * @param string $view View Type.
 	 * @return FieldState
 	 */
-	public function get_field( $view = 'grid' ) {
+	public function get_field( $view = 'grid' ): FieldState {
 		switch ( $view ) {
 			case 'grid':
 				/**

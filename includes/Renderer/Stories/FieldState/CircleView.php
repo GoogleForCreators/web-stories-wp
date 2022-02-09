@@ -103,7 +103,7 @@ final class CircleView extends BaseFieldState {
 	 *
 	 * @return BaseField
 	 */
-	public function circle_size() {
+	public function circle_size(): BaseField {
 		$label = parent::circle_size()->label();
 
 		return $this->prepare_field(

@@ -31,7 +31,7 @@ namespace Google\Web_Stories;
  * @param array $query_args Query arguments for stories.
  * @return void
  */
-function render_stories( array $attrs = [], array $query_args = [] ) {
+function render_stories( array $attrs = [], array $query_args = [] ): void {
 	$stories_obj = new Story_Query( $attrs, $query_args );
 	//phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo $stories_obj->render();
@@ -59,7 +59,7 @@ function get_stories( array $attrs = [], array $query_args = [] ): array {
  *
  * @return void
  */
-function render_theme_stories() {
+function render_theme_stories(): void {
 	$injector = Services::get_injector();
 	if ( ! method_exists( $injector, 'make' ) ) {
 		return;
