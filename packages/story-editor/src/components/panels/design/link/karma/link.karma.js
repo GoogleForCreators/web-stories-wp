@@ -379,7 +379,10 @@ describe('Link Panel', () => {
 
   describe('CUJ: Creator Can Add A Link: Remove applied link', () => {
     beforeEach(async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
       await waitFor(() => {
         if (!fixture.editor.canvas.framesLayer.frames[1].node) {
           throw new Error('node not ready');

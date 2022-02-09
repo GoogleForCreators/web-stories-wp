@@ -36,14 +36,12 @@ function updateElement(element) {
     if (element.resource.sizes) {
       for (const size of Object.keys(element.resource.sizes)) {
         // Disable reason: not acting on untrusted user input.
-        /* eslint-disable security/detect-object-injection */
         const data = element.resource.sizes[size];
         element.resource.sizes[size] = {
           ...data,
           width: Number(data.width),
           height: Number(data.height),
         };
-        /* eslint-enable security/detect-object-injection */
       }
     }
   }

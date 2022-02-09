@@ -41,7 +41,8 @@ import {
 } from '../../../constants';
 import getPosterName from './getPosterName';
 
-const isDevelopment = process.env.NODE_ENV === 'development';
+const isDevelopment =
+  typeof WEB_STORIES_ENV !== 'undefined' && WEB_STORIES_ENV === 'development';
 
 /**
  * Checks whether the file size is too large for transcoding.

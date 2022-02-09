@@ -70,11 +70,11 @@ describe('Inline style override', () => {
         // Expect correct result
         const actual = getTextContent();
         const expected =
-          'Fi<span style="text-transform: uppercase">foo</span>ll in some text';
+          'Lo<span style="text-transform: uppercase">foo</span>rem ipsum dolor sit amet, consectetur adipiscing elit.';
         expect(actual).toBe(expected);
 
         await data.fixture.snapshot(
-          '"Fifooll in some text" in mixed formatting'
+          '"Lofoorem ipsum dolor sit amet, ..." in mixed formatting'
         );
       });
     });
@@ -100,11 +100,11 @@ describe('Inline style override', () => {
         // Expect correct result
         const actual = getTextContent();
         const expected =
-          'Fi<span style="font-weight: 700">foo</span>ll in some text';
+          'Lo<span style="font-weight: 700">foo</span>rem ipsum dolor sit amet, consectetur adipiscing elit.';
         expect(actual).toBe(expected);
 
         await data.fixture.snapshot(
-          '"Fifooll in some text" in mixed formatting'
+          '"Lofoorem ipsum dolor sit amet, ..." in mixed formatting'
         );
       });
 
@@ -128,11 +128,11 @@ describe('Inline style override', () => {
         // Expect correct result
         const actual = getTextContent();
         const expected =
-          'Fi<span style="font-weight: 700">foo</span>ll in some text';
+          'Lo<span style="font-weight: 700">foo</span>rem ipsum dolor sit amet, consectetur adipiscing elit.';
         expect(actual).toBe(expected);
 
         await data.fixture.snapshot(
-          '"Fifooll in some text" in mixed formatting'
+          '"Lofoorem ipsum dolor sit amet, ..." in mixed formatting'
         );
       });
     });
@@ -162,11 +162,11 @@ describe('Inline style override', () => {
         // Expect correct result
         const actual = getTextContent();
         const expected =
-          'Fi<span style="font-style: italic; text-decoration: underline">foo</span>ll in some text';
+          'Lo<span style="font-style: italic; text-decoration: underline">foo</span>rem ipsum dolor sit amet, consectetur adipiscing elit.';
         expect(actual).toBe(expected);
 
         await data.fixture.snapshot(
-          '"Fifooll in some text" in mixed formatting'
+          '"Lofoorem ipsum dolor sit amet..." in mixed formatting'
         );
       });
 
@@ -234,11 +234,11 @@ describe('Inline style override', () => {
         // Expect correct result
         const actual = getTextContent();
         const expected =
-          'Fi<span style="font-weight: 900">foo</span>ll in some text';
+          'Lo<span style="font-weight: 900">foo</span>rem ipsum dolor sit amet, consectetur adipiscing elit.';
         expect(actual).toBe(expected);
 
         await data.fixture.snapshot(
-          '"Fifooll in some text" in mixed formatting'
+          '"Lofoorem ipsum dolor sit amet..." in mixed formatting'
         );
       });
     });
@@ -277,7 +277,7 @@ describe('Inline style override', () => {
       // Expect correct result
       const actual = getTextContent();
       const expected =
-        '<span style="font-style: italic">Fi</span><span style="font-weight: 700">foo</span><span style="font-style: italic">ll in some text</span>';
+        '<span style="font-style: italic">Lo</span><span style="font-weight: 700">foo</span><span style="font-style: italic">rem ipsum dolor sit amet, consectetur adipiscing elit.</span>';
       expect(actual).toBe(expected);
 
       await data.fixture.snapshot('"Fifooll in some text" in mixed formatting');
@@ -316,9 +316,10 @@ describe('Inline style override', () => {
 
     // Expect correct result
     const actual = getTextContent();
-    const expected = '<span style="font-weight: 700">Full in some text</span>';
+    const expected =
+      '<span style="font-weight: 700">Lurem ipsum dolor sit amet, consectetur adipiscing elit.</span>';
     expect(actual).toBe(expected);
-    await data.fixture.snapshot('"Full in some text" in bold');
+    await data.fixture.snapshot('"Lurem ipsum dolor sit amet, ..." in bold');
   });
 
   it('should keep formatting when all text is replaced', async () => {

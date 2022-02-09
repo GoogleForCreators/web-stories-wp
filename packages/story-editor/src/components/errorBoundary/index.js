@@ -53,7 +53,7 @@ class ErrorBoundary extends Component {
 }
 
 const shouldDisableErrorBoundaries =
-  process.env.DISABLE_ERROR_BOUNDARIES === 'true';
+  WEB_STORIES_DISABLE_ERROR_BOUNDARIES === 'true';
 export default shouldDisableErrorBoundaries
   ? ({ children }) => children
   : ErrorBoundary;

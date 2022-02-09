@@ -152,7 +152,7 @@ function StoriesView({
   const handleCopyStoryLink = useCallback(
     (story) => {
       setContextMenuId(-1);
-      global.navigator.clipboard.writeText(story.link);
+      window.navigator.clipboard.writeText(story.link);
 
       showSnackbar({
         message: sprintf(

@@ -66,6 +66,7 @@ const Footer = styled.div`
 `;
 
 const MainContent = ({
+  handleReviewChecklist,
   handleUpdateStoryInfo,
   handleUpdateSlug,
   inputValues,
@@ -86,7 +87,11 @@ const MainContent = ({
         <Text>{__('Panels go here', 'web-stories')}</Text>
       </PanelContainer>
       <Footer>
-        <Button type={BUTTON_TYPES.PRIMARY} size={BUTTON_SIZES.SMALL}>
+        <Button
+          type={BUTTON_TYPES.PRIMARY}
+          size={BUTTON_SIZES.SMALL}
+          onClick={handleReviewChecklist}
+        >
           {__('Checklist', 'web-stories')}
         </Button>
       </Footer>
@@ -97,6 +102,7 @@ const MainContent = ({
 export default MainContent;
 
 MainContent.propTypes = {
+  handleReviewChecklist: PropTypes.func,
   handleUpdateStoryInfo: PropTypes.func,
   handleUpdateSlug: PropTypes.func,
   inputValues: MANDATORY_INPUT_VALUE_TYPES, // update types when panel is figured out
