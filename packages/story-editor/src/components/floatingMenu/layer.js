@@ -53,9 +53,9 @@ function FloatingMenuLayer() {
     hasSelection:
       selectedElements.filter(({ isBackground }) => !isBackground).length > 0,
     hasMultiSelection: selectedElements.length > 1,
-    selectedElementTypes: [
-      ...new Set(selectedElements.map(({ type }) => type)),
-    ].sort(),
+    selectedElementTypes: [...new Set(selectedElements.map(({ type }) => type))]
+      .sort()
+      .join('-'),
     selectionIdentifier: selectedElements.map(({ id }) => id).join(''),
   }));
 
@@ -126,6 +126,7 @@ function FloatingMenuLayer() {
       handleDismiss={handleDismiss}
       hasMultiSelection={hasMultiSelection}
       selectedElementTypes={selectedElementTypes}
+      selectionIdentifier={selectionIdentifier}
     />
   );
 }

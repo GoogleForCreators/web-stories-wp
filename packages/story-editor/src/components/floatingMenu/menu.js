@@ -37,7 +37,12 @@ const MenuWrapper = styled.section`
 
 const FloatingMenu = memo(
   forwardRef(function FloatingMenu(
-    { hasMultiSelection, selectedElementTypes, handleDismiss },
+    {
+      hasMultiSelection,
+      selectionIdentifier,
+      selectedElementTypes,
+      handleDismiss,
+    },
     ref
   ) {
     useLayoutEffect(() => {
@@ -45,7 +50,7 @@ const FloatingMenu = memo(
       const bounds = node.getBoundingClientRect();
       node.style.setProperty('--width', `${bounds.width.toFixed(2)}px`);
       node.style.setProperty('--height', `${bounds.height.toFixed(2)}px`);
-    }, [ref]);
+    }, [ref, selectionIdentifier]);
 
     return (
       <MenuWrapper ref={ref} aria-label={__('Design menu', 'web-stories')}>
@@ -80,6 +85,7 @@ const FloatingMenu = memo(
 FloatingMenu.propTypes = {
   handleDismiss: PropTypes.func.isRequired,
   selectedElementTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  selectionIdentifier: PropTypes.string.isRequired,
   hasMultiSelection: PropTypes.bool.isRequired,
 };
 

@@ -33,11 +33,12 @@ import Video from './video';
 const FloatingMenuSelector = memo(function FloatingMenuSelector({
   selectedElementTypes,
 }) {
-  if (selectedElementTypes.length > 1) {
+  const selectedElementTypeArray = selectedElementTypes.split('-');
+  if (selectedElementTypeArray.length > 1) {
     return <Mixed />;
   }
 
-  const [selectedElementType] = selectedElementTypes;
+  const [selectedElementType] = selectedElementTypeArray;
 
   switch (selectedElementType) {
     case 'gif':
