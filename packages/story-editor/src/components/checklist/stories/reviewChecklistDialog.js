@@ -13,43 +13,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
-import { useCallback, useState } from '@googleforcreators/react';
-import { Button, BUTTON_TYPES } from '@googleforcreators/design-system';
+
 /**
  * Internal dependencies
  */
 import ReviewChecklistDialog from '../reviewChecklistDialog';
+import { CheckpointContext } from '../checkpointContext';
 
 export default {
   title: 'Stories Editor/Components/Dialog/Review Prepublish Checklist',
   component: ReviewChecklistDialog,
+  args: {
+    shouldReviewDialogBeSeen: true,
+    isOpen: true,
+  },
+  argTypes: {
+    onIgnore: { action: 'on (ignore) secondary triggered' },
+    onReview: { action: 'on review (primary) triggered' },
+    onClose: { action: 'close dialog triggered' },
+  },
 };
 
-export const _default = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const toggleDialog = useCallback(
-    () => setIsOpen((prevIsOpen) => !prevIsOpen),
-    []
-  );
+export const _default = (args) => {
+  const prepublishChecklistContextValue = {
+    state: {
+      shouldReviewDialogBeSeen: args.shouldReviewDialogBeSeen,
+    },
+    actions: {
+      onReviewDialogRequest: args.onReview,
+    },
+  };
 
   return (
-    <>
-      <Button type={BUTTON_TYPES.PRIMARY} onClick={toggleDialog}>
-        {'Open Dialog'}
-      </Button>
-      <ReviewChecklistDialog
-        isOpen={isOpen}
-        onClose={() => {
-          toggleDialog();
-          action('close dialog triggered')();
-        }}
-        onIgnore={action('on (ignore) secondary triggered')}
-        onReview={action('on review (primary) triggered')}
-      />
-    </>
+    <CheckpointContext.Provider value={prepublishChecklistContextValue}>
+      <ReviewChecklistDialog {...args} />
+    </CheckpointContext.Provider>
   );
 };
