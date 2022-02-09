@@ -102,6 +102,7 @@
     </properties>
     <exclude-pattern>web-stories.php</exclude-pattern>
     <exclude-pattern>includes/compat/Web_Stories_Compatibility.php</exclude-pattern>
+    <exclude-pattern>includes/Interfaces/FieldStateFactory.php</exclude-pattern>
     <exclude-pattern>includes/Renderer/Stories/*</exclude-pattern>
   </rule>
 
