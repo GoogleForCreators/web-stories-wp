@@ -34,10 +34,10 @@ const StyledButton = styled(BaseButton)`
   width: 100%;
   background-color: transparent;
 
-  ${({ $isHorizontal, $isIconMenu, $forcePadding, theme }) => {
-    const hasHeight = $isHorizontal; // In a horizontal menu, all buttons are 32px high
-    const hasNoPadding = !$forcePadding && ($isHorizontal || $isIconMenu);
-    const hasBorderRadius = $isHorizontal || $isIconMenu;
+  ${({ isHorizontal, isIconMenu, forcePadding, theme }) => {
+    const hasHeight = isHorizontal; // In a horizontal menu, all buttons are 32px high
+    const hasNoPadding = !forcePadding && (isHorizontal || isIconMenu);
+    const hasBorderRadius = isHorizontal || isIconMenu;
     return {
       height: hasHeight && '32px',
       padding: hasNoPadding && 0,
@@ -73,8 +73,8 @@ const StyledButton = styled(BaseButton)`
  * @param {Function} props.onClick Click event handler.
  * @param {boolean} props.dismissOnClick If to call onDismiss when clicking.
  * @param {Function} props.onFocus Focus event handler.
+ * @param {boolean} props.forcePadding Force padding to button regardless of mode.
  * @param {Object} ref Ref object.
- * @param props.forcePadding
  * @return {Node} The react node
  */
 function ButtonWithRef(
@@ -128,9 +128,9 @@ function ButtonWithRef(
       id={elementId}
       tabIndex={focusedId === elementId ? 0 : -1}
       role="menuitem"
-      $isIconMenu={isIconMenu}
-      $isHorizontal={isHorizontal}
-      $forcePadding={forcePadding}
+      isIconMenu={isIconMenu}
+      isHorizontal={isHorizontal}
+      forcePadding={forcePadding}
       onBlur={handleBlur}
       onClick={handleClick}
       onFocus={handleFocus}
