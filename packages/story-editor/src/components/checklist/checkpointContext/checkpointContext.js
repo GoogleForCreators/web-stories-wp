@@ -118,6 +118,12 @@ function ChecklistCheckpointProvider({ children }) {
     dispatch(PPC_CHECKPOINT_ACTION.ON_PUBLISH_CLICKED);
   }, []);
 
+  // TODO: when #10115 feature flag is getting deprecated, the review dialog request dispatch should be cleaned up
+  const onPublishDialogChecklistRequest = useCallback(() => {
+    setReviewDialogRequested(true);
+    dispatch(PPC_CHECKPOINT_ACTION.ON_PUBLISH_CLICKED);
+  }, []);
+
   const onResetReviewDialogRequest = useCallback(() => {
     setReviewDialogRequested(false);
   }, []);
@@ -133,10 +139,12 @@ function ChecklistCheckpointProvider({ children }) {
         updateHighPriorityCount,
         onReviewDialogRequest,
         onResetReviewDialogRequest,
+        onPublishDialogChecklistRequest,
       },
     }),
     [
       checkpointState,
+      onPublishDialogChecklistRequest,
       onReviewDialogRequest,
       onResetReviewDialogRequest,
       reviewDialogRequested,
