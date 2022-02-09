@@ -25,6 +25,7 @@ import { default as Gallery } from 'react-photo-album';
  * Internal dependencies
  */
 import MediaElement from './mediaElement';
+import { GalleryContainer } from './styles';
 
 const PHOTO_MARGIN = 4;
 
@@ -52,21 +53,8 @@ function MediaGallery({ resources, onInsert, providerType, canEditMedia }) {
     height: resource.height,
   }));
 
-  const containerRenderer = ({ children, containerProps }, ref) => {
-    return (
-      <div
-        ref={ref}
-        {...containerProps}
-        style={{
-          ...containerProps.style,
-          flexDirection: 'row',
-          flexWrap: 'wrap',
-          justifyContent: 'space-evenly',
-        }}
-      >
-        {children}
-      </div>
-    );
+  const containerRenderer = ({ children }, ref) => {
+    return <GalleryContainer ref={ref}>{children}</GalleryContainer>;
   };
   const rowRenderer = ({ children }) => {
     return children;

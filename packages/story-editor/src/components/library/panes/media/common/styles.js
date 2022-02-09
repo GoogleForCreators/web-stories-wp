@@ -36,6 +36,13 @@ export const PaneHeader = styled.div`
   flex: 0 1 auto;
 `;
 
+export const GalleryContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly';
+`;
+
 export const MediaGalleryContainer = styled.div`
   overflow-y: scroll;
   overflow-x: hidden;
