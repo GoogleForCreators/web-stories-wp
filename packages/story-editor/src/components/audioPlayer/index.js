@@ -97,12 +97,7 @@ function AudioPlayer({ title, src, mimeType, tracks = [], audioId }) {
   return (
     <Wrapper>
       {/* eslint-disable-next-line jsx-a11y/media-has-caption, styled-components-a11y/media-has-caption */}
-      <Audio
-        crossOrigin="anonymous"
-        loop
-        ref={playerRef}
-        id={audioId}
-      >
+      <Audio crossOrigin="anonymous" loop ref={playerRef} id={audioId}>
         <source src={src} type={mimeType} />
         {tracks &&
           tracks.map(({ srclang, label, track: trackSrc, id: key }, i) => (
