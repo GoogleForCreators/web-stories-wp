@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
-
-/**
  * Internal dependencies
  */
 import PreviewErrorDialog from '../previewErrorDialog';
@@ -27,14 +22,15 @@ import PreviewErrorDialog from '../previewErrorDialog';
 export default {
   title: 'Stories Editor/Components/Dialog/Preview Error',
   component: PreviewErrorDialog,
+  args: {
+    isOpen: true,
+  },
+  argTypes: {
+    onClose: { action: 'closed' },
+    onRetry: { action: 'retried' },
+  },
 };
 
-export const _default = () => {
-  return (
-    <PreviewErrorDialog
-      isOpen
-      onClose={action('closed')}
-      onRetry={action('retried')}
-    />
-  );
+export const _default = (args) => {
+  return <PreviewErrorDialog {...args} />;
 };
