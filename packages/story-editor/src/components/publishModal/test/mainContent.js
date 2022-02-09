@@ -22,7 +22,7 @@ import { axe } from 'jest-axe';
  * Internal dependencies
  */
 import renderWithTheme from '../../../testUtils/renderWithTheme';
-import { InspectorContext } from '../../..';
+import InspectorContext from '../../inspector/context';
 import { INPUT_KEYS } from '../constants';
 import MainContent from '../mainContent';
 

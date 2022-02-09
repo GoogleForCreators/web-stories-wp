@@ -28,7 +28,8 @@ import { __ } from '@googleforcreators/i18n';
  * Internal dependencies
  */
 import { MANDATORY_INPUT_VALUE_TYPES } from '../types';
-import { DOCUMENT_PANEL_NAMES, useInspector } from '../../..';
+import useInspector from '../../inspector/useInspector';
+import { DOCUMENT_PANEL_NAMES } from '../../panels/document';
 import MandatoryStoryInfo from './mandatoryStoryInfo';
 import StoryPreview from './storyPreview';
 
