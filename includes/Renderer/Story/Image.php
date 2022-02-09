@@ -77,11 +77,13 @@ class Image {
 				<?php
 				if ( ! empty( $this->story->get_poster_portrait() ) ) {
 					printf(
-						'<img src="%1$s" width="%2$d" height="%3$d" alt="%4$s" />',
+						'<img src="%1$s" width="%2$d" height="%3$d" alt="%4$s" srcset="%5$s" sizes="%6$s"/>',
 						esc_url( $this->story->get_poster_portrait() ),
 						absint( $args['width'] ),
 						absint( $args['height'] ),
-						esc_attr( $this->story->get_title() )
+						esc_attr( $this->story->get_title() ),
+						esc_attr( $this->story->get_publisher_logo_srcset() ),
+						esc_attr( $this->story->get_publisher_logo_sizes() )
 					);
 				} else {
 					echo esc_html( $this->story->get_title() );
