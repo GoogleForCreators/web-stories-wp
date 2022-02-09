@@ -53,6 +53,7 @@ const AddButton = styled(Button).attrs({ variant: BUTTON_VARIANTS.ICON })`
   border-radius: 100%;
   width: 28px;
   height: 28px;
+  opacity: ${({ display }) => (display ? '1' : '0')};
 `;
 
 const IconContainer = styled.div`
@@ -83,15 +84,12 @@ const menuStylesOverride = css`
  * @param {Object} props Component props.
  * @param {Object} props.resource Selected media element's resource object.
  * @param {boolean} props.display Whether the more icon should be displayed.
- * @param {boolean} props.isMenuOpen If the dropdown menu is open.
  * @param {Function} props.onInsert Callback for inserting media.
- * @param {Function} props.onMenuOpen Callback for when menu is opened.
- * @param {Function} props.onMenuCancelled Callback for when menu is closed without any selections.
- * @param {Function} props.onMenuSelected Callback for when menu is closed and an option selected.
  * @param {number} props.width Media width.
+ * @param {number} props.index Element index in the gallery.
  * @return {null|*} Element or null if should not display the More icon.
  */
-function InsertionMenu({ resource, display, onInsert, width }) {
+function InsertionMenu({ resource, display, onInsert, width, index }) {
   const insertButtonRef = useRef();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const onMenuOpen = useCallback(() => setIsMenuOpen(true), []);
@@ -146,40 +144,40 @@ function InsertionMenu({ resource, display, onInsert, width }) {
   // Keep icon and menu displayed if menu is open (even if user's mouse leaves the area).
   return (
     <MenuContainer>
+      <AddButton
+        ref={insertButtonRef}
+        onClick={onMenuOpen}
+        aria-label={__('Open insertion menu', 'web-stories')}
+        aria-pressed={isMenuOpen}
+        aria-haspopup
+        aria-expanded={isMenuOpen}
+        aria-owns={isMenuOpen ? listId : null}
+        id={buttonId}
+        display={display}
+        tabIndex={index === 0 ? 0 : -1}
+      >
+        <IconContainer>
+          <Icons.PlusFilled />
+        </IconContainer>
+      </AddButton>
       {(display || isMenuOpen) && (
-        <>
-          <AddButton
-            ref={insertButtonRef}
-            onClick={onMenuOpen}
-            aria-label={__('Open insertion menu', 'web-stories')}
-            aria-pressed={isMenuOpen}
-            aria-haspopup
-            aria-expanded={isMenuOpen}
-            aria-owns={isMenuOpen ? listId : null}
-            id={buttonId}
-          >
-            <IconContainer>
-              <Icons.PlusFilled />
-            </IconContainer>
-          </AddButton>
-          <Popup
-            anchor={insertButtonRef}
-            placement={PLACEMENT.BOTTOM_START}
-            isOpen={isMenuOpen}
-          >
-            <DropDownContainer>
-              <Menu
-                parentId={buttonId}
-                listId={listId}
-                onMenuItemClick={handleCurrentValue}
-                options={options}
-                onDismissMenu={onMenuCancelled}
-                hasMenuRole
-                menuStylesOverride={menuStylesOverride}
-              />
-            </DropDownContainer>
-          </Popup>
-        </>
+        <Popup
+          anchor={insertButtonRef}
+          placement={PLACEMENT.BOTTOM_START}
+          isOpen={isMenuOpen}
+        >
+          <DropDownContainer>
+            <Menu
+              parentId={buttonId}
+              listId={listId}
+              onMenuItemClick={handleCurrentValue}
+              options={options}
+              onDismissMenu={onMenuCancelled}
+              hasMenuRole
+              menuStylesOverride={menuStylesOverride}
+            />
+          </DropDownContainer>
+        </Popup>
       )}
     </MenuContainer>
   );
@@ -190,6 +188,7 @@ InsertionMenu.propTypes = {
   display: PropTypes.bool.isRequired,
   onInsert: PropTypes.func.isRequired,
   width: PropTypes.number.isRequired,
+  index: PropTypes.number.isRequired,
 };
 
 export default InsertionMenu;

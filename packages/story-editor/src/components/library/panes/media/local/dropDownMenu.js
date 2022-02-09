@@ -53,6 +53,7 @@ const MoreButton = styled(Button).attrs({ variant: BUTTON_VARIANTS.ICON })`
   border-radius: 100%;
   width: 28px;
   height: 28px;
+  opacity: ${({ display }) => (display ? '1' : '0')};
 `;
 
 const IconContainer = styled.div`
@@ -86,6 +87,7 @@ const menuStylesOverride = css`
  * @param {Function} props.onMenuOpen Callback for when menu is opened.
  * @param {Function} props.onMenuCancelled Callback for when menu is closed without any selections.
  * @param {Function} props.onMenuSelected Callback for when menu is closed and an option selected.
+ * @param {number} props.index Element index in the gallery.
  * @return {null|*} Element or null if should not display the More icon.
  */
 function DropDownMenu({
@@ -95,6 +97,7 @@ function DropDownMenu({
   onMenuOpen,
   onMenuCancelled,
   onMenuSelected,
+  index,
 }) {
   const options = [
     {
@@ -148,41 +151,41 @@ function DropDownMenu({
   return (
     canTranscodeResource(resource) && ( // Don't show menu if resource is being processed.
       <MenuContainer>
+        <MoreButton
+          ref={moreButtonRef}
+          onClick={onMenuOpen}
+          aria-label={__('More', 'web-stories')}
+          aria-pressed={isMenuOpen}
+          aria-haspopup
+          aria-expanded={isMenuOpen}
+          aria-owns={isMenuOpen ? listId : null}
+          id={buttonId}
+          display={display}
+          tabIndex={index === 0 ? 0 : -1}
+        >
+          <IconContainer>
+            <Icons.Dots />
+          </IconContainer>
+        </MoreButton>
         {(display || isMenuOpen) && (
-          <>
-            <MoreButton
-              ref={moreButtonRef}
-              onClick={onMenuOpen}
-              aria-label={__('More', 'web-stories')}
-              aria-pressed={isMenuOpen}
-              aria-haspopup
-              aria-expanded={isMenuOpen}
-              aria-owns={isMenuOpen ? listId : null}
-              id={buttonId}
-            >
-              <IconContainer>
-                <Icons.Dots />
-              </IconContainer>
-            </MoreButton>
-            <Popup
-              anchor={moreButtonRef}
-              placement={PLACEMENT.BOTTOM_START}
-              isOpen={isMenuOpen}
-              width={160}
-            >
-              <DropDownContainer>
-                <Menu
-                  parentId={buttonId}
-                  listId={listId}
-                  onMenuItemClick={handleCurrentValue}
-                  options={options}
-                  onDismissMenu={onMenuCancelled}
-                  hasMenuRole
-                  menuStylesOverride={menuStylesOverride}
-                />
-              </DropDownContainer>
-            </Popup>
-          </>
+          <Popup
+            anchor={moreButtonRef}
+            placement={PLACEMENT.BOTTOM_START}
+            isOpen={isMenuOpen}
+            width={160}
+          >
+            <DropDownContainer>
+              <Menu
+                parentId={buttonId}
+                listId={listId}
+                onMenuItemClick={handleCurrentValue}
+                options={options}
+                onDismissMenu={onMenuCancelled}
+                hasMenuRole
+                menuStylesOverride={menuStylesOverride}
+              />
+            </DropDownContainer>
+          </Popup>
         )}
         {showDeleteDialog && (
           <DeleteDialog
@@ -206,6 +209,7 @@ DropDownMenu.propTypes = {
   onMenuOpen: PropTypes.func.isRequired,
   onMenuCancelled: PropTypes.func.isRequired,
   onMenuSelected: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
 };
 
 export default DropDownMenu;

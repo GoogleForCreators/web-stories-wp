@@ -34,7 +34,6 @@ import { Blurhash } from 'react-blurhash';
  * Internal dependencies
  */
 import DropDownMenu from '../local/dropDownMenu';
-import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import { ContentType, useLocalMedia } from '../../../../../app/media';
 import Tooltip from '../../../../tooltip';
@@ -62,9 +61,6 @@ const InnerContainer = styled.div`
   margin-bottom: 10px;
   background-color: ${({ theme, $baseColor }) =>
     $baseColor ? $baseColor : rgba(theme.colors.standard.black, 0.3)};
-  body${KEYBOARD_USER_SELECTOR} .mediaElement:focus > & {
-    outline: solid 2px #fff;
-  }
 `;
 
 const BlurhashContainer = styled(Blurhash)`
@@ -206,7 +202,7 @@ function Element({
       onFocus={makeActive}
       onPointerLeave={makeInactive}
       onBlur={makeInactive}
-      tabIndex={index === 0 ? 0 : -1}
+      tabIndex="-1"
     >
       <InnerContainer $baseColor={isPlaceholder && baseColor}>
         <InnerElement
@@ -242,6 +238,7 @@ function Element({
           display={active}
           onInsert={onInsert}
           width={width}
+          index={index}
         />
         {providerType === 'local' && canEditMedia && (
           <DropDownMenu
@@ -251,6 +248,7 @@ function Element({
             onMenuOpen={onMenuOpen}
             onMenuCancelled={onMenuCancelled}
             onMenuSelected={onMenuSelected}
+            index={index}
           />
         )}
       </InnerContainer>
