@@ -364,45 +364,28 @@ final class SimpleInjector implements Injector {
 		ReflectionParameter $parameter,
 		$arguments
 	) {
-		if ( PHP_VERSION_ID >= 70000 ) {
-			if ( ! $parameter->hasType() ) {
-				return $this->resolve_argument_by_name(
-					$class,
-					$parameter,
-					$arguments
-				);
-			}
-
-			$type = $parameter->getType();
-
-			// In PHP 8.0, the isBuiltin method was removed from the parent {@see ReflectionType} class.
-			if ( null === $type || ( $type instanceof ReflectionNamedType && $type->isBuiltin() ) ) {
-				return $this->resolve_argument_by_name(
-					$class,
-					$parameter,
-					$arguments
-				);
-			}
-
-			$type = $type instanceof ReflectionNamedType
-				? $type->getName()
-				: (string) $type;
-		} else {
-			// As $parameter->(has|get)Type() was only introduced with PHP 7.0+,
-			// we need to provide a work-around for PHP 5.6 while we officially
-			// support it.
-
-			$reflection_class = $parameter->getClass();
-			$type             = $reflection_class->name ?? null;
-
-			if ( null === $type ) {
-				return $this->resolve_argument_by_name(
-					$class,
-					$parameter,
-					$arguments
-				);
-			}
+		if ( ! $parameter->hasType() ) {
+			return $this->resolve_argument_by_name(
+				$class,
+				$parameter,
+				$arguments
+			);
 		}
+
+		$type = $parameter->getType();
+
+		// In PHP 8.0, the isBuiltin method was removed from the parent {@see ReflectionType} class.
+		if ( null === $type || ( $type instanceof ReflectionNamedType && $type->isBuiltin() ) ) {
+			return $this->resolve_argument_by_name(
+				$class,
+				$parameter,
+				$arguments
+			);
+		}
+
+		$type = $type instanceof ReflectionNamedType
+			? $type->getName()
+			: (string) $type;
 
 		return $this->make_dependency( $injection_chain, $type );
 	}
