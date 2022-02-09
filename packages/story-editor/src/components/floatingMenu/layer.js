@@ -70,10 +70,7 @@ function FloatingMenuLayer() {
     selectionTypes: [
       ...new Set(selectedElements.map(({ type }) => type)),
     ].sort(),
-    selectionIdentifier: selectedElements
-      .map(({ id }) => id)
-      .sort()
-      .join('#'),
+    selectionIdentifier: selectedElements.map(({ id }) => id).join(''),
   }));
 
   const [moveable, setMoveable] = useState(null);
