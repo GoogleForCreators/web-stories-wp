@@ -74,6 +74,16 @@ class HTML {
 		$markup = $this->print_analytics( $markup );
 		$markup = $this->print_social_share( $markup );
 
+		/**
+		 * Filters the markup
+		 *
+		 * @param string $markup Markup.
+		 *
+		 * @since 1.18.0
+		 *
+		 */
+		$markup = apply_filters( 'web_stories_markup', $markup );
+
 		return $markup;
 	}
 
