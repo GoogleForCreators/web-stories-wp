@@ -70,10 +70,7 @@ function FloatingMenuLayer() {
     selectionTypes: [
       ...new Set(selectedElements.map(({ type }) => type)),
     ].sort(),
-    selectionIdentifier: selectedElements
-      .map(({ id }) => id)
-      .sort()
-      .join('#'),
+    selectionIdentifier: selectedElements.map(({ id }) => id).join(''),
   }));
 
   const [moveable, setMoveable] = useState(null);
@@ -100,7 +97,7 @@ function FloatingMenuLayer() {
     // frame will already be updating because of the resize, so a DOM mutation is incoming.
   }, [workspaceWidth, workspaceHeight]);
 
-  const hasMenu = hasSelection && !isDismissed;
+  const hasMenu = hasSelection && !isDismissed && moveable;
 
   // Whenever moveable is set (because selection count changed between none, single, or multiple)
   useEffect(() => {
