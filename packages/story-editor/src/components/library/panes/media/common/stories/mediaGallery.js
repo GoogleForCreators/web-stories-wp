@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,11 +18,14 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { noop } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 import MediaGallery from '../mediaGallery';
+import { CanvasProvider } from '../../../../../../app/canvas';
+import MediaContext from '../../../../../../app/media/context';
 
 export default {
   title: 'Stories Editor/Components/Media Gallery',
@@ -290,9 +293,29 @@ const Container = styled.div`
 `;
 
 export const _default = (args) => {
+  const mediaValue = {
+    local: {
+      state: {
+        isCurrentResourceProcessing: () => false,
+        isCurrentResourceUploading: () => false,
+      },
+      actions: {
+        uploadMedia: noop,
+      },
+    },
+  };
+
   return (
     <Container>
-      <MediaGallery resources={resources} providerType={'unsplash'} {...args} />
+      <MediaContext.Provider value={mediaValue}>
+        <CanvasProvider>
+          <MediaGallery
+            resources={resources}
+            providerType={'unsplash'}
+            {...args}
+          />
+        </CanvasProvider>
+      </MediaContext.Provider>
     </Container>
   );
 };
