@@ -81,6 +81,7 @@ function BackgroundAudioPanel() {
       <BackgroundAudioPanelContent
         backgroundAudio={backgroundAudio}
         updateBackgroundAudio={updateBackgroundAudio}
+        audioId="story-background-audio"
       />
     </SimplePanel>
   );

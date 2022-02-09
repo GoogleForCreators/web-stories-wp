@@ -198,7 +198,7 @@ function BackgroundAudioPanelContent({
               )}
               src={resource?.src}
               mimeType={resource?.mimeType}
-              tracks={tracks || []}
+              tracks={tracks}
               audioId={audioId}
             />
             <Tooltip hasTail title={__('Remove file', 'web-stories')}>

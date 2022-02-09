@@ -71,7 +71,7 @@ const Audio = styled.audio`
   display: none;
 `;
 
-function AudioPlayer({ title, src, mimeType, tracks = [], audioId = '' }) {
+function AudioPlayer({ title, src, mimeType, tracks = [], audioId }) {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const playerRef = useRef();
@@ -101,7 +101,7 @@ function AudioPlayer({ title, src, mimeType, tracks = [], audioId = '' }) {
         crossOrigin="anonymous"
         loop
         ref={playerRef}
-        id={audioId || undefined}
+        id={audioId}
       >
         <source src={src} type={mimeType} />
         {tracks &&
