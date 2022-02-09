@@ -31,20 +31,6 @@ import { useCanvas, useLayout, useStory } from '../../app';
 import { FLOATING_MENU_DISTANCE } from '../../constants';
 import FloatingMenu from './menu';
 
-// Note that this has to work for a lot of different types of moveable
-// Variants include small elements, proportion-locked text elements, multi-selections, etc.
-// Thus we have more selectors than we need for any single variant, but we make sure
-// that we cover something present in every variant.
-// The reason why we don't just have the control box is, that we need to record a change
-// in width as well. If you just change the width in the design panel, the control box doesn't mutate
-// Thus we need something that both checks the top-left and the bottom-right corner.
-const MUTATE_SELECTORS = [
-  '.moveable-control-box', // always present in the top left corner of every movable
-  '.moveable-direction.moveable-e', // right side handle of single selection movable
-  '.moveable-direction.moveable-s', // bottom side handle of single selection movable
-  '.moveable-direction moveable-se', // bottom-right handle of multi selection movable
-];
-
 function FloatingMenuLayer() {
   const { setMoveableMount } = useCanvas(
     ({ actions: { setMoveableMount } }) => ({ setMoveableMount })
@@ -118,11 +104,14 @@ function FloatingMenuLayer() {
     // Update now
     updatePosition();
 
-    // And update when certain elements' properties update
+    // And update when any element's properties inside the moveable box changes
     const observer = new MutationObserver(updatePosition);
-    MUTATE_SELECTORS.map((selector) => document.querySelector(selector))
-      .filter(Boolean)
-      .forEach((node) => observer.observe(node, { attributes: true }));
+    const node = document.querySelector('.moveable-control-box');
+    observer.observe(node, {
+      attributes: true,
+      subtree: true,
+      attributeFilter: ['style'],
+    });
 
     return () => observer.disconnect();
   }, [moveable, hasMenu]);
