@@ -24,7 +24,7 @@ import { memo } from '@googleforcreators/react';
  */
 import { Dismiss, Separator } from '../elements';
 
-const FloatingTextMenu = memo(function FloatingTextMenu() {
+const FloatingMixedMenu = memo(function FloatingMixedMenu() {
   return (
     <>
       <Separator />
@@ -33,4 +33,4 @@ const FloatingTextMenu = memo(function FloatingTextMenu() {
   );
 });
 
-export default FloatingTextMenu;
+export default FloatingMixedMenu;
