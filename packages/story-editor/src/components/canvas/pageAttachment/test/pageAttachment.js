@@ -26,6 +26,8 @@ import PageAttachment from '..';
 import CanvasContext from '../../../../app/canvas/context';
 import { renderWithTheme } from '../../../../testUtils';
 import StoryContext from '../../../../app/story/context';
+import { ConfigProvider } from '../../../../app/config';
+import defaultConfig from '../../../../defaultConfig';
 
 function setup(props = {}) {
   const { pageAttachment = {}, canvasProps = null } = props;
@@ -49,11 +51,13 @@ function setup(props = {}) {
     },
   };
   return renderWithTheme(
-    <StoryContext.Provider value={storyContext}>
-      <CanvasContext.Provider value={canvasContext}>
-        <PageAttachment pageAttachment={pageAttachment} />
-      </CanvasContext.Provider>
-    </StoryContext.Provider>
+    <ConfigProvider config={defaultConfig}>
+      <StoryContext.Provider value={storyContext}>
+        <CanvasContext.Provider value={canvasContext}>
+          <PageAttachment pageAttachment={pageAttachment} />
+        </CanvasContext.Provider>
+      </StoryContext.Provider>
+    </ConfigProvider>
   );
 }
 

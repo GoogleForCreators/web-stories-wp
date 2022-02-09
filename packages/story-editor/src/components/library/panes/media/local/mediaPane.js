@@ -31,6 +31,7 @@ import {
   Text,
   THEME_CONSTANTS,
   Icons,
+  PLACEMENT,
 } from '@googleforcreators/design-system';
 
 /**
@@ -50,7 +51,6 @@ import {
 } from '../common/styles';
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import Flags from '../../../../../flags';
-import { Placement } from '../../../../popup/constants';
 import { PANE_PADDING } from '../../shared';
 import { LOCAL_MEDIA_TYPE_ALL } from '../../../../../app/media/local/types';
 import { focusStyle } from '../../../../panels/shared';
@@ -259,7 +259,7 @@ function MediaPane(props) {
               selectedValue={mediaType?.toString() || FILTER_NONE}
               onMenuItemClick={onFilter}
               options={FILTERS}
-              placement={Placement.BOTTOM_START}
+              placement={PLACEMENT.BOTTOM_START}
             />
             {isSearching && media.length > 0 && (
               <SearchCount>
