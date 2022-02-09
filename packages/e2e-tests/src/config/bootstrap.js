@@ -182,7 +182,7 @@ function observeConsoleLogging() {
       return;
     }
 
-    //eslint-disable-next-line security/detect-object-injection
+    //eslint-disable-next-line security/detect-object-injection -- @todo
     const logFunction = OBSERVED_CONSOLE_MESSAGE_TYPES[type];
 
     // As of Puppeteer 1.6.1, `message.text()` wrongly returns an object of
@@ -198,12 +198,12 @@ function observeConsoleLogging() {
     // cannot be found, the default text value is used instead.
     text = message.args()?.[0]?._remoteObject?.description || text;
 
-    // Disable reason: We intentionally bubble up the console message
-    // which, unless the test explicitly anticipates the logging via
-    // @wordpress/jest-console matchers, will cause the intended test
-    // failure.
-
-    // eslint-disable-next-line no-console, security/detect-object-injection
+    /* eslint-disable-next-line no-console, security/detect-object-injection -- 
+     * We intentionally bubble up the console message
+     * which, unless the test explicitly anticipates the logging via
+     * @wordpress/jest-console matchers, will cause the intended test
+     * failure.
+    **/
     console[logFunction](text);
   });
 }
@@ -238,7 +238,7 @@ async function runAxeTestsForStoriesEditor() {
  * other posts/comments/etc. aren't dirtying tests and tests don't depend on
  * each other's side-effects.
  */
-// eslint-disable-next-line jest/require-top-level-describe
+// eslint-disable-next-line jest/require-top-level-describe -- @todo
 beforeAll(async () => {
   capturePageEventsForTearDown();
   enablePageDialogAccept();

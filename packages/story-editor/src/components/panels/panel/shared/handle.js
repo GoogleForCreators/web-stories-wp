@@ -85,8 +85,7 @@ function DragHandle({
   useKeyboardHandlers(handle, handleHeightChange);
 
   return (
-    // Disable reason: handled via useKeyboardHandlers.
-    // eslint-disable-next-line styled-components-a11y/click-events-have-key-events
+    // eslint-disable-next-line styled-components-a11y/click-events-have-key-events -- handled via useKeyboardHandlers.
     <Handle
       ref={handle}
       onClick={(e) => e.stopPropagation()}

@@ -265,8 +265,7 @@ describe('Panels/TextStyle', () => {
       );
     });
 
-    // Disable reason: Can't figure out a good way to test this easily
-    // eslint-disable-next-line jest/no-disabled-tests
+    // eslint-disable-next-line jest/no-disabled-tests -- Can't figure out a good way to test this easily
     it.skip('should select font weight', () => {
       const { pushUpdate } = arrange([textElement]);
       fireEvent.click(screen.getByRole('button', { name: 'Font weight' }));

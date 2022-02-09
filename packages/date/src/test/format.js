@@ -61,7 +61,7 @@ describe('date/format', () => {
   });
 
   // TODO: Fix implementation/tests.
-  //eslint-disable-next-line jest/no-disabled-tests
+  //eslint-disable-next-line jest/no-disabled-tests -- @todo
   it.skip('should support "B" to obtain the time in Swatch Internet Time (.beats)', () => {
     const formattedDate = format('2020-10-09T11:00:00.000', 'B');
 
@@ -121,9 +121,8 @@ describe('date/format', () => {
 
     expect(formattedDate).toBe('OctOct');
   });
-
-  // Disable reason: Not implemented yet.
-  //eslint-disable-next-line jest/no-disabled-tests
+ 
+  //eslint-disable-next-line jest/no-disabled-tests -- Not implemented yet.
   it.skip('should support "I" to obtain whether or not the timezone is observing DST', () => {
     const formattedFall = format('2020-10-09T11:00:00.000', 'I');
 

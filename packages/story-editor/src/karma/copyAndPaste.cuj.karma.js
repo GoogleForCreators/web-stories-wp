@@ -120,9 +120,10 @@ function sequencedForEach(htmlCollection, op) {
       expect(selection).toEqual([newElement.id]);
     });
 
-    // Disable reason: flakey tests.
-    // See https://github.com/googleforcreators/web-stories-wp/pull/6162
-    // eslint-disable-next-line jasmine/no-disabled-tests
+    /* eslint-disable-next-line jasmine/no-disabled-tests -- 
+     * flakey tests.
+     * See https://github.com/googleforcreators/web-stories-wp/pull/6162
+    **/
     xit('retains all foreground animations', async () => {
       // open effect chooser
       const effectChooserToggle =

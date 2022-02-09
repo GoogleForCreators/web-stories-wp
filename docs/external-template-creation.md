@@ -37,7 +37,7 @@ Remove extraneous attributes on the base `svg` component and make sure your comp
 
 ```js
 const title = __('Some Descriptor', 'web-stories');
-/* eslint-disable-next-line react/prop-types */
+/* eslint-disable-next-line react/prop-types -- @todo */ 
 function MySticker({ style }) {
   return (
     <svg
