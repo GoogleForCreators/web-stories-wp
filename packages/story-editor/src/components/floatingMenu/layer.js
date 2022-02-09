@@ -61,13 +61,13 @@ function FloatingMenuLayer() {
   const {
     hasSelection,
     hasMultiSelection,
-    selectionTypes,
+    selectedElementTypes,
     selectionIdentifier,
   } = useStory(({ state: { selectedElements } }) => ({
     hasSelection:
       selectedElements.filter(({ isBackground }) => !isBackground).length > 0,
     hasMultiSelection: selectedElements.length > 1,
-    selectionTypes: [
+    selectedElementTypes: [
       ...new Set(selectedElements.map(({ type }) => type)),
     ].sort(),
     selectionIdentifier: selectedElements.map(({ id }) => id).join(''),
@@ -136,7 +136,7 @@ function FloatingMenuLayer() {
       ref={menuRef}
       dismiss={dismiss}
       hasMultiSelection={hasMultiSelection}
-      selectionTypes={selectionTypes}
+      selectedElementTypes={selectedElementTypes}
     />
   );
 }

@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { memo } from '@googleforcreators/react';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -30,15 +31,15 @@ import Text from './text';
 import Video from './video';
 
 const FloatingMenuSelector = memo(function FloatingMenuSelector({
-  selectionTypes,
+  selectedElementTypes,
 }) {
-  if (selectionTypes.length > 1) {
+  if (selectedElementTypes.length > 1) {
     return <Mixed />;
   }
 
-  const [selectionType] = selectionTypes;
+  const [selectedElementType] = selectedElementTypes;
 
-  switch (selectionType) {
+  switch (selectedElementType) {
     case 'gif':
     case 'image':
       return <Image />;
@@ -56,5 +57,9 @@ const FloatingMenuSelector = memo(function FloatingMenuSelector({
       return null;
   }
 });
+
+FloatingMenuSelector.propTypes = {
+  selectedElementTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
+};
 
 export default FloatingMenuSelector;
