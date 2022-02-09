@@ -27,15 +27,17 @@ import { useFloatingMenu } from '../context';
 import { IconButton } from './shared';
 
 const Dismiss = function Dismiss() {
-  const { dismiss } = useFloatingMenu(({ actions: { dismiss } }) => ({
-    dismiss,
-  }));
+  const { handleDismiss } = useFloatingMenu(
+    ({ actions: { handleDismiss } }) => ({
+      handleDismiss,
+    })
+  );
 
   return (
     <IconButton
       Icon={Icons.Cross}
       title={__('Dismiss menu', 'web-stories')}
-      onClick={dismiss}
+      onClick={handleDismiss}
     />
   );
 };

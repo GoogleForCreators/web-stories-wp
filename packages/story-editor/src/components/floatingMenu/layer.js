@@ -64,7 +64,7 @@ function FloatingMenuLayer() {
   const workspaceSize = useRef();
 
   const [isDismissed, setDismissed] = useState(false);
-  const dismiss = useCallback(() => setDismissed(true), []);
+  const handleDismiss = useCallback(() => setDismissed(true), []);
   useEffect(() => setDismissed(false), [selectionIdentifier]);
 
   // Whenever the selection frame (un)mounts, update the reference to moveable
@@ -123,7 +123,7 @@ function FloatingMenuLayer() {
   return (
     <FloatingMenu
       ref={menuRef}
-      dismiss={dismiss}
+      handleDismiss={handleDismiss}
       hasMultiSelection={hasMultiSelection}
       selectedElementTypes={selectedElementTypes}
     />

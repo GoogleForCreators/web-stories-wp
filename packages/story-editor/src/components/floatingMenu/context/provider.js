@@ -24,10 +24,10 @@ import PropTypes from 'prop-types';
  */
 import Context from './context';
 
-function FloatingMenuProvider({ dismiss, children }) {
+function FloatingMenuProvider({ handleDismiss, children }) {
   const value = {
     state: {},
-    actions: { dismiss },
+    actions: { handleDismiss },
   };
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
@@ -35,7 +35,7 @@ function FloatingMenuProvider({ dismiss, children }) {
 
 FloatingMenuProvider.propTypes = {
   children: PropTypes.node,
-  dismiss: PropTypes.func.isRequired,
+  handleDismiss: PropTypes.func.isRequired,
 };
 
 export default FloatingMenuProvider;
