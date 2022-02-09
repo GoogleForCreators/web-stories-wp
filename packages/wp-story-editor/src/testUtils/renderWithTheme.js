@@ -21,7 +21,7 @@ import { render } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import { theme } from '@googleforcreators/design-system';
 
-// eslint-disable-next-line react/prop-types
+// eslint-disable-next-line react/prop-types -- @todo
 const WithThemeProvider = ({ children }) => {
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };

@@ -201,7 +201,7 @@
     "jsdoc/require-param-description": "warn",
     "jsdoc/valid-types": "error",
     "eslint-comments/no-unused-disable": "error",
-    "eslint-comments/require-description": ["error", {"ignore": []}],
+    "eslint-comments/require-description": "error",
     "@wordpress/dependency-group": "error",
     "@wordpress/no-unused-vars-before-return": ["error", {
       "excludePattern": "^use"
@@ -483,13 +483,18 @@
         "packages/e2e-tests/src/config/*.js",
         "packages/dashboard/src/karma-tests.cjs",
         "packages/story-editor/src/karma-tests.cjs",
+        "packages/story-editor/src/karma/**/*.js",
+        "packages/story-editor/src/**/test/*.js",
+        "packages/story-editor/src/testUtils/*.js",
         "packages/eslint-import-resolver/**/*.cjs",
         "packages/jest-resolver/**/*.cjs",
         "packages/fonts/**/*.js",
         "packages/commander/**/*.js",
         "packages/migration/scripts/**/*.js",
         "packages/templates/scripts/**/*.js",
-        "packages/text-sets/scripts/**/*.js"
+        "packages/templates/src/test/*.js",
+        "packages/text-sets/scripts/**/*.js",
+        "packages/i18n/src/test/*.js"
       ],
       "extends": [
         "plugin:node/recommended",
@@ -639,6 +644,21 @@
       ],
       "globals": {
         "tinymce": "readonly"
+      }
+    },
+    {
+      "files": [
+        "packages/dashboard/src/**/stories/*.js",
+        "packages/wp-dashboard/src/**/stories/*.js",
+        "packages/story-editor/src/**/stories/*.js",
+        "packages/wp-story-editor/src/**/stories/*.js",
+        "packages/design-system/src/**/stories/*.js",
+        "packages/activation-notice/src/**/stories/*.js"
+      ],
+      "rules": {
+        "react/no-array-index-key" : "off",
+        "react/prop-types": "off",
+        "eslint-comments/no-unused-disable": "off"
       }
     }
   ]

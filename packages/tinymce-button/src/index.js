@@ -41,7 +41,7 @@ const { _ } = window;
  * https://github.com/WordPress/WordPress/blob/master/wp-includes/js/mce-view.js#L145
  * lodash (which WP uses now) does not have this method, so there will be JS error in console.
  */
-// eslint-disable-next-line no-prototype-builtins
+// eslint-disable-next-line no-prototype-builtins -- @todo
 if (!_.hasOwnProperty('pluck')) {
   _.pluck = _.map;
 }
