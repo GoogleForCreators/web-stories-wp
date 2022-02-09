@@ -100,7 +100,7 @@ function FloatingMenuLayer() {
     // frame will already be updating because of the resize, so a DOM mutation is incoming.
   }, [workspaceWidth, workspaceHeight]);
 
-  const hasMenu = hasSelection && !isDismissed;
+  const hasMenu = hasSelection && !isDismissed && moveable;
 
   // Whenever moveable is set (because selection count changed between none, single, or multiple)
   useEffect(() => {
