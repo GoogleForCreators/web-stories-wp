@@ -39,6 +39,7 @@ const MandatoryStoryInfo = ({
   handleUpdateStoryInfo,
   handleUpdateSlug,
   inputValues,
+  children,
 }) => {
   return (
     <>
@@ -79,6 +80,7 @@ const MandatoryStoryInfo = ({
           onChange={handleUpdateStoryInfo}
         />
       </FormSection>
+      {children}
     </>
   );
 };
@@ -89,4 +91,5 @@ MandatoryStoryInfo.propTypes = {
   handleUpdateStoryInfo: PropTypes.func,
   handleUpdateSlug: PropTypes.func,
   inputValues: MANDATORY_INPUT_VALUE_TYPES,
+  children: PropTypes.node,
 };

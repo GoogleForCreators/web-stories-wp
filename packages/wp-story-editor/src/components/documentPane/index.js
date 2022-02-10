@@ -43,14 +43,32 @@ const availablePanels = {
   [DOCUMENT_PANEL_NAMES.TAXONOMIES]: TaxonomiesPanel,
 };
 
+export const availablePanelNames = Object.keys(availablePanels);
+
 /**
  *
  * @param {Object} props Props.
  * @param {string} props.variant When present, will update panel name from default name (key from available panels).
  * @param {Array.<string>} props.hiddenPanels An array of panel names that when present, will prevent the panel the name corresponds to from rendering.
+ * @param {string} props.isolatedPanel String corresponding to a panel name, when present will only render that panel.
  * @return {Node} panel to display.
  */
-function DocumentPane({ variant, hiddenPanels = [] }) {
+function DocumentPane({ variant, hiddenPanels = [], isolatedPanel }) {
+  if (isolatedPanel) {
+    if (Object.keys(availablePanels).indexOf(isolatedPanel) < 0) {
+      return null;
+    }
+
+    const Panel = availablePanels[isolatedPanel];
+    return (
+      <Panel
+        name={variant ? `${variant}_${isolatedPanel}` : isolatedPanel}
+        canCollapse={false}
+        isPersistable={false}
+      />
+    );
+  }
+
   return Object.entries(availablePanels).map(
     ([name, Panel]) =>
       hiddenPanels.indexOf(name) < 0 && (
@@ -64,4 +82,5 @@ export default DocumentPane;
 DocumentPane.propTypes = {
   variant: PropTypes.string,
   hiddenPanels: PropTypes.arrayOf(PropTypes.string),
+  isolatedPanel: PropTypes.oneOf(Object.keys(availablePanels)),
 };
