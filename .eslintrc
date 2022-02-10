@@ -658,7 +658,8 @@
       "rules": {
         "react/no-array-index-key" : "off",
         "react/prop-types": "off",
-        "eslint-comments/no-unused-disable": "off"
+        "eslint-comments/no-unused-disable": "off",
+        "eslint-comments/require-description": "off"
       }
     }
   ]
