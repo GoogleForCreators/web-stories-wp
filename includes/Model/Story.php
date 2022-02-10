@@ -84,7 +84,7 @@ class Story {
 	protected $publisher_logo;
 
 	/**
-	 * Publisher logo size.
+	 * Poster source set sizes.
 	 *
 	 * @var string
 	 */
@@ -92,7 +92,7 @@ class Story {
 
 
 	/**
-	 * Publisher logo srcset.
+	 * Poster source set.
 	 *
 	 * @var string
 	 */
