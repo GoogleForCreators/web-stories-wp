@@ -67,9 +67,9 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @param WP_Post         $post Post object.
 	 * @param WP_REST_Request $request Request object.
-	 * @return WP_REST_Response Response object.
+	 * @return WP_REST_Response|mixed Response object or value returned from filter.
 	 */
-	public function prepare_item_for_response( $post, $request ): WP_REST_Response {
+	public function prepare_item_for_response( $post, $request ) {
 		/**
 		 * Request context.
 		 *

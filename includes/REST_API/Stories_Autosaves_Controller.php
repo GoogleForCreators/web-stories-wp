@@ -178,9 +178,9 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller implemen
 	 *
 	 * @param WP_Post         $post Post object.
 	 * @param WP_REST_Request $request Request object.
-	 * @return WP_REST_Response Response object.
+	 * @return WP_REST_Response|mixed Response object or value returned from filter.
 	 */
-	public function prepare_item_for_response( $post, $request ): WP_REST_Response {
+	public function prepare_item_for_response( $post, $request ) {
 		$response = parent::prepare_item_for_response( $post, $request );
 		$fields   = $this->get_fields_for_response( $request );
 		$schema   = $this->get_item_schema();
