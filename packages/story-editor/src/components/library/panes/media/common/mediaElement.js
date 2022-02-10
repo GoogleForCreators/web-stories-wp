@@ -40,6 +40,7 @@ import Tooltip from '../../../../tooltip';
 import Attribution from './attribution';
 import InnerElement from './innerElement';
 import InsertionMenu from './insertionMenu';
+import useNestedRovingTabIndex from "../../shared/hooks/useNestedRovingTabIndex";
 
 const AUTOPLAY_PREVIEW_VIDEO_DELAY_MS = 600;
 
@@ -173,8 +174,6 @@ function Element({
     );
 
   const ref = useRef();
-
-  useRovingTabIndex({ ref });
 
   const onLoad = useCallback(() => setLoaded(true), []);
 

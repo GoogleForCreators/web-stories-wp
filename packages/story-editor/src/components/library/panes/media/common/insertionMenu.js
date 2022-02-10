@@ -42,6 +42,7 @@ import { getSmallestUrlForWidth } from '@googleforcreators/media';
  */
 import getElementProperties from '../../../../canvas/utils/getElementProperties';
 import useStory from '../../../../../app/story/useStory';
+import useNestedRovingTabIndex from "../../shared/hooks/useNestedRovingTabIndex";
 
 const AddButton = styled(Button).attrs({ variant: BUTTON_VARIANTS.ICON })`
   display: flex;
@@ -137,6 +138,8 @@ function InsertionMenu({ resource, display, onInsert, width, index }) {
         break;
     }
   };
+
+  useNestedRovingTabIndex({ ref: insertButtonRef }, [], 3);
 
   const listId = useMemo(() => `list-${uuidv4()}`, []);
   const buttonId = useMemo(() => `button-${uuidv4()}`, []);
