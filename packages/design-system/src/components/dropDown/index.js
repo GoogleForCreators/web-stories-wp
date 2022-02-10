@@ -195,6 +195,7 @@ export const DropDown = forwardRef(
             refCallback={positionPlacement}
             fillWidth={popupFillWidth}
             zIndex={popupZIndex}
+            ignoreMaxOffsetY
           >
             {menu}
           </Popup>
