@@ -23,8 +23,16 @@ import { useCallback, useState } from '@googleforcreators/react';
 import StoryContext from '../../../app/story/context';
 import { noop } from '../../../utils/noop';
 import { CheckpointContext } from '../../checklist';
+import InspectorContext from '../../inspector/context';
+import { PageAdvancementPanel, SlugPanel } from '../../panels/document';
 import PublishModal from '../publishModal';
 
+const MockDocumentPane = () => (
+  <>
+    <SlugPanel />
+    <PageAdvancementPanel />
+  </>
+);
 export default {
   title: 'Stories Editor/Components/Dialog/Publish Modal',
   args: {
@@ -40,6 +48,7 @@ export const _default = (args) => {
   const [inputValues, setInputValues] = useState({
     excerpt: '',
     title: '',
+    link: 'http://sample.com/post_type=web-story&p=274',
   });
 
   const handleUpdateStory = useCallback(({ properties }) => {
@@ -53,7 +62,13 @@ export const _default = (args) => {
       value={{
         actions: { updateStory: handleUpdateStory },
         state: {
-          story: inputValues,
+          story: {
+            ...inputValues,
+            permalinkConfig: {
+              prefix: 'http://sample.com/',
+              suffix: '',
+            },
+          },
         },
       }}
     >
@@ -64,7 +79,33 @@ export const _default = (args) => {
           },
         }}
       >
-        <PublishModal {...args} />
+        <InspectorContext.Provider
+          value={{
+            actions: {
+              loadUsers: () => {},
+            },
+            data: {
+              modalInspectorTab: {
+                id: 'publish_modal_document',
+                title: 'document panel',
+                Pane: MockDocumentPane,
+                availablePaneNames: [
+                  'backgroundAudio',
+                  'pageAdvancement',
+                  'permalink',
+                  'excerpt',
+                  'taxonomies',
+                ],
+              },
+            },
+            state: {
+              users: {},
+              inspectorContentHeight: 600,
+            },
+          }}
+        >
+          <PublishModal {...args} />
+        </InspectorContext.Provider>
       </CheckpointContext.Provider>
     </StoryContext.Provider>
   );

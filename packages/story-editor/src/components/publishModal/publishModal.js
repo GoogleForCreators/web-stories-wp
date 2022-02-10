@@ -28,6 +28,7 @@ import { useCallback, useEffect, useMemo } from '@googleforcreators/react';
 import { useConfig, useStory } from '../../app';
 import { updateSlug } from '../../utils/storyUpdates';
 import { useCheckpoint } from '../checklist';
+import DirectionAware from '../directionAware';
 import Header from './header';
 import MainContent from './mainContent';
 import { INPUT_KEYS, REQUIRED_INPUTS } from './constants';
@@ -102,22 +103,25 @@ function PublishModal({ isOpen, onPublish, onClose }) {
         minWidth: '917px',
         height: '66vh',
         minHeight: '580px',
+        overflow: 'hidden',
       }}
     >
       {isOpen && (
-        <Container>
-          <Header
-            onClose={onClose}
-            onPublish={onPublish}
-            isPublishEnabled={isAllRequiredInputsFulfilled}
-          />
-          <MainContent
-            inputValues={inputValues}
-            handleUpdateStoryInfo={handleUpdateStoryInfo}
-            handleUpdateSlug={handleUpdateSlug}
-            handleReviewChecklist={handleReviewChecklist}
-          />
-        </Container>
+        <DirectionAware>
+          <Container>
+            <Header
+              onClose={onClose}
+              onPublish={onPublish}
+              isPublishEnabled={isAllRequiredInputsFulfilled}
+            />
+            <MainContent
+              inputValues={inputValues}
+              handleUpdateStoryInfo={handleUpdateStoryInfo}
+              handleUpdateSlug={handleUpdateSlug}
+              handleReviewChecklist={handleReviewChecklist}
+            />
+          </Container>
+        </DirectionAware>
       )}
     </Modal>
   );
