@@ -74,7 +74,6 @@ describe('TranslateWithMarkup component', () => {
     const string = 'This is a <a>link</a>!';
 
     const Link = (props) => {
-      //eslint-disable-next-line react/prop-types
       return <a {...props}>{props.children}</a>;
     };
 
@@ -89,7 +88,6 @@ describe('TranslateWithMarkup component', () => {
 
   it('returns expected React element for multiple components', () => {
     const Link = (props) => {
-      //eslint-disable-next-line react/prop-types
       return <a {...props}>{props.children}</a>;
     };
 

@@ -68,7 +68,7 @@ describe('Web Stories Widget', () => {
 
   /* eslint-disable-next-line jest/no-disabled-tests --
    * See https://github.com/googleforcreators/web-stories-wp/issues/6879
-  **/
+   **/
   describe.skip('Customizer', () => {
     it('should be able to add widget', async () => {
       await visitAdminPage('customize.php');

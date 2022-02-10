@@ -216,7 +216,7 @@ describe('Link Panel', () => {
 
     // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
     xit('should be able to apply a link to a shape element');
- 
+
     // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
     xit('should be able to apply a link to a image element');
 

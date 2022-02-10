@@ -198,12 +198,12 @@ function observeConsoleLogging() {
     // cannot be found, the default text value is used instead.
     text = message.args()?.[0]?._remoteObject?.description || text;
 
-    /* eslint-disable-next-line no-console, security/detect-object-injection -- 
+    /* eslint-disable-next-line no-console, security/detect-object-injection --
      * We intentionally bubble up the console message
      * which, unless the test explicitly anticipates the logging via
      * @wordpress/jest-console matchers, will cause the intended test
      * failure.
-    **/
+     **/
     console[logFunction](text);
   });
 }
@@ -238,7 +238,7 @@ async function runAxeTestsForStoriesEditor() {
  * other posts/comments/etc. aren't dirtying tests and tests don't depend on
  * each other's side-effects.
  */
-// eslint-disable-next-line jest/require-top-level-describe -- @todo
+// eslint-disable-next-line jest/require-top-level-describe
 beforeAll(async () => {
   capturePageEventsForTearDown();
   enablePageDialogAccept();

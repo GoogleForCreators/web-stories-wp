@@ -121,7 +121,7 @@ describe('date/format', () => {
 
     expect(formattedDate).toBe('OctOct');
   });
- 
+
   //eslint-disable-next-line jest/no-disabled-tests -- Not implemented yet.
   it.skip('should support "I" to obtain whether or not the timezone is observing DST', () => {
     const formattedFall = format('2020-10-09T11:00:00.000', 'I');

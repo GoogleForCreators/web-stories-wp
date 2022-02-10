@@ -170,10 +170,10 @@ describe('Inline style override', () => {
         );
       });
 
-      /* eslint-disable-next-line jasmine/no-disabled-tests -- 
+      /* eslint-disable-next-line jasmine/no-disabled-tests --
        * This doesn't work due to bug #1606:
        * https://github.com/googleforcreators/web-stories-wp/issues/1606
-      **/
+       **/
       xit('should have correct formatting when pressing mod+i, then underline toggle, then inserting text', async () => {
         // Verify that italic and underline are untoggled in design panel
         const { italic, underline } =

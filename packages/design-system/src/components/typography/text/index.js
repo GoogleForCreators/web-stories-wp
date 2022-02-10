@@ -72,11 +72,10 @@ const Label = styled.label`
 export const Text = ({ as, disabled, ...props }) => {
   switch (as) {
     case 'label':
-      
       /* eslint-disable-next-line styled-components-a11y/label-has-associated-control --
        * This is building block in the design system that is used with inputs
        * and therefore has no associated control in the text element itself since it is unassembled.
-      **/
+       **/
       return <Label disabled={disabled} {...props} />;
     case 'span':
       return <Span {...props} />;

@@ -298,7 +298,7 @@
         "node": true
       },
       "rules": {
-        "eslint-comments/no-unused-disable": "off",
+        "react/prop-types": "off",
         "jest/no-hooks": "off",
         "jest/prefer-expect-assertions": "off",
         "jest/prefer-inline-snapshots": "off",
@@ -486,6 +486,7 @@
         "packages/story-editor/src/karma/**/*.js",
         "packages/story-editor/src/**/test/*.js",
         "packages/story-editor/src/testUtils/*.js",
+        "packages/story-editor/src/app/story/**/test/*.js",
         "packages/eslint-import-resolver/**/*.cjs",
         "packages/jest-resolver/**/*.cjs",
         "packages/fonts/**/*.js",
@@ -496,7 +497,12 @@
         "packages/text-sets/scripts/**/*.js",
         "packages/i18n/src/test/*.js",
         "packages/stories-block/src/**/test/*.js",
-        "packages/dashboard/src/**/test/*.js"
+        "packages/dashboard/src/**/test/*.js",
+        "packages/animation/src/components/test/*.js",
+        "packages/dashboard/src/testUtils/*.js",
+        "packages/date/src/test/*.js",
+        "packages/design-system/src/components/**/test/*.js",
+        "packages/rich-text/src/test/*.js"
       ],
       "extends": [
         "plugin:node/recommended",
@@ -530,6 +536,7 @@
         "**/*.md"
       ],
       "rules": {
+        "eslint-comments/require-description": "off",
         "react/prop-types" : "off"
       }, 
       "processor": "markdown/markdown"
@@ -655,6 +662,8 @@
         "packages/story-editor/src/**/stories/*.js",
         "packages/wp-story-editor/src/**/stories/*.js",
         "packages/design-system/src/**/stories/*.js",
+        "packages/design-system/src/components/**/*.js",
+        "packages/design-system/src/utils/*.js",
         "packages/activation-notice/src/**/stories/*.js"
       ],
       "rules": {

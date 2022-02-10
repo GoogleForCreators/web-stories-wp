@@ -51,10 +51,10 @@ describe('nativeCopyPasteExpected', () => {
     expect(nativeCopyPasteExpected()).toBe(true);
   });
 
-  /* eslint-disable-next-line jest/no-disabled-tests -- 
+  /* eslint-disable-next-line jest/no-disabled-tests --
    * jsdom does not actually support checking for contenteditable.
    * See https://github.com/jsdom/jsdom/issues/1670
-  **/
+   **/
   it.skip('should detect selection correctly for contenteditable element', () => {
     const contentEditable = document.createElement('div');
     contentEditable.setAttribute('contenteditable', 'true');

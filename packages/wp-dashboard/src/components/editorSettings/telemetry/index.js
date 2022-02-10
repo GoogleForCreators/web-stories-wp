@@ -64,7 +64,7 @@ export default function TelemetrySettings({
             <TranslateWithMarkup
               mapping={{
                 a: (
-                  //eslint-disable-next-line jsx-a11y/anchor-has-content -- @todo
+                  //eslint-disable-next-line jsx-a11y/anchor-has-content
                   <a
                     href={__(
                       'https://policies.google.com/privacy',

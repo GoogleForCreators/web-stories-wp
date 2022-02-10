@@ -19,7 +19,7 @@
  */
 import { forwardRef } from 'react';
 
-// eslint-disable-next-line no-unused-vars  -- @todo
+// eslint-disable-next-line no-unused-vars
 export const MockMoveable = jest.fn((props, ref) => <div />);
 
 export default forwardRef(MockMoveable);
