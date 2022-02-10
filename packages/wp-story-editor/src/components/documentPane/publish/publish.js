@@ -351,6 +351,7 @@ function PublishPanel(props) {
                 renderer={publisherLogoOptionRenderer}
                 activeItemRenderer={activeItemRenderer}
                 selectedId={publisherLogo.id}
+                zIndex={10}
                 disabled={!publisherLogosWithUploadOption.length}
                 ref={(node) => {
                   if (
