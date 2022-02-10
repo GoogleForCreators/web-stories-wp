@@ -71,5 +71,7 @@ class Embed extends TestCase {
 		$render   = $embed->render( $args );
 		$this->assertStringContainsString( 'test title', $render );
 		$this->assertStringContainsString( '<img', $render );
+		$this->assertStringContainsString( 'loading=', $render );
+		$this->assertStringContainsString( 'decoding=', $render );
 	}
 }
