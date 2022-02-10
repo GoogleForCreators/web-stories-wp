@@ -17,9 +17,6 @@
 /**
  * External dependencies
  */
-import * as React from 'react';
-const { useCallback, useState, useMemo, forwardRef } = React;
-
 import {
   configure,
   render,
@@ -50,6 +47,10 @@ import HeaderLayout from './components/header';
 import storyResponse from './db/storyResponse';
 import DocumentPane from './components/documentPane';
 import { Accessibility, Design, Priority } from './components/checklist';
+
+// Temp fix to get tests working with webpack 5
+const React = require('react');
+const { useCallback, useState, useMemo, forwardRef } = React;
 
 if ('true' === WEB_STORIES_CI) {
   configure({
