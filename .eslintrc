@@ -628,10 +628,9 @@
     },
     {
       "files": [
-        ".storybook/**/*.js"
+        ".storybook/main.cjs"
       ],
       "rules": {
-        "import/no-extraneous-dependencies": "off",
         "node/no-extraneous-require": "off"
       }
     },
