@@ -122,6 +122,7 @@ class Embed {
 									height="<?php echo esc_attr( $args['height'] ); ?>"
 									alt="<?php echo esc_attr( $title ); ?>"
 									loading="lazy"
+									decoding="async"
 									data-amp-story-player-poster-img
 								/>
 								<?php
@@ -153,6 +154,7 @@ class Embed {
 								height="<?php echo esc_attr( $args['height'] ); ?>"
 								alt="<?php echo esc_attr( $title ); ?>"
 								loading="lazy"
+								decoding="async"
 								data-amp-story-player-poster-img
 							/>
 							<?php

@@ -77,7 +77,7 @@ class Image {
 				<?php
 				if ( ! empty( $this->story->get_poster_portrait() ) ) {
 					printf(
-						'<img src="%1$s" width="%2$d" height="%3$d" alt="%4$s" />',
+						'<img src="%1$s" width="%2$d" height="%3$d" alt="%4$s" loading="lazy" decoding="async" />',
 						esc_url( $this->story->get_poster_portrait() ),
 						absint( $args['width'] ),
 						absint( $args['height'] ),
