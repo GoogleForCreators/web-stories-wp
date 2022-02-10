@@ -201,9 +201,6 @@ module.exports = {
       }
     );
 
-    // // only the first matching rule is used when there is a match.
-    // config.module.rules = [{ oneOf: config.module.rules }];
-
     /*
     Storybook 6.4 config doesn't work with .cjs files. 
     TODO: Remove with 6.5
