@@ -50,6 +50,9 @@ describe('Page Templates', () => {
 
     await addTextElement();
 
+    // Go back to the templates panel.
+    await page.click('#library-tab-pageTemplates');
+
     await expect(page).toMatchElement('button[aria-disabled="false"]', {
       text: 'Save current page as template',
     });

@@ -66,7 +66,9 @@ describe('Story Editor', () => {
     await toggleVideoOptimization();
   });
 
-  it('should preview story with development mode', async () => {
+  // TODO: Fix implementation/tests: https://github.com/GoogleForCreators/web-stories-wp/issues/10526
+  // eslint-disable-next-line jest/no-disabled-tests
+  it.skip('should preview story with development mode', async () => {
     await createNewStory();
 
     const editorPage = page;

@@ -34,11 +34,6 @@ import { StoryContext } from '../../../../app/story';
 import { ConfigContext } from '../../../../app/config';
 import defaultConfig from '../../../../defaultConfig.js';
 
-jest.mock('@googleforcreators/design-system', () => ({
-  ...jest.requireActual('@googleforcreators/design-system'),
-  Popup: ({ children, isOpen }) => (isOpen ? children : null),
-}));
-
 jest.mock('../getPreviewStyle', () => jest.fn());
 jest.mock('@googleforcreators/patterns', () => {
   return {
