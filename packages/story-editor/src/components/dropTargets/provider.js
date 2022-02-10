@@ -27,11 +27,8 @@ import { useTransform } from '@googleforcreators/transform';
  */
 import { useStory } from '../../app/story';
 import getElementProperties from '../canvas/utils/getElementProperties';
-import {
-  ELEMENT_TYPES,
-  getDefinitionForType,
-  MEDIA_ELEMENT_TYPES,
-} from '../../elements';
+import { getDefinitionForType } from '../../elements';
+import { ELEMENT_TYPES, MEDIA_ELEMENT_TYPES } from '../../elements/constants';
 import Context from './context';
 
 const DROP_SOURCE_ALLOWED_TYPES = MEDIA_ELEMENT_TYPES;
