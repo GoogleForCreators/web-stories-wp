@@ -87,11 +87,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		}
 
 		$response = parent::prepare_item_for_response( $post, $request );
-		if ( is_wp_error( $response ) ) {
-			return $response;
-		}
-
-		$fields = $this->get_fields_for_response( $request );
+		$fields   = $this->get_fields_for_response( $request );
 
 		/**
 		 * Response data.
