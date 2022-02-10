@@ -37,9 +37,6 @@ use Google\Web_Stories\Story_Query;
 use Iterator;
 use WP_Post;
 
-// Disable reason: prevent false positives due to ReturnTypeWillChange attributes.
-// phpcs:disable Squiz.Commenting.FunctionComment.Missing
-
 /**
  * Renderer class.
  *
@@ -198,7 +195,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return Story|null
 	 */
-	#[\ReturnTypeWillChange]
 	public function current(): ?Story {
 		return $this->stories[ $this->position ] ?? null;
 	}
@@ -210,7 +206,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @retrun void
 	 */
-	#[\ReturnTypeWillChange]
 	public function next(): void {
 		++ $this->position;
 	}
@@ -222,7 +217,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return bool|float|int|string|void|null
 	 */
-	#[\ReturnTypeWillChange]
 	public function key() {
 		return $this->position;
 	}
@@ -232,10 +226,9 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @return bool|void
+	 * @return bool
 	 */
-	#[\ReturnTypeWillChange]
-	public function valid() {
+	public function valid(): bool {
 		return isset( $this->stories[ $this->position ] );
 	}
 
@@ -246,7 +239,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return void
 	 */
-	#[\ReturnTypeWillChange]
 	public function rewind(): void {
 		$this->position = 0;
 	}
@@ -258,7 +250,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return void
 	 */
-	#[\ReturnTypeWillChange]
 	public function init(): void {
 		$this->stories = array_filter( array_map( [ $this, 'prepare_stories' ], $this->query->get_stories() ) );
 
@@ -353,7 +344,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return bool Whether or not current view type matches the one passed.
 	 */
 	protected function is_view_type( $view_type ): bool {
-
 		return ( ! empty( $this->attributes['view_type'] ) && $view_type === $this->attributes['view_type'] );
 	}
 
@@ -365,7 +355,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return string
 	 */
 	protected function get_view_type(): string {
-
 		return ( ! empty( $this->attributes['view_type'] ) ) ? $this->attributes['view_type'] : 'circles';
 	}
 
@@ -438,7 +427,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return string
 	 */
 	protected function get_container_classes(): string {
-
 		$container_classes   = [];
 		$container_classes[] = 'web-stories-list';
 		$container_classes[] = ( ! empty( $this->attributes['align'] ) ) ? sprintf( 'align%1$s', $this->attributes['align'] ) : 'alignnone';
@@ -810,7 +798,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return void
 	 */
 	public function render_stories_with_lightbox_amp(): void {
-
 		// Have to ignore this as the escaping functions are stripping off 'amp-bind' custom attribute '[class]'.
 		echo $this->lightbox_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Generated with properly escaped data.
 
