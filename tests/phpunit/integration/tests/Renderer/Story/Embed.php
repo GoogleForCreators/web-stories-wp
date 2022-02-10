@@ -19,17 +19,12 @@ class Embed extends DependencyInjectedTestCase {
 	 */
 	private $assets;
 
-	/**
-	 * @var \Google\Web_Stories\Model\Story
-	 */
-	private $story;
 
 	public function set_up() {
 		parent::set_up();
 
 		$this->assets  = $this->injector->make( \Google\Web_Stories\Assets::class );
 		$this->context = $this->injector->make( \Google\Web_Stories\Context::class );
-		$this->story   = $this->injector->make( \Google\Web_Stories\Model\Story::class );
 	}
 
 	/**
@@ -44,15 +39,16 @@ class Embed extends DependencyInjectedTestCase {
 			]
 		);
 
-		$this->story->load_from_post( $post );
+		$story = new \Google\Web_Stories\Model\Story();
+		$story->load_from_post( $post );
 
 		$embed  = $this->injector->make(
 			\Google\Web_Stories\Renderer\Story\Embed::class,
 			[
-				$this->story,
+				$story,
 				$this->assets,
 				$this->context,
-			] 
+			]
 		);
 		$args   = [
 			'align'  => 'none',
@@ -87,19 +83,20 @@ class Embed extends DependencyInjectedTestCase {
 		wp_maybe_generate_attachment_metadata( get_post( $poster_attachment_id ) );
 		set_post_thumbnail( $post->ID, $poster_attachment_id );
 
-		$this->story->load_from_post( $post );
+		$story = new \Google\Web_Stories\Model\Story();
+		$story->load_from_post( $post );
 
-		$this->assertNotEmpty( $this->story->get_poster_portrait() );
-		$this->assertNotEmpty( $this->story->get_poster_sizes() );
-		$this->assertNotEmpty( $this->story->get_poster_srcset() );
+		$this->assertNotEmpty( $story->get_poster_portrait() );
+		$this->assertNotEmpty( $story->get_poster_sizes() );
+		$this->assertNotEmpty( $story->get_poster_srcset() );
 
 		$embed  = $this->injector->make(
 			\Google\Web_Stories\Renderer\Story\Embed::class,
 			[
-				$this->story,
+				$story,
 				$this->assets,
 				$this->context,
-			] 
+			]
 		);
 		$args   = [
 			'align'  => 'none',
