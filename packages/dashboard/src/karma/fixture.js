@@ -41,7 +41,11 @@ import { AppFrame } from '../components';
 import InterfaceSkeleton from '../components/interfaceSkeleton';
 import ApiProviderFixture from './apiProviderFixture';
 
-// Temp fix to get tests working with webpack 5
+// Disable reason: Unable to spy on `React.createElement` when using
+// import/export. The function is added inline in the final output when
+// using import/export, but not when using require. Jasmine can then hook
+// into the require statement to swap out the function with a spy.
+// eslint-disable-next-line no-undef
 const React = require('react');
 
 if ('true' === WEB_STORIES_CI) {
