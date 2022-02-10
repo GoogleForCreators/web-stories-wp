@@ -89,6 +89,7 @@ class Story {
 	 * @var string
 	 */
 	protected $poster_sizes = '';
+
 	/**
 	 * Poster source set.
 	 *
@@ -209,6 +210,7 @@ class Story {
 	public function get_poster_sizes(): string {
 		return (string) $this->poster_sizes;
 	}
+
 	/**
 	 * Getter for poster source set.
 	 *
@@ -219,6 +221,7 @@ class Story {
 	public function get_poster_srcset(): string {
 		return (string) $this->poster_srcset;
 	}
+
 	/**
 	 * Getter for title attribute.
 	 *
