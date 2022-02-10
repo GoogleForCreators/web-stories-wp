@@ -71,8 +71,7 @@ function TaxonomyProvider(props) {
         const result = await getTaxonomies();
         setTaxonomies(result);
       } catch (e) {
-        // Log error
-        // eslint-disable-next-line no-console
+        // eslint-disable-next-line no-console -- Log error
         console.error(e.message);
       }
     })();

@@ -207,7 +207,7 @@ function useFFmpeg() {
           MEDIA_POSTER_IMAGE_MIME_TYPE
         );
       } catch (err) {
-        // eslint-disable-next-line no-console
+        // eslint-disable-next-line no-console -- error log
         console.error(err);
 
         trackError('video_poster_generation_ffmpeg', err.message);
@@ -216,7 +216,7 @@ function useFFmpeg() {
       } finally {
         try {
           ffmpeg.exit();
-          // eslint-disable-next-line no-empty
+          // eslint-disable-next-line no-empty -- no-op
         } catch (e) {}
 
         trackTiming();
@@ -262,7 +262,7 @@ function useFFmpeg() {
           MEDIA_TRANSCODED_MIME_TYPE
         );
       } catch (err) {
-        // eslint-disable-next-line no-console
+        // eslint-disable-next-line no-console -- error log
         console.error(err);
 
         trackError('video_transcoding', err.message);
@@ -271,7 +271,7 @@ function useFFmpeg() {
       } finally {
         try {
           ffmpeg.exit();
-          // eslint-disable-next-line no-empty
+          // eslint-disable-next-line no-empty -- no-op
         } catch (e) {}
 
         trackTiming();
@@ -321,7 +321,7 @@ function useFFmpeg() {
           type
         );
       } catch (err) {
-        // eslint-disable-next-line no-console
+        // eslint-disable-next-line no-console -- error log
         console.log(err);
 
         trackError('trim_video_transcoding', err.message);
@@ -330,7 +330,7 @@ function useFFmpeg() {
       } finally {
         try {
           ffmpeg.exit();
-          // eslint-disable-next-line no-empty
+          // eslint-disable-next-line no-empty -- no-op
         } catch (e) {}
 
         trackTiming();
@@ -380,7 +380,7 @@ function useFFmpeg() {
           type
         );
       } catch (err) {
-        // eslint-disable-next-line no-console
+        // eslint-disable-next-line no-console -- error log
         console.log(err);
 
         trackError('mute_video_transcoding', err.message);
@@ -389,7 +389,7 @@ function useFFmpeg() {
       } finally {
         try {
           ffmpeg.exit();
-          // eslint-disable-next-line no-empty
+          // eslint-disable-next-line no-empty -- no-op
         } catch (e) {}
 
         trackTiming();
@@ -435,7 +435,7 @@ function useFFmpeg() {
           MEDIA_TRANSCODED_MIME_TYPE
         );
       } catch (err) {
-        // eslint-disable-next-line no-console
+        // eslint-disable-next-line no-console -- error log
         console.error(err);
 
         trackError('gif_conversion', err.message);
@@ -444,7 +444,7 @@ function useFFmpeg() {
       } finally {
         try {
           ffmpeg.exit();
-          // eslint-disable-next-line no-empty
+          // eslint-disable-next-line no-empty -- no-op
         } catch (e) {}
 
         trackTiming();

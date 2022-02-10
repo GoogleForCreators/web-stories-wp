@@ -104,6 +104,7 @@
       }
     ],
     "no-useless-call": "error",
+    "anchor-has-content": "off",
     "no-useless-concat": "error",
     "no-console": "error",
     "no-duplicate-imports": "error",

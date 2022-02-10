@@ -29,7 +29,7 @@ const Image = styled.img`
 `;
 
 function VisibleImage({ ...attrs }) {
-  // eslint-disable-next-line styled-components-a11y/alt-text
+  // eslint-disable-next-line styled-components-a11y/alt-text --attributes passed in 
   return <Image {...attrs} decoding="async" crossOrigin="anonymous" />;
 }
 

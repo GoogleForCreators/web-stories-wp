@@ -20,7 +20,7 @@
 import * as types from './types';
 import * as reducers from './reducers';
 
-/* eslint-disable complexity */
+// eslint-disable complexity -- reducer function
 function reducer(state, { type, payload }) {
   switch (type) {
     case types.ADD_PAGE: {
