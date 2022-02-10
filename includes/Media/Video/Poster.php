@@ -209,7 +209,7 @@ class Poster extends Service_Base implements HasMeta {
 			return [];
 		}
 
-		list ( $src, $width, $height ) = $img_src;
+		[ $src, $width, $height ] = $img_src;
 		$generated                     = $this->is_poster( $thumbnail_id );
 		return compact( 'src', 'width', 'height', 'generated' );
 	}

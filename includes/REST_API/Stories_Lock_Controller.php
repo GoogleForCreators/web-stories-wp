@@ -225,7 +225,7 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 		$lock = get_post_meta( $post_id, '_edit_lock', true );
 
 		if ( ! empty( $lock ) ) {
-			list ( $time, $user ) = explode( ':', $lock );
+			[ $time, $user ] = explode( ':', $lock );
 			if ( $time && $user ) {
 				return compact( 'time', 'user' );
 			}

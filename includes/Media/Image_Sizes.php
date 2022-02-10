@@ -144,14 +144,14 @@ class Image_Sizes extends Service_Base {
 					continue;
 				}
 
-				list ( $image_src )      = $image;
+				[ $image_src ]      = $image;
 				$size_data['source_url'] = $image_src;
 			}
 
 			$img_src = wp_get_attachment_image_src( $attachment->ID, 'full' );
 
 			if ( $img_src ) {
-				list ( $src, $width, $height ) = $img_src;
+				[ $src, $width, $height ] = $img_src;
 
 				$response['media_details']['sizes']['full'] = [
 					'file'       => wp_basename( $src ),

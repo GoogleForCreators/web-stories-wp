@@ -112,7 +112,7 @@ class Stories_Controller extends Stories_Base_Controller {
 					require_once ABSPATH . 'wp-admin/includes/post.php';
 				}
 
-				list ( $permalink ) = get_sample_permalink( $post->ID, $post->post_title, '' );
+				[ $permalink ] = get_sample_permalink( $post->ID, $post->post_title, '' );
 
 				// Allow non-published (private, future) to be viewed at a pretty permalink, in case $post->post_name is set.
 				$view_link = str_replace( [ '%pagename%', '%postname%' ], $post->post_name, $permalink );
@@ -577,7 +577,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		$lock = get_post_meta( $post->ID, '_edit_lock', true );
 
 		if ( ! empty( $lock ) ) {
-			list ( $time, $user ) = explode( ':', $lock );
+			[ $time, $user ] = explode( ':', $lock );
 
 			/** This filter is documented in wp-admin/includes/ajax-actions.php */
 			$time_window = apply_filters( 'wp_check_post_lock_window', 150 );
