@@ -144,7 +144,7 @@ class Image_Sizes extends Service_Base {
 					continue;
 				}
 
-				[ $image_src ]      = $image;
+				[ $image_src ]           = $image;
 				$size_data['source_url'] = $image_src;
 			}
 
