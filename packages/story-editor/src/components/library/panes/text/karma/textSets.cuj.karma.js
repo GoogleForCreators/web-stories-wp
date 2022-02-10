@@ -227,10 +227,7 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
       await fixture.editor.library.text.smartColorToggle.click();
 
       await fixture.events.click(
-        await fixture.screen.findByTestId('FramesLayer')
-      );
-      await fixture.events.click(
-        fixture.editor.inspector.designPanel.pageBackground.backgroundColorInput
+        fixture.editor.canvas.quickActionMenu.changeBackgroundColorButton
       );
       await fixture.events.keyboard.type('000');
       await fixture.events.keyboard.press('Tab');
