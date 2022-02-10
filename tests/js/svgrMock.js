@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-export default 'SvgrURL';
+export default 'span';
 export const ReactComponent = 'span';

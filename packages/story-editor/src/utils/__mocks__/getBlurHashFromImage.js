@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,16 +15,13 @@
  */
 
 /**
- * External dependencies
+ * mock function for getBlurHashFromImage. Prevents `import.meta` from being called in the jest context.
+ *
+ * @param {string} src The url.
+ * @return {string} The blur hash string.
  */
-import { enableFetchMocks } from 'jest-fetch-mock';
+const getBlurHashFromImageMock = (src = 'default') => {
+  return `${src}-blur-hash`;
+};
 
-// eslint-disable-next-line jest/require-hook
-enableFetchMocks();
-
-jest.mock('react', () => ({
-  ...jest.requireActual('react'),
-  useLayoutEffect: jest.requireActual('react').useEffect,
-}));
-
-jest.mock('@googleforcreators/story-editor/src/utils/getBlurHashFromImage');
+export default getBlurHashFromImageMock;
