@@ -633,6 +633,14 @@
       "rules": {
         "node/no-extraneous-require": "off"
       }
+    },
+    {
+      "files": [
+        ".storybook/stories/playground/story-editor/api/fonts.js"
+      ],
+      "rules": {
+        "import/no-unresolved": "off"
+      }
     }
   ]
 }
