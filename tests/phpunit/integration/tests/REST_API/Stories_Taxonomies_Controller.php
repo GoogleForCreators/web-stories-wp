@@ -10,8 +10,6 @@ use WP_REST_Server;
 /**
  * Class Stories_Taxonomies_Controller
  *
- * @package Google\Web_Stories\Tests\REST_API
- *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Taxonomies_Controller
  */
 class Stories_Taxonomies_Controller extends DependencyInjectedRestTestCase {

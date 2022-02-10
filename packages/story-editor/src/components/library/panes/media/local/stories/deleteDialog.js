@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
 import { SnackbarContext } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
@@ -30,36 +29,45 @@ import StoryContext from '../../../../../../app/story/context';
 export default {
   title: 'Stories Editor/Components/Dialog/Delete Media',
   component: DeleteDialog,
+  argTypes: {
+    deleteMedia: { action: 'delete from server' },
+    deleteMediaElement: { action: 'delete from state' },
+    deleteElementsByResourceId: { action: 'delete element by resource ID' },
+    showSnackbar: { action: 'show snackbar' },
+    onClose: { action: 'on close' },
+  },
+  parameters: {
+    controls: {
+      exclude: ['mediaId', 'type'],
+      hideNoControlsWarning: true,
+    },
+  },
 };
 
-export const _default = () => {
+export const _default = (args) => {
   const apiValue = {
     actions: {
-      deleteMedia: action('delete from server'),
+      deleteMedia: args.deleteMedia,
     },
   };
   const mediaValue = {
     local: {
-      actions: { deleteMediaElement: action('delete from state') },
+      actions: { deleteMediaElement: args.deleteMediaElement },
     },
   };
   const storyContext = {
     actions: {
-      deleteElementsByResourceId: action('delete element by resource ID'),
+      deleteElementsByResourceId: args.deleteElementsByResourceId,
     },
   };
-  const snackbarValue = { showSnackbar: action('show snackbar') };
+  const snackbarValue = { showSnackbar: args.showSnackbar };
 
   return (
     <SnackbarContext.Provider value={snackbarValue}>
       <MediaContext.Provider value={mediaValue}>
         <ApiContext.Provider value={apiValue}>
           <StoryContext.Provider value={storyContext}>
-            <DeleteDialog
-              mediaId={123}
-              type={'image'}
-              onClose={action('closed')}
-            />
+            <DeleteDialog mediaId={123} type={'image'} onClose={args.onClose} />
           </StoryContext.Provider>
         </ApiContext.Provider>
       </MediaContext.Provider>

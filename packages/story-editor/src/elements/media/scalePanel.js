@@ -22,10 +22,11 @@ import styled from 'styled-components';
 import { _x } from '@googleforcreators/i18n';
 import { Slider } from '@googleforcreators/design-system';
 import { BG_MIN_SCALE, BG_MAX_SCALE } from '@googleforcreators/animation';
+import { InOverlay } from '@googleforcreators/moveable';
+
 /**
  * Internal dependencies
  */
-import InOverlay from '../../components/overlay';
 import { Z_INDEX_CANVAS } from '../../constants';
 
 const MIN_WIDTH = 165;

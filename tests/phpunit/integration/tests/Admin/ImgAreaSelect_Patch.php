@@ -17,16 +17,14 @@
 
 namespace Google\Web_Stories\Tests\Integration\Admin;
 
-use Google\Web_Stories\Assets;
 use Google\Web_Stories\Admin\ImgAreaSelect_Patch as Testee;
+use Google\Web_Stories\Assets;
 use Google\Web_Stories\Context;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 
 /**
  * Class ImgAreaSelect_Patch
- *
- * @package Google\Web_Stories\Tests\Admin
  *
  * @coversDefaultClass \Google\Web_Stories\Admin\ImgAreaSelect_Patch
  */

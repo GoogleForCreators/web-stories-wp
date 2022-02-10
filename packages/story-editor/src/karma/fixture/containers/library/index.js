@@ -57,10 +57,6 @@ export class Library extends Container {
     return this.getByRole('tab', { name: /Text library/ });
   }
 
-  get textAdd() {
-    return this.getByRole('button', { name: /Add new text element/ });
-  }
-
   get text() {
     return this._get(
       this.getByRole('tabpanel', { name: /Text library/ }),

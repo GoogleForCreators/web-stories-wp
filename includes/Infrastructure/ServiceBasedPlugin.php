@@ -2,10 +2,10 @@
 /**
  * Class ServiceBasedPlugin.
  *
- * @package   Google\Web_Stories
+ * @link      https://www.mwpd.io/
+ *
  * @copyright 2019 Alain Schlesser
  * @license   MIT
- * @link      https://www.mwpd.io/
  */
 
 /**
@@ -94,8 +94,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 */
 	public function __construct(
 		$enable_filters = null,
-		Injector $injector = null,
-		ServiceContainer $service_container = null
+		?Injector $injector = null,
+		?ServiceContainer $service_container = null
 	) {
 		/*
 		 * We use what is commonly referred to as a "poka-yoke" here.
@@ -131,7 +131,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 			}
 		}
 
-		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === WPCOM_IS_VIP_ENV ) {
+		if ( ! \defined( '\WPCOM_IS_VIP_ENV' ) || false === WPCOM_IS_VIP_ENV ) {
 			flush_rewrite_rules( false );
 		}
 	}
@@ -153,7 +153,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 			}
 		}
 
-		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === WPCOM_IS_VIP_ENV ) {
+		if ( ! \defined( '\WPCOM_IS_VIP_ENV' ) || false === WPCOM_IS_VIP_ENV ) {
 			flush_rewrite_rules( false );
 		}
 	}
@@ -180,7 +180,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 			}
 		}
 
-		if ( ! defined( '\WPCOM_IS_VIP_ENV' ) || false === WPCOM_IS_VIP_ENV ) {
+		if ( ! \defined( '\WPCOM_IS_VIP_ENV' ) || false === WPCOM_IS_VIP_ENV ) {
 			flush_rewrite_rules( false );
 		}
 
@@ -217,8 +217,9 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @return void
 	 * @throws InvalidService If a service is not valid.
+	 *
+	 * @return void
 	 */
 	public function register() {
 		if ( false !== static::REGISTRATION_ACTION ) {
@@ -242,7 +243,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 */
 	public function register_services() {
 		// Bail early so we don't instantiate services twice.
-		if ( count( $this->service_container ) > 0 ) {
+		if ( \count( $this->service_container ) > 0 ) {
 			return;
 		}
 
@@ -304,11 +305,10 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @since 1.13.0
 	 *
-	 * @param HasRequirements|Delayed|class-string $class    Service FQCN of the service with requirements.
-	 * @param string[]                             $services List of services to be registered.
-	 *
 	 * @throws InvalidService If the required service is not recognized.
 	 *
+	 * @param HasRequirements|Delayed|class-string $class    Service FQCN of the service with requirements.
+	 * @param string[]                             $services List of services to be registered.
 	 * @return int The registration action priority for the service.
 	 */
 	protected function get_registration_action_priority( $class, array &$services ): int {
@@ -348,12 +348,11 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @since 1.10.0
 	 *
+	 * @throws InvalidService If the required service is not recognized.
+	 *
 	 * @param string                       $id       Service ID of the service with requirements.
 	 * @param HasRequirements|class-string $class    Service FQCN of the service with requirements.
 	 * @param string[]                     $services List of services to be registered.
-	 *
-	 * @throws InvalidService If the required service is not recognized.
-	 *
 	 * @return bool Whether the requirements for the service has been met.
 	 */
 	protected function requirements_are_met( string $id, $class, array &$services ): bool {
@@ -433,11 +432,10 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @since 1.10.0
 	 *
-	 * @param HasRequirements|class-string $class    Service FQCN of the service with requirements.
-	 * @param string[]                     $services List of services to register.
-	 *
 	 * @throws InvalidService If the required service is not recognized.
 	 *
+	 * @param HasRequirements|class-string $class    Service FQCN of the service with requirements.
+	 * @param string[]                     $services List of services to register.
 	 * @return string[] List of missing requirements as a $service_id => $service_class mapping.
 	 */
 	protected function collect_missing_requirements( $class, $services ): array {
@@ -447,7 +445,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 
 		foreach ( $requirements as $requirement ) {
 			// Bail if it requires a service that is not recognized.
-			if ( ! array_key_exists( $requirement, $services ) ) {
+			if ( ! \array_key_exists( $requirement, $services ) ) {
 				throw InvalidService::from_service_id( $requirement );
 			}
 
@@ -477,7 +475,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	protected function validate_services( $services, $fallback ): array {
 		// If we don't have an array, something went wrong with filtering.
 		// Just use the fallback value in this case.
-		if ( ! is_array( $services ) ) {
+		if ( ! \is_array( $services ) ) {
 			return $fallback;
 		}
 
@@ -487,7 +485,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 		foreach ( $services_to_check as $identifier => $fqcn ) {
 			// Ensure we have valid identifiers we can refer to.
 			// If not, generate them from the FQCN.
-			if ( empty( $identifier ) || ! is_string( $identifier ) ) {
+			if ( empty( $identifier ) || ! \is_string( $identifier ) ) {
 				unset( $services[ $identifier ] );
 				$identifier              = $this->get_identifier_from_fqcn( $fqcn );
 				$services[ $identifier ] = $fqcn;
@@ -495,7 +493,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 
 			// Verify that the FQCN is valid and points to an existing class.
 			// If not, skip this service.
-			if ( empty( $fqcn ) || ! is_string( $fqcn ) || ! class_exists( $fqcn ) ) {
+			if ( empty( $fqcn ) || ! \is_string( $fqcn ) || ! class_exists( $fqcn ) ) {
 				unset( $services[ $identifier ] );
 			}
 		}
@@ -565,7 +563,6 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @param string              $id ID of the service to register.
 	 * @param class-string|object $class Class of the service to register.
-	 *
 	 * @return void
 	 */
 	protected function maybe_register_service( $id, $class ) {
@@ -606,10 +603,9 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param string|class-string|object $class Service class to instantiate.
-	 *
 	 * @throws InvalidService If the service could not be properly instantiated.
 	 *
+	 * @param string|class-string|object $class Service class to instantiate.
 	 * @return Service Instantiated service.
 	 */
 	protected function instantiate_service( $class ) {
@@ -846,7 +842,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @return string|class-string Resolved or unchanged value.
 	 */
 	protected function maybe_resolve( $value ) {
-		if ( is_callable( $value ) && ! ( is_string( $value ) && function_exists( $value ) ) ) {
+		if ( is_callable( $value ) && ! ( \is_string( $value ) && function_exists( $value ) ) ) {
 			$value = $value( $this->injector, $this->service_container );
 		}
 

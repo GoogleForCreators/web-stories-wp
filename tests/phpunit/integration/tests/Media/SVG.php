@@ -25,6 +25,7 @@ use Google\Web_Stories\Tests\Integration\TestCase;
 class SVG extends TestCase {
 	/**
 	 * Test instance.
+	 *
 	 * @var \Google\Web_Stories\Media\SVG
 	 */
 	protected $instance;

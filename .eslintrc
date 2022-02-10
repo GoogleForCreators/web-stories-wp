@@ -219,17 +219,26 @@
   },
   "env": {
     "browser": true,
-    "es6": true
+    "es2020": true
   },
   "globals": {
-    "global": true,
-    "window": true,
-    "document": true,
-    "wp": "readonly",
-    "process": "readonly",
-    "__webpack_public_path__": true
+    "__webpack_public_path__": true,
+    "WEB_STORIES_CI": "readonly",
+    "WEB_STORIES_DISABLE_ERROR_BOUNDARIES": "readonly",
+    "WEB_STORIES_DISABLE_OPTIMIZED_RENDERING": "readonly",
+    "WEB_STORIES_DISABLE_PREVENT": "readonly",
+    "WEB_STORIES_DISABLE_QUICK_TIPS": "readonly",
+    "WEB_STORIES_ENV": "readonly"
   },
   "settings": {
+    "import/resolver": {
+      "@web-stories-wp/eslint-import-resolver": {
+        "mapping": {
+          "^@googleforcreators\\/(.*)": "./packages/$1/src/",
+          "^@web-stories-wp\\/(.*)": "./packages/$1/src/"
+        }
+      }
+    },
     "jsdoc": {
       "mode": "typescript",
       "preferredTypes": {
@@ -284,6 +293,9 @@
         "testing-library",
         "jest-dom"
       ],
+      "env": {
+        "node": true
+      },
       "rules": {
         "jest/no-hooks": "off",
         "jest/prefer-expect-assertions": "off",
@@ -367,6 +379,9 @@
       "extends": [
         "plugin:jest/all"
       ],
+      "env": {
+        "node": true
+      },
       "rules": {
         "jest/no-hooks": "off",
         "jest/prefer-expect-assertions": "off",
@@ -422,10 +437,10 @@
     {
       "files": [
         "packages/commander/**/*.js",
-        "packages/fonts/scripts/cli.js",
-        "packages/migration/src/cli.js",
-        "packages/templates/scripts/cli.js",
-        "packages/text-sets/scripts/cli.js"
+        "packages/fonts/scripts/**/*.js",
+        "packages/migration/scripts/**/*.js",
+        "packages/templates/scripts/**/*.js",
+        "packages/text-sets/scripts/**/*.js"
       ],
       "rules": {
         "import/no-useless-path-segments": ["error", {
@@ -435,10 +450,18 @@
     },
     {
       "files": [
+        "packages/jest-parallel-sequencer/**/*.js"
+      ],
+      "env": {
+        "node": true
+      }
+    },
+    {
+      "files": [
         "__mocks__/**/*.js",
         "bin/**/*.js",
         "babel.config.cjs",
-        "rollup.config.migrate.cjs",
+        "rollup.config.js",
         "jest-puppeteer.config.cjs",
         "karma-*.config.cjs",
         "webpack.*.cjs",
@@ -449,11 +472,13 @@
         "packages/e2e-tests/src/config/*.js",
         "packages/dashboard/src/karma-tests.cjs",
         "packages/story-editor/src/karma-tests.cjs",
-        "packages/migration/src/**/*.js",
+        "packages/eslint-import-resolver/**/*.cjs",
+        "packages/jest-resolver/**/*.cjs",
         "packages/fonts/**/*.js",
         "packages/commander/**/*.js",
-        "packages/templates/scripts/cli.js",
-        "packages/text-sets/scripts/cli.js"
+        "packages/migration/scripts/**/*.js",
+        "packages/templates/scripts/**/*.js",
+        "packages/text-sets/scripts/**/*.js"
       ],
       "extends": [
         "plugin:node/recommended",

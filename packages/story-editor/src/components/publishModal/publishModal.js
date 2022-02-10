@@ -16,38 +16,80 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import { Modal } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
-import { useCallback, useEffect, useState } from '@googleforcreators/react';
+import { useCallback, useEffect, useMemo } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
+import { useConfig, useStory } from '../../app';
+import { updateSlug } from '../../utils/storyUpdates';
+import { useCheckpoint } from '../checklist';
 import Header from './header';
 import MainContent from './mainContent';
+import { INPUT_KEYS, REQUIRED_INPUTS } from './constants';
 
 const Container = styled.div`
-  position: relative;
   height: 100%;
-  overflow: hidden;
   color: ${({ theme }) => theme.colors.fg.primary};
   background-color: ${({ theme }) => theme.colors.bg.primary};
   border: ${({ theme }) => `1px solid ${theme.colors.divider.primary}`};
   border-radius: ${({ theme }) => theme.borders.radius.medium};
 `;
 
-function PublishModal() {
-  const [isOpen, setIsOpen] = useState(true);
+function PublishModal({ isOpen, onPublish, onClose }) {
+  const storyId = useConfig(({ storyId }) => storyId);
+  const updateStory = useStory(({ actions }) => actions.updateStory);
+  const inputValues = useStory(({ state: { story } }) => ({
+    [INPUT_KEYS.EXCERPT]: story.excerpt,
+    [INPUT_KEYS.TITLE]: story.title || '',
+    [INPUT_KEYS.SLUG]: story.slug,
+  }));
+  const openChecklist = useCheckpoint(
+    ({ actions }) => actions.onPublishDialogChecklistRequest
+  );
+
   useEffect(() => {
     if (isOpen) {
       trackEvent('publish_modal');
     }
   }, [isOpen]);
 
-  const onClose = useCallback(() => {
-    setIsOpen(false);
-  }, []);
+  const handleUpdateStoryInfo = useCallback(
+    ({ target }) => {
+      const { value, name } = target;
+      updateStory({
+        properties: { [name]: value },
+      });
+    },
+    [updateStory]
+  );
+
+  const handleUpdateSlug = useCallback(() => {
+    updateSlug({
+      currentSlug: inputValues.slug,
+      currentTitle: inputValues.title,
+      storyId,
+      updateStory,
+    });
+  }, [inputValues, storyId, updateStory]);
+
+  const isAllRequiredInputsFulfilled = useMemo(
+    () =>
+      REQUIRED_INPUTS.every(
+        (requiredInput) => inputValues?.[requiredInput]?.length > 0
+      ),
+    [inputValues]
+  );
+
+  const handleReviewChecklist = useCallback(() => {
+    trackEvent('review_prepublish_checklist');
+    onClose();
+    openChecklist();
+  }, [onClose, openChecklist]);
 
   return (
     <Modal
@@ -63,11 +105,26 @@ function PublishModal() {
       }}
     >
       <Container>
-        <Header />
-        <MainContent />
+        <Header
+          onClose={onClose}
+          onPublish={onPublish}
+          isPublishEnabled={isAllRequiredInputsFulfilled}
+        />
+        <MainContent
+          inputValues={inputValues}
+          handleUpdateStoryInfo={handleUpdateStoryInfo}
+          handleUpdateSlug={handleUpdateSlug}
+          handleReviewChecklist={handleReviewChecklist}
+        />
       </Container>
     </Modal>
   );
 }
 
 export default PublishModal;
+
+PublishModal.propTypes = {
+  isOpen: PropTypes.bool,
+  onPublish: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+};

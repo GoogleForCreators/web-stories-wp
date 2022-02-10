@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __ } from '@googleforcreators/i18n';
+import { __, sprintf } from '@googleforcreators/i18n';
 import { Modal, theme } from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';
 
@@ -46,7 +46,11 @@ function TemplateDetailsModal({
     <Modal
       isOpen={isDetailsViewOpen}
       onClose={handleDetailsToggle}
-      contentLabel={__('Details View', 'web-stories')}
+      contentLabel={sprintf(
+        /* translators: %s: template title */
+        __('Template Details for %s', 'web-stories'),
+        activeTemplate?.title
+      )}
       overlayStyles={{
         backgroundColor: `${theme.colors.opacity.overlayDark}`,
       }}

@@ -21,6 +21,7 @@ import styled from 'styled-components';
 import { useRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { useUnits } from '@googleforcreators/units';
+import { useTransformHandler } from '@googleforcreators/transform';
 
 /**
  * Internal dependencies
@@ -31,7 +32,6 @@ import {
   elementWithBorder,
 } from '../shared';
 import StoryPropTypes from '../../types';
-import { useTransformHandler } from '../../components/transform';
 import {
   getResponsiveBorder,
   shouldDisplayBorder,

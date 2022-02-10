@@ -61,7 +61,10 @@ describe('TextEdit integration', () => {
     let frame;
 
     beforeEach(async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
       await waitFor(() => {
         const node = fixture.editor.canvas.framesLayer.frames[1].node;
         if (!node) {
@@ -72,7 +75,9 @@ describe('TextEdit integration', () => {
     });
 
     it('should render initial content', () => {
-      expect(frame.textContent).toEqual('Fill in some text');
+      expect(frame.textContent).toEqual(
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+      );
     });
 
     describe('edit mode', () => {
@@ -108,6 +113,7 @@ describe('TextEdit integration', () => {
         await fixture.events.mouse.clickOn(frame, 30, 5);
         await repeatPress('ArrowUp', 10);
         await fixture.events.keyboard.down('shift');
+        await repeatPress('ArrowDown', 3);
         await repeatPress('ArrowRight', 20);
         await fixture.events.keyboard.up('shift');
 
@@ -132,13 +138,13 @@ describe('TextEdit integration', () => {
         // The element is still selected and updated.
         const storyContext = await fixture.renderHook(() => useStory());
         expect(storyContext.state.selectedElements[0].content).toEqual(
-          '<span style="font-weight: 700">Fill in some text</span>'
+          '<span style="font-weight: 700">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>'
         );
 
         // The content is updated in the frame.
         // @todo: What to do with `<p>` and containers?
         expect(frame.querySelector('p').innerHTML).toEqual(
-          '<span style="font-weight: 700">Fill in some text</span>'
+          '<span style="font-weight: 700">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>'
         );
       });
     });
@@ -176,7 +182,10 @@ describe('TextEdit integration', () => {
 
     describe('edit mode', () => {
       it('should not change height when entering and exiting edit mode', async () => {
-        await fixture.events.click(fixture.editor.library.textAdd);
+        await fixture.editor.library.textTab.click();
+        await fixture.events.click(
+          fixture.editor.library.text.preset('Paragraph')
+        );
         await waitFor(() => {
           const node = fixture.editor.canvas.framesLayer.frames[1].node;
           if (!node) {

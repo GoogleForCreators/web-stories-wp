@@ -138,7 +138,6 @@ class Core_Themes_Support extends DependencyInjectedTestCase {
 	}
 
 	/**
-	 *
 	 * @covers ::embed_web_stories
 	 */
 	public function embed_web_stories() {

@@ -41,14 +41,6 @@ export const defaultAttributes = {
   },
 };
 
-export const copyableAttributes = {
-  ...defaultAttributes,
-  content: '',
-  border: null,
-  borderRadius: null,
-  lockAspectRatio: undefined,
-};
-
 export const hasEditMode = true;
 
 export const hasEditModeMoveable = true;
@@ -65,12 +57,6 @@ export const resizeRules = {
   diagonal: true,
   minWidth: 20,
   minHeight: 0, // Enforced by min font size
-};
-
-// Resize rules change for text element if aspect ratio is unlocked.
-export const unlockedResizeRules = {
-  ...resizeRules,
-  diagonal: false,
 };
 
 export const panels = [

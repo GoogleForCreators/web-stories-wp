@@ -22,7 +22,7 @@ import getTemplates from './getTemplates';
 
 const memoizedGetTemplates = memoize(getTemplates);
 
-export default async function ({ cdnURL }) {
+export async function getAllTemplates({ cdnURL }) {
   const templates = await memoizedGetTemplates(cdnURL);
 
   const globalConfig = {

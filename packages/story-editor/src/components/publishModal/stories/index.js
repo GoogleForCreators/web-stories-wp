@@ -14,13 +14,58 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { useCallback, useState } from '@googleforcreators/react';
+/**
  * Internal dependencies
  */
+import StoryContext from '../../../app/story/context';
+import { noop } from '../../../utils/noop';
+import { CheckpointContext } from '../../checklist';
 import PublishModal from '../publishModal';
 
 export default {
   title: 'Stories Editor/Components/Dialog/Publish Modal',
-  component: PublishModal,
+  args: {
+    isOpen: true,
+  },
+  argTypes: {
+    onPublish: { action: 'onPublish clicked' },
+    onClose: { action: 'onClose clicked' },
+  },
 };
 
-export const _default = () => <PublishModal />;
+export const _default = (args) => {
+  const [inputValues, setInputValues] = useState({
+    excerpt: '',
+    title: '',
+  });
+
+  const handleUpdateStory = useCallback(({ properties }) => {
+    setInputValues((prevVal) => ({
+      ...prevVal,
+      ...properties,
+    }));
+  }, []);
+  return (
+    <StoryContext.Provider
+      value={{
+        actions: { updateStory: handleUpdateStory },
+        state: {
+          story: inputValues,
+        },
+      }}
+    >
+      <CheckpointContext.Provider
+        value={{
+          actions: {
+            onPublishDialogChecklistRequest: noop,
+          },
+        }}
+      >
+        <PublishModal {...args} />
+      </CheckpointContext.Provider>
+    </StoryContext.Provider>
+  );
+};

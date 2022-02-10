@@ -24,6 +24,7 @@ import {
   useSnackbar,
   themeHelpers,
 } from '@googleforcreators/design-system';
+import { withOverlay } from '@googleforcreators/moveable';
 import PropTypes from 'prop-types';
 /**
  * Internal dependencies
@@ -37,7 +38,6 @@ import {
   INSPECTOR_MIN_WIDTH,
   INSPECTOR_MAX_WIDTH,
 } from '../../constants';
-import withOverlay from '../overlay/withOverlay';
 import { CanvasProvider } from '../../app/canvas';
 import { HighlightsProvider } from '../../app/highlights';
 import LayoutProvider from '../../app/layout/layoutProvider';

@@ -41,13 +41,15 @@ describe('Editor Settings: Archive page settings <ArchiveSetting />', function (
   });
 
   it('should render archive dropdown button and helper text for default', function () {
-    const link = 'http://www.example.com/web-stories';
+    const archiveURL = 'http://www.example.com/custom-archive/';
+    const defaultArchiveURL = 'http://www.example.com/web-stories/';
     renderWithProviders(
       <FlagsProvider>
         <ArchiveSetting
           archive={archive}
           updateSettings={mockUpdate}
-          archiveURL={link}
+          archiveURL={archiveURL}
+          defaultArchiveURL={defaultArchiveURL}
           archivePageId={0}
           searchPages={jest.fn()}
           getPageById={jest.fn()}
@@ -59,7 +61,7 @@ describe('Editor Settings: Archive page settings <ArchiveSetting />', function (
     expect(sectionHeader).toBeInTheDocument();
 
     const helperLink = screen.getByText(
-      (_, node) => node.textContent === link,
+      (_, node) => node.textContent === archiveURL,
       {
         selector: 'a',
       }
@@ -71,13 +73,15 @@ describe('Editor Settings: Archive page settings <ArchiveSetting />', function (
   });
 
   it('should render archive dropdown button and helper text for disabled', function () {
-    const link = 'http://www.example.com/web-stories';
+    const archiveURL = 'http://www.example.com/custom-archive/';
+    const defaultArchiveURL = 'http://www.example.com/web-stories/';
     renderWithProviders(
       <FlagsProvider>
         <ArchiveSetting
           archive={ARCHIVE_TYPE.DISABLED}
           updateSettings={mockUpdate}
-          archiveURL={link}
+          archiveURL={archiveURL}
+          defaultArchiveURL={defaultArchiveURL}
           archivePageId={0}
           searchPages={jest.fn()}
           getPageById={jest.fn()}

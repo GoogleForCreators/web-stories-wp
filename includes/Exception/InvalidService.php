@@ -2,10 +2,10 @@
 /**
  * Exception InvalidService.
  *
- * @package   Google\Web_Stories
+ * @link      https://www.mwpd.io/
+ *
  * @copyright 2019 Alain Schlesser
  * @license   MIT
- * @link      https://www.mwpd.io/
  */
 
 /**
@@ -31,8 +31,9 @@ use InvalidArgumentException;
 /**
  * Exception thrown when an invalid service was requested.
  *
- * @since 1.6.0
  * @internal
+ *
+ * @since 1.6.0
  */
 final class InvalidService
 	extends InvalidArgumentException
@@ -46,7 +47,6 @@ final class InvalidService
 	 *
 	 * @param string|object $service Class name of the service that was not
 	 *                               recognized.
-	 *
 	 * @return self
 	 */
 	public static function from_service( $service ): self {
@@ -66,7 +66,6 @@ final class InvalidService
 	 *
 	 * @param string $service_id Identifier of the service that is not being
 	 *                           recognized.
-	 *
 	 * @return self
 	 */
 	public static function from_service_id( $service_id ): self {
