@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import PropTypes from 'prop-types';
+/**
  * Internal dependencies
  */
 import {
@@ -33,7 +37,22 @@ const availablePanels = {
   [DOCUMENT_PANEL_NAMES.TAXONOMIES]: TaxonomiesPanel,
 };
 
-function DocumentPane({ variant, hiddenPanels = [] }) {
+function DocumentPane({ variant, hiddenPanels = [], isolatedPanel }) {
+  if (isolatedPanel) {
+    if (Object.keys(availablePanels).indexOf(isolatedPanel) < 0) {
+      return null;
+    }
+
+    const Panel = availablePanels[isolatedPanel];
+    return (
+      <Panel
+        name={variant ? `${variant}_${isolatedPanel}` : isolatedPanel}
+        canCollapse={false}
+        isPersistable={false}
+      />
+    );
+  }
+
   return Object.entries(availablePanels).map(
     ([name, Panel]) =>
       hiddenPanels.indexOf(name) < 0 && (
@@ -43,3 +62,9 @@ function DocumentPane({ variant, hiddenPanels = [] }) {
 }
 
 export default DocumentPane;
+
+DocumentPane.propTypes = {
+  variant: PropTypes.string,
+  hiddenPanels: PropTypes.arrayOf(PropTypes.string),
+  isolatedPanel: PropTypes.oneOf(Object.keys(availablePanels)),
+};
