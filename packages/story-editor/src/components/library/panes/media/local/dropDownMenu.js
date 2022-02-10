@@ -161,7 +161,7 @@ function DropDownMenu({
           aria-owns={isMenuOpen ? listId : null}
           id={buttonId}
           display={display}
-          tabIndex={index === 0 ? 0 : -1}
+          tabIndex={index === 0 || display || isMenuOpen ? 0 : -1}
         >
           <IconContainer>
             <Icons.Dots />

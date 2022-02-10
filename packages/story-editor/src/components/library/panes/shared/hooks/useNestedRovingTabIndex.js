@@ -27,6 +27,9 @@ import { useConfig } from '../../../../../app';
 
 const SELECTOR = '[tabIndex="-1"]:not(:disabled)';
 
+// @todo Combine this with `useRovingTabIndex` so that if depth is set, this file is used, otherwise the default one is used.
+// @todo Move common helpers into a shared file between the two.
+
 /**
  * A point in 2D space.
  *
