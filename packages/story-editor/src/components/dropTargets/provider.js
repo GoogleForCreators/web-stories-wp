@@ -35,7 +35,9 @@ import {
 import Context from './context';
 
 const DROP_SOURCE_ALLOWED_TYPES = MEDIA_ELEMENT_TYPES;
-const DROP_TARGET_ALLOWED_TYPES = [...MEDIA_ELEMENT_TYPES, ELEMENT_TYPES.SHAPE];
+const DROP_TARGET_ALLOWED_TYPES = MEDIA_ELEMENT_TYPES.concat(
+  ELEMENT_TYPES.SHAPE
+);
 
 const isDropSource = (type) => DROP_SOURCE_ALLOWED_TYPES.includes(type);
 const isDropTarget = (type) => DROP_TARGET_ALLOWED_TYPES.includes(type);
