@@ -185,7 +185,10 @@ return [
 	'exclude-classes'   => $wp_classes,
 
 	'exclude-functions' => $wp_functions,
-
+	
+	// Note the hardcoded WP constants can be removed if a fix gets merged for
+	// currently exclude-wordpress-constants.json is empty []
+	// https://github.com/sniccowp/php-scoper-wordpress-excludes/issues/2
 	'exclude-constants' => array_merge(
 		$wp_constants,
 		[
