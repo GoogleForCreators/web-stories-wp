@@ -19,7 +19,7 @@
 /**
  * External dependencies
  */
-const { readFileSync, existsSync } = require('fs');
+const { readFileSync } = require('fs');
 
 /**
  * Internal dependencies
@@ -28,10 +28,7 @@ const getWebpackConfig = require('./webpack.config.test.cjs');
 
 module.exports = function (config) {
   let specsToRetry;
-  if (
-    config.retryFailed &&
-    existsSync('build/karma-story-editor-failed-tests.txt')
-  ) {
+  if (config.retryFailed) {
     // Loads names of failed specs and prepares them for use in a regex.
     specsToRetry = readFileSync(
       'build/karma-story-editor-failed-tests.txt',

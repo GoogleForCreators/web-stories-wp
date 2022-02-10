@@ -68,6 +68,7 @@ module.exports = {
       ...config.resolve,
       fallback: {
         ...config.resolve.fallback,
+        // eslint-disable-next-line node/no-extraneous-require
         stream: require.resolve('stream-browserify'),
       },
     };

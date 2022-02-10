@@ -222,6 +222,7 @@
     "es2020": true
   },
   "globals": {
+    "require": "readonly",
     "__webpack_public_path__": true,
     "WEB_STORIES_CI": "readonly",
     "WEB_STORIES_DISABLE_ERROR_BOUNDARIES": "readonly",
@@ -624,22 +625,6 @@
       ],
       "globals": {
         "tinymce": "readonly"
-      }
-    },
-    {
-      "files": [
-        ".storybook/main.cjs"
-      ],
-      "rules": {
-        "node/no-extraneous-require": "off"
-      }
-    },
-    {
-      "files": [
-        ".storybook/stories/playground/story-editor/api/fonts.js"
-      ],
-      "rules": {
-        "import/no-unresolved": "off"
       }
     }
   ]

@@ -48,11 +48,6 @@ import storyResponse from './db/storyResponse';
 import DocumentPane from './components/documentPane';
 import { Accessibility, Design, Priority } from './components/checklist';
 
-// Disable reason: Unable to spy on `React.createElement` when using
-// import/export. The function is added inline in the final output when
-// using import/export, but not when using require. Jasmine can then hook
-// into the require statement to swap out the function with a spy.
-// eslint-disable-next-line no-undef
 const React = require('react');
 const { useCallback, useState, useMemo, forwardRef } = React;
 
