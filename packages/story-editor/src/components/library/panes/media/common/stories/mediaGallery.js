@@ -25,6 +25,8 @@ import { noop } from '@googleforcreators/design-system';
  */
 import MediaGallery from '../mediaGallery';
 import { CanvasProvider } from '../../../../../../app/canvas';
+import { LayoutProvider } from '../../../../../../app/layout';
+
 import MediaContext from '../../../../../../app/media/context';
 
 export default {
@@ -47,7 +49,7 @@ const resources = [
     src: 'https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/slideshows/how_to_brush_dogs_teeth_slideshow/1800x1200_how_to_brush_dogs_teeth_slideshow.jpg',
   },
   {
-    id: 1,
+    id: 2,
     type: 'image',
     alt: 'image alt',
     mimeType: 'image/jpeg',
@@ -57,7 +59,7 @@ const resources = [
     src: 'https://www.sciencemag.org/sites/default/files/styles/article_main_large/public/dogs_1280p_0.jpg?itok=cnRk0HYq',
   },
   {
-    id: 1,
+    id: 3,
     type: 'image',
     alt: 'image alt',
     mimeType: 'image/jpeg',
@@ -67,7 +69,7 @@ const resources = [
     src: 'https://post.medicalnewstoday.com/wp-content/uploads/sites/3/2020/02/322868_1100-1100x628.jpg',
   },
   {
-    id: 1,
+    id: 4,
     type: 'image',
     alt: 'image alt',
     mimeType: 'image/jpeg',
@@ -77,7 +79,7 @@ const resources = [
     src: 'https://www.abc.net.au/cm/rimage/11779952-4x3-xlarge.jpg?v=3',
   },
   {
-    id: 1,
+    id: 5,
     type: 'image',
     alt: 'image alt',
     mimeType: 'image/jpeg',
@@ -87,7 +89,7 @@ const resources = [
     src: 'https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/slideshows/how_to_brush_dogs_teeth_slideshow/1800x1200_how_to_brush_dogs_teeth_slideshow.jpg',
   },
   {
-    id: 1,
+    id: 6,
     type: 'image',
     alt: 'image alt',
     mimeType: 'image/jpeg',
@@ -97,7 +99,7 @@ const resources = [
     src: 'https://i0.wp.com/rollinsps.vic.edu.au/wp-content/uploads/2018/11/IMG_0451.jpg',
   },
   {
-    id: 1,
+    id: 7,
     type: 'image',
     alt: 'image alt',
     mimeType: 'image/jpeg',
@@ -107,7 +109,7 @@ const resources = [
     src: 'https://i.insider.com/5d2e0e30a17d6c5cfd30be94?width=1100&format=jpeg&auto=webp',
   },
   {
-    id: 1,
+    id: 8,
     type: 'image',
     alt: 'image alt',
     mimeType: 'image/jpeg',
@@ -117,7 +119,7 @@ const resources = [
     src: 'https://www.dogsnsw.org.au/media/1007/breeding-dogs.jpg',
   },
   {
-    id: 1,
+    id: 9,
     type: 'image',
     alt: 'image alt',
     mimeType: 'image/jpeg',
@@ -127,7 +129,7 @@ const resources = [
     src: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/golden-retriever-royalty-free-image-506756303-1560962726.jpg?crop=0.672xw:1.00xh;0.166xw,0&resize=640:*',
   },
   {
-    id: 1,
+    id: 10,
     type: 'image',
     alt: 'image alt',
     mimeType: 'image/jpeg',
@@ -137,7 +139,7 @@ const resources = [
     src: 'https://i.insider.com/5d2e0e30a17d6c5cfd30be94?width=1100&format=jpeg&auto=webp',
   },
   {
-    id: 1,
+    id: 11,
     type: 'image',
     alt: 'image alt',
     mimeType: 'image/jpeg',
@@ -147,7 +149,7 @@ const resources = [
     src: 'https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/slideshows/how_to_brush_dogs_teeth_slideshow/1800x1200_how_to_brush_dogs_teeth_slideshow.jpg',
   },
   {
-    id: 1,
+    id: 12,
     type: 'image',
     alt: 'image alt',
     mimeType: 'image/jpeg',
@@ -157,7 +159,7 @@ const resources = [
     src: 'https://upload.wikimedia.org/wikipedia/commons/9/9a/Declassified_image_of_Conan%2C_the_dog_who_chased_al-Baghdadi.jpg',
   },
   {
-    id: 1,
+    id: 13,
     type: 'image',
     alt: 'image alt',
     mimeType: 'image/jpeg',
@@ -167,7 +169,7 @@ const resources = [
     src: 'https://i.insider.com/5d2e0e30a17d6c5cfd30be94?width=1100&format=jpeg&auto=webp',
   },
   {
-    id: 1,
+    id: 14,
     type: 'image',
     alt: 'image alt',
     mimeType: 'image/jpeg',
@@ -177,7 +179,7 @@ const resources = [
     src: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/bernese-mountain-dog-royalty-free-image-1581013857.jpg?crop=0.87845xw:1xh;center,top&resize=480:*',
   },
   {
-    id: 1,
+    id: 15,
     type: 'image',
     alt: 'image alt',
     mimeType: 'image/jpeg',
@@ -187,7 +189,7 @@ const resources = [
     src: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/smartest-dog-breeds-lead-1587757081.jpg?crop=1.00xw:1.00xh;0,0&resize=640:*',
   },
   {
-    id: 1,
+    id: 16,
     type: 'image',
     alt: 'image alt',
     mimeType: 'image/jpeg',
@@ -197,7 +199,7 @@ const resources = [
     src: 'https://upload.wikimedia.org/wikipedia/commons/9/9a/Declassified_image_of_Conan%2C_the_dog_who_chased_al-Baghdadi.jpg',
   },
   {
-    id: 1,
+    id: 17,
     type: 'image',
     alt: 'image alt',
     mimeType: 'image/jpeg',
@@ -207,7 +209,7 @@ const resources = [
     src: 'https://www.dogsnsw.org.au/media/1007/breeding-dogs.jpg',
   },
   {
-    id: 1,
+    id: 18,
     type: 'image',
     alt: 'image alt',
     mimeType: 'image/jpeg',
@@ -217,7 +219,7 @@ const resources = [
     src: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/golden-retriever-royalty-free-image-506756303-1560962726.jpg?crop=0.672xw:1.00xh;0.166xw,0&resize=640:*',
   },
   {
-    id: 1,
+    id: 19,
     type: 'image',
     alt: 'image alt',
     mimeType: 'image/jpeg',
@@ -227,7 +229,7 @@ const resources = [
     src: 'https://i.insider.com/5d2e0e30a17d6c5cfd30be94?width=1100&format=jpeg&auto=webp',
   },
   {
-    id: 1,
+    id: 20,
     type: 'image',
     alt: 'image alt',
     mimeType: 'image/jpeg',
@@ -237,7 +239,7 @@ const resources = [
     src: 'https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/slideshows/how_to_brush_dogs_teeth_slideshow/1800x1200_how_to_brush_dogs_teeth_slideshow.jpg',
   },
   {
-    id: 1,
+    id: 21,
     type: 'image',
     alt: 'image alt',
     mimeType: 'image/jpeg',
@@ -247,7 +249,7 @@ const resources = [
     src: 'https://upload.wikimedia.org/wikipedia/commons/9/9a/Declassified_image_of_Conan%2C_the_dog_who_chased_al-Baghdadi.jpg',
   },
   {
-    id: 1,
+    id: 22,
     type: 'image',
     alt: 'image alt',
     mimeType: 'image/jpeg',
@@ -257,7 +259,7 @@ const resources = [
     src: 'https://i.insider.com/5d2e0e30a17d6c5cfd30be94?width=1100&format=jpeg&auto=webp',
   },
   {
-    id: 1,
+    id: 23,
     type: 'image',
     alt: 'image alt',
     mimeType: 'image/jpeg',
@@ -267,7 +269,7 @@ const resources = [
     src: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/bernese-mountain-dog-royalty-free-image-1581013857.jpg?crop=0.87845xw:1xh;center,top&resize=480:*',
   },
   {
-    id: 1,
+    id: 24,
     type: 'image',
     alt: 'image alt',
     mimeType: 'image/jpeg',
@@ -277,7 +279,7 @@ const resources = [
     src: 'https://hips.hearstapps.com/hmg-prod.s3.amazonaws.com/images/smartest-dog-breeds-lead-1587757081.jpg?crop=1.00xw:1.00xh;0,0&resize=640:*',
   },
   {
-    id: 1,
+    id: 25,
     type: 'image',
     alt: 'image alt',
     mimeType: 'image/jpeg',
@@ -308,13 +310,15 @@ export const _default = (args) => {
   return (
     <Container>
       <MediaContext.Provider value={mediaValue}>
-        <CanvasProvider>
-          <MediaGallery
-            resources={resources}
-            providerType={'unsplash'}
-            {...args}
-          />
-        </CanvasProvider>
+        <LayoutProvider>
+          <CanvasProvider>
+            <MediaGallery
+              resources={resources}
+              providerType={'unsplash'}
+              {...args}
+            />
+          </CanvasProvider>
+        </LayoutProvider>
       </MediaContext.Provider>
     </Container>
   );
