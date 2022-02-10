@@ -195,16 +195,19 @@ class Settings extends Service_Base {
 			self::SETTING_GROUP,
 			self::SETTING_NAME_PUBLISHER_LOGOS,
 			[
-				'description'  => __( 'Publisher Logos', 'web-stories' ),
-				'type'         => 'array',
-				'default'      => [],
-				'show_in_rest' => [
+				'description'     => __( 'Publisher Logos', 'web-stories' ),
+				'type'            => 'array',
+				'default'         => [],
+				'show_in_rest'    => [
 					'schema' => [
 						'items' => [
 							'type' => 'integer',
 						],
 					],
 				],
+				// WPGraphQL errors when encountering array or object types.
+				// See https://github.com/wp-graphql/wp-graphql/issues/2065.
+				'show_in_graphql' => false,
 			]
 		);
 
@@ -250,14 +253,17 @@ class Settings extends Service_Base {
 			self::SETTING_GROUP_EXPERIMENTS,
 			self::SETTING_NAME_EXPERIMENTS,
 			[
-				'description'  => __( 'Experiments', 'web-stories' ),
-				'type'         => 'object',
-				'default'      => [],
-				'show_in_rest' => [
+				'description'     => __( 'Experiments', 'web-stories' ),
+				'type'            => 'object',
+				'default'         => [],
+				'show_in_rest'    => [
 					'schema' => [
 						'properties' => [],
 					],
 				],
+				// WPGraphQL errors when encountering array or object types.
+				// See https://github.com/wp-graphql/wp-graphql/issues/2065.
+				'show_in_graphql' => false,
 			]
 		);
 	}
