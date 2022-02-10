@@ -628,11 +628,27 @@
     },
     {
       "files": [
-        ".storybook/main.cjs"
+        ".storybook/**/*.js"
       ],
       "rules": {
         "import/no-extraneous-dependencies": "off",
         "node/no-extraneous-require": "off"
+      }
+    },
+    {
+      "files": [
+        ".storybook/preview.js"
+      ],
+      "rules": {
+        "node/no-unsupported-features/es-syntax": "off"
+      }
+    },
+    {
+      "files": [
+        ".storybook/stories/playground/story-editor/api/fonts.js"
+      ],
+      "rules": {
+        "import/no-unresolved": "off"
       }
     }
   ]
