@@ -67,7 +67,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @param WP_Post         $post Post object.
 	 * @param WP_REST_Request $request Request object.
-	 * @return WP_REST_Response|mixed Response object or value returned from filter.
+	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function prepare_item_for_response( $post, $request ) {
 		/**
@@ -87,7 +87,11 @@ class Stories_Controller extends Stories_Base_Controller {
 		}
 
 		$response = parent::prepare_item_for_response( $post, $request );
-		$fields   = $this->get_fields_for_response( $request );
+		if ( is_wp_error( $response ) ) {
+			return $response;
+		}
+
+		$fields = $this->get_fields_for_response( $request );
 
 		/**
 		 * Response data.

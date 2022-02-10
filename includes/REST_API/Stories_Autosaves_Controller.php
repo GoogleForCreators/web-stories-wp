@@ -31,6 +31,7 @@ use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Story_Post_Type;
+use WP_Error;
 use WP_Post;
 use WP_REST_Autosaves_Controller;
 use WP_REST_Controller;
@@ -178,7 +179,7 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller implemen
 	 *
 	 * @param WP_Post         $post Post object.
 	 * @param WP_REST_Request $request Request object.
-	 * @return WP_REST_Response|mixed Response object or value returned from filter.
+	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function prepare_item_for_response( $post, $request ) {
 		$response = parent::prepare_item_for_response( $post, $request );

@@ -397,9 +397,9 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 	 *
 	 * @param WP_Post         $post    Post object.
 	 * @param WP_REST_Request $request Request object.
-	 * @return WP_REST_Response|mixed Response object or value returned from filter.
+	 * @return WP_REST_Response Response object.
 	 */
-	public function prepare_item_for_response( $post, $request ) {
+	public function prepare_item_for_response( $post, $request ): WP_REST_Response {
 		$fields = $this->get_fields_for_response( $request );
 
 		// Base fields for every post.

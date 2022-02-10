@@ -57,11 +57,10 @@ class Stories_Taxonomies_Controller extends WP_REST_Taxonomies_Controller implem
 	 *
 	 * @param WP_Taxonomy     $taxonomy Taxonomy data.
 	 * @param WP_REST_Request $request  Full details about the request.
-	 * @return WP_REST_Response|mixed Response object or value returned from filter.
+	 * @return WP_REST_Response Response object.
 	 */
-	public function prepare_item_for_response( $taxonomy, $request ) {
-		$response = parent::prepare_item_for_response( $taxonomy, $request );
-
+	public function prepare_item_for_response( $taxonomy, $request ): WP_REST_Response {
+		$response   = parent::prepare_item_for_response( $taxonomy, $request );
 		$base       = ! empty( $taxonomy->rest_base ) ? $taxonomy->rest_base : $taxonomy->name;
 		$controller = $taxonomy->get_rest_controller();
 

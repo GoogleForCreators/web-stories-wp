@@ -177,7 +177,11 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 		}
 
 		$new_response = $this->prepare_item_for_response( $attachment, $request );
-		$data         = $new_response->get_data();
+		if ( is_wp_error( $new_response ) ) {
+			return $new_response;
+		}
+
+		$data = $new_response->get_data();
 		$response->set_data( $data );
 
 		return $response;
@@ -300,7 +304,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 *
 	 * @param WP_Post         $post    Attachment object.
 	 * @param WP_REST_Request $request Request object.
-	 * @return WP_REST_Response|mixed Response object or value returned from filter.
+	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function prepare_item_for_response( $post, $request ) {
 		$response = parent::prepare_item_for_response( $post, $request );
