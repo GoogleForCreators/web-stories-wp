@@ -42,7 +42,7 @@ class Embed extends DependencyInjectedTestCase {
 		$story = new \Google\Web_Stories\Model\Story();
 		$story->load_from_post( $post );
 
-		$embed = new \Google\Web_Stories\Renderer\Story\Embed( $story, $this->assets, $this->context );
+		$embed  = new \Google\Web_Stories\Renderer\Story\Embed( $story, $this->assets, $this->context );
 		$args   = [
 			'align'  => 'none',
 			'height' => 600,
@@ -83,7 +83,7 @@ class Embed extends DependencyInjectedTestCase {
 		$this->assertNotEmpty( $story->get_poster_sizes() );
 		$this->assertNotEmpty( $story->get_poster_srcset() );
 
-		$embed = new \Google\Web_Stories\Renderer\Story\Embed( $story, $this->assets, $this->context );
+		$embed  = new \Google\Web_Stories\Renderer\Story\Embed( $story, $this->assets, $this->context );
 		$args   = [
 			'align'  => 'none',
 			'height' => 600,
