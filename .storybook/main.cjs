@@ -16,11 +16,6 @@
 /**
  * External dependencies
  */
-const webpack = require('webpack');
-
-/**
- * External dependencies
- */
 const path = require('path');
 const webpack = require('webpack');
 
