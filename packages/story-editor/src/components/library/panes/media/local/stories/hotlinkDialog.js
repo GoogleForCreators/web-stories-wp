@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
-
-/**
  * Internal dependencies
  */
 import HotlinkModal from '../hotlink/hotlinkModal';
@@ -29,12 +24,20 @@ import ConfigContext from '../../../../../../app/config/context';
 export default {
   title: 'Stories Editor/Components/Dialog/Insert Media By Link',
   component: HotlinkModal,
+  args: {
+    isOpen: true,
+  },
+  argTypes: {
+    onClose: { action: 'closed' },
+    insertElement: { action: 'Insert media by link' },
+  },
 };
 
-export const _default = () => {
+// eslint-disable-next-line react/prop-types
+export const _default = ({ insertElement, ...args }) => {
   const libraryContext = {
     actions: {
-      insertElement: action('Insert media by link'),
+      insertElement: insertElement(),
     },
   };
   const configContext = {
@@ -55,7 +58,7 @@ export const _default = () => {
   return (
     <ConfigContext.Provider value={configContext}>
       <LibraryContext.Provider value={libraryContext}>
-        <HotlinkModal isOpen onClose={action('closed')} />
+        <HotlinkModal {...args} />
       </LibraryContext.Provider>
     </ConfigContext.Provider>
   );

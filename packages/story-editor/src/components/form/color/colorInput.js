@@ -38,18 +38,17 @@ import {
   THEME_CONSTANTS,
   Swatch,
   PLACEMENT,
+  Popup,
 } from '@googleforcreators/design-system';
-
 /**
  * Internal dependencies
  */
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../constants';
-import Popup from '../../popup';
 import ColorPicker from '../../colorPicker';
 import useInspector from '../../inspector/useInspector';
 import DefaultTooltip from '../../tooltip';
 import { focusStyle, inputContainerStyleOverride } from '../../panels/shared';
-import { useCanvas } from '../../../app';
+import { useCanvas, useConfig } from '../../../app';
 
 const Preview = styled.div`
   height: 36px;
@@ -153,13 +152,12 @@ const ColorInput = forwardRef(function ColorInput(
 
   const [pickerOpen, setPickerOpen] = useState(false);
   const previewRef = useRef(null);
-
   const { isEyedropperActive } = useCanvas(
     ({ state: { isEyedropperActive } }) => ({
       isEyedropperActive,
     })
   );
-
+  const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
   const {
     refs: { inspector },
   } = useInspector();
@@ -224,12 +222,14 @@ const ColorInput = forwardRef(function ColorInput(
         </Tooltip>
       )}
       <Popup
+        isRTL={isRTL}
         anchor={previewRef}
         dock={inspector}
         isOpen={pickerOpen}
         placement={PLACEMENT.LEFT_START}
         spacing={SPACING}
         invisible={isEyedropperActive}
+        topOffset={topOffset}
         renderContents={({ propagateDimensionChange }) => (
           <ColorPicker
             color={isMixed ? null : value}
