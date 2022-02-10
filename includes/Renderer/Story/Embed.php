@@ -94,8 +94,8 @@ class Embed {
 		$url           = $this->story->get_url();
 		$title         = $this->story->get_title();
 		$poster        = ! empty( $this->story->get_poster_portrait() ) ? $this->story->get_poster_portrait() : '';
-		$poster_srcset = ! empty( $this->story->get_publisher_logo_srcset() ) ? $this->story->get_publisher_logo_srcset() : '';
-		$poster_sizes  = ! empty( $this->story->get_publisher_logo_sizes() ) ? $this->story->get_publisher_logo_sizes() : '';
+		$poster_srcset = ! empty( $this->story->get_poster_srcset() ) ? $this->story->get_poster_srcset() : '';
+		$poster_sizes  = ! empty( $this->story->get_poster_sizes() ) ? $this->story->get_poster_sizes() : '';
 
 		$wrapper_style = sprintf(
 			'--aspect-ratio: %F; --width: %dpx; --height: %dpx',

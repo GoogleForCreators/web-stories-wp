@@ -88,7 +88,7 @@ class Story {
 	 *
 	 * @var string
 	 */
-	protected $publisher_logo_sizes = '';
+	protected $poster_sizes = '';
 
 
 	/**
@@ -96,7 +96,7 @@ class Story {
 	 *
 	 * @var string
 	 */
-	protected $publisher_logo_srcset = '';
+	protected $poster_srcset = '';
 
 	/**
 	 * Publisher logo size.
@@ -169,13 +169,13 @@ class Story {
 			$poster_src = wp_get_attachment_image_src( $thumbnail_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
 
 			if ( $poster_src ) {
-				list ( $poster_url, $width, $height ) = $poster_src;
-				$this->poster_portrait                = $poster_url;
-				$size_array                           = [ (int) $width, (int) $height ];
-				$image_meta                           = wp_get_attachment_metadata( $thumbnail_id );
+				[ $poster_url, $width, $height ] = $poster_src;
+				$this->poster_portrait = $poster_url;
+				$size_array            = [ (int) $width, (int) $height ];
+				$image_meta            = wp_get_attachment_metadata( $thumbnail_id );
 				if ( $image_meta ) {
-					$this->publisher_logo_sizes  = (string) wp_calculate_image_sizes( $size_array, $poster_url, $image_meta, $thumbnail_id );
-					$this->publisher_logo_srcset = (string) wp_calculate_image_srcset( $size_array, $poster_url, $image_meta, $thumbnail_id );
+					$this->poster_sizes  = (string) wp_calculate_image_sizes( $size_array, $poster_url, $image_meta, $thumbnail_id );
+					$this->poster_srcset = (string) wp_calculate_image_srcset( $size_array, $poster_url, $image_meta, $thumbnail_id );
 				}
 			}
 		}
@@ -201,26 +201,26 @@ class Story {
 	}
 
 	/**
-	 * Getter for publisher logo source set sizes.
+	 * Getter for poster source set sizes.
 	 *
 	 * @since 1.18.0
 	 *
 	 * @return string
 	 */
-	public function get_publisher_logo_sizes(): string {
-		return (string) $this->publisher_logo_sizes;
+	public function get_poster_sizes(): string {
+		return (string) $this->poster_sizes;
 	}
 
 
 	/**
-	 * Getter for publisher logo source set.
+	 * Getter for poster source set.
 	 *
 	 * @since 1.18.0
 	 *
 	 * @return string
 	 */
-	public function get_publisher_logo_srcset(): string {
-		return (string) $this->publisher_logo_srcset;
+	public function get_poster_srcset(): string {
+		return (string) $this->poster_srcset;
 	}
 
 

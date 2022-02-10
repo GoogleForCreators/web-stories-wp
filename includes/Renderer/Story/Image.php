@@ -82,8 +82,8 @@ class Image {
 						absint( $args['width'] ),
 						absint( $args['height'] ),
 						esc_attr( $this->story->get_title() ),
-						esc_attr( $this->story->get_publisher_logo_srcset() ),
-						esc_attr( $this->story->get_publisher_logo_sizes() )
+						esc_attr( $this->story->get_poster_srcset() ),
+						esc_attr( $this->story->get_poster_sizes() )
 					);
 				} else {
 					echo esc_html( $this->story->get_title() );
