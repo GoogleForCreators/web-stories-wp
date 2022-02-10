@@ -37,13 +37,29 @@ import {
 import { useKeyDownEffect } from '../keyboard';
 import { useContextMenu } from './contextMenuProvider';
 
+export const CONTEXT_MENU_WIDTH = 218;
+
 const MenuWrapper = styled.div(
   ({ theme }) => css`
-    padding: ${({ $isIconMenu }) => ($isIconMenu ? '4px 3px' : '8px 0')};
-    background-color: ${theme.colors.bg.primary};
-    border-radius: ${theme.borders.radius.small};
+    background-color: ${({ $isSecondary }) =>
+      $isSecondary ? theme.colors.bg.secondary : theme.colors.bg.primary};
+    border-radius: ${({ $isHorizontal }) =>
+      $isHorizontal ? theme.borders.radius.medium : theme.borders.radius.small};
     border: 1px solid ${theme.colors.border.disable};
-    width: ${({ $isIconMenu }) => ($isIconMenu ? 40 : 210)}px;
+    gap: 6px;
+    display: flex;
+    ${({ $isHorizontal, $isIconMenu }) =>
+      $isHorizontal
+        ? `
+          height: 52px;
+          padding: 7px 10px;
+          align-items: center;
+        `
+        : `
+          flex-direction: column;
+          width: ${$isIconMenu ? 40 : CONTEXT_MENU_WIDTH}px;
+          padding: ${$isIconMenu ? '4px 3px' : '8px 0'};
+        `}
 
     *:last-child {
       margin-bottom: 0;
@@ -51,7 +67,8 @@ const MenuWrapper = styled.div(
   `
 );
 MenuWrapper.propTypes = {
-  isIconMenu: PropTypes.bool,
+  $isIconMenu: PropTypes.bool,
+  $isHorizontal: PropTypes.bool,
 };
 
 /**
@@ -80,19 +97,20 @@ const Menu = ({
   isOpen,
   onFocus = noop,
   isSubMenu = false,
+  isSecondary = false,
   parentMenuRef,
   onCloseSubMenu = noop,
   ...props
 }) => {
   const { isRTL } = props;
-  const { focusedId, isIconMenu, onDismiss, setFocusedId } = useContextMenu(
-    ({ state, actions }) => ({
+  const { focusedId, isIconMenu, isHorizontal, onDismiss, setFocusedId } =
+    useContextMenu(({ state, actions }) => ({
       focusedId: state.focusedId,
       isIconMenu: state.isIconMenu,
+      isHorizontal: state.isHorizontal,
       onDismiss: actions.onDismiss,
       setFocusedId: actions.setFocusedId,
-    })
-  );
+    }));
   const mouseDownOutsideRef = useMouseDownOutsideRef(() => {
     isOpen && !isSubMenu && onDismiss();
   });
@@ -142,9 +160,12 @@ const Menu = ({
         prevIndex = 0;
       }
 
-      // If we're moving up-down.
-      if ([KEYS.UP, KEYS.DOWN].includes(key)) {
-        const isAscending = KEYS.UP === key;
+      const keyBackward = isHorizontal ? KEYS.LEFT : KEYS.UP;
+      const keyForward = isHorizontal ? KEYS.RIGHT : KEYS.DOWN;
+
+      // If we're moving through this menu (up/down in vertical, left/right in horizontal).
+      if ([keyBackward, keyForward].includes(key)) {
+        const isAscending = keyBackward === key;
         let newIndex = prevIndex + (isAscending ? -1 : 1);
 
         if (newIndex === -1) {
@@ -159,11 +180,12 @@ const Menu = ({
         setFocusedId(newSelectedElement?.id || -1);
         return;
       }
+
+      // The direction to move out of a submenu depends on horizontal/vertical and RTL/LTR
+      const keyOut = isHorizontal ? KEYS.UP : isRTL ? KEYS.RIGHT : KEYS.LEFT;
+
       // Maybe move from submenu to parent menu.
-      if (
-        isSubMenu &&
-        ((!isRTL && KEYS.LEFT === key) || (isRTL && KEYS.RIGHT === key))
-      ) {
+      if (isSubMenu && keyOut === key) {
         // Get the button with expanded popup.
         const parentButton = parentMenuRef.current.querySelector(
           'button[aria-expanded="true"]'
@@ -178,6 +200,7 @@ const Menu = ({
       setFocusedId,
       isRTL,
       isSubMenu,
+      isHorizontal,
       onCloseSubMenu,
       parentMenuRef,
     ]
@@ -218,6 +241,8 @@ const Menu = ({
       data-testid="context-menu-list"
       role="menu"
       $isIconMenu={isIconMenu}
+      $isHorizontal={isHorizontal}
+      $isSecondary={isSecondary}
       // Tabbing out from the list while using 'shift' would
       // focus the list element. Should just travel back to the previous
       // focusable element in the DOM
@@ -237,6 +262,7 @@ export const MenuPropTypes = {
   isOpen: PropTypes.bool,
   onCloseSubMenu: PropTypes.func,
   isSubMenu: PropTypes.bool,
+  isSecondary: PropTypes.bool,
   isRTL: PropTypes.bool,
   parentMenuRef: PropTypes.object,
 };

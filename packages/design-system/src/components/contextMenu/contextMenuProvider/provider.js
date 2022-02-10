@@ -27,6 +27,7 @@ import ContextMenuContext from './context';
 export default function ContextMenuProvider({
   children,
   isIconMenu = false,
+  isHorizontal = false,
   onDismiss,
 }) {
   const [focusedId, setFocusedId] = useState(-1);
@@ -38,6 +39,7 @@ export default function ContextMenuProvider({
     state: {
       focusedId,
       isIconMenu,
+      isHorizontal,
     },
     actions: {
       onDismiss,
@@ -56,5 +58,6 @@ export default function ContextMenuProvider({
 ContextMenuProvider.propTypes = {
   children: PropTypes.node,
   isIconMenu: PropTypes.bool,
+  isHorizontal: PropTypes.bool,
   onDismiss: PropTypes.func,
 };

@@ -42,6 +42,7 @@ describe('Link Panel', () => {
   });
 
   const moveElementToBottom = async (frame, frameY = 0) => {
+    safezone = fixture.querySelector('[data-testid="safezone"]');
     const safezoneHeight = safezone?.getBoundingClientRect()?.height;
     const frameHeight = frame?.getBoundingClientRect()?.height;
     await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
@@ -240,9 +241,12 @@ describe('Link Panel', () => {
 
   describe('CUJ: Creator Can Add A Link: Link with Page Attachment', () => {
     beforeEach(async () => {
-      // Select Page.
-      safezone = fixture.querySelector('[data-testid="safezone"]');
-      await clickOnTarget(safezone);
+      // Select Page and remove empty state message.
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.changeBackgroundColorButton
+      );
+      await fixture.events.keyboard.type('ef');
+      await fixture.events.keyboard.press('Tab');
 
       // Add Page Attachment
       await setPageAttachmentLink('http://pageattachment.com');
@@ -379,7 +383,10 @@ describe('Link Panel', () => {
 
   describe('CUJ: Creator Can Add A Link: Remove applied link', () => {
     beforeEach(async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
       await waitFor(() => {
         if (!fixture.editor.canvas.framesLayer.frames[1].node) {
           throw new Error('node not ready');

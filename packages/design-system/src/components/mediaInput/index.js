@@ -171,6 +171,7 @@ export const MediaInput = forwardRef(function Media(
     canUpload = true,
     menuProps = {},
     imgProps = {},
+    isRTL = false,
     ...rest
   },
   ref
@@ -238,6 +239,7 @@ export const MediaInput = forwardRef(function Media(
         placement={PLACEMENT.BOTTOM_END}
         anchor={internalRef}
         isOpen={isMenuOpen}
+        isRTL={isRTL}
       >
         <Menu
           parentId={buttonId}

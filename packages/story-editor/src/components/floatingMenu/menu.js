@@ -20,13 +20,16 @@
 import { forwardRef, useLayoutEffect } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { __ } from '@googleforcreators/i18n';
+import {
+  ContextMenu,
+  ContextMenuComponents,
+  Icons,
+  TOOLTIP_PLACEMENT,
+} from '@googleforcreators/design-system';
 
-const Menu = styled.nav`
+const MenuWrapper = styled.section`
   position: absolute;
-  background: hotpink;
-  padding: 5px;
-  border: 1px solid white;
-  color: white;
   z-index: 2;
 `;
 
@@ -39,9 +42,64 @@ const FloatingMenu = forwardRef(function FloatingMenu(props, ref) {
   }, [ref]);
 
   return (
-    <Menu ref={ref}>
-      {`Floating Menu | Floating Menu | Floating Menu | Floating Menu`}
-    </Menu>
+    <MenuWrapper ref={ref} aria-label={__('Design menu', 'web-stories')}>
+      <ContextMenu
+        isInline
+        isHorizontal
+        isSecondary
+        isAlwaysVisible
+        disableControlledTabNavigation
+        aria-label={__('Design options for selected element', 'web-stories')}
+        onMouseDown={(e) => {
+          // Stop the event from bubbling if the user clicks in between buttons.
+          // This prevents the selected element in the canvas from losing focus.
+          e.stopPropagation();
+        }}
+      >
+        <ContextMenuComponents.MenuButton>
+          <ContextMenuComponents.MenuIcon
+            title="Exclaim!"
+            placement={TOOLTIP_PLACEMENT.BOTTOM}
+          >
+            <Icons.ExclamationOutline />
+          </ContextMenuComponents.MenuIcon>
+        </ContextMenuComponents.MenuButton>
+        <ContextMenuComponents.MenuButton>
+          <ContextMenuComponents.MenuIcon
+            title="Bucket!"
+            placement={TOOLTIP_PLACEMENT.BOTTOM}
+          >
+            <Icons.ColorBucket />
+          </ContextMenuComponents.MenuIcon>
+        </ContextMenuComponents.MenuButton>
+        <ContextMenuComponents.MenuButton>
+          <ContextMenuComponents.MenuIcon
+            title="Letter Arrow!"
+            placement={TOOLTIP_PLACEMENT.BOTTOM}
+          >
+            <Icons.LetterTArrow />
+          </ContextMenuComponents.MenuIcon>
+        </ContextMenuComponents.MenuButton>
+        <ContextMenuComponents.MenuSeparator />
+        <ContextMenuComponents.MenuButton>
+          <ContextMenuComponents.MenuIcon
+            title="Pipette!"
+            placement={TOOLTIP_PLACEMENT.BOTTOM}
+          >
+            <Icons.Pipette />
+          </ContextMenuComponents.MenuIcon>
+        </ContextMenuComponents.MenuButton>
+        <ContextMenuComponents.MenuSeparator />
+        <ContextMenuComponents.MenuButton>
+          <ContextMenuComponents.MenuIcon
+            title="Dismiss menu"
+            placement={TOOLTIP_PLACEMENT.BOTTOM}
+          >
+            <Icons.Cross />
+          </ContextMenuComponents.MenuIcon>
+        </ContextMenuComponents.MenuButton>
+      </ContextMenu>
+    </MenuWrapper>
   );
 });
 

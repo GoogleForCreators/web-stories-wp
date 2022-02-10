@@ -248,15 +248,22 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       await fixture.editor.library.textTab.click();
       fixture.editor.library.text.smartColorToggle.click();
 
-      await fixture.events.click(fixture.screen.getByTestId('FramesLayer'));
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.pageBackground.backgroundColorInput
+        fixture.editor.canvas.quickActionMenu.changeBackgroundColorButton
       );
       await fixture.events.keyboard.type('000');
       await fixture.events.keyboard.press('Tab');
 
-      // This text should be added without any changes.
-      await fixture.events.click(fixture.editor.library.textAdd);
+      // Should be added with white style on black background.
+      await fixture.events.mouse.moveRel(
+        fixture.editor.library.text.preset('Paragraph'),
+        10,
+        10
+      );
+      await fixture.events.sleep(800);
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
       await waitFor(() => {
         if (!fixture.editor.canvas.framesLayer.frames[1].node) {
           throw new Error('node not ready');
@@ -264,7 +271,9 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       });
 
       const [text1] = await getSelection();
-      expect(text1.content).toEqual('Fill in some text');
+      expect(text1.content).toEqual(
+        '<span style="color: #fff">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>'
+      );
 
       await fixture.events.mouse.moveRel(
         fixture.editor.library.text.preset('Title 1'),
@@ -272,7 +281,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
         10
       );
       await fixture.events.sleep(800);
-      // Title is added with white text color since it's using auto styling.
+      // Should be added with white style on black background.
       await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
       await waitFor(() => {
         if (!fixture.editor.canvas.framesLayer.frames[2].node) {

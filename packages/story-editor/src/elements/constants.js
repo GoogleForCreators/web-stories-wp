@@ -22,3 +22,9 @@ export const ELEMENT_TYPES = {
   GIF: 'gif',
   STICKER: 'sticker',
 };
+
+export const MEDIA_ELEMENT_TYPES = [
+  ELEMENT_TYPES.IMAGE,
+  ELEMENT_TYPES.VIDEO,
+  ELEMENT_TYPES.GIF,
+];
