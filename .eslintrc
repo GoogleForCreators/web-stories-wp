@@ -494,7 +494,8 @@
         "packages/templates/scripts/**/*.js",
         "packages/templates/src/test/*.js",
         "packages/text-sets/scripts/**/*.js",
-        "packages/i18n/src/test/*.js"
+        "packages/i18n/src/test/*.js",
+        "packages/stories-block/src/**/test/*.js"
       ],
       "extends": [
         "plugin:node/recommended",
