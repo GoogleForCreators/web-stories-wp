@@ -25,6 +25,7 @@ import {
   useRef,
   useState,
 } from '@googleforcreators/react';
+import { ThemeGlobals, themeHelpers } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 import { trackEvent } from '@googleforcreators/tracking';
 import { createSolidFromString } from '@googleforcreators/patterns';
@@ -35,7 +36,6 @@ import { PAGE_WIDTH, useUnits } from '@googleforcreators/units';
  */
 import useLibrary from '../../useLibrary';
 import LibraryMoveable from '../shared/libraryMoveable';
-import { focusStyle } from '../../../panels/shared';
 import { MaskTypes } from '../../../../masks/constants';
 import InsertionOverlay from '../shared/insertionOverlay';
 
@@ -53,7 +53,14 @@ const Aspect = styled.button`
   border-radius: ${({ theme }) => theme.borders.radius.small};
   background-color: ${({ theme }) => theme.colors.interactiveBg.previewOverlay};
 
-  ${focusStyle};
+  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} [role='presentation'],
+  &[data-focus-visible-added] [role='presentation'] {
+    ${({ theme }) =>
+      themeHelpers.focusCSS(
+        theme.colors.border.focus,
+        theme.colors.bg.secondary
+      )};
+  }
 `;
 
 const AspectInner = styled.div`

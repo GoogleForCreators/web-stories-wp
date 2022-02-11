@@ -20,7 +20,12 @@ import { useMemo, useState } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import STICKERS from '@googleforcreators/stickers';
-import { Button, BUTTON_SIZES } from '@googleforcreators/design-system';
+import {
+  Button,
+  BUTTON_SIZES,
+  ThemeGlobals,
+  themeHelpers,
+} from '@googleforcreators/design-system';
 import { useUnits } from '@googleforcreators/units';
 
 /**
@@ -39,6 +44,21 @@ const StickerButton = styled(Button).attrs({
   margin: 0;
   height: 60px;
   background-color: ${({ theme }) => theme.colors.interactiveBg.previewOverlay};
+
+  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR},
+    &[data-focus-visible-added]
+    [role='presentation'] {
+    box-shadow: none;
+  }
+
+  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} [role='presentation'],
+  &[data-focus-visible-added] [role='presentation'] {
+    ${({ theme }) =>
+      themeHelpers.focusCSS(
+        theme.colors.border.focus,
+        theme.colors.bg.secondary
+      )};
+  }
 `;
 
 const StickerInner = styled.div`
