@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
 import styled, { css } from 'styled-components';
 import { useState, forwardRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
@@ -43,6 +42,10 @@ export default {
     isRTL: false,
     menuAriaLabel: 'default aria label',
     parentId: 'id-menu-associates-with',
+  },
+  argTypes: {
+    onMenuItemClick: { action: 'onMenuItemClick' },
+    onDismissMenu: { action: 'onDismissMenu occured' },
   },
 };
 
@@ -94,7 +97,8 @@ const _effectChooserOptions = getOptions(effectChooserOptions);
 const _nestedDropDownOptions = getOptions(nestedDropDownOptions);
 const _reallyLongOptions = getOptions(reallyLongOptions);
 
-export const _default = (args) => {
+// eslint-disable-next-line react/prop-types
+export const _default = ({ onMenuItemClick, ...args }) => {
   const [selectedValue, setSelectedValue] = useState(
     basicDropDownOptions[2].value
   );
@@ -104,12 +108,9 @@ export const _default = (args) => {
         <Menu
           options={_basicDropDownOptions}
           listId={'list-id'}
-          onMenuItemClick={(event, newValue) => {
-            action('onMenuItemClick')(event);
+          onMenuItemClick={(_, newValue) => {
+            onMenuItemClick(newValue);
             setSelectedValue(newValue);
-          }}
-          onDismissMenu={(event) => {
-            action('onDismissMenu occured')(event);
           }}
           activeValue={selectedValue}
           {...args}
@@ -119,7 +120,8 @@ export const _default = (args) => {
   );
 };
 
-export const LightTheme = (args) => {
+// eslint-disable-next-line react/prop-types
+export const LightTheme = ({ onMenuItemClick, ...args }) => {
   const [selectedValue, setSelectedValue] = useState(null);
 
   return (
@@ -128,12 +130,9 @@ export const LightTheme = (args) => {
         emptyText={'No options available'}
         options={_basicDropDownOptions}
         listId={'list-id'}
-        onMenuItemClick={(event, newValue) => {
-          action('onMenuItemClick')(event);
+        onMenuItemClick={(_, newValue) => {
+          onMenuItemClick(newValue);
           setSelectedValue(newValue);
-        }}
-        onDismissMenu={(event) => {
-          action('onDismissMenu occured')(event);
         }}
         activeValue={selectedValue}
         {...args}
@@ -141,8 +140,8 @@ export const LightTheme = (args) => {
     </Container>
   );
 };
-
-export const NoOptionsMenu = (args) => {
+// eslint-disable-next-line react/prop-types
+export const NoOptionsMenu = ({ onMenuItemClick, ...args }) => {
   const [selectedValue, setSelectedValue] = useState(null);
 
   return (
@@ -151,12 +150,9 @@ export const NoOptionsMenu = (args) => {
         emptyText={'No options available'}
         options={[]}
         listId={'list-id'}
-        onMenuItemClick={(event, newValue) => {
-          action('onMenuItemClick')(event);
+        onMenuItemClick={(_, newValue) => {
+          onMenuItemClick(newValue);
           setSelectedValue(newValue);
-        }}
-        onDismissMenu={(event) => {
-          action('onDismissMenu occured')(event);
         }}
         activeValue={selectedValue}
         {...args}
@@ -164,8 +160,8 @@ export const NoOptionsMenu = (args) => {
     </Container>
   );
 };
-
-export const ReallyLongLabelsMenu = (args) => {
+// eslint-disable-next-line react/prop-types
+export const ReallyLongLabelsMenu = ({ onMenuItemClick, ...args }) => {
   const [selectedValue, setSelectedValue] = useState(null);
 
   return (
@@ -174,12 +170,9 @@ export const ReallyLongLabelsMenu = (args) => {
         emptyText={'No options available'}
         options={_reallyLongOptions}
         listId={'list-id'}
-        onMenuItemClick={(event, newValue) => {
-          action('onMenuItemClick')(event);
+        onMenuItemClick={(_, newValue) => {
+          onMenuItemClick(newValue);
           setSelectedValue(newValue);
-        }}
-        onDismissMenu={(event) => {
-          action('onDismissMenu occured')(event);
         }}
         activeValue={selectedValue}
         {...args}
@@ -187,8 +180,8 @@ export const ReallyLongLabelsMenu = (args) => {
     </Container>
   );
 };
-
-export const SubMenus = (args) => {
+// eslint-disable-next-line react/prop-types
+export const SubMenus = ({ onMenuItemClick, ...args }) => {
   const [selectedValue, setSelectedValue] = useState('dog-2');
 
   return (
@@ -197,12 +190,9 @@ export const SubMenus = (args) => {
         emptyText={'No options available'}
         options={_nestedDropDownOptions}
         listId={'list-id'}
-        onMenuItemClick={(event, newValue) => {
-          action('onMenuItemClick')(event);
+        onMenuItemClick={(_, newValue) => {
+          onMenuItemClick(newValue);
           setSelectedValue(newValue);
-        }}
-        onDismissMenu={(event) => {
-          action('onDismissMenu occured')(event);
         }}
         activeValue={selectedValue}
         {...args}
@@ -228,7 +218,11 @@ RenderItemOverride.propTypes = {
   isSelected: PropTypes.bool,
 };
 
-export const OverriddenAnimationProofOfConcept = (args) => {
+export const OverriddenAnimationProofOfConcept = ({
+  // eslint-disable-next-line react/prop-types
+  onMenuItemClick,
+  ...args
+}) => {
   const [selectedValue, setSelectedValue] = useState(null);
   return (
     <DarkThemeProvider>
@@ -237,12 +231,9 @@ export const OverriddenAnimationProofOfConcept = (args) => {
           emptyText={'No options available'}
           options={_effectChooserOptions}
           listId={'list-id'}
-          onMenuItemClick={(event, newValue) => {
-            action('onMenuItemClick')(event);
+          onMenuItemClick={(_, newValue) => {
+            onMenuItemClick(newValue);
             setSelectedValue(newValue);
-          }}
-          onDismissMenu={(event) => {
-            action('onDismissMenu occured')(event);
           }}
           activeValue={selectedValue}
           menuStylesOverride={styleOverrideForAnimationEffectMenu}

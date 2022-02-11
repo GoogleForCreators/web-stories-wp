@@ -16,7 +16,6 @@
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
 import { useState } from '@googleforcreators/react';
 import styled, { ThemeProvider } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
@@ -58,6 +57,10 @@ export default {
     preventAutoDismiss: true,
     message: 'Sorry! File failed to upload.',
   },
+  argTypes: {
+    onAction: { action: 'on action clicked' },
+    onDismiss: { action: 'on dismiss fired' },
+  },
 };
 
 export const _default = (args) => (
@@ -68,8 +71,6 @@ export const _default = (args) => (
           {
             'aria-label':
               'this is my aria label giving my message context for screen reader users',
-            onAction: action('on action clicked'),
-            onDismiss: action('on dismiss fired'),
             ...args,
           },
         ]}
@@ -79,23 +80,13 @@ export const _default = (args) => (
 );
 
 export const LightThemeDefault = (args) => (
-  <SnackbarContainer
-    notifications={[
-      {
-        onAction: action('on action clicked'),
-        onDismiss: action('on dismiss fired'),
-        ...args,
-      },
-    ]}
-  />
+  <SnackbarContainer notifications={[{ ...args }]} />
 );
 
 export const Action = (args) => (
   <SnackbarContainer
     notifications={[
       {
-        onAction: action('on action clicked'),
-        onDismiss: action('on dismiss fired'),
         ...args,
         timeout: 80000,
       },
@@ -110,8 +101,6 @@ export const EarlyDismissWithAction = (args) => (
   <SnackbarContainer
     notifications={[
       {
-        onAction: action('on action clicked'),
-        onDismiss: action('on dismiss fired'),
         timeout: 80000,
         ...args,
       },
@@ -126,8 +115,6 @@ export const NoActionWithRemoveMessageTimingOverride = (args) => (
   <SnackbarContainer
     notifications={[
       {
-        onAction: action('on action clicked'),
-        onDismiss: action('on dismiss fired'),
         timeout: 80000,
         ...args,
       },
@@ -136,15 +123,7 @@ export const NoActionWithRemoveMessageTimingOverride = (args) => (
 );
 
 export const LongMessage = (args) => (
-  <SnackbarContainer
-    notifications={[
-      {
-        onAction: action('on action clicked'),
-        onDismiss: action('on dismiss fired'),
-        ...args,
-      },
-    ]}
-  />
+  <SnackbarContainer notifications={[{ ...args }]} />
 );
 LongMessage.args = {
   actionLabel: 'Retry',
@@ -163,9 +142,6 @@ export const ThumbnailMessage = ({ successBool, landscapeBool, ...args }) => {
         <SnackbarContainer
           notifications={[
             {
-              onAction: action('on action clicked'),
-              onDismiss: action('on dismiss fired'),
-
               thumbnail: {
                 src: `https://picsum.photos/${landscape ? '90/60' : '60/90'}`,
                 alt: 'test',
@@ -188,7 +164,13 @@ ThumbnailMessage.args = {
   landscapeBool: true,
 };
 
-export const ShowSnackbarByClickingButton = (args) => {
+export const ShowSnackbarByClickingButton = ({
+  // eslint-disable-next-line react/prop-types
+  onAction,
+  // eslint-disable-next-line react/prop-types
+  onDismiss,
+  ...args
+}) => {
   const [messageQueue, setMessageQueue] = useState([]);
 
   const handleRemoveMessage = ({ id }) => {
@@ -203,7 +185,7 @@ export const ShowSnackbarByClickingButton = (args) => {
   };
 
   const handleOnDismiss = (evt, notification) => {
-    action('on dismiss called')(evt);
+    onDismiss(evt);
     handleRemoveMessage(notification);
   };
 
@@ -232,7 +214,7 @@ export const ShowSnackbarByClickingButton = (args) => {
         notification = {
           ...notification,
           actionLabel: args.actionLabel,
-          onAction: action('on action clicked'),
+          onAction,
           actionHelpText: args.actionHelpText,
         };
       }
@@ -255,4 +237,5 @@ export const ShowSnackbarByClickingButton = (args) => {
 ShowSnackbarByClickingButton.args = {
   actionLabel: 'Undo',
   actionHelpText: 'Click this button to get instant cheese',
+  preventAutoDismiss: false,
 };
