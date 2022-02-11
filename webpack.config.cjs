@@ -174,7 +174,7 @@ const sharedConfig = {
         test: /\.(png|jpe?g|gif|webp)$/i,
         type: 'asset/resource',
         generator: {
-          outputPath: '../images/',
+          filename: 'images/[hash][ext]',
         },
       },
     ].filter(Boolean),
