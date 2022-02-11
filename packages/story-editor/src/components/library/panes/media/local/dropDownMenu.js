@@ -39,6 +39,7 @@ import {
  * Internal dependencies
  */
 import { useLocalMedia } from '../../../../../app';
+import useNestedRovingTabIndex from '../../shared/hooks/useNestedRovingTabIndex';
 import DeleteDialog from './deleteDialog';
 import MediaEditDialog from './mediaEditDialog';
 
@@ -144,6 +145,8 @@ function DropDownMenu({
     [setShowEditDialog]
   );
 
+  useNestedRovingTabIndex({ ref: moreButtonRef }, [], 3);
+
   const listId = useMemo(() => `list-${uuidv4()}`, []);
   const buttonId = useMemo(() => `button-${uuidv4()}`, []);
 
@@ -161,7 +164,7 @@ function DropDownMenu({
           aria-owns={isMenuOpen ? listId : null}
           id={buttonId}
           display={display}
-          tabIndex={index === 0 || display || isMenuOpen ? 0 : -1}
+          tabIndex={display || isMenuOpen ? 0 : -1}
         >
           <IconContainer>
             <Icons.Dots />

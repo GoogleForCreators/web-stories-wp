@@ -219,9 +219,9 @@ export default function useNestedRovingTabIndex(
         } else {
           // Last element.
           const parentElement = getParentByDepth(element, depth);
-          const firstElementParent = parentElement.parentNode.lastChild;
+          const lastElementParent = parentElement.parentNode.lastChild;
           // First non-disabled child with tabIndex -1.
-          switchFocusToElement(firstElementParent.querySelector(SELECTOR));
+          switchFocusToElement(lastElementParent.querySelector(SELECTOR));
         }
       } else if (key === 'Home') {
         // First element.
@@ -232,9 +232,9 @@ export default function useNestedRovingTabIndex(
       } else if (key === 'End') {
         // Last element.
         const parentElement = getParentByDepth(element, depth);
-        const firstElementParent = parentElement.parentNode.lastChild;
+        const lastElementParent = parentElement.parentNode.lastChild;
         // First non-disabled child with tabIndex -1.
-        switchFocusToElement(firstElementParent.querySelector(SELECTOR));
+        switchFocusToElement(lastElementParent.querySelector(SELECTOR));
       } else if (key === 'PageDown' || key === 'PageUp') {
         let nextElement = element;
         for (
