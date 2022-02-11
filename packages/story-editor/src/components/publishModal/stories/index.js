@@ -86,16 +86,8 @@ export const _default = (args) => {
             },
             data: {
               modalInspectorTab: {
-                id: 'publish_modal_document',
                 title: 'document panel',
-                Pane: MockDocumentPane,
-                availablePaneNames: [
-                  'backgroundAudio',
-                  'pageAdvancement',
-                  'permalink',
-                  'excerpt',
-                  'taxonomies',
-                ],
+                DocumentPane: MockDocumentPane,
               },
             },
             state: {

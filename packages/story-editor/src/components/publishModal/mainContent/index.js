@@ -24,13 +24,11 @@ import {
 } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
-import { useMemo } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
 import { MANDATORY_INPUT_VALUE_TYPES } from '../types';
 import useInspector from '../../inspector/useInspector';
-import { DOCUMENT_PANEL_NAMES } from '../../panels/document';
 import { HEADER_BAR_HEIGHT, HEADER_BAR_MARGIN } from '../constants';
 import MandatoryStoryInfo from './mandatoryStoryInfo';
 import StoryPreview from './storyPreview';
@@ -79,29 +77,15 @@ const Footer = styled.div`
   margin: 0 18px 20px 32px;
 `;
 
-const WP_STATUS_PANEL = 'status'; // Unsure what the best way to grab this value is, if any, from wp-story-editor
-const HIDDEN_PANELS = [WP_STATUS_PANEL, DOCUMENT_PANEL_NAMES.EXCERPT];
 const MainContent = ({
   handleReviewChecklist,
   handleUpdateStoryInfo,
   handleUpdateSlug,
   inputValues,
 }) => {
-  const {
-    availablePaneNames = [],
-    Pane: DocumentPane,
-    title: paneTitle,
-    id: paneId,
-  } = useInspector(({ data }) => data?.modalInspectorTab || {});
-
-  const IsolatedStatusTab = useMemo(() => {
-    if (availablePaneNames.indexOf(WP_STATUS_PANEL) > -1) {
-      return (
-        <DocumentPane isolatedPanel={WP_STATUS_PANEL} variant="publish_modal" />
-      );
-    }
-    return null;
-  }, [availablePaneNames]);
+  const { DocumentPane, id: paneId } = useInspector(
+    ({ data }) => data?.modalInspectorTab || {}
+  );
 
   return (
     <Main>
@@ -113,13 +97,14 @@ const MainContent = ({
           handleUpdateStoryInfo={handleUpdateStoryInfo}
           handleUpdateSlug={handleUpdateSlug}
           inputValues={inputValues}
-        >
-          {IsolatedStatusTab}
-        </MandatoryStoryInfo>
+        />
       </_MandatoryStoryInfo>
       {DocumentPane && (
-        <PanelContainer aria-label={paneTitle} id={paneId}>
-          <DocumentPane variant="publish_modal" hiddenPanels={HIDDEN_PANELS} />
+        <PanelContainer
+          aria-label={__('Story Settings', 'web-stories')}
+          id={paneId}
+        >
+          <DocumentPane />
         </PanelContainer>
       )}
       <Footer>

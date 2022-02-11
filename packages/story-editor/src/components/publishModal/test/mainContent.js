@@ -47,7 +47,7 @@ describe('publishModal/mainContent', () => {
     },
     data: {
       modalInspectorTab: {
-        Pane: null,
+        DocumentPane: null,
       },
     },
   };

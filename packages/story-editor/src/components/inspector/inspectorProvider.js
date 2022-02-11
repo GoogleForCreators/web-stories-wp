@@ -159,10 +159,10 @@ function InspectorProvider({ inspectorTabs, children }) {
     });
   }
 
-  if (inspectorTabs?.document && isUpdatedPublishModalEnabled) {
+  if (inspectorTabs?.publishModal && isUpdatedPublishModalEnabled) {
     state.data.modalInspectorTab = {
       id: PUBLISH_MODAL_DOCUMENT,
-      ...inspectorTabs.document,
+      ...inspectorTabs.publishModal,
     };
   }
 

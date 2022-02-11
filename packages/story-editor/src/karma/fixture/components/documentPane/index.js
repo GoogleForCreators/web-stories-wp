@@ -14,10 +14,6 @@
  * limitations under the License.
  */
 /**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-/**
  * Internal dependencies
  */
 import {
@@ -28,43 +24,33 @@ import {
   TaxonomiesPanel,
   DOCUMENT_PANEL_NAMES,
 } from '../../../../components/panels/document';
+function DocumentPane() {
+  return (
+    <>
+      <ExcerptPanel />
+      <SlugPanel />
+      <PageAdvancementPanel />
+      <BackgroundAudioPanel />
+      <TaxonomiesPanel />
+    </>
+  );
+}
 
-const availablePanels = {
-  [DOCUMENT_PANEL_NAMES.EXCERPT]: ExcerptPanel,
-  [DOCUMENT_PANEL_NAMES.SLUG]: SlugPanel,
-  [DOCUMENT_PANEL_NAMES.PAGE_ADVANCEMENT]: PageAdvancementPanel,
-  [DOCUMENT_PANEL_NAMES.BACKGROUND_AUDIO]: BackgroundAudioPanel,
-  [DOCUMENT_PANEL_NAMES.TAXONOMIES]: TaxonomiesPanel,
-};
-
-function DocumentPane({ variant, hiddenPanels = [], isolatedPanel }) {
-  if (isolatedPanel) {
-    if (Object.keys(availablePanels).indexOf(isolatedPanel) < 0) {
-      return null;
-    }
-
-    const Panel = availablePanels[isolatedPanel];
-    return (
-      <Panel
-        name={variant ? `${variant}_${isolatedPanel}` : isolatedPanel}
-        canCollapse={false}
-        isPersistable={false}
+export function PublishModalDocumentPane() {
+  return (
+    <>
+      <SlugPanel name={`story_details_${DOCUMENT_PANEL_NAMES.SLUG}`} />
+      <PageAdvancementPanel
+        name={`story_details_${DOCUMENT_PANEL_NAMES.PAGE_ADVANCEMENT}`}
       />
-    );
-  }
-
-  return Object.entries(availablePanels).map(
-    ([name, Panel]) =>
-      hiddenPanels.indexOf(name) < 0 && (
-        <Panel key={name} name={variant ? `${variant}_${name}` : name} />
-      )
+      <BackgroundAudioPanel
+        name={`story_details_${DOCUMENT_PANEL_NAMES.BACKGROUND_AUDIO}`}
+      />
+      <TaxonomiesPanel
+        name={`story_details_${DOCUMENT_PANEL_NAMES.TAXONOMIES}`}
+      />
+    </>
   );
 }
 
 export default DocumentPane;
-
-DocumentPane.propTypes = {
-  variant: PropTypes.string,
-  hiddenPanels: PropTypes.arrayOf(PropTypes.string),
-  isolatedPanel: PropTypes.oneOf(Object.keys(availablePanels)),
-};
