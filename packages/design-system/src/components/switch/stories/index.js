@@ -22,7 +22,6 @@ import { useState } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import { action } from '@storybook/addon-actions';
 import { Switch } from '..';
 import { Headline, Text } from '../../typography';
 import { DarkThemeProvider } from '../../../storybookUtils';
@@ -33,6 +32,9 @@ export default {
   args: {
     offLabel: 'OFF',
     onLabel: 'ON',
+  },
+  argTypes: {
+    onHandleChange: { action: 'handleChange' },
   },
 };
 
@@ -51,7 +53,8 @@ const Container = styled.div`
   }
 `;
 
-export const _default = (args) => {
+// eslint-disable-next-line react/prop-types
+export const _default = ({ onHandleChange, ...args }) => {
   const [switchState, setSwitchState] = useState({
     radioOne: true,
     radioTwo: false,
@@ -62,7 +65,7 @@ export const _default = (args) => {
   const handleChange = (evt, value) => {
     const name = evt?.target?.name;
 
-    action(name)(evt);
+    onHandleChange(name);
     setSwitchState((currentState) => ({
       ...currentState,
       [name]: value,

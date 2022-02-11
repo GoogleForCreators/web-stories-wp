@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { useCallback, useMemo, useState } from '@googleforcreators/react';
-import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 
 /**
@@ -49,6 +48,7 @@ export default {
       options: Object.values(PLACEMENT),
       control: 'select',
     },
+    onChange: { action: 'handleSearchValueChange' },
   },
 };
 
@@ -59,7 +59,8 @@ const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.primary};
 `;
 
-export const _default = (args) => {
+// eslint-disable-next-line react/prop-types
+export const _default = ({ onChange, ...args }) => {
   const [selectedValue, setSelectedValue] = useState(basicDropDownOptions[2]);
 
   const [inputValue, setInputValue] = useState('');
@@ -82,10 +83,13 @@ export const _default = (args) => {
     );
   }, [inputValue]);
 
-  const handleSearchValueChange = useCallback((value) => {
-    action('handleSearchValueChange')(value);
-    setInputValue(value);
-  }, []);
+  const handleSearchValueChange = useCallback(
+    (value) => {
+      onChange(value);
+      setInputValue(value);
+    },
+    [onChange]
+  );
 
   const handleOnClear = useCallback(() => {
     setInputValue('');
@@ -107,7 +111,8 @@ export const _default = (args) => {
   );
 };
 
-export const LightTheme = (args) => {
+// eslint-disable-next-line react/prop-types
+export const LightTheme = ({ onChange, ...args }) => {
   const [selectedValue, setSelectedValue] = useState();
 
   const [inputValue, setInputValue] = useState('');
@@ -130,10 +135,13 @@ export const LightTheme = (args) => {
     );
   }, [inputValue]);
 
-  const handleSearchValueChange = useCallback((value) => {
-    action('handleSearchValueChange')(value);
-    setInputValue(value);
-  }, []);
+  const handleSearchValueChange = useCallback(
+    (value) => {
+      onChange(value);
+      setInputValue(value);
+    },
+    [onChange]
+  );
 
   const handleOnClear = useCallback(() => {
     setInputValue('');
