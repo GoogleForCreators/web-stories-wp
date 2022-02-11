@@ -26,6 +26,8 @@ import {
   BUTTON_TYPES,
   THEME_CONSTANTS,
   Text,
+  themeHelpers,
+  ThemeGlobals,
 } from '@googleforcreators/design-system';
 
 /**
@@ -42,6 +44,21 @@ const PageTemplateButton = styled(Button).attrs({ type: BUTTON_TYPES.PLAIN })`
   padding: 0;
   border-radius: ${({ theme }) => theme.borders.radius.small};
   overflow: hidden;
+
+  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR},
+    &[data-focus-visible-added]
+    [role='presentation'] {
+    box-shadow: none;
+  }
+
+  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} [role='presentation'],
+  &[data-focus-visible-added] [role='presentation'] {
+    ${({ theme }) =>
+      themeHelpers.focusCSS(
+        theme.colors.border.focus,
+        theme.colors.bg.secondary
+      )};
+  }
 `;
 
 const PageTemplateTitleContainer = styled.div`
@@ -64,7 +81,7 @@ const PosterImg = styled.img`
 `;
 
 const DefaultPageTemplate = forwardRef(
-  ({ page, columnWidth, isActive, ...rest }, ref) => {
+  ({ page, columnWidth, isActive, onFocus, ...rest }, ref) => {
     const templateTitle = sprintf(
       /* translators: 1: template name. 2: page template name. */
       _x('%1$s %2$s', 'page template title', 'web-stories'),
@@ -81,7 +98,10 @@ const DefaultPageTemplate = forwardRef(
           aria-label={templateTitle}
           onPointerEnter={() => setIsFocused(true)}
           onPointerLeave={() => setIsFocused(false)}
-          onFocus={() => setIsFocused(true)}
+          onFocus={() => {
+            setIsFocused(true);
+            onFocus?.();
+          }}
           onBlur={() => setIsFocused(false)}
           {...rest}
         >
