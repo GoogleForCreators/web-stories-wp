@@ -19,7 +19,6 @@
  */
 import { useState } from '@googleforcreators/react';
 import styled from 'styled-components';
-import { action } from '@storybook/addon-actions';
 
 /**
  * Internal dependencies
@@ -33,10 +32,10 @@ export default {
   title: 'DesignSystem/Components/Toggle',
   component: Toggle,
   args: {
-    label1: 'Normal',
-    label2: 'Error',
-    label3: 'Disabled',
-    label4: 'Disabled',
+    label: 'label',
+  },
+  argTypes: {
+    onChange: { action: 'onChange' },
   },
   parameters: {
     controls: {
@@ -80,7 +79,7 @@ export const _default = (args) => {
     const name = event.target.name;
     const value = event.target.checked;
 
-    action(event.target.name)(event);
+    args.onChange(`${name} is: ${value}`);
     setInputState((prevState) => ({
       ...prevState,
       [name]: value,
@@ -105,7 +104,6 @@ export const _default = (args) => {
             name="oneLight"
             checked={inputState.oneLight}
             onChange={handleChange}
-            label={args.label1}
           />
           <Toggle
             id="two-light"
@@ -113,7 +111,6 @@ export const _default = (args) => {
             name="twoLight"
             checked={inputState.twoLight}
             onChange={handleChange}
-            label={args.label2}
           />
           <Toggle
             id="three-light"
@@ -121,7 +118,6 @@ export const _default = (args) => {
             name="threeLight"
             checked={inputState.threeLight}
             onChange={handleChange}
-            label={args.label3}
             disabled
           />
           <Toggle
@@ -130,7 +126,6 @@ export const _default = (args) => {
             name="fourLight"
             checked={inputState.fourLight}
             onChange={handleChange}
-            label={args.label4}
             disabled
           />
         </Row>
@@ -150,7 +145,6 @@ export const _default = (args) => {
               name="oneDark"
               checked={inputState.oneDark}
               onChange={handleChange}
-              label={args.label1}
             />
             <Toggle
               id="two-dark"
@@ -158,7 +152,6 @@ export const _default = (args) => {
               name="twoDark"
               checked={inputState.twoDark}
               onChange={handleChange}
-              label={args.label2}
             />
             <Toggle
               id="three-dark"
@@ -166,7 +159,6 @@ export const _default = (args) => {
               name="threeDark"
               checked={inputState.threeDark}
               onChange={handleChange}
-              label={args.label3}
               disabled
             />
             <Toggle
@@ -175,7 +167,6 @@ export const _default = (args) => {
               name="fourDark"
               checked={inputState.fourDark}
               onChange={handleChange}
-              label={args.label4}
               disabled
             />
           </Row>

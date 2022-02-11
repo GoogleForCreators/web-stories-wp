@@ -88,12 +88,14 @@ class Embed {
 			'width'  => 360,
 		];
 
-		$args   = wp_parse_args( $args, $defaults );
-		$align  = sprintf( 'align%s', $args['align'] );
-		$class  = $args['class'];
-		$url    = $this->story->get_url();
-		$title  = $this->story->get_title();
-		$poster = ! empty( $this->story->get_poster_portrait() ) ? $this->story->get_poster_portrait() : '';
+		$args          = wp_parse_args( $args, $defaults );
+		$align         = sprintf( 'align%s', $args['align'] );
+		$class         = $args['class'];
+		$url           = $this->story->get_url();
+		$title         = $this->story->get_title();
+		$poster        = ! empty( $this->story->get_poster_portrait() ) ? $this->story->get_poster_portrait() : '';
+		$poster_srcset = ! empty( $this->story->get_poster_srcset() ) ? $this->story->get_poster_srcset() : '';
+		$poster_sizes  = ! empty( $this->story->get_poster_sizes() ) ? $this->story->get_poster_sizes() : '';
 
 		$wrapper_style = sprintf(
 			'--aspect-ratio: %F; --width: %dpx; --height: %dpx',
@@ -121,6 +123,8 @@ class Embed {
 									width="<?php echo esc_attr( $args['width'] ); ?>"
 									height="<?php echo esc_attr( $args['height'] ); ?>"
 									alt="<?php echo esc_attr( $title ); ?>"
+									srcset="<?php echo esc_attr( $poster_srcset ); ?>"
+									sizes="<?php echo esc_attr( $poster_sizes ); ?>"
 									loading="lazy"
 									decoding="async"
 									data-amp-story-player-poster-img
@@ -153,6 +157,8 @@ class Embed {
 								width="<?php echo esc_attr( $args['width'] ); ?>"
 								height="<?php echo esc_attr( $args['height'] ); ?>"
 								alt="<?php echo esc_attr( $title ); ?>"
+								srcset="<?php echo esc_attr( $poster_srcset ); ?>"
+								sizes="<?php echo esc_attr( $poster_sizes ); ?>"
 								loading="lazy"
 								decoding="async"
 								data-amp-story-player-poster-img
