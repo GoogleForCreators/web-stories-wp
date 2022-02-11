@@ -590,6 +590,8 @@ abstract class Renderer implements RenderingInterface, Iterator {
 						alt="<?php echo esc_attr( $story->get_title() ); ?>"
 						width="<?php echo absint( $this->width ); ?>"
 						height="<?php echo absint( $this->height ); ?>"
+						srcset="<?php echo esc_attr( $story->get_poster_srcset() ); ?>"
+						sizes="<?php echo esc_attr( $story->get_poster_sizes() ); ?>"
 						loading="lazy"
 						decoding="async"
 					>

@@ -84,6 +84,20 @@ class Story {
 	protected $publisher_logo;
 
 	/**
+	 * Poster source set sizes.
+	 *
+	 * @var string
+	 */
+	protected $poster_sizes = '';
+
+	/**
+	 * Poster source set.
+	 *
+	 * @var string
+	 */
+	protected $poster_srcset = '';
+
+	/**
 	 * Publisher logo size.
 	 *
 	 * @var array
@@ -151,10 +165,18 @@ class Story {
 		$thumbnail_id = (int) get_post_thumbnail_id( $post );
 
 		if ( 0 !== $thumbnail_id ) {
-			$poster_url = wp_get_attachment_image_url( $thumbnail_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
+			$poster_src = wp_get_attachment_image_src( $thumbnail_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
 
-			if ( $poster_url ) {
-				$this->poster_portrait = $poster_url;
+			if ( $poster_src ) {
+				[ $poster_url, $width, $height ] = $poster_src;
+				$this->poster_portrait           = $poster_url;
+
+				$size_array = [ (int) $width, (int) $height ];
+				$image_meta = wp_get_attachment_metadata( $thumbnail_id );
+				if ( $image_meta ) {
+					$this->poster_sizes  = (string) wp_calculate_image_sizes( $size_array, $poster_url, $image_meta, $thumbnail_id );
+					$this->poster_srcset = (string) wp_calculate_image_srcset( $size_array, $poster_url, $image_meta, $thumbnail_id );
+				}
 			}
 		}
 
@@ -176,6 +198,28 @@ class Story {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Getter for poster source set sizes.
+	 *
+	 * @since 1.18.0
+	 *
+	 * @return string
+	 */
+	public function get_poster_sizes(): string {
+		return (string) $this->poster_sizes;
+	}
+
+	/**
+	 * Getter for poster source set.
+	 *
+	 * @since 1.18.0
+	 *
+	 * @return string
+	 */
+	public function get_poster_srcset(): string {
+		return (string) $this->poster_srcset;
 	}
 
 	/**
