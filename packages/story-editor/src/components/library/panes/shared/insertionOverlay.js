@@ -29,6 +29,7 @@ const IconContainer = styled.div`
   top: calc(50% - 16px);
   left: calc(50% - 16px);
   color: ${({ theme }) => theme.colors.fg.primary};
+  border-radius: ${({ theme }) => theme.borders.radius.round};
 `;
 
 const Wrapper = styled.div`
@@ -44,7 +45,7 @@ function InsertionOverlay({ showIcon = true }) {
   return (
     <Wrapper>
       {showIcon && (
-        <IconContainer>
+        <IconContainer role="presentation">
           <Icons.PlusFilled />
         </IconContainer>
       )}

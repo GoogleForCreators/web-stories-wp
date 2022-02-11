@@ -26,7 +26,12 @@ import {
   useRef,
   useState,
 } from '@googleforcreators/react';
-import { Text, useKeyDownEffect } from '@googleforcreators/design-system';
+import {
+  Text,
+  useKeyDownEffect,
+  ThemeGlobals,
+  themeHelpers,
+} from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import { useUnits } from '@googleforcreators/units';
 
@@ -36,11 +41,11 @@ import { useUnits } from '@googleforcreators/units';
 import { useFont, useHistory } from '../../../../app';
 import StoryPropTypes from '../../../../types';
 import stripHTML from '../../../../utils/stripHTML';
-import { focusStyle } from '../../../panels/shared';
 import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
 import useLibrary from '../../useLibrary';
 import LibraryMoveable from '../shared/libraryMoveable';
 import InsertionOverlay from '../shared/insertionOverlay';
+import useRovingTabIndex from '../../../../utils/useRovingTabIndex';
 
 const Preview = styled.button`
   position: relative;
@@ -54,13 +59,16 @@ const Preview = styled.button`
   border: none;
   cursor: pointer;
   text-align: left;
+  outline: none;
 
-  :hover {
-    background-color: ${({ theme }) =>
-      theme.colors.interactiveBg.secondaryHover};
+  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} [role='presentation'],
+  &[data-focus-visible-added] [role='presentation'] {
+    ${({ theme }) =>
+      themeHelpers.focusCSS(
+        theme.colors.border.focus,
+        theme.colors.bg.secondary
+      )};
   }
-
-  ${focusStyle};
 `;
 
 const PreviewText = styled(Text).attrs({ forwardedAs: 'span' })`
@@ -192,6 +200,8 @@ function FontPreview({ title, element, insertPreset, getPosition }) {
     onClick,
     [onClick]
   );
+
+  useRovingTabIndex({ ref: buttonRef });
 
   const [active, setActive] = useState(false);
   const makeActive = useCallback(() => setActive(true), []);
