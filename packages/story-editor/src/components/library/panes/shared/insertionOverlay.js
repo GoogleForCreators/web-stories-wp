@@ -42,6 +42,8 @@ const Wrapper = styled.div`
 `;
 
 function InsertionOverlay({ showIcon = true }) {
+  // The icon looks like a button but is just representational.
+  // The real interactive element is the containing element.
   return (
     <Wrapper>
       {showIcon && (
