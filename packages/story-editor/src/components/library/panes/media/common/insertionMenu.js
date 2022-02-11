@@ -42,7 +42,7 @@ import { getSmallestUrlForWidth } from '@googleforcreators/media';
  */
 import getElementProperties from '../../../../canvas/utils/getElementProperties';
 import useStory from '../../../../../app/story/useStory';
-import useNestedRovingTabIndex from "../../shared/hooks/useNestedRovingTabIndex";
+import useNestedRovingTabIndex from '../../shared/hooks/useNestedRovingTabIndex';
 
 const AddButton = styled(Button).attrs({ variant: BUTTON_VARIANTS.ICON })`
   display: flex;
@@ -93,7 +93,10 @@ const menuStylesOverride = css`
 function InsertionMenu({ resource, display, onInsert, width, index }) {
   const insertButtonRef = useRef();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const onMenuOpen = useCallback(() => setIsMenuOpen(true), []);
+  const onMenuOpen = useCallback((e) => {
+    e.stopPropagation();
+    setIsMenuOpen(true);
+  }, []);
   const onMenuCancelled = useCallback(() => setIsMenuOpen(false), []);
 
   const { currentBackgroundId, combineElements } = useStory((state) => ({

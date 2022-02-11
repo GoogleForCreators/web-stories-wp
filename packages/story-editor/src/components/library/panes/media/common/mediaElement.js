@@ -28,19 +28,18 @@ import {
 } from '@googleforcreators/react';
 import { rgba } from 'polished';
 import { __ } from '@googleforcreators/i18n';
-import { LoadingBar, useKeyDownEffect } from '@googleforcreators/design-system';
+import { LoadingBar } from '@googleforcreators/design-system';
 import { Blurhash } from 'react-blurhash';
+
 /**
  * Internal dependencies
  */
 import DropDownMenu from '../local/dropDownMenu';
-import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import { ContentType, useLocalMedia } from '../../../../../app/media';
 import Tooltip from '../../../../tooltip';
 import Attribution from './attribution';
 import InnerElement from './innerElement';
 import InsertionMenu from './insertionMenu';
-import useNestedRovingTabIndex from "../../shared/hooks/useNestedRovingTabIndex";
 
 const AUTOPLAY_PREVIEW_VIDEO_DELAY_MS = 600;
 
@@ -176,15 +175,6 @@ function Element({
   const ref = useRef();
 
   const onLoad = useCallback(() => setLoaded(true), []);
-
-  useKeyDownEffect(
-    ref,
-    {
-      key: ['enter', 'space'],
-    },
-    () => setIsMenuOpen(true),
-    [setIsMenuOpen]
-  );
 
   const isPlaceholder = !isLoaded && !active;
 
