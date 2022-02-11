@@ -236,7 +236,7 @@ const useQuickActions = () => {
   } = useConfig();
   const dispatchStoryEvent = useStoryTriggersDispatch();
   const {
-    currentPage,
+    backgroundElement,
     selectedElementAnimations,
     selectedElements,
     updateElementsById,
@@ -245,7 +245,9 @@ const useQuickActions = () => {
       state: { currentPage, selectedElementAnimations, selectedElements },
       actions: { updateElementsById },
     }) => ({
-      currentPage,
+      backgroundElement: currentPage?.elements.find(
+        (element) => element.isBackground
+      ),
       selectedElementAnimations,
       selectedElements,
       updateElementsById,
@@ -254,7 +256,7 @@ const useQuickActions = () => {
   const { undo } = useHistory(({ actions: { undo } }) => ({
     undo,
   }));
-  const { showSnackbar } = useSnackbar();
+  const showSnackbar = useSnackbar(({ showSnackbar }) => showSnackbar);
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
   }));
@@ -274,9 +276,6 @@ const useQuickActions = () => {
   const undoRef = useRef(undo);
   undoRef.current = undo;
 
-  const backgroundElement = currentPage?.elements.find(
-    (element) => element.isBackground
-  );
   const selectedElement = selectedElements?.[0];
 
   /**
