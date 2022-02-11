@@ -19,7 +19,6 @@
  */
 import { useState } from '@googleforcreators/react';
 import styled from 'styled-components';
-import { action } from '@storybook/addon-actions';
 
 /**
  * Internal dependencies
@@ -34,6 +33,9 @@ export default {
   args: {
     label: 'Normal',
     hint: 'Hint',
+  },
+  argTypes: {
+    handleOnChange: { action: 'on change' },
   },
 };
 
@@ -57,7 +59,8 @@ const Row = styled.div`
   }
 `;
 
-export const _default = (args) => {
+// eslint-disable-next-line react/prop-types
+export const _default = ({ handleOnChange, ...args }) => {
   const [inputState, setInputState] = useState({
     oneLight: {
       color: {
@@ -76,13 +79,13 @@ export const _default = (args) => {
   });
 
   const handleChange = (event) => {
+    handleOnChange(event);
     if (!event?.target) {
       return;
     }
     const name = event.target.name;
     const value = event.target.value;
 
-    action(event.target.name)(event);
     setInputState((prevState) => ({
       ...prevState,
       [name]: value,
