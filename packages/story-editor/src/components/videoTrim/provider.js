@@ -55,6 +55,10 @@ function VideoTrimProvider({ children }) {
     if (!resource) {
       return;
     }
+
+    
+    window.TEMP_TRIM_ID = element.id; // for demo purposes only --- this will not remain in the code
+
     const lengthInSeconds = Math.round(endOffset / 1000 - startOffset / 1000);
     trimExistingVideo({
       resource: {

@@ -57,6 +57,19 @@ function updateElementsByResourceId(
 
   const updatedPages = state.pages.map((page) => {
     const updatedElements = page.elements.map((element) => {
+
+      // For demo purposes only --- 
+      // this forces a match for the elementID vs just the element.resource?.id
+      // i.e. the item selected to be trimmed in this case
+      // for demo purposes only --- this will not remain in the code
+      if (window.TEMP_TRIM_ID) {
+        if (element.id == window.TEMP_TRIM_ID && element.resource?.id === id) {
+          console.log(`found trim item ${element.id}`, element);
+          return updateElementWithUpdater(element, propertiesOrUpdater);
+        }
+        return element;
+      }
+
       if (element.resource?.id === id) {
         return updateElementWithUpdater(element, propertiesOrUpdater);
       }
