@@ -245,6 +245,8 @@ function useMediaUploadQueue() {
           return;
         }
 
+        delete trimData.elementId;
+
         additionalData.meta = {
           ...additionalData.meta,
           web_stories_trim_data: trimData,

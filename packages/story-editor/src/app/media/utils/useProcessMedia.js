@@ -38,13 +38,17 @@ function useProcessMedia({
   const {
     actions: { getOptimizedMediaById, getMutedMediaById },
   } = useAPI();
-  const { updateElementsByResourceId } = useStory((state) => ({
-    updateElementsByResourceId: state.actions.updateElementsByResourceId,
-  }));
+  const { updateElementsByResourceId, updateElementById } = useStory(
+    (state) => ({
+      updateElementsByResourceId: state.actions.updateElementsByResourceId,
+      updateElementById: state.actions.updateElementById,
+    })
+  );
 
   const copyResourceData = useCallback(
     ({ oldResource, resource }) => {
       const { id, alt } = oldResource;
+
       updateElementsByResourceId({
         id,
         properties: () => {
@@ -59,6 +63,43 @@ function useProcessMedia({
       });
     },
     [updateElementsByResourceId]
+  );
+
+  const copyResourceDataByElementId = useCallback(
+    ({ oldResource, resource }) => {
+      const { id, alt } = oldResource;
+
+      updateElementById({
+        elementId: id,
+        properties: () => {
+          return {
+            type: resource.type,
+            resource: {
+              ...resource,
+              alt,
+            },
+          };
+        },
+      });
+    },
+    [updateElementById]
+  );
+
+  const updateExistingElement = useCallback(
+    (elementId, resource) => {
+      updateElementById({
+        elementId,
+        properties: (element) => {
+          return {
+            resource: {
+              ...element.resource,
+              ...resource,
+            },
+          };
+        },
+      });
+    },
+    [updateElementById]
   );
 
   const updateExistingElements = useCallback(
@@ -178,7 +219,7 @@ function useProcessMedia({
    * @param {string} end Time stamp of end time of new video. Example '00:02:00'.
    */
   const trimExistingVideo = useCallback(
-    ({ resource: oldResource, canvasResourceId, start, end }) => {
+    ({ resource: oldResource, elementId, start, end }) => {
       const { id: resourceId, ...oldResourceWithoutId } = oldResource;
       const { src: url, mimeType, poster, isMuted, isOptimized } = oldResource;
 
@@ -186,30 +227,34 @@ function useProcessMedia({
         original: resourceId,
         start,
         end,
+        elementId,
       };
 
       const onUploadStart = () =>
-        updateExistingElements(canvasResourceId, {
+        updateExistingElement(elementId, {
           trimData,
         });
 
       const onUploadError = () =>
-        updateExistingElements(canvasResourceId, {
+        updateExistingElement(elementId, {
           trimData: oldResource.trimData || {},
         });
 
       const onUploadSuccess = ({ resource }) => {
         const oldCanvasResource = {
           alt: oldResource.alt,
-          id: canvasResourceId,
+          id: elementId,
         };
-        copyResourceData({ oldResource: oldCanvasResource, resource });
+        copyResourceDataByElementId({
+          oldResource: oldCanvasResource,
+          resource,
+        });
         postProcessingResource(resource);
       };
 
       const onUploadProgress = ({ resource }) => {
-        const newResourceWithCanvasId = { ...resource, id: canvasResourceId };
-        updateExistingElements(resourceId, {
+        const newResourceWithCanvasId = { ...resource, id: elementId };
+        updateExistingElement(elementId, {
           ...newResourceWithCanvasId,
         });
       };
@@ -248,15 +293,15 @@ function useProcessMedia({
             ...oldResourceWithoutId,
             trimData,
           },
-          originalResourceId: canvasResourceId,
+          originalResourceId: elementId,
           posterFile,
         });
       };
       return process();
     },
     [
-      updateExistingElements,
-      copyResourceData,
+      updateExistingElement,
+      copyResourceDataByElementId,
       postProcessingResource,
       uploadMedia,
     ]
