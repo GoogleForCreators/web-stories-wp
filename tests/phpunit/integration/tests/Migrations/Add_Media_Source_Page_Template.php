@@ -30,7 +30,7 @@ class Add_Media_Source_Page_Template extends DependencyInjectedTestCase {
 	 * @covers ::get_term
 	 * @covers \Google\Web_Stories\Migrations\Add_Media_Source::migrate
 	 */
-	public function test_migrate() {
+	public function test_migrate(): void {
 		$instance = $this->injector->make( \Google\Web_Stories\Migrations\Add_Media_Source_Page_Template::class );
 		$instance->migrate();
 

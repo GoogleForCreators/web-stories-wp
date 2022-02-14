@@ -41,7 +41,7 @@ abstract class DependencyInjectedTestCase extends TestCase {
 	/**
 	 * Set up the service architecture before each test run.
 	 */
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		// Needed because the block will exist already after hooking up the plugin
@@ -72,7 +72,7 @@ abstract class DependencyInjectedTestCase extends TestCase {
 	/**
 	 * Clean up again after each test run.
 	 */
-	public function tear_down() {
+	public function tear_down(): void {
 		$this->set_private_property( Services::class, 'plugin', null );
 		$this->set_private_property( Services::class, 'container', null );
 		$this->set_private_property( Services::class, 'injector', null );

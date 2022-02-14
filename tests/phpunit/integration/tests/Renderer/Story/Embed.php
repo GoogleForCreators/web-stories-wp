@@ -19,8 +19,7 @@ class Embed extends DependencyInjectedTestCase {
 	 */
 	private $assets;
 
-
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->assets  = $this->injector->make( \Google\Web_Stories\Assets::class );
@@ -30,7 +29,7 @@ class Embed extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::render
 	 */
-	public function test_render() {
+	public function test_render(): void {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_title'   => 'test title',
@@ -56,7 +55,7 @@ class Embed extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::render
 	 */
-	public function test_render_with_image() {
+	public function test_render_with_image(): void {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_title'   => 'test title',

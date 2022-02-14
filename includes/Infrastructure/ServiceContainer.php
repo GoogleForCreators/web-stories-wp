@@ -70,5 +70,5 @@ interface ServiceContainer extends Traversable, Countable, ArrayAccess {
 	 * @param Service $service Service to put into the container.
 	 * @return void
 	 */
-	public function put( $id, Service $service );
+	public function put( $id, Service $service ): void;
 }

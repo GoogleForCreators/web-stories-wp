@@ -27,7 +27,7 @@ class NextGen_Gallery extends TestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$nextgen_gallery = new \Google\Web_Stories\Integrations\NextGen_Gallery();
 		$nextgen_gallery->register();
 
@@ -37,7 +37,7 @@ class NextGen_Gallery extends TestCase {
 	/**
 	 * @covers ::filter_run_ngg_resource_manager
 	 */
-	public function test_filter_run_ngg_resource_manager() {
+	public function test_filter_run_ngg_resource_manager(): void {
 		$nextgen_gallery = new \Google\Web_Stories\Integrations\NextGen_Gallery();
 
 		$before = $nextgen_gallery->filter_run_ngg_resource_manager( true );
@@ -53,7 +53,7 @@ class NextGen_Gallery extends TestCase {
 	/**
 	 * @covers ::filter_run_ngg_resource_manager
 	 */
-	public function test_filter_run_ngg_resource_manager_pretty_permalinks() {
+	public function test_filter_run_ngg_resource_manager_pretty_permalinks(): void {
 		$nextgen_gallery = new \Google\Web_Stories\Integrations\NextGen_Gallery();
 
 		$before = $nextgen_gallery->filter_run_ngg_resource_manager( true );

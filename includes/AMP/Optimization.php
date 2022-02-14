@@ -60,7 +60,7 @@ class Optimization {
 	 * @param Document $document Document instance.
 	 * @return void
 	 */
-	public function optimize_document( Document $document ) {
+	public function optimize_document( Document $document ): void {
 		$errors = new ErrorCollection();
 		$this->get_optimizer()->optimizeDom( $document, $errors );
 
@@ -123,7 +123,7 @@ class Optimization {
 	 *
 	 * @return Configuration Optimizer configuration to use.
 	 */
-	private static function get_optimizer_configuration() {
+	private static function get_optimizer_configuration(): Configuration {
 		$transformers = Configuration::DEFAULT_TRANSFORMERS;
 
 		$transformers[] = AmpStoryCssOptimizer::class;

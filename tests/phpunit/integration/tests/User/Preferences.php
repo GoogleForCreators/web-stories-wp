@@ -43,7 +43,7 @@ class Preferences extends DependencyInjectedTestCase {
 	 */
 	private $instance;
 
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$admin_id = $factory->user->create(
 			[
 				'role' => 'administrator',
@@ -57,13 +57,13 @@ class Preferences extends DependencyInjectedTestCase {
 		);
 	}
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\User\Preferences::class );
 	}
 
-	public function tear_down() {
+	public function tear_down(): void {
 		delete_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY );
 		delete_user_meta( self::$admin_id, \Google\Web_Stories\User\Preferences::OPTIN_META_KEY );
 		delete_user_meta( self::$author_id, \Google\Web_Stories\User\Preferences::MEDIA_OPTIMIZATION_META_KEY );
@@ -80,7 +80,7 @@ class Preferences extends DependencyInjectedTestCase {
 	 * @covers ::register
 	 * @covers ::can_edit_current_user
 	 */
-	public function test_add_optin_field_to_rest_api() {
+	public function test_add_optin_field_to_rest_api(): void {
 		$this->instance->register();
 
 		wp_set_current_user( self::$admin_id );
@@ -105,7 +105,7 @@ class Preferences extends DependencyInjectedTestCase {
 	 * @covers ::register
 	 * @covers ::can_edit_current_user
 	 */
-	public function test_add_optin_field_to_rest_api_for_author_user() {
+	public function test_add_optin_field_to_rest_api_for_author_user(): void {
 		$this->instance->register();
 
 		wp_set_current_user( self::$author_id );
@@ -130,7 +130,7 @@ class Preferences extends DependencyInjectedTestCase {
 	 * @covers ::register
 	 * @covers ::can_edit_current_user
 	 */
-	public function test_enables_author_user_to_update_meta_field() {
+	public function test_enables_author_user_to_update_meta_field(): void {
 		$this->instance->register();
 
 		wp_set_current_user( self::$author_id );
@@ -167,7 +167,7 @@ class Preferences extends DependencyInjectedTestCase {
 	 * @covers ::register
 	 * @covers ::can_edit_current_user
 	 */
-	public function test_permission_check_for_authors() {
+	public function test_permission_check_for_authors(): void {
 		$this->instance->register();
 
 		wp_set_current_user( self::$author_id );
@@ -203,7 +203,7 @@ class Preferences extends DependencyInjectedTestCase {
 	 * @covers ::register
 	 * @covers ::can_edit_current_user
 	 */
-	public function test_enables_author_user_to_invalid_type() {
+	public function test_enables_author_user_to_invalid_type(): void {
 		$this->instance->register();
 
 		wp_set_current_user( self::$author_id );

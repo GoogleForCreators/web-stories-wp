@@ -38,17 +38,17 @@ class Tracking extends Service_Base {
 	/**
 	 * Web Stories tracking script handle.
 	 */
-	const SCRIPT_HANDLE = 'web-stories-tracking';
+	public const SCRIPT_HANDLE = 'web-stories-tracking';
 
 	/**
 	 * Google Analytics property ID.
 	 */
-	const TRACKING_ID = 'UA-168571240-1';
+	public const TRACKING_ID = 'UA-168571240-1';
 
 	/**
 	 * Google Analytics 4 measurement ID.
 	 */
-	const TRACKING_ID_GA4 = 'G-T88C9951CM';
+	public const TRACKING_ID_GA4 = 'G-T88C9951CM';
 
 	/**
 	 * Experiments instance.
@@ -119,7 +119,7 @@ class Tracking extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		// By not passing an actual script src we can print only the inline script.
 		$this->assets->register_script(
 			self::SCRIPT_HANDLE,

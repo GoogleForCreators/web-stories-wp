@@ -59,7 +59,7 @@ class Conditional_Featured_Image extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_filter( 'cybocfi_enabled_for_post_type', [ $this, 'cybocfi_enabled_for_post_type' ], 99, 2 );
 	}
 
@@ -72,7 +72,7 @@ class Conditional_Featured_Image extends Service_Base {
 	 * @param string $post_type Post type name.
 	 * @return bool
 	 */
-	public function cybocfi_enabled_for_post_type( $enabled, $post_type ) {
+	public function cybocfi_enabled_for_post_type( $enabled, $post_type ): bool {
 		if ( $this->story_post_type->get_slug() === $post_type ) {
 			return false;
 		}

@@ -37,7 +37,7 @@ class Update_1 extends Migrate_Base {
 	 *
 	 * @return void
 	 */
-	public function migrate() {
+	public function migrate(): void {
 		// Do nothing.
 	}
 }

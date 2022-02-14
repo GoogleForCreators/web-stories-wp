@@ -191,9 +191,9 @@ class Story {
 			$img_src = wp_get_attachment_image_src( (int) $publisher_logo_id, Image_Sizes::PUBLISHER_LOGO_IMAGE_SIZE );
 
 			if ( $img_src ) {
-				list ( $src, $width, $height ) = $img_src;
-				$this->publisher_logo_size     = [ $width, $height ];
-				$this->publisher_logo          = $src;
+				[ $src, $width, $height ]  = $img_src;
+				$this->publisher_logo_size = [ $width, $height ];
+				$this->publisher_logo      = $src;
 			}
 		}
 
@@ -329,7 +329,7 @@ class Story {
 	 *
 	 * @return string|null Publisher logo URL or null if not set.
 	 */
-	public function get_publisher_logo_url() {
+	public function get_publisher_logo_url(): ?string {
 		/**
 		 * Filters the publisher logo URL.
 		 *

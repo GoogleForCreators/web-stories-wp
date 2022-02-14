@@ -26,7 +26,7 @@ class AdSense extends DependencyInjectedTestCase {
 	 */
 	private $instance;
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		update_option( \Google\Web_Stories\Settings::SETTING_NAME_AD_NETWORK, 'adsense' );
@@ -36,7 +36,7 @@ class AdSense extends DependencyInjectedTestCase {
 		$this->instance = $this->injector->make( \Google\Web_Stories\AdSense::class );
 	}
 
-	public function tear_down() {
+	public function tear_down(): void {
 		parent::tear_down();
 
 		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_AD_NETWORK );
@@ -47,7 +47,7 @@ class AdSense extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$this->instance->register();
 
 		$this->assertSame( 10, has_action( 'web_stories_print_analytics', [ $this->instance, 'print_adsense_tag' ] ) );
@@ -56,7 +56,7 @@ class AdSense extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::get_publisher_id
 	 */
-	public function test_get_publisher_id() {
+	public function test_get_publisher_id(): void {
 		$result = $this->call_private_method( $this->instance, 'get_publisher_id' );
 		$this->assertSame( '456', $result );
 	}
@@ -64,7 +64,7 @@ class AdSense extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::get_slot_id
 	 */
-	public function test_get_slot_id() {
+	public function test_get_slot_id(): void {
 		$result = $this->call_private_method( $this->instance, 'get_slot_id' );
 		$this->assertSame( '123', $result );
 	}
@@ -72,7 +72,7 @@ class AdSense extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::is_enabled
 	 */
-	public function test_is_enabled() {
+	public function test_is_enabled(): void {
 		$result = $this->call_private_method( $this->instance, 'is_enabled' );
 		$this->assertTrue( $result );
 	}
@@ -80,7 +80,7 @@ class AdSense extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::print_adsense_tag
 	 */
-	public function test_print_adsense_tag() {
+	public function test_print_adsense_tag(): void {
 		$output = get_echo( [ $this->instance, 'print_adsense_tag' ] );
 		$this->assertStringContainsString( '<amp-story-auto-ads>', $output );
 	}

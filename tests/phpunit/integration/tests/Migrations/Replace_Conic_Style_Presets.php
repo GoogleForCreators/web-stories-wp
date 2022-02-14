@@ -28,7 +28,7 @@ class Replace_Conic_Style_Presets extends TestCase {
 	/**
 	 * @covers ::migrate
 	 */
-	public function test_migrates() {
+	public function test_migrates(): void {
 		$radial_preset = [
 			[
 				'color'              => [],

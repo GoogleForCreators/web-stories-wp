@@ -30,13 +30,13 @@ class Set_Legacy_Analytics_Usage_Flag extends DependencyInjectedTestCase {
 	 */
 	private $instance;
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\Migrations\Set_Legacy_Analytics_Usage_Flag::class );
 	}
 
-	public function tear_down() {
+	public function tear_down(): void {
 		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_TRACKING_ID );
 
 		parent::tear_down();
@@ -45,7 +45,7 @@ class Set_Legacy_Analytics_Usage_Flag extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::migrate
 	 */
-	public function test_migrate_true() {
+	public function test_migrate_true(): void {
 		update_option( \Google\Web_Stories\Settings::SETTING_NAME_TRACKING_ID, 'UA-12345678-9' );
 
 		$this->instance->migrate();
@@ -56,7 +56,7 @@ class Set_Legacy_Analytics_Usage_Flag extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::migrate
 	 */
-	public function test_migrate_false() {
+	public function test_migrate_false(): void {
 		update_option( \Google\Web_Stories\Settings::SETTING_NAME_TRACKING_ID, '' );
 
 		$this->instance->migrate();

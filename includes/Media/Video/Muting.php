@@ -38,17 +38,17 @@ class Muting extends Service_Base implements HasMeta {
 	/**
 	 * Is muted.
 	 */
-	const IS_MUTED_POST_META_KEY = 'web_stories_is_muted';
+	public const IS_MUTED_POST_META_KEY = 'web_stories_is_muted';
 
 	/**
 	 * The muted video id post meta key.
 	 */
-	const MUTED_ID_POST_META_KEY = 'web_stories_muted_id';
+	public const MUTED_ID_POST_META_KEY = 'web_stories_muted_id';
 
 	/**
 	 * Is muted.
 	 */
-	const IS_MUTED_REST_API_KEY = 'web_stories_is_muted';
+	public const IS_MUTED_REST_API_KEY = 'web_stories_is_muted';
 
 	/**
 	 * Register.
@@ -57,7 +57,7 @@ class Muting extends Service_Base implements HasMeta {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		$this->register_meta();
 
 		add_action( 'rest_api_init', [ $this, 'rest_api_init' ] );
@@ -71,7 +71,7 @@ class Muting extends Service_Base implements HasMeta {
 	 *
 	 * @return void
 	 */
-	public function register_meta() {
+	public function register_meta(): void {
 		register_meta(
 			'post',
 			self::IS_MUTED_POST_META_KEY,
@@ -106,7 +106,7 @@ class Muting extends Service_Base implements HasMeta {
 	 *
 	 * @return void
 	 */
-	public function rest_api_init() {
+	public function rest_api_init(): void {
 		register_rest_field(
 			'attachment',
 			self::IS_MUTED_REST_API_KEY,
@@ -153,7 +153,7 @@ class Muting extends Service_Base implements HasMeta {
 	 * @param array $prepared Array of data to add to.
 	 * @return bool|null
 	 */
-	public function get_callback_is_muted( $prepared ) {
+	public function get_callback_is_muted( $prepared ): ?bool {
 		/**
 		 * Attachment ID.
 		 *

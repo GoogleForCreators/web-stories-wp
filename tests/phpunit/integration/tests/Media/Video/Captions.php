@@ -27,7 +27,7 @@ class Captions extends TestCase {
 	 * @covers ::filter_list_of_allowed_filetypes
 	 * @group ms-required
 	 */
-	public function test_filter_list_of_allowed_filetypes() {
+	public function test_filter_list_of_allowed_filetypes(): void {
 		$site_exts = explode( ' ', get_site_option( 'upload_filetypes', 'jpg jpeg png gif' ) );
 		$this->assertContains( 'vtt', $site_exts );
 	}

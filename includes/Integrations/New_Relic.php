@@ -59,7 +59,7 @@ class New_Relic extends Service_Base implements Conditional {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		$this->disable_autorum();
 	}
 
@@ -113,7 +113,7 @@ class New_Relic extends Service_Base implements Conditional {
 	 *
 	 * @return void
 	 */
-	public function disable_autorum() {
+	public function disable_autorum(): void {
 		if ( ! $this->context->is_web_story() ) {
 			return;
 		}

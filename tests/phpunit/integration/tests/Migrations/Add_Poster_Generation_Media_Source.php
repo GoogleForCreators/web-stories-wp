@@ -32,7 +32,7 @@ class Add_Poster_Generation_Media_Source extends DependencyInjectedTestCase {
 	 */
 	protected $instance;
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\Migrations\Add_Poster_Generation_Media_Source::class );
@@ -42,7 +42,7 @@ class Add_Poster_Generation_Media_Source extends DependencyInjectedTestCase {
 	 * @covers ::migrate
 	 * @covers \Google\Web_Stories\Migrations\Migration_Meta_To_Term::migrate
 	 */
-	public function test_migrate() {
+	public function test_migrate(): void {
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
@@ -78,7 +78,7 @@ class Add_Poster_Generation_Media_Source extends DependencyInjectedTestCase {
 	 * @covers ::get_post_meta_key
 	 * @covers \Google\Web_Stories\Migrations\Migration_Meta_To_Term::get_post_meta_key
 	 */
-	public function test_get_post_meta_key() {
+	public function test_get_post_meta_key(): void {
 		$results = $this->call_private_method( $this->instance, 'get_post_meta_key' );
 		$this->assertSame( \Google\Web_Stories\Media\Video\Poster::POSTER_POST_META_KEY, $results );
 	}
