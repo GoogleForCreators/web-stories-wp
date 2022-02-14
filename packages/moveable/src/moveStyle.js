@@ -22,7 +22,8 @@ import { createGlobalStyle } from 'styled-components';
 /**
  * Internal dependencies
  */
-import ArrowCircle from './icons/arrow_circle.svg';
+// eslint-disable-next-line import/no-unresolved
+import arrowCircle from './icons/arrow_circle.svg?url';
 
 export const GlobalStyle = createGlobalStyle`
   .default-moveable .moveable-control,
@@ -128,10 +129,8 @@ export const GlobalStyle = createGlobalStyle`
     height: 28px;
     left: -1px;
     top: -1px;
-    background-image: url('${ArrowCircle}');
-    background-size: 100%;
-    /* The icon is black and we can't use color because it's not inline so invert it is */
-    filter: invert(100%);
+    background-image: url("${arrowCircle}");
+    background-size: 100%
   }
 
   .default-moveable.hide-handles .moveable-line.moveable-rotation-line,

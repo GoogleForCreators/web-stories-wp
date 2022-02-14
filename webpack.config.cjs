@@ -98,9 +98,17 @@ const sharedConfig = {
         ],
       },
       // These should be sync'd with the config in `.storybook/main.cjs`.
+      // Use asset svg and svgr in same project using resourceQuery
+      // https://react-svgr.com/docs/webpack/#use-svgr-and-asset-svg-in-the-same-project
+      {
+        type: 'asset/inline',
+        test: /\.svg$/,
+        resourceQuery: /url/,
+      },
       {
         test: /\.svg$/,
         issuer: /\.js?$/,
+        exclude: /\?url$/,
         use: [
           {
             loader: '@svgr/webpack',
@@ -119,37 +127,6 @@ const sharedConfig = {
                     },
                   },
                   { name: 'convertColors', currentColor: /^(?!url|none)/i },
-                ],
-              },
-            },
-          },
-        ],
-      },
-      // Use asset svg and svgr in same project using resourceQuery
-      // https://react-svgr.com/docs/webpack/#use-svgr-and-asset-svg-in-the-same-project
-      {
-        type: 'asset',
-        resourceQuery: /url/,
-        test: /\.svg$/,
-        use: [
-          {
-            loader: '@svgr/webpack',
-            options: {
-              titleProp: true,
-              svgo: true,
-              memo: true,
-              svgoConfig: {
-                plugins: [
-                  {
-                    name: 'preset-default',
-                    params: {
-                      overrides: {
-                        removeViewBox: false,
-                      },
-                    },
-                  },
-                  // See https://github.com/googleforcreators/web-stories-wp/pull/6361
-                  { name: 'convertColors', active: false },
                 ],
               },
             },
