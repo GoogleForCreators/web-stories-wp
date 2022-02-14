@@ -25,7 +25,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { IconButton } from './shared';
 
-const ShapeColor = function ShapeColor() {
+function ShapeColor() {
   return (
     <IconButton
       Icon={Icons.Shapes}
@@ -33,6 +33,6 @@ const ShapeColor = function ShapeColor() {
       onClick={() => {}}
     />
   );
-};
+}
 
 export default ShapeColor;

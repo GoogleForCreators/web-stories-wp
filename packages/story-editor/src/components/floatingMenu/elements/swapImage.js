@@ -25,7 +25,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { IconButton } from './shared';
 
-const SwapImage = function SwapImage() {
+function SwapImage() {
   return (
     <IconButton
       Icon={Icons.PictureSwap}
@@ -33,6 +33,6 @@ const SwapImage = function SwapImage() {
       onClick={() => {}}
     />
   );
-};
+}
 
 export default SwapImage;

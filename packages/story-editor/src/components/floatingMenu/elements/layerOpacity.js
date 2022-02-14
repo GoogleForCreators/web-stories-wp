@@ -25,7 +25,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { IconButton } from './shared';
 
-const LayerOpacity = function LayerOpacity() {
+function LayerOpacity() {
   return (
     <IconButton
       Icon={Icons.ColorDrop}
@@ -33,6 +33,6 @@ const LayerOpacity = function LayerOpacity() {
       onClick={() => {}}
     />
   );
-};
+}
 
 export default LayerOpacity;

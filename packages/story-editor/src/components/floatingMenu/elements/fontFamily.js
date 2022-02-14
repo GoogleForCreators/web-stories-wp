@@ -25,7 +25,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { IconButton } from './shared';
 
-const FontFamily = function FontFamily() {
+function FontFamily() {
   return (
     <IconButton
       Icon={Icons.LetterTUppercase}
@@ -33,6 +33,6 @@ const FontFamily = function FontFamily() {
       onClick={() => {}}
     />
   );
-};
+}
 
 export default FontFamily;

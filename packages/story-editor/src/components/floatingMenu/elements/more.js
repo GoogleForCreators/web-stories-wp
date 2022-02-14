@@ -24,7 +24,7 @@ import { _x } from '@googleforcreators/i18n';
  */
 import { TextButton } from './shared';
 
-const More = function More() {
+function More() {
   return (
     <TextButton
       text={_x(
@@ -35,6 +35,6 @@ const More = function More() {
       onClick={() => {}}
     />
   );
-};
+}
 
 export default More;

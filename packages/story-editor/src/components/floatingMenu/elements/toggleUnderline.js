@@ -25,7 +25,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { IconButton } from './shared';
 
-const ToggleUnderline = function ToggleUnderline() {
+function ToggleUnderline() {
   return (
     <IconButton
       Icon={Icons.LetterUUnderline}
@@ -33,6 +33,6 @@ const ToggleUnderline = function ToggleUnderline() {
       onClick={() => {}}
     />
   );
-};
+}
 
 export default ToggleUnderline;

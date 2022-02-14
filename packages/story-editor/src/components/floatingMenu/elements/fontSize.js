@@ -25,7 +25,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { IconButton } from './shared';
 
-const FontSize = function FontSize() {
+function FontSize() {
   return (
     <IconButton
       Icon={Icons.LetterTArrow}
@@ -33,6 +33,6 @@ const FontSize = function FontSize() {
       onClick={() => {}}
     />
   );
-};
+}
 
 export default FontSize;

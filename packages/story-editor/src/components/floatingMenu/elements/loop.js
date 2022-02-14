@@ -25,7 +25,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { IconButton } from './shared';
 
-const Loop = function Loop() {
+function Loop() {
   return (
     <IconButton
       Icon={Icons.ArrowLeftright}
@@ -33,6 +33,6 @@ const Loop = function Loop() {
       onClick={() => {}}
     />
   );
-};
+}
 
 export default Loop;

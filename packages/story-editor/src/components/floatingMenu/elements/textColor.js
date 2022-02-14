@@ -25,7 +25,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { IconButton } from './shared';
 
-const TextColor = function TextColor() {
+function TextColor() {
   return (
     <IconButton
       Icon={Icons.Pipette}
@@ -33,6 +33,6 @@ const TextColor = function TextColor() {
       onClick={() => {}}
     />
   );
-};
+}
 
 export default TextColor;

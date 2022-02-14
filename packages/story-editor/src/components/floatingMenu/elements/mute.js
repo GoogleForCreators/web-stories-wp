@@ -25,7 +25,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { IconButton } from './shared';
 
-const Mute = function Mute() {
+function Mute() {
   return (
     <IconButton
       Icon={Icons.Muted}
@@ -33,6 +33,6 @@ const Mute = function Mute() {
       onClick={() => {}}
     />
   );
-};
+}
 
 export default Mute;

@@ -25,7 +25,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { IconButton } from './shared';
 
-const FlipHorizontal = function FlipHorizontal() {
+function FlipHorizontal() {
   return (
     <IconButton
       Icon={Icons.MirrorLeftright}
@@ -33,6 +33,6 @@ const FlipHorizontal = function FlipHorizontal() {
       onClick={() => {}}
     />
   );
-};
+}
 
 export default FlipHorizontal;

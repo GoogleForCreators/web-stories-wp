@@ -25,7 +25,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { IconButton } from './shared';
 
-const ToggleItalics = function ToggleItalics() {
+function ToggleItalics() {
   return (
     <IconButton
       Icon={Icons.LetterIItalic}
@@ -33,6 +33,6 @@ const ToggleItalics = function ToggleItalics() {
       onClick={() => {}}
     />
   );
-};
+}
 
 export default ToggleItalics;

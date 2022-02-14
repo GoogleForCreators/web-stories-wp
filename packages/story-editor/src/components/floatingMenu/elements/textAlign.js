@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { memo } from '@googleforcreators/react';
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 
@@ -26,7 +25,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { IconButton } from './shared';
 
-const TextAlign = memo(function TextAlign() {
+function TextAlign() {
   return (
     <IconButton
       Icon={Icons.AlignTextCenter}
@@ -34,6 +33,6 @@ const TextAlign = memo(function TextAlign() {
       onClick={() => {}}
     />
   );
-});
+}
 
 export default TextAlign;

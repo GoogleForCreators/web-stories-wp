@@ -25,7 +25,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { IconButton } from './shared';
 
-const ToggleBold = function ToggleBold() {
+function ToggleBold() {
   return (
     <IconButton
       Icon={Icons.LetterBBold}
@@ -33,6 +33,6 @@ const ToggleBold = function ToggleBold() {
       onClick={() => {}}
     />
   );
-};
+}
 
 export default ToggleBold;
