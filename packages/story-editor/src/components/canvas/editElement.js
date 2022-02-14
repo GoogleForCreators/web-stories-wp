@@ -49,7 +49,7 @@ const EditElement = memo(
       getBox: state.actions.getBox,
     }));
     const { getProxiedUrl } = useCORSProxy();
-    const { isRTL } = useConfig();
+    const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
     const {
       actions: { maybeEnqueueFontStyle },
     } = useFont();
@@ -86,6 +86,7 @@ const EditElement = memo(
           setLocalProperties={setLocalProperties}
           getProxiedUrl={getProxiedUrl}
           isRTL={isRTL}
+          topOffset={topOffset}
           isTrimMode={isTrimMode}
           resource={resource}
           setVideoNode={setVideoNode}

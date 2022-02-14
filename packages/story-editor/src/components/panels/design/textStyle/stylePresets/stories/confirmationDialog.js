@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
-
-/**
  * Internal dependencies
  */
 import ConfirmationDialog from '../confirmationDialog';
@@ -27,13 +22,15 @@ import ConfirmationDialog from '../confirmationDialog';
 export default {
   title: 'Stories Editor/Components/Panels/TextStyle/StylePresets/Dialog',
   component: ConfirmationDialog,
+  argTypes: {
+    onClose: { action: 'closed' },
+    onPrimary: { action: 'confirmed' },
+  },
+  parameters: {
+    controls: { hideNoControlsWarning: true },
+  },
 };
 
-export const _default = () => {
-  return (
-    <ConfirmationDialog
-      onClose={action('closed')}
-      onPrimary={action('confirmed')}
-    />
-  );
+export const _default = (args) => {
+  return <ConfirmationDialog {...args} />;
 };

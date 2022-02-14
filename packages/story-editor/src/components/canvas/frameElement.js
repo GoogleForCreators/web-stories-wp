@@ -131,7 +131,7 @@ function FrameElement({ id }) {
   const { Frame, isMaskable, Controls } = getDefinitionForType(type);
   const elementRef = useRef();
   const [hovering, setHovering] = useState(false);
-  const { isRTL } = useConfig();
+  const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
 
   const onPointerEnter = () => setHovering(true);
   const onPointerLeave = () => setHovering(false);
@@ -221,6 +221,7 @@ function FrameElement({ id }) {
           elementRef={elementRef}
           element={element}
           isRTL={isRTL}
+          topOffset={topOffset}
         />
       )}
       <Wrapper

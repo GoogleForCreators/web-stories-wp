@@ -33,7 +33,8 @@ import { ELEMENT_TYPES } from '@googleforcreators/elements';
 /**
  * Internal dependencies
  */
-import { states, useHighlights } from '..';
+import states from '../states';
+import useHighlights from '../useHighlights';
 import updateProperties from '../../../components/inspector/design/updateProperties';
 import useVideoTrim from '../../../components/videoTrim/useVideoTrim';
 import { useHistory } from '../../history';

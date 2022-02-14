@@ -2,7 +2,7 @@
   "name": "@googleforcreators/dashboard",
   "description": "The core Web Stories dashboard web application, which is platform-agnostic.",
   "private": false,
-  "version": "0.0.1",
+  "version": "0.1.202202071716",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -11,7 +11,7 @@
   "keywords": [
     "web stories"
   ],
-  "homepage": "https://github.com/googleforcreators/web-stories-wp/",
+  "homepage": "https://github.com/GoogleForCreators/web-stories-wp/blob/main/packages/dashboard/README.md",
   "repository": {
     "type": "git",
     "url": "https://github.com/GoogleForCreators/web-stories-wp.git",
@@ -21,7 +21,7 @@
     "url": "https://github.com/googleforcreators/web-stories-wp/issues"
   },
   "engines": {
-    "node": ">= 16",
+    "node": ">= 12 || >= 14 || >= 16",
     "npm": ">= 7.3"
   },
   "main": "dist/index.js",
@@ -45,8 +45,9 @@
     "flagged": "^2.0.1",
     "history": "^5.2.0",
     "prop-types": "^15.8.1",
-    "query-string": "^7.1.0",
-    "styled-components": "^5.3.3"
+    "query-string": "^7.1.1",
+    "styled-components": "^5.3.3",
+    "stylis-plugin-rtl": "^1.0.0"
   },
   "devDependencies": {
     "@googleforcreators/karma-fixture": "*",
@@ -55,7 +56,6 @@
     "@testing-library/react-hooks": "^7.0.2",
     "@testing-library/user-event": "^13.5.0",
     "jest": "^27.5.0",
-    "react": "^17.0.2",
-    "stylis-plugin-rtl": "^1.0.0"
+    "react": "^17.0.2"
   }
 }

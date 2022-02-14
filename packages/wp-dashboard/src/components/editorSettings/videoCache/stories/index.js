@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
-
-/**
  * Internal dependencies
  */
 import VideoCacheSettings from '..';
@@ -30,18 +25,11 @@ export default {
   args: {
     isEnabled: true,
   },
-  parameters: {
-    controls: {
-      exclude: ['updateSettings'],
-    },
+  argTypes: {
+    updateSettings: { action: 'updateSettings fired' },
   },
 };
 
 export const _default = (args) => {
-  return (
-    <VideoCacheSettings
-      updateSettings={action('updateSettings fired')}
-      {...args}
-    />
-  );
+  return <VideoCacheSettings {...args} />;
 };

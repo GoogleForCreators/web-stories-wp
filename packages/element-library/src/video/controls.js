@@ -34,6 +34,7 @@ function VideoControls({
   elementRef,
   element,
   isRTL,
+  topOffset = 0,
 }) {
   const isActive =
     isSelected && !isTransforming && isSingleElement && !isEditing;
@@ -46,6 +47,7 @@ function VideoControls({
       elementRef={elementRef}
       element={element}
       isRTL={isRTL}
+      topOffset={topOffset}
     />
   );
 }
@@ -59,6 +61,7 @@ VideoControls.propTypes = {
   elementRef: PropTypes.object.isRequired,
   element: StoryPropTypes.element.isRequired,
   isRTL: PropTypes.bool,
+  topOffset: PropTypes.number,
 };
 
 export default VideoControls;

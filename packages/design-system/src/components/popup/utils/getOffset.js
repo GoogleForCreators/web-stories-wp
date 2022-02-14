@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,30 +13,40 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * Internal dependencies
  */
 import { PLACEMENT } from '../constants';
-import { getXTransforms } from './getTransforms';
+import { getXTransforms, getYTransforms } from './getTransforms';
+export function getXOffset(
+  placement,
+  spacing = 0,
+  anchorRect,
+  dockRect,
+  isRTL
+) {
+  const leftAligned = (dockRect?.left || anchorRect.left) - spacing;
+  const rightAligned =
+    (dockRect?.left || anchorRect.left) + anchorRect.width + spacing;
+  const centerAligned =
+    (dockRect?.left || anchorRect.left) + anchorRect.width / 2;
 
-export function getXOffset(placement, spacing = 0, anchorRect, dockRect) {
   switch (placement) {
     case PLACEMENT.BOTTOM_START:
     case PLACEMENT.TOP_START:
     case PLACEMENT.LEFT:
     case PLACEMENT.LEFT_END:
     case PLACEMENT.LEFT_START:
-      return (dockRect?.left || anchorRect.left) - spacing;
+      return isRTL ? rightAligned : leftAligned;
     case PLACEMENT.BOTTOM_END:
     case PLACEMENT.TOP_END:
     case PLACEMENT.RIGHT:
     case PLACEMENT.RIGHT_END:
     case PLACEMENT.RIGHT_START:
-      return (dockRect?.left || anchorRect.left) + anchorRect.width + spacing;
+      return isRTL ? leftAligned : rightAligned;
     case PLACEMENT.BOTTOM:
     case PLACEMENT.TOP:
-      return (dockRect?.left || anchorRect.left) + anchorRect.width / 2;
+      return centerAligned;
     default:
       return 0;
   }
@@ -63,7 +73,6 @@ export function getYOffset(placement, spacing = 0, anchorRect) {
       return 0;
   }
 }
-
 /** @typedef {import('react').MutableRefObject} MutableRefObject */
 
 /**
@@ -80,44 +89,61 @@ export function getYOffset(placement, spacing = 0, anchorRect) {
  */
 
 /**
- *
- * @param {string} placement Placement.
- * @param {Spacing} spacing Spacing.
- * @param {MutableRefObject<HTMLElement>} anchor Anchor element
- * @param {MutableRefObject<HTMLElement>} dock Dock element.
- * @param {MutableRefObject<HTMLElement>} popup Popup element.
+ * @param {Object} args args passed to getOffset
+ * @param {string} args.placement Placement.
+ * @param {Spacing} args.spacing Spacing.
+ * @param {MutableRefObject<HTMLElement>} args.anchor Anchor element
+ * @param {MutableRefObject<HTMLElement>} args.dock Dock element.
+ * @param {MutableRefObject<HTMLElement>} args.popup Popup element.
+ * @param {boolean} args.isRTL isRTL.
+ * @param {number} args.topOffset Header Offset.
+ * @param {boolean} args.ignoreMaxOffsetY Defaults to false. Sometimes, we want the popup to respect the y value
+ * as perceived by the page because of scroll. This is really only true of dropDowns that
+ * exist beyond the initial page scroll. Because the editor is a fixed view this only
+ * comes up in peripheral pages (dashboard, settings).
  * @return {Offset} Popup offset.
  */
-export function getOffset(placement, spacing, anchor, dock, popup) {
+export function getOffset({
+  placement,
+  spacing,
+  anchor,
+  dock,
+  popup,
+  isRTL,
+  topOffset,
+  ignoreMaxOffsetY,
+}) {
   const anchorRect = anchor.current.getBoundingClientRect();
   const bodyRect = document.body.getBoundingClientRect();
   const popupRect = popup.current?.getBoundingClientRect();
   const dockRect = dock?.current?.getBoundingClientRect();
+
   // Adjust dimensions based on the popup content's inner dimensions
   if (popupRect) {
     popupRect.height = Math.max(popupRect.height, popup.current?.scrollHeight);
     popupRect.width = Math.max(popupRect.width, popup.current?.scrollWidth);
   }
 
-  const { width = 0 } = popupRect || {};
+  const { height = 0, width = 0 } = popupRect || {};
   const { x: spacingH = 0, y: spacingV = 0 } = spacing || {};
 
   // Horizontal
-  const offsetX = getXOffset(placement, spacingH, anchorRect, dockRect);
+  const offsetX = getXOffset(placement, spacingH, anchorRect, dockRect, isRTL);
   const maxOffsetX = bodyRect.width - width - getXTransforms(placement) * width;
 
   // Vertical
-  // We always want just the pure offset of Y because if anything scrolls (panels or the window) we want that position to stay true to the anchor.
-  // This prevents any overlap of labels on scroll with an open popup.
   const offsetY = getYOffset(placement, spacingV, anchorRect);
+  const maxOffsetY =
+    bodyRect.height + bodyRect.y - height - getYTransforms(placement) * height;
 
-  // Clamp X value
+  // Clamp values
   return {
     x: Math.max(0, Math.min(offsetX, maxOffsetX)),
-    y: offsetY,
+    y: ignoreMaxOffsetY
+      ? offsetY
+      : Math.max(topOffset, Math.min(offsetY, maxOffsetY)),
     width: anchorRect.width,
     height: anchorRect.height,
-    // We want to know where the popRect container stops before scrolling begins
     bottom: popupRect?.bottom,
     popupLeft: popupRect?.left,
   };

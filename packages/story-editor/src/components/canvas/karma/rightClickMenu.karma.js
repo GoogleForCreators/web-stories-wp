@@ -38,6 +38,13 @@ describe('Right Click Menu integration', () => {
     await fixture.collapseHelpCenter();
 
     insertElement = await fixture.renderHook(() => useInsertElement());
+
+    // Remove empty state message by changing the background
+    await fixture.events.click(
+      fixture.editor.canvas.quickActionMenu.changeBackgroundColorButton
+    );
+    await fixture.events.keyboard.type('ef');
+    await fixture.events.keyboard.press('Tab');
   });
 
   afterEach(async () => {
@@ -419,7 +426,10 @@ describe('Right Click Menu integration', () => {
 
     it('should open and close the context menu using keyboard shortcuts', async () => {
       // add an element to the page
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
       await waitFor(() => {
         const node = fixture.editor.canvas.framesLayer.frames[1].node;
         if (!node) {
@@ -475,7 +485,11 @@ describe('Right Click Menu integration', () => {
       expect(getMenuItemByName('Background')).not.toBeNull();
       expect(getMenuItemByName('Triangle')).not.toBeNull();
       expect(getMenuItemByName('blue-marble')).not.toBeNull();
-      expect(() => getMenuItemByName('Fill in some text')).toThrow();
+      expect(() =>
+        getMenuItemByName(
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+        )
+      ).toThrow();
 
       // Verify that clicking on the background button selects background.
       await fixture.events.click(getMenuItemByName('Background'));

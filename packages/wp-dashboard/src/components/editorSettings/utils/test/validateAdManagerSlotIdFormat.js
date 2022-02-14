@@ -30,7 +30,7 @@ const idsToValidate = [
   ['clearly wrong', false],
   ['/1234567,1234/Travel', true],
   ['/123456789/post.mobileamp/webstory', true],
-  ['/123456789/abc_123-.*/\\![:()', true],
+  ['/123456789/abc_123-.*/\\!<:()', true],
   [`/123456789/${one_hundred_chars}/${one_hundred_chars}`, true],
   [`/123456789/${one_hundred_chars}f/${one_hundred_chars}`, false],
   [`/123456789/${one_hundred_chars}/${one_hundred_chars}a`, false],

@@ -53,7 +53,7 @@ import storyResponse from './db/storyResponse';
 import DocumentPane from './components/documentPane';
 import { Accessibility, Design, Priority } from './components/checklist';
 
-if ('true' === process.env.CI) {
+if ('true' === WEB_STORIES_CI) {
   configure({
     getElementError: (message) => {
       const error = new Error(message);

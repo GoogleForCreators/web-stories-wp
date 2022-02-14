@@ -55,7 +55,7 @@ const Spinner = styled.div`
   align-items: center;
 `;
 
-function VideoTrim({ box, element, isRTL, resource, setVideoNode }) {
+function VideoTrim({ box, element, isRTL, topOffset, resource, setVideoNode }) {
   const { width, height } = box;
   const { poster, tracks, isBackground, scale, flip, focalX, focalY } = element;
   const wrapperRef = useRef();
@@ -150,6 +150,7 @@ function VideoTrim({ box, element, isRTL, resource, setVideoNode }) {
         videoRef={videoRef}
         shouldResetOnEnd={false}
         isRTL={isRTL}
+        topOffset={topOffset}
       />
     </>
   );
@@ -160,6 +161,7 @@ VideoTrim.propTypes = {
   element: StoryPropTypes.elements.video.isRequired,
   box: StoryPropTypes.box.isRequired,
   isRTL: PropTypes.bool,
+  topOffset: PropTypes.number,
   resource: PropTypes.object,
   setVideoNode: PropTypes.func,
 };

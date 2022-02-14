@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+const webpack = require('webpack');
 
 module.exports = {
   stories: [
@@ -51,6 +55,24 @@ module.exports = {
       // TODO: Revisit after upgrading to webpack v5 or when splitting repository.
       mainFields: ['browser', 'module', 'main', 'source'],
     };
+    config.plugins.push(
+      new webpack.DefinePlugin({
+        WEB_STORIES_CI: JSON.stringify(process.env.CI),
+        WEB_STORIES_ENV: JSON.stringify(process.env.NODE_ENV),
+        WEB_STORIES_DISABLE_ERROR_BOUNDARIES: JSON.stringify(
+          process.env.DISABLE_ERROR_BOUNDARIES
+        ),
+        WEB_STORIES_DISABLE_OPTIMIZED_RENDERING: JSON.stringify(
+          process.env.DISABLE_OPTIMIZED_RENDERING
+        ),
+        WEB_STORIES_DISABLE_PREVENT: JSON.stringify(
+          process.env.DISABLE_PREVENT
+        ),
+        WEB_STORIES_DISABLE_QUICK_TIPS: JSON.stringify(
+          process.env.DISABLE_QUICK_TIPS
+        ),
+      })
+    );
 
     config.module.rules.unshift(
       {

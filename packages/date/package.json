@@ -2,7 +2,7 @@
   "name": "@googleforcreators/date",
   "description": "Date-handling package, a tiny wrapper around date-fns.",
   "private": false,
-  "version": "0.0.1",
+  "version": "0.1.202202071716",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -12,7 +12,7 @@
     "web stories",
     "datetime"
   ],
-  "homepage": "https://github.com/googleforcreators/web-stories-wp/",
+  "homepage": "https://github.com/GoogleForCreators/web-stories-wp/blob/main/packages/date/README.md",
   "repository": {
     "type": "git",
     "url": "https://github.com/GoogleForCreators/web-stories-wp.git",
@@ -22,7 +22,7 @@
     "url": "https://github.com/googleforcreators/web-stories-wp/issues"
   },
   "engines": {
-    "node": ">= 16",
+    "node": ">= 12 || >= 14 || >= 16",
     "npm": ">= 7.3"
   },
   "main": "dist/index.js",

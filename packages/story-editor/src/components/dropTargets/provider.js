@@ -21,7 +21,11 @@ import PropTypes from 'prop-types';
 import { useState, useMemo, useCallback } from '@googleforcreators/react';
 import { noop, useGlobalIsKeyPressed } from '@googleforcreators/design-system';
 import { useTransform } from '@googleforcreators/transform';
-import { getDefinitionForType } from '@googleforcreators/elements';
+import {
+  getDefinitionForType,
+  ELEMENT_TYPES,
+  MEDIA_ELEMENT_TYPES,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -30,8 +34,10 @@ import { useStory } from '../../app/story';
 import getElementProperties from '../canvas/utils/getElementProperties';
 import Context from './context';
 
-const DROP_SOURCE_ALLOWED_TYPES = ['image', 'gif', 'video'];
-const DROP_TARGET_ALLOWED_TYPES = ['image', 'gif', 'video', 'shape'];
+const DROP_SOURCE_ALLOWED_TYPES = MEDIA_ELEMENT_TYPES;
+const DROP_TARGET_ALLOWED_TYPES = MEDIA_ELEMENT_TYPES.concat(
+  ELEMENT_TYPES.SHAPE
+);
 
 const isDropSource = (type) => DROP_SOURCE_ALLOWED_TYPES.includes(type);
 const isDropTarget = (type) => DROP_TARGET_ALLOWED_TYPES.includes(type);
@@ -205,8 +211,8 @@ function DropTargetsProvider({ children }) {
     [activeDropTargetId, combineElements, elements, dropTargets, pushTransform]
   );
 
-  // ⌘ key disables drop-targeting.
-  const isDropTargetingDisabled = useGlobalIsKeyPressed('meta');
+  // mod key (⌘ on macOS, Ctrl on Windows) disables drop-targeting.
+  const isDropTargetingDisabled = useGlobalIsKeyPressed('mod');
 
   const state = {
     state: {

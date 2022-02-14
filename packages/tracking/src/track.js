@@ -36,7 +36,7 @@ async function track(eventName, eventData = {}) {
     // trigger a console warning.
     // See https://developers.google.com/analytics/devguides/collection/gtagjs/sending-data
     const failTimeout = setTimeout(() => {
-      global.console.warn(
+      window.console.warn(
         `[Web Stories] Tracking event "${eventName}" took too long to fire.`
       );
       resolve();

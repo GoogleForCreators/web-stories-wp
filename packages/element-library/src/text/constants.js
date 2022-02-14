@@ -62,12 +62,6 @@ export const resizeRules = {
   minHeight: 0, // Enforced by min font size
 };
 
-// Resize rules change for text element if aspect ratio is unlocked.
-export const unlockedResizeRules = {
-  ...resizeRules,
-  diagonal: false,
-};
-
 export const panels = [
   PanelTypes.ELEMENT_ALIGNMENT,
   PanelTypes.SIZE_POSITION,

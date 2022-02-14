@@ -21,3 +21,6 @@ export const WEIGHT = 'CUSTOM-WEIGHT';
 export const COLOR = 'CUSTOM-COLOR';
 export const LETTERSPACING = 'CUSTOM-LETTERSPACING';
 export const UPPERCASE = 'CUSTOM-UPPERCASE';
+
+// @todo May be move it to new elements package?
+export const MULTIPLE_VALUE = '((MULTIPLE))';

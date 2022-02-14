@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { __, _x } from '@googleforcreators/i18n';
+import { _x } from '@googleforcreators/i18n';
 import { dataFontEm, PAGE_HEIGHT } from '@googleforcreators/units';
 import {
   BACKGROUND_TEXT_MODE,
@@ -58,16 +58,20 @@ const DEFAULT_TEXT_PADDING = {
 };
 
 const DEFAULT_PRESET = {
-  content: __('Fill in some text', 'web-stories'),
+  content: _x(
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    'text preset content',
+    'web-stories'
+  ),
   fontWeight: FONT_WEIGHT.NORMAL,
-  fontSize: dataFontEm(1.2),
-  lineHeight: 1.5,
+  fontSize: dataFontEm(1.33),
+  lineHeight: 1.2,
   x: DEFAULT_LEFT_MARGIN,
-  y: (PAGE_HEIGHT - dataFontEm(1.5)) / 2,
+  y: (PAGE_HEIGHT - dataFontEm(1.33)) / 2,
   font: TEXT_ELEMENT_DEFAULT_FONT,
-  width: DEFAULT_WIDTH.DEFAULT,
-  textAlign: 'center',
+  width: DEFAULT_WIDTH.PARAGRAPH,
   borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
+  backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
   padding: DEFAULT_TEXT_PADDING,
 };
 
@@ -134,23 +138,7 @@ const PRESETS = [
   },
   {
     title: _x('Paragraph', 'text preset title', 'web-stories'),
-    element: {
-      content: _x(
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        'text preset content',
-        'web-stories'
-      ),
-      fontWeight: FONT_WEIGHT.NORMAL,
-      fontSize: dataFontEm(1.33),
-      lineHeight: 1.2,
-      x: DEFAULT_LEFT_MARGIN,
-      y: (PAGE_HEIGHT - dataFontEm(1.33)) / 2,
-      font: TEXT_ELEMENT_DEFAULT_FONT,
-      width: DEFAULT_WIDTH.PARAGRAPH,
-      borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
-      backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
-      padding: DEFAULT_TEXT_PADDING,
-    },
+    element: DEFAULT_PRESET,
   },
   {
     title: _x('Caption', 'text preset title', 'web-stories'),

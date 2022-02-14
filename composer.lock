@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "04aa80ae774d22473cc5d83c68fb163d",
+    "content-hash": "a3b314a5a1b11abaf5ad9d921d8ddf75",
     "packages": [
         {
             "name": "ampproject/amp-toolbox",
@@ -86,12 +86,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ampproject/amp-wp",
-                "reference": "93225e7623b28e934b735b665e15ab0df420868b"
+                "reference": "95c009ad45d07177d7f202f21a2c3b9e42679639"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/93225e7623b28e934b735b665e15ab0df420868b",
-                "reference": "93225e7623b28e934b735b665e15ab0df420868b",
+                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/95c009ad45d07177d7f202f21a2c3b9e42679639",
+                "reference": "95c009ad45d07177d7f202f21a2c3b9e42679639",
                 "shasum": ""
             },
             "require": {
@@ -194,7 +194,7 @@
             ],
             "description": "WordPress plugin for adding AMP support.",
             "homepage": "https://github.com/ampproject/amp-wp",
-            "time": "2022-02-05T01:19:40+00:00"
+            "time": "2022-02-08T18:56:56+00:00"
         },
         {
             "name": "civicrm/composer-downloads-plugin",
@@ -683,16 +683,16 @@
     "packages-dev": [
         {
             "name": "antecedent/patchwork",
-            "version": "2.1.19",
+            "version": "2.1.21",
             "source": {
                 "type": "git",
                 "url": "https://github.com/antecedent/patchwork.git",
-                "reference": "94fe587cb0a6c1695b1ddc650e877231be80b8bc"
+                "reference": "25c1fa0cd9a6e6d0d13863d8df8f050b6733f16d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/antecedent/patchwork/zipball/94fe587cb0a6c1695b1ddc650e877231be80b8bc",
-                "reference": "94fe587cb0a6c1695b1ddc650e877231be80b8bc",
+                "url": "https://api.github.com/repos/antecedent/patchwork/zipball/25c1fa0cd9a6e6d0d13863d8df8f050b6733f16d",
+                "reference": "25c1fa0cd9a6e6d0d13863d8df8f050b6733f16d",
                 "shasum": ""
             },
             "require": {
@@ -725,9 +725,9 @@
             ],
             "support": {
                 "issues": "https://github.com/antecedent/patchwork/issues",
-                "source": "https://github.com/antecedent/patchwork/tree/2.1.19"
+                "source": "https://github.com/antecedent/patchwork/tree/2.1.21"
             },
-            "time": "2022-01-20T04:47:04+00:00"
+            "time": "2022-02-07T07:28:34+00:00"
         },
         {
             "name": "automattic/vipwpcs",
@@ -813,12 +813,12 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "Brain\\Monkey\\": "src/"
-                },
                 "files": [
                     "inc/api.php"
-                ]
+                ],
+                "psr-4": {
+                    "Brain\\Monkey\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -1065,23 +1065,24 @@
         },
         {
             "name": "dg/bypass-finals",
-            "version": "v1.1.3",
+            "version": "v1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/dg/bypass-finals.git",
-                "reference": "ed66d2f960126d9912d5ce1b0d3671acbfcd0586"
+                "reference": "495f5bc762e7bf30a13ed8253f44bb3a701767bb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dg/bypass-finals/zipball/ed66d2f960126d9912d5ce1b0d3671acbfcd0586",
-                "reference": "ed66d2f960126d9912d5ce1b0d3671acbfcd0586",
+                "url": "https://api.github.com/repos/dg/bypass-finals/zipball/495f5bc762e7bf30a13ed8253f44bb3a701767bb",
+                "reference": "495f5bc762e7bf30a13ed8253f44bb3a701767bb",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.6"
+                "php": ">=7.1"
             },
             "require-dev": {
-                "nette/tester": "^2.0.2"
+                "nette/tester": "^2.3",
+                "phpstan/phpstan": "^0.12"
             },
             "type": "library",
             "autoload": {
@@ -1111,9 +1112,9 @@
             ],
             "support": {
                 "issues": "https://github.com/dg/bypass-finals/issues",
-                "source": "https://github.com/dg/bypass-finals/tree/v1.1.3"
+                "source": "https://github.com/dg/bypass-finals/tree/v1.3.1"
             },
-            "time": "2020-05-08T12:36:31+00:00"
+            "time": "2021-04-09T10:42:55+00:00"
         },
         {
             "name": "doctrine/instantiator",
@@ -1478,16 +1479,16 @@
         },
         {
             "name": "phar-io/version",
-            "version": "3.1.0",
+            "version": "3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phar-io/version.git",
-                "reference": "bae7c545bef187884426f042434e561ab1ddb182"
+                "reference": "15a90844ad40f127afd244c0cad228de2a80052a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phar-io/version/zipball/bae7c545bef187884426f042434e561ab1ddb182",
-                "reference": "bae7c545bef187884426f042434e561ab1ddb182",
+                "url": "https://api.github.com/repos/phar-io/version/zipball/15a90844ad40f127afd244c0cad228de2a80052a",
+                "reference": "15a90844ad40f127afd244c0cad228de2a80052a",
                 "shasum": ""
             },
             "require": {
@@ -1523,9 +1524,9 @@
             "description": "Library for handling version information and constraints",
             "support": {
                 "issues": "https://github.com/phar-io/version/issues",
-                "source": "https://github.com/phar-io/version/tree/3.1.0"
+                "source": "https://github.com/phar-io/version/tree/3.1.1"
             },
-            "time": "2021-02-23T14:00:09+00:00"
+            "time": "2022-02-07T21:56:48+00:00"
         },
         {
             "name": "php-stubs/wordpress-stubs",
@@ -3996,6 +3997,52 @@
                 }
             ],
             "time": "2021-12-07T17:19:06+00:00"
+        },
+        {
+            "name": "sniccowp/php-scoper-wordpress-excludes",
+            "version": "5.9.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sniccowp/php-scoper-wordpress-excludes.git",
+                "reference": "36c2078e9ffaa5ea8c9752c3ec2b49587cf2a51c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sniccowp/php-scoper-wordpress-excludes/zipball/36c2078e9ffaa5ea8c9752c3ec2b49587cf2a51c",
+                "reference": "36c2078e9ffaa5ea8c9752c3ec2b49587cf2a51c",
+                "shasum": ""
+            },
+            "require-dev": {
+                "php": "^7.4",
+                "php-stubs/wordpress-stubs": "5.9.0",
+                "sniccowp/php-scoper-excludes": "dev-master"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Calvin Alkan",
+                    "email": "calvin@snicco.de"
+                },
+                {
+                    "name": "Marlon Alkan",
+                    "email": "marlon@snicco.de"
+                }
+            ],
+            "description": "A list of all WordPress core classes, functions and constants. Meant to be used with the PHP-Scoper exclusion functionality.",
+            "keywords": [
+                "php-scoper",
+                "scoping WordPress",
+                "wordpress"
+            ],
+            "support": {
+                "issues": "https://github.com/sniccowp/php-scoper-wordpress-excludes/issues",
+                "source": "https://github.com/sniccowp/php-scoper-wordpress-excludes/tree/5.9.0"
+            },
+            "time": "2022-02-09T14:28:25+00:00"
         },
         {
             "name": "squizlabs/php_codesniffer",
