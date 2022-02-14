@@ -19,8 +19,7 @@ class Embed extends DependencyInjectedTestCase {
 	 */
 	private $assets;
 
-
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->assets  = $this->injector->make( \Google\Web_Stories\Assets::class );

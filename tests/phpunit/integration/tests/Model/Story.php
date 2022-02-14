@@ -60,7 +60,7 @@ class Story extends TestCase {
 	/**
 	 * @covers ::load_from_post
 	 */
-	public function test_load_from_post_with_poster() {
+	public function test_load_from_post_with_poster(): void {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_title'   => 'test title',
