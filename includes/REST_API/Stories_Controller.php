@@ -52,7 +52,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	/**
 	 * Default style presets to pass if not set.
 	 */
-	const EMPTY_STYLE_PRESETS = [
+	public const EMPTY_STYLE_PRESETS = [
 		'colors'     => [],
 		'textStyles' => [],
 	];
@@ -69,7 +69,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @param WP_REST_Request $request Request object.
 	 * @return WP_REST_Response Response object.
 	 */
-	public function prepare_item_for_response( $post, $request ) {
+	public function prepare_item_for_response( $post, $request ): WP_REST_Response {
 		/**
 		 * Request context.
 		 *
@@ -112,7 +112,7 @@ class Stories_Controller extends Stories_Base_Controller {
 					require_once ABSPATH . 'wp-admin/includes/post.php';
 				}
 
-				list ( $permalink ) = get_sample_permalink( $post->ID, $post->post_title, '' );
+				[ $permalink ] = get_sample_permalink( $post->ID, $post->post_title, '' );
 
 				// Allow non-published (private, future) to be viewed at a pretty permalink, in case $post->post_name is set.
 				$view_link = str_replace( [ '%pagename%', '%postname%' ], $post->post_name, $permalink );
@@ -240,7 +240,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @param WP_Query $query   The WP_Query instance.
 	 * @return array Filtered query clauses.
 	 */
-	public function filter_posts_clauses( $clauses, $query ) {
+	public function filter_posts_clauses( $clauses, $query ): array {
 		global $wpdb;
 
 		if ( $this->post_type !== $query->get( 'post_type' ) ) {
@@ -272,7 +272,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return array Current args.
 	 */
-	public function filter_query( $args, $request ) {
+	public function filter_query( $args, $request ): array {
 		$this->args = $this->prepare_tax_query( $args, $request );
 
 		return $args;
@@ -332,7 +332,7 @@ class Stories_Controller extends Stories_Base_Controller {
 	 *
 	 * @todo Remove this method once WordPress 5.7 becomes minimum required version.
 	 */
-	private function prepare_tax_query( array $args, WP_REST_Request $request ) {
+	private function prepare_tax_query( array $args, WP_REST_Request $request ): array {
 		$relation = $request['tax_relation'];
 
 		if ( $relation ) {
@@ -577,7 +577,7 @@ class Stories_Controller extends Stories_Base_Controller {
 		$lock = get_post_meta( $post->ID, '_edit_lock', true );
 
 		if ( ! empty( $lock ) ) {
-			list ( $time, $user ) = explode( ':', $lock );
+			[ $time, $user ] = explode( ':', $lock );
 
 			/** This filter is documented in wp-admin/includes/ajax-actions.php */
 			$time_window = apply_filters( 'wp_check_post_lock_window', 150 );

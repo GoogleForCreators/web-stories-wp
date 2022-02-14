@@ -32,5 +32,5 @@ interface SiteRemovalAware {
 	 * @param WP_Site $site The site being removed.
 	 * @return void
 	 */
-	public function on_site_removal( WP_Site $site );
+	public function on_site_removal( WP_Site $site ): void;
 }

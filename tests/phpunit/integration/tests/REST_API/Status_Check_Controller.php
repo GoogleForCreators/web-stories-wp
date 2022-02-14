@@ -37,7 +37,7 @@ class Status_Check_Controller extends DependencyInjectedRestTestCase {
 	 */
 	private $controller;
 
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$subscriber = $factory->user->create(
 			[
 				'role' => 'subscriber',
@@ -51,7 +51,7 @@ class Status_Check_Controller extends DependencyInjectedRestTestCase {
 		);
 	}
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->controller = $this->injector->make( \Google\Web_Stories\REST_API\Status_Check_Controller::class );
@@ -60,7 +60,7 @@ class Status_Check_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$this->controller->register();
 
 		$routes = rest_get_server()->get_routes();
@@ -72,7 +72,7 @@ class Status_Check_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::status_check_permissions_check
 	 * @covers ::status_check
 	 */
-	public function test_no_user() {
+	public function test_no_user(): void {
 		$this->controller->register();
 
 		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/status-check' );
@@ -86,7 +86,7 @@ class Status_Check_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::status_check_permissions_check
 	 * @covers ::status_check
 	 */
-	public function test_without_permission() {
+	public function test_without_permission(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$subscriber );
@@ -101,7 +101,7 @@ class Status_Check_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::status_check_permissions_check
 	 * @covers ::status_check
 	 */
-	public function test_status_check() {
+	public function test_status_check(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );

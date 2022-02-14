@@ -58,7 +58,7 @@ class Set_Legacy_Analytics_Usage_Flag extends Migrate_Base {
 	 *
 	 * @return void
 	 */
-	public function migrate() {
+	public function migrate(): void {
 		$this->settings->update_setting(
 			$this->settings::SETTING_NAME_USING_LEGACY_ANALYTICS,
 			! empty( $this->settings->get_setting( $this->settings::SETTING_NAME_TRACKING_ID ) )

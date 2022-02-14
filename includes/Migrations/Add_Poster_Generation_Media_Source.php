@@ -40,7 +40,7 @@ class Add_Poster_Generation_Media_Source extends Migration_Meta_To_Term {
 	 *
 	 * @return void
 	 */
-	public function migrate() {
+	public function migrate(): void {
 		wp_insert_term( $this->get_term_name(), $this->media_source_taxonomy->get_taxonomy_slug() );
 		parent::migrate();
 	}

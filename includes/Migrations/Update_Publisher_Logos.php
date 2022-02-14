@@ -58,7 +58,7 @@ class Update_Publisher_Logos extends Migrate_Base {
 	 *
 	 * @return void
 	 */
-	public function migrate() {
+	public function migrate(): void {
 		$publisher_logo_id       = 0;
 		$publisher_logo_settings = (array) $this->settings->get_setting( $this->settings::SETTING_NAME_PUBLISHER_LOGOS, [] );
 

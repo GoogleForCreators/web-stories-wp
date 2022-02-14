@@ -43,7 +43,7 @@ class Archives extends TestCase {
 	/**
 	 * @param \WP_UnitTest_Factory $factory
 	 */
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$admin_id = $factory->user->create(
 			[ 'role' => 'administrator' ]
 		);
@@ -72,7 +72,7 @@ class Archives extends TestCase {
 	/**
 	 * @covers ::embed_player
 	 */
-	public function test_embed_player() {
+	public function test_embed_player(): void {
 		$this->go_to( get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG ) );
 
 		$content = get_echo( 'the_content' );

@@ -40,7 +40,7 @@ class TinyMCE extends Service_Base {
 	/**
 	 * Web Stories tinymce script handle.
 	 */
-	const SCRIPT_HANDLE = 'tinymce-button';
+	public const SCRIPT_HANDLE = 'tinymce-button';
 
 	/**
 	 * Assets instance.
@@ -85,7 +85,7 @@ class TinyMCE extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		if ( $this->context->is_block_editor() || $this->context->is_story_editor() ) {
 			return;
 		}
@@ -151,7 +151,7 @@ class TinyMCE extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function register_assets() {
+	public function register_assets(): void {
 		$this->assets->enqueue_style( 'wp-components' );
 
 		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE );
@@ -193,7 +193,7 @@ class TinyMCE extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function enqueue_assets() {
+	public function enqueue_assets(): void {
 		$this->assets->enqueue_style( 'wp-components' );
 		$this->assets->enqueue_script_asset( self::SCRIPT_HANDLE );
 	}
@@ -206,7 +206,7 @@ class TinyMCE extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function web_stories_tinymce_root_element() {
+	public function web_stories_tinymce_root_element(): void {
 		?>
 		<div id="web-stories-tinymce"></div>
 		<?php

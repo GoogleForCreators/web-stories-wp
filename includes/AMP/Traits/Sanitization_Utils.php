@@ -45,7 +45,7 @@ trait Sanitization_Utils {
 	 * @param Document|AMP_Document $document Document instance.
 	 * @return void
 	 */
-	private function transform_html_start_tag( &$document ) {
+	private function transform_html_start_tag( &$document ): void {
 		$document->html->setAttribute( 'amp', '' );
 
 		// See get_language_attributes().
@@ -73,7 +73,7 @@ trait Sanitization_Utils {
 	 * @param Document|AMP_Document $document Document instance.
 	 * @return void
 	 */
-	private function transform_a_tags( &$document ) {
+	private function transform_a_tags( &$document ): void {
 		$links = $document->getElementsByTagName( 'a' );
 
 		/**
@@ -125,7 +125,7 @@ trait Sanitization_Utils {
 	 * @param Document|AMP_Document $document Document instance.
 	 * @return void
 	 */
-	private function sanitize_amp_story_page_outlink( &$document ) {
+	private function sanitize_amp_story_page_outlink( &$document ): void {
 		$outlink_elements = $document->getElementsByTagName( 'amp-story-page-outlink' );
 
 		/**
@@ -156,7 +156,7 @@ trait Sanitization_Utils {
 	 * @param string                $publisher_logo Publisher logo.
 	 * @return void
 	 */
-	private function add_publisher_logo( &$document, $publisher_logo ) {
+	private function add_publisher_logo( &$document, $publisher_logo ): void {
 		/**
 		 * The <amp-story> element.
 		 *
@@ -192,7 +192,7 @@ trait Sanitization_Utils {
 	 * @param string                $publisher Publisher logo.
 	 * @return void
 	 */
-	private function add_publisher( &$document, $publisher ) {
+	private function add_publisher( &$document, $publisher ): void {
 		/**
 		 * The <amp-story> element.
 		 *
@@ -218,7 +218,7 @@ trait Sanitization_Utils {
 	 * @param string[]              $poster_images List of poster images, keyed by type.
 	 * @return void
 	 */
-	private function add_poster_images( &$document, $poster_images ) {
+	private function add_poster_images( &$document, $poster_images ): void {
 		/**
 		 * The <amp-story> element.
 		 *
@@ -254,7 +254,7 @@ trait Sanitization_Utils {
 	 * @param Document|AMP_Document $document Document instance.
 	 * @return void
 	 */
-	private function deduplicate_inline_styles( $document ) {
+	private function deduplicate_inline_styles( $document ): void {
 		$elements_by_inline_style = [];
 
 		// Gather all elements based on their common inline styles.
@@ -316,7 +316,7 @@ trait Sanitization_Utils {
 	 * @param bool                  $video_cache_enabled Whether video cache is enabled.
 	 * @return void
 	 */
-	private function add_video_cache( &$document, $video_cache_enabled ) {
+	private function add_video_cache( &$document, $video_cache_enabled ): void {
 		if ( ! $video_cache_enabled ) {
 			return;
 		}
@@ -353,7 +353,7 @@ trait Sanitization_Utils {
 	 * @param Document|AMP_Document $document Document instance.
 	 * @return void
 	 */
-	private function remove_blob_urls( &$document ) {
+	private function remove_blob_urls( &$document ): void {
 		/**
 		 * List of <amp-video> elements.
 		 *
@@ -406,7 +406,7 @@ trait Sanitization_Utils {
 	 * @param Document|AMP_Document $document Document instance.
 	 * @return void
 	 */
-	private function sanitize_srcset( &$document ) {
+	private function sanitize_srcset( &$document ): void {
 		/**
 		 * List of <amp-img> elements.
 		 *
@@ -458,7 +458,7 @@ trait Sanitization_Utils {
 	 * @param Document|AMP_Document $document Document instance.
 	 * @return void
 	 */
-	private function remove_page_template_placeholder_images( &$document ) {
+	private function remove_page_template_placeholder_images( &$document ): void {
 		// Catches "assets/images/editor/grid-placeholder.png" as well as
 		// "web-stories/assets/images/adde98ae406d6b5c95d111a934487252.png" (v1.14.0)
 		// and potentially other variants.

@@ -69,7 +69,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 	/**
 	 * @param \WP_UnitTest_Factory $factory
 	 */
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$admin_id = $factory->user->create(
 			[ 'role' => 'administrator' ]
 		);
@@ -98,7 +98,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 		self::$archive_page_id = self::factory()->post->create( [ 'post_type' => 'page' ] );
 	}
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
@@ -114,7 +114,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 		add_filter( 'wp_redirect', [ $this, 'filter_wp_redirect' ] );
 	}
 
-	public function tear_down() {
+	public function tear_down(): void {
 		$this->remove_caps_from_roles();
 
 		$this->redirect_location = null;
@@ -135,7 +135,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$this->instance->register();
 
 
@@ -156,7 +156,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::pre_get_posts
 	 */
-	public function test_pre_get_posts_default_archive() {
+	public function test_pre_get_posts_default_archive(): void {
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'default' );
 
 		$archive_link = get_post_type_archive_link( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
@@ -171,7 +171,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::pre_get_posts
 	 */
-	public function test_pre_get_posts_custom_archive() {
+	public function test_pre_get_posts_custom_archive(): void {
 		$this->set_permalink_structure( '/%postname%/' );
 
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
@@ -192,7 +192,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::on_remove_archive_page
 	 */
-	public function test_on_remove_archive_page_trash() {
+	public function test_on_remove_archive_page_trash(): void {
 		$archive_page_id = self::factory()->post->create( [ 'post_type' => 'page' ] );
 
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
@@ -210,7 +210,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::on_remove_archive_page
 	 */
-	public function test_on_remove_archive_page_delete() {
+	public function test_on_remove_archive_page_delete(): void {
 		$archive_page_id = self::factory()->post->create( [ 'post_type' => 'page' ] );
 
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
@@ -228,7 +228,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::pre_get_posts
 	 */
-	public function test_pre_get_posts_custom_archive_not_published() {
+	public function test_pre_get_posts_custom_archive_not_published(): void {
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
 		update_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
 
@@ -259,7 +259,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::filter_display_post_states
 	 */
-	public function test_filter_display_post_states() {
+	public function test_filter_display_post_states(): void {
 		$actual = $this->call_private_method(
 			$this->instance,
 			'filter_display_post_states',
@@ -275,7 +275,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::filter_display_post_states
 	 */
-	public function test_filter_display_post_states_custom_archive() {
+	public function test_filter_display_post_states_custom_archive(): void {
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
 		update_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
 
@@ -302,7 +302,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::filter_display_post_states
 	 */
-	public function test_filter_display_post_states_custom_archive_not_published() {
+	public function test_filter_display_post_states_custom_archive_not_published(): void {
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
 		update_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
 
@@ -338,7 +338,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::redirect_post_type_archive_urls
 	 */
-	public function test_redirect_post_type_archive_urls_experiment_disabled() {
+	public function test_redirect_post_type_archive_urls_experiment_disabled(): void {
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
 		update_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, PHP_INT_MAX );
 
@@ -352,7 +352,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::redirect_post_type_archive_urls
 	 */
-	public function test_redirect_post_type_archive_urls_bypass() {
+	public function test_redirect_post_type_archive_urls_bypass(): void {
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
 		update_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, PHP_INT_MAX );
 
@@ -366,7 +366,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::redirect_post_type_archive_urls
 	 */
-	public function test_redirect_post_type_archive_urls_ugly_permalinks() {
+	public function test_redirect_post_type_archive_urls_ugly_permalinks(): void {
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
 		update_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, PHP_INT_MAX );
 
@@ -383,7 +383,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::redirect_post_type_archive_urls
 	 */
-	public function test_redirect_post_type_archive_urls_pretty_permalinks() {
+	public function test_redirect_post_type_archive_urls_pretty_permalinks(): void {
 		$this->set_permalink_structure( '/%postname%/' );
 
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
@@ -402,7 +402,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::redirect_post_type_archive_urls
 	 */
-	public function test_redirect_post_type_archive_urls_page() {
+	public function test_redirect_post_type_archive_urls_page(): void {
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
 		update_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, PHP_INT_MAX );
 
@@ -429,7 +429,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::redirect_post_type_archive_urls
 	 */
-	public function test_redirect_post_type_archive_urls_pagename_set() {
+	public function test_redirect_post_type_archive_urls_pagename_set(): void {
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
 		update_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, PHP_INT_MAX );
 
@@ -453,7 +453,7 @@ class Story_Archive extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::redirect_post_type_archive_urls
 	 */
-	public function test_redirect_post_type_archive_urls_existing_custom_page() {
+	public function test_redirect_post_type_archive_urls_existing_custom_page(): void {
 		$this->set_permalink_structure( '/%postname%/' );
 
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
