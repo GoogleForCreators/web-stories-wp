@@ -115,7 +115,7 @@ trait Sanitization_Utils {
 	}
 
 	/**
-	 * Transforms paragraphs to use semantic heading tags if needed.
+	 * Transforms all paragraphs in a story to use semantic heading tags if needed.
 	 *
 	 * This logic here mirrors the getTextElementTagNames() function in the editor
 	 * in order to change simple <p> tags into <h1>, <h2> or <h3>, depending on font size.
@@ -152,41 +152,57 @@ trait Sanitization_Utils {
 
 			$text_elements = $document->xpath->query( './/p[ contains( @class, "text-wrapper" ) ]', $page );
 
-			// Matches PAGE_HEIGHT in the editor, as also seen in amp-story-grid-layer[aspect-ratio].
-			$page_height = 618;
+			if ( ! $text_elements ) {
+				return;
+			}
 
-			$has_h1 = false;
+			$this->use_semantic_heading_tags_for_elements( $text_elements );
+		}
+	}
 
-			/**
-			 * The individual text element.
-			 *
-			 * @var DOMElement $text_el The text element.
-			 */
-			foreach ( $text_elements as $text_el ) {
-				$style   = $text_el->getAttribute( 'style' );
-				$matches = [];
+	/**
+	 * Transforms a list of elements to use semantic heading tags if needed.
+	 *
+	 * @since 1.18.0
+	 *
+	 * @param DOMNodeList $text_elements List of text elements.
+	 * @return void
+	 */
+	private function use_semantic_heading_tags_for_elements( $text_elements ): void {
+		// Matches PAGE_HEIGHT in the editor, as also seen in amp-story-grid-layer[aspect-ratio].
+		$page_height = 618;
 
-				if ( ! preg_match( '/font-size:([^em]+)em/', $style, $matches ) ) {
-					continue;
-				}
+		$has_h1 = false;
 
-				// Contains the font-size in em.
-				// This is basically reversing the dataToFontSizeY() logic. Example:
-				// 0.582524em roughly equals 36 editor pixels: 0.582524 * 618 / 10 = 35.9999px.
-				$font_size_in_em = $matches[1];
-				$font_size_in_px = round( $font_size_in_em * $page_height / 10, 0 );
+		/**
+		 * The individual text element.
+		 *
+		 * @var DOMElement $text_el The text element.
+		 */
+		foreach ( $text_elements as $text_el ) {
+			$style   = $text_el->getAttribute( 'style' );
+			$matches = [];
 
-				if ( $font_size_in_px >= 36 && ! $has_h1 ) {
-					$this->change_tag_name( $text_el, 'h1' );
-					$has_h1 = true;
-					continue;
-				}
+			if ( ! preg_match( '/font-size:([^em]+)em/', $style, $matches ) ) {
+				continue;
+			}
 
-				if ( $font_size_in_px >= 27 ) {
-					$this->change_tag_name( $text_el, 'h2' );
-				} elseif ( $font_size_in_px >= 21 ) {
-					$this->change_tag_name( $text_el, 'h3' );
-				}
+			// Contains the font-size in em.
+			// This is basically reversing the dataToFontSizeY() logic. Example:
+			// 0.582524em roughly equals 36 editor pixels: 0.582524 * 618 / 10 = 35.9999px.
+			$font_size_in_em = $matches[1];
+			$font_size_in_px = round( $font_size_in_em * $page_height / 10, 0 );
+
+			if ( $font_size_in_px >= 36 && ! $has_h1 ) {
+				$this->change_tag_name( $text_el, 'h1' );
+				$has_h1 = true;
+				continue;
+			}
+
+			if ( $font_size_in_px >= 27 ) {
+				$this->change_tag_name( $text_el, 'h2' );
+			} elseif ( $font_size_in_px >= 21 ) {
+				$this->change_tag_name( $text_el, 'h3' );
 			}
 		}
 	}
@@ -198,26 +214,37 @@ trait Sanitization_Utils {
 	 *
 	 * @param DOMElement $node     Element whose tag name should be changed.
 	 * @param string     $tag_name Desired new tag name, e.g. h1 or h2.
-	 * @return DOMElement New element.
+	 * @return void
 	 */
-	private function change_tag_name( $node, $tag_name ): DOMElement {
-		$new_node = $node->ownerDocument->createElement( $tag_name );
+	private function change_tag_name( $node, $tag_name ): void {
+		/**
+		 * Owner document.
+		 *
+		 * @var \DOMDocument Owner document.
+		 */
+		$document = $node->ownerDocument;
+
+		$new_node = $document->createElement( $tag_name );
+
+		if ( ! $new_node instanceof DOMElement ) {
+			return;
+		}
 
 		// Copy over all children first.
 		foreach ( $node->childNodes as $child ) {
-			$new_node->appendChild( $node->ownerDocument->importNode( $child, true ) );
+			$new_node->appendChild( $document->importNode( $child, true ) );
 		}
 
 		// Then, copy over all attributes.
-		if ( $node->hasAttributes() ) {
+		if ( $node->attributes ) {
 			foreach ( $node->attributes as $attr ) {
 				$new_node->setAttribute( $attr->nodeName, $attr->nodeValue );
 			}
 		}
 
-		$node->parentNode->replaceChild( $new_node, $node );
-
-		return $new_node;
+		if ( $node->parentNode ) {
+			$node->parentNode->replaceChild( $new_node, $node );
+		}
 	}
 
 	/**
