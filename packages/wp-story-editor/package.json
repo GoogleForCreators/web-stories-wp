@@ -35,7 +35,7 @@
     "@googleforcreators/react": "*",
     "@googleforcreators/story-editor": "*",
     "@googleforcreators/tracking": "*",
-    "@wordpress/api-fetch": "^6.0.0",
+    "@wordpress/api-fetch": "^6.0.1",
     "flagged": "^2.0.1",
     "polished": "^4.1.4",
     "react-calendar": "^3.6.0",
