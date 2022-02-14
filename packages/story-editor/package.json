@@ -11,7 +11,7 @@
   "keywords": [
     "web stories"
   ],
-  "homepage": "https://github.com/googleforcreators/web-stories-wp/",
+  "homepage": "https://github.com/GoogleForCreators/web-stories-wp/blob/main/packages/story-editor/README.md",
   "repository": {
     "type": "git",
     "url": "https://github.com/GoogleForCreators/web-stories-wp.git",
@@ -21,7 +21,7 @@
     "url": "https://github.com/googleforcreators/web-stories-wp/issues"
   },
   "engines": {
-    "node": ">= 16",
+    "node": ">= 12 || >= 14 || >= 16",
     "npm": ">= 7.3"
   },
   "main": "dist/index.js",
@@ -86,6 +86,7 @@
     "jest-axe": "^5.0.1",
     "jest-matcher-deep-close-to": "^3.0.2",
     "mockdate": "^3.0.5",
-    "react": "^17.0.2"
+    "react": "^17.0.2",
+    "react-moveable": "^0.30.3"
   }
 }

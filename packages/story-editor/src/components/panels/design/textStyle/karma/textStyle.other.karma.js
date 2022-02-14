@@ -97,15 +97,10 @@ describe('Text Style Panel', () => {
     });
 
     it('should change the text color to white on black background', async () => {
-      // Assign black color.
-      const safezone = fixture.querySelector('[data-testid="safezone"]');
-      await fixture.events.click(safezone);
-      const hexInput =
-        fixture.editor.inspector.designPanel.pageBackground.backgroundColor.hex;
-      await fixture.events.click(hexInput);
-      // Select all the text
-      hexInput.select();
-      // Then type hex combo
+      // Assign black BG color.
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.changeBackgroundColorButton
+      );
       await fixture.events.keyboard.type('000');
       await fixture.events.keyboard.press('Tab');
 

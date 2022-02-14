@@ -124,7 +124,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
                 srcLang={srclang}
                 label={label}
                 // Hides the track from the user.
-                // Displaying happens in VideoCaptionsLayer instead.
+                // Displaying happens in MediaCaptionsLayer instead.
                 kind="metadata"
                 src={src}
                 key={key}

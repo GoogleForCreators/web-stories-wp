@@ -87,7 +87,7 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
   }, [currentPage, x, y, nodesById]);
 
   const subMenuItems = useMemo(() => {
-    if (!isMenuOpen) {
+    if (!isMenuOpen || selectedElements.length === 0) {
       return [];
     }
     const intersectingElements = getIntersectingElements();
