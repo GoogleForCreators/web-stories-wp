@@ -24,8 +24,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
  */
 import EmbedPreview from '../embedPreview';
 
-const url =
-  'https://preview.amp.dev/documentation/examples/introduction/stories_in_amp';
+const url = 'https://wp.stories.google/stories/intro-to-web-stories-storytime';
 const title = 'Stories in AMP';
 
 jest.mock('../storyPlayer', () => {

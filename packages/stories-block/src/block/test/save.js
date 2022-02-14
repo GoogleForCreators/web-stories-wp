@@ -24,8 +24,7 @@ import { render } from '@testing-library/react';
  */
 import Save from '../save';
 
-const url =
-  'https://preview.amp.dev/documentation/examples/introduction/stories_in_amp';
+const url = 'https://wp.stories.google/stories/intro-to-web-stories-storytime';
 const title = 'Stories in AMP';
 const poster = 'https://amp.dev/static/samples/img/story_dog2_portrait.jpg';
 
@@ -39,7 +38,7 @@ describe('save', () => {
         class="wp-block-web-stories-embed alignnone"
       >
         <a
-          href="https://preview.amp.dev/documentation/examples/introduction/stories_in_amp"
+          href="https://wp.stories.google/stories/intro-to-web-stories-storytime"
         >
           <img
             alt="Stories in AMP"
@@ -57,7 +56,7 @@ describe('save', () => {
         class="wp-block-web-stories-embed alignnone"
       >
         <a
-          href="https://preview.amp.dev/documentation/examples/introduction/stories_in_amp"
+          href="https://wp.stories.google/stories/intro-to-web-stories-storytime"
         >
           Stories in AMP
         </a>
