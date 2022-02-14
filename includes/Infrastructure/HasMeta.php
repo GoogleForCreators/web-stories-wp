@@ -25,5 +25,5 @@ interface HasMeta {
 	 *
 	 * @return void
 	 */
-	public function register_meta();
+	public function register_meta(): void;
 }

@@ -45,14 +45,14 @@ class Plugin extends ServiceBasedPlugin {
 	 * what makes up the actual plugin, and they provide self-contained pieces
 	 * of code that can work independently.
 	 */
-	const ENABLE_FILTERS_DEFAULT = false;
+	public const ENABLE_FILTERS_DEFAULT = false;
 
 	/**
 	 * Prefix to use for all actions and filters.
 	 *
 	 * This is used to make the filters for the dependency injector unique.
 	 */
-	const HOOK_PREFIX = 'web_stories_';
+	public const HOOK_PREFIX = 'web_stories_';
 
 	/**
 	 * List of services.
@@ -60,7 +60,7 @@ class Plugin extends ServiceBasedPlugin {
 	 * The services array contains a map of <identifier> => <service class name>
 	 * associations.
 	 */
-	const SERVICES = [
+	public const SERVICES = [
 		'activation_notice'            => Admin\Activation_Notice::class,
 		'admin.google_fonts'           => Admin\Google_Fonts::class,
 		'amp_output_buffer'            => Output_Buffer::class,

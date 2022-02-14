@@ -38,17 +38,17 @@ class Preferences extends Service_Base implements HasMeta {
 	/**
 	 * Name of the user meta key used for opt-in.
 	 */
-	const OPTIN_META_KEY = 'web_stories_tracking_optin';
+	public const OPTIN_META_KEY = 'web_stories_tracking_optin';
 
 	/**
 	 * Name of the user meta key used for onboarding.
 	 */
-	const ONBOARDING_META_KEY = 'web_stories_onboarding';
+	public const ONBOARDING_META_KEY = 'web_stories_onboarding';
 
 	/**
 	 * Name of the user meta key used for media optimization.
 	 */
-	const MEDIA_OPTIMIZATION_META_KEY = 'web_stories_media_optimization';
+	public const MEDIA_OPTIMIZATION_META_KEY = 'web_stories_media_optimization';
 
 	/**
 	 * Initializes User_Preferences.
@@ -59,7 +59,7 @@ class Preferences extends Service_Base implements HasMeta {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		$this->register_meta();
 	}
 
@@ -70,7 +70,7 @@ class Preferences extends Service_Base implements HasMeta {
 	 *
 	 * @return void
 	 */
-	public function register_meta() {
+	public function register_meta(): void {
 		register_meta(
 			'user',
 			static::OPTIN_META_KEY,

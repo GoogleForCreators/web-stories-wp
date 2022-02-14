@@ -43,12 +43,12 @@ function PageBackgroundAudioPanel() {
   } = useConfig();
   const enhancedPageBackgroundAudio = useFeature('enhancedPageBackgroundAudio');
 
-  const { backgroundAudio, updateCurrentPageProperties } = useStory(
-    (state) => ({
+  const { backgroundAudio, currentPageId, updateCurrentPageProperties } =
+    useStory((state) => ({
       updateCurrentPageProperties: state.actions.updateCurrentPageProperties,
       backgroundAudio: state.state.currentPage?.backgroundAudio,
-    })
-  );
+      currentPageId: state.state.currentPage?.id,
+    }));
 
   const updateBackgroundAudio = useCallback(
     (updatedBackgroundAudio) => {
@@ -84,6 +84,7 @@ function PageBackgroundAudioPanel() {
         updateBackgroundAudio={updateBackgroundAudio}
         showCaptions={enhancedPageBackgroundAudio}
         showLoopControl={enhancedPageBackgroundAudio}
+        audioId={`page-${currentPageId}-background-audio`}
       />
     </SimplePanel>
   );

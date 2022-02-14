@@ -112,7 +112,7 @@ class Assets {
 	 * @param bool   $with_i18n Optional. Whether to setup i18n for this asset. Default true.
 	 * @return void
 	 */
-	public function register_script_asset( string $script_handle, array $script_dependencies = [], bool $with_i18n = true ) {
+	public function register_script_asset( string $script_handle, array $script_dependencies = [], bool $with_i18n = true ): void {
 		if ( isset( $this->register_scripts[ $script_handle ] ) ) {
 			return;
 		}
@@ -181,7 +181,7 @@ class Assets {
 	 * @param bool   $with_i18n Optional. Whether to setup i18n for this asset. Default true.
 	 * @return void
 	 */
-	public function enqueue_script_asset( string $script_handle, array $script_dependencies = [], bool $with_i18n = true ) {
+	public function enqueue_script_asset( string $script_handle, array $script_dependencies = [], bool $with_i18n = true ): void {
 		$this->register_script_asset( $script_handle, $script_dependencies, $with_i18n );
 		$this->enqueue_script( $script_handle );
 	}
@@ -195,7 +195,7 @@ class Assets {
 	 * @param array  $style_dependencies Array of extra dependencies.
 	 * @return void
 	 */
-	public function register_style_asset( string $style_handle, array $style_dependencies = [] ) {
+	public function register_style_asset( string $style_handle, array $style_dependencies = [] ): void {
 		if ( isset( $this->register_styles[ $style_handle ] ) ) {
 			return;
 		}
@@ -236,7 +236,7 @@ class Assets {
 	 * @param array  $style_dependencies Array of extra dependencies.
 	 * @return void
 	 */
-	public function enqueue_style_asset( string $style_handle, array $style_dependencies = [] ) {
+	public function enqueue_style_asset( string $style_handle, array $style_dependencies = [] ): void {
 		$this->register_style_asset( $style_handle, $style_dependencies );
 		$this->enqueue_style( $style_handle );
 	}
@@ -321,7 +321,7 @@ class Assets {
 	 *                                 '(orientation: portrait)' and '(max-width: 640px)'.
 	 * @return void
 	 */
-	public function enqueue_style( string $style_handle, string $src = '', array $deps = [], $ver = false, string $media = 'all' ) {
+	public function enqueue_style( string $style_handle, string $src = '', array $deps = [], $ver = false, string $media = 'all' ): void {
 		$this->register_style( $style_handle, $src, $deps, $ver, $media );
 		wp_enqueue_style( $style_handle, $src, $deps, $ver, $media );
 	}
@@ -346,7 +346,7 @@ class Assets {
 	 * @param bool             $with_i18n Optional. Whether to setup i18n for this asset. Default true.
 	 * @return void
 	 */
-	public function enqueue_script( string $script_handle, string $src = '', array $deps = [], $ver = false, bool $in_footer = false, bool $with_i18n = false ) {
+	public function enqueue_script( string $script_handle, string $src = '', array $deps = [], $ver = false, bool $in_footer = false, bool $with_i18n = false ): void {
 		$this->register_script( $script_handle, $src, $deps, $ver, $in_footer, $with_i18n );
 		wp_enqueue_script( $script_handle, $src, $deps, $ver, $in_footer );
 	}
@@ -359,7 +359,7 @@ class Assets {
 	 * @param array $styles Array to style to be removed.
 	 * @return void
 	 */
-	public function remove_admin_style( array $styles ) {
+	public function remove_admin_style( array $styles ): void {
 		wp_styles()->registered['wp-admin']->deps = array_diff( wp_styles()->registered['wp-admin']->deps, $styles );
 	}
 

@@ -8,11 +8,10 @@ use Google\Web_Stories\Tests\Integration\TestCase;
  * @coversDefaultClass \Google\Web_Stories\Renderer\Story\Image
  */
 class Image extends TestCase {
-
 	/**
 	 * @covers ::render
 	 */
-	public function test_render() {
+	public function test_render(): void {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_title'   => 'test title',
@@ -37,7 +36,7 @@ class Image extends TestCase {
 	/**
 	 * @covers ::render
 	 */
-	public function test_render_with_image() {
+	public function test_render_with_image(): void {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_title'   => 'test title',

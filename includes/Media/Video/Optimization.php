@@ -37,7 +37,7 @@ class Optimization extends Service_Base implements HasMeta {
 	/**
 	 * The optimized video id post meta key.
 	 */
-	const OPTIMIZED_ID_POST_META_KEY = 'web_stories_optimized_id';
+	public const OPTIMIZED_ID_POST_META_KEY = 'web_stories_optimized_id';
 
 	/**
 	 * Init.
@@ -46,7 +46,7 @@ class Optimization extends Service_Base implements HasMeta {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		$this->register_meta();
 	}
 
@@ -57,7 +57,7 @@ class Optimization extends Service_Base implements HasMeta {
 	 *
 	 * @return void
 	 */
-	public function register_meta() {
+	public function register_meta(): void {
 		register_meta(
 			'post',
 			self::OPTIMIZED_ID_POST_META_KEY,

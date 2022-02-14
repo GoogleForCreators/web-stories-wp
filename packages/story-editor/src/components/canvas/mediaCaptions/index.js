@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export { default as VideoCaptionsLayer } from './videoCaptionsLayer';
+export { default as MediaCaptionsLayer } from './mediaCaptionsLayer';

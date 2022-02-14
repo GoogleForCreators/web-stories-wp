@@ -33,7 +33,7 @@ class Conditional_Featured_Image extends DependencyInjectedTestCase {
 	/**
 	 * Runs prior to each test and sets up the testee object.
 	 */
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\Integrations\Conditional_Featured_Image::class );
@@ -44,7 +44,7 @@ class Conditional_Featured_Image extends DependencyInjectedTestCase {
 	 *
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$this->instance->register();
 
 		$this->assertEquals(
@@ -62,7 +62,7 @@ class Conditional_Featured_Image extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::cybocfi_enabled_for_post_type
 	 */
-	public function test_cybocfi_enabled_for_post_type() {
+	public function test_cybocfi_enabled_for_post_type(): void {
 		$result = $this->instance->cybocfi_enabled_for_post_type( true, \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 
 		$this->assertFalse( $result );

@@ -34,13 +34,13 @@ namespace Google\Web_Stories\Tests\Integration;
 abstract class RestTestCase extends TestCase {
 	use REST_Setup;
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->set_up_rest();
 	}
 
-	public function tear_down() {
+	public function tear_down(): void {
 		$this->tear_down_rest();
 
 		parent::tear_down();

@@ -48,7 +48,7 @@ class AMP_Story_Sanitizer extends AMP_Base_Sanitizer {
 	 *
 	 * @return void
 	 */
-	public function sanitize() {
+	public function sanitize(): void {
 		$this->transform_html_start_tag( $this->dom );
 		$this->transform_a_tags( $this->dom );
 		$this->add_publisher_logo( $this->dom, $this->args['publisher_logo'] );

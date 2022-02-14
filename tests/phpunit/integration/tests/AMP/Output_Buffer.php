@@ -26,7 +26,7 @@ use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
  * @coversDefaultClass \Google\Web_Stories\AMP\Output_Buffer
  */
 class Output_Buffer extends DependencyInjectedTestCase {
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		// When running the tests, we don't have unfiltered_html capabilities.
@@ -35,7 +35,7 @@ class Output_Buffer extends DependencyInjectedTestCase {
 		remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 	}
 
-	public function tear_down() {
+	public function tear_down(): void {
 		add_filter( 'content_save_pre', 'wp_filter_post_kses' );
 		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 
@@ -53,7 +53,7 @@ class Output_Buffer extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::prepare_response
 	 */
-	public function test_sanitizes_and_optimizes_markup() {
+	public function test_sanitizes_and_optimizes_markup(): void {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
@@ -72,7 +72,7 @@ class Output_Buffer extends DependencyInjectedTestCase {
 	 *
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher
 	 */
-	public function test_add_publisher() {
+	public function test_add_publisher(): void {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
@@ -95,7 +95,7 @@ class Output_Buffer extends DependencyInjectedTestCase {
 	 *
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher_logo
 	 */
-	public function test_add_publisher_logo() {
+	public function test_add_publisher_logo(): void {
 
 		$post = self::factory()->post->create_and_get(
 			[
@@ -131,7 +131,7 @@ class Output_Buffer extends DependencyInjectedTestCase {
 	 *
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher_logo
 	 */
-	public function test_add_publisher_logo_missing() {
+	public function test_add_publisher_logo_missing(): void {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
@@ -150,7 +150,7 @@ class Output_Buffer extends DependencyInjectedTestCase {
 	/**
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_poster_images
 	 */
-	public function test_add_poster_images() {
+	public function test_add_poster_images(): void {
 		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
 
 		$post = self::factory()->post->create_and_get(
@@ -172,7 +172,7 @@ class Output_Buffer extends DependencyInjectedTestCase {
 	/**
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher_logo
 	 */
-	public function test_add_poster_images_overrides_existing_poster() {
+	public function test_add_poster_images_overrides_existing_poster(): void {
 		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
 
 		$post = self::factory()->post->create_and_get(
@@ -197,7 +197,7 @@ class Output_Buffer extends DependencyInjectedTestCase {
 	/**
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher_logo
 	 */
-	public function test_add_poster_images_no_fallback_image_added() {
+	public function test_add_poster_images_no_fallback_image_added(): void {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
@@ -215,7 +215,7 @@ class Output_Buffer extends DependencyInjectedTestCase {
 	/**
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher_logo
 	 */
-	public function test_add_poster_images_no_poster_no_amp() {
+	public function test_add_poster_images_no_poster_no_amp(): void {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,

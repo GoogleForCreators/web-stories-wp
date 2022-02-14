@@ -9,19 +9,19 @@ use Google\Web_Stories\Tests\Integration\TestCase;
 
 final class SimpleServiceContainerTest extends TestCase {
 
-	public function test_it_can_be_initialized() {
+	public function test_it_can_be_initialized(): void {
 		$container = new SimpleServiceContainer();
 
 		$this->assertInstanceOf( SimpleServiceContainer::class, $container );
 	}
 
-	public function test_it_implements_the_interface() {
+	public function test_it_implements_the_interface(): void {
 		$injector = new SimpleServiceContainer();
 
 		$this->assertInstanceOf( SimpleServiceContainer::class, $injector );
 	}
 
-	public function test_it_can_be_populated_at_initialization() {
+	public function test_it_can_be_populated_at_initialization(): void {
 		$service = $this->createMock( Service::class );
 
 		$container = new SimpleServiceContainer( [ 'some_service' => $service ] );
@@ -29,7 +29,7 @@ final class SimpleServiceContainerTest extends TestCase {
 		$this->assertInstanceOf( SimpleServiceContainer::class, $container );
 	}
 
-	public function test_it_can_check_for_service_existence() {
+	public function test_it_can_check_for_service_existence(): void {
 		$service   = $this->createMock( Service::class );
 		$container = new SimpleServiceContainer( [ 'known_service' => $service ] );
 
@@ -37,7 +37,7 @@ final class SimpleServiceContainerTest extends TestCase {
 		$this->assertFalse( $container->has( 'unknown_service' ) );
 	}
 
-	public function test_it_can_return_services() {
+	public function test_it_can_return_services(): void {
 		$service   = $this->createMock( Service::class );
 		$container = new SimpleServiceContainer( [ 'some_service' => $service ] );
 
@@ -46,7 +46,7 @@ final class SimpleServiceContainerTest extends TestCase {
 		$this->assertInstanceOf( Service::class, $retrieved_service );
 	}
 
-	public function test_it_can_accept_new_services() {
+	public function test_it_can_accept_new_services(): void {
 		$service   = $this->createMock( Service::class );
 		$container = new SimpleServiceContainer( [ 'service_a' => $service ] );
 
@@ -58,7 +58,7 @@ final class SimpleServiceContainerTest extends TestCase {
 		$this->assertInstanceOf( Service::class, $container->get( 'service_b' ) );
 	}
 
-	public function test_it_throws_when_retrieving_an_unknown_service() {
+	public function test_it_throws_when_retrieving_an_unknown_service(): void {
 		$container = new SimpleServiceContainer();
 
 		$this->expectException( InvalidService::class );
