@@ -18,7 +18,8 @@
  * External dependencies
  */
 import { render, act, waitFor } from '@testing-library/react';
-import { MockMoveable, withOverlay } from '@googleforcreators/moveable';
+import { withOverlay } from '@googleforcreators/moveable';
+import { MockMoveable } from 'react-moveable'; // eslint-disable-line import/named
 import PropTypes from 'prop-types';
 import { forwardRef } from '@googleforcreators/react';
 import { UnitsProvider } from '@googleforcreators/units';
