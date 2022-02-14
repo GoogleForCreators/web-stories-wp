@@ -52,7 +52,8 @@ import { PageSizePropType } from '../../../../types';
 import { focusStyle } from '../../../panels/shared';
 import DisplayElement from '../../../canvas/displayElement';
 import InsertionOverlay from '../shared/insertionOverlay';
-import useNestedRovingTabIndex from "../shared/hooks/useNestedRovingTabIndex";
+import useNestedRovingTabIndex from '../shared/hooks/useNestedRovingTabIndex';
+import useFocusCanvas from '../../../canvas/useFocusCanvas';
 
 const TemplateImage = styled.img`
   width: 100%;
@@ -94,13 +95,15 @@ PreviewPageWrapper.propTypes = {
   pageSize: PageSizePropType.isRequired,
 };
 
-const ButtonWrapper = styled.div`
+const DeleteButton = styled(Button)`
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 8px;
+  right: 8px;
   z-index: 1;
-  padding: 8px;
   opacity: ${({ display }) => (display ? '1' : '0')};
+  color: ${({ theme }) => theme.colors.fg.primary};
+  width: 28px;
+  height: 28px;
 `;
 
 const AddButton = styled(Button).attrs({ variant: BUTTON_VARIANTS.ICON })`
@@ -137,19 +140,7 @@ PageTemplateTitle.propTypes = {
 };
 
 function PageTemplate(
-  {
-    page,
-    pageSize,
-    translateY,
-    translateX,
-    isActive,
-    handleDelete,
-    handleGridBlur,
-    isGridFocused,
-    handleGridFocus,
-    index,
-    ...rest
-  },
+  { page, pageSize, translateY, translateX, handleDelete, index, ...rest },
   ref
 ) {
   const queuePageImageGeneration = usePageDataUrls(
@@ -167,17 +158,16 @@ function PageTemplate(
   const {
     actions: { uploadFile },
   } = useUploader();
-  const [isHover, setIsHover] = useState(false);
-  const isActivePage = isHover || isActive;
+  const [isActive, setIsActive] = useState(false);
 
-  useFocusOut(ref, () => setIsHover(false), []);
+  useFocusOut(ref, () => setIsActive(false), []);
 
   const { highlightedTemplate, onClick } = rest;
 
-  const handleSetHoverActive = useCallback(() => setIsHover(true), []);
+  const makeActive = useCallback(() => setIsActive(true), []);
 
-  const handleSetHoverFalse = useCallback(() => {
-    setIsHover(false);
+  const makeInactive = useCallback(() => {
+    setIsActive(false);
   }, []);
 
   const imageUrl = page.image?.url || pageDataUrl;
@@ -228,43 +218,27 @@ function PageTemplate(
     queuePageImageGeneration(page);
   }, [imageUrl, queuePageImageGeneration, page, hasUploadMediaAction]);
 
-  const handleKeyboardPageClick = useCallback(
-    ({ code }) => {
-      if (isGridFocused) {
-        if (code === 'Enter' || code === 'Space') {
-          // @todo Insert.
-        }
-      }
-    },
-    [isGridFocused]
-  );
-
   const insertButtonRef = useRef();
   const deleteButtonRef = useRef();
   useNestedRovingTabIndex({ ref: insertButtonRef }, [], 2);
-  useNestedRovingTabIndex({ ref: deleteButtonRef }, [], 3);
+  useNestedRovingTabIndex({ ref: deleteButtonRef }, [], 2);
 
-  const onTabKeyDown = useCallback(() => {
-    handleGridBlur();
-  }, [handleGridBlur]);
-
-  useKeyDownEffect(deleteButtonRef, 'tab', onTabKeyDown, [onTabKeyDown]);
+  const focusCanvas = useFocusCanvas();
+  useKeyDownEffect(deleteButtonRef, 'tab', focusCanvas, [focusCanvas]);
 
   return (
-    // Using custom keyboard navigation also means keyboard event has to be here.
-    // eslint-disable-next-line styled-components-a11y/no-noninteractive-element-interactions
     <PageTemplateWrapper
       pageSize={pageSize}
       role="listitem"
       ref={ref}
-      onKeyUp={(event) => handleKeyboardPageClick(event, page)}
-      onMouseEnter={handleSetHoverActive}
-      onMouseLeave={handleSetHoverFalse}
+      onPointerEnter={makeActive}
+      onPointerLeave={makeInactive}
       aria-label={page.title}
       translateY={translateY}
       translateX={translateX}
       isHighlighted={page.id === highlightedTemplate}
-      {...rest}
+      onFocus={makeActive}
+      onBlur={makeInactive}
     >
       <PreviewPageWrapper pageSize={pageSize} background={page.backgroundColor}>
         {imageUrl ? (
@@ -280,35 +254,32 @@ function PageTemplate(
             <DisplayElement key={element.id} previewMode element={element} />
           ))
         )}
-        {isActivePage && <InsertionOverlay showIcon={false} />}
+        {isActive && <InsertionOverlay showIcon={false} />}
         <AddButton
           ref={insertButtonRef}
           onClick={onClick}
           aria-label={__('Use template', 'web-stories')}
-          display={isActivePage}
+          display={isActive}
           tabIndex={index === 0 ? 0 : -1}
         >
           <Icons.PlusFilled />
         </AddButton>
-        <ButtonWrapper display={isActivePage}>
-          <Button
-            ref={deleteButtonRef}
-            variant={BUTTON_VARIANTS.CIRCLE}
-            type={BUTTON_TYPES.SECONDARY}
-            size={BUTTON_SIZES.SMALL}
-            onClick={(e) => handleDelete(page, e)}
-            aria-label={__('Delete Page Template', 'web-stories')}
-            tabIndex={index === 0 ? 0 : -1}
-          >
-            <Icons.Trash />
-          </Button>
-        </ButtonWrapper>
+        <DeleteButton
+          ref={deleteButtonRef}
+          display={isActive}
+          variant={BUTTON_VARIANTS.CIRCLE}
+          type={BUTTON_TYPES.SECONDARY}
+          size={BUTTON_SIZES.SMALL}
+          onClick={(e) => handleDelete(page, e)}
+          aria-label={__('Delete Page Template', 'web-stories')}
+          tabIndex={isActive ? 0 : -1}
+        >
+          <Icons.Trash />
+        </DeleteButton>
       </PreviewPageWrapper>
 
       {page.title && (
-        <PageTemplateTitle isActive={isActivePage}>
-          {page.title}
-        </PageTemplateTitle>
+        <PageTemplateTitle isActive={isActive}>{page.title}</PageTemplateTitle>
       )}
     </PageTemplateWrapper>
   );
@@ -323,9 +294,6 @@ PageTemplate.propTypes = {
   translateY: PropTypes.number.isRequired,
   translateX: PropTypes.number.isRequired,
   handleDelete: PropTypes.func,
-  handleGridBlur: PropTypes.func,
-  isGridFocused: PropTypes.bool,
-  handleGridFocus: PropTypes.func,
 };
 
 PageTemplate.displayName = 'PageTemplate';

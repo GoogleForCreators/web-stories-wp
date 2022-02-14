@@ -55,7 +55,6 @@ export default function useVirtualizedGridNavigation({
   gridItemRefs,
   gridItemIds,
   rowVirtualizer,
-  depth = 2,
 }) {
   const [activeGridItemId, setActiveGridItemId] = useState();
 
@@ -87,7 +86,7 @@ export default function useVirtualizedGridNavigation({
     }
   }, [activeGridItemId, currentAvailableRows, isGridFocused, gridItemRefs]);
 
-  useRovingTabIndex({ ref: depth ? null : containerRef });
+  useRovingTabIndex({ ref: containerRef });
 
   const handleGridFocus = useCallback(() => {
     if (!isGridFocused) {
@@ -100,16 +99,6 @@ export default function useVirtualizedGridNavigation({
       gridItemRefs.current?.[newGridItemId]?.focus();
     }
   }, [activeGridItemId, isGridFocused, gridItemIds, gridItemRefs]);
-
-  const handleGridBlur = useCallback(() => {
-    if (isGridFocused && window.document.activeElement) {
-      setActiveGridItemId(null);
-      setIsGridFocused(false);
-      window.document.activeElement.blur();
-      const evt = new window.FocusEvent('focusout');
-      window.document.dispatchEvent(evt);
-    }
-  }, [isGridFocused]);
 
   const handleGridItemFocus = useCallback(
     (itemId) => {
@@ -128,7 +117,7 @@ export default function useVirtualizedGridNavigation({
     setIsGridFocused(false);
   }, [focusCanvas]);
 
-  useKeyDownEffect(!depth ? containerRef : null, 'tab', onTabKeyDown, [onTabKeyDown, depth]);
+  useKeyDownEffect(containerRef, 'tab', onTabKeyDown, [onTabKeyDown]);
 
   useFocusOut(
     containerRef,
@@ -140,7 +129,6 @@ export default function useVirtualizedGridNavigation({
 
   return useMemo(
     () => ({
-      handleGridBlur,
       handleGridFocus,
       handleGridItemFocus,
       activeGridItemId,
@@ -149,7 +137,6 @@ export default function useVirtualizedGridNavigation({
     [
       activeGridItemId,
       isGridFocused,
-      handleGridBlur,
       handleGridFocus,
       handleGridItemFocus,
     ]

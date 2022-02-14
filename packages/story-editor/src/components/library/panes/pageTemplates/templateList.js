@@ -36,7 +36,6 @@ import { useSnackbar } from '@googleforcreators/design-system';
 import { PANE_PADDING } from '../shared';
 import {
   getVirtualizedItemIndex,
-  useVirtualizedGridNavigation,
   VirtualizedContainer,
   PANEL_GRID_ROW_GAP,
   VirtualizedWrapper,
@@ -61,8 +60,6 @@ function TemplateList({
 
   const containerRef = useRef();
   const pageRefs = useRef({});
-
-  const pageIds = useMemo(() => pages?.map((page) => page.id) || [], [pages]);
 
   const handlePageClick = useCallback(
     ({ templateId, version, title, ...page }) => {
@@ -115,32 +112,6 @@ function TemplateList({
     overscan: 0,
   });
 
-  const {
-    activeGridItemId,
-    handleGridBlur,
-    handleGridFocus,
-    handleGridItemFocus,
-    isGridFocused,
-  } = useVirtualizedGridNavigation({
-    rowVirtualizer,
-    containerRef,
-    gridItemRefs: pageRefs,
-    gridItemIds: pageIds,
-  });
-
-  const handleKeyboardPageClick = useCallback(
-    ({ code }, page) => {
-      if (isGridFocused) {
-        if (code === 'Enter') {
-          handlePageClick(page);
-        } else if (code === 'Space') {
-          handleDelete?.(page);
-        }
-      }
-    },
-    [isGridFocused, handlePageClick, handleDelete]
-  );
-
   return (
     <UnitsProvider
       pageSize={{
@@ -155,7 +126,6 @@ function TemplateList({
           columnWidth={pageSize.width}
           rowHeight={pageSize.height}
           paneLeft={PANE_PADDING}
-          onFocus={handleGridFocus}
           role="list"
           aria-label={__('Page Template Options', 'web-stories')}
         >
@@ -171,7 +141,6 @@ function TemplateList({
               if (!page) {
                 return null;
               }
-              const isActive = activeGridItemId === page.id && isGridFocused;
 
               return (
                 <PageTemplate
@@ -182,14 +151,8 @@ function TemplateList({
                   translateX={virtualColumn.start}
                   page={page}
                   pageSize={pageSize}
-                  isActive={isActive}
-                  onFocus={() => handleGridItemFocus(page.id)}
                   onClick={() => handlePageClick(page)}
-                  onKeyUp={(event) => handleKeyboardPageClick(event, page)}
                   handleDelete={handleDelete}
-                  isGridFocused={isGridFocused}
-                  handleGridBlur={handleGridBlur}
-                  handleGridFocus={handleGridFocus}
                   index={pageIndex}
                   {...rest}
                 />
