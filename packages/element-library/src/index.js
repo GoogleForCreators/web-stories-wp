@@ -18,5 +18,5 @@ export * from './shared';
 export * from './media';
 export * from './utils/textMeasurements';
 export * from './text/util';
-export { default as elementTypes } from './elementTypes';
 export { default as TextOutput, TextOutputWithUnits } from './text/output';
+export { default as elementTypes } from './elementTypes';

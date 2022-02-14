@@ -13,17 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * Internal dependencies
- */
 /**
  * External dependencies
  */
 import { StoryPropTypes } from '@googleforcreators/elements';
 
 /**
- * External dependencies
+ * Internal dependencies
  */
 import MediaEdit from '../media/edit';
 
