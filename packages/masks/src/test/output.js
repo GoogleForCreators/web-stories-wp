@@ -19,13 +19,14 @@
  */
 import { renderToStaticMarkup } from '@googleforcreators/react';
 import { registerElementType } from '@googleforcreators/elements';
-import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
  */
 import WithMask from '../output';
 import { MaskTypes } from '../constants';
+
+const elementTypes = [{ type: 'text', name: 'Text' }];
 
 describe('WithMask', () => {
   beforeAll(() => {

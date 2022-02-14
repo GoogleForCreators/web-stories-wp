@@ -31,6 +31,7 @@ export { default as areEventsDragging } from './areEventsDragging';
 export { default as usePerformanceTracking } from './usePerformanceTracking';
 export { default as stripHTML } from './stripHTML';
 export { default as PanelTypes } from './panelTypes';
+export { default as getTransformFlip } from './getTransformFlip';
 export * from './performanceTrackingEvents';
 export * from './multipleValue';
 export * from './constants';

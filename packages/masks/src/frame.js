@@ -20,11 +20,11 @@
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { useRef, useEffect, useState } from '@googleforcreators/react';
-import { getTransformFlip } from '@googleforcreators/element-library';
 import { StoryPropTypes } from '@googleforcreators/elements';
 import {
   usePerformanceTracking,
   TRACKING_EVENTS,
+  getTransformFlip,
 } from '@googleforcreators/design-system';
 
 /**
