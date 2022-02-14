@@ -15,24 +15,12 @@
  */
 
 /**
- * External dependencies
- */
-import { Icons } from '@googleforcreators/design-system';
-import { __ } from '@googleforcreators/i18n';
-
-/**
  * Internal dependencies
  */
-import { IconButton } from './shared';
+import { ELEMENT_TYPES } from '../../elements';
 
-function BorderWidthAndColor() {
-  return (
-    <IconButton
-      Icon={Icons.Border}
-      title={__('Change border width and color', 'web-stories')}
-      onClick={() => {}}
-    />
-  );
-}
-
-export default BorderWidthAndColor;
+export const SELECTED_ELEMENT_TYPES = {
+  ...ELEMENT_TYPES,
+  MULTIPLE: 'multiple',
+  NONE: 'none',
+};

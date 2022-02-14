@@ -17,20 +17,22 @@
 /**
  * External dependencies
  */
-import { memo } from '@googleforcreators/react';
+import { Icons } from '@googleforcreators/design-system';
+import { __ } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies
  */
-import { Dismiss, Separator } from '../elements';
+import { IconButton } from './shared';
 
-const FloatingMixedMenu = memo(function FloatingMixedMenu() {
+function ElementAlignment() {
   return (
-    <>
-      <Separator />
-      <Dismiss />
-    </>
+    <IconButton
+      Icon={Icons.AlignLeft}
+      title={__('Align elements', 'web-stories')}
+      onClick={() => {}}
+    />
   );
-});
+}
 
-export default FloatingMixedMenu;
+export default ElementAlignment;

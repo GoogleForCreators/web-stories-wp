@@ -23,34 +23,30 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { SELECTED_ELEMENT_TYPES } from '../constants';
 import Image from './image';
-import Mixed from './mixed';
+import Multiple from './multiple';
 import Shape from './shape';
 import Sticker from './sticker';
 import Text from './text';
 import Video from './video';
 
 const FloatingMenuSelector = memo(function FloatingMenuSelector({
-  selectedElementTypes,
+  selectedElementType,
 }) {
-  const selectedElementTypeArray = selectedElementTypes.split('-');
-  if (selectedElementTypeArray.length > 1) {
-    return <Mixed />;
-  }
-
-  const [selectedElementType] = selectedElementTypeArray;
-
   switch (selectedElementType) {
-    case 'gif':
-    case 'image':
+    case SELECTED_ELEMENT_TYPES.MULTIPLE:
+      return <Multiple />;
+    case SELECTED_ELEMENT_TYPES.GIF:
+    case SELECTED_ELEMENT_TYPES.IMAGE:
       return <Image />;
-    case 'shape':
+    case SELECTED_ELEMENT_TYPES.SHAPE:
       return <Shape />;
-    case 'sticker':
+    case SELECTED_ELEMENT_TYPES.STICKER:
       return <Sticker />;
-    case 'text':
+    case SELECTED_ELEMENT_TYPES.TEXT:
       return <Text />;
-    case 'video':
+    case SELECTED_ELEMENT_TYPES.VIDEO:
       // Disable reason: False positive
       // eslint-disable-next-line jsx-a11y/media-has-caption
       return <Video />;

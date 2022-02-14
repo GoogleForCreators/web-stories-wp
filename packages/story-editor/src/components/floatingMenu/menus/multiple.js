@@ -17,22 +17,27 @@
 /**
  * External dependencies
  */
-import { Icons } from '@googleforcreators/design-system';
-import { __ } from '@googleforcreators/i18n';
+import { memo } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
  */
-import { IconButton } from './shared';
+import { ElementAlignment, More, Dismiss, Separator } from '../elements';
 
-function BorderWidthAndColor() {
+const FloatingMixedMenu = memo(function FloatingMixedMenu() {
   return (
-    <IconButton
-      Icon={Icons.Border}
-      title={__('Change border width and color', 'web-stories')}
-      onClick={() => {}}
-    />
-  );
-}
+    <>
+      <ElementAlignment />
 
-export default BorderWidthAndColor;
+      <Separator />
+
+      <More />
+
+      <Separator />
+
+      <Dismiss />
+    </>
+  );
+});
+
+export default FloatingMixedMenu;

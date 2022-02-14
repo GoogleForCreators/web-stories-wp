@@ -26,7 +26,7 @@ import { __ } from '@googleforcreators/i18n';
 import { useFloatingMenu } from '../context';
 import { IconButton } from './shared';
 
-const Dismiss = function Dismiss() {
+function Dismiss() {
   const { handleDismiss } = useFloatingMenu(
     ({ actions: { handleDismiss } }) => ({
       handleDismiss,
@@ -40,6 +40,6 @@ const Dismiss = function Dismiss() {
       onClick={handleDismiss}
     />
   );
-};
+}
 
 export default Dismiss;

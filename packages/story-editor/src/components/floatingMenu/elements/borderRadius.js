@@ -25,7 +25,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { IconButton, Separator } from './shared';
 
-const BorderRadius = function BorderRadius() {
+function BorderRadius() {
   return (
     <>
       <IconButton
@@ -36,6 +36,6 @@ const BorderRadius = function BorderRadius() {
       <Separator />
     </>
   );
-};
+}
 
 export default BorderRadius;

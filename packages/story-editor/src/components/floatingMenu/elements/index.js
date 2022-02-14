@@ -17,6 +17,7 @@
 export { default as BorderWidthAndColor } from './borderWidthAndColor';
 export { default as BorderRadius } from './borderRadius';
 export { default as Dismiss } from './dismiss';
+export { default as ElementAlignment } from './elementAlignment';
 export { default as FlipHorizontal } from './flipHorizontal';
 export { default as FlipVertical } from './flipVertical';
 export { default as FontFamily } from './fontFamily';

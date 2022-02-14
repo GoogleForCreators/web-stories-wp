@@ -37,12 +37,7 @@ const MenuWrapper = styled.section`
 
 const FloatingMenu = memo(
   forwardRef(function FloatingMenu(
-    {
-      hasMultiSelection,
-      selectionIdentifier,
-      selectedElementTypes,
-      handleDismiss,
-    },
+    { selectionIdentifier, selectedElementType, handleDismiss },
     ref
   ) {
     useLayoutEffect(() => {
@@ -71,10 +66,7 @@ const FloatingMenu = memo(
               e.stopPropagation();
             }}
           >
-            <MenuSelector
-              hasMultiSelection={hasMultiSelection}
-              selectedElementTypes={selectedElementTypes}
-            />
+            <MenuSelector selectedElementType={selectedElementType} />
           </ContextMenu>
         </FloatingMenuProvider>
       </MenuWrapper>
@@ -84,9 +76,8 @@ const FloatingMenu = memo(
 
 FloatingMenu.propTypes = {
   handleDismiss: PropTypes.func.isRequired,
-  selectedElementTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  selectedElementType: PropTypes.string.isRequired,
   selectionIdentifier: PropTypes.string.isRequired,
-  hasMultiSelection: PropTypes.bool.isRequired,
 };
 
 export default FloatingMenu;

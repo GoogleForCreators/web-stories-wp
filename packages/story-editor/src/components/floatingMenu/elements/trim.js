@@ -25,7 +25,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { IconButton } from './shared';
 
-const Trim = function Trim() {
+function Trim() {
   return (
     <IconButton
       Icon={Icons.Scissors}
@@ -33,6 +33,6 @@ const Trim = function Trim() {
       onClick={() => {}}
     />
   );
-};
+}
 
 export default Trim;
