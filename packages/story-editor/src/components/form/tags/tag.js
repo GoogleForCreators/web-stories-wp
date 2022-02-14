@@ -83,6 +83,7 @@ function Tag({ children, onDismiss }) {
         title={__('Remove Tag', 'web-stories')}
         placement={TOOLTIP_PLACEMENT.BOTTOM}
         hasTail
+        popupZIndexOverride={10}
       >
         <Dismiss
           onClick={onDismiss}
