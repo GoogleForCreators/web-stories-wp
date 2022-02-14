@@ -1,4 +1,4 @@
 # Masks
 
 ---
-A simple package containing stickers for use in the editor.
+Masks package for story-editor elements
