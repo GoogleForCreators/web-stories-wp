@@ -128,6 +128,19 @@ function TemplateList({
     gridItemIds: pageIds,
   });
 
+  const handleKeyboardPageClick = useCallback(
+    ({ code }, page) => {
+      if (isGridFocused) {
+        if (code === 'Enter') {
+          handlePageClick(page);
+        } else if (code === 'Space') {
+          handleDelete?.(page);
+        }
+      }
+    },
+    [isGridFocused, handlePageClick, handleDelete]
+  );
+
   return (
     <UnitsProvider
       pageSize={{
@@ -172,10 +185,12 @@ function TemplateList({
                   isActive={isActive}
                   onFocus={() => handleGridItemFocus(page.id)}
                   onClick={() => handlePageClick(page)}
+                  onKeyUp={(event) => handleKeyboardPageClick(event, page)}
                   handleDelete={handleDelete}
                   isGridFocused={isGridFocused}
                   handleGridBlur={handleGridBlur}
                   handleGridFocus={handleGridFocus}
+                  index={pageIndex}
                   {...rest}
                 />
               );

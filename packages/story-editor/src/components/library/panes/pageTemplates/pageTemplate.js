@@ -17,7 +17,15 @@
 /**
  * External dependencies
  */
-import { themeHelpers } from '@googleforcreators/design-system';
+import {
+  Button,
+  BUTTON_SIZES,
+  BUTTON_TYPES,
+  BUTTON_VARIANTS,
+  Icons,
+  themeHelpers,
+  useKeyDownEffect,
+} from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import {
   forwardRef,
@@ -25,6 +33,7 @@ import {
   useEffect,
   useFocusOut,
   useState,
+  useRef,
 } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -43,7 +52,7 @@ import { PageSizePropType } from '../../../../types';
 import { focusStyle } from '../../../panels/shared';
 import DisplayElement from '../../../canvas/displayElement';
 import InsertionOverlay from '../shared/insertionOverlay';
-import DropDownMenu from './dropDownMenu';
+import useNestedRovingTabIndex from "../shared/hooks/useNestedRovingTabIndex";
 
 const TemplateImage = styled.img`
   width: 100%;
@@ -85,6 +94,28 @@ PreviewPageWrapper.propTypes = {
   pageSize: PageSizePropType.isRequired,
 };
 
+const ButtonWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  padding: 8px;
+  opacity: ${({ display }) => (display ? '1' : '0')};
+`;
+
+const AddButton = styled(Button).attrs({ variant: BUTTON_VARIANTS.ICON })`
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: calc(50% - 16px);
+  right: calc(50% - 16px);
+  color: ${({ theme }) => theme.colors.fg.primary};
+  border-radius: 100%;
+  width: 28px;
+  height: 28px;
+  opacity: ${({ display }) => (display ? '1' : '0')};
+`;
+
 const PageTemplateTitle = styled.div`
   position: absolute;
   bottom: 0;
@@ -116,6 +147,7 @@ function PageTemplate(
     handleGridBlur,
     isGridFocused,
     handleGridFocus,
+    index,
     ...rest
   },
   ref
@@ -135,13 +167,12 @@ function PageTemplate(
   const {
     actions: { uploadFile },
   } = useUploader();
-
   const [isHover, setIsHover] = useState(false);
   const isActivePage = isHover || isActive;
 
   useFocusOut(ref, () => setIsHover(false), []);
 
-  const { highlightedTemplate, onClick, onFocus } = rest;
+  const { highlightedTemplate, onClick } = rest;
 
   const handleSetHoverActive = useCallback(() => setIsHover(true), []);
 
@@ -197,19 +228,28 @@ function PageTemplate(
     queuePageImageGeneration(page);
   }, [imageUrl, queuePageImageGeneration, page, hasUploadMediaAction]);
 
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const handleKeyboardPageClick = useCallback(
     ({ code }) => {
       if (isGridFocused) {
         if (code === 'Enter' || code === 'Space') {
-          setIsMenuOpen(true);
+          // @todo Insert.
         }
       }
     },
     [isGridFocused]
   );
 
-  const hasMenu = Boolean(handleDelete);
+  const insertButtonRef = useRef();
+  const deleteButtonRef = useRef();
+  useNestedRovingTabIndex({ ref: insertButtonRef }, [], 2);
+  useNestedRovingTabIndex({ ref: deleteButtonRef }, [], 3);
+
+  const onTabKeyDown = useCallback(() => {
+    handleGridBlur();
+  }, [handleGridBlur]);
+
+  useKeyDownEffect(deleteButtonRef, 'tab', onTabKeyDown, [onTabKeyDown]);
+
   return (
     // Using custom keyboard navigation also means keyboard event has to be here.
     // eslint-disable-next-line styled-components-a11y/no-noninteractive-element-interactions
@@ -217,9 +257,6 @@ function PageTemplate(
       pageSize={pageSize}
       role="listitem"
       ref={ref}
-      // Needed for custom keyboard navigation implementation.
-      // eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex
-      tabIndex={0}
       onKeyUp={(event) => handleKeyboardPageClick(event, page)}
       onMouseEnter={handleSetHoverActive}
       onMouseLeave={handleSetHoverFalse}
@@ -243,22 +280,29 @@ function PageTemplate(
             <DisplayElement key={element.id} previewMode element={element} />
           ))
         )}
-        {isActivePage && <InsertionOverlay showIcon={!hasMenu} />}
-        {(isActivePage || isMenuOpen) && hasMenu && (
-          <DropDownMenu
-            onDelete={(e) => handleDelete(page, e)}
-            onInsert={onClick}
-            isMenuOpen={isMenuOpen}
-            setIsMenuOpen={setIsMenuOpen}
-            handleFocus={handleGridBlur}
-            handleClose={(e) => {
-              // First let's focus on grid.
-              handleGridFocus(e);
-              // And then back on the specific template.
-              onFocus(e);
-            }}
-          />
-        )}
+        {isActivePage && <InsertionOverlay showIcon={false} />}
+        <AddButton
+          ref={insertButtonRef}
+          onClick={onClick}
+          aria-label={__('Use template', 'web-stories')}
+          display={isActivePage}
+          tabIndex={index === 0 ? 0 : -1}
+        >
+          <Icons.PlusFilled />
+        </AddButton>
+        <ButtonWrapper display={isActivePage}>
+          <Button
+            ref={deleteButtonRef}
+            variant={BUTTON_VARIANTS.CIRCLE}
+            type={BUTTON_TYPES.SECONDARY}
+            size={BUTTON_SIZES.SMALL}
+            onClick={(e) => handleDelete(page, e)}
+            aria-label={__('Delete Page Template', 'web-stories')}
+            tabIndex={index === 0 ? 0 : -1}
+          >
+            <Icons.Trash />
+          </Button>
+        </ButtonWrapper>
       </PreviewPageWrapper>
 
       {page.title && (

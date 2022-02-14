@@ -31,6 +31,7 @@ import { useKeyDownEffect } from '@googleforcreators/design-system';
  */
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import useFocusCanvas from '../../../../canvas/useFocusCanvas';
+import useNestedRovingTabIndex from "../hooks/useNestedRovingTabIndex";
 
 /**
  * This is a shared custom hook to enable keyboard arrow navigation on panels
@@ -54,6 +55,7 @@ export default function useVirtualizedGridNavigation({
   gridItemRefs,
   gridItemIds,
   rowVirtualizer,
+  depth = 2,
 }) {
   const [activeGridItemId, setActiveGridItemId] = useState();
 
@@ -85,7 +87,7 @@ export default function useVirtualizedGridNavigation({
     }
   }, [activeGridItemId, currentAvailableRows, isGridFocused, gridItemRefs]);
 
-  useRovingTabIndex({ ref: containerRef });
+  useRovingTabIndex({ ref: depth ? null : containerRef });
 
   const handleGridFocus = useCallback(() => {
     if (!isGridFocused) {
@@ -126,7 +128,7 @@ export default function useVirtualizedGridNavigation({
     setIsGridFocused(false);
   }, [focusCanvas]);
 
-  useKeyDownEffect(containerRef, 'tab', onTabKeyDown, [onTabKeyDown]);
+  useKeyDownEffect(!depth ? containerRef : null, 'tab', onTabKeyDown, [onTabKeyDown, depth]);
 
   useFocusOut(
     containerRef,

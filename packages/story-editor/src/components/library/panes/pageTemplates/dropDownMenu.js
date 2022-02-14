@@ -31,7 +31,7 @@ import {
   Popup,
 } from '@googleforcreators/design-system';
 
-const AddButton = styled(Button).attrs({ variant: BUTTON_VARIANTS.ICON })`
+const MoreButton = styled(Button).attrs({ variant: BUTTON_VARIANTS.ICON })`
   display: flex;
   align-items: center;
   position: absolute;
@@ -139,7 +139,7 @@ function DropDownMenu({
   return (
     <MenuContainer onFocus={(e) => e.stopPropagation()}>
       <ButtonWrapper>
-        <AddButton
+        <MoreButton
           ref={moreButtonRef}
           onClick={(e) => {
             e.stopPropagation();
@@ -155,7 +155,7 @@ function DropDownMenu({
           <IconContainer>
             <Icons.PlusFilled />
           </IconContainer>
-        </AddButton>
+        </MoreButton>
       </ButtonWrapper>
       <Popup
         anchor={moreButtonRef}
