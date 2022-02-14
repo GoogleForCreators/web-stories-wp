@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+// @todo Create a custom hook to manage state.
 const elementTypes = [];
 
 function registerElementType(elementType) {

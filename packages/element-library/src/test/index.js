@@ -21,10 +21,16 @@ import {
   createPage,
   duplicatePage,
   duplicateElement,
+  registerElementType,
 } from '@googleforcreators/elements';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/design-system';
+import { elementTypes } from '@googleforcreators/element-library';
 
 describe('Element', () => {
+  beforeAll(() => {
+    elementTypes.forEach(registerElementType);
+  });
+
   describe('createNewElement', () => {
     it('should create an element with just default attributes', () => {
       const imageElement = createNewElement('image');
