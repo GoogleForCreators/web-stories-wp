@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
   useCallback,
@@ -44,7 +45,6 @@ import {
   DEFAULT_AUTO_ADVANCE,
   DEFAULT_PAGE_DURATION,
 } from '../../../../constants';
-import { DOCUMENT_PANEL_NAMES } from '../constants';
 
 const SwitchRow = styled.div`
   margin-bottom: 16px;
@@ -63,7 +63,7 @@ const MIN_MAX = {
   },
 };
 
-function PageAdvancementPanel(props) {
+function PageAdvancementPanel({ nameOverride }) {
   const { autoAdvance, defaultPageDuration, updateStory } = useStory(
     ({
       state: {
@@ -121,10 +121,9 @@ function PageAdvancementPanel(props) {
 
   return (
     <SimplePanel
-      name={DOCUMENT_PANEL_NAMES.PAGE_ADVANCEMENT}
+      name={nameOverride || 'pageAdvancement'}
       title={__('Page Advancement', 'web-stories')}
       collapsedByDefault={false}
-      {...props}
     >
       <Row>
         <MutedText>
@@ -164,3 +163,7 @@ function PageAdvancementPanel(props) {
 }
 
 export default PageAdvancementPanel;
+
+PageAdvancementPanel.propTypes = {
+  nameOverride: PropTypes.string,
+};

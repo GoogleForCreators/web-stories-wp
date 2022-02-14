@@ -19,5 +19,3 @@ export { default as PageAdvancementPanel } from './pageAdvancement';
 export { default as SlugPanel } from './slug';
 export { default as BackgroundAudioPanel } from './backgroundAudio';
 export { default as TaxonomiesPanel } from './taxonomies';
-
-export { DOCUMENT_PANEL_NAMES } from './constants';

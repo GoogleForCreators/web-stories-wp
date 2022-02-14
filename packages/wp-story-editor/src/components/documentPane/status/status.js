@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import { useCallback, useMemo, useState } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
@@ -33,16 +34,11 @@ import {
   useIsUploadingToStory,
 } from '@googleforcreators/story-editor';
 
-/**
- * Internal dependencies
- */
-import { WP_DOCUMENT_PANEL_NAMES } from '../constants';
-
 const InputRow = styled(Row)`
   margin-left: 34px;
 `;
 
-function StatusPanel(props) {
+function StatusPanel({ nameOverride }) {
   const {
     status = '',
     password,
@@ -208,10 +204,9 @@ function StatusPanel(props) {
   return (
     <>
       <SimplePanel
-        name={WP_DOCUMENT_PANEL_NAMES.STATUS}
+        name={nameOverride || 'status'}
         title={__('Visibility', 'web-stories')}
         collapsedByDefault={false}
-        {...props}
       >
         <>
           <Row>
@@ -246,3 +241,7 @@ function StatusPanel(props) {
 }
 
 export default StatusPanel;
+
+StatusPanel.propTypes = {
+  nameOverride: PropTypes.string,
+};

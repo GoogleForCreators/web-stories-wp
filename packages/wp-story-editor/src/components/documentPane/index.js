@@ -22,7 +22,6 @@ import {
   PageAdvancementPanel,
   BackgroundAudioPanel,
   TaxonomiesPanel,
-  DOCUMENT_PANEL_NAMES,
 } from '@googleforcreators/story-editor';
 
 /**
@@ -30,7 +29,6 @@ import {
  */
 import PublishPanel from './publish';
 import StatusPanel from './status';
-import { WP_DOCUMENT_PANEL_NAMES } from './constants';
 
 function DocumentPane() {
   return (
@@ -46,28 +44,26 @@ function DocumentPane() {
   );
 }
 
+// Panels require a name override to have their own local storage set for panel collapse
 export function PublishModalDocumentPane() {
   return (
     <>
-      <PublishPanel name={`story_details_${WP_DOCUMENT_PANEL_NAMES.PUBLISH}`} />
-      <SlugPanel name={`story_details_${DOCUMENT_PANEL_NAMES.SLUG}`} />
-      <PageAdvancementPanel
-        name={`story_details_${DOCUMENT_PANEL_NAMES.PAGE_ADVANCEMENT}`}
-      />
-      <BackgroundAudioPanel
-        name={`story_details_${DOCUMENT_PANEL_NAMES.BACKGROUND_AUDIO}`}
-      />
-      <TaxonomiesPanel
-        name={`story_details_${DOCUMENT_PANEL_NAMES.TAXONOMIES}`}
-      />
+      <PublishPanel nameOverride="storyDetailsPublishing" />
+      <SlugPanel nameOverride="storyDetailsExcerpt" />
+      <PageAdvancementPanel nameOverride="storyDetailsPageAdvancement" />
+      <BackgroundAudioPanel nameOverride="storyDetailsBackgroundAudio" />
+      <TaxonomiesPanel nameOverride="storyDetailsTaxonomies" />
     </>
   );
 }
 
+// Isolated Status Panel should not collapse and
+// should have its own name to prevent collapse
+// based on other implementations that have default name
 export function IsolatedStatusPanel() {
   return (
     <StatusPanel
-      name={`story_details_${WP_DOCUMENT_PANEL_NAMES.STATUS}`}
+      nameOverride="storyDetailsStatus"
       canCollapse={false}
       isPersistable={false}
     />

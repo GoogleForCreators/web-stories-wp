@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import { useCallback, useEffect, useState } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
@@ -36,7 +37,6 @@ import inRange from '../../../../utils/inRange';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { inputContainerStyleOverride } from '../../shared';
-import { DOCUMENT_PANEL_NAMES } from '../constants';
 
 export const MIN_MAX = {
   PERMALINK: {
@@ -63,7 +63,7 @@ const LinkContainer = styled.div`
   margin-bottom: 16px;
 `;
 
-function SlugPanel(props) {
+function SlugPanel({ nameOverride }) {
   const {
     slug: savedSlug,
     link,
@@ -113,10 +113,9 @@ function SlugPanel(props) {
   // In case of non-pretty permalinks, we're not showing the input.
   return (
     <SimplePanel
-      name={DOCUMENT_PANEL_NAMES.SLUG}
+      name={nameOverride || 'permalink'}
       title={__('Permalink', 'web-stories')}
       collapsedByDefault={false}
-      {...props}
     >
       {permalinkConfig && (
         <PermalinkRow>
@@ -147,3 +146,7 @@ function SlugPanel(props) {
 }
 
 export default SlugPanel;
+
+SlugPanel.propTypes = {
+  nameOverride: PropTypes.string,
+};

@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useCallback } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
@@ -30,7 +31,6 @@ import { useConfig } from '../../../../app';
 import { Row } from '../../../form';
 import { SimplePanel } from '../../panel';
 import BackgroundAudioPanelContent from '../../shared/backgroundAudioPanelContent';
-import { DOCUMENT_PANEL_NAMES } from '../constants';
 
 const HelperText = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
@@ -38,7 +38,7 @@ const HelperText = styled(Text).attrs({
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
-function BackgroundAudioPanel(props) {
+function BackgroundAudioPanel({ nameOverride }) {
   const {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
@@ -67,10 +67,9 @@ function BackgroundAudioPanel(props) {
 
   return (
     <SimplePanel
-      name={DOCUMENT_PANEL_NAMES.BACKGROUND_AUDIO}
+      name={nameOverride || 'backgroundAudio'}
       title={__('Background Audio', 'web-stories')}
       collapsedByDefault
-      {...props}
     >
       <Row>
         <HelperText>
@@ -89,3 +88,7 @@ function BackgroundAudioPanel(props) {
 }
 
 export default BackgroundAudioPanel;
+
+BackgroundAudioPanel.propTypes = {
+  nameOverride: PropTypes.string,
+};

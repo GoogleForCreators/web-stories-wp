@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import { useCallback } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
@@ -28,7 +29,6 @@ import { useStory } from '../../../../app/story';
 import { Row, TextArea } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { useHighlights, states, styles } from '../../../../app/highlights';
-import { DOCUMENT_PANEL_NAMES } from '../constants';
 
 // Margin -4px is making up for extra margin added by rows.
 const StyledText = styled(Text)`
@@ -38,7 +38,7 @@ const StyledText = styled(Text)`
 
 export const EXCERPT_MAX_LENGTH = 200;
 
-function ExcerptPanel(props) {
+function ExcerptPanel({ nameOverride }) {
   const { excerpt, updateStory } = useStory(
     ({
       state: {
@@ -69,11 +69,10 @@ function ExcerptPanel(props) {
     <SimplePanel
       css={highlight?.showEffect && styles.FLASH}
       onAnimationEnd={() => resetHighlight()}
-      name={DOCUMENT_PANEL_NAMES.EXCERPT}
+      name={nameOverride || 'excerpt'}
       title={__('Story Description', 'web-stories')}
       collapsedByDefault={false}
       isPersistable={!highlight}
-      {...props}
     >
       <Row>
         <TextArea
@@ -106,3 +105,7 @@ function ExcerptPanel(props) {
 }
 
 export default ExcerptPanel;
+
+ExcerptPanel.propTypes = {
+  nameOverride: PropTypes.string,
+};

@@ -22,7 +22,6 @@ import {
   PageAdvancementPanel,
   BackgroundAudioPanel,
   TaxonomiesPanel,
-  DOCUMENT_PANEL_NAMES,
 } from '../../../../components/panels/document';
 function DocumentPane() {
   return (
@@ -39,16 +38,10 @@ function DocumentPane() {
 export function PublishModalDocumentPane() {
   return (
     <>
-      <SlugPanel name={`story_details_${DOCUMENT_PANEL_NAMES.SLUG}`} />
-      <PageAdvancementPanel
-        name={`story_details_${DOCUMENT_PANEL_NAMES.PAGE_ADVANCEMENT}`}
-      />
-      <BackgroundAudioPanel
-        name={`story_details_${DOCUMENT_PANEL_NAMES.BACKGROUND_AUDIO}`}
-      />
-      <TaxonomiesPanel
-        name={`story_details_${DOCUMENT_PANEL_NAMES.TAXONOMIES}`}
-      />
+      <SlugPanel nameOverride="storyDetailsExcerpt" />
+      <PageAdvancementPanel nameOverride="storyDetailsPageAdvancement" />
+      <BackgroundAudioPanel nameOverride="storyDetailsBackgroundAudio" />
+      <TaxonomiesPanel nameOverride="storyDetailsTaxonomies" />
     </>
   );
 }

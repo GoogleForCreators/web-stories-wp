@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import {
   useState,
   useEffect,
@@ -51,7 +52,6 @@ import {
  * Internal dependencies
  */
 import * as apiCallbacks from '../../../api/publisherLogos';
-import { WP_DOCUMENT_PANEL_NAMES } from '../constants';
 import PublishTime from './publishTime';
 import Author from './author';
 
@@ -115,7 +115,7 @@ const LogoImg = styled.img`
   max-height: 96px;
 `;
 
-function PublishPanel(props) {
+function PublishPanel({ nameOverride }) {
   const {
     state: { users },
   } = useInspector();
@@ -292,10 +292,9 @@ function PublishPanel(props) {
 
   return (
     <Panel
-      name={WP_DOCUMENT_PANEL_NAMES.PUBLISH}
+      name={nameOverride || 'publishing'}
       collapsedByDefault={false}
       isPersistable={!(highlightLogo || highlightPoster)}
-      {...props}
     >
       <PanelTitle>{__('Publishing', 'web-stories')}</PanelTitle>
       <PanelContent>
@@ -388,3 +387,7 @@ function PublishPanel(props) {
 }
 
 export default PublishPanel;
+
+PublishPanel.propTypes = {
+  nameOverride: PropTypes.string,
+};
