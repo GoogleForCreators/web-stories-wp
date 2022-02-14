@@ -18,9 +18,6 @@
  * External dependencies
  */
 import { generatePatternStyles } from '@googleforcreators/patterns';
-/**
- * Internal dependencies
- */
 import { StoryPropTypes } from '@googleforcreators/elements';
 
 /**

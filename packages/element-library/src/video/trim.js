@@ -25,11 +25,11 @@ import {
   CircularProgress,
   getTransformFlip,
 } from '@googleforcreators/design-system';
+import { StoryPropTypes } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { StoryPropTypes } from '@googleforcreators/elements';
 import MediaDisplay from '../media/display';
 import { elementWithFlip } from '../shared';
 import PlayPauseButton from './playPauseButton';

@@ -17,11 +17,11 @@
  * External dependencies
  */
 import { stripHTML } from '@googleforcreators/design-system';
+import { StoryPropTypes } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { StoryPropTypes } from '@googleforcreators/elements';
 import { LayerText } from '../shared';
 
 function TextLayerContent({ element: { content } }) {

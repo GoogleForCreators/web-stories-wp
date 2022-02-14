@@ -43,4 +43,4 @@ const elementTypes = [
   { type: 'sticker', name: __('Sticker', 'web-stories'), ...stickerElement },
 ];
 
-export { elementTypes };
+export default elementTypes;

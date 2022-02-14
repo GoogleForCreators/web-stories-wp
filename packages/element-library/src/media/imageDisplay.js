@@ -27,11 +27,11 @@ import {
   calculateSrcSet,
   getSmallestUrlForWidth,
 } from '@googleforcreators/media';
+import { StoryPropTypes } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { StoryPropTypes } from '@googleforcreators/elements';
 import { mediaWithScale } from './util';
 import MediaDisplay from './display';
 

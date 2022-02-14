@@ -18,11 +18,11 @@
  */
 import { __ } from '@googleforcreators/i18n';
 import stickers from '@googleforcreators/stickers';
+import { StoryPropTypes } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { StoryPropTypes } from '@googleforcreators/elements';
 import { LayerText } from '../shared';
 
 function StickerLayerContent({ element }) {

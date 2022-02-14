@@ -20,11 +20,11 @@
 import styled from 'styled-components';
 import { getMaskByType } from '@googleforcreators/masks';
 import PropTypes from 'prop-types';
+import { StoryPropTypes } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { StoryPropTypes } from '@googleforcreators/elements';
 import { elementWithBackgroundColor } from '../shared';
 
 const Container = styled.div`

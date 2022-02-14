@@ -26,11 +26,11 @@ import {
   getResponsiveBorder,
   shouldDisplayBorder,
 } from '@googleforcreators/masks';
+import { StoryPropTypes } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { StoryPropTypes } from '@googleforcreators/elements';
 import {
   elementFillContent,
   elementWithBackgroundColor,

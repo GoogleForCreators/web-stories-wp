@@ -21,11 +21,11 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useRef } from '@googleforcreators/react';
 import { getMediaSizePositionProps } from '@googleforcreators/media';
+import { StoryPropTypes } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { StoryPropTypes } from '@googleforcreators/elements';
 import MediaDisplay from '../media/display';
 import { getBackgroundStyle, videoWithScale } from './util';
 

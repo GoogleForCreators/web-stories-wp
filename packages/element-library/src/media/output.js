@@ -24,10 +24,6 @@ import {
   editorPixels,
 } from '@googleforcreators/units';
 import { getMediaSizePositionProps } from '@googleforcreators/media';
-
-/**
- * Internal dependencies
- */
 import { StoryPropTypes } from '@googleforcreators/elements';
 
 /**

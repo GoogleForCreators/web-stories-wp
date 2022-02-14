@@ -18,11 +18,11 @@
  * External dependencies
  */
 import { isBlobURL } from '@googleforcreators/media';
+import { StoryPropTypes } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { StoryPropTypes } from '@googleforcreators/elements';
 import MediaOutput from '../media/output';
 
 function GifOutput({ element, box }) {

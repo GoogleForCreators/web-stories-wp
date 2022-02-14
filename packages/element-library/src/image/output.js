@@ -23,11 +23,11 @@ import {
   FULLBLEED_HEIGHT,
   FULLBLEED_RATIO,
 } from '@googleforcreators/units';
+import { StoryPropTypes } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { StoryPropTypes } from '@googleforcreators/elements';
 import MediaOutput from '../media/output';
 
 /**

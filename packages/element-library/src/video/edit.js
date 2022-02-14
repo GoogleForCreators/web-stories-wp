@@ -17,11 +17,11 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { StoryPropTypes } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { StoryPropTypes } from '@googleforcreators/elements';
 import MediaEdit from '../media/edit';
 import Trim from './trim';
 

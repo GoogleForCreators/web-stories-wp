@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-// @todo Maybe move it to a separate utils package?
 export default function objectWithout(obj, propertiesToRemove) {
   return Object.keys(obj)
     .filter((key) => !propertiesToRemove.includes(key))

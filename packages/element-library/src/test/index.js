@@ -24,7 +24,11 @@ import {
   registerElementType,
 } from '@googleforcreators/elements';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/design-system';
-import { elementTypes } from '@googleforcreators/element-library';
+
+/**
+ * Internal dependencies
+ */
+import elementTypes from '../elementTypes';
 
 describe('Element', () => {
   beforeAll(() => {

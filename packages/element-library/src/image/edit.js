@@ -21,6 +21,10 @@
  * External dependencies
  */
 import { StoryPropTypes } from '@googleforcreators/elements';
+
+/**
+ * External dependencies
+ */
 import MediaEdit from '../media/edit';
 
 function ImageEdit({ element, box, ...rest }) {

@@ -18,11 +18,11 @@
  */
 import { __ } from '@googleforcreators/i18n';
 import { getMaskByType } from '@googleforcreators/masks';
+import { StoryPropTypes } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { StoryPropTypes } from '@googleforcreators/elements';
 import { LayerText } from '../shared';
 
 function ShapeLayerContent({ element }) {
