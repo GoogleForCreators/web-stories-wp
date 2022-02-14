@@ -177,6 +177,11 @@ export default function WithMask({
   children,
   eventHandlers = null,
   flip,
+  draggingResource,
+  activeDropTargetId,
+  isDropSource,
+  registerDropTarget,
+  unregisterDropTarget,
   ...rest
 }) {
   const [hover, setHover] = useState(false);
@@ -190,6 +195,13 @@ export default function WithMask({
     },
     eventType: 'pointerdown',
   });
+  const dropTargets = {
+    draggingResource,
+    activeDropTargetId,
+    isDropSource,
+    registerDropTarget,
+    unregisterDropTarget,
+  };
 
   const mask = getElementMask(element);
   const flipStyle = flip ? { transform: getTransformFlip(flip) } : null;
@@ -246,7 +258,12 @@ export default function WithMask({
       >
         <FillerPath fill="none" d={mask?.path} />
       </Filler>
-      <WithDropTarget element={element} hover={hover} {...rest}>
+      <WithDropTarget
+        element={element}
+        hover={hover}
+        {...dropTargets}
+        {...rest}
+      >
         {children}
       </WithDropTarget>
     </div>
@@ -263,4 +280,9 @@ WithMask.propTypes = {
   }),
   eventHandlers: PropTypes.object,
   children: PropTypes.node.isRequired,
+  draggingResource: PropTypes.object,
+  activeDropTargetId: PropTypes.string,
+  isDropSource: PropTypes.func.isRequired,
+  registerDropTarget: PropTypes.func,
+  unregisterDropTarget: PropTypes.func,
 };
