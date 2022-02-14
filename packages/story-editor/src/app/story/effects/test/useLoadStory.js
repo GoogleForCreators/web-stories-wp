@@ -19,6 +19,8 @@
  */
 import { renderHook } from '@testing-library/react-hooks';
 import PropTypes from 'prop-types';
+import { registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
@@ -50,6 +52,7 @@ ContextWrapper.propTypes = {
 
 describe('useLoadStory', () => {
   beforeEach(() => {
+    elementTypes.forEach(registerElementType);
     getStoryById.mockReset();
     clearHistory.mockReset();
   });
