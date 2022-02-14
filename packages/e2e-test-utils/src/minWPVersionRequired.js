@@ -25,7 +25,7 @@ import checkVersion from './checkVersion';
  * @param {string} minVersion Minimum require WordPress version.
  */
 function minWPVersionRequired(minVersion) {
-  const WPVersion = process.env?.WP_VERSION;
+  const WPVersion = process.env?.WP_VERSION || 'latest';
   if ('latest' !== WPVersion && !checkVersion(WPVersion, minVersion)) {
     //eslint-disable-next-line jest/no-focused-tests
     test.only('minimum WordPress requirement not met', () => {});
