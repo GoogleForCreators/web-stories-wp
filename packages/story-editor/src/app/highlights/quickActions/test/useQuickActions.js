@@ -453,14 +453,20 @@ describe('useQuickActions', () => {
 
   describe('empty background element selected', () => {
     beforeEach(() => {
-      mockUseStory.mockReturnValue({
-        currentPage: {
-          elements: [BACKGROUND_ELEMENT],
-        },
-        selectedElementAnimations: [],
-        selectedElements: [BACKGROUND_ELEMENT],
-        updateElementsById: mockUpdateElementsById,
-      });
+      mockUseStory.mockImplementation((selector) =>
+        selector({
+          state: {
+            currentPage: {
+              elements: [BACKGROUND_ELEMENT],
+            },
+            selectedElementAnimations: [],
+            selectedElements: [BACKGROUND_ELEMENT],
+          },
+          actions: {
+            updateElementsById: mockUpdateElementsById,
+          },
+        })
+      );
     });
 
     it('should return the quick actions', () => {
@@ -494,8 +500,8 @@ describe('useQuickActions', () => {
 
   describe('background image element is selected', () => {
     beforeEach(() => {
-      mockUseStory.mockImplementation((s) =>
-        s({
+      mockUseStory.mockImplementation((selector) =>
+        selector({
           state: {
             currentPage: {
               elements: [BACKGROUND_IMAGE_ELEMENT],
@@ -539,8 +545,8 @@ describe('useQuickActions', () => {
 
   describe('background third party image element is selected with animation', () => {
     beforeEach(() => {
-      mockUseStory.mockImplementation((s) =>
-        s({
+      mockUseStory.mockImplementation((selector) =>
+        selector({
           state: {
             currentPage: {
               elements: [BACKGROUND_IMAGE_MEDIA3P_ELEMENT],
@@ -574,8 +580,8 @@ describe('useQuickActions', () => {
 
   describe('background video element is selected', () => {
     beforeEach(() => {
-      mockUseStory.mockImplementation((s) =>
-        s({
+      mockUseStory.mockImplementation((selector) =>
+        selector({
           state: {
             currentPage: {
               elements: [BACKGROUND_VIDEO_ELEMENT],
