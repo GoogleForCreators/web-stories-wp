@@ -108,15 +108,15 @@ class ApiFetcher {
    * the call that provided the page token.
    * @return {Promise<Object>} The response from the API.
    */
-  listMedia({
+  async listMedia({
     languageCode = null,
     filter = null,
     orderBy = null,
     pageSize = null,
     pageToken = null,
   } = {}) {
-    validateListMediaOrderBy(orderBy);
-    validatePageSize(pageSize);
+    await validateListMediaOrderBy(orderBy);
+    await validatePageSize(pageSize);
 
     const params = new URLSearchParams(
       [
@@ -148,9 +148,13 @@ class ApiFetcher {
    * server. If unspecified or zero, at most 20 media resources will be returned.
    * @return {Promise<Object>} The response from the API.
    */
-  listCategories({ filter = null, orderBy = null, pageSize = null } = {}) {
-    validateCategoriesOrderBy(orderBy);
-    validatePageSize(pageSize);
+  async listCategories({
+    filter = null,
+    orderBy = null,
+    pageSize = null,
+  } = {}) {
+    await validateCategoriesOrderBy(orderBy);
+    await validatePageSize(pageSize);
 
     const params = new URLSearchParams(
       [
@@ -173,15 +177,15 @@ class ApiFetcher {
    *
    * @param {Object} obj - An object with the options for the request.
    * @param {string} obj.registerUsageUrl Url to call to register media usage.
-   * @return {Promise<undefined>} The response from the API.
+   * @return {Promise<void>} The response from the API.
    */
-  registerUsage({ registerUsageUrl }) {
-    validateRegisterUsageUrl(registerUsageUrl);
+  async registerUsage({ registerUsageUrl }) {
+    await validateRegisterUsageUrl(registerUsageUrl);
 
-    return this.fetchUrl({
+    await this.fetchUrl({
       url: new URL(registerUsageUrl),
       method: 'POST',
-    }).then(() => undefined);
+    });
   }
 
   /**

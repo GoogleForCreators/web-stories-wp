@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { forwardRef } from '@googleforcreators/react';
-import Moveable from 'react-moveable';
+import OriginalMoveable from 'react-moveable';
 import PropTypes from 'prop-types';
 
 /**
@@ -35,14 +35,24 @@ function MoveableWithRef({ onContextMenu, ...moveableProps }, ref) {
       zIndex={DEFAULT_Z_INDEX}
       pointerEvents="initial"
       render={({ container }) => {
-        return <Moveable ref={ref} container={container} {...moveableProps} />;
+        return (
+          <OriginalMoveable
+            ref={ref}
+            container={container}
+            {...moveableProps}
+          />
+        );
       }}
     />
   );
 }
 
-MoveableWithRef.propTypes = {
+const Moveable = forwardRef(MoveableWithRef);
+
+Moveable.propTypes = {
   onContextMenu: PropTypes.func,
 };
 
-export default forwardRef(MoveableWithRef);
+MoveableWithRef.propTypes = Moveable.propTypes;
+
+export default Moveable;
