@@ -32,7 +32,7 @@ const IconContainer = styled.div`
   border-radius: ${({ theme }) => theme.borders.radius.round};
 `;
 
-const Wrapper = styled.div`
+const Scrim = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
@@ -44,14 +44,15 @@ const Wrapper = styled.div`
 function InsertionOverlay({ showIcon = true }) {
   // The icon looks like a button but is just representational.
   // The real interactive element is the containing element.
+  // If the showIcon is `false`, we still display the scrim for shade.
   return (
-    <Wrapper>
+    <Scrim>
       {showIcon && (
         <IconContainer role="presentation">
           <Icons.PlusFilled />
         </IconContainer>
       )}
-    </Wrapper>
+    </Scrim>
   );
 }
 

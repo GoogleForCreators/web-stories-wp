@@ -28,8 +28,6 @@ import {
 import { __ } from '@googleforcreators/i18n';
 import { v4 as uuidv4 } from 'uuid';
 import {
-  Button,
-  BUTTON_VARIANTS,
   Icons,
   Menu,
   PLACEMENT,
@@ -43,19 +41,7 @@ import { getSmallestUrlForWidth } from '@googleforcreators/media';
 import getElementProperties from '../../../../canvas/utils/getElementProperties';
 import useStory from '../../../../../app/story/useStory';
 import useNestedRovingTabIndex from '../../shared/hooks/useNestedRovingTabIndex';
-
-const AddButton = styled(Button).attrs({ variant: BUTTON_VARIANTS.ICON })`
-  display: flex;
-  align-items: center;
-  position: absolute;
-  top: calc(50% - 16px);
-  right: calc(50% - 16px);
-  color: ${({ theme }) => theme.colors.fg.primary};
-  border-radius: 100%;
-  width: 28px;
-  height: 28px;
-  opacity: ${({ display }) => (display ? '1' : '0')};
-`;
+import { ActionButton } from '../../shared';
 
 const IconContainer = styled.div`
   height: 32px;
@@ -150,7 +136,7 @@ function InsertionMenu({ resource, display, onInsert, width, index }) {
   // Keep icon and menu displayed if menu is open (even if user's mouse leaves the area).
   return (
     <MenuContainer>
-      <AddButton
+      <ActionButton
         ref={insertButtonRef}
         onClick={onMenuOpen}
         aria-label={__('Open insertion menu', 'web-stories')}
@@ -165,7 +151,7 @@ function InsertionMenu({ resource, display, onInsert, width, index }) {
         <IconContainer>
           <Icons.PlusFilled />
         </IconContainer>
-      </AddButton>
+      </ActionButton>
       {(display || isMenuOpen) && (
         <Popup
           anchor={insertButtonRef}

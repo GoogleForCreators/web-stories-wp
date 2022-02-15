@@ -28,33 +28,26 @@ import {
 import { __ } from '@googleforcreators/i18n';
 import { v4 as uuidv4 } from 'uuid';
 import {
-  Button,
-  BUTTON_VARIANTS,
   Icons,
   Menu,
   PLACEMENT,
   Popup,
 } from '@googleforcreators/design-system';
+
 /**
  * Internal dependencies
  */
 import { useLocalMedia } from '../../../../../app';
 import useNestedRovingTabIndex from '../../shared/hooks/useNestedRovingTabIndex';
+import { ActionButton } from '../../shared';
 import DeleteDialog from './deleteDialog';
 import MediaEditDialog from './mediaEditDialog';
 
-const MoreButton = styled(Button).attrs({ variant: BUTTON_VARIANTS.ICON })`
-  display: flex;
-  align-items: center;
-  position: absolute;
+const MoreButton = styled(ActionButton)`
   top: 8px;
   right: 8px;
   background: ${({ theme }) => theme.colors.bg.secondary};
-  color: ${({ theme }) => theme.colors.fg.primary};
   border-radius: 100%;
-  width: 28px;
-  height: 28px;
-  opacity: ${({ display }) => (display ? '1' : '0')};
 `;
 
 const IconContainer = styled.div`
@@ -88,7 +81,6 @@ const menuStylesOverride = css`
  * @param {Function} props.onMenuOpen Callback for when menu is opened.
  * @param {Function} props.onMenuCancelled Callback for when menu is closed without any selections.
  * @param {Function} props.onMenuSelected Callback for when menu is closed and an option selected.
- * @param {number} props.index Element index in the gallery.
  * @return {null|*} Element or null if should not display the More icon.
  */
 function DropDownMenu({
@@ -98,7 +90,6 @@ function DropDownMenu({
   onMenuOpen,
   onMenuCancelled,
   onMenuSelected,
-  index,
 }) {
   const options = [
     {
@@ -212,7 +203,6 @@ DropDownMenu.propTypes = {
   onMenuOpen: PropTypes.func.isRequired,
   onMenuCancelled: PropTypes.func.isRequired,
   onMenuSelected: PropTypes.func.isRequired,
-  index: PropTypes.number.isRequired,
 };
 
 export default DropDownMenu;

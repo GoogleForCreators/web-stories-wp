@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled, { css } from 'styled-components';
+import { Button, BUTTON_VARIANTS } from '@googleforcreators/design-system';
 
 export const PANE_PADDING = '1em';
 
@@ -49,6 +50,19 @@ const LoadingContainer = styled.div`
   margin-top: 18px;
 `;
 
-export { Pane, getPaneId, getTabId, LoadingContainer };
+const ActionButton = styled(Button).attrs({ variant: BUTTON_VARIANTS.ICON })`
+  display: flex;
+  align-items: center;
+  position: absolute;
+  top: calc(50% - 16px);
+  right: calc(50% - 16px);
+  color: ${({ theme }) => theme.colors.fg.primary};
+  border-radius: 100%;
+  width: 28px;
+  height: 28px;
+  opacity: ${({ display }) => (display ? '1' : '0')};
+`;
+
+export { ActionButton, Pane, getPaneId, getTabId, LoadingContainer };
 
 export { default as ChipGroup } from './chipGroup';

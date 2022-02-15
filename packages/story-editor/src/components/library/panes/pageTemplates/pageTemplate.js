@@ -54,6 +54,7 @@ import DisplayElement from '../../../canvas/displayElement';
 import InsertionOverlay from '../shared/insertionOverlay';
 import useNestedRovingTabIndex from '../shared/hooks/useNestedRovingTabIndex';
 import useFocusCanvas from '../../../canvas/useFocusCanvas';
+import { ActionButton } from '../shared';
 
 const TemplateImage = styled.img`
   width: 100%;
@@ -104,19 +105,6 @@ const DeleteButton = styled(Button)`
   color: ${({ theme }) => theme.colors.fg.primary};
   width: 28px;
   height: 28px;
-`;
-
-const AddButton = styled(Button).attrs({ variant: BUTTON_VARIANTS.ICON })`
-  display: flex;
-  align-items: center;
-  position: absolute;
-  top: calc(50% - 16px);
-  right: calc(50% - 16px);
-  color: ${({ theme }) => theme.colors.fg.primary};
-  border-radius: 100%;
-  width: 28px;
-  height: 28px;
-  opacity: ${({ display }) => (display ? '1' : '0')};
 `;
 
 const PageTemplateTitle = styled.div`
@@ -255,7 +243,7 @@ function PageTemplate(
           ))
         )}
         {isActive && <InsertionOverlay showIcon={false} />}
-        <AddButton
+        <ActionButton
           ref={insertButtonRef}
           onClick={onClick}
           aria-label={__('Use template', 'web-stories')}
@@ -263,7 +251,7 @@ function PageTemplate(
           tabIndex={index === 0 ? 0 : -1}
         >
           <Icons.PlusFilled />
-        </AddButton>
+        </ActionButton>
         <DeleteButton
           ref={deleteButtonRef}
           display={isActive}
@@ -294,6 +282,7 @@ PageTemplate.propTypes = {
   translateY: PropTypes.number.isRequired,
   translateX: PropTypes.number.isRequired,
   handleDelete: PropTypes.func,
+  index: PropTypes.number.isRequired,
 };
 
 PageTemplate.displayName = 'PageTemplate';

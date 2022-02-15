@@ -31,7 +31,6 @@ import { useKeyDownEffect } from '@googleforcreators/design-system';
  */
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import useFocusCanvas from '../../../../canvas/useFocusCanvas';
-import useNestedRovingTabIndex from "../hooks/useNestedRovingTabIndex";
 
 /**
  * This is a shared custom hook to enable keyboard arrow navigation on panels
@@ -134,11 +133,6 @@ export default function useVirtualizedGridNavigation({
       activeGridItemId,
       isGridFocused,
     }),
-    [
-      activeGridItemId,
-      isGridFocused,
-      handleGridFocus,
-      handleGridItemFocus,
-    ]
+    [activeGridItemId, isGridFocused, handleGridFocus, handleGridItemFocus]
   );
 }
