@@ -25,10 +25,8 @@ import {
 } from '@googleforcreators/patterns';
 import { getHTMLInfo } from '@googleforcreators/rich-text';
 import { generateFontFamily } from '@googleforcreators/element-library';
-import {
-  BACKGROUND_TEXT_MODE,
-  MULTIPLE_VALUE,
-} from '@googleforcreators/design-system';
+import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
+import { MULTIPLE_VALUE } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies

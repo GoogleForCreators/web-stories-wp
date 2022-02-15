@@ -18,18 +18,17 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
-import { getDefinitionForType } from '@googleforcreators/elements';
+import {
+  getDefinitionForType,
+  MULTIPLE_VALUE,
+  MULTIPLE_DISPLAY_VALUE,
+} from '@googleforcreators/elements';
+import { dataPixels } from '@googleforcreators/units';
 
 /**
  * Internal dependencies
  */
-import { dataPixels } from '@googleforcreators/units';
-import {
-  MULTIPLE_VALUE,
-  MULTIPLE_DISPLAY_VALUE,
-} from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
-
 import SizePosition from '../sizePosition';
 
 jest.mock('@googleforcreators/element-library');
