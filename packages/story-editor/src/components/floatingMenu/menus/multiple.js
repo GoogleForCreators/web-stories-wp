@@ -22,16 +22,12 @@ import { memo } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import { ElementAlignment, More, Dismiss, Separator } from '../elements';
+import { ElementAlignment, Dismiss, Separator } from '../elements';
 
 const FloatingMixedMenu = memo(function FloatingMixedMenu() {
   return (
     <>
       <ElementAlignment />
-
-      <Separator />
-
-      <More />
 
       <Separator />
 
