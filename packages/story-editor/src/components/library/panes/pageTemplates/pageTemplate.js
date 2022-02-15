@@ -98,7 +98,7 @@ const DeleteButton = styled(ActionButton)`
   width: 16px;
   height: 16px;
   background: ${({ theme }) => theme.colors.fg.primary};
-  color: ${({ theme }) => theme.colors.bg.secondary};
+  color: ${({ theme }) => theme.colors.standard.black};
 `;
 
 const PageTemplateTitle = styled.div`

@@ -49,7 +49,7 @@ const MoreButton = styled(ActionButton)`
   width: 16px;
   height: 16px;
   background: ${({ theme }) => theme.colors.fg.primary};
-  color: ${({ theme }) => theme.colors.bg.secondary};
+  color: ${({ theme }) => theme.colors.standard.black};
   border-radius: 100%;
 `;
 
