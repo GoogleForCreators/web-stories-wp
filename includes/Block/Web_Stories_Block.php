@@ -43,7 +43,7 @@ class Web_Stories_Block extends Embed_Base {
 	/**
 	 * Script handle.
 	 */
-	const SCRIPT_HANDLE = 'web-stories-block';
+	public const SCRIPT_HANDLE = 'web-stories-block';
 
 	/**
 	 * Current block's block attributes.
@@ -55,7 +55,7 @@ class Web_Stories_Block extends Embed_Base {
 	/**
 	 * Maximum number of stories users can select
 	 */
-	const MAX_NUM_OF_STORIES = 20;
+	public const MAX_NUM_OF_STORIES = 20;
 
 	/**
 	 * Story_Post_Type instance.
@@ -100,7 +100,7 @@ class Web_Stories_Block extends Embed_Base {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		parent::register();
 		$this->assets->register_script_asset( self::SCRIPT_HANDLE, [ AMP_Story_Player_Assets::SCRIPT_HANDLE, Tracking::SCRIPT_HANDLE ] );
 		$this->assets->register_style_asset( self::SCRIPT_HANDLE, [ AMP_Story_Player_Assets::SCRIPT_HANDLE, parent::SCRIPT_HANDLE ] );
@@ -121,7 +121,7 @@ class Web_Stories_Block extends Embed_Base {
 	 *
 	 * @return void
 	 */
-	protected function register_block_type() {
+	protected function register_block_type(): void {
 		$base_path = $this->assets->get_base_path( 'blocks/embed/block.json' );
 		// Note: does not use 'script' and 'style' args, and instead uses 'render_callback'
 		// to enqueue these assets only when needed.

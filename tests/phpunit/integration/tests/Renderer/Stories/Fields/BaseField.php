@@ -25,7 +25,7 @@ class BaseField extends TestCase {
 	/**
 	 * Runs before any test in class is executed.
 	 */
-	public static function wpSetUpBeforeClass() {
+	public static function wpSetUpBeforeClass(): void {
 		self::$testee = new Testee(
 			[
 				'label'  => 'Test Label',
@@ -37,21 +37,21 @@ class BaseField extends TestCase {
 	/**
 	 * @covers ::label
 	 */
-	public function test_label() {
+	public function test_label(): void {
 		$this->assertSame( 'Test Label', self::$testee->label() );
 	}
 
 	/**
 	 * @covers ::hidden
 	 */
-	public function test_hidden() {
+	public function test_hidden(): void {
 		$this->assertTrue( self::$testee->hidden() );
 	}
 
 	/**
 	 * @covers ::show
 	 */
-	public function test_show() {
+	public function test_show(): void {
 		$this->assertTrue( self::$testee->show() );
 	}
 }

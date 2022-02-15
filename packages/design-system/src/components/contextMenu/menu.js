@@ -37,6 +37,8 @@ import {
 import { useKeyDownEffect } from '../keyboard';
 import { useContextMenu } from './contextMenuProvider';
 
+export const CONTEXT_MENU_WIDTH = 218;
+
 const MenuWrapper = styled.div(
   ({ theme }) => css`
     background-color: ${({ $isSecondary }) =>
@@ -55,7 +57,7 @@ const MenuWrapper = styled.div(
         `
         : `
           flex-direction: column;
-          width: ${$isIconMenu ? 40 : 210}px;
+          width: ${$isIconMenu ? 40 : CONTEXT_MENU_WIDTH}px;
           padding: ${$isIconMenu ? '4px 3px' : '8px 0'};
         `}
 

@@ -38,7 +38,7 @@ class PluginRowMeta extends TestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$instance = new \Google\Web_Stories\Admin\PluginRowMeta();
 		$instance->register();
 
@@ -50,7 +50,7 @@ class PluginRowMeta extends TestCase {
 	 *
 	 * @covers ::get_plugin_row_meta()
 	 */
-	public function test_get_plugin_row_meta() {
+	public function test_get_plugin_row_meta(): void {
 
 		$initial_meta = [
 			'Link 1',

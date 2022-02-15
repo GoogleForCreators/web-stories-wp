@@ -27,6 +27,7 @@ import {
   Icons,
   Button,
   PLACEMENT,
+  Popup,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
@@ -35,11 +36,10 @@ import { useRef, useState } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../../../app';
+import { useStory, useConfig } from '../../../../../app';
 import { PRESET_TYPES } from '../../../../../constants';
 import useAddPreset from '../../../../../utils/useAddPreset';
 import { focusStyle } from '../../../shared';
-import Popup from '../../../../popup';
 import useInspector from '../../../../inspector/useInspector';
 import useApplyStyle from './useApplyStyle';
 import StyleGroup from './styleGroup';
@@ -110,7 +110,7 @@ function PresetPanel({ pushUpdate }) {
   } = useInspector();
   const buttonRef = useRef(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-
+  const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
   const { textStyles } = globalStoryStyles;
   const hasPresets = textStyles.length > 0;
 
@@ -156,6 +156,8 @@ function PresetPanel({ pushUpdate }) {
             <Icons.ChevronDownSmall />
           </StyledMoreButton>
           <Popup
+            topOffset={topOffset}
+            isRTL={isRTL}
             anchor={buttonRef}
             dock={inspector}
             isOpen={isPopupOpen}

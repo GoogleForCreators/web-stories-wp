@@ -11,7 +11,7 @@
     "web-stories",
     "wordpress"
   ],
-  "homepage": "https://github.com/googleforcreators/web-stories-wp/",
+  "homepage": "https://github.com/GoogleForCreators/web-stories-wp/blob/main/packages/e2e-tests/README.md",
   "repository": {
     "type": "git",
     "url": "https://github.com/GoogleForCreators/web-stories-wp.git",
@@ -21,7 +21,7 @@
     "url": "https://github.com/googleforcreators/web-stories-wp/issues"
   },
   "engines": {
-    "node": ">= 16",
+    "node": ">= 12 || >= 14 || >= 16",
     "npm": ">= 7.3"
   },
   "type": "module",
@@ -31,7 +31,7 @@
     "@web-stories-wp/jest-puppeteer-amp": "*",
     "@web-stories-wp/jest-resolver": "*",
     "@wordpress/jest-console": "^5.0.0",
-    "@wordpress/jest-puppeteer-axe": "^3.1.1",
+    "@wordpress/jest-puppeteer-axe": "^4.0.1",
     "babel-jest": "^27.4.6",
     "expect-puppeteer": "^6.0.2",
     "jest-extended": "^2.0.0",

@@ -10,7 +10,7 @@
   "keywords": [
     "web stories"
   ],
-  "homepage": "https://github.com/googleforcreators/web-stories-wp/",
+  "homepage": "https://github.com/GoogleForCreators/web-stories-wp/blob/main/packages/tinymce-button/README.md",
   "repository": {
     "type": "git",
     "url": "https://github.com/GoogleForCreators/web-stories-wp.git",
@@ -20,13 +20,13 @@
     "url": "https://github.com/googleforcreators/web-stories-wp/issues"
   },
   "engines": {
-    "node": ">= 16",
+    "node": ">= 12 || >= 14 || >= 16",
     "npm": ">= 7.3"
   },
   "main": "./src/index.js",
   "dependencies": {
     "@wordpress/components": "^19.2.0",
-    "@wordpress/compose": "^5.0.0",
+    "@wordpress/compose": "^5.1.1",
     "@wordpress/data": "^6.1.4",
     "@wordpress/element": "^4.0.0",
     "@wordpress/i18n": "^4.3.0",

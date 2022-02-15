@@ -28,11 +28,11 @@ class Uninstall extends DependencyInjectedTestCase {
 
 	protected static $user_id;
 
-	public static function wpSetUpBeforeClass() {
+	public static function wpSetUpBeforeClass(): void {
 		require_once WEBSTORIES_PLUGIN_DIR_PATH . '/includes/uninstall.php';
 	}
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		self::$attachment_ids = self::factory()->attachment->create_many( 5 );
@@ -60,7 +60,7 @@ class Uninstall extends DependencyInjectedTestCase {
 		add_user_meta( self::$user_id, \Google\Web_Stories\User\Preferences::ONBOARDING_META_KEY, [ 'hello' => 'world' ] );
 	}
 
-	public function test_delete_options() {
+	public function test_delete_options(): void {
 		$this->assertSame( '2.0.0', get_option( \Google\Web_Stories\Database_Upgrader::OPTION ) );
 		$this->assertSame( '1.0.0', get_option( \Google\Web_Stories\Database_Upgrader::PREVIOUS_OPTION ) );
 		\Google\Web_Stories\delete_options();
@@ -70,7 +70,7 @@ class Uninstall extends DependencyInjectedTestCase {
 	}
 
 
-	public function test_delete_terms() {
+	public function test_delete_terms(): void {
 		$source_taxonomy = $this->injector->make( Media_Source_Taxonomy::class );
 		$terms           = get_terms(
 			[
@@ -93,7 +93,7 @@ class Uninstall extends DependencyInjectedTestCase {
 		}
 	}
 
-	public function test_delete_posts() {
+	public function test_delete_posts(): void {
 		\Google\Web_Stories\delete_posts();
 		$cpt_posts = get_posts(
 			[
@@ -109,7 +109,7 @@ class Uninstall extends DependencyInjectedTestCase {
 		$this->assertCount( 0, $cpt_posts );
 	}
 
-	public function test_delete_stories_post_meta() {
+	public function test_delete_stories_post_meta(): void {
 		self::$attachment_ids = self::factory()->attachment->create_many( 5 );
 
 		\Google\Web_Stories\delete_stories_post_meta();
@@ -120,7 +120,7 @@ class Uninstall extends DependencyInjectedTestCase {
 		}
 	}
 
-	public function test_delete_stories_user_meta() {
+	public function test_delete_stories_user_meta(): void {
 		\Google\Web_Stories\delete_stories_user_meta();
 		$user_meta = get_user_meta( self::$user_id );
 		$this->assertArrayNotHasKey( \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, $user_meta );
@@ -131,7 +131,7 @@ class Uninstall extends DependencyInjectedTestCase {
 	/**
 	 * @group ms-required
 	 */
-	public function test_delete_site_options() {
+	public function test_delete_site_options(): void {
 		\Google\Web_Stories\delete_site_options();
 		$this->assertFalse( get_site_transient( 'web_stories_updater' ) );
 	}

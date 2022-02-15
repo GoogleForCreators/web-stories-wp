@@ -28,7 +28,7 @@ class Unify_Color_Presets extends TestCase {
 	/**
 	 * @covers ::migrate
 	 */
-	public function test_migrate() {
+	public function test_migrate(): void {
 		$presets = [
 			'textStyles' => [],
 			'textColors' => [

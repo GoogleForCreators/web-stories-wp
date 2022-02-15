@@ -81,7 +81,7 @@ class Sanitization {
 	 * @param Document $document Document instance.
 	 * @return void
 	 */
-	public function sanitize_document( Document $document ) {
+	public function sanitize_document( Document $document ): void {
 		$sanitizers = $this->get_sanitizers();
 
 		$result = AMP_Content_Sanitizer::sanitize_document( $document, $sanitizers, [] );
@@ -103,7 +103,7 @@ class Sanitization {
 	 * @param array    $scripts List of found scripts.
 	 * @return void
 	 */
-	protected function ensure_required_markup( $document, array $scripts ) {
+	protected function ensure_required_markup( $document, array $scripts ): void {
 		/**
 		 * Link elements.
 		 *

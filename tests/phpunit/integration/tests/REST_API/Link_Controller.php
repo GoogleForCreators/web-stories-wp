@@ -17,13 +17,13 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 	protected static $editor;
 	protected static $subscriber;
 
-	const URL_INVALID          = 'https://https://invalid.commmm';
-	const URL_404              = 'https://example.com/404';
-	const URL_500              = 'https://example.com/500';
-	const URL_CHARACTERS       = 'https://example.com/characters';
-	const URL_EMPTY_DOCUMENT   = 'https://example.com/empty';
-	const URL_VALID_TITLE_ONLY = 'https://example.com';
-	const URL_VALID            = 'https://amp.dev';
+	public const URL_INVALID          = 'https://https://invalid.commmm';
+	public const URL_404              = 'https://example.com/404';
+	public const URL_500              = 'https://example.com/500';
+	public const URL_CHARACTERS       = 'https://example.com/characters';
+	public const URL_EMPTY_DOCUMENT   = 'https://example.com/empty';
+	public const URL_VALID_TITLE_ONLY = 'https://example.com';
+	public const URL_VALID            = 'https://amp.dev';
 
 	/**
 	 * Count of the number of requests attempted.
@@ -39,7 +39,7 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 	 */
 	private $controller;
 
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$subscriber = $factory->user->create(
 			[
 				'role' => 'subscriber',
@@ -53,7 +53,7 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 		);
 	}
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		add_filter( 'pre_http_request', [ $this, 'mock_http_request' ], 10, 3 );
@@ -62,7 +62,7 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 		$this->controller = $this->injector->make( \Google\Web_Stories\REST_API\Link_Controller::class );
 	}
 
-	public function tear_down() {
+	public function tear_down(): void {
 		remove_filter( 'pre_http_request', [ $this, 'mock_http_request' ] );
 
 		parent::tear_down();
@@ -137,7 +137,7 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$routes = rest_get_server()->get_routes();
 
 		$this->assertArrayHasKey( '/web-stories/v1/link', $routes );
@@ -153,7 +153,7 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::parse_link_permissions_check
 	 */
-	public function test_no_user() {
+	public function test_no_user(): void {
 		$this->controller->register();
 
 		$request  = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/link' );
@@ -165,7 +165,7 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::parse_link_permissions_check
 	 */
-	public function test_without_permission() {
+	public function test_without_permission(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$subscriber );
@@ -181,7 +181,7 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::parse_link
 	 */
-	public function test_url_invalid_url() {
+	public function test_url_invalid_url(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
@@ -193,7 +193,7 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 		$this->assertErrorResponse( 'rest_invalid_param', $response, 400 );
 	}
 
-	public function test_url_returning_500() {
+	public function test_url_returning_500(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
@@ -204,7 +204,7 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 		$this->assertErrorResponse( 'rest_invalid_url', $response, 404 );
 	}
 
-	public function test_url_returning_404() {
+	public function test_url_returning_404(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
@@ -224,7 +224,7 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 		);
 	}
 
-	public function test_url_empty_string() {
+	public function test_url_empty_string(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
@@ -236,7 +236,7 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 		$this->assertErrorResponse( 'rest_invalid_param', $response, 400 );
 	}
 
-	public function test_empty_url() {
+	public function test_empty_url(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
@@ -259,7 +259,7 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 		$this->assertEqualSetsWithIndex( $expected, $data );
 	}
 
-	public function test_characters_url() {
+	public function test_characters_url(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
@@ -282,7 +282,7 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 		$this->assertEqualSetsWithIndex( $expected, $data );
 	}
 
-	public function test_example_url() {
+	public function test_example_url(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
@@ -305,7 +305,7 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 		$this->assertEqualSetsWithIndex( $expected, $data );
 	}
 
-	public function test_valid_url() {
+	public function test_valid_url(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
@@ -328,7 +328,7 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 		$this->assertEqualSetsWithIndex( $expected, $data );
 	}
 
-	public function test_removes_trailing_slashes() {
+	public function test_removes_trailing_slashes(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );

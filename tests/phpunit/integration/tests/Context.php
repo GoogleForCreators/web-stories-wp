@@ -28,7 +28,7 @@ class Context extends DependencyInjectedTestCase {
 	 */
 	private $instance;
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\Context::class );
@@ -37,7 +37,7 @@ class Context extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::is_story_editor
 	 */
-	public function test_is_story_editor() {
+	public function test_is_story_editor(): void {
 		$GLOBALS['current_screen'] = convert_to_screen( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 
 		$this->assertTrue( $this->instance->is_story_editor() );
@@ -46,7 +46,7 @@ class Context extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::is_block_editor
 	 */
-	public function test_is_block_editor() {
+	public function test_is_block_editor(): void {
 		$this->assertFalse( $this->instance->is_block_editor() );
 	}
 }

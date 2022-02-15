@@ -37,7 +37,7 @@ class PluginActionLinks extends TestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$instance = new \Google\Web_Stories\Admin\PluginActionLinks();
 		$instance->register();
 
@@ -51,7 +51,7 @@ class PluginActionLinks extends TestCase {
 	 *
 	 * @covers ::action_links()
 	 */
-	public function test_action_links() {
+	public function test_action_links(): void {
 
 		$initial_meta = [
 			'Link 1',

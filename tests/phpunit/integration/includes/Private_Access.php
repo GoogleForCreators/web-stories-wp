@@ -70,7 +70,7 @@ trait Private_Access {
 	 * @param string        $property_name Name of the property to set.
 	 * @param mixed         $value         Value to set the property to.
 	 */
-	protected function set_private_property( $object, $property_name, $value ) {
+	protected function set_private_property( $object, $property_name, $value ): void {
 		$property = ( new ReflectionClass( $object ) )->getProperty( $property_name );
 		$property->setAccessible( true );
 		$property->setValue( $object, $value );

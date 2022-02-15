@@ -22,7 +22,6 @@ import { useCallback, useEffect } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { __, _n, sprintf } from '@googleforcreators/i18n';
 import { trackEvent } from '@googleforcreators/tracking';
-import { resourceList } from '@googleforcreators/media';
 import {
   Button as DefaultButton,
   BUTTON_SIZES,
@@ -31,6 +30,7 @@ import {
   Text,
   THEME_CONSTANTS,
   Icons,
+  PLACEMENT,
 } from '@googleforcreators/design-system';
 
 /**
@@ -39,7 +39,6 @@ import {
 import { useConfig } from '../../../../../app/config';
 import { useLocalMedia } from '../../../../../app/media';
 import { SearchInput } from '../../../common';
-import useLibrary from '../../../useLibrary';
 import { MediaUploadButton, Select } from '../../../../form';
 import {
   MediaGalleryMessage,
@@ -50,11 +49,11 @@ import {
 } from '../common/styles';
 import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import Flags from '../../../../../flags';
-import { Placement } from '../../../../popup/constants';
 import { PANE_PADDING } from '../../shared';
 import { LOCAL_MEDIA_TYPE_ALL } from '../../../../../app/media/local/types';
 import { focusStyle } from '../../../../panels/shared';
 import Tooltip from '../../../../tooltip';
+import useOnMediaSelect from './useOnMediaSelect';
 import paneId from './paneId';
 import VideoOptimizationDialog from './videoOptimizationDialog';
 import LinkInsertion from './hotlink';
@@ -140,10 +139,6 @@ function MediaPane(props) {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
 
-  const { insertElement } = useLibrary((state) => ({
-    insertElement: state.actions.insertElement,
-  }));
-
   const isSearching = searchTerm.length > 0;
 
   /**
@@ -158,39 +153,7 @@ function MediaPane(props) {
     [setMediaType]
   );
 
-  /**
-   * Insert element such image, video and audio into the editor.
-   *
-   * @param {Object} resource Resource object
-   * @param {string} thumbnailURL The thumbnail's url
-   * @return {null|*} Return onInsert or null.
-   */
-  const insertMediaElement = useCallback(
-    (resource, thumbnailURL) => {
-      resourceList.set(resource.id, {
-        url: thumbnailURL,
-        type: 'cached',
-      });
-      insertElement(resource.type, { resource });
-    },
-    [insertElement]
-  );
-
-  /**
-   * Callback of select in media picker to insert media element.
-   *
-   * @param {Object} resource Object coming from backbone media picker.
-   */
-  const onSelect = useCallback(
-    (resource) => {
-      // WordPress media picker event, sizes.medium.sourceUrl is the smallest image
-      insertMediaElement(
-        resource,
-        resource.sizes?.medium?.sourceUrl || resource.src
-      );
-    },
-    [insertMediaElement]
-  );
+  const { onSelect, insertMediaElement } = useOnMediaSelect();
 
   const onSearch = (value) => {
     const trimText = value.trim();
@@ -259,7 +222,7 @@ function MediaPane(props) {
               selectedValue={mediaType?.toString() || FILTER_NONE}
               onMenuItemClick={onFilter}
               options={FILTERS}
-              placement={Placement.BOTTOM_START}
+              placement={PLACEMENT.BOTTOM_START}
             />
             {isSearching && media.length > 0 && (
               <SearchCount>

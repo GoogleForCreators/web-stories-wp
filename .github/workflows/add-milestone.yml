@@ -50,7 +50,7 @@ jobs:
           RELEASE_ID: ${{ steps.release.outputs.release_id }}
 
       - name: Retrieve linked issues
-        uses: actions/github-script@v5
+        uses: actions/github-script@v6
         id: linked-issues
         with:
           script: |
