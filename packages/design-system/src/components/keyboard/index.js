@@ -114,7 +114,7 @@ function useKeyEffectInternal(
         mousetrap.unbind(keySpec.key, type);
       };
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- Deliberately don't wont the other possible deps here.
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- Deliberately don't want the other possible deps here.
     [batchingCallback, keys]
   );
 }
