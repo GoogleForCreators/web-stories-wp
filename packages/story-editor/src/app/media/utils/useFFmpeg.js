@@ -174,7 +174,7 @@ function useFFmpeg() {
    */
   const getFirstFrameOfVideo = useCallback(
     async (file) => {
-      //eslint-disable-next-line @wordpress/no-unused-vars-before-return
+      //eslint-disable-next-line @wordpress/no-unused-vars-before-return -- False positive because of th finally().
       const trackTiming = getTimeTracker('load_video_poster_ffmpeg');
 
       let ffmpeg;
@@ -207,7 +207,7 @@ function useFFmpeg() {
           MEDIA_POSTER_IMAGE_MIME_TYPE
         );
       } catch (err) {
-        // eslint-disable-next-line no-console -- error log
+        // eslint-disable-next-line no-console -- We want to surface this error.
         console.error(err);
 
         trackError('video_poster_generation_ffmpeg', err.message);
@@ -233,7 +233,7 @@ function useFFmpeg() {
    */
   const transcodeVideo = useCallback(
     async (file) => {
-      //eslint-disable-next-line @wordpress/no-unused-vars-before-return
+      //eslint-disable-next-line @wordpress/no-unused-vars-before-return -- False positive because of th finally().
       const trackTiming = getTimeTracker('load_video_transcoding');
 
       let ffmpeg;
@@ -262,7 +262,7 @@ function useFFmpeg() {
           MEDIA_TRANSCODED_MIME_TYPE
         );
       } catch (err) {
-        // eslint-disable-next-line no-console -- error log
+        // eslint-disable-next-line no-console -- We want to surface this error.
         console.error(err);
 
         trackError('video_transcoding', err.message);
@@ -290,7 +290,7 @@ function useFFmpeg() {
    */
   const trimVideo = useCallback(
     async (file, start, end) => {
-      //eslint-disable-next-line @wordpress/no-unused-vars-before-return
+      //eslint-disable-next-line @wordpress/no-unused-vars-before-return -- False positive because of th finally().
       const trackTiming = getTimeTracker('load_trim_video_transcoding');
 
       let ffmpeg;
@@ -321,7 +321,7 @@ function useFFmpeg() {
           type
         );
       } catch (err) {
-        // eslint-disable-next-line no-console -- error log
+        // eslint-disable-next-line no-console -- We want to surface this error.
         console.log(err);
 
         trackError('trim_video_transcoding', err.message);
@@ -347,7 +347,7 @@ function useFFmpeg() {
    */
   const stripAudioFromVideo = useCallback(
     async (file) => {
-      //eslint-disable-next-line @wordpress/no-unused-vars-before-return
+      //eslint-disable-next-line @wordpress/no-unused-vars-before-return -- False positive because of th finally().
       const trackTiming = getTimeTracker('load_mute_video_transcoding');
 
       let ffmpeg;
@@ -380,7 +380,7 @@ function useFFmpeg() {
           type
         );
       } catch (err) {
-        // eslint-disable-next-line no-console -- error log
+        // eslint-disable-next-line no-console -- We want to surface this error.
         console.log(err);
 
         trackError('mute_video_transcoding', err.message);
@@ -406,7 +406,7 @@ function useFFmpeg() {
    */
   const convertGifToVideo = useCallback(
     async (file) => {
-      //eslint-disable-next-line @wordpress/no-unused-vars-before-return
+      //eslint-disable-next-line @wordpress/no-unused-vars-before-return -- False positive because of th finally().
       const trackTiming = getTimeTracker('load_gif_conversion');
 
       let ffmpeg;
@@ -435,7 +435,7 @@ function useFFmpeg() {
           MEDIA_TRANSCODED_MIME_TYPE
         );
       } catch (err) {
-        // eslint-disable-next-line no-console -- error log
+        // eslint-disable-next-line no-console -- We want to surface this error.
         console.error(err);
 
         trackError('gif_conversion', err.message);

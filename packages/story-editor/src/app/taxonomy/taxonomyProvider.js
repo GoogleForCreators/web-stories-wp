@@ -156,7 +156,7 @@ function TaxonomyProvider(props) {
         response = await getTaxonomyTerm(termsEndpoint, args);
       } catch (e) {
         // Log error
-        // eslint-disable-next-line no-console
+        // eslint-disable-next-line no-console -- We want to surface this error.
         console.error(e.message);
       }
 

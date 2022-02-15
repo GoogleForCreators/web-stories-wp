@@ -19,7 +19,7 @@
 /**
  * External dependencies
  */
-// eslint-disable-next-line no-undef  -- @todo
+//eslint-disable-next-line no-undef -- TODO: Figure out why this is needed.
 const path = require('path');
 
 const fs = jest.createMockFromModule('fs');

@@ -61,7 +61,7 @@ describe('date/format', () => {
   });
 
   // TODO: Fix implementation/tests.
-  //eslint-disable-next-line jest/no-disabled-tests -- @todo
+  //eslint-disable-next-line jest/no-disabled-tests -- Not implemented yet.
   it.skip('should support "B" to obtain the time in Swatch Internet Time (.beats)', () => {
     const formattedDate = format('2020-10-09T11:00:00.000', 'B');
 

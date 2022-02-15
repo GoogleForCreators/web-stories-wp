@@ -54,7 +54,7 @@ function useIntersectionEffect(ref, options = {}, handler, deps = undefined) {
       // eslint-disable-next-line consistent-return
       return () => observer.disconnect();
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- Pass through the provided deps.
     deps || []
   );
 }

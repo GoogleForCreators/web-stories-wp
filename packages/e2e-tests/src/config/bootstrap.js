@@ -182,7 +182,7 @@ function observeConsoleLogging() {
       return;
     }
 
-    //eslint-disable-next-line security/detect-object-injection -- @todo
+    //eslint-disable-next-line security/detect-object-injection -- Negligible.
     const logFunction = OBSERVED_CONSOLE_MESSAGE_TYPES[type];
 
     // As of Puppeteer 1.6.1, `message.text()` wrongly returns an object of
