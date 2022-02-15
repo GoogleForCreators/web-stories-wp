@@ -142,7 +142,7 @@ export function QuickTip({
           <Title>{title}</Title>
           {description.map((paragraph, i) => (
             <Paragraph
-              // eslint-disable-next-line react/no-array-index-key -- Should be OK  due to also using thee title.
+              // eslint-disable-next-line react/no-array-index-key -- Should be OK due to also using the title.
               key={`${title}-${i}`}
               size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
             >

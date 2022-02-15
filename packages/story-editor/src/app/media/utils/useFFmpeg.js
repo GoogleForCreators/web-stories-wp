@@ -216,8 +216,9 @@ function useFFmpeg() {
       } finally {
         try {
           ffmpeg.exit();
-          // eslint-disable-next-line no-empty -- no-op
-        } catch (e) {}
+        } catch {
+          // Not interested in errors here.
+        }
 
         trackTiming();
       }
@@ -271,8 +272,9 @@ function useFFmpeg() {
       } finally {
         try {
           ffmpeg.exit();
-          // eslint-disable-next-line no-empty -- no-op
-        } catch (e) {}
+        } catch {
+          // Not interested in errors here.
+        }
 
         trackTiming();
       }
@@ -330,8 +332,9 @@ function useFFmpeg() {
       } finally {
         try {
           ffmpeg.exit();
-          // eslint-disable-next-line no-empty -- no-op
-        } catch (e) {}
+        } catch {
+          // Not interested in errors here.
+        }
 
         trackTiming();
       }
@@ -389,8 +392,9 @@ function useFFmpeg() {
       } finally {
         try {
           ffmpeg.exit();
-          // eslint-disable-next-line no-empty -- no-op
-        } catch (e) {}
+        } catch {
+          // Not interested in errors here.
+        }
 
         trackTiming();
       }
