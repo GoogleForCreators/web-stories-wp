@@ -18,10 +18,6 @@
  * External dependencies
  */
 import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-  BUTTON_VARIANTS,
   Icons,
   themeHelpers,
   useKeyDownEffect,
@@ -96,15 +92,13 @@ PreviewPageWrapper.propTypes = {
   pageSize: PageSizePropType.isRequired,
 };
 
-const DeleteButton = styled(Button)`
-  position: absolute;
+const DeleteButton = styled(ActionButton)`
   top: 8px;
   right: 8px;
-  z-index: 1;
-  opacity: ${({ display }) => (display ? '1' : '0')};
-  color: ${({ theme }) => theme.colors.fg.primary};
-  width: 28px;
-  height: 28px;
+  width: 16px;
+  height: 16px;
+  background: ${({ theme }) => theme.colors.fg.primary};
+  color: ${({ theme }) => theme.colors.bg.secondary};
 `;
 
 const PageTemplateTitle = styled.div`
@@ -255,9 +249,6 @@ function PageTemplate(
         <DeleteButton
           ref={deleteButtonRef}
           display={isActive}
-          variant={BUTTON_VARIANTS.CIRCLE}
-          type={BUTTON_TYPES.SECONDARY}
-          size={BUTTON_SIZES.SMALL}
           onClick={(e) => handleDelete(page, e)}
           aria-label={__('Delete Page Template', 'web-stories')}
           tabIndex={isActive ? 0 : -1}

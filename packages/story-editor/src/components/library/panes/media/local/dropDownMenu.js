@@ -46,13 +46,11 @@ import MediaEditDialog from './mediaEditDialog';
 const MoreButton = styled(ActionButton)`
   top: 8px;
   right: 8px;
-  background: ${({ theme }) => theme.colors.bg.secondary};
+  width: 16px;
+  height: 16px;
+  background: ${({ theme }) => theme.colors.fg.primary};
+  color: ${({ theme }) => theme.colors.bg.secondary};
   border-radius: 100%;
-`;
-
-const IconContainer = styled.div`
-  height: 32px;
-  width: auto;
 `;
 
 const DropDownContainer = styled.div`
@@ -157,9 +155,7 @@ function DropDownMenu({
           display={display}
           tabIndex={display || isMenuOpen ? 0 : -1}
         >
-          <IconContainer>
-            <Icons.Dots />
-          </IconContainer>
+          <Icons.Dots />
         </MoreButton>
         {(display || isMenuOpen) && (
           <Popup

@@ -50,16 +50,17 @@ const LoadingContainer = styled.div`
   margin-top: 18px;
 `;
 
+const ACTION_BUTTON_SIZE = 32;
 const ActionButton = styled(Button).attrs({ variant: BUTTON_VARIANTS.ICON })`
   display: flex;
   align-items: center;
   position: absolute;
-  top: calc(50% - 16px);
-  right: calc(50% - 16px);
+  top: calc(50% - ${ACTION_BUTTON_SIZE / 2}px);
+  right: calc(50% - ${ACTION_BUTTON_SIZE / 2}px);
   color: ${({ theme }) => theme.colors.fg.primary};
-  border-radius: 100%;
-  width: 28px;
-  height: 28px;
+  border-radius: ${({ theme }) => theme.borders.radius.round};
+  width: ${ACTION_BUTTON_SIZE}px;
+  height: ${ACTION_BUTTON_SIZE}px;
   opacity: ${({ display }) => (display ? '1' : '0')};
 `;
 

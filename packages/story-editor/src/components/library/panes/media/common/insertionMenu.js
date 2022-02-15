@@ -43,11 +43,6 @@ import useStory from '../../../../../app/story/useStory';
 import useNestedRovingTabIndex from '../../shared/hooks/useNestedRovingTabIndex';
 import { ActionButton } from '../../shared';
 
-const IconContainer = styled.div`
-  height: 32px;
-  width: 32px;
-`;
-
 const DropDownContainer = styled.div`
   margin-top: 10px;
   min-width: 160px;
@@ -148,9 +143,7 @@ function InsertionMenu({ resource, display, onInsert, width, index }) {
         display={display}
         tabIndex={index === 0 ? 0 : -1}
       >
-        <IconContainer>
-          <Icons.PlusFilled />
-        </IconContainer>
+        <Icons.PlusFilled />
       </ActionButton>
       {(display || isMenuOpen) && (
         <Popup
