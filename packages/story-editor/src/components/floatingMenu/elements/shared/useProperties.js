@@ -15,27 +15,15 @@
  */
 
 /**
- * External dependencies
- */
-import { Icons } from '@googleforcreators/design-system';
-import { __ } from '@googleforcreators/i18n';
-
-/**
  * Internal dependencies
  */
-import { IconButton } from './shared';
-import useFlip from './shared/useFlip';
+import { useStory } from '../../../../app';
+import objectPick from '../../../../utils/objectPick';
 
-function FlipHorizontal() {
-  const { horizontal, toggleHorizontal } = useFlip();
-  return (
-    <IconButton
-      Icon={Icons.MirrorLeftright}
-      title={__('Flip horizontally', 'web-stories')}
-      onClick={toggleHorizontal}
-      isToggled={horizontal}
-    />
+function useProperties(propertyList) {
+  return useStory(({ state: { selectedElements } }) =>
+    objectPick(selectedElements[0], propertyList)
   );
 }
 
-export default FlipHorizontal;
+export default useProperties;
