@@ -73,5 +73,7 @@ class Image extends TestCase {
 		$this->assertStringContainsString( '<img', $render );
 		$this->assertStringContainsString( 'srcset=', $render );
 		$this->assertStringContainsString( 'sizes=', $render );
+		$this->assertStringContainsString( 'loading=', $render );
+		$this->assertStringContainsString( 'decoding=', $render );
 	}
 }
