@@ -67,7 +67,7 @@ export function getFocusableChild(element, depth, childToGet = 'firstChild') {
   const parentElement = getAncestorByDepth(element, depth);
   const firstElementParent = parentElement.parentNode[childToGet];
   // First non-disabled child with tabIndex -1.
-  firstElementParent.querySelector(SELECTOR);
+  return firstElementParent.querySelector(SELECTOR);
 }
 
 /**
