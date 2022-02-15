@@ -121,8 +121,8 @@ function ShapePreview({ mask, isPreview, index }) {
   }));
 
   const [active, setActive] = useState(false);
-  const makeActive = useCallback(() => setActive(true), []);
-  const makeInactive = useCallback(() => setActive(false), []);
+  const makeActive = () => setActive(true);
+  const makeInactive = () => setActive(false);
 
   const ref = useRef();
   // Creating a ref to the Path so that it can be used as a drag icon.

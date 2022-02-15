@@ -33,7 +33,10 @@ import {
   PLACEMENT,
   Popup,
 } from '@googleforcreators/design-system';
-import { getSmallestUrlForWidth } from '@googleforcreators/media';
+import {
+  getSmallestUrlForWidth,
+  ResourcePropTypes,
+} from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -150,7 +153,7 @@ function InsertionMenu({ resource, display, onInsert, width, index }) {
       >
         <Icons.PlusFilled />
       </ActionButton>
-      {(display || isMenuOpen) && (
+      {isMenuOpen && (
         <Popup
           anchor={insertButtonRef}
           placement={PLACEMENT.BOTTOM_START}
@@ -174,7 +177,7 @@ function InsertionMenu({ resource, display, onInsert, width, index }) {
 }
 
 InsertionMenu.propTypes = {
-  resource: PropTypes.object.isRequired,
+  resource: ResourcePropTypes.resource.isRequired,
   display: PropTypes.bool.isRequired,
   onInsert: PropTypes.func.isRequired,
   width: PropTypes.number.isRequired,
