@@ -62,6 +62,10 @@ const menuStylesOverride = css`
 
 // This is used for nested roving tab index to detect parent siblings.
 const BUTTON_NESTING_DEPTH = 3;
+const MENU_OPTIONS = {
+  INSERT: 'insert',
+  ADD_BACKGROUND: 'addBackground',
+};
 
 /**
  * Get a More icon that displays a dropdown menu on click.
@@ -95,27 +99,25 @@ function InsertionMenu({ resource, display, onInsert, width, index }) {
   const options = [
     {
       group: [
-        { label: insertLabel, value: 'insert' },
+        { label: insertLabel, value: MENU_OPTIONS.INSERT },
         {
           label: __('Add as background', 'web-stories'),
-          value: 'addBackground',
+          value: MENU_OPTIONS.ADD_BACKGROUND,
         },
       ],
     },
   ];
 
   const handleCurrentValue = (evt, value) => {
-    const thumbnailUrl = poster
-      ? poster
-      : getSmallestUrlForWidth(width, resource);
+    const thumbnailUrl = poster || getSmallestUrlForWidth(width, resource);
     const newElement = getElementProperties(resource.type, {
       resource,
     });
     switch (value) {
-      case 'insert':
+      case MENU_OPTIONS.INSERT:
         onInsert(resource, thumbnailUrl);
         break;
-      case 'addBackground':
+      case MENU_OPTIONS.ADD_BACKGROUND:
         combineElements({
           firstElement: newElement,
           secondId: currentBackgroundId,

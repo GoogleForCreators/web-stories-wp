@@ -76,6 +76,10 @@ const menuStylesOverride = css`
 
 // This is used for nested roving tab index to detect parent siblings.
 const BUTTON_NESTING_DEPTH = 3;
+const MENU_OPTIONS = {
+  EDIT: 'edit',
+  DELETE: 'delete',
+};
 
 /**
  * Get a More icon that displays a dropdown menu on click.
@@ -100,8 +104,8 @@ function DropDownMenu({
   const options = [
     {
       group: [
-        { label: __('Edit', 'web-stories'), value: 'edit' },
-        { label: __('Delete', 'web-stories'), value: 'delete' },
+        { label: __('Edit', 'web-stories'), value: MENU_OPTIONS.EDIT },
+        { label: __('Delete', 'web-stories'), value: MENU_OPTIONS.DELETE },
       ],
     },
   ];
@@ -119,10 +123,10 @@ function DropDownMenu({
   const handleCurrentValue = (evt, value) => {
     onMenuSelected();
     switch (value) {
-      case 'edit':
+      case MENU_OPTIONS.EDIT:
         setShowEditDialog(true);
         break;
-      case 'delete':
+      case MENU_OPTIONS.DELETE:
         setShowDeleteDialog(true);
         break;
       default:
@@ -174,7 +178,6 @@ function DropDownMenu({
             anchor={moreButtonRef}
             placement={PLACEMENT.BOTTOM_START}
             isOpen={isMenuOpen}
-            width={160}
           >
             <DropDownContainer>
               <Menu
