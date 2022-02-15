@@ -164,9 +164,7 @@ function DisplayLayer() {
     ({ state }) => {
       return {
         backgroundColor: state.currentPage?.backgroundColor,
-        isBackgroundSelected:
-          state.selectedElements?.[0]?.id ===
-          state.currentPage?.elements?.[0]?.id,
+        isBackgroundSelected: state.selectedElements?.[0]?.isBackground,
         pageAttachment: state.currentPage?.pageAttachment,
       };
     }
