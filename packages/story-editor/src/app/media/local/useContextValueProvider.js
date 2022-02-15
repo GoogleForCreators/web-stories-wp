@@ -186,7 +186,10 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     resetFilters();
     const isFirstPage = !stateRef.current.pageToken;
     if (!currentMediaType && !stateRef.current.searchTerm && isFirstPage) {
-      fetchMedia({ currentMediaType, cacheBust: true }, fetchMediaSuccess);
+      fetchMedia(
+        { mediaType: currentMediaType, cacheBust: true },
+        fetchMediaSuccess
+      );
     }
   }, [fetchMedia, fetchMediaSuccess, resetFilters]);
 
