@@ -136,9 +136,7 @@ describe('TranslateWithMarkup component', () => {
 
   it('throws error when accidentally using void elements', () => {
     const component = (
-      <TranslateWithMarkup
-        mapping={{ link: <a href="https://example.com" /> }}
-      >
+      <TranslateWithMarkup mapping={{ link: <a href="https://example.com" /> }}>
         {'This is a <link>link</link>!'}
       </TranslateWithMarkup>
     );
