@@ -162,15 +162,20 @@ jobs:
             echo "New assets found."
             NEW_ASSETS_VERSION=$((LATEST_ASSETS_VERSION+1))
 
-            echo "Copying existing assets over to new version"
+            echo "Copying existing assets over to new version."
 
             gsutil -m rsync -r gs://web-stories-wp-cdn-assets/$LATEST_ASSETS_VERSION gs://web-stories-wp-cdn-assets/$NEW_ASSETS_VERSION
 
-            echo "Uploading new assets to new version"
+            echo "Uploading new assets to new version."
             gsutil -m rsync -r -x '(^|/)\.' main gs://web-stories-wp-cdn-assets/$NEW_ASSETS_VERSION
 
             rm -rf static/main/*
 
+            echo "Updating LATEST_ASSETS_VERSION Firebase env variable."
+
+            echo "LATEST_ASSETS_VERSION=$NEW_ASSETS_VERSION" > ../../functions/.env
+
+            git add ../../functions/.env
             git add .
             git status
             git commit -m "Preparing assets for plugin release $PLUGIN_VERSION"

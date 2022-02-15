@@ -126,6 +126,7 @@ class Embed {
 									srcset="<?php echo esc_attr( $poster_srcset ); ?>"
 									sizes="<?php echo esc_attr( $poster_sizes ); ?>"
 									loading="lazy"
+									decoding="async"
 									data-amp-story-player-poster-img
 								/>
 								<?php
@@ -159,6 +160,7 @@ class Embed {
 								srcset="<?php echo esc_attr( $poster_srcset ); ?>"
 								sizes="<?php echo esc_attr( $poster_sizes ); ?>"
 								loading="lazy"
+								decoding="async"
 								data-amp-story-player-poster-img
 							/>
 							<?php
