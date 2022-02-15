@@ -66,6 +66,7 @@ export function IsolatedStatusPanel() {
       nameOverride="storyDetailsStatus"
       canCollapse={false}
       isPersistable={false}
+      popupZIndex={11}
     />
   );
 }

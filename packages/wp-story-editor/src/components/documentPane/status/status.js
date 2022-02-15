@@ -21,11 +21,10 @@ import PropTypes from 'prop-types';
 import { useCallback, useMemo, useState } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
-import { Input } from '@googleforcreators/design-system';
+import { Input, DropDown } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import {
   Row,
-  RadioGroup,
   SimplePanel,
   ReviewChecklistDialog,
   useStory,
@@ -38,7 +37,7 @@ const InputRow = styled(Row)`
   margin-left: 34px;
 `;
 
-function StatusPanel({ nameOverride }) {
+function StatusPanel({ nameOverride, popupZIndex }) {
   const {
     status = '',
     password,
@@ -144,8 +143,8 @@ function StatusPanel({ nameOverride }) {
   const isAlreadyPublished = ['publish', 'future', 'private'].includes(status);
 
   const handleChangeVisibility = useCallback(
-    (evt) => {
-      const newVisibility = evt.target.value;
+    (_, value) => {
+      const newVisibility = value;
 
       if ('private' === newVisibility && !isAlreadyPublished) {
         if (
@@ -210,12 +209,11 @@ function StatusPanel({ nameOverride }) {
       >
         <>
           <Row>
-            <RadioGroup
-              groupLabel="Visibility"
-              name="radio-group-visibility"
+            <DropDown
               options={visibilityOptions}
-              onChange={handleChangeVisibility}
-              value={visibility}
+              selectedValue={visibility}
+              onMenuItemClick={handleChangeVisibility}
+              popupZIndex={popupZIndex}
             />
           </Row>
           {hasPassword && (
@@ -244,4 +242,5 @@ export default StatusPanel;
 
 StatusPanel.propTypes = {
   nameOverride: PropTypes.string,
+  popupZIndex: PropTypes.number,
 };

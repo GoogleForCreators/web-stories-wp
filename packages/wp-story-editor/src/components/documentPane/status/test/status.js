@@ -62,6 +62,13 @@ function arrange(
 
 const windowConfirm = jest.fn(() => true);
 
+const clickDropdown = () => {
+  const dropdownBtn = screen.getByRole('button', {
+    name: 'Public',
+  });
+  fireEvent.click(dropdownBtn);
+};
+
 describe('statusPanel', () => {
   beforeAll(() => {
     localStorage.setItem(
@@ -86,38 +93,66 @@ describe('statusPanel', () => {
 
   it('should render Status Panel', () => {
     arrange();
-    const element = screen.getByRole('button', {
-      name: 'Visibility',
-    });
-    expect(element).toBeInTheDocument();
+    clickDropdown();
 
-    const radioOptions = screen.getAllByRole('radio');
-    expect(radioOptions).toHaveLength(3);
-    expect(screen.getByLabelText('Public')).toBeInTheDocument();
-    expect(screen.getByLabelText('Private')).toBeInTheDocument();
-    expect(screen.getByLabelText('Password Protected')).toBeInTheDocument();
+    expect(screen.getAllByRole('option')).toHaveLength(3);
+    expect(
+      screen.getByRole('option', {
+        name: 'Selected Public',
+      })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('option', {
+        name: 'Private',
+      })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('option', {
+        name: 'Password Protected',
+      })
+    ).toBeInTheDocument();
   });
 
   it('should always render the "Public" visibility option', () => {
     arrange({
       publish: false,
     });
-    expect(screen.getByLabelText('Public')).toBeInTheDocument();
+    clickDropdown();
+
+    expect(
+      screen.getByRole('option', {
+        name: 'Selected Public',
+      })
+    ).toBeInTheDocument();
   });
 
   it('should not render other visibility options if lacking permissions', () => {
     arrange({
       publish: false,
     });
-    expect(screen.queryByLabelText('Private')).not.toBeInTheDocument();
+    clickDropdown();
+
     expect(
-      screen.queryByLabelText('Password Protected')
+      screen.queryByRole('option', {
+        name: 'Private',
+      })
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('option', {
+        name: 'Password Protected',
+      })
     ).not.toBeInTheDocument();
   });
 
   it('should update the status when marking a story private', () => {
     const { saveStory } = arrange();
-    fireEvent.click(screen.getByLabelText('Private'));
+    clickDropdown();
+
+    fireEvent.click(
+      screen.getByRole('option', {
+        name: 'Private',
+      })
+    );
     expect(windowConfirm).toHaveBeenCalledWith(expect.any(String));
     expect(saveStory).toHaveBeenCalledWith({
       status: 'private',
@@ -143,7 +178,17 @@ describe('statusPanel', () => {
       'test'
     );
     expect(screen.getByLabelText('Password')).toBeInTheDocument();
-    fireEvent.click(screen.getByText('Public'));
+
+    const dropdownBtn = screen.getByRole('button', {
+      name: 'Password Protected',
+    });
+    fireEvent.click(dropdownBtn);
+
+    fireEvent.click(
+      screen.getByRole('option', {
+        name: 'Public',
+      })
+    );
     expect(updateStory).toHaveBeenCalledWith({
       properties: {
         status: 'draft',
