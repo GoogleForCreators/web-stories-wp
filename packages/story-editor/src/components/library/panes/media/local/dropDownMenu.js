@@ -32,6 +32,7 @@ import {
   Menu,
   PLACEMENT,
   Popup,
+  useKeyDownEffect,
 } from '@googleforcreators/design-system';
 
 /**
@@ -40,6 +41,7 @@ import {
 import { useLocalMedia } from '../../../../../app';
 import useNestedRovingTabIndex from '../../shared/hooks/useNestedRovingTabIndex';
 import { ActionButton } from '../../shared';
+import useFocusCanvas from '../../../../canvas/useFocusCanvas';
 import DeleteDialog from './deleteDialog';
 import MediaEditDialog from './mediaEditDialog';
 
@@ -138,6 +140,8 @@ function DropDownMenu({
   );
 
   useNestedRovingTabIndex({ ref: moreButtonRef }, [], 3);
+  const focusCanvas = useFocusCanvas();
+  useKeyDownEffect(moreButtonRef, 'tab', focusCanvas, [focusCanvas]);
 
   const listId = useMemo(() => `list-${uuidv4()}`, []);
   const buttonId = useMemo(() => `button-${uuidv4()}`, []);
