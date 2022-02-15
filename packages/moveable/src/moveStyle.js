@@ -129,7 +129,10 @@ export const GlobalStyle = createGlobalStyle`
     left: -1px;
     top: -1px;
     background-image: url("${arrowCircle}");
-    background-size: 100%
+    background-size: 100%;
+    /* The svg is made into an image and styles can't be shared across documents.
+    Black is the default so invert to white. */
+    filter: invert(100%);
   }
 
   .default-moveable.hide-handles .moveable-line.moveable-rotation-line,
