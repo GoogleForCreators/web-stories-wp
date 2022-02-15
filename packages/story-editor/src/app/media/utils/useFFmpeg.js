@@ -174,7 +174,7 @@ function useFFmpeg() {
    */
   const getFirstFrameOfVideo = useCallback(
     async (file) => {
-      //eslint-disable-next-line @wordpress/no-unused-vars-before-return -- False positive because of th finally().
+      //eslint-disable-next-line @wordpress/no-unused-vars-before-return -- False positive because of the finally().
       const trackTiming = getTimeTracker('load_video_poster_ffmpeg');
 
       let ffmpeg;
@@ -234,7 +234,7 @@ function useFFmpeg() {
    */
   const transcodeVideo = useCallback(
     async (file) => {
-      //eslint-disable-next-line @wordpress/no-unused-vars-before-return -- False positive because of th finally().
+      //eslint-disable-next-line @wordpress/no-unused-vars-before-return -- False positive because of the finally().
       const trackTiming = getTimeTracker('load_video_transcoding');
 
       let ffmpeg;
@@ -292,7 +292,7 @@ function useFFmpeg() {
    */
   const trimVideo = useCallback(
     async (file, start, end) => {
-      //eslint-disable-next-line @wordpress/no-unused-vars-before-return -- False positive because of th finally().
+      //eslint-disable-next-line @wordpress/no-unused-vars-before-return -- False positive because of the finally().
       const trackTiming = getTimeTracker('load_trim_video_transcoding');
 
       let ffmpeg;
@@ -350,7 +350,7 @@ function useFFmpeg() {
    */
   const stripAudioFromVideo = useCallback(
     async (file) => {
-      //eslint-disable-next-line @wordpress/no-unused-vars-before-return -- False positive because of th finally().
+      //eslint-disable-next-line @wordpress/no-unused-vars-before-return -- False positive because of the finally().
       const trackTiming = getTimeTracker('load_mute_video_transcoding');
 
       let ffmpeg;
@@ -410,7 +410,7 @@ function useFFmpeg() {
    */
   const convertGifToVideo = useCallback(
     async (file) => {
-      //eslint-disable-next-line @wordpress/no-unused-vars-before-return -- False positive because of th finally().
+      //eslint-disable-next-line @wordpress/no-unused-vars-before-return -- False positive because of the finally().
       const trackTiming = getTimeTracker('load_gif_conversion');
 
       let ffmpeg;
