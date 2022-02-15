@@ -37,7 +37,7 @@ class Experiments extends Service_Base implements HasRequirements {
 	/**
 	 * Settings page name.
 	 */
-	const PAGE_NAME = 'web-stories-experiments';
+	public const PAGE_NAME = 'web-stories-experiments';
 
 	/**
 	 * Settings instance.
@@ -63,7 +63,7 @@ class Experiments extends Service_Base implements HasRequirements {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		if ( WEBSTORIES_DEV_MODE ) {
 			add_action( 'admin_menu', [ $this, 'add_menu_page' ], 25 );
 			add_action( 'admin_init', [ $this, 'initialize_settings' ] );
@@ -90,7 +90,7 @@ class Experiments extends Service_Base implements HasRequirements {
 	 *
 	 * @return void
 	 */
-	public function add_menu_page() {
+	public function add_menu_page(): void {
 		add_submenu_page(
 			'edit.php?post_type=' . Story_Post_Type::POST_TYPE_SLUG,
 			__( 'Experiments', 'web-stories' ),
@@ -109,7 +109,7 @@ class Experiments extends Service_Base implements HasRequirements {
 	 *
 	 * @return void
 	 */
-	public function render() {
+	public function render(): void {
 		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/admin/experiments.php';
 	}
 
@@ -120,7 +120,7 @@ class Experiments extends Service_Base implements HasRequirements {
 	 *
 	 * @return void
 	 */
-	public function initialize_settings() {
+	public function initialize_settings(): void {
 		add_settings_section(
 			'web_stories_experiments_section',
 			// The empty string ensures the render function won't output a h2.
@@ -170,7 +170,7 @@ class Experiments extends Service_Base implements HasRequirements {
 	 * }
 	 * @return void
 	 */
-	public function display_experiment_field( array $args ) {
+	public function display_experiment_field( array $args ): void {
 		$is_enabled_by_default = ! empty( $args['default'] );
 		$checked               = $is_enabled_by_default || $this->is_experiment_enabled( $args['id'] );
 		$disabled              = $is_enabled_by_default ? 'disabled' : '';
@@ -196,7 +196,7 @@ class Experiments extends Service_Base implements HasRequirements {
 	 *
 	 * @return void
 	 */
-	public function display_experiment_section() {
+	public function display_experiment_section(): void {
 		?>
 		<p>
 			<?php
@@ -438,7 +438,7 @@ class Experiments extends Service_Base implements HasRequirements {
 	 * @param string $name Experiment name.
 	 * @return array|null Experiment if found, null otherwise.
 	 */
-	protected function get_experiment( string $name ) {
+	protected function get_experiment( string $name ): ?array {
 		$experiment = wp_list_filter( $this->get_experiments(), [ 'name' => $name ] );
 		return ! empty( $experiment ) ? array_shift( $experiment ) : null;
 	}

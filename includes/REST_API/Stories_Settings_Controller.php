@@ -54,7 +54,7 @@ class Stories_Settings_Controller extends WP_REST_Settings_Controller implements
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		$this->register_routes();
 	}
 

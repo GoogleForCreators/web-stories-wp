@@ -43,7 +43,7 @@ class Feed extends TestCase {
 	/**
 	 * @param \WP_UnitTest_Factory $factory
 	 */
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$admin_id = $factory->user->create(
 			[ 'role' => 'administrator' ]
 		);
@@ -74,7 +74,7 @@ class Feed extends TestCase {
 	 *
 	 * @covers ::embed_image
 	 */
-	public function test_the_content_feed() {
+	public function test_the_content_feed(): void {
 		$this->go_to( '/?feed=rss2&post_type=' . \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$feed = $this->do_rss2();
 

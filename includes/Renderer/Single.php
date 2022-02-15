@@ -56,7 +56,7 @@ class Single extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		// This is hooked to both the `template_include` and the `single_template` filters,
 		// as an additional measure to improve compatibility with themes
 		// overriding the template hierarchy in an unusual way, like the Sage theme does.

@@ -58,7 +58,7 @@ class AdSense extends Service_Base implements HasRequirements {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_action( 'web_stories_print_analytics', [ $this, 'print_adsense_tag' ] );
 	}
 
@@ -127,7 +127,7 @@ class AdSense extends Service_Base implements HasRequirements {
 	 *
 	 * @return void
 	 */
-	public function print_adsense_tag() {
+	public function print_adsense_tag(): void {
 		$publisher = $this->get_publisher_id();
 		$slot      = $this->get_slot_id();
 		$enabled   = $this->is_enabled();

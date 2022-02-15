@@ -52,7 +52,6 @@ export const DEFAULT_ATTRIBUTES_FOR_MEDIA = {
   focalY: 50,
 };
 
-// @todo Should be moved to fonts package?
 // @todo: only provide font family, and use font provider to fill the rest.
 export const TEXT_ELEMENT_DEFAULT_FONT = {
   family: 'Roboto',

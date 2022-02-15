@@ -35,7 +35,7 @@ class Experiments extends DependencyInjectedTestCase {
 	/**
 	 * @param $factory
 	 */
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$user_id = $factory->user->create(
 			[
 				'role'         => 'administrator',
@@ -44,13 +44,13 @@ class Experiments extends DependencyInjectedTestCase {
 		);
 	}
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\Experiments::class );
 	}
 
-	public function tear_down() {
+	public function tear_down(): void {
 		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_EXPERIMENTS );
 
 		parent::tear_down();
@@ -59,7 +59,7 @@ class Experiments extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$this->instance->register();
 
 		// Because WEBSTORIES_DEV_MODE is false by default.
@@ -70,7 +70,7 @@ class Experiments extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::initialize_settings
 	 */
-	public function test_initialize_settings() {
+	public function test_initialize_settings(): void {
 		global $wp_settings_fields, $wp_settings_sections;
 
 		$this->instance->initialize_settings();
@@ -83,7 +83,7 @@ class Experiments extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::display_experiment_field
 	 */
-	public function test_display_experiment_field() {
+	public function test_display_experiment_field(): void {
 		$this->instance = $this->createTestProxy(
 			\Google\Web_Stories\Experiments::class,
 			[ $this->injector->make( \Google\Web_Stories\Settings::class ) ]
@@ -117,7 +117,7 @@ class Experiments extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::display_experiment_field
 	 */
-	public function test_display_experiment_field_enabled() {
+	public function test_display_experiment_field_enabled(): void {
 		$this->instance = $this->getMockBuilder( \Google\Web_Stories\Experiments::class )
 			->setConstructorArgs( [ $this->injector->make( \Google\Web_Stories\Settings::class ) ] )
 			->setMethods( [ 'get_experiments', 'is_experiment_enabled' ] )
@@ -151,7 +151,7 @@ class Experiments extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::display_experiment_field
 	 */
-	public function test_display_experiment_field_enabled_by_default() {
+	public function test_display_experiment_field_enabled_by_default(): void {
 		$this->instance = $this->getMockBuilder( \Google\Web_Stories\Experiments::class )
 							->setConstructorArgs( [ $this->injector->make( \Google\Web_Stories\Settings::class ) ] )
 							->setMethods( [ 'get_experiments' ] )
@@ -186,7 +186,7 @@ class Experiments extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::get_experiment_groups
 	 */
-	public function test_get_experiment_groups() {
+	public function test_get_experiment_groups(): void {
 		$groups = $this->instance->get_experiment_groups();
 		$this->assertCount( 3, $groups );
 	}
@@ -194,7 +194,7 @@ class Experiments extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::get_experiments
 	 */
-	public function test_get_experiments() {
+	public function test_get_experiments(): void {
 		$all_experiments       = $this->instance->get_experiments();
 		$all_experiment_groups = array_keys( $this->instance->get_experiment_groups() );
 
@@ -213,7 +213,7 @@ class Experiments extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::get_experiment_statuses
 	 */
-	public function test_get_experiment_statuses() {
+	public function test_get_experiment_statuses(): void {
 		$this->assertEmpty( $this->instance->get_experiment_statuses( 'foo-bar-baz' ) );
 		$this->assertNotEmpty( $this->instance->get_experiment_statuses( 'dashboard' ) );
 		$this->assertNotEmpty( $this->instance->get_experiment_statuses( 'editor' ) );
@@ -227,7 +227,7 @@ class Experiments extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::is_experiment_enabled
 	 */
-	public function test_is_experiment_enabled() {
+	public function test_is_experiment_enabled(): void {
 		update_option( \Google\Web_Stories\Settings::SETTING_NAME_EXPERIMENTS, [ 'enableInProgressTemplateActions' => true ], false );
 
 		$this->assertTrue( $this->instance->is_experiment_enabled( 'enableInProgressTemplateActions' ) );
@@ -237,7 +237,7 @@ class Experiments extends DependencyInjectedTestCase {
 	 * @covers ::is_experiment_enabled
 	 * @covers ::get_experiment
 	 */
-	public function test_is_experiment_enabled_default_experiment() {
+	public function test_is_experiment_enabled_default_experiment(): void {
 		$this->instance = $this->getMockBuilder( \Google\Web_Stories\Experiments::class )
 							->setConstructorArgs( [ $this->injector->make( \Google\Web_Stories\Settings::class ) ] )
 							->setMethods( [ 'get_experiments' ] )
@@ -269,14 +269,14 @@ class Experiments extends DependencyInjectedTestCase {
 	 * @covers ::is_experiment_enabled
 	 * @covers ::get_experiment
 	 */
-	public function test_is_experiment_enabled_unknown_experiment() {
+	public function test_is_experiment_enabled_unknown_experiment(): void {
 		$this->assertFalse( $this->instance->is_experiment_enabled( 'baz' ) );
 	}
 
 	/**
 	 * @cover ::get_enabled_experiments
 	 */
-	public function test_get_enabled_experiments() {
+	public function test_get_enabled_experiments(): void {
 		update_option( \Google\Web_Stories\Settings::SETTING_NAME_EXPERIMENTS, [ 'baz' => true ], false );
 
 		$this->instance = $this->getMockBuilder( \Google\Web_Stories\Experiments::class )

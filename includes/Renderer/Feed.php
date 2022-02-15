@@ -44,7 +44,7 @@ class Feed extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_filter( 'the_content_feed', [ $this, 'embed_image' ] );
 		add_filter( 'the_excerpt_rss', [ $this, 'embed_image' ] );
 	}

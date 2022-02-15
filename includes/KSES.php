@@ -62,7 +62,7 @@ class KSES extends Service_Base implements HasRequirements {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_filter( 'wp_insert_post_data', [ $this, 'filter_insert_post_data' ], 10, 3 );
 	}
 

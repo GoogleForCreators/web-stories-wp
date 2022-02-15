@@ -39,7 +39,7 @@ class Captions extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_filter( 'site_option_upload_filetypes', [ $this, 'filter_list_of_allowed_filetypes' ] );
 	}
 

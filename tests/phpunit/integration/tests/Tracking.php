@@ -55,7 +55,7 @@ class Tracking extends TestCase {
 	 */
 	private $instance;
 
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$user_id = $factory->user->create(
 			[
 				'role' => 'administrator',
@@ -63,7 +63,7 @@ class Tracking extends TestCase {
 		);
 	}
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
@@ -77,7 +77,7 @@ class Tracking extends TestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register_tracking_script() {
+	public function test_register_tracking_script(): void {
 		$this->site_kit->method( 'get_plugin_status' )->willReturn(
 			[
 				'installed'       => true,
@@ -100,7 +100,7 @@ class Tracking extends TestCase {
 	/**
 	 * @covers ::get_settings
 	 */
-	public function test_get_settings() {
+	public function test_get_settings(): void {
 		wp_set_current_user( self::$user_id );
 
 		$this->site_kit->method( 'get_plugin_status' )->willReturn(
@@ -153,7 +153,7 @@ class Tracking extends TestCase {
 	/**
 	 * @covers ::get_settings
 	 */
-	public function test_get_settings_with_optin() {
+	public function test_get_settings_with_optin(): void {
 		wp_set_current_user( self::$user_id );
 		add_user_meta( get_current_user_id(), \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, true );
 

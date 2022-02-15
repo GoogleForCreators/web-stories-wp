@@ -55,14 +55,14 @@ class Jetpack extends Service_Base {
 	 *
 	 * @since 1.7.2
 	 */
-	const VIDEOPRESS_MIME_TYPE = 'video/videopress';
+	public const VIDEOPRESS_MIME_TYPE = 'video/videopress';
 
 	/**
 	 * VideoPress poster meta key.
 	 *
 	 * @since 1.7.2
 	 */
-	const VIDEOPRESS_POSTER_META_KEY = 'videopress_poster_image';
+	public const VIDEOPRESS_POSTER_META_KEY = 'videopress_poster_image';
 
 	/**
 	 * Media_Source_Taxonomy instance.
@@ -107,7 +107,7 @@ class Jetpack extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		// See https://github.com/Automattic/jetpack/blob/4b85be883b3c584c64eeb2fb0f3fcc15dabe2d30/modules/custom-post-types/portfolios.php#L80.
 		if ( \defined( 'IS_WPCOM' ) && IS_WPCOM ) {
 			add_filter( 'wpcom_sitemap_post_types', [ $this, 'add_to_jetpack_sitemap' ] );
@@ -264,7 +264,7 @@ class Jetpack extends Service_Base {
 	 * @param WP_Post          $post     The original attachment post.
 	 * @return WP_REST_Response
 	 */
-	public function filter_rest_api_response( WP_REST_Response $response, WP_Post $post ) {
+	public function filter_rest_api_response( WP_REST_Response $response, WP_Post $post ): WP_REST_Response {
 		if ( self::VIDEOPRESS_MIME_TYPE !== $post->post_mime_type ) {
 			return $response;
 		}
@@ -345,7 +345,7 @@ class Jetpack extends Service_Base {
 	 * @param string $meta_key    Metadata key.
 	 * @return void
 	 */
-	public function add_term( $mid, $object_id, $meta_key ) {
+	public function add_term( $mid, $object_id, $meta_key ): void {
 		if ( self::VIDEOPRESS_POSTER_META_KEY !== $meta_key ) {
 			return;
 		}

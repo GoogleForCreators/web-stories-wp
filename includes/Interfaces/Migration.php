@@ -38,5 +38,5 @@ interface Migration {
 	 *
 	 * @return void
 	 */
-	public function migrate();
+	public function migrate(): void;
 }

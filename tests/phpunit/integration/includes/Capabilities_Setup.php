@@ -18,12 +18,12 @@
 namespace Google\Web_Stories\Tests\Integration;
 
 trait Capabilities_Setup {
-	public function add_caps_to_roles() {
+	public function add_caps_to_roles(): void {
 		$capability = new \Google\Web_Stories\User\Capabilities();
 		$capability->add_caps_to_roles();
 	}
 
-	public function remove_caps_from_roles() {
+	public function remove_caps_from_roles(): void {
 		$capability = new \Google\Web_Stories\User\Capabilities();
 		$capability->remove_caps_from_roles();
 	}

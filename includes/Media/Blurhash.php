@@ -37,7 +37,7 @@ class Blurhash extends Service_Base implements HasMeta {
 	/**
 	 * The blurhash meta key.
 	 */
-	const BLURHASH_POST_META_KEY = 'web_stories_blurhash';
+	public const BLURHASH_POST_META_KEY = 'web_stories_blurhash';
 
 	/**
 	 * Init.
@@ -46,7 +46,7 @@ class Blurhash extends Service_Base implements HasMeta {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		$this->register_meta();
 
 		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'wp_prepare_attachment_for_js' ] );
@@ -59,7 +59,7 @@ class Blurhash extends Service_Base implements HasMeta {
 	 *
 	 * @return void
 	 */
-	public function register_meta() {
+	public function register_meta(): void {
 		register_meta(
 			'post',
 			self::BLURHASH_POST_META_KEY,

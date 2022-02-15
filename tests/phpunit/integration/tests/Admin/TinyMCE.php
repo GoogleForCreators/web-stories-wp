@@ -30,7 +30,7 @@ class TinyMCE extends DependencyInjectedTestCase {
 	 */
 	protected $instance;
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\Admin\TinyMCE::class );
@@ -39,7 +39,7 @@ class TinyMCE extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$this->instance->register();
 
 		$this->assertSame( 10, has_filter( 'mce_buttons', [ $this->instance, 'tinymce_web_stories_button' ] ) );
@@ -51,7 +51,7 @@ class TinyMCE extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::register_assets
 	 */
-	public function test_register_assets() {
+	public function test_register_assets(): void {
 		$this->instance->register_assets();
 
 		$this->assertTrue( wp_script_is( \Google\Web_Stories\Admin\TinyMCE::SCRIPT_HANDLE, 'registered' ) );
@@ -60,7 +60,7 @@ class TinyMCE extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::tinymce_web_stories_button
 	 */
-	public function test_tinymce_web_stories_button() {
+	public function test_tinymce_web_stories_button(): void {
 		$result = $this->instance->tinymce_web_stories_button( [] );
 
 		$this->assertContains( 'web_stories', $result );
@@ -69,7 +69,7 @@ class TinyMCE extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::web_stories_mce_plugin
 	 */
-	public function test_web_stories_mce_plugin() {
+	public function test_web_stories_mce_plugin(): void {
 		$result = $this->instance->web_stories_mce_plugin( [] );
 
 		$this->assertArrayHasKey( 'web_stories', $result );
@@ -78,7 +78,7 @@ class TinyMCE extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::web_stories_tinymce_root_element
 	 */
-	public function test_web_stories_tinymce_root_element() {
+	public function test_web_stories_tinymce_root_element(): void {
 		$result = get_echo( [ $this->instance, 'web_stories_tinymce_root_element' ] );
 		$result = trim( $result );
 
@@ -88,7 +88,7 @@ class TinyMCE extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::script_loader_tag
 	 */
-	public function test_script_loader_tag() {
+	public function test_script_loader_tag(): void {
 		$result = $this->instance->script_loader_tag( "<script src='http://www.example.com/test.js'></script>", \Google\Web_Stories\Admin\TinyMCE::SCRIPT_HANDLE, 'http://www.example.com/test.js' );
 
 		$this->assertSame( '', $result );

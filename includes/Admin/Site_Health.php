@@ -84,7 +84,7 @@ class Site_Health extends Service_Base implements Conditional {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_filter( 'debug_information', [ $this, 'add_debug_information' ] );
 		add_filter( 'site_status_test_php_modules', [ $this, 'add_extensions' ] );
 		add_filter( 'site_status_test_result', [ $this, 'modify_test_result' ] );
