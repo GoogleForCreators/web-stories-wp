@@ -74,6 +74,9 @@ const menuStylesOverride = css`
   }
 `;
 
+// This is used for nested roving tab index to detect parent siblings.
+const BUTTON_NESTING_DEPTH = 3;
+
 /**
  * Get a More icon that displays a dropdown menu on click.
  *
@@ -139,7 +142,7 @@ function DropDownMenu({
     [setShowEditDialog]
   );
 
-  useNestedRovingTabIndex({ ref: moreButtonRef }, [], 3);
+  useNestedRovingTabIndex({ ref: moreButtonRef }, [], BUTTON_NESTING_DEPTH);
   const focusCanvas = useFocusCanvas();
   useKeyDownEffect(moreButtonRef, 'tab', focusCanvas, [focusCanvas]);
 

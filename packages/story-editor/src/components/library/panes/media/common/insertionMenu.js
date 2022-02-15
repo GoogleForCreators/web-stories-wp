@@ -60,6 +60,9 @@ const menuStylesOverride = css`
   }
 `;
 
+// This is used for nested roving tab index to detect parent siblings.
+const BUTTON_NESTING_DEPTH = 3;
+
 /**
  * Get a More icon that displays a dropdown menu on click.
  *
@@ -123,7 +126,7 @@ function InsertionMenu({ resource, display, onInsert, width, index }) {
     }
   };
 
-  useNestedRovingTabIndex({ ref: insertButtonRef }, [], 3);
+  useNestedRovingTabIndex({ ref: insertButtonRef }, [], BUTTON_NESTING_DEPTH);
 
   const listId = useMemo(() => `list-${uuidv4()}`, []);
   const buttonId = useMemo(() => `button-${uuidv4()}`, []);

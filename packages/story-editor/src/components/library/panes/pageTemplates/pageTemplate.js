@@ -125,6 +125,9 @@ PageTemplateTitle.propTypes = {
   isActive: PropTypes.bool.isRequired,
 };
 
+// This is used for nested roving tab index to detect parent siblings.
+const BUTTON_NESTING_DEPTH = 2;
+
 function PageTemplate(
   { page, pageSize, translateY, translateX, handleDelete, index, ...rest },
   ref
@@ -206,8 +209,8 @@ function PageTemplate(
 
   const insertButtonRef = useRef();
   const deleteButtonRef = useRef();
-  useNestedRovingTabIndex({ ref: insertButtonRef }, [], 2);
-  useNestedRovingTabIndex({ ref: deleteButtonRef }, [], 2);
+  useNestedRovingTabIndex({ ref: insertButtonRef }, [], BUTTON_NESTING_DEPTH);
+  useNestedRovingTabIndex({ ref: deleteButtonRef }, [], BUTTON_NESTING_DEPTH);
 
   const focusCanvas = useFocusCanvas();
   useKeyDownEffect(deleteButtonRef, 'tab', focusCanvas, [focusCanvas]);
