@@ -2,10 +2,10 @@
 /**
  * Class REST_Controller
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -24,7 +24,6 @@
  * limitations under the License.
  */
 
-
 namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Infrastructure\Delayed;
@@ -34,8 +33,6 @@ use WP_REST_Controller;
 
 /**
  * Class REST_Controller
- *
- * @package Google\Web_Stories\REST_API
  */
 abstract class REST_Controller extends WP_REST_Controller implements Service, Delayed, Registerable {
 	/**
@@ -45,7 +42,7 @@ abstract class REST_Controller extends WP_REST_Controller implements Service, De
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		$this->register_routes();
 	}
 

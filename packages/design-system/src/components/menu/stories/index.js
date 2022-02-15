@@ -17,8 +17,6 @@
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
-import { boolean, number, text } from '@storybook/addon-knobs';
 import styled, { css } from 'styled-components';
 import { useState, forwardRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
@@ -38,6 +36,17 @@ import { getOptions } from '../utils';
 
 export default {
   title: 'DesignSystem/Components/Menu',
+  args: {
+    dropDownHeight: 100,
+    hasMenuRole: true,
+    isRTL: false,
+    menuAriaLabel: 'default aria label',
+    parentId: 'id-menu-associates-with',
+  },
+  argTypes: {
+    onMenuItemClick: { action: 'onMenuItemClick' },
+    onDismissMenu: { action: 'onDismissMenu occured' },
+  },
 };
 
 const STANDARD_WIDTH = 400;
@@ -88,7 +97,8 @@ const _effectChooserOptions = getOptions(effectChooserOptions);
 const _nestedDropDownOptions = getOptions(nestedDropDownOptions);
 const _reallyLongOptions = getOptions(reallyLongOptions);
 
-export const _default = () => {
+// eslint-disable-next-line react/prop-types
+export const _default = ({ onMenuItemClick, ...args }) => {
   const [selectedValue, setSelectedValue] = useState(
     basicDropDownOptions[2].value
   );
@@ -96,131 +106,96 @@ export const _default = () => {
     <DarkThemeProvider>
       <Container>
         <Menu
-          dropDownHeight={number('dropDownHeight')}
-          emptyText={'No options available'}
-          hasMenuRole={boolean('hasMenuRole')}
-          isRTL={boolean('isRTL')}
           options={_basicDropDownOptions}
           listId={'list-id'}
-          onMenuItemClick={(event, newValue) => {
-            action('onMenuItemClick')(event);
+          onMenuItemClick={(_, newValue) => {
+            onMenuItemClick(newValue);
             setSelectedValue(newValue);
           }}
-          onDismissMenu={(event) => {
-            action('onDismissMenu occured')(event);
-          }}
           activeValue={selectedValue}
-          menuAriaLabel={text('menuAriaLabel', 'default aria label')}
-          parentId={text('parentId', 'id-menu-associates-with')}
+          {...args}
         />
       </Container>
     </DarkThemeProvider>
   );
 };
 
-export const LightTheme = () => {
+// eslint-disable-next-line react/prop-types
+export const LightTheme = ({ onMenuItemClick, ...args }) => {
   const [selectedValue, setSelectedValue] = useState(null);
 
   return (
     <Container>
       <Menu
-        dropDownHeight={number('dropDownHeight')}
         emptyText={'No options available'}
-        hasMenuRole={boolean('hasMenuRole')}
-        isRTL={boolean('isRTL')}
         options={_basicDropDownOptions}
         listId={'list-id'}
-        onMenuItemClick={(event, newValue) => {
-          action('onMenuItemClick')(event);
+        onMenuItemClick={(_, newValue) => {
+          onMenuItemClick(newValue);
           setSelectedValue(newValue);
         }}
-        onDismissMenu={(event) => {
-          action('onDismissMenu occured')(event);
-        }}
         activeValue={selectedValue}
-        menuAriaLabel={text('menuAriaLabel', 'default aria label')}
-        parentId={text('parentId', 'id-menu-associates-with')}
+        {...args}
       />
     </Container>
   );
 };
-
-export const NoOptionsMenu = () => {
+// eslint-disable-next-line react/prop-types
+export const NoOptionsMenu = ({ onMenuItemClick, ...args }) => {
   const [selectedValue, setSelectedValue] = useState(null);
 
   return (
     <Container>
       <Menu
-        dropDownHeight={number('dropDownHeight')}
         emptyText={'No options available'}
-        hasMenuRole={boolean('hasMenuRole')}
-        isRTL={boolean('isRTL')}
         options={[]}
         listId={'list-id'}
-        onMenuItemClick={(event, newValue) => {
-          action('onMenuItemClick')(event);
+        onMenuItemClick={(_, newValue) => {
+          onMenuItemClick(newValue);
           setSelectedValue(newValue);
         }}
-        onDismissMenu={(event) => {
-          action('onDismissMenu occured')(event);
-        }}
         activeValue={selectedValue}
-        menuAriaLabel={text('menuAriaLabel', 'default aria label')}
-        parentId={text('parentId', 'id-menu-associates-with')}
+        {...args}
       />
     </Container>
   );
 };
-
-export const ReallyLongLabelsMenu = () => {
+// eslint-disable-next-line react/prop-types
+export const ReallyLongLabelsMenu = ({ onMenuItemClick, ...args }) => {
   const [selectedValue, setSelectedValue] = useState(null);
 
   return (
     <Container narrow>
       <Menu
-        dropDownHeight={number('dropDownHeight')}
         emptyText={'No options available'}
-        hasMenuRole={boolean('hasMenuRole')}
-        isRTL={boolean('isRTL')}
         options={_reallyLongOptions}
         listId={'list-id'}
-        onMenuItemClick={(event, newValue) => {
-          action('onMenuItemClick')(event);
+        onMenuItemClick={(_, newValue) => {
+          onMenuItemClick(newValue);
           setSelectedValue(newValue);
         }}
-        onDismissMenu={(event) => {
-          action('onDismissMenu occured')(event);
-        }}
         activeValue={selectedValue}
-        menuAriaLabel={text('menuAriaLabel', 'default aria label')}
-        parentId={text('parentId', 'id-menu-associates-with')}
+        {...args}
       />
     </Container>
   );
 };
-
-export const SubMenus = () => {
+// eslint-disable-next-line react/prop-types
+export const SubMenus = ({ onMenuItemClick, ...args }) => {
   const [selectedValue, setSelectedValue] = useState('dog-2');
 
   return (
     <Container>
       <Menu
-        dropDownHeight={number('dropDownHeight')}
         emptyText={'No options available'}
-        hasMenuRole={boolean('hasMenuRole')}
-        isRTL={boolean('isRTL')}
         options={_nestedDropDownOptions}
         listId={'list-id'}
-        onMenuItemClick={(event, newValue) => {
-          action('onMenuItemClick')(event);
+        onMenuItemClick={(_, newValue) => {
+          onMenuItemClick(newValue);
           setSelectedValue(newValue);
         }}
-        onDismissMenu={(event) => {
-          action('onDismissMenu occured')(event);
-        }}
         activeValue={selectedValue}
-        menuAriaLabel={text('menuAriaLabel', 'default aria label')}
-        parentId={text('parentId', 'id-menu-associates-with')}
+        {...args}
       />
     </Container>
   );
@@ -243,30 +218,27 @@ RenderItemOverride.propTypes = {
   isSelected: PropTypes.bool,
 };
 
-export const OverriddenAnimationProofOfConcept = () => {
+export const OverriddenAnimationProofOfConcept = ({
+  // eslint-disable-next-line react/prop-types
+  onMenuItemClick,
+  ...args
+}) => {
   const [selectedValue, setSelectedValue] = useState(null);
   return (
     <DarkThemeProvider>
       <Container>
         <Menu
-          dropDownHeight={number('dropDownHeight')}
           emptyText={'No options available'}
-          hasMenuRole={boolean('hasMenuRole')}
-          isRTL={boolean('isRTL')}
           options={_effectChooserOptions}
           listId={'list-id'}
-          onMenuItemClick={(event, newValue) => {
-            action('onMenuItemClick')(event);
+          onMenuItemClick={(_, newValue) => {
+            onMenuItemClick(newValue);
             setSelectedValue(newValue);
           }}
-          onDismissMenu={(event) => {
-            action('onDismissMenu occured')(event);
-          }}
           activeValue={selectedValue}
-          menuAriaLabel={text('menuAriaLabel', 'default aria label')}
-          parentId={text('parentId', 'id-menu-associates-with')}
           menuStylesOverride={styleOverrideForAnimationEffectMenu}
           renderItem={RenderItemOverride}
+          {...args}
         />
       </Container>
     </DarkThemeProvider>

@@ -2,10 +2,10 @@
 /**
  * Class Capabilities
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -37,8 +37,6 @@ use WP_Site;
 
 /**
  * Class Capabilities
- *
- * @package Google\Web_Stories\User
  */
 class Capabilities implements Service, PluginActivationAware, SiteInitializationAware, SiteRemovalAware {
 	/**
@@ -47,10 +45,9 @@ class Capabilities implements Service, PluginActivationAware, SiteInitialization
 	 * @since 1.6.0
 	 *
 	 * @param bool $network_wide Whether the activation was done network-wide.
-	 *
 	 * @return void
 	 */
-	public function on_plugin_activation( $network_wide ) {
+	public function on_plugin_activation( $network_wide ): void {
 		$this->add_caps_to_roles();
 	}
 
@@ -60,10 +57,9 @@ class Capabilities implements Service, PluginActivationAware, SiteInitialization
 	 * @since 1.11.0
 	 *
 	 * @param WP_Site $site The site being initialized.
-	 *
 	 * @return void
 	 */
-	public function on_site_initialization( WP_Site $site ) {
+	public function on_site_initialization( WP_Site $site ): void {
 		$this->add_caps_to_roles();
 	}
 
@@ -73,10 +69,9 @@ class Capabilities implements Service, PluginActivationAware, SiteInitialization
 	 * @since 1.11.0
 	 *
 	 * @param WP_Site $site The site being removed.
-	 *
 	 * @return void
 	 */
-	public function on_site_removal( WP_Site $site ) {
+	public function on_site_removal( WP_Site $site ): void {
 		$this->remove_caps_from_roles();
 	}
 
@@ -90,7 +85,7 @@ class Capabilities implements Service, PluginActivationAware, SiteInitialization
 	 *
 	 * @return void
 	 */
-	public function add_caps_to_roles() {
+	public function add_caps_to_roles(): void {
 		$all_capabilities_raw = $this->get_all_capabilities();
 		$all_capabilities     = array_values( $all_capabilities_raw );
 
@@ -145,7 +140,7 @@ class Capabilities implements Service, PluginActivationAware, SiteInitialization
 	 *
 	 * @return void
 	 */
-	public function remove_caps_from_roles() {
+	public function remove_caps_from_roles(): void {
 		$all_capabilities_raw = $this->get_all_capabilities();
 		$all_capabilities     = array_values( $all_capabilities_raw );
 		$all_capabilities     = array_filter(

@@ -17,7 +17,6 @@
 
 namespace Google\Web_Stories\Tests\Integration\Migrations;
 
-use Google\Web_Stories\Media\Media_Source_Taxonomy;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 
 /**
@@ -31,7 +30,7 @@ class Add_Media_Source_Page_Template extends DependencyInjectedTestCase {
 	 * @covers ::get_term
 	 * @covers \Google\Web_Stories\Migrations\Add_Media_Source::migrate
 	 */
-	public function test_migrate() {
+	public function test_migrate(): void {
 		$instance = $this->injector->make( \Google\Web_Stories\Migrations\Add_Media_Source_Page_Template::class );
 		$instance->migrate();
 

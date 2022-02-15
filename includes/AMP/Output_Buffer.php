@@ -2,10 +2,10 @@
 /**
  * Class Output_Buffer
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -26,9 +26,7 @@
 
 namespace Google\Web_Stories\AMP;
 
-use Exception;
 use Google\Web_Stories\Context;
-use Google\Web_Stories\Exception\SanitizationException;
 use Google\Web_Stories\Infrastructure\Conditional;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
@@ -95,7 +93,7 @@ class Output_Buffer extends Service_Base implements Conditional {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		/*
 		 * Start output buffering at very low priority for sake of plugins and themes that use template_redirect
 		 * instead of template_include.
@@ -123,7 +121,7 @@ class Output_Buffer extends Service_Base implements Conditional {
 	 */
 	public static function get_registration_action_priority(): int {
 		// phpcs:ignore PHPCompatibility.Constants.NewConstants.php_int_minFound
-		return defined( 'PHP_INT_MIN' ) ? PHP_INT_MIN : ~PHP_INT_MAX;
+		return \defined( 'PHP_INT_MIN' ) ? PHP_INT_MIN : ~PHP_INT_MAX;
 	}
 
 	/**
@@ -140,7 +138,7 @@ class Output_Buffer extends Service_Base implements Conditional {
 	public static function is_needed(): bool {
 		$current_post = get_post();
 
-		$has_old_amp_version = ! defined( '\AMP__VERSION' ) || ( defined( '\AMP__VERSION' ) && version_compare( \AMP__VERSION, WEBSTORIES_AMP_VERSION, '<' ) );
+		$has_old_amp_version = ! \defined( '\AMP__VERSION' ) || ( \defined( '\AMP__VERSION' ) && version_compare( \AMP__VERSION, WEBSTORIES_AMP_VERSION, '<' ) );
 		$amp_available       = function_exists( 'amp_is_available' ) && amp_is_available();
 		$amp_enabled         = function_exists( 'amp_is_enabled' ) && amp_is_enabled(); // Technically an internal method.
 		$amp_initialized     = did_action( 'amp_init' ) > 0;
@@ -158,7 +156,7 @@ class Output_Buffer extends Service_Base implements Conditional {
 	 *
 	 * @return void
 	 */
-	public function start_output_buffering() {
+	public function start_output_buffering(): void {
 		if ( ! $this->context->is_web_story() ) {
 			return;
 		}
@@ -198,7 +196,7 @@ class Output_Buffer extends Service_Base implements Conditional {
 			$response = $this->prepare_response( $response );
 		} catch ( \Error $error ) { // Only PHP 7+.
 			$response = $this->render_error_page( $error );
-		} catch ( Exception $exception ) {
+		} catch ( \Exception $exception ) {
 			$response = $this->render_error_page( $exception );
 		}
 
@@ -227,7 +225,7 @@ class Output_Buffer extends Service_Base implements Conditional {
 		$dom = Document::fromHtml( $response );
 
 		if ( ! $dom instanceof Document ) {
-			return $this->render_error_page( SanitizationException::from_document_parse_error() );
+			return $this->render_error_page( \Google\Web_Stories\Exception\SanitizationException::from_document_parse_error() );
 		}
 
 		$this->sanitization->sanitize_document( $dom );
@@ -239,12 +237,12 @@ class Output_Buffer extends Service_Base implements Conditional {
 	/**
 	 * Render error page.
 	 *
-	 * @todo Improve error message.
-	 *
 	 * @since 1.10.0
 	 *
 	 * @param Throwable $throwable Exception or (as of PHP7) Error.
 	 * @return string Error page.
+	 *
+	 * @todo Improve error message.
 	 */
 	private function render_error_page( Throwable $throwable ): string {
 		return esc_html__( 'There was an error generating the web story, probably because of a server misconfiguration. Try contacting your hosting provider or open a new support request.', 'web-stories' );

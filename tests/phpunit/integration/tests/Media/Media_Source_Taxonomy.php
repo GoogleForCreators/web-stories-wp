@@ -18,7 +18,6 @@
 namespace Google\Web_Stories\Tests\Integration\Media;
 
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
-use Google\Web_Stories\Tests\Integration\TestCase;
 use WP_Query;
 use WP_REST_Request;
 
@@ -33,7 +32,7 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 	 */
 	private $instance;
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\Media\Media_Source_Taxonomy::class );
@@ -42,7 +41,7 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$this->instance->register();
 
 		$this->assertSame( 10, has_action( 'rest_api_init', [ $this->instance, 'rest_api_init' ] ) );
@@ -82,7 +81,7 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::register_taxonomy
 	 */
-	public function test_register_taxonomy() {
+	public function test_register_taxonomy(): void {
 		$this->call_private_method( $this->instance, 'register_taxonomy' );
 
 		$this->assertTrue( taxonomy_exists( $this->instance->get_taxonomy_slug() ) );
@@ -91,7 +90,7 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::rest_api_init
 	 */
-	public function test_rest_api_init() {
+	public function test_rest_api_init(): void {
 		wp_set_current_user( self::factory()->user->create( [ 'role' => 'administrator' ] ) );
 
 		$poster_attachment_id = self::factory()->attachment->create_object(
@@ -125,7 +124,7 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::wp_prepare_attachment_for_js
 	 */
-	public function test_wp_prepare_attachment_for_js() {
+	public function test_wp_prepare_attachment_for_js(): void {
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
@@ -181,7 +180,7 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::get_exclude_tax_query
 	 */
-	public function test_get_exclude_tax_query_filter() {
+	public function test_get_exclude_tax_query_filter(): void {
 		add_filter( 'web_stories_hide_auto_generated_attachments', '__return_false' );
 		$args    = [
 			'tax_query' => [
@@ -201,7 +200,7 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 	 * @covers ::filter_ajax_query_attachments_args
 	 * @covers ::get_exclude_tax_query
 	 */
-	public function test_filter_ajax_query_attachments_args() {
+	public function test_filter_ajax_query_attachments_args(): void {
 		$tax_slug = $this->instance->get_taxonomy_slug();
 
 		$expected = [
@@ -225,7 +224,7 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 	 * @covers ::filter_ajax_query_attachments_args
 	 * @covers ::get_exclude_tax_query
 	 */
-	public function test_filter_ajax_query_attachments_args_existing_tax_query() {
+	public function test_filter_ajax_query_attachments_args_existing_tax_query(): void {
 		$tax_slug = $this->instance->get_taxonomy_slug();
 
 		$expected = [
@@ -267,7 +266,7 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::filter_generated_media_attachments
 	 */
-	public function test_filter_generated_media_attachments_no_screen() {
+	public function test_filter_generated_media_attachments_no_screen(): void {
 		$query    = new WP_Query();
 		$expected = $query->get( 'tax_query' );
 
@@ -280,7 +279,7 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::filter_generated_media_attachments
 	 */
-	public function test_filter_generated_media_attachments_not_main_query() {
+	public function test_filter_generated_media_attachments_not_main_query(): void {
 		$GLOBALS['current_screen'] = convert_to_screen( 'upload' );
 
 		$query    = new WP_Query();
@@ -296,7 +295,7 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::filter_generated_media_attachments
 	 */
-	public function test_filter_generated_media_attachments_not_upload_screen() {
+	public function test_filter_generated_media_attachments_not_upload_screen(): void {
 		$GLOBALS['current_screen'] = convert_to_screen( 'post' );
 
 		$query                   = new WP_Query();
@@ -312,7 +311,7 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::filter_generated_media_attachments
 	 */
-	public function test_filter_generated_media_attachmentss() {
+	public function test_filter_generated_media_attachmentss(): void {
 
 		$expected = [
 			[
@@ -356,7 +355,7 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::filter_rest_generated_media_attachments
 	 */
-	public function test_filter_rest_generated_media_attachments() {
+	public function test_filter_rest_generated_media_attachments(): void {
 		$tax_slug = $this->instance->get_taxonomy_slug();
 
 		$expected = [

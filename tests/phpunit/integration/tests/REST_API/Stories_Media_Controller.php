@@ -17,14 +17,12 @@
 
 namespace Google\Web_Stories\Tests\Integration\REST_API;
 
-use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedRestTestCase;
+use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
 use WP_REST_Request;
 
 /**
  * Class Stories_Media_Controller
- *
- * @package Google\Web_Stories\Tests\REST_API
  *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Media_Controller
  */
@@ -44,7 +42,7 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @param $factory
 	 */
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 		$factory->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -80,7 +78,7 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 		);
 	}
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->controller = $this->injector->make( \Google\Web_Stories\REST_API\Stories_Media_Controller::class );
@@ -89,7 +87,7 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::get_items
 	 */
-	public function test_get_items_format() {
+	public function test_get_items_format(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$user_id );
@@ -109,7 +107,7 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::get_items
 	 * @covers ::prepare_items_query
 	 */
-	public function test_get_items_filter_mime() {
+	public function test_get_items_filter_mime(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$user_id );
@@ -128,7 +126,7 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::get_items
 	 * @covers ::get_media_types
 	 */
-	public function test_get_items_filter_video() {
+	public function test_get_items_filter_video(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$user_id );
@@ -147,7 +145,7 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::create_item
 	 * @covers ::process_post
 	 */
-	public function test_create_item() {
+	public function test_create_item(): void {
 		$this->controller->register();
 
 		$poster_attachment_id = self::factory()->attachment->create_object(
@@ -185,7 +183,7 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::create_item
 	 * @covers ::process_post
 	 */
-	public function test_create_item_with_revision() {
+	public function test_create_item_with_revision(): void {
 		$this->controller->register();
 
 		$revision_id = self::factory()->post->create_object(
@@ -214,7 +212,7 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::create_item
 	 * @covers ::process_post
 	 */
-	public function test_create_item_migrate_data() {
+	public function test_create_item_migrate_data(): void {
 		$this->controller->register();
 
 		$original_attachment_id = self::factory()->attachment->create_object(
@@ -265,7 +263,7 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::prepare_links
 	 * @covers ::add_taxonomy_links
 	 */
-	public function test_get_add_taxonomy_links() {
+	public function test_get_add_taxonomy_links(): void {
 		$this->controller->register();
 
 		$object = new DummyTaxonomy();
@@ -301,7 +299,7 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::create_item
 	 * @covers ::process_post
 	 */
-	public function test_create_item_migrate_data_invalid() {
+	public function test_create_item_migrate_data_invalid(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$user_id );
@@ -324,7 +322,7 @@ class Stories_Media_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::get_item_schema
 	 */
-	public function test_get_item_schema() {
+	public function test_get_item_schema(): void {
 		$this->controller->register();
 
 		$request  = new WP_REST_Request( 'OPTIONS', '/web-stories/v1/media' );

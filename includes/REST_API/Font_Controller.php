@@ -2,10 +2,10 @@
 /**
  * Class Font_Controller
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -52,7 +52,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 		parent::__construct( $post_type );
 
 		$post_type_object = get_post_type_object( $post_type );
-		$this->namespace  = $post_type_object && ! empty( $post_type_object->rest_namespace ) ?
+		$this->namespace  = isset( $post_type_object, $post_type_object->rest_namespace ) && \is_string( $post_type_object->rest_namespace ) ?
 			$post_type_object->rest_namespace :
 			'web-stories/v1';
 	}
@@ -66,7 +66,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @return void
 	 */
-	public function register_routes() {
+	public function register_routes(): void {
 		register_rest_route(
 			$this->namespace,
 			'/' . $this->rest_base,
@@ -114,7 +114,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @return array List of Google fonts.
 	 */
-	protected function get_builtin_fonts() {
+	protected function get_builtin_fonts(): array {
 		$file = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/data/fonts/fonts.json';
 
 		if ( ! is_readable( $file ) ) {
@@ -216,7 +216,6 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	 * @since 1.16.0
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
-	 *
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_items( $request ) {
@@ -275,7 +274,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 							 *
 							 * @var array{family: string} $font
 							 */
-							return in_array( strtolower( $font['family'] ), $include_list, true );
+							return \in_array( strtolower( $font['family'] ), $include_list, true );
 						}
 					)
 				);
@@ -308,7 +307,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 		$post_type = get_post_type_object( $this->post_type );
 
 		if ( ! $post_type || ! current_user_can( $post_type->cap->read_post ) ) {
-			return new WP_Error(
+			return new \WP_Error(
 				'rest_forbidden',
 				__( 'Sorry, you are not allowed to list fonts.', 'web-stories' ),
 				[ 'status' => rest_authorization_required_code() ]
@@ -452,7 +451,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 					$prepared_post->post_title = $font_family;
 
 					if ( $this->font_exists( $font_family ) ) {
-						return new WP_Error(
+						return new \WP_Error(
 							'rest_invalid_field',
 							__( 'A font with this name already exists', 'web-stories' ),
 							[ 'status' => 400 ]
@@ -475,7 +474,6 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	 * @since 1.16.0
 	 *
 	 * @param string $font_family Font family.
-	 *
 	 * @return bool Whether a font with this exact name already exists.
 	 */
 	private function font_exists( string $font_family ): bool {
@@ -504,7 +502,7 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	 *
 	 * @return array Collection parameters.
 	 */
-	public function get_collection_params() {
+	public function get_collection_params(): array {
 		$query_params = parent::get_collection_params();
 
 		$query_params['context']['default'] = 'view';

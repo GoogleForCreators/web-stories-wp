@@ -30,7 +30,7 @@ class Muting extends DependencyInjectedTestCase {
 	 */
 	private $instance;
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\Media\Video\Muting::class );
@@ -39,7 +39,7 @@ class Muting extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$this->instance->register();
 
 		$this->assertSame( 10, has_action( 'rest_api_init', [ $this->instance, 'rest_api_init' ] ) );
@@ -58,7 +58,7 @@ class Muting extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::register_meta
 	 */
-	public function test_register_meta() {
+	public function test_register_meta(): void {
 		$this->instance->register_meta();
 
 		$this->assertTrue( registered_meta_key_exists( 'post', $this->instance::IS_MUTED_POST_META_KEY, 'attachment' ) );
@@ -69,7 +69,7 @@ class Muting extends DependencyInjectedTestCase {
 	 * @covers ::wp_prepare_attachment_for_js
 	 * @covers ::get_callback_is_muted
 	 */
-	public function test_wp_prepare_attachment_for_js() {
+	public function test_wp_prepare_attachment_for_js(): void {
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
@@ -114,7 +114,7 @@ class Muting extends DependencyInjectedTestCase {
 	 * @covers ::rest_api_init
 	 * @covers ::get_callback_is_muted
 	 */
-	public function test_rest_api_init() {
+	public function test_rest_api_init(): void {
 		wp_set_current_user( self::factory()->user->create( [ 'role' => 'administrator' ] ) );
 
 		$video_attachment_id = self::factory()->attachment->create_object(
@@ -137,7 +137,7 @@ class Muting extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::get_callback_is_muted
 	 */
-	public function test_get_callback_is_muted() {
+	public function test_get_callback_is_muted(): void {
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
@@ -154,7 +154,7 @@ class Muting extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::update_callback_is_muted
 	 */
-	public function test_update_callback_is_muted() {
+	public function test_update_callback_is_muted(): void {
 		wp_set_current_user( self::factory()->user->create( [ 'role' => 'administrator' ] ) );
 
 		$video_attachment_id = self::factory()->attachment->create_object(
@@ -173,7 +173,7 @@ class Muting extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::update_callback_is_muted
 	 */
-	public function test_update_callback_is_muted_error() {
+	public function test_update_callback_is_muted_error(): void {
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',

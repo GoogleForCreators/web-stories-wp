@@ -6,10 +6,10 @@ use Google\Web_Stories\Infrastructure\Injector;
 use Google\Web_Stories\Infrastructure\ServiceBasedPlugin;
 use Google\Web_Stories\Infrastructure\ServiceContainer;
 use Google\Web_Stories\Infrastructure\ServiceContainer\SimpleServiceContainer;
-use Google\Web_Stories\Tests\Integration\Fixture\DummyServiceWithDelay;
-use Google\Web_Stories\Tests\Integration\Fixture\DummyServiceWithRequirements;
 use Google\Web_Stories\Tests\Integration\Fixture\DummyService;
 use Google\Web_Stories\Tests\Integration\Fixture\DummyServiceBasedPlugin;
+use Google\Web_Stories\Tests\Integration\Fixture\DummyServiceWithDelay;
+use Google\Web_Stories\Tests\Integration\Fixture\DummyServiceWithRequirements;
 use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
@@ -17,13 +17,13 @@ use Google\Web_Stories\Tests\Integration\TestCase;
  */
 final class ServiceBasedPluginTest extends TestCase {
 
-	public function test_it_can_be_instantiated() {
+	public function test_it_can_be_instantiated(): void {
 		$plugin = $this->createMock( ServiceBasedPlugin::class );
 
 		$this->assertInstanceOf( ServiceBasedPlugin::class, $plugin );
 	}
 
-	public function test_it_can_return_its_container() {
+	public function test_it_can_return_its_container(): void {
 		$plugin = $this->getMockBuilder( ServiceBasedPlugin::class )
 			->setMethodsExcept( [ 'get_container' ] )
 			->enableOriginalConstructor()
@@ -34,7 +34,7 @@ final class ServiceBasedPluginTest extends TestCase {
 		$this->assertInstanceOf( ServiceContainer::class, $container );
 	}
 
-	public function test_it_can_be_registered() {
+	public function test_it_can_be_registered(): void {
 		$plugin = $this->getMockBuilder( ServiceBasedPlugin::class )
 			->setMethodsExcept( [ 'register' ] )
 			->getMock();
@@ -44,7 +44,7 @@ final class ServiceBasedPluginTest extends TestCase {
 		$plugin->register();
 	}
 
-	public function test_it_always_registers_an_injector_by_default() {
+	public function test_it_always_registers_an_injector_by_default(): void {
 		$container = new SimpleServiceContainer();
 		$plugin    = $this->getMockBuilder( ServiceBasedPlugin::class )
 			->enableOriginalConstructor()
@@ -61,7 +61,7 @@ final class ServiceBasedPluginTest extends TestCase {
 		$this->assertInstanceof( Injector::class, $container->get( 'injector' ) );
 	}
 
-	public function test_it_registers_default_services() {
+	public function test_it_registers_default_services(): void {
 		$container = new SimpleServiceContainer();
 		$plugin    = $this->getMockBuilder( DummyServiceBasedPlugin::class )
 			->enableOriginalConstructor()
@@ -87,7 +87,7 @@ final class ServiceBasedPluginTest extends TestCase {
 		$this->assertInstanceof( DummyService::class, $container->get( 'service_b' ) );
 	}
 
-	public function test_it_allows_services_to_be_filtered() {
+	public function test_it_allows_services_to_be_filtered(): void {
 		$container = new SimpleServiceContainer();
 		$plugin    = $this->getMockBuilder( DummyServiceBasedPlugin::class )
 			->enableOriginalConstructor()
@@ -119,7 +119,7 @@ final class ServiceBasedPluginTest extends TestCase {
 		$this->assertfalse( $container->has( 'service_b' ) );
 	}
 
-	public function test_it_provides_default_services_for_filtering() {
+	public function test_it_provides_default_services_for_filtering(): void {
 		$container = new SimpleServiceContainer();
 		$plugin    = $this->getMockBuilder( DummyServiceBasedPlugin::class )
 			->enableOriginalConstructor()
@@ -156,7 +156,7 @@ final class ServiceBasedPluginTest extends TestCase {
 		$this->assertInstanceof( DummyService::class, $container->get( 'filtered_service' ) );
 	}
 
-	public function test_it_registers_service_with_requirements() {
+	public function test_it_registers_service_with_requirements(): void {
 		$container = new SimpleServiceContainer();
 		$plugin    = $this->getMockBuilder( DummyServiceBasedPlugin::class )
 						->enableOriginalConstructor()
@@ -193,7 +193,7 @@ final class ServiceBasedPluginTest extends TestCase {
 		$this->assertInstanceof( DummyServiceWithRequirements::class, $container->get( 'service_with_requirements' ) );
 	}
 
-	public function test_it_handles_delays_for_requirements() {
+	public function test_it_handles_delays_for_requirements(): void {
 		$container = new SimpleServiceContainer();
 		$plugin    = $this->getMockBuilder( DummyServiceBasedPlugin::class )
 						->enableOriginalConstructor()
@@ -241,7 +241,7 @@ final class ServiceBasedPluginTest extends TestCase {
 		$this->assertInstanceof( DummyServiceWithRequirements::class, $container->get( 'service_with_requirements' ) );
 	}
 
-	public function test_it_throws_an_exception_if_unrecognized_service_is_required() {
+	public function test_it_throws_an_exception_if_unrecognized_service_is_required(): void {
 		$container = new SimpleServiceContainer();
 		$plugin    = $this->getMockBuilder( DummyServiceBasedPlugin::class )
 						->enableOriginalConstructor()
@@ -265,7 +265,7 @@ final class ServiceBasedPluginTest extends TestCase {
 		$plugin->register();
 	}
 
-	public function test_it_generates_identifiers_as_needed() {
+	public function test_it_generates_identifiers_as_needed(): void {
 		$container = new SimpleServiceContainer();
 		$plugin    = $this->getMockBuilder( ServiceBasedPlugin::class )
 			->enableOriginalConstructor()
@@ -287,7 +287,7 @@ final class ServiceBasedPluginTest extends TestCase {
 		$this->assertInstanceof( DummyService::class, $container->get( 'dummy_service' ) );
 	}
 
-	public function test_it_skips_unknown_service_classes() {
+	public function test_it_skips_unknown_service_classes(): void {
 		$container = new SimpleServiceContainer();
 		$plugin    = $this->getMockBuilder( ServiceBasedPlugin::class )
 			->enableOriginalConstructor()
@@ -310,7 +310,7 @@ final class ServiceBasedPluginTest extends TestCase {
 		$this->assertFalse( $container->has( 'dummy_service' ) );
 	}
 
-	public function test_it_falls_back_to_defaults_on_broken_filtering() {
+	public function test_it_falls_back_to_defaults_on_broken_filtering(): void {
 		$container = new SimpleServiceContainer();
 		$plugin    = $this->getMockBuilder( DummyServiceBasedPlugin::class )
 			->enableOriginalConstructor()
@@ -340,7 +340,7 @@ final class ServiceBasedPluginTest extends TestCase {
 		$this->assertInstanceof( DummyService::class, $container->get( 'service_b' ) );
 	}
 
-	public function test_it_can_have_filtering_disabled() {
+	public function test_it_can_have_filtering_disabled(): void {
 		$container = new SimpleServiceContainer();
 		$plugin    = $this->getMockBuilder( DummyServiceBasedPlugin::class )
 			->setConstructorArgs( [ false, null, $container ] )

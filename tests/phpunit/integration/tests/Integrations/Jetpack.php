@@ -17,18 +17,17 @@
 
 namespace Google\Web_Stories\Tests\Integration\Integrations;
 
-use Google\Web_Stories\Media\Media_Source_Taxonomy;
+use Google\Web_Stories\Integrations\Jetpack as Jetpack_Integration;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
-use Google\Web_Stories\Integrations\Jetpack as Jetpack_Integration;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Integrations\Jetpack
  */
 class Jetpack extends DependencyInjectedTestCase {
-	const ATTACHMENT_URL = 'https://www.example.com/test.mp4';
-	const MP4_FILE       = 'video.mp4';
-	const POSTER_URL     = 'https://www.example.com/test.mp4';
+	public const ATTACHMENT_URL = 'https://www.example.com/test.mp4';
+	public const MP4_FILE       = 'video.mp4';
+	public const POSTER_URL     = 'https://www.example.com/test.mp4';
 
 	/**
 	 * Test instance.
@@ -37,7 +36,7 @@ class Jetpack extends DependencyInjectedTestCase {
 	 */
 	protected $instance;
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\Integrations\Jetpack::class );
@@ -46,7 +45,7 @@ class Jetpack extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$this->instance->register();
 
 		$this->assertFalse( has_filter( 'wpcom_sitemap_post_types', [ $this->instance, 'add_to_jetpack_sitemap' ] ) );
@@ -61,7 +60,7 @@ class Jetpack extends DependencyInjectedTestCase {
 	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
-	public function test_register_is_wpcom() {
+	public function test_register_is_wpcom(): void {
 		define( 'IS_WPCOM', true );
 
 		$this->instance->register();
@@ -75,14 +74,14 @@ class Jetpack extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::add_to_jetpack_sitemap
 	 */
-	public function test_add_to_jetpack_sitemap() {
+	public function test_add_to_jetpack_sitemap(): void {
 		$this->assertEqualSets( [ Story_Post_Type::POST_TYPE_SLUG ], $this->instance->add_to_jetpack_sitemap( [] ) );
 	}
 
 	/**
 	 * @covers ::filter_rest_api_response
 	 */
-	public function test_filter_rest_api_response() {
+	public function test_filter_rest_api_response(): void {
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
@@ -129,7 +128,7 @@ class Jetpack extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::add_term
 	 */
-	public function test_add_term() {
+	public function test_add_term(): void {
 		$this->instance->register();
 
 		$poster_attachment_id = self::factory()->attachment->create_object(
@@ -154,7 +153,7 @@ class Jetpack extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::filter_admin_ajax_response
 	 */
-	public function test_filter_admin_ajax_response() {
+	public function test_filter_admin_ajax_response(): void {
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
@@ -194,7 +193,7 @@ class Jetpack extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::filter_ajax_query_attachments_args
 	 */
-	public function test_filter_ajax_query_attachments_args() {
+	public function test_filter_ajax_query_attachments_args(): void {
 		$types                = $this->injector->make( \Google\Web_Stories\Media\Types::class );
 		$allowed_mime_types   = $types->get_allowed_mime_types();
 		$allowed_mime_types   = array_merge( ...array_values( $allowed_mime_types ) );
@@ -214,13 +213,13 @@ class Jetpack extends DependencyInjectedTestCase {
 	}
 
 	/**
-	 * @dataProvider get_format_milliseconds_data
-	 *
 	 * @param string $milliseconds
 	 * @param string $string
+	 *
+	 * @dataProvider get_format_milliseconds_data
 	 * @covers ::format_milliseconds
 	 */
-	public function test_format_milliseconds( $milliseconds, $string ) {
+	public function test_format_milliseconds( $milliseconds, $string ): void {
 		$result = $this->call_private_method( $this->instance, 'format_milliseconds', [ $milliseconds ] );
 		$this->assertSame( $result, $string );
 	}
@@ -229,7 +228,6 @@ class Jetpack extends DependencyInjectedTestCase {
 	 * @param mixed $value
 	 * @param $object_id
 	 * @param $meta_key
-	 *
 	 * @return \array[][]|mixed
 	 */
 	public function filter_wp_get_attachment_metadata( $value, $object_id, $meta_key ) {

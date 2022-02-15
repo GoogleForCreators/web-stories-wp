@@ -4,10 +4,10 @@
  *
  * Responsible for initializing the plugin.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -29,8 +29,8 @@
 namespace Google\Web_Stories;
 
 use Google\Web_Stories\AMP\Output_Buffer;
-use Google\Web_Stories\Infrastructure\ServiceBasedPlugin;
 use Google\Web_Stories\Infrastructure\Injector;
+use Google\Web_Stories\Infrastructure\ServiceBasedPlugin;
 
 /**
  * Plugin class.
@@ -44,29 +44,23 @@ class Plugin extends ServiceBasedPlugin {
 	 * The main structure we use to modularize our code is "services". These are
 	 * what makes up the actual plugin, and they provide self-contained pieces
 	 * of code that can work independently.
-	 *
-	 * @var boolean
 	 */
-	const ENABLE_FILTERS_DEFAULT = false;
+	public const ENABLE_FILTERS_DEFAULT = false;
 
 	/**
 	 * Prefix to use for all actions and filters.
 	 *
 	 * This is used to make the filters for the dependency injector unique.
-	 *
-	 * @var string
 	 */
-	const HOOK_PREFIX = 'web_stories_';
+	public const HOOK_PREFIX = 'web_stories_';
 
 	/**
 	 * List of services.
 	 *
 	 * The services array contains a map of <identifier> => <service class name>
 	 * associations.
-	 *
-	 * @var string[]
 	 */
-	const SERVICES = [
+	public const SERVICES = [
 		'activation_notice'            => Admin\Activation_Notice::class,
 		'admin.google_fonts'           => Admin\Google_Fonts::class,
 		'amp_output_buffer'            => Output_Buffer::class,

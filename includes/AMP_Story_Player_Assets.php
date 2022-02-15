@@ -2,10 +2,10 @@
 /**
  * Class AMP_Story_Player_Assets.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -28,21 +28,17 @@ namespace Google\Web_Stories;
 
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
-use WP_Styles;
 use WP_Scripts;
+use WP_Styles;
 
 /**
  * Class AMP_Story_Player_Assets
- *
- * @package Google\Web_Stories
  */
 class AMP_Story_Player_Assets implements Service, Registerable {
 	/**
 	 * Script handle.
-	 *
-	 * @var string
 	 */
-	const SCRIPT_HANDLE = 'standalone-amp-story-player';
+	public const SCRIPT_HANDLE = 'standalone-amp-story-player';
 
 	/**
 	 * Runs on instantiation.
@@ -51,7 +47,7 @@ class AMP_Story_Player_Assets implements Service, Registerable {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_action( 'wp_default_styles', [ $this, 'register_style' ] );
 		add_action( 'wp_default_scripts', [ $this, 'register_script' ] );
 	}
@@ -62,10 +58,9 @@ class AMP_Story_Player_Assets implements Service, Registerable {
 	 * @since 1.8.0
 	 *
 	 * @param WP_Styles $wp_styles WP_Styles instance.
-	 *
 	 * @return void
 	 */
-	public function register_style( WP_Styles $wp_styles ) {
+	public function register_style( WP_Styles $wp_styles ): void {
 		$wp_styles->add(
 			self::SCRIPT_HANDLE,
 			'https://cdn.ampproject.org/amp-story-player-v0.css',
@@ -80,10 +75,9 @@ class AMP_Story_Player_Assets implements Service, Registerable {
 	 * @since 1.8.0
 	 *
 	 * @param WP_Scripts $wp_scripts WP_Scripts instance.
-	 *
 	 * @return void
 	 */
-	public function register_script( WP_Scripts $wp_scripts ) {
+	public function register_script( WP_Scripts $wp_scripts ): void {
 		$wp_scripts->add(
 			self::SCRIPT_HANDLE,
 			'https://cdn.ampproject.org/amp-story-player-v0.js',

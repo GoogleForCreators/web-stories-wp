@@ -25,8 +25,6 @@ use WP_REST_Server;
 /**
  * Class Embed_Controller
  *
- * @package Google\Web_Stories\Tests\REST_API
- *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Embed_Controller
  */
 class Embed_Controller extends DependencyInjectedRestTestCase {
@@ -36,9 +34,9 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 	protected static $editor;
 	protected static $admin;
 
-	const INVALID_URL              = 'https://www.notreallyawebsite.com/foobar.html';
-	const VALID_URL_EMPTY_DOCUMENT = 'https://empty.example.com';
-	const VALID_URL                = 'https://preview.amp.dev/documentation/examples/introduction/stories_in_amp';
+	public const INVALID_URL              = 'https://www.notreallyawebsite.com/foobar.html';
+	public const VALID_URL_EMPTY_DOCUMENT = 'https://empty.example.com';
+	public const VALID_URL                = 'https://preview.amp.dev/documentation/examples/introduction/stories_in_amp';
 
 	/**
 	 * Count of the number of requests attempted.
@@ -54,7 +52,7 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 	 */
 	private $controller;
 
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$subscriber = $factory->user->create(
 			[
 				'role' => 'subscriber',
@@ -89,7 +87,7 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 	}
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		add_filter( 'pre_http_request', [ $this, 'mock_http_request' ], 10, 3 );
@@ -98,7 +96,7 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		$this->controller = $this->injector->make( \Google\Web_Stories\REST_API\Embed_Controller::class );
 	}
 
-	public function tear_down() {
+	public function tear_down(): void {
 		remove_filter( 'pre_http_request', [ $this, 'mock_http_request' ] );
 
 		parent::tear_down();
@@ -143,7 +141,7 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::register_routes
 	 */
-	public function test_register_routes() {
+	public function test_register_routes(): void {
 		$routes = rest_get_server()->get_routes();
 
 		$this->assertArrayHasKey( '/web-stories/v1/embed', $routes );
@@ -164,7 +162,7 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		return rest_get_server()->dispatch( $request );
 	}
 
-	public function test_missing_param() {
+	public function test_missing_param(): void {
 		$this->controller->register();
 
 		$response = $this->dispatch_request();
@@ -172,7 +170,7 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		$this->assertErrorResponse( 'rest_missing_callback_param', $response, 400 );
 	}
 
-	public function test_not_logged_in() {
+	public function test_not_logged_in(): void {
 		$this->controller->register();
 
 
@@ -181,7 +179,7 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		$this->assertErrorResponse( 'rest_forbidden', $response, 401 );
 	}
 
-	public function test_without_permission() {
+	public function test_without_permission(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$subscriber );
@@ -192,7 +190,7 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		$this->assertErrorResponse( 'rest_forbidden', $response, 403 );
 	}
 
-	public function test_url_empty_string() {
+	public function test_url_empty_string(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
@@ -203,7 +201,7 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		$this->assertErrorResponse( 'rest_invalid_url', $response, 404 );
 	}
 
-	public function test_invalid_url() {
+	public function test_invalid_url(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
@@ -213,7 +211,7 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		$this->assertErrorResponse( 'rest_invalid_url', $response, 404 );
 	}
 
-	public function test_empty_url() {
+	public function test_empty_url(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
@@ -223,7 +221,7 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		$this->assertErrorResponse( 'rest_invalid_story', $response, 404 );
 	}
 
-	public function test_valid_url() {
+	public function test_valid_url(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
@@ -243,7 +241,7 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		$this->assertEqualSetsWithIndex( $expected, $data );
 	}
 
-	public function test_removes_trailing_slashes() {
+	public function test_removes_trailing_slashes(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
@@ -264,7 +262,7 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		$this->assertEqualSetsWithIndex( $expected, $data );
 	}
 
-	public function test_local_url() {
+	public function test_local_url(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
@@ -284,7 +282,7 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 		$this->assertEqualSetsWithIndex( $expected, $data );
 	}
 
-	public function test_local_url_pretty_permalinks() {
+	public function test_local_url_pretty_permalinks(): void {
 		$this->controller->register();
 
 		$this->set_permalink_structure( '/%postname%/' );
@@ -316,7 +314,7 @@ class Embed_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @group ms-required
 	 */
-	public function test_local_url_pretty_permalinks_multisite() {
+	public function test_local_url_pretty_permalinks_multisite(): void {
 		$this->controller->register();
 
 		$this->set_permalink_structure( '/%postname%/' );

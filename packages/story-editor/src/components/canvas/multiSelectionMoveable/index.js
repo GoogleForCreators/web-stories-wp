@@ -18,15 +18,22 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useRef, useEffect, useState } from '@googleforcreators/react';
+import {
+  forwardRef,
+  useRef,
+  useEffect,
+  useState,
+  useCombinedRefs,
+} from '@googleforcreators/react';
 import { useUnits } from '@googleforcreators/units';
+import { useTransform } from '@googleforcreators/transform';
+import { Moveable } from '@googleforcreators/moveable';
+
 /**
  * Internal dependencies
  */
-import Moveable from '../../moveable';
 import { useStory, useCanvas, useLayout } from '../../../app';
 import objectWithout from '../../../utils/objectWithout';
-import { useTransform } from '../../transform';
 import { getDefinitionForType } from '../../../elements';
 import isTargetOutOfContainer from '../../../utils/isTargetOutOfContainer';
 import useSnapping from '../utils/useSnapping';
@@ -38,7 +45,10 @@ import useRotate from './useRotate';
 
 const CORNER_HANDLES = ['nw', 'ne', 'sw', 'se'];
 
-function MultiSelectionMoveable({ selectedElements, ...props }) {
+const MultiSelectionMoveable = forwardRef(function MultiSelectionMoveable(
+  { selectedElements, ...props },
+  ref
+) {
   const moveable = useRef();
 
   const { updateElementsById, deleteElementsById, backgroundElement } =
@@ -227,6 +237,8 @@ function MultiSelectionMoveable({ selectedElements, ...props }) {
     frames,
   });
 
+  const combinedRef = useCombinedRefs(moveable, ref);
+
   // Not all targets have been defined yet.
   if (targetList.some(({ node }) => node === undefined)) {
     return null;
@@ -236,7 +248,7 @@ function MultiSelectionMoveable({ selectedElements, ...props }) {
     <Moveable
       {...props}
       className={'default-moveable'}
-      ref={moveable}
+      ref={combinedRef}
       zIndex={0}
       target={targetList.map(({ node }) => node)}
       draggable
@@ -249,7 +261,7 @@ function MultiSelectionMoveable({ selectedElements, ...props }) {
       {...snapProps}
     />
   );
-}
+});
 
 MultiSelectionMoveable.propTypes = {
   selectedElements: PropTypes.arrayOf(PropTypes.object).isRequired,

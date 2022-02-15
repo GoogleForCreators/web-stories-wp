@@ -2,10 +2,10 @@
 /**
  * DependencyInjectedRestTestCase class.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -28,19 +28,17 @@ namespace Google\Web_Stories\Tests\Integration;
 
 /**
  * Class DependencyInjectedRestTestCase
- *
- * @package Google\Web_Stories\Tests
  */
 abstract class DependencyInjectedRestTestCase extends DependencyInjectedTestCase {
 	use REST_Setup;
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->set_up_rest();
 	}
 
-	public function tear_down() {
+	public function tear_down(): void {
 		$this->tear_down_rest();
 
 		parent::tear_down();

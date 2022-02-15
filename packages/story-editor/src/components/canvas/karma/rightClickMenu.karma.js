@@ -23,15 +23,10 @@ import { waitFor, within } from '@testing-library/react';
  */
 import { useStory } from '../../../app';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
-import { clearableAttributes as imageAttributeDefaults } from '../../../elements/image';
-import { clearableAttributes as shapeAttributeDefaults } from '../../../elements/shape';
-import { clearableAttributes as textAttributeDefaults } from '../../../elements/text';
+import { ATTRIBUTES_TO_COPY } from '../../../app/story/useStoryReducer/reducers/copyElementById';
 import { Fixture } from '../../../karma';
 import objectPick from '../../../utils/objectPick';
 import useInsertElement from '../useInsertElement';
-
-const clearableImageProperties = Object.keys(imageAttributeDefaults);
-const clearableShapeProperties = Object.keys(shapeAttributeDefaults);
 
 describe('Right Click Menu integration', () => {
   let fixture;
@@ -43,6 +38,13 @@ describe('Right Click Menu integration', () => {
     await fixture.collapseHelpCenter();
 
     insertElement = await fixture.renderHook(() => useInsertElement());
+
+    // Remove empty state message by changing the background
+    await fixture.events.click(
+      fixture.editor.canvas.quickActionMenu.changeBackgroundColorButton
+    );
+    await fixture.events.keyboard.type('ef');
+    await fixture.events.keyboard.press('Tab');
   });
 
   afterEach(async () => {
@@ -79,6 +81,12 @@ describe('Right Click Menu integration', () => {
   function bringToFront() {
     return fixture.screen.getByRole('menuitem', {
       name: /^Bring to Front/i,
+    });
+  }
+
+  function selectLayerButton() {
+    return fixture.screen.getByRole('menuitem', {
+      name: /^Select Layer/i,
     });
   }
 
@@ -140,18 +148,6 @@ describe('Right Click Menu integration', () => {
     });
   }
 
-  function clearImageStyles() {
-    return fixture.screen.getByRole('menuitem', {
-      name: /^Clear Image Styles/i,
-    });
-  }
-
-  function clearStyles() {
-    return fixture.screen.getByRole('menuitem', {
-      name: /^Clear Styles/i,
-    });
-  }
-
   function detachImageFromBackground() {
     return fixture.screen.getByRole('menuitem', {
       name: /^Detach Image From Background/i,
@@ -185,6 +181,12 @@ describe('Right Click Menu integration', () => {
   function duplicateElements() {
     return fixture.screen.getByRole('menuitem', {
       name: /^Duplicate Element/i,
+    });
+  }
+
+  function getMenuItemByName(name) {
+    return fixture.screen.getByRole('menuitem', {
+      name,
     });
   }
 
@@ -323,6 +325,11 @@ describe('Right Click Menu integration', () => {
     );
   }
 
+  const getSelection = async () => {
+    const storyContext = await fixture.renderHook(() => useStory());
+    return storyContext.state.selectedElements;
+  };
+
   /**
    * Add shape to canvas
    *
@@ -419,8 +426,17 @@ describe('Right Click Menu integration', () => {
 
     it('should open and close the context menu using keyboard shortcuts', async () => {
       // add an element to the page
-      await fixture.events.click(fixture.editor.library.textAdd);
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
+      await waitFor(() => {
+        const node = fixture.editor.canvas.framesLayer.frames[1].node;
+        if (!node) {
+          throw new Error('node not ready');
+        }
+        expect(node).toBeTruthy();
+      });
       const frame1 = fixture.editor.canvas.framesLayer.frames[1].node;
 
       // only possible if element in canvas is focused
@@ -442,6 +458,56 @@ describe('Right Click Menu integration', () => {
           name: 'Context Menu for the selected element',
         })
       ).toBeNull();
+    });
+  });
+
+  describe('Right click menu: Select Layer', () => {
+    it('should allow selecting a layer from the point where the menu was opened from', async () => {
+      // Add a Triangle and an image to the same place.
+      await fixture.events.click(fixture.editor.library.media.item(0));
+      await fixture.events.click(fixture.editor.library.shapesTab);
+      await fixture.events.click(
+        fixture.editor.library.shapes.shape('Triangle')
+      );
+      // Add a Text a different place.
+      await addText({ x: 200 });
+
+      // Right-click on the top-left corner of the triangle.
+      const triangle = fixture.editor.canvas.framesLayer.frames[2].node;
+      const { x, y } = triangle.getBoundingClientRect();
+      await fixture.events.mouse.click(x + 10, y + 10, {
+        button: 'right',
+      });
+
+      // Open the Select Layer submenu.
+      await fixture.events.click(selectLayerButton());
+      // Verify if displays Background, Triangle, Image as options but not the text.
+      expect(getMenuItemByName('Background')).not.toBeNull();
+      expect(getMenuItemByName('Triangle')).not.toBeNull();
+      expect(getMenuItemByName('blue-marble')).not.toBeNull();
+      expect(() =>
+        getMenuItemByName(
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+        )
+      ).toThrow();
+
+      // Verify that clicking on the background button selects background.
+      await fixture.events.click(getMenuItemByName('Background'));
+      const [element] = await getSelection();
+      expect(element.isDefaultBackground).toBeTrue();
+    });
+
+    it('should not display the option to select layer when opening from the layer panel', async () => {
+      await addEarthImage();
+
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.layerPanel.layers[0],
+        {
+          button: 'right',
+        }
+      );
+
+      expect(() => selectLayerButton()).toThrow();
     });
   });
 
@@ -803,7 +869,7 @@ describe('Right Click Menu integration', () => {
       expect(bringToFront().disabled).toBeTrue();
     });
 
-    describe('right click menu: copying, pasting, and clearing styles', () => {
+    describe('right click menu: copying and pasting styles', () => {
       it('should copy and paste styles', async () => {
         const earthImage = await addEarthImage();
         const rangerImage = await addRangerImage();
@@ -811,6 +877,34 @@ describe('Right Click Menu integration', () => {
         // select earth image
         await fixture.events.click(
           fixture.editor.canvas.framesLayer.frame(earthImage.id).node
+        );
+
+        // add animation
+        const effectChooserToggle =
+          fixture.editor.inspector.designPanel.animation.effectChooser;
+
+        await fixture.events.click(effectChooserToggle, { clickCount: 1 });
+
+        // animation
+        const animation = fixture.screen.getByRole('option', {
+          name: '"Pulse" Effect',
+        });
+
+        // apply animation to element
+        await fixture.events.click(animation, { clickCount: 1 });
+
+        // the bot clicks the clear button too fast
+        // the animation does not get removed if it is clicked before it stops playing
+        // click "stop playing" and test the animations have been applied
+        await waitFor(
+          async () => {
+            await fixture.events.click(
+              fixture.screen.getByRole('button', {
+                name: 'Stop Page Animations',
+              })
+            );
+          },
+          { timeout: 4000 }
         );
 
         // add border
@@ -835,6 +929,18 @@ describe('Right Click Menu integration', () => {
           fixture.editor.inspector.designPanel.sizePosition.opacity
         );
         await fixture.events.keyboard.type('40');
+
+        // track initial animation
+        const { initialAnimations, initialElements } = await fixture.renderHook(
+          () =>
+            useStory(({ state }) => ({
+              initialAnimations: state.currentPage.animations,
+              initialElements: state.currentPage.elements,
+            }))
+        );
+
+        expect(initialAnimations.length).toBe(1);
+        expect(initialElements[1].id).toBe(initialAnimations[0].targets[0]);
 
         // copy earth image styles
         await rightClickOnTarget(
@@ -848,89 +954,36 @@ describe('Right Click Menu integration', () => {
         );
         await fixture.events.click(pasteImageStyles());
 
-        // verify that the styles were copied and pasted
-        const { currentPage } = await fixture.renderHook(() =>
-          useStory(({ state }) => ({
-            currentPage: state.currentPage,
-          }))
+        // verify that the styles and animations were copied and pasted
+        const { finalAnimations, finalElements } = await fixture.renderHook(
+          () =>
+            useStory(({ state }) => ({
+              finalAnimations: state.currentPage.animations,
+              finalElements: state.currentPage.elements,
+            }))
         );
 
-        const images = currentPage.elements.filter(
-          (element) => !element.isBackground
-        );
+        // validate copied styles
+        const images = finalElements.filter((element) => !element.isBackground);
 
-        const copiedProperties = objectPick(
-          images[0],
-          clearableImageProperties
-        );
-        const pastedProperties = objectPick(
-          images[0],
-          clearableImageProperties
-        );
+        const copiedProperties = objectPick(images[0], ATTRIBUTES_TO_COPY);
+        const pastedProperties = objectPick(images[1], ATTRIBUTES_TO_COPY);
 
         expect(copiedProperties).toEqual(pastedProperties);
-      });
 
-      it('should reset styles to the default', async () => {
-        const earthImage = await addEarthImage();
+        // validate copied animations
+        expect(finalAnimations.length).toEqual(2);
+        const { id: id1, targets: targets1, ...anim1 } = finalAnimations[0];
+        const { id: id2, targets: targets2, ...anim2 } = finalAnimations[1];
 
-        // select earth image
-        await fixture.events.click(
-          fixture.editor.canvas.framesLayer.frame(earthImage.id).node
-        );
-
-        // add border
-        await fixture.events.click(
-          fixture.editor.inspector.designPanel.border.width()
-        );
-        await fixture.events.keyboard.type('20');
-
-        // add border radius
-        await fixture.events.click(
-          fixture.editor.inspector.designPanel.sizePosition.radius()
-        );
-        await fixture.events.keyboard.type('50');
-
-        // add filter
-        await fixture.events.click(
-          fixture.editor.inspector.designPanel.filters.solid
-        );
-
-        // add opacity
-        await fixture.events.click(
-          fixture.editor.inspector.designPanel.sizePosition.opacity
-        );
-        await fixture.events.keyboard.type('40');
-
-        // clear earth styles
-        await rightClickOnTarget(
-          fixture.editor.canvas.framesLayer.frame(earthImage.id).node
-        );
-        await fixture.events.click(clearImageStyles());
-
-        // verify styles were reset to defaults
-        const { elements } = await fixture.renderHook(() =>
-          useStory(({ state }) => ({
-            elements: state.currentPage.elements,
-          }))
-        );
-
-        const image = elements.find((element) => !element.isBackground);
-
-        expect(objectPick(image, clearableImageProperties)).toEqual(
-          imageAttributeDefaults
-        );
+        expect(anim1).toEqual(anim2);
+        expect(targets1).toEqual([images[0].id]);
+        expect(targets2).toEqual([images[1].id]);
       });
     });
   });
 
   describe('right click menu: text', () => {
-    const { content: _, ...textAttributeDefaultsWithoutContent } =
-      textAttributeDefaults;
-    const clearableTextProperties = Object.keys(
-      textAttributeDefaultsWithoutContent
-    );
-
     it('should duplicate the element', async () => {
       const text = await addText({
         backgroundColor: {
@@ -1039,18 +1092,19 @@ describe('Right Click Menu integration', () => {
         (element) => !element.isBackground
       );
 
-      const copiedProperties = objectPick(
+      const { content: _copiedContent, ...copiedProperties } = objectPick(
         textElements[0],
-        clearableTextProperties
+        ATTRIBUTES_TO_COPY
       );
       const { content, ...pastedProperties } = objectPick(textElements[1], [
-        ...clearableTextProperties,
+        ...ATTRIBUTES_TO_COPY,
         'content',
       ]);
       expect(content).toBe(
         '<span style="color: #ff0110">Another Text Element</span>'
       );
       expect(copiedProperties).toEqual(pastedProperties);
+
       // should update bounding box size when updating fontSize
       expect(textB.height).not.toBe(textElements[1].height);
     });
@@ -1292,159 +1346,5 @@ describe('Right Click Menu integration', () => {
       expect(shapeElements.length).toBe(2);
       verifyElementDuplicated(shapeElements[0], shapeElements[1]);
     });
-  });
-
-  it('should only clear styles for foreground media and shapes', async () => {
-    const clearableTextProperties = Object.keys(textAttributeDefaults);
-
-    // add text element and styles
-    const text = await addText({
-      fontSize: 24,
-      content: '<span style="color: #ff0110">Some Text Element</span>',
-      backgroundColor: { r: 10, g: 0, b: 200 },
-      lineHeight: 1.4,
-      textAlign: 'center',
-      border: {
-        left: 1,
-        right: 1,
-        top: 1,
-        bottom: 1,
-        lockedWidth: true,
-        color: {
-          color: {
-            r: 0,
-            g: 0,
-            b: 0,
-          },
-        },
-      },
-      padding: {
-        vertical: 0,
-        horizontal: 20,
-        locked: true,
-      },
-      y: 300,
-    });
-
-    // add earth image and styles
-    const image = await addEarthImage();
-    await fixture.events.click(
-      fixture.editor.canvas.framesLayer.frame(image.id).node
-    );
-    await fixture.events.click(
-      fixture.editor.inspector.designPanel.border.width()
-    );
-    await fixture.events.keyboard.type('20');
-    await fixture.events.click(
-      fixture.editor.inspector.designPanel.sizePosition.radius()
-    );
-    await fixture.events.keyboard.type('50');
-    await fixture.events.click(
-      fixture.editor.inspector.designPanel.filters.solid
-    );
-    await fixture.events.click(
-      fixture.editor.inspector.designPanel.sizePosition.opacity
-    );
-    await fixture.events.keyboard.type('40');
-
-    // add shape and styles
-    const shape = await addShape({
-      backgroundColor: {
-        color: {
-          r: 201,
-          g: 24,
-          b: 74,
-          a: 0.75,
-        },
-      },
-      x: 50,
-      y: 400,
-    });
-
-    // select all elements and reset styles
-    const textFrame = fixture.editor.canvas.framesLayer.frame(text.id).node;
-    const imageFrame = fixture.editor.canvas.framesLayer.frame(image.id).node;
-    const shapeFrame = fixture.editor.canvas.framesLayer.frame(shape.id).node;
-    await clickOnTarget(textFrame);
-    await clickOnTarget(imageFrame, 'Shift');
-    await clickOnTarget(shapeFrame, 'Shift');
-
-    // multiple elements should be selected
-    const { initialElements, selectedElements } = await fixture.renderHook(() =>
-      useStory(({ state }) => ({
-        selectedElements: state.selectedElements,
-        initialElements: state.currentPage.elements,
-      }))
-    );
-
-    expect(selectedElements.length).toBe(3);
-    expect(initialElements.length).toBe(4);
-
-    // track initial state for comparison
-    const initialText = initialElements.find(
-      (element) => element.type === 'text'
-    );
-    const initialImage = initialElements.find(
-      (element) => element.type === 'image'
-    );
-    const initialShape = initialElements.find(
-      (element) => element.type === 'shape' && !element.isBackground
-    );
-
-    // open right click menu
-    await rightClickOnTarget(imageFrame);
-
-    // clear element styles
-    await fixture.events.click(clearStyles());
-
-    // verify image and shape styles were reset to default styles
-    const { elements } = await fixture.renderHook(() =>
-      useStory(({ state }) => ({
-        elements: state.currentPage.elements,
-      }))
-    );
-
-    const resetText = elements.find((element) => element.type === 'text');
-    const resetImage = elements.find((element) => element.type === 'image');
-    const resetShape = elements.find(
-      (element) => element.type === 'shape' && !element.isBackground
-    );
-
-    // text styles should not be reset to the default styles
-    expect(objectPick(resetText, clearableTextProperties)).not.toEqual(
-      textAttributeDefaults
-    );
-
-    // image and shape styles should have been reset
-    expect(objectPick(resetImage, clearableImageProperties)).toEqual(
-      imageAttributeDefaults
-    );
-    expect(objectPick(resetShape, clearableShapeProperties)).toEqual(
-      shapeAttributeDefaults
-    );
-
-    // undo should revert all reset styles at once
-    await fixture.events.click(
-      fixture.screen.getByRole('button', { name: /^Undo$/, hidden: true })
-    );
-
-    // Verify that everything is back to normal
-    const { finalElements } = await fixture.renderHook(() =>
-      useStory(({ state }) => ({
-        finalElements: state.currentPage.elements,
-      }))
-    );
-
-    const finalText = finalElements.find((element) => element.type === 'text');
-    const finalImage = finalElements.find(
-      (element) => element.type === 'image'
-    );
-    const finalShape = finalElements.find(
-      (element) => element.type === 'shape' && !element.isBackground
-    );
-
-    expect(finalText).toEqual(initialText);
-    expect(finalImage).toEqual(initialImage);
-    expect(finalShape).toEqual(initialShape);
   });
 });

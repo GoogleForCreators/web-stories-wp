@@ -2,10 +2,10 @@
 /**
  * Final class SimpleServiceContainer.
  *
- * @package   Google\Web_Stories
+ * @link      https://www.mwpd.io/
+ *
  * @copyright 2019 Alain Schlesser
  * @license   MIT
- * @link      https://www.mwpd.io/
  */
 
 /**
@@ -17,10 +17,10 @@
 
 namespace Google\Web_Stories\Infrastructure\ServiceContainer;
 
+use ArrayObject;
 use Google\Web_Stories\Exception\InvalidService;
 use Google\Web_Stories\Infrastructure\Service;
 use Google\Web_Stories\Infrastructure\ServiceContainer;
-use ArrayObject;
 
 /**
  * A simplified implementation of a service container.
@@ -28,8 +28,9 @@ use ArrayObject;
  * We extend ArrayObject so we have default implementations for iterators and
  * array access.
  *
- * @since 1.6.0
  * @internal
+ *
+ * @since 1.6.0
  */
 final class SimpleServiceContainer
 	extends ArrayObject
@@ -40,10 +41,9 @@ final class SimpleServiceContainer
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param string $id Identifier of the service to look for.
-	 *
 	 * @throws InvalidService If the service could not be found.
 	 *
+	 * @param string $id Identifier of the service to look for.
 	 * @return Service Service that was requested.
 	 */
 	public function get( $id ): Service {
@@ -69,7 +69,6 @@ final class SimpleServiceContainer
 	 * @since 1.6.0
 	 *
 	 * @param string $id Identifier of the service to look for.
-	 *
 	 * @return bool
 	 */
 	public function has( $id ): bool {
@@ -84,10 +83,9 @@ final class SimpleServiceContainer
 	 * @param string  $id      Identifier of the service to put into the
 	 *                         container.
 	 * @param Service $service Service to put into the container.
-	 *
 	 * @return void
 	 */
-	public function put( $id, Service $service ) {
+	public function put( $id, Service $service ): void {
 		$this->offsetSet( $id, $service );
 	}
 }

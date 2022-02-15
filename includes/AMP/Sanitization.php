@@ -2,10 +2,10 @@
 /**
  * Class Sanitization
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\AMP;
 
+use DOMElement;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
@@ -42,7 +43,6 @@ use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories_Dependencies\AmpProject\Extension;
 use Google\Web_Stories_Dependencies\AmpProject\Html\Attribute;
 use Google\Web_Stories_Dependencies\AmpProject\Html\Tag;
-use DOMElement;
 
 /**
  * Sanitization class.
@@ -67,7 +67,6 @@ class Sanitization {
 	 * @since 1.12.0
 	 *
 	 * @param Settings $settings Settings instance.
-	 *
 	 * @return void
 	 */
 	public function __construct( Settings $settings ) {
@@ -80,10 +79,9 @@ class Sanitization {
 	 * @since 1.1.0
 	 *
 	 * @param Document $document Document instance.
-	 *
 	 * @return void
 	 */
-	public function sanitize_document( Document $document ) {
+	public function sanitize_document( Document $document ): void {
 		$sanitizers = $this->get_sanitizers();
 
 		$result = AMP_Content_Sanitizer::sanitize_document( $document, $sanitizers, [] );
@@ -98,15 +96,14 @@ class Sanitization {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @see \AMP_Theme_Support::ensure_required_markup
 	 * @link https://github.com/ampproject/amp-wp/blob/2.1.3/includes/class-amp-theme-support.php#L1381-L1594
+	 * @see \AMP_Theme_Support::ensure_required_markup
 	 *
 	 * @param Document $document Document instance.
 	 * @param array    $scripts List of found scripts.
-	 *
 	 * @return void
 	 */
-	protected function ensure_required_markup( $document, array $scripts ) {
+	protected function ensure_required_markup( $document, array $scripts ): void {
 		/**
 		 * Link elements.
 		 *
@@ -148,7 +145,7 @@ class Sanitization {
 				continue;
 			}
 
-			if ( 'v0.js' === substr( $src, - strlen( 'v0.js' ) ) ) {
+			if ( 'v0.js' === substr( $src, - \strlen( 'v0.js' ) ) ) {
 				$amp_scripts[ Amp::RUNTIME ] = $script;
 			} elseif ( $script->hasAttribute( Attribute::CUSTOM_ELEMENT ) ) {
 				$amp_scripts[ $script->getAttribute( Attribute::CUSTOM_ELEMENT ) ] = $script;
@@ -218,7 +215,7 @@ class Sanitization {
 		 */
 		$amp_script_handles = array_keys( $amp_scripts );
 		foreach ( array_intersect( Amp::RENDER_DELAYING_EXTENSIONS, $amp_script_handles ) as $script_handle ) {
-			if ( ! in_array( $script_handle, Amp::RENDER_DELAYING_EXTENSIONS, true ) ) {
+			if ( ! \in_array( $script_handle, Amp::RENDER_DELAYING_EXTENSIONS, true ) ) {
 				continue;
 			}
 
@@ -323,8 +320,8 @@ class Sanitization {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @see amp_register_default_scripts
 	 * @link https://github.com/ampproject/amp-wp/blob/2.1.3/includes/amp-helper-functions.php#L876-L941
+	 * @see amp_register_default_scripts
 	 *
 	 * @return array List of extensions and their URLs.
 	 */
@@ -353,8 +350,8 @@ class Sanitization {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @see amp_is_dev_mode
 	 * @link https://github.com/ampproject/amp-wp/blob/2.1.3/includes/amp-helper-functions.php#L1296-L1330
+	 * @see amp_is_dev_mode
 	 *
 	 * @return bool Whether AMP dev mode is enabled.
 	 */
@@ -390,10 +387,10 @@ class Sanitization {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @see amp_get_content_sanitizers
-	 * @see AMP_Validation_Manager::filter_sanitizer_args
 	 * @link https://github.com/ampproject/amp-wp/blob/2.1.3/includes/amp-helper-functions.php#L1332-L1521
 	 * @link https://github.com/ampproject/amp-wp/blob/2.1.3/includes/validation/class-amp-validation-manager.php#L1691-L1730
+	 * @see amp_get_content_sanitizers
+	 * @see AMP_Validation_Manager::filter_sanitizer_args
 	 *
 	 * @return array Sanitizers.
 	 */
@@ -465,6 +462,7 @@ class Sanitization {
 			 * elements prior to running any of the sanitizers.
 			 *
 			 * @since 1.3
+			 *
 			 * @param string[] $element_xpaths XPath element queries. Context is the root element.
 			 */
 			$dev_mode_xpaths = apply_filters( 'web_stories_amp_dev_mode_element_xpaths', [] );
@@ -519,7 +517,6 @@ class Sanitization {
 	 *
 	 * @param array $error Error info, especially code.
 	 * @param array $data Additional data, including the node.
-	 *
 	 * @return bool Whether the validation error should be sanitized.
 	 */
 	public function validation_error_callback( array $error, array $data = [] ): bool {
@@ -537,6 +534,7 @@ class Sanitization {
 		 * sanitization by.
 		 *
 		 * @since 1.1.0
+		 *
 		 * @see AMP_Validation_Manager::is_sanitization_auto_accepted() Which controls whether an error is initially accepted or rejected for sanitization.
 		 *
 		 * @param bool $sanitized Whether the validation error should be sanitized.

@@ -2,10 +2,10 @@
 /**
  * Class Web_Stories_Block.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -28,12 +28,12 @@ namespace Google\Web_Stories\Block;
 
 use Google\Web_Stories\AMP_Story_Player_Assets;
 use Google\Web_Stories\Assets;
+use Google\Web_Stories\Context;
 use Google\Web_Stories\Embed_Base;
+use Google\Web_Stories\Stories_Script_Data;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Tracking;
-use Google\Web_Stories\Stories_Script_Data;
-use Google\Web_Stories\Context;
 
 /**
  * Latest Stories block class.
@@ -42,10 +42,8 @@ class Web_Stories_Block extends Embed_Base {
 
 	/**
 	 * Script handle.
-	 *
-	 * @var string
 	 */
-	const SCRIPT_HANDLE = 'web-stories-block';
+	public const SCRIPT_HANDLE = 'web-stories-block';
 
 	/**
 	 * Current block's block attributes.
@@ -56,10 +54,8 @@ class Web_Stories_Block extends Embed_Base {
 
 	/**
 	 * Maximum number of stories users can select
-	 *
-	 * @var int
 	 */
-	const MAX_NUM_OF_STORIES = 20;
+	public const MAX_NUM_OF_STORIES = 20;
 
 	/**
 	 * Story_Post_Type instance.
@@ -104,7 +100,7 @@ class Web_Stories_Block extends Embed_Base {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		parent::register();
 		$this->assets->register_script_asset( self::SCRIPT_HANDLE, [ AMP_Story_Player_Assets::SCRIPT_HANDLE, Tracking::SCRIPT_HANDLE ] );
 		$this->assets->register_style_asset( self::SCRIPT_HANDLE, [ AMP_Story_Player_Assets::SCRIPT_HANDLE, parent::SCRIPT_HANDLE ] );
@@ -125,7 +121,7 @@ class Web_Stories_Block extends Embed_Base {
 	 *
 	 * @return void
 	 */
-	protected function register_block_type() {
+	protected function register_block_type(): void {
 		$base_path = $this->assets->get_base_path( 'blocks/embed/block.json' );
 		// Note: does not use 'script' and 'style' args, and instead uses 'render_callback'
 		// to enqueue these assets only when needed.
@@ -245,11 +241,10 @@ class Web_Stories_Block extends Embed_Base {
 	 * @since 1.5.0
 	 *
 	 * @param array $block_attributes Array containing block attributes.
-	 *
 	 * @return bool Whether or not block attributes have been initialized with given value.
 	 */
 	protected function initialize_block_attributes( array $block_attributes = [] ): bool {
-		if ( ! empty( $block_attributes ) && is_array( $block_attributes ) ) {
+		if ( ! empty( $block_attributes ) && \is_array( $block_attributes ) ) {
 			$this->block_attributes = $block_attributes;
 			return true;
 		}
@@ -262,7 +257,6 @@ class Web_Stories_Block extends Embed_Base {
 	 * @since 1.5.0
 	 *
 	 * @param array $attributes Block attributes.
-	 *
 	 * @return string Rendered block type output.*
 	 */
 	public function render_block( array $attributes ): string {
@@ -362,7 +356,7 @@ class Web_Stories_Block extends Embed_Base {
 		$query_args['order']   = strtoupper( $attributes['order'] );
 		$query_args['orderby'] = 'title' === $attributes['orderby'] ? 'post_title' : 'post_date';
 
-		if ( ! empty( $attributes['authors'] ) && is_array( $attributes['authors'] ) ) {
+		if ( ! empty( $attributes['authors'] ) && \is_array( $attributes['authors'] ) ) {
 			$query_args['author__in'] = $attributes['authors'];
 		}
 

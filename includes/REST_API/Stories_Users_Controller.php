@@ -2,10 +2,10 @@
 /**
  * Class Stories_Users_Controller
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -26,10 +26,10 @@
 
 namespace Google\Web_Stories\REST_API;
 
-use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories\Infrastructure\Delayed;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
+use Google\Web_Stories\Story_Post_Type;
 use WP_Error;
 use WP_REST_Request;
 use WP_REST_Response;
@@ -69,7 +69,7 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		$this->register_routes();
 	}
 
@@ -100,7 +100,6 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 	 * @since 1.16.0
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
-	 *
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_items( $request ) {
@@ -119,10 +118,9 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 	 * @since 1.16.0
 	 *
 	 * @param array $prepared_args Array of arguments for WP_User_Query.
-	 *
 	 * @return array Filtered args.
 	 */
-	public function filter_user_query( $prepared_args ) {
+	public function filter_user_query( $prepared_args ): array {
 		$registered = $this->get_collection_params();
 
 		// Capability queries were added in 5.9, and the 'who' param was deprecated.
@@ -143,9 +141,9 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 	 *
 	 * Same as the parent function but with using a cached version of {@see count_user_posts()}.
 	 *
-	 * @see WP_REST_Users_Controller::get_item_permissions_check()
-	 *
 	 * @since 1.10.0
+	 *
+	 * @see WP_REST_Users_Controller::get_item_permissions_check()
 	 *
 	 * @param WP_REST_Request $request Full details about the request.
 	 * @return true|WP_Error True if the request has read access for the item, otherwise WP_Error object.
@@ -168,7 +166,7 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 		}
 
 		if ( 'edit' === $request['context'] && ! current_user_can( 'list_users' ) ) {
-			return new WP_Error(
+			return new \WP_Error(
 				'rest_user_cannot_view',
 				__( 'Sorry, you are not allowed to list users.', 'web-stories' ),
 				[ 'status' => rest_authorization_required_code() ]
@@ -176,7 +174,7 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 		}
 
 		if ( ! $this->user_posts_count_public( $user->ID, Story_Post_Type::POST_TYPE_SLUG ) && ! current_user_can( 'edit_user', $user->ID ) && ! current_user_can( 'list_users' ) ) {
-			return new WP_Error(
+			return new \WP_Error(
 				'rest_user_cannot_view',
 				__( 'Sorry, you are not allowed to list users.', 'web-stories' ),
 				[ 'status' => rest_authorization_required_code() ]
@@ -191,10 +189,11 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 	 *
 	 * Wraps {@see count_user_posts()} results in a cache.
 	 *
-	 * @since 1.10.0
-	 * @link https://core.trac.wordpress.org/ticket/39242
-	 *
 	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 *
+	 * @since 1.10.0
+	 *
+	 * @link https://core.trac.wordpress.org/ticket/39242
 	 *
 	 * @param int    $userid      User ID.
 	 * @param string $post_type   Optional. Single post type or array of post types to count the number of posts for. Default 'post'.

@@ -21,6 +21,7 @@ import {
   MEDIA,
   MEDIA3P,
   TEXT as TEXT_SET,
+  PAGE_TEMPLATES,
 } from '../../components/library/constants';
 
 /**
@@ -52,6 +53,7 @@ const keys = {
   MEDIA: 'MEDIA',
   MEDIA3P: 'MEDIA3P',
   TEXT_SET: 'TEXT',
+  PAGE_TEMPLATES: 'PAGE_TEMPLATES',
 };
 
 export const STATES = {
@@ -121,6 +123,10 @@ export const STATES = {
   [keys.TEXT_SET]: {
     focus: true,
     tab: TEXT_SET.id,
+  },
+  [keys.PAGE_TEMPLATES]: {
+    focus: true,
+    tab: PAGE_TEMPLATES.id,
   },
 };
 

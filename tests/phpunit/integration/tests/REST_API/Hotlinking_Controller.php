@@ -25,23 +25,21 @@ use WP_REST_Server;
 /**
  * Class Hotlinking_Controller
  *
- * @package Google\Web_Stories\Tests\REST_API
- *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Hotlinking_Controller
  */
 class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	protected static $subscriber;
 	protected static $editor;
 
-	const URL_INVALID = 'https://https://invalid.commmm';
-	const URL_404     = 'https://example.com/404/test.jpg';
-	const URL_500     = 'https://example.com/500/test.jpg';
-	const URL_SVG     = 'https://example.com/test.svg';
-	const URL_VALID   = 'http://example.com/test.jpg';
-	const URL_DOMAIN  = 'http://google.com';
-	const URL_PATH    = '/test.jpg';
+	public const URL_INVALID = 'https://https://invalid.commmm';
+	public const URL_404     = 'https://example.com/404/test.jpg';
+	public const URL_500     = 'https://example.com/500/test.jpg';
+	public const URL_SVG     = 'https://example.com/test.svg';
+	public const URL_VALID   = 'http://example.com/test.jpg';
+	public const URL_DOMAIN  = 'http://google.com';
+	public const URL_PATH    = '/test.jpg';
 
-	const REST_URL = '/web-stories/v1/hotlink/validate';
+	public const REST_URL = '/web-stories/v1/hotlink/validate';
 
 	/**
 	 * Count of the number of requests attempted.
@@ -57,7 +55,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	 */
 	private $controller;
 
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$subscriber = $factory->user->create(
 			[
 				'role' => 'subscriber',
@@ -71,7 +69,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 		);
 	}
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		add_filter( 'pre_http_request', [ $this, 'mock_http_request' ], 10, 3 );
@@ -80,7 +78,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 		$this->controller = $this->injector->make( \Google\Web_Stories\REST_API\Hotlinking_Controller::class );
 	}
 
-	public function tear_down() {
+	public function tear_down(): void {
 		remove_filter( 'pre_http_request', [ $this, 'mock_http_request' ] );
 
 		parent::tear_down();
@@ -147,7 +145,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$this->controller->register();
 
 		$routes = rest_get_server()->get_routes();
@@ -158,7 +156,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::validate_url
 	 */
-	public function test_validate_url() {
+	public function test_validate_url(): void {
 		$result = $this->controller->validate_url( self::URL_VALID );
 		$this->assertTrue( $result );
 	}
@@ -166,7 +164,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::validate_url
 	 */
-	public function test_validate_url_empty() {
+	public function test_validate_url_empty(): void {
 		$result = $this->controller->validate_url( '' );
 		$this->assertErrorResponse( 'rest_invalid_url', $result, 400 );
 	}
@@ -174,7 +172,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::validate_url
 	 */
-	public function test_validate_url_domain() {
+	public function test_validate_url_domain(): void {
 		$result = $this->controller->validate_url( self::URL_DOMAIN );
 		$this->assertErrorResponse( 'rest_invalid_url_path', $result, 400 );
 	}
@@ -182,7 +180,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::validate_url
 	 */
-	public function test_validate_url_path() {
+	public function test_validate_url_path(): void {
 		$result = $this->controller->validate_url( self::URL_PATH );
 		$this->assertErrorResponse( 'rest_invalid_url', $result, 400 );
 	}
@@ -190,7 +188,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::validate_url
 	 */
-	public function test_validate_url_invalid() {
+	public function test_validate_url_invalid(): void {
 		$result = $this->controller->validate_url( '-1' );
 		$this->assertErrorResponse( 'rest_invalid_url', $result, 400 );
 	}
@@ -198,7 +196,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::validate_url
 	 */
-	public function test_validate_url_invalid2() {
+	public function test_validate_url_invalid2(): void {
 		$result = $this->controller->validate_url( 'wibble' );
 		$this->assertErrorResponse( 'rest_invalid_url', $result, 400 );
 	}
@@ -206,7 +204,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::get_item_schema
 	 */
-	public function test_get_item_schema() {
+	public function test_get_item_schema(): void {
 		$data = $this->controller->get_item_schema();
 
 		$properties = $data['properties'];
@@ -223,7 +221,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::parse_url
 	 * @covers ::parse_url_permissions_check
 	 */
-	public function test_parse_url_without_permission() {
+	public function test_parse_url_without_permission(): void {
 		$this->controller->register();
 
 		// Test without a login.
@@ -244,7 +242,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 		$this->assertEquals( $data['code'], 'rest_forbidden' );
 	}
 
-	public function test_url_invalid_url() {
+	public function test_url_invalid_url(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
@@ -262,7 +260,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::parse_url
 	 * @covers ::parse_url_permissions_check
 	 */
-	public function test_parse_url_empty_string() {
+	public function test_parse_url_empty_string(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
@@ -280,7 +278,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::parse_url
 	 * @covers ::parse_url_permissions_check
 	 */
-	public function test_parse_url() {
+	public function test_parse_url(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
@@ -304,7 +302,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::parse_url
 	 * @covers ::parse_url_permissions_check
 	 */
-	public function test_parse_url_cache() {
+	public function test_parse_url_cache(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
@@ -342,7 +340,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::parse_url
 	 * @covers ::parse_url_permissions_check
 	 */
-	public function test_parse_url_404() {
+	public function test_parse_url_404(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
@@ -356,7 +354,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::parse_url
 	 * @covers ::parse_url_permissions_check
 	 */
-	public function test_parse_url_500() {
+	public function test_parse_url_500(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
@@ -372,7 +370,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::parse_url_permissions_check
 	 * @covers ::prepare_item_for_response
 	 */
-	public function test_parse_url_svg() {
+	public function test_parse_url_svg(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );

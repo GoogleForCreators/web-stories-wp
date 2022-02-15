@@ -30,10 +30,10 @@
     return function () {
       var args = Array.prototype.slice.call(arguments, 0);
       var name = '__karma_puppeteer_' + methodName;
-      if (!global[name]) {
+      if (!window[name]) {
         throw new Error('unknown method: ' + name);
       }
-      return global[name].apply(null, args);
+      return window[name].apply(null, args);
     };
   }
 

@@ -2,9 +2,6 @@
 /**
  * Main plugin file.
  *
- * @package   Google\Web_Stories
- * @copyright 2020 Google LLC
- * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  * @link      https://github.com/googleforcreators/web-stories-wp
  *
  * Plugin Name: Web Stories
@@ -12,12 +9,15 @@
  * Plugin URI: https://wp.stories.google/
  * Author: Google
  * Author URI: https://opensource.google.com/
- * Version: 1.17.0-alpha.0
+ * Version: 1.18.0-alpha.0
  * Requires at least: 5.5
- * Requires PHP: 7.0
+ * Requires PHP: 7.2
  * Text Domain: web-stories
  * License: Apache License 2.0
  * License URI: https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * @copyright 2020 Google LLC
+ * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
 
 /**
@@ -40,13 +40,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'WEBSTORIES_VERSION', '1.17.0-alpha.0' );
+define( 'WEBSTORIES_VERSION', '1.18.0-alpha.0' );
 define( 'WEBSTORIES_DB_VERSION', '3.0.14' );
 define( 'WEBSTORIES_AMP_VERSION', '2.3.0-alpha' ); // Version of the AMP library included in the plugin.
 define( 'WEBSTORIES_PLUGIN_FILE', __FILE__ );
 define( 'WEBSTORIES_PLUGIN_DIR_PATH', plugin_dir_path( WEBSTORIES_PLUGIN_FILE ) );
 define( 'WEBSTORIES_PLUGIN_DIR_URL', plugin_dir_url( WEBSTORIES_PLUGIN_FILE ) );
-define( 'WEBSTORIES_MINIMUM_PHP_VERSION', '7.0.21' );
+define( 'WEBSTORIES_MINIMUM_PHP_VERSION', '7.2.24' );
 define( 'WEBSTORIES_MINIMUM_WP_VERSION', '5.5' );
 define( 'WEBSTORIES_CDN_URL', 'https://wp.stories.google/static/main' );
 
@@ -64,7 +64,7 @@ if ( ! defined( 'WEBSTORIES_DEV_MODE' ) ) {
  * @return Web_Stories_Compatibility
  */
 function web_stories_get_compat_instance() {
-	$error      = new WP_Error();
+	$error      = new \WP_Error();
 	$extensions = array(
 		'date'   => array(
 			'classes' => array(

@@ -2,10 +2,10 @@
 /**
  * Class Canonical_Sanitizer.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -26,11 +26,11 @@
 
 namespace Google\Web_Stories\AMP;
 
+use DOMElement;
 use DOMNodeList;
 use Google\Web_Stories_Dependencies\AMP_Base_Sanitizer;
 use Google\Web_Stories_Dependencies\AmpProject\Html\Attribute;
 use Google\Web_Stories_Dependencies\AmpProject\Html\Tag;
-use DOMElement;
 
 /**
  * Canonical sanitizer class.
@@ -42,11 +42,11 @@ use DOMElement;
  * Only needed when the AMP plugin is not active, as the plugin
  * handles that already.
  *
- * @see \AMP_Theme_Support::ensure_required_markup()
+ * @since 1.1.0
+ *
  * @link https://github.com/googleforcreators/web-stories-wp/issues/4193
  * @link https://github.com/googleforcreators/web-stories-wp/pull/8169
- *
- * @since 1.1.0
+ * @see \AMP_Theme_Support::ensure_required_markup()
  */
 class Canonical_Sanitizer extends AMP_Base_Sanitizer {
 	/**
@@ -56,7 +56,7 @@ class Canonical_Sanitizer extends AMP_Base_Sanitizer {
 	 *
 	 * @return void
 	 */
-	public function sanitize() {
+	public function sanitize(): void {
 		$canonical_url = $this->args['canonical_url'];
 
 		$query = $this->dom->xpath->query( '//link[@rel="canonical"]', $this->dom->head );

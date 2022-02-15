@@ -17,10 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\Media\Video;
 
-use Google\Web_Stories\Media\Media_Source_Taxonomy;
-use Google\Web_Stories\Services;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
-use Google\Web_Stories\Tests\Integration\TestCase;
 use WP_REST_Request;
 
 /**
@@ -32,7 +29,7 @@ class Poster extends DependencyInjectedTestCase {
 	 */
 	private $instance;
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\Media\Video\Poster::class );
@@ -41,7 +38,7 @@ class Poster extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$this->instance->register();
 
 		$this->assertSame( 10, has_action( 'rest_api_init', [ $this->instance, 'rest_api_init' ] ) );
@@ -52,7 +49,7 @@ class Poster extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::register_meta
 	 */
-	public function test_register_meta() {
+	public function test_register_meta(): void {
 		$this->instance->register_meta();
 
 		$this->assertTrue( registered_meta_key_exists( 'post', $this->instance::POSTER_ID_POST_META_KEY, 'attachment' ) );
@@ -62,7 +59,7 @@ class Poster extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::rest_api_init
 	 */
-	public function test_rest_api_init() {
+	public function test_rest_api_init(): void {
 		wp_set_current_user( self::factory()->user->create( [ 'role' => 'administrator' ] ) );
 
 		$poster_attachment_id = self::factory()->attachment->create_object(
@@ -96,7 +93,7 @@ class Poster extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::wp_prepare_attachment_for_js
 	 */
-	public function test_wp_prepare_attachment_for_js() {
+	public function test_wp_prepare_attachment_for_js(): void {
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
@@ -143,7 +140,7 @@ class Poster extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::get_thumbnail_data
 	 */
-	public function test_get_thumbnail_data() {
+	public function test_get_thumbnail_data(): void {
 		$attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -166,7 +163,7 @@ class Poster extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::get_thumbnail_data
 	 */
-	public function test_get_thumbnail_data_generated() {
+	public function test_get_thumbnail_data_generated(): void {
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',
@@ -185,7 +182,7 @@ class Poster extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::delete_video_poster
 	 */
-	public function test_delete_video_poster() {
+	public function test_delete_video_poster(): void {
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
@@ -215,7 +212,7 @@ class Poster extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::delete_video_poster
 	 */
-	public function test_delete_video_poster_no_generated_poster() {
+	public function test_delete_video_poster_no_generated_poster(): void {
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
@@ -243,7 +240,7 @@ class Poster extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::delete_video_poster
 	 */
-	public function test_delete_video_poster_when_attachment_is_deleted() {
+	public function test_delete_video_poster_when_attachment_is_deleted(): void {
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
@@ -273,7 +270,7 @@ class Poster extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::is_poster
 	 */
-	public function test_is_poster() {
+	public function test_is_poster(): void {
 		$poster_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',

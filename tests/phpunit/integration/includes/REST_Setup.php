@@ -4,10 +4,10 @@
  *
  * Add method assertErrorResponse to any test class.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -28,19 +28,17 @@
 
 namespace Google\Web_Stories\Tests\Integration;
 
+use Spy_REST_Server;
 use WP_Error;
 use WP_REST_Response;
-use Spy_REST_Server;
 
 /**
  * trait REST_Setup
- *
- * @package Google\Web_Stories\Tests
  */
 trait REST_Setup {
 	use Capabilities_Setup, Kses_Setup;
 
-	protected function set_up_rest() {
+	protected function set_up_rest(): void {
 		/** @var \WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
 		$wp_rest_server = new Spy_REST_Server();
@@ -51,7 +49,7 @@ trait REST_Setup {
 		$this->set_permalink_structure( '/%postname%/' );
 	}
 
-	protected function tear_down_rest() {
+	protected function tear_down_rest(): void {
 		/** @var \WP_REST_Server $wp_rest_server */
 		global $wp_rest_server;
 		$wp_rest_server = null;
@@ -67,10 +65,9 @@ trait REST_Setup {
 	 * @param string                    $code     Status code.
 	 * @param WP_REST_Response|WP_Error $response Response object.
 	 * @param int|null                  $status   Status code.
-	 *
 	 * @return void
 	 */
-	protected function assertErrorResponse( $code, $response, $status = null ) {
+	protected function assertErrorResponse( $code, $response, $status = null ): void {
 
 		if ( $response instanceof WP_REST_Response ) {
 			$response = $response->as_error();

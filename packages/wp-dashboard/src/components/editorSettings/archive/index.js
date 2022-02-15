@@ -56,12 +56,8 @@ export const TEXT = {
     'You can customize or disable this behavior.',
     'web-stories'
   ),
-  SUB_TEXT_DISABLED: __(
-    'This disables the default archive page.',
-    'web-stories'
-  ),
   SUB_TEXT_CUSTOM: __(
-    'Choose a custom page as your stories archive.',
+    'Choose a page to serve as your Web Stories archive. Use the Web Stories block to add stories to this page.',
     'web-stories'
   ),
 };
@@ -76,7 +72,7 @@ const OPTIONS = [
     value: ARCHIVE_TYPE.DISABLED,
   },
   {
-    label: __('Custom', 'web-stories'),
+    label: __('Create your own', 'web-stories'),
     value: ARCHIVE_TYPE.CUSTOM,
   },
 ];
@@ -88,6 +84,7 @@ const SearchWrapper = styled.div`
 export default function ArchiveSettings({
   archive = ARCHIVE_TYPE.DEFAULT,
   archiveURL: _archiveURL,
+  defaultArchiveURL,
   archivePageId,
   updateSettings,
   searchPages,
@@ -105,9 +102,12 @@ export default function ArchiveSettings({
       // This way, when changing from "Custom" to "Default", we can display
       // the default "/web-stories/" URL again. Otherwise that's not possible.
       setArchiveURL(_archiveURL);
+      const newArchivePageId =
+        newArchive === ARCHIVE_TYPE.CUSTOM ? archivePageId : 0;
+      setSelectedPage(newArchivePageId);
       updateSettings({
         archive: newArchive,
-        archivePageId: newArchive === ARCHIVE_TYPE.CUSTOM ? archivePageId : 0,
+        archivePageId: newArchivePageId,
       });
     },
     [updateSettings, archivePageId, _archiveURL]
@@ -178,7 +178,20 @@ export default function ArchiveSettings({
           <TextInputHelperText
             size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
           >
-            {TEXT.SUB_TEXT_DISABLED}
+            <TranslateWithMarkup
+              mapping={{
+                code: <code />,
+              }}
+            >
+              {sprintf(
+                /* translators: %s: archive url. */
+                __(
+                  'Turn off the default archive page at <code>%s</code>. Users will see a 404 Not Found page when trying to access the default archive page.',
+                  'web-stories'
+                ),
+                archiveURL
+              )}
+            </TranslateWithMarkup>
           </TextInputHelperText>
         )}
         {ARCHIVE_TYPE.CUSTOM === archive && (
@@ -215,13 +228,24 @@ export default function ArchiveSettings({
                     as="a"
                   />
                 ),
+                code: <code />,
               }}
             >
-              {sprintf(
-                /* translators: %s: archive url. */
-                __('Visit archive page at <a>%s</a>.', 'web-stories'),
-                archiveURL
-              )}
+              {archivePageId && archiveURL !== defaultArchiveURL
+                ? sprintf(
+                    /* translators: 1. current archive url, 2. default archive url. */
+                    __(
+                      'Visit archive page at <a>%1$s</a>. <code>%2$s</code> will automatically redirect to this page.',
+                      'web-stories'
+                    ),
+                    archiveURL,
+                    defaultArchiveURL
+                  )
+                : sprintf(
+                    /* translators: %s: archive url. */
+                    __('Visit archive page at <a>%1$s</a>.', 'web-stories'),
+                    archiveURL
+                  )}
             </TranslateWithMarkup>
           </TextInputHelperText>
         )}
@@ -233,6 +257,7 @@ export default function ArchiveSettings({
 ArchiveSettings.propTypes = {
   archive: PropTypes.string.isRequired,
   archiveURL: PropTypes.string.isRequired,
+  defaultArchiveURL: PropTypes.string.isRequired,
   updateSettings: PropTypes.func.isRequired,
   searchPages: PropTypes.func.isRequired,
   archivePageId: PropTypes.number.isRequired,

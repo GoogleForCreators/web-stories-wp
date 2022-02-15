@@ -61,13 +61,23 @@ describe('TextEdit integration', () => {
     let frame;
 
     beforeEach(async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
-      frame = fixture.editor.canvas.framesLayer.frames[1].node;
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
+      await waitFor(() => {
+        const node = fixture.editor.canvas.framesLayer.frames[1].node;
+        if (!node) {
+          throw new Error('node not ready');
+        }
+        frame = fixture.editor.canvas.framesLayer.frames[1].node;
+      });
     });
 
     it('should render initial content', () => {
-      expect(frame.textContent).toEqual('Fill in some text');
+      expect(frame.textContent).toEqual(
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+      );
     });
 
     describe('edit mode', () => {
@@ -77,22 +87,18 @@ describe('TextEdit integration', () => {
 
       beforeEach(async () => {
         await fixture.events.mouse.clickOn(frame, 30, 5);
-        editor = fixture.querySelector('[data-testid="textEditor"]');
-        editLayer = fixture.querySelector('[data-testid="editLayer"]');
+        editor = await fixture.screen.findByTestId('textEditor');
+        editLayer = await fixture.screen.findByTestId('editLayer');
         boldToggle = fixture.editor.inspector.designPanel.textStyle.bold;
       });
 
-      // TODO https://github.com/googleforcreators/web-stories-wp/issues/9930
-      // eslint-disable-next-line jasmine/no-disabled-tests
-      xit('should mount editor', async () => {
+      it('should mount editor', async () => {
         expect(editor).toBeTruthy();
         expect(editLayer).toBeTruthy();
         await fixture.snapshot();
       });
 
-      // TODO https://github.com/googleforcreators/web-stories-wp/issues/9930
-      // eslint-disable-next-line jasmine/no-disabled-tests
-      xit('should handle a command, exit and save', async () => {
+      it('should handle a command, exit and save', async () => {
         // Increase the font size for ensuring the clicks to be in correct places.
         await fixture.events.click(
           fixture.editor.inspector.designPanel.textStyle.fontSize,
@@ -107,6 +113,7 @@ describe('TextEdit integration', () => {
         await fixture.events.mouse.clickOn(frame, 30, 5);
         await repeatPress('ArrowUp', 10);
         await fixture.events.keyboard.down('shift');
+        await repeatPress('ArrowDown', 3);
         await repeatPress('ArrowRight', 20);
         await fixture.events.keyboard.up('shift');
 
@@ -131,13 +138,13 @@ describe('TextEdit integration', () => {
         // The element is still selected and updated.
         const storyContext = await fixture.renderHook(() => useStory());
         expect(storyContext.state.selectedElements[0].content).toEqual(
-          '<span style="font-weight: 700">Fill in some text</span>'
+          '<span style="font-weight: 700">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>'
         );
 
         // The content is updated in the frame.
         // @todo: What to do with `<p>` and containers?
         expect(frame.querySelector('p').innerHTML).toEqual(
-          '<span style="font-weight: 700">Fill in some text</span>'
+          '<span style="font-weight: 700">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>'
         );
       });
     });
@@ -175,9 +182,18 @@ describe('TextEdit integration', () => {
 
     describe('edit mode', () => {
       it('should not change height when entering and exiting edit mode', async () => {
-        await fixture.events.click(fixture.editor.library.textAdd);
-        await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
-        frame = fixture.editor.canvas.framesLayer.frames[1].node;
+        await fixture.editor.library.textTab.click();
+        await fixture.events.click(
+          fixture.editor.library.text.preset('Paragraph')
+        );
+        await waitFor(() => {
+          const node = fixture.editor.canvas.framesLayer.frames[1].node;
+          if (!node) {
+            throw new Error('node not ready');
+          }
+          expect(node).toBeTruthy();
+          frame = fixture.editor.canvas.framesLayer.frames[1].node;
+        });
         const { width } = frame.getBoundingClientRect();
 
         // Enter edit mode.
@@ -190,7 +206,7 @@ describe('TextEdit integration', () => {
         await fixture.events.keyboard.press('Enter');
 
         // Get the initial height.
-        textElement = fixture.querySelector('[data-testid="textEditor"]');
+        textElement = await fixture.screen.findByTestId('textEditor');
         initialHeight = textElement.getBoundingClientRect()?.height;
 
         await fixture.snapshot('Trailing and leading newlines, in edit mode');
@@ -213,7 +229,7 @@ describe('TextEdit integration', () => {
           width / 2,
           heightAfterExitingEditMode / 2
         );
-        textElement = fixture.querySelector('[data-testid="textEditor"]');
+        textElement = await fixture.screen.findByTestId('textEditor');
 
         const { height: heightAfterReenteringEditMode } =
           textElement.getBoundingClientRect();

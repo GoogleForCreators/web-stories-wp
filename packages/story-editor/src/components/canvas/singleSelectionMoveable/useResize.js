@@ -17,9 +17,9 @@
 /**
  * External dependencies
  */
-import { useState } from '@googleforcreators/react';
 import classnames from 'classnames';
 import { useUnits } from '@googleforcreators/units';
+import { useState } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -27,6 +27,7 @@ import { useUnits } from '@googleforcreators/units';
 import { useStory } from '../../../app';
 import { getDefinitionForType } from '../../../elements';
 import useElementOutOfCanvas from '../utils/useElementOutOfCanvas';
+import useFullbleedMediaAsBackground from '../utils/useFullbleedMediaAsBackground';
 
 const EMPTY_HANDLES = [];
 const VERTICAL_HANDLES = ['n', 's'];
@@ -49,12 +50,16 @@ function useSingleSelectionResize({
   isEditMode,
   pushTransform,
   classNames,
+  forceLockRatio,
 }) {
   const { updateSelectedElements } = useStory((state) => ({
     updateSelectedElements: state.actions.updateSelectedElements,
   }));
 
   const { handleElementOutOfCanvas } = useElementOutOfCanvas();
+  const { handleFullbleedMediaAsBackground } = useFullbleedMediaAsBackground({
+    selectedElement,
+  });
 
   const { editorToDataX, editorToDataY, dataToEditorY, dataToEditorX } =
     useUnits(
@@ -68,10 +73,16 @@ function useSingleSelectionResize({
       })
     );
 
-  const { resizeRules = {}, updateForResizeEvent } = getDefinitionForType(
-    selectedElement.type
-  );
+  const { lockAspectRatio: elementLockRatio, type } = selectedElement;
+  const isText = type === 'text';
   const [isResizingFromCorner, setIsResizingFromCorner] = useState(true);
+  // Text element lock aspect ratio doesn't influence resizing.
+  // See https://github.com/GoogleForCreators/web-stories-wp/issues/10466
+  // We always lock the aspect ratio for text element when resizing from corners and never when resizing from edges.
+  const lockAspectRatio =
+    (!isText && (forceLockRatio || elementLockRatio)) ||
+    (isText && isResizingFromCorner);
+  const { resizeRules, updateForResizeEvent } = getDefinitionForType(type);
 
   const minWidth = dataToEditorX(resizeRules.minWidth);
   const minHeight = dataToEditorY(resizeRules.minHeight);
@@ -82,7 +93,7 @@ function useSingleSelectionResize({
     let newHeight = height;
     let updates = null;
 
-    if (isResizingFromCorner) {
+    if (lockAspectRatio) {
       if (newWidth < minWidth) {
         newWidth = minWidth;
         newHeight = newWidth / aspectRatio;
@@ -127,11 +138,10 @@ function useSingleSelectionResize({
     if (dragStart) {
       dragStart.set(frame.translate);
     }
-    // Lock ratio for diagonal directions (nw, ne, sw, se). Both
-    // `direction[]` values for diagonals are either 1 or -1. Non-diagonal
+    // Both `direction[]` values for diagonals are either 1 or -1. Non-diagonal
     // directions have 0s.
     const newResizingMode = direction[0] !== 0 && direction[1] !== 0;
-    if (isResizingFromCorner !== newResizingMode) {
+    if (isResizingFromCorner !== newResizingMode && isText) {
       setIsResizingFromCorner(newResizingMode);
     }
     if (isEditMode) {
@@ -166,6 +176,7 @@ function useSingleSelectionResize({
     }
     setIsResizingFromCorner(true);
     resetMoveable(target);
+    handleFullbleedMediaAsBackground(target);
   };
 
   const visuallyHideHandles =
@@ -176,7 +187,7 @@ function useSingleSelectionResize({
     onResize,
     onResizeStart,
     onResizeEnd,
-    keepRatio: isResizingFromCorner || selectedElement?.type === 'sticker',
+    keepRatio: lockAspectRatio,
     renderDirections: getRenderDirections(resizeRules),
     className: classnames(classNames, {
       'visually-hide-handles': visuallyHideHandles,

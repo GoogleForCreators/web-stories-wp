@@ -2,10 +2,10 @@
 /**
  * Stories Renderer Base class.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -26,26 +26,24 @@
 
 namespace Google\Web_Stories\Renderer\Stories;
 
+use Google\Web_Stories\AMP_Story_Player_Assets;
+use Google\Web_Stories\Assets;
 use Google\Web_Stories\Context;
 use Google\Web_Stories\Interfaces\Renderer as RenderingInterface;
 use Google\Web_Stories\Model\Story;
-use Google\Web_Stories\AMP_Story_Player_Assets;
 use Google\Web_Stories\Services;
-use Google\Web_Stories\Story_Query;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Assets;
+use Google\Web_Stories\Story_Query;
 use Iterator;
 use WP_Post;
-
-// Disable reason: prevent false positives due to ReturnTypeWillChange attributes.
-// phpcs:disable Squiz.Commenting.FunctionComment.Missing
 
 /**
  * Renderer class.
  *
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
- * @implements Iterator<int, \WP_Post>
+ *
+ * @implements Iterator<int, Story>
  */
 abstract class Renderer implements RenderingInterface, Iterator {
 	/**
@@ -64,17 +62,13 @@ abstract class Renderer implements RenderingInterface, Iterator {
 
 	/**
 	 * Web Stories stylesheet handle.
-	 *
-	 * @var string
 	 */
-	const STYLE_HANDLE = 'web-stories-list-styles';
+	public const STYLE_HANDLE = 'web-stories-list-styles';
 
 	/**
 	 * Web Stories stylesheet handle.
-	 *
-	 * @var string
 	 */
-	const LIGHTBOX_SCRIPT_HANDLE = 'lightbox';
+	public const LIGHTBOX_SCRIPT_HANDLE = 'lightbox';
 
 	/**
 	 * Number of instances invoked. Kept it static to keep track.
@@ -179,7 +173,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @since 1.5.0
 	 *
 	 * @param array $args Array of rendering arguments.
-	 *
 	 * @return string
 	 */
 	public function render( array $args = [] ): string {
@@ -200,11 +193,10 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @return mixed|void
+	 * @return Story|null
 	 */
-	#[\ReturnTypeWillChange]
-	public function current() {
-		return $this->stories[ $this->position ];
+	public function current(): ?Story {
+		return $this->stories[ $this->position ] ?? null;
 	}
 
 	/**
@@ -214,8 +206,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @retrun void
 	 */
-	#[\ReturnTypeWillChange]
-	public function next() {
+	public function next(): void {
 		++ $this->position;
 	}
 
@@ -226,7 +217,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return bool|float|int|string|void|null
 	 */
-	#[\ReturnTypeWillChange]
 	public function key() {
 		return $this->position;
 	}
@@ -236,10 +226,9 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @return bool|void
+	 * @return bool
 	 */
-	#[\ReturnTypeWillChange]
-	public function valid() {
+	public function valid(): bool {
 		return isset( $this->stories[ $this->position ] );
 	}
 
@@ -250,8 +239,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return void
 	 */
-	#[\ReturnTypeWillChange]
-	public function rewind() {
+	public function rewind(): void {
 		$this->position = 0;
 	}
 
@@ -262,8 +250,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return void
 	 */
-	#[\ReturnTypeWillChange]
-	public function init() {
+	public function init(): void {
 		$this->stories = array_filter( array_map( [ $this, 'prepare_stories' ], $this->query->get_stories() ) );
 
 		add_action( 'wp_footer', [ $this, 'render_stories_lightbox' ] );
@@ -277,7 +264,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return void
 	 */
-	public function load_assets() {
+	public function load_assets(): void {
 		if ( wp_style_is( self::STYLE_HANDLE, 'registered' ) ) {
 			return;
 		}
@@ -288,7 +275,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		// Web Stories lightbox script.
 		$this->assets->register_script_asset( self::LIGHTBOX_SCRIPT_HANDLE, [ AMP_Story_Player_Assets::SCRIPT_HANDLE ] );
 
-		if ( defined( 'AMPFORWP_VERSION' ) ) {
+		if ( \defined( 'AMPFORWP_VERSION' ) ) {
 			add_action( 'amp_post_template_css', [ $this, 'add_amp_post_template_css' ] );
 		}
 	}
@@ -300,7 +287,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return void
 	 */
-	public function add_amp_post_template_css() {
+	public function add_amp_post_template_css(): void {
 		$path = $this->assets->get_base_path( sprintf( 'assets/css/%s%s.css', self::STYLE_HANDLE, is_rtl() ? '-rtl' : '' ) );
 
 		if ( is_readable( $path ) ) {
@@ -312,15 +299,14 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	/**
 	 * Returns story item data.
 	 *
-	 * @since 1.5.0
-	 *
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 *
-	 * @param object $post Array of post objects.
+	 * @since 1.5.0
 	 *
+	 * @param object $post Array of post objects.
 	 * @return Story|null Story object or null if given post
 	 */
-	public function prepare_stories( $post ) {
+	public function prepare_stories( $post ): ?Story {
 		if ( ! $post instanceof WP_Post ) {
 			return null;
 		}
@@ -355,11 +341,9 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @since 1.5.0
 	 *
 	 * @param string $view_type View type to check.
-	 *
 	 * @return bool Whether or not current view type matches the one passed.
 	 */
 	protected function is_view_type( $view_type ): bool {
-
 		return ( ! empty( $this->attributes['view_type'] ) && $view_type === $this->attributes['view_type'] );
 	}
 
@@ -371,7 +355,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return string
 	 */
 	protected function get_view_type(): string {
-
 		return ( ! empty( $this->attributes['view_type'] ) ) ? $this->attributes['view_type'] : 'circles';
 	}
 
@@ -382,7 +365,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return void
 	 */
-	protected function maybe_render_archive_link() {
+	protected function maybe_render_archive_link(): void {
 
 		if ( empty( $this->attributes['show_archive_link'] ) || true !== $this->attributes['show_archive_link'] ) {
 			return;
@@ -444,7 +427,6 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 * @return string
 	 */
 	protected function get_container_classes(): string {
-
 		$container_classes   = [];
 		$container_classes[] = 'web-stories-list';
 		$container_classes[] = ( ! empty( $this->attributes['align'] ) ) ? sprintf( 'align%1$s', $this->attributes['align'] ) : 'alignnone';
@@ -521,7 +503,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return void
 	 */
-	public function render_single_story_content() {
+	public function render_single_story_content(): void {
 		/**
 		 * Story object.
 		 *
@@ -532,7 +514,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		$single_story_classes = $this->get_single_story_classes();
 		$lightbox_state       = 'lightbox' . $story->get_id() . $this->instance_id;
 		// No need to load these styles on admin as editor styles are being loaded by the block.
-		if ( ! is_admin() || ( defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST ) ) {
+		if ( ! is_admin() || ( \defined( 'IFRAME_REQUEST' ) && IFRAME_REQUEST ) ) {
 			// Web Stories Styles for AMP and non-AMP pages.
 			$this->assets->enqueue_style_asset( self::STYLE_HANDLE );
 		}
@@ -567,7 +549,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return void
 	 */
-	protected function render_story_with_poster() {
+	protected function render_story_with_poster(): void {
 		/**
 		 * Story object.
 		 *
@@ -581,7 +563,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 			?>
 			<div class="web-stories-list__story-poster">
 				<div class="web-stories-list__story-poster-placeholder">
-					<a href="<?php echo esc_url( $story->get_url() ); ?>">
+					<a href="<?php echo esc_url( $story->get_url() ); ?>" <?php $this->render_link_attributes(); ?>>
 						<?php echo esc_html( $story->get_title() ); ?>
 					</a>
 				</div>
@@ -590,12 +572,14 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		} else {
 			?>
 			<div class="web-stories-list__story-poster">
-				<a href="<?php echo esc_url( $story->get_url() ); ?>">
+				<a href="<?php echo esc_url( $story->get_url() ); ?>" <?php $this->render_link_attributes(); ?>>
 					<img
 						src="<?php echo esc_url( $poster_url ); ?>"
 						alt="<?php echo esc_attr( $story->get_title() ); ?>"
 						width="<?php echo absint( $this->width ); ?>"
 						height="<?php echo absint( $this->height ); ?>"
+						srcset="<?php echo esc_attr( $story->get_poster_srcset() ); ?>"
+						sizes="<?php echo esc_attr( $story->get_poster_sizes() ); ?>"
 						loading="lazy"
 						decoding="async"
 					>
@@ -613,13 +597,57 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	}
 
 	/**
+	 * Render additional link attributes.
+	 *
+	 * Allows customization of html attributes in the web stories widget anchor tag loop
+	 * Converts array into escaped inline html attributes.
+	 *
+	 * @since 1.17.0
+	 *
+	 * @return void
+	 */
+	protected function render_link_attributes(): void {
+		/**
+		 * The current story.
+		 *
+		 * @var Story $story
+		 */
+		$story = $this->current();
+
+		/**
+		 * Filters the link attributes added to a story's <a> tag.
+		 *
+		 * @since 1.17.0
+		 *
+		 * @param array  $attributes Key value array of attribute name to attribute value.
+		 * @param Story  $story      The current story instance.
+		 * @param int    $position   The current story's position within the list.
+		 * @param string $view_type  The current view type.
+		 */
+		$attributes = apply_filters( 'web_stories_renderer_link_attributes', [], $story, $this->position, $this->get_view_type() );
+
+		$attrs = [];
+
+		if ( ! empty( $attributes ) ) {
+			foreach ( $attributes as $attribute => $value ) {
+				$attrs[] = wp_kses_one_attr( $attribute . '="' . esc_attr( $value ) . '"', 'a' );
+			}
+		}
+
+		$attrs = array_filter( $attrs ); // Filter out empty values rejected by KSES.
+
+		//phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo implode( ' ', $attrs );
+	}
+
+	/**
 	 * Renders the content overlay markup.
 	 *
 	 * @since 1.5.0
 	 *
 	 * @return void
 	 */
-	protected function get_content_overlay() {
+	protected function get_content_overlay(): void {
 		/**
 		 * Story object.
 		 *
@@ -669,18 +697,18 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	/**
 	 * Generate HTML for the non-AMP page request.
 	 *
-	 * @param Story $story Current Story.
-	 *
-	 * @return void
 	 * @since 1.5.0
+	 *
+	 * @param Story $story Current Story.
+	 * @return void
 	 */
-	protected function generate_lightbox_html( $story ) {
+	protected function generate_lightbox_html( $story ): void {
 		// Start collecting markup for the lightbox stories. This way we don't have to re-run the loop.
 		ob_start();
 
 		// Collect story links to fill-in non-AMP lightbox 'amp-story-player'.
 		?>
-			<a href="<?php echo esc_url( $story->get_url() ); ?>"><?php echo esc_html( $story->get_title() ); ?></a>
+			<a href="<?php echo esc_url( $story->get_url() ); ?>" <?php $this->render_link_attributes(); ?>><?php echo esc_html( $story->get_title() ); ?></a>
 		<?php
 
 		$this->lightbox_html .= ob_get_clean();
@@ -689,12 +717,12 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	/**
 	 * Markup for the lightbox used on AMP pages.
 	 *
-	 * @param Story $story Current Story.
-	 *
-	 * @return void
 	 * @since 1.5.0
+	 *
+	 * @param Story $story Current Story.
+	 * @return void
 	 */
-	protected function generate_amp_lightbox_html_amp( $story ) {
+	protected function generate_amp_lightbox_html_amp( $story ): void {
 		// Start collecting markup for the lightbox stories. This way we don't have to re-run the loop.
 		ob_start();
 		$lightbox_state = 'lightbox' . $story->get_id() . $this->instance_id;
@@ -722,7 +750,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 					height="6"
 					layout="responsive"
 				>
-					<a href="<?php echo( esc_url( $story->get_url() ) ); ?>"><?php echo esc_html( $story->get_title() ); ?></a>
+					<a href="<?php echo( esc_url( $story->get_url() ) ); ?>" <?php $this->render_link_attributes(); ?>><?php echo esc_html( $story->get_title() ); ?></a>
 				</amp-story-player>
 			</div>
 		</amp-lightbox>
@@ -737,7 +765,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return void
 	 */
-	public function render_stories_with_lightbox() {
+	public function render_stories_with_lightbox(): void {
 		$data = [
 			'controls' => [
 				[
@@ -771,8 +799,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return void
 	 */
-	public function render_stories_with_lightbox_amp() {
-
+	public function render_stories_with_lightbox_amp(): void {
 		// Have to ignore this as the escaping functions are stripping off 'amp-bind' custom attribute '[class]'.
 		echo $this->lightbox_html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Generated with properly escaped data.
 
@@ -783,7 +810,7 @@ abstract class Renderer implements RenderingInterface, Iterator {
 	 *
 	 * @return void
 	 */
-	public function render_stories_lightbox() {
+	public function render_stories_lightbox(): void {
 		// Return if we don't have anything to render.
 		if ( empty( $this->lightbox_html ) ) {
 			return;

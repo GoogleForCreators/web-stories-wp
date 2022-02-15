@@ -18,14 +18,14 @@
 namespace Google\Web_Stories\Tests\Unit\AMP;
 
 use AMP_DOM_Utils;
-use Google\Web_Stories\Tests\Unit\TestCase;
 use Brain\Monkey;
+use Google\Web_Stories\Tests\Unit\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Story_Sanitizer
  */
 class Story_Sanitizer extends TestCase {
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->stubEscapeFunctions();
@@ -50,6 +50,7 @@ class Story_Sanitizer extends TestCase {
 
 	/**
 	 * Helper method for tests.
+	 *
 	 * @param string $source
 	 * @param array $sanitizer_args
 	 * @return string Sanitized HTML.
@@ -82,14 +83,14 @@ class Story_Sanitizer extends TestCase {
 	}
 
 	/**
+	 * @param string   $source   Source.
+	 * @param string   $expected Expected.
+	 *
 	 * @dataProvider get_publisher_logo_data
 	 * @covers ::sanitize
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher_logo
-	 *
-	 * @param string   $source   Source.
-	 * @param string   $expected Expected.
 	 */
-	public function test_sanitize_publisher_logo( $source, $expected ) {
+	public function test_sanitize_publisher_logo( $source, $expected ): void {
 		$args = [
 			'publisher'      => 'Web Stories',
 			'publisher_logo' => 'https://example.com/publisher_logo.png',
@@ -151,15 +152,15 @@ class Story_Sanitizer extends TestCase {
 	}
 
 	/**
-	 * @dataProvider get_poster_image_data
-	 * @covers ::sanitize
-	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_poster_images
-	 *
 	 * @param string $source   Source.
 	 * @param string $expected Expected.
 	 * @param array  $args     Args.
+	 *
+	 * @dataProvider get_poster_image_data
+	 * @covers ::sanitize
+	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_poster_images
 	 */
-	public function test_sanitize_poster_image( $source, $expected, $args ) {
+	public function test_sanitize_poster_image( $source, $expected, $args ): void {
 		$actual = $this->sanitize_and_get( $source, $args );
 
 		$this->assertEquals( $expected, $actual );
@@ -251,15 +252,15 @@ class Story_Sanitizer extends TestCase {
 	}
 
 	/**
-	 * @dataProvider get_publisher_data
-	 * @covers ::sanitize
-	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher
-	 *
 	 * @param string $source   Source.
 	 * @param string $expected Expected.
 	 * @param array  $args   Args
+	 *
+	 * @dataProvider get_publisher_data
+	 * @covers ::sanitize
+	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_publisher
 	 */
-	public function test_sanitize_publisher( $source, $expected, $args ) {
+	public function test_sanitize_publisher( $source, $expected, $args ): void {
 		$actual = $this->sanitize_and_get( $source, $args );
 
 		$this->assertEquals( $expected, $actual );
@@ -268,7 +269,7 @@ class Story_Sanitizer extends TestCase {
 	/**
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::transform_html_start_tag
 	 */
-	public function test_transform_html_start_tag() {
+	public function test_transform_html_start_tag(): void {
 		$source = '<html><head></head><body><amp-story></amp-story></body></html>';
 
 		$args = [
@@ -320,7 +321,7 @@ class Story_Sanitizer extends TestCase {
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::transform_a_tags
 	 * @dataProvider data_test_transform_a_tags
 	 */
-	public function test_transform_a_tags( $source, $expected ) {
+	public function test_transform_a_tags( $source, $expected ): void {
 		$args = [
 			'publisher_logo' => '',
 			'publisher'      => '',
@@ -336,7 +337,7 @@ class Story_Sanitizer extends TestCase {
 	/**
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::deduplicate_inline_styles
 	 */
-	public function test_deduplicate_inline_styles() {
+	public function test_deduplicate_inline_styles(): void {
 		$source = '<html><head></head><body><amp-story><div style="color: blue;"></div><div style="color: blue;"></div><div style="color: blue; background: white;"></div><div style="color: red;"></div></amp-story></body></html>';
 
 		$args = [
@@ -355,7 +356,7 @@ class Story_Sanitizer extends TestCase {
 	/**
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_video_cache
 	 */
-	public function test_add_video_cache_disabled() {
+	public function test_add_video_cache_disabled(): void {
 		$source = '<html><head></head><body><amp-story><amp-video width="720" height="960" poster="https://example.com/poster.jpg" layout="responsive"><source type="video/mp4" src="https://example.com/video.mp4" /></amp-video></amp-story></body></html>';
 
 		$args = [
@@ -373,7 +374,7 @@ class Story_Sanitizer extends TestCase {
 	/**
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::add_video_cache
 	 */
-	public function test_add_video_cache_enabled() {
+	public function test_add_video_cache_enabled(): void {
 		$source = '<html><head></head><body><amp-story><amp-video width="720" height="960" poster="https://example.com/poster.jpg" layout="responsive"><source type="video/mp4" src="https://example.com/video.mp4" /></amp-video></amp-story></body></html>';
 
 		$args = [
@@ -391,7 +392,7 @@ class Story_Sanitizer extends TestCase {
 	/**
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::remove_blob_urls
 	 */
-	public function test_remove_blob_urls() {
+	public function test_remove_blob_urls(): void {
 		$source = '<html><head></head><body><amp-story><amp-video width="720" height="960" poster="blob:https://example.com/ecee4374-8f8a-4210-8f2d-9c5f8d6a6c5a" layout="responsive"><source type="video/mp4" src="blob:https://example.com/ecee4374-8f8a-4210-8f2d-9c5f8d6a6c5a" /></amp-video><amp-img src="blob:https://example.com/ecee4374-8f8a-4210-8f2d-9c5f8d6a6c5a" width="100" height="100"></amp-img></amp-story></body></html>';
 
 		$args = [
@@ -409,7 +410,7 @@ class Story_Sanitizer extends TestCase {
 	/**
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::sanitize_srcset
 	 */
-	public function test_sanitize_srcset() {
+	public function test_sanitize_srcset(): void {
 		$source = '<html><head></head><body><amp-story><amp-img src="https://example.com/image.jpg" width="100" height="100" srcset="https://example.com/image.jpg 1000w,https://example.com/image-768x1024.jpg 768w,https://example.com/image-768x1024.jpg 768w,https://example.com/image-225x300.jpg 225w,https://example.com/image-225x300.jpg 225w,https://example.com/image-150x200.jpg 150w"></amp-img></amp-story></body></html>';
 
 		$args = [
@@ -427,7 +428,7 @@ class Story_Sanitizer extends TestCase {
 	/**
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::sanitize_srcset
 	 */
-	public function test_sanitize_srcset_commas() {
+	public function test_sanitize_srcset_commas(): void {
 		$source = '<html><head></head><body><amp-story><amp-img src="https://example.com/image.jpg" width="100" height="100" srcset="https://example.com/image/1000,1000/image.jpg 1000w,https://example.com/image/768,1024/image-768x1024.jpg 768w,https://example.com/image/225,300/image-225x300.jpg 225w,https://example.com/image/150,200/image-150x200.jpg 150w"></amp-img></amp-story></body></html>';
 
 		$args = [
@@ -445,7 +446,7 @@ class Story_Sanitizer extends TestCase {
 	/**
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::sanitize_amp_story_page_outlink
 	 */
-	public function test_sanitize_amp_story_page_outlink() {
+	public function test_sanitize_amp_story_page_outlink(): void {
 		$source = '<html><head></head><body><amp-story-page-outlink layout="nodisplay" cta-image=""><a href="https://www.bonappeteach.com/smoked-apple-cider/" target="_blank" rel="noreferrer">Get The Recipe!</a></amp-story-page-outlink></body></html>';
 
 		$args = [
@@ -463,7 +464,7 @@ class Story_Sanitizer extends TestCase {
 	/**
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::sanitize_amp_story_page_outlink
 	 */
-	public function test_sanitize_amp_story_page_outlink_element_order() {
+	public function test_sanitize_amp_story_page_outlink_element_order(): void {
 		$source = '<html><head></head><body><amp-story><amp-story-page><amp-story-page-outlink layout="nodisplay" cta-image=""><a href="https://www.bonappeteach.com/smoked-apple-cider/" target="_blank" rel="noreferrer">Get The Recipe!</a></amp-story-page-outlink><amp-story-grid-layer></amp-story-grid-layer></amp-story-page></amp-story></body></html>';
 
 		$args = [
@@ -480,7 +481,7 @@ class Story_Sanitizer extends TestCase {
 	/**
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::remove_page_template_placeholder_images
 	 */
-	public function test_remove_page_template_placeholder_images() {
+	public function test_remove_page_template_placeholder_images(): void {
 		$source = '<html><head></head><body><amp-img src="https://example.com/wp-content/plugins/web-stories/assets/images/editor/grid-placeholder.png" width="100" height="100"></amp-img></body></html>';
 
 		$args = [
@@ -498,7 +499,7 @@ class Story_Sanitizer extends TestCase {
 	/**
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::remove_page_template_placeholder_images
 	 */
-	public function test_remove_page_template_placeholder_images_hash() {
+	public function test_remove_page_template_placeholder_images_hash(): void {
 		$source = '<html><head></head><body><amp-img src="https://example.com/wp-content/plugins/web-stories/assets/images/adde98ae406d6b5c95d111a934487252.png" width="100" height="100"></amp-img></body></html>';
 
 		$args = [

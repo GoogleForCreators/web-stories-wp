@@ -17,8 +17,6 @@
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
-import { boolean, text } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 
 /**
@@ -30,6 +28,24 @@ import SearchInput from '../input';
 
 export default {
   title: 'DesignSystem/Components/Search/Input',
+  args: {
+    ariaClearLabel: 'label for clear button',
+    clearId: 'my-search-id',
+    disabled: false,
+    hasError: false,
+    id: 'my-input-id',
+    inputValue: '',
+    isOpen: true,
+    placeholder: 'search',
+  },
+  argTypes: {
+    onChange: { action: 'change event triggered' },
+    onClick: { action: 'click event triggered' },
+    onFocus: { action: 'on focus event triggered' },
+    handleClearInput: { action: 'handleClearInput triggered' },
+    handleTabClear: { action: 'handleTabClear triggered' },
+    onKeyDown: { action: 'on keyDown event triggered' },
+  },
 };
 
 const Container = styled.div`
@@ -39,26 +55,13 @@ const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.primary};
 `;
 
-export const _default = () => {
+export const _default = (args) => {
   const StorybookInput = (
     <SearchInput
-      aria-label={text('ariaInputLabel', 'my aria label')}
-      ariaClearLabel={text('ariaClearLabel', 'label for clear button')}
-      clearId={'my-search-id'}
-      disabled={boolean('disabled')}
-      hasError={boolean('hasError')}
-      id={'my-input-id'}
-      inputValue={text('inputValue', '')}
-      isOpen={boolean('isOpen')}
+      aria-label={'my aria label'}
       listId={'my-list-id'}
       name={'my-input-id'}
-      onChange={() => action('change event triggered')()}
-      onClick={() => action('click event triggered')()}
-      onFocus={() => action('on focus event triggered')()}
-      handleClearInput={() => action('handleClearInput triggered')()}
-      handleTabClear={() => action('handleTabClear triggered')()}
-      onKeyDown={() => action('on keyDown event triggered')()}
-      placeholder={text('placeholder', 'search')}
+      {...args}
     />
   );
 

@@ -2,10 +2,10 @@
 /**
  * Class Context
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -129,7 +129,7 @@ class Context {
 	 *
 	 * @return string|null Current screen base if available.
 	 */
-	public function get_screen_base() {
+	public function get_screen_base(): ?string {
 		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
 
 		return $screen->base ?? null;
@@ -142,7 +142,7 @@ class Context {
 	 *
 	 * @return string|null Current screen post type if available.
 	 */
-	public function get_screen_post_type() {
+	public function get_screen_post_type(): ?string {
 		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
 
 		return $screen->post_type ?? null;

@@ -2,10 +2,10 @@
 /**
  * Interface Instantiator.
  *
- * @package   Google\Web_Stories
+ * @link      https://www.mwpd.io/
+ *
  * @copyright 2019 Alain Schlesser
  * @license   MIT
- * @link      https://www.mwpd.io/
  */
 
 /**
@@ -23,8 +23,9 @@ namespace Google\Web_Stories\Infrastructure;
  * This way, a more elaborate mechanism can be plugged in, like using
  * ProxyManager to instantiate proxies instead of actual objects.
  *
- * @since 1.6.0
  * @internal
+ *
+ * @since 1.6.0
  */
 interface Instantiator {
 
@@ -37,5 +38,5 @@ interface Instantiator {
 	 * @param array  $dependencies Optional. Dependencies of the class.
 	 * @return object Instantiated object.
 	 */
-	public function instantiate( $class, $dependencies = [] );
+	public function instantiate( $class, $dependencies = [] ): object;
 }

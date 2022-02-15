@@ -53,8 +53,16 @@ describe('Panel: Style Presets', () => {
 
   describe('CUJ: Creator can Apply or Save Text Style from/to Their Preset Library: Save Text Style', () => {
     it('should allow adding new text style from a text element', async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
+      await waitFor(() => {
+        if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+          throw new Error('node not ready');
+        }
+        expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
+      });
 
       // Verify that no styles are added currently.
       const noStylesText = fixture.screen.getByText('No Styles Saved');
@@ -73,7 +81,12 @@ describe('Panel: Style Presets', () => {
       );
       // Add a heading.
       await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[2].node);
+      await waitFor(() => {
+        if (!fixture.editor.canvas.framesLayer.frames[2].node) {
+          throw new Error('node not ready');
+        }
+        expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
+      });
       // Select the paragraph as well.
       await fixture.events.sleep(4000);
       await selectTarget(fixture.editor.canvas.framesLayer.frames[1].node);
@@ -91,8 +104,16 @@ describe('Panel: Style Presets', () => {
   describe('CUJ: Creator can Apply or Save Text Style from/to Their Preset Library: Manage Text Style Presets', () => {
     it('should allow deleting a text style preset', async () => {
       // Add text element and style preset.
-      await fixture.events.click(fixture.editor.library.textAdd);
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
+      await waitFor(() => {
+        if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+          throw new Error('node not ready');
+        }
+        expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
+      });
       panel = fixture.editor.inspector.designPanel.textStyle;
       await fixture.events.click(panel.addStyle);
 
@@ -109,11 +130,10 @@ describe('Panel: Style Presets', () => {
       await fixture.events.click(panel.styleManager.delete);
 
       // Confirm in the dialog since it's a global preset.
-      await waitFor(() => {
-        // We have two dialogues open now.
-        const dialogs = fixture.screen.getAllByRole('dialog');
-        expect(dialogs.length).toBe(2);
-      });
+
+      // We have two dialogues open now.
+      const dialogs = await fixture.screen.findAllByRole('dialog');
+      expect(dialogs.length).toBe(2);
       await fixture.events.click(
         fixture.screen.getByRole('button', { name: 'Delete' })
       );
@@ -125,8 +145,16 @@ describe('Panel: Style Presets', () => {
 
   describe('CUJ: Creator can Apply or Save Text Style from/to Their Preset Library: Apply Text Style Presets', () => {
     it('should apply text style to a single text element', async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
+      await waitFor(() => {
+        if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+          throw new Error('node not ready');
+        }
+        expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
+      });
 
       // Add a preset
       panel = fixture.editor.inspector.designPanel.textStyle;
@@ -147,16 +175,24 @@ describe('Panel: Style Presets', () => {
     it('should apply text style to multiple text elements', async () => {
       await fixture.editor.library.textTab.click();
       // Add a paragraph.
-      const paragraphButton = await waitFor(() =>
-        fixture.editor.library.text.preset('Paragraph')
-      );
+      const paragraphButton = await waitFor(() => {
+        if (!fixture.editor.library.text.preset('Paragraph')) {
+          throw new Error('paragraph button not ready');
+        }
+        return fixture.editor.library.text.preset('Paragraph');
+      });
       await fixture.events.click(paragraphButton);
       // Add a heading.
       await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
       panel = fixture.editor.inspector.designPanel.textStyle;
       await fixture.events.click(panel.addStyle);
 
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      await waitFor(() => {
+        if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+          throw new Error('node not ready');
+        }
+        expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
+      });
       // Select both.
       await selectTarget(fixture.editor.canvas.framesLayer.frames[1].node);
 

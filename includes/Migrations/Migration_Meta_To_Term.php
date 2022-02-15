@@ -2,10 +2,10 @@
 /**
  * Class Migration_Meta_To_Term
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -24,15 +24,12 @@
  * limitations under the License.
  */
 
-
 namespace Google\Web_Stories\Migrations;
 
 use Google\Web_Stories\Media\Media_Source_Taxonomy;
 
 /**
  * Class Migration_Meta_To_Term
- *
- * @package Google\Web_Stories\Migrations
  */
 abstract class Migration_Meta_To_Term extends Migrate_Base {
 
@@ -63,7 +60,7 @@ abstract class Migration_Meta_To_Term extends Migrate_Base {
 	 *
 	 * @return void
 	 */
-	public function migrate() {
+	public function migrate(): void {
 		global $wpdb;
 
 		$post_ids = $wpdb->get_col( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
@@ -73,7 +70,7 @@ abstract class Migration_Meta_To_Term extends Migrate_Base {
 			)
 		);
 
-		if ( is_array( $post_ids ) && ! empty( $post_ids ) ) {
+		if ( \is_array( $post_ids ) && ! empty( $post_ids ) ) {
 			foreach ( $post_ids as $post_id ) {
 				wp_set_object_terms( (int) $post_id, $this->get_term_name(), $this->media_source_taxonomy->get_taxonomy_slug() );
 			}
@@ -88,7 +85,7 @@ abstract class Migration_Meta_To_Term extends Migrate_Base {
 	 *
 	 * @return string
 	 */
-	abstract protected function get_post_meta_key();
+	abstract protected function get_post_meta_key(): string;
 
 	/**
 	 * Get name of term to be used in migration.

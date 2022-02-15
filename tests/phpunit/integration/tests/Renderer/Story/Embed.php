@@ -2,21 +2,34 @@
 
 namespace Google\Web_Stories\Tests\Integration\Renderer\Story;
 
-use Google\Web_Stories\Context;
-use Google\Web_Stories\Experiments;
-use Google\Web_Stories\Settings;
-use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Tests\Integration\TestCase;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Renderer\Story\Embed
  */
-class Embed extends TestCase {
+class Embed extends DependencyInjectedTestCase {
+
+	/**
+	 * @var \Google\Web_Stories\Context
+	 */
+	private $context;
+
+	/**
+	 * @var \Google\Web_Stories\Assets
+	 */
+	private $assets;
+
+	public function set_up(): void {
+		parent::set_up();
+
+		$this->assets  = $this->injector->make( \Google\Web_Stories\Assets::class );
+		$this->context = $this->injector->make( \Google\Web_Stories\Context::class );
+	}
 
 	/**
 	 * @covers ::render
 	 */
-	public function test_render() {
+	public function test_render(): void {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_title'   => 'test title',
@@ -27,16 +40,14 @@ class Embed extends TestCase {
 
 		$story = new \Google\Web_Stories\Model\Story();
 		$story->load_from_post( $post );
-		$assets   = new \Google\Web_Stories\Assets();
-		$settings = new Settings();
-		$context  = new Context( new Story_Post_Type( $settings, new Experiments( $settings ) ) );
-		$embed    = new \Google\Web_Stories\Renderer\Story\Embed( $story, $assets, $context );
-		$args     = [
+
+		$embed  = new \Google\Web_Stories\Renderer\Story\Embed( $story, $this->assets, $this->context );
+		$args   = [
 			'align'  => 'none',
 			'height' => 600,
 			'width'  => 360,
 		];
-		$render   = $embed->render( $args );
+		$render = $embed->render( $args );
 		$this->assertStringContainsString( 'test title', $render );
 		$this->assertStringNotContainsString( '<img', $render );
 	}
@@ -44,7 +55,7 @@ class Embed extends TestCase {
 	/**
 	 * @covers ::render
 	 */
-	public function test_render_with_image() {
+	public function test_render_with_image(): void {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_title'   => 'test title',
@@ -53,23 +64,34 @@ class Embed extends TestCase {
 			]
 		);
 
-		$attachment_id = self::factory()->attachment->create_upload_object( WEB_STORIES_TEST_DATA_DIR . '/attachment.jpg', 0 );
-
-		set_post_thumbnail( $post->ID, $attachment_id );
+		$poster_attachment_id = self::factory()->attachment->create_object(
+			[
+				'file'           => DIR_TESTDATA . '/images/canola.jpg',
+				'post_parent'    => 0,
+				'post_mime_type' => 'image/jpeg',
+				'post_title'     => 'Test Image',
+			]
+		);
+		wp_maybe_generate_attachment_metadata( get_post( $poster_attachment_id ) );
+		set_post_thumbnail( $post->ID, $poster_attachment_id );
 
 		$story = new \Google\Web_Stories\Model\Story();
 		$story->load_from_post( $post );
-		$assets   = new \Google\Web_Stories\Assets();
-		$settings = new Settings();
-		$context  = new Context( new Story_Post_Type( $settings, new Experiments( $settings ) ) );
-		$embed    = new \Google\Web_Stories\Renderer\Story\Embed( $story, $assets, $context );
-		$args     = [
+
+		$this->assertNotEmpty( $story->get_poster_portrait() );
+		$this->assertNotEmpty( $story->get_poster_sizes() );
+		$this->assertNotEmpty( $story->get_poster_srcset() );
+
+		$embed  = new \Google\Web_Stories\Renderer\Story\Embed( $story, $this->assets, $this->context );
+		$args   = [
 			'align'  => 'none',
 			'height' => 600,
 			'width'  => 360,
 		];
-		$render   = $embed->render( $args );
+		$render = $embed->render( $args );
 		$this->assertStringContainsString( 'test title', $render );
 		$this->assertStringContainsString( '<img', $render );
+		$this->assertStringContainsString( 'srcset=', $render );
+		$this->assertStringContainsString( 'sizes=', $render );
 	}
 }

@@ -2,10 +2,10 @@
 /**
  * Exception FailedToMakeInstance.
  *
- * @package   Google\Web_Stories
+ * @link      https://www.mwpd.io/
+ *
  * @copyright 2019 Alain Schlesser
  * @license   MIT
- * @link      https://www.mwpd.io/
  */
 
 /**
@@ -33,8 +33,9 @@ use RuntimeException;
  * Exception thrown when the injector couldn't instantiate a given class or
  * interface.
  *
- * @since 1.6.0
  * @internal
+ *
+ * @since 1.6.0
  */
 final class FailedToMakeInstance
 	extends RuntimeException
@@ -42,12 +43,12 @@ final class FailedToMakeInstance
 
 	// These constants are public so you can use them to find out what exactly
 	// happened when you catch a "FailedToMakeInstance" exception.
-	const CIRCULAR_REFERENCE             = 100;
-	const UNRESOLVED_INTERFACE           = 200;
-	const UNREFLECTABLE_CLASS            = 300;
-	const UNRESOLVED_ARGUMENT            = 400;
-	const UNINSTANTIATED_SHARED_INSTANCE = 500;
-	const INVALID_DELEGATE               = 600;
+	public const CIRCULAR_REFERENCE             = 100;
+	public const UNRESOLVED_INTERFACE           = 200;
+	public const UNREFLECTABLE_CLASS            = 300;
+	public const UNRESOLVED_ARGUMENT            = 400;
+	public const UNINSTANTIATED_SHARED_INSTANCE = 500;
+	public const INVALID_DELEGATE               = 600;
 
 	/**
 	 * Create a new instance of the exception for an interface or class that
@@ -86,7 +87,6 @@ final class FailedToMakeInstance
 	 * @since 1.6.0
 	 *
 	 * @param string $interface Interface that was left unresolved.
-	 *
 	 * @return self
 	 */
 	public static function for_unresolved_interface( $interface ): self {
@@ -106,7 +106,6 @@ final class FailedToMakeInstance
 	 *
 	 * @param string $interface_or_class Interface or class that could not be
 	 *                                   reflected upon.
-	 *
 	 * @return self
 	 */
 	public static function for_unreflectable_class( $interface_or_class ): self {
@@ -147,7 +146,6 @@ final class FailedToMakeInstance
 	 * @since 1.6.0
 	 *
 	 * @param string $class Class that was not yet instantiated.
-	 *
 	 * @return self
 	 */
 	public static function for_uninstantiated_shared_instance( $class ): self {
@@ -166,7 +164,6 @@ final class FailedToMakeInstance
 	 * @since 1.6.0
 	 *
 	 * @param string $class Class for which there is no delegate.
-	 *
 	 * @return self
 	 */
 	public static function for_invalid_delegate( $class ): self {

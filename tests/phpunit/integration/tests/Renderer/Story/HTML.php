@@ -26,7 +26,7 @@ use WP_Post;
  * @coversDefaultClass \Google\Web_Stories\Renderer\Story\HTML
  */
 class HTML extends TestCase {
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		// When running the tests, we don't have unfiltered_html capabilities.
@@ -35,7 +35,7 @@ class HTML extends TestCase {
 		remove_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 	}
 
-	public function tear_down() {
+	public function tear_down(): void {
 		add_filter( 'content_save_pre', 'wp_filter_post_kses' );
 		add_filter( 'content_filtered_save_pre', 'wp_filter_post_kses' );
 
@@ -45,7 +45,7 @@ class HTML extends TestCase {
 	/**
 	 * @covers ::render
 	 */
-	public function test_render() {
+	public function test_render(): void {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_type'    => Story_Post_Type::POST_TYPE_SLUG,
@@ -63,7 +63,7 @@ class HTML extends TestCase {
 	 * @covers ::replace_html_head
 	 * @covers ::get_html_head_markup
 	 */
-	public function test_replace_html_head() {
+	public function test_replace_html_head(): void {
 		$start_tag = '<meta name="web-stories-replace-head-start"/>';
 		$end_tag   = '<meta name="web-stories-replace-head-end"/>';
 
@@ -90,7 +90,7 @@ class HTML extends TestCase {
 	 * @covers ::replace_html_head
 	 * @covers ::get_html_head_markup
 	 */
-	public function test_replace_html_head_invalid() {
+	public function test_replace_html_head_invalid(): void {
 		$start_tag = '<meta name="web-stories-replace-head-start " />';
 		$end_tag   = '<meta name="web-stories-replace-head-end" />';
 
@@ -116,7 +116,7 @@ class HTML extends TestCase {
 	/**
 	 * @covers ::replace_url_scheme
 	 */
-	public function test_replace_url_scheme() {
+	public function test_replace_url_scheme(): void {
 		$_SERVER['HTTPS'] = 'on';
 
 		$link = get_home_url( null, 'web-storires/test' );
@@ -135,7 +135,7 @@ class HTML extends TestCase {
 	/**
 	 * @covers ::replace_url_scheme
 	 */
-	public function test_replace_url_scheme_different_host() {
+	public function test_replace_url_scheme_different_host(): void {
 		$_SERVER['HTTPS'] = 'on';
 		$link             = 'https://www.google.com';
 
@@ -149,13 +149,13 @@ class HTML extends TestCase {
 	/**
 	 * @covers ::print_analytics
 	 */
-	public function test_print_analytics() {
+	public function test_print_analytics(): void {
 		$source   = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>';
 		$expected = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page><amp-analytics type="gtag" data-credentials="include"><script type="application/json">{}</script></amp-analytics></amp-story></body></html>';
 
 		add_action(
 			'web_stories_print_analytics',
-			static function() {
+			static function(): void {
 				echo '<amp-analytics type="gtag" data-credentials="include"><script type="application/json">{}</script></amp-analytics>';
 			}
 		);
@@ -174,7 +174,7 @@ class HTML extends TestCase {
 	/**
 	 * @covers ::print_analytics
 	 */
-	public function test_print_analytics_no_output() {
+	public function test_print_analytics_no_output(): void {
 		$source = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>';
 
 		$story    = new Story();
@@ -189,7 +189,7 @@ class HTML extends TestCase {
 	/**
 	 * @covers ::print_social_share
 	 */
-	public function test_print_social_share() {
+	public function test_print_social_share(): void {
 		$source   = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>';
 		$expected = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page><amp-story-social-share layout="nodisplay"><script type="application/json">{"shareProviders":[{"provider":"twitter"},{"provider":"linkedin"},{"provider":"email"},{"provider":"system"}]}</script></amp-story-social-share></amp-story></body></html>';
 
@@ -205,7 +205,7 @@ class HTML extends TestCase {
 	/**
 	 * @covers ::print_social_share
 	 */
-	public function test_print_social_share_filter() {
+	public function test_print_social_share_filter(): void {
 		add_filter( 'web_stories_share_providers', '__return_empty_array' );
 
 		$source = '<html><head></head><body><amp-story standalone="" publisher="Web Stories" title="Example Story" publisher-logo-src="https://example.com/image.png" poster-portrait-src="https://example.com/image.png"><amp-story-page id="example"><amp-story-grid-layer template="fill"></amp-story-grid-layer></amp-story-page></amp-story></body></html>';
@@ -224,7 +224,7 @@ class HTML extends TestCase {
 	/**
 	 * @covers ::fix_malformed_script_link_tags
 	 */
-	public function test_fix_malformed_script_link_tags() {
+	public function test_fix_malformed_script_link_tags(): void {
 		$source = '<html><head><a href="https://cdn.ampproject.org/v0.js">https://cdn.ampproject.org/v0.js</a><a href="https://cdn.ampproject.org/v0/amp-story-1.0.js">https://cdn.ampproject.org/v0/amp-story-1.0.js</a><link href="https://fonts.googleapis.com/css2?display=swap&amp;family=Roboto%3Awght%40700" rel="stylesheet" /></head><body><amp-story></amp-story></body></html>';
 
 		$story    = new Story();
@@ -240,7 +240,7 @@ class HTML extends TestCase {
 	/**
 	 * @covers ::fix_malformed_script_link_tags
 	 */
-	public function test_fix_malformed_script_link_tags_keeps_other_links() {
+	public function test_fix_malformed_script_link_tags_keeps_other_links(): void {
 		$source = '<html><head></head><body><amp-story><amp-story-page><amp-story-page-outlink layout="nodisplay"><a href="https://example.com">Learn more</a></amp-story-page-outlink></amp-story-page></amp-story></body></html>';
 
 		$story    = new Story();
@@ -255,7 +255,6 @@ class HTML extends TestCase {
 	 * Helper to setup renderer.
 	 *
 	 * @param WP_Post $post Post Object.
-	 *
 	 * @return string
 	 */
 	protected function setup_renderer( $post ): string {

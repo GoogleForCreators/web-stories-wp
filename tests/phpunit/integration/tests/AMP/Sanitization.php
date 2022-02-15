@@ -24,7 +24,6 @@ use Google\Web_Stories_Dependencies\AMP_Layout_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Style_Sanitizer;
 use Google\Web_Stories_Dependencies\AMP_Tag_And_Attribute_Sanitizer;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
-use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Sanitization
@@ -35,13 +34,13 @@ class Sanitization extends DependencyInjectedTestCase {
 	 */
 	private $instance;
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\AMP\Sanitization::class );
 	}
 
-	public function tear_down() {
+	public function tear_down(): void {
 		remove_all_filters( 'web_stories_amp_sanitizers' );
 		remove_all_filters( 'web_stories_amp_dev_mode_enabled' );
 		remove_all_filters( 'web_stories_amp_dev_mode_element_xpaths' );
@@ -52,10 +51,11 @@ class Sanitization extends DependencyInjectedTestCase {
 
 	/**
 	 * @see Test_AMP_Theme_Support::test_scripts_get_moved_to_head
+	 *
 	 * @covers ::sanitize_document()
 	 * @covers ::ensure_required_markup()
 	 */
-	public function test_scripts_get_moved_to_head() {
+	public function test_scripts_get_moved_to_head(): void {
 		ob_start();
 		?>
 		<html>
@@ -87,9 +87,10 @@ class Sanitization extends DependencyInjectedTestCase {
 
 	/**
 	 * @see Test_AMP_Theme_Support::test_unneeded_scripts_get_removed
+	 *
 	 * @covers ::ensure_required_markup()
 	 */
-	public function test_unneeded_scripts_get_removed() {
+	public function test_unneeded_scripts_get_removed(): void {
 		ob_start();
 		?>
 		<html>
@@ -131,10 +132,11 @@ class Sanitization extends DependencyInjectedTestCase {
 
 	/**
 	 * @see Test_AMP_Theme_Support::test_duplicate_scripts_are_removed
+	 *
 	 * @covers AMP_Theme_Support::prepare_response()
 	 * @covers AMP_Theme_Support::ensure_required_markup()
 	 */
-	public function test_duplicate_scripts_are_removed() {
+	public function test_duplicate_scripts_are_removed(): void {
 		ob_start();
 		?>
 		<html>
@@ -184,7 +186,7 @@ class Sanitization extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::ensure_required_markup()
 	 */
-	public function test_missing_scripts_get_added() {
+	public function test_missing_scripts_get_added(): void {
 		ob_start();
 		?>
 		<html>
@@ -230,7 +232,7 @@ class Sanitization extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::get_extension_sources
 	 */
-	public function test_get_extension_sources() {
+	public function test_get_extension_sources(): void {
 		$sources = $this->call_private_method( $this->instance, 'get_extension_sources' );
 
 		$actual = [];
@@ -388,9 +390,10 @@ class Sanitization extends DependencyInjectedTestCase {
 
 	/**
 	 * @see Test_AMP_Helper_Functions::test_amp_is_dev_mode
+	 *
 	 * @covers ::is_amp_dev_mode
 	 */
-	public function test_is_amp_dev_mode() {
+	public function test_is_amp_dev_mode(): void {
 
 		$this->assertFalse( $this->call_private_method( $this->instance, 'is_amp_dev_mode' ) );
 		add_filter( 'web_stories_amp_dev_mode_enabled', '__return_true' );
@@ -401,9 +404,10 @@ class Sanitization extends DependencyInjectedTestCase {
 
 	/**
 	 * @see Test_AMP_Helper_Functions::test_amp_is_dev_mode
+	 *
 	 * @covers ::is_amp_dev_mode
 	 */
-	public function test_is_amp_dev_mode_authenticated_user_admin_bar_showing() {
+	public function test_is_amp_dev_mode_authenticated_user_admin_bar_showing(): void {
 		add_filter( 'show_admin_bar', '__return_true' );
 
 		wp_set_current_user( self::factory()->user->create( [ 'role' => 'administrator' ] ) );
@@ -415,9 +419,10 @@ class Sanitization extends DependencyInjectedTestCase {
 
 	/**
 	 * @see Test_AMP_Helper_Functions::test_amp_is_dev_mode
+	 *
 	 * @covers ::is_amp_dev_mode
 	 */
-	public function test_is_amp_dev_mode_unauthenticated_user_admin_bar_forced() {
+	public function test_is_amp_dev_mode_unauthenticated_user_admin_bar_forced(): void {
 		// Test unauthenticated user with admin bar forced.
 		add_filter( 'show_admin_bar', '__return_true' );
 		wp_set_current_user( 0 );
@@ -429,9 +434,10 @@ class Sanitization extends DependencyInjectedTestCase {
 
 	/**
 	 * @see Test_AMP_Helper_Functions::test_amp_get_content_sanitizers
+	 *
 	 * @covers ::get_sanitizers
 	 */
-	public function test_get_sanitizers() {
+	public function test_get_sanitizers(): void {
 		// Make sure the style and validating sanitizers are always at the end, even after filtering.
 		add_filter(
 			'web_stories_amp_sanitizers',
@@ -444,18 +450,19 @@ class Sanitization extends DependencyInjectedTestCase {
 		$sanitizers = $this->call_private_method( $this->instance, 'get_sanitizers' );
 
 		$ordered_sanitizers = array_keys( $sanitizers );
-		$this->assertEquals( 'Even_After_Validating_Sanitizer', $ordered_sanitizers[ count( $ordered_sanitizers ) - 5 ] );
-		$this->assertEquals( AMP_Layout_Sanitizer::class, $ordered_sanitizers[ count( $ordered_sanitizers ) - 4 ] );
-		$this->assertEquals( AMP_Style_Sanitizer::class, $ordered_sanitizers[ count( $ordered_sanitizers ) - 3 ] );
-		$this->assertEquals( \Google\Web_Stories\AMP\Meta_Sanitizer::class, $ordered_sanitizers[ count( $ordered_sanitizers ) - 2 ] );
-		$this->assertEquals( AMP_Tag_And_Attribute_Sanitizer::class, $ordered_sanitizers[ count( $ordered_sanitizers ) - 1 ] );
+		$this->assertEquals( 'Even_After_Validating_Sanitizer', $ordered_sanitizers[ \count( $ordered_sanitizers ) - 5 ] );
+		$this->assertEquals( AMP_Layout_Sanitizer::class, $ordered_sanitizers[ \count( $ordered_sanitizers ) - 4 ] );
+		$this->assertEquals( AMP_Style_Sanitizer::class, $ordered_sanitizers[ \count( $ordered_sanitizers ) - 3 ] );
+		$this->assertEquals( \Google\Web_Stories\AMP\Meta_Sanitizer::class, $ordered_sanitizers[ \count( $ordered_sanitizers ) - 2 ] );
+		$this->assertEquals( AMP_Tag_And_Attribute_Sanitizer::class, $ordered_sanitizers[ \count( $ordered_sanitizers ) - 1 ] );
 	}
 
 	/**
 	 * @see Test_AMP_Helper_Functions::test_amp_get_content_sanitizers_with_dev_mode
+	 *
 	 * @covers ::get_sanitizers
 	 */
-	public function test_get_sanitizers_with_dev_mode() {
+	public function test_get_sanitizers_with_dev_mode(): void {
 		$element_xpaths            = [ '//script[ @id = "hello-world" ]' ];
 		$validation_error_callback = [ $this->instance, 'validation_error_callback' ];
 		add_filter(
@@ -508,7 +515,7 @@ class Sanitization extends DependencyInjectedTestCase {
 	/**
 	 * @covers \Google\Web_Stories\Integrations\AMP::filter_amp_validation_error_sanitized
 	 */
-	public function test_sanitize_amp_video_with_missing_poster() {
+	public function test_sanitize_amp_video_with_missing_poster(): void {
 		ob_start();
 		?>
 		<html>
@@ -539,7 +546,7 @@ class Sanitization extends DependencyInjectedTestCase {
 	/**
 	 * @covers \Google\Web_Stories\Integrations\AMP::filter_amp_validation_error_sanitized
 	 */
-	public function test_sanitize_amp_video_with_http_source() {
+	public function test_sanitize_amp_video_with_http_source(): void {
 		ob_start();
 		?>
 		<html>

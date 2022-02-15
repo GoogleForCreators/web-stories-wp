@@ -18,16 +18,14 @@
 namespace Google\Web_Stories\Tests\Integration\Migrations;
 
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
-use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
  * Class Update_Publisher_Logos
  *
  * @coversDefaultClass \Google\Web_Stories\Migrations\Update_Publisher_Logos
- *
  */
 class Update_Publisher_Logos extends DependencyInjectedTestCase {
-	public function tear_down() {
+	public function tear_down(): void {
 		delete_option( \Google\Web_Stories\Settings::SETTING_NAME_PUBLISHER_LOGOS );
 
 		parent::tear_down();
@@ -36,7 +34,7 @@ class Update_Publisher_Logos extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::migrate
 	 */
-	public function test_migrate() {
+	public function test_migrate(): void {
 		update_option( \Google\Web_Stories\Settings::SETTING_NAME_PUBLISHER_LOGOS, [ 'active' => 123 ] );
 
 		$instance = $this->injector->make( \Google\Web_Stories\Migrations\Update_Publisher_Logos::class );

@@ -13,11 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
-import { boolean } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
@@ -27,14 +22,15 @@ import TelemetrySettings from '..';
 export default {
   title: 'Dashboard/Views/EditorSettings/Telemetry',
   component: TelemetrySettings,
+  args: {
+    disabled: false,
+    selected: true,
+  },
+  argTypes: {
+    onCheckboxSelected: { action: 'onCheckboxSelected fired' },
+  },
 };
 
-export const _default = () => {
-  return (
-    <TelemetrySettings
-      disabled={boolean('disabled', true)}
-      selected={boolean('userOptIn', true)}
-      onCheckboxSelected={action('onCheckboxSelected fired')}
-    />
-  );
+export const _default = (args) => {
+  return <TelemetrySettings {...args} />;
 };

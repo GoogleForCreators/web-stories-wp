@@ -19,19 +19,25 @@
  */
 import { useState } from '@googleforcreators/react';
 import styled from 'styled-components';
-import { action } from '@storybook/addon-actions';
-import { text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
  */
 import { TextArea } from '..';
 import { DarkThemeProvider } from '../../../storybookUtils';
-import { Headline } from '../../..';
+import { Headline, Text } from '../../..';
 
 export default {
   title: 'DesignSystem/Components/TextArea',
   component: TextArea,
+  args: {
+    label: 'label',
+    hint: 'Hint',
+    placeholder: 'placeholder',
+  },
+  argTypes: {
+    onHandleChange: { action: 'onChange' },
+  },
 };
 
 const Container = styled.div`
@@ -54,7 +60,8 @@ const Row = styled.div`
   }
 `;
 
-export const _default = () => {
+// eslint-disable-next-line react/prop-types
+export const _default = ({ onHandleChange, ...args }) => {
   const [inputState, setInputState] = useState({
     oneLight: 'Light mode text',
     twoLight: 'disabled',
@@ -70,7 +77,7 @@ export const _default = () => {
     const name = event.target.name;
     const value = event.target.value;
 
-    action(event.target.name)(event);
+    onHandleChange(`${name} changed to: ${value}`);
     setInputState((prevState) => ({
       ...prevState,
       [name]: value,
@@ -83,50 +90,54 @@ export const _default = () => {
       <br />
       <Container>
         <Row>
-          <TextArea
-            aria-label="input-one"
-            id="one-light"
-            name="oneLight"
-            value={inputState.oneLight}
-            onChange={handleChange}
-            label={text('TextArea 1 Label', 'Normal')}
-            hint={text('Hint', 'Hint')}
-            placeholder="placeholder"
-          />
-          <TextArea
-            aria-label="input-two"
-            id="two-light"
-            name="twoLight"
-            value={inputState.twoLight}
-            onChange={handleChange}
-            label={text('TextArea 2 Label', 'Error')}
-            hint={text('Hint', 'Hint')}
-            placeholder="placeholder"
-            hasError
-          />
-          <TextArea
-            aria-label="disabled-input-one"
-            id="three-light"
-            name="threeLight"
-            value={inputState.threeLight}
-            onChange={handleChange}
-            label={text('TextArea 3 Label', 'Disabled')}
-            hint={text('Hint', 'Hint')}
-            placeholder="placeholder"
-            disabled
-          />
-          <TextArea
-            aria-label="input-four"
-            id="four-light"
-            name="fourLight"
-            value={inputState.fourLight}
-            onChange={handleChange}
-            label={text('TextArea 4 Label', 'With counter')}
-            hint={text('Hint', 'Hint')}
-            placeholder="placeholder"
-            showCount
-            maxLength={20}
-          />
+          <Text isBold>
+            {'Normal'}
+            <TextArea
+              aria-label="input-one"
+              id="one-light"
+              name="oneLight"
+              value={inputState.oneLight}
+              onChange={handleChange}
+              {...args}
+            />
+          </Text>
+          <Text isBold>
+            {'Error'}
+            <TextArea
+              aria-label="input-two"
+              id="two-light"
+              name="twoLight"
+              value={inputState.twoLight}
+              onChange={handleChange}
+              {...args}
+              hasError
+            />
+          </Text>
+          <Text isBold>
+            {'Disabled'}
+            <TextArea
+              aria-label="disabled-input-one"
+              id="three-light"
+              name="threeLight"
+              value={inputState.threeLight}
+              onChange={handleChange}
+              {...args}
+              disabled
+            />
+          </Text>
+          <Text isBold>
+            {'With Counter'}
+            <TextArea
+              aria-label="input-four"
+              id="four-light"
+              name="fourLight"
+              value={inputState.fourLight}
+              onChange={handleChange}
+              {...args}
+              showCount
+              maxLength={20}
+            />
+          </Text>
         </Row>
       </Container>
       <DarkThemeProvider>
@@ -138,9 +149,7 @@ export const _default = () => {
               name="oneDark"
               value={inputState.oneDark}
               onChange={handleChange}
-              label={text('TextArea 1 Label', 'Normal')}
-              hint={text('Hint', 'Hint')}
-              placeholder="placeholder"
+              {...args}
             />
             <TextArea
               aria-label="input-five"
@@ -148,9 +157,7 @@ export const _default = () => {
               name="twoDark"
               value={inputState.twoDark}
               onChange={handleChange}
-              label={text('TextArea 2 Label', 'Error')}
-              hint={text('Hint', 'Hint')}
-              placeholder="placeholder"
+              {...args}
               hasError
             />
             <TextArea
@@ -159,9 +166,7 @@ export const _default = () => {
               name="threeDark"
               value={inputState.threeDark}
               onChange={handleChange}
-              label={text('TextArea 3 Label', 'Disabled')}
-              hint={text('Hint', 'Hint')}
-              placeholder="placeholder"
+              {...args}
               disabled
             />
             <TextArea
@@ -170,9 +175,7 @@ export const _default = () => {
               name="fourDark"
               value={inputState.fourDark}
               onChange={handleChange}
-              label={text('TextArea 4 Label', 'With counter')}
-              hint={text('Hint', 'Hint')}
-              placeholder="placeholder"
+              {...args}
               showCount
               maxLength={200}
             />

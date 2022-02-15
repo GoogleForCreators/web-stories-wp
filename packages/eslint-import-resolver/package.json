@@ -1,0 +1,30 @@
+{
+  "name": "@web-stories-wp/eslint-import-resolver",
+  "description": "Custom resolver for eslint-plugin-import for monorepos",
+  "private": true,
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "jest"
+  ],
+  "homepage": "https://github.com/GoogleForCreators/web-stories-wp/blob/main/packages/eslint-import-resolver/README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GoogleForCreators/web-stories-wp.git",
+    "directory": "packages/eslint-plugin-resolver"
+  },
+  "bugs": {
+    "url": "https://github.com/googleforcreators/web-stories-wp/issues"
+  },
+  "engines": {
+    "node": ">= 12 || >= 14 || >= 16",
+    "npm": ">= 7.3"
+  },
+  "main": "./src/index.cjs",
+  "dependencies": {
+    "eslint-import-resolver-node": "^0.3.6"
+  }
+}

@@ -17,17 +17,17 @@
 
 namespace Google\Web_Stories\Tests\Integration\AMP;
 
+use Google\Web_Stories\Tests\Integration\TestCase;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Configuration;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpBoilerplate;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpBoilerplateErrorHandler;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpRuntimePreloads;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpStoryCssOptimizer;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\GoogleFontsPreconnect;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\MinifyHtml;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\OptimizeViewport;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\ReorderHead;
-use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\GoogleFontsPreconnect;
-use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Optimization
@@ -37,7 +37,7 @@ class Optimization extends TestCase {
 	 * @covers ::optimize_document
 	 * @covers ::get_optimizer
 	 */
-	public function test_optimize_document() {
+	public function test_optimize_document(): void {
 		ob_start();
 		?>
 		<html amp lang="en">
@@ -77,7 +77,7 @@ class Optimization extends TestCase {
 	/**
 	 * @covers ::get_optimizer_configuration
 	 */
-	public function test_get_optimizer_configuration() {
+	public function test_get_optimizer_configuration(): void {
 		$optimization  = new \Google\Web_Stories\AMP\Optimization();
 		$configuration = $this->call_private_method( $optimization, 'get_optimizer_configuration' );
 		$config_array  = $this->get_private_property( $configuration, 'configuration' );
@@ -93,7 +93,7 @@ class Optimization extends TestCase {
 	/**
 	 * @covers ::get_optimizer_configuration
 	 */
-	public function test_get_optimizer_configuration_no_ssr() {
+	public function test_get_optimizer_configuration_no_ssr(): void {
 		add_filter( 'web_stories_enable_ssr', '__return_false' );
 		$optimization  = new \Google\Web_Stories\AMP\Optimization();
 		$configuration = $this->call_private_method( $optimization, 'get_optimizer_configuration' );

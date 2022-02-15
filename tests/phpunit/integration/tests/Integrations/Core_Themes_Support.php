@@ -41,7 +41,7 @@ class Core_Themes_Support extends DependencyInjectedTestCase {
 	/**
 	 * Runs prior to each test and sets up the testee object.
 	 */
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->stylesheet = get_stylesheet();
@@ -56,7 +56,7 @@ class Core_Themes_Support extends DependencyInjectedTestCase {
 	/**
 	 * Runs after each test and resets the actions.
 	 */
-	public function tear_down() {
+	public function tear_down(): void {
 		remove_action( 'wp_body_open', [ $this->instance, 'embed_web_stories' ] );
 
 		remove_theme_support( 'web-stories' );
@@ -72,7 +72,7 @@ class Core_Themes_Support extends DependencyInjectedTestCase {
 	 *
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$this->instance->register();
 
 		$this->assertEquals( 10, has_filter( 'body_class', [ $this->instance, 'add_core_theme_classes' ] ) );
@@ -84,7 +84,7 @@ class Core_Themes_Support extends DependencyInjectedTestCase {
 	 *
 	 * @covers ::register
 	 */
-	public function test_register_non_core_theme() {
+	public function test_register_non_core_theme(): void {
 		update_option( 'stylesheet', '' );
 
 		$this->instance->register();
@@ -92,7 +92,7 @@ class Core_Themes_Support extends DependencyInjectedTestCase {
 		$this->assertFalse( has_action( 'wp_body_open', [ $this->instance, 'embed_web_stories' ] ) );
 	}
 
-	public function test_get_supported_themes() {
+	public function test_get_supported_themes(): void {
 
 		$expected = [
 			'twentytwentyone',
@@ -118,7 +118,7 @@ class Core_Themes_Support extends DependencyInjectedTestCase {
 	 *
 	 * @covers ::extend_theme_support
 	 */
-	public function test_extend_theme_support() {
+	public function test_extend_theme_support(): void {
 		$this->instance->register();
 
 		$this->assertTrue( get_theme_support( 'web-stories' ) );
@@ -129,7 +129,7 @@ class Core_Themes_Support extends DependencyInjectedTestCase {
 	 *
 	 * @covers ::extend_theme_support
 	 */
-	public function test_extend_theme_support_non_core_themes() {
+	public function test_extend_theme_support_non_core_themes(): void {
 		update_option( 'stylesheet', '' );
 
 		$this->instance->register();
@@ -138,10 +138,9 @@ class Core_Themes_Support extends DependencyInjectedTestCase {
 	}
 
 	/**
-	 *
 	 * @covers ::embed_web_stories
 	 */
-	public function embed_web_stories() {
+	public function embed_web_stories(): void {
 		ob_start();
 		$this->instance->embed_web_stories();
 

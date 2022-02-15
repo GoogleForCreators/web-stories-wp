@@ -42,7 +42,10 @@ describe('Text Style Panel', () => {
 
   describe('Panel state', () => {
     beforeEach(async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
     });
 
     it('should have the style panel always expanded', async () => {
@@ -57,8 +60,16 @@ describe('Text Style Panel', () => {
       await fixture.snapshot('Collapsed style panel');
 
       // Add a new text now.
-      await fixture.events.click(fixture.editor.library.textAdd);
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[2].node);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
+      await waitFor(() => {
+        if (!fixture.editor.canvas.framesLayer.frames[2].node) {
+          throw new Error('node not ready');
+        }
+        expect(fixture.editor.canvas.framesLayer.frames[2].node).toBeTruthy();
+      });
       // Expect the inputs to be visible again, since the panel should be expanded again.
       expect(
         fixture.editor.inspector.designPanel.textStyle.lineHeight
@@ -86,33 +97,41 @@ describe('Text Style Panel', () => {
     });
 
     it('should change the text color to white on black background', async () => {
-      // Assign black color.
-      const safezone = fixture.querySelector('[data-testid="safezone"]');
-      await fixture.events.click(safezone);
-      const hexInput =
-        fixture.editor.inspector.designPanel.pageBackground.backgroundColor.hex;
-      await fixture.events.click(hexInput);
-      // Select all the text
-      hexInput.select();
-      // Then type hex combo
+      // Assign black BG color.
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.changeBackgroundColorButton
+      );
       await fixture.events.keyboard.type('000');
       await fixture.events.keyboard.press('Tab');
 
       // Add text element.
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
       await fixture.events.click(
         fixture.editor.inspector.designPanel.textStyle.adaptiveColor
       );
 
       await waitFor(
         async () => {
-          const texts = await fixture.screen.getAllByText('Fill in some text');
-          expect(texts).toBeDefined();
+          const texts = await fixture.screen.findAllByText(
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+          );
+          await expect(texts.length).toBeGreaterThan(1);
 
           const whiteTexts = texts.filter((text) =>
             text.outerHTML.includes('color: #fff')
           );
-          expect(whiteTexts).toBeDefined();
+          await waitFor(
+            () => {
+              if (!whiteTexts.length) {
+                throw new Error('white text not ready');
+              }
+              expect(whiteTexts.length).toBeGreaterThan(0);
+            },
+            { timeout: 3000 }
+          );
 
           const html = whiteTexts[0].outerHTML;
           expect(html).toBeDefined();
@@ -124,19 +143,20 @@ describe('Text Style Panel', () => {
             },
           } = await fixture.renderHook(() => useStory());
           expect(elements[1].content).toBe(
-            '<span style="color: #fff">Fill in some text</span>'
+            '<span style="color: #fff">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>'
           );
         },
-        {
-          timeout: 9000,
-        }
+        { timeout: 9000 }
       );
     });
   });
 
   describe('Line-height & Padding', () => {
     beforeEach(async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
     });
 
     it('should display padding and line-height correctly', async () => {
@@ -150,7 +170,9 @@ describe('Text Style Panel', () => {
       await fixture.events.keyboard.press('tab');
 
       const texts = await waitFor(() =>
-        fixture.screen.getAllByText('Fill in some text')
+        fixture.screen.findAllByText(
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+        )
       );
 
       // Display layer.
@@ -179,7 +201,10 @@ describe('Text Style Panel', () => {
 
   describe('Font controls', () => {
     beforeEach(async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
     });
 
     it('should allow whole number font sizes', async () => {
@@ -219,7 +244,10 @@ describe('Text Style Panel', () => {
 
   describe('Font picker', () => {
     beforeEach(async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
     });
     const getOptions = () => {
       return fixture.screen
@@ -394,14 +422,10 @@ describe('Text Style Panel', () => {
           await openFontPicker();
 
           let options = getOptions();
-          await waitFor(() => {
-            expect(options.length).toBe(
-              DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 1
-            );
-            expect(options[DEFAULT_CUSTOM_FONTS].textContent).toBe(
-              'Space Mono'
-            );
-          });
+          expect(options.length).toBe(
+            DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 1
+          );
+          expect(options[DEFAULT_CUSTOM_FONTS].textContent).toBe('Space Mono');
 
           await fixture.events.keyboard.type('Abel');
           // Ensure the debounced callback has taken effect.
@@ -411,11 +435,9 @@ describe('Text Style Panel', () => {
           await fixture.events.sleep(TIMEOUT);
           await openFontPicker();
           options = getOptions();
-          await waitFor(() => {
-            expect(options.length).toBe(
-              DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 2
-            );
-          });
+          expect(options.length).toBe(
+            DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 2
+          );
 
           await fixture.events.keyboard.type('Abhaya Libre');
           // Ensure the debounced callback has taken effect.
@@ -425,11 +447,9 @@ describe('Text Style Panel', () => {
           await fixture.events.sleep(TIMEOUT);
           await openFontPicker();
           options = getOptions();
-          await waitFor(() => {
-            expect(options.length).toBe(
-              DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 3
-            );
-          });
+          expect(options.length).toBe(
+            DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 3
+          );
 
           await fixture.events.keyboard.type('Source Serif Pro');
           // Ensure the debounced callback has taken effect.
@@ -439,11 +459,9 @@ describe('Text Style Panel', () => {
           await fixture.events.sleep(TIMEOUT);
           await openFontPicker();
           options = getOptions();
-          await waitFor(() => {
-            expect(options.length).toBe(
-              DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 4
-            );
-          });
+          expect(options.length).toBe(
+            DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 4
+          );
 
           await fixture.events.keyboard.type('Roboto');
           // Ensure the debounced callback has taken effect.
@@ -453,11 +471,9 @@ describe('Text Style Panel', () => {
           await fixture.events.sleep(TIMEOUT);
           await openFontPicker();
           options = getOptions();
-          await waitFor(() => {
-            expect(options.length).toBe(
-              DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 5
-            );
-          });
+          expect(options.length).toBe(
+            DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 5
+          );
 
           await fixture.events.keyboard.type('Yrsa');
           // Ensure the debounced callback has taken effect.
@@ -470,13 +486,11 @@ describe('Text Style Panel', () => {
           options = getOptions();
 
           // Ensure there are only 5 extra options added.
-          await waitFor(() => {
-            expect(options.length).toBe(
-              DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 5
-            );
-            // Ensure the first one is the last chosen.
-            expect(options[DEFAULT_CUSTOM_FONTS].textContent).toBe('Yrsa');
-          });
+          expect(options.length).toBe(
+            DEFAULT_VISIBLE_FONTS + DEFAULT_CUSTOM_FONTS + 5
+          );
+          // Ensure the first one is the last chosen.
+          expect(options[DEFAULT_CUSTOM_FONTS].textContent).toBe('Yrsa');
         });
 
         it('should display the selected recent font with a tick', async () => {

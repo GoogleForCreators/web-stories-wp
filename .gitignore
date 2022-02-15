@@ -4,7 +4,9 @@
 .DS_Store
 node_modules
 /assets
-/packages/migration/src/module.js
+/packages/migration/scripts/module.js
+/packages/*/dist
+/packages/*/dist-module
 /build
 /bin/build
 /bin/local-env/data

@@ -17,8 +17,8 @@
 
 namespace Google\Web_Stories\Tests\Integration\Admin;
 
-use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 use Google\Web_Stories\Tests\Integration\Capabilities_Setup;
+use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Admin\Editor
@@ -110,7 +110,7 @@ class Editor extends DependencyInjectedTestCase {
 	/**
 	 * @param \WP_UnitTest_Factory $factory
 	 */
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$admin_id      = $factory->user->create(
 			[ 'role' => 'administrator' ]
 		);
@@ -139,7 +139,7 @@ class Editor extends DependencyInjectedTestCase {
 		set_post_thumbnail( self::$story_id, $poster_attachment_id );
 	}
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->experiments             = $this->createMock( \Google\Web_Stories\Experiments::class );
@@ -171,7 +171,7 @@ class Editor extends DependencyInjectedTestCase {
 		$this->add_caps_to_roles();
 	}
 
-	public function tear_down() {
+	public function tear_down(): void {
 		delete_post_meta( self::$story_id, '_edit_lock' );
 
 		$this->remove_caps_from_roles();
@@ -182,7 +182,7 @@ class Editor extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::admin_enqueue_scripts
 	 */
-	public function test_admin_enqueue_scripts() {
+	public function test_admin_enqueue_scripts(): void {
 		$this->assets->expects( $this->once() )->method( 'remove_admin_style' )->with( [ 'forms' ] );
 
 		$GLOBALS['current_screen'] = convert_to_screen( $this->story_post_type->get_slug() );
@@ -193,7 +193,7 @@ class Editor extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::replace_editor
 	 */
-	public function test_replace_editor() {
+	public function test_replace_editor(): void {
 		$this->assets->expects( $this->once() )->method( 'register_script_asset' )->with(
 			\Google\Web_Stories\Admin\Editor::SCRIPT_HANDLE
 		);
@@ -204,7 +204,7 @@ class Editor extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::get_editor_settings
 	 */
-	public function test_get_editor_settings_admin() {
+	public function test_get_editor_settings_admin(): void {
 		wp_set_current_user( self::$admin_id );
 
 		$this->experiments->method( 'get_experiment_statuses' )->willReturn( [] );
@@ -216,7 +216,7 @@ class Editor extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::get_editor_settings
 	 */
-	public function test_get_editor_settings_subscriber() {
+	public function test_get_editor_settings_subscriber(): void {
 		wp_set_current_user( self::$subscriber_id );
 
 		$this->experiments->method( 'get_experiment_statuses' )->willReturn( [] );
@@ -228,7 +228,7 @@ class Editor extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::setup_lock
 	 */
-	public function test_setup_lock_admin() {
+	public function test_setup_lock_admin(): void {
 		wp_set_current_user( self::$admin_id );
 
 		$this->experiments->method( 'get_experiment_statuses' )->willReturn( [] );
@@ -244,7 +244,7 @@ class Editor extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::setup_lock
 	 */
-	public function test_setup_lock_experiment_disabled() {
+	public function test_setup_lock_experiment_disabled(): void {
 		wp_set_current_user( self::$admin_id );
 
 		$this->experiments->method( 'get_experiment_statuses' )->willReturn( [] );
@@ -260,7 +260,7 @@ class Editor extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::setup_lock
 	 */
-	public function test_setup_lock_subscriber() {
+	public function test_setup_lock_subscriber(): void {
 		wp_set_current_user( self::$subscriber_id );
 
 		$this->experiments->method( 'get_experiment_statuses' )->willReturn( [] );
@@ -276,7 +276,7 @@ class Editor extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::filter_use_block_editor_for_post_type
 	 */
-	public function test_filter_use_block_editor_for_post_type() {
+	public function test_filter_use_block_editor_for_post_type(): void {
 		$this->experiments->method( 'get_experiment_statuses' )->willReturn( [] );
 
 		$use_block_editor = $this->instance->filter_use_block_editor_for_post_type( true, $this->story_post_type->get_slug() );

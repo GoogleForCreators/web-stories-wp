@@ -17,8 +17,6 @@
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
-import { boolean, text } from '@storybook/addon-knobs';
 import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 /**
@@ -29,18 +27,27 @@ import Dialog from '../dialog';
 export default {
   title: 'Stories Editor/Components/Dialog/Base',
   component: Dialog,
+  args: {
+    primaryText: 'confirm action',
+    secondaryText: 'cancel action',
+    title: 'my dialog title',
+    isOpen: true,
+  },
+  argTypes: {
+    onClose: { action: 'closed' },
+    onPrimary: { action: 'primary clicked' },
+    onSecondary: { action: 'secondary clicked' },
+  },
+  parameters: {
+    controls: {
+      exclude: ['actions', 'children'],
+    },
+  },
 };
 
-export const _default = () => {
+export const _default = (args) => {
   return (
-    <Dialog
-      isOpen={boolean('isOpen', true)}
-      onClose={action('closed')}
-      title={text('title', 'my dialog title')}
-      onPrimary={action('confirmed')}
-      secondaryText={text('secondaryText', 'cancel action')}
-      primaryText={text('primaryText', 'confirm action')}
-    >
+    <Dialog {...args}>
       <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
         {
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
@@ -49,26 +56,11 @@ export const _default = () => {
     </Dialog>
   );
 };
-
-export const WithCustomAction = () => {
-  return (
-    <Dialog
-      isOpen={boolean('isOpen', true)}
-      onClose={action('closed')}
-      title={text('title', 'my dialog title')}
-      onPrimary={action('primary clicked')}
-      primaryRest={{
-        href: 'https://example.com',
-      }}
-      primaryText={text('primaryText', 'primary button')}
-      secondaryText={text('secondaryText', 'secondary button')}
-      onSecondary={action('secondary clicked')}
-    >
-      <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-        {
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
-        }
-      </Text>
-    </Dialog>
-  );
+export const WithCustomAction = _default.bind({});
+WithCustomAction.args = {
+  primaryRest: {
+    href: 'https://example.com',
+  },
+  primaryText: 'primary button',
+  secondaryText: 'secondary button',
 };

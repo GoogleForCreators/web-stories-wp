@@ -2,10 +2,10 @@
 /**
  * Class Optimization
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -38,8 +38,8 @@ use Google\Web_Stories_Dependencies\AmpProject\Optimizer\LocalFallback;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\TransformationEngine;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpRuntimeCss;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\AmpStoryCssOptimizer;
-use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\OptimizeHeroImages;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\OptimizeAmpBind;
+use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\OptimizeHeroImages;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\RewriteAmpUrls;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\ServerSideRendering;
 use Google\Web_Stories_Dependencies\AmpProject\Optimizer\Transformer\TransformedIdentifier;
@@ -58,14 +58,13 @@ class Optimization {
 	 * @since 1.1.0
 	 *
 	 * @param Document $document Document instance.
-	 *
 	 * @return void
 	 */
-	public function optimize_document( Document $document ) {
+	public function optimize_document( Document $document ): void {
 		$errors = new ErrorCollection();
 		$this->get_optimizer()->optimizeDom( $document, $errors );
 
-		if ( count( $errors ) > 0 ) {
+		if ( \count( $errors ) > 0 ) {
 			$error_messages = array_filter(
 				array_map(
 					static function( Error $error ) {
@@ -93,8 +92,8 @@ class Optimization {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @see AMP_Theme_Support::get_optimizer
 	 * @link https://github.com/ampproject/amp-wp/blob/8856284d90fc8558c30acc029becd352ae26e4e1/includes/class-amp-theme-support.php#L2235-L2255
+	 * @see AMP_Theme_Support::get_optimizer
 	 *
 	 * @return TransformationEngine Optimizer transformation engine to use.
 	 */
@@ -119,12 +118,12 @@ class Optimization {
 	 *
 	 * @since 1.1.0
 	 *
-	 * @see AmpWPConfiguration::apply_filters()
 	 * @link https://github.com/ampproject/amp-wp/blob/5405daa38e65f0ec16ffc920014d0110b03ee773/src/Optimizer/AmpWPConfiguration.php#L43-L78
+	 * @see AmpWPConfiguration::apply_filters()
 	 *
 	 * @return Configuration Optimizer configuration to use.
 	 */
-	private static function get_optimizer_configuration() {
+	private static function get_optimizer_configuration(): Configuration {
 		$transformers = Configuration::DEFAULT_TRANSFORMERS;
 
 		$transformers[] = AmpStoryCssOptimizer::class;

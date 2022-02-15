@@ -20,6 +20,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { getMediaSizePositionProps } from '@googleforcreators/media';
+import { useTransformHandler } from '@googleforcreators/transform';
 
 /**
  * Internal dependencies
@@ -32,7 +33,6 @@ import {
   elementWithBorder,
   elementWithBackgroundColor,
 } from '../shared';
-import { useTransformHandler } from '../../components/transform';
 import {
   getResponsiveBorder,
   shouldDisplayBorder,
@@ -71,6 +71,7 @@ function MediaDisplay({
     width,
     height,
     overlay,
+    mask,
   } = element;
 
   const { dataToEditorX } = useUnits((state) => ({
@@ -119,6 +120,7 @@ function MediaDisplay({
       borderRadius={borderRadius}
       width={width}
       height={height}
+      mask={mask}
       showPlaceholder={showPlaceholder}
     >
       {children}

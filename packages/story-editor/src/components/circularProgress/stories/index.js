@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { number } from '@storybook/addon-knobs';
-
-/**
  * Internal dependencies
  */
 import CircularProgress from '..';
@@ -27,11 +22,15 @@ import CircularProgress from '..';
 export default {
   title: 'Stories Editor/Components/Circular Progress',
   component: CircularProgress,
+  args: {
+    size: 24,
+    thickness: 2,
+  },
 };
 
-export const _default = () => {
-  const size = number('Size', 24);
-  const thickness = number('Thickness', 2);
+export const _default = (args) => {
+  const size = args.size;
+  const thickness = args.thickness;
 
   return <CircularProgress size={size} thickness={thickness} />;
 };

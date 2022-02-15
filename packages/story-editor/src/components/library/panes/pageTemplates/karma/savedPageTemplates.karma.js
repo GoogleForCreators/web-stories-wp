@@ -43,7 +43,7 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
   });
 
   describe('Saved page templates', () => {
-    beforeEach(async () => {
+    const openSavedTemplates = async () => {
       await fixture.events.click(fixture.editor.library.pageTemplatesTab);
       await fixture.events.click(
         fixture.editor.library.pageTemplatesPane.dropDown
@@ -54,9 +54,10 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
           'Saved templates'
         )
       );
-    });
+    };
 
     it('should allow saving a non-empty page as template', async () => {
+      await openSavedTemplates();
       // Verify a template is not added for an empty page.
       await fixture.events.click(
         fixture.editor.library.pageTemplatesPane.saveTemplateBtn
@@ -67,8 +68,18 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
       ).toThrow();
 
       // Add an element and verify the template is added now.
-      await fixture.events.click(fixture.editor.library.textAdd);
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
+      await waitFor(() => {
+        if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+          throw new Error('node not ready');
+        }
+        expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
+      });
+
+      await openSavedTemplates();
       await fixture.events.click(
         fixture.editor.library.pageTemplatesPane.saveTemplateBtn
       );
@@ -82,8 +93,19 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
     });
 
     it('should allow deleting a saved template', async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
+      await waitFor(() => {
+        if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+          throw new Error('node not ready');
+        }
+        expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
+      });
+
+      await openSavedTemplates();
+
       await fixture.events.click(
         fixture.editor.library.pageTemplatesPane.saveTemplateBtn
       );
@@ -115,8 +137,18 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
 
     it('should allow applying a template', async () => {
       // Add an element and verify the template is added now.
-      await fixture.events.click(fixture.editor.library.textAdd);
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
+      await waitFor(() => {
+        if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+          throw new Error('node not ready');
+        }
+        expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
+      });
+
+      await openSavedTemplates();
       await fixture.events.click(
         fixture.editor.library.pageTemplatesPane.saveTemplateBtn
       );
@@ -144,8 +176,16 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
     });
 
     it('should allow manipulating custom templates using keyboard', async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
+      await waitFor(() => {
+        if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+          throw new Error('node not ready');
+        }
+        expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
+      });
       await fixture.events.click(fixture.editor.library.pageTemplatesTab);
       // navigate to Save current page a template button and save
       await fixture.events.keyboard.press('Tab');

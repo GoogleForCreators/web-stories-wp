@@ -22,8 +22,6 @@ use Google\Web_Stories\Tests\Integration\TestCase;
 /**
  * Class Feed
  *
- * @package Google\Web_Stories\Tests
- *
  * @coversDefaultClass \Google\Web_Stories\Renderer\Feed
  */
 class Feed extends TestCase {
@@ -45,7 +43,7 @@ class Feed extends TestCase {
 	/**
 	 * @param \WP_UnitTest_Factory $factory
 	 */
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$admin_id = $factory->user->create(
 			[ 'role' => 'administrator' ]
 		);
@@ -72,10 +70,11 @@ class Feed extends TestCase {
 	}
 
 	/**
-	 * @covers ::embed_image
 	 * @throws \Exception
+	 *
+	 * @covers ::embed_image
 	 */
-	public function test_the_content_feed() {
+	public function test_the_content_feed(): void {
 		$this->go_to( '/?feed=rss2&post_type=' . \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$feed = $this->do_rss2();
 
@@ -96,7 +95,7 @@ class Feed extends TestCase {
 			// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
 			@require ABSPATH . 'wp-includes/feed-rss2.php';
 			$out = ob_get_clean();
-		} catch ( Exception $e ) {
+		} catch ( \Google\Web_Stories\Tests\Integration\Renderer\Exception $e ) {
 			$out = ob_get_clean();
 			throw($e);
 		}

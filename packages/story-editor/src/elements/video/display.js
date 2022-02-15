@@ -21,7 +21,6 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useRef } from '@googleforcreators/react';
 import { getMediaSizePositionProps } from '@googleforcreators/media';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -62,7 +61,6 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
   } = element;
   const ref = useRef();
   const { getProxiedUrl } = useCORSProxy();
-  const hasCustomCaptions = useFeature('customVideoCaptionsInEditor');
 
   let style = {};
   if (isBackground) {
@@ -126,8 +124,8 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
                 srcLang={srclang}
                 label={label}
                 // Hides the track from the user.
-                // Displaying happens in VideoCaptionsLayer instead.
-                kind={hasCustomCaptions ? 'metadata' : 'captions'}
+                // Displaying happens in MediaCaptionsLayer instead.
+                kind="metadata"
                 src={src}
                 key={key}
                 default={i === 0}

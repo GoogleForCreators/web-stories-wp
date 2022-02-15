@@ -16,7 +16,6 @@
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
 import styled, { ThemeProvider } from 'styled-components';
 /**
  * Internal dependencies
@@ -28,6 +27,9 @@ import { theme } from '../../../theme';
 export default {
   title: 'DesignSystem/Components/Chip',
   component: Chip,
+  argTypes: {
+    onClick: { action: 'clicked' },
+  },
 };
 
 const Container = styled.div`
@@ -55,9 +57,9 @@ const CHIP_STATES = [
   },
 ];
 
-export const _default = () => {
+export const _default = (args) => {
   const chips = CHIP_STATES.map(({ name, ...state }) => (
-    <Chip key={name} onClick={() => action('onClick')(name)} {...state}>
+    <Chip key={name} onClick={() => args.onClick(name)} {...state}>
       {name}
     </Chip>
   ));

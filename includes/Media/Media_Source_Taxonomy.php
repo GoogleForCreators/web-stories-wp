@@ -2,10 +2,10 @@
 /**
  * Class Media_Source_Taxonomy
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -29,13 +29,11 @@ namespace Google\Web_Stories\Media;
 use Google\Web_Stories\Context;
 use Google\Web_Stories\REST_API\Stories_Terms_Controller;
 use Google\Web_Stories\Taxonomy\Taxonomy_Base;
-use WP_Query;
 use WP_Post;
+use WP_Query;
 
 /**
  * Class Media_Source_Taxonomy
- *
- * @package Google\Web_Stories\Media
  */
 class Media_Source_Taxonomy extends Taxonomy_Base {
 	/**
@@ -70,10 +68,8 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 
 	/**
 	 * Media Source key.
-	 *
-	 * @var string
 	 */
-	const MEDIA_SOURCE_KEY = 'web_stories_media_source';
+	public const MEDIA_SOURCE_KEY = 'web_stories_media_source';
 
 	/**
 	 * Init.
@@ -82,7 +78,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		$this->register_taxonomy();
 
 		add_action( 'rest_api_init', [ $this, 'rest_api_init' ] );
@@ -122,7 +118,7 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 *
 	 * @return void
 	 */
-	public function rest_api_init() {
+	public function rest_api_init(): void {
 		// Custom field, as built in term update require term id and not slug.
 		register_rest_field(
 			$this->taxonomy_post_type,
@@ -155,11 +151,10 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 * @since 1.0.0
 	 *
 	 * @param array|mixed $response   Array of prepared attachment data.
-	 *
 	 * @return array|mixed $response Filtered attachment data.
 	 */
 	public function wp_prepare_attachment_for_js( $response ) {
-		if ( ! is_array( $response ) ) {
+		if ( ! \is_array( $response ) ) {
 			return $response;
 		}
 		$response[ self::MEDIA_SOURCE_KEY ] = $this->get_callback_media_source( $response );
@@ -173,14 +168,13 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 * @since 1.0.0
 	 *
 	 * @param array $prepared Prepared data before response.
-	 *
 	 * @return string
 	 */
 	public function get_callback_media_source( $prepared ): string {
 		$id = $prepared['id'];
 
 		$terms = get_the_terms( $id, $this->taxonomy_slug );
-		if ( is_array( $terms ) && ! empty( $terms ) ) {
+		if ( \is_array( $terms ) && ! empty( $terms ) ) {
 			return array_shift( $terms )->slug;
 		}
 
@@ -194,7 +188,6 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 *
 	 * @param string  $value  Value to update.
 	 * @param WP_Post $object Object to update on.
-	 *
 	 * @return true|\WP_Error
 	 */
 	public function update_callback_media_source( $value, $object ) {
@@ -210,7 +203,6 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 * Returns the tax query needed to exclude generated video poster images and source videos.
 	 *
 	 * @param array $args Existing WP_Query args.
-	 *
 	 * @return array  Tax query arg.
 	 */
 	private function get_exclude_tax_query( array $args ): array {
@@ -262,11 +254,10 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 * @since 1.10.0
 	 *
 	 * @param array|mixed $args Query args.
-	 *
 	 * @return array|mixed Filtered query args.
 	 */
 	public function filter_ajax_query_attachments_args( $args ) {
-		if ( ! is_array( $args ) ) {
+		if ( ! \is_array( $args ) ) {
 			return $args;
 		}
 		$args['tax_query'] = $this->get_exclude_tax_query( $args ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query
@@ -282,10 +273,9 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 * @since 1.10.0
 	 *
 	 * @param WP_Query $query WP_Query instance, passed by reference.
-	 *
 	 * @return void
 	 */
-	public function filter_generated_media_attachments( &$query ) {
+	public function filter_generated_media_attachments( &$query ): void {
 		if ( is_admin() && $query->is_main_query() && $this->context->is_upload_screen() ) {
 			$tax_query = $query->get( 'tax_query' );
 
@@ -301,11 +291,10 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 * @since 1.10.0
 	 *
 	 * @param array|mixed $args Query args.
-	 *
 	 * @return array|mixed Filtered query args.
 	 */
 	public function filter_rest_generated_media_attachments( $args ) {
-		if ( ! is_array( $args ) ) {
+		if ( ! \is_array( $args ) ) {
 			return $args;
 		}
 		$args['tax_query'] = $this->get_exclude_tax_query( $args ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query

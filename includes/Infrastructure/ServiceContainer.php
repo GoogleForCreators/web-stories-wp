@@ -2,10 +2,10 @@
 /**
  * Interface ServiceContainer.
  *
- * @package   Google\Web_Stories
+ * @link      https://www.mwpd.io/
+ *
  * @copyright 2019 Alain Schlesser
  * @license   MIT
- * @link      https://www.mwpd.io/
  */
 
 /**
@@ -17,9 +17,9 @@
 
 namespace Google\Web_Stories\Infrastructure;
 
-use Google\Web_Stories\Exception\InvalidService;
 use ArrayAccess;
 use Countable;
+use Google\Web_Stories\Exception\InvalidService;
 use Traversable;
 
 /**
@@ -29,9 +29,11 @@ use Traversable;
  * are being used. Relying on a standardized interface like PSR-11 means you'll
  * be able to easily swap out the implementation for something else later on.
  *
- * @see https://www.php-fig.org/psr/psr-11/
- * @since 1.6.0
  * @internal
+ *
+ * @since 1.6.0
+ *
+ * @see https://www.php-fig.org/psr/psr-11/
  */
 interface ServiceContainer extends Traversable, Countable, ArrayAccess {
 
@@ -40,10 +42,9 @@ interface ServiceContainer extends Traversable, Countable, ArrayAccess {
 	 *
 	 * @since 1.6.0
 	 *
-	 * @param string $id Identifier of the service to look for.
-	 *
 	 * @throws InvalidService If the service could not be found.
 	 *
+	 * @param string $id Identifier of the service to look for.
 	 * @return Service Service that was requested.
 	 */
 	public function get( $id ): Service;
@@ -55,7 +56,6 @@ interface ServiceContainer extends Traversable, Countable, ArrayAccess {
 	 * @since 1.6.0
 	 *
 	 * @param string $id Identifier of the service to look for.
-	 *
 	 * @return bool
 	 */
 	public function has( $id ): bool;
@@ -68,8 +68,7 @@ interface ServiceContainer extends Traversable, Countable, ArrayAccess {
 	 * @param string  $id      Identifier of the service to put into the
 	 *                         container.
 	 * @param Service $service Service to put into the container.
-	 *
 	 * @return void
 	 */
-	public function put( $id, Service $service );
+	public function put( $id, Service $service ): void;
 }

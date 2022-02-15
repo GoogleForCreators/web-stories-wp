@@ -23,8 +23,6 @@ use WP_REST_Request;
 /**
  * Class Stories_Autosaves_Controller
  *
- * @package Google\Web_Stories\Tests\REST_API
- *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Autosaves_Controller
  */
 class Stories_Autosaves_Controller extends DependencyInjectedRestTestCase {
@@ -43,7 +41,7 @@ class Stories_Autosaves_Controller extends DependencyInjectedRestTestCase {
 	 */
 	private $controller;
 
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$author_id = $factory->user->create(
 			[
 				'role' => 'author',
@@ -51,13 +49,13 @@ class Stories_Autosaves_Controller extends DependencyInjectedRestTestCase {
 		);
 	}
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->controller = $this->injector->make( \Google\Web_Stories\REST_API\Stories_Autosaves_Controller::class );
 	}
 
-	public function test_create_item_as_author_should_not_strip_markup() {
+	public function test_create_item_as_author_should_not_strip_markup(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$author_id );

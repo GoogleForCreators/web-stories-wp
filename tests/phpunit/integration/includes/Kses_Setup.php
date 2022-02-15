@@ -21,8 +21,6 @@ namespace Google\Web_Stories\Tests\Integration;
  * Trait Kses_Setup
  *
  * Helper trait to setup KSES. This is normally setup on init but needed to be manually fired in tests.
- *
- * @package Google\Web_Stories\Tests
  */
 trait Kses_Setup {
 	/**
@@ -33,7 +31,7 @@ trait Kses_Setup {
 	/**
 	 * Setup KSES init class.
 	 */
-	protected function kses_int() {
+	protected function kses_int(): void {
 		$settings    = new \Google\Web_Stories\Settings();
 		$experiments = new \Google\Web_Stories\Experiments( $settings );
 		$this->kses  = new \Google\Web_Stories\KSES(
@@ -45,7 +43,7 @@ trait Kses_Setup {
 	/**
 	 * Remove filters and reset kses by calling kses init.
 	 */
-	protected function kses_remove_filters() {
+	protected function kses_remove_filters(): void {
 		if ( ! current_user_can( 'unfiltered_html' ) ) {
 			remove_filter( 'safe_style_css', [ $this->kses, 'filter_safe_style_css' ] );
 			remove_filter( 'wp_kses_allowed_html', [ $this->kses, 'filter_kses_allowed_html' ], 10 );

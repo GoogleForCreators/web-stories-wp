@@ -23,8 +23,6 @@ use WP_REST_Request;
 /**
  * Class Lock_Controller
  *
- * @package Google\Web_Stories\Tests\REST_API
- *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Lock_Controller
  */
 class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
@@ -39,7 +37,7 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 	 */
 	private $controller;
 
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$subscriber = $factory->user->create(
 			[
 				'role' => 'subscriber',
@@ -58,7 +56,7 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 		);
 	}
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->controller = $this->injector->make( \Google\Web_Stories\REST_API\Stories_Lock_Controller::class );
@@ -67,7 +65,7 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$routes = rest_get_server()->get_routes();
 
 		$this->assertArrayHasKey( '/web-stories/v1/web-story/(?P<id>[\d]+)/lock', $routes );
@@ -79,7 +77,7 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::prepare_item_for_response
 	 * @covers ::get_item_permissions_check
 	 */
-	public function test_get_item() {
+	public function test_get_item(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$author_id );
@@ -102,7 +100,7 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::prepare_item_for_response
 	 * @covers ::get_item_permissions_check
 	 */
-	public function test_get_item_no_story() {
+	public function test_get_item_no_story(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$author_id );
@@ -117,7 +115,7 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::prepare_item_for_response
 	 * @covers ::get_item_permissions_check
 	 */
-	public function test_get_item_not_a_story() {
+	public function test_get_item_not_a_story(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$author_id );
@@ -138,7 +136,7 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::get_item
 	 * @covers ::get_item_permissions_check
 	 */
-	public function test_get_item_no_perm() {
+	public function test_get_item_no_perm(): void {
 		$this->controller->register();
 
 		$story    = self::factory()->post->create(
@@ -157,7 +155,7 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::get_item
 	 * @covers ::get_item_permissions_check
 	 */
-	public function test_get_item_wrong_perm() {
+	public function test_get_item_wrong_perm(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$subscriber );
@@ -179,7 +177,7 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::prepare_links
 	 * @covers ::get_item_permissions_check
 	 */
-	public function test_get_item_with_lock() {
+	public function test_get_item_with_lock(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$author_id );
@@ -208,7 +206,7 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::prepare_item_for_response
 	 * @covers ::update_item_permissions_check
 	 */
-	public function test_update_item() {
+	public function test_update_item(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$author_id );
@@ -232,7 +230,7 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::prepare_item_for_response
 	 * @covers ::delete_item_permissions_check
 	 */
-	public function test_delete_item() {
+	public function test_delete_item(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$author_id );
@@ -260,7 +258,7 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::prepare_item_for_response
 	 * @covers ::delete_item_permissions_check
 	 */
-	public function test_delete_item_with_lock() {
+	public function test_delete_item_with_lock(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$author_id );
@@ -290,7 +288,7 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::prepare_item_for_response
 	 * @covers ::delete_item_permissions_check
 	 */
-	public function test_delete_item_with_lock_another_user() {
+	public function test_delete_item_with_lock_another_user(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
@@ -313,7 +311,7 @@ class Stories_Lock_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::get_lock
 	 */
-	public function test_get_lock() {
+	public function test_get_lock(): void {
 		$this->controller->register();
 
 		$story    = self::factory()->post->create(

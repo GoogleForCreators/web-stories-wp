@@ -25,8 +25,6 @@ use WP_REST_Server;
 /**
  * Class Font_Controller
  *
- * @package Google\Web_Stories\Tests\REST_API
- *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Font_Controller
  */
 class Font_Controller extends RestTestCase {
@@ -41,7 +39,7 @@ class Font_Controller extends RestTestCase {
 	 */
 	private $controller;
 
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$admin_id = $factory->user->create(
 			[
 				'role'         => 'administrator',
@@ -77,7 +75,7 @@ class Font_Controller extends RestTestCase {
 		);
 	}
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->controller = new \Google\Web_Stories\REST_API\Font_Controller( Font_Post_Type::POST_TYPE_SLUG );
@@ -86,7 +84,7 @@ class Font_Controller extends RestTestCase {
 	/**
 	 * @covers ::get_item_schema
 	 */
-	public function test_get_item_schema() {
+	public function test_get_item_schema(): void {
 		$actual = $this->controller->get_item_schema();
 
 		$this->assertCount( 9, array_keys( $actual['properties'] ) );
@@ -104,7 +102,7 @@ class Font_Controller extends RestTestCase {
 	/**
 	 * @covers ::get_collection_params
 	 */
-	public function test_get_collection_params() {
+	public function test_get_collection_params(): void {
 		$this->controller->register_routes();
 
 		$collection_params = $this->controller->get_collection_params();
@@ -117,7 +115,7 @@ class Font_Controller extends RestTestCase {
 	/**
 	 * @covers ::get_items_permissions_check
 	 */
-	public function test_get_items_no_permission() {
+	public function test_get_items_no_permission(): void {
 		$this->controller->register_routes();
 
 		$request  = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/fonts' );
@@ -128,7 +126,7 @@ class Font_Controller extends RestTestCase {
 	/**
 	 * @covers ::get_items
 	 */
-	public function test_get_items_filter_by_service_builtin() {
+	public function test_get_items_filter_by_service_builtin(): void {
 		$this->controller->register_routes();
 
 		wp_set_current_user( self::$admin_id );
@@ -150,7 +148,7 @@ class Font_Controller extends RestTestCase {
 	/**
 	 * @covers ::get_items
 	 */
-	public function test_get_items_filter_by_service_custom() {
+	public function test_get_items_filter_by_service_custom(): void {
 		$this->controller->register_routes();
 
 		wp_set_current_user( self::$admin_id );
@@ -173,7 +171,7 @@ class Font_Controller extends RestTestCase {
 	/**
 	 * @covers ::get_items
 	 */
-	public function test_get_items_include() {
+	public function test_get_items_include(): void {
 		$this->controller->register_routes();
 
 		wp_set_current_user( self::$admin_id );
@@ -194,7 +192,7 @@ class Font_Controller extends RestTestCase {
 	/**
 	 * @covers ::get_items
 	 */
-	public function test_get_items_search() {
+	public function test_get_items_search(): void {
 		$this->controller->register_routes();
 
 		wp_set_current_user( self::$admin_id );
@@ -217,7 +215,7 @@ class Font_Controller extends RestTestCase {
 	 * @covers ::create_item
 	 * @covers ::prepare_item_for_database
 	 */
-	public function test_create_item() {
+	public function test_create_item(): void {
 		$this->controller->register_routes();
 
 		wp_set_current_user( self::$admin_id );
@@ -313,7 +311,7 @@ class Font_Controller extends RestTestCase {
 	 * @covers ::prepare_item_for_database
 	 * @covers ::font_exists
 	 */
-	public function test_create_item_duplicate() {
+	public function test_create_item_duplicate(): void {
 		$this->controller->register_routes();
 
 		wp_set_current_user( self::$admin_id );
@@ -355,7 +353,7 @@ class Font_Controller extends RestTestCase {
 	/**
 	 * @covers ::delete_item
 	 */
-	public function test_delete_item() {
+	public function test_delete_item(): void {
 		$this->controller->register_routes();
 
 		wp_set_current_user( self::$admin_id );

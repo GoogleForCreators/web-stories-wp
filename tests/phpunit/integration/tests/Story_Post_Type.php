@@ -59,7 +59,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	/**
 	 * @param \WP_UnitTest_Factory $factory
 	 */
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$admin_id = $factory->user->create(
 			[ 'role' => 'administrator' ]
 		);
@@ -88,7 +88,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 		self::$archive_page_id = self::factory()->post->create( [ 'post_type' => 'page' ] );
 	}
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
@@ -101,7 +101,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 		$this->add_caps_to_roles();
 	}
 
-	public function tear_down() {
+	public function tear_down(): void {
 		$this->remove_caps_from_roles();
 
 		delete_option( $this->settings::SETTING_NAME_ARCHIVE );
@@ -113,7 +113,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$this->instance->register();
 
 		$this->assertSame(
@@ -143,7 +143,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::get_post_type_icon
 	 */
-	public function test_get_post_type_icon() {
+	public function test_get_post_type_icon(): void {
 		$valid = $this->call_private_method( $this->instance, 'get_post_type_icon' );
 		$this->assertStringContainsString( 'data:image/svg+xml;base64', $valid );
 	}
@@ -151,7 +151,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::register_post_type
 	 */
-	public function test_register_post_type() {
+	public function test_register_post_type(): void {
 
 		$post_type = $this->instance->register_post_type();
 		$this->assertTrue( $post_type->has_archive );
@@ -160,7 +160,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::register_post_type
 	 */
-	public function test_register_post_type_disabled() {
+	public function test_register_post_type_disabled(): void {
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'disabled' );
 		$post_type = $this->instance->register_post_type();
 		$this->assertFalse( $post_type->has_archive );
@@ -169,7 +169,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::register_post_type
 	 */
-	public function test_register_post_type_default() {
+	public function test_register_post_type_default(): void {
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'default' );
 		$post_type = $this->instance->register_post_type();
 		$this->assertTrue( $post_type->has_archive );
@@ -178,7 +178,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::register_meta
 	 */
-	public function test_register_meta() {
+	public function test_register_meta(): void {
 		$this->instance->register_meta();
 
 		$this->assertTrue( registered_meta_key_exists( 'post', $this->instance::PUBLISHER_LOGO_META_KEY, $this->instance->get_slug() ) );
@@ -187,7 +187,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::change_default_title
 	 */
-	public function test_change_default_title() {
+	public function test_change_default_title(): void {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_type'    => $this->instance->get_slug(),
@@ -203,7 +203,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::get_has_archive
 	 */
-	public function test_get_has_archive_default() {
+	public function test_get_has_archive_default(): void {
 		$actual = $this->instance->get_has_archive();
 		$this->assertTrue( $actual );
 	}
@@ -211,7 +211,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::get_has_archive
 	 */
-	public function test_get_has_archive_disabled_experiments() {
+	public function test_get_has_archive_disabled_experiments(): void {
 		$experiments    = new \Google\Web_Stories\Experiments( $this->settings );
 		$this->instance = new \Google\Web_Stories\Story_Post_Type( $this->settings, $experiments );
 
@@ -222,7 +222,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::get_has_archive
 	 */
-	public function test_get_has_archive_disabled() {
+	public function test_get_has_archive_disabled(): void {
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'disabled' );
 
 		$actual = $this->instance->get_has_archive();
@@ -235,7 +235,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::get_has_archive
 	 */
-	public function test_get_has_archive_custom_but_no_page() {
+	public function test_get_has_archive_custom_but_no_page(): void {
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
 
 		$actual = $this->instance->get_has_archive();
@@ -248,7 +248,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::get_has_archive
 	 */
-	public function test_get_has_archive_custom_but_invalid_page() {
+	public function test_get_has_archive_custom_but_invalid_page(): void {
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
 		update_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, PHP_INT_MAX );
 
@@ -263,7 +263,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::get_has_archive
 	 */
-	public function test_get_has_archive_custom() {
+	public function test_get_has_archive_custom(): void {
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
 		update_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
 
@@ -279,7 +279,7 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::get_has_archive
 	 */
-	public function test_get_has_archive_custom_not_published() {
+	public function test_get_has_archive_custom_not_published(): void {
 		update_option( $this->settings::SETTING_NAME_ARCHIVE, 'custom' );
 		update_option( $this->settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
 
@@ -308,13 +308,13 @@ class Story_Post_Type extends DependencyInjectedTestCase {
 	/**
 	 * Testing the revisions_to_keep() method.
 	 *
-	 * @dataProvider data_test_revisions_to_keep
-	 * @covers ::revisions_to_keep
-	 *
 	 * @param int $num      Number of revisions
 	 * @param int $expected Expected string of CSS rules.
+	 *
+	 * @dataProvider data_test_revisions_to_keep
+	 * @covers ::revisions_to_keep
 	 */
-	public function test_revisions_to_keep( $num, $expected ) {
+	public function test_revisions_to_keep( $num, $expected ): void {
 		$this->assertSame( $expected, $this->instance->revisions_to_keep( $num ) );
 	}
 

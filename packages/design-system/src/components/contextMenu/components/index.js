@@ -19,17 +19,23 @@
 import MenuButton from './button';
 import MenuGroup from './group';
 import MenuIcon from './icon';
+import MenuItem from './item';
+import MenuItemSuffix from './suffix';
 import MenuLabel from './label';
 import MenuLink from './link';
 import MenuSeparator from './separator';
 import MenuShortcut from './shortcut';
+import SubMenuTrigger from './subMenuTrigger';
 
 export {
   MenuButton,
   MenuGroup,
   MenuIcon,
+  MenuItem,
+  MenuItemSuffix,
   MenuLabel,
   MenuLink,
   MenuSeparator,
   MenuShortcut,
+  SubMenuTrigger,
 };

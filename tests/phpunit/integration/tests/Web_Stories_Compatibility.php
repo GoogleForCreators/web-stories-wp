@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 namespace Google\Web_Stories\Tests\Integration;
 
 /**
@@ -27,7 +26,7 @@ class Web_Stories_Compatibility extends TestCase {
 	 */
 	protected $instance;
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->instance = \web_stories_get_compat_instance();
@@ -47,7 +46,7 @@ class Web_Stories_Compatibility extends TestCase {
 	/**
 	 * @covers ::check_extensions
 	 */
-	public function test_check_extensions() {
+	public function test_check_extensions(): void {
 		$results = $this->instance->check_extensions();
 		$this->assertFalse( $results );
 		$error       = $this->instance->get_error();
@@ -60,7 +59,7 @@ class Web_Stories_Compatibility extends TestCase {
 	/**
 	 * @covers ::check_classes
 	 */
-	public function test_check_classes() {
+	public function test_check_classes(): void {
 		$results = $this->instance->check_classes();
 		$this->assertFalse( $results );
 		$error       = $this->instance->get_error();
@@ -73,7 +72,7 @@ class Web_Stories_Compatibility extends TestCase {
 	/**
 	 * @covers ::check_functions
 	 */
-	public function test_check_functions() {
+	public function test_check_functions(): void {
 		$results = $this->instance->check_functions();
 		$this->assertFalse( $results );
 		$error       = $this->instance->get_error();
@@ -86,7 +85,7 @@ class Web_Stories_Compatibility extends TestCase {
 	/**
 	 * @covers ::check_wp_version
 	 */
-	public function test_check_wp_version() {
+	public function test_check_wp_version(): void {
 		$this->instance->set_wp_version( '10.0.0' );
 		$results = $this->instance->check_wp_version();
 		$this->assertFalse( $results );
@@ -100,7 +99,7 @@ class Web_Stories_Compatibility extends TestCase {
 	/**
 	 * @covers ::check_php_version
 	 */
-	public function test_check_php_version() {
+	public function test_check_php_version(): void {
 		$this->instance->set_php_version( '10.0.0' );
 		$results = $this->instance->check_php_version();
 		$this->assertFalse( $results );
@@ -114,7 +113,7 @@ class Web_Stories_Compatibility extends TestCase {
 	/**
 	 * @covers ::check_required_files
 	 */
-	public function test_check_required_files() {
+	public function test_check_required_files(): void {
 		$this->instance->set_required_files( [ WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/fake.js' ] );
 		$results = $this->instance->check_required_files();
 		$this->assertFalse( $results );
@@ -129,7 +128,7 @@ class Web_Stories_Compatibility extends TestCase {
 	 * @covers ::check_required_files
 	 * @covers ::add_to_error
 	 */
-	public function test_add_to_error() {
+	public function test_add_to_error(): void {
 		$this->instance->set_required_files( [ WEBSTORIES_PLUGIN_DIR_PATH . '/assets/js/fake.js' ] );
 		$results  = $this->instance->check_required_files();
 		$results2 = $this->instance->check_required_files();

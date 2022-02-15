@@ -16,3 +16,4 @@
 
 export { default as useRightClickMenu } from './useRightClickMenu';
 export { default as RightClickMenuProvider } from './provider';
+export * from './menus';

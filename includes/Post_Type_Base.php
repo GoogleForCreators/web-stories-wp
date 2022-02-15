@@ -4,10 +4,10 @@
  *
  * Base class for registering and handling post types.
  *
- * @package   Google\Web_Stories\classs
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -31,27 +31,22 @@ namespace Google\Web_Stories;
 use Google\Web_Stories\Infrastructure\PluginActivationAware;
 use Google\Web_Stories\Infrastructure\PluginDeactivationAware;
 use Google\Web_Stories\Infrastructure\SiteInitializationAware;
+use WP_Error;
 use WP_Post_Type;
 use WP_REST_Controller;
 use WP_REST_Posts_Controller;
 use WP_Rewrite;
 use WP_Site;
-use WP_Error;
-
 
 /**
  * Class Post_Type_Base.
- *
- * @package Google\Web_Stories
  */
 abstract class Post_Type_Base extends Service_Base implements PluginActivationAware, PluginDeactivationAware, SiteInitializationAware {
 
 	/**
 	 * Default REST Namespace.
-	 *
-	 * @var string
 	 */
-	const REST_NAMESPACE = 'web-stories/v1';
+	public const REST_NAMESPACE = 'web-stories/v1';
 
 	/**
 	 * Registers the post type.
@@ -60,7 +55,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		$this->register_post_type();
 	}
 
@@ -82,7 +77,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 *
 	 * @return void
 	 */
-	public function unregister_post_type() {
+	public function unregister_post_type(): void {
 		unregister_post_type( $this->get_slug() );
 	}
 
@@ -94,7 +89,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * @param WP_Site $site The site being initialized.
 	 * @return void
 	 */
-	public function on_site_initialization( WP_Site $site ) {
+	public function on_site_initialization( WP_Site $site ): void {
 		$this->register_post_type();
 	}
 
@@ -106,7 +101,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * @param bool $network_wide Whether the activation was done network-wide.
 	 * @return void
 	 */
-	public function on_plugin_activation( $network_wide ) {
+	public function on_plugin_activation( $network_wide ): void {
 		$this->register_post_type();
 	}
 
@@ -118,7 +113,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * @param bool $network_wide Whether the deactivation was done network-wide.
 	 * @return void
 	 */
-	public function on_plugin_deactivation( $network_wide ) {
+	public function on_plugin_deactivation( $network_wide ): void {
 		$this->unregister_post_type();
 	}
 
@@ -129,7 +124,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 *
 	 * @return string
 	 */
-	abstract public function get_slug() : string;
+	abstract public function get_slug(): string;
 
 	/**
 	 * Post type args.
@@ -138,7 +133,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 *
 	 * @return array
 	 */
-	abstract protected function get_args() : array;
+	abstract protected function get_args(): array;
 
 	/**
 	 * Get post type object.
@@ -147,7 +142,7 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 *
 	 * @return WP_Post_Type|null
 	 */
-	protected function get_object() {
+	protected function get_object(): ?WP_Post_Type {
 		return get_post_type_object( $this->get_slug() );
 	}
 
@@ -159,10 +154,12 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * @return string REST base.
 	 */
 	public function get_rest_base(): string {
-		$post_type_obj = $this->get_object();
-		$rest_base     = $this->get_slug();
-		if ( $post_type_obj instanceof WP_Post_Type ) {
-			$rest_base = ( ! empty( $post_type_obj->rest_base ) && is_string( $post_type_obj->rest_base ) ) ? $post_type_obj->rest_base : $post_type_obj->name;
+		$post_type_object = $this->get_object();
+		$rest_base        = $this->get_slug();
+		if ( $post_type_object instanceof WP_Post_Type ) {
+			$rest_base = ! empty( $post_type_object->rest_base ) && \is_string( $post_type_object->rest_base ) ?
+				$post_type_object->rest_base :
+				$post_type_object->name;
 		}
 
 		return (string) $rest_base;
@@ -176,11 +173,10 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * @return string REST base.
 	 */
 	public function get_rest_namespace(): string {
-		$post_type_obj  = $this->get_object();
-		$rest_namespace = self::REST_NAMESPACE;
-		if ( $post_type_obj instanceof WP_Post_Type ) {
-			$rest_namespace = ( ! empty( $post_type_obj->rest_namespace ) && is_string( $post_type_obj->rest_namespace ) ) ? $post_type_obj->rest_namespace : self::REST_NAMESPACE;
-		}
+		$post_type_object = $this->get_object();
+		$rest_namespace   = isset( $post_type_object, $post_type_object->rest_namespace ) && \is_string( $post_type_object->rest_namespace ) ?
+			$post_type_object->rest_namespace :
+			self::REST_NAMESPACE;
 
 		return (string) $rest_namespace;
 	}
@@ -202,7 +198,6 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * @since 1.14.0
 	 *
 	 * @param string $cap Capability name.
-	 *
 	 * @return bool Whether the user has the capability.
 	 */
 	public function has_cap( string $cap ): bool {
@@ -221,7 +216,6 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * @since 1.14.0
 	 *
 	 * @param string $cap Capability name.
-	 *
 	 * @return string|false Capability name if found, false otherwise.
 	 */
 	public function get_cap_name( string $cap ) {
@@ -245,7 +239,6 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * @since 1.14.0
 	 *
 	 * @param string $label Label name.
-	 *
 	 * @return string
 	 */
 	public function get_label( string $label ): string {
@@ -291,14 +284,16 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * Identical to {@see get_post_type_archive_link()}, but also returns a URL
 	 * if the archive page has been disabled.
 	 *
+	 * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+	 *
 	 * @since 1.14.0
 	 *
 	 * @global WP_Rewrite $wp_rewrite WordPress rewrite component.
 	 *
-	 * @return string|false The post type archive permalink. False if the post type
-	 *                      does not exist or does not have an archive.
+	 * @param  bool $ignore_has_archive Ignore 'has_archive' value to get default permalink.
+	 * @return string|false The post type archive permalink. False if the post type does not exist.
 	 */
-	public function get_archive_link() {
+	public function get_archive_link( bool $ignore_has_archive = false ) {
 		global $wp_rewrite;
 
 		$post_type_obj = $this->get_object();
@@ -306,8 +301,8 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 			return false;
 		}
 
-		if ( get_option( 'permalink_structure' ) && is_array( $post_type_obj->rewrite ) ) {
-			$struct = ( true === $post_type_obj->has_archive ) ? $post_type_obj->rewrite['slug'] : $post_type_obj->has_archive;
+		if ( get_option( 'permalink_structure' ) && \is_array( $post_type_obj->rewrite ) ) {
+			$struct = ( true === $post_type_obj->has_archive || $ignore_has_archive ) ? $post_type_obj->rewrite['slug'] : $post_type_obj->has_archive;
 			if ( $post_type_obj->rewrite['with_front'] ) {
 				$struct = $wp_rewrite->front . $struct;
 			} else {

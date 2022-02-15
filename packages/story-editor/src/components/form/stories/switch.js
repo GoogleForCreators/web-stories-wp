@@ -19,8 +19,6 @@
  */
 import { useState } from '@googleforcreators/react';
 import styled from 'styled-components';
-import { action } from '@storybook/addon-actions';
-import { boolean, text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
@@ -30,6 +28,14 @@ import Switch from '../switch';
 export default {
   title: 'Stories Editor/Components/Form/Switch',
   component: Switch,
+  args: {
+    onLabel: 'Fit to Device',
+    offLabel: 'Do not format',
+    disabled: false,
+  },
+  argTypes: {
+    handleChange: { action: 'Switching' },
+  },
 };
 
 const Container = styled.div`
@@ -38,14 +44,11 @@ const Container = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.standard.black};
 `;
 
-export const _default = () => {
-  const onLabel = text('OnLabel', 'Fit to Device');
-  const offLabel = text('OffLabel', 'Do not format');
-  const disabled = boolean('Disabled', false);
+export const _default = (args) => {
   const [value, setValue] = useState(true);
 
   const handleChange = (evt, newValue) => {
-    action(`Switching to: '${newValue ? 'On' : 'Off'}'`)(evt);
+    args.handleChange(`${newValue ? 'On' : 'Off'}`, evt);
     setValue(newValue);
   };
 
@@ -55,10 +58,8 @@ export const _default = () => {
         groupLabel="Switch"
         name="test-switch"
         value={value}
-        onLabel={onLabel}
-        offLabel={offLabel}
         onChange={handleChange}
-        disabled={disabled}
+        {...args}
       />
     </Container>
   );

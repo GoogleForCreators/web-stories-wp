@@ -23,7 +23,7 @@ namespace Google\Web_Stories\Tests\Integration;
  * @coversDefaultClass \Google\Web_Stories\Assets
  */
 class Assets extends TestCase {
-	public function tear_down() {
+	public function tear_down(): void {
 		wp_deregister_script( 'test_script' );
 		wp_deregister_script( 'fake_js_chunk' );
 		wp_deregister_style( 'test_style' );
@@ -35,7 +35,7 @@ class Assets extends TestCase {
 	/**
 	 * @covers ::register_style
 	 */
-	public function test_register_style() {
+	public function test_register_style(): void {
 		$assets          = new \Google\Web_Stories\Assets();
 		$results         = $assets->register_style( 'test_style', false );
 		$register_styles = $this->get_private_property( $assets, 'register_styles' );
@@ -46,7 +46,7 @@ class Assets extends TestCase {
 	/**
 	 * @covers ::register_script
 	 */
-	public function test_register_script() {
+	public function test_register_script(): void {
 		$assets           = new \Google\Web_Stories\Assets();
 		$results          = $assets->register_script( 'test_script', 'https://example.com/test.js' );
 		$register_scripts = $this->get_private_property( $assets, 'register_scripts' );
@@ -59,7 +59,7 @@ class Assets extends TestCase {
 	/**
 	 * @covers ::register_script
 	 */
-	public function test_register_script_without_src() {
+	public function test_register_script_without_src(): void {
 		$assets           = new \Google\Web_Stories\Assets();
 		$results          = $assets->register_script( 'test_script', false );
 		$register_scripts = $this->get_private_property( $assets, 'register_scripts' );
@@ -72,7 +72,7 @@ class Assets extends TestCase {
 	/**
 	 * @covers ::enqueue_style
 	 */
-	public function test_enqueue_style() {
+	public function test_enqueue_style(): void {
 		$assets = new \Google\Web_Stories\Assets();
 		$assets->enqueue_style( 'test_style', false );
 		$register_styles = $this->get_private_property( $assets, 'register_styles' );
@@ -83,7 +83,7 @@ class Assets extends TestCase {
 	/**
 	 * @covers ::enqueue_script
 	 */
-	public function test_enqueue_script() {
+	public function test_enqueue_script(): void {
 		$assets = new \Google\Web_Stories\Assets();
 		$assets->enqueue_script( 'test_script', false );
 		$register_scripts = $this->get_private_property( $assets, 'register_scripts' );
@@ -94,7 +94,7 @@ class Assets extends TestCase {
 	/**
 	 * @covers ::register_script_asset
 	 */
-	public function test_register_script_asset() {
+	public function test_register_script_asset(): void {
 		$assets = $this->getMockBuilder( \Google\Web_Stories\Assets::class )->setMethods( [ 'get_asset_metadata' ] )->getMock();
 		$assets->method( 'get_asset_metadata' )
 			->willReturn(
@@ -114,7 +114,7 @@ class Assets extends TestCase {
 	/**
 	 * @covers ::register_script_asset
 	 */
-	public function test_register_script_asset_prints_translations_for_chunks() {
+	public function test_register_script_asset_prints_translations_for_chunks(): void {
 		$assets = $this->getMockBuilder( \Google\Web_Stories\Assets::class )->setMethods( [ 'get_asset_metadata' ] )->getMock();
 		$assets->method( 'get_asset_metadata' )
 			->willReturn(
@@ -145,7 +145,7 @@ class Assets extends TestCase {
 	/**
 	 * @covers ::register_style_asset
 	 */
-	public function test_register_style_asset() {
+	public function test_register_style_asset(): void {
 		$assets = $this->getMockBuilder( \Google\Web_Stories\Assets::class )->setMethods( [ 'get_asset_metadata' ] )->getMock();
 		$assets->method( 'get_asset_metadata' )
 			->willReturn(
@@ -165,7 +165,7 @@ class Assets extends TestCase {
 	/**
 	 * @covers ::get_asset_metadata
 	 */
-	public function test_get_asset_metadata() {
+	public function test_get_asset_metadata(): void {
 		$assets  = new \Google\Web_Stories\Assets();
 		$results = $assets->get_asset_metadata( 'test_script' );
 		$this->assertIsArray( $results );

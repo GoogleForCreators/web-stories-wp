@@ -53,6 +53,11 @@ const isProduction = process.env.NODE_ENV === 'production';
 const mode = isProduction ? 'production' : 'development';
 
 const sharedConfig = {
+  resolve: {
+    // Fixes resolving packages in the monorepo so we use the "src" folder, not "dist".
+    // TODO: Revisit after upgrading to webpack v5 or when splitting repository.
+    mainFields: ['browser', 'module', 'main', 'source'],
+  },
   mode,
   devtool: !isProduction ? 'source-map' : undefined,
   output: {
@@ -77,7 +82,7 @@ const sharedConfig = {
       // See https://github.com/googleforcreators/web-stories-wp/pull/9001 for context.
       // TODO(#5792): Use `mangleExports` option in webpack v5 instead.
       {
-        test: require.resolve('@googleforcreators/i18n'), // eslint-disable-line node/no-extraneous-require
+        test: require.resolve('./packages/i18n/src'),
         loader: 'expose-loader',
         options: {
           exposes: [
@@ -213,11 +218,19 @@ const sharedConfig = {
     new RtlCssPlugin({
       filename: `../css/[name]-rtl.css`,
     }),
-    new webpack.EnvironmentPlugin({
-      DISABLE_PREVENT: false,
-      DISABLE_OPTIMIZED_RENDERING: false,
-      DISABLE_ERROR_BOUNDARIES: false,
-      DISABLE_QUICK_TIPS: false,
+    new webpack.DefinePlugin({
+      WEB_STORIES_CI: JSON.stringify(process.env.CI),
+      WEB_STORIES_ENV: JSON.stringify(process.env.NODE_ENV),
+      WEB_STORIES_DISABLE_ERROR_BOUNDARIES: JSON.stringify(
+        process.env.DISABLE_ERROR_BOUNDARIES
+      ),
+      WEB_STORIES_DISABLE_OPTIMIZED_RENDERING: JSON.stringify(
+        process.env.DISABLE_OPTIMIZED_RENDERING
+      ),
+      WEB_STORIES_DISABLE_PREVENT: JSON.stringify(process.env.DISABLE_PREVENT),
+      WEB_STORIES_DISABLE_QUICK_TIPS: JSON.stringify(
+        process.env.DISABLE_QUICK_TIPS
+      ),
     }),
     new DependencyExtractionWebpackPlugin(),
   ].filter(Boolean),

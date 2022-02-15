@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { boolean } from '@storybook/addon-knobs';
-
-/**
  * Internal dependencies
  */
 import NavProvider, { useNavContext } from '../../navProvider';
@@ -27,19 +22,23 @@ import NavMenuButton from '../menuButton';
 
 export default {
   title: 'Dashboard/Components/NavMenuButton',
+  args: {
+    showOnlyOnSmallViewport: true,
+  },
+  argTypes: {
+    showOnlyOnSmallViewport: { name: 'Show only on Small (Mobile) Viewort' },
+  },
 };
 
 const Status = () => {
   const { state } = useNavContext();
-  return <span>{String(state.sideBarVisible)}</span>;
+  return <span>{`Sidebar Visible: ${String(state.sideBarVisible)}`}</span>;
 };
 
-export const _default = () => {
+export const _default = (args) => {
   return (
     <NavProvider>
-      <NavMenuButton
-        showOnlyOnSmallViewport={boolean('showOnlyOnSmallViewport')}
-      />
+      <NavMenuButton {...args} />
       <br />
       <Status />
     </NavProvider>

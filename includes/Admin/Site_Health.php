@@ -4,10 +4,10 @@
  *
  * Adds tests and debugging information for Site Health.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -26,17 +26,14 @@
  * limitations under the License.
  */
 
-
 namespace Google\Web_Stories\Admin;
 
-use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Infrastructure\Conditional;
+use Google\Web_Stories\Service_Base;
 
 /**
  * Class Site_Health
- *
- * @package Google\Web_Stories\Admin
  */
 class Site_Health extends Service_Base implements Conditional {
 	/**
@@ -52,7 +49,6 @@ class Site_Health extends Service_Base implements Conditional {
 	 * @since 1.8.0
 	 *
 	 * @param Experiments $experiments Experiments instance.
-	 *
 	 * @return void
 	 */
 	public function __construct( Experiments $experiments ) {
@@ -88,7 +84,7 @@ class Site_Health extends Service_Base implements Conditional {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_filter( 'debug_information', [ $this, 'add_debug_information' ] );
 		add_filter( 'site_status_test_php_modules', [ $this, 'add_extensions' ] );
 		add_filter( 'site_status_test_result', [ $this, 'modify_test_result' ] );
@@ -100,7 +96,6 @@ class Site_Health extends Service_Base implements Conditional {
 	 * @since 1.8.0
 	 *
 	 * @param array|mixed $debugging_information The debugging information from Core.
-	 *
 	 * @return array|mixed The debugging information, with added information for Web stories.
 	 */
 	public function add_debug_information( $debugging_information ) {
@@ -114,7 +109,7 @@ class Site_Health extends Service_Base implements Conditional {
 		if ( ! $enabled_experiments ) {
 			$enabled_experiments = __( 'No experiments enabled', 'web-stories' );
 		}
-		if ( ! is_array( $debugging_information ) ) {
+		if ( ! \is_array( $debugging_information ) ) {
 			return $debugging_information;
 		}
 		$extra_data = [
@@ -176,7 +171,6 @@ class Site_Health extends Service_Base implements Conditional {
 	 * @since 1.8.0
 	 *
 	 * @param mixed $value Value to formatted.
-	 *
 	 * @return string
 	 */
 	protected function get_formatted_output( $value ): string {
@@ -192,7 +186,7 @@ class Site_Health extends Service_Base implements Conditional {
 	 * @return array|mixed The extensions, including those for Web Stories.
 	 */
 	public function add_extensions( $core_extensions ) {
-		if ( ! is_array( $core_extensions ) ) {
+		if ( ! \is_array( $core_extensions ) ) {
 			return $core_extensions;
 		}
 		$extensions = [
@@ -236,11 +230,10 @@ class Site_Health extends Service_Base implements Conditional {
 	 * @since 1.8.0
 	 *
 	 * @param array|mixed $test_result Site Health test result.
-	 *
 	 * @return array|mixed Modified test result.
 	 */
 	public function modify_test_result( $test_result ) {
-		if ( ! is_array( $test_result ) ) {
+		if ( ! \is_array( $test_result ) ) {
 			return $test_result;
 		}
 		// Set the `https_status` test status to critical if its current status is recommended, along with adding to the

@@ -2,10 +2,10 @@
 /**
  * Class Stories_Taxonomies_Controller
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -29,9 +29,9 @@ namespace Google\Web_Stories\REST_API;
 use Google\Web_Stories\Infrastructure\Delayed;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
-use WP_REST_Taxonomies_Controller;
-use WP_REST_Response;
 use WP_REST_Request;
+use WP_REST_Response;
+use WP_REST_Taxonomies_Controller;
 use WP_Taxonomy;
 
 /**
@@ -59,9 +59,8 @@ class Stories_Taxonomies_Controller extends WP_REST_Taxonomies_Controller implem
 	 * @param WP_REST_Request $request  Full details about the request.
 	 * @return WP_REST_Response Response object.
 	 */
-	public function prepare_item_for_response( $taxonomy, $request ) {
-		$response = parent::prepare_item_for_response( $taxonomy, $request );
-
+	public function prepare_item_for_response( $taxonomy, $request ): WP_REST_Response {
+		$response   = parent::prepare_item_for_response( $taxonomy, $request );
 		$base       = ! empty( $taxonomy->rest_base ) ? $taxonomy->rest_base : $taxonomy->name;
 		$controller = $taxonomy->get_rest_controller();
 
@@ -91,7 +90,7 @@ class Stories_Taxonomies_Controller extends WP_REST_Taxonomies_Controller implem
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		$this->register_routes();
 	}
 

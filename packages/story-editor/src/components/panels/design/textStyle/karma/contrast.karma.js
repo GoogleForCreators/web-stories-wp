@@ -37,7 +37,8 @@ describe('Text Panel: Contrast Warning', () => {
   });
 
   it('should have no aXe violations', async () => {
-    await fixture.events.click(fixture.editor.library.textAdd);
+    await fixture.editor.library.textTab.click();
+    await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
     await waitFor(() => {
       if (!fixture.editor.canvas.framesLayer.frames[1].node) {
         throw new Error('node not ready');
@@ -47,16 +48,19 @@ describe('Text Panel: Contrast Warning', () => {
     await fixture.events.click(
       fixture.editor.inspector.designPanel.textStyle.fontColor.button
     );
-    await waitFor(() =>
-      fixture.events.click(fixture.screen.getByRole('option', { name: '#fff' }))
+    await fixture.events.click(
+      await fixture.screen.findByRole('option', { name: '#fff' })
     );
 
-    const contrastWarning = fixture.screen.getByTestId('warningContainer');
+    const contrastWarning = await fixture.screen.findByTestId(
+      'warningContainer'
+    );
     await expectAsync(contrastWarning).toHaveNoViolations();
   });
 
   it('should show contrast warning', async () => {
-    await fixture.events.click(fixture.editor.library.textAdd);
+    await fixture.editor.library.textTab.click();
+    await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
     await waitFor(() => {
       if (!fixture.editor.canvas.framesLayer.frames[1].node) {
         throw new Error('node not ready');
@@ -67,13 +71,13 @@ describe('Text Panel: Contrast Warning', () => {
       fixture.editor.inspector.designPanel.textStyle.fontColor.button
     );
     await fixture.events.click(
-      fixture.screen.getByRole('option', { name: '#fff' })
+      await fixture.screen.findByRole('option', { name: '#fff' })
     );
     // check that the warning icon is on screen
     await expect(fixture.screen.queryByTitle('Low Warning')).toBeDefined();
     // change font color back to black
     await fixture.events.click(
-      fixture.screen.getByRole('option', { name: '#000' })
+      await fixture.screen.findByRole('option', { name: '#000' })
     );
     // Check that the warning icon has been removed from screen. We cannot check
     // for the text, since useLiveRegion will leave the message on the dom.

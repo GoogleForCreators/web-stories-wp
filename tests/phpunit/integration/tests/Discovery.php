@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-
 namespace Google\Web_Stories\Tests\Integration;
 
 use Google\Web_Stories\Settings;
@@ -61,7 +60,7 @@ class Discovery extends DependencyInjectedTestCase {
 	/**
 	 * @param $factory
 	 */
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$user_id = $factory->user->create(
 			[
 				'role' => 'administrator',
@@ -94,13 +93,13 @@ class Discovery extends DependencyInjectedTestCase {
 		self::$archive_page_id = self::factory()->post->create( [ 'post_type' => 'page' ] );
 	}
 
-	public static function tear_down_after_class() {
+	public static function tear_down_after_class(): void {
 		remove_theme_support( 'automatic-feed-links' );
 
 		parent::tear_down_after_class();
 	}
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\Discovery::class );
@@ -112,7 +111,7 @@ class Discovery extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$this->instance->register();
 		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $this->instance, 'print_metadata' ] ) );
 		$this->assertSame( 10, has_action( 'web_stories_story_head', [ $this->instance, 'print_schemaorg_metadata' ] ) );
@@ -125,7 +124,7 @@ class Discovery extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::print_metadata
 	 */
-	public function test_print_metadata() {
+	public function test_print_metadata(): void {
 		$output = get_echo( [ $this->instance, 'print_metadata' ] );
 		$this->assertStringContainsString( '<title>', $output );
 	}
@@ -133,7 +132,7 @@ class Discovery extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::print_schemaorg_metadata
 	 */
-	public function test_print_schemaorg_metadata() {
+	public function test_print_schemaorg_metadata(): void {
 		$output = get_echo( [ $this->instance, 'print_schemaorg_metadata' ] );
 		$this->assertStringContainsString( 'application/ld+json', $output );
 	}
@@ -141,7 +140,7 @@ class Discovery extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::get_schemaorg_metadata
 	 */
-	public function test_get_schemaorg_metadata() {
+	public function test_get_schemaorg_metadata(): void {
 		$result = $this->call_private_method( $this->instance, 'get_schemaorg_metadata' );
 		$this->assertArrayHasKey( 'mainEntityOfPage', $result );
 		$this->assertArrayHasKey( 'headline', $result );
@@ -154,7 +153,7 @@ class Discovery extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::print_open_graph_metadata
 	 */
-	public function test_print_open_graph_metadata() {
+	public function test_print_open_graph_metadata(): void {
 		$output = get_echo( [ $this->instance, 'print_open_graph_metadata' ] );
 		$this->assertStringContainsString( 'og:locale', $output );
 		$this->assertStringContainsString( 'og:type', $output );
@@ -167,7 +166,7 @@ class Discovery extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::get_open_graph_metadata
 	 */
-	public function test_get_open_graph_metadata() {
+	public function test_get_open_graph_metadata(): void {
 		$result = $this->call_private_method( $this->instance, 'get_open_graph_metadata' );
 		$this->assertArrayHasKey( 'og:locale', $result );
 		$this->assertArrayHasKey( 'og:type', $result );
@@ -180,7 +179,7 @@ class Discovery extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::print_feed_link
 	 */
-	public function test_print_feed_link() {
+	public function test_print_feed_link(): void {
 		$output = get_echo( [ $this->instance, 'print_feed_link' ] );
 		$this->assertStringContainsString( '<link rel="alternate"', $output );
 		$this->assertStringContainsString( get_bloginfo( 'name' ), $output );
@@ -189,7 +188,7 @@ class Discovery extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::print_feed_link
 	 */
-	public function test_print_feed_link_custom_archive() {
+	public function test_print_feed_link_custom_archive(): void {
 		update_option( Settings::SETTING_NAME_ARCHIVE, 'custom' );
 		update_option( Settings::SETTING_NAME_ARCHIVE_PAGE_ID, self::$archive_page_id );
 
@@ -206,7 +205,7 @@ class Discovery extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::print_twitter_metadata
 	 */
-	public function test_print_twitter_metadata() {
+	public function test_print_twitter_metadata(): void {
 		$output = get_echo( [ $this->instance, 'print_twitter_metadata' ] );
 		$this->assertStringContainsString( 'twitter:card', $output );
 		$this->assertStringContainsString( 'twitter:image', $output );
@@ -217,7 +216,7 @@ class Discovery extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::get_twitter_metadata
 	 */
-	public function test_get_twitter_metadata() {
+	public function test_get_twitter_metadata(): void {
 		$result = $this->call_private_method( $this->instance, 'get_twitter_metadata' );
 		$this->assertArrayHasKey( 'twitter:card', $result );
 		$this->assertArrayHasKey( 'twitter:image', $result );
@@ -228,7 +227,7 @@ class Discovery extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::get_poster
 	 */
-	public function test_get_poster() {
+	public function test_get_poster(): void {
 		$result = $this->call_private_method( $this->instance, 'get_poster', [ self::$story_id ] );
 		$this->assertArrayHasKey( 'src', $result );
 		$this->assertArrayHasKey( 'height', $result );
@@ -238,7 +237,7 @@ class Discovery extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::get_poster
 	 */
-	public function test_get_poster_no() {
+	public function test_get_poster_no(): void {
 		$result = $this->call_private_method( $this->instance, 'get_poster', [ -99 ] );
 		$this->assertFalse( $result );
 	}

@@ -4,10 +4,10 @@
  *
  * Responsible for adding the stories dashboard to WordPress admin.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -28,17 +28,17 @@
 
 namespace Google\Web_Stories\Admin;
 
+use Google\Web_Stories\Assets;
 use Google\Web_Stories\Context;
 use Google\Web_Stories\Decoder;
 use Google\Web_Stories\Experiments;
-use Google\Web_Stories\Locale;
-use Google\Web_Stories\Tracking;
-use Google\Web_Stories\Media\Types;
 use Google\Web_Stories\Font_Post_Type;
-use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Integrations\Site_Kit;
-use Google\Web_Stories\Assets;
+use Google\Web_Stories\Locale;
+use Google\Web_Stories\Media\Types;
+use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Story_Post_Type;
+use Google\Web_Stories\Tracking;
 
 /**
  * Dashboard class.
@@ -47,10 +47,8 @@ class Dashboard extends Service_Base {
 
 	/**
 	 * Script handle.
-	 *
-	 * @var string
 	 */
-	const SCRIPT_HANDLE = 'wp-dashboard';
+	public const SCRIPT_HANDLE = 'wp-dashboard';
 
 	/**
 	 * Admin page hook suffixes.
@@ -178,7 +176,7 @@ class Dashboard extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
 		add_action( 'admin_init', [ $this, 'redirect_menu_page' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
@@ -192,7 +190,6 @@ class Dashboard extends Service_Base {
 	 * @since 1.0.0
 	 *
 	 * @param string $key The current admin page key.
-	 *
 	 * @return string|false|null The dashboard page's hook_suffix, or false if the user does not have the capability required.
 	 */
 	public function get_hook_suffix( $key ) {
@@ -206,7 +203,7 @@ class Dashboard extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function add_menu_page() {
+	public function add_menu_page(): void {
 		$parent = 'edit.php?post_type=' . $this->story_post_type->get_slug();
 
 		$settings = $this->get_dashboard_settings();
@@ -253,7 +250,7 @@ class Dashboard extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function redirect_menu_page() {
+	public function redirect_menu_page(): void {
 		global $pagenow;
 
 		if ( ! isset( $_GET['page'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -285,7 +282,7 @@ class Dashboard extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function load_stories_dashboard() {
+	public function load_stories_dashboard(): void {
 		$rest_url = trailingslashit( $this->story_post_type->get_rest_url() );
 
 		$preload_paths = [
@@ -368,7 +365,7 @@ class Dashboard extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function render() {
+	public function render(): void {
 		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/admin/dashboard.php';
 	}
 
@@ -378,10 +375,9 @@ class Dashboard extends Service_Base {
 	 * @since 1.0.0
 	 *
 	 * @param string $hook_suffix The current admin page.
-	 *
 	 * @return void
 	 */
-	public function enqueue_assets( $hook_suffix ) {
+	public function enqueue_assets( $hook_suffix ): void {
 		if ( $this->get_hook_suffix( 'stories-dashboard' ) !== $hook_suffix ) {
 			return;
 		}
@@ -432,6 +428,7 @@ class Dashboard extends Service_Base {
 			'locale'                  => $this->locale->get_locale_settings(),
 			'newStoryURL'             => $new_story_url,
 			'archiveURL'              => $this->story_post_type->get_archive_link(),
+			'defaultArchiveURL'       => $this->story_post_type->get_archive_link( true ),
 			'cdnURL'                  => trailingslashit( WEBSTORIES_CDN_URL ),
 			'allowedImageMimeTypes'   => $this->types->get_allowed_image_mime_types(),
 			'version'                 => WEBSTORIES_VERSION,
@@ -477,7 +474,7 @@ class Dashboard extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function display_link_to_dashboard() {
+	public function display_link_to_dashboard(): void {
 		if ( ! $this->context->is_story_editor() ) {
 			return;
 		}

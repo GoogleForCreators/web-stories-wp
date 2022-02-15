@@ -27,7 +27,7 @@ class Image_Sizes extends TestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$media = new \Google\Web_Stories\Media\Image_Sizes();
 		$media->register();
 
@@ -37,7 +37,7 @@ class Image_Sizes extends TestCase {
 	/**
 	 * @covers ::add_image_sizes
 	 */
-	public function test_add_image_sizes() {
+	public function test_add_image_sizes(): void {
 		$media = new \Google\Web_Stories\Media\Image_Sizes();
 		$this->call_private_method( $media, 'add_image_sizes' );
 
@@ -49,7 +49,7 @@ class Image_Sizes extends TestCase {
 	/**
 	 * @covers ::wp_prepare_attachment_for_js
 	 */
-	public function test_wp_prepare_attachment_for_js() {
+	public function test_wp_prepare_attachment_for_js(): void {
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',

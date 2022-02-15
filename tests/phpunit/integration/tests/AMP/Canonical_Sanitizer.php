@@ -17,8 +17,8 @@
 
 namespace Google\Web_Stories\Tests\Integration\AMP;
 
-use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 use Google\Web_Stories\Tests\Integration\TestCase;
+use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\AMP\Canonical_Sanitizer
@@ -26,7 +26,7 @@ use Google\Web_Stories\Tests\Integration\TestCase;
 class Canonical_Sanitizer extends TestCase {
 	protected static $user_id;
 
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$user_id = $factory->user->create(
 			[
 				'role' => 'administrator',
@@ -37,7 +37,7 @@ class Canonical_Sanitizer extends TestCase {
 	/**
 	 * @covers ::sanitize
 	 */
-	public function test_sanitize_canonical_missing_draft() {
+	public function test_sanitize_canonical_missing_draft(): void {
 		// Needed so that the user is allowed to preview drafts.
 		wp_set_current_user( self::$user_id );
 

@@ -29,6 +29,7 @@ import {
   useEffect,
 } from '@googleforcreators/react';
 import { useFeature } from 'flagged';
+import { TransformProvider } from '@googleforcreators/transform';
 
 /**
  * Internal dependencies
@@ -38,7 +39,6 @@ import {
   requestIdleCallback,
   cancelIdleCallback,
 } from '../../../utils/idleCallback';
-import { TransformProvider } from '../../transform';
 import DisplayElement from '../../canvas/displayElement';
 import usePerformanceTracking from '../../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../../constants/performanceTrackingEvents';
@@ -200,7 +200,7 @@ PagePreview.propTypes = {
   page: StoryPropTypes.page.isRequired,
   label: PropTypes.string,
   isCacheable: PropTypes.bool,
-  cachedImage: PropTypes.object,
+  cachedImage: PropTypes.string,
   setCachedImage: PropTypes.func,
   pageImageData: PropTypes.string,
   width: PropTypes.number.isRequired,

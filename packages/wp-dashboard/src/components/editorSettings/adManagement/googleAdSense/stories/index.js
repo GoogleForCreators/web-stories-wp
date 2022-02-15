@@ -13,11 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
-import { text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
@@ -27,17 +22,16 @@ import GoogleAdSense from '..';
 export default {
   title: 'Dashboard/Views/EditorSettings/AdManagement/GoogleAdSense',
   component: GoogleAdSense,
+  args: {
+    slotId: '',
+    publisherId: '',
+  },
+  argTypes: {
+    handleUpdateSlotId: { action: 'update slot id' },
+    handleUpdatePublisherId: { action: 'update publisher id' },
+  },
 };
 
-export const _default = () => {
-  return (
-    <GoogleAdSense
-      publisherId={text('publisherId', '')}
-      slotId={text('slotId', '')}
-      handleUpdatePublisherId={(newPublisherId) =>
-        action('update publisher id')(newPublisherId)
-      }
-      handleUpdateSlotId={(newSlotId) => action('update slot id')(newSlotId)}
-    />
-  );
+export const _default = (args) => {
+  return <GoogleAdSense {...args} />;
 };

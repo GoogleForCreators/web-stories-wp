@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
-
-/**
  * Internal dependencies
  */
 import StatusCheckFailed from '../statusCheckFailed';
@@ -27,8 +22,14 @@ import StatusCheckFailed from '../statusCheckFailed';
 export default {
   title: 'Stories Editor/Components/Dialog/Status Check Failed',
   component: StatusCheckFailed,
+  args: {
+    isOpen: true,
+  },
+  argTypes: {
+    onClose: { action: 'closed' },
+  },
 };
 
-export const _default = () => {
-  return <StatusCheckFailed isOpen onClose={action('closed')} />;
+export const _default = (args) => {
+  return <StatusCheckFailed {...args} />;
 };

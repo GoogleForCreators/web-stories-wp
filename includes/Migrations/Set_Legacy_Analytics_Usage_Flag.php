@@ -2,10 +2,10 @@
 /**
  * Class Set_Legacy_Analytics_Usage_Flag
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -30,8 +30,6 @@ use Google\Web_Stories\Settings;
 
 /**
  * Class Set_Legacy_Analytics_Usage_Flag
- *
- * @package Google\Web_Stories\Migrations
  */
 class Set_Legacy_Analytics_Usage_Flag extends Migrate_Base {
 	/**
@@ -47,7 +45,6 @@ class Set_Legacy_Analytics_Usage_Flag extends Migrate_Base {
 	 * @since 1.12.0
 	 *
 	 * @param Settings $settings Settings instance.
-	 *
 	 * @return void
 	 */
 	public function __construct( Settings $settings ) {
@@ -61,7 +58,7 @@ class Set_Legacy_Analytics_Usage_Flag extends Migrate_Base {
 	 *
 	 * @return void
 	 */
-	public function migrate() {
+	public function migrate(): void {
 		$this->settings->update_setting(
 			$this->settings::SETTING_NAME_USING_LEGACY_ANALYTICS,
 			! empty( $this->settings->get_setting( $this->settings::SETTING_NAME_TRACKING_ID ) )

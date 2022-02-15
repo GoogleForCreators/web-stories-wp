@@ -2,10 +2,10 @@
 /**
  * Class Single
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -31,8 +31,6 @@ use Google\Web_Stories\Service_Base;
 
 /**
  * Class Single
- *
- * @package Google\Web_Stories\Single
  */
 class Single extends Service_Base {
 	/**
@@ -58,7 +56,7 @@ class Single extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		// This is hooked to both the `template_include` and the `single_template` filters,
 		// as an additional measure to improve compatibility with themes
 		// overriding the template hierarchy in an unusual way, like the Sage theme does.
@@ -74,7 +72,6 @@ class Single extends Service_Base {
 	 * @since 1.0.0
 	 *
 	 * @param string|mixed $template Absolute path to template file.
-	 *
 	 * @return string|mixed Filtered template file path.
 	 */
 	public function filter_template_include( $template ) {
@@ -90,8 +87,7 @@ class Single extends Service_Base {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param boolean|mixed $show Current value of filter.
-	 *
+	 * @param bool|mixed $show Current value of filter.
 	 * @return bool|mixed
 	 */
 	public function show_admin_bar( $show ) {

@@ -21,6 +21,7 @@ import { useCallback } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 import styled from 'styled-components';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -40,18 +41,21 @@ function PageBackgroundAudioPanel() {
   const {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
+  const enhancedPageBackgroundAudio = useFeature('enhancedPageBackgroundAudio');
 
-  const { backgroundAudio, updateCurrentPageProperties } = useStory(
-    (state) => ({
+  const { backgroundAudio, currentPageId, updateCurrentPageProperties } =
+    useStory((state) => ({
       updateCurrentPageProperties: state.actions.updateCurrentPageProperties,
       backgroundAudio: state.state.currentPage?.backgroundAudio,
-    })
-  );
+      currentPageId: state.state.currentPage?.id,
+    }));
 
   const updateBackgroundAudio = useCallback(
-    (audioResource) => {
+    (updatedBackgroundAudio) => {
       updateCurrentPageProperties({
-        properties: { backgroundAudio: audioResource },
+        properties: {
+          backgroundAudio: updatedBackgroundAudio,
+        },
       });
     },
     [updateCurrentPageProperties]
@@ -78,6 +82,9 @@ function PageBackgroundAudioPanel() {
       <BackgroundAudioPanelContent
         backgroundAudio={backgroundAudio}
         updateBackgroundAudio={updateBackgroundAudio}
+        showCaptions={enhancedPageBackgroundAudio}
+        showLoopControl={enhancedPageBackgroundAudio}
+        audioId={`page-${currentPageId}-background-audio`}
       />
     </SimplePanel>
   );

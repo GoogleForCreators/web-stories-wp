@@ -17,8 +17,8 @@
 
 namespace Google\Web_Stories\Tests\Integration\User;
 
-use Google\Web_Stories\Tests\Integration\TestCase;
 use Google\Web_Stories\Tests\Integration\Capabilities_Setup;
+use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\User\Capabilities
@@ -26,12 +26,12 @@ use Google\Web_Stories\Tests\Integration\Capabilities_Setup;
 class Capabilities extends TestCase {
 	use Capabilities_Setup;
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 		$this->add_caps_to_roles();
 	}
 
-	public function tear_down() {
+	public function tear_down(): void {
 		$this->remove_caps_from_roles();
 
 		parent::tear_down();
@@ -40,7 +40,7 @@ class Capabilities extends TestCase {
 	/**
 	 * @covers ::add_caps_to_roles
 	 */
-	public function test_add_caps_to_roles() {
+	public function test_add_caps_to_roles(): void {
 		$post_type_object = get_post_type_object( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$all_capabilities = array_values( (array) $post_type_object->cap );
 
@@ -59,7 +59,7 @@ class Capabilities extends TestCase {
 	/**
 	 * @covers ::remove_caps_from_roles
 	 */
-	public function test_remove_caps_from_roles() {
+	public function test_remove_caps_from_roles(): void {
 		$capability = new \Google\Web_Stories\User\Capabilities();
 		$capability->remove_caps_from_roles();
 
@@ -86,7 +86,7 @@ class Capabilities extends TestCase {
 	 * @covers ::add_caps_to_roles
 	 * @group ms-required
 	 */
-	public function test_add_caps_to_roles_multisite() {
+	public function test_add_caps_to_roles_multisite(): void {
 		$blog_id = self::factory()->blog->create();
 		switch_to_blog( $blog_id );
 

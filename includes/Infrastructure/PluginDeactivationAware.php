@@ -2,10 +2,10 @@
 /**
  * Interface PluginDeactivationAware.
  *
- * @package   Google\Web_Stories
+ * @link      https://www.mwpd.io/
+ *
  * @copyright 2019 Alain Schlesser
  * @license   MIT
- * @link      https://www.mwpd.io/
  */
 
 /**
@@ -26,8 +26,9 @@ namespace Google\Web_Stories\Infrastructure;
  * This way, we can just add the simple interface marker and not worry about how
  * to wire up the code to reach that part during the static deactivation hook.
  *
- * @since 1.6.0
  * @internal
+ *
+ * @since 1.6.0
  */
 interface PluginDeactivationAware {
 
@@ -39,5 +40,5 @@ interface PluginDeactivationAware {
 	 * @param bool $network_wide Whether the deactivation was done network-wide.
 	 * @return void
 	 */
-	public function on_plugin_deactivation( $network_wide );
+	public function on_plugin_deactivation( $network_wide ): void;
 }

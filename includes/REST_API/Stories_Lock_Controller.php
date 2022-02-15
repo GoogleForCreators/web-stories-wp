@@ -2,10 +2,10 @@
 /**
  * Class Stories_Lock_Controller
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -28,16 +28,14 @@ namespace Google\Web_Stories\REST_API;
 
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Story_Post_Type;
-use WP_REST_Controller;
-use WP_REST_Response;
-use WP_REST_Request;
-use WP_REST_Server;
 use WP_Error;
+use WP_REST_Controller;
+use WP_REST_Request;
+use WP_REST_Response;
+use WP_REST_Server;
 
 /**
  * Class Stories_Lock_Controller
- *
- * @package Google\Web_Stories\REST_API
  */
 class Stories_Lock_Controller extends REST_Controller implements HasRequirements {
 
@@ -95,7 +93,7 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 	 *
 	 * @return void
 	 */
-	public function register_routes() {
+	public function register_routes(): void {
 		register_rest_route(
 			$this->namespace,
 			'/' . $this->rest_base . '/(?P<id>[\d]+)/lock',
@@ -227,7 +225,7 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 		$lock = get_post_meta( $post_id, '_edit_lock', true );
 
 		if ( ! empty( $lock ) ) {
-			list ( $time, $user ) = explode( ':', $lock );
+			[ $time, $user ] = explode( ':', $lock );
 			if ( $time && $user ) {
 				return compact( 'time', 'user' );
 			}
@@ -276,8 +274,8 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 		$post_id = $request['id'];
 
 		$lock = $this->get_lock( $post_id );
-		if ( is_array( $lock ) && isset( $lock['user'] ) && get_current_user_id() !== (int) $lock['user'] ) {
-			return new WP_Error(
+		if ( \is_array( $lock ) && isset( $lock['user'] ) && get_current_user_id() !== (int) $lock['user'] ) {
+			return new \WP_Error(
 				'rest_cannot_delete_others_lock',
 				__( 'Sorry, you are not allowed delete others lock.', 'web-stories' ),
 				[ 'status' => rest_authorization_required_code() ]
@@ -294,7 +292,6 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 	 *
 	 * @param array|false     $lock Lock value, default to false is not set.
 	 * @param WP_REST_Request $request Request object.
-	 *
 	 * @return WP_REST_Response|WP_Error Response object.
 	 */
 	public function prepare_item_for_response( $lock, $request ) {

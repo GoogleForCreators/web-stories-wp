@@ -22,8 +22,6 @@ use Google\Web_Stories\Tests\Integration\TestCase;
 /**
  * Class Single
  *
- * @package Google\Web_Stories\Tests
- *
  * @coversDefaultClass \Google\Web_Stories\Renderer\Oembed
  */
 class Oembed extends TestCase {
@@ -45,7 +43,7 @@ class Oembed extends TestCase {
 	/**
 	 * @param \WP_UnitTest_Factory $factory
 	 */
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$admin_id = $factory->user->create(
 			[ 'role' => 'administrator' ]
 		);
@@ -74,7 +72,7 @@ class Oembed extends TestCase {
 	/**
 	 * @covers ::get_embed_height_width
 	 */
-	public function test_get_embed_height_width() {
+	public function test_get_embed_height_width(): void {
 		$renderer = new \Google\Web_Stories\Renderer\Oembed();
 		$actual   = $this->call_private_method( $renderer, 'get_embed_height_width', [ 600 ] );
 		$expected = [
@@ -88,7 +86,7 @@ class Oembed extends TestCase {
 	/**
 	 * @covers ::get_embed_height_width
 	 */
-	public function test_get_embed_height_width_invalid() {
+	public function test_get_embed_height_width_invalid(): void {
 		$renderer = new \Google\Web_Stories\Renderer\Oembed();
 		$actual   = $this->call_private_method( $renderer, 'get_embed_height_width', [ 'invalid' ] );
 		$expected = [
@@ -102,7 +100,7 @@ class Oembed extends TestCase {
 	/**
 	 * @covers ::filter_oembed_response_data
 	 */
-	public function test_filter_oembed_response_data() {
+	public function test_filter_oembed_response_data(): void {
 		$renderer = new \Google\Web_Stories\Renderer\Oembed();
 		$old      = [
 			'existing' => 'data',
@@ -120,7 +118,7 @@ class Oembed extends TestCase {
 	/**
 	 * @covers ::filter_embed_html
 	 */
-	public function test_filter_embed_htmla() {
+	public function test_filter_embed_htmla(): void {
 		$renderer     = new \Google\Web_Stories\Renderer\Oembed();
 		$current_post = get_post( self::$story_id );
 		$story        = new \Google\Web_Stories\Model\Story();

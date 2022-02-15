@@ -17,9 +17,9 @@
 
 namespace Google\Web_Stories\Tests\Integration;
 
-use Google\Web_Stories\Story_Query as Testee;
-use Google\Web_Stories\Story_Post_Type as Story_CPT;
 use Google\Web_Stories\Renderer\Stories\Carousel_Renderer;
+use Google\Web_Stories\Story_Post_Type as Story_CPT;
+use Google\Web_Stories\Story_Query as Testee;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Story_Query
@@ -59,7 +59,7 @@ class Story_Query extends TestCase {
 	 *
 	 * @param \WP_UnitTest_Factory $factory Factory class object.
 	 */
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 
 		self::$testee = new Testee();
 
@@ -102,7 +102,7 @@ class Story_Query extends TestCase {
 	 *
 	 * @covers ::render
 	 */
-	public function test_render() {
+	public function test_render(): void {
 		$this->assertInstanceOf( Carousel_Renderer::class, self::$testee->get_renderer() );
 	}
 
@@ -111,7 +111,7 @@ class Story_Query extends TestCase {
 	 *
 	 * @covers ::get_stories
 	 */
-	public function test_get_stories_returns_valid_story() {
+	public function test_get_stories_returns_valid_story(): void {
 
 		$story_posts = self::$testee->get_stories();
 		$this->assertSame( self::$story_id, $story_posts[0]->ID );
@@ -120,7 +120,7 @@ class Story_Query extends TestCase {
 	/**
 	 * Test count of number of stories.
 	 */
-	public function test_get_stories_count() {
+	public function test_get_stories_count(): void {
 		$story_posts = self::$testee->get_stories();
 		$this->assertCount( 1, $story_posts );
 	}
@@ -130,7 +130,7 @@ class Story_Query extends TestCase {
 	 *
 	 * @covers ::get_stories
 	 */
-	public function test_get_stories_returns_empty_array() {
+	public function test_get_stories_returns_empty_array(): void {
 
 		$stories_obj = new Testee( [], [ 'post_type' => 'draft' ] );
 		$story_posts = $stories_obj->get_stories();
@@ -142,7 +142,7 @@ class Story_Query extends TestCase {
 	 *
 	 * @covers ::get_story_attributes
 	 */
-	public function test_default_story_args_equality() {
+	public function test_default_story_args_equality(): void {
 
 		$story_args = self::$testee->get_story_attributes();
 		$this->assertEqualSetsWithIndex( self::$default_story_args, $story_args );

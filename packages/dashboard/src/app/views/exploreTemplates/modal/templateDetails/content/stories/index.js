@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
-import { boolean } from '@storybook/addon-knobs';
-/**
  * Internal dependencies
  */
 import { formattedTemplatesArray } from '../../../../../../../storybookUtils';
@@ -27,14 +22,24 @@ import DetailsContent from '..';
 
 export default {
   title: 'Dashboard/Views/TemplateDetails/Content/DetailsContent',
+  argTypes: {
+    switchToTemplateByOffset: {
+      action: 'switch to template by offset clicked',
+    },
+  },
+  parameters: {
+    controls: {
+      include: ['switchToTemplateByOffset'],
+    },
+  },
 };
 
-export const _default = () => (
+export const _default = (args) => (
   <DetailsContent
     activeTemplateIndex={8}
-    isRTL={boolean('isRTL')}
+    isRTL={false}
     filteredTemplatesLength={12}
-    switchToTemplateByOffset={action('switch to template by offset clicked')}
     template={formattedTemplatesArray[1]}
+    {...args}
   />
 );

@@ -15,12 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { action } from '@storybook/addon-actions';
-import { boolean } from '@storybook/addon-knobs';
-
-/**
  * Internal dependencies
  */
 import VideoCacheSettings from '..';
@@ -28,13 +22,14 @@ import VideoCacheSettings from '..';
 export default {
   title: 'Dashboard/Views/EditorSettings/VideoCache',
   component: VideoCacheSettings,
+  args: {
+    isEnabled: true,
+  },
+  argTypes: {
+    updateSettings: { action: 'updateSettings fired' },
+  },
 };
 
-export const _default = () => {
-  return (
-    <VideoCacheSettings
-      isEnabled={boolean('isEnabled', true)}
-      updateSettings={action('updateSettings fired')}
-    />
-  );
+export const _default = (args) => {
+  return <VideoCacheSettings {...args} />;
 };

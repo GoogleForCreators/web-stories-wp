@@ -32,10 +32,11 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { useStory, useLocalMedia } from '../../../app';
+import { useStory } from '../../../app';
 import escapeHTML from '../../../utils/escapeHTML';
 import PreviewErrorDialog from '../previewErrorDialog';
 import Tooltip from '../../tooltip';
+import useIsUploadingToStory from '../../../utils/useIsUploadingToStory';
 
 const PREVIEW_TARGET = 'story-preview';
 
@@ -49,9 +50,7 @@ function PreviewButton({ forceIsSaving = false }) {
       actions: { autoSave, saveStory },
     }) => ({ isSaving, status, previewLink, autoSave, saveStory })
   );
-  const { isUploading } = useLocalMedia(({ state: { isUploading } }) => ({
-    isUploading,
-  }));
+  const isUploading = useIsUploadingToStory();
 
   const [previewLinkToOpenViaDialog, setPreviewLinkToOpenViaDialog] =
     useState(null);
@@ -80,7 +79,7 @@ function PreviewButton({ forceIsSaving = false }) {
     // the saving operation. That way we will not bust the popup timeout.
     let popup;
     try {
-      popup = global.open('about:blank', PREVIEW_TARGET);
+      popup = window.open('about:blank', PREVIEW_TARGET);
       if (popup) {
         popup.document.write('<!DOCTYPE html><html><head>');
         popup.document.write('<title>');

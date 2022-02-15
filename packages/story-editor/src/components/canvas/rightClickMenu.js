@@ -18,15 +18,12 @@
  */
 import styled, { StyleSheetManager } from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
-import {
-  ContextMenu,
-  ContextMenuComponents,
-} from '@googleforcreators/design-system';
+import { ContextMenu } from '@googleforcreators/design-system';
 import {
   createPortal,
-  Fragment,
-  useRef,
   useEffect,
+  useMemo,
+  useRef,
 } from '@googleforcreators/react';
 
 /**
@@ -34,6 +31,18 @@ import {
  */
 import { useRightClickMenu, useConfig } from '../../app';
 import DirectionAware from '../directionAware';
+import { ELEMENT_TYPES } from '../../elements';
+import { useStory } from '../../app/story';
+import {
+  ForegroundMediaMenu,
+  MultipleElementsMenu,
+  PageMenu,
+  ShapeMenu,
+  StickerMenu,
+  TextMenu,
+} from '../../app/rightClickMenu';
+import isEmptyStory from '../../app/story/utils/isEmptyStory';
+import EmptyStateMenu from '../../app/rightClickMenu/menus/emptyStateMenu';
 
 const RightClickMenuContainer = styled.div`
   position: absolute;
@@ -44,13 +53,12 @@ const RightClickMenuContainer = styled.div`
 
 const RightClickMenu = () => {
   const { isRTL } = useConfig();
-  const {
-    isMenuOpen,
-    menuItems: rightClickMenuItems,
-    menuPosition,
-    onCloseMenu,
-    maskRef,
-  } = useRightClickMenu();
+  const { selectedElements, isThisEmptyStory } = useStory((value) => ({
+    selectedElements: value.state.selectedElements,
+    isThisEmptyStory: isEmptyStory(value.state.pages),
+  }));
+  const { isMenuOpen, menuPosition, onCloseMenu, maskRef } =
+    useRightClickMenu();
   const ref = useRef();
 
   /**
@@ -62,6 +70,37 @@ const RightClickMenu = () => {
     evt.preventDefault();
     evt.stopPropagation();
   };
+
+  const Menu = useMemo(() => {
+    if (isThisEmptyStory) {
+      return EmptyStateMenu;
+    }
+
+    if (selectedElements.length > 1) {
+      return MultipleElementsMenu;
+    }
+
+    const selectedElement = selectedElements?.[0];
+
+    if (selectedElement?.isDefaultBackground) {
+      return PageMenu;
+    }
+
+    switch (selectedElement?.type) {
+      case ELEMENT_TYPES.IMAGE:
+      case ELEMENT_TYPES.VIDEO:
+      case ELEMENT_TYPES.GIF:
+        return selectedElement?.isBackground ? PageMenu : ForegroundMediaMenu;
+      case ELEMENT_TYPES.SHAPE:
+        return ShapeMenu;
+      case ELEMENT_TYPES.TEXT:
+        return TextMenu;
+      case ELEMENT_TYPES.STICKER:
+        return StickerMenu;
+      default:
+        return PageMenu;
+    }
+  }, [selectedElements, isThisEmptyStory]);
 
   useEffect(() => {
     const node = ref.current;
@@ -88,26 +127,7 @@ const RightClickMenu = () => {
             onMouseDown={(evt) => evt.stopPropagation()}
             isRTL={isRTL}
           >
-            {rightClickMenuItems.map(
-              ({ label, shortcut, separator, ...buttonProps }) => (
-                <Fragment key={label}>
-                  {separator === 'top' && (
-                    <ContextMenuComponents.MenuSeparator />
-                  )}
-                  <ContextMenuComponents.MenuButton {...buttonProps}>
-                    {label}
-                    {shortcut && (
-                      <ContextMenuComponents.MenuShortcut>
-                        {shortcut.display}
-                      </ContextMenuComponents.MenuShortcut>
-                    )}
-                  </ContextMenuComponents.MenuButton>
-                  {separator === 'bottom' && (
-                    <ContextMenuComponents.MenuSeparator />
-                  )}
-                </Fragment>
-              )
-            )}
+            <Menu parentMenuRef={ref} />
           </ContextMenu>
         </DirectionAware>
       </RightClickMenuContainer>

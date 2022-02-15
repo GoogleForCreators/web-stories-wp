@@ -51,7 +51,7 @@ import storyResponse from './db/storyResponse';
 import DocumentPane from './components/documentPane';
 import { Accessibility, Design, Priority } from './components/checklist';
 
-if ('true' === process.env.CI) {
+if ('true' === WEB_STORIES_CI) {
   configure({
     getElementError: (message) => {
       const error = new Error(message);
@@ -119,10 +119,6 @@ export const FIXTURE_DEFAULT_CONFIG = {
   ],
   capabilities: {
     hasUploadMediaAction: true,
-  },
-  postLock: {
-    interval: 150,
-    showLockedDialog: true,
   },
   nonce: '123456789',
   version: '1.0.0-alpha.9',

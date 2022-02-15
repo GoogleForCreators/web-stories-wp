@@ -2,10 +2,10 @@
 /**
  * DependencyInjectedTestCase class.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 namespace Google\Web_Stories\Tests\Integration;
@@ -41,7 +41,7 @@ abstract class DependencyInjectedTestCase extends TestCase {
 	/**
 	 * Set up the service architecture before each test run.
 	 */
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		// Needed because the block will exist already after hooking up the plugin
@@ -72,7 +72,7 @@ abstract class DependencyInjectedTestCase extends TestCase {
 	/**
 	 * Clean up again after each test run.
 	 */
-	public function tear_down() {
+	public function tear_down(): void {
 		$this->set_private_property( Services::class, 'plugin', null );
 		$this->set_private_property( Services::class, 'container', null );
 		$this->set_private_property( Services::class, 'injector', null );

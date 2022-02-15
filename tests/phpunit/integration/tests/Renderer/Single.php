@@ -18,12 +18,10 @@
 namespace Google\Web_Stories\Tests\Integration\Renderer;
 
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
-use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
  * Class Single
  *
- * @package Google\Web_Stories\Tests
  * @coversDefaultClass \Google\Web_Stories\Renderer\Single
  */
 class Single extends DependencyInjectedTestCase {
@@ -50,7 +48,7 @@ class Single extends DependencyInjectedTestCase {
 	/**
 	 * @param \WP_UnitTest_Factory $factory
 	 */
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$admin_id = $factory->user->create(
 			[ 'role' => 'administrator' ]
 		);
@@ -76,7 +74,7 @@ class Single extends DependencyInjectedTestCase {
 		set_post_thumbnail( self::$story_id, $poster_attachment_id );
 	}
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\Renderer\Single::class );
@@ -85,7 +83,7 @@ class Single extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::filter_template_include
 	 */
-	public function test_filter_template_include() {
+	public function test_filter_template_include(): void {
 		$this->set_permalink_structure( '/%postname%/' );
 		$this->go_to( get_permalink( self::$story_id ) );
 
@@ -96,7 +94,7 @@ class Single extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::filter_template_include
 	 */
-	public function test_filter_template_include_with_password() {
+	public function test_filter_template_include_with_password(): void {
 		$this->set_permalink_structure( '/%postname%/' );
 		$this->go_to( get_permalink( self::$story_id ) );
 
@@ -112,7 +110,7 @@ class Single extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::show_admin_bar
 	 */
-	public function test_show_admin_bar() {
+	public function test_show_admin_bar(): void {
 		$this->set_permalink_structure( '/%postname%/' );
 		$this->go_to( get_permalink( self::$story_id ) );
 

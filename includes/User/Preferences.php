@@ -4,10 +4,10 @@
  *
  * Register user meta.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -37,24 +37,18 @@ use Google\Web_Stories\Service_Base;
 class Preferences extends Service_Base implements HasMeta {
 	/**
 	 * Name of the user meta key used for opt-in.
-	 *
-	 * @var string
 	 */
-	const OPTIN_META_KEY = 'web_stories_tracking_optin';
+	public const OPTIN_META_KEY = 'web_stories_tracking_optin';
 
 	/**
 	 * Name of the user meta key used for onboarding.
-	 *
-	 * @var string
 	 */
-	const ONBOARDING_META_KEY = 'web_stories_onboarding';
+	public const ONBOARDING_META_KEY = 'web_stories_onboarding';
 
 	/**
 	 * Name of the user meta key used for media optimization.
-	 *
-	 * @var string
 	 */
-	const MEDIA_OPTIMIZATION_META_KEY = 'web_stories_media_optimization';
+	public const MEDIA_OPTIMIZATION_META_KEY = 'web_stories_media_optimization';
 
 	/**
 	 * Initializes User_Preferences.
@@ -65,7 +59,7 @@ class Preferences extends Service_Base implements HasMeta {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		$this->register_meta();
 	}
 
@@ -76,7 +70,7 @@ class Preferences extends Service_Base implements HasMeta {
 	 *
 	 * @return void
 	 */
-	public function register_meta() {
+	public function register_meta(): void {
 		register_meta(
 			'user',
 			static::OPTIN_META_KEY,
@@ -130,7 +124,6 @@ class Preferences extends Service_Base implements HasMeta {
 	 * @param string $meta_key Unused. The meta key.
 	 * @param int    $user_id ID of the user being edited.
 	 * @param int    $current_user_id The currently editing user's ID.
-	 *
 	 * @return bool
 	 */
 	public function can_edit_current_user( $allowed, $meta_key, $user_id, $current_user_id ): bool {
@@ -144,7 +137,6 @@ class Preferences extends Service_Base implements HasMeta {
 	 *
 	 * @param int    $user_id User ID.
 	 * @param string $key Preference key.
-	 *
 	 * @return mixed User preference value.
 	 */
 	public function get_preference( $user_id, $key ) {

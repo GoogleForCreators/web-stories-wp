@@ -2,10 +2,10 @@
 /**
  * Class Stories_Autosaves_Controller
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -88,7 +88,7 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller implemen
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		$this->register_routes();
 	}
 
@@ -138,7 +138,7 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller implemen
 	 *
 	 * @return void
 	 */
-	public function register_routes() {
+	public function register_routes(): void {
 		parent::register_routes();
 
 		register_rest_route(
@@ -178,7 +178,6 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller implemen
 	 *
 	 * @param WP_Post         $post Post object.
 	 * @param WP_REST_Request $request Request object.
-	 *
 	 * @return WP_REST_Response Response object.
 	 */
 	public function prepare_item_for_response( $post, $request ): WP_REST_Response {

@@ -2,10 +2,10 @@
 /**
  * Class AdSense
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -45,7 +45,6 @@ class AdSense extends Service_Base implements HasRequirements {
 	 * @since 1.12.0
 	 *
 	 * @param Settings $settings Settings instance.
-	 *
 	 * @return void
 	 */
 	public function __construct( Settings $settings ) {
@@ -59,7 +58,7 @@ class AdSense extends Service_Base implements HasRequirements {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_action( 'web_stories_print_analytics', [ $this, 'print_adsense_tag' ] );
 	}
 
@@ -128,7 +127,7 @@ class AdSense extends Service_Base implements HasRequirements {
 	 *
 	 * @return void
 	 */
-	public function print_adsense_tag() {
+	public function print_adsense_tag(): void {
 		$publisher = $this->get_publisher_id();
 		$slot      = $this->get_slot_id();
 		$enabled   = $this->is_enabled();

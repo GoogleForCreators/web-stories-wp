@@ -18,14 +18,10 @@
  */
 import {
   MEDIA_DEFAULT_ATTRIBUTES,
-  MEDIA_DEFAULT_CLEARABLE_ATTRIBUTES,
   MEDIA_PANELS,
   resizeRules as mediaResizeRules,
 } from '../media/constants';
-import {
-  SHARED_DEFAULT_ATTRIBUTES,
-  SHARED_DEFAULT_CLEARABLE_ATTRIBUTES,
-} from '../shared/constants';
+import { SHARED_DEFAULT_ATTRIBUTES } from '../shared/constants';
 import PanelTypes from '../../components/panels/design/types';
 
 export {
@@ -53,11 +49,6 @@ export const defaultAttributes = {
     id: 0,
     alt: '',
   },
-};
-
-export const clearableAttributes = {
-  ...SHARED_DEFAULT_CLEARABLE_ATTRIBUTES,
-  ...MEDIA_DEFAULT_CLEARABLE_ATTRIBUTES,
 };
 
 export const panels = [

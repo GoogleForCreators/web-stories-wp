@@ -32,11 +32,12 @@ trait Private_Access {
 	/**
 	 * Call a private method as if it was public.
 	 *
+	 * @throws ReflectionException If the object could not be reflected upon.
+	 *
 	 * @param object|string $object      Object instance or class string to call the method of.
 	 * @param string        $method_name Name of the method to call.
 	 * @param array         $args        Optional. Array of arguments to pass to the method.
 	 * @return mixed Return value of the method call.
-	 * @throws ReflectionException If the object could not be reflected upon.
 	 */
 	protected function call_private_method( $object, $method_name, $args = [] ) {
 		$method = ( new ReflectionClass( $object ) )->getMethod( $method_name );
@@ -47,11 +48,12 @@ trait Private_Access {
 	/**
 	 * Call a private static method as if it was public.
 	 *
+	 * @throws ReflectionException If the class could not be reflected upon.
+	 *
 	 * @param string $class       Class string to call the method of.
 	 * @param string $method_name Name of the method to call.
 	 * @param array  $args        Optional. Array of arguments to pass to the method.
 	 * @return mixed Return value of the method call.
-	 * @throws ReflectionException If the class could not be reflected upon.
 	 */
 	protected function call_private_static_method( $class, $method_name, $args = [] ) {
 		$method = ( new ReflectionClass( $class ) )->getMethod( $method_name );
@@ -62,12 +64,13 @@ trait Private_Access {
 	/**
 	 * Set a private property as if it was public.
 	 *
+	 * @throws ReflectionException If the object could not be reflected upon.
+	 *
 	 * @param object|string $object        Object instance or class string to set the property of.
 	 * @param string        $property_name Name of the property to set.
 	 * @param mixed         $value         Value to set the property to.
-	 * @throws ReflectionException If the object could not be reflected upon.
 	 */
-	protected function set_private_property( $object, $property_name, $value ) {
+	protected function set_private_property( $object, $property_name, $value ): void {
 		$property = ( new ReflectionClass( $object ) )->getProperty( $property_name );
 		$property->setAccessible( true );
 		$property->setValue( $object, $value );
@@ -76,10 +79,11 @@ trait Private_Access {
 	/**
 	 * Get a private property as if it was public.
 	 *
+	 * @throws ReflectionException If the object could not be reflected upon.
+	 *
 	 * @param object|string $object        Object instance or class string to get the property of.
 	 * @param string        $property_name Name of the property to get.
 	 * @return mixed Return value of the property.
-	 * @throws ReflectionException If the object could not be reflected upon.
 	 */
 	protected function get_private_property( $object, $property_name ) {
 		$property = ( new ReflectionClass( $object ) )->getProperty( $property_name );
@@ -90,13 +94,14 @@ trait Private_Access {
 	/**
 	 * Get a static private property as if it was public.
 	 *
+	 * @throws ReflectionException If the class could not be reflected upon.
+	 *
 	 * @param string $class         Class string to get the property of.
 	 * @param string $property_name Name of the property to get.
 	 * @return mixed Return value of the property.
-	 * @throws ReflectionException If the class could not be reflected upon.
 	 */
 	protected function get_static_private_property( $class, $property_name ) {
 		$properties = ( new ReflectionClass( $class ) )->getStaticProperties();
-		return array_key_exists( $property_name, $properties ) ? $properties[ $property_name ] : null;
+		return \array_key_exists( $property_name, $properties ) ? $properties[ $property_name ] : null;
 	}
 }

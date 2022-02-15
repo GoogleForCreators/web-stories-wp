@@ -2,10 +2,10 @@
 /**
  * Class Stories_Media_Controller
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -29,13 +29,13 @@ namespace Google\Web_Stories\REST_API;
 use Google\Web_Stories\Infrastructure\Delayed;
 use Google\Web_Stories\Infrastructure\Registerable;
 use Google\Web_Stories\Infrastructure\Service;
-use Google\Web_Stories\Media\Types;
 use Google\Web_Stories\Media\Base_Color;
-use WP_Post;
+use Google\Web_Stories\Media\Types;
 use WP_Error;
+use WP_Post;
+use WP_REST_Attachments_Controller;
 use WP_REST_Request;
 use WP_REST_Response;
-use WP_REST_Attachments_Controller;
 
 /**
  * Stories_Media_Controller class.
@@ -53,9 +53,9 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 *
 	 * Override the namespace.
 	 *
-	 * @param Types $types Types instance.
-	 *
 	 * @since 1.0.0
+	 *
+	 * @param Types $types Types instance.
 	 */
 	public function __construct( Types $types ) {
 		parent::__construct( 'attachment' );
@@ -70,7 +70,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		$this->register_routes();
 	}
 
@@ -177,7 +177,8 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 		}
 
 		$new_response = $this->prepare_item_for_response( $attachment, $request );
-		$data         = $new_response->get_data();
+
+		$data = $new_response->get_data();
 		$response->set_data( $data );
 
 		return $response;
@@ -191,7 +192,6 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 * @param int      $post_id Post id.
 	 * @param int|null $parent_post New post parent. Default null.
 	 * @param int|null $original_id Original id to copy data from. Default null.
-	 *
 	 * @return WP_Post|WP_Error
 	 */
 	protected function process_post( $post_id, $parent_post, $original_id ) {
@@ -268,7 +268,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 * @param WP_REST_Request $request       Optional. Request to prepare items for.
 	 * @return array Array of query arguments.
 	 */
-	protected function prepare_items_query( $prepared_args = [], $request = null ) {
+	protected function prepare_items_query( $prepared_args = [], $request = null ): array {
 		$query_args = parent::prepare_items_query( $prepared_args, $request );
 
 		if ( empty( $request['mime_type'] ) && empty( $request['media_type'] ) ) {
@@ -303,7 +303,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 * @param WP_REST_Request $request Request object.
 	 * @return WP_REST_Response Response object.
 	 */
-	public function prepare_item_for_response( $post, $request ) {
+	public function prepare_item_for_response( $post, $request ): WP_REST_Response {
 		$response = parent::prepare_item_for_response( $post, $request );
 
 		/**
@@ -328,7 +328,6 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 * @since 1.12.0
 	 *
 	 * @param WP_Post $post Post object.
-	 *
 	 * @return array Links for the given post.
 	 */
 	protected function prepare_links( $post ): array {
@@ -345,7 +344,6 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 *
 	 * @param array   $links Links for the given post.
 	 * @param WP_Post $post Post object.
-	 *
 	 * @return array Modified list of links.
 	 */
 	private function add_taxonomy_links( array $links, WP_Post $post ): array {

@@ -17,7 +17,6 @@
  * External dependencies
  */
 import { useState } from '@googleforcreators/react';
-import { number } from '@storybook/addon-knobs';
 import styled, { ThemeProvider } from 'styled-components';
 import {
   theme as dsTheme,
@@ -31,6 +30,9 @@ import { Toggle as HelpCenterToggle } from '..';
 
 export default {
   title: 'Stories Editor/Components/Help Center',
+  args: {
+    notificationCount: 6,
+  },
 };
 
 const Bg = styled.div`
@@ -42,7 +44,7 @@ const Bg = styled.div`
   padding: 50px;
 `;
 
-export const Toggle = () => {
+export const Toggle = (args) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <ThemeProvider theme={dsTheme}>
@@ -51,7 +53,7 @@ export const Toggle = () => {
         <HelpCenterToggle
           isOpen={isOpen}
           onClick={() => setIsOpen((v) => !v)}
-          notificationCount={number('notificationCount')}
+          {...args}
         />
       </Bg>
     </ThemeProvider>

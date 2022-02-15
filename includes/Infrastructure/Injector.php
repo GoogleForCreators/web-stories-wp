@@ -2,10 +2,10 @@
 /**
  * Interface Injector.
  *
- * @package   Google\Web_Stories
+ * @link      https://www.mwpd.io/
+ *
  * @copyright 2019 Alain Schlesser
  * @license   MIT
- * @link      https://www.mwpd.io/
  */
 
 /**
@@ -34,8 +34,9 @@ namespace Google\Web_Stories\Infrastructure;
  * (always returning a fresh new instance on each subsequent call). This
  * effectively gets rid of the dreaded Singletons.
  *
- * @since 1.6.0
  * @internal
+ *
+ * @since 1.6.0
  */
 interface Injector extends Service {
 
@@ -51,7 +52,7 @@ interface Injector extends Service {
 	 *                                                       empty array.
 	 * @return object Instantiated object.
 	 */
-	public function make( $interface_or_class, $arguments = [] );
+	public function make( $interface_or_class, $arguments = [] ): object;
 
 	/**
 	 * Bind a given interface or class to an implementation.
@@ -65,7 +66,7 @@ interface Injector extends Service {
 	 * @param string $to   Interface or class that provides the implementation.
 	 * @return Injector
 	 */
-	public function bind( $from, $to );
+	public function bind( $from, $to ): Injector;
 
 	/**
 	 * Bind an argument for a class to a specific value.
@@ -76,14 +77,13 @@ interface Injector extends Service {
 	 *                                   for.
 	 * @param string $argument_name      Argument name to bind a value to.
 	 * @param mixed  $value              Value to bind the argument to.
-	 *
 	 * @return Injector
 	 */
 	public function bind_argument(
 		$interface_or_class,
 		$argument_name,
 		$value
-	);
+	): Injector;
 
 	/**
 	 * Always reuse and share the same instance for the provided interface or
@@ -94,7 +94,7 @@ interface Injector extends Service {
 	 * @param string $interface_or_class Interface or class to reuse.
 	 * @return Injector
 	 */
-	public function share( $interface_or_class );
+	public function share( $interface_or_class ): Injector;
 
 	/**
 	 * Delegate instantiation of an interface or class to a callable.
@@ -106,5 +106,5 @@ interface Injector extends Service {
 	 * @param callable $callable           Callable to use for instantiation.
 	 * @return Injector
 	 */
-	public function delegate( $interface_or_class, callable $callable );
+	public function delegate( $interface_or_class, callable $callable ): Injector;
 }

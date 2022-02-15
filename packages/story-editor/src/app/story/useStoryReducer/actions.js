@@ -119,12 +119,12 @@ const updateElementById =
       payload: { elementIds: [elementId], properties },
     });
 
-const duplicateElementById =
+const duplicateElementsById =
   (dispatch) =>
-  ({ elementId }) =>
+  ({ elementIds }) =>
     dispatch({
-      type: types.DUPLICATE_ELEMENT_BY_ID,
-      payload: { elementId },
+      type: types.DUPLICATE_ELEMENTS_BY_ID,
+      payload: { elementIds },
     });
 
 const updateSelectedElements =
@@ -219,9 +219,18 @@ const toggleLayer =
       payload: { metaKey, shiftKey, elementId },
     });
 
+const copyElementById =
+  (dispatch) =>
+  ({ elementId }) =>
+    dispatch({
+      type: types.COPY_ELEMENT_BY_ID,
+      payload: { elementId: elementId },
+    });
+
 export const exposedActions = {
   addPage,
   addPageAt,
+  copyElementById,
   deletePage,
   deleteCurrentPage,
   updatePageProperties,
@@ -237,7 +246,7 @@ export const exposedActions = {
   updateElementsByResourceId,
   deleteElementsByResourceId,
   updateElementById,
-  duplicateElementById,
+  duplicateElementsById,
   updateSelectedElements,
   combineElements,
   setBackgroundElement,

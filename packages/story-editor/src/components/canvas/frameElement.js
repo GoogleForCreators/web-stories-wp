@@ -23,13 +23,15 @@ import {
   useLayoutEffect,
   useRef,
   useState,
+  memo,
 } from '@googleforcreators/react';
 import { useUnits } from '@googleforcreators/units';
+import { useTransformHandler } from '@googleforcreators/transform';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../types';
 import { getDefinitionForType } from '../../elements';
 import { useStory, useTransform, useCanvas } from '../../app';
 import {
@@ -39,7 +41,6 @@ import {
 } from '../../elements/shared';
 import WithMask from '../../masks/frame';
 import WithLink from '../elementLink/frame';
-import { useTransformHandler } from '../transform';
 import { getElementMask } from '../../masks';
 import { MaskTypes } from '../../masks/constants';
 import useDoubleClick from '../../utils/useDoubleClick';
@@ -78,33 +79,34 @@ const EmptyFrame = styled.div`
 
 const NOOP = () => {};
 
-function FrameElement({ element }) {
+function FrameElement({ id }) {
+  const { isSelected, isSingleElement, isBackground, element } = useStory(
+    ({ state }) => ({
+      isSelected: state.selectedElementIds.includes(id),
+      isSingleElement: state.selectedElementIds.length === 1,
+      isBackground: state.currentPage?.elements[0].id === id,
+      element: state.currentPage?.elements.find((el) => el.id === id),
+    })
+  );
   const setEditingElement = useCanvas(
     ({ actions }) => actions.setEditingElement
   );
-  const { id, type, flip } = element;
+  const { type, flip } = element;
   const { Frame, isMaskable, Controls } = getDefinitionForType(type);
   const elementRef = useRef();
   const [hovering, setHovering] = useState(false);
-  const isAnythingTransforming = useTransform(
-    ({ state }) => state.isAnythingTransforming
-  );
 
   const onPointerEnter = () => setHovering(true);
   const onPointerLeave = () => setHovering(false);
 
+  const isLinkActive = useTransform(
+    ({ state }) => !isSelected && hovering && !state.isAnythingTransforming
+  );
   const { setNodeForElement, handleSelectElement, isEditing } = useCanvas(
     ({ state, actions }) => ({
       setNodeForElement: actions.setNodeForElement,
       handleSelectElement: actions.handleSelectElement,
       isEditing: state.isEditing,
-    })
-  );
-  const { isSelected, isSingleElement, isBackground } = useStory(
-    ({ state }) => ({
-      isSelected: state.selectedElementIds.includes(id),
-      isSingleElement: state.selectedElementIds.length === 1,
-      isBackground: state.currentPage?.elements[0].id === id,
     })
   );
   const getBox = useUnits(({ actions }) => actions.getBox);
@@ -171,11 +173,7 @@ function FrameElement({ element }) {
   });
 
   return (
-    <WithLink
-      element={element}
-      active={!isSelected && hovering && !isAnythingTransforming}
-      anchorRef={elementRef}
-    >
+    <WithLink element={element} active={isLinkActive} anchorRef={elementRef}>
       {Controls && (
         <Controls
           isTransforming={isTransforming}
@@ -218,7 +216,7 @@ function FrameElement({ element }) {
 }
 
 FrameElement.propTypes = {
-  element: StoryPropTypes.element.isRequired,
+  id: PropTypes.string.isRequired,
 };
 
-export default FrameElement;
+export default memo(FrameElement);

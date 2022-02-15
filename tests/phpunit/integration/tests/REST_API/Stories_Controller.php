@@ -19,14 +19,12 @@ namespace Google\Web_Stories\Tests\Integration\REST_API;
 
 use DateTime;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Tests\Integration\RestTestCase;
 use Google\Web_Stories\Tests\Integration\Fixture\DummyTaxonomy;
+use Google\Web_Stories\Tests\Integration\RestTestCase;
 use WP_REST_Request;
 
 /**
  * Class Stories_Controller
- *
- * @package Google\Web_Stories\Tests\REST_API
  *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Stories_Controller
  */
@@ -48,7 +46,7 @@ class Stories_Controller extends RestTestCase {
 	 */
 	private $controller;
 
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$user_id = $factory->user->create(
 			[
 				'role'         => 'administrator',
@@ -140,13 +138,13 @@ class Stories_Controller extends RestTestCase {
 		);
 	}
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->controller = new \Google\Web_Stories\REST_API\Stories_Controller( Story_Post_Type::POST_TYPE_SLUG );
 	}
 
-	public function tear_down() {
+	public function tear_down(): void {
 		$this->kses_remove_filters();
 
 		parent::tear_down();
@@ -155,7 +153,7 @@ class Stories_Controller extends RestTestCase {
 	/**
 	 * @covers ::register_routes
 	 */
-	public function test_register_routes() {
+	public function test_register_routes(): void {
 		$routes = rest_get_server()->get_routes();
 
 		$this->assertArrayHasKey( '/web-stories/v1/web-story', $routes );
@@ -166,7 +164,7 @@ class Stories_Controller extends RestTestCase {
 	 * @covers ::get_items
 	 * @covers ::add_response_headers
 	 */
-	public function test_get_items() {
+	public function test_get_items(): void {
 		$this->controller->register_routes();
 
 		wp_set_current_user( self::$user_id );
@@ -204,7 +202,7 @@ class Stories_Controller extends RestTestCase {
 	/**
 	 * @covers ::get_items
 	 */
-	public function test_get_items_no_permission() {
+	public function test_get_items_no_permission(): void {
 		$this->controller->register_routes();
 
 		$request  = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story' );
@@ -219,7 +217,7 @@ class Stories_Controller extends RestTestCase {
 	 * @covers ::get_items
 	 * @covers ::add_response_headers
 	 */
-	public function test_get_items_contributor() {
+	public function test_get_items_contributor(): void {
 		$this->controller->register_routes();
 
 		wp_set_current_user( self::$contributor_id );
@@ -255,7 +253,7 @@ class Stories_Controller extends RestTestCase {
 	 * @covers ::get_items
 	 * @covers ::add_response_headers
 	 */
-	public function test_get_items_author() {
+	public function test_get_items_author(): void {
 		wp_set_current_user( self::$author_id );
 		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story' );
 		$request->set_param( 'context', 'edit' );
@@ -289,7 +287,7 @@ class Stories_Controller extends RestTestCase {
 	 * @covers ::get_item
 	 * @covers ::prepare_item_for_response
 	 */
-	public function test_get_item() {
+	public function test_get_item(): void {
 		$this->controller->register_routes();
 
 		wp_set_current_user( self::$user_id );
@@ -318,7 +316,7 @@ class Stories_Controller extends RestTestCase {
 	 * @covers ::get_item
 	 * @covers ::prepare_item_for_response
 	 */
-	public function test_get_item_no_user() {
+	public function test_get_item_no_user(): void {
 		$this->controller->register_routes();
 
 		$story = self::factory()->post->create(
@@ -342,7 +340,7 @@ class Stories_Controller extends RestTestCase {
 	 * @covers ::get_item
 	 * @covers ::prepare_item_for_response
 	 */
-	public function test_get_item_future() {
+	public function test_get_item_future(): void {
 		$this->controller->register_routes();
 
 		wp_set_current_user( self::$user_id );
@@ -373,7 +371,7 @@ class Stories_Controller extends RestTestCase {
 	 * @covers ::prepare_item_for_response
 	 * @covers \Google\Web_Stories\REST_API\Stories_Base_Controller::prepare_links
 	 */
-	public function test_get_item_lock() {
+	public function test_get_item_lock(): void {
 		$this->controller->register_routes();
 
 		wp_set_current_user( self::$user_id );
@@ -400,7 +398,7 @@ class Stories_Controller extends RestTestCase {
 	 * @covers ::get_item
 	 * @covers \Google\Web_Stories\REST_API\Stories_Base_Controller::get_available_actions
 	 */
-	public function test_get_available_actions() {
+	public function test_get_available_actions(): void {
 		$this->controller->register_routes();
 
 		wp_set_current_user( self::$user_id );
@@ -427,7 +425,7 @@ class Stories_Controller extends RestTestCase {
 	 * @covers ::get_item
 	 * @covers \Google\Web_Stories\REST_API\Stories_Base_Controller::add_taxonomy_links
 	 */
-	public function test_get_add_taxonomy_links() {
+	public function test_get_add_taxonomy_links(): void {
 		$this->controller->register_routes();
 
 		$object = new DummyTaxonomy();
@@ -458,7 +456,7 @@ class Stories_Controller extends RestTestCase {
 	 * @covers ::get_items
 	 * @covers ::add_response_headers
 	 */
-	public function test_get_items_format() {
+	public function test_get_items_format(): void {
 		$this->controller->register_routes();
 
 		wp_set_current_user( self::$user_id );
@@ -490,7 +488,7 @@ class Stories_Controller extends RestTestCase {
 	/**
 	 * @covers ::get_item_schema
 	 */
-	public function test_get_item_schema() {
+	public function test_get_item_schema(): void {
 		$this->controller->register_routes();
 
 		$data = $this->controller->get_item_schema();
@@ -502,7 +500,7 @@ class Stories_Controller extends RestTestCase {
 	/**
 	 * @covers ::filter_posts_clauses
 	 */
-	public function test_filter_posts_by_author_display_names() {
+	public function test_filter_posts_by_author_display_names(): void {
 		$this->controller->register_routes();
 
 		$request = new WP_REST_Request( \WP_REST_Server::READABLE, '/web-stories/v1/web-story' );
@@ -551,7 +549,7 @@ class Stories_Controller extends RestTestCase {
 	/**
 	 * @covers ::filter_posts_clauses
 	 */
-	public function test_filter_posts_clauses_irrelevant_query() {
+	public function test_filter_posts_clauses_irrelevant_query(): void {
 		$this->controller->register_routes();
 
 		$controller = new \Google\Web_Stories\REST_API\Stories_Controller( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
@@ -579,7 +577,7 @@ class Stories_Controller extends RestTestCase {
 	/**
 	 * @covers ::get_collection_params
 	 */
-	public function test_get_collection_params() {
+	public function test_get_collection_params(): void {
 		$this->controller->register_routes();
 
 		$controller = new \Google\Web_Stories\REST_API\Stories_Controller( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
@@ -595,7 +593,7 @@ class Stories_Controller extends RestTestCase {
 	/**
 	 * @covers ::create_item
 	 */
-	public function test_create_item_as_author_should_not_strip_markup() {
+	public function test_create_item_as_author_should_not_strip_markup(): void {
 		$this->controller->register_routes();
 
 		wp_set_current_user( self::$author_id );
@@ -623,7 +621,7 @@ class Stories_Controller extends RestTestCase {
 	/**
 	 * @covers ::create_item
 	 */
-	public function test_create_item_duplicate_id() {
+	public function test_create_item_duplicate_id(): void {
 		$this->controller->register_routes();
 
 		$unsanitized_content    = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content.html' );
@@ -672,7 +670,7 @@ class Stories_Controller extends RestTestCase {
 	/**
 	 * @covers ::create_item
 	 */
-	public function test_create_item_duplicate_id_invalid_id() {
+	public function test_create_item_duplicate_id_invalid_id(): void {
 		$this->controller->register_routes();
 
 		wp_set_current_user( self::$user_id );
@@ -692,7 +690,7 @@ class Stories_Controller extends RestTestCase {
 	/**
 	 * @covers ::create_item
 	 */
-	public function test_create_item_duplicate_id_permission() {
+	public function test_create_item_duplicate_id_permission(): void {
 		$this->controller->register_routes();
 
 		$unsanitized_content    = file_get_contents( WEB_STORIES_TEST_DATA_DIR . '/story_post_content.html' );
@@ -730,7 +728,7 @@ class Stories_Controller extends RestTestCase {
 	 * @covers ::update_item
 	 * @covers \Google\Web_Stories\REST_API\Stories_Base_Controller::update_item
 	 */
-	public function test_update_item_as_author_should_not_strip_markup() {
+	public function test_update_item_as_author_should_not_strip_markup(): void {
 		$this->controller->register_routes();
 
 		wp_set_current_user( self::$author_id );

@@ -4,10 +4,10 @@
  *
  * Responsible for WordPress admin integration.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -29,12 +29,11 @@
 namespace Google\Web_Stories\Admin;
 
 use Google\Web_Stories\Context;
-use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Renderer\Story\Image;
+use Google\Web_Stories\Service_Base;
+use Google\Web_Stories\Story_Post_Type;
 use WP_Post;
-
 
 /**
  * Admin class.
@@ -63,7 +62,7 @@ class Admin extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_filter( 'admin_body_class', [ $this, 'admin_body_class' ], 99 );
 		add_filter( 'default_content', [ $this, 'prefill_post_content' ], 10, 2 );
 		add_filter( 'default_title', [ $this, 'prefill_post_title' ] );
@@ -89,7 +88,6 @@ class Admin extends Service_Base {
 	 * @since 1.0.0
 	 *
 	 * @param string|mixed $class Current classes.
-	 *
 	 * @return string|mixed $class List of Classes.
 	 */
 	public function admin_body_class( $class ) {
@@ -119,7 +117,6 @@ class Admin extends Service_Base {
 	 *
 	 * @param string|mixed $content Default post content.
 	 * @param \WP_Post     $post    Post object.
-	 *
 	 * @return string|mixed Pre-filled post content if applicable, or the default content otherwise.
 	 */
 	public function prefill_post_content( $content, $post ) {
@@ -187,7 +184,6 @@ class Admin extends Service_Base {
 	 * @since 1.0.0
 	 *
 	 * @param string|mixed $title Default post title.
-	 *
 	 * @return string|mixed Pre-filled post title if applicable, or the default title otherwise.
 	 */
 	public function prefill_post_title( $title ) {

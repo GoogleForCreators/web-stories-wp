@@ -39,6 +39,8 @@ const StoryPropTypes = {};
 export const BackgroundAudioPropType = PropTypes.shape({
   id: PropTypes.number,
   src: PropTypes.string,
+  length: PropTypes.number,
+  lengthFormatted: PropTypes.string,
   mimeType: PropTypes.string,
 });
 
@@ -64,7 +66,9 @@ StoryPropTypes.story = PropTypes.shape({
   currentStoryStyles: PropTypes.object,
   autoAdvance: PropTypes.bool,
   defaultPageDuration: PropTypes.number,
-  backgroundAudio: BackgroundAudioPropType,
+  backgroundAudio: PropTypes.shape({
+    resource: BackgroundAudioPropType,
+  }),
 });
 
 StoryPropTypes.mask = PropTypes.shape({
@@ -97,7 +101,11 @@ StoryPropTypes.page = PropTypes.shape({
   animations: PropTypes.arrayOf(PropTypes.shape(AnimationProps)),
   elements: PropTypes.arrayOf(PropTypes.shape(StoryPropTypes.element)),
   overlay: PropTypes.oneOf(Object.values(OverlayType)),
-  backgroundAudio: BackgroundAudioPropType,
+  backgroundAudio: PropTypes.shape({
+    resource: BackgroundAudioPropType,
+    loop: PropTypes.bool,
+    tracks: PropTypes.arrayOf(ResourcePropTypes.trackResource),
+  }),
 });
 
 const StoryLayerPropTypes = {
@@ -201,6 +209,7 @@ const StoryTextElementPropTypes = {
   lineHeight: PropTypes.number,
   padding: PaddingPropType,
   textAlign: PropTypes.string,
+  tagName: PropTypes.oneOf(['h1', 'h2', 'h3', 'p', 'auto']),
 };
 
 StoryPropTypes.textContent = PropTypes.shape({

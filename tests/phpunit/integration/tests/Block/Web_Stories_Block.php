@@ -17,10 +17,7 @@
 
 namespace Google\Web_Stories\Tests\Integration\Block;
 
-use Google\Web_Stories\Assets;
-use Google\Web_Stories\Block\Web_Stories_Block as Block;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
-use Google\Web_Stories\Tests\Integration\TestCase;
 use WP_Block_Type_Registry;
 
 /**
@@ -32,13 +29,13 @@ class Web_Stories_Block extends DependencyInjectedTestCase {
 	 */
 	private $instance;
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\Block\Web_Stories_Block::class );
 	}
 
-	public function tear_down() {
+	public function tear_down(): void {
 		unregister_block_type( 'web-stories/embed' );
 
 		parent::tear_down();
@@ -48,7 +45,7 @@ class Web_Stories_Block extends DependencyInjectedTestCase {
 	 * @covers ::register
 	 * @covers ::register_block_type
 	 */
-	public function test_registers_block_type() {
+	public function test_registers_block_type(): void {
 		$this->assertTrue( WP_Block_Type_Registry::get_instance()->is_registered( 'web-stories/embed' ) );
 	}
 
@@ -58,7 +55,7 @@ class Web_Stories_Block extends DependencyInjectedTestCase {
 	 * @covers \Google\Web_Stories\Embed_Base::default_attrs
 	 * @covers \Google\Web_Stories\Renderer\Story\Embed::render
 	 */
-	public function test_render_block() {
+	public function test_render_block(): void {
 		$actual = $this->instance->render_block(
 			[
 				'url'    => 'https://example.com/story.html',
@@ -78,7 +75,7 @@ class Web_Stories_Block extends DependencyInjectedTestCase {
 	 * @covers \Google\Web_Stories\Embed_Base::default_attrs
 	 * @covers \Google\Web_Stories\Renderer\Story\Embed::render
 	 */
-	public function test_render_block_missing_url() {
+	public function test_render_block_missing_url(): void {
 		$actual = $this->instance->render_block(
 			[
 				'url'    => '',
@@ -98,7 +95,7 @@ class Web_Stories_Block extends DependencyInjectedTestCase {
 	 * @covers \Google\Web_Stories\Embed_Base::default_attrs
 	 * @covers \Google\Web_Stories\Renderer\Story\Embed::render
 	 */
-	public function test_render_block_missing_title() {
+	public function test_render_block_missing_title(): void {
 		$actual = $this->instance->render_block(
 			[
 				'url'    => 'https://example.com/story.html',
@@ -118,7 +115,7 @@ class Web_Stories_Block extends DependencyInjectedTestCase {
 	 * @covers \Google\Web_Stories\Embed_Base::default_attrs
 	 * @covers \Google\Web_Stories\Renderer\Story\Image::render
 	 */
-	public function test_render_block_feed_no_poster() {
+	public function test_render_block_feed_no_poster(): void {
 		$this->go_to( '/?feed=rss2' );
 
 		$actual = $this->instance->render_block(
@@ -138,7 +135,7 @@ class Web_Stories_Block extends DependencyInjectedTestCase {
 	 * @covers \Google\Web_Stories\Embed_Base::default_attrs
 	 * @covers \Google\Web_Stories\Renderer\Story\Image::render
 	 */
-	public function test_render_block_with_poster() {
+	public function test_render_block_with_poster(): void {
 		$this->go_to( '/?feed=rss2' );
 
 		$actual = $this->instance->render_block(

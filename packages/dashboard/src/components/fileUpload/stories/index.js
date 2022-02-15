@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +18,6 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { text, boolean } from '@storybook/addon-knobs';
-import { action } from '@storybook/addon-actions';
 
 /**
  * Internal dependencies
@@ -32,23 +30,31 @@ const Container = styled.div`
 export default {
   title: 'Dashboard/Components/FileUpload',
   component: FileUpload,
+  args: {
+    label: 'Upload',
+    isLoading: false,
+    isMultiple: true,
+    instructionalText:
+      'Drag a jpg, png, or static gif in this box. Or click “Upload logo” below.',
+  },
+  argTypes: {
+    onSubmit: { action: 'files uploaded' },
+  },
+  parameters: {
+    controls: {
+      exclude: ['id', 'ariaLabel', 'acceptableFormats'],
+    },
+  },
 };
 
-export const _default = () => {
+export const _default = (args) => {
   return (
     <Container>
       <FileUpload
         acceptableFormats={['.jpg', '.jpeg', '.png', '.gif']}
-        onSubmit={action('files uploaded')}
         id={'898989'}
-        label={text('label', 'Upload')}
-        isLoading={boolean('isLoading', false)}
-        isMultiple={boolean('isMultiple', true)}
         ariaLabel={'Click to upload a file'}
-        instructionalText={text(
-          'instructionalText',
-          'Drag a jpg, png, or static gif in this box. Or click “Upload logo” below.'
-        )}
+        {...args}
       />
     </Container>
   );

@@ -63,6 +63,8 @@ const TooltipContainer = styled.div`
   z-index: 9999;
   border-radius: 4px;
   background-color: ${({ theme }) => theme.colors.inverted.bg.primary};
+
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 `;
 
 const TooltipText = styled(Text)`
@@ -87,7 +89,7 @@ let lastVisibleDelayedTooltip = null;
  * @param {Function} props.onPointerLeave Pointer leave event callback function
  * @param {string} props.placement Where to place the tooltip {@link: PLACEMENT}
  * @param {string} props.shortcut Shortcut text to display in tooltip
- * @param {string} props.title Text to display in tooltip
+ * @param {import('react').ReactNode|string|null} props.title Text to display in tooltip
  * @param {Object} props.tooltipProps Props for <Tooltip /> component
  * @param {string} props.className Classname.
  * @param {string} props.isDelayed If this tooltip is to be displayed instantly on hover (default) or by a short delay.
@@ -282,6 +284,7 @@ function Tooltip({
         spacing={spacing}
         isOpen={Boolean(shown && (shortcut || title))}
         onPositionUpdate={positionArrow}
+        noOverFlow
       >
         <TooltipContainer
           className={className}
@@ -321,7 +324,7 @@ const TooltipPropTypes = {
   onPointerEnter: PropTypes.func,
   onPointerLeave: PropTypes.func,
   shortcut: PropTypes.string,
-  title: PropTypes.node,
+  title: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
   forceAnchorRef: PropTypes.object,
   tooltipProps: PropTypes.object,
   className: PropTypes.string,

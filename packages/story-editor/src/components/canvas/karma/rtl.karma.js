@@ -50,8 +50,17 @@ describe('RTL support', () => {
 
   describe('CUJ: Creator can Select an Element: Transforming element', () => {
     it('should allow dragging element in RTL mode', async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
+      await waitFor(() => {
+        const node = fixture.editor.canvas.framesLayer.frames[1].node;
+        if (!node) {
+          throw new Error('node not ready');
+        }
+        expect(node).toBeTruthy();
+      });
       const frame = fixture.editor.canvas.framesLayer.frames[1].node;
       const elements = await getSelectedElements();
       const originX = elements[0].x;
@@ -72,8 +81,17 @@ describe('RTL support', () => {
     });
 
     it('should allow resizing element in RTL mode', async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
-      await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
+      await waitFor(() => {
+        const node = fixture.editor.canvas.framesLayer.frames[1].node;
+        if (!node) {
+          throw new Error('node not ready');
+        }
+        expect(node).toBeTruthy();
+      });
       const elements = await getSelectedElements();
       const originWidth = elements[0].width;
       const resizeW = fixture

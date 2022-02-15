@@ -21,6 +21,7 @@ import styled, { StyleSheetManager } from 'styled-components';
 import { memo, useRef, useCombinedRefs } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -31,6 +32,7 @@ import {
   useCanvasBoundingBoxRef,
   useLayout,
 } from '../../app';
+import { FloatingMenuLayer } from '../floatingMenu';
 import EditLayer from './editLayer';
 import DisplayLayer from './displayLayer';
 import FramesLayer from './framesLayer';
@@ -40,6 +42,7 @@ import { useLayoutParams, useLayoutParamsCssVars } from './layout';
 import CanvasUploadDropTarget from './canvasUploadDropTarget';
 import CanvasElementDropzone from './canvasElementDropzone';
 import EyedropperLayer from './eyedropperLayer';
+import EmptyStateLayer from './emptyStateLayer';
 
 // data-fix-caret is for allowing caretRangeFromPoint to work in Safari.
 // See https://github.com/googleforcreators/web-stories-wp/issues/7745.
@@ -80,6 +83,8 @@ function CanvasLayout({ header, footer }) {
     })
   );
 
+  const isFloatingMenuEnabled = useFeature('floatingMenu');
+
   // If we don't have proper canvas dimensions yet, don't bother rendering element layers.
   const hasDimensions = pageWidth !== 0 && pageHeight !== 0;
 
@@ -99,6 +104,8 @@ function CanvasLayout({ header, footer }) {
             </SelectionCanvas>
             <EditLayer />
             <EyedropperLayer />
+            <EmptyStateLayer />
+            {isFloatingMenuEnabled && <FloatingMenuLayer />}
           </CanvasElementDropzone>
         </CanvasUploadDropTarget>
       </Background>

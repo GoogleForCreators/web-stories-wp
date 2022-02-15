@@ -2,10 +2,10 @@
 /**
  * Class Oembed
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -24,7 +24,6 @@
  * limitations under the License.
  */
 
-
 namespace Google\Web_Stories\Renderer;
 
 use Google\Web_Stories\Service_Base;
@@ -33,8 +32,6 @@ use WP_Post;
 
 /**
  * Class Oembed
- *
- * @package Google\Web_Stories\Single
  */
 class Oembed extends Service_Base {
 
@@ -45,7 +42,7 @@ class Oembed extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_filter( 'embed_template', [ $this, 'filter_embed_template' ] );
 		add_filter( 'embed_html', [ $this, 'filter_embed_html' ], 10, 4 );
 		// So it runs after get_oembed_response_data_rich().
@@ -58,7 +55,6 @@ class Oembed extends Service_Base {
 	 * @since 1.7.0
 	 *
 	 * @param string|mixed $template  Path to the template. See locate_template().
-	 *
 	 * @return string|mixed $template
 	 */
 	public function filter_embed_template( $template ) {
@@ -80,11 +76,10 @@ class Oembed extends Service_Base {
 	 * @param WP_Post      $post Post object.
 	 * @param int          $width  The width for the response.
 	 * @param int          $height The height for the response.
-	 *
 	 * @return string|mixed Filtered embed code.
 	 */
 	public function filter_embed_html( $output, $post, $width, $height ) {
-		if ( ! is_string( $output ) ) {
+		if ( ! \is_string( $output ) ) {
 			return $output;
 		}
 
@@ -133,7 +128,7 @@ class Oembed extends Service_Base {
 		if ( ! has_post_thumbnail( $post ) ) {
 			return $data;
 		}
-		if ( ! is_array( $data ) ) {
+		if ( ! \is_array( $data ) ) {
 			return $data;
 		}
 		$new_data = $this->get_embed_height_width( $width );
@@ -147,7 +142,6 @@ class Oembed extends Service_Base {
 	 * @since 1.7.0
 	 *
 	 * @param int $old_width Old width, used to generate new height and width.
-	 *
 	 * @return array
 	 */
 	protected function get_embed_height_width( $old_width ): array {

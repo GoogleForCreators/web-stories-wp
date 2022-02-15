@@ -18,8 +18,6 @@
  * External dependencies
  */
 import { useCallback, useMemo, useState } from '@googleforcreators/react';
-import { action } from '@storybook/addon-actions';
-import { boolean, number, select, text } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 
 /**
@@ -32,6 +30,26 @@ import { basicDropDownOptions } from '../../../storybookUtils/sampleData';
 
 export default {
   title: 'DesignSystem/Components/Search',
+  args: {
+    ariaClearLabel: 'clear search',
+    ariaInputLabel: 'search for an image',
+    disabled: false,
+    emptyText: 'No options available',
+    hasError: false,
+    hint: 'default hint text',
+    label: 'Find an image',
+    isRTL: false,
+    placeholder: 'search',
+    placement: PLACEMENT.BOTTOM,
+    popupZIndex: 1,
+  },
+  argTypes: {
+    placement: {
+      options: Object.values(PLACEMENT),
+      control: 'select',
+    },
+    onChange: { action: 'handleSearchValueChange' },
+  },
 };
 
 const Container = styled.div`
@@ -41,7 +59,8 @@ const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.primary};
 `;
 
-export const _default = () => {
+// eslint-disable-next-line react/prop-types
+export const _default = ({ onChange, ...args }) => {
   const [selectedValue, setSelectedValue] = useState(basicDropDownOptions[2]);
 
   const [inputValue, setInputValue] = useState('');
@@ -64,10 +83,13 @@ export const _default = () => {
     );
   }, [inputValue]);
 
-  const handleSearchValueChange = useCallback((value) => {
-    action('handleSearchValueChange')(value);
-    setInputValue(value);
-  }, []);
+  const handleSearchValueChange = useCallback(
+    (value) => {
+      onChange(value);
+      setInputValue(value);
+    },
+    [onChange]
+  );
 
   const handleOnClear = useCallback(() => {
     setInputValue('');
@@ -78,28 +100,19 @@ export const _default = () => {
     <DarkThemeProvider>
       <Container>
         <Search
-          ariaClearLabel={text('ariaClearLabel', 'clear search')}
-          ariaInputLabel={text('ariaInputLabel', 'search for an image')}
-          disabled={boolean('disabled')}
-          emptyText={text('emptyText', 'No options available')}
           handleSearchValueChange={handleSearchValueChange}
-          hasError={boolean('hasError')}
-          hint={text('hint', 'default hint text')}
-          label={text('label', 'Find an image')}
-          isRTL={boolean('isRTL')}
           onClear={handleOnClear}
           options={options}
-          placeholder={text('placeholder', 'search')}
-          placement={select('placement', Object.values(PLACEMENT))}
-          popupZIndex={number('popupZIndex')}
           selectedValue={selectedValue}
+          {...args}
         />
       </Container>
     </DarkThemeProvider>
   );
 };
 
-export const LightTheme = () => {
+// eslint-disable-next-line react/prop-types
+export const LightTheme = ({ onChange, ...args }) => {
   const [selectedValue, setSelectedValue] = useState();
 
   const [inputValue, setInputValue] = useState('');
@@ -122,10 +135,13 @@ export const LightTheme = () => {
     );
   }, [inputValue]);
 
-  const handleSearchValueChange = useCallback((value) => {
-    action('handleSearchValueChange')(value);
-    setInputValue(value);
-  }, []);
+  const handleSearchValueChange = useCallback(
+    (value) => {
+      onChange(value);
+      setInputValue(value);
+    },
+    [onChange]
+  );
 
   const handleOnClear = useCallback(() => {
     setInputValue('');
@@ -135,21 +151,11 @@ export const LightTheme = () => {
   return (
     <Container>
       <Search
-        ariaClearLabel={text('ariaClearLabel', 'clear input')}
-        ariaInputLabel={text('ariaInputLabel', 'search for stories')}
-        disabled={boolean('disabled')}
-        emptyText={text('emptyText', 'No options available')}
         handleSearchValueChange={handleSearchValueChange}
-        hasError={boolean('hasError')}
-        hint={text('hint', 'default hint text')}
-        label={text('label', 'Search For Stories')}
-        isRTL={boolean('isRTL')}
         onClear={handleOnClear}
         options={options}
-        placeholder={text('placeholder', 'search')}
-        placement={select('placement', Object.values(PLACEMENT))}
-        popupZIndex={number('popupZIndex')}
         selectedValue={selectedValue}
+        {...args}
       />
     </Container>
   );

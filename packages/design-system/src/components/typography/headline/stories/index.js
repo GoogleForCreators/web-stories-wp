@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,34 +15,36 @@
  */
 
 /**
- * External dependencies
- */
-import { select } from '@storybook/addon-knobs';
-
-/**
  * Internal dependencies
  */
 import { THEME_CONSTANTS } from '../../../..';
 import { Text } from '../..';
 import { Headline } from '..';
 
-export default {
-  title: 'DesignSystem/Components/Typography/Headline',
-  component: Headline,
-};
-
 const headlinePresetSizes = THEME_CONSTANTS.TYPOGRAPHY.HEADLINE_SIZES;
 const headlineRenderAsOptions = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 
-export const _default = () => (
+export default {
+  title: 'DesignSystem/Components/Typography/Headline',
+  component: Headline,
+  arg: {
+    as: 'h1',
+  },
+  argTypes: {
+    as: {
+      options: headlineRenderAsOptions,
+      control: 'select',
+      name: 'as HTML:',
+    },
+  },
+};
+
+export const _default = (args) => (
   <>
     {headlinePresetSizes.map((presetSize) => (
       <div key={`${presetSize}_headline`}>
         <Text size={'small'}>{presetSize}</Text>
-        <Headline
-          size={presetSize}
-          as={select('as', headlineRenderAsOptions, 'h1')}
-        >
+        <Headline size={presetSize} {...args}>
           {'The Quick Brown Fox Jumps Over the Lazy Dog'}
         </Headline>
       </div>

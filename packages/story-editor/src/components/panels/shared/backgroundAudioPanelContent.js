@@ -29,6 +29,8 @@ import {
 } from '@googleforcreators/design-system';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import { useCallback } from '@googleforcreators/react';
+import { ResourcePropTypes } from '@googleforcreators/media';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
@@ -38,6 +40,8 @@ import AudioPlayer from '../../audioPlayer';
 import Tooltip from '../../tooltip';
 import { useConfig } from '../../../app';
 import { BackgroundAudioPropType } from '../../../types';
+import CaptionsPanelContent from './captionsPanelContent';
+import LoopPanelContent from './loopPanelContent';
 
 const StyledButton = styled(Button)`
   ${({ theme }) =>
@@ -54,6 +58,9 @@ const UploadButton = styled(StyledButton)`
 function BackgroundAudioPanelContent({
   backgroundAudio,
   updateBackgroundAudio,
+  showCaptions = false,
+  showLoopControl = false,
+  audioId,
 }) {
   const {
     allowedAudioMimeTypes,
@@ -61,6 +68,8 @@ function BackgroundAudioPanelContent({
     capabilities: { hasUploadMediaAction },
     MediaUpload,
   } = useConfig();
+
+  const { resource, tracks = [], loop = true } = backgroundAudio || {};
 
   const onSelectErrorMessage = sprintf(
     /* translators: %s: list of allowed file types. */
@@ -70,13 +79,70 @@ function BackgroundAudioPanelContent({
 
   const onSelect = useCallback(
     (media) => {
-      updateBackgroundAudio({
-        src: media.src,
-        id: media.id,
-        mimeType: media.mimeType,
-      });
+      const updatedBackgroundAudio = {
+        resource: {
+          src: media.src,
+          id: media.id,
+          mimeType: media.mimeType,
+          length: media.length,
+          lengthFormatted: media.lengthFormatted,
+        },
+      };
+
+      if (showCaptions) {
+        updatedBackgroundAudio.tracks = [];
+      }
+      if (showLoopControl) {
+        updatedBackgroundAudio.loop = true;
+      }
+      updateBackgroundAudio(updatedBackgroundAudio);
     },
-    [updateBackgroundAudio]
+    [showCaptions, showLoopControl, updateBackgroundAudio]
+  );
+
+  const updateTracks = useCallback(
+    (newTracks) => {
+      updateBackgroundAudio({ ...backgroundAudio, tracks: newTracks });
+    },
+    [backgroundAudio, updateBackgroundAudio]
+  );
+
+  const onChangeLoop = useCallback(
+    (evt) => {
+      updateBackgroundAudio({ ...backgroundAudio, loop: evt.target.checked });
+    },
+    [backgroundAudio, updateBackgroundAudio]
+  );
+
+  const handleRemoveTrack = useCallback(
+    (idToDelete) => {
+      let newTracks = [];
+      if (idToDelete) {
+        const trackIndex = tracks.findIndex(({ id }) => id === idToDelete);
+        newTracks = [
+          ...tracks.slice(0, trackIndex),
+          ...tracks.slice(trackIndex + 1),
+        ];
+      }
+      updateTracks(newTracks);
+    },
+    [tracks, updateTracks]
+  );
+
+  const handleChangeTrack = useCallback(
+    ({ src = '', id }) => {
+      const newTracks = {
+        track: src,
+        trackId: id,
+        trackName: src.split('/').pop(),
+        id: uuidv4(),
+        kind: 'captions',
+        srclang: '',
+        label: '',
+      };
+      updateTracks([...tracks, newTracks]);
+    },
+    [tracks, updateTracks]
   );
 
   const renderUploadButton = useCallback(
@@ -93,9 +159,25 @@ function BackgroundAudioPanelContent({
     []
   );
 
+  const captionText = __('Upload audio captions', 'web-stories');
+
+  const renderUploadCaptionButton = useCallback(
+    (open) => (
+      <UploadButton
+        onClick={open}
+        type={BUTTON_TYPES.SECONDARY}
+        size={BUTTON_SIZES.SMALL}
+        variant={BUTTON_VARIANTS.RECTANGLE}
+      >
+        {captionText}
+      </UploadButton>
+    ),
+    [captionText]
+  );
+
   return (
     <>
-      {!backgroundAudio?.src && hasUploadMediaAction && (
+      {!resource?.src && hasUploadMediaAction && (
         <Row expand>
           <MediaUpload
             onSelect={onSelect}
@@ -107,35 +189,60 @@ function BackgroundAudioPanelContent({
           />
         </Row>
       )}
-      {backgroundAudio?.src && (
-        <Row>
-          <AudioPlayer
-            title={backgroundAudio?.src.substring(
-              backgroundAudio?.src.lastIndexOf('/') + 1
-            )}
-            src={backgroundAudio?.src}
-            mimeType={backgroundAudio?.mimeType}
-          />
-          <Tooltip hasTail title={__('Remove file', 'web-stories')}>
-            <StyledButton
-              aria-label={__('Remove file', 'web-stories')}
-              type={BUTTON_TYPES.TERTIARY}
-              size={BUTTON_SIZES.SMALL}
-              variant={BUTTON_VARIANTS.SQUARE}
-              onClick={() => updateBackgroundAudio(null)}
-            >
-              <Icons.Trash />
-            </StyledButton>
-          </Tooltip>
-        </Row>
+      {resource?.src && (
+        <>
+          <Row>
+            <AudioPlayer
+              title={resource?.src.substring(
+                resource?.src.lastIndexOf('/') + 1
+              )}
+              src={resource?.src}
+              mimeType={resource?.mimeType}
+              tracks={tracks}
+              audioId={audioId}
+            />
+            <Tooltip hasTail title={__('Remove file', 'web-stories')}>
+              <StyledButton
+                aria-label={__('Remove file', 'web-stories')}
+                type={BUTTON_TYPES.TERTIARY}
+                size={BUTTON_SIZES.SMALL}
+                variant={BUTTON_VARIANTS.SQUARE}
+                onClick={() => updateBackgroundAudio(null)}
+              >
+                <Icons.Trash />
+              </StyledButton>
+            </Tooltip>
+          </Row>
+          {showCaptions && (
+            <CaptionsPanelContent
+              captionText={captionText}
+              tracks={tracks || []}
+              handleChangeTrack={handleChangeTrack}
+              handleRemoveTrack={handleRemoveTrack}
+              renderUploadButton={renderUploadCaptionButton}
+            />
+          )}
+          {showLoopControl && resource?.length && (
+            <Row spaceBetween={false}>
+              <LoopPanelContent loop={loop} onChange={onChangeLoop} />
+            </Row>
+          )}
+        </>
       )}
     </>
   );
 }
 
 BackgroundAudioPanelContent.propTypes = {
-  backgroundAudio: BackgroundAudioPropType,
+  backgroundAudio: PropTypes.shape({
+    resource: BackgroundAudioPropType,
+    loop: PropTypes.bool,
+    tracks: PropTypes.arrayOf(ResourcePropTypes.trackResource),
+  }),
   updateBackgroundAudio: PropTypes.func.isRequired,
+  showCaptions: PropTypes.bool,
+  showLoopControl: PropTypes.bool,
+  audioId: PropTypes.string,
 };
 
 export default BackgroundAudioPanelContent;

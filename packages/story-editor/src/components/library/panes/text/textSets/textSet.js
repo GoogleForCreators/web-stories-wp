@@ -113,7 +113,7 @@ function TextSet({ id, elements, translateY, translateX, ...rest }, ref) {
     [onClick]
   );
 
-  const renderImages = process.env.DISABLE_OPTIMIZED_RENDERING !== 'true';
+  const renderImages = WEB_STORIES_DISABLE_OPTIMIZED_RENDERING !== 'true';
 
   const { textSetHeight, textSetWidth } = elements[0];
   const dragWidth = dataToEditorX(textSetWidth, pageWidth);

@@ -10,8 +10,6 @@ use WP_REST_Server;
 /**
  * Class Publisher_Logos_Controller
  *
- * @package Google\Web_Stories\Tests\REST_API
- *
  * @coversDefaultClass \Google\Web_Stories\REST_API\Publisher_Logos_Controller
  */
 class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
@@ -54,7 +52,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 	 */
 	protected $request_count = 0;
 
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$admin = $factory->user->create(
 			[
 				'role' => 'administrator',
@@ -87,13 +85,13 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 		);
 	}
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->controller = $this->injector->make( \Google\Web_Stories\REST_API\Publisher_Logos_Controller::class );
 	}
 
-	public function tear_down() {
+	public function tear_down(): void {
 		delete_option( Settings::SETTING_NAME_PUBLISHER_LOGOS );
 		delete_option( Settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO );
 
@@ -103,7 +101,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::register_routes
 	 */
-	public function test_register_routes() {
+	public function test_register_routes(): void {
 		$this->controller->register_routes();
 
 		$routes = rest_get_server()->get_routes();
@@ -124,7 +122,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::get_item_schema
 	 */
-	public function test_get_item_schema() {
+	public function test_get_item_schema(): void {
 		$data = $this->controller->get_item_schema();
 
 		$properties = $data['properties'];
@@ -137,7 +135,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::permissions_check
 	 */
-	public function test_get_items_no_permission() {
+	public function test_get_items_no_permission(): void {
 		$this->controller->register();
 
 		$request  = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/publisher-logos' );
@@ -148,7 +146,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::get_items
 	 */
-	public function test_get_items_no_items() {
+	public function test_get_items_no_items(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$admin );
@@ -163,7 +161,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::permissions_check
 	 * @covers ::get_items
 	 */
-	public function test_get_items_editor() {
+	public function test_get_items_editor(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
@@ -178,7 +176,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::prepare_item_for_response
 	 * @covers ::get_items
 	 */
-	public function test_get_items() {
+	public function test_get_items(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$admin );
@@ -203,7 +201,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::permissions_check
 	 */
-	public function test_create_item_no_permission() {
+	public function test_create_item_no_permission(): void {
 		$this->controller->register();
 
 		$request = new WP_REST_Request( WP_REST_Server::CREATABLE, '/web-stories/v1/publisher-logos' );
@@ -220,7 +218,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::permissions_check
 	 * @covers ::create_item
 	 */
-	public function test_create_item_editor() {
+	public function test_create_item_editor(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
@@ -248,7 +246,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::permissions_check
 	 * @covers ::create_item
 	 */
-	public function test_create_item() {
+	public function test_create_item(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$admin );
@@ -282,7 +280,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::permissions_check
 	 * @covers ::create_item
 	 */
-	public function test_create_item_existing_ones() {
+	public function test_create_item_existing_ones(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$admin );
@@ -319,7 +317,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::permissions_check
 	 * @covers ::create_item
 	 */
-	public function test_create_item_multiple() {
+	public function test_create_item_multiple(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$admin );
@@ -385,7 +383,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::permissions_check
 	 * @covers ::create_item
 	 */
-	public function test_create_item_empty_array() {
+	public function test_create_item_empty_array(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$admin );
@@ -405,7 +403,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::permissions_check
 	 * @covers ::create_item
 	 */
-	public function test_create_item_updates_incorrect_active_publisher_logo() {
+	public function test_create_item_updates_incorrect_active_publisher_logo(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$admin );
@@ -441,7 +439,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::permissions_check
 	 */
-	public function test_delete_item_no_permission() {
+	public function test_delete_item_no_permission(): void {
 		$this->controller->register();
 
 		$request  = new WP_REST_Request( WP_REST_Server::DELETABLE, '/web-stories/v1/publisher-logos/' . self::$attachment_id_1 );
@@ -453,7 +451,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::permissions_check
 	 * @covers ::delete_item
 	 */
-	public function test_delete_item_editor() {
+	public function test_delete_item_editor(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
@@ -482,7 +480,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::permissions_check
 	 * @covers ::delete_item
 	 */
-	public function test_delete_item() {
+	public function test_delete_item(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$admin );
@@ -517,7 +515,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::permissions_check
 	 * @covers ::delete_item
 	 */
-	public function test_delete_item_incorrect_active_publisher_logo() {
+	public function test_delete_item_incorrect_active_publisher_logo(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$admin );
@@ -552,7 +550,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::permissions_check
 	 * @covers ::delete_item
 	 */
-	public function test_delete_item_non_existent_logo() {
+	public function test_delete_item_non_existent_logo(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$admin );
@@ -569,7 +567,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::permissions_check
 	 */
-	public function test_update_item_no_permission() {
+	public function test_update_item_no_permission(): void {
 		$this->controller->register();
 
 		$request  = new WP_REST_Request( WP_REST_Server::CREATABLE, '/web-stories/v1/publisher-logos/' . self::$attachment_id_1 );
@@ -581,7 +579,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::permissions_check
 	 * @covers ::update_item
 	 */
-	public function test_update_item_editor() {
+	public function test_update_item_editor(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
@@ -607,7 +605,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::update_item_permissions_check
 	 * @covers ::update_item
 	 */
-	public function test_update_item() {
+	public function test_update_item(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$admin );
@@ -642,7 +640,7 @@ class Publisher_Logos_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::update_item_permissions_check
 	 * @covers ::update_item
 	 */
-	public function test_update_item_non_existent_logo() {
+	public function test_update_item_non_existent_logo(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$admin );

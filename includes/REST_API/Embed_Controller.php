@@ -2,10 +2,10 @@
 /**
  * Class Embed_Controller
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -26,11 +26,11 @@
 
 namespace Google\Web_Stories\REST_API;
 
+use DOMElement;
 use DOMNodeList;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Story_Post_Type;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
-use DOMElement;
 use WP_Error;
 use WP_Http;
 use WP_Network;
@@ -87,7 +87,7 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @return void
 	 */
-	public function register_routes() {
+	public function register_routes(): void {
 		register_rest_route(
 			$this->namespace,
 			'/' . $this->rest_base,
@@ -117,7 +117,6 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 * @since 1.0.0
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
-	 *
 	 * @return WP_REST_Response|WP_Error Response object on success, or WP_Error object on failure.
 	 */
 	public function get_proxy_item( $request ) {
@@ -130,7 +129,7 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 		$url = urldecode( untrailingslashit( $url ) );
 
 		if ( empty( $url ) ) {
-			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
+			return new \WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
 		}
 
 		/**
@@ -146,7 +145,7 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 
 		$data = get_transient( $cache_key );
 
-		if ( is_string( $data ) && ! empty( $data ) ) {
+		if ( \is_string( $data ) && ! empty( $data ) ) {
 			/**
 			 * Decoded cached embed data.
 			 *
@@ -188,19 +187,19 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 
 		if ( WP_Http::OK !== wp_remote_retrieve_response_code( $response ) ) {
 			// Not saving the error response to cache since the error might be temporary.
-			return new WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
+			return new \WP_Error( 'rest_invalid_url', __( 'Invalid URL', 'web-stories' ), [ 'status' => 404 ] );
 		}
 
 		$html = wp_remote_retrieve_body( $response );
 
 		if ( ! $html ) {
-			return new WP_Error( 'rest_invalid_story', __( 'URL is not a story', 'web-stories' ), [ 'status' => 404 ] );
+			return new \WP_Error( 'rest_invalid_story', __( 'URL is not a story', 'web-stories' ), [ 'status' => 404 ] );
 		}
 
 		$data = $this->get_data_from_document( $html );
 
 		if ( ! $data ) {
-			return new WP_Error( 'rest_invalid_story', __( 'URL is not a story', 'web-stories' ), [ 'status' => 404 ] );
+			return new \WP_Error( 'rest_invalid_story', __( 'URL is not a story', 'web-stories' ), [ 'status' => 404 ] );
 		}
 
 		$response = $this->prepare_item_for_response( $data, $request );
@@ -216,7 +215,6 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 * @since 1.0.0
 	 *
 	 * @param string $url  The URL that should be inspected for metadata.
-	 *
 	 * @return array|false Story metadata if the URL does belong to the current site. False otherwise.
 	 */
 	private function get_data_from_post( $url ) {
@@ -238,15 +236,15 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
 	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
 	 *
+	 * @since 1.2.0
+	 *
 	 * @see get_oembed_response_data_for_url
 	 * @see url_to_postid
-	 *
-	 * @since 1.2.0
 	 *
 	 * @param string $url Permalink to check.
 	 * @return WP_Post|null Post object on success, null otherwise.
 	 */
-	private function url_to_post( $url ) {
+	private function url_to_post( $url ): ?WP_Post {
 		$post          = null;
 		$switched_blog = false;
 
@@ -284,7 +282,7 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 				// This differs from the logic in get_oembed_response_data_for_url() which does not do this.
 				// TODO: Investigate possible core bug in get_oembed_response_data_for_url()?
 				$path    = explode( '/', ltrim( $url_parts['path'], '/' ) );
-				$path    = count( $path ) > 2 ? reset( $path ) : false;
+				$path    = \count( $path ) > 2 ? reset( $path ) : false;
 				$network = get_network();
 				if ( $path && $network instanceof WP_Network ) {
 					$qv['path'] = $network->path . $path . '/';
@@ -375,7 +373,6 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 * @since 1.0.0
 	 *
 	 * @param string $html HTML document markup.
-	 *
 	 * @return array|false Response data or false if document is not a story.
 	 */
 	private function get_data_from_document( $html ) {
@@ -407,7 +404,6 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @param DOMNodeList<DOMElement>|false $query XPath query result.
 	 * @param string                        $attribute Attribute name.
-	 *
 	 * @return string|false Attribute content on success, false otherwise.
 	 */
 	protected function get_dom_attribute_content( $query, string $attribute ) {
@@ -436,7 +432,6 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @param array|false     $embed Embed value, default to false is not set.
 	 * @param WP_REST_Request $request Request object.
-	 *
 	 * @return WP_REST_Response|WP_Error Response object.
 	 */
 	public function prepare_item_for_response( $embed, $request ) {
@@ -445,7 +440,7 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 
 		$data = [];
 
-		if ( is_array( $embed ) ) {
+		if ( \is_array( $embed ) ) {
 			$check_fields = array_keys( $embed );
 			foreach ( $check_fields as $check_field ) {
 				if ( rest_is_field_included( $check_field, $fields ) ) {
@@ -512,7 +507,7 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 */
 	public function get_proxy_item_permissions_check() {
 		if ( ! $this->story_post_type->has_cap( 'edit_posts' ) ) {
-			return new WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to make proxied embed requests.', 'web-stories' ), [ 'status' => rest_authorization_required_code() ] );
+			return new \WP_Error( 'rest_forbidden', __( 'Sorry, you are not allowed to make proxied embed requests.', 'web-stories' ), [ 'status' => rest_authorization_required_code() ] );
 		}
 
 		return true;

@@ -23,13 +23,12 @@ use Google\Web_Stories\Tests\Integration\TestCase;
  * Class Remove_Unneeded_Attachment_Meta
  *
  * @coversDefaultClass \Google\Web_Stories\Migrations\Remove_Unneeded_Attachment_Meta
-*
  */
 class Remove_Unneeded_Attachment_Meta extends TestCase {
 	/**
 	 * @covers ::migrate
 	 */
-	public function test_migrate() {
+	public function test_migrate(): void {
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',

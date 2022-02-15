@@ -20,6 +20,7 @@
 import { ThemeProvider } from 'styled-components';
 import PropTypes from 'prop-types';
 import { PAGE_WIDTH, PAGE_RATIO } from '@googleforcreators/units';
+import { TransformProvider, useTransform } from '@googleforcreators/transform';
 
 /**
  * Internal dependencies
@@ -30,7 +31,6 @@ import { CanvasProvider } from '../../../app/canvas';
 import LayoutContext from '../../../app/layout/context';
 import ConfigProvider from '../../../app/config/configProvider';
 import StoryContext from '../../../app/story/context';
-import { TransformProvider, useTransform } from '../../transform';
 import theme from '../../../theme';
 import useEditingElement from '../../../app/canvas/useEditingElement';
 
@@ -65,6 +65,13 @@ export function TestFrameElement({
       selectedElements: [],
       selectedElementIds: [],
       ...(inputStoryContext && inputStoryContext.state),
+      currentPage: {
+        ...(inputStoryContext.state?.currentPage || {}),
+        elements: [
+          element,
+          ...(inputStoryContext.state?.currentPage?.elements || []),
+        ],
+      },
     },
     actions: {
       toggleElementInSelection: () => {},
@@ -87,7 +94,7 @@ export function TestFrameElement({
             <CanvasProvider>
               <TransformProvider>
                 <WithRefs refs={refs}>
-                  <FrameElement element={element} />
+                  <FrameElement id={element.id} />
                 </WithRefs>
               </TransformProvider>
             </CanvasProvider>

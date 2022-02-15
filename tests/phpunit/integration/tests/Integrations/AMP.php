@@ -30,7 +30,7 @@ class AMP extends DependencyInjectedTestCase {
 	 */
 	private $instance;
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\Integrations\AMP::class );
@@ -39,7 +39,7 @@ class AMP extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$this->instance->register();
 
 		$this->assertSame( 10, has_filter( 'option_amp-options', [ $this->instance, 'filter_amp_options' ] ) );
@@ -58,14 +58,14 @@ class AMP extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::filter_amp_options
 	 */
-	public function test_filter_amp_options_if_not_requested_post_type() {
+	public function test_filter_amp_options_if_not_requested_post_type(): void {
 		$this->assertEqualSets( [], $this->instance->filter_amp_options( [] ) );
 	}
 
 	/**
 	 * @covers ::filter_amp_options
 	 */
-	public function test_filter_amp_options() {
+	public function test_filter_amp_options(): void {
 		$GLOBALS['current_screen'] = convert_to_screen( Story_Post_Type::POST_TYPE_SLUG );
 
 		$before = [
@@ -88,7 +88,7 @@ class AMP extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::filter_supportable_post_types
 	 */
-	public function test_filter_supportable_post_types_if_not_requested_post_type() {
+	public function test_filter_supportable_post_types_if_not_requested_post_type(): void {
 
 		$this->assertEqualSets( [], $this->instance->filter_supportable_post_types( [ Story_Post_Type::POST_TYPE_SLUG ] ) );
 	}
@@ -96,7 +96,7 @@ class AMP extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::filter_supportable_post_types
 	 */
-	public function test_filter_supportable_post_types() {
+	public function test_filter_supportable_post_types(): void {
 		$GLOBALS['current_screen'] = convert_to_screen( Story_Post_Type::POST_TYPE_SLUG );
 
 		$actual = $this->instance->filter_supportable_post_types( [] );
@@ -142,7 +142,7 @@ class AMP extends DependencyInjectedTestCase {
 	 * @covers ::filter_amp_to_amp_linking_element_excluded
 	 * @dataProvider data_test_filter_amp_to_amp_linking_element_excluded
 	 */
-	public function test_filter_amp_to_amp_linking_element_excluded( $args, $expected ) {
+	public function test_filter_amp_to_amp_linking_element_excluded( $args, $expected ): void {
 		$actual = $this->instance->filter_amp_to_amp_linking_element_excluded( ...$args );
 		$this->assertSame( $actual, $expected );
 	}

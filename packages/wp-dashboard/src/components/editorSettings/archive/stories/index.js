@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,8 +17,6 @@
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
-import { select } from '@storybook/addon-knobs';
 import { FlagsProvider } from 'flagged';
 
 /**
@@ -30,15 +28,26 @@ import { ARCHIVE_TYPE } from '../../../../constants';
 export default {
   title: 'Dashboard/Views/EditorSettings/Archive',
   component: ArchiveSettings,
+  argTypes: {
+    archive: {
+      options: Object.values(ARCHIVE_TYPE),
+      control: 'radio',
+    },
+    updateSettings: { action: 'updateSettings fired' },
+  },
+  parameters: {
+    controls: {
+      include: ['updateSettings', 'archive'],
+    },
+  },
 };
 
-export const _default = () => {
+export const _default = (args) => {
   return (
     <FlagsProvider>
       <ArchiveSettings
-        archive={select('archive', Object.values(ARCHIVE_TYPE))}
         archiveURL={'http://www.example.com/web-stories'}
-        updateSettings={action('updateSettings fired')}
+        defaultArchiveURL={'http://www.example.com/web-stories'}
         archivePageId={0}
         getPageById={() => ({ value: 1, label: 'Page 1' })}
         searchPages={() => [
@@ -46,6 +55,7 @@ export const _default = () => {
           { value: 1, label: 'Page 2' },
           { value: 1, label: 'Page 3' },
         ]}
+        {...args}
       />
     </FlagsProvider>
   );

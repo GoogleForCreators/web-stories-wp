@@ -17,8 +17,8 @@
 
 namespace Google\Web_Stories\Tests\Integration\Integrations;
 
-use Google\Web_Stories\Tests\Integration\TestCase;
 use Google\Web_Stories\Integrations\New_Relic as New_Relic_Integration;
+use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
  * @coversDefaultClass \Google\Web_Stories\Integrations\New_Relic
@@ -27,7 +27,7 @@ class New_Relic extends TestCase {
 	/**
 	 * @covers ::is_needed
 	 */
-	public function test_is_needed() {
+	public function test_is_needed(): void {
 		$this->assertSame( function_exists( 'newrelic_disable_autorum' ), New_Relic_Integration::is_needed() );
 	}
 }

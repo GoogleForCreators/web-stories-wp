@@ -2,10 +2,10 @@
 /**
  * Class Add_Media_Source_Editor
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -24,15 +24,12 @@
  * limitations under the License.
  */
 
-
 namespace Google\Web_Stories\Migrations;
 
 use Google\Web_Stories\Media\Media_Source_Taxonomy;
 
 /**
  * Class Add_Media_Source
- *
- * @package Google\Web_Stories\Migrations
  */
 abstract class Add_Media_Source extends Migrate_Base {
 	/**
@@ -60,7 +57,7 @@ abstract class Add_Media_Source extends Migrate_Base {
 	 *
 	 * @return void
 	 */
-	public function migrate() {
+	public function migrate(): void {
 		wp_insert_term( $this->get_term(), $this->media_source_taxonomy->get_taxonomy_slug() );
 	}
 

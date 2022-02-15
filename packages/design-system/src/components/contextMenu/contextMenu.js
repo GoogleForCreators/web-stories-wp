@@ -34,19 +34,24 @@ const ContextMenu = ({
   children,
   id,
   isAlwaysVisible,
-  isRTL,
-  isIconMenu,
+  isIconMenu = false,
+  isHorizontal = false,
   isInline = false,
   onDismiss = noop,
   ...props
 }) => {
+  const { isRTL } = props;
   const Wrapper = useMemo(
     () => (animate ? AnimationContainer : SmartPopover),
     [animate]
   );
 
   return (
-    <ContextMenuProvider isIconMenu={isIconMenu} onDismiss={onDismiss}>
+    <ContextMenuProvider
+      isIconMenu={isIconMenu}
+      isHorizontal={isHorizontal}
+      onDismiss={onDismiss}
+    >
       <Wrapper
         aria-label={ariaLabel}
         isInline={isInline}
@@ -58,7 +63,7 @@ const ContextMenu = ({
           {children}
         </Menu>
         {/* <AnimationContainer /> has a <Shadow />. Don't double the shadow. */}
-        {!animate && <Shadow />}
+        {!animate && <Shadow $isHorizontal={isHorizontal} />}
       </Wrapper>
     </ContextMenuProvider>
   );
@@ -73,6 +78,8 @@ ContextMenu.propTypes = {
   onDismiss: PropTypes.func,
   isAlwaysVisible: PropTypes.bool,
   isRTL: PropTypes.bool,
+  isInline: PropTypes.bool,
+  isHorizontal: PropTypes.bool,
 };
 
 export default ContextMenu;

@@ -2,10 +2,10 @@
 /**
  * PluginActionLinks class.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -30,16 +30,14 @@ use Google\Web_Stories\Tests\Integration\TestCase;
 
 /**
  * Class PluginActionLinks
- * @package Google\Web_Stories\Tests\Admin
  *
  * @coversDefaultClass \Google\Web_Stories\Admin\PluginActionLinks
- *
  */
 class PluginActionLinks extends TestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$instance = new \Google\Web_Stories\Admin\PluginActionLinks();
 		$instance->register();
 
@@ -53,7 +51,7 @@ class PluginActionLinks extends TestCase {
 	 *
 	 * @covers ::action_links()
 	 */
-	public function test_action_links() {
+	public function test_action_links(): void {
 
 		$initial_meta = [
 			'Link 1',

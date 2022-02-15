@@ -19,8 +19,6 @@
  */
 import { useState } from '@googleforcreators/react';
 import styled from 'styled-components';
-import { action } from '@storybook/addon-actions';
-import { text } from '@storybook/addon-knobs';
 
 /**
  * Internal dependencies
@@ -32,6 +30,13 @@ import { Headline } from '../../..';
 export default {
   title: 'DesignSystem/Components/HexInput',
   component: HexInput,
+  args: {
+    label: 'Normal',
+    hint: 'Hint',
+  },
+  argTypes: {
+    handleOnChange: { action: 'on change' },
+  },
 };
 
 const Container = styled.div`
@@ -54,7 +59,8 @@ const Row = styled.div`
   }
 `;
 
-export const _default = () => {
+// eslint-disable-next-line react/prop-types
+export const _default = ({ handleOnChange, ...args }) => {
   const [inputState, setInputState] = useState({
     oneLight: {
       color: {
@@ -73,13 +79,13 @@ export const _default = () => {
   });
 
   const handleChange = (event) => {
+    handleOnChange(event);
     if (!event?.target) {
       return;
     }
     const name = event.target.name;
     const value = event.target.value;
 
-    action(event.target.name)(event);
     setInputState((prevState) => ({
       ...prevState,
       [name]: value,
@@ -98,9 +104,8 @@ export const _default = () => {
             name="oneLight"
             value={inputState.oneLight}
             onChange={handleChange}
-            label={text('Input 1 Label', 'Normal')}
-            hint={text('Hint', 'Hint')}
             placeholder="placeholder"
+            {...args}
           />
         </Row>
       </Container>
@@ -113,9 +118,8 @@ export const _default = () => {
               name="oneDark"
               value={inputState.oneDark}
               onChange={handleChange}
-              label={text('Input 1 Label', 'Normal')}
-              hint={text('Hint', 'Hint')}
               placeholder="placeholder"
+              {...args}
             />
           </Row>
         </Container>

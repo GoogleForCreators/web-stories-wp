@@ -18,7 +18,7 @@
 // Ad unit codes  (the "amp_story_dfp_example" part) can be up to 100 characters in length.
 // Only letters, numbers, underscores, hyphens, periods, asterisks, forward slashes, backslashes, exclamations, left angle brackets, colons and parentheses are allowed.
 const adManagerSlotIdFormatRegex =
-  /^\/\d+(,\d+)?(\/[\w\-.*/\\![:()]{1,99}[^/])*$/;
+  /^\/\d+(,\d+)?(\/[\w\d_\-.*\\!<:()]{1,99}[^/])*$/;
 
 export default function validateAdManagerSlotIdFormat(value = '') {
   return Boolean(value.toLowerCase().match(adManagerSlotIdFormatRegex));

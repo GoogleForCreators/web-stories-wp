@@ -2,10 +2,10 @@
 /**
  * Class Unify_Color_Presets
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -24,15 +24,12 @@
  * limitations under the License.
  */
 
-
 namespace Google\Web_Stories\Migrations;
 
 use Google\Web_Stories\Story_Post_Type;
 
 /**
  * Class Unify_Color_Presets
- *
- * @package Google\Web_Stories\Migrations
  */
 class Unify_Color_Presets extends Migrate_Base {
 
@@ -45,15 +42,15 @@ class Unify_Color_Presets extends Migrate_Base {
 	 *
 	 * @return void
 	 */
-	public function migrate() {
+	public function migrate(): void {
 		$style_presets = get_option( Story_Post_Type::STYLE_PRESETS_OPTION, false );
 		// Nothing to do if style presets don't exist.
-		if ( ! $style_presets || ! is_array( $style_presets ) ) {
+		if ( ! $style_presets || ! \is_array( $style_presets ) ) {
 			return;
 		}
 
 		// If either of these is not an array, something is incorrect.
-		if ( ! is_array( $style_presets['fillColors'] ) || ! is_array( $style_presets['textColors'] ) ) {
+		if ( ! \is_array( $style_presets['fillColors'] ) || ! \is_array( $style_presets['textColors'] ) ) {
 			return;
 		}
 

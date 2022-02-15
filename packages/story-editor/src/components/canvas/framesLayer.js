@@ -27,7 +27,7 @@ import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
  * Internal dependencies
  */
 import { useKeyDownEffect } from '@googleforcreators/design-system';
-import { DESIGN_SPACE_MARGIN } from '../../constants';
+import { DESIGN_SPACE_MARGIN, STABLE_ARRAY } from '../../constants';
 import {
   useStory,
   useCanvas,
@@ -45,7 +45,8 @@ const FramesPageArea = styled(PageArea)`
   pointer-events: initial;
 `;
 const marginRatio = 100 * (DESIGN_SPACE_MARGIN / PAGE_WIDTH);
-const DesignSpaceGuideline = styled.div`
+
+const DesignSpaceGuidelineBorder = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.border.negativePress};
   left: ${marginRatio}%;
   right: ${marginRatio}%;
@@ -57,28 +58,45 @@ const DesignSpaceGuideline = styled.div`
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
 `;
 
-function FramesLayer() {
-  const { currentPage, isAnimating } = useStory((state) => ({
-    currentPage: state.state.currentPage,
-    isAnimating: [
-      STORY_ANIMATION_STATE.PLAYING,
-      STORY_ANIMATION_STATE.SCRUBBING,
-    ].includes(state.state.animationState),
+function DesignSpaceGuideline() {
+  const setDesignSpaceGuideline = useCanvas(
+    ({ actions }) => actions.setDesignSpaceGuideline
+  );
+  const { isAnythingTransforming } = useTransform(({ state }) => ({
+    isAnythingTransforming: state.isAnythingTransforming,
   }));
-  const { setDesignSpaceGuideline } = useCanvas(
-    ({ actions: { setDesignSpaceGuideline } }) => ({
-      setDesignSpaceGuideline,
-    })
+
+  return (
+    <DesignSpaceGuidelineBorder
+      ref={setDesignSpaceGuideline}
+      isVisible={isAnythingTransforming}
+    />
+  );
+}
+
+function FramesLayer() {
+  // We are returning this directly because we want the elementIds array to be shallowly
+  // compared between re-renders. This allows element properties to update without re-rendering
+  // this top level component.
+  const elementIds = useStory(
+    ({ state }) =>
+      state.currentPage?.elements?.map((el) => el.id) || STABLE_ARRAY
+  );
+  const isAnimating = useStory(({ state }) =>
+    [STORY_ANIMATION_STATE.PLAYING, STORY_ANIMATION_STATE.SCRUBBING].includes(
+      state.animationState
+    )
   );
 
-  const { isAnythingTransforming } = useTransform((state) => ({
-    isAnythingTransforming: state.state.isAnythingTransforming,
-  }));
-
   const framesLayerRef = useRef(null);
+  // TODO: https://github.com/google/web-stories-wp/issues/10266
+  // refactor `useCanvasKeys`. This is the last hook causing extraneous re-renders in this component.
+  // - pulls most of state from useStory and only creates actions and attaches them to hot keys
+  // - extraneous re-renders in this component contribute only ~1ms to total re-render time,
+  //   so this is a high hanging fruit with little reward.
   useCanvasKeys(framesLayerRef);
 
-  const { onOpenMenu } = useRightClickMenu();
+  const onOpenMenu = useRightClickMenu((state) => state.onOpenMenu);
 
   const { setScrollOffset } = useLayout(({ actions: { setScrollOffset } }) => ({
     setScrollOffset,
@@ -114,14 +132,10 @@ function FramesLayer() {
           onContextMenu={onOpenMenu}
           onScroll={onScroll}
         >
-          {currentPage &&
-            currentPage.elements.map((element) => {
-              return <FrameElement key={element.id} element={element} />;
-            })}
-          <DesignSpaceGuideline
-            ref={setDesignSpaceGuideline}
-            isVisible={isAnythingTransforming}
-          />
+          {elementIds.map((id) => {
+            return <FrameElement key={id} id={id} />;
+          })}
+          <DesignSpaceGuideline />
         </FramesPageArea>
       )}
       <NavPrevArea>

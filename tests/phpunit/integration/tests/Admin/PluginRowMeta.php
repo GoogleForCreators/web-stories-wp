@@ -2,10 +2,10 @@
 /**
  * PluginRowMeta class.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -31,17 +31,14 @@ use Google\Web_Stories\Tests\Integration\TestCase;
 /**
  * Class PluginRowMeta
  *
- * @package Google\Web_Stories\Tests\Admin
- *
  * @coversDefaultClass \Google\Web_Stories\Admin\PluginRowMeta
- *
  */
 class PluginRowMeta extends TestCase {
 
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$instance = new \Google\Web_Stories\Admin\PluginRowMeta();
 		$instance->register();
 
@@ -53,7 +50,7 @@ class PluginRowMeta extends TestCase {
 	 *
 	 * @covers ::get_plugin_row_meta()
 	 */
-	public function test_get_plugin_row_meta() {
+	public function test_get_plugin_row_meta(): void {
 
 		$initial_meta = [
 			'Link 1',

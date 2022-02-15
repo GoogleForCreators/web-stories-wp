@@ -37,13 +37,29 @@ import {
 import { useKeyDownEffect } from '../keyboard';
 import { useContextMenu } from './contextMenuProvider';
 
+export const CONTEXT_MENU_WIDTH = 218;
+
 const MenuWrapper = styled.div(
   ({ theme }) => css`
-    padding: ${({ $isIconMenu }) => ($isIconMenu ? '4px 3px' : '8px 0')};
-    background-color: ${theme.colors.bg.primary};
-    border-radius: ${theme.borders.radius.small};
+    background-color: ${({ $isSecondary }) =>
+      $isSecondary ? theme.colors.bg.secondary : theme.colors.bg.primary};
+    border-radius: ${({ $isHorizontal }) =>
+      $isHorizontal ? theme.borders.radius.medium : theme.borders.radius.small};
     border: 1px solid ${theme.colors.border.disable};
-    width: ${({ $isIconMenu }) => ($isIconMenu ? 40 : 210)}px;
+    gap: 6px;
+    display: flex;
+    ${({ $isHorizontal, $isIconMenu }) =>
+      $isHorizontal
+        ? `
+          height: 52px;
+          padding: 7px 10px;
+          align-items: center;
+        `
+        : `
+          flex-direction: column;
+          width: ${$isIconMenu ? 40 : CONTEXT_MENU_WIDTH}px;
+          padding: ${$isIconMenu ? '4px 3px' : '8px 0'};
+        `}
 
     *:last-child {
       margin-bottom: 0;
@@ -51,17 +67,28 @@ const MenuWrapper = styled.div(
   `
 );
 MenuWrapper.propTypes = {
-  isIconMenu: PropTypes.bool,
+  $isIconMenu: PropTypes.bool,
+  $isHorizontal: PropTypes.bool,
 };
 
 /**
- * Extracts all focusable children from an html tree.
+ * Extracts all focusable children from an html tree, optionally ignoring items from submenu.
  *
  * @param {HTMLElement} parent The parent to search
+ * @param {boolean} isSubMenu If we're searching from submenu.
  * @return {Array.<HTMLElement>} List of focusable elements
  */
-function getFocusableChildren(parent) {
-  return Array.from(parent.querySelectorAll(FOCUSABLE_SELECTORS.join(', ')));
+function getFocusableChildren(parent, isSubMenu) {
+  const allButtons = Array.from(
+    parent.querySelectorAll(FOCUSABLE_SELECTORS.join(', '))
+  );
+  if (isSubMenu) {
+    return allButtons;
+  }
+  // Skip considering the submenu, and the submenu items.
+  return allButtons.filter(
+    (elem) => !elem.matches('[role="menu"], [role="menu"] [role="menu"] *')
+  );
 }
 
 const Menu = ({
@@ -69,18 +96,23 @@ const Menu = ({
   disableControlledTabNavigation,
   isOpen,
   onFocus = noop,
+  isSubMenu = false,
+  isSecondary = false,
+  parentMenuRef,
+  onCloseSubMenu = noop,
   ...props
 }) => {
-  const { focusedId, isIconMenu, onDismiss, setFocusedId } = useContextMenu(
-    ({ state, actions }) => ({
+  const { isRTL } = props;
+  const { focusedId, isIconMenu, isHorizontal, onDismiss, setFocusedId } =
+    useContextMenu(({ state, actions }) => ({
       focusedId: state.focusedId,
       isIconMenu: state.isIconMenu,
+      isHorizontal: state.isHorizontal,
       onDismiss: actions.onDismiss,
       setFocusedId: actions.setFocusedId,
-    })
-  );
+    }));
   const mouseDownOutsideRef = useMouseDownOutsideRef(() => {
-    isOpen && onDismiss();
+    isOpen && !isSubMenu && onDismiss();
   });
   const menuRef = useRef(null);
   const composedListRef = useCombinedRefs(mouseDownOutsideRef, menuRef);
@@ -100,6 +132,7 @@ const Menu = ({
 
   /**
    * Allow navigation of the list using the UP and DOWN arrow keys.
+   * Allow navigation between the parent menu and submenu with LEFT and RIGHT arrow keys.
    * Close menu if ESCAPE is pressed.
    *
    * @param {Event} event The synthetic event
@@ -113,33 +146,64 @@ const Menu = ({
         return;
       }
 
-      const focusableChildren = getFocusableChildren(menuRef.current);
+      const focusableChildren = getFocusableChildren(
+        menuRef.current,
+        isSubMenu
+      );
 
-      const prevIndex = focusableChildren.findIndex(
+      let prevIndex = focusableChildren.findIndex(
         (element) => element.id === focusedId
       );
 
       if (prevIndex === -1 && focusableChildren.length) {
         setFocusedId(focusableChildren[0].id);
+        prevIndex = 0;
+      }
+
+      const keyBackward = isHorizontal ? KEYS.LEFT : KEYS.UP;
+      const keyForward = isHorizontal ? KEYS.RIGHT : KEYS.DOWN;
+
+      // If we're moving through this menu (up/down in vertical, left/right in horizontal).
+      if ([keyBackward, keyForward].includes(key)) {
+        const isAscending = keyBackward === key;
+        let newIndex = prevIndex + (isAscending ? -1 : 1);
+
+        if (newIndex === -1) {
+          newIndex = focusableChildren.length - 1;
+        }
+
+        // Otherwise move to the next element or loop around the list.
+        const newSelectedElement =
+          focusableChildren[newIndex % focusableChildren.length];
+
+        newSelectedElement?.focus();
+        setFocusedId(newSelectedElement?.id || -1);
         return;
       }
 
-      const isAscending = [KEYS.UP, KEYS.LEFT].includes(key);
-      let newIndex = prevIndex + (isAscending ? -1 : 1);
+      // The direction to move out of a submenu depends on horizontal/vertical and RTL/LTR
+      const keyOut = isHorizontal ? KEYS.UP : isRTL ? KEYS.RIGHT : KEYS.LEFT;
 
-      if (newIndex === -1) {
-        newIndex = focusableChildren.length - 1;
+      // Maybe move from submenu to parent menu.
+      if (isSubMenu && keyOut === key) {
+        // Get the button with expanded popup.
+        const parentButton = parentMenuRef.current.querySelector(
+          'button[aria-expanded="true"]'
+        );
+        parentButton?.focus();
+        onCloseSubMenu();
       }
-
-      // Otherwise move to the next element or loop around the list.
-      const newSelectedElement =
-        focusableChildren[newIndex % focusableChildren.length];
-
-      newSelectedElement?.focus();
-      setFocusedId(newSelectedElement?.id || -1);
-      return;
     },
-    [focusedId, onDismiss, setFocusedId]
+    [
+      focusedId,
+      onDismiss,
+      setFocusedId,
+      isRTL,
+      isSubMenu,
+      isHorizontal,
+      onCloseSubMenu,
+      parentMenuRef,
+    ]
   );
 
   // focus first focusable element on open
@@ -177,6 +241,8 @@ const Menu = ({
       data-testid="context-menu-list"
       role="menu"
       $isIconMenu={isIconMenu}
+      $isHorizontal={isHorizontal}
+      $isSecondary={isSecondary}
       // Tabbing out from the list while using 'shift' would
       // focus the list element. Should just travel back to the previous
       // focusable element in the DOM
@@ -194,6 +260,11 @@ export const MenuPropTypes = {
   onFocus: PropTypes.func,
   disableControlledTabNavigation: PropTypes.bool,
   isOpen: PropTypes.bool,
+  onCloseSubMenu: PropTypes.func,
+  isSubMenu: PropTypes.bool,
+  isSecondary: PropTypes.bool,
+  isRTL: PropTypes.bool,
+  parentMenuRef: PropTypes.object,
 };
 
 Menu.propTypes = MenuPropTypes;

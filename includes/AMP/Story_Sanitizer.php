@@ -2,10 +2,10 @@
 /**
  * Class Story_Sanitizer.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -26,8 +26,8 @@
 
 namespace Google\Web_Stories\AMP;
 
-use Google\Web_Stories_Dependencies\AMP_Base_Sanitizer;
 use Google\Web_Stories\AMP\Traits\Sanitization_Utils;
+use Google\Web_Stories_Dependencies\AMP_Base_Sanitizer;
 
 /**
  * Story sanitizer.
@@ -46,7 +46,7 @@ class Story_Sanitizer extends AMP_Base_Sanitizer {
 	 *
 	 * @return void
 	 */
-	public function sanitize() {
+	public function sanitize(): void {
 		$this->transform_html_start_tag( $this->dom );
 		$this->transform_a_tags( $this->dom );
 		$this->add_publisher_logo( $this->dom, $this->args['publisher_logo'] );

@@ -2,10 +2,10 @@
 /**
  * Class Poster
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -26,30 +26,24 @@
 
 namespace Google\Web_Stories\Media\Video;
 
-use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Infrastructure\HasMeta;
 use Google\Web_Stories\Media\Media_Source_Taxonomy;
+use Google\Web_Stories\Service_Base;
 use WP_Post;
 
 /**
  * Class Poster
- *
- * @package Google\Web_Stories\Media\Video
  */
 class Poster extends Service_Base implements HasMeta {
 	/**
 	 * The poster post meta key.
-	 *
-	 * @var string
 	 */
-	const POSTER_POST_META_KEY = 'web_stories_is_poster';
+	public const POSTER_POST_META_KEY = 'web_stories_is_poster';
 
 	/**
 	 * The poster id post meta key.
-	 *
-	 * @var string
 	 */
-	const POSTER_ID_POST_META_KEY = 'web_stories_poster_id';
+	public const POSTER_ID_POST_META_KEY = 'web_stories_poster_id';
 
 	/**
 	 * Media_Source_Taxonomy instance.
@@ -76,7 +70,7 @@ class Poster extends Service_Base implements HasMeta {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		$this->register_meta();
 		add_action( 'rest_api_init', [ $this, 'rest_api_init' ] );
 		add_action( 'delete_attachment', [ $this, 'delete_video_poster' ] );
@@ -90,7 +84,7 @@ class Poster extends Service_Base implements HasMeta {
 	 *
 	 * @return void
 	 */
-	public function register_meta() {
+	public function register_meta(): void {
 		register_meta(
 			'post',
 			self::POSTER_ID_POST_META_KEY,
@@ -113,7 +107,7 @@ class Poster extends Service_Base implements HasMeta {
 	 *
 	 * @return void
 	 */
-	public function rest_api_init() {
+	public function rest_api_init(): void {
 		register_rest_field(
 			'attachment',
 			'featured_media',
@@ -161,7 +155,6 @@ class Poster extends Service_Base implements HasMeta {
 	 * @since 1.0.0
 	 *
 	 * @param array $prepared Prepared data before response.
-	 *
 	 * @return array
 	 */
 	public function get_callback_featured_media_src( $prepared ): array {
@@ -181,11 +174,10 @@ class Poster extends Service_Base implements HasMeta {
 	 *
 	 * @param array|mixed $response   Array of prepared attachment data.
 	 * @param WP_Post     $attachment Attachment object.
-	 *
 	 * @return array|mixed $response;
 	 */
 	public function wp_prepare_attachment_for_js( $response, $attachment ) {
-		if ( ! is_array( $response ) ) {
+		if ( ! \is_array( $response ) ) {
 			return $response;
 		}
 		if ( 'video' === $response['type'] ) {
@@ -208,7 +200,6 @@ class Poster extends Service_Base implements HasMeta {
 	 * @since 1.0.0
 	 *
 	 * @param int $thumbnail_id Attachment ID.
-	 *
 	 * @return array
 	 */
 	public function get_thumbnail_data( int $thumbnail_id ): array {
@@ -218,8 +209,8 @@ class Poster extends Service_Base implements HasMeta {
 			return [];
 		}
 
-		list ( $src, $width, $height ) = $img_src;
-		$generated                     = $this->is_poster( $thumbnail_id );
+		[ $src, $width, $height ] = $img_src;
+		$generated                = $this->is_poster( $thumbnail_id );
 		return compact( 'src', 'width', 'height', 'generated' );
 	}
 
@@ -232,10 +223,9 @@ class Poster extends Service_Base implements HasMeta {
 	 * @since 1.0.0
 	 *
 	 * @param int $attachment_id ID of the attachment to be deleted.
-	 *
 	 * @return void
 	 */
-	public function delete_video_poster( int $attachment_id ) {
+	public function delete_video_poster( int $attachment_id ): void {
 		/**
 		 * Post ID.
 		 *
@@ -260,15 +250,14 @@ class Poster extends Service_Base implements HasMeta {
 	 * @since 1.2.1
 	 *
 	 * @param int $post_id Attachment ID.
-	 *
 	 * @return bool
 	 */
 	protected function is_poster( int $post_id ): bool {
 		$terms = get_the_terms( $post_id, $this->media_source_taxonomy->get_taxonomy_slug() );
-		if ( is_array( $terms ) && ! empty( $terms ) ) {
+		if ( \is_array( $terms ) && ! empty( $terms ) ) {
 			$slugs = wp_list_pluck( $terms, 'slug' );
 
-			return in_array( 'poster-generation', $slugs, true );
+			return \in_array( 'poster-generation', $slugs, true );
 		}
 
 		return false;

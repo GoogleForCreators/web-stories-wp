@@ -2,10 +2,10 @@
 /**
  * Class Image
  *
- * @package   Google\Web_Stories\Renderer\Story
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -24,15 +24,12 @@
  * limitations under the License.
  */
 
-
 namespace Google\Web_Stories\Renderer\Story;
 
 use Google\Web_Stories\Model\Story;
 
 /**
  * Class Image
- *
- * @package Google\Web_Stories\Renderer\Story
  */
 class Image {
 	/**
@@ -60,7 +57,6 @@ class Image {
 	 * @since 1.0.0
 	 *
 	 * @param array $args Array of Argument to render.
-	 *
 	 * @return string Rendered block type output.
 	 */
 	public function render( array $args = [] ): string {
@@ -81,11 +77,13 @@ class Image {
 				<?php
 				if ( ! empty( $this->story->get_poster_portrait() ) ) {
 					printf(
-						'<img src="%1$s" width="%2$d" height="%3$d" alt="%4$s" />',
+						'<img src="%1$s" width="%2$d" height="%3$d" alt="%4$s" srcset="%5$s" sizes="%6$s"/>',
 						esc_url( $this->story->get_poster_portrait() ),
 						absint( $args['width'] ),
 						absint( $args['height'] ),
-						esc_attr( $this->story->get_title() )
+						esc_attr( $this->story->get_title() ),
+						esc_attr( $this->story->get_poster_srcset() ),
+						esc_attr( $this->story->get_poster_sizes() )
 					);
 				} else {
 					echo esc_html( $this->story->get_title() );

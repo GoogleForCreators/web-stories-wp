@@ -2,10 +2,10 @@
 /**
  * Uninstall helpers.
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -28,14 +28,14 @@ namespace Google\Web_Stories;
 
 use Google\Web_Stories\Media\Base_Color;
 use Google\Web_Stories\Media\Blurhash;
+use Google\Web_Stories\Media\Media_Source_Taxonomy;
+use Google\Web_Stories\Media\Video\Muting;
+use Google\Web_Stories\Media\Video\Optimization;
+use Google\Web_Stories\Media\Video\Poster;
+use Google\Web_Stories\Media\Video\Trimming;
 use Google\Web_Stories\Taxonomy\Category_Taxonomy;
 use Google\Web_Stories\Taxonomy\Tag_Taxonomy;
 use Google\Web_Stories\User\Preferences;
-use Google\Web_Stories\Media\Media_Source_Taxonomy;
-use Google\Web_Stories\Media\Video\Optimization;
-use Google\Web_Stories\Media\Video\Muting;
-use Google\Web_Stories\Media\Video\Poster;
-use Google\Web_Stories\Media\Video\Trimming;
 use WP_Term;
 use WP_Term_Query;
 
@@ -46,7 +46,7 @@ use WP_Term_Query;
  *
  * @return void
  */
-function delete_options() {
+function delete_options(): void {
 	global $wpdb;
 
 	$prefix = 'web_stories\_%';
@@ -85,7 +85,7 @@ function delete_options() {
  *
  * @return void
  */
-function delete_site_options() {
+function delete_site_options(): void {
 	global $wpdb;
 
 	$prefix = 'web_stories\_%';
@@ -125,7 +125,7 @@ function delete_site_options() {
  *
  * @return void
  */
-function delete_stories_post_meta() {
+function delete_stories_post_meta(): void {
 	delete_post_meta_by_key( Base_Color::BASE_COLOR_POST_META_KEY );
 	delete_post_meta_by_key( Poster::POSTER_POST_META_KEY );
 	delete_post_meta_by_key( Poster::POSTER_ID_POST_META_KEY );
@@ -143,7 +143,7 @@ function delete_stories_post_meta() {
  *
  * @return void
  */
-function delete_stories_user_meta() {
+function delete_stories_user_meta(): void {
 	delete_metadata( 'user', 0, Preferences::OPTIN_META_KEY, '', true );
 	delete_metadata( 'user', 0, Preferences::ONBOARDING_META_KEY, '', true );
 	delete_metadata( 'user', 0, Preferences::MEDIA_OPTIMIZATION_META_KEY, '', true );
@@ -156,7 +156,7 @@ function delete_stories_user_meta() {
  *
  * @return void
  */
-function delete_posts() {
+function delete_posts(): void {
 	// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.get_posts_get_posts -- False positive.
 	$cpt_posts = get_posts(
 		[
@@ -182,7 +182,7 @@ function delete_posts() {
  *
  * @return void
  */
-function delete_terms() {
+function delete_terms(): void {
 	$taxonomies = [];
 
 	$settings  = new Settings();
@@ -200,7 +200,7 @@ function delete_terms() {
 		]
 	);
 
-	if ( empty( $terms ) || ! is_array( $terms ) ) {
+	if ( empty( $terms ) || ! \is_array( $terms ) ) {
 		return;
 	}
 
@@ -218,7 +218,7 @@ function delete_terms() {
  *
  * @return void
  */
-function remove_caps() {
+function remove_caps(): void {
 	$capabilities = Services::get( 'user.capabilities' );
 	$capabilities->remove_caps_from_roles();
 }
@@ -230,7 +230,7 @@ function remove_caps() {
  *
  * @return void
  */
-function delete_site() {
+function delete_site(): void {
 	delete_options();
 	delete_posts();
 	delete_terms();

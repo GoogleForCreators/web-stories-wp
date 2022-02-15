@@ -26,7 +26,7 @@ class KSES extends DependencyInjectedTestCase {
 	 */
 	private $instance;
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\KSES::class );
@@ -34,27 +34,27 @@ class KSES extends DependencyInjectedTestCase {
 	/**
 	 * Testing the safecss_filter_attr() function.
 	 *
-	 * @dataProvider data_test_safecss_filter_attr
-	 * @covers ::safecss_filter_attr
-	 *
 	 * @param string $css      A string of CSS rules.
 	 * @param string $expected Expected string of CSS rules.
+	 *
+	 * @dataProvider data_test_safecss_filter_attr
+	 * @covers ::safecss_filter_attr
 	 */
-	public function test_safecss_filter_attr( $css, $expected ) {
+	public function test_safecss_filter_attr( $css, $expected ): void {
 		$this->assertSame( $expected, $this->instance->safecss_filter_attr( $css ) );
 	}
 
 	/**
 	 * Testing the safecss_filter_attr() function with transform attributes.
 	 *
+	 * @param string $css      A string of CSS rules.
+	 * @param string $expected Expected string of CSS rules.
+	 *
 	 * @dataProvider data_test_safecss_filter_attr
 	 * @dataProvider data_test_safecss_filter_attr_extended
 	 * @covers ::safecss_filter_attr
-	 *
-	 * @param string $css      A string of CSS rules.
-	 * @param string $expected Expected string of CSS rules.
 	 */
-	public function test_safecss_filter_attr_extended( $css, $expected ) {
+	public function test_safecss_filter_attr_extended( $css, $expected ): void {
 		add_filter( 'safe_style_css', [ $this->instance, 'filter_safe_style_css' ] );
 		$actual = $this->instance->safecss_filter_attr( $css );
 		remove_filter( 'safe_style_css', [ $this->instance, 'filter_safe_style_css' ] );
@@ -67,7 +67,7 @@ class KSES extends DependencyInjectedTestCase {
 	 *
 	 * @covers ::array_merge_recursive_distinct
 	 */
-	public function test_array_merge_recursive_distinct() {
+	public function test_array_merge_recursive_distinct(): void {
 		$input_array1 = [
 			'one' => [
 				'one-one' => [],
@@ -370,15 +370,15 @@ class KSES extends DependencyInjectedTestCase {
 	/**
 	 * Testing the filter_kses_allowed_html() method.
 	 *
+	 * @param string $html     HTML string.
+	 * @param string $expected Expected output.
+	 *
 	 * @dataProvider data_test_filter_kses_allowed_html
 	 * @covers ::filter_kses_allowed_html
 	 * @covers ::add_global_attributes
 	 * @covers ::array_merge_recursive_distinct
-	 *
-	 * @param string $html     HTML string.
-	 * @param string $expected Expected output.
 	 */
-	public function test_filter_kses_allowed_html( $html, $expected ) {
+	public function test_filter_kses_allowed_html( $html, $expected ): void {
 				add_filter( 'wp_kses_allowed_html', [ $this->instance, 'filter_kses_allowed_html' ] );
 
 		$this->assertSame( $expected, wp_unslash( wp_filter_post_kses( $html ) ) );
@@ -391,7 +391,7 @@ class KSES extends DependencyInjectedTestCase {
 	 * @covers ::filter_kses_allowed_html
 	 * @covers ::array_merge_recursive_distinct
 	 */
-	public function test_filter_kses_allowed_html_uses_deep_merge() {
+	public function test_filter_kses_allowed_html_uses_deep_merge(): void {
 		$allowed_tags = [
 			'img'     => [
 				'width' => true,

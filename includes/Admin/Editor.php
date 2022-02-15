@@ -2,10 +2,10 @@
 /**
  * Class Editor
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2020 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -26,41 +26,35 @@
 
 namespace Google\Web_Stories\Admin;
 
+use Google\Web_Stories\Assets;
 use Google\Web_Stories\Context;
 use Google\Web_Stories\Decoder;
 use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Font_Post_Type;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Locale;
-use Google\Web_Stories\Assets;
+use Google\Web_Stories\Media\Types;
 use Google\Web_Stories\Model\Story;
+use Google\Web_Stories\Page_Template_Post_Type;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
-use Google\Web_Stories\Page_Template_Post_Type;
 use Google\Web_Stories\Tracking;
-use Google\Web_Stories\Media\Types;
 use WP_Post;
 
 /**
  * Class Editor
- *
- * @package Google\Web_Stories\Admin
  */
 class Editor extends Service_Base implements HasRequirements {
 
 	/**
 	 * Web Stories editor script handle.
-	 *
-	 * @var string
 	 */
-	const SCRIPT_HANDLE = 'wp-story-editor';
+	public const SCRIPT_HANDLE = 'wp-story-editor';
 
 	/**
 	 * AMP validator script handle.
-	 *
-	 * @var string
 	 */
-	const AMP_VALIDATOR_SCRIPT_HANDLE = 'amp-validator';
+	public const AMP_VALIDATOR_SCRIPT_HANDLE = 'amp-validator';
 
 	/**
 	 * Experiments instance.
@@ -191,7 +185,7 @@ class Editor extends Service_Base implements HasRequirements {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
 		add_filter( 'replace_editor', [ $this, 'replace_editor' ], 10, 2 );
 		add_filter( 'use_block_editor_for_post_type', [ $this, 'filter_use_block_editor_for_post_type' ], 10, 2 );
@@ -219,7 +213,6 @@ class Editor extends Service_Base implements HasRequirements {
 	 *
 	 * @param bool|mixed $replace Bool if to replace editor or not.
 	 * @param WP_Post    $post    Current post object.
-	 *
 	 * @return bool|mixed Whether the editor has been replaced.
 	 */
 	public function replace_editor( $replace, $post ) {
@@ -253,7 +246,6 @@ class Editor extends Service_Base implements HasRequirements {
 	 *
 	 * @param bool|mixed $use_block_editor  Whether the post type can be edited or not. Default true.
 	 * @param string     $post_type         The post type being checked.
-	 *
 	 * @return false|mixed Whether to use the block editor.
 	 */
 	public function filter_use_block_editor_for_post_type( $use_block_editor, $post_type ) {
@@ -265,22 +257,20 @@ class Editor extends Service_Base implements HasRequirements {
 	}
 
 	/**
-	 *
 	 * Enqueue scripts for the element editor.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @param string $hook The current admin page.
-	 *
 	 * @return void
 	 */
-	public function admin_enqueue_scripts( $hook ) {
+	public function admin_enqueue_scripts( $hook ): void {
 		if ( ! $this->context->is_story_editor() ) {
 			return;
 		}
 
 		// Only output scripts and styles where in edit screens.
-		if ( ! in_array( $hook, [ 'post.php', 'post-new.php' ], true ) ) {
+		if ( ! \in_array( $hook, [ 'post.php', 'post-new.php' ], true ) ) {
 			return;
 		}
 
@@ -314,9 +304,9 @@ class Editor extends Service_Base implements HasRequirements {
 	/**
 	 * Get editor settings as an array.
 	 *
-	 * @since 1.0.0
-	 *
 	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
+	 *
+	 * @since 1.0.0
 	 *
 	 * @return array
 	 */
@@ -367,7 +357,7 @@ class Editor extends Service_Base implements HasRequirements {
 		$story->load_from_post( $post );
 
 		$settings = [
-			'autoSaveInterval'             => defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
+			'autoSaveInterval'             => \defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 			'isRTL'                        => is_rtl(),
 			'locale'                       => $this->locale->get_locale_settings(),
 			'allowedFileTypes'             => $this->types->get_allowed_file_types(),
@@ -441,10 +431,9 @@ class Editor extends Service_Base implements HasRequirements {
 	 * @since 1.5.0
 	 *
 	 * @param int $story_id Post id of story.
-	 *
 	 * @return void
 	 */
-	protected function setup_lock( int $story_id ) {
+	protected function setup_lock( int $story_id ): void {
 		if ( ! $this->experiments->is_experiment_enabled( 'enablePostLocking' ) ) {
 			return;
 		}

@@ -2,10 +2,10 @@
 /**
  * Class Image_Size
  *
- * @package   Google\Web_Stories
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
  * @copyright 2021 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://github.com/googleforcreators/web-stories-wp
  */
 
 /**
@@ -31,51 +31,37 @@ use WP_Post;
 
 /**
  * Class Image_Sizes
- *
- * @package Google\Web_Stories\Media
  */
 class Image_Sizes extends Service_Base {
 	/**
 	 * The image size for the poster-portrait-src.
-	 *
-	 * @var string
 	 */
-	const POSTER_PORTRAIT_IMAGE_SIZE = 'web-stories-poster-portrait';
+	public const POSTER_PORTRAIT_IMAGE_SIZE = 'web-stories-poster-portrait';
 
 	/**
 	 * The image dimensions for the poster-portrait-src.
-	 *
-	 * @var int[]
 	 */
-	const POSTER_PORTRAIT_IMAGE_DIMENSIONS = [ 640, 853 ];
+	public const POSTER_PORTRAIT_IMAGE_DIMENSIONS = [ 640, 853 ];
 
 	/**
 	 * Name of size used in media library.
-	 *
-	 * @var string
 	 */
-	const STORY_THUMBNAIL_IMAGE_SIZE = 'web-stories-thumbnail';
+	public const STORY_THUMBNAIL_IMAGE_SIZE = 'web-stories-thumbnail';
 
 	/**
 	 * The image dimensions for media library thumbnails.
-	 *
-	 * @var int[]
 	 */
-	const STORY_THUMBNAIL_IMAGE_DIMENSIONS = [ 150, 9999 ];
+	public const STORY_THUMBNAIL_IMAGE_DIMENSIONS = [ 150, 9999 ];
 
 	/**
 	 * The image size for the publisher logo.
-	 *
-	 * @var string
 	 */
-	const PUBLISHER_LOGO_IMAGE_SIZE = 'web-stories-publisher-logo';
+	public const PUBLISHER_LOGO_IMAGE_SIZE = 'web-stories-publisher-logo';
 
 	/**
 	 * The image dimensions for the publisher logo.
-	 *
-	 * @var int[]
 	 */
-	const PUBLISHER_LOGO_IMAGE_DIMENSIONS = [ 96, 96 ];
+	public const PUBLISHER_LOGO_IMAGE_DIMENSIONS = [ 96, 96 ];
 
 	/**
 	 * Init.
@@ -84,7 +70,7 @@ class Image_Sizes extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		$this->add_image_sizes();
 		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'wp_prepare_attachment_for_js' ], 10, 2 );
 	}
@@ -92,13 +78,13 @@ class Image_Sizes extends Service_Base {
 	/**
 	 * Add image sizes.
 	 *
-	 * @link https://amp.dev/documentation/components/amp-story/#poster-guidelines-for-poster-portrait-src-poster-landscape-src-and-poster-square-src.
-	 *
 	 * @since 1.10.0
+	 *
+	 * @link https://amp.dev/documentation/components/amp-story/#poster-guidelines-for-poster-portrait-src-poster-landscape-src-and-poster-square-src.
 	 *
 	 * @return void
 	 */
-	protected function add_image_sizes() {
+	protected function add_image_sizes(): void {
 		// Used for amp-story[poster-portrait-src]: The story poster in portrait format (3x4 aspect ratio).
 		add_image_size(
 			self::POSTER_PORTRAIT_IMAGE_SIZE,
@@ -132,11 +118,10 @@ class Image_Sizes extends Service_Base {
 	 *
 	 * @param array|mixed $response   Array of prepared attachment data.
 	 * @param WP_Post     $attachment Attachment object.
-	 *
 	 * @return array|mixed $response;
 	 */
 	public function wp_prepare_attachment_for_js( $response, $attachment ) {
-		if ( ! is_array( $response ) ) {
+		if ( ! \is_array( $response ) ) {
 			return $response;
 		}
 		// See https://github.com/WordPress/wordpress-develop/blob/d28766f8f2ecf2be02c2520cdf0cc3b51deb9e1b/src/wp-includes/rest-api/endpoints/class-wp-rest-attachments-controller.php#L753-L791 .
@@ -159,14 +144,14 @@ class Image_Sizes extends Service_Base {
 					continue;
 				}
 
-				list ( $image_src )      = $image;
+				[ $image_src ]           = $image;
 				$size_data['source_url'] = $image_src;
 			}
 
 			$img_src = wp_get_attachment_image_src( $attachment->ID, 'full' );
 
 			if ( $img_src ) {
-				list ( $src, $width, $height ) = $img_src;
+				[ $src, $width, $height ] = $img_src;
 
 				$response['media_details']['sizes']['full'] = [
 					'file'       => wp_basename( $src ),
