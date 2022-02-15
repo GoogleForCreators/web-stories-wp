@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { createSolid } from '@googleforcreators/patterns';
-import { MULTIPLE_VALUE } from '@googleforcreators/design-system';
+import { MULTIPLE_VALUE } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies

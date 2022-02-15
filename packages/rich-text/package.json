@@ -29,7 +29,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@googleforcreators/design-system": "*",
+    "@googleforcreators/elements": "*",
     "@googleforcreators/patterns": "*",
     "@googleforcreators/react": "*",
     "draft-js": "^0.11.7",
