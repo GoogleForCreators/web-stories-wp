@@ -101,35 +101,37 @@ const sharedConfig = {
       // Use asset svg and svgr in same project using resourceQuery
       // https://react-svgr.com/docs/webpack/#use-svgr-and-asset-svg-in-the-same-project
       {
-        type: 'asset/inline',
         test: /\.svg$/,
-        resourceQuery: /url/,
-      },
-      {
-        test: /\.svg$/,
-        issuer: /\.js?$/,
-        exclude: /\?url$/,
-        use: [
+        oneOf: [
           {
-            loader: '@svgr/webpack',
-            options: {
-              titleProp: true,
-              svgo: true,
-              memo: true,
-              svgoConfig: {
-                plugins: [
-                  {
-                    name: 'preset-default',
-                    params: {
-                      overrides: {
-                        removeViewBox: false,
+            type: 'asset/inline',
+            resourceQuery: /url/,
+          },
+          {
+            issuer: /\.js?$/,
+            use: [
+              {
+                loader: '@svgr/webpack',
+                options: {
+                  titleProp: true,
+                  svgo: true,
+                  memo: true,
+                  svgoConfig: {
+                    plugins: [
+                      {
+                        name: 'preset-default',
+                        params: {
+                          overrides: {
+                            removeViewBox: false,
+                          },
+                        },
                       },
-                    },
+                      { name: 'convertColors', currentColor: /^(?!url|none)/i },
+                    ],
                   },
-                  { name: 'convertColors', currentColor: /^(?!url|none)/i },
-                ],
+                },
               },
-            },
+            ],
           },
         ],
       },
