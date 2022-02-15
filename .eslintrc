@@ -490,7 +490,6 @@
         "packages/commander/**/*.js",
         "packages/migration/scripts/**/*.js",
         "packages/templates/scripts/**/*.js",
-        "packages/templates/src/test/*.js",
         "packages/text-sets/scripts/**/*.js"
       ],
       "extends": [

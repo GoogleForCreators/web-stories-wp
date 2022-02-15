@@ -31,6 +31,7 @@ describe('raw template files', () => {
     let templateData;
 
     beforeAll(async () => {
+      // eslint-disable-next-line node/no-unsupported-features/es-syntax -- Dynamic import support was added in Node 13, but in package.json we still technically allow Node 12.
       const { default: _templateData } = await import(
         /* webpackChunkName: "chunk-web-stories-template-[index]" */ `../raw/${template}`
       );
@@ -186,6 +187,7 @@ describe('raw template files', () => {
     });
 
     it('should contain a valid createdDate', async () => {
+      // eslint-disable-next-line node/no-unsupported-features/es-syntax -- Dynamic import support was added in Node 13, but in package.json we still technically allow Node 12.
       const { default: metaData } = await import(
         /* webpackChunkName: "chunk-web-stories-template-[index]-metaData" */ `../raw/${template}/metaData`
       );

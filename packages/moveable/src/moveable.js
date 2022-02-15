@@ -19,6 +19,7 @@
  */
 import { forwardRef } from '@googleforcreators/react';
 import Moveable from 'react-moveable';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -27,7 +28,6 @@ import InOverlay from './overlay';
 
 const DEFAULT_Z_INDEX = 10;
 
-// eslint-disable-next-line react/prop-types
 function MoveableWithRef({ onContextMenu, ...moveableProps }, ref) {
   return (
     <InOverlay
@@ -40,5 +40,9 @@ function MoveableWithRef({ onContextMenu, ...moveableProps }, ref) {
     />
   );
 }
+
+MoveableWithRef.propTypes = {
+  onContextMenu: PropTypes.func,
+};
 
 export default forwardRef(MoveableWithRef);
