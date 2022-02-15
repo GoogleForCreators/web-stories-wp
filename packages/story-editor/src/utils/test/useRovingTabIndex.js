@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import { getSiblingDirection } from '../useRovingTabIndex';
+import { getFocusableElementDirection } from '../useRovingTabIndex';
 
 describe('getSiblingDirection', () => {
   describe('RTL', () => {
@@ -24,7 +24,9 @@ describe('getSiblingDirection', () => {
       'given key: %s returns "previousSibling"',
       (key) => {
         const isRTL = true;
-        expect(getSiblingDirection(isRTL, key)).toBe('previousSibling');
+        expect(getFocusableElementDirection(isRTL, key)).toBe(
+          'previousSibling'
+        );
       }
     );
 
@@ -32,7 +34,7 @@ describe('getSiblingDirection', () => {
       'given key: %s returns "nextSibling"',
       (key) => {
         const isRTL = true;
-        expect(getSiblingDirection(isRTL, key)).toBe('nextSibling');
+        expect(getFocusableElementDirection(isRTL, key)).toBe('nextSibling');
       }
     );
   });
@@ -42,7 +44,9 @@ describe('getSiblingDirection', () => {
       'given key: %s returns "previousSibling"',
       (key) => {
         const isRTL = false;
-        expect(getSiblingDirection(isRTL, key)).toBe('previousSibling');
+        expect(getFocusableElementDirection(isRTL, key)).toBe(
+          'previousSibling'
+        );
       }
     );
 
@@ -50,7 +54,7 @@ describe('getSiblingDirection', () => {
       'given key: %s returns "nextSibling"',
       (key) => {
         const isRTL = false;
-        expect(getSiblingDirection(isRTL, key)).toBe('nextSibling');
+        expect(getFocusableElementDirection(isRTL, key)).toBe('nextSibling');
       }
     );
   });

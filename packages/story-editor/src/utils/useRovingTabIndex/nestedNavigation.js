@@ -50,6 +50,7 @@ function getAncestorByDepth(e, depth) {
  * Returns the center of a given element.
  *
  * @param {Element} e The element
+ * @param {number} depth The nesting depth of the focusable element.
  * @return {Point2D} The coordinates of the center as defined by
  * getBoundingClientRect's `top` and `left` fields.
  */

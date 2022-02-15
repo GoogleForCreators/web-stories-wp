@@ -92,7 +92,7 @@ export function getFocusableElementDirection(isRTL, key) {
  *
  * @param {Element} element The element.
  * @param {string} direction The next element direction.
- * @param depth
+ * @param {number} depth The nesting depth of the focusable element.
  * @return {?Element} The closest sibling in the following (or previous) row.
  */
 function getClosestValidElement(element, direction, depth) {
