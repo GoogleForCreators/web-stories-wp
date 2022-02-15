@@ -224,7 +224,7 @@
     "es2020": true
   },
   "globals": {
-    "__webpack_public_path__": true,
+    "__webpack_public_path__": "writable",
     "WEB_STORIES_CI": "readonly",
     "WEB_STORIES_DISABLE_ERROR_BOUNDARIES": "readonly",
     "WEB_STORIES_DISABLE_OPTIMIZED_RENDERING": "readonly",
@@ -277,6 +277,7 @@
         "__mocks__/**/*.js",
         "**/__tests__/**/*.js",
         "**/test/**/*.js",
+        "**/testUtils/**/*.js",
         "**/?(*.)test.js",
         "tests/js/**/*.js"
       ],
@@ -299,6 +300,7 @@
         "node": true
       },
       "rules": {
+        "eslint-comments/require-description": "off",
         "react/prop-types": "off",
         "jest/no-hooks": "off",
         "jest/prefer-expect-assertions": "off",
@@ -320,12 +322,7 @@
         "__mocks__/**/*.js"
       ],
       "rules": {
-        "jest/require-hook":  "off",
-        "react/prop-types" : "off",
-        "eslint-comments/require-description": "off"
-      },
-      "env": {
-        "node": true
+        "jest/require-hook":  "off"
       }
     },
     {
@@ -440,7 +437,10 @@
       }
     },
     {
-      "files": ["packages/e2e-tests/src/config/**/*.js"],
+      "files": [
+        "packages/e2e-tests/src/config/**/*.js",
+        "**/testUtils/**/*.js"
+      ],
       "rules": {
         "eslint-comments/require-description": "off",
         "jest/require-hook": "off"
@@ -484,10 +484,6 @@
         "packages/e2e-tests/src/config/*.js",
         "packages/dashboard/src/karma-tests.cjs",
         "packages/story-editor/src/karma-tests.cjs",
-        "packages/story-editor/src/karma/**/*.js",
-        "packages/story-editor/src/**/test/*.js",
-        "packages/story-editor/src/testUtils/*.js",
-        "packages/story-editor/src/app/story/**/test/*.js",
         "packages/eslint-import-resolver/**/*.cjs",
         "packages/jest-resolver/**/*.cjs",
         "packages/fonts/**/*.js",
@@ -495,15 +491,7 @@
         "packages/migration/scripts/**/*.js",
         "packages/templates/scripts/**/*.js",
         "packages/templates/src/test/*.js",
-        "packages/text-sets/scripts/**/*.js",
-        "packages/i18n/src/test/*.js",
-        "packages/stories-block/src/**/test/*.js",
-        "packages/dashboard/src/**/test/*.js",
-        "packages/animation/src/components/test/*.js",
-        "packages/dashboard/src/testUtils/*.js",
-        "packages/date/src/test/*.js",
-        "packages/design-system/src/components/**/test/*.js",
-        "packages/rich-text/src/test/*.js"
+        "packages/text-sets/scripts/**/*.js"
       ],
       "extends": [
         "plugin:node/recommended",
@@ -536,10 +524,6 @@
         "*.md",
         "**/*.md"
       ],
-      "rules": {
-        "eslint-comments/require-description": "off",
-        "react/prop-types" : "off"
-      }, 
       "processor": "markdown/markdown"
     },
     {
@@ -559,7 +543,9 @@
         "no-undef": "off",
         "no-unused-vars": "off",
         "header/header": "off",
-        "prettier/prettier": "off"
+        "prettier/prettier": "off",
+        "eslint-comments/require-description": "off",
+        "react/prop-types" : "off"
       }
     },
     {
@@ -658,14 +644,8 @@
     },
     {
       "files": [
-        "packages/dashboard/src/**/stories/*.js",
-        "packages/wp-dashboard/src/**/stories/*.js",
-        "packages/story-editor/src/**/stories/*.js",
-        "packages/wp-story-editor/src/**/stories/*.js",
-        "packages/design-system/src/**/stories/*.js",
-        "packages/design-system/src/components/**/*.js",
-        "packages/design-system/src/utils/*.js",
-        "packages/activation-notice/src/**/stories/*.js"
+        "**/stories/*.js",
+        ".storybook/main.cjs"
       ],
       "rules": {
         "react/no-array-index-key" : "off",
