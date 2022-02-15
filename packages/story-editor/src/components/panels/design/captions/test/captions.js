@@ -18,11 +18,11 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
+import { MULTIPLE_DISPLAY_VALUE } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 import ConfigContext from '../../../../../app/config/context';
 import { renderPanel } from '../../../shared/test/_utils';
 import Captions from '../captions';

@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
+import { MULTIPLE_DISPLAY_VALUE } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import VideoAccessibility, { MIN_MAX } from '../videoAccessibility';
-import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
 import ConfigContext from '../../../../../app/config/context';
 

@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
+import { MULTIPLE_DISPLAY_VALUE } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -26,7 +27,6 @@ import APIContext from '../../../../../app/api/context';
 import ConfigContext from '../../../../../app/config/context';
 import StoryContext from '../../../../../app/story/context';
 import CanvasContext from '../../../../../app/canvas/context';
-import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
 import LinkPanel from '../link';
 

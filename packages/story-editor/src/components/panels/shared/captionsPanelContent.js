@@ -30,12 +30,12 @@ import {
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import { ResourcePropTypes } from '@googleforcreators/media';
+import { MULTIPLE_DISPLAY_VALUE } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { Row } from '../../form';
-import { MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import Tooltip from '../../tooltip';
 import { useConfig } from '../../../app/config';
 import { focusStyle } from './styles';

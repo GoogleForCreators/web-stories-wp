@@ -18,11 +18,11 @@
  * External dependencies
  */
 import { render, act, fireEvent } from '@testing-library/react';
+import { MULTIPLE_VALUE } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE } from '../../../../constants';
 import useFormContext from '../../../form/useFormContext';
 import { usePresubmitHandler } from '../../../form';
 import DesignPanel from '../designPanel';

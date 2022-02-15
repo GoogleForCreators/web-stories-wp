@@ -14,10 +14,14 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { MULTIPLE_DISPLAY_VALUE } from '@googleforcreators/elements';
+
+/**
  * Internal dependencies
  */
 import { Fixture } from '../fixture';
-import { MULTIPLE_DISPLAY_VALUE } from '../../constants';
 import { useStory } from '../../app';
 import { initHelpers } from './_utils';
 
