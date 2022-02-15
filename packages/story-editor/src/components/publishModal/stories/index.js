@@ -21,6 +21,7 @@ import { useCallback, useState } from '@googleforcreators/react';
  * Internal dependencies
  */
 import StoryContext from '../../../app/story/context';
+import { ConfigContext } from '../../../app/config';
 import { noop } from '../../../utils/noop';
 import { ChecklistCountProvider, CheckpointContext } from '../../checklist';
 import InspectorContext from '../../inspector/context';
@@ -38,6 +39,10 @@ export default {
   args: {
     isOpen: true,
     hasChecklist: true,
+    publisher: 'Gotham Bugle',
+    hasPublisherLogo: true,
+    hasFeaturedMedia: true,
+    hasUploadMediaAction: true,
   },
   argTypes: {
     onPublish: { action: 'onPublish clicked' },
@@ -46,6 +51,12 @@ export default {
 };
 
 export const _default = (args) => {
+  const {
+    hasUploadMediaAction,
+    hasFeaturedMedia,
+    hasPublisherLogo,
+    publisher,
+  } = args;
   const [inputValues, setInputValues] = useState({
     excerpt: '',
     title: '',
@@ -59,35 +70,37 @@ export const _default = (args) => {
     }));
   }, []);
   return (
-    // todo: add config to grab publisher
-    <StoryContext.Provider
+    <ConfigContext.Provider
       value={{
-        actions: { updateStory: handleUpdateStory },
-        state: {
-          story: {
-            ...inputValues,
-            permalinkConfig: {
-              prefix: 'http://sample.com/',
-              suffix: '',
-            },
-            featuredMedia: {
-              url: 'http://placekitten.com/230/342',
-              height: 342,
-              width: 342,
-            },
-            publisherLogo: {
-              url: 'http://placekitten.com/158/96',
-              height: 96,
-              width: 158,
-            },
-          },
+        metadata: {
+          publisher: publisher,
+        },
+        capabilities: {
+          hasUploadMediaAction: hasUploadMediaAction,
         },
       }}
     >
-      <CheckpointContext.Provider
+      <StoryContext.Provider
         value={{
-          actions: {
-            onPublishDialogChecklistRequest: noop,
+          actions: { updateStory: handleUpdateStory },
+          state: {
+            story: {
+              ...inputValues,
+              permalinkConfig: {
+                prefix: 'http://sample.com/',
+                suffix: '',
+              },
+              featuredMedia: {
+                url: hasFeaturedMedia ? 'http://placekitten.com/230/342' : '',
+                height: 333,
+                width: 250,
+              },
+              publisherLogo: {
+                url: hasPublisherLogo ? 'http://placekitten.com/158/96' : '',
+                height: 96,
+                width: 158,
+              },
+            },
           },
         }}
       >
@@ -111,8 +124,19 @@ export const _default = (args) => {
           <ChecklistCountProvider hasChecklist={args.hasChecklist}>
             <PublishModal {...args} />
           </ChecklistCountProvider>
+          <CheckpointContext.Provider
+            value={{
+              actions: {
+                onPublishDialogChecklistRequest: noop,
+              },
+            }}
+          >
+            <ChecklistCountProvider hasChecklist={args.hasChecklist}>
+              <PublishModal {...args} />
+            </ChecklistCountProvider>
+          </CheckpointContext.Provider>
         </InspectorContext.Provider>
-      </CheckpointContext.Provider>
-    </StoryContext.Provider>
+      </StoryContext.Provider>
+    </ConfigContext.Provider>
   );
 };

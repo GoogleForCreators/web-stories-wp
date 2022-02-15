@@ -16,6 +16,7 @@
 /**
  * External dependencies
  */
+import styled from 'styled-components';
 import {
   Button,
   Headline,
@@ -26,40 +27,40 @@ import {
   BUTTON_TYPES,
   BUTTON_SIZES,
 } from '@googleforcreators/design-system';
-import styled from 'styled-components';
+import { PAGE_RATIO } from '@googleforcreators/units';
 import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
 import { useConfig, useStory } from '../../../app';
 
+// Set the available space for cover preview image + overlay
 const PreviewContainer = styled.div`
+  width: ${({ width }) => width}px;
+  height: ${({ height }) => height}px;
   position: relative;
-  width: 100%;
-  height: calc(100% - 16px);
-  margin: 8px 0;
+`;
+
+const PreviewWrapper = styled.div`
+  width: ${({ width }) => width}px;
+  height: ${({ height }) => height}px;
+  position: absolute;
 `;
 
 export const Image = styled.img`
   height: 100%;
   width: 100%;
   display: block;
+  aspect-ratio: auto ${PAGE_RATIO};
   object-fit: cover;
   border-radius: ${({ theme }) => theme.borders.radius.medium};
-  background: ${({ theme }) => theme.colors.gradient.placeholder};
+  background: ${({ theme }) => theme.colors.interactiveBg.primaryNormal};
 `;
 
 const EmptyPlaceholder = styled.div`
   height: 100%;
-  width: 100%;
   border-radius: ${({ theme }) => theme.borders.radius.medium};
-  background: ${({ theme }) => theme.colors.gradient.placeholder};
-`;
-
-const PreviewWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  position: absolute;
+  background: ${({ theme }) => theme.colors.interactiveBg.primaryNormal};
 `;
 
 const Gradient = styled.div`
@@ -71,7 +72,7 @@ const Gradient = styled.div`
   background: ${({ theme }) => theme.colors.gradient.posterOverlay};
 `;
 
-const Scrim = styled.div`
+const ScrimWrapper = styled.div`
   position: absolute;
   top: 0;
   width: 100%;
@@ -103,9 +104,18 @@ const ScrimContent = styled.div`
   justify-content: space-between;
 `;
 
+const TopOverlay = styled.div`
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: auto;
+  grid-template-areas: 'publisherLogo editButton';
+  justify-content: inherit;
+  width: 100%;
+`;
 const PublisherLogo = styled.img`
-  height: 32px;
-  width: 32px;
+  grid-area: publisherLogo;
+  height: 24px;
+  width: 24px;
 `;
 
 const EditFeaturedMedia = styled(Button).attrs({
@@ -113,30 +123,33 @@ const EditFeaturedMedia = styled(Button).attrs({
   type: BUTTON_TYPES.SECONDARY,
   size: BUTTON_SIZES.SMALL,
 })`
+  grid-area: editButton;
   height: 32px;
   width: 32px;
+  margin: 0 0 0 auto;
 `;
 
-const Copy = styled.div`
+const BottomOverlay = styled.div`
   width: 100%;
   margin: auto 0 0;
   align-self: flex-end;
 `;
+
 const Title = styled(Headline).attrs({
   as: 'h3',
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
 })`
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: ${({ theme }) => theme.colors.fg.primary};
-  padding: 0;
-  margin: 0 0 4px;
   max-height: calc(1.2em * 3);
   /* stylelint-disable-next-line */
   display: -webkit-box;
   -webkit-line-clamp: 3;
   /* stylelint-disable-next-line */
   -webkit-box-orient: vertical;
+  padding: 0;
+  margin: 0 0 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
 const Publisher = styled(Text).attrs({
@@ -162,7 +175,14 @@ const StoryPreview = () => {
     })
   );
 
-  const publisher = useConfig(({ metadata }) => metadata?.publisher || null);
+  const publisher = useConfig(({ metadata }) => metadata?.publisher);
+  const hasUploadMediaAction = useConfig(
+    ({ capabilities }) => capabilities?.hasUploadMediaAction
+  );
+
+  // Honor 2:3 aspect ratio that cover previews have
+  const mediaWidth = 232;
+  const mediaHeight = Math.round(mediaWidth / PAGE_RATIO);
 
   return (
     <>
@@ -172,44 +192,49 @@ const StoryPreview = () => {
       >
         {__('Cover Preview', 'web-stories')}
       </Headline>
-      <PreviewContainer>
-        <PreviewWrapper>
+      <PreviewContainer width={mediaWidth} height={mediaHeight}>
+        <PreviewWrapper width={mediaWidth} height={mediaHeight}>
           {featuredMedia.url ? (
             <Image
               crossOrigin="anonymous"
+              src={featuredMedia.url}
               width={featuredMedia.width}
               height={featuredMedia.height}
-              src={featuredMedia.url}
               alt={__('Preview image', 'web-stories')}
             />
           ) : (
             <EmptyPlaceholder />
           )}
           <Gradient />
-          <Scrim>
+          <ScrimWrapper>
             <ScrimContainer>
               <ScrimContent>
-                {publisherLogo?.url.length > 0 && (
-                  <PublisherLogo
-                    crossOrigin="anonymous"
-                    width={publisherLogo.width}
-                    height={publisherLogo.height}
-                    src={publisherLogo.url}
-                    alt={__('Publisher Logo', 'web-stories')}
-                  />
-                )}
-                <EditFeaturedMedia
-                  aria-label={__('Edit Publisher Logo', 'web-stories')}
-                >
-                  <Icons.Pencil aria-hidden="true" />
-                </EditFeaturedMedia>
-                <Copy>
-                  <Title>{title}</Title>
+                <TopOverlay>
+                  {publisherLogo?.url.length > 0 && (
+                    <PublisherLogo
+                      crossOrigin="anonymous"
+                      width={publisherLogo.width}
+                      height={publisherLogo.height}
+                      src={publisherLogo.url}
+                      alt={__('Publisher Logo', 'web-stories')}
+                    />
+                  )}
+                  {/* TODO separately as follow up */}
+                  {hasUploadMediaAction && (
+                    <EditFeaturedMedia
+                      aria-label={__('Edit Publisher Logo', 'web-stories')}
+                    >
+                      <Icons.Pencil aria-hidden="true" />
+                    </EditFeaturedMedia>
+                  )}
+                </TopOverlay>
+                <BottomOverlay>
+                  {title && <Title>{title}</Title>}
                   {publisher && <Publisher>{publisher}</Publisher>}
-                </Copy>
+                </BottomOverlay>
               </ScrimContent>
             </ScrimContainer>
-          </Scrim>
+          </ScrimWrapper>
         </PreviewWrapper>
       </PreviewContainer>
     </>
