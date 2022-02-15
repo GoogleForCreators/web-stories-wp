@@ -114,7 +114,7 @@ export const _default = () => {
       scale: 100,
       focalX: 50,
       focalY: 50,
-      id: '3631d6b0-0f6a-4959-9df0-b9f3d7fcab35',
+      id: '755f1d9e-aeb4-4c4d-ba7f-fac834434243',
       previewOffsetX: 0,
       previewOffsetY: 0,
       textSetWidth: 333,
@@ -195,7 +195,7 @@ export const _default = () => {
       scale: 100,
       focalX: 50,
       focalY: 50,
-      id: 'c61010e2-750e-4e6d-8372-bfb5e93f2312',
+      id: '755f1d9e-aeb4-4c4d-ba7f-fac834434243',
       previewOffsetX: 30,
       previewOffsetY: 30,
       textSetWidth: 333,
@@ -215,7 +215,10 @@ export const _default = () => {
       registerTransformHandler: () => {},
     },
   };
-  const configValue = { api: { stories: [] } };
+  const configValue = {
+    api: { stories: [] },
+    cdnURL: 'https://wp.stories.google/static/main/',
+  };
   const fontsValue = {
     actions: {
       maybeEnqueueFontStyle: () => {},
@@ -263,7 +266,11 @@ export const _default = () => {
                       }}
                       getBox={getBox}
                     >
-                      <TextSet id={'1'} elements={textSet1} index={0} />
+                      <TextSet
+                        id={'755f1d9e-aeb4-4c4d-ba7f-fac834434243'}
+                        elements={textSet1}
+                        index={0}
+                      />
                     </UnitsProvider>
                   </LibraryContext.Provider>
                 </LayoutProvider>
