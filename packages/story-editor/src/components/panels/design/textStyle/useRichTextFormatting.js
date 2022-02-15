@@ -30,11 +30,11 @@ import {
   getHTMLFormatters,
   getHTMLInfo,
 } from '@googleforcreators/rich-text';
+import { MULTIPLE_VALUE } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE } from '../../../../constants';
 import { useCanvas } from '../../../../app';
 
 /**

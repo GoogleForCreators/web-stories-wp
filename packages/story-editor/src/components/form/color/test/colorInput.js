@@ -22,11 +22,14 @@ import {
   createSolid,
   getPreviewText as getPreviewTextMock,
 } from '@googleforcreators/patterns';
+import {
+  MULTIPLE_VALUE,
+  MULTIPLE_DISPLAY_VALUE,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import { renderWithTheme } from '../../../../testUtils';
 import ColorInput from '../colorInput';
 import getPreviewStyleMock from '../getPreviewStyle';

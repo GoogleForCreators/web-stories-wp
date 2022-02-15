@@ -26,6 +26,10 @@ import {
   calcRotatedResizeOffset,
 } from '@googleforcreators/design-system';
 import { calculateTextHeight } from '@googleforcreators/element-library';
+import {
+  MULTIPLE_VALUE,
+  MULTIPLE_DISPLAY_VALUE,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -34,10 +38,6 @@ import TextStyle from '../textStyle';
 import FontContext from '../../../../../app/font/context';
 import { StoryContext } from '../../../../../app/story';
 import CanvasContext from '../../../../../app/canvas/context';
-import {
-  MULTIPLE_VALUE,
-  MULTIPLE_DISPLAY_VALUE,
-} from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
 
 let mockControls;

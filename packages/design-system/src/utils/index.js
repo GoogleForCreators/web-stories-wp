@@ -33,7 +33,6 @@ export { default as stripHTML } from './stripHTML';
 export { default as PanelTypes } from './panelTypes';
 export { default as getTransformFlip } from './getTransformFlip';
 export * from './performanceTrackingEvents';
-export * from './multipleValue';
 export * from './constants';
 export * from './directions';
 export * from './url';

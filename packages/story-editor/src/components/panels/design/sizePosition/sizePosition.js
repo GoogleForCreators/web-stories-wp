@@ -38,12 +38,15 @@ import {
   Tooltip,
   usePerformanceTracking,
 } from '@googleforcreators/design-system';
-import { getDefinitionForType } from '@googleforcreators/elements';
+import {
+  MULTIPLE_VALUE,
+  MULTIPLE_DISPLAY_VALUE,
+  getDefinitionForType,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { SimplePanel } from '../../panel';
 import FlipControls from '../../shared/flipControls';
 import {

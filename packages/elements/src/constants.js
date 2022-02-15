@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { __ } from '@googleforcreators/i18n';
 
 export const ELEMENT_TYPES = {
   IMAGE: 'image',
@@ -28,3 +32,7 @@ export const MEDIA_ELEMENT_TYPES = [
   ELEMENT_TYPES.VIDEO,
   ELEMENT_TYPES.GIF,
 ];
+
+export const MULTIPLE_VALUE = '((MULTIPLE))';
+
+export const MULTIPLE_DISPLAY_VALUE = __('Mixed', 'web-stories');

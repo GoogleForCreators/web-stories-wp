@@ -29,11 +29,11 @@ import {
   BUTTON_VARIANTS,
   themeHelpers,
 } from '@googleforcreators/design-system';
+import { MULTIPLE_VALUE } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE } from '../../../../constants';
 import { usePresubmitHandler } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';

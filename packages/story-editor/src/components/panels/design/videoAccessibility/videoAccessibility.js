@@ -21,6 +21,10 @@ import PropTypes from 'prop-types';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import { useCallback, useMemo } from '@googleforcreators/react';
 import styled from 'styled-components';
+import {
+  MULTIPLE_VALUE,
+  MULTIPLE_DISPLAY_VALUE,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -30,7 +34,6 @@ import { Media, Row, TextArea } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue, useCommonObjectValue } from '../../shared';
 import { useConfig } from '../../../../app/config';
-import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { styles, states, useHighlights } from '../../../../app/highlights';
 
 const DEFAULT_RESOURCE = {

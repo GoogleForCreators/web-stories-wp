@@ -40,10 +40,14 @@ import {
   PLACEMENT,
   Popup,
 } from '@googleforcreators/design-system';
+import {
+  MULTIPLE_VALUE,
+  MULTIPLE_DISPLAY_VALUE,
+} from '@googleforcreators/elements';
+
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import ColorPicker from '../../colorPicker';
 import useInspector from '../../inspector/useInspector';
 import DefaultTooltip from '../../tooltip';

@@ -31,6 +31,7 @@
   "dependencies": {
     "@googleforcreators/animation": "*",
     "@googleforcreators/design-system": "*",
+    "@googleforcreators/i18n": "*",
     "@googleforcreators/media": "*",
     "@googleforcreators/patterns": "*",
     "@googleforcreators/units": "*",

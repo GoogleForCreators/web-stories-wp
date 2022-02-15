@@ -29,6 +29,10 @@ import {
   BUTTON_SIZES,
   BUTTON_VARIANTS,
 } from '@googleforcreators/design-system';
+import {
+  MULTIPLE_VALUE,
+  MULTIPLE_DISPLAY_VALUE,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -36,7 +40,6 @@ import {
 import { useFont } from '../../../../app/font';
 import clamp from '../../../../utils/clamp';
 import { Row, usePresubmitHandler } from '../../../form';
-import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import {
   focusStyle,
   getCommonValue,
