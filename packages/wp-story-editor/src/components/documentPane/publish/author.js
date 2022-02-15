@@ -104,6 +104,7 @@ function Author() {
     placeholder: isLoading ? __('Loading…', 'web-stories') : '',
     disabled: isLoading ? true : isSaving,
     primaryOptions: isLoading ? [] : visibleOptions,
+    zIndex: 10,
   };
   return (
     <Row>
