@@ -19,16 +19,16 @@
  */
 import { useCallback } from '@googleforcreators/react';
 import { useKeyDownEffect } from '@googleforcreators/design-system';
-
 /**
  * Internal dependencies
  */
-import { useConfig } from '../../../../../app';
-
-const SELECTOR = '[tabIndex="-1"]:not(:disabled)';
-
-// @todo Combine this with `useRovingTabIndex` so that if depth is set, this file is used, otherwise the default one is used.
-// @todo Move common helpers into a shared file between the two.
+import { useConfig } from '../../app/config';
+import {
+  getFocusableChild,
+  getNextEnabledElement,
+  getParentCenter,
+} from './nestedNavigation';
+import { getElementCenter, getNextEnabledSibling } from './flatNavigation';
 
 /**
  * A point in 2D space.
@@ -42,15 +42,22 @@ const SELECTOR = '[tabIndex="-1"]:not(:disabled)';
  * Returns the center of a given element.
  *
  * @param {Element} e The element
+ * @param {number} depth Element's nested depth relative to the parent siblings of the elements.
  * @return {Point2D} The coordinates of the center as defined by
  * getBoundingClientRect's `top` and `left` fields.
  */
-function getCenter(e) {
-  const rect = e.getBoundingClientRect();
-  return {
-    x: rect.left + rect.width / 2,
-    y: rect.top + rect.height / 2,
-  };
+function getCenter(e, depth) {
+  if (depth > 0) {
+    return getParentCenter(e, depth);
+  }
+  return getElementCenter(e);
+}
+
+function getNextElement(e, direction, depth) {
+  if (depth > 0) {
+    return getNextEnabledElement(e, direction, depth);
+  }
+  return getNextEnabledSibling(e, direction);
 }
 
 /**
@@ -80,54 +87,12 @@ export function getFocusableElementDirection(isRTL, key) {
 }
 
 /**
- * Gets the parent element of the active element based on given depth.
- *
- * @param e
- * @param depth
- * @returns {*}
- */
-function getParentByDepth(e, depth) {
-  let parentElement,
-    counter = depth;
-
-  while (counter > 0) {
-    if (!parentElement) {
-      parentElement = e.parentElement;
-    } else {
-      parentElement = parentElement?.parentElement;
-    }
-    counter--;
-  }
-  return parentElement;
-}
-
-/**
- * Given an element, nesting depth and a direction, returns that element's next enabled active element.
- *
- * @param {Element} e The element.
- * @param {string} direction The sibling direction (previousSibling or nextSibling).
- * @param {number} depth Nesting depth.
- * @return {Element} The sibling.
- */
-function getNextEnabledElement(e, direction, depth) {
-  const parentElement = getParentByDepth(e, depth);
-  if (parentElement) {
-    const nextElementParent = parentElement[direction];
-    if (!nextElementParent) {
-      return null;
-    }
-    // Get the first child that is not disabled and has tabindex -1.
-    return nextElementParent.querySelector(SELECTOR);
-  }
-  return null;
-}
-
-/**
- * Given an element, returns the closest following (or previous) element to focus in 2D
+ * Given an element, returns the closest following (or previous) sibling in 2D
  * space that is in a different row.
  *
  * @param {Element} element The element.
  * @param {string} direction The next element direction.
+ * @param depth
  * @return {?Element} The closest sibling in the following (or previous) row.
  */
 function getClosestValidElement(element, direction, depth) {
@@ -137,9 +102,9 @@ function getClosestValidElement(element, direction, depth) {
   let closestValidElementCenter = null;
   let closestValidElementDistanceSq = null;
   for (
-    let nextElement = getNextEnabledElement(element, direction, depth);
+    let nextElement = getNextElement(element, direction, depth);
     nextElement;
-    nextElement = getNextEnabledElement(nextElement, direction, depth)
+    nextElement = getNextElement(nextElement, direction, depth)
   ) {
     const nextElementCenter = getCenter(nextElement);
     if (Math.floor(nextElementCenter.y) === Math.floor(elementCenter.y)) {
@@ -166,14 +131,23 @@ function getClosestValidElement(element, direction, depth) {
   return closestValidElement;
 }
 
-export default function useNestedRovingTabIndex(
+/**
+ * Keyboard navigation for focusable elements.
+ *
+ * @param {Object} ref Ref object.
+ * @param {Object} ref.ref Ref object or node.
+ * @param {Array} keyEventDeps Array of dependencies.
+ * @param {number} depth The nesting depth of the focusable element. By default (0) the focusable elements are siblings.
+ */
+export default function useRovingTabIndex(
   { ref },
   keyEventDeps = [],
-  depth = 1
+  depth = 0
 ) {
   const { isRTL } = useConfig();
+
   /**
-   * Returns a callback for the keydown event raised by a focused element.
+   * Returns a callback for the keydown event raised by a MediaElement.
    *
    * @param {Event} event Keydown event.
    */
@@ -192,11 +166,7 @@ export default function useNestedRovingTabIndex(
         }
       };
       if (key === 'ArrowLeft' || key === 'ArrowRight') {
-        const nextElement = getNextEnabledElement(
-          element,
-          elementDirection,
-          depth
-        );
+        const nextElement = getNextElement(element, elementDirection, depth);
         if (nextElement) {
           switchFocusToElement(nextElement);
         }
@@ -212,43 +182,43 @@ export default function useNestedRovingTabIndex(
           closestValidElement.focus();
         } else if (key === 'ArrowUp') {
           // First element.
-          const parentElement = getParentByDepth(element, depth);
-          const firstElementParent = parentElement.parentNode.firstChild;
-          // First non-disabled child with tabIndex -1.
-          switchFocusToElement(firstElementParent.querySelector(SELECTOR));
+          const elToFocus =
+            depth > 0
+              ? getFocusableChild(element, depth)
+              : element.parentNode.firstChild;
+          switchFocusToElement(elToFocus);
         } else {
           // Last element.
-          const parentElement = getParentByDepth(element, depth);
-          const lastElementParent = parentElement.parentNode.lastChild;
-          // First non-disabled child with tabIndex -1.
-          switchFocusToElement(lastElementParent.querySelector(SELECTOR));
+          const elToFocus =
+            depth > 0
+              ? getFocusableChild(element, depth, 'lastChild')
+              : element.parentNode.lastChild;
+          switchFocusToElement(elToFocus);
         }
       } else if (key === 'Home') {
         // First element.
-        const parentElement = getParentByDepth(element, depth);
-        const firstElementParent = parentElement.parentNode.firstChild;
-        // First non-disabled child with tabIndex -1.
-        switchFocusToElement(firstElementParent.querySelector(SELECTOR));
+        const elToFocus =
+          depth > 0
+            ? getFocusableChild(element, depth)
+            : element.parentNode.firstChild;
+        switchFocusToElement(elToFocus);
       } else if (key === 'End') {
         // Last element.
-        const parentElement = getParentByDepth(element, depth);
-        const lastElementParent = parentElement.parentNode.lastChild;
-        // First non-disabled child with tabIndex -1.
-        switchFocusToElement(lastElementParent.querySelector(SELECTOR));
+        const elToFocus =
+          depth > 0
+            ? getFocusableChild(element, depth, 'lastChild')
+            : element.parentNode.lastChild;
+        switchFocusToElement(elToFocus);
       } else if (key === 'PageDown' || key === 'PageUp') {
-        let nextElement = element;
+        let sibling = element;
         for (
           let i = 0;
-          getNextEnabledElement(element, elementDirection, depth) && i < 5;
-          nextElement = getNextEnabledElement(
-            nextElement,
-            elementDirection,
-            depth
-          )
+          getNextElement(sibling, elementDirection, depth) && i < 5;
+          sibling = getNextElement(sibling, elementDirection, depth)
         ) {
           i++;
         }
-        switchFocusToElement(nextElement);
+        switchFocusToElement(sibling);
       }
     },
     [isRTL, depth]

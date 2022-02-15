@@ -39,9 +39,9 @@ import {
  * Internal dependencies
  */
 import { useLocalMedia } from '../../../../../app';
-import useNestedRovingTabIndex from '../../shared/hooks/useNestedRovingTabIndex';
 import { ActionButton } from '../../shared';
 import useFocusCanvas from '../../../../canvas/useFocusCanvas';
+import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import DeleteDialog from './deleteDialog';
 import MediaEditDialog from './mediaEditDialog';
 
@@ -146,7 +146,7 @@ function DropDownMenu({
     [setShowEditDialog]
   );
 
-  useNestedRovingTabIndex({ ref: moreButtonRef }, [], BUTTON_NESTING_DEPTH);
+  useRovingTabIndex({ ref: moreButtonRef }, [], BUTTON_NESTING_DEPTH);
   const focusCanvas = useFocusCanvas();
   useKeyDownEffect(moreButtonRef, 'tab', focusCanvas, [focusCanvas]);
 

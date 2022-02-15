@@ -43,8 +43,8 @@ import {
  */
 import getElementProperties from '../../../../canvas/utils/getElementProperties';
 import useStory from '../../../../../app/story/useStory';
-import useNestedRovingTabIndex from '../../shared/hooks/useNestedRovingTabIndex';
 import { ActionButton } from '../../shared';
+import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 
 const DropDownContainer = styled.div`
   margin-top: 10px;
@@ -131,7 +131,7 @@ function InsertionMenu({ resource, display, onInsert, width, index }) {
     }
   };
 
-  useNestedRovingTabIndex({ ref: insertButtonRef }, [], BUTTON_NESTING_DEPTH);
+  useRovingTabIndex({ ref: insertButtonRef }, [], BUTTON_NESTING_DEPTH);
 
   const listId = useMemo(() => `list-${uuidv4()}`, []);
   const buttonId = useMemo(() => `button-${uuidv4()}`, []);

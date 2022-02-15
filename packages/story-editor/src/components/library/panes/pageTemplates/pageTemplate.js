@@ -48,9 +48,9 @@ import { PageSizePropType } from '../../../../types';
 import { focusStyle } from '../../../panels/shared';
 import DisplayElement from '../../../canvas/displayElement';
 import InsertionOverlay from '../shared/insertionOverlay';
-import useNestedRovingTabIndex from '../shared/hooks/useNestedRovingTabIndex';
 import useFocusCanvas from '../../../canvas/useFocusCanvas';
 import { ActionButton } from '../shared';
+import useRovingTabIndex from '../../../../utils/useRovingTabIndex';
 
 const TemplateImage = styled.img`
   width: 100%;
@@ -209,8 +209,8 @@ function PageTemplate(
 
   const insertButtonRef = useRef();
   const deleteButtonRef = useRef();
-  useNestedRovingTabIndex({ ref: insertButtonRef }, [], BUTTON_NESTING_DEPTH);
-  useNestedRovingTabIndex({ ref: deleteButtonRef }, [], BUTTON_NESTING_DEPTH);
+  useRovingTabIndex({ ref: insertButtonRef }, [], BUTTON_NESTING_DEPTH);
+  useRovingTabIndex({ ref: deleteButtonRef }, [], BUTTON_NESTING_DEPTH);
 
   const focusCanvas = useFocusCanvas();
   useKeyDownEffect(deleteButtonRef, 'tab', focusCanvas, [focusCanvas]);
