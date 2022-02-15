@@ -59,6 +59,7 @@ export const _default = (args) => {
     }));
   }, []);
   return (
+    // todo: add config to grab publisher
     <StoryContext.Provider
       value={{
         actions: { updateStory: handleUpdateStory },
@@ -68,6 +69,16 @@ export const _default = (args) => {
             permalinkConfig: {
               prefix: 'http://sample.com/',
               suffix: '',
+            },
+            featuredMedia: {
+              url: 'http://placekitten.com/230/342',
+              height: 342,
+              width: 342,
+            },
+            publisherLogo: {
+              url: 'http://placekitten.com/158/96',
+              height: 96,
+              width: 158,
             },
           },
         },
