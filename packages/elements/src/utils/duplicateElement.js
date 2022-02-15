@@ -24,7 +24,7 @@ import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
  */
 import createNewElement from './createNewElement';
 
-/** @typedef {import('../../types').Element} Element */
+/** @typedef {import('../types').Element} Element */
 
 /**
  * Gets x, y values for cloned element, ensuring it's not added out of the page.
