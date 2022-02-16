@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { waitFor } from '@testing-library/react';
-
-/**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
@@ -67,11 +62,7 @@ describe('Library Media Tab', () => {
         name: 'More',
       });
       const moreButton = menuButtons[mediaIndex];
-      await fixture.events.mouse.seq(({ moveRel, down, up }) => [
-        moveRel(moreButton, 20, 20),
-        down(),
-        up(),
-      ]);
+      await fixture.events.click(moreButton);
       expect(
         fixture.screen.getByRole('menuitem', { name: 'Edit meta data' })
       ).toBeDefined();
@@ -80,7 +71,7 @@ describe('Library Media Tab', () => {
       ).toBeDefined();
     });
 
-    it('should allow setting media as background from the dropdown menu', async () => {
+    it('should allow setting media as background from the insertion menu', async () => {
       const mediaIndex = 0;
       const mediaItem = fixture.editor.library.media.item(mediaIndex);
       // Hover the media
@@ -89,11 +80,7 @@ describe('Library Media Tab', () => {
         name: 'Open insertion menu',
       });
       const insertionButton = menuButtons[mediaIndex];
-      await fixture.events.mouse.seq(({ moveRel, down, up }) => [
-        moveRel(insertionButton, 20, 20),
-        down(),
-        up(),
-      ]);
+      await fixture.events.click(insertionButton);
 
       await fixture.events.click(
         fixture.screen.getByRole('menuitem', { name: 'Add as background' })

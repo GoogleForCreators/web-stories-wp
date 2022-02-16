@@ -114,23 +114,19 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
         fixture.editor.library.pageTemplatesPane.pageTemplates.length
       ).toBe(1);
 
-      // Hover the added template to reveal the menu.
+      // Hover the added template to reveal the button.
       await fixture.events.hover(
         fixture.editor.library.pageTemplatesPane.pageTemplates[0]
       );
-      // Open the menu and choose "Delete" option.
-      await fixture.events.click(
-        fixture.editor.library.pageTemplatesPane.menuBtn
-      );
-      await fixture.events.click(
-        fixture.screen.getByRole('menuitem', { name: 'Delete' })
-      );
-
-      await waitFor(() => {
-        expect(fixture.screen.getByRole('dialog')).toBeTruthy();
+      // Choose the Delete button of the first item.
+      const deleteButtons = await fixture.screen.findAllByRole('button', {
+        name: 'Delete',
       });
+      await fixture.events.click(deleteButtons[0]);
+
+      const dialog = await fixture.screen.findByRole('dialog');
       await fixture.events.click(
-        fixture.screen.getByRole('button', { name: 'Delete' })
+        dialog.getByRole('button', { name: 'Delete' })
       );
 
       await fixture.events.sleep(200);
