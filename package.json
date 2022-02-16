@@ -263,8 +263,7 @@
     "workflow:migrate:templates": "npm run migration --workspace packages/migration packages/templates/src/raw",
     "postworkflow:migrate:templates": "npx prettier --write packages/templates/src/raw",
     "workflow:migrate:ftue-story": "npm run migration --workspace packages/migration includes/data/stories",
-    "postworkflow:migrate:ftue-story": "npx prettier --write includes/data/stories",
-    "prepare": "husky install"
+    "postworkflow:migrate:ftue-story": "npx prettier --write includes/data/stories"
   },
   "lint-staged": {
     "*.js": [
