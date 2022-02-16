@@ -248,7 +248,10 @@ function PageTemplate(
         {isActive && <InsertionOverlay showIcon={false} />}
         <ActionButton
           ref={insertButtonRef}
-          onClick={onClick}
+          onClick={(e) => {
+            e.stopPropagation();
+            onClick(e);
+          }}
           aria-label={__('Use template', 'web-stories')}
           $display={isActive}
           tabIndex={index === 0 ? 0 : -1}
@@ -258,7 +261,10 @@ function PageTemplate(
         <DeleteButton
           ref={deleteButtonRef}
           $display={isActive}
-          onClick={(e) => handleDelete(page, e)}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleDelete(page, e);
+          }}
           aria-label={__('Delete Page Template', 'web-stories')}
           tabIndex={isActive ? 0 : -1}
         >
