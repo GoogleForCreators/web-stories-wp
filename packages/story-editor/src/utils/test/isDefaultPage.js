@@ -18,7 +18,8 @@
  * External dependencies
  */
 import { createSolid } from '@googleforcreators/patterns';
-import { createPage } from '@googleforcreators/elements';
+import { createPage, registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
@@ -26,6 +27,10 @@ import { createPage } from '@googleforcreators/elements';
 import isDefaultPage from '../isDefaultPage';
 
 describe('isDefaultPage', () => {
+  beforeAll(() => {
+    elementTypes.forEach(registerElementType);
+  });
+
   it('should return true with base page', () => {
     const page = createPage();
     expect(isDefaultPage(page)).toBeTrue();

@@ -19,6 +19,8 @@
  */
 import { render, act } from '@testing-library/react';
 import { resourceList } from '@googleforcreators/media';
+import { registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
@@ -32,6 +34,10 @@ describe('MediaDisplay', () => {
   let videoElement;
   let storyContext;
   let refs;
+
+  beforeAll(() => {
+    elementTypes.forEach(registerElementType);
+  });
 
   beforeEach(() => {
     imageElement = {

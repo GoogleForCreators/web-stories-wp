@@ -19,6 +19,9 @@
  */
 import { render, fireEvent } from '@testing-library/react';
 import { createSolid } from '@googleforcreators/patterns';
+import { registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
+
 /**
  * Internal dependencies
  */
@@ -27,6 +30,10 @@ import { TestFrameElement } from './_utils';
 /* eslint-disable testing-library/no-node-access, testing-library/no-container */
 
 describe('FrameElement selection', () => {
+  beforeAll(() => {
+    elementTypes.forEach(registerElementType);
+  });
+
   let setSelectedElementsById;
   let toggleElementInSelection;
   let storyContext;

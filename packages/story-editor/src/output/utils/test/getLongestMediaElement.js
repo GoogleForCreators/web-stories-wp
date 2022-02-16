@@ -13,6 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
@@ -20,6 +25,10 @@
 import getLongestMediaElement from '../getLongestMediaElement';
 
 describe('getLongestMediaElement', () => {
+  beforeAll(() => {
+    elementTypes.forEach(registerElementType);
+  });
+
   it('should return the media element with the longest duration', () => {
     const elements = [
       { type: 'video', resource: { length: 1 } },
