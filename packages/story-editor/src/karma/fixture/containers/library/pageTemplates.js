@@ -53,7 +53,9 @@ export default class PageTemplates extends Container {
   }
 
   deleteBtnByIndex(index) {
-    const deleteButtons = this.getAllByRole('button', { name: 'Delete Page Template' });
+    const deleteButtons = this.getAllByRole('button', {
+      name: 'Delete Page Template',
+    });
     return deleteButtons[index];
   }
 }
