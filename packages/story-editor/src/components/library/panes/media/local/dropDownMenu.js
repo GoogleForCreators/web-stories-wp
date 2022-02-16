@@ -96,8 +96,14 @@ function DropDownMenu({
   const options = [
     {
       group: [
-        { label: __('Edit', 'web-stories'), value: MENU_OPTIONS.EDIT },
-        { label: __('Delete', 'web-stories'), value: MENU_OPTIONS.DELETE },
+        {
+          label: __('Edit meta data', 'web-stories'),
+          value: MENU_OPTIONS.EDIT,
+        },
+        {
+          label: __('Delete from library', 'web-stories'),
+          value: MENU_OPTIONS.DELETE,
+        },
       ],
     },
   ];
