@@ -28,31 +28,36 @@ import {
   Icons,
   THEME_CONSTANTS,
 } from '@googleforcreators/design-system';
+/**
+ * Internal dependencies
+ */
+import { HEADER_BAR_HEIGHT, HEADER_BAR_MARGIN } from '../constants';
 
 const _Header = styled.header`
   width: 100%;
-  height: 44px;
+  height: ${HEADER_BAR_HEIGHT};
   display: flex;
   align-items: center;
-  margin-bottom: 1px;
+  margin-bottom: ${HEADER_BAR_MARGIN};
   background-color: ${({ theme }) => theme.colors.bg.secondary};
+  border-top-left-radius: ${({ theme }) => theme.borders.radius.medium};
+  border-top-right-radius: ${({ theme }) => theme.borders.radius.medium};
+`;
 
-  & > button:first-of-type {
-    margin: 0 auto 0 6px;
-  }
-  & > button:last-of-type {
-    margin: 0 6px 0 auto;
-  }
+const CloseButton = styled(Button)`
+  margin: 6px auto 5px 6px;
 `;
 
 const PublishButton = styled(Button)`
   height: 32px;
+  padding: 6px 8px;
+  margin: 6px 6px 5px auto;
 `;
 
 const Header = ({ isPublishEnabled, onClose, onPublish }) => {
   return (
     <_Header>
-      <Button
+      <CloseButton
         variant={BUTTON_VARIANTS.SQUARE}
         size={BUTTON_SIZES.SMALL}
         type={BUTTON_TYPES.TERTIARY}
@@ -60,7 +65,7 @@ const Header = ({ isPublishEnabled, onClose, onPublish }) => {
         aria-label={__('Close', 'web-stories')}
       >
         <Icons.Cross />
-      </Button>
+      </CloseButton>
       <Headline
         as="h2"
         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL}

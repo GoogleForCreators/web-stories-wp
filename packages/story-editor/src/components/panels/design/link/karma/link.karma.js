@@ -42,6 +42,7 @@ describe('Link Panel', () => {
   });
 
   const moveElementToBottom = async (frame, frameY = 0) => {
+    safezone = fixture.querySelector('[data-testid="safezone"]');
     const safezoneHeight = safezone.getBoundingClientRect().height;
     const frameHeight = frame.getBoundingClientRect().height;
     await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
@@ -205,44 +206,39 @@ describe('Link Panel', () => {
       );
     });
 
-    // Disable reason: tests not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
+    // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
     xit('should invoke API when looking up link');
 
-    // Disable reason: tests not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
+    // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
     xit('should display error when API errors');
 
-    // Disable reason: tests not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
+    // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
     xit('should display link details when API succeeds');
 
-    // Disable reason: tests not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
+    // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
     xit('should be able to apply a link to a shape element');
 
-    // Disable reason: tests not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
+    // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
     xit('should be able to apply a link to a image element');
 
-    // Disable reason: tests not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
+    // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
     xit('should be able to apply a link to a video element');
 
-    // Disable reason: tests not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
+    // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
     xit('should not be able to apply a link to a background shape element');
 
-    // Disable reason: tests not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
+    // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
     xit('should not be able to apply a link to a background media element');
   });
 
   describe('CUJ: Creator Can Add A Link: Link with Page Attachment', () => {
     beforeEach(async () => {
-      // Select Page.
-      safezone = fixture.querySelector('[data-testid="safezone"]');
-      await clickOnTarget(safezone);
+      // Select Page and remove empty state message.
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.changeBackgroundColorButton
+      );
+      await fixture.events.keyboard.type('ef');
+      await fixture.events.keyboard.press('Tab');
 
       // Add Page Attachment
       await setPageAttachmentLink('http://pageattachment.com');
@@ -393,21 +389,18 @@ describe('Link Panel', () => {
       await fixture.events.keyboard.type('http://google.com');
     });
 
-    // Disable reason: tests not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
+    // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
     xit('should be able to removed an applied a link');
   });
 
-  // Disable reason: tests not implemented yet
-  // eslint-disable-next-line jasmine/no-disabled-tests
+  // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
   xdescribe('CUJ: Creator Can Add A Link: Edit brand icon', () => {
     it('should be able to edit brand icon');
 
     it('should be able to remove brand icon');
   });
 
-  // Disable reason: tests not implemented yet
-  // eslint-disable-next-line jasmine/no-disabled-tests
+  // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
   xdescribe('CUJ: Creator Can Add A Link: Edit description', () => {
     it('should be able to edit description');
   });

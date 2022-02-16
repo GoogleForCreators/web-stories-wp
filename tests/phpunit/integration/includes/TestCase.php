@@ -23,7 +23,7 @@ abstract class TestCase extends PolyfilledTestCase {
 	/**
 	 * Clean up again after each test run.
 	 */
-	public function tear_down() {
+	public function tear_down(): void {
 		// WordPress core fails to do this.
 		$GLOBALS['wp_the_query'] = $GLOBALS['wp_query'];
 

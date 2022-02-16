@@ -37,7 +37,7 @@ class Font_Post_Type extends Post_Type_Base implements HasRequirements {
 	/**
 	 * The slug of the font post type.
 	 */
-	const POST_TYPE_SLUG = 'web-story-font';
+	public const POST_TYPE_SLUG = 'web-story-font';
 
 	/**
 	 * Story_Post_Type instance.

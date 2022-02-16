@@ -30,7 +30,7 @@ class Base_Color extends TestCase {
 	 */
 	protected $instance;
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->instance = new \Google\Web_Stories\Media\Base_Color();
@@ -39,7 +39,7 @@ class Base_Color extends TestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$this->instance->register();
 
 		$this->assertSame( 10, has_filter( 'wp_prepare_attachment_for_js', [ $this->instance, 'wp_prepare_attachment_for_js' ] ) );
@@ -48,7 +48,7 @@ class Base_Color extends TestCase {
 	/**
 	 * @covers ::register_meta
 	 */
-	public function test_register_meta() {
+	public function test_register_meta(): void {
 		$this->instance->register_meta();
 
 		$this->assertTrue( registered_meta_key_exists( 'post', $this->instance::BASE_COLOR_POST_META_KEY, 'attachment' ) );
@@ -57,7 +57,7 @@ class Base_Color extends TestCase {
 	/**
 	 * @covers ::wp_prepare_attachment_for_js
 	 */
-	public function test_wp_prepare_attachment_for_js() {
+	public function test_wp_prepare_attachment_for_js(): void {
 		$attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/images/canola.jpg',

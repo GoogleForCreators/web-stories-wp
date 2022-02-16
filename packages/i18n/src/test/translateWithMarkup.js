@@ -61,7 +61,6 @@ describe('TranslateWithMarkup component', () => {
 
   it('returns expected React element for component', () => {
     const result = renderToStaticMarkup(
-      //eslint-disable-next-line jsx-a11y/anchor-has-content
       <TranslateWithMarkup mapping={{ a: <a href="https://example.com" /> }}>
         {'This is a <a>link</a>!'}
       </TranslateWithMarkup>
@@ -74,7 +73,6 @@ describe('TranslateWithMarkup component', () => {
     const string = 'This is a <a>link</a>!';
 
     const Link = (props) => {
-      //eslint-disable-next-line react/prop-types
       return <a {...props}>{props.children}</a>;
     };
 
@@ -89,7 +87,6 @@ describe('TranslateWithMarkup component', () => {
 
   it('returns expected React element for multiple components', () => {
     const Link = (props) => {
-      //eslint-disable-next-line react/prop-types
       return <a {...props}>{props.children}</a>;
     };
 
@@ -115,7 +112,6 @@ describe('TranslateWithMarkup component', () => {
 
   it('does not preserve HTML attributes', () => {
     const result = renderToStaticMarkup(
-      //eslint-disable-next-line jsx-a11y/anchor-has-content
       <TranslateWithMarkup mapping={{ a: <a href="https://example.com" /> }}>
         {
           'This is a <a href="https://example.org" target="_blank" rel="noreferrer">link</a>!'
@@ -129,7 +125,6 @@ describe('TranslateWithMarkup component', () => {
   it('converts mapping keys to lowercase', () => {
     const result = renderToStaticMarkup(
       <TranslateWithMarkup
-        //eslint-disable-next-line jsx-a11y/anchor-has-content
         mapping={{ CustomLink: <a href="https://example.com" /> }}
       >
         {'This is a <CustomLink>link</CustomLink>!'}
@@ -141,10 +136,7 @@ describe('TranslateWithMarkup component', () => {
 
   it('throws error when accidentally using void elements', () => {
     const component = (
-      <TranslateWithMarkup
-        //eslint-disable-next-line jsx-a11y/anchor-has-content
-        mapping={{ link: <a href="https://example.com" /> }}
-      >
+      <TranslateWithMarkup mapping={{ link: <a href="https://example.com" /> }}>
         {'This is a <link>link</link>!'}
       </TranslateWithMarkup>
     );

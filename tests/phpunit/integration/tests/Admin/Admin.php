@@ -45,7 +45,7 @@ class Admin extends DependencyInjectedTestCase {
 	 */
 	protected static $post_id;
 
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$admin_id = $factory->user->create(
 			[ 'role' => 'administrator' ]
 		);
@@ -77,7 +77,7 @@ class Admin extends DependencyInjectedTestCase {
 	 */
 	private $instance;
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\Admin\Admin::class );
@@ -86,7 +86,7 @@ class Admin extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$this->instance->register();
 
 		$this->assertSame( 99, has_filter( 'admin_body_class', [ $this->instance, 'admin_body_class' ] ) );
@@ -98,7 +98,7 @@ class Admin extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::admin_body_class
 	 */
-	public function test_admin_body_class() {
+	public function test_admin_body_class(): void {
 		wp_set_current_user( self::$admin_id );
 		$GLOBALS['current_screen'] = convert_to_screen( \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$result                    = $this->instance->admin_body_class( 'current' );
@@ -108,7 +108,7 @@ class Admin extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::prefill_post_content
 	 */
-	public function test_prefill_post_content() {
+	public function test_prefill_post_content(): void {
 		wp_set_current_user( self::$admin_id );
 
 		$_GET['from-web-story'] = self::$story_id;
@@ -121,7 +121,7 @@ class Admin extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::prefill_post_content
 	 */
-	public function test_prefill_post_content_invalid_user() {
+	public function test_prefill_post_content_invalid_user(): void {
 		wp_set_current_user( 0 );
 
 		$_GET['from-web-story'] = self::$story_id;
@@ -133,7 +133,7 @@ class Admin extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::prefill_post_content
 	 */
-	public function test_prefill_post_content_shortcode() {
+	public function test_prefill_post_content_shortcode(): void {
 		add_filter( 'use_block_editor_for_post', '__return_false' );
 
 		wp_set_current_user( self::$admin_id );
@@ -149,7 +149,7 @@ class Admin extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::prefill_post_content
 	 */
-	public function test_prefill_post_content_invalid_id() {
+	public function test_prefill_post_content_invalid_id(): void {
 		wp_set_current_user( self::$admin_id );
 
 		$_GET['from-web-story'] = 999999999;
@@ -160,7 +160,7 @@ class Admin extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::prefill_post_title
 	 */
-	public function test_prefill_post_title() {
+	public function test_prefill_post_title(): void {
 		wp_set_current_user( self::$admin_id );
 
 		$_GET['from-web-story'] = self::$story_id;
@@ -171,7 +171,7 @@ class Admin extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::prefill_post_title
 	 */
-	public function test_prefill_post_title_no_texturize() {
+	public function test_prefill_post_title_no_texturize(): void {
 		wp_set_current_user( self::$admin_id );
 
 		$_GET['from-web-story'] = self::$story_id;

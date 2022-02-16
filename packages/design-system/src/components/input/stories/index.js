@@ -19,7 +19,6 @@
  */
 import { useState } from '@googleforcreators/react';
 import styled from 'styled-components';
-import { action } from '@storybook/addon-actions';
 
 /**
  * Internal dependencies
@@ -27,21 +26,21 @@ import { action } from '@storybook/addon-actions';
 import { Input } from '..';
 import { NumericInput } from '../numericInput';
 import { DarkThemeProvider } from '../../../storybookUtils';
-import { Headline } from '../../..';
+import { Headline, Text } from '../../..';
 import { AlignCenter } from '../../../icons';
 
 export default {
   title: 'DesignSystem/Components/Input',
   component: Input,
   args: {
-    label1: 'Normal',
-    label2: 'Suffix',
-    label3: 'Error',
-    label4: 'Disabled',
-
+    label: 'Label',
     hint: 'Hint',
     placeholder: 'placeholder',
-    suffix: 'Suffix',
+    suffix: '',
+    unit: '',
+  },
+  argTypes: {
+    handleOnChange: { action: 'handle on change' },
   },
 };
 
@@ -72,11 +71,11 @@ const IconContainer = styled.div`
 `;
 
 // eslint-disable-next-line react/prop-types
-export const _default = ({ label1, label2, label3, label4, ...args }) => {
+export const _default = ({ handleOnChange, ...args }) => {
   const [inputState, setInputState] = useState({
     oneLight: '600',
-    twoLight: 'we have an error',
-    threeLight: 'disabled',
+    twoLight: 'w/ suffix',
+    threeLight: 'we have an error',
     fourLight: 'disabled',
     oneDark: 'Dark mode text',
     twoDark: '',
@@ -88,7 +87,7 @@ export const _default = ({ label1, label2, label3, label4, ...args }) => {
     const name = event.target.name;
     const value = event.target.value;
 
-    action(event.target.name)(event);
+    handleOnChange(name, value);
     setInputState((prevState) => ({
       ...prevState,
       [name]: value,
@@ -101,45 +100,58 @@ export const _default = ({ label1, label2, label3, label4, ...args }) => {
       <br />
       <Container>
         <Row>
-          <Input
-            aria-label="input-one"
-            id="one-light"
-            name="oneLight"
-            value={inputState.oneLight}
-            onChange={handleChange}
-            unit="ms"
-            label={label1}
-            {...args}
-          />
-          <Input
-            aria-label="input-two"
-            id="two-light"
-            name="twoLight"
-            value={inputState.twoLight}
-            onChange={handleChange}
-            label={label2}
-            {...args}
-          />
-          <Input
-            aria-label="input-three"
-            id="three-light"
-            name="threeLight"
-            value={inputState.threeLight}
-            onChange={handleChange}
-            label={label3}
-            {...args}
-            hasError
-          />
-          <Input
-            aria-label="disabled-input-one"
-            id="four-light"
-            name="fourLight"
-            value={inputState.fourLight}
-            onChange={handleChange}
-            label={label4}
-            {...args}
-            disabled
-          />
+          <Text isBold>
+            {'Normal'}
+            <Input
+              aria-label="input-one"
+              id="one-light"
+              name="oneLight"
+              value={inputState.oneLight}
+              onChange={handleChange}
+              unit="ms"
+              {...args}
+            />
+          </Text>
+          <Text isBold>
+            {'Suffix Icon'}
+            <Input
+              aria-label="input-two"
+              id="two-light"
+              name="twoLight"
+              value={inputState.twoLight}
+              onChange={handleChange}
+              {...args}
+              suffix={
+                <IconContainer>
+                  <AlignCenter />
+                </IconContainer>
+              }
+            />
+          </Text>
+          <Text isBold>
+            {'Error'}
+            <Input
+              aria-label="input-three"
+              id="three-light"
+              name="threeLight"
+              value={inputState.threeLight}
+              onChange={handleChange}
+              {...args}
+              hasError
+            />
+          </Text>
+          <Text isBold>
+            {'Disabled'}
+            <Input
+              aria-label="disabled-input-one"
+              id="four-light"
+              name="fourLight"
+              value={inputState.fourLight}
+              onChange={handleChange}
+              {...args}
+              disabled
+            />
+          </Text>
         </Row>
       </Container>
       <DarkThemeProvider>
@@ -151,7 +163,6 @@ export const _default = ({ label1, label2, label3, label4, ...args }) => {
               name="oneDark"
               value={inputState.oneDark}
               onChange={handleChange}
-              label={label1}
               {...args}
             />
             <Input
@@ -160,7 +171,6 @@ export const _default = ({ label1, label2, label3, label4, ...args }) => {
               name="twoDark"
               value={inputState.twoDark}
               onChange={handleChange}
-              label={label2}
               {...args}
               suffix={
                 <IconContainer>
@@ -174,7 +184,6 @@ export const _default = ({ label1, label2, label3, label4, ...args }) => {
               name="threeDark"
               value={inputState.threeDark}
               onChange={handleChange}
-              label={label3}
               {...args}
               hasError
             />
@@ -184,7 +193,6 @@ export const _default = ({ label1, label2, label3, label4, ...args }) => {
               name="fourDark"
               value={inputState.fourDark}
               onChange={handleChange}
-              label={label4}
               {...args}
               disabled
             />
@@ -196,7 +204,7 @@ export const _default = ({ label1, label2, label3, label4, ...args }) => {
 };
 
 // eslint-disable-next-line react/prop-types
-export const Numeric = ({ label1, label2, label3, label4, ...args }) => {
+export const Numeric = ({ handleOnChange, ...args }) => {
   const [inputState, setInputState] = useState({
     oneLight: 600,
     twoLight: 0,
@@ -208,6 +216,7 @@ export const Numeric = ({ label1, label2, label3, label4, ...args }) => {
 
   const handleChange = (ev, value) => {
     const name = ev.target.name;
+    handleOnChange(name, value);
 
     setInputState((prevState) => ({
       ...prevState,
@@ -221,36 +230,42 @@ export const Numeric = ({ label1, label2, label3, label4, ...args }) => {
       <br />
       <Container>
         <Row>
-          <NumericInput
-            aria-label="input-one"
-            id="one-light"
-            name="oneLight"
-            value={inputState.oneLight}
-            onChange={handleChange}
-            label={label1}
-            {...args}
-          />
-          <NumericInput
-            aria-label="input-two"
-            id="two-light"
-            name="twoLight"
-            value={inputState.twoLight}
-            onChange={handleChange}
-            label={label2}
-            {...args}
-            unit="ms"
-            suffix="Duration"
-          />
-          <NumericInput
-            aria-label="disabled-input-one"
-            id="three-light"
-            name="threeLight"
-            value={inputState.threeLight}
-            onChange={handleChange}
-            label={label4}
-            {...args}
-            disabled
-          />
+          <Text isBold>
+            {'Normal'}
+            <NumericInput
+              aria-label="input-one"
+              id="one-light"
+              name="oneLight"
+              value={inputState.oneLight}
+              onChange={handleChange}
+              {...args}
+            />
+          </Text>
+          <Text isBold>
+            {'Unit and Suffix'}
+            <NumericInput
+              aria-label="input-two"
+              id="two-light"
+              name="twoLight"
+              value={inputState.twoLight}
+              onChange={handleChange}
+              {...args}
+              unit="ms"
+              suffix="Duration"
+            />
+          </Text>
+          <Text isBold>
+            {'Disabled'}
+            <NumericInput
+              aria-label="disabled-input-one"
+              id="three-light"
+              name="threeLight"
+              value={inputState.threeLight}
+              onChange={handleChange}
+              {...args}
+              disabled
+            />
+          </Text>
         </Row>
       </Container>
       <DarkThemeProvider>
@@ -262,7 +277,6 @@ export const Numeric = ({ label1, label2, label3, label4, ...args }) => {
               name="oneDark"
               value={inputState.oneDark}
               onChange={handleChange}
-              label={label1}
               {...args}
             />
             <NumericInput
@@ -271,7 +285,6 @@ export const Numeric = ({ label1, label2, label3, label4, ...args }) => {
               name="twoDark"
               value={inputState.twoDark}
               onChange={handleChange}
-              label={label2}
               {...args}
               unit="°"
               suffix="Temp"
@@ -282,7 +295,6 @@ export const Numeric = ({ label1, label2, label3, label4, ...args }) => {
               name="threeDark"
               value={inputState.threeDark}
               onChange={handleChange}
-              label={label4}
               {...args}
               disabled
             />
@@ -293,7 +305,6 @@ export const Numeric = ({ label1, label2, label3, label4, ...args }) => {
   );
 };
 Numeric.args = {
-  label2: 'Unit and Suffix',
   min: 0,
   max: 100,
   allowEmpty: false,

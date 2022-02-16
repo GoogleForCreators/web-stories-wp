@@ -41,6 +41,8 @@ import {
   StickerMenu,
   TextMenu,
 } from '../../app/rightClickMenu';
+import isEmptyStory from '../../app/story/utils/isEmptyStory';
+import EmptyStateMenu from '../../app/rightClickMenu/menus/emptyStateMenu';
 
 const RightClickMenuContainer = styled.div`
   position: absolute;
@@ -51,7 +53,10 @@ const RightClickMenuContainer = styled.div`
 
 const RightClickMenu = () => {
   const { isRTL } = useConfig();
-  const selectedElements = useStory((value) => value.state.selectedElements);
+  const { selectedElements, isThisEmptyStory } = useStory((value) => ({
+    selectedElements: value.state.selectedElements,
+    isThisEmptyStory: isEmptyStory(value.state.pages),
+  }));
   const { isMenuOpen, menuPosition, onCloseMenu, maskRef } =
     useRightClickMenu();
   const ref = useRef();
@@ -67,6 +72,10 @@ const RightClickMenu = () => {
   };
 
   const Menu = useMemo(() => {
+    if (isThisEmptyStory) {
+      return EmptyStateMenu;
+    }
+
     if (selectedElements.length > 1) {
       return MultipleElementsMenu;
     }
@@ -91,7 +100,7 @@ const RightClickMenu = () => {
       default:
         return PageMenu;
     }
-  }, [selectedElements]);
+  }, [selectedElements, isThisEmptyStory]);
 
   useEffect(() => {
     const node = ref.current;

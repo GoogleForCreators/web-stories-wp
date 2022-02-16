@@ -41,7 +41,7 @@ class Remove_Unneeded_Attachment_Meta extends Migrate_Base {
 	 *
 	 * @return void
 	 */
-	public function migrate() {
+	public function migrate(): void {
 		delete_post_meta_by_key( Poster::POSTER_POST_META_KEY );
 	}
 }

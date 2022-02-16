@@ -29,8 +29,8 @@ import {
 } from '../../components/editorSettings';
 
 jest.mock('../settings', () => ({
-  fetchSettings: () => Promise.reject({}), // eslint-disable-line prefer-promise-reject-errors
-  updateSettings: () => Promise.reject({}), // eslint-disable-line prefer-promise-reject-errors
+  fetchSettings: () => Promise.reject(new Error()),
+  updateSettings: () => Promise.reject(new Error()),
 }));
 
 jest.mock('../user', () => ({

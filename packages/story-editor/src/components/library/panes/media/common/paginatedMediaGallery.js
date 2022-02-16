@@ -50,6 +50,8 @@ const StyledText = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 function PaginatedMediaGallery({
   providerType,
   resources,
@@ -129,9 +131,6 @@ function PaginatedMediaGallery({
   // After loading a next page, see if we need to load another,
   // ie. when the page of results isn't full.
   useLayoutEffect(() => {
-    //eslint-disable-next-line @wordpress/react-no-unsafe-timeout
-    const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
     async function loadNextPageIfNeededAfterGalleryRendering() {
       // Wait for <Gallery> to finish its render layout cycles first.
       await sleep(200);

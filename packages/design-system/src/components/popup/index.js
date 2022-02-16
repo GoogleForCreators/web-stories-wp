@@ -80,6 +80,7 @@ function Popup({
   topOffset = DEFAULT_TOPOFFSET,
   zIndex = DEFAULT_POPUP_Z_INDEX,
   noOverFlow = false,
+  ignoreMaxOffsetY,
 }) {
   const [popupState, setPopupState] = useState(null);
   const isMounted = useRef(false);
@@ -103,12 +104,21 @@ function Popup({
       }
       setPopupState({
         offset: anchor.current
-          ? getOffset(placement, spacing, anchor, dock, popup, isRTL, topOffset)
+          ? getOffset({
+              placement,
+              spacing,
+              anchor,
+              dock,
+              popup,
+              isRTL,
+              topOffset,
+              ignoreMaxOffsetY,
+            })
           : {},
         height: popup.current?.getBoundingClientRect()?.height,
       });
     },
-    [anchor, dock, isRTL, placement, spacing, topOffset]
+    [anchor, dock, isRTL, placement, spacing, topOffset, ignoreMaxOffsetY]
   );
   useEffect(() => {
     // If the popup height changes meanwhile, let's update the popup, too.
@@ -185,6 +195,7 @@ Popup.propTypes = {
   topOffset: PropTypes.number,
   zIndex: PropTypes.number,
   noOverFlow: PropTypes.bool,
+  ignoreMaxOffsetY: PropTypes.bool,
 };
 
 export { Popup, PLACEMENT };

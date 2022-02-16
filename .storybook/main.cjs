@@ -37,7 +37,7 @@ module.exports = {
     fastRefresh: true,
     strictMode: true,
   },
-  //eslint-disable-next-line require-await
+  //eslint-disable-next-line require-await -- Negligible.
   webpackFinal: async (config) => {
     // Modifies storybook's webpack config to use svgr instead of file-loader.
     // see https://github.com/storybookjs/storybook/issues/5613

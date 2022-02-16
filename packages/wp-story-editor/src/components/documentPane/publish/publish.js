@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import {
   useState,
   useEffect,
@@ -114,7 +115,7 @@ const LogoImg = styled.img`
   max-height: 96px;
 `;
 
-function PublishPanel() {
+function PublishPanel({ nameOverride }) {
   const {
     state: { users },
   } = useInspector();
@@ -291,7 +292,7 @@ function PublishPanel() {
 
   return (
     <Panel
-      name="publishing"
+      name={nameOverride || 'publishing'}
       collapsedByDefault={false}
       isPersistable={!(highlightLogo || highlightPoster)}
     >
@@ -349,6 +350,7 @@ function PublishPanel() {
                 renderer={publisherLogoOptionRenderer}
                 activeItemRenderer={activeItemRenderer}
                 selectedId={publisherLogo.id}
+                zIndex={10}
                 disabled={!publisherLogosWithUploadOption.length}
                 ref={(node) => {
                   if (
@@ -385,3 +387,7 @@ function PublishPanel() {
 }
 
 export default PublishPanel;
+
+PublishPanel.propTypes = {
+  nameOverride: PropTypes.string,
+};

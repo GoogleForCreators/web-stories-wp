@@ -40,7 +40,7 @@ class Yoast_Reindex_Stories extends Migrate_Base {
 	 *
 	 * @return void
 	 */
-	public function migrate() {
+	public function migrate(): void {
 		if (
 			! function_exists( 'YoastSEO' ) ||
 			! class_exists( '\Yoast\WP\SEO\Repositories\Indexable_Repository' ) ||

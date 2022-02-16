@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import { useCallback, useMemo, useState } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
@@ -37,7 +38,7 @@ const InputRow = styled(Row)`
   margin-left: 34px;
 `;
 
-function StatusPanel() {
+function StatusPanel({ nameOverride }) {
   const {
     status = '',
     password,
@@ -203,7 +204,7 @@ function StatusPanel() {
   return (
     <>
       <SimplePanel
-        name="status"
+        name={nameOverride || 'status'}
         title={__('Visibility', 'web-stories')}
         collapsedByDefault={false}
       >
@@ -240,3 +241,7 @@ function StatusPanel() {
 }
 
 export default StatusPanel;
+
+StatusPanel.propTypes = {
+  nameOverride: PropTypes.string,
+};

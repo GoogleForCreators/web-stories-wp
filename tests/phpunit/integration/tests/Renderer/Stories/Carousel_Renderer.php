@@ -57,7 +57,7 @@ class Carousel_Renderer extends TestCase {
 	 *
 	 * @param \WP_UnitTest_Factory $factory Factory class object.
 	 */
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$story_id = $factory->post->create(
 			[
 				'post_type'    => \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG,
@@ -72,7 +72,7 @@ class Carousel_Renderer extends TestCase {
 	/**
 	 * Runs once before any test in the class run.
 	 */
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->story_model = $this->createMock( Story::class );
@@ -84,7 +84,7 @@ class Carousel_Renderer extends TestCase {
 	 * @covers ::init
 	 * @covers ::load_assets
 	 */
-	public function test_init() {
+	public function test_init(): void {
 
 		$this->story_query->method( 'get_story_attributes' )->willReturn(
 			[
@@ -105,7 +105,7 @@ class Carousel_Renderer extends TestCase {
 	/**
 	 * @covers ::render
 	 */
-	public function test_render() {
+	public function test_render(): void {
 
 		$this->story_query->method( 'get_story_attributes' )->willReturn(
 			[

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-/* eslint complexity: ["error", { "max": 21 }] */
+/* eslint complexity: ["error", { "max": 21 }] -- TODO: Refactor this. */
 
 /**
  * External dependencies

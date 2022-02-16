@@ -25,18 +25,20 @@ import { useContextMenu } from '../contextMenuProvider';
 
 const Line = styled.div`
   display: block;
-  background-color: ${({ theme }) => theme.colors.divider.primary};
-  ${({ $isHorizontal, $isIconMenu }) =>
-    $isHorizontal
+  flex-shrink: 0;
+  ${({ isHorizontal, isIconMenu, theme }) =>
+    isHorizontal
       ? `
         width: 1px;
         height: 89%; /* 32px out of 36px */
         margin: auto 2px; /* there's an extra 6px horizontal flexbox gap */
+        background-color: ${theme.colors.divider.secondary};
       `
       : `
         height: 1px;
         margin: 2px auto; /* there's an extra 6px vertical flexbox gap */
-        width: ${$isIconMenu ? 40 : 100}%;
+        width: ${isIconMenu ? 40 : 100}%;
+        background-color: ${theme.colors.divider.primary};
       `}
 `;
 
@@ -47,11 +49,12 @@ const Line = styled.div`
  * @return {Node} The react node
  */
 function Separator() {
-  const { isIconMenu, isHorizontal } = useContextMenu(
-    ({ state: { isIconMenu, isHorizontal } }) => ({ isIconMenu, isHorizontal })
-  );
+  const props = useContextMenu(({ state: { isIconMenu, isHorizontal } }) => ({
+    isIconMenu,
+    isHorizontal,
+  }));
 
-  return <Line $isIconMenu={isIconMenu} $isHorizontal={isHorizontal} />;
+  return <Line {...props} />;
 }
 
 export default Separator;

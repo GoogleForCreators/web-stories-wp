@@ -15,7 +15,7 @@
     "ampproject/amp-wp": "dev-develop",
     "civicrm/composer-downloads-plugin": "^3.0",
     "cweagans/composer-patches": "^1.6",
-    "enshrined/svg-sanitize": "^0.14.0",
+    "enshrined/svg-sanitize": "^0.15.2",
     "mcaskill/composer-exclude-files": "^2.0",
     "sabberworm/php-css-parser": "dev-master#bfdd976",
     "symfony/polyfill-mbstring": "^1.18"
@@ -30,6 +30,7 @@
     "roave/security-advisories": "dev-latest",
     "sirbrillig/phpcs-variable-analysis": "^2.8",
     "slevomat/coding-standard": "^7.0.18",
+    "sniccowp/php-scoper-wordpress-excludes": "^5.9",
     "szepeviktor/phpstan-wordpress": "^1.0",
     "wp-coding-standards/wpcs": "^2.3",
     "yoast/wp-test-utils": "^1.0.0"
@@ -87,7 +88,7 @@
       "php-scoper": {
         "path": "vendor/bin/php-scoper",
         "type": "phar",
-        "url": "https://github.com/humbug/php-scoper/releases/download/0.15.0/php-scoper.phar"
+        "url": "https://github.com/humbug/php-scoper/releases/download/0.17.0/php-scoper.phar"
       }
     },
     "enable-patching": true,

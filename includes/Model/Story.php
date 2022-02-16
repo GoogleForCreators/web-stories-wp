@@ -84,6 +84,20 @@ class Story {
 	protected $publisher_logo;
 
 	/**
+	 * Poster source set sizes.
+	 *
+	 * @var string
+	 */
+	protected $poster_sizes = '';
+
+	/**
+	 * Poster source set.
+	 *
+	 * @var string
+	 */
+	protected $poster_srcset = '';
+
+	/**
 	 * Publisher logo size.
 	 *
 	 * @var array
@@ -151,10 +165,18 @@ class Story {
 		$thumbnail_id = (int) get_post_thumbnail_id( $post );
 
 		if ( 0 !== $thumbnail_id ) {
-			$poster_url = wp_get_attachment_image_url( $thumbnail_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
+			$poster_src = wp_get_attachment_image_src( $thumbnail_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
 
-			if ( $poster_url ) {
-				$this->poster_portrait = $poster_url;
+			if ( $poster_src ) {
+				[ $poster_url, $width, $height ] = $poster_src;
+				$this->poster_portrait           = $poster_url;
+
+				$size_array = [ (int) $width, (int) $height ];
+				$image_meta = wp_get_attachment_metadata( $thumbnail_id );
+				if ( $image_meta ) {
+					$this->poster_sizes  = (string) wp_calculate_image_sizes( $size_array, $poster_url, $image_meta, $thumbnail_id );
+					$this->poster_srcset = (string) wp_calculate_image_srcset( $size_array, $poster_url, $image_meta, $thumbnail_id );
+				}
 			}
 		}
 
@@ -169,13 +191,35 @@ class Story {
 			$img_src = wp_get_attachment_image_src( (int) $publisher_logo_id, Image_Sizes::PUBLISHER_LOGO_IMAGE_SIZE );
 
 			if ( $img_src ) {
-				list ( $src, $width, $height ) = $img_src;
-				$this->publisher_logo_size     = [ $width, $height ];
-				$this->publisher_logo          = $src;
+				[ $src, $width, $height ]  = $img_src;
+				$this->publisher_logo_size = [ $width, $height ];
+				$this->publisher_logo      = $src;
 			}
 		}
 
 		return true;
+	}
+
+	/**
+	 * Getter for poster source set sizes.
+	 *
+	 * @since 1.18.0
+	 *
+	 * @return string
+	 */
+	public function get_poster_sizes(): string {
+		return (string) $this->poster_sizes;
+	}
+
+	/**
+	 * Getter for poster source set.
+	 *
+	 * @since 1.18.0
+	 *
+	 * @return string
+	 */
+	public function get_poster_srcset(): string {
+		return (string) $this->poster_srcset;
 	}
 
 	/**
@@ -285,7 +329,7 @@ class Story {
 	 *
 	 * @return string|null Publisher logo URL or null if not set.
 	 */
-	public function get_publisher_logo_url() {
+	public function get_publisher_logo_url(): ?string {
 		/**
 		 * Filters the publisher logo URL.
 		 *

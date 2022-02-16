@@ -24,7 +24,6 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../../types';
 import { useLayout } from '../../../app';
 import Cue from './cue';
 
@@ -42,11 +41,11 @@ const Track = styled.div`
  * Track renderer component.
  *
  * @param {Object} props Component props.
- * @param {Object} props.videoElement Video element
+ * @param {string} props.elementId Media element id.
  * @param {number} props.trackIndex Video track index in the tracklist.
  * @return {*} Track component.
  */
-function TrackRenderer({ videoElement, trackIndex }) {
+function TrackRenderer({ elementId, trackIndex }) {
   const { pageWidth, pageHeight } = useLayout(
     ({ state: { pageWidth, pageHeight } }) => ({
       pageWidth,
@@ -74,35 +73,35 @@ function TrackRenderer({ videoElement, trackIndex }) {
     /**
      * @type {HTMLVideoElement}
      */
-    const videoEl = document.getElementById(`video-${videoElement.id}`);
+    const mediaEl = document.getElementById(elementId);
 
-    if (!videoEl) {
+    if (!mediaEl) {
       return undefined;
     }
 
-    const videoTrack = videoEl.textTracks?.[trackIndex];
+    const mediaTrack = mediaEl.textTracks?.[trackIndex];
 
-    if (!videoTrack) {
+    if (!mediaTrack) {
       return undefined;
     }
 
-    videoTrack.mode = 'hidden';
+    mediaTrack.mode = 'hidden';
 
     updateCues();
 
-    setTrack(videoTrack);
+    setTrack(mediaTrack);
 
-    videoEl.addEventListener('timeupdate', () => {
-      setVideoTime(videoEl.currentTime);
+    mediaEl.addEventListener('timeupdate', () => {
+      setVideoTime(mediaEl.currentTime);
     });
 
     // TODO: Figure out why this doesn't work after moving the video on the canvas.
-    videoTrack.addEventListener('cuechange', updateCues);
+    mediaTrack.addEventListener('cuechange', updateCues);
 
     return () => {
-      videoTrack.removeEventListener('cuechange', updateCues);
+      mediaTrack.removeEventListener('cuechange', updateCues);
     };
-  }, [trackIndex, updateCues, videoElement, pageWidth, pageHeight]);
+  }, [trackIndex, updateCues, elementId, pageWidth, pageHeight]);
 
   if (!cues || !track) {
     return null;
@@ -113,7 +112,7 @@ function TrackRenderer({ videoElement, trackIndex }) {
       {cues.map((cue, index) => (
         <Cue
           key={
-            // eslint-disable-next-line react/no-array-index-key
+            // eslint-disable-next-line react/no-array-index-key -- Order should never change.
             index
           }
           cue={cue}
@@ -126,7 +125,7 @@ function TrackRenderer({ videoElement, trackIndex }) {
 }
 
 TrackRenderer.propTypes = {
-  videoElement: StoryPropTypes.element.isRequired,
+  elementId: PropTypes.string.isRequired,
   trackIndex: PropTypes.number.isRequired,
 };
 

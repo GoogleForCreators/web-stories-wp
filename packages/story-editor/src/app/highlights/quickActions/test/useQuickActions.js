@@ -310,7 +310,7 @@ const mockOptimizeGif = jest.fn();
 const mockUseFFmpeg = useFFmpeg;
 const mockUseSnackbar = useSnackbar;
 const mockShowSnackbar = jest.fn();
-// eslint-disable-next-line react/prop-types
+
 const MockMediaPicker = ({ onSelect, onClose }) => (
   <>
     <button onClick={() => onSelect(imageResource)}>{'onSelect image'}</button>

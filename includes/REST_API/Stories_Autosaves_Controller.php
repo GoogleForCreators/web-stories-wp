@@ -88,7 +88,7 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller implemen
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		$this->register_routes();
 	}
 
@@ -138,7 +138,7 @@ class Stories_Autosaves_Controller extends WP_REST_Autosaves_Controller implemen
 	 *
 	 * @return void
 	 */
-	public function register_routes() {
+	public function register_routes(): void {
 		parent::register_routes();
 
 		register_rest_route(

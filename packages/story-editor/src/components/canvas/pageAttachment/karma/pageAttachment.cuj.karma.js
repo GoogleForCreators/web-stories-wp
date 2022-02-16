@@ -40,9 +40,12 @@ describe('Page Attachment', () => {
     await fixture.render();
     await fixture.collapseHelpCenter();
 
-    // Select Page by default.
-    safezone = fixture.querySelector('[data-testid="safezone"]');
-    await clickOnTarget(safezone);
+    // Select Page by default and remove empty state.
+    await fixture.events.click(
+      fixture.editor.canvas.quickActionMenu.changeBackgroundColorButton
+    );
+    await fixture.events.keyboard.type('ef');
+    await fixture.events.keyboard.press('Tab');
   });
 
   afterEach(() => {
@@ -50,6 +53,7 @@ describe('Page Attachment', () => {
   });
 
   const moveElementToBottom = async () => {
+    safezone = fixture.querySelector('[data-testid="safezone"]');
     const safezoneHeight = safezone.getBoundingClientRect().height;
     const frameHeight = frame.getBoundingClientRect().height;
     await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [

@@ -14,4 +14,6 @@
  * limitations under the License.
  */
 
-export { default as VideoCaptionsLayer } from './videoCaptionsLayer';
+export { default as IconButton } from './icon';
+export { default as TextButton } from './text';
+export { default as Separator } from './separator';

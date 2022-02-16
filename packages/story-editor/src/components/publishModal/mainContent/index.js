@@ -21,7 +21,6 @@ import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
-  Text,
 } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
@@ -29,6 +28,8 @@ import { __ } from '@googleforcreators/i18n';
  * Internal dependencies
  */
 import { MANDATORY_INPUT_VALUE_TYPES } from '../types';
+import useInspector from '../../inspector/useInspector';
+import { HEADER_BAR_HEIGHT, HEADER_BAR_MARGIN } from '../constants';
 import MandatoryStoryInfo from './mandatoryStoryInfo';
 import StoryPreview from './storyPreview';
 
@@ -36,33 +37,44 @@ const Main = styled.div`
   display: grid;
   min-width: 917px;
   width: 100%;
-  height: 100%;
-  margin: 0 -3.7% 0 3.7%;
-  grid-gap: 3.7%;
-  /* grid-template-columns: 230px 276px 308px; */
-  grid-template-columns: 25% 30% 34%;
+  height: calc(100% - ${HEADER_BAR_MARGIN} - ${HEADER_BAR_HEIGHT});
+  /* grid-template-columns: 281px 313px 326.5px; */
+  grid-template-columns: 30.5% 34% 35.5%;
   grid-template-rows: auto;
   grid-template-areas:
     'preview mandatory panel'
-    'footer footer panel';
+    'footer mandatory panel';
 `;
 
 const _StoryPreview = styled.div`
   grid-area: preview;
-  padding-top: 20px;
+  margin: 20px 18px 0 32px;
 `;
 
 const _MandatoryStoryInfo = styled.div`
   grid-area: mandatory;
+  padding: 0 18px;
+  overflow: scroll;
+
+  & > section {
+    border: none; /* Override the default border that is part of the base panel structure since this is destructured */
+  }
 `;
 
-const PanelContainer = styled.div`
+const PanelContainer = styled.div.attrs({ role: 'tabpanel' })`
   grid-area: panel;
+  height: 100%;
+  margin-left: 18px;
   background-color: ${({ theme }) => theme.colors.bg.secondary};
+  border-bottom-right-radius: ${({ theme }) => theme.borders.radius.medium};
+  overflow: scroll;
 `;
 
 const Footer = styled.div`
   grid-area: footer;
+  display: flex;
+  align-items: flex-end;
+  margin: 0 18px 20px 32px;
 `;
 
 const MainContent = ({
@@ -71,6 +83,10 @@ const MainContent = ({
   handleUpdateSlug,
   inputValues,
 }) => {
+  const { DocumentPane, id: paneId } = useInspector(
+    ({ data }) => data?.modalInspectorTab || {}
+  );
+
   return (
     <Main>
       <_StoryPreview>
@@ -83,9 +99,14 @@ const MainContent = ({
           inputValues={inputValues}
         />
       </_MandatoryStoryInfo>
-      <PanelContainer>
-        <Text>{__('Panels go here', 'web-stories')}</Text>
-      </PanelContainer>
+      {DocumentPane && (
+        <PanelContainer
+          aria-label={__('Story Settings', 'web-stories')}
+          id={paneId}
+        >
+          <DocumentPane />
+        </PanelContainer>
+      )}
       <Footer>
         <Button
           type={BUTTON_TYPES.PRIMARY}

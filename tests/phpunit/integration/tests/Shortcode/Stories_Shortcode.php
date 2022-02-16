@@ -44,7 +44,7 @@ class Stories_Shortcode extends TestCase {
 	/**
 	 * Run before any test is run and class is being setup.
 	 */
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 		require WEBSTORIES_PLUGIN_DIR_PATH . '/includes/compat/amp.php';
 
 		self::$story_id = $factory->post->create(
@@ -59,7 +59,7 @@ class Stories_Shortcode extends TestCase {
 	/**
 	 * Runs after all tests are run.
 	 */
-	public function tear_down() {
+	public function tear_down(): void {
 		remove_shortcode( Testee::SHORTCODE_NAME );
 
 		parent::tear_down();
@@ -70,7 +70,7 @@ class Stories_Shortcode extends TestCase {
 	 * @covers ::prepare_story_args
 	 * @covers ::prepare_story_attrs
 	 */
-	public function test_render_carousel_view_in_shortcode() {
+	public function test_render_carousel_view_in_shortcode(): void {
 		$stories_shortcode = new Testee();
 		$actual            = $stories_shortcode->render_stories(
 			[
@@ -86,7 +86,7 @@ class Stories_Shortcode extends TestCase {
 	 * @covers ::prepare_story_attrs
 	 * @covers ::prepare_story_args
 	 */
-	public function test_render_circles_view_in_shortcode() {
+	public function test_render_circles_view_in_shortcode(): void {
 		$stories_shortcode = new Testee();
 		$actual            = $stories_shortcode->render_stories(
 			[
@@ -102,7 +102,7 @@ class Stories_Shortcode extends TestCase {
 	 *
 	 * @covers ::prepare_story_args
 	 */
-	public function test_max_number_for_stories() {
+	public function test_max_number_for_stories(): void {
 		$stories_shortcode = new Testee();
 		$attributes        = [
 			'number_of_stories' => 1000000,
@@ -118,7 +118,7 @@ class Stories_Shortcode extends TestCase {
 	/**
 	 * @covers ::prepare_story_attrs
 	 */
-	public function test_prepare_story_attrs() {
+	public function test_prepare_story_attrs(): void {
 		$shortcode = new Testee();
 
 		$expected = [

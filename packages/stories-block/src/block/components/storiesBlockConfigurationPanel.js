@@ -42,11 +42,10 @@ function BlockConfigurationPanel({
       instructions={instructions}
       className="web-stories-block-configuration-panel"
     >
-      {/*
-       * Disable reason: The `list` ARIA role is redundant but
+      {/* eslint-disable-next-line jsx-a11y/no-redundant-roles --
+       * The `list` ARIA role is redundant but
        * Safari+VoiceOver won't announce the list otherwise.
-       */
-      /* eslint-disable-next-line jsx-a11y/no-redundant-roles */}
+       **/}
       <ul
         className="web-stories-block-configuration-panel__options"
         role="list"

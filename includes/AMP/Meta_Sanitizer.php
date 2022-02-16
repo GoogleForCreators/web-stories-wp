@@ -59,7 +59,7 @@ class Meta_Sanitizer extends AMP_Meta_Sanitizer {
 	 *
 	 * @return void
 	 */
-	protected function ensure_boilerplate_is_present() {
+	protected function ensure_boilerplate_is_present(): void {
 		$style  = null;
 		$styles = $this->dom->xpath->query( './style[ @amp-boilerplate ]', $this->dom->head );
 
@@ -116,7 +116,7 @@ class Meta_Sanitizer extends AMP_Meta_Sanitizer {
 	 *
 	 * @return string[] Stylesheets, where first is contained in style[amp-boilerplate] and the second in noscript>style[amp-boilerplate].
 	 */
-	protected function get_boilerplate_stylesheets() {
+	protected function get_boilerplate_stylesheets(): array {
 		return [
 			'body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}',
 			'body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}',
