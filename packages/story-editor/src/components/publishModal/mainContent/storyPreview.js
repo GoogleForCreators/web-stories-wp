@@ -16,6 +16,7 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
   Button,
@@ -41,12 +42,20 @@ const PreviewContainer = styled.div`
   position: relative;
   margin-top: 8px;
 `;
+PreviewContainer.propTypes = {
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+};
 
 const PreviewWrapper = styled.div`
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
   position: absolute;
 `;
+PreviewWrapper.propTypes = {
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+};
 
 export const Image = styled.img`
   height: 100%;
