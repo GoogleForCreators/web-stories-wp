@@ -69,6 +69,7 @@ const Container = styled.div`
  * @param {Function} props.activeItemRenderer Active item renderer in case a activeItemLabel is not enough.
  * @param {boolean} props.isInline If to display the selection list inline instead of as a separate popup modal.
  * @param {string} props.dropDownLabel The visible label of the dropdown select.
+ * @param {number} props.zIndex an override for default zIndex of popup
  * @return {*} Render.
  */
 const Datalist = forwardRef(function Datalist(
@@ -90,6 +91,7 @@ const Datalist = forwardRef(function Datalist(
     dropDownLabel = '',
     highlightStylesOverride,
     hasDropDownBorder = false,
+    zIndex,
     ...rest
   },
   ref
@@ -202,7 +204,12 @@ const Datalist = forwardRef(function Datalist(
       />
       {isOpen && !disabled && isInline && list}
       {!disabled && !isInline && (
-        <Popup anchor={internalRef} isOpen={isOpen} fillWidth={DEFAULT_WIDTH}>
+        <Popup
+          anchor={internalRef}
+          isOpen={isOpen}
+          fillWidth={DEFAULT_WIDTH}
+          zIndex={zIndex}
+        >
           {list}
         </Popup>
       )}
@@ -229,6 +236,7 @@ Datalist.propTypes = {
   dropDownLabel: PropTypes.string,
   isInline: PropTypes.bool,
   hasDropDownBorder: PropTypes.bool,
+  zIndex: PropTypes.number,
 };
 
 export default Datalist;
