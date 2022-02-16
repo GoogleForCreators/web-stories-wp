@@ -119,6 +119,7 @@ function InsertionMenu({ resource, display, onInsert, width, index, isLocal }) {
     const newElement = getElementProperties(resource.type, {
       resource,
     });
+    onMenuCancelled();
     switch (value) {
       case MENU_OPTIONS.INSERT:
         onInsert(resource, thumbnailUrl);
