@@ -119,7 +119,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
           data-leaf-element="true"
         >
           {url && <source src={url} type={resource.mimeType} />}
-          <Captions tracks={tracks} defaultKind="metadata" />
+          <Captions tracks={tracks} />
         </Video>
       )}
     </MediaDisplay>
