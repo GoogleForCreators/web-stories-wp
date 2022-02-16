@@ -160,15 +160,19 @@ StoryAnimations.propTypes = {
 };
 
 function DisplayLayer() {
-  const { backgroundColor, isBackgroundSelected, pageAttachment } = useStory(
-    ({ state }) => {
-      return {
-        backgroundColor: state.currentPage?.backgroundColor,
-        isBackgroundSelected: state.selectedElements?.[0]?.isBackground,
-        pageAttachment: state.currentPage?.pageAttachment,
-      };
-    }
-  );
+  const {
+    backgroundColor,
+    isBackgroundSelected,
+    pageAttachment,
+    hasCurrentPage,
+  } = useStory(({ state }) => {
+    return {
+      hasCurrentPage: Boolean(state.currentPage),
+      backgroundColor: state.currentPage?.backgroundColor,
+      isBackgroundSelected: state.selectedElements?.[0]?.isBackground,
+      pageAttachment: state.currentPage?.pageAttachment,
+    };
+  });
   // Have page elements shallowly equaled for scenarios like animation
   // updates where elements don't change, but we get a new page elements
   // array
@@ -187,8 +191,8 @@ function DisplayLayer() {
   );
 
   const Overlay = useMemo(
-    () => pageAttachment && <PageAttachment pageAttachment={pageAttachment} />,
-    [pageAttachment]
+    () => hasCurrentPage && <PageAttachment pageAttachment={pageAttachment} />,
+    [pageAttachment, hasCurrentPage]
   );
 
   return (
