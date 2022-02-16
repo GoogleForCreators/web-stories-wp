@@ -83,6 +83,10 @@
     "import/no-useless-path-segments": ["error", {
       "noUselessIndex": true
     }],
+    "import/no-relative-packages": "error",
+    "import/no-internal-modules": [ "error", {
+      "forbid": [ "@googleforcreators/**/*" ]
+    } ],
     "jsx-a11y/label-has-for": "off",
     "jsx-a11y/media-has-caption": [ "error", {
       "audio": [ "Audio" ],

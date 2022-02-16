@@ -27,6 +27,7 @@ import {
   THEME_CONSTANTS,
   theme,
   lightMode,
+  CONTEXT_MENU_WIDTH,
 } from '@googleforcreators/design-system';
 import { useTransform } from '@googleforcreators/transform';
 
@@ -34,7 +35,6 @@ import { useTransform } from '@googleforcreators/transform';
  * Internal dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-import { CONTEXT_MENU_WIDTH } from '@googleforcreators/design-system/src/components/contextMenu/menu';
 import { useConfig, useRightClickMenu } from '../../app';
 import useStory from '../../app/story/useStory';
 import isEmptyStory from '../../app/story/utils/isEmptyStory';
