@@ -50,7 +50,7 @@ const LoadingContainer = styled.div`
   margin-top: 18px;
 `;
 
-const ACTION_BUTTON_SIZE = 32;
+const ACTION_BUTTON_SIZE = 16;
 const ActionButton = styled(Button).attrs({ variant: BUTTON_VARIANTS.ICON })`
   display: flex;
   align-items: center;

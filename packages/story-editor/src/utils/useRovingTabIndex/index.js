@@ -23,12 +23,8 @@ import { useKeyDownEffect } from '@googleforcreators/design-system';
  * Internal dependencies
  */
 import { useConfig } from '../../app/config';
-import {
-  getFocusableChild,
-  getNextEnabledElement,
-  getParentCenter,
-} from './nestedNavigation';
-import { getElementCenter, getNextEnabledSibling } from './flatNavigation';
+import { getFocusableChild, getNextEnabledElement } from './nestedNavigation';
+import { getNextEnabledSibling } from './flatNavigation';
 
 /**
  * A point in 2D space.
@@ -42,15 +38,15 @@ import { getElementCenter, getNextEnabledSibling } from './flatNavigation';
  * Returns the center of a given element.
  *
  * @param {Element} e The element
- * @param {number} depth Element's nested depth relative to the parent siblings of the elements.
  * @return {Point2D} The coordinates of the center as defined by
  * getBoundingClientRect's `top` and `left` fields.
  */
-function getCenter(e, depth) {
-  if (depth > 0) {
-    return getParentCenter(e, depth);
-  }
-  return getElementCenter(e);
+function getCenter(e) {
+  const rect = e.getBoundingClientRect();
+  return {
+    x: rect.left + rect.width / 2,
+    y: rect.top + rect.height / 2,
+  };
 }
 
 function getNextElement(e, direction, depth) {

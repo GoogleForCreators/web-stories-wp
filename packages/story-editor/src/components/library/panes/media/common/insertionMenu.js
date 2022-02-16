@@ -151,7 +151,7 @@ function InsertionMenu({ resource, display, onInsert, width, index }) {
         display={display}
         tabIndex={index === 0 ? 0 : -1}
       >
-        <Icons.PlusFilled />
+        <Icons.PlusFilledSmall />
       </ActionButton>
       {isMenuOpen && (
         <Popup

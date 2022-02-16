@@ -15,29 +15,6 @@
  */
 
 /**
- * A point in 2D space.
- *
- * @typedef {Object} Point2D A point in 2D space.
- * @property {number} x The X coordinate.
- * @property {number} y The Y coordinate.
- */
-
-/**
- * Returns the center of a given element.
- *
- * @param {Element} e The element
- * @return {Point2D} The coordinates of the center as defined by
- * getBoundingClientRect's `top` and `left` fields.
- */
-export function getElementCenter(e) {
-  const rect = e.getBoundingClientRect();
-  return {
-    x: rect.left + rect.width / 2,
-    y: rect.top + rect.height / 2,
-  };
-}
-
-/**
  * Given an element and a sibling direction, returns that media element's next enabled sibling.
  * Media elements are nested 1 level deep.
  *

@@ -38,31 +38,6 @@ function getAncestorByDepth(e, depth) {
   return parentElement;
 }
 
-/**
- * A point in 2D space.
- *
- * @typedef {Object} Point2D A point in 2D space.
- * @property {number} x The X coordinate.
- * @property {number} y The Y coordinate.
- */
-
-/**
- * Returns the center of a given element.
- *
- * @param {Element} e The element
- * @param {number} depth The nesting depth of the focusable element.
- * @return {Point2D} The coordinates of the center as defined by
- * getBoundingClientRect's `top` and `left` fields.
- */
-export function getParentCenter(e, depth) {
-  const parent = getAncestorByDepth(e, depth);
-  const rect = parent.getBoundingClientRect();
-  return {
-    x: rect.left + rect.width / 2,
-    y: rect.top + rect.height / 2,
-  };
-}
-
 export function getFocusableChild(element, depth, childToGet = 'firstChild') {
   const parentElement = getAncestorByDepth(element, depth);
   const firstElementParent = parentElement.parentNode[childToGet];
