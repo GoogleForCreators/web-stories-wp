@@ -216,6 +216,7 @@ function PageTemplate(
   useKeyDownEffect(deleteButtonRef, 'tab', focusCanvas, [focusCanvas]);
 
   return (
+    // eslint-disable-next-line styled-components-a11y/click-events-have-key-events,styled-components-a11y/no-noninteractive-element-interactions -- clicking and events need to work on the wrapper AND in the contained buttons as well.
     <PageTemplateWrapper
       pageSize={pageSize}
       role="listitem"
@@ -228,6 +229,7 @@ function PageTemplate(
       isHighlighted={page.id === highlightedTemplate}
       onFocus={makeActive}
       onBlur={makeInactive}
+      onClick={onClick}
     >
       <PreviewPageWrapper pageSize={pageSize} background={page.backgroundColor}>
         {imageUrl ? (
@@ -248,14 +250,14 @@ function PageTemplate(
           ref={insertButtonRef}
           onClick={onClick}
           aria-label={__('Use template', 'web-stories')}
-          display={isActive}
+          $display={isActive}
           tabIndex={index === 0 ? 0 : -1}
         >
-          <Icons.PlusFilled />
+          <Icons.PlusFilledSmall />
         </ActionButton>
         <DeleteButton
           ref={deleteButtonRef}
-          display={isActive}
+          $display={isActive}
           onClick={(e) => handleDelete(page, e)}
           aria-label={__('Delete Page Template', 'web-stories')}
           tabIndex={isActive ? 0 : -1}

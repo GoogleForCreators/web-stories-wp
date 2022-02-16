@@ -40,6 +40,7 @@ const Scrim = styled.div`
   top: 0;
   left: 0;
   background-color: ${({ theme }) => rgba(theme.colors.standard.black, 0.5)};
+  pointer-events: none;
 `;
 
 function InsertionOverlay({ showIcon = true }) {
