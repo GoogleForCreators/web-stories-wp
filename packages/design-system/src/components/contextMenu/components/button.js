@@ -73,12 +73,12 @@ const StyledButton = styled(BaseButton)`
  * @param {boolean} props.dismissOnClick If to call onDismiss when clicking.
  * @param {Function} props.onFocus Focus event handler.
  * @param {boolean} props.forcePadding Force padding to button regardless of mode.
- * @param {boolean} props.isToggled `true` if a toggled pushbutton, `false` if an untoggled
+ * @param {boolean|null} props.isToggled `true` if a toggled pushbutton, `false` if an untoggled
  * pushbutton, leave unset if not a pushbutton.
  * @param {Object} ref Ref object.
  * @return {Node} The react node
  */
-function ButtonWithRef(
+const Button = forwardRef(function Button(
   {
     id,
     onBlur,
@@ -148,9 +148,8 @@ function ButtonWithRef(
       {...props}
     />
   );
-}
+});
 
-const Button = forwardRef(ButtonWithRef);
 Button.propTypes = {
   id: PropTypes.string,
   onBlur: PropTypes.func,
@@ -158,8 +157,7 @@ Button.propTypes = {
   onFocus: PropTypes.func,
   forcePadding: PropTypes.bool,
   dismissOnClick: PropTypes.bool,
+  isToggled: PropTypes.bool,
 };
-
-ButtonWithRef.propTypes = Button.propTypes;
 
 export default Button;
