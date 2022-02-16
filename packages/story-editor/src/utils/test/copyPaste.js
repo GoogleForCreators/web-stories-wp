@@ -19,11 +19,12 @@
  */
 import { createSolid } from '@googleforcreators/patterns';
 import { PAGE_WIDTH } from '@googleforcreators/units';
-import { getDefinitionForType } from '@googleforcreators/elements';
 import {
   SHARED_DEFAULT_ATTRIBUTES,
   MEDIA_DEFAULT_ATTRIBUTES,
+  elementTypes,
 } from '@googleforcreators/element-library';
+import { registerElementType } from '@googleforcreators/elements';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/design-system';
 
 /**
@@ -31,7 +32,14 @@ import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/design-system';
  */
 import { addElementsToClipboard, processPastedElements } from '../copyPaste';
 
+const getDefinitionForType = (type) =>
+  elementTypes.find((element) => element.type === type);
+
 describe('copyPaste utils', () => {
+  beforeAll(() => {
+    elementTypes.forEach(registerElementType);
+  });
+
   const PAGE = {
     backgroundColor: createSolid(255, 0, 0),
   };
