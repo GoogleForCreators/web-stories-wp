@@ -29,6 +29,7 @@ import {
  */
 import { useCanvas, useLayout, useStory } from '../../app';
 import { FLOATING_MENU_DISTANCE } from '../../constants';
+import { SELECTED_ELEMENT_TYPES } from './constants';
 import FloatingMenu from './menu';
 
 function FloatingMenuLayer() {
@@ -41,30 +42,26 @@ function FloatingMenuLayer() {
       workspaceHeight,
     })
   );
-  // We need to know if anything (non-bg) is selected, if more than one element is selected,
-  // the list of different element types selected as well as a unique identifier
-  // for the combined selection (in order to undismiss in case of change of seletion)
-  const {
-    hasSelection,
-    hasMultiSelection,
-    selectionTypes,
-    selectionIdentifier,
-  } = useStory(({ state: { selectedElements } }) => ({
-    hasSelection:
-      selectedElements.filter(({ isBackground }) => !isBackground).length > 0,
-    hasMultiSelection: selectedElements.length > 1,
-    selectionTypes: [
-      ...new Set(selectedElements.map(({ type }) => type)),
-    ].sort(),
-    selectionIdentifier: selectedElements.map(({ id }) => id).join(''),
-  }));
+  // We need to know if what is currently selected as well as a unique identifier
+  // for the combined selection (in order to undismiss in case of change of selection)
+  const { selectedElementType, selectionIdentifier } = useStory(
+    ({ state: { selectedElements } }) => ({
+      selectedElementType:
+        selectedElements.length === 1 && !selectedElements[0].isBackground
+          ? selectedElements[0]?.type
+          : selectedElements.length > 1
+          ? SELECTED_ELEMENT_TYPES.MULTIPLE
+          : SELECTED_ELEMENT_TYPES.NONE,
+      selectionIdentifier: selectedElements.map(({ id }) => id).join(''),
+    })
+  );
 
   const [moveable, setMoveable] = useState(null);
   const menuRef = useRef();
   const workspaceSize = useRef();
 
   const [isDismissed, setDismissed] = useState(false);
-  const dismiss = useCallback(() => setDismissed(true), []);
+  const handleDismiss = useCallback(() => setDismissed(true), []);
   useEffect(() => setDismissed(false), [selectionIdentifier]);
 
   // Whenever the selection frame (un)mounts, update the reference to moveable
@@ -83,7 +80,10 @@ function FloatingMenuLayer() {
     // frame will already be updating because of the resize, so a DOM mutation is incoming.
   }, [workspaceWidth, workspaceHeight]);
 
-  const hasMenu = hasSelection && !isDismissed && moveable;
+  const hasMenu =
+    selectedElementType !== SELECTED_ELEMENT_TYPES.NONE &&
+    !isDismissed &&
+    moveable;
 
   // Whenever moveable is set (because selection count changed between none, single, or multiple)
   useEffect(() => {
@@ -123,9 +123,9 @@ function FloatingMenuLayer() {
   return (
     <FloatingMenu
       ref={menuRef}
-      dismiss={dismiss}
-      hasMultiSelection={hasMultiSelection}
-      selectionTypes={selectionTypes}
+      handleDismiss={handleDismiss}
+      selectedElementType={selectedElementType}
+      selectionIdentifier={selectionIdentifier}
     />
   );
 }

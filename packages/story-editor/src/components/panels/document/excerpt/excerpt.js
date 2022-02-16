@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import { useCallback } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
@@ -37,7 +38,7 @@ const StyledText = styled(Text)`
 
 export const EXCERPT_MAX_LENGTH = 200;
 
-function ExcerptPanel() {
+function ExcerptPanel({ nameOverride }) {
   const { excerpt, updateStory } = useStory(
     ({
       state: {
@@ -68,7 +69,7 @@ function ExcerptPanel() {
     <SimplePanel
       css={highlight?.showEffect && styles.FLASH}
       onAnimationEnd={() => resetHighlight()}
-      name="excerpt"
+      name={nameOverride || 'excerpt'}
       title={__('Story Description', 'web-stories')}
       collapsedByDefault={false}
       isPersistable={!highlight}
@@ -104,3 +105,7 @@ function ExcerptPanel() {
 }
 
 export default ExcerptPanel;
+
+ExcerptPanel.propTypes = {
+  nameOverride: PropTypes.string,
+};

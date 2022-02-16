@@ -93,6 +93,7 @@ let lastVisibleDelayedTooltip = null;
  * @param {Object} props.tooltipProps Props for <Tooltip /> component
  * @param {string} props.className Classname.
  * @param {string} props.isDelayed If this tooltip is to be displayed instantly on hover (default) or by a short delay.
+ * @param {number} props.popupZIndexOverride If present, passes an override for z-index to popup
  * @return {import('react').Component} Tooltip element
  */
 function Tooltip({
@@ -109,6 +110,7 @@ function Tooltip({
   forceAnchorRef = null,
   tooltipProps = null,
   className = null,
+  popupZIndexOverride,
   ...props
 }) {
   const [shown, setShown] = useState(false);
@@ -284,6 +286,7 @@ function Tooltip({
         spacing={spacing}
         isOpen={Boolean(shown && (shortcut || title))}
         onPositionUpdate={positionArrow}
+        zIndex={popupZIndexOverride}
         noOverFlow
       >
         <TooltipContainer
@@ -329,6 +332,7 @@ const TooltipPropTypes = {
   tooltipProps: PropTypes.object,
   className: PropTypes.string,
   isDelayed: PropTypes.bool,
+  popupZIndexOverride: PropTypes.number,
 };
 Tooltip.propTypes = TooltipPropTypes;
 

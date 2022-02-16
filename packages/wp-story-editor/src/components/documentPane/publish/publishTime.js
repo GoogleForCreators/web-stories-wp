@@ -138,6 +138,7 @@ function PublishTime() {
         isOpen={showDatePicker}
         placement={PLACEMENT.BOTTOM_END}
         isRTL={isRTL}
+        zIndex={10}
         renderContents={({ propagateDimensionChange }) => (
           <DateTime
             value={floatingDate ? displayDate : date}

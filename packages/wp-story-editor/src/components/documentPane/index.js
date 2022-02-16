@@ -44,4 +44,30 @@ function DocumentPane() {
   );
 }
 
+// Panels require a name override to have their own local storage set for panel collapse
+export function PublishModalDocumentPane() {
+  return (
+    <>
+      <PublishPanel nameOverride="storyDetailsPublishing" />
+      <SlugPanel nameOverride="storyDetailsExcerpt" />
+      <PageAdvancementPanel nameOverride="storyDetailsPageAdvancement" />
+      <BackgroundAudioPanel nameOverride="storyDetailsBackgroundAudio" />
+      <TaxonomiesPanel nameOverride="storyDetailsTaxonomies" />
+    </>
+  );
+}
+
+// Isolated Status Panel should not collapse and
+// should have its own name to prevent collapse
+// based on other implementations that have default name
+export function IsolatedStatusPanel() {
+  return (
+    <StatusPanel
+      nameOverride="storyDetailsStatus"
+      canCollapse={false}
+      isPersistable={false}
+    />
+  );
+}
+
 export default DocumentPane;
