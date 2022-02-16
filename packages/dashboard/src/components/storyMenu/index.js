@@ -120,8 +120,7 @@ export default function StoryMenu({
       </MoreVerticalButton>
       <ContextMenu animate isOpen={isPopoverMenuOpen} onDismiss={handleDismiss}>
         {menuItems.map(({ label, separator, ...props }) => {
-          // Disable reason: map is not picking up definition from StoryMenu proptypes.
-          // eslint-disable-next-line react/prop-types
+          // eslint-disable-next-line react/prop-types -- map is not picking up definition from StoryMenu proptypes.
           const MenuItem = props.href
             ? ContextMenuComponents.MenuLink
             : ContextMenuComponents.MenuButton;

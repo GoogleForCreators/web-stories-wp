@@ -36,6 +36,7 @@ import { StoryContext } from '../../../../../app/story';
 let mockControls;
 jest.mock('../../../../form/color/color', () => {
   const React = require('@googleforcreators/react');
+
   const _PropTypes = require('prop-types');
   const FakeControl = React.forwardRef(function FakeControl(props, ref) {
     mockControls[props['data-testid']] = props;

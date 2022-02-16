@@ -93,7 +93,7 @@ export function EffectRotateIn({
       ...SpinWAAPIAnimation,
       keyframes,
     },
-    // eslint-disable-next-line react/prop-types
+    // eslint-disable-next-line react/prop-types -- Negligible.
     AMPTarget: function AMPTarget({ children, style }) {
       return (
         <MoveAMPTarget style={style}>

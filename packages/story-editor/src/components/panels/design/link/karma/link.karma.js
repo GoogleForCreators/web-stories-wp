@@ -206,36 +206,28 @@ describe('Link Panel', () => {
       );
     });
 
-    // Disable reason: tests not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
+    // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
     xit('should invoke API when looking up link');
 
-    // Disable reason: tests not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
+    // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
     xit('should display error when API errors');
 
-    // Disable reason: tests not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
+    // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
     xit('should display link details when API succeeds');
 
-    // Disable reason: tests not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
+    // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
     xit('should be able to apply a link to a shape element');
 
-    // Disable reason: tests not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
+    // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
     xit('should be able to apply a link to a image element');
 
-    // Disable reason: tests not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
+    // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
     xit('should be able to apply a link to a video element');
 
-    // Disable reason: tests not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
+    // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
     xit('should not be able to apply a link to a background shape element');
 
-    // Disable reason: tests not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
+    // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
     xit('should not be able to apply a link to a background media element');
   });
 
@@ -397,21 +389,18 @@ describe('Link Panel', () => {
       await fixture.events.keyboard.type('http://google.com');
     });
 
-    // Disable reason: tests not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
+    // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
     xit('should be able to removed an applied a link');
   });
 
-  // Disable reason: tests not implemented yet
-  // eslint-disable-next-line jasmine/no-disabled-tests
+  // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
   xdescribe('CUJ: Creator Can Add A Link: Edit brand icon', () => {
     it('should be able to edit brand icon');
 
     it('should be able to remove brand icon');
   });
 
-  // Disable reason: tests not implemented yet
-  // eslint-disable-next-line jasmine/no-disabled-tests
+  // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
   xdescribe('CUJ: Creator Can Add A Link: Edit description', () => {
     it('should be able to edit description');
   });
