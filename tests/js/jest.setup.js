@@ -17,8 +17,6 @@
 /**
  * External dependencies
  */
-import { registerElementType } from '@googleforcreators/elements';
-import { elementTypes } from '@googleforcreators/element-library';
 
 // Extend Jest matchers.
 // See https://github.com/testing-library/jest-dom.
@@ -34,11 +32,6 @@ import {
   toBeValidAMPStoryElement,
   toBeValidAMPStoryPage,
 } from '@web-stories-wp/jest-amp';
-
-// eslint-disable-next-line jest/require-hook
-global.beforeAll(() => {
-  elementTypes.forEach(registerElementType);
-});
 
 // eslint-disable-next-line jest/require-hook
 expect.extend({
