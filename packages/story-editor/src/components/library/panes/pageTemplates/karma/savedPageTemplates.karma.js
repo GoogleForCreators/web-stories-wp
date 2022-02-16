@@ -119,14 +119,13 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
         fixture.editor.library.pageTemplatesPane.pageTemplates[0]
       );
       // Choose the Delete button of the first item.
-      const deleteButtons = await fixture.screen.findAllByRole('button', {
-        name: 'Delete',
-      });
-      await fixture.events.click(deleteButtons[0]);
-
-      const dialog = await fixture.screen.findByRole('dialog');
       await fixture.events.click(
-        dialog.getByRole('button', { name: 'Delete' })
+        fixture.editor.library.pageTemplatesPane.deleteBtnByIndex(0)
+      );
+
+      expect(await fixture.screen.findByRole('dialog')).toBeTruthy();
+      await fixture.events.click(
+        fixture.screen.getByRole('button', { name: 'Delete' })
       );
 
       await fixture.events.sleep(200);
@@ -160,11 +159,7 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
 
       const template =
         fixture.editor.library.pageTemplatesPane.pageTemplates[0];
-      await fixture.events.mouse.seq(({ moveRel, down, up }) => [
-        moveRel(template, 20, 20),
-        down(),
-        up(),
-      ]);
+      await fixture.events.click(template);
       await fixture.events.sleep(200);
       const { pages, currentPage } = await fixture.renderHook(() =>
         useStory(({ state }) => {
@@ -206,14 +201,7 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
       // navigate to newly saved template and open delete dialog
       await fixture.events.keyboard.press('Tab');
       await fixture.events.keyboard.press('Tab');
-      await fixture.events.keyboard.press('Space');
-
-      await waitFor(() => {
-        expect(
-          fixture.screen.getByRole('menuitem', { name: 'Delete' })
-        ).toBeTruthy();
-      });
-      await fixture.events.keyboard.press('down');
+      await fixture.events.keyboard.press('Tab');
       await fixture.events.keyboard.press('Enter');
 
       await fixture.events.sleep(200);
