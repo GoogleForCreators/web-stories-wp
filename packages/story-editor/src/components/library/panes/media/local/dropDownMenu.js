@@ -144,9 +144,15 @@ function DropDownMenu({
     [setShowEditDialog]
   );
 
-  useRovingTabIndex({ ref: moreButtonRef }, [], BUTTON_NESTING_DEPTH);
+  useRovingTabIndex(
+    { ref: moreButtonRef.current || null },
+    [],
+    BUTTON_NESTING_DEPTH
+  );
   const focusCanvas = useFocusCanvas();
-  useKeyDownEffect(moreButtonRef, 'tab', focusCanvas, [focusCanvas]);
+  useKeyDownEffect(moreButtonRef.current || null, 'tab', focusCanvas, [
+    focusCanvas,
+  ]);
 
   const listId = useMemo(() => `list-${uuidv4()}`, []);
   const buttonId = useMemo(() => `button-${uuidv4()}`, []);
@@ -164,7 +170,7 @@ function DropDownMenu({
           aria-expanded={isMenuOpen}
           aria-owns={isMenuOpen ? listId : null}
           id={buttonId}
-          display={display}
+          $display={display}
           tabIndex={display || isMenuOpen ? 0 : -1}
         >
           <Icons.DotsFillSmall />

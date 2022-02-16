@@ -61,7 +61,7 @@ const ActionButton = styled(Button).attrs({ variant: BUTTON_VARIANTS.ICON })`
   border-radius: ${({ theme }) => theme.borders.radius.round};
   width: ${ACTION_BUTTON_SIZE}px;
   height: ${ACTION_BUTTON_SIZE}px;
-  opacity: ${({ display }) => (display ? '1' : '0')};
+  opacity: ${({ $display }) => ($display ? '1' : '0')};
 `;
 
 export { ActionButton, Pane, getPaneId, getTabId, LoadingContainer };

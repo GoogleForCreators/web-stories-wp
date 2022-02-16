@@ -156,7 +156,7 @@ function InsertionMenu({ resource, display, onInsert, width, index, isLocal }) {
         aria-expanded={isMenuOpen}
         aria-owns={isMenuOpen ? listId : null}
         id={buttonId}
-        display={display}
+        $display={display}
         tabIndex={index === 0 ? 0 : -1}
       >
         <Icons.PlusFilledSmall />
