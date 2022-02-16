@@ -97,6 +97,48 @@ describe('Publish Story Modal', () => {
         fixture.editor.checklist.issues.getAttribute('data-isexpanded')
       ).toBe('true');
     });
+
+    it('should not update story permalink when title is updated if permalink already exists', async () => {
+      // Give story initial title
+      const storyTitle = await getPublishModalElement('textbox', 'Story Title');
+      await fixture.events.focus(storyTitle);
+      await fixture.events.keyboard.type('Stews for long journeys');
+      await fixture.events.keyboard.press('tab');
+
+      const storySlug = await getPublishModalElement('textbox', 'URL slug');
+      // that initial title should give us an initial slug
+      expect(storySlug.getAttribute('value')).toBe('stews-for-long-journeys');
+
+      await fixture.events.focus(storySlug);
+      await fixture.events.keyboard.type(
+        "bilbo's favorite 30 minute rabbit stew"
+      );
+      await fixture.events.keyboard.press('tab');
+      // now we've updated the slug independent of title
+      expect(storySlug.getAttribute('value')).toBe(
+        'bilbos-favorite-30-minute-rabbit-stew'
+      );
+
+      // Update the title
+      await fixture.events.focus(storyTitle);
+      await fixture.events.keyboard.type('Travel Stews With Bilbo');
+      await fixture.events.keyboard.press('tab');
+
+      // slug should remain as it was
+      expect(storySlug.getAttribute('value')).toBe(
+        'bilbos-favorite-30-minute-rabbit-stew'
+      );
+    });
+
+    it('should toggle from auto page advancement by default to manual', async () => {
+      const manualInput = await getPublishModalElement('radio', 'Manual');
+      const autoInput = await getPublishModalElement('radio', 'Auto');
+
+      await fixture.events.click(manualInput.closest('label'));
+
+      expect(typeof autoInput.getAttribute('checked')).toBe('string');
+      expect(manualInput.getAttribute('checked')).toBeNull();
+    });
   });
 
   describe('Keyboard navigation', () => {

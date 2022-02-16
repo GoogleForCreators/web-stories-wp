@@ -39,7 +39,7 @@ function useIntersectionEffect(ref, options = {}, handler, deps = undefined) {
         options.root = options.root.current;
       }
       if (!node || (usingRoot && !options.root)) {
-        return;
+        return () => {};
       }
 
       const observer = new window.IntersectionObserver((entries) => {
@@ -51,10 +51,9 @@ function useIntersectionEffect(ref, options = {}, handler, deps = undefined) {
 
       observer.observe(node);
 
-      // eslint-disable-next-line consistent-return
       return () => observer.disconnect();
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- Pass through the provided deps.
     deps || []
   );
 }

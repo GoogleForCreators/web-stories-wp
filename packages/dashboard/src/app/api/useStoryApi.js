@@ -59,7 +59,7 @@ const useStoryApi = () => {
         payload: true,
       });
 
-      // eslint-disable-next-line @wordpress/no-unused-vars-before-return
+      // eslint-disable-next-line @wordpress/no-unused-vars-before-return -- False positive because of the finally().
       const trackTiming = getTimeTracker('load_stories');
 
       try {

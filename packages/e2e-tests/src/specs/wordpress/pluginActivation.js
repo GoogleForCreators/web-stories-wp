@@ -86,9 +86,10 @@ describe('Plugin Activation', () => {
     await expect(page).toMatchElement('#web-stories-dashboard');
   });
 
-  // Disable reason: Step 3 is not visible on the screen size used in E2E tests.
-  // This might change in the future though.
-  //eslint-disable-next-line jest/no-disabled-tests
+  /* eslint-disable-next-line jest/no-disabled-tests --
+   * Step 3 is not visible on the screen size used in E2E tests.
+   * This might change in the future though.
+   **/
   it.skip('should lead to the editor in step 3', async () => {
     const editorStep = await expect(page).toMatchElement('p', {
       text: /Jump into the\s?Editor/i,

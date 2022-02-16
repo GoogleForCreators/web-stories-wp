@@ -96,7 +96,7 @@ function AudioPlayer({ title, src, mimeType, tracks = [], audioId }) {
 
   return (
     <Wrapper>
-      {/* eslint-disable-next-line jsx-a11y/media-has-caption, styled-components-a11y/media-has-caption */}
+      {/* eslint-disable-next-line jsx-a11y/media-has-caption, styled-components-a11y/media-has-caption -- No captions wanted/needed here. */}
       <Audio crossOrigin="anonymous" loop ref={playerRef} id={audioId}>
         <source src={src} type={mimeType} />
         {tracks &&
@@ -116,7 +116,11 @@ function AudioPlayer({ title, src, mimeType, tracks = [], audioId }) {
       <div>{title}</div>
       <div>
         {isPlaying ? (
-          <Tooltip hasTail title={__('Pause', 'web-stories')}>
+          <Tooltip
+            hasTail
+            title={__('Pause', 'web-stories')}
+            popupZIndexOverride={10}
+          >
             <StyledButton
               type={BUTTON_TYPES.TERTIARY}
               size={BUTTON_SIZES.SMALL}
@@ -128,7 +132,11 @@ function AudioPlayer({ title, src, mimeType, tracks = [], audioId }) {
             </StyledButton>
           </Tooltip>
         ) : (
-          <Tooltip hasTail title={__('Play', 'web-stories')}>
+          <Tooltip
+            hasTail
+            title={__('Play', 'web-stories')}
+            popupZIndexOverride={10}
+          >
             <StyledButton
               type={BUTTON_TYPES.TERTIARY}
               size={BUTTON_SIZES.SMALL}

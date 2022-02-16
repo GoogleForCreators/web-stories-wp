@@ -86,7 +86,6 @@ function setup() {
   );
 }
 
-// eslint-disable-next-line react/prop-types
 function MockPane({ children }) {
   const ref = useRef();
   return <div ref={ref}>{children(ref)}</div>;

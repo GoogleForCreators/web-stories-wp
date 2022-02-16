@@ -332,8 +332,7 @@ function HelpCenterProvider({ children }) {
         trackEvent('tutorial_complete');
       }
     }
-    // Disable reason: avoid sending duplicate tracking events.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- avoid sending duplicate tracking events.
   }, [navigationIndex]);
 
   const contextValue = useMemo(

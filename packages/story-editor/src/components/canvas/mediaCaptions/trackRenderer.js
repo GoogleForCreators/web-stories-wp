@@ -112,7 +112,7 @@ function TrackRenderer({ elementId, trackIndex }) {
       {cues.map((cue, index) => (
         <Cue
           key={
-            // eslint-disable-next-line react/no-array-index-key
+            // eslint-disable-next-line react/no-array-index-key -- Order should never change.
             index
           }
           cue={cue}

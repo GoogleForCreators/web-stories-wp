@@ -92,9 +92,7 @@ function mockFetch(response, { requestPath, requestMethod }) {
 
 describe('ApiFetcher', () => {
   afterEach(() => {
-    if (window.fetch['mockClear']) {
-      window.fetch.mockClear();
-    }
+    window.fetch?.mockClear();
   });
 
   describe('listMedia', () => {
