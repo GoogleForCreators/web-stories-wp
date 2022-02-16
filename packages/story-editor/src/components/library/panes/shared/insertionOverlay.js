@@ -22,12 +22,13 @@ import { Icons } from '@googleforcreators/design-system';
 import { rgba } from 'polished';
 import PropTypes from 'prop-types';
 
+const ICON_SIZE = 16;
 const IconContainer = styled.div`
-  height: 32px;
-  width: 32px;
+  height: ${ICON_SIZE}px;
+  width: ${ICON_SIZE}px;
   position: absolute;
-  top: calc(50% - 16px);
-  left: calc(50% - 16px);
+  top: calc(50% - ${ICON_SIZE / 2}px);
+  left: calc(50% - ${ICON_SIZE / 2}px);
   color: ${({ theme }) => theme.colors.fg.primary};
   border-radius: ${({ theme }) => theme.borders.radius.round};
 `;
@@ -49,7 +50,7 @@ function InsertionOverlay({ showIcon = true }) {
     <Scrim>
       {showIcon && (
         <IconContainer role="presentation">
-          <Icons.PlusFilled />
+          <Icons.PlusFilledSmall />
         </IconContainer>
       )}
     </Scrim>
