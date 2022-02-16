@@ -23,6 +23,7 @@ import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
+import useInspector from '../../inspector/useInspector';
 import { INPUT_KEYS } from '../constants';
 import { MANDATORY_INPUT_VALUE_TYPES } from '../types';
 import FormLabel from './formLabel';
@@ -40,6 +41,9 @@ const MandatoryStoryInfo = ({
   handleUpdateSlug,
   inputValues,
 }) => {
+  const IsolatedStatusPanel = useInspector(
+    ({ data }) => data?.modalInspectorTab?.IsolatedStatusPanel
+  );
   return (
     <>
       <FormSection>
@@ -79,6 +83,7 @@ const MandatoryStoryInfo = ({
           onChange={handleUpdateStoryInfo}
         />
       </FormSection>
+      {IsolatedStatusPanel && <IsolatedStatusPanel />}
     </>
   );
 };
