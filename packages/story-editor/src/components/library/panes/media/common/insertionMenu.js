@@ -32,6 +32,7 @@ import {
   Menu,
   PLACEMENT,
   Popup,
+  useKeyDownEffect,
 } from '@googleforcreators/design-system';
 import {
   getSmallestUrlForWidth,
@@ -45,6 +46,7 @@ import getElementProperties from '../../../../canvas/utils/getElementProperties'
 import useStory from '../../../../../app/story/useStory';
 import { ActionButton } from '../../shared';
 import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
+import useFocusCanvas from '../../../../canvas/useFocusCanvas';
 
 const DropDownContainer = styled.div`
   margin-top: 10px;
@@ -79,9 +81,10 @@ const MENU_OPTIONS = {
  * @param {Function} props.onInsert Callback for inserting media.
  * @param {number} props.width Media width.
  * @param {number} props.index Element index in the gallery.
+ * @param {boolean} props.isLocal If the menu is for local or 3p media.
  * @return {null|*} Element or null if should not display the More icon.
  */
-function InsertionMenu({ resource, display, onInsert, width, index }) {
+function InsertionMenu({ resource, display, onInsert, width, index, isLocal }) {
   const insertButtonRef = useRef();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const onMenuOpen = useCallback((e) => {
@@ -132,6 +135,11 @@ function InsertionMenu({ resource, display, onInsert, width, index }) {
   };
 
   useRovingTabIndex({ ref: insertButtonRef }, [], BUTTON_NESTING_DEPTH);
+  // In case of 3p media, we tab out of the panel since it's the only button there.
+  const focusCanvas = useFocusCanvas();
+  useKeyDownEffect(isLocal ? null : insertButtonRef, 'tab', focusCanvas, [
+    focusCanvas,
+  ]);
 
   const listId = useMemo(() => `list-${uuidv4()}`, []);
   const buttonId = useMemo(() => `button-${uuidv4()}`, []);
@@ -182,6 +190,7 @@ InsertionMenu.propTypes = {
   onInsert: PropTypes.func.isRequired,
   width: PropTypes.number.isRequired,
   index: PropTypes.number.isRequired,
+  isLocal: PropTypes.bool,
 };
 
 export default InsertionMenu;

@@ -85,7 +85,7 @@ const DragContainer = styled.div`
 `;
 
 function TextSet(
-  { id, elements, translateY, translateX, isActive, ...rest },
+  { id, elements, translateY, translateX, isActive, index, ...rest },
   ref
 ) {
   const { insertTextSet } = useLibrary((state) => ({
@@ -133,6 +133,7 @@ function TextSet(
       onKeyUp={handleKeyboardPageClick}
       onPointerEnter={setHovering}
       onPointerLeave={unsetHovering}
+      tabIndex={index === 0 ? 0 : -1}
       {...rest}
     >
       {renderImages ? (
@@ -178,6 +179,7 @@ TextSet.propTypes = {
   translateY: PropTypes.number.isRequired,
   translateX: PropTypes.number.isRequired,
   isActive: PropTypes.bool,
+  index: PropTypes.number,
 };
 
 TextSet.displayName = 'TextSet';

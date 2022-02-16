@@ -89,7 +89,7 @@ const DragContainer = styled.div`
   line-height: ${({ lineHeight }) => lineHeight}px;
 `;
 
-function FontPreview({ title, element, insertPreset, getPosition }) {
+function FontPreview({ title, element, insertPreset, getPosition, index }) {
   const { font, fontSize, fontWeight, content } = element;
   const {
     actions: { maybeEnqueueFontStyle },
@@ -214,6 +214,7 @@ function FontPreview({ title, element, insertPreset, getPosition }) {
       onFocus={makeActive}
       onPointerLeave={makeInactive}
       onBlur={makeInactive}
+      tabIndex={index === 0 ? 0 : -1}
     >
       {getTextDisplay()}
       {active && <InsertionOverlay />}
@@ -240,6 +241,7 @@ FontPreview.propTypes = {
   element: StoryPropTypes.textContent.isRequired,
   insertPreset: PropTypes.func.isRequired,
   getPosition: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
 };
 
 export default FontPreview;

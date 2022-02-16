@@ -228,6 +228,7 @@ function Element({
           onInsert={onInsert}
           width={width}
           index={index}
+          isLocal={providerType === 'local'}
         />
         {providerType === 'local' && canEditMedia && (
           <DropDownMenu
