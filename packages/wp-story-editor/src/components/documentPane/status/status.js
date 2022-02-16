@@ -18,8 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useMemo, useState } from '@googleforcreators/react';
-import styled from 'styled-components';
+import { useCallback, useEffect, useState } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { Input, DropDown } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
@@ -33,11 +32,13 @@ import {
   useIsUploadingToStory,
 } from '@googleforcreators/story-editor';
 
-const InputRow = styled(Row)`
-  margin-left: 34px;
-`;
-
-function StatusPanel({ nameOverride, popupZIndex }) {
+function StatusPanel({
+  nameOverride,
+  popupZIndex,
+  canCollapse,
+  isPersistable,
+  ...rest
+}) {
   const {
     status = '',
     password,
@@ -47,10 +48,11 @@ function StatusPanel({ nameOverride, popupZIndex }) {
     editLink,
     title,
     storyId,
+    visibility,
   } = useStory(
     ({
       state: {
-        story: { status, password, editLink, title, storyId },
+        story: { status, password, editLink, title, storyId, visibility },
         capabilities,
       },
       actions: { updateStory, saveStory },
@@ -63,6 +65,7 @@ function StatusPanel({ nameOverride, popupZIndex }) {
       editLink,
       title,
       storyId,
+      visibility,
     })
   );
 
@@ -77,19 +80,25 @@ function StatusPanel({ nameOverride, popupZIndex }) {
 
   const isUploading = useIsUploadingToStory();
 
-  const [hasPassword, setHasPassword] = useState(Boolean(password));
-
-  const visibility = useMemo(() => {
-    if (hasPassword) {
-      return 'protected';
+  useEffect(() => {
+    if (password) {
+      updateStory({
+        properties: { visibility: 'protected' },
+      });
+      return;
     }
 
     if (status === 'private') {
-      return 'private';
+      updateStory({
+        properties: { visibility: 'private' },
+      });
+      return;
     }
 
-    return 'public';
-  }, [status, hasPassword]);
+    updateStory({
+      properties: { visibility: 'public' },
+    });
+  }, [password, status, updateStory]);
 
   const visibilityOptions = [
     {
@@ -129,7 +138,6 @@ function StatusPanel({ nameOverride, popupZIndex }) {
       status: 'private',
       password: '',
     };
-    setHasPassword(false);
 
     trackEvent('publish_story', {
       status: 'private',
@@ -138,7 +146,7 @@ function StatusPanel({ nameOverride, popupZIndex }) {
     refreshPostEditURL();
 
     saveStory(properties);
-  }, [setHasPassword, title.length, refreshPostEditURL, saveStory]);
+  }, [title.length, refreshPostEditURL, saveStory]);
 
   const isAlreadyPublished = ['publish', 'future', 'private'].includes(status);
 
@@ -165,12 +173,13 @@ function StatusPanel({ nameOverride, popupZIndex }) {
         case 'public':
           properties.status = visibility === 'private' ? 'draft' : status;
           properties.password = '';
-          setHasPassword(false);
+          properties.visibility = 'public';
           break;
 
         case 'private':
           if (shouldReviewDialogBeSeen && !isAlreadyPublished) {
             setShowReviewDialog(true);
+            properties.visibility = 'private';
           } else {
             publishPrivately();
           }
@@ -179,7 +188,7 @@ function StatusPanel({ nameOverride, popupZIndex }) {
         case 'protected':
           properties.status = visibility === 'private' ? 'draft' : status;
           properties.password = password || '';
-          setHasPassword(true);
+          properties.visibility = 'protected';
           break;
 
         default:
@@ -192,7 +201,6 @@ function StatusPanel({ nameOverride, popupZIndex }) {
       status,
       visibility,
       password,
-      setHasPassword,
       updateStory,
       publishPrivately,
       shouldReviewDialogBeSeen,
@@ -205,7 +213,9 @@ function StatusPanel({ nameOverride, popupZIndex }) {
       <SimplePanel
         name={nameOverride || 'status'}
         title={__('Visibility', 'web-stories')}
-        collapsedByDefault={false}
+        canCollapse={canCollapse}
+        isPersistable={isPersistable}
+        {...rest}
       >
         <>
           <Row>
@@ -216,15 +226,15 @@ function StatusPanel({ nameOverride, popupZIndex }) {
               popupZIndex={popupZIndex}
             />
           </Row>
-          {hasPassword && (
-            <InputRow>
+          {visibility === 'protected' && (
+            <Row>
               <Input
                 aria-label={__('Password', 'web-stories')}
                 value={password}
                 onChange={handleChangePassword}
                 placeholder={__('Enter a password', 'web-stories')}
               />
-            </InputRow>
+            </Row>
           )}
         </>
       </SimplePanel>
@@ -243,4 +253,6 @@ export default StatusPanel;
 StatusPanel.propTypes = {
   nameOverride: PropTypes.string,
   popupZIndex: PropTypes.number,
+  canCollapse: PropTypes.bool,
+  isPersistable: PropTypes.bool,
 };
