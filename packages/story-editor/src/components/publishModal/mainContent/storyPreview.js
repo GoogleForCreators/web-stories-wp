@@ -36,27 +36,28 @@ import { __ } from '@googleforcreators/i18n';
 import { useConfig, useStory } from '../../../app';
 
 // Set the available space for cover preview image + overlay
-const PreviewContainer = styled.div`
+const PreviewWrapper = styled.div`
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
   position: relative;
   margin-top: 8px;
-`;
-PreviewContainer.propTypes = {
-  width: PropTypes.number.isRequired,
-  height: PropTypes.number.isRequired,
-};
-
-const PreviewWrapper = styled.div`
-  width: ${({ width }) => width}px;
-  height: ${({ height }) => height}px;
-  position: absolute;
 `;
 PreviewWrapper.propTypes = {
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
 };
 
+const PreviewContainer = styled.div`
+  width: ${({ width }) => width}px;
+  height: ${({ height }) => height}px;
+  position: absolute;
+`;
+PreviewContainer.propTypes = {
+  width: PropTypes.number.isRequired,
+  height: PropTypes.number.isRequired,
+};
+
+// In ascending order, the featured image is set as the full available 2:3 space.
 export const Image = styled.img`
   height: 100%;
   width: 100%;
@@ -67,12 +68,18 @@ export const Image = styled.img`
   background: ${({ theme }) => theme.colors.interactiveBg.primaryNormal};
 `;
 
+// If there's no featured image, a div gets set to take its place.
+// Mostly this prevents an empty image tag and sets a background color
+// so that any story title or site name is visible on top of it.
 const EmptyPlaceholder = styled.div`
   height: 100%;
   border-radius: ${({ theme }) => theme.borders.radius.medium};
   background: ${({ theme }) => theme.colors.interactiveBg.primaryNormal};
 `;
 
+// On top of the featured media we position a gradient.
+// This is pulled directly from the gradient styles seen in Search results
+// so it mirrors the actual Cover preview.
 const Gradient = styled.div`
   position: absolute;
   bottom: 0;
@@ -82,39 +89,35 @@ const Gradient = styled.div`
   background: ${({ theme }) => theme.colors.gradient.posterOverlay};
 `;
 
+// Next we establish the scrim, this is where everything either
+// a) interactive or b) overlay on top of the featured media and gradient lives
 const ScrimWrapper = styled.div`
   position: absolute;
   top: 0;
+  box-sizing: border-box;
   width: 100%;
   height: 100%;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
   border-radius: ${({ theme }) => theme.borders.radius.medium};
   background: ${({ theme }) => theme.colors.opacity.black3};
+  padding: 8px;
 `;
 
+// While the above wrapper sets positioning to keep it directly on top of the
+// previous elements, the container gives the children their general display.
 const ScrimContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  width: 100%;
-  overflow: hidden;
-`;
-
-const ScrimContent = styled.div`
   height: 100%;
-  box-sizing: border-box;
-  position: absolute;
   width: 100%;
-  top: 0;
-  padding: 8px;
-  display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 `;
 
-const TopOverlay = styled.div`
+// Scrim has two sections, the first is positioned at the top, second the bottom.
+// They have pretty different requirements, so they each get their own container.
+// The top has one row with 2 columns, content is positioned along the edges.
+// Content may or may not be present, it needs to be in its true visual position
+// regardless of if its siblings are there.
+const ScrimTop = styled.div`
   display: grid;
   grid-template-columns: 50% 50%;
   grid-template-rows: auto;
@@ -128,6 +131,7 @@ const PublisherLogo = styled.img`
   width: 24px;
 `;
 
+// TODO https://github.com/GoogleForCreators/web-stories-wp/issues/10584
 const EditFeaturedMedia = styled(Button).attrs({
   variant: BUTTON_VARIANTS.SQUARE,
   type: BUTTON_TYPES.SECONDARY,
@@ -139,12 +143,19 @@ const EditFeaturedMedia = styled(Button).attrs({
   margin: 0 0 0 auto;
 `;
 
-const BottomOverlay = styled.div`
+// The bottom section of the scrim is full width.
+const ScrimBottom = styled.div`
   width: 100%;
   margin: auto 0 0;
   align-self: flex-end;
 `;
 
+// Title styles are taken from Search cover preview styles.
+// There's some specific overrides happening here though because,
+// while Search shows Story Cover Previews in Chrome, we have to make
+// sure these styles will show Creators using Web Stories in other browsers
+// the same results. So we specifically want prefixes to stay put and not compile
+// the lines that have stylelint disabled.
 const Title = styled(Headline).attrs({
   as: 'h3',
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL,
@@ -204,8 +215,8 @@ const StoryPreview = () => {
       >
         {__('Cover Preview', 'web-stories')}
       </Headline>
-      <PreviewContainer width={mediaWidth} height={mediaHeight}>
-        <PreviewWrapper width={mediaWidth} height={mediaHeight}>
+      <PreviewWrapper width={mediaWidth} height={mediaHeight}>
+        <PreviewContainer width={mediaWidth} height={mediaHeight}>
           {featuredMedia?.url ? (
             <Image
               crossOrigin="anonymous"
@@ -221,41 +232,39 @@ const StoryPreview = () => {
           <Gradient />
           <ScrimWrapper>
             <ScrimContainer>
-              <ScrimContent>
-                <TopOverlay>
-                  {publisherLogo?.url?.length > 0 && (
-                    <PublisherLogo
-                      crossOrigin="anonymous"
-                      width={publisherLogo.width}
-                      height={publisherLogo.height}
-                      src={publisherLogo.url}
-                      alt={__('Publisher Logo', 'web-stories')}
-                      data-testid="story_preview_logo"
-                    />
-                  )}
-                  {ENABLE_EDIT_FEATURED_MEDIA && hasUploadMediaAction && (
-                    <EditFeaturedMedia
-                      aria-label={__('Edit Publisher Logo', 'web-stories')}
-                    >
-                      <Icons.Pencil aria-hidden="true" />
-                    </EditFeaturedMedia>
-                  )}
-                </TopOverlay>
-                <BottomOverlay>
-                  {title && (
-                    <Title data-testid="story_preview_title">{title}</Title>
-                  )}
-                  {publisher && (
-                    <Publisher data-testid="story_preview_publisher">
-                      {publisher}
-                    </Publisher>
-                  )}
-                </BottomOverlay>
-              </ScrimContent>
+              <ScrimTop>
+                {publisherLogo?.url?.length > 0 && (
+                  <PublisherLogo
+                    crossOrigin="anonymous"
+                    width={publisherLogo.width}
+                    height={publisherLogo.height}
+                    src={publisherLogo.url}
+                    alt={__('Publisher Logo', 'web-stories')}
+                    data-testid="story_preview_logo"
+                  />
+                )}
+                {ENABLE_EDIT_FEATURED_MEDIA && hasUploadMediaAction && (
+                  <EditFeaturedMedia
+                    aria-label={__('Edit Publisher Logo', 'web-stories')}
+                  >
+                    <Icons.Pencil aria-hidden="true" />
+                  </EditFeaturedMedia>
+                )}
+              </ScrimTop>
+              <ScrimBottom>
+                {title && (
+                  <Title data-testid="story_preview_title">{title}</Title>
+                )}
+                {publisher && (
+                  <Publisher data-testid="story_preview_publisher">
+                    {publisher}
+                  </Publisher>
+                )}
+              </ScrimBottom>
             </ScrimContainer>
           </ScrimWrapper>
-        </PreviewWrapper>
-      </PreviewContainer>
+        </PreviewContainer>
+      </PreviewWrapper>
     </>
   );
 };
