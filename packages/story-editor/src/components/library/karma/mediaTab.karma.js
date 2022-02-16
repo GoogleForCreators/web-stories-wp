@@ -59,15 +59,14 @@ describe('Library Media Tab', () => {
 
   describe('CUJ: Creator Can Add Image/Video to Page: Can manage media', () => {
     it('should open the dropdown menu', async () => {
-      const mediaItem = fixture.editor.library.media.item(0);
+      const mediaIndex = 0;
+      const mediaItem = fixture.editor.library.media.item(mediaIndex);
       // Hover the media
       await fixture.events.mouse.moveRel(mediaItem, 20, 20, { steps: 2 });
-      await waitFor(() =>
-        expect(
-          fixture.screen.getByRole('button', { name: 'More' })
-        ).toBeDefined()
-      );
-      const moreButton = fixture.screen.getByRole('button', { name: 'More' });
+      const menuButtons = await fixture.screen.findAllByRole('button', {
+        name: 'More',
+      });
+      const moreButton = menuButtons[mediaIndex];
       await fixture.events.mouse.seq(({ moveRel, down, up }) => [
         moveRel(moreButton, 20, 20),
         down(),
@@ -79,26 +78,19 @@ describe('Library Media Tab', () => {
       expect(
         fixture.screen.getByRole('menuitem', { name: 'Delete from library' })
       ).toBeDefined();
-      expect(
-        fixture.screen.getByRole('menuitem', { name: 'Insert image' })
-      ).toBeDefined();
-      expect(
-        fixture.screen.getByRole('menuitem', { name: 'Add as background' })
-      ).toBeDefined();
     });
 
     it('should allow setting media as background from the dropdown menu', async () => {
-      const mediaItem = fixture.editor.library.media.item(0);
+      const mediaIndex = 0;
+      const mediaItem = fixture.editor.library.media.item(mediaIndex);
       // Hover the media
       await fixture.events.mouse.moveRel(mediaItem, 20, 20, { steps: 2 });
-      await waitFor(() =>
-        expect(
-          fixture.screen.getByRole('button', { name: 'More' })
-        ).toBeDefined()
-      );
-      const moreButton = fixture.screen.getByRole('button', { name: 'More' });
+      const menuButtons = await fixture.screen.findAllByRole('button', {
+        name: 'Open insertion menu',
+      });
+      const insertionButton = menuButtons[mediaIndex];
       await fixture.events.mouse.seq(({ moveRel, down, up }) => [
-        moveRel(moreButton, 20, 20),
+        moveRel(insertionButton, 20, 20),
         down(),
         up(),
       ]);
