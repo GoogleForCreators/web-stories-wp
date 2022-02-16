@@ -167,4 +167,11 @@ export class Media3P extends Container {
   get mediaElements() {
     return this.getAllByTestId(/^mediaElement/);
   }
+
+  insertionBtnByIndex(index) {
+    const buttons = this.getAllByRole('button', {
+      name: /Open insertion menu/,
+    });
+    return buttons[index];
+  }
 }
