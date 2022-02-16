@@ -125,10 +125,13 @@ const ScrimTop = styled.div`
   justify-content: inherit;
   width: 100%;
 `;
+// Publisher logo border radius and box shadow are outside of theme to match Search Cover Preview
 const PublisherLogo = styled.img`
   grid-area: publisherLogo;
   height: 24px;
   width: 24px;
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.08);
 `;
 
 // TODO https://github.com/GoogleForCreators/web-stories-wp/issues/10584
