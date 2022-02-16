@@ -42,7 +42,7 @@ describe('ChecklistCategoryProvider', () => {
 
   it('provides a method to add entries', () => {
     const ChecklistWrapper = ({ children }) => (
-      <ChecklistCountProvider>
+      <ChecklistCountProvider hasChecklist>
         <ChecklistCategoryProvider category={ISSUE_TYPES.PRIORITY}>
           {children}
         </ChecklistCategoryProvider>
@@ -65,6 +65,7 @@ describe('ChecklistCategoryProvider', () => {
       },
       [ISSUE_TYPES.DESIGN]: {},
       [ISSUE_TYPES.ACCESSIBILITY]: {},
+      hasChecklist: true,
     });
   });
 });
@@ -74,7 +75,7 @@ describe('useRegisterCheck', () => {
     const testKey = 'testKey';
 
     const ChecklistWrapper = ({ children }) => (
-      <ChecklistCountProvider>
+      <ChecklistCountProvider hasChecklist>
         <ChecklistCategoryProvider category={ISSUE_TYPES.PRIORITY}>
           {children}
         </ChecklistCategoryProvider>
@@ -98,6 +99,7 @@ describe('useRegisterCheck', () => {
       },
       [ISSUE_TYPES.DESIGN]: {},
       [ISSUE_TYPES.ACCESSIBILITY]: {},
+      hasChecklist: true,
     });
 
     rerender(false);
@@ -107,6 +109,7 @@ describe('useRegisterCheck', () => {
       },
       [ISSUE_TYPES.DESIGN]: {},
       [ISSUE_TYPES.ACCESSIBILITY]: {},
+      hasChecklist: true,
     });
   });
 });

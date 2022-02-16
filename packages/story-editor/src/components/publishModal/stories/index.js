@@ -22,7 +22,7 @@ import { useCallback, useState } from '@googleforcreators/react';
  */
 import StoryContext from '../../../app/story/context';
 import { noop } from '../../../utils/noop';
-import { CheckpointContext } from '../../checklist';
+import { ChecklistCountProvider, CheckpointContext } from '../../checklist';
 import InspectorContext from '../../inspector/context';
 import { PageAdvancementPanel, SlugPanel } from '../../panels/document';
 import PublishModal from '../publishModal';
@@ -37,6 +37,7 @@ export default {
   title: 'Stories Editor/Components/Dialog/Publish Modal',
   args: {
     isOpen: true,
+    hasChecklist: true,
   },
   argTypes: {
     onPublish: { action: 'onPublish clicked' },
@@ -96,7 +97,9 @@ export const _default = (args) => {
             },
           }}
         >
-          <PublishModal {...args} />
+          <ChecklistCountProvider hasChecklist={args.hasChecklist}>
+            <PublishModal {...args} />
+          </ChecklistCountProvider>
         </InspectorContext.Provider>
       </CheckpointContext.Provider>
     </StoryContext.Provider>

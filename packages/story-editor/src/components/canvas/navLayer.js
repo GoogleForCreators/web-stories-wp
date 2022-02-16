@@ -27,24 +27,29 @@ import Footer from '../footer';
 import DirectionAware from '../directionAware';
 import PageSideMenu from './pageSideMenu';
 import { FooterArea, HeadArea, Layer, PageMenuArea, Z_INDEX } from './layout';
+import { ChecklistCountProvider } from '../checklist';
 
 function NavLayer({ header, footer }) {
   return (
-    <Layer
-      pointerEvents="none"
-      zIndex={Z_INDEX.NAV}
-      onMouseDown={(evt) => evt.stopPropagation()}
+    <ChecklistCountProvider
+      hasChecklist={Boolean(footer?.secondaryMenu?.checklist)}
     >
-      <HeadArea pointerEvents="initial">{header}</HeadArea>
-      <DirectionAware>
-        <PageMenuArea>
-          <PageSideMenu />
-        </PageMenuArea>
-      </DirectionAware>
-      <FooterArea pointerEvents="initial">
-        <Footer footer={footer} />
-      </FooterArea>
-    </Layer>
+      <Layer
+        pointerEvents="none"
+        zIndex={Z_INDEX.NAV}
+        onMouseDown={(evt) => evt.stopPropagation()}
+      >
+        <HeadArea pointerEvents="initial">{header}</HeadArea>
+        <DirectionAware>
+          <PageMenuArea>
+            <PageSideMenu />
+          </PageMenuArea>
+        </DirectionAware>
+        <FooterArea pointerEvents="initial">
+          <Footer footer={footer} />
+        </FooterArea>
+      </Layer>
+    </ChecklistCountProvider>
   );
 }
 
