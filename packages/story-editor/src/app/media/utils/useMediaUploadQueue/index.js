@@ -245,7 +245,7 @@ function useMediaUploadQueue() {
           return;
         }
 
-        delete trimData.elementId;
+        delete trimData.elementId; // remove transient ref to elementId
 
         additionalData.meta = {
           ...additionalData.meta,
