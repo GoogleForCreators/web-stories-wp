@@ -56,11 +56,19 @@ describe('Background Copy Paste integration', () => {
     // Verify setup - 1 element on each page in the right color
     await gotoPage(1);
     await waitFor(() => {
+      const pageArea = getPageArea();
+      if (!pageArea) {
+        throw new Error('node not ready!');
+      }
       expect(getPageArea()).toHaveStyle('background-color', 'rgb(255, 0, 0)');
     });
     expect(await getNumElements()).toBe(1);
     await gotoPage(2);
     await waitFor(() => {
+      const pageArea = getPageArea();
+      if (!pageArea) {
+        throw new Error('node not ready!');
+      }
       expect(getPageArea()).toHaveStyle('background-color', 'rgb(0, 255, 0)');
     });
     expect(await getNumElements()).toBe(1);
@@ -74,10 +82,13 @@ describe('Background Copy Paste integration', () => {
 
     // Assert - validate that page 2 now has the correct background color and only 1 element
     await gotoPage(2);
-    expect(await getPageArea()).toHaveStyle(
-      'background-color',
-      'rgb(255, 0, 0)'
-    );
+    await waitFor(() => {
+      const pageArea = getPageArea();
+      if (!pageArea) {
+        throw new Error('node not ready!');
+      }
+      expect(getPageArea()).toHaveStyle('background-color', 'rgb(255, 0, 0)');
+    });
     expect(await getNumElements()).toBe(1);
   });
 
