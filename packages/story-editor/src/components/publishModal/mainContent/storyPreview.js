@@ -39,6 +39,7 @@ const PreviewContainer = styled.div`
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
   position: relative;
+  margin-top: 8px;
 `;
 
 const PreviewWrapper = styled.div`
@@ -165,6 +166,9 @@ const Publisher = styled(Text).attrs({
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
+// TODO https://github.com/GoogleForCreators/web-stories-wp/issues/10584
+const ENABLE_EDIT_FEATURED_MEDIA = false;
+
 const StoryPreview = () => {
   const { title, featuredMedia, publisherLogo } = useStory(
     ({ state: { story } }) => ({
@@ -219,8 +223,7 @@ const StoryPreview = () => {
                       alt={__('Publisher Logo', 'web-stories')}
                     />
                   )}
-                  {/* TODO separately as follow up */}
-                  {hasUploadMediaAction && (
+                  {ENABLE_EDIT_FEATURED_MEDIA && hasUploadMediaAction && (
                     <EditFeaturedMedia
                       aria-label={__('Edit Publisher Logo', 'web-stories')}
                     >
