@@ -17,11 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-} from '@googleforcreators/design-system';
+import { Icons } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 /**
@@ -32,6 +28,7 @@ import useInspector from '../../inspector/useInspector';
 import { HEADER_BAR_HEIGHT, HEADER_BAR_MARGIN } from '../constants';
 import MandatoryStoryInfo from './mandatoryStoryInfo';
 import StoryPreview from './storyPreview';
+import { ToggleButton } from '../../toggleButton';
 
 const Main = styled.div`
   display: grid;
@@ -108,13 +105,13 @@ const MainContent = ({
         </PanelContainer>
       )}
       <Footer>
-        <Button
-          type={BUTTON_TYPES.PRIMARY}
-          size={BUTTON_SIZES.SMALL}
+        <ToggleButton
+          MainIcon={Icons.Checkbox}
+          label={__('Checklist', 'web-stories')}
+          aria-label={__('Checklist', 'web-stories')}
+          popupZIndexOverride={10}
           onClick={handleReviewChecklist}
-        >
-          {__('Checklist', 'web-stories')}
-        </Button>
+        />
       </Footer>
     </Main>
   );
