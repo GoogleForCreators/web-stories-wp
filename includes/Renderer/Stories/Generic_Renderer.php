@@ -48,7 +48,7 @@ class Generic_Renderer extends Renderer {
 	 *
 	 * @return void
 	 */
-	public function init() {
+	public function init(): void {
 
 		parent::init();
 

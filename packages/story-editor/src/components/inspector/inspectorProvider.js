@@ -28,6 +28,7 @@ import {
 } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { trackEvent } from '@googleforcreators/tracking';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -35,12 +36,16 @@ import { trackEvent } from '@googleforcreators/tracking';
 import { useAPI } from '../../app/api';
 import { useStory } from '../../app/story';
 import { useHighlights } from '../../app/highlights';
-import { DOCUMENT, DESIGN } from './constants';
+import { DOCUMENT, DESIGN, PUBLISH_MODAL_DOCUMENT } from './constants';
 import Context from './context';
 import DesignInspector from './design';
 
 const INSPECTOR_TAB_IDS = new Set([DOCUMENT, DESIGN]);
 function InspectorProvider({ inspectorTabs, children }) {
+  const isUpdatedPublishModalEnabled = useFeature(
+    'enableUpdatedPublishStoryModal'
+  );
+
   const {
     actions: { getAuthors },
   } = useAPI();
@@ -152,6 +157,13 @@ function InspectorProvider({ inspectorTabs, children }) {
       id: DOCUMENT,
       ...inspectorTabs.document,
     });
+  }
+
+  if (inspectorTabs?.publishModal && isUpdatedPublishModalEnabled) {
+    state.data.modalInspectorTab = {
+      id: PUBLISH_MODAL_DOCUMENT,
+      ...inspectorTabs.publishModal,
+    };
   }
 
   return <Context.Provider value={state}>{children}</Context.Provider>;

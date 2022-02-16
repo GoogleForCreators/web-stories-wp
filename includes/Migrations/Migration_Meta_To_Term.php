@@ -60,7 +60,7 @@ abstract class Migration_Meta_To_Term extends Migrate_Base {
 	 *
 	 * @return void
 	 */
-	public function migrate() {
+	public function migrate(): void {
 		global $wpdb;
 
 		$post_ids = $wpdb->get_col( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
@@ -85,7 +85,7 @@ abstract class Migration_Meta_To_Term extends Migrate_Base {
 	 *
 	 * @return string
 	 */
-	abstract protected function get_post_meta_key();
+	abstract protected function get_post_meta_key(): string;
 
 	/**
 	 * Get name of term to be used in migration.

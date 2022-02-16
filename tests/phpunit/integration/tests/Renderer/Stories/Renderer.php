@@ -65,7 +65,7 @@ class Renderer extends TestCase {
 	 *
 	 * @param \WP_UnitTest_Factory $factory Factory class object.
 	 */
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 
 		self::$story_id = $factory->post->create(
 			[
@@ -79,7 +79,7 @@ class Renderer extends TestCase {
 	/**
 	 * Runs once before any test in the class run.
 	 */
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->story_model = $this->createMock( Story::class );
@@ -101,7 +101,7 @@ class Renderer extends TestCase {
 	/**
 	 * @covers ::load_assets
 	 */
-	public function test_assets() {
+	public function test_assets(): void {
 		$renderer = new Test_Renderer( $this->story_query );
 
 		$renderer->load_assets();
@@ -112,7 +112,7 @@ class Renderer extends TestCase {
 	/**
 	 * @covers ::is_view_type
 	 */
-	public function test_is_view_type() {
+	public function test_is_view_type(): void {
 
 		$renderer = new Test_Renderer( $this->story_query );
 
@@ -128,7 +128,7 @@ class Renderer extends TestCase {
 	/**
 	 * @covers ::get_view_type
 	 */
-	public function test_get_view_type() {
+	public function test_get_view_type(): void {
 
 		$this->story_query->method( 'get_story_attributes' )->willReturn(
 			[
@@ -146,7 +146,7 @@ class Renderer extends TestCase {
 	/**
 	 * @covers ::render_story_with_poster
 	 */
-	public function test_render_story_with_poster() {
+	public function test_render_story_with_poster(): void {
 
 		$this->story_query->method( 'get_story_attributes' )->willReturn(
 			[
@@ -170,7 +170,7 @@ class Renderer extends TestCase {
 	/**
 	 * @covers ::get_content_overlay
 	 */
-	public function test_get_content_overlay() {
+	public function test_get_content_overlay(): void {
 		$renderer = $this->getMockForAbstractClass( AbstractRenderer::class, [ $this->story_query ], '', true, true, true, [ 'is_amp_request' ] );
 		$renderer->method( 'is_amp_request' )->willReturn( false );
 		$this->set_private_property( $renderer, 'stories', [ $this->story_model ] );
@@ -195,7 +195,7 @@ class Renderer extends TestCase {
 	/**
 	 * @covers ::get_single_story_classes
 	 */
-	public function test_get_single_story_classes() {
+	public function test_get_single_story_classes(): void {
 		$this->story_query->method( 'get_story_attributes' )->willReturn(
 			[
 				'view_type' => 'circles',
@@ -213,7 +213,7 @@ class Renderer extends TestCase {
 	/**
 	 * @covers ::get_container_classes
 	 */
-	public function test_get_container_classes() {
+	public function test_get_container_classes(): void {
 		$story_query = $this->createMock( Story_Query::class );
 		$story_query->method( 'get_stories' )->willReturn( [ $this->story_model ] );
 		$story_query->method( 'get_story_attributes' )->willReturn(
@@ -236,7 +236,7 @@ class Renderer extends TestCase {
 	/**
 	 * @covers ::maybe_render_archive_link
 	 */
-	public function test_maybe_render_archive_link() {
+	public function test_maybe_render_archive_link(): void {
 		$story_query = $this->createMock( Story_Query::class );
 		$story_query->method( 'get_stories' )->willReturn( [ $this->story_model ] );
 		$story_query->method( 'get_story_attributes' )->willReturn(
@@ -264,7 +264,7 @@ class Renderer extends TestCase {
 	 * Test that content overlay property is set when any of title,
 	 * date or author attribute is true.
 	 */
-	public function test_content_overlay_is_set() {
+	public function test_content_overlay_is_set(): void {
 		$story_query = $this->createMock( Story_Query::class );
 		$story_query->method( 'get_stories' )->willReturn( [ $this->story_model ] );
 		$story_query->method( 'get_story_attributes' )->willReturn(
@@ -281,7 +281,7 @@ class Renderer extends TestCase {
 		$this->assertTrue( $overlay );
 	}
 
-	public function test_render_link_attributes() {
+	public function test_render_link_attributes(): void {
 		$filter = static function( $attrs, $story, $position ) {
 			return [
 				'class'                              => '123',

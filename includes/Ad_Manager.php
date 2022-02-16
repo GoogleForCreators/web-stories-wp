@@ -58,7 +58,7 @@ class Ad_Manager extends Service_Base implements HasRequirements {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_action( 'web_stories_print_analytics', [ $this, 'print_ad_manager_tag' ] );
 	}
 
@@ -110,7 +110,7 @@ class Ad_Manager extends Service_Base implements HasRequirements {
 	 *
 	 * @return void
 	 */
-	public function print_ad_manager_tag() {
+	public function print_ad_manager_tag(): void {
 		$slot    = $this->get_slot_id();
 		$enabled = $this->is_enabled();
 

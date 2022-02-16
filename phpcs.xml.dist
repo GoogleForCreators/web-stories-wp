@@ -95,6 +95,22 @@
     >tests/phpunit/integration/includes/REST_Setup.php</exclude-pattern>
   </rule>
 
+  <rule
+    ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint"
+  >
+    <properties>
+      <property name="enableStaticTypeHint" value="false" />
+      <property name="enableMixedTypeHint" value="false" />
+      <property name="enableUnionTypeHint" value="false" />
+    </properties>
+    <exclude-pattern>web-stories.php</exclude-pattern>
+    <exclude-pattern
+    >includes/compat/Web_Stories_Compatibility.php</exclude-pattern>
+    <exclude-pattern>includes/Interfaces/FieldState.php</exclude-pattern>
+    <exclude-pattern>includes/Interfaces/FieldStateFactory.php</exclude-pattern>
+    <exclude-pattern>includes/Renderer/Stories/*</exclude-pattern>
+  </rule>
+
   <!-- Checks whether the nullablity ? symbol is present before each nullable and optional parameter. -->
   <rule
     ref="SlevomatCodingStandard.TypeHints.NullableTypeForNullDefaultValue"
@@ -170,7 +186,7 @@
     </properties>
   </rule>
   <!-- Requires declaring visibility for class constants. -->
-  <!--  <rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility" />-->
+  <rule ref="SlevomatCodingStandard.Classes.ClassConstantVisibility" />
 
   <!-- Requires use of null coalesce operator (??) when possible. -->
   <rule

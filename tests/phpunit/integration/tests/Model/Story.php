@@ -26,7 +26,7 @@ class Story extends TestCase {
 	/**
 	 * @covers ::__construct
 	 */
-	public function test_init() {
+	public function test_init(): void {
 		$data  = [
 			'title' => 'test title',
 			'url'   => 'https://www.google.com',
@@ -40,7 +40,7 @@ class Story extends TestCase {
 	/**
 	 * @covers ::load_from_post
 	 */
-	public function test_load_from_post() {
+	public function test_load_from_post(): void {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_title'   => 'test title',
@@ -60,7 +60,7 @@ class Story extends TestCase {
 	/**
 	 * @covers ::load_from_post
 	 */
-	public function test_load_from_post_with_poster() {
+	public function test_load_from_post_with_poster(): void {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_title'   => 'test title',
@@ -96,7 +96,7 @@ class Story extends TestCase {
 	/**
 	 * @covers ::load_from_post
 	 */
-	public function test_invalid_load_from_post() {
+	public function test_invalid_load_from_post(): void {
 		$post = self::factory()->post->create_and_get(
 			[
 				'post_title'   => 'test title',

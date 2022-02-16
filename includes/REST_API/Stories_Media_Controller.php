@@ -70,7 +70,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		$this->register_routes();
 	}
 
@@ -177,7 +177,8 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 		}
 
 		$new_response = $this->prepare_item_for_response( $attachment, $request );
-		$data         = $new_response->get_data();
+
+		$data = $new_response->get_data();
 		$response->set_data( $data );
 
 		return $response;
@@ -267,7 +268,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 * @param WP_REST_Request $request       Optional. Request to prepare items for.
 	 * @return array Array of query arguments.
 	 */
-	protected function prepare_items_query( $prepared_args = [], $request = null ) {
+	protected function prepare_items_query( $prepared_args = [], $request = null ): array {
 		$query_args = parent::prepare_items_query( $prepared_args, $request );
 
 		if ( empty( $request['mime_type'] ) && empty( $request['media_type'] ) ) {
@@ -302,7 +303,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 * @param WP_REST_Request $request Request object.
 	 * @return WP_REST_Response Response object.
 	 */
-	public function prepare_item_for_response( $post, $request ) {
+	public function prepare_item_for_response( $post, $request ): WP_REST_Response {
 		$response = parent::prepare_item_for_response( $post, $request );
 
 		/**

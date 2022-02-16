@@ -28,7 +28,7 @@ class Remove_Broken_Text_Styles extends TestCase {
 	/**
 	 * @covers ::migrate
 	 */
-	public function test_migrates() {
+	public function test_migrates(): void {
 		$presets = [
 			'textStyles' => [
 				[

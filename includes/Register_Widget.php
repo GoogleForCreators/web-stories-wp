@@ -59,7 +59,7 @@ class Register_Widget implements Service, Registerable {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_action( 'widgets_init', [ $this, 'register_widget' ] );
 		add_filter( 'widget_types_to_hide_from_legacy_widget_block', [ $this, 'hide_widget' ] );
 		add_filter( 'body_class', [ $this, 'body_class' ] );
@@ -72,7 +72,7 @@ class Register_Widget implements Service, Registerable {
 	 *
 	 * @return void
 	 */
-	public function register_widget() {
+	public function register_widget(): void {
 		register_widget( $this->stories );
 	}
 

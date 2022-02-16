@@ -40,7 +40,7 @@ use WP_Site;
  * @param bool $network_wide Whether to activate network-wide.
  * @return void
  */
-function activate( $network_wide = false ) {
+function activate( $network_wide = false ): void {
 	$network_wide = (bool) $network_wide;
 
 	// Runs all PluginActivationAware services.
@@ -65,7 +65,7 @@ register_activation_hook( WEBSTORIES_PLUGIN_FILE, __NAMESPACE__ . '\activate' );
  * @param int|WP_Site $site Site ID or object.
  * @return void
  */
-function new_site( $site ) {
+function new_site( $site ): void {
 	if ( ! is_multisite() ) {
 		return;
 	}
@@ -92,7 +92,7 @@ add_action( 'wp_initialize_site', __NAMESPACE__ . '\new_site', PHP_INT_MAX );
  * @param int|WP_Site $site Site ID or object.
  * @return void
  */
-function remove_site( $error, $site ) {
+function remove_site( $error, $site ): void {
 	if ( ! is_multisite() ) {
 		return;
 	}
@@ -118,7 +118,7 @@ add_action( 'wp_validate_site_deletion', __NAMESPACE__ . '\remove_site', PHP_INT
  * @param bool $network_wide Whether to deactivate network-wide.
  * @return void
  */
-function deactivate( $network_wide = false ) {
+function deactivate( $network_wide = false ): void {
 	$network_wide = (bool) $network_wide;
 
 	// Runs all PluginDeactivationAware services.
@@ -144,7 +144,7 @@ register_deactivation_hook( WEBSTORIES_PLUGIN_FILE, __NAMESPACE__ . '\deactivate
  *
  * @return void
  */
-function load_amp_plugin_compat() {
+function load_amp_plugin_compat(): void {
 	require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/compat/amp.php';
 }
 
@@ -157,7 +157,7 @@ add_action( 'wp', __NAMESPACE__ . '\load_amp_plugin_compat' );
  *
  * @todo Move to autoloader
  */
-function load_functions() {
+function load_functions(): void {
 	require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/functions.php';
 }
 
@@ -256,7 +256,7 @@ function rest_preload_api_request( $memo, $path ): array {
  *
  * @return Plugin
  */
-function get_plugin_instance() {
+function get_plugin_instance(): Plugin {
 	return PluginFactory::create();
 }
 
@@ -267,7 +267,7 @@ function get_plugin_instance() {
  *
  * @return void
  */
-function bootstrap_plugin() {
+function bootstrap_plugin(): void {
 	PluginFactory::create()->register();
 }
 

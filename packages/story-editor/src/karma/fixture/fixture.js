@@ -48,7 +48,9 @@ import taxonomiesResponse from './db/getTaxonomiesResponse';
 import singleSavedTemplate from './db/singleSavedTemplate';
 import HeaderLayout from './components/header';
 import storyResponse from './db/storyResponse';
-import DocumentPane from './components/documentPane';
+import DocumentPane, {
+  PublishModalDocumentPane,
+} from './components/documentPane';
 import { Accessibility, Design, Priority } from './components/checklist';
 
 if ('true' === WEB_STORIES_CI) {
@@ -352,6 +354,9 @@ export class Fixture {
             document: {
               title: 'Document',
               Pane: DocumentPane,
+            },
+            publishModal: {
+              DocumentPane: PublishModalDocumentPane,
             },
           }}
         />

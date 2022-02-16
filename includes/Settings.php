@@ -35,72 +35,72 @@ class Settings extends Service_Base {
 	/**
 	 * Settings group.
 	 */
-	const SETTING_GROUP = 'web-stories';
+	public const SETTING_GROUP = 'web-stories';
 
 	/**
 	 * Experiments settings group.
 	 */
-	const SETTING_GROUP_EXPERIMENTS = 'web-stories-experiments';
+	public const SETTING_GROUP_EXPERIMENTS = 'web-stories-experiments';
 
 	/**
 	 * Experiments setting name.
 	 */
-	const SETTING_NAME_EXPERIMENTS = 'web_stories_experiments';
+	public const SETTING_NAME_EXPERIMENTS = 'web_stories_experiments';
 
 	/**
 	 * GA Tracking ID setting name.
 	 */
-	const SETTING_NAME_TRACKING_ID = 'web_stories_ga_tracking_id';
+	public const SETTING_NAME_TRACKING_ID = 'web_stories_ga_tracking_id';
 
 	/**
 	 * Legacy analytics usage flag.
 	 */
-	const SETTING_NAME_USING_LEGACY_ANALYTICS = 'web_stories_using_legacy_analytics';
+	public const SETTING_NAME_USING_LEGACY_ANALYTICS = 'web_stories_using_legacy_analytics';
 
 	/**
 	 * Type of adloader.
 	 */
-	const SETTING_NAME_AD_NETWORK = 'web_stories_ad_network';
+	public const SETTING_NAME_AD_NETWORK = 'web_stories_ad_network';
 
 	/**
 	 * AdSense Publisher ID setting name.
 	 */
-	const SETTING_NAME_ADSENSE_PUBLISHER_ID = 'web_stories_adsense_publisher_id';
+	public const SETTING_NAME_ADSENSE_PUBLISHER_ID = 'web_stories_adsense_publisher_id';
 
 	/**
 	 * AdSense Slot ID setting name.
 	 */
-	const SETTING_NAME_ADSENSE_SLOT_ID = 'web_stories_adsense_slot_id';
+	public const SETTING_NAME_ADSENSE_SLOT_ID = 'web_stories_adsense_slot_id';
 
 	/**
 	 * Ad Manager Slot ID setting name.
 	 */
-	const SETTING_NAME_AD_MANAGER_SLOT_ID = 'web_stories_ad_manager_slot_id';
+	public const SETTING_NAME_AD_MANAGER_SLOT_ID = 'web_stories_ad_manager_slot_id';
 
 	/**
 	 * Active publisher logo setting name.
 	 */
-	const SETTING_NAME_ACTIVE_PUBLISHER_LOGO = 'web_stories_active_publisher_logo';
+	public const SETTING_NAME_ACTIVE_PUBLISHER_LOGO = 'web_stories_active_publisher_logo';
 
 	/**
 	 * Publisher logos setting name.
 	 */
-	const SETTING_NAME_PUBLISHER_LOGOS = 'web_stories_publisher_logos';
+	public const SETTING_NAME_PUBLISHER_LOGOS = 'web_stories_publisher_logos';
 
 	/**
 	 * Video cache setting name.
 	 */
-	const SETTING_NAME_VIDEO_CACHE = 'web_stories_video_cache';
+	public const SETTING_NAME_VIDEO_CACHE = 'web_stories_video_cache';
 
 	/**
 	 * Web Stories archive setting name.
 	 */
-	const SETTING_NAME_ARCHIVE = 'web_stories_archive';
+	public const SETTING_NAME_ARCHIVE = 'web_stories_archive';
 
 	/**
 	 * Web Stories archive page ID setting name.
 	 */
-	const SETTING_NAME_ARCHIVE_PAGE_ID = 'web_stories_archive_page_id';
+	public const SETTING_NAME_ARCHIVE_PAGE_ID = 'web_stories_archive_page_id';
 
 	/**
 	 * Register settings.
@@ -111,7 +111,7 @@ class Settings extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		register_setting(
 			self::SETTING_GROUP,
 			self::SETTING_NAME_TRACKING_ID,
@@ -195,16 +195,19 @@ class Settings extends Service_Base {
 			self::SETTING_GROUP,
 			self::SETTING_NAME_PUBLISHER_LOGOS,
 			[
-				'description'  => __( 'Publisher Logos', 'web-stories' ),
-				'type'         => 'array',
-				'default'      => [],
-				'show_in_rest' => [
+				'description'     => __( 'Publisher Logos', 'web-stories' ),
+				'type'            => 'array',
+				'default'         => [],
+				'show_in_rest'    => [
 					'schema' => [
 						'items' => [
 							'type' => 'integer',
 						],
 					],
 				],
+				// WPGraphQL errors when encountering array or object types.
+				// See https://github.com/wp-graphql/wp-graphql/issues/2065.
+				'show_in_graphql' => false,
 			]
 		);
 
@@ -250,14 +253,17 @@ class Settings extends Service_Base {
 			self::SETTING_GROUP_EXPERIMENTS,
 			self::SETTING_NAME_EXPERIMENTS,
 			[
-				'description'  => __( 'Experiments', 'web-stories' ),
-				'type'         => 'object',
-				'default'      => [],
-				'show_in_rest' => [
+				'description'     => __( 'Experiments', 'web-stories' ),
+				'type'            => 'object',
+				'default'         => [],
+				'show_in_rest'    => [
 					'schema' => [
 						'properties' => [],
 					],
 				],
+				// WPGraphQL errors when encountering array or object types.
+				// See https://github.com/wp-graphql/wp-graphql/issues/2065.
+				'show_in_graphql' => false,
 			]
 		);
 	}

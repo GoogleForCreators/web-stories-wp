@@ -40,5 +40,5 @@ interface PluginDeactivationAware {
 	 * @param bool $network_wide Whether the deactivation was done network-wide.
 	 * @return void
 	 */
-	public function on_plugin_deactivation( $network_wide );
+	public function on_plugin_deactivation( $network_wide ): void;
 }

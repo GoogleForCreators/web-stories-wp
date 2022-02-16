@@ -20,3 +20,6 @@ export const INPUT_KEYS = {
   SLUG: 'slug',
   TITLE: 'title',
 };
+
+export const HEADER_BAR_HEIGHT = '44px';
+export const HEADER_BAR_MARGIN = '1px';

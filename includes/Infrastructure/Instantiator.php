@@ -38,5 +38,5 @@ interface Instantiator {
 	 * @param array  $dependencies Optional. Dependencies of the class.
 	 * @return object Instantiated object.
 	 */
-	public function instantiate( $class, $dependencies = [] );
+	public function instantiate( $class, $dependencies = [] ): object;
 }

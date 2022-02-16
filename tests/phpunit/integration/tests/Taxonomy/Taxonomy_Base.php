@@ -27,7 +27,7 @@ class Taxonomy_Base extends TestCase {
 	/**
 	 * @covers ::register_taxonomy
 	 */
-	public function test_register_taxonomy() {
+	public function test_register_taxonomy(): void {
 		$object = new DummyTaxonomy();
 		$object->register_taxonomy();
 		$slug = $this->get_private_property( $object, 'taxonomy_slug' );
@@ -37,7 +37,7 @@ class Taxonomy_Base extends TestCase {
 	/**
 	 * @covers ::unregister_taxonomy
 	 */
-	public function test_unregister_taxonomy() {
+	public function test_unregister_taxonomy(): void {
 		$object = new DummyTaxonomy();
 		$object->register();
 		$slug = $this->get_private_property( $object, 'taxonomy_slug' );

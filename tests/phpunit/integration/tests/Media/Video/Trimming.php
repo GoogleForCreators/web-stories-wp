@@ -31,7 +31,7 @@ class Trimming extends TestCase {
 	 */
 	protected $instance;
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->instance = new \Google\Web_Stories\Media\Video\Trimming();
@@ -40,7 +40,7 @@ class Trimming extends TestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$this->instance->register();
 
 		$this->assertSame( 10, has_filter( 'wp_prepare_attachment_for_js', [ $this->instance, 'wp_prepare_attachment_for_js' ] ) );
@@ -49,7 +49,7 @@ class Trimming extends TestCase {
 	/**
 	 * @covers ::register_meta
 	 */
-	public function test_register_meta() {
+	public function test_register_meta(): void {
 		$this->instance->register_meta();
 
 		$this->assertTrue( registered_meta_key_exists( 'post', $this->instance::TRIM_POST_META_KEY, 'attachment' ) );
@@ -58,7 +58,7 @@ class Trimming extends TestCase {
 	/**
 	 * @covers ::wp_prepare_attachment_for_js
 	 */
-	public function test_wp_prepare_attachment_for_js() {
+	public function test_wp_prepare_attachment_for_js(): void {
 		$video_attachment_id = self::factory()->attachment->create_object(
 			[
 				'file'           => DIR_TESTDATA . '/uploads/test-video.mp4',
