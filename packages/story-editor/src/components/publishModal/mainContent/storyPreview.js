@@ -172,10 +172,9 @@ const ENABLE_EDIT_FEATURED_MEDIA = false;
 const StoryPreview = () => {
   const { title, featuredMedia, publisherLogo } = useStory(
     ({ state: { story } }) => ({
-      title: story.title,
-      featuredMedia: story.featuredMedia,
-      publisherLogo: story.publisherLogo,
-      story,
+      title: story?.title,
+      featuredMedia: story?.featuredMedia || {},
+      publisherLogo: story?.publisherLogo || {},
     })
   );
 
@@ -198,13 +197,14 @@ const StoryPreview = () => {
       </Headline>
       <PreviewContainer width={mediaWidth} height={mediaHeight}>
         <PreviewWrapper width={mediaWidth} height={mediaHeight}>
-          {featuredMedia.url ? (
+          {featuredMedia?.url ? (
             <Image
               crossOrigin="anonymous"
               src={featuredMedia.url}
               width={featuredMedia.width}
               height={featuredMedia.height}
               alt={__('Preview image', 'web-stories')}
+              data-testid="story_preview_featured_media"
             />
           ) : (
             <EmptyPlaceholder />
@@ -214,13 +214,14 @@ const StoryPreview = () => {
             <ScrimContainer>
               <ScrimContent>
                 <TopOverlay>
-                  {publisherLogo?.url.length > 0 && (
+                  {publisherLogo?.url?.length > 0 && (
                     <PublisherLogo
                       crossOrigin="anonymous"
                       width={publisherLogo.width}
                       height={publisherLogo.height}
                       src={publisherLogo.url}
                       alt={__('Publisher Logo', 'web-stories')}
+                      data-testid="story_preview_logo"
                     />
                   )}
                   {ENABLE_EDIT_FEATURED_MEDIA && hasUploadMediaAction && (
@@ -232,8 +233,14 @@ const StoryPreview = () => {
                   )}
                 </TopOverlay>
                 <BottomOverlay>
-                  {title && <Title>{title}</Title>}
-                  {publisher && <Publisher>{publisher}</Publisher>}
+                  {title && (
+                    <Title data-testid="story_preview_title">{title}</Title>
+                  )}
+                  {publisher && (
+                    <Publisher data-testid="story_preview_publisher">
+                      {publisher}
+                    </Publisher>
+                  )}
                 </BottomOverlay>
               </ScrimContent>
             </ScrimContainer>
