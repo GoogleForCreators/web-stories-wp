@@ -199,8 +199,7 @@ describe('Filter Panel', () => {
     });
   });
 
-  // Disable reason: tests not implemented yet
-  // eslint-disable-next-line jasmine/no-disabled-tests
+  // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
   xdescribe('CUJ: Creator Can Manipulate an Image/Video on Canvas: Set overlay color(s) & other gradient properties', () => {
     it('should render overlay color component iff it has an overlay');
 

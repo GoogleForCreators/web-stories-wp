@@ -111,9 +111,9 @@ export default function useFetchMediaEffect({
     // don't load media again.
     const somethingChanged =
       previousProps &&
-      (pageToken != previousProps.pageToken ||
-        searchTerm != previousProps.searchTerm ||
-        selectedCategoryId != previousProps.selectedCategoryId);
+      (pageToken !== previousProps.pageToken ||
+        searchTerm !== previousProps.searchTerm ||
+        selectedCategoryId !== previousProps.selectedCategoryId);
     const firstFetchOrSomethingChanged =
       !previousProps ||
       (!previousProps.isMediaLoading && !previousProps.isMediaLoaded) ||
@@ -122,8 +122,7 @@ export default function useFetchMediaEffect({
     if (provider === selectedProvider && firstFetchOrSomethingChanged) {
       fetch();
     }
-    // We don't want to depend on previousProps, see https://blog.logrocket.com/how-to-get-previous-props-state-with-react-hooks/
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- We don't want to depend on previousProps, see https://blog.logrocket.com/how-to-get-previous-props-state-with-react-hooks/
   }, [
     // Fetch media is triggered by changes to these.
     selectedProvider,

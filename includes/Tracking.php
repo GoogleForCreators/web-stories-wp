@@ -196,6 +196,7 @@ class Tracking extends Service_Base {
 			'wpVersion'          => get_bloginfo( 'version' ),
 			'phpVersion'         => PHP_VERSION,
 			'isMultisite'        => (int) is_multisite(),
+			'serverEnvironment'  => wp_get_environment_type(),
 			'adNetwork'          => $ad_network,
 			'analytics'          => $analytics,
 			'activePlugins'      => $active_plugins,

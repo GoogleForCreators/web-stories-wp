@@ -21,7 +21,7 @@ import { renderToStaticMarkup as _renderToStaticMarkup } from 'react-dom/server'
 
 /** @typedef {import('react').ReactElement} ReactElement */
 
-/* eslint-disable no-console */
+/* eslint-disable no-console -- Deliberately overriding console.error  */
 
 /**
  * Render a React element to static markup.
@@ -53,5 +53,7 @@ function renderToStaticMarkup(element) {
 
   return markup;
 }
-/* eslint-enable no-console */
+
+/* eslint-enable no-console -- Deliberately overriding console.error */
+
 export default renderToStaticMarkup;

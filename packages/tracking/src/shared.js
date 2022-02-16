@@ -27,7 +27,7 @@ import { DATA_LAYER } from './constants';
  */
 export function gtag() {
   window[DATA_LAYER] = window[DATA_LAYER] || [];
-  //eslint-disable-next-line prefer-rest-params
+  //eslint-disable-next-line prefer-rest-params -- Must push instead of using spread to prevent tracking failures.
   window[DATA_LAYER].push(arguments);
 }
 

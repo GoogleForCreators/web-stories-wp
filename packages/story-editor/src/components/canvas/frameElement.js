@@ -189,8 +189,7 @@ function FrameElement({ id }) {
         ref={elementRef}
         data-element-id={id}
         {...box}
-        // Needed for being able to focus on the selected element on canvas, e.g. for entering edit mode.
-        // eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex
+        // eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex -- Needed for being able to focus on the selected element on canvas, e.g. for entering edit mode.
         tabIndex={0}
         aria-labelledby={`layer-${id}`}
         hasMask={isMaskable}

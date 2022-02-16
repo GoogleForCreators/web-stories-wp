@@ -193,7 +193,7 @@ function InnerElement({
   };
 
   if (type === ContentType.IMAGE) {
-    // eslint-disable-next-line styled-components-a11y/alt-text
+    // eslint-disable-next-line styled-components-a11y/alt-text -- False positive.
     media = <Image key={src} {...imageProps} ref={mediaElement} />;
     cloneProps.src = thumbnailURL;
   } else if ([ContentType.VIDEO, ContentType.GIF].includes(type)) {

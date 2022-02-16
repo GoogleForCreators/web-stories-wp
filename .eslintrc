@@ -104,6 +104,7 @@
       }
     ],
     "no-useless-call": "error",
+    "jsx-a11y/anchor-has-content": "off",
     "no-useless-concat": "error",
     "no-console": "error",
     "no-duplicate-imports": "error",
@@ -201,6 +202,7 @@
     "jsdoc/require-param-description": "warn",
     "jsdoc/valid-types": "error",
     "eslint-comments/no-unused-disable": "error",
+    "eslint-comments/require-description": "error",
     "@wordpress/dependency-group": "error",
     "@wordpress/no-unused-vars-before-return": ["error", {
       "excludePattern": "^use"
@@ -222,7 +224,7 @@
     "es2020": true
   },
   "globals": {
-    "__webpack_public_path__": true,
+    "__webpack_public_path__": "writable",
     "WEB_STORIES_CI": "readonly",
     "WEB_STORIES_DISABLE_ERROR_BOUNDARIES": "readonly",
     "WEB_STORIES_DISABLE_OPTIMIZED_RENDERING": "readonly",
@@ -275,6 +277,7 @@
         "__mocks__/**/*.js",
         "**/__tests__/**/*.js",
         "**/test/**/*.js",
+        "**/testUtils/**/*.js",
         "**/?(*.)test.js",
         "tests/js/**/*.js"
       ],
@@ -297,6 +300,8 @@
         "node": true
       },
       "rules": {
+        "eslint-comments/require-description": "off",
+        "react/prop-types": "off",
         "jest/no-hooks": "off",
         "jest/prefer-expect-assertions": "off",
         "jest/prefer-inline-snapshots": "off",
@@ -317,7 +322,7 @@
         "__mocks__/**/*.js"
       ],
       "rules": {
-      "jest/require-hook":  "off"
+        "jest/require-hook":  "off"
       }
     },
     {
@@ -338,6 +343,7 @@
         "jasmine": true
       },
       "rules": {
+        "eslint-comments/require-description": "off",
         "testing-library/no-debugging-utils": "error",
         "testing-library/no-dom-import": "error",
         "jasmine/new-line-before-expect": "off",
@@ -383,6 +389,7 @@
         "node": true
       },
       "rules": {
+        "eslint-comments/require-description": "off",
         "jest/no-hooks": "off",
         "jest/prefer-expect-assertions": "off",
         "jest/prefer-inline-snapshots": "off",
@@ -417,6 +424,7 @@
         "packages/e2e-test-utils/**/*.js"
       ],
       "rules": {
+        "eslint-comments/require-description": "off",
         "jest/expect-expect": "off",
         "jest/no-export": "off",
         "jest/require-top-level-describe": "off"
@@ -429,8 +437,12 @@
       }
     },
     {
-      "files": ["packages/e2e-tests/src/config/**/*.js"],
+      "files": [
+        "packages/e2e-tests/src/config/**/*.js",
+        "**/testUtils/**/*.js"
+      ],
       "rules": {
+        "eslint-comments/require-description": "off",
         "jest/require-hook": "off"
       }
     },
@@ -491,6 +503,7 @@
         "node": true
       },
       "rules": {
+        "eslint-comments/require-description": "off",
         "node/no-extraneous-import": "off",
         "node/no-missing-import": "off",
         "node/no-unpublished-import": "off",
@@ -529,7 +542,9 @@
         "no-undef": "off",
         "no-unused-vars": "off",
         "header/header": "off",
-        "prettier/prettier": "off"
+        "prettier/prettier": "off",
+        "eslint-comments/require-description": "off",
+        "react/prop-types" : "off"
       }
     },
     {
@@ -624,6 +639,18 @@
       ],
       "globals": {
         "tinymce": "readonly"
+      }
+    },
+    {
+      "files": [
+        "**/stories/*.js",
+        ".storybook/main.cjs"
+      ],
+      "rules": {
+        "react/no-array-index-key" : "off",
+        "react/prop-types": "off",
+        "eslint-comments/no-unused-disable": "off",
+        "eslint-comments/require-description": "off"
       }
     }
   ]

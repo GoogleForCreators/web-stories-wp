@@ -91,7 +91,7 @@ function EditablePreview({ label, value, width, format, onChange }) {
   );
 
   // Handle ESC keypress to toggle input field.
-  //eslint-disable-next-line react-hooks/exhaustive-deps
+  //eslint-disable-next-line react-hooks/exhaustive-deps -- False positive.
   useKeyDownEffect(wrapperRef, { key: 'esc', editable: true }, disableEditing, [
     isEditing,
   ]);

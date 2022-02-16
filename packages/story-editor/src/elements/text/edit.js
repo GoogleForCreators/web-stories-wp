@@ -392,8 +392,7 @@ function TextEdit({
       width={elementWidth}
       height={elementHeight}
     >
-      {/* onClick handler is needed here to ensure the editor keeps focus, e.g. after setting inline colour. */}
-      {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions */}
+      {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions -- Needed here to ensure the editor keeps focus, e.g. after setting inline colour. */}
       <Wrapper
         ref={wrapperRef}
         onClick={onClick}

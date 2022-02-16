@@ -119,7 +119,7 @@
     "file-loader": "^6.2.0",
     "glob": "^7.2.0",
     "html-webpack-plugin": "^4.5.2",
-    "husky": "^4.3.7",
+    "husky": "^7.0.4",
     "jest": "^27.5.0",
     "jest-axe": "^5.0.1",
     "jest-canvas-mock": "^2.3.1",
@@ -265,11 +265,6 @@
     "postworkflow:migrate:templates": "npx prettier --write packages/templates/src/raw",
     "workflow:migrate:ftue-story": "npm run migration --workspace packages/migration includes/data/stories",
     "postworkflow:migrate:ftue-story": "npx prettier --write includes/data/stories"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged --relative"
-    }
   },
   "lint-staged": {
     "*.js": [
