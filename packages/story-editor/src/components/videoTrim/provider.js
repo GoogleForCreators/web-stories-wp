@@ -56,7 +56,6 @@ function VideoTrimProvider({ children }) {
       return;
     }
     const lengthInSeconds = Math.round(endOffset / 1000 - startOffset / 1000);
-
     trimExistingVideo({
       resource: {
         ...resource,
