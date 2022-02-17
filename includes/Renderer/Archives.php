@@ -83,7 +83,7 @@ class Archives extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_filter( 'the_content', [ $this, 'embed_player' ], PHP_INT_MAX );
 		add_filter( 'the_excerpt', [ $this, 'embed_player' ], PHP_INT_MAX );
 	}

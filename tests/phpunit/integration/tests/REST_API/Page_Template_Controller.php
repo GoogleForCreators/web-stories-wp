@@ -43,7 +43,7 @@ class Page_Template_Controller extends RestTestCase {
 	 */
 	private $controller;
 
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$user_id = $factory->user->create(
 			[
 				'role'         => 'administrator',
@@ -113,7 +113,7 @@ class Page_Template_Controller extends RestTestCase {
 		);
 	}
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->controller = new \Google\Web_Stories\REST_API\Page_Template_Controller( 'post' );
@@ -122,7 +122,7 @@ class Page_Template_Controller extends RestTestCase {
 	/**
 	 * @covers ::get_collection_params
 	 */
-	public function test_get_collection_params() {
+	public function test_get_collection_params(): void {
 		$actual = $this->controller->get_collection_params();
 
 		$this->assertArrayHasKey( '_web_stories_envelope', $actual );
@@ -131,7 +131,7 @@ class Page_Template_Controller extends RestTestCase {
 	/**
 	 * @covers ::get_item_schema
 	 */
-	public function test_get_item_schema() {
+	public function test_get_item_schema(): void {
 		$actual = $this->controller->get_item_schema();
 
 		$this->assertArrayNotHasKey( 'permalink_template', $actual['properties'] );
@@ -141,7 +141,7 @@ class Page_Template_Controller extends RestTestCase {
 	/**
 	 * @covers ::get_items
 	 */
-	public function test_get_items_format() {
+	public function test_get_items_format(): void {
 		$this->controller->register_routes();
 
 		wp_set_current_user( self::$user_id );

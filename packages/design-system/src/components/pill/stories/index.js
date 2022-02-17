@@ -19,7 +19,6 @@
  */
 import { useState } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
-import { action } from '@storybook/addon-actions';
 import styled, { ThemeProvider } from 'styled-components';
 /**
  * Internal dependencies
@@ -30,12 +29,21 @@ import { Pill, PillGroup } from '..';
 export default {
   title: 'DesignSystem/Components/Pill',
   args: {
-    pill1isActive: true,
-    pill2isActive: true,
-    pill3isActive: true,
     pill1: 'pill 1 text',
     pill2: 'pill 2 text',
     pill3: 'pill 3 text',
+    pill1isActive: true,
+    pill2isActive: true,
+    pill3isActive: true,
+  },
+  argTypes: {
+    pill1: { name: 'first pill' },
+    pill2: { name: 'second pill' },
+    pill3: { name: 'third pill' },
+    pill1isActive: { name: 'first pill isActive' },
+    pill2isActive: { name: 'second pill isActive' },
+    pill3isActive: { name: 'third pill isActive' },
+    onClick: { action: 'clicked' },
   },
 };
 
@@ -46,7 +54,8 @@ const Container = styled.div`
   gap: 12px;
 `;
 
-function PillContainer({ prefix, ...args }) {
+// eslint-disable-next-line react/prop-types
+function PillContainer({ prefix, onClick, ...args }) {
   let message;
   let active;
 
@@ -76,7 +85,7 @@ function PillContainer({ prefix, ...args }) {
           <Pill
             key={i}
             isActive={active}
-            onClick={(e) => action(`${prefix}: click on pill ${i}`)(e)}
+            onClick={(e) => onClick(`Theme: ${prefix}; pill: ${i}`, e)}
           >
             {message}
           </Pill>
@@ -124,10 +133,12 @@ function PillGroupContainer(args) {
 // Override light theme because this component is only set up for dark theme right now given fg and bg coloring
 export const PillGroups = (args) => (
   <>
-    <PillGroupContainer />
+    <PillGroupContainer {...args} />
     <ThemeProvider theme={theme}>
       <PillGroupContainer {...args} />
     </ThemeProvider>
   </>
 );
-PillGroups.parameters = { controls: { include: [] } };
+PillGroups.parameters = {
+  controls: { include: [], hideNoControlsWarning: true },
+};

@@ -20,7 +20,7 @@
 import * as types from './types';
 import * as reducers from './reducers';
 
-/* eslint-disable complexity */
+// eslint-disable-next-line complexity -- reducer function, negligible.
 function reducer(state, { type, payload }) {
   switch (type) {
     case types.ADD_PAGE: {
@@ -123,6 +123,5 @@ function reducer(state, { type, payload }) {
       return state;
   }
 }
-/* eslint-enable complexity */
 
 export default reducer;

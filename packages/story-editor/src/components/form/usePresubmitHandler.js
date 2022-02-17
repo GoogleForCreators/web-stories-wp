@@ -33,7 +33,7 @@ function usePresubmitHandler(handler, deps = undefined) {
   const { registerPresubmitHandler } = useFormContext();
   useEffect(
     () => registerPresubmitHandler(handler),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- Pass through provided deps.
     [registerPresubmitHandler].concat(deps || [])
   );
 }

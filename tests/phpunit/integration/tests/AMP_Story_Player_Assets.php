@@ -27,7 +27,7 @@ class AMP_Story_Player_Assets extends TestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$instance = new Assets();
 		$instance->register();
 

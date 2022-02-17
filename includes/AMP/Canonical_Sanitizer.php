@@ -56,7 +56,7 @@ class Canonical_Sanitizer extends AMP_Base_Sanitizer {
 	 *
 	 * @return void
 	 */
-	public function sanitize() {
+	public function sanitize(): void {
 		$canonical_url = $this->args['canonical_url'];
 
 		$query = $this->dom->xpath->query( '//link[@rel="canonical"]', $this->dom->head );

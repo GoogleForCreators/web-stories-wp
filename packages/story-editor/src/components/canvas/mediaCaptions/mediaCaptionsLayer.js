@@ -47,41 +47,63 @@ const CaptionsCanvas = styled.div`
   cursor: default;
 `;
 
-function VideoCaptionsLayer() {
+function MediaCaptionsLayer() {
   const { isEditing } = useCanvas(({ state: { isEditing } }) => ({
     isEditing,
   }));
 
-  const videoElement = useStory(({ state }) => {
-    const { selectedElements } = state;
+  const { currentPageId, backgroundAudio, videoElement } = useStory(
+    ({ state }) => {
+      const { selectedElements, currentPage } = state;
+      const { backgroundAudio: currentPageBackgroundAudio } = currentPage;
 
-    if (selectedElements.length !== 1) {
-      return null;
+      let backgroundAudio = null;
+      let videoElement = null;
+
+      if (selectedElements.length === 1) {
+        const selectedElement = selectedElements[0];
+        const { isBackground, type, tracks } = selectedElement;
+        if (
+          isBackground &&
+          currentPageBackgroundAudio &&
+          currentPageBackgroundAudio?.tracks?.length > 0
+        ) {
+          backgroundAudio = currentPageBackgroundAudio;
+        }
+        if (type === 'video' && tracks?.length > 0) {
+          videoElement = selectedElement;
+        }
+      }
+
+      return {
+        currentPageId: currentPage?.id,
+        backgroundAudio,
+        videoElement,
+      };
     }
+  );
 
-    const selectedElement = selectedElements[0];
-    const { type, tracks } = selectedElement;
-    if (type === 'video' && tracks?.length > 0) {
-      return selectedElement;
-    }
-
-    return null;
-  });
-
-  const [videoTrackCount, setVideoTrackCount] = useState(0);
+  const [mediaTrackCount, setMediaTrackCount] = useState(0);
+  const [mediaElementId, setMediaElementId] = useState('');
 
   useEffect(() => {
-    setVideoTrackCount(0);
+    setMediaTrackCount(0);
+    setMediaElementId('');
+
+    if (backgroundAudio) {
+      setMediaElementId(`page-${currentPageId}-background-audio`);
+      setMediaTrackCount(backgroundAudio.tracks.length);
+      return;
+    }
 
     if (isEditing || !videoElement) {
       return;
     }
+    setMediaElementId(`video-${videoElement.id}`);
+    setMediaTrackCount(videoElement.tracks.length);
+  }, [videoElement, backgroundAudio, currentPageId, isEditing]);
 
-    const video = document.getElementById(`video-${videoElement.id}`);
-    setVideoTrackCount(video.textTracks.length);
-  }, [videoElement, setVideoTrackCount, isEditing]);
-
-  if (isEditing || !videoElement || !videoTrackCount) {
+  if (!mediaTrackCount) {
     return null;
   }
 
@@ -89,13 +111,13 @@ function VideoCaptionsLayer() {
     <CaptionsLayer>
       <CaptionsPageArea withSafezone={false} showOverflow>
         <CaptionsCanvas>
-          {Array.from({ length: videoTrackCount }).map((_, index) => (
+          {Array.from({ length: mediaTrackCount }).map((_, index) => (
             <TrackRenderer
               key={
-                // eslint-disable-next-line react/no-array-index-key
+                // eslint-disable-next-line react/no-array-index-key -- Order should never change.
                 index
               }
-              videoElement={videoElement}
+              elementId={mediaElementId}
               trackIndex={index}
             />
           ))}
@@ -105,4 +127,4 @@ function VideoCaptionsLayer() {
   );
 }
 
-export default VideoCaptionsLayer;
+export default MediaCaptionsLayer;

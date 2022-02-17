@@ -11,26 +11,26 @@ use stdClass;
 
 final class SimpleInjectorTest extends TestCase {
 
-	public function test_it_can_be_initialized() {
+	public function test_it_can_be_initialized(): void {
 		$injector = new SimpleInjector();
 
 		$this->assertInstanceOf( SimpleInjector::class, $injector );
 	}
 
-	public function test_it_implements_the_interface() {
+	public function test_it_implements_the_interface(): void {
 		$injector = new SimpleInjector();
 
 		$this->assertInstanceOf( Injector::class, $injector );
 	}
 
-	public function test_it_can_instantiate_a_concrete_class() {
+	public function test_it_can_instantiate_a_concrete_class(): void {
 		$object = ( new SimpleInjector() )
 			->make( Fixture\DummyClass::class );
 
 		$this->assertInstanceOf( Fixture\DummyClass::class, $object );
 	}
 
-	public function test_it_can_autowire_a_class_with_a_dependency() {
+	public function test_it_can_autowire_a_class_with_a_dependency(): void {
 		$object = ( new SimpleInjector() )
 			->make( Fixture\DummyClassWithDependency::class );
 
@@ -38,7 +38,7 @@ final class SimpleInjectorTest extends TestCase {
 		$this->assertInstanceOf( Fixture\DummyClass::class, $object->get_dummy() );
 	}
 
-	public function test_it_can_instantiate_a_bound_interface() {
+	public function test_it_can_instantiate_a_bound_interface(): void {
 		$injector = ( new SimpleInjector() )
 			->bind(
 				Fixture\DummyInterface::class,
@@ -51,7 +51,7 @@ final class SimpleInjectorTest extends TestCase {
 		$this->assertInstanceOf( Fixture\DummyClass::class, $object->get_dummy() );
 	}
 
-	public function test_it_returns_separate_instances_by_default() {
+	public function test_it_returns_separate_instances_by_default(): void {
 		$injector = new SimpleInjector();
 		$object_a = $injector->make( Fixture\DummyClass::class );
 		$object_b = $injector->make( Fixture\DummyClass::class );
@@ -59,7 +59,7 @@ final class SimpleInjectorTest extends TestCase {
 		$this->assertNotSame( $object_a, $object_b );
 	}
 
-	public function test_it_returns_same_instances_if_shared() {
+	public function test_it_returns_same_instances_if_shared(): void {
 		$injector = ( new SimpleInjector() )
 			->share( Fixture\DummyClass::class );
 		$object_a = $injector->make( Fixture\DummyClass::class );
@@ -68,7 +68,7 @@ final class SimpleInjectorTest extends TestCase {
 		$this->assertSame( $object_a, $object_b );
 	}
 
-	public function test_it_can_instantiate_a_class_with_named_arguments() {
+	public function test_it_can_instantiate_a_class_with_named_arguments(): void {
 		$object = ( new SimpleInjector() )
 			->make(
 				Fixture\DummyClassWithNamedArguments::class,
@@ -83,7 +83,7 @@ final class SimpleInjectorTest extends TestCase {
 		$this->assertEquals( 'Mr Alderson', $object->get_argument_b() );
 	}
 
-	public function test_it_allows_for_skipping_named_arguments_with_default_values() {
+	public function test_it_allows_for_skipping_named_arguments_with_default_values(): void {
 		$object = ( new SimpleInjector() )
 			->make(
 				Fixture\DummyClassWithNamedArguments::class,
@@ -95,14 +95,14 @@ final class SimpleInjectorTest extends TestCase {
 		$this->assertEquals( 'Mr Meeseeks', $object->get_argument_b() );
 	}
 
-	public function test_it_throws_if_a_required_named_arguments_is_missing() {
+	public function test_it_throws_if_a_required_named_arguments_is_missing(): void {
 		$this->expectException( FailedToMakeInstance::class );
 
 		( new SimpleInjector() )
 			->make( Fixture\DummyClassWithNamedArguments::class );
 	}
 
-	public function test_it_throws_if_a_circular_reference_is_detected() {
+	public function test_it_throws_if_a_circular_reference_is_detected(): void {
 		$this->expectException( FailedToMakeInstance::class );
 		$this->expectExceptionCode( FailedToMakeInstance::CIRCULAR_REFERENCE );
 
@@ -114,7 +114,7 @@ final class SimpleInjectorTest extends TestCase {
 			->make( Fixture\DummyClassWithDependency::class );
 	}
 
-	public function test_it_can_delegate_instantiation() {
+	public function test_it_can_delegate_instantiation(): void {
 		$injector = ( new SimpleInjector() )
 			->delegate(
 				Fixture\DummyInterface::class,
@@ -131,7 +131,7 @@ final class SimpleInjectorTest extends TestCase {
 		$this->assertEquals( Fixture\DummyInterface::class, $object->class_name );
 	}
 
-	public function test_delegation_works_across_resolution() {
+	public function test_delegation_works_across_resolution(): void {
 		$injector = ( new SimpleInjector() )
 			->bind(
 				Fixture\DummyInterface::class,
@@ -152,7 +152,7 @@ final class SimpleInjectorTest extends TestCase {
 		$this->assertEquals( Fixture\DummyClassWithDependency::class, $object->class_name );
 	}
 
-	public function test_arguments_can_be_bound() {
+	public function test_arguments_can_be_bound(): void {
 		$object = ( new SimpleInjector() )
 			->bind_argument(
 				Fixture\DummyClassWithNamedArguments::class,
@@ -171,7 +171,7 @@ final class SimpleInjectorTest extends TestCase {
 		$this->assertEquals( 'Mr Alderson', $object->get_argument_b() );
 	}
 
-	public function test_callable_arguments_are_lazily_resolved() {
+	public function test_callable_arguments_are_lazily_resolved(): void {
 		$injector = new SimpleInjector();
 		$injector->bind_argument(
 			Fixture\DummyClassWithNamedArguments::class,

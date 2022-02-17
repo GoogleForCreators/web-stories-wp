@@ -55,7 +55,7 @@ describe('Web Stories Widget Block', () => {
 
     await page.type(
       'input[aria-label="Story URL"]',
-      'https://preview.amp.dev/documentation/examples/introduction/stories_in_amp'
+      'https://wp.stories.google/stories/intro-to-web-stories-storytime'
     );
     await expect(page).toClick('button[aria-label="Embed"]');
 

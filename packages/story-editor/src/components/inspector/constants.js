@@ -15,3 +15,4 @@
  */
 export const DESIGN = 'design';
 export const DOCUMENT = 'document';
+export const PUBLISH_MODAL_DOCUMENT = 'publish_modal_document';

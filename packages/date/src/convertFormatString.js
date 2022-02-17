@@ -157,7 +157,7 @@ const formatMap = {
   e: 'zzzz',
 
   // Whether or not the date is in daylight saving time.	1 if Daylight Saving Time, 0 otherwise.
-  //eslint-disable-next-line no-unused-vars
+  //eslint-disable-next-line no-unused-vars -- Not implemented yet
   I(date) {
     // TODO: Not implemented yet.
     return 0;

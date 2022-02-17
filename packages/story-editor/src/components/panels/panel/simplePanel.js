@@ -31,6 +31,7 @@ function SimplePanel({ children, name, ariaLabel, title, className, ...rest }) {
     <Panel name={name} {...rest}>
       <PanelTitle
         ariaLabel={ariaLabel ?? (typeof title === 'string' ? title : '')}
+        {...rest}
       >
         {title}
       </PanelTitle>

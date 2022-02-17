@@ -111,7 +111,7 @@ function GradientLine({
         <GradientStop
           ref={(ref) => (stopRefs[index].current = ref)}
           key={
-            /* eslint-disable-next-line react/no-array-index-key */
+            // eslint-disable-next-line react/no-array-index-key -- Should be OK here.
             index
           }
           index={index}

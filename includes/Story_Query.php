@@ -125,7 +125,7 @@ class Story_Query {
 	 *
 	 * @return Renderer Renderer Instance.
 	 */
-	public function get_renderer() {
+	public function get_renderer(): Renderer {
 		$story_attributes = $this->get_story_attributes();
 		$view_type        = ( ! empty( $story_attributes['view_type'] ) ) ? $story_attributes['view_type'] : '';
 

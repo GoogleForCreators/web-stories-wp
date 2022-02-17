@@ -27,6 +27,7 @@ import { useState } from '@googleforcreators/react';
 import { useStory } from '../../../app';
 import { getDefinitionForType } from '../../../elements';
 import useElementOutOfCanvas from '../utils/useElementOutOfCanvas';
+import useFullbleedMediaAsBackground from '../utils/useFullbleedMediaAsBackground';
 
 const EMPTY_HANDLES = [];
 const VERTICAL_HANDLES = ['n', 's'];
@@ -56,6 +57,9 @@ function useSingleSelectionResize({
   }));
 
   const { handleElementOutOfCanvas } = useElementOutOfCanvas();
+  const { handleFullbleedMediaAsBackground } = useFullbleedMediaAsBackground({
+    selectedElement,
+  });
 
   const { editorToDataX, editorToDataY, dataToEditorY, dataToEditorX } =
     useUnits(
@@ -172,6 +176,7 @@ function useSingleSelectionResize({
     }
     setIsResizingFromCorner(true);
     resetMoveable(target);
+    handleFullbleedMediaAsBackground(target);
   };
 
   const visuallyHideHandles =

@@ -30,13 +30,13 @@ class Embed_Shortcode extends DependencyInjectedTestCase {
 	 */
 	protected $instance;
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\Shortcode\Embed_Shortcode::class );
 	}
 
-	public function tear_down() {
+	public function tear_down(): void {
 		remove_shortcode( \Google\Web_Stories\Shortcode\Embed_Shortcode::SHORTCODE_NAME );
 
 		parent::tear_down();
@@ -45,7 +45,7 @@ class Embed_Shortcode extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_registers_shortcode() {
+	public function test_registers_shortcode(): void {
 		$this->instance->register();
 		$this->assertTrue( shortcode_exists( \Google\Web_Stories\Shortcode\Embed_Shortcode::SHORTCODE_NAME ) );
 	}
@@ -56,7 +56,7 @@ class Embed_Shortcode extends DependencyInjectedTestCase {
 	 * @covers \Google\Web_Stories\Embed_Base::default_attrs
 	 * @covers \Google\Web_Stories\Renderer\Story\Embed::render
 	 */
-	public function test_render_shortcode() {
+	public function test_render_shortcode(): void {
 		$actual = $this->instance->render_shortcode(
 			[
 				'url'    => 'https://example.com/story.html',
@@ -77,7 +77,7 @@ class Embed_Shortcode extends DependencyInjectedTestCase {
 	 * @covers \Google\Web_Stories\Embed_Base::default_attrs
 	 * @covers \Google\Web_Stories\Renderer\Story\Embed::render
 	 */
-	public function test_render_shortcode_missing_url() {
+	public function test_render_shortcode_missing_url(): void {
 		$actual = $this->instance->render_shortcode(
 			[
 				'url'    => '',
@@ -98,7 +98,7 @@ class Embed_Shortcode extends DependencyInjectedTestCase {
 	 * @covers \Google\Web_Stories\Embed_Base::default_attrs
 	 * @covers \Google\Web_Stories\Renderer\Story\Embed::render
 	 */
-	public function test_render_shortcode_missing_title() {
+	public function test_render_shortcode_missing_title(): void {
 		$actual = $this->instance->render_shortcode(
 			[
 				'url'    => 'https://example.com/story.html',
@@ -119,7 +119,7 @@ class Embed_Shortcode extends DependencyInjectedTestCase {
 	 * @covers \Google\Web_Stories\Embed_Base::default_attrs
 	 * @covers \Google\Web_Stories\Renderer\Story\Image::render
 	 */
-	public function test_render_shortcode_feed_no_poster() {
+	public function test_render_shortcode_feed_no_poster(): void {
 		$this->go_to( '/?feed=rss2' );
 
 		$actual = $this->instance->render_shortcode(
@@ -140,7 +140,7 @@ class Embed_Shortcode extends DependencyInjectedTestCase {
 	 * @covers \Google\Web_Stories\Embed_Base::default_attrs
 	 * @covers \Google\Web_Stories\Renderer\Story\Image::render
 	 */
-	public function test_render_shortcode_with_poster() {
+	public function test_render_shortcode_with_poster(): void {
 		$this->instance->register();
 
 		$this->go_to( '/?feed=rss2' );

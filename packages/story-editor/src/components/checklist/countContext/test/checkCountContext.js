@@ -41,7 +41,6 @@ describe('ChecklistCategoryProvider', () => {
   });
 
   it('provides a method to add entries', () => {
-    // eslint-disable-next-line react/prop-types
     const ChecklistWrapper = ({ children }) => (
       <ChecklistCountProvider>
         <ChecklistCategoryProvider category={ISSUE_TYPES.PRIORITY}>
@@ -73,7 +72,7 @@ describe('ChecklistCategoryProvider', () => {
 describe('useRegisterCheck', () => {
   it('registers a check under a key', () => {
     const testKey = 'testKey';
-    // eslint-disable-next-line react/prop-types
+
     const ChecklistWrapper = ({ children }) => (
       <ChecklistCountProvider>
         <ChecklistCategoryProvider category={ISSUE_TYPES.PRIORITY}>

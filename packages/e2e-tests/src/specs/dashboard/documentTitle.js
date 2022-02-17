@@ -20,8 +20,7 @@
 import { visitDashboard } from '@web-stories-wp/e2e-test-utils';
 
 describe('Document Title', () => {
-  // Disable reason: broken by https://github.com/googleforcreators/web-stories-wp/pull/7213, needs updating.
-  // eslint-disable-next-line jest/no-disabled-tests
+  // eslint-disable-next-line jest/no-disabled-tests -- broken by https://github.com/googleforcreators/web-stories-wp/pull/7213, needs updating.
   it.skip('should update the document title during navigation', async () => {
     await visitDashboard();
 

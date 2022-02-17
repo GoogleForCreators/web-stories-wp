@@ -70,7 +70,7 @@ class Story_Archive extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_filter( 'pre_handle_404', [ $this, 'redirect_post_type_archive_urls' ], 10, 2 );
 
 		add_action( 'add_option_' . $this->settings::SETTING_NAME_ARCHIVE, [ $this, 'update_archive_setting' ] );
@@ -125,7 +125,7 @@ class Story_Archive extends Service_Base {
 	 *
 	 * @return void
 	 */
-	public function update_archive_setting() {
+	public function update_archive_setting(): void {
 		$this->story_post_type->unregister_post_type();
 		$this->story_post_type->register_post_type();
 
@@ -142,7 +142,7 @@ class Story_Archive extends Service_Base {
 	 * @param WP_Query $query Current query instance, passed by reference.
 	 * @return void
 	 */
-	public function pre_get_posts( WP_Query $query ) {
+	public function pre_get_posts( WP_Query $query ): void {
 		if ( ! \is_string( $this->story_post_type->get_has_archive() ) ) {
 			return;
 		}
@@ -173,7 +173,7 @@ class Story_Archive extends Service_Base {
 	 * @param int $postid Post ID.
 	 * @return void
 	 */
-	public function on_remove_archive_page( $postid ) {
+	public function on_remove_archive_page( $postid ): void {
 		if ( 'page' !== get_post_type( $postid ) ) {
 			return;
 		}

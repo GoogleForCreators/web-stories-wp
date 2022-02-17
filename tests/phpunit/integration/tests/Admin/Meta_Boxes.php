@@ -31,7 +31,7 @@ class Meta_Boxes extends TestCase {
 	 */
 	private $story_id;
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		// Deliberately NOT created in wpSetUpBeforeClass() because this class contains running
@@ -50,7 +50,7 @@ class Meta_Boxes extends TestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$meta_boxes = new \Google\Web_Stories\Admin\Meta_Boxes();
 		$meta_boxes->register();
 		$has_action = has_action(
@@ -69,7 +69,7 @@ class Meta_Boxes extends TestCase {
 	/**
 	 * @covers ::get_meta_box_url
 	 */
-	public function test_get_meta_box_url() {
+	public function test_get_meta_box_url(): void {
 		$meta_boxes = new \Google\Web_Stories\Admin\Meta_Boxes();
 		$url        = $meta_boxes->get_meta_box_url( $this->story_id );
 
@@ -83,7 +83,7 @@ class Meta_Boxes extends TestCase {
 	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
-	public function test_remove_meta_boxes() {
+	public function test_remove_meta_boxes(): void {
 		require_once ABSPATH . 'wp-admin/includes/meta-boxes.php';
 
 		global $wp_meta_boxes, $current_screen;
@@ -126,7 +126,7 @@ class Meta_Boxes extends TestCase {
 	 * @runInSeparateProcess
 	 * @preserveGlobalState disabled
 	 */
-	public function test_get_meta_boxes_per_location() {
+	public function test_get_meta_boxes_per_location(): void {
 		require_once ABSPATH . 'wp-admin/includes/meta-boxes.php';
 
 		$GLOBALS['current_screen'] = convert_to_screen( Story_Post_Type::POST_TYPE_SLUG );
@@ -163,7 +163,7 @@ class Meta_Boxes extends TestCase {
 		);
 	}
 
-	public function register_test_meta_boxes() {
+	public function register_test_meta_boxes(): void {
 		add_meta_box( 'foo', 'Foo', '__return_empty_string', null, 'normal', 'default', [ '__back_compat_meta_box' => true ] );
 		add_meta_box( 'bar', 'Bar', '__return_empty_string', null, 'normal', 'default', [ '__back_compat_meta_box' => false ] );
 		add_meta_box( 'baz', 'Baz', '__return_empty_string', null, 'advanced', 'default', [ '__back_compat_meta_box' => true ] );

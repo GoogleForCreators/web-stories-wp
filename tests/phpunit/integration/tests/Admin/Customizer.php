@@ -42,7 +42,7 @@ class Customizer extends DependencyInjectedTestCase {
 	 */
 	private $wp_customize_mock;
 
-	public static function wpSetUpBeforeClass() {
+	public static function wpSetUpBeforeClass(): void {
 		require_once ABSPATH . WPINC . '/class-wp-customize-manager.php';
 		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/functions.php';
 	}
@@ -50,7 +50,7 @@ class Customizer extends DependencyInjectedTestCase {
 	/**
 	 * Runs once before any test in the class run.
 	 */
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		global $wp_customize;
@@ -60,7 +60,7 @@ class Customizer extends DependencyInjectedTestCase {
 		$this->instance          = $this->injector->make( \Google\Web_Stories\Admin\Customizer::class );
 	}
 
-	public function tear_down() {
+	public function tear_down(): void {
 		remove_theme_support( 'web-stories' );
 
 		parent::tear_down();
@@ -69,14 +69,14 @@ class Customizer extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::is_needed
 	 */
-	public function test_is_needed() {
+	public function test_is_needed(): void {
 		$this->assertTrue( $this->instance::is_needed() );
 	}
 
 	/**
 	 * Add theme support for web stories.
 	 */
-	private function add_web_stories_theme_support() {
+	private function add_web_stories_theme_support(): void {
 		add_theme_support(
 			'web-stories',
 			[
@@ -132,7 +132,7 @@ class Customizer extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 
 		$this->instance->register();
 		$this->assertSame(
@@ -150,7 +150,7 @@ class Customizer extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::register_customizer_settings
 	 */
-	public function test_customizer_web_stories_section_added() {
+	public function test_customizer_web_stories_section_added(): void {
 		$this->add_web_stories_theme_support();
 
 		$this->wp_customize_mock->expects( $this->once() )->method( 'add_section' )->with(
@@ -167,7 +167,7 @@ class Customizer extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::register_customizer_settings
 	 */
-	public function test_customizer_settings_added() {
+	public function test_customizer_settings_added(): void {
 		$this->add_web_stories_theme_support();
 		$this->wp_customize_mock->expects( $this->exactly( 14 ) )->method( 'add_setting' );
 		$this->instance->register_customizer_settings( $this->wp_customize_mock );
@@ -176,7 +176,7 @@ class Customizer extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::register_customizer_settings
 	 */
-	public function test_customizer_show_stories_settings_added() {
+	public function test_customizer_show_stories_settings_added(): void {
 		$this->add_web_stories_theme_support();
 		$this->wp_customize_mock->expects( $this->exactly( 14 ) )->
 		method( 'add_setting' )->
@@ -289,7 +289,7 @@ class Customizer extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::validate_number_of_stories
 	 */
-	public function test_validate_number_of_stories() {
+	public function test_validate_number_of_stories(): void {
 		$output = $this->instance->validate_number_of_stories( new \WP_Error(), 20 );
 
 		$this->assertEmpty( $output->errors );
@@ -309,7 +309,7 @@ class Customizer extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::validate_number_of_columns
 	 */
-	public function test_validate_number_of_columns() {
+	public function test_validate_number_of_columns(): void {
 		$output = $this->instance->validate_number_of_columns( new \WP_Error(), 2 );
 
 		$this->assertEmpty( $output->errors );
@@ -329,7 +329,7 @@ class Customizer extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::get_stories_theme_support
 	 */
-	public function test_get_stories_theme_support() {
+	public function test_get_stories_theme_support(): void {
 		add_theme_support( 'web-stories' );
 
 		$expected = [
@@ -392,7 +392,7 @@ class Customizer extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::render_stories
 	 */
-	public function test_render_stories() {
+	public function test_render_stories(): void {
 		add_theme_support(
 			'web-stories',
 			[

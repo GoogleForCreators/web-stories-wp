@@ -23,6 +23,8 @@ import { createSolid } from '@googleforcreators/patterns';
  */
 import createNewElement from './createNewElement';
 
+export const DEFAULT_PAGE_BACKGROUND_COLOR = createSolid(255, 255, 255);
+
 const createPage = (pageProps = null) => {
   const backgroundElementProps = {
     // The values of x, y, width, height are irrelevant here, however, need to be set.
@@ -40,7 +42,7 @@ const createPage = (pageProps = null) => {
 
   const newAttributes = {
     elements: [backgroundElement],
-    backgroundColor: createSolid(255, 255, 255),
+    backgroundColor: DEFAULT_PAGE_BACKGROUND_COLOR,
     ...pageProps,
   };
 

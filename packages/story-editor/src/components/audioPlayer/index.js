@@ -30,6 +30,7 @@ import {
   BUTTON_VARIANTS,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
+import { ResourcePropTypes } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -70,7 +71,7 @@ const Audio = styled.audio`
   display: none;
 `;
 
-function AudioPlayer({ title, src, mimeType }) {
+function AudioPlayer({ title, src, mimeType, tracks = [], audioId }) {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const playerRef = useRef();
@@ -95,14 +96,31 @@ function AudioPlayer({ title, src, mimeType }) {
 
   return (
     <Wrapper>
-      {/* eslint-disable-next-line jsx-a11y/media-has-caption, styled-components-a11y/media-has-caption */}
-      <Audio crossOrigin="anonymous" loop ref={playerRef}>
+      {/* eslint-disable-next-line jsx-a11y/media-has-caption, styled-components-a11y/media-has-caption -- No captions wanted/needed here. */}
+      <Audio crossOrigin="anonymous" loop ref={playerRef} id={audioId}>
         <source src={src} type={mimeType} />
+        {tracks &&
+          tracks.map(({ srclang, label, track: trackSrc, id: key }, i) => (
+            <track
+              srcLang={srclang}
+              label={label}
+              // Hides the track from the user.
+              // Displaying happens in MediaCaptionsLayer instead.
+              kind="metadata"
+              src={trackSrc}
+              key={key}
+              default={i === 0}
+            />
+          ))}
       </Audio>
       <div>{title}</div>
       <div>
         {isPlaying ? (
-          <Tooltip hasTail title={__('Pause', 'web-stories')}>
+          <Tooltip
+            hasTail
+            title={__('Pause', 'web-stories')}
+            popupZIndexOverride={10}
+          >
             <StyledButton
               type={BUTTON_TYPES.TERTIARY}
               size={BUTTON_SIZES.SMALL}
@@ -114,7 +132,11 @@ function AudioPlayer({ title, src, mimeType }) {
             </StyledButton>
           </Tooltip>
         ) : (
-          <Tooltip hasTail title={__('Play', 'web-stories')}>
+          <Tooltip
+            hasTail
+            title={__('Play', 'web-stories')}
+            popupZIndexOverride={10}
+          >
             <StyledButton
               type={BUTTON_TYPES.TERTIARY}
               size={BUTTON_SIZES.SMALL}
@@ -135,6 +157,8 @@ AudioPlayer.propTypes = {
   title: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   mimeType: PropTypes.string.isRequired,
+  audioId: PropTypes.string,
+  tracks: PropTypes.arrayOf(ResourcePropTypes.trackResource),
 };
 
 export default AudioPlayer;

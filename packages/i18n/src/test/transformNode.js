@@ -57,7 +57,6 @@ describe('transformNode', () => {
     node.setAttribute('class', 'bar');
     node.textContent = 'Hello World';
 
-    //eslint-disable-next-line react/prop-types
     const AwesomeComponent = ({ children }) => {
       return (
         <div id="bar" className="baz">
@@ -82,7 +81,6 @@ describe('transformNode', () => {
     p.appendChild(span);
     node.appendChild(p);
 
-    //eslint-disable-next-line react/prop-types
     const AwesomeComponent = ({ children }) => {
       return (
         <span id="bar" className="baz">

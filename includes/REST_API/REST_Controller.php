@@ -42,7 +42,7 @@ abstract class REST_Controller extends WP_REST_Controller implements Service, De
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		$this->register_routes();
 	}
 

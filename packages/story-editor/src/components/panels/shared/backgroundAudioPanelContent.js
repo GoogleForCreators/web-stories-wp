@@ -35,11 +35,11 @@ import { v4 as uuidv4 } from 'uuid';
 /**
  * Internal dependencies
  */
+import { useConfig } from '../../../app';
+import { BackgroundAudioPropType } from '../../../types';
 import { Row } from '../../form';
 import AudioPlayer from '../../audioPlayer';
 import Tooltip from '../../tooltip';
-import { useConfig } from '../../../app';
-import { BackgroundAudioPropType } from '../../../types';
 import CaptionsPanelContent from './captionsPanelContent';
 import LoopPanelContent from './loopPanelContent';
 
@@ -60,6 +60,7 @@ function BackgroundAudioPanelContent({
   updateBackgroundAudio,
   showCaptions = false,
   showLoopControl = false,
+  audioId,
 }) {
   const {
     allowedAudioMimeTypes,
@@ -197,8 +198,14 @@ function BackgroundAudioPanelContent({
               )}
               src={resource?.src}
               mimeType={resource?.mimeType}
+              tracks={tracks}
+              audioId={audioId}
             />
-            <Tooltip hasTail title={__('Remove file', 'web-stories')}>
+            <Tooltip
+              hasTail
+              title={__('Remove file', 'web-stories')}
+              popupZIndexOverride={10}
+            >
               <StyledButton
                 aria-label={__('Remove file', 'web-stories')}
                 type={BUTTON_TYPES.TERTIARY}
@@ -239,6 +246,7 @@ BackgroundAudioPanelContent.propTypes = {
   updateBackgroundAudio: PropTypes.func.isRequired,
   showCaptions: PropTypes.bool,
   showLoopControl: PropTypes.bool,
+  audioId: PropTypes.string,
 };
 
 export default BackgroundAudioPanelContent;

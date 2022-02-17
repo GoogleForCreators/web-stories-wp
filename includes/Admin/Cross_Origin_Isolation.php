@@ -69,7 +69,7 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		if ( ! $this->context->is_story_editor() ) {
 			return;
 		}
@@ -159,7 +159,7 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 	 *
 	 * @return void
 	 */
-	public function admin_header() {
+	public function admin_header(): void {
 		if ( $this->needs_isolation() ) {
 			header( 'Cross-Origin-Opener-Policy: same-origin' );
 			header( 'Cross-Origin-Embedder-Policy: require-corp' );
@@ -338,7 +338,7 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 	 *
 	 * @return void
 	 */
-	public function override_media_templates() {
+	public function override_media_templates(): void {
 		remove_action( 'admin_footer', 'wp_print_media_templates' );
 		add_action( 'admin_footer', [ $this, 'custom_print_media_templates' ] );
 	}
@@ -350,7 +350,7 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 	 *
 	 * @return void
 	 */
-	public function custom_print_media_templates() {
+	public function custom_print_media_templates(): void {
 		ob_start();
 		wp_print_media_templates();
 		$html = (string) ob_get_clean();

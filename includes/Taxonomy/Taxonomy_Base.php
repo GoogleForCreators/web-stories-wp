@@ -37,7 +37,7 @@ use WP_Site;
  */
 abstract class Taxonomy_Base extends Service_Base implements PluginActivationAware, PluginDeactivationAware, SiteInitializationAware {
 
-	const DEFAULT_CAPABILITIES = [
+	public const DEFAULT_CAPABILITIES = [
 		'manage_terms' => 'manage_terms_web-stories',
 		'edit_terms'   => 'edit_terms_web-stories',
 		'delete_terms' => 'delete_terms_web-stories',
@@ -47,7 +47,7 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	/**
 	 * Default REST Namespace.
 	 */
-	const REST_NAMESPACE = 'web-stories/v1';
+	public const REST_NAMESPACE = 'web-stories/v1';
 
 	/**
 	 * Taxonomy key, must not exceed 32 characters.
@@ -70,7 +70,7 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		$this->register_taxonomy();
 	}
 
@@ -81,7 +81,7 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	 *
 	 * @return void
 	 */
-	public function register_taxonomy() {
+	public function register_taxonomy(): void {
 		register_taxonomy( $this->taxonomy_slug, $this->taxonomy_post_type, $this->taxonomy_args() );
 	}
 
@@ -92,7 +92,7 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	 *
 	 * @return void
 	 */
-	public function unregister_taxonomy() {
+	public function unregister_taxonomy(): void {
 		unregister_taxonomy( $this->taxonomy_slug );
 	}
 
@@ -113,7 +113,7 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	 * @param WP_Site $site The site being initialized.
 	 * @return void
 	 */
-	public function on_site_initialization( WP_Site $site ) {
+	public function on_site_initialization( WP_Site $site ): void {
 		$this->register_taxonomy();
 	}
 
@@ -125,7 +125,7 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	 * @param bool $network_wide Whether the activation was done network-wide.
 	 * @return void
 	 */
-	public function on_plugin_activation( $network_wide ) {
+	public function on_plugin_activation( $network_wide ): void {
 		$this->register_taxonomy();
 	}
 
@@ -137,7 +137,7 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	 * @param bool $network_wide Whether the deactivation was done network-wide.
 	 * @return void
 	 */
-	public function on_plugin_deactivation( $network_wide ) {
+	public function on_plugin_deactivation( $network_wide ): void {
 		$this->unregister_taxonomy();
 	}
 

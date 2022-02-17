@@ -218,8 +218,9 @@ function DevTools() {
     let input = output;
     try {
       input = window.atob(input);
-      // eslint-disable-next-line no-empty
-    } catch (e) {}
+    } catch (e) {
+      // Do nothing.
+    }
     const inputState = JSON.parse(input);
     const stateToRestore = {
       ...inputState,

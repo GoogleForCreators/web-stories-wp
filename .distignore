@@ -67,3 +67,4 @@ scoper.inc.php
 SECURITY.md
 webpack.config.cjs
 webpack.config.test.cjs
+.husky

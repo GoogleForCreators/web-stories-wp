@@ -37,7 +37,7 @@ final class FallbackInstantiator implements Instantiator {
 	 * @param array  $dependencies Optional. Dependencies of the class.
 	 * @return object Instantiated object.
 	 */
-	public function instantiate( $class, $dependencies = [] ) {
+	public function instantiate( $class, $dependencies = [] ): object {
 		return new $class( ...$dependencies );
 	}
 }

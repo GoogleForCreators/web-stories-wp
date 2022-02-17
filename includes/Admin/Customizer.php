@@ -48,14 +48,14 @@ class Customizer extends Service_Base implements Conditional {
 	 *
 	 * @since 1.5.0
 	 */
-	const SECTION_SLUG = 'web_story_options';
+	public const SECTION_SLUG = 'web_story_options';
 
 	/**
 	 * Customizer web stories options key.
 	 *
 	 * @since 1.5.0
 	 */
-	const STORY_OPTION = 'web_stories_customizer_settings';
+	public const STORY_OPTION = 'web_stories_customizer_settings';
 
 	/**
 	 * WP_Customize_Manager instance.
@@ -114,7 +114,7 @@ class Customizer extends Service_Base implements Conditional {
 	 *
 	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_action( 'customize_register', [ $this, 'register_customizer_settings' ] );
 	}
 
@@ -141,7 +141,7 @@ class Customizer extends Service_Base implements Conditional {
 	 * @param WP_Customize_Manager $wp_customize WP_Customize_Manager instance.
 	 * @return void
 	 */
-	public function register_customizer_settings( WP_Customize_Manager $wp_customize ) {
+	public function register_customizer_settings( WP_Customize_Manager $wp_customize ): void {
 		$this->wp_customize = $wp_customize;
 
 		$theme_support = $this->get_stories_theme_support()['customizer'];
@@ -539,7 +539,7 @@ class Customizer extends Service_Base implements Conditional {
 	 * @param int      $value    Value to be validated.
 	 * @return WP_Error
 	 */
-	public function validate_number_of_stories( $validity, $value ) {
+	public function validate_number_of_stories( $validity, $value ): WP_Error {
 		$value = (int) $value;
 
 		if ( $value <= 0 || $value > 20 ) {
@@ -557,7 +557,7 @@ class Customizer extends Service_Base implements Conditional {
 	 * @param int      $value Value to be validated.
 	 * @return WP_Error
 	 */
-	public function validate_number_of_columns( $validity, $value ) {
+	public function validate_number_of_columns( $validity, $value ): WP_Error {
 		$value = (int) $value;
 
 		if ( $value <= 0 || $value > 5 ) {
