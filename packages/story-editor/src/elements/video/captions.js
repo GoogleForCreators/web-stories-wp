@@ -19,16 +19,16 @@
 import PropTypes from 'prop-types';
 import { ResourcePropTypes } from '@googleforcreators/media';
 
-function Captions({ tracks, defaultKind = 'metadata' }) {
+function Captions({ tracks, kind }) {
   if (!tracks) {
     return null;
   }
 
-  return tracks.map(({ srclang, label, kind, track, id: key }, i) => (
+  return tracks.map(({ srclang, label, kind: trackKind, track, id: key }, i) => (
     <track
       srcLang={srclang}
       label={label}
-      kind={kind || defaultKind}
+      kind={kind || trackKind }
       src={track}
       key={key}
       default={i === 0}
@@ -36,7 +36,7 @@ function Captions({ tracks, defaultKind = 'metadata' }) {
   ));
 }
 Captions.propTypes = {
-  defaultKind: PropTypes.string,
+  kind: PropTypes.string,
   tracks: PropTypes.arrayOf(ResourcePropTypes.trackResource),
 };
 
