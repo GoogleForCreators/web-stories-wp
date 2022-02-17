@@ -52,6 +52,7 @@ export default {
 
 export const _default = (args) => {
   const {
+    hasChecklist,
     hasUploadMediaAction,
     hasFeaturedMedia,
     hasPublisherLogo,
@@ -121,7 +122,7 @@ export const _default = (args) => {
             },
           }}
         >
-          <ChecklistCountProvider hasChecklist={args.hasChecklist}>
+          <ChecklistCountProvider hasChecklist={hasChecklist}>
             <PublishModal {...args} />
           </ChecklistCountProvider>
           <CheckpointContext.Provider
