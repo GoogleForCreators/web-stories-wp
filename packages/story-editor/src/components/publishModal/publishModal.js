@@ -41,7 +41,7 @@ const Container = styled.div`
   border-radius: ${({ theme }) => theme.borders.radius.medium};
 `;
 
-function PublishModal({ isOpen, onPublish, onClose }) {
+function PublishModal({ isOpen, onPublish, onClose, publishButtonCopy }) {
   const storyId = useConfig(({ storyId }) => storyId);
   const updateStory = useStory(({ actions }) => actions.updateStory);
   const inputValues = useStory(({ state: { story } }) => ({
@@ -110,6 +110,7 @@ function PublishModal({ isOpen, onPublish, onClose }) {
         <DirectionAware>
           <Container>
             <Header
+              publishButtonCopy={publishButtonCopy}
               onClose={onClose}
               onPublish={onPublish}
               isPublishEnabled={isAllRequiredInputsFulfilled}
