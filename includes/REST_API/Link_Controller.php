@@ -176,7 +176,6 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 			'timeout'             => 7, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout
 		];
 
-
 		/**
 		 * Filters the HTTP request args for link data retrieval.
 		 *
