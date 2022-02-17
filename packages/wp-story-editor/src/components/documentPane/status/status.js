@@ -226,6 +226,11 @@ function StatusPanel({
               selectedValue={visibility}
               onMenuItemClick={handleChangeVisibility}
               popupZIndex={popupZIndex}
+              hint={
+                visibilityOptions.find((option) => visibility === option.value)
+                  ?.helper
+              }
+              disabled={visibilityOptions.length <= 1}
             />
           </Row>
           {visibility === 'protected' && (
