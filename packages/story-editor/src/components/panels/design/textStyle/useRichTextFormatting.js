@@ -84,10 +84,13 @@ function reduceWithMultiple(reduced, info) {
 }
 
 function useRichTextFormatting(selectedElements, pushUpdate) {
-  const {
-    state: { hasCurrentEditor, selectionInfo },
-    actions: { selectionActions },
-  } = useRichText();
+  const { hasCurrentEditor, selectionInfo, selectionActions } = useRichText(
+    ({ state, actions }) => ({
+      hasCurrentEditor: state.hasCurrentEditor,
+      selectionInfo: state.selectionInfo,
+      selectionActions: actions.selectionActions,
+    })
+  );
 
   const { clearEditing } = useCanvas(({ actions: { clearEditing } }) => ({
     clearEditing,
@@ -102,6 +105,7 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
     // (setting MULTIPLE_VALUE appropriately)
     return selectedElements
       .map(({ content }) => content)
+      .filter(Boolean)
       .map(getHTMLInfo)
       .reduce(reduceWithMultiple, {});
   }, [hasCurrentEditor, selectionInfo, selectedElements]);

@@ -45,14 +45,14 @@ const useCopyPasteActions = () => {
     copiedElementState,
     selectedElement,
     selectedElementAnimations,
-    updateElementsById,
+    updateSelectedElements,
   } = useStory(({ state, actions }) => ({
     addAnimations: actions.addAnimations,
     copiedElementState: state.copiedElementState,
     copyElementById: actions.copyElementById,
     selectedElement: state.selectedElements?.[0],
     selectedElementAnimations: state.selectedElementAnimations,
-    updateElementsById: actions.updateElementsById,
+    updateSelectedElements: actions.updateSelectedElements,
   }));
 
   const showSnackbar = useSnackbar((value) => value.showSnackbar);
@@ -94,27 +94,23 @@ const useCopyPasteActions = () => {
     });
   }, [copyElementById, selectedElement, showSnackbar]);
 
-  const selectedElementId = selectedElement?.id;
   const pushUpdate = useCallback(
     (update, commitValues) => {
-      if (selectedElementId) {
-        updateElementsById({
-          elementIds: [selectedElementId],
-          properties: (element) => {
-            const updates = updateProperties(element, update, commitValues);
-            const sizeUpdates = getUpdatedSizeAndPosition({
-              ...element,
-              ...updates,
-            });
-            return {
-              ...updates,
-              ...sizeUpdates,
-            };
-          },
-        });
-      }
+      updateSelectedElements({
+        properties: (element) => {
+          const updates = updateProperties(element, update, commitValues);
+          const sizeUpdates = getUpdatedSizeAndPosition({
+            ...element,
+            ...updates,
+          });
+          return {
+            ...updates,
+            ...sizeUpdates,
+          };
+        },
+      });
     },
-    [selectedElementId, updateElementsById]
+    [updateSelectedElements]
   );
 
   const handleApplyStyle = useApplyStyle({ pushUpdate });
@@ -179,7 +175,7 @@ const useCopyPasteActions = () => {
       handleApplyStyle(updatedElementStyles);
     } else {
       // Add styles and animations to element
-      updateElementsById({
+      updateSelectedElements({
         elementIds: [selectedElement.id],
         properties: (currentProperties) =>
           updateProperties(
@@ -223,7 +219,7 @@ const useCopyPasteActions = () => {
     selectedElement,
     selectedElementAnimations,
     showSnackbar,
-    updateElementsById,
+    updateSelectedElements,
   ]);
 
   return {
