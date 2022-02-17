@@ -114,7 +114,7 @@ function TextSet({ id, elements, translateY, translateX, ...rest }, ref) {
   );
 
   const renderImages =
-    typeof WEB_STORIES_DISABLE_OPTIMIZED_RENDERING !== 'undefined' &&
+    typeof WEB_STORIES_DISABLE_OPTIMIZED_RENDERING === 'undefined' ||
     WEB_STORIES_DISABLE_OPTIMIZED_RENDERING !== 'true';
 
   const { textSetHeight, textSetWidth } = elements[0];
