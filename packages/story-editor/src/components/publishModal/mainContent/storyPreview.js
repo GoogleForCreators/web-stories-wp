@@ -62,7 +62,7 @@ export const Image = styled.img`
   height: 100%;
   width: 100%;
   display: block;
-  aspect-ratio: auto ${PAGE_RATIO};
+  aspect-ratio: ${PAGE_RATIO};
   object-fit: cover;
   border-radius: ${({ theme }) => theme.borders.radius.medium};
   background: ${({ theme }) => theme.colors.interactiveBg.primaryNormal};
