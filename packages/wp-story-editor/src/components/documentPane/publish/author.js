@@ -55,11 +55,8 @@ function Author() {
   const [visibleOptions, setVisibleOptions] = useState(null);
 
   useEffect(() => {
-    if (users.length === 0 && !isUsersLoading) {
-      return loadUsers();
-    }
-    return () => {};
-  }, [loadUsers, users, isUsersLoading]);
+    loadUsers();
+  }, [loadUsers]);
 
   const getAuthorsBySearch = useCallback(
     (search) => {
