@@ -117,9 +117,7 @@ function TextSet(
 
   useRovingTabIndex({ ref: ref.current });
 
-  const renderImages =
-    typeof WEB_STORIES_DISABLE_OPTIMIZED_RENDERING === 'undefined' ||
-    WEB_STORIES_DISABLE_OPTIMIZED_RENDERING !== 'true';
+  const renderImages = WEB_STORIES_DISABLE_OPTIMIZED_RENDERING !== 'true';
   const [isHovering, setIsHovering] = useState(false);
   const setHovering = useCallback(() => setIsHovering(true), []);
   const unsetHovering = useCallback(() => setIsHovering(false), []);
