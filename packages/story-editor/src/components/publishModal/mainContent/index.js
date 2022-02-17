@@ -24,11 +24,11 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { MANDATORY_INPUT_VALUE_TYPES } from '../types';
 import useInspector from '../../inspector/useInspector';
+import { useHasChecklist } from '../../checklist';
 import { HEADER_BAR_HEIGHT, HEADER_BAR_MARGIN } from '../constants';
 import MandatoryStoryInfo from './mandatoryStoryInfo';
 import StoryPreview from './storyPreview';
 import ChecklistButton from './checklistButton';
-import { useHasChecklist } from '../../checklist';
 
 const Main = styled.div`
   display: grid;

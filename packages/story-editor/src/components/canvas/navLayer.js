@@ -23,11 +23,11 @@ import Proptypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { ChecklistCountProvider } from '../checklist';
 import Footer from '../footer';
 import DirectionAware from '../directionAware';
 import PageSideMenu from './pageSideMenu';
 import { FooterArea, HeadArea, Layer, PageMenuArea, Z_INDEX } from './layout';
-import { ChecklistCountProvider } from '../checklist';
 
 function NavLayer({ header, footer }) {
   return (

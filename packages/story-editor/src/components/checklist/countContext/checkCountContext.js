@@ -46,6 +46,7 @@ function ChecklistCountProvider({ hasChecklist, children }) {
 }
 ChecklistCountProvider.propTypes = {
   children: PropTypes.node,
+  hasChecklist: PropTypes.bool,
 };
 
 function ChecklistCategoryProvider({ children, category }) {

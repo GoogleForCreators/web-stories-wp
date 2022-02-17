@@ -18,6 +18,7 @@
  */
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
+import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
@@ -41,3 +42,7 @@ const ChecklistButton = ({ handleReviewChecklist }) => {
 };
 
 export default ChecklistButton;
+
+ChecklistButton.propTypes = {
+  handleReviewChecklist: PropTypes.func,
+};
