@@ -128,7 +128,7 @@ trait Sanitization_Utils {
 	 * @param bool                  $is_enabled Whether the feature is enabled.
 	 * @return void
 	 */
-	private function use_semantic_heading_tags( &$document, $is_enabled ): void {
+	private function use_semantic_heading_tags( &$document, bool $is_enabled ): void {
 		if ( ! $is_enabled ) {
 			return;
 		}
@@ -216,11 +216,11 @@ trait Sanitization_Utils {
 	 * @param string     $tag_name Desired new tag name, e.g. h1 or h2.
 	 * @return void
 	 */
-	private function change_tag_name( $node, $tag_name ): void {
+	private function change_tag_name( DOMElement $node, string $tag_name ): void {
 		/**
 		 * Owner document.
 		 *
-		 * @var \DOMDocument Owner document.
+		 * @var Document|AMP_Document Owner document.
 		 */
 		$document = $node->ownerDocument;
 
