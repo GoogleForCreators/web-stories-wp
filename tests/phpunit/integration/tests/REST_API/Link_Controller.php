@@ -24,6 +24,7 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 	public const URL_EMPTY_DOCUMENT   = 'https://example.com/empty';
 	public const URL_VALID_TITLE_ONLY = 'https://example.com';
 	public const URL_VALID            = 'https://amp.dev';
+	public const URL_INSTAGRAM        = 'https://www.instagram.com/googleforcreators';
 
 	/**
 	 * Count of the number of requests attempted.
@@ -96,6 +97,15 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 		}
 
 		if ( false !== strpos( $url, self::URL_EMPTY_DOCUMENT ) ) {
+			return [
+				'response' => [
+					'code' => 200,
+				],
+				'body'     => '<html></html>',
+			];
+		}
+
+		if ( false !== strpos( $url, self::URL_INSTAGRAM ) ) {
 			return [
 				'response' => [
 					'code' => 200,
@@ -193,6 +203,9 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 		$this->assertErrorResponse( 'rest_invalid_param', $response, 400 );
 	}
 
+	/**
+	 * @covers ::parse_link
+	 */
 	public function test_url_returning_500(): void {
 		$this->controller->register();
 
@@ -204,6 +217,9 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 		$this->assertErrorResponse( 'rest_invalid_url', $response, 404 );
 	}
 
+	/**
+	 * @covers ::parse_link
+	 */
 	public function test_url_returning_404(): void {
 		$this->controller->register();
 
@@ -224,6 +240,9 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 		);
 	}
 
+	/**
+	 * @covers ::parse_link
+	 */
 	public function test_url_empty_string(): void {
 		$this->controller->register();
 
@@ -236,6 +255,9 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 		$this->assertErrorResponse( 'rest_invalid_param', $response, 400 );
 	}
 
+	/**
+	 * @covers ::parse_link
+	 */
 	public function test_empty_url(): void {
 		$this->controller->register();
 
@@ -259,6 +281,35 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 		$this->assertEqualSetsWithIndex( $expected, $data );
 	}
 
+	/**
+	 * @covers ::parse_link
+	 */
+	public function test_instagram_url(): void {
+		$this->controller->register();
+
+		wp_set_current_user( self::$editor );
+		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/link' );
+		$request->set_param( 'url', self::URL_INSTAGRAM );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+
+		$expected = [
+			'title'       => '',
+			'image'       => '',
+			'description' => '',
+		];
+
+		// Subsequent requests is cached and so it should not cause a request.
+		rest_get_server()->dispatch( $request );
+
+		$this->assertEquals( 1, $this->request_count );
+		$this->assertNotEmpty( $data );
+		$this->assertEqualSetsWithIndex( $expected, $data );
+	}
+
+	/**
+	 * @covers ::parse_link
+	 */
 	public function test_characters_url(): void {
 		$this->controller->register();
 
@@ -282,6 +333,9 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 		$this->assertEqualSetsWithIndex( $expected, $data );
 	}
 
+	/**
+	 * @covers ::parse_link
+	 */
 	public function test_example_url(): void {
 		$this->controller->register();
 
@@ -305,6 +359,9 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 		$this->assertEqualSetsWithIndex( $expected, $data );
 	}
 
+	/**
+	 * @covers ::parse_link
+	 */
 	public function test_valid_url(): void {
 		$this->controller->register();
 
@@ -328,6 +385,9 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 		$this->assertEqualSetsWithIndex( $expected, $data );
 	}
 
+	/**
+	 * @covers ::parse_link
+	 */
 	public function test_removes_trailing_slashes(): void {
 		$this->controller->register();
 

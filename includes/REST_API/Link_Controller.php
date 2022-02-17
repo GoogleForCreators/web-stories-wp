@@ -161,10 +161,21 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 			'description' => '',
 		];
 
+		// Do not request instagram.com, as it redirects to a login page.
+		// See https://github.com/GoogleForCreators/web-stories-wp/issues/10451.
+		$url_host = wp_parse_url( $url, PHP_URL_HOST );
+		if ( \is_string( $url_host ) && false !== strpos( $url_host, 'instagram.com' ) ) {
+			set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
+			$response = $this->prepare_item_for_response( $data, $request );
+
+			return rest_ensure_response( $response );
+		}
+
 		$args = [
 			'limit_response_size' => 153600, // 150 KB.
 			'timeout'             => 7, // phpcs:ignore WordPressVIPMinimum.Performance.RemoteRequestTimeout.timeout_timeout
 		];
+
 
 		/**
 		 * Filters the HTTP request args for link data retrieval.
