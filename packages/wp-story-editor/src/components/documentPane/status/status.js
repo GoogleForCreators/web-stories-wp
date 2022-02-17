@@ -32,6 +32,11 @@ import {
   useIsUploadingToStory,
 } from '@googleforcreators/story-editor';
 
+/**
+ * Internal dependencies
+ */
+import { VISIBILITY, STATUS } from '../../../constants';
+
 function StatusPanel({
   nameOverride,
   popupZIndex,
@@ -83,26 +88,26 @@ function StatusPanel({
   useEffect(() => {
     if (password) {
       updateStory({
-        properties: { visibility: 'protected' },
+        properties: { visibility: VISIBILITY.PASSWORD_PROTECTED },
       });
       return;
     }
 
-    if (status === 'private') {
+    if (status === STATUS.PRIVATE) {
       updateStory({
-        properties: { visibility: 'private' },
+        properties: { visibility: VISIBILITY.PRIVATE },
       });
       return;
     }
 
     updateStory({
-      properties: { visibility: 'public' },
+      properties: { visibility: VISIBILITY.PUBLIC },
     });
   }, [password, status, updateStory]);
 
   const visibilityOptions = [
     {
-      value: 'public',
+      value: VISIBILITY.PUBLIC,
       label: __('Public', 'web-stories'),
       helper: __('Visible to everyone', 'web-stories'),
     },
@@ -110,13 +115,13 @@ function StatusPanel({
 
   if (capabilities?.publish) {
     visibilityOptions.push({
-      value: 'private',
+      value: VISIBILITY.PRIVATE,
       label: __('Private', 'web-stories'),
       helper: __('Visible to site admins & editors only', 'web-stories'),
-      disabled: isUploading && visibility !== 'private',
+      disabled: isUploading && visibility !== VISIBILITY.PRIVATE,
     });
     visibilityOptions.push({
-      value: 'protected',
+      value: VISIBILITY.PASSWORD_PROTECTED,
       label: __('Password Protected', 'web-stories'),
       helper: __('Visible only to those with the password.', 'web-stories'),
     });
@@ -135,13 +140,13 @@ function StatusPanel({
 
   const publishPrivately = useCallback(() => {
     const properties = {
-      status: 'private',
+      status: STATUS.PRIVATE,
       password: '',
-      visibility: 'private',
+      visibility: VISIBILITY.PRIVATE,
     };
 
     trackEvent('publish_story', {
-      status: 'private',
+      status: STATUS.PRIVATE,
       title_length: title.length,
     });
     refreshPostEditURL();
@@ -149,13 +154,17 @@ function StatusPanel({
     saveStory(properties);
   }, [title.length, refreshPostEditURL, saveStory]);
 
-  const isAlreadyPublished = ['publish', 'future', 'private'].includes(status);
+  const isAlreadyPublished = [
+    STATUS.PUBLISH,
+    STATUS.FUTURE,
+    STATUS.PRIVATE,
+  ].includes(status);
 
   const handleChangeVisibility = useCallback(
     (_, value) => {
       const newVisibility = value;
 
-      if ('private' === newVisibility && !isAlreadyPublished) {
+      if (VISIBILITY.PRIVATE === newVisibility && !isAlreadyPublished) {
         if (
           !window.confirm(
             __(
@@ -171,25 +180,27 @@ function StatusPanel({
       const properties = {};
 
       switch (newVisibility) {
-        case 'public':
-          properties.status = visibility === 'private' ? 'draft' : status;
+        case VISIBILITY.PUBLIC:
+          properties.status =
+            visibility === VISIBILITY.PRIVATE ? STATUS.DRAFT : status;
           properties.password = '';
-          properties.visibility = 'public';
+          properties.visibility = VISIBILITY.PUBLIC;
           break;
 
-        case 'private':
+        case VISIBILITY.PRIVATE:
           if (shouldReviewDialogBeSeen && !isAlreadyPublished) {
             setShowReviewDialog(true);
-            properties.visibility = 'private';
+            properties.visibility = VISIBILITY.PRIVATE;
           } else {
             publishPrivately();
           }
           return;
 
-        case 'protected':
-          properties.status = visibility === 'private' ? 'draft' : status;
+        case VISIBILITY.PASSWORD_PROTECTED:
+          properties.status =
+            visibility === VISIBILITY.PRIVATE ? STATUS.DRAFT : status;
           properties.password = password || '';
-          properties.visibility = 'protected';
+          properties.visibility = VISIBILITY.PASSWORD_PROTECTED;
           break;
 
         default:
@@ -233,7 +244,7 @@ function StatusPanel({
               disabled={visibilityOptions.length <= 1}
             />
           </Row>
-          {visibility === 'protected' && (
+          {visibility === VISIBILITY.PASSWORD_PROTECTED && (
             <Row>
               <Input
                 aria-label={__('Password', 'web-stories')}
