@@ -64,7 +64,7 @@ function VideoOutput({ element, box }) {
         }
       >
         <source {...sourceProps} />
-        <Captions tracks={tracks}  />
+        <Captions tracks={tracks} />
       </amp-video>
     </MediaOutput>
   );

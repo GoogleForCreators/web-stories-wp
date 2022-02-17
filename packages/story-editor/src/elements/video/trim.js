@@ -138,7 +138,7 @@ function VideoTrim({ box, element }) {
             {resource.src && (
               <source src={resource.src} type={resource.mimeType} />
             )}
-            <Captions tracks={tracks}  />
+            <Captions tracks={tracks} />
           </Video>
         </MediaDisplay>
       </Wrapper>
