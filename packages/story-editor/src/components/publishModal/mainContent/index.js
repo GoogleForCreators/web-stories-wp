@@ -28,6 +28,7 @@ import { HEADER_BAR_HEIGHT, HEADER_BAR_MARGIN } from '../constants';
 import MandatoryStoryInfo from './mandatoryStoryInfo';
 import StoryPreview from './storyPreview';
 import ChecklistButton from './checklistButton';
+import { useHasChecklist } from '../../checklist';
 
 const Main = styled.div`
   display: grid;
@@ -82,6 +83,7 @@ const MainContent = ({
   const { DocumentPane, id: paneId } = useInspector(
     ({ data }) => data?.modalInspectorTab || {}
   );
+  const hasChecklist = useHasChecklist();
 
   return (
     <Main>
@@ -103,9 +105,11 @@ const MainContent = ({
           <DocumentPane />
         </PanelContainer>
       )}
-      <Footer>
-        <ChecklistButton handleReviewChecklist={handleReviewChecklist} />
-      </Footer>
+      {hasChecklist && (
+        <Footer>
+          <ChecklistButton handleReviewChecklist={handleReviewChecklist} />
+        </Footer>
+      )}
     </Main>
   );
 };

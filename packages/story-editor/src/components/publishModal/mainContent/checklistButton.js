@@ -22,19 +22,12 @@ import { __ } from '@googleforcreators/i18n';
  * Internal dependencies
  */
 import { ISSUE_TYPES } from '../../checklist/constants';
-import {
-  useCategoryCount,
-  useHasChecklist,
-} from '../../checklist/countContext';
+import { useCategoryCount } from '../../checklist/countContext';
 import { ToggleButton } from '../../toggleButton';
 
 const ChecklistButton = ({ handleReviewChecklist }) => {
-  const hasChecklist = useHasChecklist();
-  if (!hasChecklist) {
-    return null;
-  }
-
   const priorityCount = useCategoryCount(ISSUE_TYPES.PRIORITY);
+
   return (
     <ToggleButton
       MainIcon={Icons.Checkbox}
