@@ -302,10 +302,17 @@ const useQuickActions = () => {
       }
 
       if (properties.includes(RESET_PROPERTIES.ANIMATION)) {
-        newProperties.animation = {
-          ...selectedElementAnimations?.[0],
-          delete: true,
-        };
+        updateElementsById({
+          elementIds: [elementId],
+          properties: (currentProperties) =>
+            updateProperties(
+              currentProperties,
+              {
+                animation: { ...selectedElementAnimations?.[0], delete: true },
+              },
+              /* commitValues */ true
+            ),
+        });
       }
 
       if (properties.includes(RESET_PROPERTIES.STYLES)) {
