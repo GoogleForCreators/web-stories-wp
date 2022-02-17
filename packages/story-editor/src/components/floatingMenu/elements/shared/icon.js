@@ -38,7 +38,7 @@ const IconButton = memo(function IconButton({ Icon, title, ...rest }) {
 });
 
 IconButton.propTypes = {
-  Icon: PropTypes.node.isRequired,
+  Icon: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
   title: PropTypes.string,
 };

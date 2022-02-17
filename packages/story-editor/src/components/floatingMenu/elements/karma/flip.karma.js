@@ -25,7 +25,9 @@ describe('Design Menu: Flip toggles', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
+    fixture.setFlags({ floatingMenu: true });
     await fixture.render();
+
     await fixture.collapseHelpCenter();
 
     // Add an image to stage
@@ -41,10 +43,10 @@ describe('Design Menu: Flip toggles', () => {
     return storyContext.state.selectedElements[0];
   };
 
-  it('should render the buttons as untoggled if current selection is not flipped', () => {
+  it('should render the buttons as untoggled if current selection is not flipped', async () => {
     // Check that actual element properties have flips set to false
     const { flip: { vertical = false, horizontal = false } = {} } =
-      getSelectedElement();
+      await getSelectedElement();
     expect(vertical).toBe(false);
     expect(horizontal).toBe(false);
 
@@ -53,7 +55,7 @@ describe('Design Menu: Flip toggles', () => {
     expect(fixture.editor.canvas.designMenu.flipHorizontal.checked).toBe(false);
   });
 
-  it('should render the buttons as toggled if current selection is doubly flipped', async () => {
+  it('should render the buttons as toggled if current selection is flipped both ways', async () => {
     // Toggle the flips using the design panel
     await fixture.events.click(
       fixture.editor.inspector.designPanel.sizePosition.flipHorizontal
@@ -64,7 +66,7 @@ describe('Design Menu: Flip toggles', () => {
 
     // Check that actual element properties have flips set to true
     const { flip: { vertical = false, horizontal = false } = {} } =
-      getSelectedElement();
+      await getSelectedElement();
     expect(vertical).toBe(true);
     expect(horizontal).toBe(true);
 
@@ -75,7 +77,7 @@ describe('Design Menu: Flip toggles', () => {
 
   it('should correctly flip the element if the vertical flip button is clicked', async () => {
     // Check that actual element property have vertical flip set to false
-    const { flip: { vertical = false } = {} } = getSelectedElement();
+    const { flip: { vertical = false } = {} } = await getSelectedElement();
     expect(vertical).toBe(false);
 
     // Check that the design menu button is untoggled
@@ -83,12 +85,12 @@ describe('Design Menu: Flip toggles', () => {
 
     // Click the toggle
     await fixture.events.click(
-      fixture.editor.canvas.designMenu.flipVertical.checked
+      fixture.editor.canvas.designMenu.flipVertical.node
     );
 
     // Check that actual element property have vertical flip set to true
     const { flip: { vertical: verticalAfter = false } = {} } =
-      getSelectedElement();
+      await getSelectedElement();
     expect(verticalAfter).toBe(true);
 
     // Check that the design menu button is toggled
@@ -97,7 +99,7 @@ describe('Design Menu: Flip toggles', () => {
 
   it('should correctly flip the element if the horizontal flip button is clicked', async () => {
     // Check that actual element property have horizontal flip set to false
-    const { flip: { horizontal = false } = {} } = getSelectedElement();
+    const { flip: { horizontal = false } = {} } = await getSelectedElement();
     expect(horizontal).toBe(false);
 
     // Check that the design menu button is untoggled
@@ -105,12 +107,12 @@ describe('Design Menu: Flip toggles', () => {
 
     // Click the toggle
     await fixture.events.click(
-      fixture.editor.canvas.designMenu.flipHorizontal.checked
+      fixture.editor.canvas.designMenu.flipHorizontal.node
     );
 
     // Check that actual element property have horizontal flip set to true
     const { flip: { horizontal: horizontalAfter = false } = {} } =
-      getSelectedElement();
+      await getSelectedElement();
     expect(horizontalAfter).toBe(true);
 
     // Check that the design menu button is toggled

@@ -17,7 +17,7 @@
  * Internal dependencies
  */
 import { Container } from './container';
-import { Toggle } from './common';
+import { ToggleButton } from './common';
 
 export class DesignMenu extends Container {
   constructor(node, path) {
@@ -28,7 +28,7 @@ export class DesignMenu extends Container {
     return this._get(
       this.getByRole('menuitem', { name: 'Flip vertically' }),
       'flipVertical',
-      Toggle
+      ToggleButton
     );
   }
 
@@ -36,7 +36,7 @@ export class DesignMenu extends Container {
     return this._get(
       this.getByRole('menuitem', { name: 'Flip horizontally' }),
       'flipHorizontal',
-      Toggle
+      ToggleButton
     );
   }
 }
