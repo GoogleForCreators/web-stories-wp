@@ -17,26 +17,26 @@
 /**
  * Internal dependencies
  */
+import { useStory } from '../../../../app';
 import useProperties from './useProperties';
-import useUpdateSelected from './useUpdateSelected';
 
-function useFlip() {
+function useFlip(property) {
   const { flip } = useProperties(['flip']);
-  const updateSelected = useUpdateSelected();
-  const toggleVertical = () =>
-    updateSelected(({ flip: { horizontal, vertical = false } }) => ({
-      flip: { horizontal, vertical: !vertical },
-    }));
-  const toggleHorizontal = () =>
-    updateSelected(({ flip: { vertical, horizontal = false } }) => ({
-      flip: { vertical, horizontal: !horizontal },
-    }));
+  const updateSelectedElements = useStory(
+    (state) => state.actions.updateSelectedElements
+  );
+  const toggle = () =>
+    updateSelectedElements({
+      properties: (oldElement) => ({
+        flip: {
+          ...oldElement.flip,
+          [property]: !oldElement.flip[property] || false,
+        },
+      }),
+    });
   return {
-    vertical: false,
-    horizontal: false,
-    ...flip,
-    toggleVertical,
-    toggleHorizontal,
+    [property]: flip[property] || false,
+    toggle,
   };
 }
 

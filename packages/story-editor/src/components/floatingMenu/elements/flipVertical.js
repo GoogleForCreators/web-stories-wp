@@ -27,12 +27,12 @@ import { IconButton } from './shared';
 import useFlip from './shared/useFlip';
 
 function FlipVertical() {
-  const { vertical, toggleVertical } = useFlip();
+  const { vertical, toggle } = useFlip('vertical');
   return (
     <IconButton
       Icon={Icons.MirrorUpdown}
       title={__('Flip vertically', 'web-stories')}
-      onClick={toggleVertical}
+      onClick={toggle}
       isToggled={vertical}
     />
   );
