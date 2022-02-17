@@ -243,7 +243,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
   };
 
   describe('Easier/smarter text color', () => {
-    it('should add text color based on background', async () => {
+    xit('should add text color based on background', async () => {
       // Enable the smart colors first.
       await fixture.editor.library.textTab.click();
       fixture.editor.library.text.smartColorToggle.click();
@@ -261,9 +261,6 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
         10
       );
       await fixture.events.sleep(800);
-      await fixture.events.click(
-        fixture.editor.library.text.preset('Paragraph')
-      );
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
       );
