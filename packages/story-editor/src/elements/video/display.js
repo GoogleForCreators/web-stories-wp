@@ -124,7 +124,7 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
             // Hides the track from the user
             // Displaying happens in MediaCaptionsLayer instead.
           }
-          <Captions tracks={tracks} overrideKind="metadata" />
+          <Captions tracks={tracks} kind="metadata" />
         </Video>
       )}
     </MediaDisplay>
