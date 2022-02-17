@@ -30,7 +30,8 @@ function arrange(
   capabilities = {
     publish: true,
   },
-  password = ''
+  password = '',
+  visibility = 'public'
 ) {
   const updateStory = jest.fn();
   const saveStory = jest.fn();
@@ -43,6 +44,7 @@ function arrange(
         title: '',
         storyId: 123,
         editLink: 'http://localhost/wp-admin/post.php?post=123&action=edit',
+        visibility,
       },
       capabilities,
     },
@@ -157,6 +159,7 @@ describe('statusPanel', () => {
     expect(saveStory).toHaveBeenCalledWith({
       status: 'private',
       password: '',
+      visibility: 'private',
     });
   });
 
@@ -165,17 +168,20 @@ describe('statusPanel', () => {
       {
         publish: true,
       },
-      'test'
+      'password',
+      'protected'
     );
+
     expect(screen.getByLabelText('Password')).toBeInTheDocument();
   });
 
-  it('should hide password field when changing visibility', () => {
+  it('should update properties changing visibility', () => {
     const { updateStory } = arrange(
       {
         publish: true,
       },
-      'test'
+      'password',
+      'protected'
     );
     expect(screen.getByLabelText('Password')).toBeInTheDocument();
 
@@ -193,8 +199,18 @@ describe('statusPanel', () => {
       properties: {
         status: 'draft',
         password: '',
+        visibility: 'public',
       },
     });
+  });
+  it('should hide password when public visibility', () => {
+    arrange(
+      {
+        publish: true,
+      },
+      undefined,
+      'public'
+    );
     expect(screen.queryByLabelText('Password')).not.toBeInTheDocument();
   });
 });

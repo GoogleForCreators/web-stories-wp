@@ -137,6 +137,7 @@ function StatusPanel({
     const properties = {
       status: 'private',
       password: '',
+      visibility: 'private',
     };
 
     trackEvent('publish_story', {
@@ -215,6 +216,7 @@ function StatusPanel({
         title={__('Visibility', 'web-stories')}
         canCollapse={canCollapse}
         isPersistable={isPersistable}
+        collapsedByDefault={false}
         {...rest}
       >
         <>
