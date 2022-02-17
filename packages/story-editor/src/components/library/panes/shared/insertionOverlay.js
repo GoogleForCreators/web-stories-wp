@@ -31,6 +31,7 @@ const IconContainer = styled.div`
   left: calc(50% - ${ICON_SIZE / 2}px);
   color: ${({ theme }) => theme.colors.fg.primary};
   border-radius: ${({ theme }) => theme.borders.radius.round};
+  pointer-events: none;
 `;
 
 const Scrim = styled.div`
