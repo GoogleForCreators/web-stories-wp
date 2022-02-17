@@ -105,15 +105,6 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 			];
 		}
 
-		if ( false !== strpos( $url, self::URL_INSTAGRAM ) ) {
-			return [
-				'response' => [
-					'code' => 200,
-				],
-				'body'     => '<html></html>',
-			];
-		}
-
 		if ( false !== strpos( $url, self::URL_CHARACTERS ) ) {
 			return [
 				'response' => [
@@ -302,7 +293,7 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 		// Subsequent requests is cached and so it should not cause a request.
 		rest_get_server()->dispatch( $request );
 
-		$this->assertEquals( 1, $this->request_count );
+		$this->assertEquals( 0, $this->request_count );
 		$this->assertNotEmpty( $data );
 		$this->assertEqualSetsWithIndex( $expected, $data );
 	}
