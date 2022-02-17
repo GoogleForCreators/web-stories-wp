@@ -32,7 +32,7 @@ function Author() {
     actions: { getAuthors },
   } = useAPI();
   const {
-    state: { tab, users, isUsersLoading },
+    state: { users, isUsersLoading },
     actions: { loadUsers },
   } = useInspector();
   const { isSaving, author, updateStory } = useStory(
