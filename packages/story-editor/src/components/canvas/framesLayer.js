@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import { memo, useRef, useCallback } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { PAGE_WIDTH } from '@googleforcreators/units';
@@ -74,7 +75,47 @@ function DesignSpaceGuideline() {
   );
 }
 
-function FramesLayer() {
+function FramesNavAndSelection({ children }) {
+  const framesLayerRef = useRef(null);
+  // TODO: https://github.com/google/web-stories-wp/issues/10266
+  // refactor `useCanvasKeys`. This is the last hook causing extraneous re-renders in this component.
+  // - pulls most of state from useStory and only creates actions and attaches them to hot keys
+  // - extraneous re-renders in this component contribute only ~1ms to total re-render time,
+  //   so this is a high hanging fruit with little reward.
+  useCanvasKeys(framesLayerRef);
+
+  const onOpenMenu = useRightClickMenu((state) => state.onOpenMenu);
+
+  useKeyDownEffect(framesLayerRef, 'mod+alt+shift+m', onOpenMenu);
+
+  return (
+    <Layer
+      ref={framesLayerRef}
+      data-testid="FramesLayer"
+      pointerEvents="initial"
+      // Use `-1` to ensure that there's a default target to focus if
+      // there's no selection, but it's not reachable by keyboard
+      // otherwise.
+      tabIndex="-1"
+      aria-label={__('Frames layer', 'web-stories')}
+    >
+      {children}
+      <NavPrevArea>
+        <PageNav isNext={false} />
+      </NavPrevArea>
+      <NavNextArea>
+        <PageNav />
+      </NavNextArea>
+      <Selection onContextMenu={onOpenMenu} />
+    </Layer>
+  );
+}
+
+FramesNavAndSelection.propTypes = {
+  children: PropTypes.node,
+};
+
+function FrameElements() {
   // We are returning this directly because we want the elementIds array to be shallowly
   // compared between re-renders. This allows element properties to update without re-rendering
   // this top level component.
@@ -87,14 +128,6 @@ function FramesLayer() {
       state.animationState
     )
   );
-
-  const framesLayerRef = useRef(null);
-  // TODO: https://github.com/google/web-stories-wp/issues/10266
-  // refactor `useCanvasKeys`. This is the last hook causing extraneous re-renders in this component.
-  // - pulls most of state from useStory and only creates actions and attaches them to hot keys
-  // - extraneous re-renders in this component contribute only ~1ms to total re-render time,
-  //   so this is a high hanging fruit with little reward.
-  useCanvasKeys(framesLayerRef);
 
   const onOpenMenu = useRightClickMenu((state) => state.onOpenMenu);
 
@@ -110,42 +143,30 @@ function FramesLayer() {
     [setScrollOffset]
   );
 
-  useKeyDownEffect(framesLayerRef, 'mod+alt+shift+m', onOpenMenu);
-
   return (
-    <Layer
-      ref={framesLayerRef}
-      data-testid="FramesLayer"
-      pointerEvents="initial"
-      // Use `-1` to ensure that there's a default target to focus if
-      // there's no selection, but it's not reachable by keyboard
-      // otherwise.
-      tabIndex="-1"
-      aria-label={__('Frames layer', 'web-stories')}
-    >
-      {!isAnimating && (
-        <FramesPageArea
-          fullBleedContainerLabel={__(
-            'Fullbleed area (Frames layer)',
-            'web-stories'
-          )}
-          onContextMenu={onOpenMenu}
-          onScroll={onScroll}
-        >
-          {elementIds.map((id) => {
-            return <FrameElement key={id} id={id} />;
-          })}
-          <DesignSpaceGuideline />
-        </FramesPageArea>
-      )}
-      <NavPrevArea>
-        <PageNav isNext={false} />
-      </NavPrevArea>
-      <NavNextArea>
-        <PageNav />
-      </NavNextArea>
-      <Selection onContextMenu={onOpenMenu} />
-    </Layer>
+    !isAnimating && (
+      <FramesPageArea
+        fullBleedContainerLabel={__(
+          'Fullbleed area (Frames layer)',
+          'web-stories'
+        )}
+        onContextMenu={onOpenMenu}
+        onScroll={onScroll}
+      >
+        {elementIds.map((id) => {
+          return <FrameElement key={id} id={id} />;
+        })}
+        <DesignSpaceGuideline />
+      </FramesPageArea>
+    )
+  );
+}
+
+function FramesLayer() {
+  return (
+    <FramesNavAndSelection>
+      <FrameElements />
+    </FramesNavAndSelection>
   );
 }
 

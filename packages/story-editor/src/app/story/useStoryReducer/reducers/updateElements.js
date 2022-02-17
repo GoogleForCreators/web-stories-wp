@@ -75,48 +75,53 @@ function updateElements(
     return state;
   }
 
-  const { animationLookup, elements: updatedElements } =
-    oldPage.elements.reduce(
-      ({ animationLookup, elements }, element) => {
-        if (!idsToUpdate.includes(element.id)) {
-          return {
-            animationLookup,
-            elements: [...elements, element],
-          };
-        }
-
-        const { animation, ...elem } = updateElementWithUpdater(
-          element,
-          propertiesOrUpdater
-        );
-
-        const animLookup = animation
-          ? { [animation.id]: { ...animation, targets: [elem.id] } }
-          : {};
-
-        return {
-          animationLookup: {
-            ...animationLookup,
-            ...animLookup,
-          },
-          elements: [...elements, elem],
-        };
-      },
-      {
-        animationLookup: {},
-        elements: [],
+  const animationLookup = oldPage.elements.reduce(
+    (animationLookup, element) => {
+      if (!idsToUpdate.includes(element.id)) {
+        return animationLookup;
       }
+      const { animation, ...elem } = updateElementWithUpdater(
+        element,
+        propertiesOrUpdater
+      );
+      const animLookup = animation
+        ? { [animation.id]: { ...animation, targets: [elem.id] } }
+        : {};
+      return {
+        ...animationLookup,
+        ...animLookup,
+      };
+    },
+    {}
+  );
+
+  const updatedElements = oldPage.elements.reduce((elements, element) => {
+    if (!idsToUpdate.includes(element.id)) {
+      return [...elements, element];
+    }
+    const { animation, ...elem } = updateElementWithUpdater(
+      element,
+      propertiesOrUpdater
     );
+    return [...elements, elem];
+  }, []);
 
-  const newAnimations =
-    Object.keys(animationLookup).length > 0
-      ? updateAnimations(oldPage.animations || [], animationLookup)
-      : oldPage.animations;
+  const isAnimationUpdate = Object.keys(animationLookup).length > 0;
+  const newAnimations = isAnimationUpdate
+    ? updateAnimations(oldPage.animations || [], animationLookup)
+    : oldPage.animations;
 
+  // Element properties are not updating if it is an animation update.
+  // Keep the same reference to elements if they are not updating.
+  const updatedAnimationsProperty = newAnimations && {
+    animations: newAnimations,
+  };
+  const updatedElementsProperty = { elements: updatedElements };
   const newPage = {
     ...oldPage,
-    elements: updatedElements,
-    ...(newAnimations ? { animations: newAnimations } : {}),
+    ...(isAnimationUpdate
+      ? updatedAnimationsProperty
+      : updatedElementsProperty),
   };
 
   const newPages = [
