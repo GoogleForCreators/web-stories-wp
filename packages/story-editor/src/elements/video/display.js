@@ -118,7 +118,12 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
           data-testid="videoElement"
           data-leaf-element="true"
         >
-          {url && <source src={url} type={resource.mimeType} />}
+          {
+            url && <source src={url} type={resource.mimeType} />
+
+            // Hides the track from the user
+            // Displaying happens in MediaCaptionsLayer instead.
+          }
           <Captions tracks={tracks} />
         </Video>
       )}

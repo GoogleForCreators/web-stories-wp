@@ -28,8 +28,6 @@ function Captions({ tracks, defaultKind = 'metadata' }) {
     <track
       srcLang={srclang}
       label={label}
-      // Hides the track from the user
-      // Displaying happens in MediaCaptionsLayer instead.
       kind={kind || defaultKind}
       src={track}
       key={key}
