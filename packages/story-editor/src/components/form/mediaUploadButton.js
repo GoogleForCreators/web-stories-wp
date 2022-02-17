@@ -27,10 +27,10 @@ import PropTypes from 'prop-types';
  */
 import { useConfig, useLocalMedia } from '../../app';
 import useFFmpeg from '../../app/media/utils/useFFmpeg';
+import { TRANSCODABLE_MIME_TYPES } from '../../app/media';
 
 function MediaUploadButton({ onInsert, renderButton, buttonInsertText }) {
   const {
-    allowedTranscodableMimeTypes,
     allowedFileTypes,
     allowedMimeTypes: {
       image: allowedImageMimeTypes,
@@ -70,24 +70,19 @@ function MediaUploadButton({ onInsert, renderButton, buttonInsertText }) {
   const allowedMimeTypes = useMemo(() => {
     if (isTranscodingEnabled) {
       return [
-        ...allowedTranscodableMimeTypes,
+        ...TRANSCODABLE_MIME_TYPES,
         ...allowedImageMimeTypes,
         ...allowedVideoMimeTypes,
       ];
     }
     return [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
-  }, [
-    allowedImageMimeTypes,
-    allowedVideoMimeTypes,
-    isTranscodingEnabled,
-    allowedTranscodableMimeTypes,
-  ]);
+  }, [allowedImageMimeTypes, allowedVideoMimeTypes, isTranscodingEnabled]);
 
   const transcodableMimeTypes = useMemo(() => {
-    return allowedTranscodableMimeTypes.filter(
+    return TRANSCODABLE_MIME_TYPES.filter(
       (x) => !allowedVideoMimeTypes.includes(x)
     );
-  }, [allowedTranscodableMimeTypes, allowedVideoMimeTypes]);
+  }, [allowedVideoMimeTypes]);
 
   let onSelectErrorMessage = __(
     'No file types are currently supported.',
