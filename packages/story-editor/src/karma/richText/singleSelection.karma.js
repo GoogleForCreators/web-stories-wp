@@ -210,8 +210,7 @@ describe('Styling single text field', () => {
   });
 
   describe('CUJ: Creator Can Style Text: Apply B, Apply U, Apply I', () => {
-    // Disable reason: This isn't implemented yet: Filed in #1977
-    // eslint-disable-next-line jasmine/no-disabled-tests
+    // eslint-disable-next-line jasmine/no-disabled-tests -- This isn't implemented yet: Filed in #1977
     xit('should apply inline formatting using shortcuts', async () => {
       const { bold, italic, underline } =
         data.fixture.editor.inspector.designPanel.textStyle;

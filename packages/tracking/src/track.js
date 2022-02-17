@@ -26,8 +26,7 @@ import { gtag } from './shared';
  * @param {Object<*>?} [eventData] The event data to send.
  * @return {Promise<void>} Promise that always resolves.
  */
-//eslint-disable-next-line require-await
-async function track(eventName, eventData = {}) {
+function track(eventName, eventData = {}) {
   return new Promise((resolve) => {
     // This timeout ensures a tracking event does not block the user
     // event if it is not sent (in time).

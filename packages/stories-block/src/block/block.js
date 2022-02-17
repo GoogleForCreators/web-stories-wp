@@ -16,6 +16,7 @@
 /**
  * Internal dependencies
  */
+// eslint-disable-next-line import/no-relative-packages -- False positive because this is not another package.
 import metadata from '../../../../blocks/embed/block.json';
 
 export default metadata;

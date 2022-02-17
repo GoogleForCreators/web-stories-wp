@@ -17,7 +17,7 @@
 // Important! This file cannot use `styled-components` or any stateful/context
 // React features to stay compatible with the "output" templates.
 
-/* eslint no-restricted-imports: ["error", { "paths": ["styled-components"] }] */
+/* eslint no-restricted-imports: ["error", { "paths": ["styled-components"] }] -- Cannot use styled-components here. */
 
 /**
  * External dependencies
