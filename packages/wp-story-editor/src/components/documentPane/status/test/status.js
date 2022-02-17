@@ -25,13 +25,14 @@ import { StoryContext } from '@googleforcreators/story-editor';
  */
 import { renderWithTheme } from '../../../../testUtils';
 import StatusPanel from '../status';
+import { STATUS, VISIBILITY } from '../../../../constants';
 
 function arrange(
   capabilities = {
     publish: true,
   },
   password = '',
-  visibility = 'public'
+  visibility = VISIBILITY.PUBLIC
 ) {
   const updateStory = jest.fn();
   const saveStory = jest.fn();
@@ -39,7 +40,7 @@ function arrange(
   const storyContextValue = {
     state: {
       story: {
-        status: 'draft',
+        status: STATUS.DRAFT,
         password,
         title: '',
         storyId: 123,
@@ -157,9 +158,9 @@ describe('statusPanel', () => {
     );
     expect(windowConfirm).toHaveBeenCalledWith(expect.any(String));
     expect(saveStory).toHaveBeenCalledWith({
-      status: 'private',
+      status: STATUS.PRIVATE,
       password: '',
-      visibility: 'private',
+      visibility: VISIBILITY.PRIVATE,
     });
   });
 
@@ -181,7 +182,7 @@ describe('statusPanel', () => {
         publish: true,
       },
       'password',
-      'protected'
+      VISIBILITY.PASSWORD_PROTECTED
     );
     expect(screen.getByLabelText('Password')).toBeInTheDocument();
 
@@ -199,7 +200,7 @@ describe('statusPanel', () => {
       properties: {
         status: 'draft',
         password: '',
-        visibility: 'public',
+        visibility: VISIBILITY.PUBLIC,
       },
     });
   });
@@ -209,7 +210,7 @@ describe('statusPanel', () => {
         publish: true,
       },
       undefined,
-      'public'
+      VISIBILITY.PUBLIC
     );
     expect(screen.queryByLabelText('Password')).not.toBeInTheDocument();
   });
