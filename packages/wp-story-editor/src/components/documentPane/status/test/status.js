@@ -122,8 +122,8 @@ describe('statusPanel', () => {
     clickDropdown();
 
     expect(
-      screen.getByRole('option', {
-        name: 'Selected Public',
+      screen.getByRole('button', {
+        name: 'Public',
       })
     ).toBeInTheDocument();
   });
