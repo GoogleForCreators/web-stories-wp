@@ -31,6 +31,7 @@ import json from '@rollup/plugin-json';
 import dynamicImportVars from '@rollup/plugin-dynamic-import-vars';
 import license from 'rollup-plugin-license';
 import del from 'rollup-plugin-delete';
+import copy from 'rollup-plugin-copy';
 import webWorkerLoader from 'rollup-plugin-web-worker-loader';
 import workspacesRun from 'workspaces-run';
 
@@ -149,42 +150,64 @@ async function config(cliArgs) {
       ]),
     ];
 
+    const sourceDir = dirname(resolvePath(pkg.dir, pkg.config.source));
+
     if (entriesToBuild.includes('es')) {
+      const moduleDir = dirname(resolvePath(pkg.dir, pkg.config.module));
+      const _plugins = [
+        del({
+          targets: [moduleDir],
+          runOnce: false !== cliArgs.watch,
+        }),
+      ];
+
+      if ('@googleforcreators/fonts' === pkg.name) {
+        _plugins.push(
+          copy({
+            targets: [{ src: `${sourceDir}/fonts.json`, dest: moduleDir }],
+          })
+        );
+      }
+
       entries.push({
         input,
         output: {
-          dir: dirname(resolvePath(pkg.dir, pkg.config.module)),
+          dir: moduleDir,
           format: 'es',
           preserveModules: true,
         },
-        plugins: [
-          ...plugins,
-          del({
-            targets: [dirname(resolvePath(pkg.dir, pkg.config.module))],
-            runOnce: false !== cliArgs.watch,
-          }),
-        ],
+        plugins: [...plugins, ..._plugins],
         external,
         context: 'window',
       });
     }
 
     if (entriesToBuild.includes('cjs')) {
+      const mainDir = dirname(resolvePath(pkg.dir, pkg.config.main));
+      const _plugins = [
+        del({
+          targets: [mainDir],
+          runOnce: false !== cliArgs.watch,
+        }),
+      ];
+
+      if ('@googleforcreators/fonts' === pkg.name) {
+        _plugins.push(
+          copy({
+            targets: [{ src: `${sourceDir}/fonts.json`, dest: mainDir }],
+          })
+        );
+      }
+
       entries.push({
         input,
         output: {
-          dir: dirname(resolvePath(pkg.dir, pkg.config.main)),
+          dir: mainDir,
           format: 'cjs',
           exports: 'auto',
           preserveModules: true,
         },
-        plugins: [
-          ...plugins,
-          del({
-            targets: [dirname(resolvePath(pkg.dir, pkg.config.main))],
-            runOnce: false !== cliArgs.watch,
-          }),
-        ],
+        plugins: [...plugins, ..._plugins],
         external,
         context: 'window',
       });
