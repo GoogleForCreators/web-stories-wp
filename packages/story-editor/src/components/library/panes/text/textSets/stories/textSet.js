@@ -17,17 +17,20 @@
  * External dependencies
  */
 import { UnitsProvider, getBox, PAGE_RATIO } from '@googleforcreators/units';
-import { TransformProvider } from '@googleforcreators/transform';
+import { TransformContext } from '@googleforcreators/transform';
 
 /**
  * Internal dependencies
  */
 import TextSet from '../textSet';
-import LibraryProvider from '../../../../libraryProvider';
-import { FontProvider } from '../../../../../../app/font';
-import { APIProvider } from '../../../../../../app/api';
-import { ConfigProvider } from '../../../../../../app/config';
 import { TEXT_SET_SIZE } from '../../../../../../constants';
+import LibraryContext from '../../../../context';
+import FontContext from '../../../../../../app/font/context';
+import APIContext from '../../../../../../app/api/context';
+import ConfigContext from '../../../../../../app/config/context';
+import StoryContext from '../../../../../../app/story/context';
+import { LayoutProvider } from '../../../../../../app/layout';
+import CanvasContext from '../../../../../../app/canvas/context';
 
 export default {
   title: 'Stories Editor/Components/Library/Panes/Text/TextSet',
@@ -111,9 +114,13 @@ export const _default = () => {
       scale: 100,
       focalX: 50,
       focalY: 50,
-      id: '3631d6b0-0f6a-4959-9df0-b9f3d7fcab35',
+      id: '755f1d9e-aeb4-4c4d-ba7f-fac834434243',
+      previewOffsetX: 0,
+      previewOffsetY: 0,
       textSetWidth: 333,
       textSetHeight: 304,
+      normalizedOffsetX: 0,
+      normalizedOffsetY: 0,
     },
     {
       opacity: 100,
@@ -188,31 +195,90 @@ export const _default = () => {
       scale: 100,
       focalX: 50,
       focalY: 50,
-      id: 'c61010e2-750e-4e6d-8372-bfb5e93f2312',
+      id: '755f1d9e-aeb4-4c4d-ba7f-fac834434243',
+      previewOffsetX: 30,
+      previewOffsetY: 30,
       textSetWidth: 333,
       textSetHeight: 304,
+      normalizedOffsetX: 0,
+      normalizedOffsetY: 0,
     },
   ];
 
+  const libraryValue = {
+    actions: {
+      insertTextSet: () => {},
+    },
+  };
+  const transformValue = {
+    actions: {
+      registerTransformHandler: () => {},
+    },
+  };
+  const configValue = {
+    api: { stories: [] },
+    cdnURL: 'https://wp.stories.google/static/main/',
+  };
+  const fontsValue = {
+    actions: {
+      maybeEnqueueFontStyle: () => {},
+    },
+  };
+  const apiValue = {
+    actions: {
+      getAllFonts: () => [],
+    },
+  };
+
+  const storyValue = {
+    actions: {
+      setSelectedElementsById: () => {},
+    },
+    state: {
+      currentPage: {},
+    },
+  };
+
+  const canvasValue = {
+    state: {
+      nodesById: {},
+      pageSize: {},
+      pageContainer: document.body,
+      canvasContainer: document.body,
+      designSpaceGuideline: {},
+    },
+    actions: {},
+  };
+
   return (
-    <LibraryProvider insertElements={() => {}}>
-      <UnitsProvider
-        getBox={getBox}
-        pageSize={{
-          width: TEXT_SET_SIZE,
-          height: TEXT_SET_SIZE / PAGE_RATIO,
-        }}
-      >
-        <TransformProvider registerTransformHandler={() => {}}>
-          <ConfigProvider config={{ api: { stories: [] } }}>
-            <APIProvider getAllFonts={() => {}}>
-              <FontProvider maybeEnqueueFontStyle={() => {}}>
-                <TextSet elements={textSet1} index={0} />
-              </FontProvider>
-            </APIProvider>
-          </ConfigProvider>
-        </TransformProvider>
-      </UnitsProvider>
-    </LibraryProvider>
+    <TransformContext.Provider value={transformValue}>
+      <ConfigContext.Provider value={configValue}>
+        <APIContext.Provider value={apiValue}>
+          <StoryContext.Provider value={storyValue}>
+            <CanvasContext.Provider value={canvasValue}>
+              <FontContext.Provider value={fontsValue}>
+                <LayoutProvider>
+                  <LibraryContext.Provider value={libraryValue}>
+                    <UnitsProvider
+                      pageSize={{
+                        width: TEXT_SET_SIZE,
+                        height: TEXT_SET_SIZE / PAGE_RATIO,
+                      }}
+                      getBox={getBox}
+                    >
+                      <TextSet
+                        id={'755f1d9e-aeb4-4c4d-ba7f-fac834434243'}
+                        elements={textSet1}
+                        index={0}
+                      />
+                    </UnitsProvider>
+                  </LibraryContext.Provider>
+                </LayoutProvider>
+              </FontContext.Provider>
+            </CanvasContext.Provider>
+          </StoryContext.Provider>
+        </APIContext.Provider>
+      </ConfigContext.Provider>
+    </TransformContext.Provider>
   );
 };
