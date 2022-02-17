@@ -61,7 +61,15 @@ const NotificationCount = styled(Text).attrs({ as: 'span' })`
 
 export const ToggleButton = forwardRef(
   (
-    { isOpen = false, notificationCount, MainIcon, label, shortcut, ...rest },
+    {
+      isOpen = false,
+      notificationCount = 0,
+      MainIcon,
+      label,
+      shortcut,
+      popupZIndexOverride,
+      ...rest
+    },
     ref
   ) => {
     const hasNotifications = notificationCount > 0;
@@ -71,6 +79,7 @@ export const ToggleButton = forwardRef(
         title={label}
         placement={TOOLTIP_PLACEMENT.TOP}
         shortcut={shortcut}
+        popupZIndexOverride={popupZIndexOverride}
       >
         <Button
           ref={ref}
@@ -104,4 +113,5 @@ ToggleButton.propTypes = {
   MainIcon: PropTypes.object.isRequired,
   notificationCount: PropTypes.number,
   shortcut: PropTypes.string,
+  popupZIndexOverride: PropTypes.number,
 };
