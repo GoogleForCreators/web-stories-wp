@@ -35,9 +35,9 @@ describe('Contributor User', () => {
 
     await expect(page).toClick('li[role="tab"]', { text: 'Document' });
 
-    await expect(page).toMatchElement('label', { text: 'Public' });
-    await expect(page).not.toMatchElement('label', { text: 'Private' });
-    await expect(page).not.toMatchElement('label', {
+    await expect(page).toMatchElement('button', { text: 'Public' });
+    await expect(page).not.toMatchElement('option', { text: 'Private' });
+    await expect(page).not.toMatchElement('option', {
       text: 'Password Protected',
     });
   });
