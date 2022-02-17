@@ -77,7 +77,6 @@ const Footer = styled.div`
 const MainContent = ({
   handleReviewChecklist,
   handleUpdateStoryInfo,
-  handleUpdateSlug,
   inputValues,
 }) => {
   const { DocumentPane, id: paneId } = useInspector(
@@ -93,7 +92,6 @@ const MainContent = ({
       <_MandatoryStoryInfo>
         <MandatoryStoryInfo
           handleUpdateStoryInfo={handleUpdateStoryInfo}
-          handleUpdateSlug={handleUpdateSlug}
           inputValues={inputValues}
         />
       </_MandatoryStoryInfo>
@@ -119,6 +117,5 @@ export default MainContent;
 MainContent.propTypes = {
   handleReviewChecklist: PropTypes.func,
   handleUpdateStoryInfo: PropTypes.func,
-  handleUpdateSlug: PropTypes.func,
-  inputValues: MANDATORY_INPUT_VALUE_TYPES, // update types when panel is figured out
+  inputValues: MANDATORY_INPUT_VALUE_TYPES,
 };
