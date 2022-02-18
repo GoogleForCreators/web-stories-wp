@@ -25,7 +25,6 @@ describe('CUJ: Creator can Add and Write Text: Delete textbox', () => {
     });
   });
 
-  // Disable reason: Not implemented yet
-  // eslint-disable-next-line jasmine/no-disabled-tests
+  // eslint-disable-next-line jasmine/no-disabled-tests -- Not implemented yet
   xit('should allow you to delete a text box by dragging it off-stage', () => {});
 });

@@ -88,7 +88,7 @@ module.exports = function (config) {
         served: true,
         nocache: false,
       },
-      // eslint-disable-next-line prettier/prettier, no-useless-escape
+      // eslint-disable-next-line prettier/prettier, no-useless-escape -- karma-test
       '^https:\/\/fonts.googleapis.com\/css*',
       'node_modules/axe-core/axe.js',
     ],
@@ -196,7 +196,7 @@ module.exports = function (config) {
       // Re-implements a round-robin strategy, but with a custom shardIndex.
       // Need to use the Function constructor here so we have access to the outer shardIndex and totalShards vars,
       // because karma-parallel serializes this function.
-      // eslint-disable-next-line no-new-func
+      // eslint-disable-next-line no-new-func -- karma-test
       customShardStrategy: new Function(
         'parallelOptions',
         `

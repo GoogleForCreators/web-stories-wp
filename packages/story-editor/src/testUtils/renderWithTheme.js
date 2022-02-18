@@ -29,7 +29,6 @@ import * as ariaLabelQueries from './queryByAriaLabel';
 import * as autoAdvanceAfterQueries from './queryByAutoAdvanceAfter';
 import * as idQueries from './queryById';
 
-// eslint-disable-next-line react/prop-types
 const WithThemeProvider = ({ children }) => {
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };

@@ -96,7 +96,7 @@ function AudioPlayer({ title, src, mimeType, tracks = [], audioId }) {
 
   return (
     <Wrapper>
-      {/* eslint-disable-next-line jsx-a11y/media-has-caption, styled-components-a11y/media-has-caption */}
+      {/* eslint-disable-next-line jsx-a11y/media-has-caption, styled-components-a11y/media-has-caption -- No captions wanted/needed here. */}
       <Audio crossOrigin="anonymous" loop ref={playerRef} id={audioId}>
         <source src={src} type={mimeType} />
         {tracks &&

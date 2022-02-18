@@ -28,12 +28,10 @@
   },
   "type": "module",
   "exports": {
-    "./raw": {
-      "default" : "./src/fonts.json"
-    },
-    ".": {
-      "default": "./src/index.js"
-    }
+     "./fonts.json": {
+         "import": "./dist-module/fonts.json",
+         "require": "./dist/fonts.json"
+     }
   },
   "main": "dist/index.js",
   "module": "dist-module/index.js",

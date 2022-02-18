@@ -24,21 +24,26 @@ import {
   TOOLTIP_PLACEMENT,
 } from '@googleforcreators/design-system';
 
+/**
+ * Internal dependencies
+ */
+import ToggleButton from './toggleButton';
+
 const IconButton = memo(function IconButton({ Icon, title, ...rest }) {
   return (
-    <ContextMenuComponents.MenuButton {...rest}>
+    <ToggleButton {...rest}>
       <ContextMenuComponents.MenuIcon
         title={title}
         placement={TOOLTIP_PLACEMENT.BOTTOM}
       >
         <Icon />
       </ContextMenuComponents.MenuIcon>
-    </ContextMenuComponents.MenuButton>
+    </ToggleButton>
   );
 });
 
 IconButton.propTypes = {
-  Icon: PropTypes.node.isRequired,
+  Icon: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
   title: PropTypes.string,
 };

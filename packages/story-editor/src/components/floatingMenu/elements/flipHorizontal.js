@@ -24,13 +24,16 @@ import { __ } from '@googleforcreators/i18n';
  * Internal dependencies
  */
 import { IconButton } from './shared';
+import useFlip from './shared/useFlip';
 
 function FlipHorizontal() {
+  const { horizontal, toggle } = useFlip('horizontal');
   return (
     <IconButton
       Icon={Icons.MirrorLeftright}
       title={__('Flip horizontally', 'web-stories')}
-      onClick={() => {}}
+      onClick={toggle}
+      isToggled={horizontal}
     />
   );
 }

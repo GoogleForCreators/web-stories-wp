@@ -203,8 +203,7 @@ function PageTemplate(
       pageSize={pageSize}
       role="listitem"
       ref={ref}
-      // Needed for custom keyboard navigation implementation.
-      // eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex
+      // eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex -- Needed for custom keyboard navigation implementation.
       tabIndex={0}
       onMouseEnter={handleSetHoverActive}
       onMouseLeave={handleSetHoverFalse}

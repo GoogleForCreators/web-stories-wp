@@ -146,6 +146,7 @@ function PublishButton({ forceIsSaving }) {
           isOpen={showDialog}
           onPublish={publish}
           onClose={closeDialog}
+          publishButtonCopy={text}
         />
       ) : (
         <ReviewChecklistDialog

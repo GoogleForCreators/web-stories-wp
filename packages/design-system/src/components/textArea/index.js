@@ -47,7 +47,9 @@ const Label = styled(Text)`
   margin-bottom: 12px;
 `;
 
-const Hint = styled(Text)`
+const Hint = styled(Text).attrs({
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+})`
   margin-top: 12px;
   color: ${({ hasError, theme }) =>
     theme.colors.fg[hasError ? 'negative' : 'tertiary']};

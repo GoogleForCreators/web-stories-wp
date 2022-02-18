@@ -60,7 +60,7 @@ module.exports = {
     fastRefresh: false,
     strictMode: true,
   },
-  //eslint-disable-next-line require-await
+  //eslint-disable-next-line require-await -- Negligible.
   webpackFinal: async (config) => {
     // webpack < 5 used to include polyfills for node.js core modules by default.
     // Prevent ModuleNotFoundError for this dependency.
