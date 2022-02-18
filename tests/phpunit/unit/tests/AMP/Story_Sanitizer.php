@@ -284,7 +284,7 @@ class Story_Sanitizer extends TestCase {
 		$this->assertStringContainsString( ' lang="en-US"', $actual );
 	}
 
-	public function data_test_transform_a_tags() {
+	public function data_test_transform_a_tags(): array {
 		return [
 			'Link without rel or target attribute' => [
 				'<html><head></head><body><a href="https://www.google.com">Google</a></body></html>',
