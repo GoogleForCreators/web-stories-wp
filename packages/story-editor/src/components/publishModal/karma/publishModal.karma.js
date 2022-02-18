@@ -139,10 +139,6 @@ describe('Publish Story Modal', () => {
       expect(typeof autoInput.getAttribute('checked')).toBe('string');
       expect(manualInput.getAttribute('checked')).toBeNull();
     });
-    // TODO when visible panel update is done
-    // it('should update publish button copy from "Publish" to "Schedule" when future date is selected for publish', () => {
-
-    // })
   });
 
   describe('Keyboard navigation', () => {
