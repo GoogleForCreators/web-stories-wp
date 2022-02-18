@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useState } from '@googleforcreators/react';
+import { useState } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { TextArea } from '@googleforcreators/design-system';
 import styled from 'styled-components';
@@ -101,6 +101,5 @@ export default MandatoryStoryInfo;
 
 MandatoryStoryInfo.propTypes = {
   handleUpdateStoryInfo: PropTypes.func,
-  handleUpdateSlug: PropTypes.func,
   inputValues: MANDATORY_INPUT_VALUE_TYPES,
 };

@@ -76,7 +76,7 @@ function PublishModal({ isOpen, onPublish, onClose, publishButtonCopy }) {
         });
       }
     },
-    [updateStory, slug]
+    [updateStory, slug, storyId]
   );
 
   const isAllRequiredInputsFulfilled = useMemo(
