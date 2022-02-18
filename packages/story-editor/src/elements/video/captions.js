@@ -24,16 +24,18 @@ function Captions({ tracks, kind }) {
     return null;
   }
 
-  return tracks.map(({ srclang, label, kind: trackKind, track, id: key }, i) => (
-    <track
-      srcLang={srclang}
-      label={label}
-      kind={kind || trackKind }
-      src={track}
-      key={key}
-      default={i === 0}
-    />
-  ));
+  return tracks.map(
+    ({ srclang, label, kind: trackKind, track, id: key }, i) => (
+      <track
+        srcLang={srclang}
+        label={label}
+        kind={kind || trackKind}
+        src={track}
+        key={key}
+        default={i === 0}
+      />
+    )
+  );
 }
 Captions.propTypes = {
   kind: PropTypes.string,
