@@ -19,7 +19,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
-import { Modal } from '@googleforcreators/design-system';
+import { Modal, theme } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import { useCallback, useEffect, useMemo } from '@googleforcreators/react';
 /**
@@ -105,6 +105,9 @@ function PublishModal({ isOpen, onPublish, onClose, publishButtonCopy }) {
         height: '66vh',
         minHeight: '580px',
         overflow: 'hidden',
+      }}
+      overlayStyles={{
+        backgroundColor: theme.colors.inverted.interactiveBg.modalScrim,
       }}
     >
       {isOpen && (
