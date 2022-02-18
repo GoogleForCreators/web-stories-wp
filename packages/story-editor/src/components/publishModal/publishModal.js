@@ -134,4 +134,5 @@ PublishModal.propTypes = {
   isOpen: PropTypes.bool,
   onPublish: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+  publishButtonCopy: PropTypes.string.isRequired,
 };
