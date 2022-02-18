@@ -229,6 +229,7 @@ function StatusPanel({
       publishPrivately,
       shouldReviewDialogBeSeen,
       isAlreadyPublished,
+      isUpdatedPublishModalEnabled,
     ]
   );
 

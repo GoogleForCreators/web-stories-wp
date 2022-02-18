@@ -24,6 +24,7 @@ import {
   uploadPublisherLogoEditor,
   takeSnapshot,
   addTextElement,
+  insertStoryTitle,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Pre-Publish Checklist : Admin User', () => {
