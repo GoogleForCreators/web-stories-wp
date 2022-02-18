@@ -24,7 +24,7 @@ import { useMemo, forwardRef } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import { Button as BaseButton, BUTTON_TYPES } from '../../button';
+import { Button as BaseButton } from '../../button';
 import { useContextMenu } from '../contextMenuProvider';
 import { menuItemStyles } from './styles';
 
