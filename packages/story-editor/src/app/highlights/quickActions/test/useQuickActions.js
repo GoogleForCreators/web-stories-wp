@@ -1048,8 +1048,7 @@ describe('MediaPicker', () => {
     });
   });
 
-  //eslint-disable-next-line jest/no-disabled-tests -- testing PR without these
-  it.skip('should insert an optimized video', () => {
+  it('should insert an optimized video', () => {
     render(<MediaPicker render={noop} />);
 
     fireEvent.click(screen.getByText('onSelect video'));
@@ -1084,8 +1083,7 @@ describe('MediaPicker', () => {
     });
   });
 
-  //eslint-disable-next-line jest/no-disabled-tests -- testing PR without these
-  it.skip('should show a snackbar if something fails during upload', () => {
+  it('should show a snackbar if something fails during upload', () => {
     mockOptimizeVideo.mockImplementation(() => {
       throw new Error('throwing it down');
     });
