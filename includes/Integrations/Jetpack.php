@@ -104,8 +104,6 @@ class Jetpack extends Service_Base {
 	 * Initializes all hooks.
 	 *
 	 * @since 1.2.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		// See https://github.com/Automattic/jetpack/blob/4b85be883b3c584c64eeb2fb0f3fcc15dabe2d30/modules/custom-post-types/portfolios.php#L80.
@@ -262,7 +260,6 @@ class Jetpack extends Service_Base {
 	 *
 	 * @param WP_REST_Response $response The response object.
 	 * @param WP_Post          $post     The original attachment post.
-	 * @return WP_REST_Response
 	 */
 	public function filter_rest_api_response( WP_REST_Response $response, WP_Post $post ): WP_REST_Response {
 		if ( self::VIDEOPRESS_MIME_TYPE !== $post->post_mime_type ) {
@@ -319,7 +316,6 @@ class Jetpack extends Service_Base {
 	 * @since 1.7.2
 	 *
 	 * @param int $milliseconds Milliseconds to converted to minutes and seconds.
-	 * @return string
 	 */
 	protected function format_milliseconds( $milliseconds ): string {
 		$seconds = floor( $milliseconds / 1000 );
@@ -343,7 +339,6 @@ class Jetpack extends Service_Base {
 	 * @param int    $mid         The meta ID after successful update.
 	 * @param int    $object_id   ID of the object metadata is for.
 	 * @param string $meta_key    Metadata key.
-	 * @return void
 	 */
 	public function add_term( $mid, $object_id, $meta_key ): void {
 		if ( self::VIDEOPRESS_POSTER_META_KEY !== $meta_key ) {

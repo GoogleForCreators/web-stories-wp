@@ -103,8 +103,6 @@ class AMP extends Service_Base implements HasRequirements {
 	 * Initializes all hooks.
 	 *
 	 * @since 1.2.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		add_filter( 'option_amp-options', [ $this, 'filter_amp_options' ] );
@@ -331,8 +329,6 @@ class AMP extends Service_Base implements HasRequirements {
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 *
 	 * @since 1.2.0
-	 *
-	 * @return string|null
 	 */
 	protected function get_request_post_type(): ?string {
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized

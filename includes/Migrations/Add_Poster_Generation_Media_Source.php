@@ -37,8 +37,6 @@ class Add_Poster_Generation_Media_Source extends Migration_Meta_To_Term {
 	 * Migration media post meta to taxonomy term.
 	 *
 	 * @since 1.7.0
-	 *
-	 * @return void
 	 */
 	public function migrate(): void {
 		wp_insert_term( $this->get_term_name(), $this->media_source_taxonomy->get_taxonomy_slug() );
@@ -49,8 +47,6 @@ class Add_Poster_Generation_Media_Source extends Migration_Meta_To_Term {
 	 * Get name of meta key to be used in migration.
 	 *
 	 * @since 1.7.2
-	 *
-	 * @return string
 	 */
 	protected function get_post_meta_key(): string {
 		return Poster::POSTER_POST_META_KEY;

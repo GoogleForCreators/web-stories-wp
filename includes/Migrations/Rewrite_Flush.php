@@ -37,8 +37,6 @@ class Rewrite_Flush extends Migrate_Base {
 	 * Flush rewrite rules.
 	 *
 	 * @since 1.7.0
-	 *
-	 * @return void
 	 */
 	public function migrate(): void {
 		if ( ! \defined( '\WPCOM_IS_VIP_ENV' ) || false === WPCOM_IS_VIP_ENV ) {

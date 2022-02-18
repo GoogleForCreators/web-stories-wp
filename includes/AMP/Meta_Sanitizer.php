@@ -56,8 +56,6 @@ class Meta_Sanitizer extends AMP_Meta_Sanitizer {
 	 *
 	 * @link https://amp.dev/documentation/guides-and-tutorials/learn/spec/amp-boilerplate/?format=websites
 	 * @link https://amp.dev/documentation/guides-and-tutorials/optimize-and-measure/optimize_amp/#optimize-the-amp-runtime-loading
-	 *
-	 * @return void
 	 */
 	protected function ensure_boilerplate_is_present(): void {
 		$style  = null;

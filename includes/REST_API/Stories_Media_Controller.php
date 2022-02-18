@@ -67,8 +67,6 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 * Register the service.
 	 *
 	 * @since 1.7.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		$this->register_routes();

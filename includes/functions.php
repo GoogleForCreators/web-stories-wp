@@ -29,7 +29,6 @@ namespace Google\Web_Stories;
  *
  * @param array $attrs Arguments for displaying stories.
  * @param array $query_args Query arguments for stories.
- * @return void
  */
 function render_stories( array $attrs = [], array $query_args = [] ): void {
 	$stories_obj = new Story_Query( $attrs, $query_args );
@@ -56,8 +55,6 @@ function get_stories( array $attrs = [], array $query_args = [] ): array {
  * Render stories based on customizer settings.
  *
  * @since 1.5.0
- *
- * @return void
  */
 function render_theme_stories(): void {
 	$injector = Services::get_injector();

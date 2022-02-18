@@ -182,8 +182,6 @@ class Editor extends Service_Base implements HasRequirements {
 	 * Initializes the Editor logic.
 	 *
 	 * @since 1.7.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
@@ -262,7 +260,6 @@ class Editor extends Service_Base implements HasRequirements {
 	 * @since 1.0.0
 	 *
 	 * @param string $hook The current admin page.
-	 * @return void
 	 */
 	public function admin_enqueue_scripts( $hook ): void {
 		if ( ! $this->context->is_story_editor() ) {
@@ -431,7 +428,6 @@ class Editor extends Service_Base implements HasRequirements {
 	 * @since 1.5.0
 	 *
 	 * @param int $story_id Post id of story.
-	 * @return void
 	 */
 	protected function setup_lock( int $story_id ): void {
 		if ( ! $this->experiments->is_experiment_enabled( 'enablePostLocking' ) ) {

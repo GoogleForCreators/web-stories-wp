@@ -81,8 +81,6 @@ class Site_Health extends Service_Base implements Conditional {
 	 * Adds the filters.
 	 *
 	 * @since 1.8.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		add_filter( 'debug_information', [ $this, 'add_debug_information' ] );
@@ -171,7 +169,6 @@ class Site_Health extends Service_Base implements Conditional {
 	 * @since 1.8.0
 	 *
 	 * @param mixed $value Value to formatted.
-	 * @return string
 	 */
 	protected function get_formatted_output( $value ): string {
 		return $value ? __( 'Enabled', 'web-stories' ) : __( 'Disabled', 'web-stories' );

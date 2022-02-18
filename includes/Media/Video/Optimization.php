@@ -43,8 +43,6 @@ class Optimization extends Service_Base implements HasMeta {
 	 * Init.
 	 *
 	 * @since 1.10.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		$this->register_meta();
@@ -54,8 +52,6 @@ class Optimization extends Service_Base implements HasMeta {
 	 * Register meta
 	 *
 	 * @since 1.15.0
-	 *
-	 * @return void
 	 */
 	public function register_meta(): void {
 		register_meta(

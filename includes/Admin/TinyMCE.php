@@ -82,8 +82,6 @@ class TinyMCE extends Service_Base {
 	 * Initialization actions.
 	 *
 	 * @since 1.5.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		if ( $this->context->is_block_editor() || $this->context->is_story_editor() ) {
@@ -148,8 +146,6 @@ class TinyMCE extends Service_Base {
 	 * Enqueue related scripts.
 	 *
 	 * @since 1.5.0
-	 *
-	 * @return void
 	 */
 	public function register_assets(): void {
 		$this->assets->enqueue_style( 'wp-components' );
@@ -190,8 +186,6 @@ class TinyMCE extends Service_Base {
 	 * Enqueue related scripts.
 	 *
 	 * @since 1.5.0
-	 *
-	 * @return void
 	 */
 	public function enqueue_assets(): void {
 		$this->assets->enqueue_style( 'wp-components' );
@@ -203,8 +197,6 @@ class TinyMCE extends Service_Base {
 	 * This is useful for performing some react operations.
 	 *
 	 * @since 1.5.0
-	 *
-	 * @return void
 	 */
 	public function web_stories_tinymce_root_element(): void {
 		?>

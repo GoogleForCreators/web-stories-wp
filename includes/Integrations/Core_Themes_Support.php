@@ -81,8 +81,6 @@ class Core_Themes_Support extends Service_Base {
 	 * options supported themes.
 	 *
 	 * @since 1.5.0
-	 *
-	 * @return void
 	 */
 	public function extend_theme_support(): void {
 		add_theme_support( 'web-stories' );
@@ -94,8 +92,6 @@ class Core_Themes_Support extends Service_Base {
 	 * Embeds web stories with default customizer settings.
 	 *
 	 * @since 1.5.0
-	 *
-	 * @return void
 	 */
 	public function embed_web_stories(): void {
 		$stylesheet = get_stylesheet();
@@ -130,8 +126,6 @@ class Core_Themes_Support extends Service_Base {
 	 * Adds theme support and hook to embed the web stories.
 	 *
 	 * @since 1.5.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 

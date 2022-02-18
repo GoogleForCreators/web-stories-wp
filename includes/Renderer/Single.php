@@ -53,8 +53,6 @@ class Single extends Service_Base {
 	 * Initializes the Single logic.
 	 *
 	 * @since 1.7.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		// This is hooked to both the `template_include` and the `single_template` filters,

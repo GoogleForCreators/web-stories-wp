@@ -57,8 +57,6 @@ abstract class Migration_Meta_To_Term extends Migrate_Base {
 	 * @since 1.7.2
 	 *
 	 * @global \wpdb $wpdb WordPress database abstraction object.
-	 *
-	 * @return void
 	 */
 	public function migrate(): void {
 		global $wpdb;
@@ -82,8 +80,6 @@ abstract class Migration_Meta_To_Term extends Migrate_Base {
 	 * This method is designed for overridden.
 	 *
 	 * @since 1.7.2
-	 *
-	 * @return string
 	 */
 	abstract protected function get_post_meta_key(): string;
 
@@ -92,8 +88,6 @@ abstract class Migration_Meta_To_Term extends Migrate_Base {
 	 * This method is designed for overridden.
 	 *
 	 * @since 1.7.2
-	 *
-	 * @return string
 	 */
 	protected function get_term_name(): string {
 		return 'poster-generation';
