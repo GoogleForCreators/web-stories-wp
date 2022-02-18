@@ -30,10 +30,7 @@ import { MANDATORY_INPUT_VALUE_TYPES } from '../types';
 import FormLabel from './formLabel';
 
 const FormSection = styled.div`
-  margin: 18px 0 8px;
-  &:first-of-type {
-    margin-top: 20px;
-  }
+  margin: 20px 0 22px;
 `;
 
 const _TextArea = styled(TextArea)`

@@ -50,8 +50,6 @@ const _StoryPreview = styled.div`
 
 const _MandatoryStoryInfo = styled.div`
   grid-area: mandatory;
-  display: flex;
-  flex-direction: column;
   padding: 0 18px;
   overflow: scroll;
 
