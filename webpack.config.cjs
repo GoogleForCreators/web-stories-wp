@@ -78,6 +78,11 @@ const sharedConfig = {
         },
       },
       {
+        // Load worker in as an inline asset to avoid CORS errors
+        test: /\.worker\.js$/,
+        type: 'asset/inline',
+      },
+      {
         test: /\.m?js$/,
         exclude: /node_modules/,
         resolve: {

@@ -16,7 +16,9 @@
 /**
  * External dependencies
  */
-import { encode } from 'blurhash';
+// Disable reason: loading in blurhash from from skypack.
+// eslint-disable-next-line import/no-unresolved
+import { encode } from 'https://cdn.skypack.dev/blurhash@1.1.4';
 
 const callback = function (event) {
   const { image, width, height, componentX, componentY } = event.data;

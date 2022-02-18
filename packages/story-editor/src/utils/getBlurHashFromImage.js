@@ -44,8 +44,10 @@ const getBlurHashFromImage = async (src) => {
   const trackTiming = getTimeTracker('load_get_blurhash');
   return new Promise((resolve, reject) => {
     const worker = new Worker(
-      new URL('./generateBlurhash.worker', import.meta.url)
+      new URL('./generateBlurhash.worker.js', import.meta.url),
+      { type: 'module' }
     );
+
     worker.postMessage({
       image: data,
       width,
