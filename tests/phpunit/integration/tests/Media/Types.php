@@ -108,7 +108,7 @@ class Types extends TestCase {
 		$this->assertEqualSets( [ 'webm' ], $actual );
 	}
 
-	protected function supportsWebP() {
+	protected function supportsWebP(): bool {
 		$mime_type = array_values( wp_get_mime_types() );
 
 		return \in_array( 'image/webp', $mime_type, true );
