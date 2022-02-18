@@ -31,6 +31,7 @@ import {
   useRefreshPostEditURL,
   useIsUploadingToStory,
 } from '@googleforcreators/story-editor';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -72,6 +73,10 @@ function StatusPanel({
       storyId,
       visibility,
     })
+  );
+
+  const isUpdatedPublishModalEnabled = useFeature(
+    'enableUpdatedPublishStoryModal'
   );
 
   const [showReviewDialog, setShowReviewDialog] = useState(false);
@@ -191,7 +196,11 @@ function StatusPanel({
           break;
 
         case VISIBILITY.PRIVATE:
-          if (shouldReviewDialogBeSeen && !isAlreadyPublished) {
+          if (
+            !isUpdatedPublishModalEnabled &&
+            shouldReviewDialogBeSeen &&
+            !isAlreadyPublished
+          ) {
             setShowReviewDialog(true);
             properties.visibility = VISIBILITY.PRIVATE;
           } else {
