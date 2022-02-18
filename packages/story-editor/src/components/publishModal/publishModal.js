@@ -35,10 +35,10 @@ import { INPUT_KEYS, REQUIRED_INPUTS } from './constants';
 
 const Container = styled.div`
   height: 100%;
-  color: ${({ theme }) => theme.colors.fg.primary};
-  background-color: ${({ theme }) => theme.colors.bg.primary};
-  border: ${({ theme }) => `1px solid ${theme.colors.divider.primary}`};
-  border-radius: ${({ theme }) => theme.borders.radius.medium};
+  color: ${theme.colors.fg.primary};
+  background-color: ${theme.colors.bg.primary};
+  border: ${`1px solid ${theme.colors.divider.primary}`};
+  border-radius: ${theme.borders.radius.medium};
 `;
 
 function PublishModal({ isOpen, onPublish, onClose, publishButtonCopy }) {
