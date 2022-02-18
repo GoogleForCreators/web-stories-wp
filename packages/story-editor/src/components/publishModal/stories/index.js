@@ -37,6 +37,7 @@ const MockDocumentPane = () => (
 export default {
   title: 'Stories Editor/Components/Dialog/Publish Modal',
   args: {
+    publishButtonCopy: 'Publish',
     isOpen: true,
     hasChecklist: true,
     publisher: 'Gotham Bugle',
