@@ -50,11 +50,21 @@ const _StoryPreview = styled.div`
 
 const _MandatoryStoryInfo = styled.div`
   grid-area: mandatory;
-  padding: 0 18px;
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px;
   overflow: scroll;
 
   & > section {
-    border: none; /* Override the default border that is part of the base panel structure since this is destructured */
+    border: none; // Override the default border that is part of the base panel structure since this is destructured
+    // overriding this way because of how isolated panel is inserted
+    & > h2 {
+      padding-top: 18px;
+      padding-bottom: 2px;
+      & > button {
+        height: 1em;
+      }
+    }
   }
 `;
 

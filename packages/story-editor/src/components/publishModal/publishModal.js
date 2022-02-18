@@ -19,7 +19,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
-import { Modal } from '@googleforcreators/design-system';
+import { Modal, theme } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import { useCallback, useEffect, useMemo } from '@googleforcreators/react';
 /**
@@ -35,10 +35,10 @@ import { INPUT_KEYS, REQUIRED_INPUTS } from './constants';
 
 const Container = styled.div`
   height: 100%;
-  color: ${({ theme }) => theme.colors.fg.primary};
-  background-color: ${({ theme }) => theme.colors.bg.primary};
-  border: ${({ theme }) => `1px solid ${theme.colors.divider.primary}`};
-  border-radius: ${({ theme }) => theme.borders.radius.medium};
+  color: ${theme.colors.fg.primary};
+  background-color: ${theme.colors.bg.primary};
+  border: ${`1px solid ${theme.colors.divider.primary}`};
+  border-radius: ${theme.borders.radius.medium};
 `;
 
 function PublishModal({ isOpen, onPublish, onClose, publishButtonCopy }) {
@@ -105,6 +105,9 @@ function PublishModal({ isOpen, onPublish, onClose, publishButtonCopy }) {
         height: '66vh',
         minHeight: '580px',
         overflow: 'hidden',
+      }}
+      overlayStyles={{
+        backgroundColor: theme.colors.inverted.interactiveBg.modalScrim,
       }}
     >
       {isOpen && (

@@ -63,7 +63,7 @@ export function PublishModalDocumentPane() {
 // based on other implementations that have default name
 
 const IsolatedPanel = styled(StatusPanel)`
-  padding: 0;
+  padding: 4px 4px 8px;
 `;
 
 export function IsolatedStatusPanel() {
