@@ -17,6 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import {
   Headline,
   PLACEMENT,
@@ -29,19 +30,26 @@ import { __ } from '@googleforcreators/i18n';
 import Tooltip from '../../tooltip';
 import { REQUIRED_INPUTS } from '../constants';
 
+const RequiredHeadline = styled(Headline)`
+  &:after {
+    content: '*';
+    color: ${({ theme }) => theme.colors.fg.tertiary};
+    padding-left: 0.25em;
+  }
+`;
 const FormLabel = ({ htmlFor, copy }) => {
   return REQUIRED_INPUTS.indexOf(htmlFor) > -1 ? (
     <Tooltip
       title={__('Required', 'web-stories')}
       placement={PLACEMENT.BOTTOM_START}
     >
-      <Headline
+      <RequiredHeadline
         as="label"
         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL}
         htmlFor={htmlFor}
       >
-        {`${copy} *`}
-      </Headline>
+        {copy}
+      </RequiredHeadline>
     </Tooltip>
   ) : (
     <Headline
