@@ -58,6 +58,8 @@ describe('Pre-Publish Checklist : Admin User', () => {
     await insertButton.click();
     await expect(page).toMatchElement('[data-testid="imageElement"]');
 
+    await insertStoryTitle('Prepublish Checklist - admin - no poster warning');
+
     await publishStory();
 
     await page.reload();
