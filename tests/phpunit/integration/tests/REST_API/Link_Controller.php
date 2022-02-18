@@ -25,6 +25,7 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 	public const URL_VALID_TITLE_ONLY = 'https://example.com';
 	public const URL_VALID            = 'https://amp.dev';
 	public const URL_INSTAGRAM        = 'https://www.instagram.com/googleforcreators';
+	public const URL_INSTAGRAM_SINGLE = 'https://www.instagram.com/p/CZwz48cFoQM';
 
 	/**
 	 * Count of the number of requests attempted.
@@ -97,6 +98,15 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 		}
 
 		if ( false !== strpos( $url, self::URL_EMPTY_DOCUMENT ) ) {
+			return [
+				'response' => [
+					'code' => 200,
+				],
+				'body'     => '<html></html>',
+			];
+		}
+
+		if ( false !== strpos( $url, self::URL_INSTAGRAM_SINGLE ) ) {
 			return [
 				'response' => [
 					'code' => 200,
@@ -285,7 +295,7 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 		$data     = $response->get_data();
 
 		$expected = [
-			'title'       => '',
+			'title'       => 'Instagram - @googleforcreators',
 			'image'       => '',
 			'description' => '',
 		];
@@ -294,6 +304,32 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 		rest_get_server()->dispatch( $request );
 
 		$this->assertEquals( 0, $this->request_count );
+		$this->assertNotEmpty( $data );
+		$this->assertEqualSetsWithIndex( $expected, $data );
+	}
+
+	/**
+	 * @covers ::parse_link
+	 */
+	public function test_instagram_single_url(): void {
+		$this->controller->register();
+
+		wp_set_current_user( self::$editor );
+		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/link' );
+		$request->set_param( 'url', self::URL_INSTAGRAM_SINGLE );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+
+		$expected = [
+			'title'       => '',
+			'image'       => '',
+			'description' => '',
+		];
+
+		// Subsequent requests is cached and so it should not cause a request.
+		rest_get_server()->dispatch( $request );
+
+		$this->assertEquals( 1, $this->request_count );
 		$this->assertNotEmpty( $data );
 		$this->assertEqualSetsWithIndex( $expected, $data );
 	}

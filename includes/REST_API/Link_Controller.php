@@ -163,12 +163,22 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 
 		// Do not request instagram.com, as it redirects to a login page.
 		// See https://github.com/GoogleForCreators/web-stories-wp/issues/10451.
-		$url_host = wp_parse_url( $url, PHP_URL_HOST );
-		if ( \is_string( $url_host ) && false !== strpos( $url_host, 'instagram.com' ) ) {
-			set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
-			$response = $this->prepare_item_for_response( $data, $request );
+		$parse_url = wp_parse_url( $url );
+		if ( \is_array( $parse_url ) ) {
+			$url_host    = (string) str_replace( 'www.', '', $parse_url['host'] ?? '' );
+			$path_pieces = explode( '/', $parse_url['path'] ?? '' );
+			$path_pieces = array_filter( $path_pieces );
+			if ( \count( $path_pieces ) === 1 && false !== strpos( $url_host, 'instagram.com' ) ) {
+				$data['title'] = sprintf(
+					/* translators: %s: Instagram username. */
+					__( 'Instagram - @%s', 'web-stories' ),
+					array_shift( $path_pieces )
+				);
+				set_transient( $cache_key, wp_json_encode( $data ), $cache_ttl );
+				$response = $this->prepare_item_for_response( $data, $request );
 
-			return rest_ensure_response( $response );
+				return rest_ensure_response( $response );
+			}
 		}
 
 		$args = [
