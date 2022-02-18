@@ -85,7 +85,7 @@ function useProcessMedia({
     [updateElementById]
   );
 
-  const updateExistingElement = useCallback(
+  const updateExistingElementById = useCallback(
     (elementId, resource) => {
       updateElementById({
         elementId,
@@ -102,7 +102,7 @@ function useProcessMedia({
     [updateElementById]
   );
 
-  const updateExistingElements = useCallback(
+  const updateExistingElementsByResourceId = useCallback(
     (resourceId, resource) => {
       updateElementsByResourceId({
         id: resourceId,
@@ -152,7 +152,7 @@ function useProcessMedia({
       const { id: resourceId, src: url, mimeType } = oldResource;
 
       const onUploadError = () =>
-        updateExistingElements(resourceId, {
+        updateExistingElementsByResourceId(resourceId, {
           isOptimized: false,
         });
 
@@ -166,7 +166,7 @@ function useProcessMedia({
       // TODO: Confirm which properties exactly need to be updated.
       const onUploadProgress = ({ resource }) => {
         const oldResourceWithId = { ...resource, id: oldResource.id };
-        updateExistingElements(resourceId, {
+        updateExistingElementsByResourceId(resourceId, {
           ...oldResourceWithId,
         });
       };
@@ -176,7 +176,7 @@ function useProcessMedia({
 
         // This video was optimized before, no need to optimize it again.
         if (optimizedResource) {
-          updateExistingElements(resourceId, optimizedResource);
+          updateExistingElementsByResourceId(resourceId, optimizedResource);
           return;
         }
 
@@ -201,7 +201,7 @@ function useProcessMedia({
       })();
     },
     [
-      updateExistingElements,
+      updateExistingElementsByResourceId,
       copyResourceData,
       updateOldTranscodedObject,
       deleteMediaElement,
@@ -231,12 +231,12 @@ function useProcessMedia({
       };
 
       const onUploadStart = () =>
-        updateExistingElement(elementId, {
+        updateExistingElementById(elementId, {
           trimData,
         });
 
       const onUploadError = () =>
-        updateExistingElement(elementId, {
+        updateExistingElementById(elementId, {
           trimData: oldResource.trimData || {},
         });
 
@@ -255,7 +255,7 @@ function useProcessMedia({
 
       const onUploadProgress = ({ resource }) => {
         const newResourceWithCanvasId = { ...resource, id: canvasResourceId };
-        updateExistingElement(elementId, {
+        updateExistingElementById(elementId, {
           ...newResourceWithCanvasId,
         });
       };
@@ -301,7 +301,7 @@ function useProcessMedia({
       return process();
     },
     [
-      updateExistingElement,
+      updateExistingElementById,
       copyResourceDataByElementId,
       postProcessingResource,
       uploadMedia,
@@ -319,7 +319,7 @@ function useProcessMedia({
       const { src: url, mimeType, poster, isOptimized } = oldResource;
 
       const onUploadError = () => {
-        updateExistingElements(resourceId, {
+        updateExistingElementsByResourceId(resourceId, {
           isMuted: false,
         });
       };
@@ -333,7 +333,7 @@ function useProcessMedia({
       // TODO: Confirm which properties exactly need to be updated.
       const onUploadProgress = ({ resource }) => {
         const oldResourceWithId = { ...resource, id: oldResource.id };
-        updateExistingElements(resourceId, {
+        updateExistingElementsByResourceId(resourceId, {
           ...oldResourceWithId,
         });
       };
@@ -343,7 +343,7 @@ function useProcessMedia({
 
         // This video was muted before, no need to mute it again.
         if (mutedResource) {
-          updateExistingElements(resourceId, mutedResource);
+          updateExistingElementsByResourceId(resourceId, mutedResource);
           return;
         }
 
@@ -384,7 +384,7 @@ function useProcessMedia({
       })();
     },
     [
-      updateExistingElements,
+      updateExistingElementsByResourceId,
       copyResourceData,
       updateOldMutedObject,
       postProcessingResource,
@@ -412,7 +412,7 @@ function useProcessMedia({
       // TODO: Confirm which properties exactly need to be updated.
       const onUploadProgress = ({ resource }) => {
         const oldResourceWithId = { ...resource, id: oldResource.id };
-        updateExistingElements(resourceId, {
+        updateExistingElementsByResourceId(resourceId, {
           ...oldResourceWithId,
         });
       };
@@ -447,7 +447,7 @@ function useProcessMedia({
       updateOldTranscodedObject,
       deleteMediaElement,
       postProcessingResource,
-      updateExistingElements,
+      updateExistingElementsByResourceId,
       uploadMedia,
     ]
   );
