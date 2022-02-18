@@ -30,6 +30,7 @@ import { MANDATORY_INPUT_VALUE_TYPES } from '../types';
 import FormLabel from './formLabel';
 
 const FormSection = styled.div`
+  padding: 0 4px;
   margin: 18px 0 8px;
   &:first-of-type {
     margin-top: 20px;
