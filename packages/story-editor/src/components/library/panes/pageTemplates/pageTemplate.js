@@ -95,14 +95,6 @@ PreviewPageWrapper.propTypes = {
 const DeleteButton = styled(ActionButton)`
   top: 4px;
   right: 4px;
-  color: ${({ theme }) => theme.colors.standard.black};
-`;
-
-const IconWrapper = styled.div`
-  width: 16px;
-  height: 16px;
-  background: ${({ theme }) => theme.colors.fg.primary};
-  border-radius: inherit;
 `;
 
 const PageTemplateTitle = styled.div`
@@ -268,9 +260,7 @@ function PageTemplate(
           aria-label={__('Delete Page Template', 'web-stories')}
           tabIndex={isActive ? 0 : -1}
         >
-          <IconWrapper>
-            <Icons.Trash />
-          </IconWrapper>
+          <Icons.TrashFilledSmall />
         </DeleteButton>
       </PreviewPageWrapper>
 
