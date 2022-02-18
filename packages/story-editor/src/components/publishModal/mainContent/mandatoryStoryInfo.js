@@ -16,6 +16,7 @@
 /**
  * External dependencies
  */
+import { useState } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { TextArea } from '@googleforcreators/design-system';
 import styled from 'styled-components';
@@ -38,12 +39,19 @@ const _TextArea = styled(TextArea)`
 
 const MandatoryStoryInfo = ({
   handleUpdateStoryInfo,
-  handleUpdateSlug,
-  inputValues,
+  inputValues: _inputValues,
 }) => {
+  const [inputValues, setInputValues] = useState(_inputValues);
   const IsolatedStatusPanel = useInspector(
     ({ data }) => data?.modalInspectorTab?.IsolatedStatusPanel
   );
+
+  const onInputChange = ({ currentTarget }) => {
+    setInputValues((prev) => ({
+      ...prev,
+      [currentTarget.name]: currentTarget.value,
+    }));
+  };
   return (
     <>
       <FormSection>
@@ -57,8 +65,8 @@ const MandatoryStoryInfo = ({
           showCount
           maxLength={300}
           value={inputValues[INPUT_KEYS.TITLE]}
-          onChange={handleUpdateStoryInfo}
-          onBlur={handleUpdateSlug}
+          onChange={onInputChange}
+          onBlur={handleUpdateStoryInfo}
           aria-label={__('Story Title', 'web-stories')}
           placeholder={__('Add title', 'web-stories')}
         />
@@ -80,7 +88,8 @@ const MandatoryStoryInfo = ({
             'Stories with a description tend to do better on search and have a wider reach',
             'web-stories'
           )}
-          onChange={handleUpdateStoryInfo}
+          onChange={onInputChange}
+          onBlur={handleUpdateStoryInfo}
         />
       </FormSection>
       {IsolatedStatusPanel && <IsolatedStatusPanel />}
@@ -92,6 +101,5 @@ export default MandatoryStoryInfo;
 
 MandatoryStoryInfo.propTypes = {
   handleUpdateStoryInfo: PropTypes.func,
-  handleUpdateSlug: PropTypes.func,
   inputValues: MANDATORY_INPUT_VALUE_TYPES,
 };

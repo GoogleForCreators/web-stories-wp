@@ -70,12 +70,15 @@ describe('Publish Story Modal', () => {
       const storyTitle = await getPublishModalElement('textbox', 'Story Title');
       await fixture.events.focus(storyTitle);
       await fixture.events.keyboard.type('my test story');
+      await fixture.events.keyboard.press('tab');
+
       const storyDescription = await getPublishModalElement(
         'textbox',
         'Story Description'
       );
       await fixture.events.focus(storyDescription);
       await fixture.events.keyboard.type('my test description for my story');
+      await fixture.events.keyboard.press('tab');
 
       publishButton = await getPublishModalElement('button', 'Publish');
       expect(publishButton.getAttribute('disabled')).toBeNull();

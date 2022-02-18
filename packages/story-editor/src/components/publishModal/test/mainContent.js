@@ -29,7 +29,6 @@ import MainContent from '../mainContent';
 
 describe('publishModal/mainContent', () => {
   const mockHandleUpdateStoryInfo = jest.fn();
-  const mockHandleUpdateSlug = jest.fn();
 
   const mockInputValues = {
     [INPUT_KEYS.EXCERPT]:
@@ -59,7 +58,6 @@ describe('publishModal/mainContent', () => {
         <ChecklistCountProvider hasChecklist>
           <MainContent
             handleUpdateStoryInfo={mockHandleUpdateStoryInfo}
-            handleUpdateSlug={mockHandleUpdateSlug}
             inputValues={mockInputValues}
           />
         </ChecklistCountProvider>
@@ -73,7 +71,7 @@ describe('publishModal/mainContent', () => {
     expect(results).toHaveNoViolations();
   });
 
-  it('should trigger handleUpdateStoryInfo on title input change', () => {
+  it('should trigger handleUpdateStoryInfo on title input blur', () => {
     view();
 
     const titleInput = screen.getByRole('textbox', { name: 'Story Title' });
@@ -82,11 +80,9 @@ describe('publishModal/mainContent', () => {
       target: { value: "David Bowman (and HAL's) Odyseey" },
     });
 
-    expect(mockHandleUpdateStoryInfo).toHaveBeenCalledTimes(1);
-
     fireEvent.blur(titleInput);
 
-    expect(mockHandleUpdateSlug).toHaveBeenCalledTimes(1);
+    expect(mockHandleUpdateStoryInfo).toHaveBeenCalledTimes(1);
   });
 
   it('should trigger handleUpdateStoryInfo on excerpt input change', () => {
@@ -99,6 +95,8 @@ describe('publishModal/mainContent', () => {
     fireEvent.change(descriptionInput, {
       target: { value: 'Lorem ipsum' },
     });
+
+    fireEvent.blur(descriptionInput);
 
     expect(mockHandleUpdateStoryInfo).toHaveBeenCalledTimes(1);
   });

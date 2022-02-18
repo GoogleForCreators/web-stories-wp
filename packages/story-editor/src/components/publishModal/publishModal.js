@@ -59,24 +59,25 @@ function PublishModal({ isOpen, onPublish, onClose, publishButtonCopy }) {
     }
   }, [isOpen]);
 
+  const slug = inputValues[INPUT_KEYS.SLUG];
   const handleUpdateStoryInfo = useCallback(
     ({ target }) => {
       const { value, name } = target;
       updateStory({
         properties: { [name]: value },
       });
-    },
-    [updateStory]
-  );
 
-  const handleUpdateSlug = useCallback(() => {
-    updateSlug({
-      currentSlug: inputValues.slug,
-      currentTitle: inputValues.title,
-      storyId,
-      updateStory,
-    });
-  }, [inputValues, storyId, updateStory]);
+      if (name === INPUT_KEYS.TITLE) {
+        updateSlug({
+          currentSlug: slug,
+          currentTitle: value,
+          storyId,
+          updateStory,
+        });
+      }
+    },
+    [updateStory, slug, storyId]
+  );
 
   const isAllRequiredInputsFulfilled = useMemo(
     () =>
@@ -118,7 +119,6 @@ function PublishModal({ isOpen, onPublish, onClose, publishButtonCopy }) {
             <MainContent
               inputValues={inputValues}
               handleUpdateStoryInfo={handleUpdateStoryInfo}
-              handleUpdateSlug={handleUpdateSlug}
               handleReviewChecklist={handleReviewChecklist}
             />
           </Container>
