@@ -13,29 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-import { Icons } from '@googleforcreators/design-system';
-import { __ } from '@googleforcreators/i18n';
-
 /**
  * Internal dependencies
  */
-import { IconButton } from './shared';
-import useFlip from './shared/useFlip';
+import { Container } from './container';
+import { ToggleButton } from './common';
 
-function FlipHorizontal() {
-  const { horizontal, toggle } = useFlip('horizontal');
-  return (
-    <IconButton
-      Icon={Icons.MirrorLeftright}
-      title={__('Flip horizontally', 'web-stories')}
-      onClick={toggle}
-      isToggled={horizontal}
-    />
-  );
+export class DesignMenu extends Container {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get flipVertical() {
+    return this._get(
+      this.getByRole('menuitem', { name: 'Flip vertically' }),
+      'flipVertical',
+      ToggleButton
+    );
+  }
+
+  get flipHorizontal() {
+    return this._get(
+      this.getByRole('menuitem', { name: 'Flip horizontally' }),
+      'flipHorizontal',
+      ToggleButton
+    );
+  }
 }
-
-export default FlipHorizontal;

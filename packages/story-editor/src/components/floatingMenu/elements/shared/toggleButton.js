@@ -18,34 +18,31 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { memo } from '@googleforcreators/react';
 import {
   ContextMenuComponents,
-  TOOLTIP_PLACEMENT,
+  BUTTON_TYPES,
 } from '@googleforcreators/design-system';
 
-/**
- * Internal dependencies
- */
-import ToggleButton from './toggleButton';
+function ToggleButton({ isToggled, children, ...rest }) {
+  // Add extra properties to indicate this is a pushbutton, only if isToggled is a boolean
+  const toggleProps =
+    typeof isToggled === 'boolean'
+      ? {
+          type: isToggled ? BUTTON_TYPES.SECONDARY : BUTTON_TYPES.TERTIARY,
+          'aria-pressed': isToggled,
+        }
+      : {};
 
-const IconButton = memo(function IconButton({ Icon, title, ...rest }) {
   return (
-    <ToggleButton {...rest}>
-      <ContextMenuComponents.MenuIcon
-        title={title}
-        placement={TOOLTIP_PLACEMENT.BOTTOM}
-      >
-        <Icon />
-      </ContextMenuComponents.MenuIcon>
-    </ToggleButton>
+    <ContextMenuComponents.MenuButton {...toggleProps} {...rest}>
+      {children}
+    </ContextMenuComponents.MenuButton>
   );
-});
+}
 
-IconButton.propTypes = {
-  Icon: PropTypes.object.isRequired,
-  onClick: PropTypes.func.isRequired,
-  title: PropTypes.string,
+ToggleButton.propTypes = {
+  isToggled: PropTypes.bool,
+  children: PropTypes.node,
 };
 
-export default IconButton;
+export default ToggleButton;

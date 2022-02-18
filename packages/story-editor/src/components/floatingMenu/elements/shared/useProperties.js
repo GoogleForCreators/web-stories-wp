@@ -15,50 +15,15 @@
  */
 
 /**
- * External dependencies
- */
-import { memo } from '@googleforcreators/react';
-
-/**
  * Internal dependencies
  */
-import {
-  SwapImage,
-  LayerOpacity,
-  FlipHorizontal,
-  FlipVertical,
-  BorderWidthAndColor,
-  More,
-  Separator,
-  Dismiss,
-} from '../elements';
+import { useStory } from '../../../../app';
+import objectPick from '../../../../utils/objectPick';
 
-const FloatingImageMenu = memo(function FloatingImageMenu() {
-  return (
-    <>
-      <SwapImage />
-
-      <Separator />
-
-      <LayerOpacity />
-
-      <Separator />
-      <FlipHorizontal />
-      <FlipVertical />
-
-      <Separator />
-
-      <BorderWidthAndColor />
-
-      <Separator />
-
-      <More />
-
-      <Separator />
-
-      <Dismiss />
-    </>
+function useProperties(propertyList) {
+  return useStory(({ state: { selectedElements } }) =>
+    objectPick(selectedElements[0], propertyList)
   );
-});
+}
 
-export default FloatingImageMenu;
+export default useProperties;
