@@ -31,7 +31,10 @@
      "./fonts.json": {
          "import": "./dist-module/fonts.json",
          "require": "./dist/fonts.json"
-     }
+     },
+     ".": {
+      "default": "./src/index.js"
+    }
   },
   "main": "dist/index.js",
   "module": "dist-module/index.js",
