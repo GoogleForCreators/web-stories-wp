@@ -58,7 +58,7 @@ const MenuContainer = styled.div`
 `;
 
 const menuStylesOverride = css`
-  min-width: 100px;
+  min-width: 160px;
   margin-top: 0;
   li {
     display: block;
