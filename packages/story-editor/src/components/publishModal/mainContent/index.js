@@ -17,11 +17,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-} from '@googleforcreators/design-system';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 /**
@@ -29,9 +24,11 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { MANDATORY_INPUT_VALUE_TYPES } from '../types';
 import useInspector from '../../inspector/useInspector';
+import { useHasChecklist } from '../../checklist';
 import { HEADER_BAR_HEIGHT, HEADER_BAR_MARGIN } from '../constants';
 import MandatoryStoryInfo from './mandatoryStoryInfo';
 import StoryPreview from './storyPreview';
+import ChecklistButton from './checklistButton';
 
 const Main = styled.div`
   display: grid;
@@ -86,6 +83,7 @@ const MainContent = ({
   const { DocumentPane, id: paneId } = useInspector(
     ({ data }) => data?.modalInspectorTab || {}
   );
+  const hasChecklist = useHasChecklist();
 
   return (
     <Main>
@@ -107,15 +105,11 @@ const MainContent = ({
           <DocumentPane />
         </PanelContainer>
       )}
-      <Footer>
-        <Button
-          type={BUTTON_TYPES.PRIMARY}
-          size={BUTTON_SIZES.SMALL}
-          onClick={handleReviewChecklist}
-        >
-          {__('Checklist', 'web-stories')}
-        </Button>
-      </Footer>
+      {hasChecklist && (
+        <Footer>
+          <ChecklistButton handleReviewChecklist={handleReviewChecklist} />
+        </Footer>
+      )}
     </Main>
   );
 };

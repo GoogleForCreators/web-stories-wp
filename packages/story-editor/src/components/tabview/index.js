@@ -158,7 +158,7 @@ function UnreffedTab(
     ? TRACKING_EVENTS.LIBRARY_PANEL_CLICK
     : TRACKING_EVENTS.DESIGN_PANEL_CLICK;
   usePerformanceTracking({
-    node: tabRefs[refId]?.current,
+    node: tabRefs?.[refId]?.current,
     eventData: {
       ...eventData,
       label: `${refId}_tab`,

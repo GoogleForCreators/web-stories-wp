@@ -22,6 +22,7 @@ import { axe } from 'jest-axe';
  * Internal dependencies
  */
 import renderWithTheme from '../../../testUtils/renderWithTheme';
+import { ChecklistCountProvider } from '../../checklist';
 import InspectorContext from '../../inspector/context';
 import { INPUT_KEYS } from '../constants';
 import MainContent from '../mainContent';
@@ -55,11 +56,13 @@ describe('publishModal/mainContent', () => {
   const view = () => {
     return renderWithTheme(
       <InspectorContext.Provider value={inspectorContextValue}>
-        <MainContent
-          handleUpdateStoryInfo={mockHandleUpdateStoryInfo}
-          handleUpdateSlug={mockHandleUpdateSlug}
-          inputValues={mockInputValues}
-        />
+        <ChecklistCountProvider hasChecklist>
+          <MainContent
+            handleUpdateStoryInfo={mockHandleUpdateStoryInfo}
+            handleUpdateSlug={mockHandleUpdateSlug}
+            inputValues={mockInputValues}
+          />
+        </ChecklistCountProvider>
       </InspectorContext.Provider>
     );
   };
