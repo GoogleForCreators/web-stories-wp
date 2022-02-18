@@ -100,10 +100,13 @@ function StatusPanel({
       return;
     }
 
-    updateStory({
-      properties: { visibility: VISIBILITY.PUBLIC },
-    });
-  }, [password, status, updateStory]);
+    if (!visibility) {
+      updateStory({
+        properties: { visibility: VISIBILITY.PUBLIC },
+      });
+      return;
+    }
+  }, [password, status, updateStory, visibility]);
 
   const visibilityOptions = [
     {
