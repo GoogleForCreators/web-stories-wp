@@ -10,6 +10,7 @@ on:
       - 'phpstan.neon.dist'
       - 'composer.json'
       - 'composer.lock'
+      - '.github/workflows/lint-php.yml'
     branches:
       - main
       - release/*
@@ -22,6 +23,7 @@ on:
       - 'phpstan.neon.dist'
       - 'composer.json'
       - 'composer.lock'
+      - '.github/workflows/lint-php.yml'
 
 # Cancels all previous workflow runs for pull requests that have not completed.
 concurrency:
