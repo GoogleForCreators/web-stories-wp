@@ -175,13 +175,7 @@ class Jetpack extends Service_Base {
 		}
 
 		if ( \in_array( self::VIDEOPRESS_MIME_TYPE, $args['post_mime_type'], true ) ) {
-			$allowed_mime_types = $this->types->get_allowed_mime_types();
-			$allowed_mime_types = array_merge( ...array_values( $allowed_mime_types ) );
-
-			if ( ! array_diff( $allowed_mime_types, $args['post_mime_type'] ) ) {
-				// Load filter at 15, so it load after Media\Media\wp_prepare_attachment_for_js which is loaded at 10.
-				add_filter( 'wp_prepare_attachment_for_js', [ $this, 'filter_admin_ajax_response' ], 15, 2 );
-			}
+			add_filter( 'wp_prepare_attachment_for_js', [ $this, 'filter_admin_ajax_response' ], 15, 2 );
 		}
 
 		return $args;
