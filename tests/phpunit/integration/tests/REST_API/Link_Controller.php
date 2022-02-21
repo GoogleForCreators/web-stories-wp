@@ -17,15 +17,16 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 	protected static $editor;
 	protected static $subscriber;
 
-	public const URL_INVALID          = 'https://https://invalid.commmm';
-	public const URL_404              = 'https://example.com/404';
-	public const URL_500              = 'https://example.com/500';
-	public const URL_CHARACTERS       = 'https://example.com/characters';
-	public const URL_EMPTY_DOCUMENT   = 'https://example.com/empty';
-	public const URL_VALID_TITLE_ONLY = 'https://example.com';
-	public const URL_VALID            = 'https://amp.dev';
-	public const URL_INSTAGRAM        = 'https://www.instagram.com/googleforcreators';
-	public const URL_INSTAGRAM_SINGLE = 'https://www.instagram.com/p/CZwz48cFoQM';
+	public const URL_INVALID             = 'https://https://invalid.commmm';
+	public const URL_404                 = 'https://example.com/404';
+	public const URL_500                 = 'https://example.com/500';
+	public const URL_CHARACTERS          = 'https://example.com/characters';
+	public const URL_EMPTY_DOCUMENT      = 'https://example.com/empty';
+	public const URL_VALID_TITLE_ONLY    = 'https://example.com';
+	public const URL_VALID               = 'https://amp.dev';
+	public const URL_INSTAGRAM           = 'https://www.instagram.com/googleforcreators';
+	public const URL_INSTAGRAM_SINGLE    = 'https://www.instagram.com/p/CZwz48cFoQM';
+	public const URL_INSTAGRAM_SUBDOMAIN = 'https://about.instagram.com/about-us';
 
 	/**
 	 * Count of the number of requests attempted.
@@ -106,7 +107,7 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 			];
 		}
 
-		if ( false !== strpos( $url, self::URL_INSTAGRAM_SINGLE ) ) {
+		if ( false !== strpos( $url, self::URL_INSTAGRAM_SINGLE ) || false !== strpos( $url, self::URL_INSTAGRAM_SUBDOMAIN ) ) {
 			return [
 				'response' => [
 					'code' => 200,
@@ -311,12 +312,64 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::parse_link
 	 */
+	public function test_instagram_url_with_slash(): void {
+		$this->controller->register();
+
+		wp_set_current_user( self::$editor );
+		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/link' );
+		$request->set_param( 'url', self::URL_INSTAGRAM . '/' );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+
+		$expected = [
+			'title'       => 'Instagram - @googleforcreators',
+			'image'       => '',
+			'description' => '',
+		];
+
+		// Subsequent requests is cached and so it should not cause a request.
+		rest_get_server()->dispatch( $request );
+
+		$this->assertEquals( 0, $this->request_count );
+		$this->assertNotEmpty( $data );
+		$this->assertEqualSetsWithIndex( $expected, $data );
+	}
+
+	/**
+	 * @covers ::parse_link
+	 */
 	public function test_instagram_single_url(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
 		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/link' );
 		$request->set_param( 'url', self::URL_INSTAGRAM_SINGLE );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+
+		$expected = [
+			'title'       => '',
+			'image'       => '',
+			'description' => '',
+		];
+
+		// Subsequent requests is cached and so it should not cause a request.
+		rest_get_server()->dispatch( $request );
+
+		$this->assertEquals( 1, $this->request_count );
+		$this->assertNotEmpty( $data );
+		$this->assertEqualSetsWithIndex( $expected, $data );
+	}
+
+	/**
+	 * @covers ::parse_link
+	 */
+	public function test_instagram_subdomain_url(): void {
+		$this->controller->register();
+
+		wp_set_current_user( self::$editor );
+		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/link' );
+		$request->set_param( 'url', self::URL_INSTAGRAM_SUBDOMAIN );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 

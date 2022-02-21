@@ -164,7 +164,7 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 		// Do not request instagram.com, as it redirects to a login page.
 		// See https://github.com/GoogleForCreators/web-stories-wp/issues/10451.
 		$matches = [];
-		if ( preg_match( '~^https?://(www\.)?instagram\.com/(.*)/?$~', $url, $matches ) ) {
+		if ( preg_match( '~^https?://(www\.)?instagram\.com/([^/]+)/?$~', $url, $matches ) ) {
 			$data['title'] = sprintf(
 				/* translators: %s: Instagram username. */
 				__( 'Instagram - @%s', 'web-stories' ),
