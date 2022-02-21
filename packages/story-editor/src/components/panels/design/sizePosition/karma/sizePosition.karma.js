@@ -54,11 +54,7 @@ describe('Selection Panel', () => {
   describe('CUJ: Creator can Transform an Element: Set height and width', () => {
     it('should have correct default aspect ratio lock values', async () => {
       const mediaItem = fixture.editor.library.media.item(0);
-      await fixture.events.mouse.seq(({ moveRel, down, up }) => [
-        moveRel(mediaItem, 20, 20),
-        down(),
-        up(),
-      ]);
+      await fixture.events.mouse.clickOn(mediaItem, 20, 20);
       const [image] = await getSelection();
       expect(image.lockAspectRatio).toBeFalse();
 

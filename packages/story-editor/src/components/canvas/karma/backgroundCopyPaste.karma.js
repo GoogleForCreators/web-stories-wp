@@ -265,11 +265,7 @@ describe('Background Copy Paste integration', () => {
   async function addBackgroundImage(index) {
     // Add image and click "set as background"
     const image = fixture.editor.library.media.item(index);
-    await fixture.events.mouse.seq(({ moveRel, down, up }) => [
-      moveRel(image, 20, 20),
-      down(),
-      up(),
-    ]);
+    await fixture.events.mouse.clickOn(image, 20, 20);
     await fixture.events.click(
       fixture.editor.inspector.designPanel.sizePosition.setAsBackground
     );

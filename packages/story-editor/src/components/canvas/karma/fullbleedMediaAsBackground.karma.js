@@ -78,11 +78,7 @@ describe('Fullbleed Media as Background', () => {
 
   it('should not set image as background when media background is already set', async () => {
     const tempImage = fixture.editor.library.media.item(1);
-    await fixture.events.mouse.seq(({ moveRel, down, up }) => [
-      moveRel(tempImage, 20, 20),
-      down(),
-      up(),
-    ]);
+    await fixture.events.mouse.clickOn(tempImage, 20, 20);
     await fixture.events.click(
       fixture.editor.inspector.designPanel.sizePosition.setAsBackground
     );

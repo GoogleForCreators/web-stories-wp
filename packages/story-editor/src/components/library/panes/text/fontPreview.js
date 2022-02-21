@@ -204,8 +204,8 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
   useRovingTabIndex({ ref: buttonRef });
 
   const [active, setActive] = useState(false);
-  const makeActive = useCallback(() => setActive(true), []);
-  const makeInactive = useCallback(() => setActive(false), []);
+  const makeActive = () => setActive(true);
+  const makeInactive = () => setActive(false);
 
   return (
     <Preview

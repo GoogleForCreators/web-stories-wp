@@ -84,7 +84,14 @@ const MENU_OPTIONS = {
  * @param {boolean} props.isLocal If the menu is for local or 3p media.
  * @return {null|*} Element or null if should not display the More icon.
  */
-function InsertionMenu({ resource, display, onInsert, width, index, isLocal }) {
+function InsertionMenu({
+  resource,
+  display,
+  onInsert,
+  width,
+  index,
+  isLocal = false,
+}) {
   const insertButtonRef = useRef();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const onMenuOpen = useCallback((e) => {

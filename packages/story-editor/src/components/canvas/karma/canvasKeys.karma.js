@@ -26,11 +26,7 @@ describe('Canvas Keyboard Shortcuts', () => {
 
   async function insertMediaByIndex(index) {
     const mediaItem = fixture.editor.library.media.item(index);
-    await fixture.events.mouse.seq(({ moveRel, down, up }) => [
-      moveRel(mediaItem, 20, 20),
-      down(),
-      up(),
-    ]);
+    await fixture.events.mouse.clickOn(mediaItem, 20, 20);
   }
 
   beforeEach(async () => {

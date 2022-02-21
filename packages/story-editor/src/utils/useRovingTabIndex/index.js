@@ -73,7 +73,7 @@ function getDistanceSq(p1, p2) {
  *
  * @param {boolean} isRTL Whether the document is RTL.
  * @param {string} key The key pressed.
- * @return {string} Either `prev` or `next`.
+ * @return {string} Either `previousSibling` or `nextSibling`.
  */
 export function getFocusableElementDirection(isRTL, key) {
   const isPreviousDirection = isRTL

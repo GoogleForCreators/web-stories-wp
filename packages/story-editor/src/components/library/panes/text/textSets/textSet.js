@@ -121,8 +121,8 @@ function TextSet(
 
   useRovingTabIndex({ ref: ref.current });
   const [isHovering, setIsHovering] = useState(false);
-  const setHovering = useCallback(() => setIsHovering(true), []);
-  const unsetHovering = useCallback(() => setIsHovering(false), []);
+  const setHovering = () => setIsHovering(true);
+  const unsetHovering = () => setIsHovering(false);
 
   const { textSetHeight, textSetWidth } = elements[0];
   const dragWidth = dataToEditorX(textSetWidth, pageWidth);

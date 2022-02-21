@@ -576,11 +576,7 @@ function dragCanvasElementToDropTarget(fixture, fromId, toId) {
 
 async function insertMediaByIndex(fixture, index) {
   const mediaItem = fixture.editor.library.media.item(index);
-  await fixture.events.mouse.seq(({ moveRel, down, up }) => [
-    moveRel(mediaItem, 20, 20),
-    down(),
-    up(),
-  ]);
+  await fixture.events.mouse.clickOn(mediaItem, 20, 20);
 }
 
 async function dragToDropTarget(fixture, from, toId) {

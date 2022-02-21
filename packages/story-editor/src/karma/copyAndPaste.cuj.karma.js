@@ -235,11 +235,7 @@ describe('Background Copy & Paste', () => {
     // Navigate back to previous page and add Background image
     await goToPreviousPage();
     const bgMedia = fixture.editor.library.media.item(0);
-    await fixture.events.mouse.seq(({ moveRel, down, up }) => [
-      moveRel(bgMedia, 20, 20),
-      down(),
-      up(),
-    ]);
+    await fixture.events.mouse.clickOn(bgMedia, 20, 20);
     await fixture.events.click(
       fixture.editor.inspector.designPanel.sizePosition.setAsBackground
     );

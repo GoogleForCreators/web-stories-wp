@@ -40,11 +40,7 @@ describe('Drop-Target order', () => {
 
   async function insertMediaByIndex(index) {
     const mediaItem = fixture.editor.library.media.item(index);
-    await fixture.events.mouse.seq(({ moveRel, down, up }) => [
-      moveRel(mediaItem, 20, 20),
-      down(),
-      up(),
-    ]);
+    await fixture.events.mouse.clickOn(mediaItem, 20, 20);
   }
 
   it('should replace top image when bg image is set and another one is on top', async () => {

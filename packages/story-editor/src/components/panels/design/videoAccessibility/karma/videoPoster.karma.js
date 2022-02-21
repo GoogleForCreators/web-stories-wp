@@ -41,11 +41,7 @@ describe('Video Accessibility Panel', () => {
   describe('CUJ: Creator Can Manipulate an Image/Video on Canvas: Set different poster image', () => {
     beforeEach(async () => {
       const mediaItem = fixture.editor.library.media.item(5);
-      await fixture.events.mouse.seq(({ moveRel, down, up }) => [
-        moveRel(mediaItem, 20, 20),
-        down(),
-        up(),
-      ]); // item 5 is a video
+      await fixture.events.mouse.clickOn(mediaItem, 20, 20); // item 5 is a video
       vaPanel = fixture.editor.inspector.designPanel.videoAccessibility;
     });
 
