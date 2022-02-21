@@ -37,7 +37,7 @@ import { THEME_CONSTANTS } from '../../theme';
 import { Text } from '../typography';
 import { RTL_PLACEMENT } from '../popup/constants';
 import { noop } from '../../utils';
-import { SvgForTail, Tail, SVG_TOOLTIP_TAIL_ID } from './tail';
+import { SvgForTail, Tail, SVG_TOOLTIP_TAIL_ID, TAIL_HEIGHT } from './tail';
 
 const SPACE_BETWEEN_TOOLTIP_AND_ELEMENT = 8;
 // For how many milliseconds is a delayed tooltip waiting to appear?
@@ -177,14 +177,13 @@ function Tooltip({
   const positionPlacement = useCallback(
     ({ offset }) => {
       // check to see if there's an overlap with the window's bottom edge
-      const neededVerticalSpace = offset.bottom;
+      const neededVerticalSpace = offset.y + offset.height + TAIL_HEIGHT;
       const shouldMoveToTop =
         dynamicPlacement.startsWith('bottom') &&
         neededVerticalSpace >= window.innerHeight;
       // check that the tooltip isn't cutoff on the left edge of the screen.
       // right-cutoff is already taken care of with `getOffset`
       const isOverFlowingLeft = offset.popupLeft < 0;
-
       if (shouldMoveToTop && !isOverFlowingLeft) {
         setDynamicPlacement(PLACEMENT.TOP);
       } else if (shouldMoveToTop && isOverFlowingLeft) {
