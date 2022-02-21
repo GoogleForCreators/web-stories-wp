@@ -22,10 +22,10 @@
  */
 async function publishStory(dismiss = true) {
   await expect(page).toClick('button', { text: 'Publish' });
-  await expect(page).toMatchElement('#modal-story-details-publish');
-  await expect(page).toMatch(/Story Details/);
-  await expect(page).toClick('button', {
-    text: /Publish/,
+  await expect(page).toMatchElement('div#modal-story-details-publish');
+  await expect(page).toMatch('Story Details');
+  await expect(page).toClick('div#modal-story-details-publish button', {
+    text: 'Publish',
   });
 
   await expect(page).toMatch('Story published.');
