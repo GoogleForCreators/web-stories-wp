@@ -90,8 +90,6 @@ class Output_Buffer extends Service_Base implements Conditional {
 	 * Runs on instantiation.
 	 *
 	 * @since 1.10.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		/*
@@ -153,8 +151,6 @@ class Output_Buffer extends Service_Base implements Conditional {
 	 * @since 1.10.0
 	 *
 	 * @see Sanitization::finish_output_buffering()
-	 *
-	 * @return void
 	 */
 	public function start_output_buffering(): void {
 		if ( ! $this->context->is_web_story() ) {

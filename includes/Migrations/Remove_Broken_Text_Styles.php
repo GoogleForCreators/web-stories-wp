@@ -36,8 +36,6 @@ class Remove_Broken_Text_Styles extends Migrate_Base {
 	 * Removes broken text styles (with color.r|g|b structure).
 	 *
 	 * @since 1.7.0
-	 *
-	 * @return void
 	 */
 	public function migrate(): void {
 		$style_presets = get_option( Story_Post_Type::STYLE_PRESETS_OPTION, false );

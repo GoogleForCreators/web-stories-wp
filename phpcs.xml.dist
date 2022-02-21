@@ -102,9 +102,6 @@
       <property name="enableUnionTypeHint" value="false" />
     </properties>
     <exclude
-      name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.UselessAnnotation"
-    />
-    <exclude
       name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingTraversableTypeHintSpecification"
     />
 

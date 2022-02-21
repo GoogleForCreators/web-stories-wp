@@ -255,7 +255,6 @@ class HTML extends TestCase {
 	 * Helper to setup renderer.
 	 *
 	 * @param WP_Post $post Post Object.
-	 * @return string
 	 */
 	protected function setup_renderer( $post ): string {
 		$story = new Story();

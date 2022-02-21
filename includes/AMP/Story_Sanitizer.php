@@ -43,8 +43,6 @@ class Story_Sanitizer extends AMP_Base_Sanitizer {
 	 * Sanitize the HTML contained in the DOMDocument received by the constructor.
 	 *
 	 * @since 1.1.0
-	 *
-	 * @return void
 	 */
 	public function sanitize(): void {
 		$this->transform_html_start_tag( $this->dom );

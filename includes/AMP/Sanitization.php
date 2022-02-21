@@ -89,7 +89,6 @@ class Sanitization {
 	 * @since 1.1.0
 	 *
 	 * @param Document $document Document instance.
-	 * @return void
 	 */
 	public function sanitize_document( Document $document ): void {
 		$sanitizers = $this->get_sanitizers();
@@ -111,7 +110,6 @@ class Sanitization {
 	 *
 	 * @param Document $document Document instance.
 	 * @param array    $scripts List of found scripts.
-	 * @return void
 	 */
 	protected function ensure_required_markup( $document, array $scripts ): void {
 		/**

@@ -54,8 +54,6 @@ class Muting extends Service_Base implements HasMeta {
 	 * Register.
 	 *
 	 * @since 1.10.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		$this->register_meta();
@@ -68,8 +66,6 @@ class Muting extends Service_Base implements HasMeta {
 	 * Register meta for attachment post type.
 	 *
 	 * @since 1.10.0
-	 *
-	 * @return void
 	 */
 	public function register_meta(): void {
 		register_meta(
@@ -103,8 +99,6 @@ class Muting extends Service_Base implements HasMeta {
 	 * Registers additional REST API fields upon API initialization.
 	 *
 	 * @since 1.10.0
-	 *
-	 * @return void
 	 */
 	public function rest_api_init(): void {
 		register_rest_field(
@@ -151,7 +145,6 @@ class Muting extends Service_Base implements HasMeta {
 	 * @since 1.10.0
 	 *
 	 * @param array $prepared Array of data to add to.
-	 * @return bool|null
 	 */
 	public function get_callback_is_muted( $prepared ): ?bool {
 		/**

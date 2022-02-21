@@ -58,7 +58,6 @@ class Optimization {
 	 * @since 1.1.0
 	 *
 	 * @param Document $document Document instance.
-	 * @return void
 	 */
 	public function optimize_document( Document $document ): void {
 		$errors = new ErrorCollection();

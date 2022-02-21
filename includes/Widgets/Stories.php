@@ -101,7 +101,6 @@ class Stories extends WP_Widget {
 	 *
 	 * @param array $args Widget args.
 	 * @param array $instance Widget instance.
-	 * @return void
 	 *
      * phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 	 */
@@ -159,7 +158,6 @@ class Stories extends WP_Widget {
 	 * @since 1.5.0
 	 *
 	 * @param array $instance Widget instance.
-	 * @return string
 	 */
 	public function form( $instance ): string {
 		$this->enqueue_scripts();
@@ -459,8 +457,6 @@ class Stories extends WP_Widget {
 	 * Enqueue widget script.
 	 *
 	 * @since 1.5.0
-	 *
-	 * @return void
 	 */
 	public function enqueue_scripts(): void {
 		if ( wp_script_is( self::SCRIPT_HANDLE ) ) {
@@ -483,7 +479,6 @@ class Stories extends WP_Widget {
 	 * @since 1.5.0
 	 *
 	 * @param array $args Field args.
-	 * @return void
 	 */
 	private function dropdown( array $args ): void {
 		$args = wp_parse_args(
@@ -530,7 +525,6 @@ class Stories extends WP_Widget {
 	 * @since 1.5.0
 	 *
 	 * @param array $args Field args.
-	 * @return void
 	 */
 	private function radio( array $args ): void {
 		$args = wp_parse_args(
@@ -578,7 +572,6 @@ class Stories extends WP_Widget {
 	 * @since 1.5.0
 	 *
 	 * @param array $args Field args.
-	 * @return void
 	 */
 	private function input( array $args ): void {
 		$args = wp_parse_args(
@@ -642,7 +635,6 @@ class Stories extends WP_Widget {
 	 * @since 1.5.0
 	 *
 	 * @param array $args Label args.
-	 * @return string
 	 */
 	private function label( array $args ): string {
 		$args = wp_parse_args(

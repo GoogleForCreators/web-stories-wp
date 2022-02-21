@@ -54,8 +54,6 @@ abstract class Add_Media_Source extends Migrate_Base {
 	 * Add the editor term, to make sure it exists.
 	 *
 	 * @since 1.9.0
-	 *
-	 * @return void
 	 */
 	public function migrate(): void {
 		wp_insert_term( $this->get_term(), $this->media_source_taxonomy->get_taxonomy_slug() );
@@ -65,8 +63,6 @@ abstract class Add_Media_Source extends Migrate_Base {
 	 * Override this method.
 	 *
 	 * @since 1.9.0
-	 *
-	 * @return string
 	 */
 	abstract protected function get_term(): string;
 }

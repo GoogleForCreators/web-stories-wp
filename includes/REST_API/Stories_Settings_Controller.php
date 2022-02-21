@@ -51,8 +51,6 @@ class Stories_Settings_Controller extends WP_REST_Settings_Controller implements
 	 * Register the service.
 	 *
 	 * @since 1.7.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		$this->register_routes();
