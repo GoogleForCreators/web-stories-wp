@@ -80,8 +80,8 @@ const useCopyPasteActions = () => {
     copiedElementState: state.copiedElementState,
     copySelectedElement: actions.copySelectedElement,
     selectedElement: state.selectedElements?.[0],
-    selectedElementType: state.selectedElements?.[0].type,
-    isSelectedElementBackground: state.selectedElements?.[0].isBackground,
+    selectedElementType: state.selectedElements?.[0]?.type,
+    isSelectedElementBackground: state.selectedElements?.[0]?.isBackground,
     selectedElementAnimations: state.selectedElementAnimations,
     updateSelectedElements: actions.updateSelectedElements,
   }));
