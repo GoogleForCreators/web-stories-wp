@@ -38,18 +38,20 @@ export const ATTRIBUTES_TO_COPY = [
 ];
 
 /**
- * Copies the styles and animations of the element specified by `elementId`
+ * Copies the styles and animations of the selected element
  * on the current page.
  *
- * If given `elementId` doesn't match an element's id, do nothing.
- *
  * @param {Object} state Current state
- * @param {Object} payload Action payload
- * @param {string} payload.elementId id of elements to copy.
  * @return {Object} New state
  */
-function copyElementById(state, { elementId }) {
+function copySelectedElement(state) {
+  // we can only copy one element
+  if (state.selection?.length || state.selection?.length > 1) {
+    return state;
+  }
+
   // Do nothing if no elementId
+  const elementId = state.selection[0];
   if (!elementId) {
     return state;
   }
@@ -83,4 +85,4 @@ function copyElementById(state, { elementId }) {
   };
 }
 
-export default copyElementById;
+export default copySelectedElement;

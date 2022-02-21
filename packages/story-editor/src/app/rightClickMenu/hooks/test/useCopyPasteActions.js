@@ -24,7 +24,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import { useCopyPasteActions } from '..';
 import objectPick from '../../../../utils/objectPick';
 import { useStory } from '../../..';
-import { ATTRIBUTES_TO_COPY } from '../../../story/useStoryReducer/reducers/copyElementById';
+import { ATTRIBUTES_TO_COPY } from '../../../story/useStoryReducer/reducers/copySelectedElement';
 import { ELEMENT } from './testUtils';
 
 jest.mock('@googleforcreators/design-system', () => ({
@@ -37,7 +37,7 @@ jest.mock('../../../story/useStory');
 const mockUseStory = useStory;
 const mockUseSnackbar = useSnackbar;
 
-const mockCopyElementById = jest.fn();
+const mockCopySelectedElement = jest.fn();
 const mockShowSnackbar = jest.fn();
 const mockAddAnimations = jest.fn();
 const mockUpdateElementsById = jest.fn();
@@ -54,7 +54,7 @@ const ANIMATION = {
 
 const defaultStoryState = {
   addAnimations: mockAddAnimations,
-  copyElementById: mockCopyElementById,
+  copySelectedElement: mockCopySelectedElement,
   selectedElement: ELEMENT,
   selectedElementAnimations: [ANIMATION],
   updateElementsById: mockUpdateElementsById,
@@ -77,7 +77,7 @@ describe('useCopyPasteActions', () => {
 
     result.current.handleCopyStyles();
 
-    expect(mockCopyElementById).toHaveBeenCalledWith({ elementId: ELEMENT.id });
+    expect(mockCopySelectedElement).toHaveBeenCalledWith();
 
     expect(mockShowSnackbar).toHaveBeenCalledWith(
       expect.objectContaining({
