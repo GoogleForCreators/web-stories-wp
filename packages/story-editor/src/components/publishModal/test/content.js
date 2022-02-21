@@ -35,7 +35,7 @@ const mockInputValues = {
   [INPUT_KEYS.SLUG]: '2001-space-odyssey',
 };
 
-describe('publishModal/mainContent', () => {
+describe('publishModal/content', () => {
   const mockHandleReviewChecklist = jest.fn();
 
   afterEach(() => {
