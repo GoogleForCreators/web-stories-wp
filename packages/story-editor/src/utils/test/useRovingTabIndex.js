@@ -17,6 +17,36 @@
  * Internal dependencies
  */
 import { getFocusableElementDirection } from '../useRovingTabIndex';
+import { getNextEnabledSibling } from '../useRovingTabIndex/flatNavigation';
+
+describe('getNextEnabledSibling', () => {
+  it('should get next sibling', () => {
+    const wrapper = document.createElement('div');
+    const button1 = document.createElement('button');
+    wrapper.appendChild(button1);
+    const button2 = document.createElement('button');
+    wrapper.appendChild(button2);
+    const button3 = document.createElement('button3');
+    wrapper.appendChild(button3);
+
+    expect(getNextEnabledSibling(button2, 'previousSibling')).toBe(button1);
+    expect(getNextEnabledSibling(button2, 'nextSibling')).toBe(button3);
+  });
+
+  it('should skip disabled sibling', () => {
+    const wrapper = document.createElement('div');
+    const button1 = document.createElement('button');
+    wrapper.appendChild(button1);
+    const button2 = document.createElement('button');
+    button2.disabled = 'true';
+    wrapper.appendChild(button2);
+    const button3 = document.createElement('button3');
+    wrapper.appendChild(button3);
+
+    expect(getNextEnabledSibling(button3, 'previousSibling')).toBe(button1);
+    expect(getNextEnabledSibling(button1, 'nextSibling')).toBe(button3);
+  });
+});
 
 describe('getSiblingDirection', () => {
   describe('RTL', () => {
