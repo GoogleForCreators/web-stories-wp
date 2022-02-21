@@ -30,10 +30,8 @@ function useApplyStyle({ pushUpdate }) {
   // Update size and position if relevant values have changed.
   usePresubmitHandler(getUpdatedSizeAndPosition, []);
 
-  const { selectedElements } = useStory(({ state: { selectedElements } }) => {
-    return {
-      selectedElements,
-    };
+  const selectedTextElements = useStory(({ state: { selectedElements } }) => {
+    return selectedElements?.filter(({ type }) => type === 'text');
   });
 
   const extraPropsToAdd = useRef(null);
@@ -58,7 +56,7 @@ function useApplyStyle({ pushUpdate }) {
       handleClickItalic,
       handleSelectFontWeight,
     },
-  } = useRichTextFormatting(selectedElements, push);
+  } = useRichTextFormatting(selectedTextElements, push);
 
   const handleApplyStyle = useCallback(
     (preset) => {

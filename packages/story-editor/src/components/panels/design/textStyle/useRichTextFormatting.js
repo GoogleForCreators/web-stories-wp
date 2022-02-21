@@ -101,11 +101,10 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
       return selectionInfo;
     }
 
-    // loop over all elements, find info for content and reduce to common value
+    // loop over all text elements, find info for content and reduce to common value
     // (setting MULTIPLE_VALUE appropriately)
     return selectedElements
       .map(({ content }) => content)
-      .filter(Boolean)
       .map(getHTMLInfo)
       .reduce(reduceWithMultiple, {});
   }, [hasCurrentEditor, selectionInfo, selectedElements]);

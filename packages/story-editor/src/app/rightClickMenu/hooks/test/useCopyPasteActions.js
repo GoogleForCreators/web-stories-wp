@@ -40,7 +40,7 @@ const mockUseSnackbar = useSnackbar;
 const mockCopySelectedElement = jest.fn();
 const mockShowSnackbar = jest.fn();
 const mockAddAnimations = jest.fn();
-const mockUpdateElementsById = jest.fn();
+const mockUpdateSelectedElements = jest.fn();
 
 const ANIMATION = {
   targets: [ELEMENT.id],
@@ -52,12 +52,15 @@ const ANIMATION = {
   delay: 0,
 };
 
-const defaultStoryState = {
+const defaultStoryActions = {
   addAnimations: mockAddAnimations,
   copySelectedElement: mockCopySelectedElement,
+  updateSelectedElements: mockUpdateSelectedElements,
+};
+
+const defaultStoryState = {
   selectedElement: ELEMENT,
   selectedElementAnimations: [ANIMATION],
-  updateElementsById: mockUpdateElementsById,
   // needed for `useRichTextFormatting`
   selectedElements: [ELEMENT],
 };
@@ -66,7 +69,9 @@ describe('useCopyPasteActions', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    mockUseStory.mockReturnValue(defaultStoryState);
+    mockUseStory.mockImplementation((selector = (v) => v) =>
+      selector({ state: defaultStoryState, actions: defaultStoryActions })
+    );
     mockUseSnackbar.mockReturnValue(mockShowSnackbar);
   });
 
@@ -90,20 +95,25 @@ describe('useCopyPasteActions', () => {
   it('should paste styles and show a confirmation snackbar', () => {
     const styles = objectPick(ELEMENT, ATTRIBUTES_TO_COPY);
     // Set copied element in state
-    mockUseStory.mockReturnValue({
-      ...defaultStoryState,
-      copiedElementState: {
-        type: ELEMENT.type,
-        animations: [ANIMATION],
-        styles,
-      },
-      selectedElement: { id: 'new-element', type: 'image' },
-      selectedElementAnimations: [
-        { id: 'other-animation', targets: ['new-element'] },
-      ],
-      // needed for `useRichTextFormatting`
-      selectedElements: [{ id: 'new-element', type: 'image' }],
-    });
+    mockUseStory.mockImplementation((selector) =>
+      selector({
+        actions: defaultStoryActions,
+        state: {
+          ...defaultStoryState,
+          copiedElementState: {
+            type: ELEMENT.type,
+            animations: [ANIMATION],
+            styles,
+          },
+          selectedElement: { id: 'new-element', type: 'image' },
+          selectedElementAnimations: [
+            { id: 'other-animation', targets: ['new-element'] },
+          ],
+          // needed for `useRichTextFormatting`
+          selectedElements: [{ id: 'new-element', type: 'image' }],
+        },
+      })
+    );
 
     const { result } = renderHook(() => useCopyPasteActions());
 
@@ -115,14 +125,14 @@ describe('useCopyPasteActions', () => {
     // 2. Delete existing animation on target element
     // 3. Add new animations
 
-    expect(mockUpdateElementsById).toHaveBeenCalledWith({
-      elementIds: ['new-element'],
+    expect(mockUpdateSelectedElements).toHaveBeenCalledWith({
       properties: expect.any(Function),
     });
 
     // Need to call updater fn that is passed to `updateElementById`
     // to see what is being updated.
-    const updatedStyles = mockUpdateElementsById.mock.calls[0][0].properties();
+    const updatedStyles =
+      mockUpdateSelectedElements.mock.calls[0][0].properties();
 
     // verify old animation deleted
     // verify styles copied

@@ -46,7 +46,7 @@ export const ATTRIBUTES_TO_COPY = [
  */
 function copySelectedElement(state) {
   // we can only copy one element
-  if (state.selection?.length || state.selection?.length > 1) {
+  if (state.selection?.length !== 1) {
     return state;
   }
 
