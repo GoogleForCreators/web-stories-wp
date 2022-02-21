@@ -91,7 +91,7 @@ const MandatoryStoryInfo = () => {
         handleUpdateSlug(value);
       }
     },
-    [handleUpdateSlug, updateStory, slug, storyId]
+    [handleUpdateSlug, updateStory]
   );
 
   const onInputChange = ({ currentTarget }) => {
