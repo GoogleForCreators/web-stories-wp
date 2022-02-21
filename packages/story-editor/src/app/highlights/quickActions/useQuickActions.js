@@ -486,7 +486,6 @@ const useQuickActions = () => {
     handleFocusMediaPanel,
     handleFocusPageBackground,
     handleFocusTextSetsPanel,
-    handleMouseDown,
   ]);
 
   const resetProperties = useMemo(
