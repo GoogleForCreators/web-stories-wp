@@ -281,7 +281,7 @@ const stickerQuickActionsWithClear = [
 const videoResource = {
   id: 'video',
   type: 'video',
-  mimeType: 'video/x-h261',
+  mimeType: 'video/mp4',
   src: 'video',
 };
 const imageResource = {
@@ -1068,7 +1068,7 @@ describe('MediaPicker', () => {
 
     expect(mockPostProcessingResource).toHaveBeenCalledWith({
       ...videoResource,
-      mimeType: 'video/x-h261',
+      mimeType: 'video/mp4',
       isMuted: null,
     });
     expect(mockUpdateElementsById).toHaveBeenCalledWith({
