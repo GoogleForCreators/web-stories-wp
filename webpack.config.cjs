@@ -212,10 +212,6 @@ const sharedConfig = {
       new CssMinimizerPlugin(),
     ],
   },
-  stats: {
-    children: true,
-    errorDetails: true,
-  },
 };
 
 const EDITOR_CHUNK = 'wp-story-editor';
