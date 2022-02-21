@@ -124,9 +124,11 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
       );
 
       expect(await fixture.screen.findByRole('dialog')).toBeTruthy();
-      await fixture.events.click(
-        fixture.screen.getByRole('button', { name: 'Delete' })
-      );
+
+      const deleteButton = await fixture.screen.findByRole('button', {
+        name: 'Delete',
+      });
+      await fixture.events.click(deleteButton);
 
       await fixture.events.sleep(200);
       const list = fixture.editor.getByRole('list', {
