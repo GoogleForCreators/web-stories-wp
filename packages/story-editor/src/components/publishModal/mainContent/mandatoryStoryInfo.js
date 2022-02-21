@@ -25,6 +25,7 @@ import { __ } from '@googleforcreators/i18n';
  * Internal dependencies
  */
 import useInspector from '../../inspector/useInspector';
+import { EXCERPT_MAX_LENGTH } from '../../panels/document/excerpt';
 import { INPUT_KEYS } from '../constants';
 import { MANDATORY_INPUT_VALUE_TYPES } from '../types';
 import FormLabel from './formLabel';
@@ -84,10 +85,10 @@ const MandatoryStoryInfo = ({
           name={INPUT_KEYS.EXCERPT}
           id="story-excerpt"
           showCount
-          maxLength={100}
+          maxLength={EXCERPT_MAX_LENGTH}
           value={inputValues[INPUT_KEYS.EXCERPT]}
           aria-label={__('Story Description', 'web-stories')}
-          placeholder={__('Write an excerpt', 'web-stories')}
+          placeholder={__('Write a description of the story', 'web-stories')}
           hint={__(
             'Stories with a description tend to do better on search and have a wider reach',
             'web-stories'
