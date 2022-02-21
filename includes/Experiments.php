@@ -402,6 +402,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Semantic Headings', 'web-stories' ),
 				'description' => __( 'Automatically use semantic heading tags for text elements', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 		];
 	}
