@@ -16,19 +16,22 @@
 /**
  * External dependencies
  */
-import { useState } from '@googleforcreators/react';
-import PropTypes from 'prop-types';
-import { TextArea } from '@googleforcreators/design-system';
+import { useCallback, useState } from '@googleforcreators/react';
+import {
+  Headline,
+  TextArea,
+  THEME_CONSTANTS,
+} from '@googleforcreators/design-system';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
+import { useConfig, useStory } from '../../../app';
+import { updateSlug } from '../../../utils/storyUpdates';
 import useInspector from '../../inspector/useInspector';
 import { EXCERPT_MAX_LENGTH } from '../../panels/document/excerpt';
 import { INPUT_KEYS } from '../constants';
-import { MANDATORY_INPUT_VALUE_TYPES } from '../types';
-import FormLabel from './formLabel';
 
 const FormSection = styled.div`
   padding: 0 4px;
@@ -42,13 +45,53 @@ const _TextArea = styled(TextArea)`
   margin: 8px 0;
 `;
 
-const MandatoryStoryInfo = ({
-  handleUpdateStoryInfo,
-  inputValues: _inputValues,
-}) => {
-  const [inputValues, setInputValues] = useState(_inputValues);
+const MandatoryStoryInfo = () => {
+  const storyId = useConfig(({ storyId }) => storyId);
+
+  const updateStory = useStory(({ actions }) => actions.updateStory);
+  const _inputValues = useStory(({ state: { story } }) => ({
+    [INPUT_KEYS.EXCERPT]: story.excerpt,
+    [INPUT_KEYS.TITLE]: story.title || '',
+  }));
+  // Keep slug isolated from other input values to limit changes and keep in sync on handleSlugUpdate
+  const slug = useStory(
+    ({
+      state: {
+        story: { slug },
+      },
+    }) => slug
+  );
+
   const IsolatedStatusPanel = useInspector(
     ({ data }) => data?.modalInspectorTab?.IsolatedStatusPanel
+  );
+
+  const [inputValues, setInputValues] = useState(_inputValues);
+
+  const handleUpdateSlug = useCallback(
+    (newTitle) => {
+      updateSlug({
+        currentSlug: slug,
+        currentTitle: newTitle,
+        storyId,
+        updateStory,
+      });
+    },
+    [slug, updateStory, storyId]
+  );
+
+  const handleUpdateStoryInfo = useCallback(
+    ({ target }) => {
+      const { value, name } = target;
+      updateStory({
+        properties: { [name]: value },
+      });
+
+      if (name === INPUT_KEYS.TITLE) {
+        handleUpdateSlug(value);
+      }
+    },
+    [handleUpdateSlug, updateStory, slug, storyId]
   );
 
   const onInputChange = ({ currentTarget }) => {
@@ -71,7 +114,6 @@ const MandatoryStoryInfo = ({
           name={INPUT_KEYS.TITLE}
           id="story-title"
           showCount
-          maxLength={300}
           value={inputValues[INPUT_KEYS.TITLE]}
           onChange={onInputChange}
           onBlur={handleUpdateStoryInfo}
@@ -109,8 +151,3 @@ const MandatoryStoryInfo = ({
 };
 
 export default MandatoryStoryInfo;
-
-MandatoryStoryInfo.propTypes = {
-  handleUpdateStoryInfo: PropTypes.func,
-  inputValues: MANDATORY_INPUT_VALUE_TYPES,
-};
