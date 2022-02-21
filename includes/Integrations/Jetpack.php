@@ -28,7 +28,6 @@ namespace Google\Web_Stories\Integrations;
 
 use Google\Web_Stories\Context;
 use Google\Web_Stories\Media\Media_Source_Taxonomy;
-use Google\Web_Stories\Media\Types;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
 use WP_Post;
@@ -79,25 +78,16 @@ class Jetpack extends Service_Base {
 	private $context;
 
 	/**
-	 * Types instance.
-	 *
-	 * @var Types Types instance.
-	 */
-	private $types;
-
-	/**
 	 * Jetpack constructor.
 	 *
 	 * @since 1.12.0
 	 *
 	 * @param Media_Source_Taxonomy $media_source_taxonomy Media_Source_Taxonomy instance.
 	 * @param Context               $context               Context instance.
-	 * @param Types                 $types                 Types instance.
 	 */
-	public function __construct( Media_Source_Taxonomy $media_source_taxonomy, Context $context, Types $types ) {
+	public function __construct( Media_Source_Taxonomy $media_source_taxonomy, Context $context ) {
 		$this->media_source_taxonomy = $media_source_taxonomy;
 		$this->context               = $context;
-		$this->types                 = $types;
 	}
 
 	/**
