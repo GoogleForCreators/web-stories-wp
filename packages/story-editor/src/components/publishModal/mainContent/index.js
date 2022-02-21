@@ -22,7 +22,6 @@ import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
-import { MANDATORY_INPUT_VALUE_TYPES } from '../types';
 import useInspector from '../../inspector/useInspector';
 import { useHasChecklist } from '../../checklist';
 import { HEADER_BAR_HEIGHT, HEADER_BAR_MARGIN } from '../constants';
@@ -84,11 +83,7 @@ const Footer = styled.div`
   margin: 0 18px 20px 32px;
 `;
 
-const MainContent = ({
-  handleReviewChecklist,
-  handleUpdateStoryInfo,
-  inputValues,
-}) => {
+const MainContent = ({ handleReviewChecklist }) => {
   const { DocumentPane, id: paneId } = useInspector(
     ({ data }) => data?.modalInspectorTab || {}
   );
@@ -100,10 +95,7 @@ const MainContent = ({
         <StoryPreview />
       </_StoryPreview>
       <_MandatoryStoryInfo>
-        <MandatoryStoryInfo
-          handleUpdateStoryInfo={handleUpdateStoryInfo}
-          inputValues={inputValues}
-        />
+        <MandatoryStoryInfo />
       </_MandatoryStoryInfo>
       {DocumentPane && (
         <PanelContainer
@@ -126,6 +118,4 @@ export default MainContent;
 
 MainContent.propTypes = {
   handleReviewChecklist: PropTypes.func,
-  handleUpdateStoryInfo: PropTypes.func,
-  inputValues: MANDATORY_INPUT_VALUE_TYPES,
 };
