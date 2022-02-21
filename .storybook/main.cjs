@@ -160,10 +160,12 @@ module.exports = {
                         params: {
                           overrides: {
                             removeViewBox: false,
+                            convertColors: {
+                              currentColor: /^(?!url|none)/i,
+                            },
                           },
                         },
                       },
-                      { name: 'convertColors', currentColor: /^(?!url|none)/i },
                     ],
                   },
                 },
