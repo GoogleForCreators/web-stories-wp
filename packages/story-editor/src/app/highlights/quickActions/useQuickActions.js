@@ -477,7 +477,7 @@ const useQuickActions = () => {
             element: 'none',
           });
         },
-        onMouseDown: handleMouseDown,
+        ...actionMenuProps,
       },
     ];
   }, [
