@@ -77,11 +77,6 @@ const sharedConfig = {
           fullySpecified: false,
         },
       },
-      // {
-      //   // Load worker in as an inline asset to avoid CORS errors
-      //   test: /\.worker\.js$/,
-      //   type: 'asset/inline',
-      // },
       {
         test: /\.worker\.js$/,
         use: {

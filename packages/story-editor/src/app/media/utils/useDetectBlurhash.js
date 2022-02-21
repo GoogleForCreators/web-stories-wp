@@ -102,7 +102,6 @@ function useDetectBlurHash({ updateMediaElement }) {
         const blurHash = await getBlurHashFromImage(imageSrcProxied);
         await saveBlurHash(resource.id, blurHash);
       } catch (error) {
-        console.error('top level error', error?.message);
         trackError('blurhash_generation', error?.message);
       }
     },

@@ -16,12 +16,10 @@
 /**
  * External dependencies
  */
-// import { encode } from 'https://cdn.skypack.dev/blurhash@1.1.4';
 import { encode } from 'blurhash';
 
 const callback = function (event) {
   const { image, width, height, componentX, componentY } = event.data;
-  console.log('✨✨✨ running the worker script');
 
   try {
     const blurHash = encode(image, width, height, componentX, componentY);
@@ -30,7 +28,6 @@ const callback = function (event) {
       blurHash,
     });
   } catch (error) {
-    console.log('🚨🚨🚨 script error', error);
     postMessage({
       type: 'error',
       error,
