@@ -79,7 +79,9 @@ describe('Pre-Publish Checklist : Admin User', () => {
     await addPages(3);
 
     await expect(page).toClick('button', { text: 'Publish' });
-    await expect(page).toClick('button[aria-label^="Checklist"]');
+    await expect(page).toClick(
+      'div#modal-story-details-publish button[aria-label^="Checklist"]'
+    );
     await expect(page).toMatch('Add poster image');
 
     await expect(page).toClick('p', { text: 'Document' });
@@ -108,7 +110,9 @@ describe('Pre-Publish Checklist : Admin User', () => {
     await addPages(3);
 
     await expect(page).toClick('button', { text: 'Publish' });
-    await expect(page).toClick('button[aria-label^="Checklist"]');
+    await expect(page).toClick(
+      'div#modal-story-details-publish button[aria-label^="Checklist"]'
+    );
     const title = await expect(page).toMatchElement('h2', {
       text: 'Add poster image',
     });
