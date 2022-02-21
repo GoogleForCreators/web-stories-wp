@@ -44,14 +44,14 @@ class SVG extends Service_Base {
 	 *
 	 * @since 1.3.0
 	 */
-	const EXT = 'svg';
+	public const EXT = 'svg';
 
 	/**
 	 * Mime type.
 	 *
 	 * @since 1.3.0
 	 */
-	const MIME_TYPE = 'image/svg+xml';
+	public const MIME_TYPE = 'image/svg+xml';
 
 	/**
 	 * Cached list of SVG files and their contents.
@@ -88,10 +88,8 @@ class SVG extends Service_Base {
 	 * Register filters and actions.
 	 *
 	 * @since 1.3.0
-	 *
-	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		if ( ! $this->experiments->is_experiment_enabled( 'enableSVG' ) ) {
 			return;
 		}
@@ -116,8 +114,6 @@ class SVG extends Service_Base {
 	 * Helper function to check if svg uploads are already enabled.
 	 *
 	 * @since 1.3.0
-	 *
-	 * @return bool
 	 */
 	private function svg_already_enabled(): bool {
 		$allowed_mime_types = get_allowed_mime_types();

@@ -32,7 +32,7 @@ class Meta_Sanitizer extends TestCase {
 	use MarkupComparison;
 	use ScriptHash;
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		Monkey\Functions\stubs(
@@ -47,7 +47,7 @@ class Meta_Sanitizer extends TestCase {
 	/**
 	 * Test that the expected tag specs exist for the body.
 	 */
-	public function test_expected_meta_tags() {
+	public function test_expected_meta_tags(): void {
 		$named_specs = array_filter(
 			AMP_Allowed_Tags_Generated::get_allowed_tag( 'meta' ),
 			static function ( $spec ) {
@@ -80,7 +80,7 @@ class Meta_Sanitizer extends TestCase {
 	 *
 	 * @return array[] Array of arrays with test data.
 	 */
-	public function get_data_for_sanitize() {
+	public function get_data_for_sanitize(): array {
 		$script1 = 'document.body.textContent += "First!";';
 		$script2 = 'document.body.textContent += "Second!";';
 		$script3 = 'document.body.textContent += "Third!";';
@@ -252,7 +252,7 @@ class Meta_Sanitizer extends TestCase {
 	 * @dataProvider get_data_for_sanitize
 	 * @covers ::sanitize()
 	 */
-	public function test_sanitize( $source_content, $expected_content ) {
+	public function test_sanitize( $source_content, $expected_content ): void {
 		$dom       = Document::fromHtml( $source_content );
 		$sanitizer = new \Google\Web_Stories\AMP\Meta_Sanitizer( $dom );
 		$sanitizer->sanitize();

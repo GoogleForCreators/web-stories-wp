@@ -29,13 +29,16 @@ import {
 import { CSSTransition } from 'react-transition-group';
 import { __ } from '@googleforcreators/i18n';
 import { rgba } from 'polished';
-import { Icons, useKeyDownEffect } from '@googleforcreators/design-system';
+import {
+  Icons,
+  useKeyDownEffect,
+  Popup,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import Popup from '../../components/popup';
 import { useConfig } from '../../app/config';
 
 const PLAY_BUTTON_SIZE = 82;
@@ -121,7 +124,7 @@ function PlayPauseButton({
   element,
   videoRef = null,
 }) {
-  const { isRTL } = useConfig();
+  const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
   const hasVideoSrc = Boolean(element.resource.src);
   const isPlayAbove =
     element.width < PLAY_ABOVE_BREAKPOINT_WIDTH ||
@@ -245,10 +248,12 @@ function PlayPauseButton({
   const TransitionWrapper = isPlayAbove
     ? ({ children }) => (
         <Popup
+          isRTL={isRTL}
           anchor={elementRef}
           isOpen
           placement="top"
           spacing={playAboveSpacing}
+          topOffset={topOffset}
         >
           {children}
         </Popup>

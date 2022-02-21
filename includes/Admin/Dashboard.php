@@ -48,7 +48,7 @@ class Dashboard extends Service_Base {
 	/**
 	 * Script handle.
 	 */
-	const SCRIPT_HANDLE = 'wp-dashboard';
+	public const SCRIPT_HANDLE = 'wp-dashboard';
 
 	/**
 	 * Admin page hook suffixes.
@@ -173,10 +173,8 @@ class Dashboard extends Service_Base {
 	 * Initializes the dashboard logic.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
 		add_action( 'admin_init', [ $this, 'redirect_menu_page' ] );
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
@@ -200,10 +198,8 @@ class Dashboard extends Service_Base {
 	 * Registers the dashboard admin menu page.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
-	public function add_menu_page() {
+	public function add_menu_page(): void {
 		$parent = 'edit.php?post_type=' . $this->story_post_type->get_slug();
 
 		$settings = $this->get_dashboard_settings();
@@ -247,10 +243,8 @@ class Dashboard extends Service_Base {
 	 * @codeCoverageIgnore
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
-	public function redirect_menu_page() {
+	public function redirect_menu_page(): void {
 		global $pagenow;
 
 		if ( ! isset( $_GET['page'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -279,10 +273,8 @@ class Dashboard extends Service_Base {
 	 * Important: keep in sync with usage & definition in React app.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
-	public function load_stories_dashboard() {
+	public function load_stories_dashboard(): void {
 		$rest_url = trailingslashit( $this->story_post_type->get_rest_url() );
 
 		$preload_paths = [
@@ -362,10 +354,8 @@ class Dashboard extends Service_Base {
 	 * Renders the dashboard page.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
-	public function render() {
+	public function render(): void {
 		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/admin/dashboard.php';
 	}
 
@@ -375,9 +365,8 @@ class Dashboard extends Service_Base {
 	 * @since 1.0.0
 	 *
 	 * @param string $hook_suffix The current admin page.
-	 * @return void
 	 */
-	public function enqueue_assets( $hook_suffix ) {
+	public function enqueue_assets( $hook_suffix ): void {
 		if ( $this->get_hook_suffix( 'stories-dashboard' ) !== $hook_suffix ) {
 			return;
 		}
@@ -471,10 +460,8 @@ class Dashboard extends Service_Base {
 	 * Displays a link to the Web Stories dashboard on the WordPress list table view.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
-	public function display_link_to_dashboard() {
+	public function display_link_to_dashboard(): void {
 		if ( ! $this->context->is_story_editor() ) {
 			return;
 		}

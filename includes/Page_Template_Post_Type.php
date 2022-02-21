@@ -38,7 +38,7 @@ class Page_Template_Post_Type extends Post_Type_Base implements HasRequirements 
 	 * The slug of the page template post type.
 	 * Limited to web-story-page as web-story-page-template goes over character limit.
 	 */
-	const POST_TYPE_SLUG = 'web-story-page';
+	public const POST_TYPE_SLUG = 'web-story-page';
 
 	/**
 	 * Story_Post_Type instance.
@@ -60,10 +60,8 @@ class Page_Template_Post_Type extends Post_Type_Base implements HasRequirements 
 
 	/**
 	 * Init
-	 *
-	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		parent::register();
 
 		add_action( 'delete_post', [ $this, 'delete_poster_image' ] );
@@ -73,8 +71,6 @@ class Page_Template_Post_Type extends Post_Type_Base implements HasRequirements 
 	 * Get post type slug.
 	 *
 	 * @since 1.14.0
-	 *
-	 * @return string
 	 */
 	public function get_slug(): string {
 		return self::POST_TYPE_SLUG;
@@ -179,9 +175,8 @@ class Page_Template_Post_Type extends Post_Type_Base implements HasRequirements 
 	 * @since 1.14.0
 	 *
 	 * @param int $post_id Post ID.
-	 * @return void
 	 */
-	public function delete_poster_image( int $post_id ) {
+	public function delete_poster_image( int $post_id ): void {
 		if ( get_post_type( $post_id ) !== $this->get_slug() ) {
 			return;
 		}

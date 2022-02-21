@@ -91,6 +91,7 @@ describe('Story Editor', () => {
     const previewPage = await previewStory(editorPage);
 
     await previewPage.waitForSelector('amp-story');
+    await previewPage.waitForSelector('.i-amphtml-story-dev-tools-header');
 
     await expect(previewPage).toMatch(/Preview/i);
     await expect(previewPage).toMatch(/Debug/i);

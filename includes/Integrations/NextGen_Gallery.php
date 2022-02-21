@@ -37,10 +37,8 @@ class NextGen_Gallery extends Service_Base {
 	 * Initializes all hooks.
 	 *
 	 * @since 1.2.0
-	 *
-	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_filter( 'run_ngg_resource_manager', [ $this, 'filter_run_ngg_resource_manager' ], PHP_INT_MAX );
 	}
 
@@ -97,7 +95,7 @@ class NextGen_Gallery extends Service_Base {
 	 *
 	 * @return string|null Request URI path on success, null on failure.
 	 */
-	private function get_request_uri_path() {
+	private function get_request_uri_path(): ?string {
 		// phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 		if ( ! isset( $_SERVER['REQUEST_URI'] ) ) {
 			return null;

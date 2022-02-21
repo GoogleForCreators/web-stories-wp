@@ -42,7 +42,8 @@ describe('ColorPicker', () => {
       });
 
       it('should display correctly', async () => {
-        // Click the background element
+        await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
+
         await fixture.events.click(
           fixture.editor.canvas.framesLayer.frames[0].node
         );
@@ -160,7 +161,10 @@ describe('ColorPicker', () => {
         );
 
         // Add text and apply the previously saved color.
-        await fixture.events.click(fixture.editor.library.textAdd);
+        await fixture.editor.library.textTab.click();
+        await fixture.events.click(
+          fixture.editor.library.text.preset('Paragraph')
+        );
         await waitFor(() => {
           if (!fixture.editor.canvas.framesLayer.frames[1].node) {
             throw new Error('node not ready');
@@ -177,7 +181,7 @@ describe('ColorPicker', () => {
         );
         const [text] = await getSelection();
         expect(text.content).toEqual(
-          '<span style="color: #c4c4c4">Fill in some text</span>'
+          '<span style="color: #c4c4c4">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>'
         );
       });
 
@@ -196,7 +200,10 @@ describe('ColorPicker', () => {
         );
 
         // Add text and apply the previously saved color.
-        await fixture.events.click(fixture.editor.library.textAdd);
+        await fixture.editor.library.textTab.click();
+        await fixture.events.click(
+          fixture.editor.library.text.preset('Paragraph')
+        );
         await waitFor(() => {
           if (!fixture.editor.canvas.framesLayer.frames[1].node) {
             throw new Error('node not ready');
@@ -213,13 +220,16 @@ describe('ColorPicker', () => {
         );
         const [text] = await getSelection();
         expect(text.content).toEqual(
-          '<span style="color: #c4c4c4">Fill in some text</span>'
+          '<span style="color: #c4c4c4">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>'
         );
       });
 
       it('should allow saving text background color', async () => {
         // Add text element
-        await fixture.events.click(fixture.editor.library.textAdd);
+        await fixture.editor.library.textTab.click();
+        await fixture.events.click(
+          fixture.editor.library.text.preset('Paragraph')
+        );
         await waitFor(() => {
           if (!fixture.editor.canvas.framesLayer.frames[1].node) {
             throw new Error('node not ready');
@@ -247,7 +257,10 @@ describe('ColorPicker', () => {
     describe('CUJ: Creator can Apply or Save a Color from/to Their Preset Library: Manage Color Presets', () => {
       it('should allow deleting local and global color presets', async () => {
         // Add text element and a color preset.
-        await fixture.events.click(fixture.editor.library.textAdd);
+        await fixture.editor.library.textTab.click();
+        await fixture.events.click(
+          fixture.editor.library.text.preset('Paragraph')
+        );
         await waitFor(() => {
           if (!fixture.editor.canvas.framesLayer.frames[1].node) {
             throw new Error('node not ready');

@@ -31,7 +31,6 @@ import { __, sprintf } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
-import { THEME_CONSTANTS } from '../../theme';
 import { Menu, MENU_OPTIONS } from '../menu';
 import { Popup, PLACEMENT } from '../popup';
 import { DropDownContainer, Hint } from './components';
@@ -195,18 +194,12 @@ export const DropDown = forwardRef(
             refCallback={positionPlacement}
             fillWidth={popupFillWidth}
             zIndex={popupZIndex}
+            ignoreMaxOffsetY
           >
             {menu}
           </Popup>
         )}
-        {hint && (
-          <Hint
-            hasError={hasError}
-            size={THEME_CONSTANTS.TYPOGRAPHY.TEXT_SIZES.SMALL}
-          >
-            {hint}
-          </Hint>
-        )}
+        {hint && <Hint hasError={hasError}>{hint}</Hint>}
       </DropDownContainer>
     );
   }

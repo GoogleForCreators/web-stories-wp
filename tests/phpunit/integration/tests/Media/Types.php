@@ -30,7 +30,7 @@ class Types extends TestCase {
 	 */
 	protected $instance;
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->instance = new \Google\Web_Stories\Media\Types();
@@ -39,7 +39,7 @@ class Types extends TestCase {
 	/**
 	 * @covers ::get_allowed_mime_types
 	 */
-	public function test_get_allowed_mime_types() {
+	public function test_get_allowed_mime_types(): void {
 		if ( $this->supportsWebP() ) {
 			$expected = [
 				'image' => [
@@ -77,7 +77,7 @@ class Types extends TestCase {
 	/**
 	 * @covers ::get_allowed_image_mime_types
 	 */
-	public function test_get_allowed_image_mime_types() {
+	public function test_get_allowed_image_mime_types(): void {
 		if ( $this->supportsWebP() ) {
 			$expected = [
 				'image/webp',
@@ -102,13 +102,13 @@ class Types extends TestCase {
 	/**
 	 * @covers ::get_file_type_exts
 	 */
-	public function test_get_file_type_exts() {
+	public function test_get_file_type_exts(): void {
 		$actual = $this->instance->get_file_type_exts( [ 'video/webm' ] );
 
 		$this->assertEqualSets( [ 'webm' ], $actual );
 	}
 
-	protected function supportsWebP() {
+	protected function supportsWebP(): bool {
 		$mime_type = array_values( wp_get_mime_types() );
 
 		return \in_array( 'image/webp', $mime_type, true );

@@ -26,6 +26,7 @@ export {
   useRegisterCheck,
   useIsChecklistEmpty,
   useCategoryCount,
+  useHasChecklist,
 } from './countContext';
 
 export { Checklist } from './checklist';

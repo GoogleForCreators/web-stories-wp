@@ -55,10 +55,8 @@ class Update_Publisher_Logos extends Migrate_Base {
 	 * Split publisher logos into two options.
 	 *
 	 * @since 1.7.0
-	 *
-	 * @return void
 	 */
-	public function migrate() {
+	public function migrate(): void {
 		$publisher_logo_id       = 0;
 		$publisher_logo_settings = (array) $this->settings->get_setting( $this->settings::SETTING_NAME_PUBLISHER_LOGOS, [] );
 

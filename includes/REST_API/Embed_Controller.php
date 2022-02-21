@@ -84,10 +84,8 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 * Registers routes for links.
 	 *
 	 * @see register_rest_route()
-	 *
-	 * @return void
 	 */
-	public function register_routes() {
+	public function register_routes(): void {
 		register_rest_route(
 			$this->namespace,
 			'/' . $this->rest_base,
@@ -244,7 +242,7 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 	 * @param string $url Permalink to check.
 	 * @return WP_Post|null Post object on success, null otherwise.
 	 */
-	private function url_to_post( $url ) {
+	private function url_to_post( $url ): ?WP_Post {
 		$post          = null;
 		$switched_blog = false;
 

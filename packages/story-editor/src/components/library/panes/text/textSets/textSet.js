@@ -20,11 +20,12 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { trackEvent } from '@googleforcreators/tracking';
-import { useCallback, forwardRef } from '@googleforcreators/react';
+import { useCallback, forwardRef, useState } from '@googleforcreators/react';
 import { dataToEditorX, dataToEditorY } from '@googleforcreators/units';
 import {
   BUTTON_TRANSITION_TIMING,
   ThemeGlobals,
+  themeHelpers,
 } from '@googleforcreators/design-system';
 
 /**
@@ -34,8 +35,9 @@ import { useLayout } from '../../../../../app/layout';
 import { TEXT_SET_SIZE } from '../../../../../constants';
 import useLibrary from '../../../useLibrary';
 import LibraryMoveable from '../../shared/libraryMoveable';
-import { focusStyle } from '../../../../panels/shared';
 import { useConfig } from '../../../../../app';
+import InsertionOverlay from '../../shared/insertionOverlay';
+import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import TextSetElements from './textSetElements';
 
 const TextSetItem = styled.button`
@@ -52,23 +54,20 @@ const TextSetItem = styled.button`
   transform: ${({ translateX, translateY }) =>
     `translateX(${translateX}px) translateY(${translateY}px)`};
 
-  ${focusStyle};
-
   background-color: ${({ theme }) =>
     theme.colors.interactiveBg.secondaryNormal};
   border-radius: ${({ theme }) => theme.borders.radius.small};
   cursor: pointer;
   transition: background-color ${BUTTON_TRANSITION_TIMING};
+  outline: none;
 
-  &:hover,
-  &:focus,
-  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} {
-    background-color: ${({ theme }) =>
-      theme.colors.interactiveBg.secondaryHover};
-  }
-  &:active {
-    background-color: ${({ theme }) =>
-      theme.colors.interactiveBg.secondaryPress};
+  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} [role='presentation'],
+  &[data-focus-visible-added] [role='presentation'] {
+    ${({ theme }) =>
+      themeHelpers.focusCSS(
+        theme.colors.border.focus,
+        theme.colors.bg.secondary
+      )};
   }
 `;
 
@@ -85,7 +84,10 @@ const DragContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.opacity.white24};
 `;
 
-function TextSet({ id, elements, translateY, translateX, ...rest }, ref) {
+function TextSet(
+  { id, elements, translateY, translateX, isActive, index, ...rest },
+  ref
+) {
   const { insertTextSet } = useLibrary((state) => ({
     insertTextSet: state.actions.insertTextSet,
   }));
@@ -113,7 +115,14 @@ function TextSet({ id, elements, translateY, translateX, ...rest }, ref) {
     [onClick]
   );
 
-  const renderImages = WEB_STORIES_DISABLE_OPTIMIZED_RENDERING !== 'true';
+  const renderImages =
+    typeof WEB_STORIES_DISABLE_OPTIMIZED_RENDERING === 'undefined' ||
+    WEB_STORIES_DISABLE_OPTIMIZED_RENDERING !== 'true';
+
+  useRovingTabIndex({ ref: ref.current });
+  const [isHovering, setIsHovering] = useState(false);
+  const setHovering = () => setIsHovering(true);
+  const unsetHovering = () => setIsHovering(false);
 
   const { textSetHeight, textSetWidth } = elements[0];
   const dragWidth = dataToEditorX(textSetWidth, pageWidth);
@@ -124,6 +133,9 @@ function TextSet({ id, elements, translateY, translateX, ...rest }, ref) {
       translateY={translateY}
       ref={ref}
       onKeyUp={handleKeyboardPageClick}
+      onPointerEnter={setHovering}
+      onPointerLeave={unsetHovering}
+      tabIndex={index === 0 ? 0 : -1}
       {...rest}
     >
       {renderImages ? (
@@ -136,6 +148,7 @@ function TextSet({ id, elements, translateY, translateX, ...rest }, ref) {
       ) : (
         <TextSetElements isForDisplay elements={elements} />
       )}
+      {(isActive || isHovering) && <InsertionOverlay />}
       <LibraryMoveable
         type={'textSet'}
         elements={elements}
@@ -167,6 +180,8 @@ TextSet.propTypes = {
   elements: PropTypes.array.isRequired,
   translateY: PropTypes.number.isRequired,
   translateX: PropTypes.number.isRequired,
+  isActive: PropTypes.bool,
+  index: PropTypes.number,
 };
 
 TextSet.displayName = 'TextSet';

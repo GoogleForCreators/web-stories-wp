@@ -37,10 +37,8 @@ class Yoast_Reindex_Stories extends Migrate_Base {
 	 * Re-index stories in Yoast SEO if permalinks are outdated.
 	 *
 	 * @since 1.7.0
-	 *
-	 * @return void
 	 */
-	public function migrate() {
+	public function migrate(): void {
 		if (
 			! function_exists( 'YoastSEO' ) ||
 			! class_exists( '\Yoast\WP\SEO\Repositories\Indexable_Repository' ) ||

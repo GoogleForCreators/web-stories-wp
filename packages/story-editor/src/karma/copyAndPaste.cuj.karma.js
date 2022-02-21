@@ -120,9 +120,10 @@ function sequencedForEach(htmlCollection, op) {
       expect(selection).toEqual([newElement.id]);
     });
 
-    // Disable reason: flakey tests.
-    // See https://github.com/googleforcreators/web-stories-wp/pull/6162
-    // eslint-disable-next-line jasmine/no-disabled-tests
+    /* eslint-disable-next-line jasmine/no-disabled-tests --
+     * flakey tests.
+     * See https://github.com/googleforcreators/web-stories-wp/pull/6162
+     **/
     xit('retains all foreground animations', async () => {
       // open effect chooser
       const effectChooserToggle =
@@ -234,7 +235,7 @@ describe('Background Copy & Paste', () => {
     // Navigate back to previous page and add Background image
     await goToPreviousPage();
     const bgMedia = fixture.editor.library.media.item(0);
-    await fixture.events.click(bgMedia);
+    await fixture.events.mouse.clickOn(bgMedia, 20, 20);
     await fixture.events.click(
       fixture.editor.inspector.designPanel.sizePosition.setAsBackground
     );

@@ -84,6 +84,20 @@ class Story {
 	protected $publisher_logo;
 
 	/**
+	 * Poster source set sizes.
+	 *
+	 * @var string
+	 */
+	protected $poster_sizes = '';
+
+	/**
+	 * Poster source set.
+	 *
+	 * @var string
+	 */
+	protected $poster_srcset = '';
+
+	/**
 	 * Publisher logo size.
 	 *
 	 * @var array
@@ -132,7 +146,6 @@ class Story {
 	 * @since 1.0.0
 	 *
 	 * @param int|null|WP_Post $_post Post id or Post object.
-	 * @return bool
 	 */
 	public function load_from_post( $_post ): bool {
 		$this->publisher_name = get_bloginfo( 'name' );
@@ -151,10 +164,18 @@ class Story {
 		$thumbnail_id = (int) get_post_thumbnail_id( $post );
 
 		if ( 0 !== $thumbnail_id ) {
-			$poster_url = wp_get_attachment_image_url( $thumbnail_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
+			$poster_src = wp_get_attachment_image_src( $thumbnail_id, Image_Sizes::POSTER_PORTRAIT_IMAGE_SIZE );
 
-			if ( $poster_url ) {
-				$this->poster_portrait = $poster_url;
+			if ( $poster_src ) {
+				[ $poster_url, $width, $height ] = $poster_src;
+				$this->poster_portrait           = $poster_url;
+
+				$size_array = [ (int) $width, (int) $height ];
+				$image_meta = wp_get_attachment_metadata( $thumbnail_id );
+				if ( $image_meta ) {
+					$this->poster_sizes  = (string) wp_calculate_image_sizes( $size_array, $poster_url, $image_meta, $thumbnail_id );
+					$this->poster_srcset = (string) wp_calculate_image_srcset( $size_array, $poster_url, $image_meta, $thumbnail_id );
+				}
 			}
 		}
 
@@ -169,9 +190,9 @@ class Story {
 			$img_src = wp_get_attachment_image_src( (int) $publisher_logo_id, Image_Sizes::PUBLISHER_LOGO_IMAGE_SIZE );
 
 			if ( $img_src ) {
-				list ( $src, $width, $height ) = $img_src;
-				$this->publisher_logo_size     = [ $width, $height ];
-				$this->publisher_logo          = $src;
+				[ $src, $width, $height ]  = $img_src;
+				$this->publisher_logo_size = [ $width, $height ];
+				$this->publisher_logo      = $src;
 			}
 		}
 
@@ -179,11 +200,27 @@ class Story {
 	}
 
 	/**
+	 * Getter for poster source set sizes.
+	 *
+	 * @since 1.18.0
+	 */
+	public function get_poster_sizes(): string {
+		return (string) $this->poster_sizes;
+	}
+
+	/**
+	 * Getter for poster source set.
+	 *
+	 * @since 1.18.0
+	 */
+	public function get_poster_srcset(): string {
+		return (string) $this->poster_srcset;
+	}
+
+	/**
 	 * Getter for title attribute.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return string
 	 */
 	public function get_title(): string {
 		return (string) $this->title;
@@ -191,8 +228,6 @@ class Story {
 
 	/**
 	 * Getter for excerpt attribute.
-	 *
-	 * @return string
 	 */
 	public function get_excerpt(): string {
 		return (string) $this->excerpt;
@@ -202,8 +237,6 @@ class Story {
 	 * Getter for url attribute.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return string
 	 */
 	public function get_url(): string {
 		return (string) $this->url;
@@ -213,8 +246,6 @@ class Story {
 	 * Getter for markup attribute.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return string
 	 */
 	public function get_markup(): string {
 		return (string) $this->markup;
@@ -224,8 +255,6 @@ class Story {
 	 * Getter for poster portrait attribute.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return string
 	 */
 	public function get_poster_portrait(): string {
 		return (string) $this->poster_portrait;
@@ -233,8 +262,6 @@ class Story {
 
 	/**
 	 * Get the story ID.
-	 *
-	 * @return int
 	 */
 	public function get_id(): int {
 		return (int) $this->id;
@@ -242,8 +269,6 @@ class Story {
 
 	/**
 	 * Get author of the story.
-	 *
-	 * @return string
 	 */
 	public function get_author(): string {
 		return (string) $this->author;
@@ -251,8 +276,6 @@ class Story {
 
 	/**
 	 * Date for the story.
-	 *
-	 * @return string
 	 */
 	public function get_date(): string {
 		return (string) $this->date;
@@ -285,7 +308,7 @@ class Story {
 	 *
 	 * @return string|null Publisher logo URL or null if not set.
 	 */
-	public function get_publisher_logo_url() {
+	public function get_publisher_logo_url(): ?string {
 		/**
 		 * Filters the publisher logo URL.
 		 *

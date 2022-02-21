@@ -35,10 +35,8 @@ class Stories extends DependencyInjectedTestCase {
 
 	/**
 	 * Runs before any method in class is run.
-	 *
-	 * @return void
 	 */
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\Widgets\Stories::class );
@@ -47,14 +45,14 @@ class Stories extends DependencyInjectedTestCase {
 	/**
 	 * Test that object is instance of WP_Widget.
 	 */
-	public function test_instance() {
+	public function test_instance(): void {
 		$this->assertInstanceOf( WP_Widget::class, $this->instance );
 	}
 
 	/**
 	 * Test ID Base is set.
 	 */
-	public function test_id_base() {
+	public function test_id_base(): void {
 		$this->assertEquals( 'string', \gettype( $this->instance->id_base ) );
 		$this->assertNotEmpty( $this->instance->id_base );
 	}
@@ -62,7 +60,7 @@ class Stories extends DependencyInjectedTestCase {
 	/**
 	 * Test name is set.
 	 */
-	public function test_name() {
+	public function test_name(): void {
 		$this->assertEquals( 'string', \gettype( $this->instance->name ) );
 		$this->assertNotEmpty( $this->instance->name );
 	}
@@ -70,7 +68,7 @@ class Stories extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::enqueue_scripts
 	 */
-	public function test_enqueue_scripts() {
+	public function test_enqueue_scripts(): void {
 		$this->instance->enqueue_scripts();
 		$this->assertTrue( wp_script_is( 'web-stories-widget' ) );
 	}
@@ -78,7 +76,7 @@ class Stories extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::update
 	 */
-	public function test_update() {
+	public function test_update(): void {
 		$new_instance = [
 			'title'              => '<p>Test Stories</p>',
 			'view_type'          => 'list',
@@ -119,7 +117,7 @@ class Stories extends DependencyInjectedTestCase {
 	 * @covers ::update
 	 * @covers ::default_values
 	 */
-	public function test_update_default() {
+	public function test_update_default(): void {
 		$new_instance = [];
 
 		$old_instance = [];
@@ -136,8 +134,8 @@ class Stories extends DependencyInjectedTestCase {
 	 * @covers ::input
 	 * @covers ::label
 	 */
-	public function test_input() {
-		$function = function () {
+	public function test_input(): void {
+		$function = function (): void {
 			$args = [
 				'label' => 'Test input',
 				'value' => 3,
@@ -156,8 +154,8 @@ class Stories extends DependencyInjectedTestCase {
 	 * @covers ::dropdown
 	 * @covers ::label
 	 */
-	public function test_dropdown() {
-		$function = function () {
+	public function test_dropdown(): void {
+		$function = function (): void {
 			$args = [
 				'label'    => 'Test input',
 				'options'  => range( 'A', 'Z' ),
@@ -178,8 +176,8 @@ class Stories extends DependencyInjectedTestCase {
 	 * @covers ::radio
 	 * @covers ::label
 	 */
-	public function test_radio() {
-		$function = function () {
+	public function test_radio(): void {
+		$function = function (): void {
 			$args = [
 				'label'    => 'Test input',
 				'options'  => range( 'A', 'Z' ),
@@ -199,7 +197,7 @@ class Stories extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::label
 	 */
-	public function test_label() {
+	public function test_label(): void {
 		$args = [
 			'label' => 'Test input',
 			'id'    => '123',

@@ -66,10 +66,8 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 	 * Register the service.
 	 *
 	 * @since 1.7.0
-	 *
-	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		$this->register_routes();
 	}
 
@@ -120,7 +118,7 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 	 * @param array $prepared_args Array of arguments for WP_User_Query.
 	 * @return array Filtered args.
 	 */
-	public function filter_user_query( $prepared_args ) {
+	public function filter_user_query( $prepared_args ): array {
 		$registered = $this->get_collection_params();
 
 		// Capability queries were added in 5.9, and the 'who' param was deprecated.

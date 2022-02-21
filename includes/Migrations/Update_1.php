@@ -34,10 +34,8 @@ class Update_1 extends Migrate_Base {
 	 * First database migration.
 	 *
 	 * @since 1.7.0
-	 *
-	 * @return void
 	 */
-	public function migrate() {
+	public function migrate(): void {
 		// Do nothing.
 	}
 }

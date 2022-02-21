@@ -49,12 +49,12 @@ class Editor extends Service_Base implements HasRequirements {
 	/**
 	 * Web Stories editor script handle.
 	 */
-	const SCRIPT_HANDLE = 'wp-story-editor';
+	public const SCRIPT_HANDLE = 'wp-story-editor';
 
 	/**
 	 * AMP validator script handle.
 	 */
-	const AMP_VALIDATOR_SCRIPT_HANDLE = 'amp-validator';
+	public const AMP_VALIDATOR_SCRIPT_HANDLE = 'amp-validator';
 
 	/**
 	 * Experiments instance.
@@ -182,10 +182,8 @@ class Editor extends Service_Base implements HasRequirements {
 	 * Initializes the Editor logic.
 	 *
 	 * @since 1.7.0
-	 *
-	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
 		add_filter( 'replace_editor', [ $this, 'replace_editor' ], 10, 2 );
 		add_filter( 'use_block_editor_for_post_type', [ $this, 'filter_use_block_editor_for_post_type' ], 10, 2 );
@@ -262,9 +260,8 @@ class Editor extends Service_Base implements HasRequirements {
 	 * @since 1.0.0
 	 *
 	 * @param string $hook The current admin page.
-	 * @return void
 	 */
-	public function admin_enqueue_scripts( $hook ) {
+	public function admin_enqueue_scripts( $hook ): void {
 		if ( ! $this->context->is_story_editor() ) {
 			return;
 		}
@@ -431,9 +428,8 @@ class Editor extends Service_Base implements HasRequirements {
 	 * @since 1.5.0
 	 *
 	 * @param int $story_id Post id of story.
-	 * @return void
 	 */
-	protected function setup_lock( int $story_id ) {
+	protected function setup_lock( int $story_id ): void {
 		if ( ! $this->experiments->is_experiment_enabled( 'enablePostLocking' ) ) {
 			return;
 		}

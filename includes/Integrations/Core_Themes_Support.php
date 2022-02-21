@@ -81,10 +81,8 @@ class Core_Themes_Support extends Service_Base {
 	 * options supported themes.
 	 *
 	 * @since 1.5.0
-	 *
-	 * @return void
 	 */
-	public function extend_theme_support() {
+	public function extend_theme_support(): void {
 		add_theme_support( 'web-stories' );
 	}
 
@@ -94,10 +92,8 @@ class Core_Themes_Support extends Service_Base {
 	 * Embeds web stories with default customizer settings.
 	 *
 	 * @since 1.5.0
-	 *
-	 * @return void
 	 */
-	public function embed_web_stories() {
+	public function embed_web_stories(): void {
 		$stylesheet = get_stylesheet();
 		if ( is_readable( sprintf( '%sassets/css/web-stories-theme-style-%s.css', WEBSTORIES_PLUGIN_DIR_PATH, $stylesheet ) ) ) {
 			$this->assets->enqueue_style_asset( 'web-stories-theme-style-' . $stylesheet, [ Renderer::STYLE_HANDLE ] );
@@ -130,10 +126,8 @@ class Core_Themes_Support extends Service_Base {
 	 * Adds theme support and hook to embed the web stories.
 	 *
 	 * @since 1.5.0
-	 *
-	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 
 		if ( ! \in_array( get_stylesheet(), self::$supported_themes, true ) ) {
 			return;

@@ -83,8 +83,8 @@ describe('Background Audio', () => {
     it('should allow adding background audio', async () => {
       await createNewStory();
 
-      // Select the current page by clicking on the canvas / safezone.
-      await expect(page).toClick('[data-testid="safezone"]');
+      // Select the current page by clicking bg change quick action (because of empty state).
+      await expect(page).toClick('button', { text: 'Change background color' });
 
       await expect(page).toMatch('Page Background Audio');
 

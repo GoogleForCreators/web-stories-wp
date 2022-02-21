@@ -29,6 +29,7 @@ namespace Google\Web_Stories\Integrations;
 use DOMElement;
 use Google\Web_Stories\AMP\Integration\AMP_Story_Sanitizer;
 use Google\Web_Stories\Context;
+use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Service_Base;
@@ -45,7 +46,7 @@ class AMP extends Service_Base implements HasRequirements {
 	/**
 	 * Slug of the AMP validated URL post type.
 	 */
-	const AMP_VALIDATED_URL_POST_TYPE = 'amp_validated_url';
+	public const AMP_VALIDATED_URL_POST_TYPE = 'amp_validated_url';
 
 	/**
 	 * Settings instance.
@@ -69,29 +70,41 @@ class AMP extends Service_Base implements HasRequirements {
 	private $context;
 
 	/**
+	 * Experiments instance.
+	 *
+	 * @var Experiments Experiments instance.
+	 */
+	private $experiments;
+
+	/**
 	 * Analytics constructor.
 	 *
 	 * @since 1.12.0
 	 *
 	 * @param Settings        $settings        Settings instance.
 	 * @param Story_Post_Type $story_post_type Experiments instance.
-	 * @param Context         $context Context instance.
+	 * @param Context         $context         Context instance.
+	 * @param Experiments     $experiments     Experiments instance.
 	 * @return void
 	 */
-	public function __construct( Settings $settings, Story_Post_Type $story_post_type, Context $context ) {
+	public function __construct(
+		Settings $settings,
+		Story_Post_Type $story_post_type,
+		Context $context,
+		Experiments $experiments
+	) {
 		$this->settings        = $settings;
 		$this->story_post_type = $story_post_type;
 		$this->context         = $context;
+		$this->experiments     = $experiments;
 	}
 
 	/**
 	 * Initializes all hooks.
 	 *
 	 * @since 1.2.0
-	 *
-	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_filter( 'option_amp-options', [ $this, 'filter_amp_options' ] );
 		add_filter( 'amp_supportable_post_types', [ $this, 'filter_supportable_post_types' ] );
 		add_filter( 'amp_to_amp_linking_element_excluded', [ $this, 'filter_amp_to_amp_linking_element_excluded' ], 10, 4 );
@@ -203,10 +216,11 @@ class AMP extends Service_Base implements HasRequirements {
 		}
 
 		$sanitizers[ AMP_Story_Sanitizer::class ] = [
-			'publisher_logo' => $story->get_publisher_logo_url(),
-			'publisher'      => $story->get_publisher_name(),
-			'poster_images'  => array_filter( $poster_images ),
-			'video_cache'    => $video_cache_enabled,
+			'publisher_logo'    => $story->get_publisher_logo_url(),
+			'publisher'         => $story->get_publisher_name(),
+			'poster_images'     => array_filter( $poster_images ),
+			'video_cache'       => $video_cache_enabled,
+			'semantic_headings' => $this->experiments->is_experiment_enabled( 'semanticHeadingTags' ),
 		];
 
 		return $sanitizers;
@@ -232,7 +246,7 @@ class AMP extends Service_Base implements HasRequirements {
 	 * @param array     $error Validation error being sanitized.
 	 * @return null|bool Whether sanitized.
 	 */
-	public function filter_amp_validation_error_sanitized( $sanitized, $error ) {
+	public function filter_amp_validation_error_sanitized( $sanitized, $error ): ?bool {
 		// Skip sanitization for missing publisher logos and poster portrait images.
 		if (
 			( isset( $error['node_type'], $error['node_name'], $error['parent_name'] ) ) &&
@@ -315,10 +329,8 @@ class AMP extends Service_Base implements HasRequirements {
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 *
 	 * @since 1.2.0
-	 *
-	 * @return string|null
 	 */
-	protected function get_request_post_type() {
+	protected function get_request_post_type(): ?string {
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
 		if ( did_action( 'wp' ) && is_singular() ) {
@@ -370,7 +382,7 @@ class AMP extends Service_Base implements HasRequirements {
 	 * @param int $post_id Post ID for Validated URL Post.
 	 * @return string|null Post type or null if validated URL is not for a singular post.
 	 */
-	protected function get_validated_url_post_type( $post_id ) {
+	protected function get_validated_url_post_type( $post_id ): ?string {
 		if ( empty( $post_id ) ) {
 			return null;
 		}

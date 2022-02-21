@@ -42,12 +42,12 @@ class Activation_Notice implements ServiceInterface, Registerable, PluginActivat
 	/**
 	 * Script handle.
 	 */
-	const SCRIPT_HANDLE = 'web-stories-activation-notice';
+	public const SCRIPT_HANDLE = 'web-stories-activation-notice';
 
 	/**
 	 * Option name.
 	 */
-	const OPTION_SHOW_ACTIVATION_NOTICE = 'web_stories_show_activation_notice';
+	public const OPTION_SHOW_ACTIVATION_NOTICE = 'web_stories_show_activation_notice';
 
 	/**
 	 * Assets instance.
@@ -71,10 +71,8 @@ class Activation_Notice implements ServiceInterface, Registerable, PluginActivat
 	 * Initializes the plugin activation notice.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_assets' ] );
 		add_action( 'admin_notices', [ $this, 'render_notice' ] );
 		add_action( 'network_admin_notices', [ $this, 'render_notice' ] );
@@ -86,9 +84,8 @@ class Activation_Notice implements ServiceInterface, Registerable, PluginActivat
 	 * @since 1.13.0
 	 *
 	 * @param bool $network_wide Whether the activation was done network-wide.
-	 * @return void
 	 */
-	public function on_plugin_activation( $network_wide ) {
+	public function on_plugin_activation( $network_wide ): void {
 		$this->set_activation_flag( $network_wide );
 	}
 
@@ -98,9 +95,8 @@ class Activation_Notice implements ServiceInterface, Registerable, PluginActivat
 	 * @since 1.13.0
 	 *
 	 * @param bool $network_wide Whether the deactivation was done network-wide.
-	 * @return void
 	 */
-	public function on_plugin_deactivation( $network_wide ) {
+	public function on_plugin_deactivation( $network_wide ): void {
 		$this->delete_activation_flag( $network_wide );
 	}
 
@@ -110,9 +106,8 @@ class Activation_Notice implements ServiceInterface, Registerable, PluginActivat
 	 * @since 1.0.0
 	 *
 	 * @param string $hook_suffix The current admin page.
-	 * @return void
 	 */
-	public function enqueue_assets( string $hook_suffix ) {
+	public function enqueue_assets( string $hook_suffix ): void {
 		if ( ! $this->is_plugins_page( $hook_suffix ) || ! $this->get_activation_flag( is_network_admin() ) ) {
 			return;
 		}
@@ -189,10 +184,8 @@ class Activation_Notice implements ServiceInterface, Registerable, PluginActivat
 	 * Renders the plugin activation notice.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
-	public function render_notice() {
+	public function render_notice(): void {
 		global $hook_suffix;
 
 		if ( ! $this->is_plugins_page( $hook_suffix ) ) {
@@ -232,7 +225,6 @@ class Activation_Notice implements ServiceInterface, Registerable, PluginActivat
 	 * @since 1.13.0
 	 *
 	 * @param bool $network_wide Whether the plugin is being activated network-wide.
-	 * @return bool
 	 */
 	protected function set_activation_flag( bool $network_wide = false ): bool {
 		if ( $network_wide ) {

@@ -36,21 +36,19 @@ class Meta_Boxes extends Service_Base {
 	/**
 	 * Supported meta box locations.
 	 */
-	const LOCATIONS = [ 'normal', 'advanced', 'side' ];
+	public const LOCATIONS = [ 'normal', 'advanced', 'side' ];
 
 	/**
 	 * Meta box priorities.
 	 */
-	const PRIORITIES = [ 'high', 'sorted', 'core', 'default', 'low' ];
+	public const PRIORITIES = [ 'high', 'sorted', 'core', 'default', 'low' ];
 
 	/**
 	 * Init.
 	 *
 	 * @since 1.2.0
-	 *
-	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_action( 'add_meta_boxes_' . Story_Post_Type::POST_TYPE_SLUG, [ $this, 'remove_meta_boxes' ], PHP_INT_MAX );
 	}
 
@@ -65,10 +63,8 @@ class Meta_Boxes extends Service_Base {
 	 * @since 1.2.0
 	 *
 	 * @see do_meta_boxes()
-	 *
-	 * @return void
 	 */
-	public function remove_meta_boxes() {
+	public function remove_meta_boxes(): void {
 		global $wp_meta_boxes;
 
 		$screen = get_current_screen();

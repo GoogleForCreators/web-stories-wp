@@ -71,10 +71,8 @@ class Discovery extends Service_Base implements HasRequirements {
 	 * Initialize discovery functionality.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_action( 'web_stories_story_head', [ $this, 'print_metadata' ] );
 		add_action( 'web_stories_story_head', [ $this, 'print_schemaorg_metadata' ] );
 		add_action( 'web_stories_story_head', [ $this, 'print_open_graph_metadata' ] );
@@ -112,10 +110,8 @@ class Discovery extends Service_Base implements HasRequirements {
 	 * @since 1.0.0
 	 *
 	 * @see _wp_render_title_tag().
-	 *
-	 * @return void
 	 */
-	public function print_metadata() {
+	public function print_metadata(): void {
 		/**
 		 * Filters filter to enable / disable metadata
 		 *
@@ -137,10 +133,8 @@ class Discovery extends Service_Base implements HasRequirements {
 	 * Prints the schema.org metadata on the single story template.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
-	public function print_schemaorg_metadata() {
+	public function print_schemaorg_metadata(): void {
 		/**
 		 * Filters filter to enable / disable schemaorg metadata.
 		 *
@@ -241,10 +235,8 @@ class Discovery extends Service_Base implements HasRequirements {
 	 * Prints Open Graph metadata.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
-	public function print_open_graph_metadata() {
+	public function print_open_graph_metadata(): void {
 		/**
 		 * Filters filter to enable / disable open graph metadata.
 		 *
@@ -316,10 +308,8 @@ class Discovery extends Service_Base implements HasRequirements {
 	 * Prints Twitter card metadata.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
-	public function print_twitter_metadata() {
+	public function print_twitter_metadata(): void {
 		/**
 		 * Filters filter to enable / disable twitter metadata.
 		 *
@@ -381,10 +371,8 @@ class Discovery extends Service_Base implements HasRequirements {
 	 * Add RSS feed link for stories, if theme supports automatic-feed-links.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
-	public function print_feed_link() {
+	public function print_feed_link(): void {
 		if ( ! current_theme_supports( 'automatic-feed-links' ) ) {
 			return;
 		}
@@ -433,7 +421,7 @@ class Discovery extends Service_Base implements HasRequirements {
 			return false;
 		}
 
-		list( $src, $width, $height ) = $image;
+		[ $src, $width, $height ] = $image;
 
 		$poster = compact( 'src', 'width', 'height' );
 		$poster = array_filter( $poster );

@@ -23,15 +23,12 @@ import {
   uploadPublisherLogoEditor,
   takeSnapshot,
   skipSuiteOnFirefox,
+  addTextElement,
 } from '@web-stories-wp/e2e-test-utils';
-
-const addNewTextElement = async () => {
-  await expect(page).toClick('button[aria-label="Add new text element"]');
-};
 
 const addNewPage = async () => {
   await expect(page).toClick('button[aria-label="Add New Page"]');
-  await addNewTextElement();
+  await addTextElement();
 };
 
 const addPages = async (number) => {
@@ -64,6 +61,10 @@ describe('Pre-Publish Checklist : Admin User', () => {
 
   it('should show that there is no poster attached to the story', async () => {
     await expect(page).toClick('[data-testid^="mediaElement"]');
+    const insertButton = await page.waitForXPath(
+      `//li//span[contains(text(), 'Insert image')]`
+    );
+    await insertButton.click();
     await expect(page).toMatchElement('[data-testid="imageElement"]');
 
     await publishStory();
@@ -84,7 +85,7 @@ describe('Pre-Publish Checklist : Admin User', () => {
     skipSuiteOnFirefox();
 
     it('should show cards related to poster image issues', async () => {
-      await addNewTextElement();
+      await addTextElement();
       await addPages(3);
 
       await expect(page).toClick('button', { text: 'Publish' });
@@ -114,7 +115,7 @@ describe('Pre-Publish Checklist : Admin User', () => {
   });
 
   it('should focus on media button when poster image issue card is clicked', async () => {
-    await addNewTextElement();
+    await addTextElement();
     await addPages(3);
 
     await expect(page).toClick('button', { text: 'Publish' });

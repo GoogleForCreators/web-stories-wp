@@ -13,21 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const Placement = {
-  // TOP
-  TOP: 'top',
-  TOP_START: 'top-start',
-  TOP_END: 'top-end',
-  // BOTTOM
-  BOTTOM: 'bottom',
-  BOTTOM_START: 'bottom-start',
-  BOTTOM_END: 'bottom-end',
-  // RIGHT
-  RIGHT: 'right',
-  RIGHT_START: 'right-start',
-  RIGHT_END: 'right-end',
-  // LEFT
-  LEFT: 'left',
-  LEFT_START: 'left-start',
-  LEFT_END: 'left-end',
-};
+
+/**
+ * External dependencies
+ */
+import { Icons } from '@googleforcreators/design-system';
+import { __ } from '@googleforcreators/i18n';
+
+/**
+ * Internal dependencies
+ */
+import { IconButton } from './shared';
+
+function Mute() {
+  return (
+    <IconButton
+      Icon={Icons.Muted}
+      title={__('mute video', 'web-stories')}
+      onClick={() => {}}
+    />
+  );
+}
+
+export default Mute;

@@ -53,10 +53,8 @@ class Analytics extends Service_Base {
 	 * Initializes all hooks.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_action( 'web_stories_print_analytics', [ $this, 'print_analytics_tag' ] );
 	}
 
@@ -231,10 +229,8 @@ class Analytics extends Service_Base {
 	 * Prints the analytics tag for single stories.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
-	public function print_analytics_tag() {
+	public function print_analytics_tag(): void {
 		$tracking_id = $this->get_tracking_id();
 
 		if ( ! $tracking_id ) {
@@ -254,9 +250,8 @@ class Analytics extends Service_Base {
 	 * @since 1.12.0
 	 *
 	 * @param string $tracking_id Tracking ID.
-	 * @return void
 	 */
-	private function print_amp_analytics_tag( $tracking_id ) {
+	private function print_amp_analytics_tag( $tracking_id ): void {
 		?>
 		<amp-analytics type="gtag" data-credentials="include">
 			<script type="application/json">
@@ -272,9 +267,8 @@ class Analytics extends Service_Base {
 	 * @since 1.12.0
 	 *
 	 * @param string $tracking_id Tracking ID.
-	 * @return void
 	 */
-	private function print_amp_story_auto_analytics_tag( $tracking_id ) {
+	private function print_amp_story_auto_analytics_tag( $tracking_id ): void {
 		?>
 		<amp-story-auto-analytics gtag-id="<?php echo esc_attr( $tracking_id ); ?>"></amp-story-auto-analytics>
 		<?php

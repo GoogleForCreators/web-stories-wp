@@ -41,7 +41,7 @@ use WP_REST_Server;
  * Class Hotlinking_Controller
  */
 class Hotlinking_Controller extends REST_Controller implements HasRequirements {
-	const PROXY_HEADERS_ALLOWLIST = [
+	public const PROXY_HEADERS_ALLOWLIST = [
 		'Content-Type',
 		'Cache-Control',
 		'Etag',
@@ -103,10 +103,8 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 * @since 1.11.0
 	 *
 	 * @see register_rest_route()
-	 *
-	 * @return void
 	 */
-	public function register_routes() {
+	public function register_routes(): void {
 		register_rest_route(
 			$this->namespace,
 			'/' . $this->rest_base . '/validate',
@@ -265,11 +263,10 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 * @since 1.13.0
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
-	 * @return void
 	 *
 	 * @todo Forward the Range request header.
 	 */
-	public function proxy_url( $request ) {
+	public function proxy_url( $request ): void {
 		/**
 		 * Requested URL.
 		 *
@@ -331,9 +328,8 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @param string $url  Request URL.
 	 * @param array  $args Request args.
-	 * @return void
 	 */
-	private function proxy_url_curl( $url, $args ) {
+	private function proxy_url_curl( $url, $args ): void {
 		add_action( 'http_api_curl', [ $this, 'modify_curl_configuration' ] );
 		wp_safe_remote_get( $url, $args );
 		remove_action( 'http_api_curl', [ $this, 'modify_curl_configuration' ] );
@@ -353,9 +349,8 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @param string $url  Request URL.
 	 * @param array  $args Request args.
-	 * @return void
 	 */
-	private function proxy_url_fallback( $url, $args ) {
+	private function proxy_url_fallback( $url, $args ): void {
 		$response = wp_safe_remote_get( $url, $args );
 		$status   = wp_remote_retrieve_response_code( $response );
 
@@ -525,9 +520,8 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 * @since 1.15.0
 	 *
 	 * @param resource $handle      The cURL handle returned by curl_init() (passed by reference).
-	 * @return void
 	 */
-	public function modify_curl_configuration( &$handle ) {
+	public function modify_curl_configuration( &$handle ): void {
 		// Just some safeguard in case cURL is not really available,
 		// despite this method being run in the context of WP_Http_Curl.
 		if ( ! function_exists( 'curl_setopt' ) ) {

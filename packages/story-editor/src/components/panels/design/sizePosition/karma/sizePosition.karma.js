@@ -53,7 +53,8 @@ describe('Selection Panel', () => {
 
   describe('CUJ: Creator can Transform an Element: Set height and width', () => {
     it('should have correct default aspect ratio lock values', async () => {
-      await fixture.events.click(fixture.editor.library.media.item(0));
+      const mediaItem = fixture.editor.library.media.item(0);
+      await fixture.events.mouse.clickOn(mediaItem, 20, 20);
       const [image] = await getSelection();
       expect(image.lockAspectRatio).toBeFalse();
 
@@ -70,13 +71,19 @@ describe('Selection Panel', () => {
       const [rectangle] = await getSelection();
       expect(rectangle.lockAspectRatio).toBeFalse();
 
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
       const [text] = await getSelection();
       expect(text.lockAspectRatio).not.toBeFalse();
     });
 
     it('should allow the user to change the height & width of a text element', async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
       await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
       panel = fixture.editor.inspector.designPanel.sizePosition;
 
@@ -108,8 +115,12 @@ describe('Selection Panel', () => {
     });
 
     it('should disable setting height independently of multi-selection containing text', async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
       await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+
       panel = fixture.editor.inspector.designPanel.sizePosition;
 
       // Switch to shapes tab and click the triangle
@@ -138,7 +149,8 @@ describe('Selection Panel', () => {
       await fixture.events.keyboard.press('tab');
 
       const updatedElements = await getSelection();
-      expect(updatedElements[0].height).toBe(oHeight1);
+      // The height of the text was reduced automatically due to the number of rows decreasing.
+      expect(updatedElements[0].height).toBeLessThanOrEqual(oHeight1);
       expect(updatedElements[1].height).toBe(oHeight2);
     });
   });

@@ -35,7 +35,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 	 */
 	private $controller;
 
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$user_id = $factory->user->create(
 			[
 				'role'         => 'administrator',
@@ -55,7 +55,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 		);
 	}
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->controller = $this->injector->make( \Google\Web_Stories\REST_API\Stories_Users_Controller::class );
@@ -64,7 +64,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$routes = rest_get_server()->get_routes();
 
 		$this->assertArrayHasKey( '/web-stories/v1/users', $routes );
@@ -74,7 +74,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::filter_user_query
 	 */
-	public function test_filter_user_query_pre_wp_59() {
+	public function test_filter_user_query_pre_wp_59(): void {
 		if ( is_wp_version_compatible( '5.9-beta' ) ) {
 			$this->markTestSkipped( 'This test requires WordPress < 5.9.' );
 		}
@@ -91,7 +91,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::filter_user_query
 	 */
-	public function test_filter_user_query_wp_59() {
+	public function test_filter_user_query_wp_59(): void {
 		if ( ! is_wp_version_compatible( '5.9-beta' ) ) {
 			$this->markTestSkipped( 'This test requires WordPress 5.9.' );
 		}
@@ -108,7 +108,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::filter_user_query
 	 */
-	public function test_filter_user_query_capabilities_query_supported() {
+	public function test_filter_user_query_capabilities_query_supported(): void {
 		add_filter( 'rest_user_collection_params', [ $this, 'filter_rest_user_collection_params' ] );
 
 		$actual = $this->controller->filter_user_query( [ 'who' => 'authors' ] );
@@ -123,7 +123,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 		);
 	}
 
-	public function filter_rest_user_collection_params( $query_params ) {
+	public function filter_rest_user_collection_params( array $query_params ): array {
 		$query_params['capabilities'] = [
 			'type'  => 'array',
 			'items' => [
@@ -137,7 +137,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::filter_user_query
 	 */
-	public function test_filter_user_query_wp_59_existing_query() {
+	public function test_filter_user_query_wp_59_existing_query(): void {
 		if ( version_compare( get_bloginfo( 'version' ), '5.9.0-beta', '<' ) ) {
 			$this->markTestSkipped( 'This test requires WordPress 5.9.' );
 		}
@@ -159,7 +159,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 	/**
 	 * @covers ::filter_user_query
 	 */
-	public function test_filter_user_query_no_change() {
+	public function test_filter_user_query_no_change(): void {
 		$args    = [
 			'orderby' => 'registered',
 			'order'   => 'ASC',
@@ -172,7 +172,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::user_posts_count_public
 	 * @covers \Google\Web_Stories\Story_Post_Type::clear_user_posts_count
 	 */
-	public function test_count_user_posts() {
+	public function test_count_user_posts(): void {
 		$this->controller->register();
 		$post_type = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
 		$post_type->register();
@@ -223,7 +223,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::user_posts_count_public
 	 * @covers \Google\Web_Stories\Story_Post_Type::clear_user_posts_count
 	 */
-	public function test_count_user_posts_invalid() {
+	public function test_count_user_posts_invalid(): void {
 		$this->controller->register();
 
 		$post_type = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );

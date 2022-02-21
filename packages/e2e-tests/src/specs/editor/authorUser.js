@@ -39,7 +39,7 @@ describe('Author User', () => {
     const editorPage = page;
     const previewPage = await previewStory(editorPage);
     await expect(previewPage).toMatchElement('p', {
-      text: 'Fill in some text',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     });
 
     await editorPage.bringToFront();
@@ -60,7 +60,7 @@ describe('Author User', () => {
     const editorPage = page;
     const previewPage = await previewStory(editorPage);
     await expect(previewPage).toMatchElement('p', {
-      text: 'Fill in some text',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     });
 
     await editorPage.bringToFront();
@@ -81,7 +81,7 @@ describe('Author User', () => {
     const editorPage = page;
     const previewPage = await previewStory(editorPage);
     await expect(previewPage).toMatchElement('p', {
-      text: 'Fill in some text',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     });
 
     await editorPage.bringToFront();

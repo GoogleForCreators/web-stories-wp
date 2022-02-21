@@ -34,28 +34,28 @@ use const WPCOM_IS_VIP_ENV;
 abstract class ServiceBasedPlugin implements Plugin {
 
 	// Main filters to control the flow of the plugin from outside code.
-	const SERVICES_FILTER         = 'services';
-	const BINDINGS_FILTER         = 'bindings';
-	const ARGUMENTS_FILTER        = 'arguments';
-	const SHARED_INSTANCES_FILTER = 'shared_instances';
-	const DELEGATIONS_FILTER      = 'delegations';
+	public const SERVICES_FILTER         = 'services';
+	public const BINDINGS_FILTER         = 'bindings';
+	public const ARGUMENTS_FILTER        = 'arguments';
+	public const SHARED_INSTANCES_FILTER = 'shared_instances';
+	public const DELEGATIONS_FILTER      = 'delegations';
 
 	// Service identifier for the injector.
-	const INJECTOR_ID = 'injector';
+	public const INJECTOR_ID = 'injector';
 
 	// WordPress action to trigger the service registration on.
 	// Use false to register as soon as the code is loaded.
-	const REGISTRATION_ACTION = false;
+	public const REGISTRATION_ACTION = false;
 
 	// Whether to enable filtering by default or not.
-	const ENABLE_FILTERS_DEFAULT = true;
+	public const ENABLE_FILTERS_DEFAULT = true;
 
 	// Prefixes to use.
-	const HOOK_PREFIX    = '';
-	const SERVICE_PREFIX = '';
+	public const HOOK_PREFIX    = '';
+	public const SERVICE_PREFIX = '';
 
 	// Pattern used for detecting capitals to turn PascalCase into snake_case.
-	const DETECT_CAPITALS_REGEX_PATTERN = '/[A-Z]([A-Z](?![a-z]))*/';
+	public const DETECT_CAPITALS_REGEX_PATTERN = '/[A-Z]([A-Z](?![a-z]))*/';
 
 	/**
 	 * Enable filters.
@@ -120,9 +120,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @since 1.6.0
 	 *
 	 * @param bool $network_wide Whether the activation was done network-wide.
-	 * @return void
 	 */
-	public function on_plugin_activation( $network_wide ) {
+	public function on_plugin_activation( $network_wide ): void {
 		$this->register_services();
 
 		foreach ( $this->service_container as $service ) {
@@ -142,9 +141,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @since 1.6.0
 	 *
 	 * @param bool $network_wide Whether the deactivation was done network-wide.
-	 * @return void
 	 */
-	public function on_plugin_deactivation( $network_wide ) {
+	public function on_plugin_deactivation( $network_wide ): void {
 		$this->register_services();
 
 		foreach ( $this->service_container as $service ) {
@@ -164,9 +162,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @since 1.11.0
 	 *
 	 * @param WP_Site $site The site being initialized.
-	 * @return void
 	 */
-	public function on_site_initialization( WP_Site $site ) {
+	public function on_site_initialization( WP_Site $site ): void {
 		$this->register_services();
 
 		$site_id = (int) $site->blog_id;
@@ -193,9 +190,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @since 1.11.0
 	 *
 	 * @param WP_Site $site The site being removed.
-	 * @return void
 	 */
-	public function on_site_removal( WP_Site $site ) {
+	public function on_site_removal( WP_Site $site ): void {
 		$this->register_services();
 
 		$site_id = (int) $site->blog_id;
@@ -218,10 +214,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @since 1.6.0
 	 *
 	 * @throws InvalidService If a service is not valid.
-	 *
-	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		if ( false !== static::REGISTRATION_ACTION ) {
 			add_action(
 				static::REGISTRATION_ACTION,
@@ -238,10 +232,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @since 1.6.0
 	 *
 	 * @throws InvalidService If a service is not valid.
-	 *
-	 * @return void
 	 */
-	public function register_services() {
+	public function register_services(): void {
 		// Bail early so we don't instantiate services twice.
 		if ( \count( $this->service_container ) > 0 ) {
 			return;
@@ -399,7 +391,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 
 				add_action(
 					$action,
-					function () use ( $id, $class, $services ) {
+					function () use ( $id, $class, $services ): void {
 						if ( ! $this->requirements_are_met( $id, $class, $services ) ) {
 							return;
 						}
@@ -533,9 +525,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @param string                       $id ID of the service to register.
 	 * @param HasRequirements|class-string $class Class of the service to register.
-	 * @return void
 	 */
-	protected function schedule_potential_service_registration( $id, $class ) {
+	protected function schedule_potential_service_registration( $id, $class ): void {
 		if ( is_a( $class, Delayed::class, true ) ) {
 			$action   = $class::get_registration_action();
 			$priority = $class::get_registration_action_priority();
@@ -545,7 +536,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 			} else {
 				add_action(
 					$action,
-					function () use ( $id, $class ) {
+					function () use ( $id, $class ): void {
 						$this->maybe_register_service( $id, $class );
 					},
 					$priority
@@ -563,9 +554,8 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @param string              $id ID of the service to register.
 	 * @param class-string|object $class Class of the service to register.
-	 * @return void
 	 */
-	protected function maybe_register_service( $id, $class ) {
+	protected function maybe_register_service( $id, $class ): void {
 		// Ensure we don't register the same service more than once.
 		if ( $this->service_container->has( $id ) ) {
 			return;
@@ -608,7 +598,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @param string|class-string|object $class Service class to instantiate.
 	 * @return Service Instantiated service.
 	 */
-	protected function instantiate_service( $class ) {
+	protected function instantiate_service( $class ): Service {
 		/*
 		 * If the service is not registerable, we default to lazily instantiated
 		 * services here for some basic optimization.
@@ -841,7 +831,7 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @param string|callable|class-string $value Value to potentially resolve.
 	 * @return string|class-string Resolved or unchanged value.
 	 */
-	protected function maybe_resolve( $value ) {
+	protected function maybe_resolve( $value ): string {
 		if ( is_callable( $value ) && ! ( \is_string( $value ) && function_exists( $value ) ) ) {
 			$value = $value( $this->injector, $this->service_container );
 		}

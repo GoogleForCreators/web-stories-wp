@@ -66,10 +66,8 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 
 	/**
 	 * Init
-	 *
-	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		if ( ! $this->context->is_story_editor() ) {
 			return;
 		}
@@ -156,10 +154,8 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 	 * Start output buffer to add headers and `crossorigin` attribute everywhere.
 	 *
 	 * @since 1.6.0
-	 *
-	 * @return void
 	 */
-	public function admin_header() {
+	public function admin_header(): void {
 		if ( $this->needs_isolation() ) {
 			header( 'Cross-Origin-Opener-Policy: same-origin' );
 			header( 'Cross-Origin-Embedder-Policy: require-corp' );
@@ -335,10 +331,8 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 	 * Unhook wp_print_media_templates and replace with custom media templates.
 	 *
 	 * @since 1.8.0
-	 *
-	 * @return void
 	 */
-	public function override_media_templates() {
+	public function override_media_templates(): void {
 		remove_action( 'admin_footer', 'wp_print_media_templates' );
 		add_action( 'admin_footer', [ $this, 'custom_print_media_templates' ] );
 	}
@@ -347,10 +341,8 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 	 * Add crossorigin attribute to all tags that could have assets loaded from a different domain.
 	 *
 	 * @since 1.8.0
-	 *
-	 * @return void
 	 */
-	public function custom_print_media_templates() {
+	public function custom_print_media_templates(): void {
 		ob_start();
 		wp_print_media_templates();
 		$html = (string) ob_get_clean();
@@ -374,7 +366,6 @@ class Cross_Origin_Isolation extends Service_Base implements HasRequirements {
 	 *
 	 * @param string $string       String to search.
 	 * @param string $start_string String to search with.
-	 * @return bool
 	 */
 	private function starts_with( string $string, string $start_string ): bool {
 		return 0 === strpos( $string, $start_string );

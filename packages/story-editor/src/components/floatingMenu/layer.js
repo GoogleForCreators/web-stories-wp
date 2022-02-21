@@ -17,28 +17,20 @@
 /**
  * External dependencies
  */
-import { useEffect, useRef, useState } from '@googleforcreators/react';
+import {
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+} from '@googleforcreators/react';
 
 /**
  * Internal dependencies
  */
-import { useCanvas, useLayout } from '../../app';
+import { useCanvas, useLayout, useStory } from '../../app';
 import { FLOATING_MENU_DISTANCE } from '../../constants';
+import { SELECTED_ELEMENT_TYPES } from './constants';
 import FloatingMenu from './menu';
-
-// Note that this has to work for a lot of different types of moveable
-// Variants include small elements, proportion-locked text elements, multi-selections, etc.
-// Thus we have more selectors than we need for any single variant, but we make sure
-// that we cover something present in every variant.
-// The reason why we don't just have the control box is, that we need to record a change
-// in width as well. If you just change the width in the design panel, the control box doesn't mutate
-// Thus we need something that both checks the top-left and the bottom-right corner.
-const MUTATE_SELECTORS = [
-  '.moveable-control-box', // always present in the top left corner of every movable
-  '.moveable-direction.moveable-e', // right side handle of single selection movable
-  '.moveable-direction.moveable-s', // bottom side handle of single selection movable
-  '.moveable-direction moveable-se', // bottom-right handle of multi selection movable
-];
 
 function FloatingMenuLayer() {
   const { setMoveableMount } = useCanvas(
@@ -50,10 +42,27 @@ function FloatingMenuLayer() {
       workspaceHeight,
     })
   );
+  // We need to know if what is currently selected as well as a unique identifier
+  // for the combined selection (in order to undismiss in case of change of selection)
+  const { selectedElementType, selectionIdentifier } = useStory(
+    ({ state: { selectedElements } }) => ({
+      selectedElementType:
+        selectedElements.length === 1 && !selectedElements[0].isBackground
+          ? selectedElements[0]?.type
+          : selectedElements.length > 1
+          ? SELECTED_ELEMENT_TYPES.MULTIPLE
+          : SELECTED_ELEMENT_TYPES.NONE,
+      selectionIdentifier: selectedElements.map(({ id }) => id).join(''),
+    })
+  );
 
   const [moveable, setMoveable] = useState(null);
   const menuRef = useRef();
   const workspaceSize = useRef();
+
+  const [isDismissed, setDismissed] = useState(false);
+  const handleDismiss = useCallback(() => setDismissed(true), []);
+  useEffect(() => setDismissed(false), [selectionIdentifier]);
 
   // Whenever the selection frame (un)mounts, update the reference to moveable
   // This happens when selection changes between the three possible states: None,
@@ -71,18 +80,21 @@ function FloatingMenuLayer() {
     // frame will already be updating because of the resize, so a DOM mutation is incoming.
   }, [workspaceWidth, workspaceHeight]);
 
+  const hasMenu =
+    selectedElementType !== SELECTED_ELEMENT_TYPES.NONE &&
+    !isDismissed &&
+    moveable;
+
   // Whenever moveable is set (because selection count changed between none, single, or multiple)
   useEffect(() => {
     const menu = menuRef.current;
-    if (!moveable) {
-      menu.style.display = 'none';
-      return null;
+    if (!menu || !moveable) {
+      return undefined;
     }
 
     const updatePosition = () => {
       const frameRect = moveable.getRect();
       const { width, height } = workspaceSize.current;
-      menu.style.display = 'flex';
       const centerX = frameRect.left + frameRect.width / 2;
       menu.style.left = `clamp(0px, ${centerX}px - (var(--width) / 2), ${width}px - var(--width))`;
       const bottomX = frameRect.top + frameRect.height + FLOATING_MENU_DISTANCE;
@@ -92,16 +104,30 @@ function FloatingMenuLayer() {
     // Update now
     updatePosition();
 
-    // And update when certain elements' properties update
+    // And update when any element's properties inside the moveable box changes
     const observer = new MutationObserver(updatePosition);
-    MUTATE_SELECTORS.map((selector) => document.querySelector(selector))
-      .filter(Boolean)
-      .forEach((node) => observer.observe(node, { attributes: true }));
+    const node = document.querySelector('.moveable-control-box');
+    observer.observe(node, {
+      attributes: true,
+      subtree: true,
+      attributeFilter: ['style'],
+    });
 
     return () => observer.disconnect();
-  }, [moveable]);
+  }, [moveable, hasMenu]);
 
-  return <FloatingMenu ref={menuRef} />;
+  if (!hasMenu) {
+    return false;
+  }
+
+  return (
+    <FloatingMenu
+      ref={menuRef}
+      handleDismiss={handleDismiss}
+      selectedElementType={selectedElementType}
+      selectionIdentifier={selectionIdentifier}
+    />
+  );
 }
 
 export default FloatingMenuLayer;

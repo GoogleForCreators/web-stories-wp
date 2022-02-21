@@ -23,6 +23,7 @@ import { useMemo, useEffect } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
+import { STABLE_ARRAY } from '../../constants';
 import Context from './context';
 
 import useLoadStory from './effects/useLoadStory';
@@ -33,13 +34,6 @@ import useHistoryReplay from './effects/useHistoryReplay';
 import useStoryReducer from './useStoryReducer';
 import useAutoSave from './actions/useAutoSave';
 import { StoryTriggersProvider } from './storyTriggers';
-
-/**
- * Shared reference to an empty array for cases where it is important to avoid
- * returning a new array reference on every invocation, as in a connected or
- * other pure component which performs `shouldComponentUpdate` check on props.
- */
-const EMPTY_ARRAY = [];
 
 function StoryProvider({ storyId, initialEdits, children }) {
   const [hashPageId, setHashPageId] = useHashState('page', null);
@@ -92,41 +86,38 @@ function StoryProvider({ storyId, initialEdits, children }) {
   }, [pages, current]);
 
   // Generate selection info
-  const {
-    selectedElementIds,
-    selectedElements,
-    selectedElementAnimations,
-    hasSelection,
-  } = useMemo(() => {
-    if (!currentPage) {
-      return {
-        selectedElements: EMPTY_ARRAY,
-        selectedElementIds: EMPTY_ARRAY,
-        selectedElementAnimations: EMPTY_ARRAY,
-        hasSelection: false,
-      };
-    }
+  const selectedElementIds = useMemo(
+    () => (selection.length > 0 ? selection : STABLE_ARRAY),
+    [selection]
+  );
+  const isCurrentPageEmpty = !currentPage;
 
-    const els = currentPage.elements.filter(({ id }) => selection.includes(id));
-    const animations = (currentPage.animations || []).reduce(
+  const currentPageElements = currentPage?.elements;
+  const selectedElements = useMemo(() => {
+    if (isCurrentPageEmpty) {
+      return STABLE_ARRAY;
+    }
+    const els = currentPageElements.filter(({ id }) => selection.includes(id));
+    return els.length > 0 ? els : STABLE_ARRAY;
+  }, [isCurrentPageEmpty, currentPageElements, selection]);
+
+  const currentPageAnimations = currentPage?.animations;
+  const selectedElementAnimations = useMemo(() => {
+    if (isCurrentPageEmpty) {
+      return STABLE_ARRAY;
+    }
+    const animations = (currentPageAnimations || []).reduce(
       (acc, { targets, ...properties }) => {
         if (targets.some((id) => selection.includes(id))) {
           return [...acc, { targets, ...properties }];
         }
-
         return acc;
       },
       []
     );
-
-    return {
-      selectedElementIds: selection.length > 0 ? selection : EMPTY_ARRAY,
-      selectedElements: els.length > 0 ? els : EMPTY_ARRAY,
-      selectedElementAnimations:
-        animations.length > 0 ? animations : EMPTY_ARRAY,
-      hasSelection: els.length > 0,
-    };
-  }, [currentPage, selection]);
+    return animations.length > 0 ? animations : STABLE_ARRAY;
+  }, [isCurrentPageEmpty, selection, currentPageAnimations]);
+  const hasSelection = selectedElements.length > 0;
 
   // This effect loads and initialises the story on first load (when there's no pages).
   const shouldLoad = pages.length === 0;

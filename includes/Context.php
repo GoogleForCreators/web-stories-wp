@@ -113,8 +113,6 @@ class Context {
 	 * Whether we're currently on a block editor screen.
 	 *
 	 * @since 1.15.0
-	 *
-	 * @return bool
 	 */
 	public function is_block_editor(): bool {
 		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
@@ -129,7 +127,7 @@ class Context {
 	 *
 	 * @return string|null Current screen base if available.
 	 */
-	public function get_screen_base() {
+	public function get_screen_base(): ?string {
 		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
 
 		return $screen->base ?? null;
@@ -142,7 +140,7 @@ class Context {
 	 *
 	 * @return string|null Current screen post type if available.
 	 */
-	public function get_screen_post_type() {
+	public function get_screen_post_type(): ?string {
 		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
 
 		return $screen->post_type ?? null;

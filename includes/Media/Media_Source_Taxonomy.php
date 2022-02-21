@@ -69,16 +69,14 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	/**
 	 * Media Source key.
 	 */
-	const MEDIA_SOURCE_KEY = 'web_stories_media_source';
+	public const MEDIA_SOURCE_KEY = 'web_stories_media_source';
 
 	/**
 	 * Init.
 	 *
 	 * @since 1.10.0
-	 *
-	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		$this->register_taxonomy();
 
 		add_action( 'rest_api_init', [ $this, 'rest_api_init' ] );
@@ -115,10 +113,8 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 * Registers additional REST API fields upon API initialization.
 	 *
 	 * @since 1.10.0
-	 *
-	 * @return void
 	 */
-	public function rest_api_init() {
+	public function rest_api_init(): void {
 		// Custom field, as built in term update require term id and not slug.
 		register_rest_field(
 			$this->taxonomy_post_type,
@@ -168,7 +164,6 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 * @since 1.0.0
 	 *
 	 * @param array $prepared Prepared data before response.
-	 * @return string
 	 */
 	public function get_callback_media_source( $prepared ): string {
 		$id = $prepared['id'];
@@ -273,9 +268,8 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 * @since 1.10.0
 	 *
 	 * @param WP_Query $query WP_Query instance, passed by reference.
-	 * @return void
 	 */
-	public function filter_generated_media_attachments( &$query ) {
+	public function filter_generated_media_attachments( &$query ): void {
 		if ( is_admin() && $query->is_main_query() && $this->context->is_upload_screen() ) {
 			$tax_query = $query->get( 'tax_query' );
 

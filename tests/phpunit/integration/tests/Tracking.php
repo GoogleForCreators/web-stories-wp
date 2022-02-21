@@ -22,7 +22,7 @@ use Google\Web_Stories\Integrations\Site_Kit;
 /**
  * @coversDefaultClass \Google\Web_Stories\Tracking
  */
-class Tracking extends TestCase {
+class Tracking extends DependencyInjectedTestCase {
 	protected static $user_id;
 
 	/**
@@ -36,26 +36,11 @@ class Tracking extends TestCase {
 	private $experiments;
 
 	/**
-	 * @var \Google\Web_Stories\Assets
-	 */
-	private $assets;
-
-	/**
-	 * @var \Google\Web_Stories\Settings
-	 */
-	private $settings;
-
-	/**
-	 * @var \Google\Web_Stories\User\Preferences
-	 */
-	private $preferences;
-
-	/**
 	 * @var \Google\Web_Stories\Tracking
 	 */
 	private $instance;
 
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$user_id = $factory->user->create(
 			[
 				'role' => 'administrator',
@@ -63,21 +48,27 @@ class Tracking extends TestCase {
 		);
 	}
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->experiments = $this->createMock( \Google\Web_Stories\Experiments::class );
 		$this->site_kit    = $this->createMock( \Google\Web_Stories\Integrations\Site_Kit::class );
-		$this->assets      = new \Google\Web_Stories\Assets();
-		$this->settings    = new \Google\Web_Stories\Settings();
-		$this->preferences = new \Google\Web_Stories\User\Preferences();
-		$this->instance    = new \Google\Web_Stories\Tracking( $this->experiments, $this->site_kit, $this->assets, $this->settings, $this->preferences );
+		$assets            = $this->injector->make( \Google\Web_Stories\Assets::class );
+		$settings          = $this->injector->make( \Google\Web_Stories\Settings::class );
+		$preferences       = $this->injector->make( \Google\Web_Stories\User\Preferences::class );
+		$this->instance    = new \Google\Web_Stories\Tracking(
+			$this->experiments,
+			$this->site_kit,
+			$assets,
+			$settings,
+			$preferences
+		);
 	}
 
 	/**
 	 * @covers ::register
 	 */
-	public function test_register_tracking_script() {
+	public function test_register_tracking_script(): void {
 		$this->site_kit->method( 'get_plugin_status' )->willReturn(
 			[
 				'installed'       => true,
@@ -100,7 +91,7 @@ class Tracking extends TestCase {
 	/**
 	 * @covers ::get_settings
 	 */
-	public function test_get_settings() {
+	public function test_get_settings(): void {
 		wp_set_current_user( self::$user_id );
 
 		$this->site_kit->method( 'get_plugin_status' )->willReturn(
@@ -135,9 +126,11 @@ class Tracking extends TestCase {
 		$this->assertArrayHasKey( 'isMultisite', $settings['userProperties'] );
 		$this->assertArrayHasKey( 'adNetwork', $settings['userProperties'] );
 		$this->assertArrayHasKey( 'analytics', $settings['userProperties'] );
+		$this->assertArrayHasKey( 'serverEnvironment', $settings['userProperties'] );
 		$this->assertArrayHasKey( 'activePlugins', $settings['userProperties'] );
 		$this->assertSame( get_locale(), $settings['userProperties']['siteLocale'] );
 		$this->assertSame( get_user_locale(), $settings['userProperties']['userLocale'] );
+		$this->assertSame( wp_get_environment_type(), $settings['userProperties']['serverEnvironment'] );
 		$this->assertSame( PHP_VERSION, $settings['userProperties']['phpVersion'] );
 		$this->assertSame( get_bloginfo( 'version' ), $settings['userProperties']['wpVersion'] );
 		$this->assertSame( 'administrator', $settings['userProperties']['userRole'] );
@@ -148,12 +141,13 @@ class Tracking extends TestCase {
 		$this->assertIsString( $settings['userProperties']['adNetwork'] );
 		$this->assertIsString( $settings['userProperties']['analytics'] );
 		$this->assertIsString( $settings['userProperties']['activePlugins'] );
+		$this->assertIsString( $settings['userProperties']['serverEnvironment'] );
 	}
 
 	/**
 	 * @covers ::get_settings
 	 */
-	public function test_get_settings_with_optin() {
+	public function test_get_settings_with_optin(): void {
 		wp_set_current_user( self::$user_id );
 		add_user_meta( get_current_user_id(), \Google\Web_Stories\User\Preferences::OPTIN_META_KEY, true );
 

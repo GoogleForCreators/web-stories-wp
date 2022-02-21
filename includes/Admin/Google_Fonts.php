@@ -42,7 +42,7 @@ class Google_Fonts implements Conditional, Service, Registerable {
 	/**
 	 * Script handle.
 	 */
-	const SCRIPT_HANDLE = 'web-stories-fonts';
+	public const SCRIPT_HANDLE = 'web-stories-fonts';
 
 	/**
 	 * Check whether the conditional object is currently needed.
@@ -59,10 +59,8 @@ class Google_Fonts implements Conditional, Service, Registerable {
 	 * Runs on instantiation.
 	 *
 	 * @since 1.8.0
-	 *
-	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_action( 'wp_default_styles', [ $this, 'register_style' ] );
 	}
 
@@ -72,9 +70,8 @@ class Google_Fonts implements Conditional, Service, Registerable {
 	 * @since 1.8.0
 	 *
 	 * @param WP_Styles $wp_styles WP_Styles instance.
-	 * @return void
 	 */
-	public function register_style( WP_Styles $wp_styles ) {
+	public function register_style( WP_Styles $wp_styles ): void {
 		// so we need to avoid specifying a version at all.
 		$wp_styles->add(
 			self::SCRIPT_HANDLE,

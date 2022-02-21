@@ -19,7 +19,6 @@
  */
 import { useState } from '@googleforcreators/react';
 import styled from 'styled-components';
-import { action } from '@storybook/addon-actions';
 
 /**
  * Internal dependencies
@@ -34,6 +33,9 @@ export default {
     offLabel: 'Do not format',
     disabled: false,
   },
+  argTypes: {
+    handleChange: { action: 'Switching' },
+  },
 };
 
 const Container = styled.div`
@@ -43,13 +45,10 @@ const Container = styled.div`
 `;
 
 export const _default = (args) => {
-  const onLabel = args.onLabel;
-  const offLabel = args.offLabel;
-  const disabled = args.disabled;
   const [value, setValue] = useState(true);
 
   const handleChange = (evt, newValue) => {
-    action(`Switching to: '${newValue ? 'On' : 'Off'}'`)(evt);
+    args.handleChange(`${newValue ? 'On' : 'Off'}`, evt);
     setValue(newValue);
   };
 
@@ -59,10 +58,8 @@ export const _default = (args) => {
         groupLabel="Switch"
         name="test-switch"
         value={value}
-        onLabel={onLabel}
-        offLabel={offLabel}
         onChange={handleChange}
-        disabled={disabled}
+        {...args}
       />
     </Container>
   );

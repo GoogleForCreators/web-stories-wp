@@ -43,7 +43,7 @@ class Feed extends TestCase {
 	/**
 	 * @param \WP_UnitTest_Factory $factory
 	 */
-	public static function wpSetUpBeforeClass( $factory ) {
+	public static function wpSetUpBeforeClass( $factory ): void {
 		self::$admin_id = $factory->user->create(
 			[ 'role' => 'administrator' ]
 		);
@@ -74,7 +74,7 @@ class Feed extends TestCase {
 	 *
 	 * @covers ::embed_image
 	 */
-	public function test_the_content_feed() {
+	public function test_the_content_feed(): void {
 		$this->go_to( '/?feed=rss2&post_type=' . \Google\Web_Stories\Story_Post_Type::POST_TYPE_SLUG );
 		$feed = $this->do_rss2();
 
@@ -88,7 +88,7 @@ class Feed extends TestCase {
 	 *
 	 * @link https://github.com/WordPress/wordpress-develop/blob/ab9aee8af474ac512b31b012f3c7c44fab31a990/tests/phpunit/tests/feed/rss2.php#L78-L94
 	 */
-	protected function do_rss2() {
+	protected function do_rss2(): string {
 		ob_start();
 		// Nasty hack! In the future it would better to leverage do_feed( 'rss2' ).
 		try {

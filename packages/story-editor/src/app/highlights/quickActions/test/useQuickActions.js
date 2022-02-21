@@ -79,7 +79,9 @@ jest.mock('../../../../utils/useApplyTextAutoStyle');
 
 jest.mock('@googleforcreators/design-system', () => ({
   ...jest.requireActual('@googleforcreators/design-system'),
-  useSnackbar: jest.fn(() => ({ showSnackbar: jest.fn() })),
+  useSnackbar: jest.fn((selector = (v) => v) =>
+    selector({ showSnackbar: jest.fn() })
+  ),
 }));
 
 jest.mock('@googleforcreators/tracking');
@@ -310,7 +312,7 @@ const mockOptimizeGif = jest.fn();
 const mockUseFFmpeg = useFFmpeg;
 const mockUseSnackbar = useSnackbar;
 const mockShowSnackbar = jest.fn();
-// eslint-disable-next-line react/prop-types
+
 const MockMediaPicker = ({ onSelect, onClose }) => (
   <>
     <button onClick={() => onSelect(imageResource)}>{'onSelect image'}</button>
@@ -379,14 +381,20 @@ describe('useQuickActions', () => {
 
   describe('multiple elements selected', () => {
     beforeEach(() => {
-      mockUseStory.mockReturnValue({
-        currentPage: {
-          elements: [BACKGROUND_ELEMENT, IMAGE_ELEMENT, VIDEO_ELEMENT],
-        },
-        selectedElementAnimations: [],
-        selectedElements: [IMAGE_ELEMENT, VIDEO_ELEMENT],
-        updateElementsById: mockUpdateElementsById,
-      });
+      mockUseStory.mockImplementation((s) =>
+        s({
+          state: {
+            currentPage: {
+              elements: [BACKGROUND_ELEMENT, IMAGE_ELEMENT, VIDEO_ELEMENT],
+            },
+            selectedElementAnimations: [],
+            selectedElements: [IMAGE_ELEMENT, VIDEO_ELEMENT],
+          },
+          actions: {
+            updateElementsById: mockUpdateElementsById,
+          },
+        })
+      );
     });
 
     it('should return no quick actions', () => {
@@ -398,14 +406,20 @@ describe('useQuickActions', () => {
 
   describe('no element selected', () => {
     beforeEach(() => {
-      mockUseStory.mockReturnValue({
-        currentPage: {
-          elements: [BACKGROUND_ELEMENT],
-        },
-        selectedElementAnimations: [],
-        selectedElements: [],
-        updateElementsById: mockUpdateElementsById,
-      });
+      mockUseStory.mockImplementation((s) =>
+        s({
+          state: {
+            currentPage: {
+              elements: [BACKGROUND_ELEMENT],
+            },
+            selectedElementAnimations: [],
+            selectedElements: [],
+          },
+          actions: {
+            updateElementsById: mockUpdateElementsById,
+          },
+        })
+      );
     });
 
     it('should return the quick actions', () => {
@@ -439,14 +453,20 @@ describe('useQuickActions', () => {
 
   describe('empty background element selected', () => {
     beforeEach(() => {
-      mockUseStory.mockReturnValue({
-        currentPage: {
-          elements: [BACKGROUND_ELEMENT],
-        },
-        selectedElementAnimations: [],
-        selectedElements: [BACKGROUND_ELEMENT],
-        updateElementsById: mockUpdateElementsById,
-      });
+      mockUseStory.mockImplementation((selector) =>
+        selector({
+          state: {
+            currentPage: {
+              elements: [BACKGROUND_ELEMENT],
+            },
+            selectedElementAnimations: [],
+            selectedElements: [BACKGROUND_ELEMENT],
+          },
+          actions: {
+            updateElementsById: mockUpdateElementsById,
+          },
+        })
+      );
     });
 
     it('should return the quick actions', () => {
@@ -480,14 +500,20 @@ describe('useQuickActions', () => {
 
   describe('background image element is selected', () => {
     beforeEach(() => {
-      mockUseStory.mockReturnValue({
-        currentPage: {
-          elements: [BACKGROUND_IMAGE_ELEMENT],
-        },
-        selectedElementAnimations: [],
-        selectedElements: [BACKGROUND_IMAGE_ELEMENT],
-        updateElementsById: mockUpdateElementsById,
-      });
+      mockUseStory.mockImplementation((selector) =>
+        selector({
+          state: {
+            currentPage: {
+              elements: [BACKGROUND_IMAGE_ELEMENT],
+            },
+            selectedElementAnimations: [],
+            selectedElements: [BACKGROUND_IMAGE_ELEMENT],
+          },
+          actions: {
+            updateElementsById: mockUpdateElementsById,
+          },
+        })
+      );
     });
 
     it('should return the quick actions', () => {
@@ -519,14 +545,20 @@ describe('useQuickActions', () => {
 
   describe('background third party image element is selected with animation', () => {
     beforeEach(() => {
-      mockUseStory.mockReturnValue({
-        currentPage: {
-          elements: [BACKGROUND_IMAGE_MEDIA3P_ELEMENT],
-        },
-        selectedElementAnimations: [],
-        selectedElements: [BACKGROUND_IMAGE_MEDIA3P_ELEMENT],
-        updateElementsById: mockUpdateElementsById,
-      });
+      mockUseStory.mockImplementation((selector) =>
+        selector({
+          state: {
+            currentPage: {
+              elements: [BACKGROUND_IMAGE_MEDIA3P_ELEMENT],
+            },
+            selectedElementAnimations: [],
+            selectedElements: [BACKGROUND_IMAGE_MEDIA3P_ELEMENT],
+          },
+          actions: {
+            updateElementsById: mockUpdateElementsById,
+          },
+        })
+      );
     });
 
     it('should return the quick actions', () => {
@@ -548,18 +580,24 @@ describe('useQuickActions', () => {
 
   describe('background video element is selected', () => {
     beforeEach(() => {
-      mockUseStory.mockReturnValue({
-        currentPage: {
-          elements: [BACKGROUND_VIDEO_ELEMENT],
-        },
-        selectedElementAnimations: [
-          {
-            target: [BACKGROUND_VIDEO_ELEMENT.id],
+      mockUseStory.mockImplementation((selector) =>
+        selector({
+          state: {
+            currentPage: {
+              elements: [BACKGROUND_VIDEO_ELEMENT],
+            },
+            selectedElementAnimations: [
+              {
+                target: [BACKGROUND_VIDEO_ELEMENT.id],
+              },
+            ],
+            selectedElements: [BACKGROUND_VIDEO_ELEMENT],
           },
-        ],
-        selectedElements: [BACKGROUND_VIDEO_ELEMENT],
-        updateElementsById: mockUpdateElementsById,
-      });
+          actions: {
+            updateElementsById: mockUpdateElementsById,
+          },
+        })
+      );
     });
 
     it('should return the quick actions', () => {

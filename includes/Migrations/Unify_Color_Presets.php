@@ -39,10 +39,8 @@ class Unify_Color_Presets extends Migrate_Base {
 	 * Color presets: Removes fillColor and textColor and unifies to one color.
 	 *
 	 * @since 1.7.0
-	 *
-	 * @return void
 	 */
-	public function migrate() {
+	public function migrate(): void {
 		$style_presets = get_option( Story_Post_Type::STYLE_PRESETS_OPTION, false );
 		// Nothing to do if style presets don't exist.
 		if ( ! $style_presets || ! \is_array( $style_presets ) ) {

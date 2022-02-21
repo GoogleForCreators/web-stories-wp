@@ -32,7 +32,7 @@ function Author() {
     actions: { getAuthors },
   } = useAPI();
   const {
-    state: { tab, users, isUsersLoading },
+    state: { users, isUsersLoading },
     actions: { loadUsers },
   } = useInspector();
   const { isSaving, author, updateStory } = useStory(
@@ -55,10 +55,8 @@ function Author() {
   const [visibleOptions, setVisibleOptions] = useState(null);
 
   useEffect(() => {
-    if (tab === 'document') {
-      loadUsers();
-    }
-  }, [tab, loadUsers]);
+    loadUsers();
+  }, [loadUsers]);
 
   const getAuthorsBySearch = useCallback(
     (search) => {
@@ -104,6 +102,7 @@ function Author() {
     placeholder: isLoading ? __('Loading…', 'web-stories') : '',
     disabled: isLoading ? true : isSaving,
     primaryOptions: isLoading ? [] : visibleOptions,
+    zIndex: 10,
   };
   return (
     <Row>

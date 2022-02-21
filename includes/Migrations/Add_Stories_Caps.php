@@ -54,10 +54,8 @@ class Add_Stories_Caps extends Migrate_Base {
 	 * Adds story capabilities to default user roles.
 	 *
 	 * @since 1.7.0
-	 *
-	 * @return void
 	 */
-	public function migrate() {
+	public function migrate(): void {
 		$this->capabilities->add_caps_to_roles();
 	}
 }

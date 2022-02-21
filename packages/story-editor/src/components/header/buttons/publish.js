@@ -27,7 +27,7 @@ import {
 import { __ } from '@googleforcreators/i18n';
 import { trackEvent } from '@googleforcreators/tracking';
 import PropTypes from 'prop-types';
-
+import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
@@ -35,9 +35,13 @@ import { useStory } from '../../../app';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
 import { useCheckpoint, ReviewChecklistDialog } from '../../checklist';
 import useIsUploadingToStory from '../../../utils/useIsUploadingToStory';
+import { PublishModal } from '../../publishModal';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
 function PublishButton({ forceIsSaving }) {
+  const isUpdatedPublishModalEnabled = useFeature(
+    'enableUpdatedPublishStoryModal'
+  );
   const {
     isSaving,
     date,
@@ -105,13 +109,21 @@ function PublishButton({ forceIsSaving }) {
   }, [refreshPostEditURL, saveStory, hasFutureDate, title, canPublish]);
 
   const handlePublish = useCallback(() => {
-    if (shouldReviewDialogBeSeen && canPublish) {
+    if (
+      canPublish &&
+      (shouldReviewDialogBeSeen || isUpdatedPublishModalEnabled)
+    ) {
       setShowDialog(true);
       return;
     }
 
     publish();
-  }, [shouldReviewDialogBeSeen, canPublish, publish]);
+  }, [
+    shouldReviewDialogBeSeen,
+    isUpdatedPublishModalEnabled,
+    canPublish,
+    publish,
+  ]);
 
   const closeDialog = useCallback(() => setShowDialog(false), []);
 
@@ -129,12 +141,21 @@ function PublishButton({ forceIsSaving }) {
         isUploading={isUploading}
         canPublish={canPublish}
       />
-      <ReviewChecklistDialog
-        isOpen={showDialog}
-        onIgnore={publish}
-        onClose={closeDialog}
-        onReview={closeDialog}
-      />
+      {isUpdatedPublishModalEnabled ? (
+        <PublishModal
+          isOpen={showDialog}
+          onPublish={publish}
+          onClose={closeDialog}
+          publishButtonCopy={text}
+        />
+      ) : (
+        <ReviewChecklistDialog
+          isOpen={showDialog}
+          onIgnore={publish}
+          onClose={closeDialog}
+          onReview={closeDialog}
+        />
+      )}
     </>
   );
 }

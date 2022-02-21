@@ -37,21 +37,19 @@ class Trimming extends Service_Base implements HasMeta {
 	/**
 	 * The trim video post meta key.
 	 */
-	const TRIM_POST_META_KEY = 'web_stories_trim_data';
+	public const TRIM_POST_META_KEY = 'web_stories_trim_data';
 
 	/**
 	 * Is trim.
 	 */
-	const TRIM_DATA_KEY = 'trim_data';
+	public const TRIM_DATA_KEY = 'trim_data';
 
 	/**
 	 * Register.
 	 *
 	 * @since 1.12.0
-	 *
-	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		$this->register_meta();
 
 		add_filter( 'wp_prepare_attachment_for_js', [ $this, 'wp_prepare_attachment_for_js' ] );
@@ -61,10 +59,8 @@ class Trimming extends Service_Base implements HasMeta {
 	 * Register meta for attachment post type.
 	 *
 	 * @since 1.12.0
-	 *
-	 * @return void
 	 */
-	public function register_meta() {
+	public function register_meta(): void {
 		register_meta(
 			'post',
 			self::TRIM_POST_META_KEY,

@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { action } from '@storybook/addon-actions';
 import styled from 'styled-components';
 
 /**
@@ -39,6 +38,14 @@ export default {
     isOpen: true,
     placeholder: 'search',
   },
+  argTypes: {
+    onChange: { action: 'change event triggered' },
+    onClick: { action: 'click event triggered' },
+    onFocus: { action: 'on focus event triggered' },
+    handleClearInput: { action: 'handleClearInput triggered' },
+    handleTabClear: { action: 'handleTabClear triggered' },
+    onKeyDown: { action: 'on keyDown event triggered' },
+  },
 };
 
 const Container = styled.div`
@@ -54,12 +61,6 @@ export const _default = (args) => {
       aria-label={'my aria label'}
       listId={'my-list-id'}
       name={'my-input-id'}
-      onChange={() => action('change event triggered')()}
-      onClick={() => action('click event triggered')()}
-      onFocus={() => action('on focus event triggered')()}
-      handleClearInput={() => action('handleClearInput triggered')()}
-      handleTabClear={() => action('handleTabClear triggered')()}
-      onKeyDown={() => action('on keyDown event triggered')()}
       {...args}
     />
   );

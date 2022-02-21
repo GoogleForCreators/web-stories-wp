@@ -24,7 +24,7 @@ class Locale extends TestCase {
 	/**
 	 * @covers ::get_locale_settings
 	 */
-	public function test_get_locale_settings() {
+	public function test_get_locale_settings(): void {
 		$actual = ( new \Google\Web_Stories\Locale() )->get_locale_settings();
 
 		$this->assertCount( 11, $actual );

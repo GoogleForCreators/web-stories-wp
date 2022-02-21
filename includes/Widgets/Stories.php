@@ -34,7 +34,7 @@ use WP_Widget;
  */
 class Stories extends WP_Widget {
 
-	const SCRIPT_HANDLE = 'web-stories-widget';
+	public const SCRIPT_HANDLE = 'web-stories-widget';
 
 	/**
 	 * Widget args.
@@ -101,11 +101,10 @@ class Stories extends WP_Widget {
 	 *
 	 * @param array $args Widget args.
 	 * @param array $instance Widget instance.
-	 * @return void
 	 *
      * phpcs:disable WordPress.Security.EscapeOutput.OutputNotEscaped
 	 */
-	public function widget( $args, $instance ) {
+	public function widget( $args, $instance ): void {
 		echo $args['before_widget'];
 
 		$instance = wp_parse_args( $instance, $this->default_values() );
@@ -159,9 +158,8 @@ class Stories extends WP_Widget {
 	 * @since 1.5.0
 	 *
 	 * @param array $instance Widget instance.
-	 * @return string
 	 */
-	public function form( $instance ) {
+	public function form( $instance ): string {
 		$this->enqueue_scripts();
 
 		$instance = wp_parse_args( $instance, $this->default_values() );
@@ -404,7 +402,7 @@ class Stories extends WP_Widget {
 	 * @param array $old_instance Old instance.
 	 * @return array
 	 */
-	public function update( $new_instance, $old_instance ) {
+	public function update( $new_instance, $old_instance ): array {
 		$instance = [];
 
 		$new_instance = wp_parse_args( $new_instance, $this->default_values() );
@@ -435,7 +433,7 @@ class Stories extends WP_Widget {
 	 *
 	 * @return array
 	 */
-	private function default_values() {
+	private function default_values(): array {
 		return [
 			'title'              => esc_html__( 'Web Stories', 'web-stories' ),
 			'view_type'          => 'circles',
@@ -459,10 +457,8 @@ class Stories extends WP_Widget {
 	 * Enqueue widget script.
 	 *
 	 * @since 1.5.0
-	 *
-	 * @return void
 	 */
-	public function enqueue_scripts() {
+	public function enqueue_scripts(): void {
 		if ( wp_script_is( self::SCRIPT_HANDLE ) ) {
 			return;
 		}
@@ -483,9 +479,8 @@ class Stories extends WP_Widget {
 	 * @since 1.5.0
 	 *
 	 * @param array $args Field args.
-	 * @return void
 	 */
-	private function dropdown( array $args ) {
+	private function dropdown( array $args ): void {
 		$args = wp_parse_args(
 			$args,
 			[
@@ -530,9 +525,8 @@ class Stories extends WP_Widget {
 	 * @since 1.5.0
 	 *
 	 * @param array $args Field args.
-	 * @return void
 	 */
-	private function radio( array $args ) {
+	private function radio( array $args ): void {
 		$args = wp_parse_args(
 			$args,
 			[
@@ -578,9 +572,8 @@ class Stories extends WP_Widget {
 	 * @since 1.5.0
 	 *
 	 * @param array $args Field args.
-	 * @return void
 	 */
-	private function input( array $args ) {
+	private function input( array $args ): void {
 		$args = wp_parse_args(
 			$args,
 			[
@@ -642,9 +635,8 @@ class Stories extends WP_Widget {
 	 * @since 1.5.0
 	 *
 	 * @param array $args Label args.
-	 * @return string
 	 */
-	private function label( array $args ) {
+	private function label( array $args ): string {
 		$args = wp_parse_args(
 			$args,
 			[

@@ -28,7 +28,7 @@ class Font_Post_Type extends DependencyInjectedTestCase {
 	 */
 	private $instance;
 
-	public function set_up() {
+	public function set_up(): void {
 		parent::set_up();
 
 		$this->instance = $this->injector->make( \Google\Web_Stories\Font_Post_Type::class );
@@ -37,7 +37,7 @@ class Font_Post_Type extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::register
 	 */
-	public function test_register() {
+	public function test_register(): void {
 		$this->instance->register();
 
 		$post_type_object = get_post_type_object( \Google\Web_Stories\Font_Post_Type::POST_TYPE_SLUG );

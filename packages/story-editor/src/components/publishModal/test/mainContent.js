@@ -22,12 +22,13 @@ import { axe } from 'jest-axe';
  * Internal dependencies
  */
 import renderWithTheme from '../../../testUtils/renderWithTheme';
+import { ChecklistCountProvider } from '../../checklist';
+import InspectorContext from '../../inspector/context';
 import { INPUT_KEYS } from '../constants';
 import MainContent from '../mainContent';
 
 describe('publishModal/mainContent', () => {
   const mockHandleUpdateStoryInfo = jest.fn();
-  const mockHandleUpdateSlug = jest.fn();
 
   const mockInputValues = {
     [INPUT_KEYS.EXCERPT]:
@@ -38,27 +39,40 @@ describe('publishModal/mainContent', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
-  it('should have no accessibility issues', async () => {
-    const { container } = renderWithTheme(
-      <MainContent
-        handleUpdateStoryInfo={mockHandleUpdateStoryInfo}
-        handleUpdateSlug={mockHandleUpdateSlug}
-        inputValues={mockInputValues}
-      />
+
+  const inspectorContextValue = {
+    actions: { loadUsers: jest.fn() },
+    state: {
+      users: [{ value: 'foo' }, { value: 'bar' }],
+    },
+    data: {
+      modalInspectorTab: {
+        DocumentPane: null,
+      },
+    },
+  };
+
+  const view = () => {
+    return renderWithTheme(
+      <InspectorContext.Provider value={inspectorContextValue}>
+        <ChecklistCountProvider hasChecklist>
+          <MainContent
+            handleUpdateStoryInfo={mockHandleUpdateStoryInfo}
+            inputValues={mockInputValues}
+          />
+        </ChecklistCountProvider>
+      </InspectorContext.Provider>
     );
+  };
+  it('should have no accessibility issues', async () => {
+    const { container } = view();
 
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
 
-  it('should trigger handleUpdateStoryInfo on title input change', () => {
-    renderWithTheme(
-      <MainContent
-        handleUpdateStoryInfo={mockHandleUpdateStoryInfo}
-        handleUpdateSlug={mockHandleUpdateSlug}
-        inputValues={mockInputValues}
-      />
-    );
+  it('should trigger handleUpdateStoryInfo on title input blur', () => {
+    view();
 
     const titleInput = screen.getByRole('textbox', { name: 'Story Title' });
 
@@ -66,21 +80,13 @@ describe('publishModal/mainContent', () => {
       target: { value: "David Bowman (and HAL's) Odyseey" },
     });
 
-    expect(mockHandleUpdateStoryInfo).toHaveBeenCalledTimes(1);
-
     fireEvent.blur(titleInput);
 
-    expect(mockHandleUpdateSlug).toHaveBeenCalledTimes(1);
+    expect(mockHandleUpdateStoryInfo).toHaveBeenCalledTimes(1);
   });
 
   it('should trigger handleUpdateStoryInfo on excerpt input change', () => {
-    renderWithTheme(
-      <MainContent
-        handleUpdateStoryInfo={mockHandleUpdateStoryInfo}
-        handleUpdateSlug={mockHandleUpdateSlug}
-        inputValues={mockInputValues}
-      />
-    );
+    view();
 
     const descriptionInput = screen.getByRole('textbox', {
       name: 'Story Description',
@@ -89,6 +95,8 @@ describe('publishModal/mainContent', () => {
     fireEvent.change(descriptionInput, {
       target: { value: 'Lorem ipsum' },
     });
+
+    fireEvent.blur(descriptionInput);
 
     expect(mockHandleUpdateStoryInfo).toHaveBeenCalledTimes(1);
   });

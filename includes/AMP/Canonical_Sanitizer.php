@@ -53,10 +53,8 @@ class Canonical_Sanitizer extends AMP_Base_Sanitizer {
 	 * Sanitize the HTML contained in the DOMDocument received by the constructor.
 	 *
 	 * @since 1.1.0
-	 *
-	 * @return void
 	 */
-	public function sanitize() {
+	public function sanitize(): void {
 		$canonical_url = $this->args['canonical_url'];
 
 		$query = $this->dom->xpath->query( '//link[@rel="canonical"]', $this->dom->head );

@@ -39,10 +39,8 @@ class Oembed extends Service_Base {
 	 * Filter to render oembed.
 	 *
 	 * @since 1.7.0
-	 *
-	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_filter( 'embed_template', [ $this, 'filter_embed_template' ] );
 		add_filter( 'embed_html', [ $this, 'filter_embed_html' ], 10, 4 );
 		// So it runs after get_oembed_response_data_rich().

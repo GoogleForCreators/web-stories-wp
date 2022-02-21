@@ -46,16 +46,14 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	/**
 	 * Default REST Namespace.
 	 */
-	const REST_NAMESPACE = 'web-stories/v1';
+	public const REST_NAMESPACE = 'web-stories/v1';
 
 	/**
 	 * Registers the post type.
 	 *
 	 * @since 1.14.0
-	 *
-	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		$this->register_post_type();
 	}
 
@@ -74,10 +72,8 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * Unregister post type.
 	 *
 	 * @since 1.14.0
-	 *
-	 * @return void
 	 */
-	public function unregister_post_type() {
+	public function unregister_post_type(): void {
 		unregister_post_type( $this->get_slug() );
 	}
 
@@ -87,9 +83,8 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * @since 1.14.0
 	 *
 	 * @param WP_Site $site The site being initialized.
-	 * @return void
 	 */
-	public function on_site_initialization( WP_Site $site ) {
+	public function on_site_initialization( WP_Site $site ): void {
 		$this->register_post_type();
 	}
 
@@ -99,9 +94,8 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * @since 1.14.0
 	 *
 	 * @param bool $network_wide Whether the activation was done network-wide.
-	 * @return void
 	 */
-	public function on_plugin_activation( $network_wide ) {
+	public function on_plugin_activation( $network_wide ): void {
 		$this->register_post_type();
 	}
 
@@ -111,9 +105,8 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * @since 1.14.0
 	 *
 	 * @param bool $network_wide Whether the deactivation was done network-wide.
-	 * @return void
 	 */
-	public function on_plugin_deactivation( $network_wide ) {
+	public function on_plugin_deactivation( $network_wide ): void {
 		$this->unregister_post_type();
 	}
 
@@ -121,8 +114,6 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * Post type slug.
 	 *
 	 * @since 1.14.0
-	 *
-	 * @return string
 	 */
 	abstract public function get_slug(): string;
 
@@ -139,10 +130,8 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * Get post type object.
 	 *
 	 * @since 1.14.0
-	 *
-	 * @return WP_Post_Type|null
 	 */
-	protected function get_object() {
+	protected function get_object(): ?WP_Post_Type {
 		return get_post_type_object( $this->get_slug() );
 	}
 
@@ -239,7 +228,6 @@ abstract class Post_Type_Base extends Service_Base implements PluginActivationAw
 	 * @since 1.14.0
 	 *
 	 * @param string $label Label name.
-	 * @return string
 	 */
 	public function get_label( string $label ): string {
 		$post_type_obj = $this->get_object();

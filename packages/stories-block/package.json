@@ -10,7 +10,7 @@
   "keywords": [
     "web stories"
   ],
-  "homepage": "https://github.com/googleforcreators/web-stories-wp/",
+  "homepage": "https://github.com/GoogleForCreators/web-stories-wp/blob/main/packages/stories-block/README.md",
   "repository": {
     "type": "git",
     "url": "https://github.com/GoogleForCreators/web-stories-wp.git",
@@ -20,7 +20,7 @@
     "url": "https://github.com/googleforcreators/web-stories-wp/issues"
   },
   "engines": {
-    "node": ">= 16",
+    "node": ">= 12 || >= 14 || >= 16",
     "npm": ">= 7.3"
   },
   "type": "module",
@@ -32,18 +32,18 @@
   "dependencies": {
     "@googleforcreators/tracking": "*",
     "@web-stories-wp/glider": "*",
-    "@wordpress/api-fetch": "^6.0.0",
+    "@wordpress/api-fetch": "^6.0.1",
     "@wordpress/block-editor": "^8.1.0",
     "@wordpress/blocks": "^11.0.0",
-    "@wordpress/components": "^19.2.0",
-    "@wordpress/compose": "^5.0.0",
+    "@wordpress/components": "^19.4.0",
+    "@wordpress/compose": "^5.1.1",
     "@wordpress/data": "^6.1.4",
     "@wordpress/date": "^4.2.2",
     "@wordpress/element": "^4.0.0",
     "@wordpress/i18n": "^4.3.0",
     "@wordpress/icons": "^6.1.1",
     "@wordpress/url": "^3.2.1",
-    "@wordpress/viewport": "^4.1.0",
+    "@wordpress/viewport": "^4.1.1",
     "classnames": "^2.3.1",
     "lodash": "^4.17.21",
     "prop-types": "^15.8.1"

@@ -90,10 +90,8 @@ class Output_Buffer extends Service_Base implements Conditional {
 	 * Runs on instantiation.
 	 *
 	 * @since 1.10.0
-	 *
-	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		/*
 		 * Start output buffering at very low priority for sake of plugins and themes that use template_redirect
 		 * instead of template_include.
@@ -153,10 +151,8 @@ class Output_Buffer extends Service_Base implements Conditional {
 	 * @since 1.10.0
 	 *
 	 * @see Sanitization::finish_output_buffering()
-	 *
-	 * @return void
 	 */
-	public function start_output_buffering() {
+	public function start_output_buffering(): void {
 		if ( ! $this->context->is_web_story() ) {
 			return;
 		}

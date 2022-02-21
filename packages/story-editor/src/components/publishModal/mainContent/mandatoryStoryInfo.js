@@ -16,6 +16,7 @@
 /**
  * External dependencies
  */
+import { useState } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { TextArea } from '@googleforcreators/design-system';
 import styled from 'styled-components';
@@ -23,12 +24,18 @@ import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
+import useInspector from '../../inspector/useInspector';
+import { EXCERPT_MAX_LENGTH } from '../../panels/document/excerpt';
 import { INPUT_KEYS } from '../constants';
 import { MANDATORY_INPUT_VALUE_TYPES } from '../types';
 import FormLabel from './formLabel';
 
 const FormSection = styled.div`
-  margin: 20px 0 22px;
+  padding: 0 4px;
+  margin: 18px 0 8px;
+  &:first-of-type {
+    margin-top: 20px;
+  }
 `;
 
 const _TextArea = styled(TextArea)`
@@ -37,9 +44,19 @@ const _TextArea = styled(TextArea)`
 
 const MandatoryStoryInfo = ({
   handleUpdateStoryInfo,
-  handleUpdateSlug,
-  inputValues,
+  inputValues: _inputValues,
 }) => {
+  const [inputValues, setInputValues] = useState(_inputValues);
+  const IsolatedStatusPanel = useInspector(
+    ({ data }) => data?.modalInspectorTab?.IsolatedStatusPanel
+  );
+
+  const onInputChange = ({ currentTarget }) => {
+    setInputValues((prev) => ({
+      ...prev,
+      [currentTarget.name]: currentTarget.value,
+    }));
+  };
   return (
     <>
       <FormSection>
@@ -53,8 +70,8 @@ const MandatoryStoryInfo = ({
           showCount
           maxLength={300}
           value={inputValues[INPUT_KEYS.TITLE]}
-          onChange={handleUpdateStoryInfo}
-          onBlur={handleUpdateSlug}
+          onChange={onInputChange}
+          onBlur={handleUpdateStoryInfo}
           aria-label={__('Story Title', 'web-stories')}
           placeholder={__('Add title', 'web-stories')}
         />
@@ -68,17 +85,19 @@ const MandatoryStoryInfo = ({
           name={INPUT_KEYS.EXCERPT}
           id="story-excerpt"
           showCount
-          maxLength={100}
+          maxLength={EXCERPT_MAX_LENGTH}
           value={inputValues[INPUT_KEYS.EXCERPT]}
           aria-label={__('Story Description', 'web-stories')}
-          placeholder={__('Write an excerpt', 'web-stories')}
+          placeholder={__('Write a description of the story', 'web-stories')}
           hint={__(
             'Stories with a description tend to do better on search and have a wider reach',
             'web-stories'
           )}
-          onChange={handleUpdateStoryInfo}
+          onChange={onInputChange}
+          onBlur={handleUpdateStoryInfo}
         />
       </FormSection>
+      {IsolatedStatusPanel && <IsolatedStatusPanel />}
     </>
   );
 };
@@ -87,6 +106,5 @@ export default MandatoryStoryInfo;
 
 MandatoryStoryInfo.propTypes = {
   handleUpdateStoryInfo: PropTypes.func,
-  handleUpdateSlug: PropTypes.func,
   inputValues: MANDATORY_INPUT_VALUE_TYPES,
 };

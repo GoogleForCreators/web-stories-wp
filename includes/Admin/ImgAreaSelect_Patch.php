@@ -39,7 +39,7 @@ class ImgAreaSelect_Patch implements Conditional, Service, Registerable {
 	/**
 	 * Web Stories editor script handle.
 	 */
-	const SCRIPT_HANDLE = 'imgareaselect';
+	public const SCRIPT_HANDLE = 'imgareaselect';
 
 	/**
 	 * Assets instance.
@@ -84,10 +84,8 @@ class ImgAreaSelect_Patch implements Conditional, Service, Registerable {
 	 * Runs on instantiation.
 	 *
 	 * @since 1.10.0
-	 *
-	 * @return void
 	 */
-	public function register() {
+	public function register(): void {
 		add_filter( 'script_loader_tag', [ $this, 'script_loader_tag' ], 10, 3 );
 	}
 

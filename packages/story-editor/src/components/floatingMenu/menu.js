@@ -17,36 +17,67 @@
 /**
  * External dependencies
  */
-import { forwardRef, useLayoutEffect } from '@googleforcreators/react';
+import { forwardRef, useLayoutEffect, memo } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { __ } from '@googleforcreators/i18n';
+import { ContextMenu } from '@googleforcreators/design-system';
 
-const Menu = styled.nav`
+/**
+ * Internal dependencies
+ */
+import { FloatingMenuProvider } from './context';
+import MenuSelector from './menus';
+
+const MenuWrapper = styled.section`
+  display: flex;
   position: absolute;
-  background: hotpink;
-  padding: 5px;
-  border: 1px solid white;
-  color: white;
   z-index: 2;
 `;
 
-const FloatingMenu = forwardRef(function FloatingMenu(props, ref) {
-  useLayoutEffect(() => {
-    const node = ref.current;
-    const bounds = node.getBoundingClientRect();
-    node.style.setProperty('--width', `${bounds.width.toFixed(2)}px`);
-    node.style.setProperty('--height', `${bounds.height.toFixed(2)}px`);
-  }, [ref]);
+const FloatingMenu = memo(
+  forwardRef(function FloatingMenu(
+    { selectionIdentifier, selectedElementType, handleDismiss },
+    ref
+  ) {
+    useLayoutEffect(() => {
+      const node = ref.current;
+      const bounds = node.getBoundingClientRect();
+      node.style.setProperty('--width', `${bounds.width.toFixed(2)}px`);
+      node.style.setProperty('--height', `${bounds.height.toFixed(2)}px`);
+    }, [ref, selectionIdentifier]);
 
-  return (
-    <Menu ref={ref}>
-      {`Floating Menu | Floating Menu | Floating Menu | Floating Menu`}
-    </Menu>
-  );
-});
+    return (
+      <MenuWrapper ref={ref} aria-label={__('Design menu', 'web-stories')}>
+        <FloatingMenuProvider handleDismiss={handleDismiss}>
+          <ContextMenu
+            isInline
+            isHorizontal
+            isSecondary
+            isAlwaysVisible
+            disableControlledTabNavigation
+            aria-label={__(
+              'Design options for selected element',
+              'web-stories'
+            )}
+            onMouseDown={(e) => {
+              // Stop the event from bubbling if the user clicks in between buttons.
+              // This prevents the selected element in the canvas from losing focus.
+              e.stopPropagation();
+            }}
+          >
+            <MenuSelector selectedElementType={selectedElementType} />
+          </ContextMenu>
+        </FloatingMenuProvider>
+      </MenuWrapper>
+    );
+  })
+);
 
 FloatingMenu.propTypes = {
-  isVisible: PropTypes.bool,
+  handleDismiss: PropTypes.func.isRequired,
+  selectedElementType: PropTypes.string.isRequired,
+  selectionIdentifier: PropTypes.string.isRequired,
 };
 
 export default FloatingMenu;

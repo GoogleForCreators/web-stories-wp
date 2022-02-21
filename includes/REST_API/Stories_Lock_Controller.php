@@ -90,10 +90,8 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 	 * @since 1.6.0
 	 *
 	 * @see register_rest_route()
-	 *
-	 * @return void
 	 */
-	public function register_routes() {
+	public function register_routes(): void {
 		register_rest_route(
 			$this->namespace,
 			'/' . $this->rest_base . '/(?P<id>[\d]+)/lock',
@@ -225,7 +223,7 @@ class Stories_Lock_Controller extends REST_Controller implements HasRequirements
 		$lock = get_post_meta( $post_id, '_edit_lock', true );
 
 		if ( ! empty( $lock ) ) {
-			list ( $time, $user ) = explode( ':', $lock );
+			[ $time, $user ] = explode( ':', $lock );
 			if ( $time && $user ) {
 				return compact( 'time', 'user' );
 			}

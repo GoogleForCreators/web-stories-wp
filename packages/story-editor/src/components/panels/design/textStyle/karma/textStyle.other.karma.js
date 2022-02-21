@@ -42,7 +42,10 @@ describe('Text Style Panel', () => {
 
   describe('Panel state', () => {
     beforeEach(async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
     });
 
     it('should have the style panel always expanded', async () => {
@@ -57,12 +60,15 @@ describe('Text Style Panel', () => {
       await fixture.snapshot('Collapsed style panel');
 
       // Add a new text now.
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
       await waitFor(() => {
         if (!fixture.editor.canvas.framesLayer.frames[2].node) {
           throw new Error('node not ready');
         }
-        expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
+        expect(fixture.editor.canvas.framesLayer.frames[2].node).toBeTruthy();
       });
       // Expect the inputs to be visible again, since the panel should be expanded again.
       expect(
@@ -91,20 +97,18 @@ describe('Text Style Panel', () => {
     });
 
     it('should change the text color to white on black background', async () => {
-      // Assign black color.
-      const safezone = fixture.querySelector('[data-testid="safezone"]');
-      await fixture.events.click(safezone);
-      const hexInput =
-        fixture.editor.inspector.designPanel.pageBackground.backgroundColor.hex;
-      await fixture.events.click(hexInput);
-      // Select all the text
-      hexInput.select();
-      // Then type hex combo
+      // Assign black BG color.
+      await fixture.events.click(
+        fixture.editor.canvas.quickActionMenu.changeBackgroundColorButton
+      );
       await fixture.events.keyboard.type('000');
       await fixture.events.keyboard.press('Tab');
 
       // Add text element.
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
       await fixture.events.click(
         fixture.editor.inspector.designPanel.textStyle.adaptiveColor
       );
@@ -112,7 +116,7 @@ describe('Text Style Panel', () => {
       await waitFor(
         async () => {
           const texts = await fixture.screen.findAllByText(
-            'Fill in some text',
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
             { timeout: 2000 }
           );
           await expect(texts.length).toBeGreaterThan(1);
@@ -140,7 +144,7 @@ describe('Text Style Panel', () => {
             },
           } = await fixture.renderHook(() => useStory());
           expect(elements[1].content).toBe(
-            '<span style="color: #fff">Fill in some text</span>'
+            '<span style="color: #fff">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>'
           );
         },
         { timeout: 9000 }
@@ -150,7 +154,10 @@ describe('Text Style Panel', () => {
 
   describe('Line-height & Padding', () => {
     beforeEach(async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
     });
 
     it('should display padding and line-height correctly', async () => {
@@ -163,7 +170,9 @@ describe('Text Style Panel', () => {
       await fixture.events.keyboard.type('4');
       await fixture.events.keyboard.press('tab');
 
-      const texts = await fixture.screen.findAllByText('Fill in some text');
+      const texts = await fixture.screen.findAllByText(
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+      );
 
       // Display layer.
       const displayStyle = await waitFor(() =>
@@ -191,7 +200,10 @@ describe('Text Style Panel', () => {
 
   describe('Font controls', () => {
     beforeEach(async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
     });
 
     it('should allow whole number font sizes', async () => {
@@ -231,7 +243,10 @@ describe('Text Style Panel', () => {
 
   describe('Font picker', () => {
     beforeEach(async () => {
-      await fixture.events.click(fixture.editor.library.textAdd);
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
     });
     const getOptions = () => {
       return fixture.screen

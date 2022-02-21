@@ -46,7 +46,9 @@ describe('Styling multiple text fields', () => {
 
   it('should both have the correct initial text and formatting', () => {
     // Get content of first textfield
-    expect(getTextContent(0)).toBe('Fill in some text');
+    expect(getTextContent(0)).toBe(
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+    );
     // Get content of second textfield
     expect(getTextContent(1)).toBe('Number #2');
   });
@@ -103,7 +105,9 @@ describe('Styling multiple text fields', () => {
         'letter-spacing: 0.5em',
       ].join('; ');
       const getExpected = (content) => `<span style="${css}">${content}</span>`;
-      expect(getTextContent(0)).toBe(getExpected('Fill in some text'));
+      expect(getTextContent(0)).toBe(
+        getExpected('Lorem ipsum dolor sit amet, consectetur adipiscing elit.')
+      );
       expect(getTextContent(1)).toBe(getExpected('Number #2'));
 
       await data.fixture.snapshot(
@@ -190,7 +194,7 @@ describe('Styling multiple text fields', () => {
         'letter-spacing: 1em',
         'text-transform: uppercase',
       ].join('; ');
-      const expected = `<span style="${css}">Fill in some text</span>`;
+      const expected = `<span style="${css}">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>`;
       expect(actual).toBe(expected);
 
       await data.fixture.snapshot('Two texts in bold,italic,underline,green');
@@ -231,7 +235,9 @@ describe('Styling multiple text fields', () => {
       expect(fontWeight.value).toBe('Regular');
 
       // Assume both texts' content to now be formatting-free
-      expect(getTextContent(0)).toBe('Fill in some text');
+      expect(getTextContent(0)).toBe(
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+      );
       expect(getTextContent(1)).toBe('Number #2');
 
       await data.fixture.snapshot('Two texts without formatting');
@@ -271,7 +277,7 @@ describe('Styling multiple text fields', () => {
 
       // Assume texts' content to now be correctly bold
       expect(getTextContent(0)).toBe(
-        '<span style="font-weight: 700">Fill in some text</span>'
+        '<span style="font-weight: 700">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>'
       );
       expect(getTextContent(1)).toBe(
         '<span style="font-weight: 700">Number #2</span>'

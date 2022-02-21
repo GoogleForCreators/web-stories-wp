@@ -55,16 +55,22 @@ describe('Background Copy Paste integration', () => {
 
     // Verify setup - 1 element on each page in the right color
     await gotoPage(1);
-    expect(await getPageArea()).toHaveStyle(
-      'background-color',
-      'rgb(255, 0, 0)'
-    );
+    await waitFor(() => {
+      const pageArea = getPageArea();
+      if (!pageArea) {
+        throw new Error('node not ready!');
+      }
+      expect(getPageArea()).toHaveStyle('background-color', 'rgb(255, 0, 0)');
+    });
     expect(await getNumElements()).toBe(1);
     await gotoPage(2);
-    expect(await getPageArea()).toHaveStyle(
-      'background-color',
-      'rgb(0, 255, 0)'
-    );
+    await waitFor(() => {
+      const pageArea = getPageArea();
+      if (!pageArea) {
+        throw new Error('node not ready!');
+      }
+      expect(getPageArea()).toHaveStyle('background-color', 'rgb(0, 255, 0)');
+    });
     expect(await getNumElements()).toBe(1);
 
     // Act: Copy background from page 1 to page 2
@@ -76,10 +82,13 @@ describe('Background Copy Paste integration', () => {
 
     // Assert - validate that page 2 now has the correct background color and only 1 element
     await gotoPage(2);
-    expect(await getPageArea()).toHaveStyle(
-      'background-color',
-      'rgb(255, 0, 0)'
-    );
+    await waitFor(() => {
+      const pageArea = getPageArea();
+      if (!pageArea) {
+        throw new Error('node not ready!');
+      }
+      expect(getPageArea()).toHaveStyle('background-color', 'rgb(255, 0, 0)');
+    });
     expect(await getNumElements()).toBe(1);
   });
 
@@ -256,7 +265,7 @@ describe('Background Copy Paste integration', () => {
   async function addBackgroundImage(index) {
     // Add image and click "set as background"
     const image = fixture.editor.library.media.item(index);
-    await fixture.events.click(image);
+    await fixture.events.mouse.clickOn(image, 20, 20);
     await fixture.events.click(
       fixture.editor.inspector.designPanel.sizePosition.setAsBackground
     );

@@ -28,36 +28,26 @@ import {
 import { __ } from '@googleforcreators/i18n';
 import { v4 as uuidv4 } from 'uuid';
 import {
-  Button,
-  BUTTON_VARIANTS,
   Icons,
   Menu,
   PLACEMENT,
   Popup,
+  useKeyDownEffect,
 } from '@googleforcreators/design-system';
+
 /**
  * Internal dependencies
  */
 import { useLocalMedia } from '../../../../../app';
+import { ActionButton } from '../../shared';
+import useFocusCanvas from '../../../../canvas/useFocusCanvas';
+import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import DeleteDialog from './deleteDialog';
 import MediaEditDialog from './mediaEditDialog';
 
-const MoreButton = styled(Button).attrs({ variant: BUTTON_VARIANTS.ICON })`
-  display: flex;
-  align-items: center;
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  background: ${({ theme }) => theme.colors.bg.secondary};
-  color: ${({ theme }) => theme.colors.fg.primary};
-  border-radius: 100%;
-  width: 28px;
-  height: 28px;
-`;
-
-const IconContainer = styled.div`
-  height: 32px;
-  width: auto;
+const MoreButton = styled(ActionButton)`
+  top: 4px;
+  right: 4px;
 `;
 
 const DropDownContainer = styled.div`
@@ -69,12 +59,19 @@ const MenuContainer = styled.div`
 `;
 
 const menuStylesOverride = css`
-  min-width: 100px;
+  min-width: 160px;
   margin-top: 0;
   li {
     display: block;
   }
 `;
+
+// This is used for nested roving tab index to detect parent siblings.
+const BUTTON_NESTING_DEPTH = 3;
+const MENU_OPTIONS = {
+  EDIT: 'edit',
+  DELETE: 'delete',
+};
 
 /**
  * Get a More icon that displays a dropdown menu on click.
@@ -99,8 +96,14 @@ function DropDownMenu({
   const options = [
     {
       group: [
-        { label: __('Edit', 'web-stories'), value: 'edit' },
-        { label: __('Delete', 'web-stories'), value: 'delete' },
+        {
+          label: __('Edit meta data', 'web-stories'),
+          value: MENU_OPTIONS.EDIT,
+        },
+        {
+          label: __('Delete from library', 'web-stories'),
+          value: MENU_OPTIONS.DELETE,
+        },
       ],
     },
   ];
@@ -118,10 +121,10 @@ function DropDownMenu({
   const handleCurrentValue = (evt, value) => {
     onMenuSelected();
     switch (value) {
-      case 'edit':
+      case MENU_OPTIONS.EDIT:
         setShowEditDialog(true);
         break;
-      case 'delete':
+      case MENU_OPTIONS.DELETE:
         setShowDeleteDialog(true);
         break;
       default:
@@ -141,6 +144,16 @@ function DropDownMenu({
     [setShowEditDialog]
   );
 
+  useRovingTabIndex(
+    { ref: moreButtonRef.current || null },
+    [],
+    BUTTON_NESTING_DEPTH
+  );
+  const focusCanvas = useFocusCanvas();
+  useKeyDownEffect(moreButtonRef.current || null, 'tab', focusCanvas, [
+    focusCanvas,
+  ]);
+
   const listId = useMemo(() => `list-${uuidv4()}`, []);
   const buttonId = useMemo(() => `button-${uuidv4()}`, []);
 
@@ -148,41 +161,38 @@ function DropDownMenu({
   return (
     canTranscodeResource(resource) && ( // Don't show menu if resource is being processed.
       <MenuContainer>
+        <MoreButton
+          ref={moreButtonRef}
+          onClick={onMenuOpen}
+          aria-label={__('More', 'web-stories')}
+          aria-pressed={isMenuOpen}
+          aria-haspopup
+          aria-expanded={isMenuOpen}
+          aria-owns={isMenuOpen ? listId : null}
+          id={buttonId}
+          $display={display}
+          tabIndex={display || isMenuOpen ? 0 : -1}
+        >
+          <Icons.DotsFillSmall />
+        </MoreButton>
         {(display || isMenuOpen) && (
-          <>
-            <MoreButton
-              ref={moreButtonRef}
-              onClick={onMenuOpen}
-              aria-label={__('More', 'web-stories')}
-              aria-pressed={isMenuOpen}
-              aria-haspopup
-              aria-expanded={isMenuOpen}
-              aria-owns={isMenuOpen ? listId : null}
-              id={buttonId}
-            >
-              <IconContainer>
-                <Icons.Dots />
-              </IconContainer>
-            </MoreButton>
-            <Popup
-              anchor={moreButtonRef}
-              placement={PLACEMENT.BOTTOM_START}
-              isOpen={isMenuOpen}
-              width={160}
-            >
-              <DropDownContainer>
-                <Menu
-                  parentId={buttonId}
-                  listId={listId}
-                  onMenuItemClick={handleCurrentValue}
-                  options={options}
-                  onDismissMenu={onMenuCancelled}
-                  hasMenuRole
-                  menuStylesOverride={menuStylesOverride}
-                />
-              </DropDownContainer>
-            </Popup>
-          </>
+          <Popup
+            anchor={moreButtonRef}
+            placement={PLACEMENT.BOTTOM_START}
+            isOpen={isMenuOpen}
+          >
+            <DropDownContainer>
+              <Menu
+                parentId={buttonId}
+                listId={listId}
+                onMenuItemClick={handleCurrentValue}
+                options={options}
+                onDismissMenu={onMenuCancelled}
+                hasMenuRole
+                menuStylesOverride={menuStylesOverride}
+              />
+            </DropDownContainer>
+          </Popup>
         )}
         {showDeleteDialog && (
           <DeleteDialog

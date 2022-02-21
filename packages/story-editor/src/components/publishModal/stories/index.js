@@ -21,17 +21,48 @@ import { useCallback, useState } from '@googleforcreators/react';
  * Internal dependencies
  */
 import StoryContext from '../../../app/story/context';
+import { ConfigContext } from '../../../app/config';
+import { noop } from '../../../utils/noop';
+import { ChecklistCountProvider, CheckpointContext } from '../../checklist';
+import InspectorContext from '../../inspector/context';
+import { PageAdvancementPanel, SlugPanel } from '../../panels/document';
 import PublishModal from '../publishModal';
 
+const MockDocumentPane = () => (
+  <>
+    <SlugPanel />
+    <PageAdvancementPanel />
+  </>
+);
 export default {
   title: 'Stories Editor/Components/Dialog/Publish Modal',
-  component: PublishModal,
+  args: {
+    publishButtonCopy: 'Publish',
+    isOpen: true,
+    hasChecklist: true,
+    publisher: 'Gotham Bugle',
+    hasPublisherLogo: true,
+    hasFeaturedMedia: true,
+    hasUploadMediaAction: true,
+  },
+  argTypes: {
+    onPublish: { action: 'onPublish clicked' },
+    onClose: { action: 'onClose clicked' },
+  },
 };
 
-export const _default = () => {
+export const _default = (args) => {
+  const {
+    hasChecklist,
+    hasUploadMediaAction,
+    hasFeaturedMedia,
+    hasPublisherLogo,
+    publisher,
+  } = args;
   const [inputValues, setInputValues] = useState({
     excerpt: '',
     title: '',
+    link: 'http://sample.com/post_type=web-story&p=274',
   });
 
   const handleUpdateStory = useCallback(({ properties }) => {
@@ -41,15 +72,73 @@ export const _default = () => {
     }));
   }, []);
   return (
-    <StoryContext.Provider
+    <ConfigContext.Provider
       value={{
-        actions: { updateStory: handleUpdateStory },
-        state: {
-          story: inputValues,
+        metadata: {
+          publisher: publisher,
+        },
+        capabilities: {
+          hasUploadMediaAction: hasUploadMediaAction,
         },
       }}
     >
-      <PublishModal />
-    </StoryContext.Provider>
+      <StoryContext.Provider
+        value={{
+          actions: { updateStory: handleUpdateStory },
+          state: {
+            story: {
+              ...inputValues,
+              permalinkConfig: {
+                prefix: 'http://sample.com/',
+                suffix: '',
+              },
+              featuredMedia: {
+                url: hasFeaturedMedia ? 'http://placekitten.com/230/342' : '',
+                height: 333,
+                width: 250,
+              },
+              publisherLogo: {
+                url: hasPublisherLogo ? 'http://placekitten.com/158/96' : '',
+                height: 96,
+                width: 158,
+              },
+            },
+          },
+        }}
+      >
+        <InspectorContext.Provider
+          value={{
+            actions: {
+              loadUsers: () => {},
+            },
+            data: {
+              modalInspectorTab: {
+                title: 'document panel',
+                DocumentPane: MockDocumentPane,
+              },
+            },
+            state: {
+              users: {},
+              inspectorContentHeight: 600,
+            },
+          }}
+        >
+          <ChecklistCountProvider hasChecklist={hasChecklist}>
+            <PublishModal {...args} />
+          </ChecklistCountProvider>
+          <CheckpointContext.Provider
+            value={{
+              actions: {
+                onPublishDialogChecklistRequest: noop,
+              },
+            }}
+          >
+            <ChecklistCountProvider hasChecklist={args.hasChecklist}>
+              <PublishModal {...args} />
+            </ChecklistCountProvider>
+          </CheckpointContext.Provider>
+        </InspectorContext.Provider>
+      </StoryContext.Provider>
+    </ConfigContext.Provider>
   );
 };

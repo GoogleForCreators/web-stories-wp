@@ -72,7 +72,7 @@ function useResizeEffect(ref, handler, deps = undefined) {
         observer.disconnect();
       };
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- Pass through provided deps.
     deps || []
   );
 }

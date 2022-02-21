@@ -16,7 +16,7 @@
 
 export function isValidUrl(url) {
   try {
-    // eslint-disable-next-line no-new
+    // eslint-disable-next-line no-new -- Needed here just to catch errors.
     new URL(url);
     return true;
   } catch {
