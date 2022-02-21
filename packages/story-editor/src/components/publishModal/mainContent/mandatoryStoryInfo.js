@@ -60,10 +60,13 @@ const MandatoryStoryInfo = ({
   return (
     <>
       <FormSection>
-        <FormLabel
+        <Headline
+          as="label"
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL}
           htmlFor={INPUT_KEYS.TITLE}
-          copy={__('Story Title', 'web-stories')}
-        />
+        >
+          {__('Story Title', 'web-stories')}
+        </Headline>
         <_TextArea
           name={INPUT_KEYS.TITLE}
           id="story-title"
@@ -77,10 +80,13 @@ const MandatoryStoryInfo = ({
         />
       </FormSection>
       <FormSection>
-        <FormLabel
+        <Headline
+          as="label"
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XX_SMALL}
           htmlFor={INPUT_KEYS.EXCERPT}
-          copy={__('Story Description', 'web-stories')}
-        />
+        >
+          {__('Story Description', 'web-stories')}
+        </Headline>
         <_TextArea
           name={INPUT_KEYS.EXCERPT}
           id="story-excerpt"

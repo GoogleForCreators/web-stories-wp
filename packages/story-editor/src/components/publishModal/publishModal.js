@@ -79,13 +79,6 @@ function PublishModal({ isOpen, onPublish, onClose, publishButtonCopy }) {
     [updateStory, slug, storyId]
   );
 
-  const isAllRequiredInputsFulfilled = useMemo(
-    () =>
-      REQUIRED_INPUTS.every(
-        (requiredInput) => inputValues?.[requiredInput]?.length > 0
-      ),
-    [inputValues]
-  );
 
   const handleReviewChecklist = useCallback(() => {
     trackEvent('review_prepublish_checklist');
@@ -117,7 +110,6 @@ function PublishModal({ isOpen, onPublish, onClose, publishButtonCopy }) {
               publishButtonCopy={publishButtonCopy}
               onClose={onClose}
               onPublish={onPublish}
-              isPublishEnabled={isAllRequiredInputsFulfilled}
             />
             <MainContent
               inputValues={inputValues}
