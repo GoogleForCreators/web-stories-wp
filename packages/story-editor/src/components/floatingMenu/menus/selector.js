@@ -55,7 +55,7 @@ const FloatingMenuSelector = memo(function FloatingMenuSelector({
 });
 
 FloatingMenuSelector.propTypes = {
-  selectedElementTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  selectedElementType: PropTypes.string.isRequired,
 };
 
 export default FloatingMenuSelector;

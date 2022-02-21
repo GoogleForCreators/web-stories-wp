@@ -19,7 +19,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
-import { Modal } from '@googleforcreators/design-system';
+import { Modal, theme } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import { useCallback, useEffect, useMemo } from '@googleforcreators/react';
 /**
@@ -35,13 +35,13 @@ import { INPUT_KEYS, REQUIRED_INPUTS } from './constants';
 
 const Container = styled.div`
   height: 100%;
-  color: ${({ theme }) => theme.colors.fg.primary};
-  background-color: ${({ theme }) => theme.colors.bg.primary};
-  border: ${({ theme }) => `1px solid ${theme.colors.divider.primary}`};
-  border-radius: ${({ theme }) => theme.borders.radius.medium};
+  color: ${theme.colors.fg.primary};
+  background-color: ${theme.colors.bg.primary};
+  border: ${`1px solid ${theme.colors.divider.primary}`};
+  border-radius: ${theme.borders.radius.medium};
 `;
 
-function PublishModal({ isOpen, onPublish, onClose }) {
+function PublishModal({ isOpen, onPublish, onClose, publishButtonCopy }) {
   const storyId = useConfig(({ storyId }) => storyId);
   const updateStory = useStory(({ actions }) => actions.updateStory);
   const inputValues = useStory(({ state: { story } }) => ({
@@ -59,24 +59,25 @@ function PublishModal({ isOpen, onPublish, onClose }) {
     }
   }, [isOpen]);
 
+  const slug = inputValues[INPUT_KEYS.SLUG];
   const handleUpdateStoryInfo = useCallback(
     ({ target }) => {
       const { value, name } = target;
       updateStory({
         properties: { [name]: value },
       });
-    },
-    [updateStory]
-  );
 
-  const handleUpdateSlug = useCallback(() => {
-    updateSlug({
-      currentSlug: inputValues.slug,
-      currentTitle: inputValues.title,
-      storyId,
-      updateStory,
-    });
-  }, [inputValues, storyId, updateStory]);
+      if (name === INPUT_KEYS.TITLE) {
+        updateSlug({
+          currentSlug: slug,
+          currentTitle: value,
+          storyId,
+          updateStory,
+        });
+      }
+    },
+    [updateStory, slug, storyId]
+  );
 
   const isAllRequiredInputsFulfilled = useMemo(
     () =>
@@ -105,11 +106,15 @@ function PublishModal({ isOpen, onPublish, onClose }) {
         minHeight: '580px',
         overflow: 'hidden',
       }}
+      overlayStyles={{
+        backgroundColor: theme.colors.inverted.interactiveBg.modalScrim,
+      }}
     >
       {isOpen && (
         <DirectionAware>
           <Container>
             <Header
+              publishButtonCopy={publishButtonCopy}
               onClose={onClose}
               onPublish={onPublish}
               isPublishEnabled={isAllRequiredInputsFulfilled}
@@ -117,7 +122,6 @@ function PublishModal({ isOpen, onPublish, onClose }) {
             <MainContent
               inputValues={inputValues}
               handleUpdateStoryInfo={handleUpdateStoryInfo}
-              handleUpdateSlug={handleUpdateSlug}
               handleReviewChecklist={handleReviewChecklist}
             />
           </Container>
@@ -133,4 +137,5 @@ PublishModal.propTypes = {
   isOpen: PropTypes.bool,
   onPublish: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+  publishButtonCopy: PropTypes.string.isRequired,
 };

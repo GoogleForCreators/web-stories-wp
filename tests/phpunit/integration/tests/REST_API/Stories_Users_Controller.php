@@ -123,7 +123,7 @@ class Stories_Users_Controller extends DependencyInjectedRestTestCase {
 		);
 	}
 
-	public function filter_rest_user_collection_params( $query_params ) {
+	public function filter_rest_user_collection_params( array $query_params ): array {
 		$query_params['capabilities'] = [
 			'type'  => 'array',
 			'items' => [

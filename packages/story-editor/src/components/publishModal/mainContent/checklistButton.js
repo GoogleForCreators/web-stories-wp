@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,29 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
-
+import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { IconButton } from './shared';
-import useFlip from './shared/useFlip';
+import { ISSUE_TYPES } from '../../checklist/constants';
+import { useCategoryCount } from '../../checklist/countContext';
+import { ToggleButton } from '../../toggleButton';
 
-function FlipHorizontal() {
-  const { horizontal, toggle } = useFlip('horizontal');
+const ChecklistButton = ({ handleReviewChecklist }) => {
+  const priorityCount = useCategoryCount(ISSUE_TYPES.PRIORITY);
+
   return (
-    <IconButton
-      Icon={Icons.MirrorLeftright}
-      title={__('Flip horizontally', 'web-stories')}
-      onClick={toggle}
-      isToggled={horizontal}
+    <ToggleButton
+      MainIcon={Icons.Checkbox}
+      label={__('Checklist', 'web-stories')}
+      aria-label={__('Checklist', 'web-stories')}
+      popupZIndexOverride={10}
+      onClick={handleReviewChecklist}
+      notificationCount={priorityCount}
     />
   );
-}
+};
 
-export default FlipHorizontal;
+export default ChecklistButton;
+
+ChecklistButton.propTypes = {
+  handleReviewChecklist: PropTypes.func,
+};

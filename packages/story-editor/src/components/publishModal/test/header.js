@@ -38,6 +38,7 @@ describe('publishModal/header', () => {
         isPublishEnabled
         onClose={mockOnClose}
         onPublish={mockOnPublish}
+        publishButtonCopy="Publish"
       />
     );
 
@@ -51,6 +52,7 @@ describe('publishModal/header', () => {
         isPublishEnabled
         onClose={mockOnClose}
         onPublish={mockOnPublish}
+        publishButtonCopy="Publish"
       />
     );
 
@@ -66,6 +68,7 @@ describe('publishModal/header', () => {
         isPublishEnabled={false}
         onClose={mockOnClose}
         onPublish={mockOnPublish}
+        publishButtonCopy="Publish"
       />
     );
 
@@ -81,6 +84,7 @@ describe('publishModal/header', () => {
         isPublishEnabled
         onClose={mockOnClose}
         onPublish={mockOnPublish}
+        publishButtonCopy="Publish"
       />
     );
 

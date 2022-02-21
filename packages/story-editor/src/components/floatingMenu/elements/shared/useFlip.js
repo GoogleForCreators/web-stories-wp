@@ -15,50 +15,29 @@
  */
 
 /**
- * External dependencies
- */
-import { memo } from '@googleforcreators/react';
-
-/**
  * Internal dependencies
  */
-import {
-  SwapImage,
-  LayerOpacity,
-  FlipHorizontal,
-  FlipVertical,
-  BorderWidthAndColor,
-  More,
-  Separator,
-  Dismiss,
-} from '../elements';
+import { useStory } from '../../../../app';
+import useProperties from './useProperties';
 
-const FloatingImageMenu = memo(function FloatingImageMenu() {
-  return (
-    <>
-      <SwapImage />
-
-      <Separator />
-
-      <LayerOpacity />
-
-      <Separator />
-      <FlipHorizontal />
-      <FlipVertical />
-
-      <Separator />
-
-      <BorderWidthAndColor />
-
-      <Separator />
-
-      <More />
-
-      <Separator />
-
-      <Dismiss />
-    </>
+function useFlip(property) {
+  const { flip } = useProperties(['flip']);
+  const updateSelectedElements = useStory(
+    (state) => state.actions.updateSelectedElements
   );
-});
+  const toggle = () =>
+    updateSelectedElements({
+      properties: (oldElement) => ({
+        flip: {
+          ...oldElement.flip,
+          [property]: !oldElement.flip[property] || false,
+        },
+      }),
+    });
+  return {
+    [property]: flip[property] || false,
+    toggle,
+  };
+}
 
-export default FloatingImageMenu;
+export default useFlip;
