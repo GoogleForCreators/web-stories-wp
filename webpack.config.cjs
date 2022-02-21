@@ -72,6 +72,7 @@ const sharedConfig = {
       !isProduction && {
         test: /\.m?js$/,
         use: ['source-map-loader'],
+        exclude: /node_modules/,
         enforce: 'pre',
         resolve: {
           fullySpecified: false,
@@ -79,6 +80,7 @@ const sharedConfig = {
       },
       {
         test: /\.worker\.js$/,
+        exclude: /node_modules/,
         use: {
           loader: 'worker-loader',
           options: {
@@ -209,6 +211,10 @@ const sharedConfig = {
       }),
       new CssMinimizerPlugin(),
     ],
+  },
+  stats: {
+    children: true,
+    errorDetails: true,
   },
 };
 
