@@ -145,5 +145,6 @@ export function getOffset({
     width: anchorRect.width,
     height: anchorRect.height,
     popupLeft: popupRect?.left,
+    popupHeight: popupRect?.height,
   };
 }

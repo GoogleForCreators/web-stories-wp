@@ -177,13 +177,14 @@ function Tooltip({
   const positionPlacement = useCallback(
     ({ offset }) => {
       // check to see if there's an overlap with the window's bottom edge
-      const neededVerticalSpace = offset.y + offset.height + TAIL_HEIGHT;
+      const neededVerticalSpace = offset.y + offset.popupHeight + TAIL_HEIGHT;
       const shouldMoveToTop =
         dynamicPlacement.startsWith('bottom') &&
         neededVerticalSpace >= window.innerHeight;
       // check that the tooltip isn't cutoff on the left edge of the screen.
       // right-cutoff is already taken care of with `getOffset`
       const isOverFlowingLeft = offset.popupLeft < 0;
+
       if (shouldMoveToTop && !isOverFlowingLeft) {
         setDynamicPlacement(PLACEMENT.TOP);
       } else if (shouldMoveToTop && isOverFlowingLeft) {
