@@ -38,8 +38,7 @@ import updateProperties from '../../../components/inspector/design/updatePropert
 import useVideoTrim from '../../../components/videoTrim/useVideoTrim';
 import { useHistory } from '../../history';
 import { useConfig } from '../../config';
-import { useLocalMedia } from '../../media';
-import { TRANSCODABLE_MIME_TYPES } from '../../media/constants';
+import { useLocalMedia, TRANSCODABLE_MIME_TYPES } from '../../media';
 import { ELEMENT_TYPES } from '../../../elements';
 import { useStory, useStoryTriggersDispatch, STORY_EVENTS } from '../../story';
 import useApplyTextAutoStyle from '../../../utils/useApplyTextAutoStyle';
