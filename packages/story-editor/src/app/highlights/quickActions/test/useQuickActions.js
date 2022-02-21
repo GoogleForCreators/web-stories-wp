@@ -95,6 +95,7 @@ jest.mock('@googleforcreators/media', () => ({
 
 jest.mock('../../../media', () => ({
   ...jest.requireActual('../../../media'),
+  useLocalMedia: jest.fn(),
   TRANSCODABLE_MIME_TYPES: ['video/mp4'],
 }));
 
