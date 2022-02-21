@@ -43,7 +43,12 @@ function BackgroundAudio({ backgroundAudio, id }) {
 
   return (
     <amp-story-grid-layer template="fill">
-      <amp-video autoPlay="autoplay" layout="nodisplay" {...videoProps}>
+      <amp-video
+        autoPlay="autoplay"
+        layout="nodisplay"
+        poster=""
+        {...videoProps}
+      >
         <source {...sourceProps} />
         {tracks &&
           tracks.map(({ srclang, label, kind, track, id: key }, i) => (
