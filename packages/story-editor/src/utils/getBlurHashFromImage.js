@@ -19,6 +19,10 @@
  */
 import { preloadImage } from '@googleforcreators/media';
 import { getTimeTracker, trackError } from '@googleforcreators/tracking';
+/**
+ * Internal dependencies
+ */
+import Worker from './generateBlurhash.worker';
 
 const getImageData = (image) => {
   const { width, height } = image;
@@ -44,10 +48,10 @@ const getBlurHashFromImage = async (src) => {
 
   const trackTiming = getTimeTracker('load_get_blurhash');
   return new Promise((resolve, reject) => {
-    const url = new URL('./generateBlurhash.worker.js', import.meta.url);
-    const worker = new Worker(url);
+    // const url = new URL('./generateBlurhash.worker.js');
+    const worker = new Worker();
 
-    console.log({ url });
+    // console.log({ url });
 
     worker.postMessage({
       image: data,
