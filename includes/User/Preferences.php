@@ -56,8 +56,6 @@ class Preferences extends Service_Base implements HasMeta {
 	 * Registers the setting in WordPress.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		$this->register_meta();
@@ -67,8 +65,6 @@ class Preferences extends Service_Base implements HasMeta {
 	 * Register meta
 	 *
 	 * @since 1.15.0
-	 *
-	 * @return void
 	 */
 	public function register_meta(): void {
 		register_meta(
@@ -124,7 +120,6 @@ class Preferences extends Service_Base implements HasMeta {
 	 * @param string $meta_key Unused. The meta key.
 	 * @param int    $user_id ID of the user being edited.
 	 * @param int    $current_user_id The currently editing user's ID.
-	 * @return bool
 	 */
 	public function can_edit_current_user( $allowed, $meta_key, $user_id, $current_user_id ): bool {
 		return user_can( $current_user_id, 'edit_user', $user_id );

@@ -55,8 +55,6 @@ class AdSense extends Service_Base implements HasRequirements {
 	 * Initializes all hooks.
 	 *
 	 * @since 1.3.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		add_action( 'web_stories_print_analytics', [ $this, 'print_adsense_tag' ] );
@@ -113,8 +111,6 @@ class AdSense extends Service_Base implements HasRequirements {
 	 * Returns if Google AdSense is enabled.
 	 *
 	 * @since 1.3.0
-	 *
-	 * @return bool
 	 */
 	private function is_enabled(): bool {
 		return ( 'adsense' === $this->settings->get_setting( $this->settings::SETTING_NAME_AD_NETWORK, 'none' ) );
@@ -124,8 +120,6 @@ class AdSense extends Service_Base implements HasRequirements {
 	 * Prints the <amp-story-auto-ads> tag for single stories.
 	 *
 	 * @since 1.3.0
-	 *
-	 * @return void
 	 */
 	public function print_adsense_tag(): void {
 		$publisher = $this->get_publisher_id();

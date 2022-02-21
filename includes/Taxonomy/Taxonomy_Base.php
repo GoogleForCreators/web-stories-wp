@@ -67,8 +67,6 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	 * Register taxonomy on register service.
 	 *
 	 * @since 1.12.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		$this->register_taxonomy();
@@ -78,8 +76,6 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	 * Register taxonomy.
 	 *
 	 * @since 1.12.0
-	 *
-	 * @return void
 	 */
 	public function register_taxonomy(): void {
 		register_taxonomy( $this->taxonomy_slug, $this->taxonomy_post_type, $this->taxonomy_args() );
@@ -89,8 +85,6 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	 * Unregister taxonomy.
 	 *
 	 * @since 1.12.0
-	 *
-	 * @return void
 	 */
 	public function unregister_taxonomy(): void {
 		unregister_taxonomy( $this->taxonomy_slug );
@@ -111,7 +105,6 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	 * @since 1.12.0
 	 *
 	 * @param WP_Site $site The site being initialized.
-	 * @return void
 	 */
 	public function on_site_initialization( WP_Site $site ): void {
 		$this->register_taxonomy();
@@ -123,7 +116,6 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	 * @since 1.12.0
 	 *
 	 * @param bool $network_wide Whether the activation was done network-wide.
-	 * @return void
 	 */
 	public function on_plugin_activation( $network_wide ): void {
 		$this->register_taxonomy();
@@ -135,7 +127,6 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	 * @since 1.12.0
 	 *
 	 * @param bool $network_wide Whether the deactivation was done network-wide.
-	 * @return void
 	 */
 	public function on_plugin_deactivation( $network_wide ): void {
 		$this->unregister_taxonomy();
@@ -145,8 +136,6 @@ abstract class Taxonomy_Base extends Service_Base implements PluginActivationAwa
 	 * Get taxonomy slug.
 	 *
 	 * @since 1.12.0
-	 *
-	 * @return string
 	 */
 	public function get_taxonomy_slug(): string {
 		return $this->taxonomy_slug;

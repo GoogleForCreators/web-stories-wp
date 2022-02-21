@@ -201,7 +201,6 @@ class HTML {
 	 * @since 1.1.0
 	 *
 	 * @param string $content String to replace.
-	 * @return string
 	 */
 	protected function replace_url_scheme( string $content ): string {
 		if ( is_ssl() ) {
@@ -220,7 +219,6 @@ class HTML {
 	 * @since 1.2.0
 	 *
 	 * @param string $content String to replace.
-	 * @return string
 	 */
 	protected function print_analytics( string $content ): string {
 		ob_start();
@@ -245,7 +243,6 @@ class HTML {
 	 * @since 1.6.0
 	 *
 	 * @param string $content String to replace.
-	 * @return string
 	 */
 	protected function print_social_share( string $content ): string {
 		$share_providers = [

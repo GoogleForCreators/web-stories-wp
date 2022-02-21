@@ -114,19 +114,21 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
         fixture.editor.library.pageTemplatesPane.pageTemplates.length
       ).toBe(1);
 
-      // Hover the added template to reveal the delete button.
+      // Hover the added template to reveal the button.
       await fixture.events.hover(
         fixture.editor.library.pageTemplatesPane.pageTemplates[0]
       );
+      // Choose the Delete button of the first item.
       await fixture.events.click(
-        fixture.editor.library.pageTemplatesPane.deleteTemplateBtn
+        fixture.editor.library.pageTemplatesPane.deleteBtnByIndex(0)
       );
-      await waitFor(() => {
-        expect(fixture.screen.getByRole('dialog')).toBeTruthy();
+
+      expect(await fixture.screen.findByRole('dialog')).toBeTruthy();
+
+      const deleteButton = await fixture.screen.findByRole('button', {
+        name: 'Delete',
       });
-      await fixture.events.click(
-        fixture.screen.getByRole('button', { name: 'Delete' })
-      );
+      await fixture.events.click(deleteButton);
 
       await fixture.events.sleep(200);
       const list = fixture.editor.getByRole('list', {
@@ -157,9 +159,9 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
         fixture.editor.library.pageTemplatesPane.pageTemplates.length
       ).toBe(1);
 
-      await fixture.events.click(
-        fixture.editor.library.pageTemplatesPane.pageTemplates[0]
-      );
+      const template =
+        fixture.editor.library.pageTemplatesPane.pageTemplates[0];
+      await fixture.events.click(template);
       await fixture.events.sleep(200);
       const { pages, currentPage } = await fixture.renderHook(() =>
         useStory(({ state }) => {
@@ -201,7 +203,8 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
       // navigate to newly saved template and open delete dialog
       await fixture.events.keyboard.press('Tab');
       await fixture.events.keyboard.press('Tab');
-      await fixture.events.keyboard.press('Space');
+      await fixture.events.keyboard.press('Tab');
+      await fixture.events.keyboard.press('Enter');
 
       await fixture.events.sleep(200);
 

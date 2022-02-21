@@ -43,8 +43,6 @@ class Blurhash extends Service_Base implements HasMeta {
 	 * Init.
 	 *
 	 * @since 1.16.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		$this->register_meta();
@@ -56,8 +54,6 @@ class Blurhash extends Service_Base implements HasMeta {
 	 * Register meta
 	 *
 	 * @since 1.16.0
-	 *
-	 * @return void
 	 */
 	public function register_meta(): void {
 		register_meta(

@@ -38,8 +38,6 @@ class Remove_Unneeded_Attachment_Meta extends Migrate_Base {
 	 * @since 1.7.0
 	 *
 	 * @global \wpdb $wpdb WordPress database abstraction object.
-	 *
-	 * @return void
 	 */
 	public function migrate(): void {
 		delete_post_meta_by_key( Poster::POSTER_POST_META_KEY );

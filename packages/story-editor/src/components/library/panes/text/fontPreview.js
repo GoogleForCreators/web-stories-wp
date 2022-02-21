@@ -24,8 +24,14 @@ import {
   useLayoutEffect,
   useCallback,
   useRef,
+  useState,
 } from '@googleforcreators/react';
-import { Text, useKeyDownEffect } from '@googleforcreators/design-system';
+import {
+  Text,
+  useKeyDownEffect,
+  ThemeGlobals,
+  themeHelpers,
+} from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import { useUnits } from '@googleforcreators/units';
 
@@ -35,10 +41,11 @@ import { useUnits } from '@googleforcreators/units';
 import { useFont, useHistory } from '../../../../app';
 import StoryPropTypes from '../../../../types';
 import stripHTML from '../../../../utils/stripHTML';
-import { focusStyle } from '../../../panels/shared';
 import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
 import useLibrary from '../../useLibrary';
 import LibraryMoveable from '../shared/libraryMoveable';
+import InsertionOverlay from '../shared/insertionOverlay';
+import useRovingTabIndex from '../../../../utils/useRovingTabIndex';
 
 const Preview = styled.button`
   position: relative;
@@ -52,13 +59,16 @@ const Preview = styled.button`
   border: none;
   cursor: pointer;
   text-align: left;
+  outline: none;
 
-  :hover {
-    background-color: ${({ theme }) =>
-      theme.colors.interactiveBg.secondaryHover};
+  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} [role='presentation'],
+  &[data-focus-visible-added] [role='presentation'] {
+    ${({ theme }) =>
+      themeHelpers.focusCSS(
+        theme.colors.border.focus,
+        theme.colors.bg.secondary
+      )};
   }
-
-  ${focusStyle};
 `;
 
 const PreviewText = styled(Text).attrs({ forwardedAs: 'span' })`
@@ -79,7 +89,7 @@ const DragContainer = styled.div`
   line-height: ${({ lineHeight }) => lineHeight}px;
 `;
 
-function FontPreview({ title, element, insertPreset, getPosition }) {
+function FontPreview({ title, element, insertPreset, getPosition, index }) {
   const { font, fontSize, fontWeight, content } = element;
   const {
     actions: { maybeEnqueueFontStyle },
@@ -191,9 +201,23 @@ function FontPreview({ title, element, insertPreset, getPosition }) {
     [onClick]
   );
 
+  useRovingTabIndex({ ref: buttonRef });
+
+  const [active, setActive] = useState(false);
+  const makeActive = () => setActive(true);
+  const makeInactive = () => setActive(false);
+
   return (
-    <Preview ref={buttonRef}>
+    <Preview
+      ref={buttonRef}
+      onPointerEnter={makeActive}
+      onFocus={makeActive}
+      onPointerLeave={makeInactive}
+      onBlur={makeInactive}
+      tabIndex={index === 0 ? 0 : -1}
+    >
       {getTextDisplay()}
+      {active && <InsertionOverlay />}
       <LibraryMoveable
         cloneElement={DragContainer}
         cloneProps={{
@@ -217,6 +241,7 @@ FontPreview.propTypes = {
   element: StoryPropTypes.textContent.isRequired,
   insertPreset: PropTypes.func.isRequired,
   getPosition: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired,
 };
 
 export default FontPreview;

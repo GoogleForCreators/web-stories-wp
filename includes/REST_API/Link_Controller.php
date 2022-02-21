@@ -82,8 +82,6 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 	 * @since 1.0.0
 	 *
 	 * @see register_rest_route()
-	 *
-	 * @return void
 	 */
 	public function register_routes(): void {
 		register_rest_route(

@@ -116,7 +116,8 @@ describe('Text Style Panel', () => {
       await waitFor(
         async () => {
           const texts = await fixture.screen.findAllByText(
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+            'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+            { timeout: 2000 }
           );
           await expect(texts.length).toBeGreaterThan(1);
 
@@ -169,10 +170,8 @@ describe('Text Style Panel', () => {
       await fixture.events.keyboard.type('4');
       await fixture.events.keyboard.press('tab');
 
-      const texts = await waitFor(() =>
-        fixture.screen.findAllByText(
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-        )
+      const texts = await fixture.screen.findAllByText(
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
       );
 
       // Display layer.

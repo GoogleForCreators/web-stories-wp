@@ -65,7 +65,6 @@ trait REST_Setup {
 	 * @param string                    $code     Status code.
 	 * @param WP_REST_Response|WP_Error $response Response object.
 	 * @param int|null                  $status   Status code.
-	 * @return void
 	 */
 	protected function assertErrorResponse( $code, $response, $status = null ): void {
 
