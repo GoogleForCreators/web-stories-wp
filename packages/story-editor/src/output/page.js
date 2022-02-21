@@ -31,7 +31,7 @@ import isElementBelowLimit from '../utils/isElementBelowLimit';
 import { ELEMENT_TYPES } from '../elements';
 import { DEFAULT_AUTO_ADVANCE, DEFAULT_PAGE_DURATION } from '../constants';
 import OutputElement from './element';
-import HiddenAudio from './utils/HiddenAudio';
+import BackgroundAudio from './utils/backgroundAudio';
 import getTextElementTagNames from './utils/getTextElementTagNames';
 import getAutoAdvanceAfter from './utils/getAutoAdvanceAfter';
 
@@ -166,7 +166,7 @@ function OutputPage({
         </amp-story-grid-layer>
       </StoryAnimation.Provider>
       {(hasBackgroundAudioWithTracks || isNonLoopingBackgroundAudio) && (
-        <HiddenAudio backgroundAudio={backgroundAudio} id={id} />
+        <BackgroundAudio backgroundAudio={backgroundAudio} id={id} />
       )}
       {videoCaptions.length > 0 && (
         <amp-story-grid-layer

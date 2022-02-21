@@ -25,13 +25,11 @@ import { ResourcePropTypes } from '@googleforcreators/media';
  */
 import { BackgroundAudioPropType } from '../../types';
 
-function HiddenAudio({ backgroundAudio, id }) {
+function BackgroundAudio({ backgroundAudio, id }) {
   const { resource, tracks, loop } = backgroundAudio || {};
   const { mimeType, src } = resource;
 
   const videoProps = {
-    autoPlay: 'autoplay',
-    layout: 'nodisplay',
     loop: loop ? 'loop' : undefined,
     id: `page-${id}-background-audio`,
     // Actual <amp-story-captions> output happens in OutputPage.
@@ -45,7 +43,7 @@ function HiddenAudio({ backgroundAudio, id }) {
 
   return (
     <amp-story-grid-layer template="fill">
-      <amp-video {...videoProps}>
+      <amp-video autoPlay="autoplay" layout="nodisplay" {...videoProps}>
         <source {...sourceProps} />
         {tracks &&
           tracks.map(({ srclang, label, kind, track, id: key }, i) => (
@@ -63,7 +61,7 @@ function HiddenAudio({ backgroundAudio, id }) {
   );
 }
 
-HiddenAudio.propTypes = {
+BackgroundAudio.propTypes = {
   backgroundAudio: PropTypes.shape({
     resource: BackgroundAudioPropType,
     loop: PropTypes.bool,
@@ -72,4 +70,4 @@ HiddenAudio.propTypes = {
   id: PropTypes.string.isRequired,
 };
 
-export default HiddenAudio;
+export default BackgroundAudio;
