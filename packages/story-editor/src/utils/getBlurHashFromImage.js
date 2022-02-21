@@ -32,6 +32,7 @@ const getImageData = (image) => {
 };
 
 const getBlurHashFromImage = async (src) => {
+  console.log('getting blurhash from image');
   let image;
   try {
     image = await preloadImage({ src });
@@ -43,10 +44,10 @@ const getBlurHashFromImage = async (src) => {
 
   const trackTiming = getTimeTracker('load_get_blurhash');
   return new Promise((resolve, reject) => {
-    const worker = new Worker(
-      new URL('./generateBlurhash.worker.js', import.meta.url),
-      { type: 'module' }
-    );
+    const url = new URL('./generateBlurhash.worker.js', import.meta.url);
+    const worker = new Worker(url);
+
+    console.log({ url });
 
     worker.postMessage({
       image: data,
@@ -56,6 +57,7 @@ const getBlurHashFromImage = async (src) => {
       componentY: 4,
     });
     worker.addEventListener('message', function (event) {
+      console.log('🌹🌹🌹 message success', event);
       worker.terminate(); // lgtm [js/property-access-on-non-object]
       trackTiming();
       if (event.data.type === 'success') {
@@ -66,6 +68,7 @@ const getBlurHashFromImage = async (src) => {
       }
     });
     worker.addEventListener('error', (e) => {
+      console.error('👷‍♀️👷‍♀️👷‍♀️ worker error', e?.message);
       worker.terminate(); // lgtm [js/property-access-on-non-object]
       trackTiming();
       trackError('blurhash_generation', e?.message);
