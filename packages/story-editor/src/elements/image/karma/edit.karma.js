@@ -31,7 +31,11 @@ describe('Image Editor', () => {
     await fixture.collapseHelpCenter();
 
     // Add first image to canvas
-    await fixture.events.click(fixture.editor.library.media.item(0));
+    await fixture.events.mouse.seq(({ moveRel, down, up }) => [
+      moveRel(fixture.editor.library.media.item(0), '30%', '30%'),
+      down(),
+      up(),
+    ]);
 
     const {
       state: {

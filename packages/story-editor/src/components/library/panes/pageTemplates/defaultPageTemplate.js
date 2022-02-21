@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { forwardRef } from '@googleforcreators/react';
+import { forwardRef, useState } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { _x, sprintf, __ } from '@googleforcreators/i18n';
 import {
@@ -26,10 +26,14 @@ import {
   BUTTON_TYPES,
   THEME_CONSTANTS,
   Text,
+  themeHelpers,
+  ThemeGlobals,
 } from '@googleforcreators/design-system';
+
 /**
  * Internal dependencies
  */
+import InsertionOverlay from '../shared/insertionOverlay';
 import { PAGE_TEMPLATE_TYPES } from './constants';
 
 const PageTemplateWrapper = styled.div``;
@@ -40,6 +44,21 @@ const PageTemplateButton = styled(Button).attrs({ type: BUTTON_TYPES.PLAIN })`
   padding: 0;
   border-radius: ${({ theme }) => theme.borders.radius.small};
   overflow: hidden;
+
+  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR},
+    &[data-focus-visible-added]
+    [role='presentation'] {
+    box-shadow: none;
+  }
+
+  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} [role='presentation'],
+  &[data-focus-visible-added] [role='presentation'] {
+    ${({ theme }) =>
+      themeHelpers.focusCSS(
+        theme.colors.border.focus,
+        theme.colors.bg.secondary
+      )};
+  }
 `;
 
 const PageTemplateTitleContainer = styled.div`
@@ -62,13 +81,14 @@ const PosterImg = styled.img`
 `;
 
 const DefaultPageTemplate = forwardRef(
-  ({ page, columnWidth, isActive, ...rest }, ref) => {
+  ({ page, columnWidth, isActive, onFocus, ...rest }, ref) => {
     const templateTitle = sprintf(
       /* translators: 1: template name. 2: page template name. */
       _x('%1$s %2$s', 'page template title', 'web-stories'),
       page.title,
       PAGE_TEMPLATE_TYPES[page.type].name
     );
+    const [isFocused, setIsFocused] = useState(false);
 
     return (
       <PageTemplateWrapper ref={ref} role="listitem">
@@ -76,6 +96,13 @@ const DefaultPageTemplate = forwardRef(
           columnWidth={columnWidth}
           tabIndex={isActive ? 0 : -1}
           aria-label={templateTitle}
+          onPointerEnter={() => setIsFocused(true)}
+          onPointerLeave={() => setIsFocused(false)}
+          onFocus={() => {
+            setIsFocused(true);
+            onFocus?.();
+          }}
+          onBlur={() => setIsFocused(false)}
           {...rest}
         >
           {page.png && (
@@ -91,6 +118,7 @@ const DefaultPageTemplate = forwardRef(
               draggable={false}
             />
           )}
+          {isFocused && <InsertionOverlay />}
           {page.title && (
             <PageTemplateTitleContainer>
               <Text

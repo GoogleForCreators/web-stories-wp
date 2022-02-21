@@ -15,14 +15,10 @@
  */
 
 /**
- * External dependencies
- */
-import { waitFor } from '@testing-library/react';
-
-/**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
+import { useStory } from '../../../app';
 
 describe('Library Media Tab', () => {
   let fixture;
@@ -56,28 +52,44 @@ describe('Library Media Tab', () => {
     });
   });
 
-  describe('CUJ: Creator Can Add Image/Video to Page: Can edit/delete media', () => {
-    it('should open the edit/delete menu', async () => {
-      const mediaItem = fixture.editor.library.media.item(0);
+  describe('CUJ: Creator Can Add Image/Video to Page: Can manage media', () => {
+    it('should open the dropdown menu', async () => {
+      const mediaIndex = 0;
+      const mediaItem = fixture.editor.library.media.item(mediaIndex);
       // Hover the media
       await fixture.events.mouse.moveRel(mediaItem, 20, 20, { steps: 2 });
-      await waitFor(() =>
-        expect(
-          fixture.screen.getByRole('button', { name: 'More' })
-        ).toBeDefined()
+      const menuButtons = await fixture.screen.findAllByRole('button', {
+        name: 'More',
+      });
+      const moreButton = menuButtons[mediaIndex];
+      await fixture.events.click(moreButton);
+      expect(
+        fixture.screen.getByRole('menuitem', { name: 'Edit meta data' })
+      ).toBeDefined();
+      expect(
+        fixture.screen.getByRole('menuitem', { name: 'Delete from library' })
+      ).toBeDefined();
+    });
+
+    it('should allow setting media as background from the insertion menu', async () => {
+      const mediaIndex = 0;
+      const mediaItem = fixture.editor.library.media.item(mediaIndex);
+      // Hover the media
+      await fixture.events.mouse.moveRel(mediaItem, 20, 20, { steps: 2 });
+      const menuButtons = await fixture.screen.findAllByRole('button', {
+        name: 'Open insertion menu',
+      });
+      const insertionButton = menuButtons[mediaIndex];
+      await fixture.events.click(insertionButton);
+
+      await fixture.events.click(
+        fixture.screen.getByRole('menuitem', { name: 'Add as background' })
       );
-      const moreButton = fixture.screen.getByRole('button', { name: 'More' });
-      await fixture.events.mouse.seq(({ moveRel, down, up }) => [
-        moveRel(moreButton, 20, 20),
-        down(),
-        up(),
-      ]);
-      expect(
-        fixture.screen.getByRole('menuitem', { name: 'Edit' })
-      ).toBeDefined();
-      expect(
-        fixture.screen.getByRole('menuitem', { name: 'Delete' })
-      ).toBeDefined();
+
+      const storyContext = await fixture.renderHook(() => useStory());
+      const [background] = storyContext.state.selectedElements;
+      expect(background.type).toBe('image');
+      expect(background.resource.src).toMatch(/^http.+\/blue-marble.jpg$/);
     });
   });
 });
