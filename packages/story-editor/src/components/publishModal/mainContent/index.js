@@ -17,11 +17,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import {
-  Button,
-  BUTTON_SIZES,
-  BUTTON_TYPES,
-} from '@googleforcreators/design-system';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 /**
@@ -29,9 +24,11 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { MANDATORY_INPUT_VALUE_TYPES } from '../types';
 import useInspector from '../../inspector/useInspector';
+import { useHasChecklist } from '../../checklist';
 import { HEADER_BAR_HEIGHT, HEADER_BAR_MARGIN } from '../constants';
 import MandatoryStoryInfo from './mandatoryStoryInfo';
 import StoryPreview from './storyPreview';
+import ChecklistButton from './checklistButton';
 
 const Main = styled.div`
   display: grid;
@@ -53,11 +50,21 @@ const _StoryPreview = styled.div`
 
 const _MandatoryStoryInfo = styled.div`
   grid-area: mandatory;
-  padding: 0 18px;
+  display: flex;
+  flex-direction: column;
+  padding: 0 16px;
   overflow: scroll;
 
   & > section {
-    border: none; /* Override the default border that is part of the base panel structure since this is destructured */
+    border: none; // Override the default border that is part of the base panel structure since this is destructured
+    // overriding this way because of how isolated panel is inserted
+    & > h2 {
+      padding-top: 18px;
+      padding-bottom: 2px;
+      & > button {
+        height: 1em;
+      }
+    }
   }
 `;
 
@@ -80,12 +87,12 @@ const Footer = styled.div`
 const MainContent = ({
   handleReviewChecklist,
   handleUpdateStoryInfo,
-  handleUpdateSlug,
   inputValues,
 }) => {
   const { DocumentPane, id: paneId } = useInspector(
     ({ data }) => data?.modalInspectorTab || {}
   );
+  const hasChecklist = useHasChecklist();
 
   return (
     <Main>
@@ -95,7 +102,6 @@ const MainContent = ({
       <_MandatoryStoryInfo>
         <MandatoryStoryInfo
           handleUpdateStoryInfo={handleUpdateStoryInfo}
-          handleUpdateSlug={handleUpdateSlug}
           inputValues={inputValues}
         />
       </_MandatoryStoryInfo>
@@ -107,15 +113,11 @@ const MainContent = ({
           <DocumentPane />
         </PanelContainer>
       )}
-      <Footer>
-        <Button
-          type={BUTTON_TYPES.PRIMARY}
-          size={BUTTON_SIZES.SMALL}
-          onClick={handleReviewChecklist}
-        >
-          {__('Checklist', 'web-stories')}
-        </Button>
-      </Footer>
+      {hasChecklist && (
+        <Footer>
+          <ChecklistButton handleReviewChecklist={handleReviewChecklist} />
+        </Footer>
+      )}
     </Main>
   );
 };
@@ -125,6 +127,5 @@ export default MainContent;
 MainContent.propTypes = {
   handleReviewChecklist: PropTypes.func,
   handleUpdateStoryInfo: PropTypes.func,
-  handleUpdateSlug: PropTypes.func,
-  inputValues: MANDATORY_INPUT_VALUE_TYPES, // update types when panel is figured out
+  inputValues: MANDATORY_INPUT_VALUE_TYPES,
 };

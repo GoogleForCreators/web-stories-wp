@@ -22,13 +22,13 @@ import { axe } from 'jest-axe';
  * Internal dependencies
  */
 import renderWithTheme from '../../../testUtils/renderWithTheme';
+import { ChecklistCountProvider } from '../../checklist';
 import InspectorContext from '../../inspector/context';
 import { INPUT_KEYS } from '../constants';
 import MainContent from '../mainContent';
 
 describe('publishModal/mainContent', () => {
   const mockHandleUpdateStoryInfo = jest.fn();
-  const mockHandleUpdateSlug = jest.fn();
 
   const mockInputValues = {
     [INPUT_KEYS.EXCERPT]:
@@ -55,11 +55,12 @@ describe('publishModal/mainContent', () => {
   const view = () => {
     return renderWithTheme(
       <InspectorContext.Provider value={inspectorContextValue}>
-        <MainContent
-          handleUpdateStoryInfo={mockHandleUpdateStoryInfo}
-          handleUpdateSlug={mockHandleUpdateSlug}
-          inputValues={mockInputValues}
-        />
+        <ChecklistCountProvider hasChecklist>
+          <MainContent
+            handleUpdateStoryInfo={mockHandleUpdateStoryInfo}
+            inputValues={mockInputValues}
+          />
+        </ChecklistCountProvider>
       </InspectorContext.Provider>
     );
   };
@@ -70,7 +71,7 @@ describe('publishModal/mainContent', () => {
     expect(results).toHaveNoViolations();
   });
 
-  it('should trigger handleUpdateStoryInfo on title input change', () => {
+  it('should trigger handleUpdateStoryInfo on title input blur', () => {
     view();
 
     const titleInput = screen.getByRole('textbox', { name: 'Story Title' });
@@ -79,11 +80,9 @@ describe('publishModal/mainContent', () => {
       target: { value: "David Bowman (and HAL's) Odyseey" },
     });
 
-    expect(mockHandleUpdateStoryInfo).toHaveBeenCalledTimes(1);
-
     fireEvent.blur(titleInput);
 
-    expect(mockHandleUpdateSlug).toHaveBeenCalledTimes(1);
+    expect(mockHandleUpdateStoryInfo).toHaveBeenCalledTimes(1);
   });
 
   it('should trigger handleUpdateStoryInfo on excerpt input change', () => {
@@ -96,6 +95,8 @@ describe('publishModal/mainContent', () => {
     fireEvent.change(descriptionInput, {
       target: { value: 'Lorem ipsum' },
     });
+
+    fireEvent.blur(descriptionInput);
 
     expect(mockHandleUpdateStoryInfo).toHaveBeenCalledTimes(1);
   });

@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
 import { useRef } from 'react';
 import { toId } from '@storybook/csf';
 import { Dashboard, InterfaceSkeleton } from '@googleforcreators/dashboard';
@@ -30,10 +29,6 @@ import { GlobalStyle } from './theme';
 export default {
   title: 'Playground/Dashboard',
 };
-
-const AppContainer = styled.div`
-  height: 100vh;
-`;
 
 const linkHrefTo = (title, name) => {
   const url = new URL(window.parent.location);
@@ -108,11 +103,9 @@ export const _default = () => {
   };
 
   return (
-    <AppContainer>
-      <Dashboard config={config}>
-        <GlobalStyle />
-        <InterfaceSkeleton />
-      </Dashboard>
-    </AppContainer>
+    <Dashboard config={config}>
+      <GlobalStyle />
+      <InterfaceSkeleton />
+    </Dashboard>
   );
 };

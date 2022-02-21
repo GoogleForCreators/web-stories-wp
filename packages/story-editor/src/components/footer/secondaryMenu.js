@@ -27,12 +27,7 @@ import PropTypes from 'prop-types';
 import KeyboardShortcutsMenu from '../keyboardShortcutsMenu';
 import { HelpCenter } from '../helpCenter';
 import { useCanvas, useHelpCenter } from '../../app';
-import {
-  Checklist,
-  ChecklistCountProvider,
-  useChecklist,
-  useCheckpoint,
-} from '../checklist';
+import { Checklist, useChecklist, useCheckpoint } from '../checklist';
 import { useKeyboardShortcutsMenu } from '../keyboardShortcutsMenu/keyboardShortcutsMenuContext';
 import { FOOTER_MENU_GAP, FOOTER_MARGIN } from './constants';
 
@@ -186,11 +181,7 @@ function SecondaryMenu({ menu }) {
     <Wrapper>
       <MenuItems>
         <HelpCenter components={menu?.helpCenter} />
-        {menu?.checklist && (
-          <ChecklistCountProvider>
-            <Checklist items={menu.checklist} />
-          </ChecklistCountProvider>
-        )}
+        {menu?.checklist && <Checklist items={menu.checklist} />}
         <KeyboardShortcutsMenu />
       </MenuItems>
     </Wrapper>

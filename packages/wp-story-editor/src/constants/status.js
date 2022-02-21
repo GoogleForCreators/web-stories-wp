@@ -13,13 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-export const REQUIRED_INPUTS = ['title'];
-export const INPUT_KEYS = {
-  EXCERPT: 'excerpt',
-  SLUG: 'slug',
-  TITLE: 'title',
+export const VISIBILITY = {
+  PUBLIC: 'public',
+  PRIVATE: 'private',
+  PASSWORD_PROTECTED: 'protected',
 };
 
-export const HEADER_BAR_HEIGHT = '44px';
-export const HEADER_BAR_MARGIN = '1px';
+export const STATUS = {
+  PUBLISH: 'publish',
+  FUTURE: 'future',
+  PRIVATE: 'private',
+  DRAFT: 'draft',
+};
