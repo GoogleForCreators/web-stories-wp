@@ -232,7 +232,7 @@ class Editor extends Service_Base implements HasRequirements {
 		}
 
 		return $replace;
-	} 
+	}
 
 	/**
 	 * Filters whether post type supports the block editor.
