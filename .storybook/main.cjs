@@ -67,6 +67,7 @@ module.exports = {
     config.resolve = {
       ...config.resolve,
       // Fixes resolving packages in the monorepo so we use the "src" folder, not "dist".
+      // TODO: Figure out why it doesn't seem to be respected.
       exportsFields: ['customExports', 'exports'],
       fallback: {
         ...config.resolve.fallback,
