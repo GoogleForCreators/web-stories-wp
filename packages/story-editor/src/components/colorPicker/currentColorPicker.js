@@ -62,8 +62,8 @@ import EditablePreview from './editablePreview';
 
 const CONTAINER_PADDING = 16;
 const HEADER_FOOTER_HEIGHT = 36;
-const BODY_HEIGHT = 156;
-const CONTROLS_HEIGHT = 28;
+const BODY_HEIGHT = 116;
+const CONTROLS_HEIGHT = 24;
 const CONTROLS_BORDER_RADIUS = 50;
 const OPACITY_WIDTH = 52;
 const HEX_WIDTH = 74;
@@ -122,7 +122,7 @@ const Footer = styled.div`
   position: relative;
   margin-top: 7px;
   display: flex;
-  gap: 10px;
+  justify-content: space-between;
   margin-bottom: 16px;
 `;
 
