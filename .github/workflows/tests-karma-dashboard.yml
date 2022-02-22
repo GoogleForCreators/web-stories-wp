@@ -69,6 +69,12 @@ jobs:
       - name: Increase max number of file watchers
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
+      - name: Get Chromium executable path
+        id: chromium_path
+        run: |
+          CHROMIUM=$(node -p "const puppeteer = require('puppeteer'); puppeteer.executablePath();")
+          echo "::set-output name=chromium_path::${CHROMIUM}"
+
       - name: Run dashboard integration tests with Percy
         run: |
           npx percy exec --parallel --config=percy.config.karma.yml -- \
