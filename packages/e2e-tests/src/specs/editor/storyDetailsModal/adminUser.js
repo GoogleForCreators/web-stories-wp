@@ -224,11 +224,9 @@ describe('Story Details Modal', () => {
 
       await page.keyboard.press('Tab');
 
-      const permalinkInput = await expect(page).toMatchElement(
-        'div[aria-label="Story details"] input[aria-label="URL slug"]'
+      await expect(page).toMatchElement(
+        'input[aria-label="URL slug"][value="story-details-modal-admin"]'
       );
-
-      expect(permalinkInput).toMatch('story-details-modal-admin');
     });
   });
 });
