@@ -67,7 +67,7 @@ module.exports = {
     config.resolve = {
       ...config.resolve,
       // Fixes resolving packages in the monorepo so we use the "src" folder, not "dist".
-      // TODO: Figure out why it doesn't seem to be respected.
+      // This should be sync'd with the config in `webpack.config.cjs`.
       exportsFields: ['customExports', 'exports'],
       fallback: {
         ...config.resolve.fallback,
@@ -109,11 +109,6 @@ module.exports = {
 
     // These should be sync'd with the config in `webpack.config.cjs`.
 
-    config.resolve = {
-      // Fixes resolving packages in the monorepo so we use the "src" folder, not "dist".
-      // TODO: Revisit after upgrading to webpack v5 or when splitting repository.
-      mainFields: ['browser', 'module', 'main', 'source'],
-    };
     config.plugins.push(
       new webpack.DefinePlugin({
         WEB_STORIES_CI: JSON.stringify(process.env.CI),
