@@ -172,7 +172,10 @@ describe('Story Details Modal', () => {
       await page.keyboard.press('Enter');
 
       // check that publish button says 'schedule'
-      await expect(page).toMatchElement('button', { text: 'Schedule' });
+      await expect(page).toMatchElement(
+        'div[aria-label="Story details"] button',
+        { text: 'Schedule' }
+      );
     });
 
     // TODO https://github.com/googleforcreators/web-stories-wp/issues/7107
