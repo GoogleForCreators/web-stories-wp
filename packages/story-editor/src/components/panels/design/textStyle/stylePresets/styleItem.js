@@ -90,8 +90,9 @@ function StyleItem({ style, i, activeIndex, handleOnClick, isEditMode }) {
     return null;
   }
 
-  const textContent =
-    stripHTML(selectedElements[0].content) || __('Text', 'web-stories');
+  const textContent = selectedElements[0]?.content
+    ? stripHTML(selectedElements[0].content)
+    : __('Text', 'web-stories');
 
   const getStylePresetText = () => {
     const isHighLight =
