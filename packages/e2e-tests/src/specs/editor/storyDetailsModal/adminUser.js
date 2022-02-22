@@ -21,6 +21,7 @@ import {
   createNewStory,
   uploadMedia,
   deleteMedia,
+  takeSnapshot,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Story Details Modal', () => {
@@ -47,6 +48,8 @@ describe('Story Details Modal', () => {
       await expect(page).toMatchElement('div[aria-label="Story details"] h3', {
         text: 'Story Details Modal - admin',
       });
+
+      await takeSnapshot(page, 'Story Details Modal - Admin');
     });
 
     it('should have 3 visibility options', async () => {
