@@ -121,6 +121,7 @@ const sharedConfig = {
           },
           {
             issuer: /\.js?$/,
+            exclude: [/images\/.*\.svg$/],
             use: [
               {
                 loader: '@svgr/webpack',
@@ -141,6 +142,38 @@ const sharedConfig = {
                           },
                         },
                       },
+                      'removeDimensions',
+                    ],
+                  },
+                },
+              },
+            ],
+          },
+          {
+            issuer: /\.js?$/,
+            include: [/images\/.*\.svg$/],
+            use: [
+              {
+                loader: '@svgr/webpack',
+                options: {
+                  titleProp: true,
+                  svgo: true,
+                  memo: true,
+                  svgoConfig: {
+                    plugins: [
+                      {
+                        name: 'preset-default',
+                        params: {
+                          overrides: {
+                            removeViewBox: false,
+                            convertColors: {
+                              // See https://github.com/googleforcreators/web-stories-wp/pull/6361
+                              currentColor: false,
+                            },
+                          },
+                        },
+                      },
+                      'removeDimensions',
                     ],
                   },
                 },

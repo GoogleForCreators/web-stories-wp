@@ -146,6 +146,7 @@ module.exports = {
           },
           {
             issuer: /\.js?$/,
+            exclude: [/images\/.*\.svg$/],
             use: [
               {
                 loader: '@svgr/webpack',
@@ -166,6 +167,38 @@ module.exports = {
                           },
                         },
                       },
+                      'removeDimensions',
+                    ],
+                  },
+                },
+              },
+            ],
+          },
+          {
+            issuer: /\.js?$/,
+            include: [/images\/.*\.svg$/],
+            use: [
+              {
+                loader: '@svgr/webpack',
+                options: {
+                  titleProp: true,
+                  svgo: true,
+                  memo: true,
+                  svgoConfig: {
+                    plugins: [
+                      {
+                        name: 'preset-default',
+                        params: {
+                          overrides: {
+                            removeViewBox: false,
+                            convertColors: {
+                              // See https://github.com/googleforcreators/web-stories-wp/pull/6361
+                              currentColor: false,
+                            },
+                          },
+                        },
+                      },
+                      'removeDimensions',
                     ],
                   },
                 },
@@ -184,7 +217,7 @@ module.exports = {
     );
 
     /*
-    Storybook 6.4 config doesn't work with .cjs files. 
+    Storybook 6.4 config doesn't work with .cjs files.
     TODO: Remove with 6.5
     */
     // https://github.com/storybookjs/storybook/issues/14877#issuecomment-1000441696
