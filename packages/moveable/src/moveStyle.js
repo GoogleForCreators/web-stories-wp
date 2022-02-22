@@ -22,6 +22,7 @@ import { createGlobalStyle } from 'styled-components';
 /**
  * Internal dependencies
  */
+// eslint-disable-next-line import/no-unresolved -- TODO: Use eslint-import-resolver-webpack or similar.
 import arrowCircle from './icons/arrow_circle.svg?url';
 
 export const GlobalStyle = createGlobalStyle`

@@ -228,7 +228,6 @@
     "es2020": true
   },
   "globals": {
-    "require": "readonly",
     "__webpack_public_path__": "writable",
     "WEB_STORIES_CI": "readonly",
     "WEB_STORIES_DISABLE_ERROR_BOUNDARIES": "readonly",
@@ -242,8 +241,7 @@
       "@web-stories-wp/eslint-import-resolver": {
         "mapping": {
           "^@googleforcreators\\/(.*)": "./packages/$1/src/",
-          "^@web-stories-wp\\/(.*)": "./packages/$1/src/",
-          "(.*)\\?url$": "./packages/moveable/src/$1"
+          "^@web-stories-wp\\/(.*)": "./packages/$1/src/"
         }
       }
     },
@@ -346,7 +344,8 @@
         "jasmine"
       ],
       "env": {
-        "jasmine": true
+        "jasmine": true,
+        "node": true
       },
       "rules": {
         "eslint-comments/require-description": "off",
