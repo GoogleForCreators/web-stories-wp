@@ -18,7 +18,6 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { __ } from '@googleforcreators/i18n';
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
 import { StoryAnimation } from '@googleforcreators/animation';
@@ -31,9 +30,10 @@ import isElementBelowLimit from '../utils/isElementBelowLimit';
 import { ELEMENT_TYPES } from '../elements';
 import { DEFAULT_AUTO_ADVANCE, DEFAULT_PAGE_DURATION } from '../constants';
 import OutputElement from './element';
-import HiddenAudio from './utils/HiddenAudio';
+import BackgroundAudio from './utils/backgroundAudio';
 import getTextElementTagNames from './utils/getTextElementTagNames';
 import getAutoAdvanceAfter from './utils/getAutoAdvanceAfter';
+import Outlink from './utils/outlink';
 
 const ASPECT_RATIO = `${PAGE_WIDTH}:${PAGE_HEIGHT}`;
 
@@ -49,9 +49,8 @@ function OutputPage({
     elements,
     backgroundColor,
     backgroundAudio,
-    pageAttachment,
+    pageAttachment = {},
   } = page;
-  const { ctaText, url, icon, theme, rel = [] } = pageAttachment || {};
 
   const {
     resource: backgroundAudioResource,
@@ -92,7 +91,7 @@ function OutputPage({
 
     // Remove invalid links.
     // TODO: this should come from the pre-publish checklist in the future.
-    if (url && isElementBelowLimit(element)) {
+    if (pageAttachment?.url && isElementBelowLimit(element)) {
       delete element.link;
     }
 
@@ -165,9 +164,11 @@ function OutputPage({
           </div>
         </amp-story-grid-layer>
       </StoryAnimation.Provider>
+
       {(hasBackgroundAudioWithTracks || isNonLoopingBackgroundAudio) && (
-        <HiddenAudio backgroundAudio={backgroundAudio} id={id} />
+        <BackgroundAudio backgroundAudio={backgroundAudio} id={id} />
       )}
+
       {videoCaptions.length > 0 && (
         <amp-story-grid-layer
           template="vertical"
@@ -186,18 +187,9 @@ function OutputPage({
           </div>
         </amp-story-grid-layer>
       )}
+
       {/* <amp-story-page-outlink> needs to be the last child element */}
-      {url && (
-        <amp-story-page-outlink
-          layout="nodisplay"
-          cta-image={icon || undefined}
-          theme={theme}
-        >
-          <a href={url} rel={rel.join(' ')}>
-            {ctaText || __('Learn more', 'web-stories')}
-          </a>
-        </amp-story-page-outlink>
-      )}
+      {pageAttachment?.url && <Outlink {...pageAttachment} />}
     </amp-story-page>
   );
 }
