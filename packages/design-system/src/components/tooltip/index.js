@@ -185,11 +185,13 @@ function Tooltip({
       // right-cutoff is already taken care of with `getOffset`
       const isOverFlowingLeft = offset.popupLeft < 0;
       if (shouldMoveToTop) {
-        setDynamicPlacement(
-          dynamicPlacement.endsWith('-start')
-            ? PLACEMENT.TOP_START
-            : PLACEMENT.TOP
-        );
+        if (dynamicPlacement.endsWith('-start')) {
+          setDynamicPlacement(PLACEMENT.TOP_START);
+        } else if (dynamicPlacement.endsWith('-end')) {
+          setDynamicPlacement(PLACEMENT.TOP_END);
+        } else {
+          setDynamicPlacement(PLACEMENT.TOP);
+        }
       } else if (isOverFlowingLeft) {
         updatePlacement();
       }
