@@ -164,9 +164,7 @@ describe('Story Details Modal', () => {
       await page.keyboard.press('Tab');
       await page.keyboard.press('Tab');
       await page.keyboard.press('Tab');
-      // From the currently selected date, arrow left a few times to get a future date
-      await page.keyboard.press('ArrowRight');
-      await page.keyboard.press('ArrowRight');
+      // From the currently selected date, arrow right to get a future date
       await page.keyboard.press('ArrowRight');
       // Select future date with keyboard
       await page.keyboard.press('Enter');
