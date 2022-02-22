@@ -22,8 +22,7 @@ import { createGlobalStyle } from 'styled-components';
 /**
  * Internal dependencies
  */
-// eslint-disable-next-line import/no-unresolved -- TODO: Use eslint-import-resolver-webpack or similar.
-import arrowCircle from './icons/arrow_circle.svg?url';
+import arrowCircle from './inline-icons/arrow_circle.svg';
 
 export const GlobalStyle = createGlobalStyle`
   .default-moveable .moveable-control,

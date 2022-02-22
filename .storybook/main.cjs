@@ -132,23 +132,20 @@ module.exports = {
       })
     );
 
-    // ensure svgr is the only loader used for files with .svg extension
-    const assetRule = config.module.rules.find(({ test }) => test.test('.svg'));
-    assetRule.exclude = /\.svg/;
-
     config.module.rules.unshift(
-      // Use asset svg and svgr in same project using resourceQuery
-      // https://react-svgr.com/docs/webpack/#use-svgr-and-asset-svg-in-the-same-project
       {
         test: /\.svg$/,
+        // Use asset SVG and SVGR together.
+        // Not using resourceQuery because it doesn't work well with Rollup.
+        // https://react-svgr.com/docs/webpack/#use-svgr-and-asset-svg-in-the-same-project
         oneOf: [
           {
             type: 'asset/inline',
-            resourceQuery: /url/,
+            include: [/inline-icons\/.*\.svg$/],
           },
           {
             issuer: /\.js?$/,
-            exclude: [/images\/.*\.svg$/],
+            include: [/\/icons\/.*\.svg$/],
             use: [
               {
                 loader: '@svgr/webpack',
