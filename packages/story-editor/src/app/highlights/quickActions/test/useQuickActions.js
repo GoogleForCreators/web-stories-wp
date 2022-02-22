@@ -93,6 +93,11 @@ jest.mock('@googleforcreators/media', () => ({
   },
 }));
 
+jest.mock('../../../media', () => ({
+  ...jest.requireActual('../../../media'),
+  useLocalMedia: jest.fn(),
+}));
+
 jest.mock('../../../config');
 jest.mock('../../../media/utils/useFFmpeg');
 
