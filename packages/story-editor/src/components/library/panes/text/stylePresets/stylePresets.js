@@ -39,9 +39,11 @@ import { useRef, useState } from '@googleforcreators/react';
 import { useStory, useConfig } from '../../../../../app';
 import { PRESET_TYPES } from '../../../../../constants';
 import useAddPreset from '../../../../../utils/useAddPreset';
+import { DEFAULT_PRESET } from '../textPresets';
 import { focusStyle } from '../../../../panels/shared';
 import StyleGroup from '../../../../panels/design/textStyle/stylePresets/styleGroup';
 import StyleManager from '../../../../panels/design/textStyle/stylePresets/styleManager';
+import useLibrary from '../../../useLibrary';
 
 const PresetsHeader = styled.div`
   display: flex;
@@ -90,33 +92,42 @@ const NoStylesText = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.tertiary};
 `;
 
-const SPACING = { x: 20 };
+const SPACING = { x: 40 };
+const TYPE = 'text';
+
 function PresetPanel() {
-  const { globalStoryStyles } = useStory(
+  const textStyles = useStory(
     ({
       state: {
         story: { globalStoryStyles },
       },
     }) => {
-      return {
-        globalStoryStyles,
-      };
+      return globalStoryStyles.textStyles;
     }
   );
+  const { insertElement } = useLibrary((state) => ({
+    insertElement: state.actions.insertElement,
+  }));
 
   const buttonRef = useRef(null);
   const stylesRef = useRef(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
-  const { textStyles } = globalStoryStyles;
   const hasPresets = textStyles.length > 0;
 
   //const handleApplyStyle = useApplyStyle({ pushUpdate });
   //const { addGlobalPreset } = useAddPreset({ presetType: PRESET_TYPES.STYLE });
 
-  /*const handlePresetClick = (preset) => {
-    handleApplyStyle(preset);
-  };*/
+  const addStyledText = (preset) => {
+    insertElement(TYPE, {
+      ...DEFAULT_PRESET,
+      ...preset,
+    });
+  };
+
+  const handlePresetClick = (preset) => {
+    addStyledText(preset);
+  };
 
   return (
     <>
@@ -139,7 +150,7 @@ function PresetPanel() {
           <StylesWrapper ref={stylesRef}>
             <StyleGroup
               styles={[...textStyles].reverse().slice(0, 2)}
-              handleClick={() => {}}
+              handleClick={handlePresetClick}
             />
           </StylesWrapper>
           <StyledMoreButton
@@ -162,7 +173,7 @@ function PresetPanel() {
             renderContents={() => (
               <StyleManager
                 styles={textStyles}
-                applyStyle={() => {}}
+                applyStyle={handlePresetClick}
                 onClose={() => setIsPopupOpen(false)}
               />
             )}
