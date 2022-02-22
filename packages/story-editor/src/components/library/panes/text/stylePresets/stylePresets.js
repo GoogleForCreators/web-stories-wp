@@ -30,7 +30,7 @@ import {
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
-import { useRef, useState } from '@googleforcreators/react';
+import { useCallback, useRef, useState } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -44,6 +44,9 @@ import StyleGroup from '../../../../panels/design/textStyle/stylePresets/styleGr
 import StyleManager from '../../../../panels/design/textStyle/stylePresets/styleManager';
 import useLibrary from '../../../useLibrary';
 import { areAllType } from '../../../../../utils/presetUtils';
+import useApplyStyle from '../../../../panels/design/textStyle/stylePresets/useApplyStyle';
+import updateProperties from '../../../../inspector/design/updateProperties';
+import getUpdatedSizeAndPosition from '../../../../../utils/getUpdatedSizeAndPosition';
 
 const PresetsHeader = styled.div`
   display: flex;
@@ -96,16 +99,20 @@ const SPACING = { x: 40 };
 const TYPE = 'text';
 
 function PresetPanel() {
-  const { textStyles, isText } = useStory(
+  const { textStyles, isText, selectedTexts, updateElementsById } = useStory(
     ({
       state: {
         story: { globalStoryStyles },
         selectedElements,
       },
+      actions,
     }) => {
+      const isText = selectedElements && areAllType(TYPE, selectedElements);
       return {
-        isText: selectedElements && areAllType(TYPE, selectedElements),
+        isText,
         textStyles: globalStoryStyles.textStyles,
+        selectedTexts: isText ? selectedElements : [],
+        updateElementsById: actions.updateElementsById,
       };
     }
   );
@@ -120,7 +127,27 @@ function PresetPanel() {
   const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
   const hasPresets = textStyles.length > 0;
 
-  //const handleApplyStyle = useApplyStyle({ pushUpdate });
+  const pushUpdate = useCallback(
+    (update) => {
+      updateElementsById({
+        elementIds: selectedTexts.map(({ id }) => id),
+        properties: (element) => {
+          const updates = updateProperties(element, update, true);
+          const sizeUpdates = getUpdatedSizeAndPosition({
+            ...element,
+            ...updates,
+          });
+          return {
+            ...updates,
+            ...sizeUpdates,
+          };
+        },
+      });
+    },
+    [selectedTexts, updateElementsById]
+  );
+
+  const handleApplyStyle = useApplyStyle({ pushUpdate });
   const { addGlobalPreset } = useAddPreset({ presetType: PRESET_TYPES.STYLE });
 
   const addStyledText = (preset) => {
@@ -131,7 +158,11 @@ function PresetPanel() {
   };
 
   const handlePresetClick = (preset) => {
-    addStyledText(preset);
+    if (isText) {
+      handleApplyStyle(preset);
+    } else {
+      addStyledText(preset);
+    }
   };
 
   return (
