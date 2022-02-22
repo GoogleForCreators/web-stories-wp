@@ -172,10 +172,12 @@ describe('Story Details Modal', () => {
       await page.keyboard.press('Enter');
 
       // check that publish button says 'schedule'
-      await expect(page).toMatch('Schedule');
+      await expect(page).toMatchElement('button', { text: 'Schedule' });
     });
 
-    it('should update featured media (poster)', async () => {
+    // TODO https://github.com/googleforcreators/web-stories-wp/issues/7107
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip('should update featured media (poster)', async () => {
       await openPublishingPanel();
 
       const featuredMediaButton = await expect(page).toMatchElement(
