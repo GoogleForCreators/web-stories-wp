@@ -47,6 +47,7 @@ import { areAllType } from '../../../../../utils/presetUtils';
 import useApplyStyle from '../../../../panels/design/textStyle/stylePresets/useApplyStyle';
 import updateProperties from '../../../../inspector/design/updateProperties';
 import getUpdatedSizeAndPosition from '../../../../../utils/getUpdatedSizeAndPosition';
+import InsertionOverlay from '../../shared/insertionOverlay';
 
 const PresetsHeader = styled.div`
   display: flex;
@@ -185,7 +186,9 @@ function PresetPanel() {
       {hasPresets && (
         <>
           <StylesWrapper ref={stylesRef}>
+            {/* We only show the insertion overlay if we're inserting -> this means selected elements are not texts */}
             <StyleGroup
+              activeItemOverlay={isText ? null : <InsertionOverlay />}
               styles={[...textStyles].reverse().slice(0, 2)}
               handleClick={handlePresetClick}
             />
@@ -209,6 +212,7 @@ function PresetPanel() {
             spacing={SPACING}
             renderContents={() => (
               <StyleManager
+                activeItemOverlay={isText ? null : <InsertionOverlay />}
                 styles={textStyles}
                 applyStyle={handlePresetClick}
                 onClose={() => setIsPopupOpen(false)}

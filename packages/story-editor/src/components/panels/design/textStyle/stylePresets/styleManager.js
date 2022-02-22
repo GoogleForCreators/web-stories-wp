@@ -73,7 +73,7 @@ const StyledText = styled(Text).attrs({
   color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
-function StyleManager({ styles, onClose, applyStyle }) {
+function StyleManager({ styles, onClose, applyStyle, activeItemOverlay }) {
   const [isEditMode, setIsEditMode] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
   const [toDelete, setToDelete] = useState(null);
@@ -130,6 +130,7 @@ function StyleManager({ styles, onClose, applyStyle }) {
         </Header>
         <Body>
           <StyleGroup
+            activeItemOverlay={activeItemOverlay}
             styles={[...styles].reverse()}
             handleClick={handleClick}
             isEditMode={isEditMode}

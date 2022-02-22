@@ -22,6 +22,8 @@ import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import { Icons } from '@googleforcreators/design-system';
+import { useState } from '@googleforcreators/react';
+
 /**
  * Internal dependencies
  */
@@ -47,7 +49,7 @@ const PresetButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  svg {
+  > svg {
     width: ${REMOVE_ICON_SIZE}px;
     height: ${REMOVE_ICON_SIZE}px;
     position: absolute;
@@ -80,12 +82,28 @@ const TextWrapper = styled.div`
   ${({ background }) => (background ? generatePatternStyles(background) : null)}
 `;
 
-function StyleItem({ style, i, activeIndex, handleOnClick, isEditMode }) {
+function StyleItem({
+  style,
+  i,
+  activeIndex,
+  handleOnClick,
+  isEditMode,
+  activeItemOverlay,
+}) {
   const { selectedElements } = useStory(({ state: { selectedElements } }) => {
     return {
       selectedElements,
     };
   });
+  const [isActive, setIsActive] = useState(false);
+  // We only want to change this state if we have the active item overlay.
+  const makeActive = () => {
+    activeItemOverlay && setIsActive(true);
+  };
+  const makeInactive = () => {
+    activeItemOverlay && setIsActive(false);
+  };
+
   if (!style) {
     return null;
   }
@@ -119,6 +137,10 @@ function StyleItem({ style, i, activeIndex, handleOnClick, isEditMode }) {
       tabIndex={activeIndex === i ? 0 : -1}
       style={style}
       onClick={() => handleOnClick(style)}
+      onPointerEnter={makeActive}
+      onFocus={makeActive}
+      onPointerLeave={makeInactive}
+      onBlur={makeInactive}
       aria-label={
         isEditMode
           ? __('Delete style', 'web-stories')
@@ -127,6 +149,7 @@ function StyleItem({ style, i, activeIndex, handleOnClick, isEditMode }) {
     >
       {getStylePresetText()}
       {isEditMode && <Icons.Cross />}
+      {!isEditMode && isActive && activeItemOverlay}
     </PresetButton>
   );
 }
