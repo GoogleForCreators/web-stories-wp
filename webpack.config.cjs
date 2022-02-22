@@ -55,8 +55,7 @@ const mode = isProduction ? 'production' : 'development';
 const sharedConfig = {
   resolve: {
     // Fixes resolving packages in the monorepo so we use the "src" folder, not "dist".
-    // TODO: Revisit after upgrading to webpack v5 or when splitting repository.
-    mainFields: ['exports', 'browser', 'module', 'main', 'source'],
+    exportsFields: ['customExports','exports'],
   },
   mode,
   devtool: !isProduction ? 'source-map' : undefined,

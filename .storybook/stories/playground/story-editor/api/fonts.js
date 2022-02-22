@@ -16,7 +16,7 @@
 
 export async function getFonts(params) {
   let { default: fonts } = await import(
-    /* webpackChunkName: "chunk-fonts" */ '@googleforcreators/fonts/src/fonts.json' //eslint-disable-line import/no-internal-modules -- TODO: Improve export in module.
+    /* webpackChunkName: "chunk-fonts" */ '@googleforcreators/fonts/fonts.json' //eslint-disable-line import/no-internal-modules,import/no-unresolved -- TODO: Improve export in module.
   );
 
   fonts = fonts.map((font) => ({
