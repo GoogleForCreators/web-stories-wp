@@ -393,6 +393,17 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'editor',
 				'default'     => true,
 			],
+			/**
+			 * Author: @miina
+			 * Issue: #10113
+			 * Creation date: 2022-02-22
+			 */
+			[
+				'name'        => 'libraryTextStyles',
+				'label'       => __( 'Library: Saved Styles', 'web-stories' ),
+				'description' => __( 'Allow inserting/applying Saved Styles from Text Library', 'web-stories' ),
+				'group'       => 'editor',
+			],
 		];
 	}
 
