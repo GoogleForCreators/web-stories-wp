@@ -99,6 +99,7 @@ const plugins = [
 /**
  * @typedef {Object} CustomInputOptions
  * @property {string} configPackages Comma-separated list of package names to include.
+ * @property {string} configEntries Comma-separated list of entries to build. Supports "es" and "cjs".
  * @typedef {import('rollup').RollupOptions & CustomInputOptions} CustomInputOptions
  */
 
