@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import PropTypes from 'prop-types';
 import {
   THEME_CONSTANTS,
   Text,
@@ -44,6 +43,7 @@ import { focusStyle } from '../../../../panels/shared';
 import StyleGroup from '../../../../panels/design/textStyle/stylePresets/styleGroup';
 import StyleManager from '../../../../panels/design/textStyle/stylePresets/styleManager';
 import useLibrary from '../../../useLibrary';
+import { areAllType } from '../../../../../utils/presetUtils';
 
 const PresetsHeader = styled.div`
   display: flex;
@@ -96,15 +96,20 @@ const SPACING = { x: 40 };
 const TYPE = 'text';
 
 function PresetPanel() {
-  const textStyles = useStory(
+  const { textStyles, isText } = useStory(
     ({
       state: {
         story: { globalStoryStyles },
+        selectedElements,
       },
     }) => {
-      return globalStoryStyles.textStyles;
+      return {
+        isText: selectedElements && areAllType(TYPE, selectedElements),
+        textStyles: globalStoryStyles.textStyles,
+      };
     }
   );
+
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
@@ -116,7 +121,7 @@ function PresetPanel() {
   const hasPresets = textStyles.length > 0;
 
   //const handleApplyStyle = useApplyStyle({ pushUpdate });
-  //const { addGlobalPreset } = useAddPreset({ presetType: PRESET_TYPES.STYLE });
+  const { addGlobalPreset } = useAddPreset({ presetType: PRESET_TYPES.STYLE });
 
   const addStyledText = (preset) => {
     insertElement(TYPE, {
@@ -139,8 +144,9 @@ function PresetPanel() {
           type={BUTTON_TYPES.TERTIARY}
           size={BUTTON_SIZES.SMALL}
           variant={BUTTON_VARIANTS.SQUARE}
-          onClick={() => {}}
+          onClick={addGlobalPreset}
           aria-label={__('Add style', 'web-stories')}
+          disabled={!isText}
         >
           <Icons.Plus />
         </StyledButton>
