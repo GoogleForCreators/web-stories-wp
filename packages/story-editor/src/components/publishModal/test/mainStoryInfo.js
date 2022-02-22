@@ -26,7 +26,7 @@ import renderWithTheme from '../../../testUtils/renderWithTheme';
 import { ChecklistCountProvider } from '../../checklist';
 import InspectorContext from '../../inspector/context';
 import { INPUT_KEYS } from '../constants';
-import MainStoryInfo from '../mainContent/mainStoryInfo';
+import MainStoryInfo from '../content/mainStoryInfo';
 
 const mockInputValues = {
   [INPUT_KEYS.EXCERPT]:

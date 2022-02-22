@@ -26,7 +26,7 @@ import renderWithTheme from '../../../testUtils/renderWithTheme';
 import { ChecklistCountProvider } from '../../checklist';
 import InspectorContext from '../../inspector/context';
 import { INPUT_KEYS } from '../constants';
-import MainContent from '../mainContent';
+import Content from '../content';
 
 const mockInputValues = {
   [INPUT_KEYS.EXCERPT]:
@@ -68,7 +68,7 @@ describe('publishModal/content', () => {
       >
         <InspectorContext.Provider value={inspectorContextValue}>
           <ChecklistCountProvider hasChecklist>
-            <MainContent handleReviewChecklist={mockHandleReviewChecklist} />
+            <Content handleReviewChecklist={mockHandleReviewChecklist} />
           </ChecklistCountProvider>
         </InspectorContext.Provider>
       </StoryContext.Provider>
