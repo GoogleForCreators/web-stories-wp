@@ -26,7 +26,7 @@ import {
 describe('Story Details Modal', () => {
   const openStoryDetailsModal = async () => {
     await expect(page).toClick('button', { text: 'Publish' });
-    await expect(page).toMatchElement('div#modal-story-details-publish');
+    await expect(page).toMatchElement('div[aria-label="Story details"]');
   };
   beforeEach(async () => {
     await createNewStory();
@@ -41,9 +41,10 @@ describe('Story Details Modal', () => {
         'textarea[placeholder="Add title"]',
         'Story Details Modal - admin'
       );
+      await page.keyboard.press('Tab');
 
       // Make sure title is displayed over preview
-      await expect(page).toMatchElement('h3', {
+      await expect(page).toMatchElement('div[aria-label="Story details"] h3', {
         text: 'Story Details Modal - admin',
       });
     });
@@ -75,7 +76,7 @@ describe('Story Details Modal', () => {
     async function openPublishingPanel() {
       //find publish panel button
       const publishPanelButton = await expect(page).toMatchElement(
-        'div#publish_modal_document button',
+        'div[aria-label="Story details"] button',
         { text: 'Publishing' }
       );
 
@@ -92,7 +93,7 @@ describe('Story Details Modal', () => {
       await openPublishingPanel();
 
       const authorDropDownButton = await expect(page).toMatchElement(
-        'button[aria-label="Author"]'
+        'div[aria-label="Story details"] button[aria-label="Author"]'
       );
       await expect(authorDropDownButton).toMatch('admin');
 
@@ -111,7 +112,7 @@ describe('Story Details Modal', () => {
       await openPublishingPanel();
 
       const authorDropDownButton = await expect(page).toMatchElement(
-        'button[aria-label="Author"]'
+        'div[aria-label="Story details"] button[aria-label="Author"]'
       );
       await expect(authorDropDownButton).toMatch('admin');
 
@@ -148,7 +149,7 @@ describe('Story Details Modal', () => {
       await openPublishingPanel();
 
       const publishDateDropDownButton = await expect(page).toMatchElement(
-        'button[aria-label="Story publish time"]'
+        'div[aria-label="Story details"] button[aria-label="Story publish time"]'
       );
       await expect(publishDateDropDownButton).toMatch('Immediately');
 
@@ -175,7 +176,7 @@ describe('Story Details Modal', () => {
       await openPublishingPanel();
 
       const featuredMediaButton = await expect(page).toMatchElement(
-        'button[aria-label="Poster image"]'
+        'div[aria-label="Story details"] button[aria-label="Poster image"]'
       );
 
       await featuredMediaButton.click();
@@ -196,7 +197,7 @@ describe('Story Details Modal', () => {
     async function openPermalinkPanel() {
       //find permalink panel button
       const permalinkPanelButton = await expect(page).toMatchElement(
-        '#publish_modal_document button',
+        'div[aria-label="Story details"] button',
         { text: 'Permalink' }
       );
 
@@ -219,7 +220,7 @@ describe('Story Details Modal', () => {
       );
 
       const permalinkInput = await expect(page).toMatchElement(
-        'div#publish_modal_document input[aria-label="URL slug"]'
+        'div[aria-label="Story details"] input[aria-label="URL slug"]'
       );
 
       expect(permalinkInput).toMatch('story-details-modal-admin');
