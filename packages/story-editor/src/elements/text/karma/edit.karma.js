@@ -72,6 +72,7 @@ describe('TextEdit integration', () => {
         }
         frame = fixture.editor.canvas.framesLayer.frames[1].node;
       });
+      frame = fixture.editor.canvas.framesLayer.frames[1].node;
     });
 
     it('should render initial content', () => {

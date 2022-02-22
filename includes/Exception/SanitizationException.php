@@ -43,8 +43,6 @@ final class SanitizationException
 	 * Create a new instance of the exception for a document that cannot be parsed.
 	 *
 	 * @since 1.10.0
-	 *
-	 * @return self
 	 */
 	public static function from_document_parse_error(): self {
 		return new self( 'The markup could not be parsed into a DOMDocument.' );

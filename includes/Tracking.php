@@ -116,8 +116,6 @@ class Tracking extends Service_Base {
 	 * Registers the setting in WordPress.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		// By not passing an actual script src we can print only the inline script.

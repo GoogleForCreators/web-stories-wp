@@ -48,8 +48,6 @@ class Trimming extends Service_Base implements HasMeta {
 	 * Register.
 	 *
 	 * @since 1.12.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		$this->register_meta();
@@ -61,8 +59,6 @@ class Trimming extends Service_Base implements HasMeta {
 	 * Register meta for attachment post type.
 	 *
 	 * @since 1.12.0
-	 *
-	 * @return void
 	 */
 	public function register_meta(): void {
 		register_meta(

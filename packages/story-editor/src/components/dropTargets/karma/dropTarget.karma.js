@@ -176,7 +176,7 @@ describe('Drop-Target integration', () => {
     let imageData;
 
     beforeEach(async () => {
-      await fixture.events.click(fixture.editor.library.media.item(0));
+      await insertMediaByIndex(fixture, 0);
       imageData = (await getElements(fixture))[1];
     });
 
@@ -285,7 +285,7 @@ describe('Drop-Target integration', () => {
       let imageData;
 
       beforeEach(async () => {
-        await fixture.events.click(fixture.editor.library.media.item(1));
+        await insertMediaByIndex(fixture, 1);
         imageData = (await getElements(fixture))[1];
       });
 
@@ -452,7 +452,7 @@ describe('Drop-Target integration', () => {
         let flippedImageData;
 
         beforeEach(async () => {
-          await fixture.events.click(fixture.editor.library.media.item(2));
+          await insertMediaByIndex(fixture, 2);
           flippedImageData = (await getElements(fixture))[2];
 
           await fixture.events.click(
@@ -574,13 +574,18 @@ function dragCanvasElementToDropTarget(fixture, fromId, toId) {
   return dragToDropTarget(fixture, from, toId);
 }
 
+async function insertMediaByIndex(fixture, index) {
+  const mediaItem = fixture.editor.library.media.item(index);
+  await fixture.events.mouse.clickOn(mediaItem, 20, 20);
+}
+
 async function dragToDropTarget(fixture, from, toId) {
   const to = fixture.editor.canvas.framesLayer.frame(toId).node;
 
   // Schedule a sequence of events by dragging from center of image
   // to corner of target
   await fixture.events.mouse.seq(({ moveRel, down }) => [
-    moveRel(from, '50%', '50%'),
+    moveRel(from, '20%', '20%'),
     down(),
     moveRel(to, 5, 5, { steps: 5 }),
   ]);

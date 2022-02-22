@@ -28,7 +28,11 @@ describe('Zoom selector', () => {
     await fixture.collapseHelpCenter();
 
     // Add an image to the canvas to make it more visual when things move
-    await fixture.events.click(fixture.editor.library.media.item(0));
+    await fixture.events.mouse.clickOn(
+      fixture.editor.library.media.item(0),
+      20,
+      20
+    );
 
     // Add some matchers not generally useful, but applicable in this file
     jasmine.addMatchers({

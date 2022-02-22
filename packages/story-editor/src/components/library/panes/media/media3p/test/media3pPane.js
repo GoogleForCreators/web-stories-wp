@@ -308,10 +308,11 @@ describe('Media3pPane', () => {
     useMediaResult.searchTerm = '';
     renderWithTheme(<Media3pPane isActive />);
 
-    fireEvent.keyDown(screen.queryAllByTestId(/^mediaElement-/)[0], {
-      key: 'Enter',
-      which: 13,
-    });
+    fireEvent.click(
+      screen.queryAllByRole('button', { name: 'Open insertion menu' })[0]
+    );
+
+    fireEvent.click(screen.getByText(/Insert image/));
 
     expect(registerUsage).toHaveBeenCalledWith({
       registerUsageUrl: 'https://registerUsageUrl.com/register',

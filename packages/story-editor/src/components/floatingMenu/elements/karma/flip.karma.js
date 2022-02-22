@@ -31,7 +31,11 @@ describe('Design Menu: Flip toggles', () => {
     await fixture.collapseHelpCenter();
 
     // Add an image to stage
-    await fixture.events.click(fixture.editor.library.media.item(0));
+    await fixture.events.mouse.clickOn(
+      fixture.editor.library.media.item(0),
+      20,
+      20
+    );
   });
 
   afterEach(() => {

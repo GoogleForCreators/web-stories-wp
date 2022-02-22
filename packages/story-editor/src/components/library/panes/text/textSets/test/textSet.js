@@ -240,7 +240,12 @@ function setup(elements, id) {
                       }}
                       getBox={getBox}
                     >
-                      <TextSet id={id} elements={elements} index={0} />
+                      <TextSet
+                        ref={{ current: null }}
+                        id={id}
+                        elements={elements}
+                        index={0}
+                      />
                     </UnitsProvider>
                   </LibraryContext.Provider>
                 </LayoutProvider>

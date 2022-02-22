@@ -37,8 +37,6 @@ class NextGen_Gallery extends Service_Base {
 	 * Initializes all hooks.
 	 *
 	 * @since 1.2.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		add_filter( 'run_ngg_resource_manager', [ $this, 'filter_run_ngg_resource_manager' ], PHP_INT_MAX );

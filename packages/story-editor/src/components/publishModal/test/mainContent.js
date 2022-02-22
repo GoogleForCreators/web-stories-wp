@@ -21,21 +21,23 @@ import { axe } from 'jest-axe';
 /**
  * Internal dependencies
  */
+import StoryContext from '../../../app/story/context';
 import renderWithTheme from '../../../testUtils/renderWithTheme';
 import { ChecklistCountProvider } from '../../checklist';
 import InspectorContext from '../../inspector/context';
 import { INPUT_KEYS } from '../constants';
 import MainContent from '../mainContent';
 
-describe('publishModal/mainContent', () => {
-  const mockHandleUpdateStoryInfo = jest.fn();
+const mockInputValues = {
+  [INPUT_KEYS.EXCERPT]:
+    'A voyage to the great beyond, where none have gone and going back is impossible.',
+  [INPUT_KEYS.TITLE]: "David Bowman's Odyssey",
+  [INPUT_KEYS.SLUG]: '2001-space-odyssey',
+};
 
-  const mockInputValues = {
-    [INPUT_KEYS.EXCERPT]:
-      'A voyage to the great beyond, where none have gone and going back is impossible.',
-    [INPUT_KEYS.TITLE]: "David Bowman's Odyssey",
-    [INPUT_KEYS.SLUG]: '2001-space-odyssey',
-  };
+describe('publishModal/mainContent', () => {
+  const mockHandleReviewChecklist = jest.fn();
+
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -54,14 +56,22 @@ describe('publishModal/mainContent', () => {
 
   const view = () => {
     return renderWithTheme(
-      <InspectorContext.Provider value={inspectorContextValue}>
-        <ChecklistCountProvider hasChecklist>
-          <MainContent
-            handleUpdateStoryInfo={mockHandleUpdateStoryInfo}
-            inputValues={mockInputValues}
-          />
-        </ChecklistCountProvider>
-      </InspectorContext.Provider>
+      <StoryContext.Provider
+        value={{
+          actions: { updateStory: jest.fn() },
+          state: {
+            story: {
+              ...mockInputValues,
+            },
+          },
+        }}
+      >
+        <InspectorContext.Provider value={inspectorContextValue}>
+          <ChecklistCountProvider hasChecklist>
+            <MainContent handleReviewChecklist={mockHandleReviewChecklist} />
+          </ChecklistCountProvider>
+        </InspectorContext.Provider>
+      </StoryContext.Provider>
     );
   };
   it('should have no accessibility issues', async () => {
@@ -71,33 +81,13 @@ describe('publishModal/mainContent', () => {
     expect(results).toHaveNoViolations();
   });
 
-  it('should trigger handleUpdateStoryInfo on title input blur', () => {
+  it('should trigger handleReviewChecklist on checklist button click', () => {
     view();
 
-    const titleInput = screen.getByRole('textbox', { name: 'Story Title' });
+    const checklistButton = screen.getByRole('button', { name: 'Checklist' });
 
-    fireEvent.change(titleInput, {
-      target: { value: "David Bowman (and HAL's) Odyseey" },
-    });
+    fireEvent.click(checklistButton);
 
-    fireEvent.blur(titleInput);
-
-    expect(mockHandleUpdateStoryInfo).toHaveBeenCalledTimes(1);
-  });
-
-  it('should trigger handleUpdateStoryInfo on excerpt input change', () => {
-    view();
-
-    const descriptionInput = screen.getByRole('textbox', {
-      name: 'Story Description',
-    });
-
-    fireEvent.change(descriptionInput, {
-      target: { value: 'Lorem ipsum' },
-    });
-
-    fireEvent.blur(descriptionInput);
-
-    expect(mockHandleUpdateStoryInfo).toHaveBeenCalledTimes(1);
+    expect(mockHandleReviewChecklist).toHaveBeenCalledTimes(1);
   });
 });
