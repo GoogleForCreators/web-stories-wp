@@ -26,7 +26,7 @@ import renderWithTheme from '../../../testUtils/renderWithTheme';
 import { ChecklistCountProvider } from '../../checklist';
 import InspectorContext from '../../inspector/context';
 import { INPUT_KEYS } from '../constants';
-import MainContent from '../mainContent';
+import MandatoryStoryInfo from '../mainContent/mandatoryStoryInfo';
 
 const mockInputValues = {
   [INPUT_KEYS.EXCERPT]:
@@ -35,9 +35,8 @@ const mockInputValues = {
   [INPUT_KEYS.SLUG]: '2001-space-odyssey',
 };
 
-describe('publishModal/mainContent', () => {
-  const mockHandleReviewChecklist = jest.fn();
-
+describe('publishModal/mandatoryStoryInfo', () => {
+  const mockHandleUpdateStory = jest.fn();
   afterEach(() => {
     jest.clearAllMocks();
   });
@@ -58,7 +57,7 @@ describe('publishModal/mainContent', () => {
     return renderWithTheme(
       <StoryContext.Provider
         value={{
-          actions: { updateStory: jest.fn() },
+          actions: { updateStory: mockHandleUpdateStory },
           state: {
             story: {
               ...mockInputValues,
@@ -68,7 +67,7 @@ describe('publishModal/mainContent', () => {
       >
         <InspectorContext.Provider value={inspectorContextValue}>
           <ChecklistCountProvider hasChecklist>
-            <MainContent handleReviewChecklist={mockHandleReviewChecklist} />
+            <MandatoryStoryInfo />
           </ChecklistCountProvider>
         </InspectorContext.Provider>
       </StoryContext.Provider>
@@ -81,13 +80,33 @@ describe('publishModal/mainContent', () => {
     expect(results).toHaveNoViolations();
   });
 
-  it('should trigger handleReviewChecklist on checklist button click', () => {
+  it('should trigger mockHandleUpdateStory on title input blur', () => {
     view();
 
-    const checklistButton = screen.getByRole('button', { name: 'Checklist' });
+    const titleInput = screen.getByRole('textbox', { name: 'Story Title' });
 
-    fireEvent.click(checklistButton);
+    fireEvent.change(titleInput, {
+      target: { value: "David Bowman (and HAL's) Odyseey" },
+    });
 
-    expect(mockHandleReviewChecklist).toHaveBeenCalledTimes(1);
+    fireEvent.blur(titleInput);
+
+    expect(mockHandleUpdateStory).toHaveBeenCalledTimes(1);
+  });
+
+  it('should trigger mockHandleUpdateStory on excerpt input change', () => {
+    view();
+
+    const descriptionInput = screen.getByRole('textbox', {
+      name: 'Story Description',
+    });
+
+    fireEvent.change(descriptionInput, {
+      target: { value: 'Lorem ipsum' },
+    });
+
+    fireEvent.blur(descriptionInput);
+
+    expect(mockHandleUpdateStory).toHaveBeenCalledTimes(1);
   });
 });
