@@ -69,11 +69,6 @@ module.exports = {
       // Fixes resolving packages in the monorepo so we use the "src" folder, not "dist".
       // This should be sync'd with the config in `webpack.config.cjs`.
       exportsFields: ['customExports', 'exports'],
-      fallback: {
-        ...config.resolve.fallback,
-        // eslint-disable-next-line node/no-extraneous-require
-        stream: require.resolve('stream-browserify'),
-      },
     };
 
     // Avoid having to provide full file extension for imports.
