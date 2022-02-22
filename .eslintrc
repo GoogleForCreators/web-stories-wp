@@ -240,6 +240,7 @@
     "import/resolver": {
       "@web-stories-wp/eslint-import-resolver": {
         "mapping": {
+          "^@googleforcreators\\/(.*)\\/(.*)": "./packages/$1/src/$2",
           "^@googleforcreators\\/(.*)": "./packages/$1/src/",
           "^@web-stories-wp\\/(.*)": "./packages/$1/src/"
         }
