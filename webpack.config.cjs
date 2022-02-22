@@ -72,7 +72,8 @@ const sharedConfig = {
       !isProduction && {
         test: /\.m?js$/,
         use: ['source-map-loader'],
-        exclude: /node_modules/,
+        // html-to-image and react-blurhash reference source maps but don't currently ship with any.
+        exclude: /node_modules\/html-to-image|node_modules\/react-blurhash/,
         enforce: 'pre',
         resolve: {
           fullySpecified: false,
