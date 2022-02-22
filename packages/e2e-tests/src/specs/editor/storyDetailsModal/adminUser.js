@@ -222,6 +222,8 @@ describe('Story Details Modal', () => {
         'Story Details Modal - admin'
       );
 
+      await page.keyboard.press('Tab');
+
       const permalinkInput = await expect(page).toMatchElement(
         'div[aria-label="Story details"] input[aria-label="URL slug"]'
       );
