@@ -81,6 +81,9 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
       await expectAsync(listViewTable).toHaveNoViolations();
 
       expect(listViewTable).toBeTruthy();
+
+      // testing
+      await fixture.snapshot('List View');
     });
 
     it('should switch to List View and back to Grid View', async () => {
