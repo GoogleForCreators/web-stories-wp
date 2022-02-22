@@ -294,6 +294,10 @@ function StatusPanel({
               popupZIndex={popupZIndex}
               disabled={visibilityOptions.length <= 1}
               renderItem={RenderItemOverride}
+              hint={
+                visibilityOptions.find((option) => visibility === option.value)
+                  ?.helper
+              }
             />
           </Row>
           {visibility === VISIBILITY.PASSWORD_PROTECTED && (
