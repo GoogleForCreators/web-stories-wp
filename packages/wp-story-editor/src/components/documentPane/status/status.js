@@ -18,9 +18,20 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { useCallback, useEffect, useState } from '@googleforcreators/react';
+import {
+  useCallback,
+  useEffect,
+  useState,
+  forwardRef,
+} from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
-import { Input, DropDown } from '@googleforcreators/design-system';
+import styled from 'styled-components';
+import {
+  Input,
+  DropDown,
+  themeHelpers,
+  theme,
+} from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import {
   Row,
@@ -37,6 +48,37 @@ import { useFeature } from 'flagged';
  * Internal dependencies
  */
 import { VISIBILITY, STATUS } from '../../../constants';
+
+const StyledListItem = styled.li`
+  position: relative;
+  padding: 6px 8px;
+  margin: 4px 8px;
+  align-items: center;
+  border-radius: 4px;
+  cursor: pointer;
+  ${themeHelpers.focusableOutlineCSS}
+  &:hover {
+    background-color: ${theme.colors.border.defaultNormal};
+  }
+`;
+const LabelText = styled.span`
+  font-size: 14px;
+  color: ${theme.colors.fg.primary};
+`;
+
+const HelperText = styled.span`
+  color: ${theme.colors.fg.tertiary};
+`;
+
+const RenderItemOverride = forwardRef(
+  ({ option, isSelected, ...rest }, ref) => (
+    <StyledListItem ref={ref} active={isSelected} {...rest}>
+      <LabelText>{option.label}</LabelText>
+      <br />
+      <HelperText>{option.helper}</HelperText>
+    </StyledListItem>
+  )
+);
 
 function StatusPanel({
   nameOverride,
@@ -250,11 +292,8 @@ function StatusPanel({
               selectedValue={visibility}
               onMenuItemClick={handleChangeVisibility}
               popupZIndex={popupZIndex}
-              hint={
-                visibilityOptions.find((option) => visibility === option.value)
-                  ?.helper
-              }
               disabled={visibilityOptions.length <= 1}
+              renderItem={RenderItemOverride}
             />
           </Row>
           {visibility === VISIBILITY.PASSWORD_PROTECTED && (
