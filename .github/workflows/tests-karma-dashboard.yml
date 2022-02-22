@@ -43,10 +43,12 @@ jobs:
     steps:
       - id: nonce
         run: echo "::set-output name=result::${{ github.run_id }}-$(date +%s)"
+
   karma:
     name: Karma
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    needs: nonce
     steps:
       - name: Checkout
         uses: actions/checkout@v2
