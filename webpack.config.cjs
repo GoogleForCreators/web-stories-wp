@@ -55,7 +55,7 @@ const mode = isProduction ? 'production' : 'development';
 const sharedConfig = {
   resolve: {
     // Fixes resolving packages in the monorepo so we use the "src" folder, not "dist".
-    exportsFields: ['customExports','exports'],
+    exportsFields: ['customExports', 'exports'],
   },
   mode,
   devtool: !isProduction ? 'source-map' : undefined,

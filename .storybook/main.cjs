@@ -67,7 +67,7 @@ module.exports = {
     config.resolve = {
       ...config.resolve,
       // Fixes resolving packages in the monorepo so we use the "src" folder, not "dist".
-      exportsFields: ['customExports','exports'],
+      exportsFields: ['customExports', 'exports'],
       fallback: {
         ...config.resolve.fallback,
         // eslint-disable-next-line node/no-extraneous-require
