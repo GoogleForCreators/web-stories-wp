@@ -36,7 +36,7 @@ const Container = styled.div`
 
 const Row = styled.div`
   display: grid;
-  grid-template-columns: 30% repeat(6, 10%);
+  grid-template-columns: 30% repeat(4, 15%);
   margin-bottom: 16px;
   text-align: right;
 `;
@@ -151,16 +151,8 @@ const VARIANTS = [
     Icon: Cross,
   },
   {
-    variant: 'Large, pipette',
+    variant: 'Large, pipette, disabled',
     Icon: Pipette,
-  },
-  {
-    variant: 'Small, regular',
-    isSmall: true,
-  },
-  {
-    variant: 'Small, disabled',
-    isSmall: true,
     isDisabled: true,
   },
 ];

@@ -206,7 +206,6 @@ const ColorInput = forwardRef(function ColorInput(
           <ColorButton ref={previewRef} {...buttonProps}>
             <ColorPreview>
               <Swatch
-                isSmall
                 isPreview
                 role="status"
                 tabIndex="-1"
