@@ -34,7 +34,7 @@ import { NAVIGATION_HEIGHT } from '../../secondaryPopup';
 import { GUTTER_WIDTH } from '../constants';
 import { useConfig } from '../../../app';
 import { Transitioner } from './transitioner';
-import DoneCheckmark from './doneCheckmark.svg';
+import DoneCheckmark from './icons/doneCheckmark.svg';
 
 const Panel = styled.div`
   width: 100%;

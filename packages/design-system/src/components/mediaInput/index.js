@@ -41,7 +41,7 @@ import { Pencil } from '../../icons';
 import { Menu } from '../menu';
 import { Tooltip } from '../tooltip';
 import { PLACEMENT, Popup } from '../popup';
-import Landscape from './landscape.svg';
+import Landscape from './icons/landscape.svg';
 import { MEDIA_VARIANTS } from './constants';
 
 export { MEDIA_VARIANTS };
