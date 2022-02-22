@@ -64,7 +64,7 @@ const Label = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
 })`
   color: ${({ theme }) => theme.colors.fg.secondary};
-  margin: 16px 0 10px;
+  margin: 12px 0 10px;
 `;
 
 const DefaultText = styled(Label)`

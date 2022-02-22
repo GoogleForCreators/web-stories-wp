@@ -29,7 +29,10 @@ import {
 } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { PatternPropType, hasGradient } from '@googleforcreators/patterns';
-import { useKeyDownEffect } from '@googleforcreators/design-system';
+import {
+  useKeyDownEffect,
+  themeHelpers,
+} from '@googleforcreators/design-system';
 import { useTransform } from '@googleforcreators/transform';
 
 /**
@@ -40,10 +43,14 @@ import useStory from '../../app/story/useStory';
 import CustomColorPicker from './customColorPicker';
 import BasicColorPicker from './basicColorPicker';
 
+const PICKER_WIDTH = 208;
+
 const Container = styled.div`
   border-radius: 8px;
   background: ${({ theme }) => theme.colors.bg.secondary};
-  width: 256px;
+  width: ${({ maxHeight }) =>
+    PICKER_WIDTH + (maxHeight ? themeHelpers.SCROLLBAR_WIDTH : 0)}px;
+  ${({ maxHeight }) => (maxHeight ? `max-height: ${maxHeight}px` : '')};
   user-select: none;
   display: flex;
   flex-direction: column;
@@ -70,6 +77,7 @@ function ColorPicker({
   allowsGradient = false,
   allowsOpacity = true,
   allowsSavedColors = false,
+  maxHeight = null,
   onClose = () => {},
   changedStyle = 'background',
   onDimensionChange = () => {},
@@ -162,6 +170,7 @@ function ColorPicker({
         role="dialog"
         aria-label={__('Color and gradient picker', 'web-stories')}
         ref={containerRef}
+        maxHeight={maxHeight}
       >
         <ActualColorPicker
           color={color}
@@ -188,6 +197,7 @@ ColorPicker.propTypes = {
   allowsOpacity: PropTypes.bool,
   allowsSavedColors: PropTypes.bool,
   isEyedropperActive: PropTypes.bool,
+  maxHeight: PropTypes.number,
   color: PatternPropType,
   changedStyle: PropTypes.string,
   onDimensionChange: PropTypes.func,
