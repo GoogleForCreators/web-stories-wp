@@ -45,7 +45,7 @@ const _TextArea = styled(TextArea)`
   margin: 8px 0;
 `;
 
-const MandatoryStoryInfo = () => {
+const MainStoryInfo = () => {
   const storyId = useConfig(({ storyId }) => storyId);
 
   const updateStory = useStory(({ actions }) => actions.updateStory);
@@ -150,4 +150,4 @@ const MandatoryStoryInfo = () => {
   );
 };
 
-export default MandatoryStoryInfo;
+export default MainStoryInfo;
