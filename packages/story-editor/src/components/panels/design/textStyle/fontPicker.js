@@ -22,7 +22,6 @@ import {
   useCallback,
   useMemo,
   useEffect,
-  useRef,
 } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
@@ -46,7 +45,6 @@ const FontPicker = forwardRef(function FontPicker(
     selectedElements,
     ({ font }) => font?.family
   );
-  const mounted = useRef(false);
 
   const {
     textInfo: { fontWeight, isItalic },
@@ -81,14 +79,8 @@ const FontPicker = forwardRef(function FontPicker(
   }));
 
   useEffect(() => {
-    mounted.current = true;
-
-    getCustomFonts(mounted);
-    getCuratedFonts(mounted);
-
-    return () => {
-      mounted.current = false;
-    };
+    getCustomFonts();
+    getCuratedFonts();
   }, [getCustomFonts, getCuratedFonts]);
 
   const handleFontPickerChange = useCallback(

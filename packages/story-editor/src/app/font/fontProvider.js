@@ -45,57 +45,51 @@ function FontProvider({ children }) {
 
   const fonts = queriedFonts.length > 0 ? queriedFonts : curatedFonts;
 
-  const getCustomFonts = useCallback(
-    async (mounted) => {
-      if (customFonts || !getFonts || !isCustomFontsEnabled) {
-        return;
-      }
+  const getCustomFonts = useCallback(async () => {
+    if (customFonts || !getFonts || !isCustomFontsEnabled) {
+      return;
+    }
 
-      const _customFonts = await getFonts({
-        service: 'custom',
-      });
+    const _customFonts = await getFonts({
+      service: 'custom',
+    });
 
-      if (!mounted.current || !_customFonts.length) {
-        return;
-      }
+    if (!_customFonts.length) {
+      return;
+    }
 
-      const formattedFonts = _customFonts.map((font) => ({
-        id: font.family,
-        name: font.family,
-        value: font.family,
-        ...font,
-      }));
+    const formattedFonts = _customFonts.map((font) => ({
+      id: font.family,
+      name: font.family,
+      value: font.family,
+      ...font,
+    }));
 
-      setCustomFonts(formattedFonts);
-    },
-    [getFonts, customFonts, isCustomFontsEnabled]
-  );
+    setCustomFonts(formattedFonts);
+  }, [getFonts, customFonts, isCustomFontsEnabled]);
 
-  const getCuratedFonts = useCallback(
-    async (mounted) => {
-      if (curatedFonts.length || !getFonts) {
-        return;
-      }
+  const getCuratedFonts = useCallback(async () => {
+    if (curatedFonts.length || !getFonts) {
+      return;
+    }
 
-      const newFonts = await getFonts({
-        include: CURATED_FONT_NAMES.join(','),
-      });
+    const newFonts = await getFonts({
+      include: CURATED_FONT_NAMES.join(','),
+    });
 
-      if (!mounted.current || !newFonts.length) {
-        return;
-      }
+    if (!newFonts.length) {
+      return;
+    }
 
-      const formattedFonts = newFonts.map((font) => ({
-        id: font.family,
-        name: font.family,
-        value: font.family,
-        ...font,
-      }));
+    const formattedFonts = newFonts.map((font) => ({
+      id: font.family,
+      name: font.family,
+      value: font.family,
+      ...font,
+    }));
 
-      setCuratedFonts(formattedFonts);
-    },
-    [getFonts, curatedFonts]
-  );
+    setCuratedFonts(formattedFonts);
+  }, [getFonts, curatedFonts]);
 
   const { maybeEnqueueFontStyle, maybeLoadFont } = useLoadFontFiles();
 
