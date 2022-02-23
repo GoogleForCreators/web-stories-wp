@@ -89,12 +89,9 @@ function StyleItem({
   handleOnClick,
   isEditMode,
   activeItemOverlay,
+  applyLabel = __('Apply style', 'web-stories'),
 }) {
-  const { selectedElements } = useStory(({ state: { selectedElements } }) => {
-    return {
-      selectedElements,
-    };
-  });
+  const selectedElements = useStory(({ state }) => state.selectedElements);
   const [isActive, setIsActive] = useState(false);
   // We only want to change this state if we have the active item overlay.
   const makeActive = () => {
@@ -141,11 +138,7 @@ function StyleItem({
       onFocus={makeActive}
       onPointerLeave={makeInactive}
       onBlur={makeInactive}
-      aria-label={
-        isEditMode
-          ? __('Delete style', 'web-stories')
-          : __('Apply style', 'web-stories')
-      }
+      aria-label={isEditMode ? __('Delete style', 'web-stories') : applyLabel}
     >
       {getStylePresetText()}
       {isEditMode && <Icons.Cross />}
@@ -161,6 +154,7 @@ StyleItem.propTypes = {
   handleOnClick: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool.isRequired,
   activeItemOverlay: PropTypes.node,
+  applyLabel: PropTypes.string,
 };
 
 export default StyleItem;

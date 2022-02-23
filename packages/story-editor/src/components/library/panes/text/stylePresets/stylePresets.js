@@ -161,6 +161,14 @@ function PresetPanel() {
     }
   };
 
+  // If it's not text, we're displaying insertion overlay and label for adding a new text.
+  const styleItemProps = isText
+    ? {}
+    : {
+        activeItemOverlay: <InsertionOverlay />,
+        applyLabel: __('Add new text', 'web-stories'),
+      };
+
   return (
     <>
       <PresetsHeader>
@@ -183,9 +191,9 @@ function PresetPanel() {
           <StylesWrapper ref={stylesRef}>
             {/* We only show the insertion overlay if we're inserting -> this means selected elements are not texts */}
             <StyleGroup
-              activeItemOverlay={isText ? null : <InsertionOverlay />}
               styles={[...textStyles].reverse().slice(0, 2)}
               handleClick={handlePresetClick}
+              {...styleItemProps}
             />
           </StylesWrapper>
           <StyledMoreButton
@@ -207,10 +215,10 @@ function PresetPanel() {
             spacing={SPACING}
             renderContents={() => (
               <StyleManager
-                activeItemOverlay={isText ? null : <InsertionOverlay />}
                 styles={textStyles}
                 applyStyle={handlePresetClick}
                 onClose={() => setIsPopupOpen(false)}
+                {...styleItemProps}
               />
             )}
           />

@@ -45,7 +45,7 @@ function StyleGroup({
   isEditMode = false,
   handleClick,
   buttonWidth = 128,
-  activeItemOverlay,
+  ...rest
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const groupRef = useRef(null);
@@ -67,7 +67,7 @@ function StyleGroup({
             activeIndex={activeIndex}
             handleOnClick={handleClick}
             isEditMode={isEditMode}
-            activeItemOverlay={activeItemOverlay}
+            {...rest}
           />
         </ButtonWrapper>
       ))}
@@ -80,7 +80,6 @@ StyleGroup.propTypes = {
   handleClick: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool,
   buttonWidth: PropTypes.number,
-  activeItemOverlay: PropTypes.node,
 };
 
 export default StyleGroup;
