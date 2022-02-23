@@ -166,13 +166,14 @@ describe('Story Details Modal', () => {
       await page.keyboard.press('Tab');
       // From the currently selected date, arrow right to get a future date
       await page.keyboard.press('ArrowRight');
+      await page.keyboard.press('ArrowRight');
       // Select future date with keyboard
       await page.keyboard.press('Enter');
 
       // check that publish button says 'schedule'
       await expect(page).toMatchElement(
         'div[aria-label="Story details"] button',
-        { text: 'Schedule' }
+        { name: 'Schedule' }
       );
     });
 
