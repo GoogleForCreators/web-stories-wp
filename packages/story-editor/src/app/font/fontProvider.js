@@ -18,19 +18,13 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from '@googleforcreators/react';
+import { useCallback, useRef, useState } from '@googleforcreators/react';
 import { CURATED_FONT_NAMES } from '@googleforcreators/fonts';
 import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
-import { trackError } from '@googleforcreators/tracking';
 import loadStylesheet from '../../utils/loadStylesheet';
 import { FONT_WEIGHT_NAMES } from '../../constants';
 import { useAPI } from '../api';
@@ -51,73 +45,49 @@ function FontProvider({ children }) {
 
   const fonts = queriedFonts.length > 0 ? queriedFonts : curatedFonts;
 
-  useEffect(() => {
-    let mounted = true;
-    // Don't load custom fonts if not enabled.
-    // TODO: Don't load custom fonts when not requested by FontPicker.
-    if (!customFonts && getFonts && isCustomFontsEnabled) {
-      try {
-        (async () => {
-          const _customFonts = await getFonts({
-            service: 'custom',
-          });
+  const getCustomFonts = useCallback(
+    async (mounted) => {
+      const _customFonts = await getFonts({
+        service: 'custom',
+      });
 
-          if (!mounted) {
-            return;
-          }
-
-          const formattedFonts = _customFonts.map((font) => ({
-            id: font.family,
-            name: font.family,
-            value: font.family,
-            ...font,
-          }));
-
-          setCustomFonts(formattedFonts);
-        })();
-      } catch (err) {
-        trackError('font_provider', err.message);
+      if (!mounted.current || !_customFonts.length) {
+        return;
       }
-    }
-    return () => {
-      mounted = false;
-    };
-  });
 
-  useEffect(() => {
-    let mounted = true;
+      const formattedFonts = _customFonts.map((font) => ({
+        id: font.family,
+        name: font.family,
+        value: font.family,
+        ...font,
+      }));
 
-    // Not defined when used within storyPageToDataUrl().
-    // TODO: Don't load curatedFonts when not requested by FontPicker.
-    if (!curatedFonts.length && getFonts) {
-      try {
-        (async () => {
-          const newFonts = await getFonts({
-            include: CURATED_FONT_NAMES.join(','),
-          });
+      setCustomFonts(formattedFonts);
+    },
+    [getFonts]
+  );
 
-          if (!mounted) {
-            return;
-          }
+  const getCuratedFonts = useCallback(
+    async (mounted) => {
+      const newFonts = await getFonts({
+        include: CURATED_FONT_NAMES.join(','),
+      });
 
-          const formattedFonts = newFonts.map((font) => ({
-            id: font.family,
-            name: font.family,
-            value: font.family,
-            ...font,
-          }));
-
-          setCuratedFonts(formattedFonts);
-        })();
-      } catch (err) {
-        trackError('font_provider', err.message);
+      if (!mounted.current || !newFonts.length) {
+        return;
       }
-    }
 
-    return () => {
-      mounted = false;
-    };
-  }, [curatedFonts, getFonts]);
+      const formattedFonts = newFonts.map((font) => ({
+        id: font.family,
+        name: font.family,
+        value: font.family,
+        ...font,
+      }));
+
+      setCuratedFonts(formattedFonts);
+    },
+    [getFonts]
+  );
 
   const { maybeEnqueueFontStyle, maybeLoadFont } = useLoadFontFiles();
 
@@ -248,6 +218,8 @@ function FontProvider({ children }) {
       ensureMenuFontsLoaded,
       ensureCustomFontsLoaded,
       addRecentFont,
+      getCustomFonts,
+      getCuratedFonts,
     },
   };
 
