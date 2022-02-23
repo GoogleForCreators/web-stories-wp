@@ -111,8 +111,8 @@ function reducer(state, { type, payload }) {
       return reducers.addAnimations(state, payload);
     }
 
-    case types.COPY_ELEMENT_BY_ID: {
-      return reducers.copyElementById(state, payload);
+    case types.COPY_SELECTED_ELEMENT: {
+      return reducers.copySelectedElement(state, payload);
     }
 
     case types.RESTORE: {
