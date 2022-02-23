@@ -46,7 +46,7 @@ function FontProvider({ children }) {
   const fonts = queriedFonts.length > 0 ? queriedFonts : curatedFonts;
 
   const getCustomFonts = useCallback(async () => {
-    if (customFonts || !isCustomFontsEnabled) {
+    if (customFonts || !getFonts || !isCustomFontsEnabled) {
       return;
     }
 
@@ -69,7 +69,7 @@ function FontProvider({ children }) {
   }, [getFonts, customFonts, isCustomFontsEnabled]);
 
   const getCuratedFonts = useCallback(async () => {
-    if (curatedFonts.length) {
+    if (curatedFonts.length || !getFonts) {
       return;
     }
 
