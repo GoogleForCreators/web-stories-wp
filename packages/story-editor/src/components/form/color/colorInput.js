@@ -130,13 +130,7 @@ const loadReactColor = () =>
 
 const SPACING = { x: 20 };
 const ColorInput = forwardRef(function ColorInput(
-  {
-    onChange,
-    pickerProps = {},
-    value = null,
-    label = null,
-    changedStyle,
-  },
+  { onChange, pickerProps = {}, value = null, label = null, changedStyle },
   ref
 ) {
   const isMixed = value === MULTIPLE_VALUE;
