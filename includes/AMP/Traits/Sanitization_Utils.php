@@ -43,7 +43,6 @@ trait Sanitization_Utils {
 	 * @since 1.1.0
 	 *
 	 * @param Document|AMP_Document $document Document instance.
-	 * @return void
 	 */
 	private function transform_html_start_tag( &$document ): void {
 		$document->html->setAttribute( 'amp', '' );
@@ -71,7 +70,6 @@ trait Sanitization_Utils {
 	 * @since 1.1.0
 	 *
 	 * @param Document|AMP_Document $document Document instance.
-	 * @return void
 	 */
 	private function transform_a_tags( &$document ): void {
 		$links = $document->getElementsByTagName( 'a' );
@@ -115,6 +113,136 @@ trait Sanitization_Utils {
 	}
 
 	/**
+	 * Transforms all paragraphs in a story to use semantic heading tags if needed.
+	 *
+	 * This logic here mirrors the getTextElementTagNames() function in the editor
+	 * in order to change simple <p> tags into <h1>, <h2> or <h3>, depending on font size.
+	 *
+	 * Only relevant for older stories that haven't been updated in a while.
+	 *
+	 * @since 1.18.0
+	 *
+	 * @param Document|AMP_Document $document   Document instance.
+	 * @param bool                  $is_enabled Whether the feature is enabled.
+	 */
+	private function use_semantic_heading_tags( &$document, bool $is_enabled ): void {
+		if ( ! $is_enabled ) {
+			return;
+		}
+
+		$pages = $document->getElementsByTagName( 'amp-story-page' );
+
+		/**
+		 * The <amp-story-page> element
+		 *
+		 * @var DOMElement $page The <amp-story-page> element
+		 */
+		foreach ( $pages as $page ) {
+			$h1 = $page->getElementsByTagName( 'h1' );
+			$h2 = $page->getElementsByTagName( 'h2' );
+			$h3 = $page->getElementsByTagName( 'h3' );
+
+			// When a page already contains any headings, we don't need to do anything further.
+			if ( $h1->count() || $h2->count() || $h3->count() ) {
+				continue;
+			}
+
+			$text_elements = $document->xpath->query( './/p[ contains( @class, "text-wrapper" ) ]', $page );
+
+			if ( ! $text_elements ) {
+				return;
+			}
+
+			$this->use_semantic_heading_tags_for_elements( $text_elements );
+		}
+	}
+
+	/**
+	 * Transforms a list of elements to use semantic heading tags if needed.
+	 *
+	 * @since 1.18.0
+	 *
+	 * @param DOMNodeList $text_elements List of text elements.
+	 */
+	private function use_semantic_heading_tags_for_elements( $text_elements ): void {
+		// Matches PAGE_HEIGHT in the editor, as also seen in amp-story-grid-layer[aspect-ratio].
+		$page_height = 618;
+
+		$has_h1 = false;
+
+		/**
+		 * The individual text element.
+		 *
+		 * @var DOMElement $text_el The text element.
+		 */
+		foreach ( $text_elements as $text_el ) {
+			$style   = $text_el->getAttribute( 'style' );
+			$matches = [];
+
+			if ( ! preg_match( '/font-size:([^em]+)em/', $style, $matches ) ) {
+				continue;
+			}
+
+			// Contains the font-size in em.
+			// This is basically reversing the dataToFontSizeY() logic. Example:
+			// 0.582524em roughly equals 36 editor pixels: 0.582524 * 618 / 10 = 35.9999px.
+			$font_size_in_em = $matches[1];
+			$font_size_in_px = round( $font_size_in_em * $page_height / 10, 0 );
+
+			if ( $font_size_in_px >= 36 && ! $has_h1 ) {
+				$this->change_tag_name( $text_el, 'h1' );
+				$has_h1 = true;
+				continue;
+			}
+
+			if ( $font_size_in_px >= 27 ) {
+				$this->change_tag_name( $text_el, 'h2' );
+			} elseif ( $font_size_in_px >= 21 ) {
+				$this->change_tag_name( $text_el, 'h3' );
+			}
+		}
+	}
+
+	/**
+	 * Changes an element's tag name.
+	 *
+	 * @since 1.18.0
+	 *
+	 * @param DOMElement $node     Element whose tag name should be changed.
+	 * @param string     $tag_name Desired new tag name, e.g. h1 or h2.
+	 */
+	private function change_tag_name( DOMElement $node, string $tag_name ): void {
+		/**
+		 * Owner document.
+		 *
+		 * @var Document|AMP_Document Owner document.
+		 */
+		$document = $node->ownerDocument;
+
+		$new_node = $document->createElement( $tag_name );
+
+		if ( ! $new_node instanceof DOMElement ) {
+			return;
+		}
+
+		// Copy over all children first.
+		foreach ( $node->childNodes as $child ) {
+			$new_node->appendChild( $document->importNode( $child, true ) );
+		}
+
+		// Then, copy over all attributes.
+		if ( $node->attributes ) {
+			foreach ( $node->attributes as $attr ) {
+				$new_node->setAttribute( $attr->nodeName, $attr->nodeValue );
+			}
+		}
+
+		if ( $node->parentNode ) {
+			$node->parentNode->replaceChild( $new_node, $node );
+		}
+	}
+
+	/**
 	 * Sanitizes <amp-story-page-outlink> elements to ensure they're always valid.
 	 *
 	 * Removes empty `cta-image` attributes.
@@ -123,7 +251,6 @@ trait Sanitization_Utils {
 	 * @since 1.13.0
 	 *
 	 * @param Document|AMP_Document $document Document instance.
-	 * @return void
 	 */
 	private function sanitize_amp_story_page_outlink( &$document ): void {
 		$outlink_elements = $document->getElementsByTagName( 'amp-story-page-outlink' );
@@ -154,7 +281,6 @@ trait Sanitization_Utils {
 	 *
 	 * @param Document|AMP_Document $document       Document instance.
 	 * @param string                $publisher_logo Publisher logo.
-	 * @return void
 	 */
 	private function add_publisher_logo( &$document, $publisher_logo ): void {
 		/**
@@ -190,7 +316,6 @@ trait Sanitization_Utils {
 	 *
 	 * @param Document|AMP_Document $document       Document instance.
 	 * @param string                $publisher Publisher logo.
-	 * @return void
 	 */
 	private function add_publisher( &$document, $publisher ): void {
 		/**
@@ -216,7 +341,6 @@ trait Sanitization_Utils {
 	 *
 	 * @param Document|AMP_Document $document      Document instance.
 	 * @param string[]              $poster_images List of poster images, keyed by type.
-	 * @return void
 	 */
 	private function add_poster_images( &$document, $poster_images ): void {
 		/**
@@ -252,7 +376,6 @@ trait Sanitization_Utils {
 	 * @since 1.8.0
 	 *
 	 * @param Document|AMP_Document $document Document instance.
-	 * @return void
 	 */
 	private function deduplicate_inline_styles( $document ): void {
 		$elements_by_inline_style = [];
@@ -314,7 +437,6 @@ trait Sanitization_Utils {
 	 *
 	 * @param Document|AMP_Document $document Document instance.
 	 * @param bool                  $video_cache_enabled Whether video cache is enabled.
-	 * @return void
 	 */
 	private function add_video_cache( &$document, $video_cache_enabled ): void {
 		if ( ! $video_cache_enabled ) {
@@ -351,7 +473,6 @@ trait Sanitization_Utils {
 	 * @since 1.9.0
 	 *
 	 * @param Document|AMP_Document $document Document instance.
-	 * @return void
 	 */
 	private function remove_blob_urls( &$document ): void {
 		/**
@@ -404,7 +525,6 @@ trait Sanitization_Utils {
 	 * @since 1.10.0
 	 *
 	 * @param Document|AMP_Document $document Document instance.
-	 * @return void
 	 */
 	private function sanitize_srcset( &$document ): void {
 		/**
@@ -456,7 +576,6 @@ trait Sanitization_Utils {
 	 * @link https://github.com/googleforcreators/web-stories-wp/issues/9530
 	 *
 	 * @param Document|AMP_Document $document Document instance.
-	 * @return void
 	 */
 	private function remove_page_template_placeholder_images( &$document ): void {
 		// Catches "assets/images/editor/grid-placeholder.png" as well as

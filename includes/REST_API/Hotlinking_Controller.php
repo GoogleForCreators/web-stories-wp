@@ -103,8 +103,6 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 * @since 1.11.0
 	 *
 	 * @see register_rest_route()
-	 *
-	 * @return void
 	 */
 	public function register_routes(): void {
 		register_rest_route(
@@ -265,7 +263,6 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 * @since 1.13.0
 	 *
 	 * @param WP_REST_Request $request Full data about the request.
-	 * @return void
 	 *
 	 * @todo Forward the Range request header.
 	 */
@@ -331,7 +328,6 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @param string $url  Request URL.
 	 * @param array  $args Request args.
-	 * @return void
 	 */
 	private function proxy_url_curl( $url, $args ): void {
 		add_action( 'http_api_curl', [ $this, 'modify_curl_configuration' ] );
@@ -353,7 +349,6 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @param string $url  Request URL.
 	 * @param array  $args Request args.
-	 * @return void
 	 */
 	private function proxy_url_fallback( $url, $args ): void {
 		$response = wp_safe_remote_get( $url, $args );
@@ -525,7 +520,6 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 * @since 1.15.0
 	 *
 	 * @param resource $handle      The cURL handle returned by curl_init() (passed by reference).
-	 * @return void
 	 */
 	public function modify_curl_configuration( &$handle ): void {
 		// Just some safeguard in case cURL is not really available,

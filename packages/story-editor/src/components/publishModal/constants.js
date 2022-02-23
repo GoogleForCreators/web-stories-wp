@@ -14,7 +14,6 @@
  * limitations under the License.
  */
 
-export const REQUIRED_INPUTS = ['excerpt', 'title'];
 export const INPUT_KEYS = {
   EXCERPT: 'excerpt',
   SLUG: 'slug',

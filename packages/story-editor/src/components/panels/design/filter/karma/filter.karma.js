@@ -150,7 +150,8 @@ describe('Filter Panel', () => {
     describe('media elements', () => {
       let elements;
       beforeEach(async () => {
-        await fixture.events.click(fixture.editor.library.media.item(0));
+        const mediaItem = fixture.editor.library.media.item(0);
+        await fixture.events.mouse.clickOn(mediaItem, 20, 20);
         filterPanel = fixture.editor.inspector.designPanel.filters;
       });
 

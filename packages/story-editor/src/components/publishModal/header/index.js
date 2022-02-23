@@ -54,7 +54,7 @@ const PublishButton = styled(Button)`
   margin: 6px 6px 5px auto;
 `;
 
-const Header = ({ isPublishEnabled, onClose, onPublish }) => {
+const Header = ({ onClose, onPublish, publishButtonCopy }) => {
   return (
     <_Header>
       <CloseButton
@@ -76,10 +76,9 @@ const Header = ({ isPublishEnabled, onClose, onPublish }) => {
         variant={BUTTON_VARIANTS.RECTANGLE}
         size={BUTTON_SIZES.SMALL}
         type={BUTTON_TYPES.PRIMARY}
-        disabled={!isPublishEnabled}
         onClick={onPublish}
       >
-        {__('Publish', 'web-stories')}
+        {publishButtonCopy}
       </PublishButton>
     </_Header>
   );
@@ -88,7 +87,7 @@ const Header = ({ isPublishEnabled, onClose, onPublish }) => {
 export default Header;
 
 Header.propTypes = {
-  isPublishEnabled: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   onPublish: PropTypes.func.isRequired,
+  publishButtonCopy: PropTypes.string.isRequired,
 };

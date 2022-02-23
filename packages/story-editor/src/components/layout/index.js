@@ -55,6 +55,7 @@ const Editor = withOverlay(styled.section.attrs({
   background-color: ${({ theme }) => theme.colors.bg.primary};
 
   position: relative;
+  max-height: 100vh;
   height: 100%;
   width: 100%;
   display: grid;

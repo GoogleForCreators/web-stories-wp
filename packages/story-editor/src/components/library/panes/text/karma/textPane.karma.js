@@ -265,11 +265,14 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
       );
-      await waitFor(() => {
-        if (!fixture.editor.canvas.framesLayer.frames[1].node) {
-          throw new Error('node not ready');
-        }
-      });
+      await waitFor(
+        () => {
+          if (!fixture.editor.canvas.framesLayer.frames[1].node) {
+            throw new Error('node not ready');
+          }
+        },
+        { timeout: 3000 }
+      );
 
       const [text1] = await getSelection();
       expect(text1.content).toEqual(

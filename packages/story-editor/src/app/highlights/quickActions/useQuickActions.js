@@ -236,7 +236,7 @@ const useQuickActions = () => {
   } = useConfig();
   const dispatchStoryEvent = useStoryTriggersDispatch();
   const {
-    currentPage,
+    backgroundElement,
     selectedElementAnimations,
     selectedElements,
     updateElementsById,
@@ -245,7 +245,9 @@ const useQuickActions = () => {
       state: { currentPage, selectedElementAnimations, selectedElements },
       actions: { updateElementsById },
     }) => ({
-      currentPage,
+      backgroundElement: currentPage?.elements.find(
+        (element) => element.isBackground
+      ),
       selectedElementAnimations,
       selectedElements,
       updateElementsById,
@@ -254,7 +256,7 @@ const useQuickActions = () => {
   const { undo } = useHistory(({ actions: { undo } }) => ({
     undo,
   }));
-  const { showSnackbar } = useSnackbar();
+  const showSnackbar = useSnackbar(({ showSnackbar }) => showSnackbar);
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
   }));
@@ -274,9 +276,6 @@ const useQuickActions = () => {
   const undoRef = useRef(undo);
   undoRef.current = undo;
 
-  const backgroundElement = currentPage?.elements.find(
-    (element) => element.isBackground
-  );
   const selectedElement = selectedElements?.[0];
 
   /**
@@ -303,10 +302,20 @@ const useQuickActions = () => {
       }
 
       if (properties.includes(RESET_PROPERTIES.ANIMATION)) {
-        newProperties.animation = {
-          ...selectedElementAnimations?.[0],
-          delete: true,
-        };
+        // this is the only place where we're updating both animations and other
+        // properties on an element. updateElementsById only accepts if you upate
+        // one or the other, so we're upating animations if needed here separately
+        updateElementsById({
+          elementIds: [elementId],
+          properties: (currentProperties) =>
+            updateProperties(
+              currentProperties,
+              {
+                animation: { ...selectedElementAnimations?.[0], delete: true },
+              },
+              /* commitValues */ true
+            ),
+        });
       }
 
       if (properties.includes(RESET_PROPERTIES.STYLES)) {

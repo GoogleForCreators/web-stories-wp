@@ -11,7 +11,9 @@ final class DummyClassWithDependency implements DummyInterface {
 		$this->dummy = $dummy;
 	}
 
-	public function get_dummy() {
+	/**
+	 */
+	public function get_dummy(): DummyClass {
 		return $this->dummy;
 	}
 }

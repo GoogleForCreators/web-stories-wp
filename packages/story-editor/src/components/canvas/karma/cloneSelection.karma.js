@@ -99,7 +99,8 @@ describe('Clone element integration', () => {
 
   it('should correctly clone 2 elements', async () => {
     // Add first image to page
-    await fixture.events.click(getMediaElement(/blue-marble/));
+    let mediaItem = await getMediaElement(/blue-marble/);
+    await fixture.events.mouse.clickOn(mediaItem, 20, 20);
     let img1 = await getElementByIndex(2);
     // Drag it to (50,50)
     const rect1 = (
@@ -115,7 +116,8 @@ describe('Clone element integration', () => {
     // Save final objects
     img1 = await getElementByIndex(2);
     // Add second image to page
-    await fixture.events.click(getMediaElement(/saturn/));
+    mediaItem = await getMediaElement(/saturn/);
+    await fixture.events.mouse.clickOn(mediaItem, 20, 20);
     let img2 = await getElementByIndex(3);
 
     // Drag it to (100,100)

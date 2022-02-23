@@ -33,7 +33,7 @@ import {
   Dismiss,
 } from '../elements';
 
-const FloatingShapeMenu = memo(function FloatingShapeMenu() {
+const FloatingImageMenu = memo(function FloatingImageMenu() {
   return (
     <>
       <SwapImage />
@@ -61,4 +61,4 @@ const FloatingShapeMenu = memo(function FloatingShapeMenu() {
   );
 });
 
-export default FloatingShapeMenu;
+export default FloatingImageMenu;

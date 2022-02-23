@@ -63,24 +63,6 @@ describe('Publish Story Modal', () => {
   });
 
   describe('Functionality', () => {
-    it('should only allow publish of a Story when both title and description are not empty', async () => {
-      let publishButton = await getPublishModalElement('button', 'Publish');
-      expect(typeof publishButton.getAttribute('disabled')).toBe('string');
-
-      const storyTitle = await getPublishModalElement('textbox', 'Story Title');
-      await fixture.events.focus(storyTitle);
-      await fixture.events.keyboard.type('my test story');
-      const storyDescription = await getPublishModalElement(
-        'textbox',
-        'Story Description'
-      );
-      await fixture.events.focus(storyDescription);
-      await fixture.events.keyboard.type('my test description for my story');
-
-      publishButton = await getPublishModalElement('button', 'Publish');
-      expect(publishButton.getAttribute('disabled')).toBeNull();
-    });
-
     it('should close publish modal and open the checklist when checklist button is clicked', async () => {
       const checklistButton = await getPublishModalElement(
         'button',
@@ -149,6 +131,11 @@ describe('Publish Story Modal', () => {
 
       const closeButton = await getPublishModalElement('button', 'Close');
       expect(closeButton).toHaveFocus();
+
+      await fixture.events.keyboard.press('tab');
+
+      const publishButton = await getPublishModalElement('button', 'Publish');
+      expect(publishButton).toHaveFocus();
 
       await fixture.events.keyboard.press('tab');
 

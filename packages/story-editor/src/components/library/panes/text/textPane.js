@@ -127,13 +127,14 @@ function TextPane(props) {
         onPointerOver={() => shouldUseSmartColor && generateCanvasFromPage()}
       >
         <GridContainer>
-          {PRESETS.map(({ title, element }) => (
+          {PRESETS.map(({ title, element }, index) => (
             <FontPreview
               key={title}
               title={title}
               element={element}
               insertPreset={insertPreset}
               getPosition={getPosition}
+              index={index}
             />
           ))}
         </GridContainer>

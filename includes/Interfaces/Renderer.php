@@ -38,8 +38,6 @@ interface Renderer {
 	 * adding hooks and setting up states.
 	 *
 	 * @since 1.5.0
-	 *
-	 * @return void
 	 */
 	public function init(): void;
 
