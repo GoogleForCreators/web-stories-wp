@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,9 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-export { default as MediaProvider } from './mediaProvider';
-export { default as useLocalMedia } from './local/useLocalMedia';
-export { default as useMedia } from './useMedia';
-export * from './media3p/constants';
-export * from './constants';
+export const TRANSCODABLE_MIME_TYPES = [
+  'video/3gpp',
+  'video/3gpp2',
+  'video/MP2T',
+  'video/mp4',
+  'video/mpeg',
+  'video/ogg',
+  'video/quicktime',
+  'video/webm',
+  'video/x-flv',
+  'video/x-h261',
+  'video/x-h263',
+  'video/x-m4v',
+  'video/x-matroska',
+  'video/x-mjpeg',
+  'video/x-ms-asf',
+  'video/x-msvideo',
+  'video/x-nut',
+];
