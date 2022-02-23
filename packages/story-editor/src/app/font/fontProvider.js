@@ -47,6 +47,10 @@ function FontProvider({ children }) {
 
   const getCustomFonts = useCallback(
     async (mounted) => {
+      if (customFonts || !getFonts || !isCustomFontsEnabled) {
+        return;
+      }
+
       const _customFonts = await getFonts({
         service: 'custom',
       });
@@ -64,11 +68,15 @@ function FontProvider({ children }) {
 
       setCustomFonts(formattedFonts);
     },
-    [getFonts]
+    [getFonts, customFonts, isCustomFontsEnabled]
   );
 
   const getCuratedFonts = useCallback(
     async (mounted) => {
+      if (curatedFonts.length || !getFonts) {
+        return;
+      }
+
       const newFonts = await getFonts({
         include: CURATED_FONT_NAMES.join(','),
       });
@@ -86,7 +94,7 @@ function FontProvider({ children }) {
 
       setCuratedFonts(formattedFonts);
     },
-    [getFonts]
+    [getFonts, curatedFonts]
   );
 
   const { maybeEnqueueFontStyle, maybeLoadFont } = useLoadFontFiles();
