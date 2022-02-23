@@ -17,6 +17,10 @@ snapshot:
       background-color: transparent !important;
     }
 
+    #banner{
+       display: none;
+    }
+
     video::-webkit-media-controls {
       display: none;
     }

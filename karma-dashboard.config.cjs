@@ -131,8 +131,8 @@ module.exports = function (config) {
         defaultViewport: getViewport(config.viewport),
       },
     },
-
     client: {
+      clientDisplayNone: config.snapshots || false,
       args: [
         specsToRetry && '--grep',
         specsToRetry && `/${specsToRetry}/`,
