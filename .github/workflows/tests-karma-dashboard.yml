@@ -124,5 +124,5 @@ jobs:
       - name: Finalize Percy build
         run: npx percy build:finalize
         env:
-          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_DASHBOARD }}
           PERCY_PARALLEL_NONCE: ${{ needs.nonce.outputs.result }}
