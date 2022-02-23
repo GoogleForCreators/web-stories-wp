@@ -212,11 +212,11 @@ module.exports = {
     );
 
     /*
-    Storybook 6.4 config doesn't work with .cjs files.
-    TODO: Remove with 6.5
+    Webpack + Storybook 6.4 - webpack crashing due to plugins
+    that are compiled to CJS while project uses ESM.
+    TODO: 10696: Remove with storybook 6.5
     */
     // https://github.com/storybookjs/storybook/issues/14877#issuecomment-1000441696
-    // https://issuehunt.io/r/storybookjs/storybook/issues/14877
 
     // Find the plugin instance that needs to be mutated
     const virtualModulesPlugin = config.plugins.find(
