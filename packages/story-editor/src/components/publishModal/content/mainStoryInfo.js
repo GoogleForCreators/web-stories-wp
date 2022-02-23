@@ -36,12 +36,17 @@ import { INPUT_KEYS } from '../constants';
 const FormSection = styled.div`
   padding: 0 4px;
   &:first-of-type {
-    margin: 20px 0 6px;
+    margin: 20px 0 0px;
   }
 `;
 
 const _TextArea = styled(TextArea)`
   margin: 8px 0 0;
+  // We want 34px between each section on the main content panel. The TextArea's "hint" has a line height that forces the
+  // space between sections to be too large, so this is to account for the extra space.
+  & > p {
+    margin-bottom: -4px;
+  }
 `;
 
 const MainStoryInfo = () => {

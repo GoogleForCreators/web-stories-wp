@@ -54,7 +54,7 @@ const _MainStoryInfo = styled.div`
   flex-direction: column;
   padding: 0 16px;
   overflow-y: scroll;
-  gap: 28px;
+  gap: 34px;
 
   & > section {
     border: none; // Override the default border that is part of the base panel structure since this is destructured
