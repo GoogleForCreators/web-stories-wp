@@ -93,16 +93,8 @@ const NoStylesText = styled(Text)`
 
 const SPACING = { x: 20 };
 function PresetPanel({ pushUpdate }) {
-  const { globalStoryStyles } = useStory(
-    ({
-      state: {
-        story: { globalStoryStyles },
-      },
-    }) => {
-      return {
-        globalStoryStyles,
-      };
-    }
+  const textStyles = useStory(
+    ({ state }) => state.story.globalStoryStyles.textStyles
   );
 
   const {
@@ -111,7 +103,6 @@ function PresetPanel({ pushUpdate }) {
   const buttonRef = useRef(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
-  const { textStyles } = globalStoryStyles;
   const hasPresets = textStyles.length > 0;
 
   const handleApplyStyle = useApplyStyle({ pushUpdate });
