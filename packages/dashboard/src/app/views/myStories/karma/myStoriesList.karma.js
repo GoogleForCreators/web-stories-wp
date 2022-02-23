@@ -82,7 +82,6 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
 
       expect(listViewTable).toBeTruthy();
 
-      // testing
       await fixture.snapshot('List View');
     });
 
@@ -107,6 +106,8 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
       const { storiesOrderById } = await getStoriesState();
 
       expect(storyElements.length).toEqual(storiesOrderById.length);
+
+      await fixture.snapshot('Grid View');
     });
 
     it('should Rename a story', async () => {
