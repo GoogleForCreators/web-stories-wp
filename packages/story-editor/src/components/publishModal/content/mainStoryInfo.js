@@ -35,14 +35,13 @@ import { INPUT_KEYS } from '../constants';
 
 const FormSection = styled.div`
   padding: 0 4px;
-  margin: 18px 0 8px;
   &:first-of-type {
-    margin-top: 20px;
+    margin: 20px 0 6px;
   }
 `;
 
 const _TextArea = styled(TextArea)`
-  margin: 8px 0;
+  margin: 8px 0 0;
 `;
 
 const MainStoryInfo = () => {
