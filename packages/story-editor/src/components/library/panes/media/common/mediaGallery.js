@@ -19,7 +19,7 @@
  */
 import { useCallback, forwardRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
-import { default as Gallery } from 'react-photo-album';
+import Gallery from 'react-photo-album';
 
 /**
  * Internal dependencies
@@ -87,7 +87,11 @@ function MediaGallery({ resources, onInsert, providerType, canEditMedia }) {
         renderPhoto={imageRenderer}
         renderRowContainer={rowRenderer}
         renderContainer={forwardRef(containerRenderer)}
-        targetRowHeight={150}
+        targetRowHeight={110}
+        rowConstraints={{
+          minPhotos: 2,
+          maxPhotos: 4,
+        }}
         // This should match the actual margin the element is styled with.
         spacing={PHOTO_MARGIN}
       />
