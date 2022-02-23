@@ -37,10 +37,10 @@ describe('Contributor User', () => {
 
     await expect(page).toMatchElement('button', { text: 'Public' });
     await expect(page).not.toMatchElement('li[role="option"]', {
-      text: 'Private',
+      text: 'Private Visible to site admins & editors only',
     });
     await expect(page).not.toMatchElement('li[role="option"]', {
-      text: 'Password Protected',
+      text: 'Password Protected Visible only to those with the password.',
     });
   });
 });
