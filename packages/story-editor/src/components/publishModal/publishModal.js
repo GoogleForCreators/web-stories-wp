@@ -71,7 +71,6 @@ function PublishModal({ isOpen, onPublish, onClose, publishButtonCopy }) {
       overlayStyles={{
         backgroundColor: theme.colors.inverted.interactiveBg.modalScrim,
       }}
-      id="modal-story-details-publish"
     >
       {isOpen && (
         <DirectionAware>
