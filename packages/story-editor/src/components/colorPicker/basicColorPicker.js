@@ -103,6 +103,7 @@ function BasicColorPicker({
   showDialog,
   setShowDialog,
   changedStyle,
+  hasEyeDropper,
 }) {
   const { savedColors, storyColors } = useStory((state) => ({
     savedColors: state.state.story?.globalStoryStyles?.colors || [],
@@ -158,21 +159,23 @@ function BasicColorPicker({
         <DefaultText>{__('Color', 'web-stories')}</DefaultText>
       </Header>
       <Body>
-        <EyedropperWrapper>
-          <Button
-            variant={BUTTON_VARIANTS.SQUARE}
-            type={BUTTON_TYPES.QUATERNARY}
-            size={BUTTON_SIZES.SMALL}
-            aria-label={__('Pick a color from canvas', 'web-stories')}
-            onClick={initEyedropper()}
-            onPointerEnter={initEyedropper(false)}
-          >
-            <Icons.Pipette />
-          </Button>
-          <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-            {__('Sample color', 'web-stories')}
-          </StyledText>
-        </EyedropperWrapper>
+        {hasEyeDropper && (
+          <EyedropperWrapper>
+            <Button
+              variant={BUTTON_VARIANTS.SQUARE}
+              type={BUTTON_TYPES.QUATERNARY}
+              size={BUTTON_SIZES.SMALL}
+              aria-label={__('Pick a color from canvas', 'web-stories')}
+              onClick={initEyedropper()}
+              onPointerEnter={initEyedropper(false)}
+            >
+              <Icons.Pipette />
+            </Button>
+            <StyledText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+              {__('Sample color', 'web-stories')}
+            </StyledText>
+          </EyedropperWrapper>
+        )}
         <SavedColors>
           {allowsSavedColors && (
             <>
@@ -260,6 +263,7 @@ BasicColorPicker.propTypes = {
   showDialog: PropTypes.bool,
   setShowDialog: PropTypes.func,
   changedStyle: PropTypes.string,
+  hasEyeDropper: PropTypes.bool,
 };
 
 export default BasicColorPicker;

@@ -132,9 +132,7 @@ const SPACING = { x: 20 };
 const ColorInput = forwardRef(function ColorInput(
   {
     onChange,
-    allowsGradient = false,
-    allowsOpacity = true,
-    allowsSavedColors = false,
+    pickerProps = {},
     value = null,
     label = null,
     changedStyle,
@@ -234,12 +232,10 @@ const ColorInput = forwardRef(function ColorInput(
             color={isMixed ? null : value}
             isEyedropperActive={isEyedropperActive}
             onChange={onChange}
-            allowsGradient={allowsGradient}
-            allowsOpacity={allowsOpacity}
-            allowsSavedColors={allowsSavedColors}
             onClose={onClose}
             changedStyle={changedStyle}
             onDimensionChange={propagateDimensionChange}
+            {...pickerProps}
           />
         )}
       />
@@ -249,9 +245,7 @@ const ColorInput = forwardRef(function ColorInput(
 
 ColorInput.propTypes = {
   value: PropTypes.oneOfType([PatternPropType, PropTypes.string]),
-  allowsGradient: PropTypes.bool,
-  allowsOpacity: PropTypes.bool,
-  allowsSavedColors: PropTypes.bool,
+  pickerProps: PropTypes.object,
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string,
   changedStyle: PropTypes.string,

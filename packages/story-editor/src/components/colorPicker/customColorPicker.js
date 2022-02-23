@@ -53,6 +53,7 @@ function CustomColorPicker({
   handleClose,
   hideCustomPicker,
   allowsSavedColors,
+  hasEyeDropper,
 }) {
   const {
     state: { type, stops, currentStopIndex, currentColor, generatedColor },
@@ -123,6 +124,7 @@ function CustomColorPicker({
           color={currentColor}
           onChange={updateCurrentColor}
           showOpacity={allowsOpacity}
+          hasEyeDropper={hasEyeDropper}
         />
         {allowsSavedColors && (
           <AddCustomColor
@@ -143,6 +145,7 @@ CustomColorPicker.propTypes = {
   allowsOpacity: PropTypes.bool,
   allowsSavedColors: PropTypes.bool,
   color: PatternPropType,
+  hasEyeDropper: PropTypes.bool,
 };
 
 export default CustomColorPicker;

@@ -134,7 +134,15 @@ const Opacity = styled.div`
   width: ${OPACITY_WIDTH}px;
 `;
 
-function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
+function CurrentColorPicker({
+  rgb,
+  hsl,
+  hsv,
+  hex,
+  onChange,
+  showOpacity,
+  hasEyeDropper,
+}) {
   const alphaPercentage = String(Math.round(rgb.a * 100));
   const hexValue = hex[0] === '#' ? hex.substr(1) : hex;
 
@@ -211,16 +219,18 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
         </Suspense>
       </Body>
       <Footer>
-        <Button
-          variant={BUTTON_VARIANTS.SQUARE}
-          type={BUTTON_TYPES.QUATERNARY}
-          size={BUTTON_SIZES.SMALL}
-          aria-label={__('Pick a color from canvas', 'web-stories')}
-          onClick={initEyedropper()}
-          onPointerEnter={initEyedropper(false)}
-        >
-          <Icons.Pipette />
-        </Button>
+        {hasEyeDropper && (
+          <Button
+            variant={BUTTON_VARIANTS.SQUARE}
+            type={BUTTON_TYPES.QUATERNARY}
+            size={BUTTON_SIZES.SMALL}
+            aria-label={__('Pick a color from canvas', 'web-stories')}
+            onClick={initEyedropper()}
+            onPointerEnter={initEyedropper(false)}
+          >
+            <Icons.Pipette />
+          </Button>
+        )}
         <HexValue>
           <EditablePreview
             label={__('Edit hex value', 'web-stories')}
@@ -254,6 +264,7 @@ CurrentColorPicker.propTypes = {
   hex: PropTypes.string,
   hsl: PropTypes.object,
   hsv: PropTypes.object,
+  hasEyeDropper: PropTypes.bool,
 };
 
 CurrentColorPicker.defaultProps = {

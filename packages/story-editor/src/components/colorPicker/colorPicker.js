@@ -77,6 +77,7 @@ function ColorPicker({
   allowsGradient = false,
   allowsOpacity = true,
   allowsSavedColors = false,
+  hasEyeDropper = true,
   maxHeight = null,
   onClose = () => {},
   changedStyle = 'background',
@@ -180,6 +181,7 @@ function ColorPicker({
           showCustomPicker={showCustomPicker}
           hideCustomPicker={hideCustomPicker}
           handleClose={handleCloseAndRefocus}
+          hasEyeDropper={hasEyeDropper}
           allowsSavedColors={allowsSavedColors}
           showDialog={showDialog}
           setShowDialog={setShowDialog}

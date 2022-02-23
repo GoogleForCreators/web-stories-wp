@@ -90,6 +90,7 @@ const Color = forwardRef(function Color(
     label = null,
     changedStyle = null,
     hasEyedropper = false,
+    pickerHasEyeDropper = true,
   },
   ref
 ) {
@@ -131,12 +132,15 @@ const Color = forwardRef(function Color(
           <ColorInput
             ref={ref}
             onChange={onChange}
-            allowsGradient={allowsGradient}
-            allowsOpacity={allowsOpacity}
             value={value}
             label={label}
-            allowsSavedColors={allowsSavedColors}
             changedStyle={changedStyle}
+            pickerProps={{
+              allowsGradient,
+              allowsOpacity,
+              allowsSavedColors,
+              hasEyedropper: pickerHasEyeDropper,
+            }}
           />
         </InputWrapper>
         {allowsOpacity && displayOpacity && (
@@ -161,6 +165,7 @@ Color.propTypes = {
   label: PropTypes.string.isRequired,
   changedStyle: PropTypes.string,
   hasEyedropper: PropTypes.bool,
+  pickerHasEyedropper: PropTypes.bool,
 };
 
 export default Color;
