@@ -18,7 +18,14 @@
  */
 import styled, { createGlobalStyle } from 'styled-components';
 import { useState } from '@googleforcreators/react';
-import { ContextMenu, Headline, Text } from '@googleforcreators/design-system';
+import {
+  ContextMenu,
+  ContextMenuComponents,
+  Icons,
+  Headline,
+  Text,
+  PLACEMENT,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -59,8 +66,23 @@ const DesignPanelWrapper = styled.div`
 const DesignMenuWrapper = styled.div`
   padding: 50px;
   display: flex;
+  height: 100%;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: flex-end;
+`;
+
+const DesignMenuSingle = styled.div`
+  width: 600px;
+`;
+
+const ContextMenuWrapper = styled.div`
+  display: flex;
+`;
+
+const ColorInputWrapper = styled.div`
+  width: ${({ $width }) => $width}px;
+  flex: 0 0 ${({ $width }) => $width}px;
 `;
 
 function ColorInput({ initialColor, ...rest }) {
@@ -129,21 +151,62 @@ function DesignPanelColorInput({ label, ...props }) {
   );
 }
 
-function DesignMenuColorInput({ label, ...props }) {
+function DummyButton({ children }) {
   return (
-    <div>
-      <Headline as="h3">{label}</Headline>
-      <ContextMenu
-        isInline
-        isHorizontal
-        isSecondary
-        isAlwaysVisible
-        disableControlledTabNavigation
-        aria-label={label}
-      >
-        <ColorInput {...props} />
-      </ContextMenu>
-    </div>
+    <ContextMenuComponents.MenuButton onClick={() => {}}>
+      <ContextMenuComponents.MenuIcon>
+        {children}
+      </ContextMenuComponents.MenuIcon>
+    </ContextMenuComponents.MenuButton>
+  );
+}
+
+function DesignMenuColorInput({ label, width, atStart = false, ...props }) {
+  return (
+    <DesignMenuSingle>
+      <Headline style={{ margin: '40px 0 10px' }}>{label}</Headline>
+      <ContextMenuWrapper>
+        <ContextMenu
+          isInline
+          isHorizontal
+          isSecondary
+          isAlwaysVisible
+          disableControlledTabNavigation
+          aria-label={label}
+        >
+          {atStart && (
+            <>
+              <ColorInputWrapper $width={width}>
+                <ColorInput {...props} />
+              </ColorInputWrapper>
+              <ContextMenuComponents.MenuSeparator />
+            </>
+          )}
+          <DummyButton>
+            <Icons.PictureSwap />
+          </DummyButton>
+          <ContextMenuComponents.MenuSeparator />
+          <DummyButton>
+            <Icons.Trash />
+          </DummyButton>
+          <DummyButton>
+            <Icons.ColorBucket />
+          </DummyButton>
+          {!atStart && (
+            <>
+              <ContextMenuComponents.MenuSeparator />
+              <ColorInputWrapper $width={width}>
+                <ColorInput {...props} />
+              </ColorInputWrapper>
+            </>
+          )}
+          <ContextMenuComponents.MenuSeparator />
+          <DummyButton>
+            <Icons.Cross />
+          </DummyButton>
+        </ContextMenu>
+      </ContextMenuWrapper>
+    </DesignMenuSingle>
   );
 }
 
@@ -184,7 +247,50 @@ export function DesignMenu() {
   return (
     <Wrapper>
       <DesignMenuWrapper>
-        <DesignMenuColorInput label="Compact" initialColor={RED} isCompact />
+        <DesignMenuColorInput
+          width={216}
+          atStart
+          label="Regular to the left"
+          initialColor={RED}
+          // Params below are to the color input component
+          maxHeight={362}
+          pickerPlacement={PLACEMENT.TOP_END}
+          isMinimal
+          shouldCloseOnSelection
+          allowsSavedColors
+          allowsSavedColorDeletion={false}
+          hasEyedropper
+          pickerHasEyedropper={false}
+        />
+        <DesignMenuColorInput
+          width={98}
+          atStart
+          label="No inputs, with eyedropper, to the left"
+          initialColor={BLUE}
+          // Params below are to the color input component
+          maxHeight={362}
+          pickerPlacement={PLACEMENT.TOP_END}
+          isMinimal
+          shouldCloseOnSelection
+          allowsSavedColors
+          allowsSavedColorDeletion={false}
+          hasInputs={false}
+          hasEyedropper
+          pickerHasEyedropper={false}
+        />
+        <DesignMenuColorInput
+          width={60}
+          label="No inputs, without eyedropper, to the right"
+          initialColor={CYAN}
+          // Params below are to the color input component
+          maxHeight={362}
+          pickerPlacement={PLACEMENT.TOP_START}
+          hasInputs={false}
+          isMinimal
+          shouldCloseOnSelection
+          allowsSavedColors
+          allowsSavedColorDeletion={false}
+        />
       </DesignMenuWrapper>
     </Wrapper>
   );

@@ -28,6 +28,7 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Icons,
+  PLACEMENT,
 } from '@googleforcreators/design-system';
 
 /**
@@ -49,22 +50,23 @@ const containerCss = css`
 
 const Container = styled.section`
   ${containerCss}
+  gap: ${({ isMinimal }) => (isMinimal ? 6 : 8)}px;
 `;
 
 const ColorInputsWrapper = styled.div`
   ${containerCss}
+  gap: ${({ isMinimal }) => (isMinimal ? 0 : 6)}px;
 `;
 
 const Space = styled.div`
   width: 8px;
   height: 1px;
-  margin: 6px;
   background-color: ${({ theme }) => theme.colors.divider.primary};
 `;
 
 // 10px comes from divider / 2
 const InputWrapper = styled.div`
-  width: calc(53% - 10px);
+  ${({ hasInputs }) => hasInputs && `width: calc(53% - 10px);`}
 `;
 
 const OpacityWrapper = styled.div`
@@ -76,7 +78,6 @@ const EyeDropperButton = styled(Button).attrs({
   type: BUTTON_TYPES.TERTIARY,
   size: BUTTON_SIZES.SMALL,
 })`
-  margin-right: 8px;
   ${focusStyle};
 `;
 
@@ -90,7 +91,13 @@ const Color = forwardRef(function Color(
     label = null,
     changedStyle = null,
     hasEyedropper = false,
-    pickerHasEyeDropper = true,
+    pickerHasEyedropper = true,
+    maxHeight = null,
+    shouldCloseOnSelection = false,
+    allowsSavedColorDeletion = true,
+    pickerPlacement = PLACEMENT.LEFT,
+    isMinimal = false,
+    hasInputs = true,
   },
   ref
 ) {
@@ -106,7 +113,7 @@ const Color = forwardRef(function Color(
   );
 
   const displayOpacity =
-    value !== MULTIPLE_VALUE && Boolean(getPreviewText(value));
+    value !== MULTIPLE_VALUE && Boolean(getPreviewText(value)) && hasInputs;
 
   const { initEyedropper } = useEyedropper({
     onChange: (color) => onChange({ color }),
@@ -114,7 +121,7 @@ const Color = forwardRef(function Color(
   const tooltip = __('Pick a color from canvas', 'web-stories');
 
   return (
-    <Container aria-label={containerLabel}>
+    <Container aria-label={containerLabel} isMinimal={isMinimal}>
       {hasEyedropper && (
         <Tooltip title={tooltip} hasTail>
           <EyeDropperButton
@@ -127,19 +134,25 @@ const Color = forwardRef(function Color(
         </Tooltip>
       )}
 
-      <ColorInputsWrapper>
-        <InputWrapper>
+      <ColorInputsWrapper isMinimal={isMinimal}>
+        <InputWrapper hasInputs={hasInputs}>
           <ColorInput
             ref={ref}
             onChange={onChange}
             value={value}
             label={label}
             changedStyle={changedStyle}
+            pickerPlacement={pickerPlacement}
+            hasInputs={hasInputs}
+            isMinimal={isMinimal}
             pickerProps={{
               allowsGradient,
               allowsOpacity,
               allowsSavedColors,
-              hasEyedropper: pickerHasEyeDropper,
+              hasEyedropper: pickerHasEyedropper,
+              allowsSavedColorDeletion,
+              maxHeight,
+              shouldCloseOnSelection,
             }}
           />
         </InputWrapper>
@@ -147,7 +160,11 @@ const Color = forwardRef(function Color(
           <>
             <Space />
             <OpacityWrapper>
-              <OpacityInput value={value} onChange={handleOpacityChange} />
+              <OpacityInput
+                value={value}
+                onChange={handleOpacityChange}
+                isMinimal={isMinimal}
+              />
             </OpacityWrapper>
           </>
         )}
@@ -166,6 +183,12 @@ Color.propTypes = {
   changedStyle: PropTypes.string,
   hasEyedropper: PropTypes.bool,
   pickerHasEyedropper: PropTypes.bool,
+  maxHeight: PropTypes.number,
+  shouldCloseOnSelection: PropTypes.bool,
+  allowsSavedColorDeletion: PropTypes.bool,
+  pickerPlacement: PropTypes.bool,
+  isMinimal: PropTypes.bool,
+  hasInputs: PropTypes.bool,
 };
 
 export default Color;

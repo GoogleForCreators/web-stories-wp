@@ -37,7 +37,7 @@ import {
   Text,
   THEME_CONSTANTS,
   Swatch,
-  PLACEMENT,
+  Icons,
   Popup,
 } from '@googleforcreators/design-system';
 /**
@@ -95,6 +95,11 @@ const buttonStyle = css`
   background: transparent;
 `;
 
+const minimalInputContainerStyleOverride = css`
+  ${inputContainerStyleOverride};
+  padding-right: 6px;
+`;
+
 const ColorButton = styled(Preview).attrs(buttonAttrs)`
   border-radius: 4px;
   ${buttonStyle}
@@ -125,12 +130,33 @@ const StyledSwatch = styled(Swatch)`
   ${focusStyle};
 `;
 
+const ChevronContainer = styled.div`
+  width: 58px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+`;
+
 const loadReactColor = () =>
   import(/* webpackChunkName: "chunk-react-color" */ 'react-color');
 
 const SPACING = { x: 20 };
 const ColorInput = forwardRef(function ColorInput(
-  { onChange, pickerProps = {}, value = null, label = null, changedStyle },
+  {
+    onChange,
+    value = null,
+    label = null,
+    changedStyle,
+    pickerPlacement,
+    isMinimal,
+    hasInputs,
+    pickerProps,
+  },
   ref
 ) {
   const isMixed = value === MULTIPLE_VALUE;
@@ -156,7 +182,7 @@ const ColorInput = forwardRef(function ColorInput(
 
   const colorType = value?.type;
   // Allow editing always in case of solid color of if color type is missing (mixed)
-  const isEditable = !colorType || colorType === 'solid';
+  const isEditable = !colorType || (colorType === 'solid' && hasInputs);
 
   const buttonProps = {
     onClick: () => setPickerOpen(true),
@@ -171,6 +197,11 @@ const ColorInput = forwardRef(function ColorInput(
   const onClose = useCallback(() => setPickerOpen(false), []);
 
   const tooltip = __('Open color picker', 'web-stories');
+
+  const containerStyle = isMinimal
+    ? minimalInputContainerStyleOverride
+    : inputContainerStyleOverride;
+
   return (
     <>
       {isEditable ? (
@@ -184,7 +215,7 @@ const ColorInput = forwardRef(function ColorInput(
             onChange={onChange}
             isIndeterminate={isMixed}
             placeholder={isMixed ? MULTIPLE_DISPLAY_VALUE : ''}
-            containerStyleOverride={inputContainerStyleOverride}
+            containerStyleOverride={containerStyle}
           />
           <ColorPreview>
             <Tooltip title={tooltip} hasTail>
@@ -204,11 +235,17 @@ const ColorInput = forwardRef(function ColorInput(
                 pattern={previewPattern}
               />
             </ColorPreview>
-            <TextualPreview>
-              <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-                {previewText}
-              </Text>
-            </TextualPreview>
+            {hasInputs ? (
+              <TextualPreview>
+                <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+                  {previewText}
+                </Text>
+              </TextualPreview>
+            ) : (
+              <ChevronContainer>
+                <Icons.ChevronDown />
+              </ChevronContainer>
+            )}
           </ColorButton>
         </Tooltip>
       )}
@@ -217,7 +254,7 @@ const ColorInput = forwardRef(function ColorInput(
         anchor={previewRef}
         dock={inspector}
         isOpen={pickerOpen}
-        placement={PLACEMENT.LEFT_START}
+        placement={pickerPlacement}
         spacing={SPACING}
         invisible={isEyedropperActive}
         topOffset={topOffset}
@@ -243,6 +280,9 @@ ColorInput.propTypes = {
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string,
   changedStyle: PropTypes.string,
+  pickerPlacement: PropTypes.bool,
+  isMinimal: PropTypes.bool,
+  hasInputs: PropTypes.bool,
 };
 
 export default ColorInput;

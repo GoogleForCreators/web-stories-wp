@@ -141,7 +141,7 @@ function CurrentColorPicker({
   hex,
   onChange,
   showOpacity,
-  hasEyeDropper,
+  hasEyedropper,
 }) {
   const alphaPercentage = String(Math.round(rgb.a * 100));
   const hexValue = hex[0] === '#' ? hex.substr(1) : hex;
@@ -219,7 +219,7 @@ function CurrentColorPicker({
         </Suspense>
       </Body>
       <Footer>
-        {hasEyeDropper && (
+        {hasEyedropper && (
           <Button
             variant={BUTTON_VARIANTS.SQUARE}
             type={BUTTON_TYPES.QUATERNARY}
@@ -264,7 +264,7 @@ CurrentColorPicker.propTypes = {
   hex: PropTypes.string,
   hsl: PropTypes.object,
   hsv: PropTypes.object,
-  hasEyeDropper: PropTypes.bool,
+  hasEyedropper: PropTypes.bool,
 };
 
 CurrentColorPicker.defaultProps = {

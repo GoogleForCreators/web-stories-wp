@@ -77,7 +77,7 @@ function ColorPicker({
   allowsGradient = false,
   allowsOpacity = true,
   allowsSavedColors = false,
-  hasEyeDropper = true,
+  hasEyedropper = true,
   maxHeight = null,
   onClose = () => {},
   changedStyle = 'background',
@@ -181,7 +181,7 @@ function ColorPicker({
           showCustomPicker={showCustomPicker}
           hideCustomPicker={hideCustomPicker}
           handleClose={handleCloseAndRefocus}
-          hasEyeDropper={hasEyeDropper}
+          hasEyedropper={hasEyedropper}
           allowsSavedColors={allowsSavedColors}
           showDialog={showDialog}
           setShowDialog={setShowDialog}
@@ -203,6 +203,7 @@ ColorPicker.propTypes = {
   color: PatternPropType,
   changedStyle: PropTypes.string,
   onDimensionChange: PropTypes.func,
+  hasEyedropper: PropTypes.bool,
 };
 
 export default ColorPicker;

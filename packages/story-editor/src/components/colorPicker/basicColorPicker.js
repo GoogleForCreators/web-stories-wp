@@ -103,7 +103,7 @@ function BasicColorPicker({
   showDialog,
   setShowDialog,
   changedStyle,
-  hasEyeDropper,
+  hasEyedropper,
 }) {
   const { savedColors, storyColors } = useStory((state) => ({
     savedColors: state.state.story?.globalStoryStyles?.colors || [],
@@ -159,7 +159,7 @@ function BasicColorPicker({
         <DefaultText>{__('Color', 'web-stories')}</DefaultText>
       </Header>
       <Body>
-        {hasEyeDropper && (
+        {hasEyedropper && (
           <EyedropperWrapper>
             <Button
               variant={BUTTON_VARIANTS.SQUARE}
@@ -263,7 +263,7 @@ BasicColorPicker.propTypes = {
   showDialog: PropTypes.bool,
   setShowDialog: PropTypes.func,
   changedStyle: PropTypes.string,
-  hasEyeDropper: PropTypes.bool,
+  hasEyedropper: PropTypes.bool,
 };
 
 export default BasicColorPicker;
