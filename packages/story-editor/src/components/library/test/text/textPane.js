@@ -83,6 +83,8 @@ describe('TextPane', () => {
       actions: {
         ensureMenuFontsLoaded: () => {},
         ensureCustomFontsLoaded: () => {},
+        getCustomFonts: jest.fn(),
+        getCuratedFonts: jest.fn(),
       },
     };
 
