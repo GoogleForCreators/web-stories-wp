@@ -44,7 +44,7 @@ export const saveStoryById = ({
     excerpt: {
       raw: excerpt,
     },
-    storyData: {
+    story_data: {
       version: DATA_VERSION,
       pages,
       autoAdvance,
@@ -56,8 +56,8 @@ export const saveStoryById = ({
       id: 1,
       name: '',
     },
-    stylePresets: globalStoryStyles,
-    permalinkTemplate: 'https://example.org/web-stories/%pagename%/',
+    style_presets: globalStoryStyles,
+    permalink_template: 'https://example.org/web-stories/%pagename%/',
   };
 
   window.localStorage.setItem(
