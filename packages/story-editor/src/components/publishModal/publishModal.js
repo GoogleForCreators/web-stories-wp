@@ -28,7 +28,7 @@ import { useCallback, useEffect } from '@googleforcreators/react';
 import { useCheckpoint } from '../checklist';
 import DirectionAware from '../directionAware';
 import Header from './header';
-import MainContent from './mainContent';
+import Content from './content';
 
 const Container = styled.div`
   height: 100%;
@@ -80,7 +80,7 @@ function PublishModal({ isOpen, onPublish, onClose, publishButtonCopy }) {
               onClose={onClose}
               onPublish={onPublish}
             />
-            <MainContent handleReviewChecklist={handleReviewChecklist} />
+            <Content handleReviewChecklist={handleReviewChecklist} />
           </Container>
         </DirectionAware>
       )}

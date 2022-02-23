@@ -26,7 +26,7 @@ import renderWithTheme from '../../../testUtils/renderWithTheme';
 import { ChecklistCountProvider } from '../../checklist';
 import InspectorContext from '../../inspector/context';
 import { INPUT_KEYS } from '../constants';
-import MandatoryStoryInfo from '../mainContent/mandatoryStoryInfo';
+import MainStoryInfo from '../content/mainStoryInfo';
 
 const mockInputValues = {
   [INPUT_KEYS.EXCERPT]:
@@ -35,7 +35,7 @@ const mockInputValues = {
   [INPUT_KEYS.SLUG]: '2001-space-odyssey',
 };
 
-describe('publishModal/mandatoryStoryInfo', () => {
+describe('publishModal/mainStoryInfo', () => {
   const mockHandleUpdateStory = jest.fn();
   afterEach(() => {
     jest.clearAllMocks();
@@ -67,7 +67,7 @@ describe('publishModal/mandatoryStoryInfo', () => {
       >
         <InspectorContext.Provider value={inspectorContextValue}>
           <ChecklistCountProvider hasChecklist>
-            <MandatoryStoryInfo />
+            <MainStoryInfo />
           </ChecklistCountProvider>
         </InspectorContext.Provider>
       </StoryContext.Provider>
