@@ -123,7 +123,7 @@ function FontControls({
 
   return (
     <>
-      {fonts && (
+      {fonts.length > 0 && (
         <Row>
           <FontPicker
             ref={fontDropdownRef}
