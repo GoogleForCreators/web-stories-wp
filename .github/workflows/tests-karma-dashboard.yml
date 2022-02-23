@@ -86,7 +86,7 @@ jobs:
         env:
           DISABLE_ERROR_BOUNDARIES: true
           SHARD: ${{ matrix.shard }}
-          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_DASHBOARD }}
           PERCY_BROWSER_EXECUTABLE: ${{ steps.chromium_path.outputs.chromium_path }}
           PERCY_PARALLEL_NONCE: ${{ needs.nonce.outputs.result }}
         if: github.event.pull_request.draft == false
