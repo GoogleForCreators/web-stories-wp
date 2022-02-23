@@ -36,14 +36,14 @@ import { useRef, useState } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import { useStory, useConfig } from '../../../../../app';
-import { PRESET_TYPES } from '../../../../../constants';
-import useAddPreset from '../../../../../utils/useAddPreset';
-import { focusStyle } from '../../../shared';
-import useInspector from '../../../../inspector/useInspector';
-import useApplyStyle from './useApplyStyle';
-import StyleGroup from './styleGroup';
-import StyleManager from './styleManager';
+import { useStory, useConfig } from '../../../../app';
+import { PRESET_TYPES } from '../../../../constants';
+import useAddPreset from '../../../../utils/useAddPreset';
+import { focusStyle } from '../../shared';
+import useInspector from '../../../inspector/useInspector';
+import StyleGroup from '../../../styleManager/styleGroup';
+import StyleManager from '../../../styleManager';
+import useApplyStyle from '../../../styleManager/useApplyStyle';
 
 const PresetsHeader = styled.div`
   display: flex;

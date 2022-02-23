@@ -21,10 +21,10 @@ import { useCallback, useRef } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import useRichTextFormatting from '../useRichTextFormatting';
-import { useStory } from '../../../../../app/story';
-import { usePresubmitHandler } from '../../../../form';
-import getUpdatedSizeAndPosition from '../../../../../utils/getUpdatedSizeAndPosition';
+import useRichTextFormatting from '../panels/design/textStyle/useRichTextFormatting';
+import { useStory } from '../../app';
+import { usePresubmitHandler } from '../form';
+import getUpdatedSizeAndPosition from '../../utils/getUpdatedSizeAndPosition';
 
 function useApplyStyle({ pushUpdate }) {
   // Update size and position if relevant values have changed.

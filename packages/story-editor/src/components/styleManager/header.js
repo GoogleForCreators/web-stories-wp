@@ -32,7 +32,7 @@ import {
 /**
  * Internal dependencies
  */
-import { focusStyle } from '../../../shared';
+import { focusStyle } from '../panels/shared';
 
 const HEADER_HEIGHT = 44;
 

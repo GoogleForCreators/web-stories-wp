@@ -40,11 +40,11 @@ import { PRESET_TYPES } from '../../../../../constants';
 import useAddPreset from '../../../../../utils/useAddPreset';
 import { DEFAULT_PRESET } from '../textPresets';
 import { focusStyle } from '../../../../panels/shared';
-import StyleGroup from '../../../../panels/design/textStyle/stylePresets/styleGroup';
-import StyleManager from '../../../../panels/design/textStyle/stylePresets/styleManager';
+import StyleGroup from '../../../../styleManager/styleGroup';
+import StyleManager from '../../../../styleManager';
 import useLibrary from '../../../useLibrary';
 import { areAllType } from '../../../../../utils/presetUtils';
-import useApplyStyle from '../../../../panels/design/textStyle/stylePresets/useApplyStyle';
+import useApplyStyle from '../../../../styleManager/useApplyStyle';
 import updateProperties from '../../../../inspector/design/updateProperties';
 import getUpdatedSizeAndPosition from '../../../../../utils/getUpdatedSizeAndPosition';
 import InsertionOverlay from '../../shared/insertionOverlay';
@@ -101,18 +101,13 @@ const TYPE = 'text';
 
 function PresetPanel() {
   const { textStyles, isText, selectedTexts, updateElementsById } = useStory(
-    ({
-      state: {
-        story: { globalStoryStyles },
-        selectedElements,
-      },
-      actions,
-    }) => {
-      const isText = selectedElements && areAllType(TYPE, selectedElements);
+    ({ state, actions }) => {
+      const isText =
+        state.selectedElements && areAllType(TYPE, state.selectedElements);
       return {
         isText,
-        textStyles: globalStoryStyles.textStyles,
-        selectedTexts: isText ? selectedElements : [],
+        textStyles: state.story.globalStoryStyles.textStyles,
+        selectedTexts: isText ? state.selectedElements : [],
         updateElementsById: actions.updateElementsById,
       };
     }

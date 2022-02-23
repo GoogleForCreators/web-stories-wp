@@ -156,6 +156,7 @@ StyleManager.propTypes = {
   styles: PropTypes.array.isRequired,
   onClose: PropTypes.func.isRequired,
   applyStyle: PropTypes.func.isRequired,
+  activeItemOverlay: PropTypes.node,
 };
 
 export default StyleManager;

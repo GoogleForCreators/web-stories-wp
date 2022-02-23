@@ -27,11 +27,11 @@ import { useState } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import { BACKGROUND_TEXT_MODE } from '../../../../../constants';
-import { generatePresetStyle } from '../../../../../utils/presetUtils';
-import stripHTML from '../../../../../utils/stripHTML';
-import { useStory } from '../../../../../app/story';
-import { focusStyle } from '../../../shared';
+import { BACKGROUND_TEXT_MODE } from '../../constants';
+import { generatePresetStyle } from '../../utils/presetUtils';
+import stripHTML from '../../utils/stripHTML';
+import { useStory } from '../../app/story';
+import { focusStyle } from '../panels/shared';
 
 const REMOVE_ICON_SIZE = 32;
 
@@ -160,6 +160,7 @@ StyleItem.propTypes = {
   activeIndex: PropTypes.number,
   handleOnClick: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool.isRequired,
+  activeItemOverlay: PropTypes.node,
 };
 
 export default StyleItem;
