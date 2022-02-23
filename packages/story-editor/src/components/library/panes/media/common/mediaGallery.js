@@ -27,7 +27,8 @@ import Gallery from 'react-photo-album';
 import MediaElement from './mediaElement';
 import { GalleryContainer } from './styles';
 
-const PHOTO_MARGIN = 4;
+const PHOTO_MARGIN = 8;
+const TARGET_ROW_HEIGHT = 150;
 
 /**
  * @callback InsertionCallback
@@ -66,9 +67,9 @@ function MediaGallery({ resources, onInsert, providerType, canEditMedia }) {
         <MediaElement
           key={photo.key}
           index={photo.index}
-          margin={PHOTO_MARGIN + 'px'}
+          margin={`0px 0px ${PHOTO_MARGIN}px 0px`}
           resource={resources[photo.index]}
-          width={layout.width - 2 * PHOTO_MARGIN}
+          width={layout.width}
           height={layout.height}
           onInsert={onInsert}
           providerType={providerType}
@@ -87,10 +88,9 @@ function MediaGallery({ resources, onInsert, providerType, canEditMedia }) {
         renderPhoto={imageRenderer}
         renderRowContainer={rowRenderer}
         renderContainer={forwardRef(containerRenderer)}
-        targetRowHeight={110}
+        targetRowHeight={TARGET_ROW_HEIGHT}
         rowConstraints={{
           minPhotos: 2,
-          maxPhotos: 4,
         }}
         // This should match the actual margin the element is styled with.
         spacing={PHOTO_MARGIN}

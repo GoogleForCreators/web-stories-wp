@@ -40,7 +40,7 @@ export const GalleryContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-evenly';
+  justify-content: space-between;
 `;
 
 export const MediaGalleryContainer = styled.div`
