@@ -19,7 +19,10 @@
  */
 import { useCallback, useMemo } from '@googleforcreators/react';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
-import { getFileName } from '@googleforcreators/media';
+import {
+  getFileName,
+  getExtensionFromMimeType,
+} from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -42,13 +45,15 @@ function useUploader() {
       image: allowedImageMimeTypes,
       video: allowedVideoMimeTypes,
     },
-    allowedFileTypes,
     capabilities: { hasUploadMediaAction },
   } = useConfig();
   const allowedMimeTypes = useMemo(
     () => [...allowedImageMimeTypes, ...allowedVideoMimeTypes],
     [allowedImageMimeTypes, allowedVideoMimeTypes]
   );
+  const allowedFileTypes = allowedMimeTypes
+    .map((type) => getExtensionFromMimeType(type))
+    .filter((a) => a);
 
   const isValidType = useCallback(
     ({ type }) => {

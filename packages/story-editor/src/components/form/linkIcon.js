@@ -19,6 +19,7 @@
  */
 import styled from 'styled-components';
 import { useMemo } from '@googleforcreators/react';
+import { getExtensionFromMimeType } from '@googleforcreators/media';
 import PropTypes from 'prop-types';
 
 /**
@@ -36,10 +37,14 @@ const StyledMedia = styled(Media)`
 
 function LinkIcon({ handleChange, icon, isLoading = false, ...rest }) {
   const {
-    allowedImageMimeTypes,
-    allowedImageFileTypes,
+    allowedMimeTypes: { ws_image: allowedImageMimeTypes },
     capabilities: { hasUploadMediaAction },
   } = useConfig();
+
+  const allowedImageFileTypes = allowedImageMimeTypes
+    .map((type) => getExtensionFromMimeType(type))
+    .filter((a) => a);
+
   const iconErrorMessage = useMemo(() => {
     let message = __(
       'No image file types are currently supported.',

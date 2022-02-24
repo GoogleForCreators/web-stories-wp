@@ -52,7 +52,6 @@ export const _default = ({ insertElement, ...args }) => {
       audio: [],
       video: ['video/mp4', 'video/webm'],
     },
-    allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4', 'webp', 'webm'],
     capabilities: { hasUploadMediaAction: true },
   };
   return (

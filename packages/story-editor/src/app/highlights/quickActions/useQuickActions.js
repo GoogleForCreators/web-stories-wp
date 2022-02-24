@@ -27,7 +27,10 @@ import {
   Icons,
 } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
-import { resourceList } from '@googleforcreators/media';
+import {
+  resourceList,
+  getExtensionFromMimeType,
+} from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -68,7 +71,6 @@ const {
 
 export const MediaPicker = ({ render, ...props }) => {
   const {
-    allowedFileTypes,
     allowedMimeTypes: {
       image: allowedImageMimeTypes,
       video: allowedVideoMimeTypes,
@@ -111,6 +113,9 @@ export const MediaPicker = ({ render, ...props }) => {
 
   // Media Upload Props
   let allowedMimeTypes = [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
+  const allowedFileTypes = allowedMimeTypes
+    .map((type) => getExtensionFromMimeType(type))
+    .filter((a) => a);
   if (isTranscodingEnabled) {
     allowedMimeTypes = allowedMimeTypes.concat(TRANSCODABLE_MIME_TYPES);
   }

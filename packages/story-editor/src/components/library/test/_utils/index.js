@@ -40,16 +40,9 @@ export async function arrange({ mediaResponse = [] }) {
         'image/gif',
         'image/webp',
       ],
+      ws_image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
       video: ['video/mp4', 'video/webm'],
     },
-    allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4', 'webp', 'webm'],
-    allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
-    allowedImageMimeTypes: [
-      'image/png',
-      'image/jpeg',
-      'image/jpg',
-      'image/gif',
-    ],
     capabilities: {
       hasUploadMediaAction: true,
     },

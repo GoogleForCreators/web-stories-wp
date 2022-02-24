@@ -42,13 +42,9 @@ function arrange(selectedElements) {
     capabilities: {
       hasUploadMediaAction: true,
     },
-    allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
-    allowedImageMimeTypes: [
-      'image/png',
-      'image/jpeg',
-      'image/jpg',
-      'image/gif',
-    ],
+    allowedMimeTypes: {
+      ws_image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
+    },
     MediaUpload,
   };
 
