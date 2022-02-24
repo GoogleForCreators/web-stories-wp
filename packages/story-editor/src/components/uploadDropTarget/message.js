@@ -21,7 +21,7 @@ import { getExtensionFromMimeType } from '@googleforcreators/media';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { memo } from '@googleforcreators/react';
+import { memo, useMemo } from '@googleforcreators/react';
 import {
   Icons,
   Text as DefaultText,
@@ -70,10 +70,17 @@ function UploadDropTargetMessage({ message, ...rest }) {
     },
   } = useConfig();
 
-  const allowedMimeTypes = [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
-  const allowedFileTypes = allowedMimeTypes
-    .map((type) => getExtensionFromMimeType(type))
-    .filter((a) => a);
+  const allowedMimeTypes = useMemo(
+    () => [...allowedImageMimeTypes, ...allowedVideoMimeTypes],
+    [allowedImageMimeTypes, allowedVideoMimeTypes]
+  );
+  const allowedFileTypes = useMemo(
+    () =>
+      allowedMimeTypes
+        .map((type) => getExtensionFromMimeType(type))
+        .filter((a) => a),
+    [allowedMimeTypes]
+  );
 
   let description = __('No file types are currently supported.', 'web-stories');
 

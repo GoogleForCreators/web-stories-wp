@@ -209,7 +209,7 @@ describe('useUploader', () => {
     it('formats the error message correctly if no file types are supported', async () => {
       const {
         actions: { validateFileForUpload },
-      } = setup({ allowedMimeTypes: { image: [], video: []} });
+      } = setup({ allowedMimeTypes: { image: [], video: [] } });
 
       await expect(() =>
         validateFileForUpload({ size: 20000, type: 'video/quicktime' })

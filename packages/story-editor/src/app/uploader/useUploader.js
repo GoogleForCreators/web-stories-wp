@@ -51,9 +51,13 @@ function useUploader() {
     () => [...allowedImageMimeTypes, ...allowedVideoMimeTypes],
     [allowedImageMimeTypes, allowedVideoMimeTypes]
   );
-  const allowedFileTypes = allowedMimeTypes
-    .map((type) => getExtensionFromMimeType(type))
-    .filter((a) => a);
+  const allowedFileTypes = useMemo(
+    () =>
+      allowedMimeTypes
+        .map((type) => getExtensionFromMimeType(type))
+        .filter((a) => a),
+    [allowedMimeTypes]
+  );
 
   const isValidType = useCallback(
     ({ type }) => {
