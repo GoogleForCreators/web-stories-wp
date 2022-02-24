@@ -77,7 +77,7 @@ jobs:
           CHROMIUM=$(node -p "const puppeteer = require('puppeteer'); puppeteer.executablePath();")
           echo "::set-output name=chromium_path::${CHROMIUM}"
 
-      - name: Run dashboard integration tests with Percy
+      - name: Run integration tests with Percy
         run: |
           npx percy exec --parallel --config=percy.config.karma.yml -- \
             npm run test:karma:dashboard -- --headless --viewport=1600:1000 --coverage --shard=$SHARD || \
