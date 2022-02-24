@@ -153,7 +153,6 @@ module.exports = function (config) {
       },
     },
     client: {
-      clientDisplayNone: config.snapshots || false,
       args: [
         specsToRetry && '--grep',
         specsToRetry && `/${specsToRetry}/`,
