@@ -154,6 +154,8 @@ function Wrapper({ children }) {
                 fallbacks: ['fallback1'],
               }),
               addRecentFont: jest.fn(),
+              getCustomFonts: jest.fn(),
+              getCuratedFonts: jest.fn(),
             },
           }}
         >

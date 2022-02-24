@@ -25,15 +25,16 @@ import useRichTextFormatting from '../useRichTextFormatting';
 import { useStory } from '../../../../../app/story';
 import { usePresubmitHandler } from '../../../../form';
 import getUpdatedSizeAndPosition from '../../../../../utils/getUpdatedSizeAndPosition';
+import { STABLE_ARRAY } from '../../../../../constants';
 
 function useApplyStyle({ pushUpdate }) {
   // Update size and position if relevant values have changed.
   usePresubmitHandler(getUpdatedSizeAndPosition, []);
 
-  const { selectedElements } = useStory(({ state: { selectedElements } }) => {
-    return {
-      selectedElements,
-    };
+  const selectedTextElements = useStory(({ state: { selectedElements } }) => {
+    return selectedElements
+      ? selectedElements?.filter(({ type }) => type === 'text')
+      : STABLE_ARRAY;
   });
 
   const extraPropsToAdd = useRef(null);
@@ -58,7 +59,7 @@ function useApplyStyle({ pushUpdate }) {
       handleClickItalic,
       handleSelectFontWeight,
     },
-  } = useRichTextFormatting(selectedElements, push);
+  } = useRichTextFormatting(selectedTextElements, push);
 
   const handleApplyStyle = useCallback(
     (preset) => {

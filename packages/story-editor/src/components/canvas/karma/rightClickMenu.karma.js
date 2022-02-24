@@ -23,7 +23,7 @@ import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/design-system';
  * Internal dependencies
  */
 import { useStory } from '../../../app';
-import { ATTRIBUTES_TO_COPY } from '../../../app/story/useStoryReducer/reducers/copyElementById';
+import { ATTRIBUTES_TO_COPY } from '../../../app/story/useStoryReducer/reducers/copySelectedElement';
 import { Fixture } from '../../../karma';
 import objectPick from '../../../utils/objectPick';
 import useInsertElement from '../useInsertElement';
