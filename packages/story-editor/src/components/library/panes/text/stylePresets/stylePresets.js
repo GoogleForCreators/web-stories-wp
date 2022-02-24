@@ -113,7 +113,7 @@ function PresetPanel() {
         state.selectedElements && areAllType(TYPE, state.selectedElements);
       return {
         isText,
-        textStyles: state.story.globalStoryStyles.textStyles,
+        textStyles: state.story?.globalStoryStyles?.textStyles || [],
         updateSelectedElements: actions.updateSelectedElements,
       };
     }
