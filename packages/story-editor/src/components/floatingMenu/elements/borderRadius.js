@@ -72,7 +72,7 @@ function BorderRadius() {
       <StyledInput
         suffix={<Icons.Corner />}
         value={borderRadius.topLeft}
-        aria-label={__('Corner radius', 'web-stories')}
+        aria-label={__('Corner Radius', 'web-stories')}
         onChange={(_, value) => handleChange(value)}
       />
       <Separator />

@@ -41,6 +41,6 @@ export class DesignMenu extends Container {
   }
 
   get borderRadius() {
-    return this.queryByRole('textbox', { name: 'Corner radius' });
+    return this.queryByRole('textbox', { name: 'Corner Radius' });
   }
 }
