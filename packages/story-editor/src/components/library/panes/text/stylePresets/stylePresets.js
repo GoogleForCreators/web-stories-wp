@@ -18,6 +18,7 @@
  * External dependencies
  */
 import {
+  Headline,
   THEME_CONSTANTS,
   Text,
   BUTTON_TYPES,
@@ -48,20 +49,23 @@ import useApplyStyle from '../../../../styleManager/useApplyStyle';
 import updateProperties from '../../../../inspector/design/updateProperties';
 import getUpdatedSizeAndPosition from '../../../../../utils/getUpdatedSizeAndPosition';
 import InsertionOverlay from '../../shared/insertionOverlay';
+import { Container } from '../../../common/section';
 
-const PresetsHeader = styled.div`
+const SectionContainer = styled(Container)`
+  padding: 16px 0;
+  margin-bottom: -24px;
+  border-top: 1px solid ${({ theme }) => theme.colors.divider.tertiary};
+  border-bottom: 1px solid ${({ theme }) => theme.colors.divider.tertiary};
+`;
+
+const TitleBar = styled.div`
   display: flex;
-  padding: 8px 0;
+  padding-bottom: 16px;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const StylesWrapper = styled.div``;
-
-const SubHeading = styled(Text)`
-  color: ${({ theme }) => theme.colors.fg.secondary};
-  margin: 6px 0;
-  font-weight: ${({ theme }) => theme.typography.weight.bold};
-`;
 
 const StyledButton = styled(Button)`
   margin-left: auto;
@@ -69,7 +73,7 @@ const StyledButton = styled(Button)`
 
 const StyledMoreButton = styled(Button)`
   ${focusStyle};
-  margin: 12px 0;
+  margin-top: 12px;
   padding: 0 16px;
   justify-content: center;
   align-self: center;
@@ -171,11 +175,14 @@ function PresetPanel() {
       };
 
   return (
-    <>
-      <PresetsHeader>
-        <SubHeading size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+    <SectionContainer>
+      <TitleBar>
+        <Headline
+          as="h2"
+          size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL}
+        >
           {__('Saved Styles', 'web-stories')}
-        </SubHeading>
+        </Headline>
         <StyledButton
           type={BUTTON_TYPES.TERTIARY}
           size={BUTTON_SIZES.SMALL}
@@ -186,7 +193,7 @@ function PresetPanel() {
         >
           <Icons.Plus />
         </StyledButton>
-      </PresetsHeader>
+      </TitleBar>
       {hasPresets && (
         <>
           <StylesWrapper ref={stylesRef}>
@@ -233,7 +240,7 @@ function PresetPanel() {
           </NoStylesText>
         </NoStylesWrapper>
       )}
-    </>
+    </SectionContainer>
   );
 }
 
