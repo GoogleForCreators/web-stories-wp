@@ -165,7 +165,7 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 		// See https://github.com/GoogleForCreators/web-stories-wp/issues/10451.
 		$matches      = [];
 		$query_string = wp_parse_url( $url, PHP_URL_QUERY );
-		$check_url    = str_replace( "?$query_string", '', $url );
+		$check_url    = \is_string( $query_string ) ? str_replace( "?$query_string", '', $url ) : $url;
 		if ( preg_match( '~^https?://(www\.)?instagram\.com/([^/]+)/?$~', $check_url, $matches ) ) {
 			$data['title'] = sprintf(
 				/* translators: %s: Instagram username. */
