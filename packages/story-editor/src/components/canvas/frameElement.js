@@ -80,14 +80,11 @@ const EmptyFrame = styled.div`
 const NOOP = () => {};
 
 function FrameElement({ id }) {
-  const { isSelected, isSingleElement, isBackground, element } = useStory(
-    ({ state }) => ({
-      isSelected: state.selectedElementIds.includes(id),
-      isSingleElement: state.selectedElementIds.length === 1,
-      isBackground: state.currentPage?.elements[0].id === id,
-      element: state.currentPage?.elements.find((el) => el.id === id),
-    })
-  );
+  const { isSelected, isBackground, element } = useStory(({ state }) => ({
+    isSelected: state.selectedElementIds.includes(id),
+    isBackground: state.currentPage?.elements[0].id === id,
+    element: state.currentPage?.elements.find((el) => el.id === id),
+  }));
   const setEditingElement = useCanvas(
     ({ actions }) => actions.setEditingElement
   );
@@ -178,7 +175,6 @@ function FrameElement({ id }) {
         <Controls
           isTransforming={isTransforming}
           isSelected={isSelected}
-          isSingleElement={isSingleElement}
           isEditing={isEditing}
           box={box}
           elementRef={elementRef}
