@@ -63,6 +63,11 @@ export default {
 
 const DEMO_COLORS = [
   {
+    label: 'Indeterminate',
+    pattern: { color: { r: 0, g: 0, b: 255, a: 0 } },
+    isIndeterminate: true,
+  },
+  {
     label: 'Fully transparent',
     pattern: { color: { r: 0, g: 0, b: 255, a: 0 } },
   },
@@ -170,12 +175,12 @@ function _default(args) {
             </Cell>
           ))}
         </Row>
-        {DEMO_COLORS.map(({ label, pattern }) => (
+        {DEMO_COLORS.map(({ label, pattern, ...patternProps }) => (
           <Row key={label}>
             <Text>{label}</Text>
             {VARIANTS.map(({ variant, Icon, ...props }) => (
               <Cell key={variant}>
-                <Swatch pattern={pattern} {...props}>
+                <Swatch pattern={pattern} {...patternProps} {...props}>
                   {Icon && <Icon />}
                 </Swatch>
               </Cell>
@@ -183,13 +188,18 @@ function _default(args) {
           </Row>
         ))}
         <hr />
-        {DEMO_COLORS.map(({ label, pattern }) => (
+        {DEMO_COLORS.map(({ label, pattern, ...patternProps }) => (
           <Row key={`${label}_tooltip`}>
             <Text>{`${label} + tooltips`}</Text>
             {VARIANTS.map(({ variant, Icon, ...props }) => (
               <Tooltip title={variant} key={variant}>
                 <Cell>
-                  <Swatch pattern={pattern} {...args} {...props}>
+                  <Swatch
+                    pattern={pattern}
+                    {...args}
+                    {...patternProps}
+                    {...props}
+                  >
                     {Icon && <Icon />}
                   </Swatch>
                 </Cell>

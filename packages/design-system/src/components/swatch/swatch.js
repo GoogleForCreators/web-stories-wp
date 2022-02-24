@@ -120,9 +120,10 @@ const OpaqueColor = styled.div`
 
 function Swatch({
   pattern,
-  isDisabled = false,
   children,
-  isPreview,
+  isPreview = false,
+  isDisabled = false,
+  isIndeterminate = false,
   className = '',
   ...props
 }) {
@@ -134,8 +135,8 @@ function Swatch({
   const opaquePattern = swatchHasTransparency
     ? getOpaquePattern(pattern)
     : pattern;
-  // gradient swatches are never split
-  const displaySplit = !swatchIsGradient && swatchHasTransparency;
+  // gradient swatches and indeterminates are never split
+  const displaySplit = !swatchIsGradient && swatchHasTransparency && !isIndeterminate;
   const SwatchDisplay = isPreview ? SwatchPreview : SwatchButton;
   return (
     <SwatchDisplay disabled={isDisabled} className={className} {...props}>
@@ -158,8 +159,9 @@ function Swatch({
 Swatch.propTypes = {
   children: PropTypes.node,
   pattern: PatternPropType,
-  isDisabled: PropTypes.bool,
   isPreview: PropTypes.bool,
+  isDisabled: PropTypes.bool,
+  isIndeterminate: PropTypes.bool,
   className: PropTypes.string,
 };
 
