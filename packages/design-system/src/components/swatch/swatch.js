@@ -82,7 +82,6 @@ const SwatchButton = styled.button`
 const SwatchPreview = styled(SwatchButton).attrs({ as: 'div', type: '' })``;
 
 const SwatchItem = styled.div`
-  ${({ $pattern }) => generatePatternStyles($pattern)}
   transform: rotate(${({ displaySplit }) => (displaySplit ? -45 : 0)}deg);
   display: block;
   width: 100%;
@@ -142,10 +141,13 @@ function Swatch({
   return (
     <SwatchDisplay disabled={isDisabled} className={className} {...props}>
       {swatchHasTransparency && <Transparent />}
-      <SwatchItem $pattern={pattern} displaySplit={displaySplit}>
+      <SwatchItem
+        style={generatePatternStyles(pattern)}
+        displaySplit={displaySplit}
+      >
         {displaySplit && (
           <OpaqueColorWrapper>
-            <OpaqueColor pattern={opaquePattern} />
+            <OpaqueColor style={generatePatternStyles(opaquePattern)} />
           </OpaqueColorWrapper>
         )}
         {children}
