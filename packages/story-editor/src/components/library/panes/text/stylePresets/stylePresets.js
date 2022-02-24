@@ -98,6 +98,7 @@ const NoStylesText = styled(Text)`
 
 const SPACING = { x: 40 };
 const TYPE = 'text';
+const STYLE_BUTTON_WIDTH = 150;
 
 function PresetPanel() {
   const { textStyles, isText, selectedTexts, updateElementsById } = useStory(
@@ -193,6 +194,7 @@ function PresetPanel() {
             <StyleGroup
               styles={[...textStyles].reverse().slice(0, 2)}
               handleClick={handlePresetClick}
+              buttonWidth={STYLE_BUTTON_WIDTH}
               {...styleItemProps}
             />
           </StylesWrapper>

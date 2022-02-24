@@ -107,7 +107,7 @@ function StyleItem({
 
   const textContent = selectedElements[0]?.content
     ? stripHTML(selectedElements[0].content)
-    : __('Text', 'web-stories');
+    : __('Lorem ipsum dolor sit amet', 'web-stories');
 
   const getStylePresetText = () => {
     const isHighLight =
