@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import { getExtensionFromMimeType } from '@googleforcreators/media';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -62,7 +63,17 @@ const Icon = styled(Icons.ArrowCloud)`
 `;
 
 function UploadDropTargetMessage({ message, ...rest }) {
-  const { allowedFileTypes } = useConfig();
+  const {
+    allowedMimeTypes: {
+      image: allowedImageMimeTypes,
+      video: allowedVideoMimeTypes,
+    },
+  } = useConfig();
+
+  const allowedMimeTypes = [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
+  const allowedFileTypes = allowedMimeTypes
+    .map((type) => getExtensionFromMimeType(type))
+    .filter((a) => a);
 
   let description = __('No file types are currently supported.', 'web-stories');
 

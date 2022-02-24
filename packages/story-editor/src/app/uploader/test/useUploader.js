@@ -43,16 +43,9 @@ function setup(args) {
         'image/gif',
         'image/webp',
       ],
+      ws_image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
       video: ['video/mp4', 'video/webm'],
     },
-    allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4', 'webp', 'webm'],
-    allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
-    allowedImageMimeTypes: [
-      'image/png',
-      'image/jpeg',
-      'image/jpg',
-      'image/gif',
-    ],
     maxUpload: 104857600,
     capabilities: {
       hasUploadMediaAction: true,
@@ -118,7 +111,7 @@ describe('useUploader', () => {
       await expect(() =>
         validateFileForUpload({ size: 20000, type: 'video/quicktime' })
       ).toThrow(
-        'Please choose only png, jpeg, jpg, gif, mp4, webp, or webm to upload.'
+        'Please choose only png, jpeg, gif, webp, mp4, or webm to upload.'
       );
     });
 
@@ -206,7 +199,7 @@ describe('useUploader', () => {
     it('formats the error message correctly if there is only one file type supported', async () => {
       const {
         actions: { validateFileForUpload },
-      } = setup({ allowedFileTypes: ['mp4'] });
+      } = setup({ allowedMimeTypes: { image: [], video: ['video/mp4'] } });
 
       await expect(() =>
         validateFileForUpload({ size: 20000, type: 'video/quicktime' })
@@ -216,7 +209,7 @@ describe('useUploader', () => {
     it('formats the error message correctly if no file types are supported', async () => {
       const {
         actions: { validateFileForUpload },
-      } = setup({ allowedFileTypes: [] });
+      } = setup({ allowedMimeTypes: { image: [], video: []} });
 
       await expect(() =>
         validateFileForUpload({ size: 20000, type: 'video/quicktime' })

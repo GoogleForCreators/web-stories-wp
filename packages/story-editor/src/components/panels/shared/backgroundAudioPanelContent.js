@@ -29,7 +29,10 @@ import {
 } from '@googleforcreators/design-system';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import { useCallback } from '@googleforcreators/react';
-import { ResourcePropTypes } from '@googleforcreators/media';
+import {
+  ResourcePropTypes,
+  getExtensionFromMimeType,
+} from '@googleforcreators/media';
 import { v4 as uuidv4 } from 'uuid';
 
 /**
@@ -63,11 +66,13 @@ function BackgroundAudioPanelContent({
   audioId,
 }) {
   const {
-    allowedAudioMimeTypes,
-    allowedAudioFileTypes,
+    allowedMimeTypes: { audio: allowedAudioMimeTypes },
     capabilities: { hasUploadMediaAction },
     MediaUpload,
   } = useConfig();
+  const allowedAudioFileTypes = allowedAudioMimeTypes
+    .map((type) => getExtensionFromMimeType(type))
+    .filter((a) => a);
 
   const { resource, tracks = [], loop = true } = backgroundAudio || {};
 

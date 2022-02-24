@@ -39,13 +39,9 @@ function arrange({ backgroundAudio, hasUploadMediaAction = true } = {}) {
     capabilities: {
       hasUploadMediaAction,
     },
-    allowedAudioMimeTypes: [
-      'audio/mpeg',
-      'audio/aac',
-      'audio/wav',
-      'audio/ogg',
-    ],
-    allowedAudioFileTypes: ['mp3', 'aac', 'wav', 'ogg'],
+    allowedMimeTypes: {
+      audio: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
+    },
     MediaUpload,
   };
 

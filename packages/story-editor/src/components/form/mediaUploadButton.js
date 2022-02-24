@@ -19,6 +19,7 @@
  */
 import { useSnackbar } from '@googleforcreators/design-system';
 import { useCallback, useMemo } from '@googleforcreators/react';
+import { getExtensionFromMimeType } from '@googleforcreators/media';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 
@@ -31,13 +32,20 @@ import { TRANSCODABLE_MIME_TYPES } from '../../app/media';
 
 function MediaUploadButton({ onInsert, renderButton, buttonInsertText }) {
   const {
-    allowedFileTypes,
     allowedMimeTypes: {
       image: allowedImageMimeTypes,
       video: allowedVideoMimeTypes,
     },
     MediaUpload,
   } = useConfig();
+
+  const allowedUploadMimeTypes = [
+    ...allowedImageMimeTypes,
+    ...allowedVideoMimeTypes,
+  ];
+  const allowedFileTypes = allowedUploadMimeTypes
+    .map((type) => getExtensionFromMimeType(type))
+    .filter((a) => a);
 
   const {
     canTranscodeResource,
