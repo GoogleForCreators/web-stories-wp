@@ -36,7 +36,7 @@ import { INPUT_KEYS } from '../constants';
 const FormSection = styled.div`
   padding: 0 4px;
   &:first-of-type {
-    margin: 20px 0 0px;
+    margin: 20px 0px 0px;
   }
 `;
 
