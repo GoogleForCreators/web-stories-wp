@@ -186,12 +186,15 @@ function Tooltip({
       // check that the tooltip isn't cutoff on the left edge of the screen.
       // right-cutoff is already taken care of with `getOffset`
       const isOverFlowingLeft = offset.popupLeft < 0;
-
-      if (shouldMoveToTop && !isOverFlowingLeft) {
-        setDynamicPlacement(PLACEMENT.TOP);
-      } else if (shouldMoveToTop && isOverFlowingLeft) {
-        setDynamicPlacement(PLACEMENT.TOP_START);
-      } else if (!shouldMoveToTop && isOverFlowingLeft) {
+      if (shouldMoveToTop) {
+        if (dynamicPlacement.endsWith('-start')) {
+          setDynamicPlacement(PLACEMENT.TOP_START);
+        } else if (dynamicPlacement.endsWith('-end')) {
+          setDynamicPlacement(PLACEMENT.TOP_END);
+        } else {
+          setDynamicPlacement(PLACEMENT.TOP);
+        }
+      } else if (isOverFlowingLeft) {
         updatePlacement();
       }
     },
