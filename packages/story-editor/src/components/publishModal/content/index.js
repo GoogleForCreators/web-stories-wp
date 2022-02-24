@@ -19,6 +19,7 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
+import { themeHelpers } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
@@ -52,7 +53,9 @@ const _MainStoryInfo = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 16px;
-  overflow: scroll;
+  overflow-y: scroll;
+
+  ${themeHelpers.scrollbarCSS};
 
   & > section {
     border: none; // Override the default border that is part of the base panel structure since this is destructured
@@ -73,7 +76,9 @@ const PanelContainer = styled.div.attrs({ role: 'tabpanel' })`
   margin-left: 18px;
   background-color: ${({ theme }) => theme.colors.bg.secondary};
   border-bottom-right-radius: ${({ theme }) => theme.borders.radius.medium};
-  overflow: scroll;
+  overflow-y: scroll;
+
+  ${themeHelpers.scrollbarCSS};
 `;
 
 const Footer = styled.div`
