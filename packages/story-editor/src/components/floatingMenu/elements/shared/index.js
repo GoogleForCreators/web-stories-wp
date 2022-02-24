@@ -15,5 +15,6 @@
  */
 
 export { default as IconButton } from './icon';
-export { default as TextButton } from './text';
 export { default as Separator } from './separator';
+export { default as TextButton } from './text';
+export { default as useProperties } from './useProperties';
