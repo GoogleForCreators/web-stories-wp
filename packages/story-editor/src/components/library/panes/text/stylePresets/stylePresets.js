@@ -32,6 +32,7 @@ import {
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import { useCallback, useRef, useState } from '@googleforcreators/react';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -105,6 +106,7 @@ const TYPE = 'text';
 const STYLE_BUTTON_WIDTH = 150;
 
 function PresetPanel() {
+  const isStylePaneEnabled = useFeature('libraryTextStyles');
   const { textStyles, isText, selectedTexts, updateElementsById } = useStory(
     ({ state, actions }) => {
       const isText =
@@ -150,6 +152,10 @@ function PresetPanel() {
 
   const handleApplyStyle = useApplyStyle({ pushUpdate });
   const { addGlobalPreset } = useAddPreset({ presetType: PRESET_TYPES.STYLE });
+
+  if (!isStylePaneEnabled) {
+    return null;
+  }
 
   const addStyledText = (preset) => {
     insertElement(TYPE, {
