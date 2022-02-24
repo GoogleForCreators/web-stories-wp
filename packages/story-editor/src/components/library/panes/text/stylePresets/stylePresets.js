@@ -248,6 +248,4 @@ function PresetPanel() {
   );
 }
 
-PresetPanel.propTypes = {};
-
 export default memo(PresetPanel);
