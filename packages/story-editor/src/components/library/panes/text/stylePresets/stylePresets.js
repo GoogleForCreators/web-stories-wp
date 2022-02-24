@@ -31,7 +31,7 @@ import {
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
-import { useCallback, useRef, useState } from '@googleforcreators/react';
+import { useCallback, useRef, useState, memo } from '@googleforcreators/react';
 import { useFeature } from 'flagged';
 
 /**
@@ -250,4 +250,4 @@ function PresetPanel() {
 
 PresetPanel.propTypes = {};
 
-export default PresetPanel;
+export default memo(PresetPanel);
