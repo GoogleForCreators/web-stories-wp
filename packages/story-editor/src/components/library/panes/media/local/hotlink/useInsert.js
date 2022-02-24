@@ -80,9 +80,13 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
     () => [...allowedImageMimeTypes, ...allowedVideoMimeTypes],
     [allowedImageMimeTypes, allowedVideoMimeTypes]
   );
-  const allowedFileTypes = allowedMimeTypes
-    .map((type) => getExtensionFromMimeType(type))
-    .filter((a) => a);
+  const allowedFileTypes = useMemo(
+    () =>
+      allowedMimeTypes
+        .map((type) => getExtensionFromMimeType(type))
+        .filter((a) => a),
+    [allowedMimeTypes]
+  );
 
   const {
     actions: { getHotlinkInfo },

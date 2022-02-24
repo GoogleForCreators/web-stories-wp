@@ -24,6 +24,7 @@ import {
   useRef,
   useLayoutEffect,
   useCallback,
+  useMemo,
 } from '@googleforcreators/react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -52,10 +53,17 @@ function HotlinkModal({ isOpen, onClose }) {
   const [errorMsg, setErrorMsg] = useState(false);
   const inputRef = useRef(null);
 
-  const allowedMimeTypes = [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
-  const allowedFileTypes = allowedMimeTypes
-    .map((type) => getExtensionFromMimeType(type))
-    .filter((a) => a);
+  const allowedMimeTypes = useMemo(
+    () => [...allowedImageMimeTypes, ...allowedVideoMimeTypes],
+    [allowedImageMimeTypes, allowedVideoMimeTypes]
+  );
+  const allowedFileTypes = useMemo(
+    () =>
+      allowedMimeTypes
+        .map((type) => getExtensionFromMimeType(type))
+        .filter((a) => a),
+    [allowedMimeTypes]
+  );
   useLayoutEffect(() => {
     // Wait one tick to ensure the input has been loaded.
     const timeout = setTimeout(() => {
