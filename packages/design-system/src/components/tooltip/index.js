@@ -37,9 +37,9 @@ import { THEME_CONSTANTS } from '../../theme';
 import { Text } from '../typography';
 import { RTL_PLACEMENT } from '../popup/constants';
 import { noop } from '../../utils';
-import { SvgForTail, Tail, SVG_TOOLTIP_TAIL_ID } from './tail';
+import { SvgForTail, Tail, SVG_TOOLTIP_TAIL_ID, TAIL_HEIGHT } from './tail';
 
-const SPACE_BETWEEN_TOOLTIP_AND_ELEMENT = 8;
+const SPACE_BETWEEN_TOOLTIP_AND_ELEMENT = TAIL_HEIGHT;
 // For how many milliseconds is a delayed tooltip waiting to appear?
 const DELAY_MS = 1000;
 // For how many milliseconds will triggering another delayed tooltip show instantly?
@@ -176,8 +176,10 @@ function Tooltip({
   // cutoff the contents of the tooltip.
   const positionPlacement = useCallback(
     ({ offset }) => {
-      // check to see if there's an overlap with the window's bottom edge
-      const neededVerticalSpace = offset.bottom;
+      //  In order to check if there's an overlap with the window's bottom edge we need the overall height of the tooltip
+      //  from the anchor's y position along with the amount of space between the anchor and the tooltip content.
+      const neededVerticalSpace =
+        offset.y + offset.popupHeight + SPACE_BETWEEN_TOOLTIP_AND_ELEMENT;
       const shouldMoveToTop =
         dynamicPlacement.startsWith('bottom') &&
         neededVerticalSpace >= window.innerHeight;

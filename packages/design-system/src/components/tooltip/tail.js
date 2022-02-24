@@ -27,7 +27,7 @@ import { PLACEMENT } from '../popup';
 
 export const SVG_TOOLTIP_TAIL_ID = 'tooltip-tail';
 const TAIL_WIDTH = 34;
-const TAIL_HEIGHT = 8;
+export const TAIL_HEIGHT = 8;
 
 const getTailPosition = ({ placement, translateX }) => {
   switch (placement) {
