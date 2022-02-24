@@ -50,7 +50,7 @@ const plugins = [
     presets: ['@babel/env', '@babel/preset-react'],
     plugins: [
       'babel-plugin-styled-components',
-      'babel-plugin-inline-json-import',
+      'babel-plugin-transform-react-remove-prop-types',
     ],
   }),
   url(),
