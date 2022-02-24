@@ -28,7 +28,7 @@ import MediaElement from './mediaElement';
 import { GalleryContainer } from './styles';
 
 const PHOTO_MARGIN = 8;
-const TARGET_ROW_HEIGHT = 150;
+const TARGET_ROW_HEIGHT = 110;
 
 const ContainerRenderer = forwardRef(({ children }, ref) => {
   return <GalleryContainer ref={ref}>{children}</GalleryContainer>;
@@ -90,7 +90,7 @@ function MediaGallery({ resources, onInsert, providerType, canEditMedia }) {
         renderContainer={ContainerRenderer}
         targetRowHeight={TARGET_ROW_HEIGHT}
         rowConstraints={{
-          minPhotos: 2,
+          maxPhotos: 2,
         }}
         // This should match the actual margin the element is styled with.
         spacing={PHOTO_MARGIN}
