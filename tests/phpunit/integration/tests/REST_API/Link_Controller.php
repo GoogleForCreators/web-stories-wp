@@ -285,106 +285,82 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 
 	/**
 	 * @covers ::parse_link
+	 * @dataProvider data_instagram_urls
 	 */
-	public function test_instagram_url(): void {
+	public function test_instagram_urls( $url, $expected, $num ): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
 		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/link' );
-		$request->set_param( 'url', self::URL_INSTAGRAM );
+		$request->set_param( 'url', $url );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
-
-		$expected = [
-			'title'       => 'Instagram - @googleforcreators',
-			'image'       => '',
-			'description' => '',
-		];
 
 		// Subsequent requests is cached and so it should not cause a request.
 		rest_get_server()->dispatch( $request );
 
-		$this->assertEquals( 0, $this->request_count );
+		$this->assertEquals( $num, $this->request_count );
 		$this->assertNotEmpty( $data );
 		$this->assertEqualSetsWithIndex( $expected, $data );
 	}
 
-	/**
-	 * @covers ::parse_link
-	 */
-	public function test_instagram_url_with_slash(): void {
-		$this->controller->register();
-
-		wp_set_current_user( self::$editor );
-		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/link' );
-		$request->set_param( 'url', self::URL_INSTAGRAM . '/' );
-		$response = rest_get_server()->dispatch( $request );
-		$data     = $response->get_data();
-
-		$expected = [
-			'title'       => 'Instagram - @googleforcreators',
-			'image'       => '',
-			'description' => '',
+	public function data_instagram_urls(): array {
+		return [
+			'Instagram profile url'                   => [
+				'url'      => self::URL_INSTAGRAM,
+				'expected' => [
+					'title'       => 'Instagram - @googleforcreators',
+					'image'       => '',
+					'description' => '',
+				],
+				'num'      => 0,
+			],
+			'Instagram profile url with slash'        => [
+				'url'      => self::URL_INSTAGRAM . '/',
+				'expected' => [
+					'title'       => 'Instagram - @googleforcreators',
+					'image'       => '',
+					'description' => '',
+				],
+				'num'      => 0,
+			],
+			'Instagram profile url with query string' => [
+				'url'      => self::URL_INSTAGRAM . '/?hl=en',
+				'expected' => [
+					'title'       => 'Instagram - @googleforcreators',
+					'image'       => '',
+					'description' => '',
+				],
+				'num'      => 0,
+			],
+			'Instagram profile url with query longer string' => [
+				'url'      => self::URL_INSTAGRAM . '/?hl=en&qs=2',
+				'expected' => [
+					'title'       => 'Instagram - @googleforcreators',
+					'image'       => '',
+					'description' => '',
+				],
+				'num'      => 0,
+			],
+			'Instagram photo url'                     => [
+				'url'      => self::URL_INSTAGRAM_SINGLE,
+				'expected' => [
+					'title'       => '',
+					'image'       => '',
+					'description' => '',
+				],
+				'num'      => 1,
+			],
+			'Instagram subdomain'                     => [
+				'url'      => self::URL_INSTAGRAM_SUBDOMAIN,
+				'expected' => [
+					'title'       => '',
+					'image'       => '',
+					'description' => '',
+				],
+				'num'      => 1,
+			],
 		];
-
-		// Subsequent requests is cached and so it should not cause a request.
-		rest_get_server()->dispatch( $request );
-
-		$this->assertEquals( 0, $this->request_count );
-		$this->assertNotEmpty( $data );
-		$this->assertEqualSetsWithIndex( $expected, $data );
-	}
-
-	/**
-	 * @covers ::parse_link
-	 */
-	public function test_instagram_single_url(): void {
-		$this->controller->register();
-
-		wp_set_current_user( self::$editor );
-		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/link' );
-		$request->set_param( 'url', self::URL_INSTAGRAM_SINGLE );
-		$response = rest_get_server()->dispatch( $request );
-		$data     = $response->get_data();
-
-		$expected = [
-			'title'       => '',
-			'image'       => '',
-			'description' => '',
-		];
-
-		// Subsequent requests is cached and so it should not cause a request.
-		rest_get_server()->dispatch( $request );
-
-		$this->assertEquals( 1, $this->request_count );
-		$this->assertNotEmpty( $data );
-		$this->assertEqualSetsWithIndex( $expected, $data );
-	}
-
-	/**
-	 * @covers ::parse_link
-	 */
-	public function test_instagram_subdomain_url(): void {
-		$this->controller->register();
-
-		wp_set_current_user( self::$editor );
-		$request = new WP_REST_Request( WP_REST_Server::READABLE, '/web-stories/v1/link' );
-		$request->set_param( 'url', self::URL_INSTAGRAM_SUBDOMAIN );
-		$response = rest_get_server()->dispatch( $request );
-		$data     = $response->get_data();
-
-		$expected = [
-			'title'       => '',
-			'image'       => '',
-			'description' => '',
-		];
-
-		// Subsequent requests is cached and so it should not cause a request.
-		rest_get_server()->dispatch( $request );
-
-		$this->assertEquals( 1, $this->request_count );
-		$this->assertNotEmpty( $data );
-		$this->assertEqualSetsWithIndex( $expected, $data );
 	}
 
 	/**
