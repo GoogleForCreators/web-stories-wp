@@ -107,15 +107,14 @@ const STYLE_BUTTON_WIDTH = 150;
 
 function PresetPanel() {
   const isStylePaneEnabled = useFeature('libraryTextStyles');
-  const { textStyles, isText, selectedTexts, updateElementsById } = useStory(
+  const { textStyles, isText, updateSelectedElements } = useStory(
     ({ state, actions }) => {
       const isText =
         state.selectedElements && areAllType(TYPE, state.selectedElements);
       return {
         isText,
         textStyles: state.story.globalStoryStyles.textStyles,
-        selectedTexts: isText ? state.selectedElements : [],
-        updateElementsById: actions.updateElementsById,
+        updateSelectedElements: actions.updateSelectedElements,
       };
     }
   );
@@ -132,8 +131,7 @@ function PresetPanel() {
 
   const pushUpdate = useCallback(
     (update) => {
-      updateElementsById({
-        elementIds: selectedTexts.map(({ id }) => id),
+      updateSelectedElements({
         properties: (element) => {
           const updates = updateProperties(element, update, true);
           const sizeUpdates = getUpdatedSizeAndPosition({
@@ -147,7 +145,7 @@ function PresetPanel() {
         },
       });
     },
-    [selectedTexts, updateElementsById]
+    [updateSelectedElements]
   );
 
   const handleApplyStyle = useApplyStyle({ pushUpdate });
