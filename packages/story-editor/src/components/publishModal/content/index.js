@@ -54,14 +54,13 @@ const _MainStoryInfo = styled.div`
   flex-direction: column;
   padding: 0 16px;
   overflow-y: scroll;
-
-  ${themeHelpers.scrollbarCSS};
+  gap: 34px;
 
   & > section {
     border: none; // Override the default border that is part of the base panel structure since this is destructured
     // overriding this way because of how isolated panel is inserted
     & > h2 {
-      padding-top: 18px;
+      padding-top: 0;
       padding-bottom: 2px;
       & > button {
         height: 1em;
