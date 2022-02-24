@@ -93,8 +93,12 @@ jest.mock('@googleforcreators/media', () => ({
   },
 }));
 
+jest.mock('../../../media', () => ({
+  ...jest.requireActual('../../../media'),
+  useLocalMedia: jest.fn(),
+}));
+
 jest.mock('../../../config');
-jest.mock('../../../media');
 jest.mock('../../../media/utils/useFFmpeg');
 
 const mockClickEvent = {
@@ -281,7 +285,7 @@ const stickerQuickActionsWithClear = [
 const videoResource = {
   id: 'video',
   type: 'video',
-  mimeType: 'videoMimeType',
+  mimeType: 'video/mp4',
   src: 'video',
 };
 const imageResource = {
@@ -359,7 +363,6 @@ describe('useQuickActions', () => {
     useStoryTriggersDispatch.mockReturnValue(mockDispatchStoryEvent);
 
     mockUseConfig.mockReturnValue({
-      allowedTranscodableMimeTypes: [],
       allowedFileTypes: [],
       allowedMimeTypes: {
         image: [],
@@ -620,7 +623,6 @@ describe('useQuickActions', () => {
 
     it('clicking `clear filters and animations` should update the element', () => {
       const { result } = renderHook(() => useQuickActions());
-
       result.current[2].onClick(mockClickEvent);
       expect(mockUpdateElementsById).toHaveBeenCalledWith({
         elementIds: [BACKGROUND_VIDEO_ELEMENT.id],
@@ -1002,7 +1004,6 @@ describe('MediaPicker', () => {
     });
 
     mockUseConfig.mockReturnValue({
-      allowedTranscodableMimeTypes: ['videoMimeType'],
       allowedFileTypes: ['pepperoni', 'cheese'],
       allowedMimeTypes: {
         image: ['image/gif'],
@@ -1071,7 +1072,7 @@ describe('MediaPicker', () => {
 
     expect(mockPostProcessingResource).toHaveBeenCalledWith({
       ...videoResource,
-      mimeType: 'videoMimeType',
+      mimeType: 'video/mp4',
       isMuted: null,
     });
     expect(mockUpdateElementsById).toHaveBeenCalledWith({

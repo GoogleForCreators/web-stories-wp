@@ -25,7 +25,7 @@ import { __ } from '@googleforcreators/i18n';
 import useInspector from '../../inspector/useInspector';
 import { useHasChecklist } from '../../checklist';
 import { HEADER_BAR_HEIGHT, HEADER_BAR_MARGIN } from '../constants';
-import MandatoryStoryInfo from './mandatoryStoryInfo';
+import MainStoryInfo from './mainStoryInfo';
 import StoryPreview from './storyPreview';
 import ChecklistButton from './checklistButton';
 
@@ -38,8 +38,8 @@ const Main = styled.div`
   grid-template-columns: 30.5% 34% 35.5%;
   grid-template-rows: auto;
   grid-template-areas:
-    'preview mandatory panel'
-    'footer mandatory panel';
+    'preview mainPanel sidePanel'
+    'footer mainPanel sidePanel';
 `;
 
 const _StoryPreview = styled.div`
@@ -47,8 +47,8 @@ const _StoryPreview = styled.div`
   margin: 20px 18px 0 32px;
 `;
 
-const _MandatoryStoryInfo = styled.div`
-  grid-area: mandatory;
+const _MainStoryInfo = styled.div`
+  grid-area: mainPanel;
   display: flex;
   flex-direction: column;
   padding: 0 16px;
@@ -68,7 +68,7 @@ const _MandatoryStoryInfo = styled.div`
 `;
 
 const PanelContainer = styled.div.attrs({ role: 'tabpanel' })`
-  grid-area: panel;
+  grid-area: sidePanel;
   height: 100%;
   margin-left: 18px;
   background-color: ${({ theme }) => theme.colors.bg.secondary};
@@ -83,7 +83,7 @@ const Footer = styled.div`
   margin: 0 18px 20px 32px;
 `;
 
-const MainContent = ({ handleReviewChecklist }) => {
+const Content = ({ handleReviewChecklist }) => {
   const { DocumentPane, id: paneId } = useInspector(
     ({ data }) => data?.modalInspectorTab || {}
   );
@@ -94,9 +94,9 @@ const MainContent = ({ handleReviewChecklist }) => {
       <_StoryPreview>
         <StoryPreview />
       </_StoryPreview>
-      <_MandatoryStoryInfo>
-        <MandatoryStoryInfo />
-      </_MandatoryStoryInfo>
+      <_MainStoryInfo>
+        <MainStoryInfo />
+      </_MainStoryInfo>
       {DocumentPane && (
         <PanelContainer
           aria-label={__('Story Settings', 'web-stories')}
@@ -114,8 +114,8 @@ const MainContent = ({ handleReviewChecklist }) => {
   );
 };
 
-export default MainContent;
+export default Content;
 
-MainContent.propTypes = {
+Content.propTypes = {
   handleReviewChecklist: PropTypes.func,
 };

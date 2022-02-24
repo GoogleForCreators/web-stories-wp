@@ -24,7 +24,7 @@ import { axe } from 'jest-axe';
 import renderWithTheme from '../../../testUtils/renderWithTheme';
 import { StoryContext } from '../../../app/story';
 import { ConfigContext } from '../../../app/config';
-import StoryPreview from '../mainContent/storyPreview';
+import StoryPreview from '../content/storyPreview';
 
 describe('publishModal/storyPreview', () => {
   const view = (props) => {
