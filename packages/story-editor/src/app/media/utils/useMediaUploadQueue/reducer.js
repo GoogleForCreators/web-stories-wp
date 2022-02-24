@@ -42,6 +42,7 @@ import { ITEM_STATUS } from './constants';
  * @param {boolean} action.payload.muteVideo Whether the video being uploaded should be muted.
  * @param {import('@googleforcreators/media').TrimData} action.payload.trimData Trim data.
  * @param {number} action.payload.originalResourceId Original resource id.
+ * @param {string} action.payload.elementId ID of element on the canvas.
  * @return {Object} New state
  */
 export function addItem(
@@ -59,6 +60,7 @@ export function addItem(
       muteVideo,
       trimData,
       originalResourceId,
+      elementId,
     },
   }
 ) {
@@ -82,6 +84,7 @@ export function addItem(
     muteVideo,
     trimData,
     originalResourceId,
+    elementId,
   };
 
   return {
