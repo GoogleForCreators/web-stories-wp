@@ -40,7 +40,7 @@ export default {
 };
 
 const GlobalStyle = createGlobalStyle`
-  * {
+  *, *::before, *::after {
     box-sizing: border-box;
   }
 `;
@@ -118,7 +118,7 @@ function Wrapper({ children }) {
       setStoryColors(currentStoryStyles.colors);
     }
   };
-  const STORY_CONTEXT = {
+  const storyContext = {
     state: {
       currentPage: {
         background: RED,
@@ -138,7 +138,7 @@ function Wrapper({ children }) {
     },
   };
   return (
-    <StoryContext.Provider value={STORY_CONTEXT}>
+    <StoryContext.Provider value={storyContext}>
       <Background>
         <GlobalStyle />
         {children}
