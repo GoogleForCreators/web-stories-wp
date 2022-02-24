@@ -95,7 +95,7 @@ const Color = forwardRef(function Color(
     maxHeight = null,
     shouldCloseOnSelection = false,
     allowsSavedColorDeletion = true,
-    pickerPlacement = PLACEMENT.LEFT,
+    pickerPlacement = PLACEMENT.LEFT_START,
     isMinimal = false,
     hasInputs = true,
   },

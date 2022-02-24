@@ -48,13 +48,20 @@ const PICKER_WIDTH = 208;
 const Container = styled.div`
   border-radius: 8px;
   background: ${({ theme }) => theme.colors.bg.secondary};
-  width: ${({ maxHeight }) =>
-    PICKER_WIDTH + (maxHeight ? themeHelpers.SCROLLBAR_WIDTH : 0)}px;
-  ${({ maxHeight }) => (maxHeight ? `max-height: ${maxHeight}px` : '')};
   user-select: none;
   display: flex;
   flex-direction: column;
+  gap: 12px;
   align-items: stretch;
+  ${({ maxHeight }) =>
+    maxHeight
+      ? `
+          height: ${maxHeight}px;
+          width: ${PICKER_WIDTH + themeHelpers.SCROLLBAR_WIDTH}px;
+        `
+      : `
+          width: ${PICKER_WIDTH}px;
+        `};
   overflow: hidden;
 
   &.picker-appear {
@@ -82,6 +89,8 @@ function ColorPicker({
   onClose = () => {},
   changedStyle = 'background',
   onDimensionChange = () => {},
+  allowsSavedColorDeletion = true,
+  shouldCloseOnSelection = false,
 }) {
   const [showDialog, setShowDialog] = useState(false);
   // If initial color is a gradient, start by showing a custom color picker.
@@ -186,6 +195,8 @@ function ColorPicker({
           showDialog={showDialog}
           setShowDialog={setShowDialog}
           changedStyle={changedStyle}
+          allowsSavedColorDeletion={allowsSavedColorDeletion}
+          shouldCloseOnSelection={shouldCloseOnSelection}
         />
       </Container>
     </CSSTransition>
@@ -204,6 +215,8 @@ ColorPicker.propTypes = {
   changedStyle: PropTypes.string,
   onDimensionChange: PropTypes.func,
   hasEyedropper: PropTypes.bool,
+  allowsSavedColorDeletion: PropTypes.bool,
+  shouldCloseOnSelection: PropTypes.bool,
 };
 
 export default ColorPicker;

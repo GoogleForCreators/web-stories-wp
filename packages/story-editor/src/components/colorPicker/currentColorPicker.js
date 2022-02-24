@@ -63,19 +63,10 @@ import EditablePreview from './editablePreview';
 const CONTAINER_PADDING = 16;
 const HEADER_FOOTER_HEIGHT = 36;
 const BODY_HEIGHT = 116;
-const CONTROLS_HEIGHT = 24;
+const CONTROLS_HEIGHT = 20;
 const CONTROLS_BORDER_RADIUS = 50;
 const OPACITY_WIDTH = 52;
 const HEX_WIDTH = 74;
-
-const Container = styled.div`
-  user-select: none;
-  padding: 0 ${CONTAINER_PADDING}px;
-`;
-
-const Body = styled.div`
-  padding-bottom: 0;
-`;
 
 const BodyFallback = styled.div`
   height: ${BODY_HEIGHT + 3 * CONTROLS_HEIGHT + 4 * CONTAINER_PADDING}px;
@@ -86,14 +77,14 @@ const BodyFallback = styled.div`
 
 const SaturationWrapper = styled.div`
   position: relative;
-  height: ${BODY_HEIGHT}px;
-  margin-bottom: 16px;
+  margin: 0 16px;
+  flex: 0 1 ${BODY_HEIGHT}px;
 `;
 
 const wrapperCSS = css`
-  margin-bottom: 16px;
+  margin: 0 16px;
   border: 1px solid ${({ theme }) => theme.colors.shadow.active};
-  height: ${CONTROLS_HEIGHT}px;
+  flex: 0 0 ${CONTROLS_HEIGHT}px;
   position: relative;
   border-radius: ${CONTROLS_BORDER_RADIUS}px;
   background-clip: padding-box;
@@ -120,10 +111,9 @@ const Footer = styled.div`
   height: ${HEADER_FOOTER_HEIGHT}px;
   line-height: 19px;
   position: relative;
-  margin-top: 7px;
+  margin: 0 16px;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 16px;
 `;
 
 const HexValue = styled.div`
@@ -170,54 +160,52 @@ function CurrentColorPicker({
   });
 
   return (
-    <Container data-testid="colorPicker">
-      <Body showOpacity={showOpacity}>
-        <Suspense fallback={null}>
-          <SaturationWrapper>
-            <Saturation
-              radius="8px"
-              pointer={() => (
-                <Pointer offsetX={-12} offsetY={-12} currentColor={rgb} />
-              )}
-              hsl={hsl}
-              hsv={hsv}
-              onChange={onChange}
-            />
-          </SaturationWrapper>
-          <HueWrapper>
-            <Hue
+    <>
+      <Suspense fallback={null}>
+        <SaturationWrapper>
+          <Saturation
+            radius="8px"
+            pointer={() => (
+              <Pointer offsetX={-8} offsetY={-8} currentColor={rgb} />
+            )}
+            hsl={hsl}
+            hsv={hsv}
+            onChange={onChange}
+          />
+        </SaturationWrapper>
+        <HueWrapper>
+          <Hue
+            direction="horizontal"
+            height={`${CONTROLS_HEIGHT}px`}
+            radius={`${CONTROLS_BORDER_RADIUS}px`}
+            pointer={() => (
+              <Pointer offsetX={-8} offsetY={1} currentColor={rgb} />
+            )}
+            hsl={hsl}
+            onChange={onChange}
+          />
+        </HueWrapper>
+        {showOpacity && (
+          <AlphaWrapper>
+            <Alpha
               direction="horizontal"
               height={`${CONTROLS_HEIGHT}px`}
               radius={`${CONTROLS_BORDER_RADIUS}px`}
               pointer={() => (
-                <Pointer offsetX={-12} offsetY={1} currentColor={rgb} />
+                <Pointer
+                  offsetX={-8}
+                  offsetY={1}
+                  currentColor={rgb}
+                  withAlpha
+                />
               )}
+              rgb={rgb}
               hsl={hsl}
               onChange={onChange}
             />
-          </HueWrapper>
-          {showOpacity && (
-            <AlphaWrapper>
-              <Alpha
-                direction="horizontal"
-                height={`${CONTROLS_HEIGHT}px`}
-                radius={`${CONTROLS_BORDER_RADIUS}px`}
-                pointer={() => (
-                  <Pointer
-                    offsetX={-12}
-                    offsetY={1}
-                    currentColor={rgb}
-                    withAlpha
-                  />
-                )}
-                rgb={rgb}
-                hsl={hsl}
-                onChange={onChange}
-              />
-            </AlphaWrapper>
-          )}
-        </Suspense>
-      </Body>
+          </AlphaWrapper>
+        )}
+      </Suspense>
       <Footer>
         {hasEyedropper && (
           <Button
@@ -253,7 +241,7 @@ function CurrentColorPicker({
           </Opacity>
         )}
       </Footer>
-    </Container>
+    </>
   );
 }
 

@@ -30,6 +30,7 @@ import {
   BUTTON_VARIANTS,
   localStore,
   LOCAL_STORAGE_PREFIX,
+  themeHelpers,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import { useState } from '@googleforcreators/react';
@@ -48,17 +49,23 @@ import useDeleteColor from './useDeleteColor';
 const Body = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 8px 16px 16px;
+  padding: 8px 16px 0;
+  overflow: auto;
+  ${themeHelpers.scrollbarCSS};
+`;
+
+const Footer = styled.div`
+  padding: 8px 16px 16px;
+  display: flex;
+  flex-direction: column;
 `;
 
 const SavedColors = styled.div`
   border-bottom: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
-  padding-bottom: 24px;
+  padding-bottom: 16px;
 `;
 
-const DefaultColors = styled.div`
-  padding-bottom: 24px;
-`;
+const DefaultColors = styled.div``;
 
 const Label = styled(Text).attrs({
   size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
@@ -104,6 +111,8 @@ function BasicColorPicker({
   setShowDialog,
   changedStyle,
   hasEyedropper,
+  allowsSavedColorDeletion,
+  shouldCloseOnSelection,
 }) {
   const { savedColors, storyColors } = useStory((state) => ({
     savedColors: state.state.story?.globalStoryStyles?.colors || [],
@@ -122,10 +131,18 @@ function BasicColorPicker({
     onEmpty: () => setIsEditMode(false),
   });
 
+  const handleSelect = (pattern) => {
+    handleColorChange(pattern);
+    // if closing on select, go ahead and close
+    if (shouldCloseOnSelection) {
+      handleClose();
+    }
+  };
+
   const handleClick = (preset, isLocal = false) => {
     // If not in edit mode, apply the color.
     if (!isEditMode) {
-      handleColorChange(preset);
+      handleSelect(preset);
       return;
     }
     // If deleting a local color, delete without confirmation.
@@ -148,16 +165,20 @@ function BasicColorPicker({
     setToDelete(preset);
   };
 
+  const hasHeader = !shouldCloseOnSelection || allowsSavedColorDeletion;
+
   return (
     <>
-      <Header
-        handleClose={handleClose}
-        isEditMode={isEditMode}
-        setIsEditMode={setIsEditMode}
-        hasPresets={hasPresets}
-      >
-        <DefaultText>{__('Color', 'web-stories')}</DefaultText>
-      </Header>
+      {hasHeader && (
+        <Header
+          handleClose={handleClose}
+          isEditMode={isEditMode}
+          setIsEditMode={setIsEditMode}
+          hasPresets={hasPresets && allowsSavedColors}
+        >
+          <DefaultText>{__('Color', 'web-stories')}</DefaultText>
+        </Header>
+      )}
       <Body>
         {hasEyedropper && (
           <EyedropperWrapper>
@@ -219,7 +240,7 @@ function BasicColorPicker({
             color={color}
             colors={BASIC_COLORS}
             handleClick={(pattern) => {
-              handleColorChange(pattern);
+              handleSelect(pattern);
               setIsEditMode(false);
             }}
             allowsOpacity={allowsOpacity}
@@ -228,6 +249,8 @@ function BasicColorPicker({
             isEditMode={false}
           />
         </DefaultColors>
+      </Body>
+      <Footer>
         <StyledButton
           onClick={showCustomPicker}
           type={BUTTON_TYPES.SECONDARY}
@@ -237,7 +260,7 @@ function BasicColorPicker({
           {__('Custom', 'web-stories')}
           <StyledPlus />
         </StyledButton>
-      </Body>
+      </Footer>
       {showDialog && (
         <ConfirmationDialog
           onClose={() => setShowDialog(false)}
@@ -264,6 +287,8 @@ BasicColorPicker.propTypes = {
   setShowDialog: PropTypes.func,
   changedStyle: PropTypes.string,
   hasEyedropper: PropTypes.bool,
+  allowsSavedColorDeletion: PropTypes.bool,
+  shouldCloseOnSelection: PropTypes.bool,
 };
 
 export default BasicColorPicker;

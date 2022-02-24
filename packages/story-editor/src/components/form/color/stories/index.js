@@ -56,7 +56,6 @@ const Background = styled.div`
 const DesignPanelWrapper = styled.div`
   position: absolute;
   top: 0;
-  right: 0;
   bottom: 0;
   width: 312px;
   padding: 16px;
@@ -97,6 +96,14 @@ const GREEN = { type: 'solid', color: { r: 0, g: 255, b: 0 } };
 const YELLOW = { type: 'solid', color: { r: 255, g: 255, b: 0 } };
 const MAGENTA = { type: 'solid', color: { r: 255, g: 0, b: 255 } };
 const CYAN = { type: 'solid', color: { r: 0, g: 255, b: 255 } };
+const RED_GREEN = {
+  type: 'linear',
+  stops: [
+    { color: { r: 255, g: 0, b: 0 }, position: 0 },
+    { color: { r: 0, g: 255, b: 0 }, position: 1 },
+  ],
+  rotation: 0.375,
+};
 
 function Wrapper({ children }) {
   const [globalColors, setGlobalColors] = useState([RED, GREEN, BLUE]);
@@ -192,6 +199,12 @@ function DesignMenuColorInput({ label, width, atStart = false, ...props }) {
           <DummyButton>
             <Icons.ColorBucket />
           </DummyButton>
+          <DummyButton>
+            <Icons.MirrorLeftright />
+          </DummyButton>
+          <DummyButton>
+            <Icons.MirrorUpdown />
+          </DummyButton>
           {!atStart && (
             <>
               <ContextMenuComponents.MenuSeparator />
@@ -210,37 +223,52 @@ function DesignMenuColorInput({ label, width, atStart = false, ...props }) {
   );
 }
 
-export function DesignPanel() {
+function DesignPanel({ style, pickerPlacement }) {
   return (
     <Wrapper>
-      <DesignPanelWrapper>
+      <DesignPanelWrapper style={style}>
         <DesignPanelColorInput
           label="Without saved colors"
-          initialColor={RED}
+          initialColor={MAGENTA}
+          pickerPlacement={pickerPlacement}
         />
         <DesignPanelColorInput
           label="With saved colors"
-          initialColor={RED}
+          initialColor={YELLOW}
           allowsSavedColors
+          pickerPlacement={pickerPlacement}
         />
         <DesignPanelColorInput
           label="With dropper"
-          initialColor={RED}
+          initialColor={BLUE}
           hasEyedropper
+          pickerPlacement={pickerPlacement}
         />
         <DesignPanelColorInput
           label="Without opacity"
-          initialColor={RED}
+          initialColor={CYAN}
           allowsOpacity={false}
+          pickerPlacement={pickerPlacement}
         />
         <DesignPanelColorInput
           label="With gradient"
-          initialColor={RED}
+          initialColor={RED_GREEN}
           allowsGradient
+          pickerPlacement={pickerPlacement}
         />
       </DesignPanelWrapper>
     </Wrapper>
   );
+}
+
+export function DesignPanelLeft() {
+  return (
+    <DesignPanel style={{ left: 0 }} pickerPlacement={PLACEMENT.RIGHT_START} />
+  );
+}
+
+export function DesignPanelRight() {
+  return <DesignPanel style={{ right: 0 }} />;
 }
 
 export function DesignMenu() {
@@ -250,7 +278,7 @@ export function DesignMenu() {
         <DesignMenuColorInput
           width={216}
           atStart
-          label="Regular to the left"
+          label="All options"
           initialColor={RED}
           // Params below are to the color input component
           maxHeight={362}
@@ -265,7 +293,7 @@ export function DesignMenu() {
         <DesignMenuColorInput
           width={98}
           atStart
-          label="No inputs, with eyedropper, to the left"
+          label="No inputs, with eyedropper"
           initialColor={BLUE}
           // Params below are to the color input component
           maxHeight={362}
@@ -280,8 +308,37 @@ export function DesignMenu() {
         />
         <DesignMenuColorInput
           width={60}
-          label="No inputs, without eyedropper, to the right"
+          atStart
+          label="No inputs, without eyedropper"
           initialColor={CYAN}
+          // Params below are to the color input component
+          maxHeight={362}
+          pickerPlacement={PLACEMENT.TOP_END}
+          hasInputs={false}
+          isMinimal
+          shouldCloseOnSelection
+          allowsSavedColors
+          allowsSavedColorDeletion={false}
+        />
+        <DesignMenuColorInput
+          width={60}
+          atStart
+          label="No inputs, allows gradient"
+          initialColor={RED_GREEN}
+          // Params below are to the color input component
+          maxHeight={362}
+          pickerPlacement={PLACEMENT.TOP_END}
+          hasInputs={false}
+          isMinimal
+          shouldCloseOnSelection
+          allowsGradient
+          allowsSavedColors
+          allowsSavedColorDeletion={false}
+        />
+        <DesignMenuColorInput
+          width={60}
+          label="No inputs, to the right"
+          initialColor={YELLOW}
           // Params below are to the color input component
           maxHeight={362}
           pickerPlacement={PLACEMENT.TOP_START}

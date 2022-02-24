@@ -145,7 +145,7 @@ const ChevronContainer = styled.div`
 const loadReactColor = () =>
   import(/* webpackChunkName: "chunk-react-color" */ 'react-color');
 
-const SPACING = { x: 20 };
+const SPACING = { x: 20, y: 10 };
 const ColorInput = forwardRef(function ColorInput(
   {
     onChange,
@@ -182,7 +182,7 @@ const ColorInput = forwardRef(function ColorInput(
 
   const colorType = value?.type;
   // Allow editing always in case of solid color of if color type is missing (mixed)
-  const isEditable = !colorType || (colorType === 'solid' && hasInputs);
+  const isEditable = (!colorType || colorType === 'solid') && hasInputs;
 
   const buttonProps = {
     onClick: () => setPickerOpen(true),
