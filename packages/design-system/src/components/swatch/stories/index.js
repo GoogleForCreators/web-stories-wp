@@ -140,18 +140,18 @@ const DEMO_COLORS = [
 
 const VARIANTS = [
   {
-    variant: 'Large, regular',
+    variant: 'Regular',
   },
   {
-    variant: 'Large, disabled',
+    variant: 'Disabled',
     isDisabled: true,
   },
   {
-    variant: 'Large, cross',
+    variant: 'Icon',
     Icon: Cross,
   },
   {
-    variant: 'Large, pipette, disabled',
+    variant: 'Icon + disabled',
     Icon: Pipette,
     isDisabled: true,
   },

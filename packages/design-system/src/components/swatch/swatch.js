@@ -32,8 +32,7 @@ import {
  */
 import { themeHelpers } from '../../theme';
 
-const RADIUS = 24;
-const ICON_SIZE = 24;
+const SIZE = 24;
 
 const Transparent = styled.div`
   width: 100%;
@@ -50,8 +49,8 @@ const SwatchButton = styled.button`
   padding: 0;
   border-width: 0;
   display: block;
-  width: ${RADIUS}px;
-  height: ${RADIUS}px;
+  width: ${SIZE}px;
+  height: ${SIZE}px;
   border-radius: 100%;
   overflow: hidden;
   position: relative;
@@ -90,11 +89,11 @@ const SwatchItem = styled.div`
   position: relative;
 
   svg {
-    width: ${ICON_SIZE}px;
-    height: ${ICON_SIZE}px;
+    width: ${SIZE}px;
+    height: ${SIZE}px;
     position: absolute;
-    top: calc(50% - ${ICON_SIZE / 2}px);
-    left: calc(50% - ${ICON_SIZE / 2}px);
+    top: calc(50% - ${SIZE / 2}px);
+    left: calc(50% - ${SIZE / 2}px);
     filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.4));
     color: ${({ theme }) => theme.colors.fg.primary};
     transform: rotate(${({ displaySplit }) => (displaySplit ? 45 : 0)}deg);
@@ -102,7 +101,7 @@ const SwatchItem = styled.div`
 `;
 
 const OpaqueColorWrapper = styled.div`
-  height: ${RADIUS}px;
+  height: ${SIZE}px;
   width: 50%;
   overflow: hidden;
   position: absolute;
@@ -111,8 +110,8 @@ const OpaqueColorWrapper = styled.div`
 `;
 
 const OpaqueColor = styled.div`
-  height: ${RADIUS}px;
-  width: ${RADIUS}px;
+  height: ${SIZE}px;
+  width: ${SIZE}px;
   position: absolute;
   top: 0;
   left: 0;
