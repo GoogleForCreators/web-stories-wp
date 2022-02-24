@@ -228,7 +228,6 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
             label={__('Background color', 'web-stories')}
             allowsSavedColors
             allowsOpacity={false}
-            pickerHasEyedropper={false}
           />
         </Row>
       )}
