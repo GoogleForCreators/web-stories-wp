@@ -13,17 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import PropTypes from 'prop-types';
-/**
- * Internal dependencies
- */
-import { INPUT_KEYS } from './constants';
-
-export const MANDATORY_INPUT_VALUE_TYPES = PropTypes.shape({
-  [INPUT_KEYS.EXCERPT]: PropTypes.string,
-  [INPUT_KEYS.SLUG]: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  [INPUT_KEYS.TITLE]: PropTypes.string,
-});
+export const TRANSCODABLE_MIME_TYPES = [
+  'video/3gpp',
+  'video/3gpp2',
+  'video/MP2T',
+  'video/mp4',
+  'video/mpeg',
+  'video/ogg',
+  'video/quicktime',
+  'video/webm',
+  'video/x-flv',
+  'video/x-h261',
+  'video/x-h263',
+  'video/x-m4v',
+  'video/x-matroska',
+  'video/x-mjpeg',
+  'video/x-ms-asf',
+  'video/x-msvideo',
+  'video/x-nut',
+];

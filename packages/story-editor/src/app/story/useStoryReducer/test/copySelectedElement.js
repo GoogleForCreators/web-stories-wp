@@ -18,9 +18,9 @@
  */
 import { setupReducer } from './_utils';
 
-describe('copyElementById', () => {
+describe('copySelectedElement', () => {
   it("copies an element's styles and animations", () => {
-    const { restore, copyElementById } = setupReducer();
+    const { restore, copySelectedElement } = setupReducer();
 
     // Set an initial state with a current page.
     const initialState = restore({
@@ -45,10 +45,10 @@ describe('copyElementById', () => {
         },
       ],
       current: '111',
-      selection: [],
+      selection: ['456'],
     });
 
-    const result = copyElementById({ elementId: '456' });
+    const result = copySelectedElement();
 
     expect(result).toStrictEqual({
       ...initialState,
@@ -71,8 +71,8 @@ describe('copyElementById', () => {
     });
   });
 
-  it('should not update state if non-existent element id is passed in', () => {
-    const { restore, copyElementById } = setupReducer();
+  it('should not update state if multiple elements selected', () => {
+    const { restore, copySelectedElement } = setupReducer();
 
     // Set an initial state with a current page.
     const initialState = restore({
@@ -91,7 +91,7 @@ describe('copyElementById', () => {
       selection: ['789', '456'],
     });
 
-    const result = copyElementById({ elementId: ['not-an-id'] });
+    const result = copySelectedElement();
 
     expect(result).toStrictEqual(initialState);
   });

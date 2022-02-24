@@ -35,17 +35,21 @@ import { INPUT_KEYS } from '../constants';
 
 const FormSection = styled.div`
   padding: 0 4px;
-  margin: 18px 0 8px;
   &:first-of-type {
-    margin-top: 20px;
+    margin: 20px 0px 0px;
   }
 `;
 
 const _TextArea = styled(TextArea)`
-  margin: 8px 0;
+  margin: 8px 0 0;
+  // We want 34px between each section on the main content panel. The TextArea's "hint" has a line height that forces the
+  // space between sections to be too large, so this is to account for the extra space.
+  & > p {
+    margin-bottom: -4px;
+  }
 `;
 
-const MandatoryStoryInfo = () => {
+const MainStoryInfo = () => {
   const storyId = useConfig(({ storyId }) => storyId);
 
   const updateStory = useStory(({ actions }) => actions.updateStory);
@@ -150,4 +154,4 @@ const MandatoryStoryInfo = () => {
   );
 };
 
-export default MandatoryStoryInfo;
+export default MainStoryInfo;
