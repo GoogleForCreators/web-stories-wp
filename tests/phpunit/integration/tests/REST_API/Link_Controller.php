@@ -287,7 +287,7 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::parse_link
 	 * @dataProvider data_instagram_urls
 	 */
-	public function test_instagram_urls( $url, $expected, $num ): void {
+	public function test_instagram_urls( $url, $expected, $request_count ): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
@@ -299,7 +299,7 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 		// Subsequent requests is cached and so it should not cause a request.
 		rest_get_server()->dispatch( $request );
 
-		$this->assertEquals( $num, $this->request_count );
+		$this->assertEquals( $request_count, $this->request_count );
 		$this->assertNotEmpty( $data );
 		$this->assertEqualSetsWithIndex( $expected, $data );
 	}
@@ -307,58 +307,67 @@ class Link_Controller extends DependencyInjectedRestTestCase {
 	public function data_instagram_urls(): array {
 		return [
 			'Instagram profile url'                   => [
-				'url'      => self::URL_INSTAGRAM,
-				'expected' => [
+				'url'           => self::URL_INSTAGRAM,
+				'expected'      => [
 					'title'       => 'Instagram - @googleforcreators',
 					'image'       => '',
 					'description' => '',
 				],
-				'num'      => 0,
+				'request_count' => 0,
 			],
 			'Instagram profile url with slash'        => [
-				'url'      => self::URL_INSTAGRAM . '/',
-				'expected' => [
+				'url'           => self::URL_INSTAGRAM . '/',
+				'expected'      => [
 					'title'       => 'Instagram - @googleforcreators',
 					'image'       => '',
 					'description' => '',
 				],
-				'num'      => 0,
+				'request_count' => 0,
 			],
 			'Instagram profile url with query string' => [
-				'url'      => self::URL_INSTAGRAM . '/?hl=en',
-				'expected' => [
+				'url'           => self::URL_INSTAGRAM . '/?hl=en',
+				'expected'      => [
 					'title'       => 'Instagram - @googleforcreators',
 					'image'       => '',
 					'description' => '',
 				],
-				'num'      => 0,
+				'request_count' => 0,
 			],
-			'Instagram profile url with query longer string' => [
-				'url'      => self::URL_INSTAGRAM . '/?hl=en&qs=2',
-				'expected' => [
+			'Instagram profile url with longer query string' => [
+				'url'           => self::URL_INSTAGRAM . '/?hl=en&qs=2',
+				'expected'      => [
 					'title'       => 'Instagram - @googleforcreators',
 					'image'       => '',
 					'description' => '',
 				],
-				'num'      => 0,
+				'request_count' => 0,
+			],
+			'Instagram profile url with double query string' => [
+				'url'           => self::URL_INSTAGRAM . '/?hl=en&qs=2?web=2',
+				'expected'      => [
+					'title'       => 'Instagram - @googleforcreators',
+					'image'       => '',
+					'description' => '',
+				],
+				'request_count' => 0,
 			],
 			'Instagram photo url'                     => [
-				'url'      => self::URL_INSTAGRAM_SINGLE,
-				'expected' => [
+				'url'           => self::URL_INSTAGRAM_SINGLE,
+				'expected'      => [
 					'title'       => '',
 					'image'       => '',
 					'description' => '',
 				],
-				'num'      => 1,
+				'request_count' => 1,
 			],
 			'Instagram subdomain'                     => [
-				'url'      => self::URL_INSTAGRAM_SUBDOMAIN,
-				'expected' => [
+				'url'           => self::URL_INSTAGRAM_SUBDOMAIN,
+				'expected'      => [
 					'title'       => '',
 					'image'       => '',
 					'description' => '',
 				],
-				'num'      => 1,
+				'request_count' => 1,
 			],
 		];
 	}
