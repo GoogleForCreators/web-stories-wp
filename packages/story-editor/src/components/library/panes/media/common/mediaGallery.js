@@ -54,12 +54,12 @@ function MediaGallery({ resources, onInsert, providerType, canEditMedia }) {
     height: resource.height,
   }));
 
-  const containerRenderer = ({ children }, ref) => {
+  const containerRenderer = useCallback(({ children }, ref) => {
     return <GalleryContainer ref={ref}>{children}</GalleryContainer>;
-  };
-  const rowRenderer = ({ children }) => {
+  }, []);
+  const rowRenderer = useCallback(({ children }) => {
     return children;
-  };
+  }, []);
 
   const imageRenderer = useCallback(
     ({ photo, layout }) => {
