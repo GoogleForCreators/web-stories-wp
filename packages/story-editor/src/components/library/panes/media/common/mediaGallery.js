@@ -30,6 +30,13 @@ import { GalleryContainer } from './styles';
 const PHOTO_MARGIN = 8;
 const TARGET_ROW_HEIGHT = 150;
 
+const ContainerRenderer = forwardRef(({ children }, ref) => {
+  return <GalleryContainer ref={ref}>{children}</GalleryContainer>;
+});
+const RowRenderer = ({ children }) => {
+  return children;
+};
+
 /**
  * @callback InsertionCallback
  * @param {Object} element Inserted element.
@@ -53,13 +60,6 @@ function MediaGallery({ resources, onInsert, providerType, canEditMedia }) {
     width: resource.width,
     height: resource.height,
   }));
-
-  const containerRenderer = useCallback(({ children }, ref) => {
-    return <GalleryContainer ref={ref}>{children}</GalleryContainer>;
-  }, []);
-  const rowRenderer = useCallback(({ children }) => {
-    return children;
-  }, []);
 
   const imageRenderer = useCallback(
     ({ photo, layout }) => {
@@ -86,8 +86,8 @@ function MediaGallery({ resources, onInsert, providerType, canEditMedia }) {
         layout="rows"
         photos={photos}
         renderPhoto={imageRenderer}
-        renderRowContainer={rowRenderer}
-        renderContainer={forwardRef(containerRenderer)}
+        renderRowContainer={RowRenderer}
+        renderContainer={ContainerRenderer}
         targetRowHeight={TARGET_ROW_HEIGHT}
         rowConstraints={{
           minPhotos: 2,
