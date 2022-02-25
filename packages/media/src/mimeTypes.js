@@ -52,6 +52,8 @@ export function getExtensionsFromMimeType(mimeType) {
       return ['aac'];
     case 'audio/ogg':
       return ['oga', 'ogg'];
+    case 'image/jpeg':
+      return ['jpg', 'jpeg'];
     default:
       return [getExtensionFromMimeType(mimeType)].filter(Boolean);
   }
