@@ -39,4 +39,8 @@ export class DesignMenu extends Container {
       ToggleButton
     );
   }
+
+  get borderRadius() {
+    return this.queryByRole('textbox', { name: 'Corner Radius' });
+  }
 }

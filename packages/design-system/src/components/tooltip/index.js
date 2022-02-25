@@ -37,9 +37,9 @@ import { THEME_CONSTANTS } from '../../theme';
 import { Text } from '../typography';
 import { RTL_PLACEMENT } from '../popup/constants';
 import { noop } from '../../utils';
-import { SvgForTail, Tail, SVG_TOOLTIP_TAIL_ID } from './tail';
+import { SvgForTail, Tail, SVG_TOOLTIP_TAIL_ID, TAIL_HEIGHT } from './tail';
 
-const SPACE_BETWEEN_TOOLTIP_AND_ELEMENT = 8;
+const SPACE_BETWEEN_TOOLTIP_AND_ELEMENT = TAIL_HEIGHT;
 // For how many milliseconds is a delayed tooltip waiting to appear?
 const DELAY_MS = 1000;
 // For how many milliseconds will triggering another delayed tooltip show instantly?
@@ -94,6 +94,10 @@ let lastVisibleDelayedTooltip = null;
  * @param {string} props.className Classname.
  * @param {string} props.isDelayed If this tooltip is to be displayed instantly on hover (default) or by a short delay.
  * @param {number} props.popupZIndexOverride If present, passes an override for z-index to popup
+ * @param {boolean} props.ignoreMaxOffsetY  Defaults to false. Sometimes, we want the popup to respect the y value
+ * as perceived by the page because of scroll. This is really only true of dropDowns that
+ * exist beyond the initial page scroll. Because the editor is a fixed view this only
+ * comes up in peripheral pages (dashboard, settings).
  * @return {import('react').Component} Tooltip element
  */
 function Tooltip({
@@ -111,6 +115,7 @@ function Tooltip({
   tooltipProps = null,
   className = null,
   popupZIndexOverride,
+  ignoreMaxOffsetY = false,
   ...props
 }) {
   const [shown, setShown] = useState(false);
@@ -176,20 +181,25 @@ function Tooltip({
   // cutoff the contents of the tooltip.
   const positionPlacement = useCallback(
     ({ offset }) => {
-      // check to see if there's an overlap with the window's bottom edge
-      const neededVerticalSpace = offset.bottom;
+      //  In order to check if there's an overlap with the window's bottom edge we need the overall height of the tooltip
+      //  from the anchor's y position along with the amount of space between the anchor and the tooltip content.
+      const neededVerticalSpace =
+        offset.y + offset.popupHeight + SPACE_BETWEEN_TOOLTIP_AND_ELEMENT;
       const shouldMoveToTop =
         dynamicPlacement.startsWith('bottom') &&
         neededVerticalSpace >= window.innerHeight;
       // check that the tooltip isn't cutoff on the left edge of the screen.
       // right-cutoff is already taken care of with `getOffset`
       const isOverFlowingLeft = offset.popupLeft < 0;
-
-      if (shouldMoveToTop && !isOverFlowingLeft) {
-        setDynamicPlacement(PLACEMENT.TOP);
-      } else if (shouldMoveToTop && isOverFlowingLeft) {
-        setDynamicPlacement(PLACEMENT.TOP_START);
-      } else if (!shouldMoveToTop && isOverFlowingLeft) {
+      if (shouldMoveToTop) {
+        if (dynamicPlacement.endsWith('-start')) {
+          setDynamicPlacement(PLACEMENT.TOP_START);
+        } else if (dynamicPlacement.endsWith('-end')) {
+          setDynamicPlacement(PLACEMENT.TOP_END);
+        } else {
+          setDynamicPlacement(PLACEMENT.TOP);
+        }
+      } else if (isOverFlowingLeft) {
         updatePlacement();
       }
     },
@@ -288,6 +298,7 @@ function Tooltip({
         onPositionUpdate={positionArrow}
         zIndex={popupZIndexOverride}
         noOverFlow
+        ignoreMaxOffsetY={ignoreMaxOffsetY}
       >
         <TooltipContainer
           className={className}
@@ -333,6 +344,7 @@ const TooltipPropTypes = {
   className: PropTypes.string,
   isDelayed: PropTypes.bool,
   popupZIndexOverride: PropTypes.number,
+  ignoreMaxOffsetY: PropTypes.bool,
 };
 Tooltip.propTypes = TooltipPropTypes;
 
