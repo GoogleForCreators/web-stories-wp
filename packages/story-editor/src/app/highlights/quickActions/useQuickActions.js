@@ -29,7 +29,7 @@ import {
 import { trackEvent } from '@googleforcreators/tracking';
 import {
   resourceList,
-  getExtensionFromMimeType,
+  getExtensionsFromMimeType,
 } from '@googleforcreators/media';
 
 /**
@@ -118,9 +118,7 @@ export const MediaPicker = ({ render, ...props }) => {
   );
   const allowedFileTypes = useMemo(
     () =>
-      allowedMimeTypes
-        .map((type) => getExtensionFromMimeType(type))
-        .filter((a) => a),
+      allowedMimeTypes.map((type) => getExtensionsFromMimeType(type)).flat(),
     [allowedMimeTypes]
   );
   if (isTranscodingEnabled) {

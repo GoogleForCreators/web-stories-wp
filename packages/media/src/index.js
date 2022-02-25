@@ -28,7 +28,7 @@ export { default as formatMsToHMS } from './formatMsToHMS';
 export { default as generateVideoStrip } from './generateVideoStrip';
 export { default as getFileNameFromUrl } from './getFileNameFromUrl';
 export { default as getFileNameWithExt } from './getFileNameWithExt';
-export { default as getExtensionFromMimeType } from './getExtensionFromMimeType';
+export * from './mimeTypes';
 export { default as getFirstFrameOfVideo } from './getFirstFrameOfVideo';
 export { default as getImageDimensions } from './getImageDimensions';
 export { default as getMsFromHMS } from './getMsFromHMS';

@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
-import { getExtensionFromMimeType } from '@googleforcreators/media';
+import { getExtensionsFromMimeType } from '@googleforcreators/media';
 import { useCallback, useMemo } from '@googleforcreators/react';
 import styled from 'styled-components';
 
@@ -81,8 +81,8 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
   const allowedImageFileTypes = useMemo(
     () =>
       allowedImageMimeTypes
-        .map((type) => getExtensionFromMimeType(type))
-        .filter((a) => a),
+        .map((type) => getExtensionsFromMimeType(type))
+        .flat(),
     [allowedImageMimeTypes]
   );
 

@@ -19,7 +19,7 @@
  */
 import { useSnackbar } from '@googleforcreators/design-system';
 import { useCallback, useMemo } from '@googleforcreators/react';
-import { getExtensionFromMimeType } from '@googleforcreators/media';
+import { getExtensionsFromMimeType } from '@googleforcreators/media';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 
@@ -46,8 +46,8 @@ function MediaUploadButton({ onInsert, renderButton, buttonInsertText }) {
   const allowedFileTypes = useMemo(
     () =>
       allowedUploadMimeTypes
-        .map((type) => getExtensionFromMimeType(type))
-        .filter((a) => a),
+        .map((type) => getExtensionsFromMimeType(type))
+        .flat(),
     [allowedUploadMimeTypes]
   );
 
