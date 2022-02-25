@@ -47,6 +47,12 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
   });
 
   async function addPreset(name) {
+    // Select background for being able to insert a text.
+    await fixture.events.mouse.clickOn(
+      fixture.editor.canvas.framesLayer.frames[0].node,
+      '90%',
+      '90%'
+    );
     // Imitate the movement of real use to trigger the background processes while the user is moving the mouse.
     await fixture.events.mouse.moveRel(
       fixture.editor.library.text.preset(name),
@@ -261,6 +267,12 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
         10
       );
       await fixture.events.sleep(800);
+      // Select background for being able to insert another text.
+      await fixture.events.mouse.clickOn(
+        fixture.editor.canvas.framesLayer.frames[0].node,
+        '90%',
+        '90%'
+      );
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
       );
@@ -278,6 +290,12 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
         '<span style="color: #fff">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>'
       );
 
+      // Select background for being able to insert another text.
+      await fixture.events.mouse.clickOn(
+        fixture.editor.canvas.framesLayer.frames[0].node,
+        '90%',
+        '90%'
+      );
       await fixture.events.mouse.moveRel(
         fixture.editor.library.text.preset('Title 1'),
         10,
