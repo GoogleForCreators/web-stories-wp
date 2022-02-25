@@ -43,8 +43,6 @@ function useLoadFontFiles() {
       return;
     }
 
-    const css = getFontCSS(family, url);
-
     switch (service) {
       case 'fonts.google.com':
         await loadStylesheet(
@@ -53,7 +51,7 @@ function useLoadFontFiles() {
         );
         break;
       case 'custom':
-        await loadInlineStylesheet(elementId, css);
+        await loadInlineStylesheet(elementId, getFontCSS(family, url));
         break;
       default:
         return;
