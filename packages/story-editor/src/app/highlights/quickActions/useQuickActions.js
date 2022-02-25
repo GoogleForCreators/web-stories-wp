@@ -112,10 +112,17 @@ export const MediaPicker = ({ render, ...props }) => {
   const { showSnackbar } = useSnackbar();
 
   // Media Upload Props
-  let allowedMimeTypes = [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
-  const allowedFileTypes = allowedMimeTypes
-    .map((type) => getExtensionFromMimeType(type))
-    .filter((a) => a);
+  let allowedMimeTypes = useMemo(
+    () => [...allowedImageMimeTypes, ...allowedVideoMimeTypes],
+    [allowedImageMimeTypes, allowedVideoMimeTypes]
+  );
+  const allowedFileTypes = useMemo(
+    () =>
+      allowedMimeTypes
+        .map((type) => getExtensionFromMimeType(type))
+        .filter((a) => a),
+    [allowedMimeTypes]
+  );
   if (isTranscodingEnabled) {
     allowedMimeTypes = allowedMimeTypes.concat(TRANSCODABLE_MIME_TYPES);
   }

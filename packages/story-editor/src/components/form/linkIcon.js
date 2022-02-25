@@ -41,9 +41,13 @@ function LinkIcon({ handleChange, icon, isLoading = false, ...rest }) {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
 
-  const allowedImageFileTypes = allowedImageMimeTypes
-    .map((type) => getExtensionFromMimeType(type))
-    .filter((a) => a);
+  const allowedImageFileTypes = useMemo(
+    () =>
+      allowedImageMimeTypes
+        .map((type) => getExtensionFromMimeType(type))
+        .filter((a) => a),
+    [allowedImageMimeTypes]
+  );
 
   const iconErrorMessage = useMemo(() => {
     let message = __(

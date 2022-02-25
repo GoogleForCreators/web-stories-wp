@@ -39,13 +39,17 @@ function MediaUploadButton({ onInsert, renderButton, buttonInsertText }) {
     MediaUpload,
   } = useConfig();
 
-  const allowedUploadMimeTypes = [
-    ...allowedImageMimeTypes,
-    ...allowedVideoMimeTypes,
-  ];
-  const allowedFileTypes = allowedUploadMimeTypes
-    .map((type) => getExtensionFromMimeType(type))
-    .filter((a) => a);
+  const allowedUploadMimeTypes = useMemo(
+    () => [...allowedImageMimeTypes, ...allowedVideoMimeTypes],
+    [allowedImageMimeTypes, allowedVideoMimeTypes]
+  );
+  const allowedFileTypes = useMemo(
+    () =>
+      allowedUploadMimeTypes
+        .map((type) => getExtensionFromMimeType(type))
+        .filter((a) => a),
+    [allowedUploadMimeTypes]
+  );
 
   const {
     canTranscodeResource,
