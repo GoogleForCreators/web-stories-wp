@@ -38,7 +38,7 @@ import { useUnits } from '@googleforcreators/units';
 /**
  * Internal dependencies
  */
-import { useFont, useHistory } from '../../../../app';
+import { useFont, useHistory, useStory } from '../../../../app';
 import StoryPropTypes from '../../../../types';
 import stripHTML from '../../../../utils/stripHTML';
 import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
@@ -46,6 +46,9 @@ import useLibrary from '../../useLibrary';
 import LibraryMoveable from '../shared/libraryMoveable';
 import InsertionOverlay from '../shared/insertionOverlay';
 import useRovingTabIndex from '../../../../utils/useRovingTabIndex';
+import { areAllType } from '../../../../utils/presetUtils';
+import objectWithout from '../../../../utils/objectWithout';
+import getUpdatedSizeAndPosition from '../../../../utils/getUpdatedSizeAndPosition';
 
 const Preview = styled.button`
   position: relative;
@@ -111,6 +114,15 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
 
   const { calculateAccessibleTextColors } = usePageAsCanvas();
 
+  const { isText, updateSelectedElements } = useStory(({ state, actions }) => {
+    const isText =
+      state.selectedElements && areAllType('text', state.selectedElements);
+    return {
+      isText,
+      updateSelectedElements: actions.updateSelectedElements,
+    };
+  });
+
   const presetDataRef = useRef({});
   const buttonRef = useRef(null);
 
@@ -161,8 +173,25 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
     pageCanvasData,
     versionNumber,
   ]);
-
   const onClick = useCallback(() => {
+    // If we have only text(s) selected, we apply the preset instead of inserting.
+    if (isText) {
+      updateSelectedElements({
+        properties: (oldElement) => {
+          const presetAtts = objectWithout(element, ['content', 'width']);
+          const sizeUpdates = getUpdatedSizeAndPosition({
+            ...oldElement,
+            ...presetAtts,
+          });
+          return {
+            ...oldElement,
+            ...presetAtts,
+            ...sizeUpdates,
+          };
+        },
+      });
+      return;
+    }
     // We might have pre-calculated data, let's use that, too.
     const isPositioned = Boolean(presetDataRef.current?.positionAtts);
     insertPreset(
@@ -176,7 +205,7 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
     // Reset after insertion.
     presetDataRef.current = {};
     trackEvent('insert_text_preset', { name: title });
-  }, [insertPreset, element, title]);
+  }, [insertPreset, element, title, isText, updateSelectedElements]);
 
   const getTextDisplay = (textProps = {}) => {
     const { isClone } = textProps;
@@ -217,7 +246,7 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
       tabIndex={index === 0 ? 0 : -1}
     >
       {getTextDisplay()}
-      {active && <InsertionOverlay />}
+      {active && !isText && <InsertionOverlay />}
       <LibraryMoveable
         cloneElement={DragContainer}
         cloneProps={{
