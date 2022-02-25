@@ -28,10 +28,15 @@ import './style.css'; // This way the general dashboard styles are loaded before
 import './setLocaleData';
 
 /**
+ * WordPress dependencies
+ */
+import domReady from '@wordpress/dom-ready';
+
+/**
  * External dependencies
  */
 import { Dashboard } from '@googleforcreators/dashboard';
-import { domReady, setAppElement } from '@googleforcreators/design-system';
+import { setAppElement } from '@googleforcreators/design-system';
 import { StrictMode, render } from '@googleforcreators/react';
 import { updateSettings } from '@googleforcreators/date';
 import { initializeTracking } from '@googleforcreators/tracking';

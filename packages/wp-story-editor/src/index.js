@@ -28,10 +28,15 @@ import './style.css'; // This way the general editor styles are loaded before al
 import './setLocaleData';
 
 /**
+ * WordPress dependencies
+ */
+import domReady from '@wordpress/dom-ready';
+
+/**
  * External dependencies
  */
 import { StoryEditor } from '@googleforcreators/story-editor';
-import { setAppElement, domReady } from '@googleforcreators/design-system';
+import { setAppElement } from '@googleforcreators/design-system';
 import { StrictMode, render } from '@googleforcreators/react';
 import { updateSettings } from '@googleforcreators/date';
 import { initializeTracking } from '@googleforcreators/tracking';
