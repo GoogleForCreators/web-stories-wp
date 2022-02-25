@@ -15,6 +15,5 @@
  */
 export { default as stripHTML } from './stripHTML';
 export { default as escapeHTML } from './escapeHTML';
-export { default as getCaretCharacterOffsetWithin } from './getCaretCharacterOffsetWithin';
 export { default as ensureFontLoaded } from './ensureFontLoaded';
 export * from './loadStylesheet';
