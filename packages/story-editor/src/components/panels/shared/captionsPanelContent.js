@@ -81,7 +81,7 @@ function CaptionsPanelContent({
     MediaUpload,
   } = useConfig();
 
-  if (!hasUploadMediaAction && !tracks.length) {
+  if (!hasUploadMediaAction && !tracks.length || !allowedTextMimeTypes.length) {
     return null;
   }
 
