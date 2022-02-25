@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
-import { getExtensionFromMimeType } from '@googleforcreators/media';
+import { getExtensionsFromMimeType } from '@googleforcreators/media';
 import { Input, withProtocol } from '@googleforcreators/design-system';
 import {
   useState,
@@ -59,9 +59,7 @@ function HotlinkModal({ isOpen, onClose }) {
   );
   const allowedFileTypes = useMemo(
     () =>
-      allowedMimeTypes
-        .map((type) => getExtensionFromMimeType(type))
-        .filter((a) => a),
+      allowedMimeTypes.map((type) => getExtensionsFromMimeType(type)).flat(),
     [allowedMimeTypes]
   );
   useLayoutEffect(() => {

@@ -26,7 +26,7 @@ import {
   forwardRef,
 } from '@googleforcreators/react';
 import styled from 'styled-components';
-import { getExtensionFromMimeType } from '@googleforcreators/media';
+import { getExtensionsFromMimeType } from '@googleforcreators/media';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import {
   Link,
@@ -137,8 +137,8 @@ function PublishPanel({ nameOverride }) {
   const allowedImageFileTypes = useMemo(
     () =>
       allowedImageMimeTypes
-        .map((type) => getExtensionFromMimeType(type))
-        .filter((a) => a),
+        .map((type) => getExtensionsFromMimeType(type))
+        .flat(),
     [allowedImageMimeTypes]
   );
 

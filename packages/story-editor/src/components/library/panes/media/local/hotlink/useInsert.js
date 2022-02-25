@@ -25,7 +25,7 @@ import {
   getVideoLength,
   preloadVideo,
   hasVideoGotAudio,
-  getExtensionFromMimeType,
+  getExtensionsFromMimeType,
 } from '@googleforcreators/media';
 import { v4 as uuidv4 } from 'uuid';
 import { trackError, trackEvent } from '@googleforcreators/tracking';
@@ -82,9 +82,7 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
   );
   const allowedFileTypes = useMemo(
     () =>
-      allowedMimeTypes
-        .map((type) => getExtensionFromMimeType(type))
-        .filter((a) => a),
+      allowedMimeTypes.map((type) => getExtensionsFromMimeType(type)).flat(),
     [allowedMimeTypes]
   );
   const {

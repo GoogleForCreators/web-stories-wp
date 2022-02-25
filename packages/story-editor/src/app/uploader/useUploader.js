@@ -21,7 +21,7 @@ import { useCallback, useMemo } from '@googleforcreators/react';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import {
   getFileName,
-  getExtensionFromMimeType,
+  getExtensionsFromMimeType,
 } from '@googleforcreators/media';
 
 /**
@@ -53,9 +53,7 @@ function useUploader() {
   );
   const allowedFileTypes = useMemo(
     () =>
-      allowedMimeTypes
-        .map((type) => getExtensionFromMimeType(type))
-        .filter((a) => a),
+      allowedMimeTypes.map((type) => getExtensionsFromMimeType(type)).flat(),
     [allowedMimeTypes]
   );
 
