@@ -68,8 +68,13 @@ class Types {
 				'image/jpg',
 				'image/gif',
 			],
-			// TODO: Update once audio elements are supported.
-			'audio'  => [],
+			'audio'  => [
+				'audio/mpeg',
+				'audio/aac',
+				'audio/wav',
+				'audio/ogg',
+			],
+			'text'   => [ 'text/vtt' ],
 			'vector' => [],
 			'video'  => [
 				'video/mp4',
@@ -130,25 +135,5 @@ class Types {
 		$image_mime_type = apply_filters( 'web_stories_allowed_image_mime_types', $image_mime_type, $allowed_mime_type );
 
 		return array_values( array_intersect( $allowed_mime_type, $image_mime_type ) );
-	}
-
-	/**
-	 * Returns a list of audio mime types.
-	 *
-	 * Used for the allowlist when adding background audio.
-	 *
-	 * @since 1.11.0
-	 *
-	 * @return array List of allowed mime types.
-	 */
-	public function get_allowed_audio_mime_types(): array {
-		$allowed_mime_types = [
-			'audio/mpeg',
-			'audio/aac',
-			'audio/wav',
-			'audio/ogg',
-		];
-
-		return array_values( array_intersect( $allowed_mime_types, get_allowed_mime_types() ) );
 	}
 }

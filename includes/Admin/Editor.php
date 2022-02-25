@@ -347,8 +347,6 @@ class Editor extends Service_Base implements HasRequirements {
 		$show_locked_dialog  = apply_filters( 'show_post_locked_dialog', true, $post, $user );
 		$nonce               = wp_create_nonce( 'wp_rest' );
 		$mime_types          = $this->types->get_allowed_mime_types();
-		$mime_types['audio'] = $this->types->get_allowed_audio_mime_types();
-		$mime_types['text']  = [ 'text/vtt' ];
 
 		$story = new Story();
 		$story->load_from_post( $post );
