@@ -36,11 +36,12 @@ import {
   BG_MIN_SCALE,
   DIRECTION,
   SCALE_DIRECTION,
-  progress,
   hasOffsets,
   STORY_ANIMATION_STATE,
   getAnimationEffectDefaults,
 } from '@googleforcreators/animation';
+import { progress } from '@googleforcreators/units';
+
 /**
  * Internal dependencies
  */

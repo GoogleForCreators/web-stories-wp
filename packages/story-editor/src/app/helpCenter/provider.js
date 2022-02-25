@@ -26,7 +26,7 @@ import {
   useRef,
 } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
-import { clamp } from '@googleforcreators/animation';
+import { clamp } from '@googleforcreators/units';
 import {
   localStore,
   LOCAL_STORAGE_PREFIX,

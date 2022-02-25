@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { useCallback, useMemo, useState } from '@googleforcreators/react';
+import { clamp } from '@googleforcreators/units';
 import PropTypes from 'prop-types';
 /**
  * Internal dependencies
@@ -28,7 +29,6 @@ import {
   VIEW_STYLE,
 } from '../constants';
 import { PageSizePropType } from '../types';
-import clamp from './clamp';
 import usePagePreviewSize from './usePagePreviewSize';
 
 export default function useTemplateView({ totalPages }) {

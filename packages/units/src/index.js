@@ -20,6 +20,7 @@ export * from './dimensions';
 export { default as UnitsProvider } from './unitsProvider';
 export { default as useUnits } from './useUnits';
 export { default as calcRotatedResizeOffset } from './calcRotatedResizeOffset';
+export * from './range';
 export {
   default as getBoundRect,
   calcRotatedObjectPositionAndSize,

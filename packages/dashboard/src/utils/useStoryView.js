@@ -26,12 +26,13 @@ import {
 } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { trackEvent } from '@googleforcreators/tracking';
+import { clamp } from '@googleforcreators/units';
+
 /**
  * Internal dependencies
  */
 import { SORT_DIRECTION, STORY_SORT_OPTIONS, VIEW_STYLE } from '../constants';
 import { PageSizePropType } from '../types';
-import clamp from './clamp';
 import usePagePreviewSize from './usePagePreviewSize';
 
 export default function useStoryView({

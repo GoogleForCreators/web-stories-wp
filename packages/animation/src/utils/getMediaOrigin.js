@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { lerp } from './range';
+import { lerp } from '@googleforcreators/units';
 
 /**
  * Given a media element, calculates where the origin is on the media

@@ -13,19 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { clamp, progress, lerp } from '@googleforcreators/units';
 
 /**
  * Internal dependencies
  */
 import { BG_MIN_SCALE, BG_MAX_SCALE, SCALE_DIRECTION } from '../../constants';
 import { AnimationZoom } from '../../parts/zoom';
-import {
-  lerp,
-  getMediaOrigin,
-  getMediaBoundOffsets,
-  clamp,
-  progress,
-} from '../../utils';
+import { getMediaOrigin, getMediaBoundOffsets } from '../../utils';
 
 export function EffectBackgroundZoom({
   element,
