@@ -14,3 +14,4 @@
  * limitations under the License.
  */
 export * from './snakeToCamelCase';
+export { default as bindToCallbacks } from './bindToCallbacks';
