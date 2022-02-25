@@ -78,9 +78,13 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
 
-  const allowedImageFileTypes = allowedImageMimeTypes
-    .map((type) => getExtensionFromMimeType(type))
-    .filter((a) => a);
+  const allowedImageFileTypes = useMemo(
+    () =>
+      allowedImageMimeTypes
+        .map((type) => getExtensionFromMimeType(type))
+        .filter((a) => a),
+    [allowedImageMimeTypes]
+  );
 
   const handleChangePoster = useCallback(
     /**

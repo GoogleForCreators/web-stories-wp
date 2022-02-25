@@ -21,10 +21,12 @@ import PropTypes from 'prop-types';
 import {
   useState,
   useEffect,
+  useMemo,
   useCallback,
   forwardRef,
 } from '@googleforcreators/react';
 import styled from 'styled-components';
+import { getExtensionFromMimeType } from '@googleforcreators/media';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import {
   Link,
@@ -126,12 +128,19 @@ function PublishPanel({ nameOverride }) {
   const { getPublisherLogos, addPublisherLogo } = apiCallbacks;
 
   const {
-    allowedImageMimeTypes,
-    allowedImageFileTypes,
+    allowedMimeTypes: { ws_image: allowedImageMimeTypes },
     dashboardSettingsLink,
     capabilities: { hasUploadMediaAction, canManageSettings },
     MediaUpload,
   } = useConfig();
+
+  const allowedImageFileTypes = useMemo(
+    () =>
+      allowedImageMimeTypes
+        .map((type) => getExtensionFromMimeType(type))
+        .filter((a) => a),
+    [allowedImageMimeTypes]
+  );
 
   const [publisherLogos, setPublisherLogos] = useState([]);
 

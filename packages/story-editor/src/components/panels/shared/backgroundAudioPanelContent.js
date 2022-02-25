@@ -28,7 +28,7 @@ import {
   themeHelpers,
 } from '@googleforcreators/design-system';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
-import { useCallback } from '@googleforcreators/react';
+import { useCallback, useMemo } from '@googleforcreators/react';
 import {
   ResourcePropTypes,
   getExtensionFromMimeType,
@@ -70,10 +70,13 @@ function BackgroundAudioPanelContent({
     capabilities: { hasUploadMediaAction },
     MediaUpload,
   } = useConfig();
-  const allowedAudioFileTypes = allowedAudioMimeTypes
-    .map((type) => getExtensionFromMimeType(type))
-    .filter((a) => a);
-
+  const allowedAudioFileTypes = useMemo(
+    () =>
+      allowedAudioMimeTypes
+        .map((type) => getExtensionFromMimeType(type))
+        .filter((a) => a),
+    [allowedAudioMimeTypes]
+  );
   const { resource, tracks = [], loop = true } = backgroundAudio || {};
 
   const onSelectErrorMessage = sprintf(

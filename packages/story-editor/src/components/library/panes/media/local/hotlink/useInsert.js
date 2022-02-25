@@ -87,7 +87,6 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
         .filter((a) => a),
     [allowedMimeTypes]
   );
-
   const {
     actions: { getHotlinkInfo },
   } = useAPI();
