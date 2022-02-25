@@ -13,6 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+/**
+ * Linear interpolation function.
+ *
+ * Takes a normalized progress value and a range in the form of a tuple
+ * and returns the interpolated progress within the given range.
+ *
+ * @param {number} progress - value between 0 and 1
+ * @param {[number, number]} range - tuple that dictates a range between 2 numbers
+ * @return {number} value within given range
+ */
 export const lerp = (progress, range) =>
   (1 - progress) * range[0] + progress * range[1];
 
