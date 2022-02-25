@@ -136,7 +136,8 @@ function Swatch({
     ? getOpaquePattern(pattern)
     : pattern;
   // gradient swatches and indeterminates are never split
-  const displaySplit = !swatchIsGradient && swatchHasTransparency && !isIndeterminate;
+  const displaySplit =
+    !swatchIsGradient && swatchHasTransparency && !isIndeterminate;
   const SwatchDisplay = isPreview ? SwatchPreview : SwatchButton;
   return (
     <SwatchDisplay disabled={isDisabled} className={className} {...props}>
