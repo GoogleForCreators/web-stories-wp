@@ -128,7 +128,7 @@ function PublishPanel({ nameOverride }) {
   const { getPublisherLogos, addPublisherLogo } = apiCallbacks;
 
   const {
-    allowedMimeTypes: { ws_image: allowedImageMimeTypes },
+    allowedMimeTypes: { image: allowedImageMimeTypes },
     dashboardSettingsLink,
     capabilities: { hasUploadMediaAction, canManageSettings },
     MediaUpload,

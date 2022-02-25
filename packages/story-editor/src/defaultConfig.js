@@ -62,14 +62,9 @@ const defaultConfig = {
     weekStartsOn: 1,
   },
   allowedMimeTypes: {
-    image: [
-      'image/webp',
-      'image/png',
-      'image/jpeg',
-      'image/gif',
-      'image/svg+xml',
-    ],
-    ws_image: ['image/webp', 'image/png', 'image/jpeg', 'image/gif'],
+    image: ['image/webp', 'image/png', 'image/jpeg', 'image/gif'],
+    vector: ['image/svg+xml'],
+    text: ['text/vtt'],
     audio: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
     video: ['video/mp4', 'video/webm'],
   },

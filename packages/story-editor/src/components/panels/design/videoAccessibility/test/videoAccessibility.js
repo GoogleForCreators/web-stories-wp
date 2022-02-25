@@ -39,7 +39,7 @@ function MediaUpload({ render, onSelect }) {
 function arrange(selectedElements) {
   const configValue = {
     allowedMimeTypes: {
-      ws_image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
+      image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
     },
     capabilities: {
       hasUploadMediaAction: true,

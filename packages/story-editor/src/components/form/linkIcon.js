@@ -37,7 +37,7 @@ const StyledMedia = styled(Media)`
 
 function LinkIcon({ handleChange, icon, isLoading = false, ...rest }) {
   const {
-    allowedMimeTypes: { ws_image: allowedImageMimeTypes },
+    allowedMimeTypes: { image: allowedImageMimeTypes },
     capabilities: { hasUploadMediaAction },
   } = useConfig();
 

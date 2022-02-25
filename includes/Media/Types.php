@@ -61,7 +61,7 @@ class Types {
 	 */
 	public function get_allowed_mime_types(): array {
 		$default_allowed_mime_types = [
-			'image' => [
+			'image'  => [
 				'image/webp',
 				'image/png',
 				'image/jpeg',
@@ -69,8 +69,9 @@ class Types {
 				'image/gif',
 			],
 			// TODO: Update once audio elements are supported.
-			'audio' => [],
-			'video' => [
+			'audio'  => [],
+			'vector' => [],
+			'video'  => [
 				'video/mp4',
 				'video/webm',
 			],

@@ -365,6 +365,7 @@ describe('useQuickActions', () => {
     mockUseConfig.mockReturnValue({
       allowedMimeTypes: {
         image: [],
+        vector: [],
         video: [],
       },
       capabilities: { hasUploadMediaAction: true },
@@ -1005,6 +1006,7 @@ describe('MediaPicker', () => {
     mockUseConfig.mockReturnValue({
       allowedMimeTypes: {
         image: ['image/gif'],
+        vector: [],
         video: ['muted'],
       },
       capabilities: { hasUploadMediaAction: true },

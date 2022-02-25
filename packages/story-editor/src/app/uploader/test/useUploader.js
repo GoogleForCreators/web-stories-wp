@@ -43,7 +43,7 @@ function setup(args) {
         'image/gif',
         'image/webp',
       ],
-      ws_image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
+      vector: [],
       video: ['video/mp4', 'video/webm'],
     },
     maxUpload: 104857600,

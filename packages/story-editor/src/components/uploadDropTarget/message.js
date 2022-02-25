@@ -66,13 +66,18 @@ function UploadDropTargetMessage({ message, ...rest }) {
   const {
     allowedMimeTypes: {
       image: allowedImageMimeTypes,
+      vector: allowedVectorMimeTypes,
       video: allowedVideoMimeTypes,
     },
   } = useConfig();
 
   const allowedMimeTypes = useMemo(
-    () => [...allowedImageMimeTypes, ...allowedVideoMimeTypes],
-    [allowedImageMimeTypes, allowedVideoMimeTypes]
+    () => [
+      ...allowedImageMimeTypes,
+      ...allowedVectorMimeTypes,
+      ...allowedVideoMimeTypes,
+    ],
+    [allowedImageMimeTypes, allowedVideoMimeTypes, allowedVectorMimeTypes]
   );
   const allowedFileTypes = useMemo(
     () =>

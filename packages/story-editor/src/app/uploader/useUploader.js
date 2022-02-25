@@ -43,13 +43,18 @@ function useUploader() {
     maxUpload,
     allowedMimeTypes: {
       image: allowedImageMimeTypes,
+      vector: allowedVectorMimeTypes,
       video: allowedVideoMimeTypes,
     },
     capabilities: { hasUploadMediaAction },
   } = useConfig();
   const allowedMimeTypes = useMemo(
-    () => [...allowedImageMimeTypes, ...allowedVideoMimeTypes],
-    [allowedImageMimeTypes, allowedVideoMimeTypes]
+    () => [
+      ...allowedImageMimeTypes,
+      ...allowedVectorMimeTypes,
+      ...allowedVideoMimeTypes,
+    ],
+    [allowedImageMimeTypes, allowedVectorMimeTypes, allowedVideoMimeTypes]
   );
   const allowedFileTypes = useMemo(
     () =>

@@ -73,6 +73,7 @@ export const MediaPicker = ({ render, ...props }) => {
   const {
     allowedMimeTypes: {
       image: allowedImageMimeTypes,
+      vector: allowedVectorMimeTypes,
       video: allowedVideoMimeTypes,
     },
     MediaUpload,
@@ -113,8 +114,12 @@ export const MediaPicker = ({ render, ...props }) => {
 
   // Media Upload Props
   let allowedMimeTypes = useMemo(
-    () => [...allowedImageMimeTypes, ...allowedVideoMimeTypes],
-    [allowedImageMimeTypes, allowedVideoMimeTypes]
+    () => [
+      ...allowedImageMimeTypes,
+      ...allowedVectorMimeTypes,
+      ...allowedVideoMimeTypes,
+    ],
+    [allowedImageMimeTypes, allowedVectorMimeTypes, allowedVideoMimeTypes]
   );
   const allowedFileTypes = useMemo(
     () =>
