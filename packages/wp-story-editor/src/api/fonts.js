@@ -30,11 +30,15 @@ import apiFetch from '@wordpress/api-fetch';
  * Works around a bug in WordPress.
  *
  * @see https://github.com/GoogleForCreators/web-stories-wp/issues/10710
- * @param {string[]} include List of fonts to include.
+ * @param {string} include Comma-separated list of fonts to include.
  * @return {string} include query parameter with bracket notation.
  */
-function getIncludeQueryArgs(include) {
-  return include?.map((item) => `include[]=${encodeURI(item)}`).join('&');
+function getIncludeQueryArgs(include = '') {
+  return include
+    .split(',')
+    .filter(Boolean)
+    .map((item) => `include[]=${encodeURI(item)}`)
+    .join('&');
 }
 
 export function getFonts(config, { include: _include, search, service }) {
@@ -43,7 +47,7 @@ export function getFonts(config, { include: _include, search, service }) {
     service,
   });
   const include = getIncludeQueryArgs(_include);
-  if (include) {
+  if (include.length > 0) {
     path += path.includes('?') ? `&${include}` : `?${include}`;
   }
   return apiFetch({

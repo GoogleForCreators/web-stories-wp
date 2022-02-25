@@ -53,7 +53,7 @@ describe('Fonts API Callbacks', () => {
     });
 
     getFonts({
-      include: ['Roboto Mono', 'Roboto Serif'],
+      include: ['Roboto Mono', 'Roboto Serif'].join(','),
     });
 
     expect(apiFetch).toHaveBeenCalledWith(
@@ -72,7 +72,7 @@ describe('Fonts API Callbacks', () => {
 
     getFonts({
       service: 'fonts.google.com',
-      include: ['Roboto Mono', 'Roboto Serif'],
+      include: ['Roboto Mono', 'Roboto Serif'].join(','),
     });
 
     expect(apiFetch).toHaveBeenCalledWith(
