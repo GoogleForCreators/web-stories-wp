@@ -111,7 +111,7 @@ describe('useUploader', () => {
       await expect(() =>
         validateFileForUpload({ size: 20000, type: 'video/quicktime' })
       ).toThrow(
-        'Please choose only png, jpeg, gif, webp, mp4, or webm to upload.'
+        'Please choose only png, jpg, jpeg, gif, webp, mp4, or webm to upload.'
       );
     });
 

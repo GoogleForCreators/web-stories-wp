@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import { useMemo } from '@googleforcreators/react';
-import { getExtensionFromMimeType } from '@googleforcreators/media';
+import { getExtensionsFromMimeType } from '@googleforcreators/media';
 import PropTypes from 'prop-types';
 
 /**
@@ -44,8 +44,8 @@ function LinkIcon({ handleChange, icon, isLoading = false, ...rest }) {
   const allowedImageFileTypes = useMemo(
     () =>
       allowedImageMimeTypes
-        .map((type) => getExtensionFromMimeType(type))
-        .filter((a) => a),
+        .map((type) => getExtensionsFromMimeType(type))
+        .flat(),
     [allowedImageMimeTypes]
   );
 

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { getExtensionFromMimeType } from '@googleforcreators/media';
+import { getExtensionsFromMimeType } from '@googleforcreators/media';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -76,9 +76,7 @@ function UploadDropTargetMessage({ message, ...rest }) {
   );
   const allowedFileTypes = useMemo(
     () =>
-      allowedMimeTypes
-        .map((type) => getExtensionFromMimeType(type))
-        .filter((a) => a),
+      allowedMimeTypes.map((type) => getExtensionsFromMimeType(type)).flat(),
     [allowedMimeTypes]
   );
 

@@ -31,7 +31,7 @@ import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import { useCallback, useMemo } from '@googleforcreators/react';
 import {
   ResourcePropTypes,
-  getExtensionFromMimeType,
+  getExtensionsFromMimeType,
 } from '@googleforcreators/media';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -73,8 +73,8 @@ function BackgroundAudioPanelContent({
   const allowedAudioFileTypes = useMemo(
     () =>
       allowedAudioMimeTypes
-        .map((type) => getExtensionFromMimeType(type))
-        .filter((a) => a),
+        .map((type) => getExtensionsFromMimeType(type))
+        .flat(),
     [allowedAudioMimeTypes]
   );
   const { resource, tracks = [], loop = true } = backgroundAudio || {};
