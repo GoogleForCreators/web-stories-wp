@@ -34,6 +34,7 @@ import {
 } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import { useUnits } from '@googleforcreators/units';
+import { __, sprintf } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies
@@ -244,6 +245,15 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
       onPointerLeave={makeInactive}
       onBlur={makeInactive}
       tabIndex={index === 0 ? 0 : -1}
+      aria-label={
+        isText
+          ? sprintf(
+              /* translators: %s: preset name */
+              __('Apply preset: %s', 'web-stories'),
+              title
+            )
+          : null
+      }
     >
       {getTextDisplay()}
       {active && !isText && <InsertionOverlay />}
