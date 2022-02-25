@@ -55,6 +55,8 @@ export function TestFrameElement({
     ...inputConfigContext,
     allowedMimeTypes: {
       image: [],
+      text: [],
+      vector: [],
       video: [],
       ...(inputConfigContext && inputConfigContext.allowedMimeTypes),
     },
@@ -123,6 +125,8 @@ export function TestDisplayElement({
     ...inputConfigContext,
     allowedMimeTypes: {
       image: [],
+      text: [],
+      vector: [],
       video: [],
       ...(inputConfigContext && inputConfigContext.allowedMimeTypes),
     },

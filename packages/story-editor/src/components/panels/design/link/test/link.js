@@ -43,7 +43,7 @@ function arrange(selectedElements) {
       hasUploadMediaAction: true,
     },
     allowedMimeTypes: {
-      ws_image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
+      image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
     },
     MediaUpload,
   };

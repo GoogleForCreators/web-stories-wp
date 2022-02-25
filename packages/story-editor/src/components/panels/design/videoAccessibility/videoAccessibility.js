@@ -74,7 +74,7 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
   const rawPoster = getCommonValue(selectedElements, 'poster');
   const poster = getCommonValue(selectedElements, 'poster', resource.poster);
   const {
-    allowedMimeTypes: { ws_image: allowedImageMimeTypes },
+    allowedMimeTypes: { image: allowedImageMimeTypes },
     capabilities: { hasUploadMediaAction },
   } = useConfig();
 

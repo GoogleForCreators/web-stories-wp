@@ -47,6 +47,7 @@ function HotlinkModal({ isOpen, onClose }) {
   const {
     allowedMimeTypes: {
       image: allowedImageMimeTypes,
+      vector: allowedVectorMimeTypes,
       video: allowedVideoMimeTypes,
     },
   } = useConfig();
@@ -54,8 +55,12 @@ function HotlinkModal({ isOpen, onClose }) {
   const inputRef = useRef(null);
 
   const allowedMimeTypes = useMemo(
-    () => [...allowedImageMimeTypes, ...allowedVideoMimeTypes],
-    [allowedImageMimeTypes, allowedVideoMimeTypes]
+    () => [
+      ...allowedImageMimeTypes,
+      ...allowedVectorMimeTypes,
+      ...allowedVideoMimeTypes,
+    ],
+    [allowedImageMimeTypes, allowedVectorMimeTypes, allowedVideoMimeTypes]
   );
   const allowedFileTypes = useMemo(
     () =>

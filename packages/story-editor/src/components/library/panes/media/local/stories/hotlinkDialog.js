@@ -50,6 +50,7 @@ export const _default = ({ insertElement, ...args }) => {
         'image/webp',
       ],
       audio: [],
+      vector: [],
       video: ['video/mp4', 'video/webm'],
     },
     capabilities: { hasUploadMediaAction: true },

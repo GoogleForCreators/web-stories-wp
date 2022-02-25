@@ -69,7 +69,7 @@ function arrange(
   const config = {
     capabilities,
     allowedMimeTypes: {
-      ws_image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
+      image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
     },
     apiCallbacks: {
       getAuthors: jest.fn().mockResolvedValue({}),

@@ -49,7 +49,7 @@ function arrange(selectedElements) {
   const configValue = {
     allowedMimeTypes: {
       image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
-      ws_image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
+      vector: [],
       video: [],
     },
     capabilities: {
