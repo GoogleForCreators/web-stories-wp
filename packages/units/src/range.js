@@ -21,18 +21,18 @@
  * and returns the interpolated progress within the given range.
  *
  * @param {number} progress - value between 0 and 1
- * @param {[number, number]} range - tuple that dictates a range between 2 numbers
+ * @param {Object} range - tuple that dictates a range between 2 numbers
  * @return {number} value within given range
  */
 export const lerp = (progress, range) =>
-  (1 - progress) * range[0] + progress * range[1];
+  (1 - progress) * range.MIN + progress * range.MAX;
 
 /**
  * Takes a value and a range in the form of the tuple and returns
  * a normalized progress value of that value within the range.
  *
  * ```js
- * const p = progress(25, [0, 50]);
+ * const p = progress(25, {MIN: 0, MAX: 50});
  * console.log(p) // .5
  * ```
  *
@@ -42,26 +42,24 @@ export const lerp = (progress, range) =>
  */
 export const progress = (v, range) => {
   const clamped = clamp(v, range);
-  const delta = clamped - range[0];
-  const difference = range[1] - range[0];
+  const delta = clamped - range.MIN;
+  const difference = range.MAX - range.MIN;
 
   return Math.abs(delta / difference);
 };
 
 /**
- * Takes a value and a range in the form of either a tuple and clamps the value to that range.
+ * Takes a value and a range in the form of a tuple and clamps the value to that range.
  *
  * @param {number} value - value to be clamped
- * @param {[number, number]|{MIN: number, MAX: number}} range - range in the form of a tuple.
+ * @param {Object} range - range in the form of a tuple.
+ * @param range.MIN
+ * @param range.MAX
  * @return {number} - number within range
  */
-export const clamp = (value, range) => {
-  const lowerBound = Array.isArray(range)
-    ? Math.min(range[0], range[1])
-    : range.MIN;
-  const upperBound = Array.isArray(range)
-    ? Math.max(range[0], range[1])
-    : range.MAX;
+export const clamp = (value, { MIN, MAX }) => {
+  const lowerBound = Math.min(MIN, MAX);
+  const upperBound = Math.max(MIN, MAX);
 
-  return Math.min(Math.max(lowerBound, value), upperBound);
+  return Math.min(Math.max(value, lowerBound), upperBound);
 };

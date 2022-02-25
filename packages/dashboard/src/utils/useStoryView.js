@@ -60,7 +60,7 @@ export default function useStoryView({
 
   const setPageClamped = useCallback(
     (newPage) => {
-      const pageRange = [1, totalPages];
+      const pageRange = { MIN: 1, MAX: totalPages };
       setPage(clamp(newPage, pageRange));
     },
     [totalPages]

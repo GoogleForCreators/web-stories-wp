@@ -126,18 +126,18 @@ export const getInitial = (additionalInitialState) => ({
     goToNext:
       () =>
       ({ navigationIndex, navigationFlow }) => ({
-        navigationIndex: clamp(navigationIndex + 1, [
-          0,
-          navigationFlow.length - 1,
-        ]),
+        navigationIndex: clamp(navigationIndex + 1, {
+          MIN: 0,
+          MAX: navigationFlow.length - 1,
+        }),
       }),
     goToPrev:
       () =>
       ({ navigationIndex, navigationFlow }) => ({
-        navigationIndex: clamp(navigationIndex - 1, [
-          0,
-          navigationFlow.length - 1,
-        ]),
+        navigationIndex: clamp(navigationIndex - 1, {
+          MIN: 0,
+          MAX: navigationFlow.length - 1,
+        }),
       }),
     goToMenu: () => () => ({ navigationIndex: -1 }),
     goToTip:

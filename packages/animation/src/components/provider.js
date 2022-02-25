@@ -234,7 +234,7 @@ function Provider({
         animation.currentTime =
           time === 'end'
             ? animationEndTime
-            : clamp(time, [0, animationEndTime]);
+            : clamp(time, { MIN: 0, MAX: animationEndTime });
       });
 
     return {
