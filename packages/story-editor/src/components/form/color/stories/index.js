@@ -87,7 +87,7 @@ const ColorInputWrapper = styled.div`
 function ColorInput({ initialColor, ...rest }) {
   const [color, setColor] = useState(initialColor);
 
-  return <Color onChange={setColor} value={color} {...rest} />;
+  return <Color onChange={setColor} label="Color" value={color} {...rest} />;
 }
 
 const RED = { type: 'solid', color: { r: 255, g: 0, b: 0 } };

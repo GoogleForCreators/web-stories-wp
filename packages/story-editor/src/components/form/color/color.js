@@ -186,7 +186,7 @@ Color.propTypes = {
   maxHeight: PropTypes.number,
   shouldCloseOnSelection: PropTypes.bool,
   allowsSavedColorDeletion: PropTypes.bool,
-  pickerPlacement: PropTypes.bool,
+  pickerPlacement: PropTypes.string,
   isMinimal: PropTypes.bool,
   hasInputs: PropTypes.bool,
 };

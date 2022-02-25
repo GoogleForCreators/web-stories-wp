@@ -153,8 +153,8 @@ const ColorInput = forwardRef(function ColorInput(
     label = null,
     changedStyle,
     pickerPlacement,
-    isMinimal,
-    hasInputs,
+    isMinimal = false,
+    hasInputs = true,
     pickerProps,
   },
   ref
@@ -280,7 +280,7 @@ ColorInput.propTypes = {
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string,
   changedStyle: PropTypes.string,
-  pickerPlacement: PropTypes.bool,
+  pickerPlacement: PropTypes.string,
   isMinimal: PropTypes.bool,
   hasInputs: PropTypes.bool,
 };

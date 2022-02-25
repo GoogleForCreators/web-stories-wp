@@ -60,7 +60,10 @@ describe('<ColorPicker /> when moving a stop with a pointer device', () => {
         type: 'linear',
         stops: [
           { color: { r: 0, g: 255, b: 0, a: 0.4 }, position: 0 },
-          { color: { r: 255, g: 0, b: 255, a: 0.8 }, position: 0.7 },
+          {
+            color: { r: 255, g: 0, b: 255, a: 0.8 },
+            position: expect.closeTo(0.7, 1),
+          },
         ],
       })
     );
@@ -78,7 +81,10 @@ describe('<ColorPicker /> when moving a stop with a pointer device', () => {
       type: 'linear',
       stops: [
         { color: { r: 0, g: 255, b: 0, a: 0.4 }, position: 0 },
-        { color: { r: 255, g: 0, b: 255, a: 0.8 }, position: 0.6 },
+        {
+          color: { r: 255, g: 0, b: 255, a: 0.8 },
+          position: expect.closeTo(0.6, 1),
+        },
       ],
     });
     onChange.mockReset();
@@ -130,8 +136,14 @@ describe('<ColorPicker /> when moving a stop with a pointer device', () => {
         type: 'linear',
         stops: [
           { color: { r: 255, g: 0, b: 0 }, position: 0 },
-          { color: { r: 0, g: 255, b: 0 }, position: 0.4 },
-          { color: { r: 0, g: 0, b: 255 }, position: 0.6 },
+          {
+            color: { r: 0, g: 255, b: 0 },
+            position: expect.closeTo(0.4, 1),
+          },
+          {
+            color: { r: 0, g: 0, b: 255 },
+            position: expect.closeTo(0.6, 1),
+          },
         ],
       })
     );
