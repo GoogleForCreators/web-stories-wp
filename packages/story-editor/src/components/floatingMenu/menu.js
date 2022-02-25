@@ -42,9 +42,19 @@ const FloatingMenu = memo(
   ) {
     useLayoutEffect(() => {
       const node = ref.current;
-      const bounds = node.getBoundingClientRect();
-      node.style.setProperty('--width', `${bounds.width.toFixed(2)}px`);
-      node.style.setProperty('--height', `${bounds.height.toFixed(2)}px`);
+      const updateSize = () => {
+        node.style.width = '';
+        const bounds = node.getBoundingClientRect();
+        node.style.setProperty('--width', `${bounds.width.toFixed(2)}px`);
+        node.style.setProperty('--height', `${bounds.height.toFixed(2)}px`);
+        node.style.width = 'var(--width)';
+      };
+      updateSize();
+      // If the menu children list changes, update the size again
+      const observer = new MutationObserver(updateSize);
+      const menu = node.querySelector('[role=menu]');
+      observer.observe(menu, { childList: true });
+      return () => observer.disconnect();
     }, [ref, selectionIdentifier]);
 
     return (
