@@ -168,8 +168,6 @@ describe('TextEdit integration', () => {
           expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull()
         );
         // The element is still selected and updated.
-        // const storyContext = await fixture.renderHook(() => useStory());
-
         await waitFor(async () => {
           const story = await fixture.renderHook(() => useStory());
 
