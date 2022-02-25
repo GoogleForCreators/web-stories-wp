@@ -19,12 +19,12 @@
  */
 import { useCallback } from '@googleforcreators/react';
 import { getGoogleFontURL } from '@googleforcreators/fonts';
+import { loadStylesheet } from '@googleforcreators/dom';
 
 /**
  * Internal dependencies
  */
 import cleanForSlug from '../../../utils/cleanForSlug';
-import loadStylesheet from '../../../utils/loadStylesheet';
 import { ensureFontLoaded, loadInlineStylesheet } from '../utils';
 
 function useLoadFontFiles() {

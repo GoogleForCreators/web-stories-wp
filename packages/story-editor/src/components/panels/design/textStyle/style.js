@@ -28,12 +28,12 @@ import {
   BUTTON_SIZES,
   BUTTON_VARIANTS,
 } from '@googleforcreators/design-system';
+import { stripHTML } from '@googleforcreators/dom';
 
 /**
  * Internal dependencies
  */
 import { useFont } from '../../../../app/font';
-import stripHTML from '../../../../utils/stripHTML';
 import clamp from '../../../../utils/clamp';
 import { Row, usePresubmitHandler } from '../../../form';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';

@@ -16,7 +16,6 @@
 
 export { default as isNullOrUndefinedOrEmptyString } from './isNullOrUndefinedOrEmptyString';
 export { noop } from './noop';
-export { default as addQueryArgs } from './addQueryArgs';
 export { default as labelAccessibilityValidator } from './labelAccessibilityValidator';
 export { default as useLiveRegion } from './useLiveRegion';
 export { default as uniqueEntriesByKey } from './uniqueEntriesByKey';
@@ -25,4 +24,3 @@ export { default as deepMerge } from './deepMerge';
 export { default as useMouseDownOutsideRef } from './useMouseDownOutsideRef';
 export * from './constants';
 export * from './directions';
-export * from './url';

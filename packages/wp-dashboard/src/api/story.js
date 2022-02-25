@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { addQueryArgs } from '@googleforcreators/design-system';
+import { addQueryArgs } from '@googleforcreators/url';
 import {
   ORDER_BY_SORT,
   STORIES_PER_REQUEST,

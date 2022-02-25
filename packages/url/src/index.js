@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,10 +14,5 @@
  * limitations under the License.
  */
 
-export function toAbsoluteUrl(base, path) {
-  try {
-    return new URL(path, base).href;
-  } catch (error) {
-    return path;
-  }
-}
+export * from './url';
+export { default as addQueryArgs } from './addQueryArgs';

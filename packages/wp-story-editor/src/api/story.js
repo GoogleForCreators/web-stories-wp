@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { addQueryArgs } from '@googleforcreators/design-system';
+import { addQueryArgs } from '@googleforcreators/url';
 import { DATA_VERSION } from '@googleforcreators/migration';
 
 /**

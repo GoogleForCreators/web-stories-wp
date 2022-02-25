@@ -13,25 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { stripHTML } from '@googleforcreators/dom';
 
-/**
- * Internal dependencies
- */
-import StoryPropTypes from '../../types';
-import { LayerText } from '../shared/layerText';
+const buffer = document.createElement('div');
 
-function TextLayerContent({ element: { content } }) {
-  // Remove all tags
-  const rawContent = stripHTML(content);
-  return <LayerText>{rawContent}</LayerText>;
+export default function stripHTML(string) {
+  // @todo: implement a cheaper way to strip markup.
+  buffer.innerHTML = string;
+  return buffer.textContent;
 }
-
-TextLayerContent.propTypes = {
-  element: StoryPropTypes.element.isRequired,
-};
-
-export default TextLayerContent;
