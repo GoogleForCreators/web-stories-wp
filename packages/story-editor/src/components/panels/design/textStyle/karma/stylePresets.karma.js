@@ -176,6 +176,7 @@ describe('Panel: Style Presets', () => {
       await fixture.editor.library.textTab.click();
       await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
 
+      panel = fixture.editor.inspector.designPanel.textStyle;
       await fixture.events.click(panel.applyStyle);
       const storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElements[0].fontSize).toEqual(
