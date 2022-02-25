@@ -33,27 +33,6 @@ class Types {
 	/**
 	 * Returns a list of allowed file types.
 	 *
-	 * @since 1.0.0
-	 *
-	 * @return array List of allowed file types.
-	 */
-	public function get_allowed_file_types(): array {
-		$allowed_mime_types = $this->get_allowed_mime_types();
-		$mime_types         = [];
-
-		foreach ( $allowed_mime_types as $mimes ) {
-			// Otherwise this throws a warning on PHP < 7.3.
-			if ( ! empty( $mimes ) ) {
-				array_push( $mime_types, ...$mimes );
-			}
-		}
-
-		return $this->get_file_type_exts( $mime_types );
-	}
-
-	/**
-	 * Returns a list of allowed file types.
-	 *
 	 * @since 1.5.0
 	 *
 	 * @param array $mime_types Array of mime types.
