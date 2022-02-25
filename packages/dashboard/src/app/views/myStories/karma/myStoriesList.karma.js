@@ -82,11 +82,7 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
 
       expect(listViewTable).toBeTruthy();
 
-      const {
-        state: { templates },
-      } = await fixture.renderHook(() => useApi());
-
-      await fixture.snapshot(`List View - ${templates.allPagesFetched}`);
+      await fixture.snapshot(`List View`);
     });
 
     it('should switch to List View and back to Grid View', async () => {
