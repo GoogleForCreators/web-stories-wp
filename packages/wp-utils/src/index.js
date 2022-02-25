@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,21 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-import { addQueryArgs } from '@googleforcreators/url';
-import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/wp-utils';
-
-/**
- * WordPress dependencies
- */
-import apiFetch from '@wordpress/api-fetch';
-
-export function getHotlinkInfo(config, url) {
-  const path = addQueryArgs(config.api.hotlink, { url });
-  return apiFetch({
-    path,
-  }).then(snakeToCamelCaseObjectKeys);
-}
+export * from './snakeToCamelCase';

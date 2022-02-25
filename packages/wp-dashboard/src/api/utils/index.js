@@ -14,4 +14,3 @@
  * limitations under the License.
  */
 export { default as reshapeStoryObject } from './reshapeStoryObject';
-export * from './snakeToCamelCase';

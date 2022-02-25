@@ -18,10 +18,11 @@
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
+
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { snakeToCamelCaseObjectKeys } from './utils';
+import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/wp-utils';
 
 /**
  * Upload media
