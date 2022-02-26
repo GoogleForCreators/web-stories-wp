@@ -98,15 +98,6 @@ describe('progress', () => {
     expect(progress(100, standard)).toBe(1);
   });
 
-  it('calculates progress in inverse range', () => {
-    const inverse = { MIN: 100, MAX: 0 };
-    expect(progress(100, inverse)).toBe(0);
-    expect(progress(75, inverse)).toBe(0.25);
-    expect(progress(50, inverse)).toBe(0.5);
-    expect(progress(25, inverse)).toBe(0.75);
-    expect(progress(0, inverse)).toBe(1);
-  });
-
   it('calculates progress in negative range', () => {
     const negative = { MIN: -100, MAX: 0 };
     expect(progress(-100, negative)).toBe(0);
@@ -114,14 +105,5 @@ describe('progress', () => {
     expect(progress(-50, negative)).toBe(0.5);
     expect(progress(-25, negative)).toBe(0.75);
     expect(progress(0, negative)).toBe(1);
-  });
-
-  it('calculates progress in negative inverse range', () => {
-    const negativeInverse = { MIN: 0, MAX: -100 };
-    expect(progress(0, negativeInverse)).toBe(0);
-    expect(progress(-25, negativeInverse)).toBe(0.25);
-    expect(progress(-50, negativeInverse)).toBe(0.5);
-    expect(progress(-75, negativeInverse)).toBe(0.75);
-    expect(progress(-100, negativeInverse)).toBe(1);
   });
 });

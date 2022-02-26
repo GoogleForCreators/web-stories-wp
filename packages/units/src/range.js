@@ -58,8 +58,5 @@ export const progress = (v, range) => {
  * @return {number} - number within range
  */
 export const clamp = (value, { MIN, MAX }) => {
-  const lowerBound = Math.min(MIN, MAX);
-  const upperBound = Math.max(MIN, MAX);
-
-  return Math.min(Math.max(value, lowerBound), upperBound);
+  return Math.min(Math.max(value, MIN), MAX);
 };
