@@ -231,10 +231,8 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 			$ext = end( $exts );
 		}
 
-		$allowed_mime_types = $this->types->get_allowed_mime_types();
-		unset( $allowed_mime_types['audio'] );
-		unset( $allowed_mime_types['text'] );
-		$type = '';
+		$allowed_mime_types = $this->get_media_types();
+		$type               = '';
 		foreach ( $allowed_mime_types as $key => $mime_types ) {
 			if ( \in_array( $mime_type, $mime_types, true ) ) {
 				$type = $key;
@@ -431,7 +429,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 			return $this->add_additional_fields_schema( $this->schema );
 		}
 
-		$allowed_mime_types = $this->types->get_allowed_mime_types();
+		$allowed_mime_types = $this->get_media_types();
 		$types              = array_keys( $allowed_mime_types );
 		$allowed_mime_types = array_merge( ...array_values( $allowed_mime_types ) );
 		$exts               = $this->types->get_file_type_exts( $allowed_mime_types );
@@ -571,5 +569,26 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		}
 
 		return \strlen( $header );
+	}
+
+	/**
+	 * Retrieves the supported media types.
+	 *
+	 * Media types are considered the MIME type category.
+	 *
+	 * @since 1.18.0
+	 *
+	 * @return array Array of supported media types.
+	 */
+	protected function get_media_types(): array {
+		$mime_type = $this->types->get_allowed_mime_types();
+		// TODO: Update once audio elements are supported.
+		$mime_type['audio'] = [];
+		// TODO: Add support hotlinking vvt files.
+		unset( $mime_type['text'] );
+		// Do not support hotlinking SVGs for security reasons.
+		unset( $mime_type['vector'] );
+
+		return $mime_type;
 	}
 }

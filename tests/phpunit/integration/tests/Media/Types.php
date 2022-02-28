@@ -42,27 +42,41 @@ class Types extends TestCase {
 	public function test_get_allowed_mime_types(): void {
 		if ( $this->supportsWebP() ) {
 			$expected = [
-				'image' => [
+				'image'  => [
 					'image/webp',
 					'image/png',
 					'image/jpeg',
 					'image/gif',
 				],
-				'audio' => [],
-				'video' => [
+				'audio'  => [
+					'audio/mpeg',
+					'audio/aac',
+					'audio/wav',
+					'audio/ogg',
+				],
+				'text'   => [ 'text/vtt' ],
+				'vector' => [],
+				'video'  => [
 					'video/mp4',
 					'video/webm',
 				],
 			];
 		} else {
 			$expected = [
-				'image' => [
+				'image'  => [
 					'image/png',
 					'image/jpeg',
 					'image/gif',
 				],
-				'audio' => [],
-				'video' => [
+				'audio'  => [
+					'audio/mpeg',
+					'audio/aac',
+					'audio/wav',
+					'audio/ogg',
+				],
+				'text'   => [ 'text/vtt' ],
+				'vector' => [],
+				'video'  => [
 					'video/mp4',
 					'video/webm',
 				],
@@ -70,31 +84,6 @@ class Types extends TestCase {
 		}
 
 		$actual = $this->instance->get_allowed_mime_types();
-
-		$this->assertEqualSets( $expected, $actual );
-	}
-
-	/**
-	 * @covers ::get_allowed_image_mime_types
-	 */
-	public function test_get_allowed_image_mime_types(): void {
-		if ( $this->supportsWebP() ) {
-			$expected = [
-				'image/webp',
-				'image/png',
-				'image/jpeg',
-				'image/gif',
-			];
-		} else {
-
-			$expected = [
-				'image/png',
-				'image/jpeg',
-				'image/gif',
-			];
-		}
-
-		$actual = $this->instance->get_allowed_image_mime_types();
 
 		$this->assertEqualSets( $expected, $actual );
 	}

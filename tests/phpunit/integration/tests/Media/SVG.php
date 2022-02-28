@@ -128,8 +128,8 @@ class SVG extends TestCase {
 	public function test_web_stories_allowed_mime_types(): void {
 		$allowed_mime_types = $this->instance->web_stories_allowed_mime_types( [] );
 
-		$this->assertArrayHasKey( 'image', $allowed_mime_types );
-		$this->assertContains( 'image/svg+xml', $allowed_mime_types['image'] );
+		$this->assertArrayHasKey( 'vector', $allowed_mime_types );
+		$this->assertContains( 'image/svg+xml', $allowed_mime_types['vector'] );
 	}
 
 	/**

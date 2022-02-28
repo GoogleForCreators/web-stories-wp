@@ -105,35 +105,4 @@ class Types {
 
 		return $allowed_mime_types;
 	}
-
-	/**
-	 * Returns a list of image mime types.
-	 *
-	 * @since 1.4.0
-	 *
-	 * @return array List of allowed mime types.
-	 */
-	public function get_allowed_image_mime_types(): array {
-		$mime_type         = $this->get_allowed_mime_types();
-		$allowed_mime_type = $mime_type['image'];
-		$image_mime_type   = [
-			'image/webp',
-			'image/png',
-			'image/jpeg',
-			'image/jpg',
-			'image/gif',
-		];
-
-		/**
-		 * Filter list of allowed poster image mime types.
-		 *
-		 * @since 1.4.0
-		 *
-		 * @param array $image_mime_type   List of allowed mime types. Defaults to 'image/png', 'image/jpeg', 'image/jpg','image/gif'.
-		 * @param array $allowed_mime_type Allowed mime types from get_allowed_mime_types.
-		 */
-		$image_mime_type = apply_filters( 'web_stories_allowed_image_mime_types', $image_mime_type, $allowed_mime_type );
-
-		return array_values( array_intersect( $allowed_mime_type, $image_mime_type ) );
-	}
 }

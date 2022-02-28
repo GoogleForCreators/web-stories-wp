@@ -429,7 +429,7 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	protected function get_media_types(): array {
 		$mime_type = $this->types->get_allowed_mime_types();
 		// TODO: Update once audio elements are supported.
-		unset( $mime_type['audio'] );
+		$mime_type['audio'] = [];
 		unset( $mime_type['text'] );
 
 		return $mime_type;
