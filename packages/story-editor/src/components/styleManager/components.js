@@ -18,12 +18,17 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { Button } from '@googleforcreators/design-system';
+import {
+  Button,
+  BUTTON_TYPES,
+  BUTTON_SIZES,
+  BUTTON_VARIANTS,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
-import {focusStyle} from "../panels/shared";
+import { focusStyle } from '../panels/shared';
 
 export const NoStylesWrapper = styled.div`
   display: flex;
@@ -35,7 +40,11 @@ export const NoStylesWrapper = styled.div`
   height: 64px;
 `;
 
-export const MoreButton = styled(Button)`
+export const MoreButton = styled(Button).attrs({
+  type: BUTTON_TYPES.PLAIN,
+  size: BUTTON_SIZES.SMALL,
+  variant: BUTTON_VARIANTS.RECTANGLE,
+})`
   ${focusStyle};
   margin: 12px 0;
   padding: 0 16px;

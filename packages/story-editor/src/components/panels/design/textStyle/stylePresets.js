@@ -113,10 +113,9 @@ function PresetPanel({ pushUpdate }) {
           </StylesWrapper>
           <MoreButton
             ref={buttonRef}
-            type={BUTTON_TYPES.PLAIN}
-            size={BUTTON_SIZES.SMALL}
-            variant={BUTTON_VARIANTS.RECTANGLE}
             onClick={() => setIsPopupOpen(true)}
+            aria-haspopup="dialog"
+            aria-expanded={isPopupOpen}
           >
             {__('More styles', 'web-stories')}
             <Icons.ChevronDownSmall />
