@@ -17,10 +17,6 @@
 
 namespace Google\Web_Stories\Tests\Integration\Admin;
 
-use Google\Web_Stories\Assets;
-use Google\Web_Stories\Decoder;
-use Google\Web_Stories\Integrations\Site_Kit;
-use Google\Web_Stories\Locale;
 use Google\Web_Stories\Tests\Integration\Capabilities_Setup;
 use Google\Web_Stories\Tests\Integration\DependencyInjectedTestCase;
 
@@ -157,7 +153,7 @@ class Dashboard extends DependencyInjectedTestCase {
 		$experiments->method( 'get_experiment_statuses' )
 					->willReturn( [] );
 
-		$assets = $this->getMockBuilder( Assets::class )->setMethods( [ 'get_asset_metadata' ] )->getMock();
+		$assets = $this->getMockBuilder( \Google\Web_Stories\Assets::class )->setMethods( [ 'get_asset_metadata' ] )->getMock();
 		$assets->method( 'get_asset_metadata' )
 			->willReturn(
 				[
@@ -169,17 +165,20 @@ class Dashboard extends DependencyInjectedTestCase {
 				]
 			);
 
-		$post_type      = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
-		$font_post_type = $this->injector->make( \Google\Web_Stories\Font_Post_Type::class );
-		$types          = $this->injector->make( \Google\Web_Stories\Media\Types::class );
+		$site_kit       = $this->injector->make( \Google\Web_Stories\Integrations\Site_Kit::class );
+		$decoder        = $this->injector->make( \Google\Web_Stories\Decoder::class );
+		$locale         = $this->injector->make( \Google\Web_Stories\Locale::class );
 		$google_fonts   = $this->injector->make( \Google\Web_Stories\Admin\Google_Fonts::class );
+		$font_post_type = $this->injector->make( \Google\Web_Stories\Font_Post_Type::class );
+		$post_type      = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
 		$context        = $this->injector->make( \Google\Web_Stories\Context::class );
+		$types          = $this->injector->make( \Google\Web_Stories\Media\Types::class );
 
 		$this->instance = new \Google\Web_Stories\Admin\Dashboard(
 			$experiments,
-			$this->createMock( Site_Kit::class ),
-			$this->createMock( Decoder::class ),
-			$this->createMock( Locale::class ),
+			$site_kit,
+			$decoder,
+			$locale,
 			$google_fonts,
 			$assets,
 			$font_post_type,
