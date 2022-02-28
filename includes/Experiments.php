@@ -308,6 +308,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Updated Publish Story Modal', 'web-stories' ),
 				'description' => __( 'Enable new pre-publish confirmation modal', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @miina
