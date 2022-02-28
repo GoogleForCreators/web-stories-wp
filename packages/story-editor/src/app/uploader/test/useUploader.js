@@ -199,7 +199,7 @@ describe('useUploader', () => {
     it('formats the error message correctly if there is only one file type supported', async () => {
       const {
         actions: { validateFileForUpload },
-      } = setup({ allowedMimeTypes: { image: [], video: ['video/mp4'] } });
+      } = setup({ allowedMimeTypes: { image: [], video: ['video/mp4'], vector: [] } });
 
       await expect(() =>
         validateFileForUpload({ size: 20000, type: 'video/quicktime' })
@@ -209,7 +209,7 @@ describe('useUploader', () => {
     it('formats the error message correctly if no file types are supported', async () => {
       const {
         actions: { validateFileForUpload },
-      } = setup({ allowedMimeTypes: { image: [], video: [] } });
+      } = setup({ allowedMimeTypes: { image: [], video: [], vector: [] } });
 
       await expect(() =>
         validateFileForUpload({ size: 20000, type: 'video/quicktime' })
