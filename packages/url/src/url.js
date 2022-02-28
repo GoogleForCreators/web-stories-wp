@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,4 +20,27 @@ export function toAbsoluteUrl(base, path) {
   } catch (error) {
     return path;
   }
+}
+
+export function isValidUrl(url) {
+  try {
+    // eslint-disable-next-line no-new -- Needed here just to catch errors.
+    new URL(url);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Prepends a protocol (default https) to a URL that doesn't have one
+ *
+ * @param {string} url URL.
+ * @param {string} [protocol=https] default protocol to prepend
+ * @return {string} the url with the protocol prepended to it
+ */
+export function withProtocol(url, protocol = 'https') {
+  return /^(http:\/\/|https:\/\/|tel:|mailto:)/.test(url)
+    ? url
+    : `${protocol}://${url}`;
 }

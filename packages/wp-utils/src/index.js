@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,18 +13,5 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-function loadStylesheet(url, id) {
-  return new Promise((resolve, reject) => {
-    const link = document.createElement('link');
-    link.id = id;
-    link.rel = 'stylesheet';
-    link.href = url;
-    link.crossOrigin = 'anonymous';
-    link.addEventListener('load', resolve);
-    link.addEventListener('error', reject);
-    document.head.appendChild(link);
-  });
-}
-
-export default loadStylesheet;
+export * from './snakeToCamelCase';
+export { default as bindToCallbacks } from './bindToCallbacks';

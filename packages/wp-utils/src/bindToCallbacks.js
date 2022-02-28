@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,18 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+const bindToCallbacks = (callbacks, config) => {
+  return Object.entries(callbacks).reduce((_callbacks, [name, callback]) => {
+    _callbacks[name] = callback.bind(null, config);
+    return _callbacks;
+  }, {});
+};
 
-/**
- * Fires when dom is ready.
- *
- * @param {Function} callback Callback function.
- */
-function domReady(callback) {
-  if ('loading' === document.readyState) {
-    document.addEventListener('DOMContentLoaded', callback);
-  } else {
-    callback();
-  }
-}
-
-export default domReady;
+export default bindToCallbacks;

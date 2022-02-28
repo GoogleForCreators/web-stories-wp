@@ -36,11 +36,12 @@ import {
   BG_MIN_SCALE,
   DIRECTION,
   SCALE_DIRECTION,
-  progress,
   hasOffsets,
   STORY_ANIMATION_STATE,
   getAnimationEffectDefaults,
 } from '@googleforcreators/animation';
+import { progress } from '@googleforcreators/units';
+
 /**
  * Internal dependencies
  */
@@ -194,10 +195,10 @@ function AnimationPanel({
       const hasOffset =
         ['media', 'image', 'video', 'gif'].includes(selectedElements[0].type) &&
         hasOffsets({ element: selectedElements[0] });
-      const normalizedScale = progress(selectedElements[0]?.scale || 0, [
-        BG_MIN_SCALE,
-        BG_MAX_SCALE,
-      ]);
+      const normalizedScale = progress(selectedElements[0]?.scale || 0, {
+        MIN: BG_MIN_SCALE,
+        MAX: BG_MAX_SCALE,
+      });
       return {
         [BACKGROUND_ANIMATION_EFFECTS.PAN.value]: {
           tooltip: backgroundAnimationTooltip,

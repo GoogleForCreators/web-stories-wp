@@ -20,12 +20,12 @@
 import PropTypes from 'prop-types';
 import { useCallback, useRef, useState } from '@googleforcreators/react';
 import { CURATED_FONT_NAMES } from '@googleforcreators/fonts';
+import { loadStylesheet } from '@googleforcreators/dom';
 import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
  */
-import loadStylesheet from '../../utils/loadStylesheet';
 import { FONT_WEIGHT_NAMES } from '../../constants';
 import { useAPI } from '../api';
 import Context from './context';

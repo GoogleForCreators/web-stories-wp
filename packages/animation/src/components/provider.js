@@ -27,6 +27,7 @@ import {
   useState,
   createContext,
 } from '@googleforcreators/react';
+import { clamp } from '@googleforcreators/units';
 import { v4 as uuidv4 } from 'uuid';
 
 if (!('KeyframeEffect' in window)) {
@@ -39,7 +40,6 @@ if (!('KeyframeEffect' in window)) {
  * Internal dependencies
  */
 import { StoryElementPropType } from '../types';
-import { clamp } from '../utils/range';
 import { AnimationPart } from '../parts';
 import { AnimationProps } from '../parts/types';
 
@@ -234,7 +234,7 @@ function Provider({
         animation.currentTime =
           time === 'end'
             ? animationEndTime
-            : clamp(time, [0, animationEndTime]);
+            : clamp(time, { MIN: 0, MAX: animationEndTime });
       });
 
     return {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,11 +14,5 @@
  * limitations under the License.
  */
 
-const clamp = (v, range) => {
-  const lowerBound = Math.min(range[0], range[1]);
-  const upperBound = Math.max(range[0], range[1]);
-
-  return Math.min(Math.max(lowerBound, v), upperBound);
-};
-
-export default clamp;
+export * from './url';
+export { default as addQueryArgs } from './addQueryArgs';
