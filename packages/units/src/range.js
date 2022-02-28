@@ -51,11 +51,11 @@ export const progress = (v, range) => {
 /**
  * Takes a value and a range in the form of a tuple and clamps the value to that range.
  *
- * @param {number} value - value to be clamped
- * @param {Object} range - range in the form of a tuple.
- * @param range.MIN
- * @param range.MAX
- * @return {number} - number within range
+ * @param {number} value Value to be clamped.
+ * @param {Object} range Range.
+ * @param {number} range.MIN Minimum value.
+ * @param {number} range.MAX Maximum value.
+ * @return {number} Number within range.
  */
 export const clamp = (value, { MIN, MAX }) => {
   return Math.min(Math.max(value, MIN), MAX);
