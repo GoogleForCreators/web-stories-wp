@@ -20,11 +20,8 @@
 import PropTypes from 'prop-types';
 import { forwardRef } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
-import {
-  isValidUrl,
-  withProtocol,
-  Input,
-} from '@googleforcreators/design-system';
+import { Input } from '@googleforcreators/design-system';
+import { isValidUrl, withProtocol } from '@googleforcreators/url';
 
 /**
  * Internal dependencies

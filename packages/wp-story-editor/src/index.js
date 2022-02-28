@@ -28,13 +28,19 @@ import './style.css'; // This way the general editor styles are loaded before al
 import './setLocaleData';
 
 /**
+ * WordPress dependencies
+ */
+import domReady from '@wordpress/dom-ready';
+
+/**
  * External dependencies
  */
 import { StoryEditor } from '@googleforcreators/story-editor';
-import { setAppElement, domReady } from '@googleforcreators/design-system';
+import { setAppElement } from '@googleforcreators/design-system';
 import { StrictMode, render } from '@googleforcreators/react';
 import { updateSettings } from '@googleforcreators/date';
 import { initializeTracking } from '@googleforcreators/tracking';
+import { bindToCallbacks } from '@web-stories-wp/wp-utils';
 
 /**
  * Internal dependencies
@@ -46,7 +52,7 @@ import {
   PostLock,
   MediaUpload,
 } from './components';
-import getApiCallbacks from './api/utils/getApiCallbacks';
+import * as apiCallbacks from './api';
 import { transformStoryResponse } from './api/utils';
 import { TIPS, TOOLBAR_HEIGHT, MENU_WIDTH } from './constants';
 import { GlobalStyle } from './theme.js';
@@ -77,7 +83,7 @@ window.webStories.initializeStoryEditor = (id, config, initialEdits) => {
 
   const editorConfig = {
     ...config,
-    apiCallbacks: getApiCallbacks(config),
+    apiCallbacks: bindToCallbacks(apiCallbacks, config),
     additionalTips: TIPS,
     MediaUpload,
     styleConstants: {
