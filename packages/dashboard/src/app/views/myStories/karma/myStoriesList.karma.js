@@ -82,9 +82,8 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
 
       expect(listViewTable).toBeTruthy();
 
-      const { isLoading } = await getStoriesState();
-
-      await waitFor(() => {
+      await waitFor(async () => {
+        const { isLoading } = await getStoriesState();
         if (isLoading) {
           throw new Error('Loading list view');
         }
@@ -111,11 +110,12 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
 
       const storyElements = fixture.screen.getAllByTestId(/^story-grid-item/);
 
-      const { storiesOrderById, isLoading } = await getStoriesState();
+      const { storiesOrderById } = await getStoriesState();
 
       expect(storyElements.length).toEqual(storiesOrderById.length);
 
-      await waitFor(() => {
+      await waitFor(async () => {
+        const { isLoading } = await getStoriesState();
         if (isLoading) {
           throw new Error('Loading gist view');
         }
