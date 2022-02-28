@@ -26,10 +26,11 @@ import {
   LockToggle as DefaultLockToggle,
   NumericInput,
 } from '@googleforcreators/design-system';
+import { clamp } from '@googleforcreators/units';
+
 /**
  * Internal dependencies
  */
-import clamp from '../../../../utils/clamp';
 import { Row as DefaultRow, usePresubmitHandler } from '../../../form';
 import {
   focusStyle,

@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 /**
- * Internal dependencies
+ * External dependencies
  */
-import stripHTML from '../../../utils/stripHTML';
+import { stripHTML } from '@googleforcreators/dom';
 
 export function characterCountForPage(page) {
   let characterCount = 0;

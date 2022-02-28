@@ -19,13 +19,12 @@
  */
 import { useState, useCallback } from '@googleforcreators/react';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
+import { isValidUrl, withProtocol } from '@googleforcreators/url';
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
-  isValidUrl,
-  withProtocol,
   Icons,
   Text,
   THEME_CONSTANTS,
