@@ -89,7 +89,8 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
         }
       });
 
-      await fixture.snapshot(`List View`);
+      const { isLoading } = await getStoriesState();
+      await fixture.snapshot(`List View - ${isLoading}`);
     });
 
     it('should switch to List View and back to Grid View', async () => {
@@ -117,11 +118,12 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
       await waitFor(async () => {
         const { isLoading } = await getStoriesState();
         if (isLoading) {
-          throw new Error('Loading gist view');
+          throw new Error('Loading grid view');
         }
       });
 
-      await fixture.snapshot('Grid View');
+      const { isLoading } = await getStoriesState();
+      await fixture.snapshot(`Grid View - ${isLoading}`);
     });
 
     it('should Rename a story', async () => {
