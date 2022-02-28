@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { within, waitFor } from '@testing-library/react';
+import { within } from '@testing-library/react';
 import { getRelativeDisplayDate } from '@googleforcreators/date';
 
 /**
@@ -82,15 +82,7 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
 
       expect(listViewTable).toBeTruthy();
 
-      await waitFor(async () => {
-        const { isLoading } = await getStoriesState();
-        if (isLoading) {
-          throw new Error('Loading list view');
-        }
-      });
-
-      const { isLoading } = await getStoriesState();
-      await fixture.snapshot(`List View - ${isLoading}`);
+      await fixture.snapshot('List View');
     });
 
     it('should switch to List View and back to Grid View', async () => {
@@ -115,15 +107,7 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
 
       expect(storyElements.length).toEqual(storiesOrderById.length);
 
-      await waitFor(async () => {
-        const { isLoading } = await getStoriesState();
-        if (isLoading) {
-          throw new Error('Loading grid view');
-        }
-      });
-
-      const { isLoading } = await getStoriesState();
-      await fixture.snapshot(`Grid View - ${isLoading}`);
+      await fixture.snapshot('Grid View');
     });
 
     it('should Rename a story', async () => {
