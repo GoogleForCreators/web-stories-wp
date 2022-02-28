@@ -63,6 +63,11 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
     await fixture.events.click(fixture.editor.library.text.preset(name));
   }
 
+  async function getSelection() {
+    const storyContext = await fixture.renderHook(() => useStory());
+    return storyContext.state.selectedElements;
+  }
+
   describe('Adding text presets', () => {
     beforeEach(async () => {
       await fixture.editor.library.textTab.click();
@@ -90,6 +95,37 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       ]);
       // Now background + 1 extra element
       expect(fixture.editor.canvas.framesLayer.frames.length).toBe(2);
+    });
+  });
+
+  describe('Applying text presets', () => {
+    beforeEach(async () => {
+      await fixture.editor.library.textTab.click();
+      // Give some time for everything to be ready for the tests.
+      await fixture.events.sleep(800);
+      await waitFor(() => {
+        if (!fixture.editor.canvas.framesLayer.frames[0].node) {
+          throw new Error('node not ready');
+        }
+      });
+    });
+
+    it('should apply Title preset to a label', async () => {
+      // Only background initially
+      expect(fixture.editor.canvas.framesLayer.frames.length).toBe(1);
+
+      // Add label.
+      await fixture.events.click(fixture.editor.library.text.preset('LABEL'));
+      const [label] = await getSelection();
+      expect(label.fontSize).toBe(12);
+
+      // Apply Title 1.
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Apply preset: Title 1')
+      );
+      // Verify the font size was applied.
+      const [styledLabel] = await getSelection();
+      expect(styledLabel.fontSize).toBe(36);
     });
   });
 
@@ -242,11 +278,6 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       await fixture.snapshot('staggered all text presets');
     });
   });
-
-  const getSelection = async () => {
-    const storyContext = await fixture.renderHook(() => useStory());
-    return storyContext.state.selectedElements;
-  };
 
   describe('Easier/smarter text color', () => {
     it('should add text color based on background', async () => {
