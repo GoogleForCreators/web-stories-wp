@@ -410,6 +410,8 @@ class Dashboard extends Service_Base {
 		if ( ! $max_upload_size ) {
 			$max_upload_size = 0;
 		}
+		$mime_types               = $this->types->get_allowed_mime_types();
+		$allowed_image_mime_types = $mime_types['image'];
 
 		$settings = [
 			'isRTL'                   => is_rtl(),
@@ -419,7 +421,7 @@ class Dashboard extends Service_Base {
 			'archiveURL'              => $this->story_post_type->get_archive_link(),
 			'defaultArchiveURL'       => $this->story_post_type->get_archive_link( true ),
 			'cdnURL'                  => trailingslashit( WEBSTORIES_CDN_URL ),
-			'allowedImageMimeTypes'   => $this->types->get_allowed_image_mime_types(),
+			'allowedImageMimeTypes'   => $allowed_image_mime_types,
 			'version'                 => WEBSTORIES_VERSION,
 			'encodeMarkup'            => $this->decoder->supports_decoding(),
 			'api'                     => [
