@@ -163,14 +163,10 @@ describe('TextEdit integration', () => {
 
         // Exit edit mode using the Esc key
         await fixture.events.keyboard.press('Esc');
-        await fixture.events.sleep(100);
-        await waitFor(() =>
-          expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull()
-        );
+
         // The element is still selected and updated.
         await waitFor(async () => {
           const story = await fixture.renderHook(() => useStory());
-
           if (!story.state.selectedElements.length) {
             throw new Error('story not ready');
           }
