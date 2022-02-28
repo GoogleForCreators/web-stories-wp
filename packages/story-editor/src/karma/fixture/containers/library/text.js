@@ -45,4 +45,16 @@ export default class Text extends Container {
       name: 'Adaptive text colors',
     });
   }
+
+  get addStyleButton() {
+    return this.getByRole('button', { name: /Add style/ });
+  }
+
+  get addTextWithStyleButtons() {
+    return this.getAllByRole('button', { name: /Add new text/ });
+  }
+
+  get applyStyleButtons() {
+    return this.getAllByRole('button', { name: /Apply style/ });
+  }
 }

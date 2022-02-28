@@ -22,15 +22,16 @@ import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import { Icons } from '@googleforcreators/design-system';
+import { useState } from '@googleforcreators/react';
 import { stripHTML } from '@googleforcreators/dom';
 
 /**
  * Internal dependencies
  */
-import { BACKGROUND_TEXT_MODE } from '../../../../../constants';
-import { generatePresetStyle } from '../../../../../utils/presetUtils';
-import { useStory } from '../../../../../app/story';
-import { focusStyle } from '../../../shared';
+import { BACKGROUND_TEXT_MODE } from '../../constants';
+import { generatePresetStyle } from '../../utils/presetUtils';
+import { useStory } from '../../app/story';
+import { focusStyle } from '../panels/shared';
 
 const REMOVE_ICON_SIZE = 32;
 
@@ -48,7 +49,7 @@ const PresetButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  svg {
+  > svg {
     width: ${REMOVE_ICON_SIZE}px;
     height: ${REMOVE_ICON_SIZE}px;
     position: absolute;
@@ -81,18 +82,32 @@ const TextWrapper = styled.div`
   ${({ background }) => (background ? generatePatternStyles(background) : null)}
 `;
 
-function StyleItem({ style, i, activeIndex, handleOnClick, isEditMode }) {
-  const { selectedElements } = useStory(({ state: { selectedElements } }) => {
-    return {
-      selectedElements,
-    };
-  });
+function StyleItem({
+  style,
+  i,
+  activeIndex,
+  handleOnClick,
+  isEditMode,
+  activeItemOverlay,
+  applyLabel = __('Apply style', 'web-stories'),
+}) {
+  const selectedElements = useStory(({ state }) => state.selectedElements);
+  const [isActive, setIsActive] = useState(false);
+  // We only want to change this state if we have the active item overlay.
+  const makeActive = () => {
+    activeItemOverlay && setIsActive(true);
+  };
+  const makeInactive = () => {
+    activeItemOverlay && setIsActive(false);
+  };
+
   if (!style) {
     return null;
   }
 
-  const textContent =
-    stripHTML(selectedElements[0].content) || __('Text', 'web-stories');
+  const textContent = selectedElements[0]?.content
+    ? stripHTML(selectedElements[0].content)
+    : __('Lorem ipsum dolor sit amet', 'web-stories');
 
   const getStylePresetText = () => {
     const isHighLight =
@@ -119,14 +134,15 @@ function StyleItem({ style, i, activeIndex, handleOnClick, isEditMode }) {
       tabIndex={activeIndex === i ? 0 : -1}
       style={style}
       onClick={() => handleOnClick(style)}
-      aria-label={
-        isEditMode
-          ? __('Delete style', 'web-stories')
-          : __('Apply style', 'web-stories')
-      }
+      onPointerEnter={makeActive}
+      onFocus={makeActive}
+      onPointerLeave={makeInactive}
+      onBlur={makeInactive}
+      aria-label={isEditMode ? __('Delete style', 'web-stories') : applyLabel}
     >
       {getStylePresetText()}
       {isEditMode && <Icons.Cross />}
+      {!isEditMode && isActive && activeItemOverlay}
     </PresetButton>
   );
 }
@@ -137,6 +153,8 @@ StyleItem.propTypes = {
   activeIndex: PropTypes.number,
   handleOnClick: PropTypes.func.isRequired,
   isEditMode: PropTypes.bool.isRequired,
+  activeItemOverlay: PropTypes.node,
+  applyLabel: PropTypes.string,
 };
 
 export default StyleItem;

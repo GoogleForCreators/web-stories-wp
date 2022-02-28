@@ -26,7 +26,7 @@ import { v4 as uuidv4 } from 'uuid';
  */
 import { PRESET_TYPES } from '../../../constants';
 import updateProperties from '../../../components/inspector/design/updateProperties';
-import useApplyStyle from '../../../components/panels/design/textStyle/stylePresets/useApplyStyle';
+import useApplyStyle from '../../../components/styleManager/useApplyStyle';
 import getUpdatedSizeAndPosition from '../../../utils/getUpdatedSizeAndPosition';
 import { getTextPresets } from '../../../utils/presetUtils';
 import { useHistory, useStory } from '../..';

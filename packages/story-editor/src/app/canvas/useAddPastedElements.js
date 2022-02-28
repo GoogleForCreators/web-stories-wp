@@ -33,7 +33,7 @@ function useAddPastedElements() {
     addAnimations,
   } = useStory(
     ({
-      state: { currentPage, selectedElements },
+      state: { currentPage },
       actions: {
         addElements,
         deleteSelectedElements,
@@ -45,7 +45,6 @@ function useAddPastedElements() {
     }) => {
       return {
         currentPage,
-        selectedElements,
         addElements,
         deleteSelectedElements,
         updateCurrentPageProperties,
