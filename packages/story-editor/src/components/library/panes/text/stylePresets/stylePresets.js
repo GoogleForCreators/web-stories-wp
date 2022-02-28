@@ -41,9 +41,11 @@ import { useStory, useConfig } from '../../../../../app';
 import { PRESET_TYPES } from '../../../../../constants';
 import useAddPreset from '../../../../../utils/useAddPreset';
 import { DEFAULT_PRESET } from '../textPresets';
-import { focusStyle } from '../../../../panels/shared';
 import StyleGroup from '../../../../styleManager/styleGroup';
-import StyleManager from '../../../../styleManager';
+import StyleManager, {
+  NoStylesWrapper,
+  MoreButton,
+} from '../../../../styleManager';
 import useLibrary from '../../../useLibrary';
 import { areAllType } from '../../../../../utils/presetUtils';
 import useApplyStyle from '../../../../styleManager/useApplyStyle';
@@ -70,31 +72,6 @@ const StylesWrapper = styled.div``;
 
 const StyledButton = styled(Button)`
   margin-left: auto;
-`;
-
-const StyledMoreButton = styled(Button)`
-  ${focusStyle};
-  margin-top: 12px;
-  padding: 0 16px;
-  justify-content: center;
-  align-self: center;
-  width: 100%;
-  svg {
-    transform: rotate(-90deg);
-    height: 32px;
-    width: 32px;
-    margin-left: -4px;
-  }
-`;
-
-const NoStylesWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: calc(100% + 32px);
-  margin: 0 0 -8px -16px;
-  background-color: ${({ theme }) => theme.colors.opacity.black24};
-  height: 64px;
 `;
 
 const NoStylesText = styled(Text)`
@@ -209,7 +186,7 @@ function PresetPanel() {
               {...styleItemProps}
             />
           </StylesWrapper>
-          <StyledMoreButton
+          <MoreButton
             ref={buttonRef}
             type={BUTTON_TYPES.PLAIN}
             size={BUTTON_SIZES.SMALL}
@@ -218,7 +195,7 @@ function PresetPanel() {
           >
             {__('More styles', 'web-stories')}
             <Icons.ChevronDownSmall />
-          </StyledMoreButton>
+          </MoreButton>
           <Popup
             topOffset={topOffset}
             isRTL={isRTL}

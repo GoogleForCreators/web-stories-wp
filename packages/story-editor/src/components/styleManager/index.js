@@ -14,3 +14,4 @@
  * limitations under the License.
  */
 export { default } from './styleManager';
+export * from './components';
