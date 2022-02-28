@@ -15,4 +15,3 @@
  */
 
 export default 'span';
-export const ReactComponent = 'span';

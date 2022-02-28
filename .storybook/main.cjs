@@ -124,7 +124,6 @@ module.exports = {
     );
 
     // Ensure SVGR is the only loader used for files with .svg extension.
-    // TODO: Figure out why this is needed; only the first-matching rule ought to be used.
     const assetRule = config.module.rules.find(({ test }) => test.test('.svg'));
     assetRule.exclude = /\.svg/;
 
