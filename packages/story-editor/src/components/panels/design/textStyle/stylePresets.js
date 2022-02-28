@@ -41,7 +41,10 @@ import { PRESET_TYPES } from '../../../../constants';
 import useAddPreset from '../../../../utils/useAddPreset';
 import useInspector from '../../../inspector/useInspector';
 import StyleGroup from '../../../styleManager/styleGroup';
-import StyleManager, { NoStylesWrapper, MoreButton } from '../../../styleManager';
+import StyleManager, {
+  NoStylesWrapper,
+  MoreButton,
+} from '../../../styleManager';
 import useApplyStyle from '../../../styleManager/useApplyStyle';
 
 const PresetsHeader = styled.div`
