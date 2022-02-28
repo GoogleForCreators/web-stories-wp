@@ -234,7 +234,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		$allowed_mime_types = $this->types->get_allowed_mime_types();
 		unset( $allowed_mime_types['audio'] );
 		unset( $allowed_mime_types['text'] );
-		$type               = '';
+		$type = '';
 		foreach ( $allowed_mime_types as $key => $mime_types ) {
 			if ( \in_array( $mime_type, $mime_types, true ) ) {
 				$type = $key;
