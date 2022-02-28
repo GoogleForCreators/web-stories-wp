@@ -17,10 +17,6 @@ snapshot:
       background-color: transparent !important;
     }
 
-    [class*='loadingSpinner__Container-']{
-      display:none;
-    }
-
     video::-webkit-media-controls {
       display: none;
     }
