@@ -24,6 +24,7 @@ import {
   uploadPublisherLogoEditor,
   takeSnapshot,
   addTextElement,
+  insertStoryTitle,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Pre-Publish Checklist : Admin User', () => {
@@ -58,6 +59,8 @@ describe('Pre-Publish Checklist : Admin User', () => {
     await insertButton.click();
     await expect(page).toMatchElement('[data-testid="imageElement"]');
 
+    await insertStoryTitle('Prepublish Checklist - admin - no poster warning');
+
     await publishStory();
 
     await page.reload();
@@ -76,7 +79,9 @@ describe('Pre-Publish Checklist : Admin User', () => {
     await addPages(3);
 
     await expect(page).toClick('button', { text: 'Publish' });
-    await expect(page).toClick('button', { text: 'Review Checklist' });
+    await expect(page).toClick(
+      'div[aria-label="Story details"] button[aria-label^="Checklist"]'
+    );
     await expect(page).toMatch('Add poster image');
 
     await expect(page).toClick('p', { text: 'Document' });
@@ -105,7 +110,9 @@ describe('Pre-Publish Checklist : Admin User', () => {
     await addPages(3);
 
     await expect(page).toClick('button', { text: 'Publish' });
-    await expect(page).toClick('button', { text: 'Review Checklist' });
+    await expect(page).toClick(
+      'div[aria-label="Story details"] button[aria-label^="Checklist"]'
+    );
     const title = await expect(page).toMatchElement('h2', {
       text: 'Add poster image',
     });
