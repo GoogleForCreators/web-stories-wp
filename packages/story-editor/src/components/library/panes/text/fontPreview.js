@@ -35,6 +35,7 @@ import {
 import { trackEvent } from '@googleforcreators/tracking';
 import { useUnits } from '@googleforcreators/units';
 import { __, sprintf } from '@googleforcreators/i18n';
+import { getHTMLFormatters, getHTMLInfo } from '@googleforcreators/rich-text';
 
 /**
  * Internal dependencies
@@ -94,6 +95,7 @@ const DragContainer = styled.div`
 `;
 
 function FontPreview({ title, element, insertPreset, getPosition, index }) {
+  const htmlFormatters = getHTMLFormatters();
   const { font, fontSize, fontWeight, content } = element;
   const {
     actions: { maybeEnqueueFontStyle },
@@ -179,6 +181,7 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
     if (isText) {
       updateSelectedElements({
         properties: (oldElement) => {
+          const { fontWeight: newFontWeight } = getHTMLInfo(element.content);
           const presetAtts = objectWithout(element, ['content', 'width']);
           const sizeUpdates = getUpdatedSizeAndPosition({
             ...oldElement,
@@ -188,6 +191,10 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
             ...oldElement,
             ...presetAtts,
             ...sizeUpdates,
+            content: htmlFormatters.setFontWeight(
+              oldElement.content,
+              newFontWeight
+            ),
           };
         },
       });
@@ -206,7 +213,14 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
     // Reset after insertion.
     presetDataRef.current = {};
     trackEvent('insert_text_preset', { name: title });
-  }, [insertPreset, element, title, isText, updateSelectedElements]);
+  }, [
+    insertPreset,
+    element,
+    title,
+    isText,
+    updateSelectedElements,
+    htmlFormatters,
+  ]);
 
   const getTextDisplay = (textProps = {}) => {
     const { isClone } = textProps;

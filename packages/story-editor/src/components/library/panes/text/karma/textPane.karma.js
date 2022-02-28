@@ -123,9 +123,12 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       await fixture.events.click(
         fixture.editor.library.text.preset('Apply preset: Title 1')
       );
-      // Verify the font size was applied.
+      // Verify the font size and font weight were applied.
       const [styledLabel] = await getSelection();
       expect(styledLabel.fontSize).toBe(36);
+      expect(styledLabel.content).toBe(
+        '<span style="font-weight: 700">LABEL</span>'
+      );
     });
   });
 
