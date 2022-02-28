@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+const MINIMUM_CONTENT_LENGTH = 3;
+
 /**
  * Returns a map of tag names for text elements.
  *
@@ -34,9 +36,15 @@ function getTextElementTagNames(elements) {
        * @param {Object} element Text element.
        * @param {string} element.id Element ID
        * @param {number} element.fontSize Font size.
+       * @param {string} element.content Text content.
        * @return {Map<string, string>} Tag names map.
        */
-      (tagNamesMap, { id, fontSize }) => {
+      (tagNamesMap, { id, fontSize, content }) => {
+        if (content.length <= MINIMUM_CONTENT_LENGTH) {
+          tagNamesMap.set(id, 'p');
+          return tagNamesMap;
+        }
+
         const hasH1 = Array.from(tagNamesMap.values()).includes('h1');
 
         if (fontSize >= 36 && !hasH1) {
