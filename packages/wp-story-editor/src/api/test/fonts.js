@@ -20,9 +20,14 @@
 import apiFetch from '@wordpress/api-fetch';
 
 /**
+ * External dependencies
+ */
+import { bindToCallbacks } from '@web-stories-wp/wp-utils';
+
+/**
  * Internal dependencies
  */
-import getApiCallbacks from '../utils/getApiCallbacks';
+import * as apiCallbacks from '..';
 
 jest.mock('@wordpress/api-fetch');
 
@@ -32,7 +37,7 @@ describe('Fonts API Callbacks', () => {
   });
 
   it('should not add include param if not provided', () => {
-    const { getFonts } = getApiCallbacks({
+    const { getFonts } = bindToCallbacks(apiCallbacks, {
       api: { fonts: '/web-stories/v1/fonts/' },
     });
 
@@ -48,7 +53,7 @@ describe('Fonts API Callbacks', () => {
   });
 
   it('should include fonts with square bracket notation', () => {
-    const { getFonts } = getApiCallbacks({
+    const { getFonts } = bindToCallbacks(apiCallbacks, {
       api: { fonts: '/web-stories/v1/fonts/' },
     });
 
@@ -66,7 +71,7 @@ describe('Fonts API Callbacks', () => {
   });
 
   it('should include fonts with square bracket notation after other query params', () => {
-    const { getFonts } = getApiCallbacks({
+    const { getFonts } = bindToCallbacks(apiCallbacks, {
       api: { fonts: '/web-stories/v1/fonts/' },
     });
 

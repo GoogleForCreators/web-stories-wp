@@ -17,25 +17,16 @@
 /**
  * External dependencies
  */
-import { useCallback, forwardRef } from '@googleforcreators/react';
+import { useCallback } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
-import Gallery from 'react-photo-album';
 
 /**
  * Internal dependencies
  */
+import Gallery from 'react-photo-gallery';
 import MediaElement from './mediaElement';
-import { GalleryContainer } from './styles';
 
-const PHOTO_MARGIN = 8;
-const TARGET_ROW_HEIGHT = 110;
-
-const ContainerRenderer = forwardRef(({ children }, ref) => {
-  return <GalleryContainer ref={ref}>{children}</GalleryContainer>;
-});
-const RowRenderer = ({ children }) => {
-  return children;
-};
+const PHOTO_MARGIN = 4;
 
 /**
  * @callback InsertionCallback
@@ -53,47 +44,39 @@ const RowRenderer = ({ children }) => {
  * @return {*} The gallery element.
  */
 function MediaGallery({ resources, onInsert, providerType, canEditMedia }) {
-  const photos = resources.map((resource, index) => ({
-    index,
-    key: resource.id,
+  const photos = resources.map((resource) => ({
+    id: resource.id,
     src: resource.src,
     width: resource.width,
     height: resource.height,
   }));
 
   const imageRenderer = useCallback(
-    ({ photo, layout }) => {
-      return (
-        <MediaElement
-          key={photo.key}
-          index={photo.index}
-          margin={`0px 0px ${PHOTO_MARGIN}px 0px`}
-          resource={resources[photo.index]}
-          width={layout.width}
-          height={layout.height}
-          onInsert={onInsert}
-          providerType={providerType}
-          canEditMedia={canEditMedia}
-        />
-      );
-    },
+    ({ index, photo }) => (
+      <MediaElement
+        key={photo.id}
+        index={index}
+        margin={PHOTO_MARGIN + 'px'}
+        resource={resources[index]}
+        width={photo.width}
+        height={photo.height}
+        onInsert={onInsert}
+        providerType={providerType}
+        canEditMedia={canEditMedia}
+      />
+    ),
     [providerType, onInsert, resources, canEditMedia]
   );
 
   return (
     <div>
       <Gallery
-        layout="rows"
-        photos={photos}
-        renderPhoto={imageRenderer}
-        renderRowContainer={RowRenderer}
-        renderContainer={ContainerRenderer}
-        targetRowHeight={TARGET_ROW_HEIGHT}
-        rowConstraints={{
-          maxPhotos: 2,
-        }}
+        targetRowHeight={110}
+        direction={'row'}
         // This should match the actual margin the element is styled with.
-        spacing={PHOTO_MARGIN}
+        margin={PHOTO_MARGIN}
+        photos={photos}
+        renderImage={imageRenderer}
       />
     </div>
   );

@@ -34,6 +34,7 @@ import {
 } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import { useUnits } from '@googleforcreators/units';
+import { stripHTML } from '@googleforcreators/dom';
 import { __, sprintf } from '@googleforcreators/i18n';
 import { getHTMLFormatters, getHTMLInfo } from '@googleforcreators/rich-text';
 
@@ -42,7 +43,6 @@ import { getHTMLFormatters, getHTMLInfo } from '@googleforcreators/rich-text';
  */
 import { useFont, useHistory, useStory } from '../../../../app';
 import StoryPropTypes from '../../../../types';
-import stripHTML from '../../../../utils/stripHTML';
 import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
 import useLibrary from '../../useLibrary';
 import LibraryMoveable from '../shared/libraryMoveable';

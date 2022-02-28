@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 
-const clamp = (value, { MIN, MAX }) => Math.min(Math.max(value, MIN), MAX);
+const buffer = document.createElement('div');
 
-export default clamp;
+export default function stripHTML(string) {
+  // @todo: implement a cheaper way to strip markup.
+  buffer.innerHTML = string;
+  return buffer.textContent;
+}

@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import { withProtocol, isValidUrl } from '../url';
+import { withProtocol, isValidUrl } from '..';
 
 describe('isValidUrl', () => {
   it('should return correct results for valid URL', () => {
