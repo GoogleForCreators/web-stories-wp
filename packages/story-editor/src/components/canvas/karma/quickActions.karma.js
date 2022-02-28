@@ -26,7 +26,7 @@ import { ACTIONS } from '../../../app/highlights';
 import { Fixture } from '../../../karma';
 import useInsertElement from '../useInsertElement';
 
-xdescribe('Quick Actions integration', () => {
+describe('Quick Actions integration', () => {
   let fixture;
 
   async function clickOnTarget(target) {

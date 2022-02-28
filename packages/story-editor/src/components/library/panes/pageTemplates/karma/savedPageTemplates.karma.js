@@ -92,7 +92,7 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
       ).toBe(1);
     });
 
-    xit('should allow deleting a saved template', async () => {
+    it('should allow deleting a saved template', async () => {
       await fixture.editor.library.textTab.click();
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')

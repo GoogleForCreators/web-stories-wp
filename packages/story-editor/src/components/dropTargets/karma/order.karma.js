@@ -43,7 +43,7 @@ describe('Drop-Target order', () => {
     await fixture.events.mouse.clickOn(mediaItem, 20, 20);
   }
 
-  xit('should replace top image when bg image is set and another one is on top', async () => {
+  it('should replace top image when bg image is set and another one is on top', async () => {
     // Drag first media element straight to canvas edge to set as background
     const bgMedia = fixture.editor.library.media.item(0);
     const canvas = fixture.editor.canvas.framesLayer.fullbleed;
