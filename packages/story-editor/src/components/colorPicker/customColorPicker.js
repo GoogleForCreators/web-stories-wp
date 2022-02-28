@@ -19,7 +19,6 @@
  */
 import { useEffect } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { createSolid, PatternPropType } from '@googleforcreators/patterns';
 import {
   Button,
@@ -40,11 +39,6 @@ import PatternTypePicker from './patternTypePicker';
 import useColor from './useColor';
 import AddCustomColor from './addCustomColor';
 
-const Body = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
 function CustomColorPicker({
   color,
   allowsGradient,
@@ -53,6 +47,7 @@ function CustomColorPicker({
   handleClose,
   hideCustomPicker,
   allowsSavedColors,
+  hasEyedropper,
 }) {
   const {
     state: { type, stops, currentStopIndex, currentColor, generatedColor },
@@ -105,32 +100,31 @@ function CustomColorPicker({
           setToSolid={setToSolid}
         />
       )}
-      <Body>
-        {type !== 'solid' && (
-          <GradientPicker
-            stops={stops}
-            currentStopIndex={currentStopIndex}
-            onSelect={selectStop}
-            onReverse={reverseStops}
-            onAdd={addStopAt}
-            onDelete={removeCurrentStop}
-            onRotate={rotateClockwise}
-            onMove={moveCurrentStopBy}
-            type={type}
-          />
-        )}
-        <CurrentColorPicker
-          color={currentColor}
-          onChange={updateCurrentColor}
-          showOpacity={allowsOpacity}
+      {type !== 'solid' && (
+        <GradientPicker
+          stops={stops}
+          currentStopIndex={currentStopIndex}
+          onSelect={selectStop}
+          onReverse={reverseStops}
+          onAdd={addStopAt}
+          onDelete={removeCurrentStop}
+          onRotate={rotateClockwise}
+          onMove={moveCurrentStopBy}
+          type={type}
         />
-        {allowsSavedColors && (
-          <AddCustomColor
-            color={generatedColor || color}
-            onSave={hideCustomPicker}
-          />
-        )}
-      </Body>
+      )}
+      <CurrentColorPicker
+        color={currentColor}
+        onChange={updateCurrentColor}
+        showOpacity={allowsOpacity}
+        hasEyedropper={hasEyedropper}
+      />
+      {allowsSavedColors && (
+        <AddCustomColor
+          color={generatedColor || color}
+          onSave={hideCustomPicker}
+        />
+      )}
     </>
   );
 }
@@ -143,6 +137,7 @@ CustomColorPicker.propTypes = {
   allowsOpacity: PropTypes.bool,
   allowsSavedColors: PropTypes.bool,
   color: PatternPropType,
+  hasEyedropper: PropTypes.bool,
 };
 
 export default CustomColorPicker;
