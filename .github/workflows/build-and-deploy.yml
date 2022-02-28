@@ -96,7 +96,7 @@ jobs:
   build:
     name: Package ZIP files
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     if: >
       github.event.pull_request.draft == false &&
       github.event.pull_request.head.repo.fork == false &&

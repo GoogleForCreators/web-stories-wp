@@ -19,19 +19,26 @@
  */
 import { __ } from '@googleforcreators/i18n';
 import { CSSTransition } from 'react-transition-group';
-import { useFocusOut, useRef, useState } from '@googleforcreators/react';
+import {
+  useFocusOut,
+  useRef,
+  useState,
+  useCallback,
+} from '@googleforcreators/react';
 import styled from 'styled-components';
 import {
   LOCAL_STORAGE_PREFIX,
   localStore,
   Text,
   THEME_CONSTANTS,
+  useKeyDownEffect,
 } from '@googleforcreators/design-system';
 import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
+import useFocusTrapping from '../../utils/useFocusTrapping';
 import Header from './header';
 import StyleGroup from './styleGroup';
 import useDeleteStyle from './useDeleteStyle';
@@ -73,13 +80,30 @@ const StyledText = styled(Text).attrs({
   color: ${({ theme }) => theme.colors.fg.primary};
 `;
 
-function StyleManager({ styles, onClose, applyStyle }) {
+function StyleManager({ styles, onClose, applyStyle, ...rest }) {
   const [isEditMode, setIsEditMode] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
   const [toDelete, setToDelete] = useState(null);
   const containerRef = useRef(null);
 
-  const deleteStyle = useDeleteStyle({ onEmpty: () => onClose() });
+  // Re-establish focus when actively exiting by button or key press
+  const previousFocus = useRef(document.activeElement);
+  const handleCloseAndRefocus = useCallback(
+    (evt) => {
+      // Ignore reason: In Jest, focus is always on document.body if not on any specific
+      // element, so it can never be falsy, as it can be in a real browser.
+
+      // istanbul ignore else
+      if (previousFocus.current) {
+        previousFocus.current.focus();
+      }
+      onClose(evt);
+    },
+    [onClose]
+  );
+  useKeyDownEffect(containerRef, 'esc', handleCloseAndRefocus);
+
+  const deleteStyle = useDeleteStyle({ onEmpty: handleCloseAndRefocus });
 
   const maybeClose = () => {
     // If we're focusing out of the style manager but it's for confirmation dialog, don't close.
@@ -89,6 +113,8 @@ function StyleManager({ styles, onClose, applyStyle }) {
   };
   // Detect focus out of the style manager
   useFocusOut(containerRef, maybeClose, [showDialog]);
+  // Focus trapping.
+  useFocusTrapping({ ref: containerRef });
 
   const handleClick = (style) => {
     if (!isEditMode) {
@@ -122,7 +148,7 @@ function StyleManager({ styles, onClose, applyStyle }) {
         ref={containerRef}
       >
         <Header
-          handleClose={onClose}
+          handleClose={handleCloseAndRefocus}
           isEditMode={isEditMode}
           setIsEditMode={setIsEditMode}
         >
@@ -134,6 +160,7 @@ function StyleManager({ styles, onClose, applyStyle }) {
             handleClick={handleClick}
             isEditMode={isEditMode}
             buttonWidth={106}
+            {...rest}
           />
         </Body>
         {showDialog && (

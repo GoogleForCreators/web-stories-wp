@@ -24,7 +24,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { SAVED_STYLE_HEIGHT, PRESET_TYPES } from '../../../../../constants';
+import { SAVED_STYLE_HEIGHT, PRESET_TYPES } from '../../constants';
 import useKeyboardNavigation from './useKeyboardNavigation';
 import StyleItem from './styleItem';
 
@@ -45,6 +45,7 @@ function StyleGroup({
   isEditMode = false,
   handleClick,
   buttonWidth = 128,
+  ...rest
 }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const groupRef = useRef(null);
@@ -66,6 +67,7 @@ function StyleGroup({
             activeIndex={activeIndex}
             handleOnClick={handleClick}
             isEditMode={isEditMode}
+            {...rest}
           />
         </ButtonWrapper>
       ))}

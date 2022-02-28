@@ -36,14 +36,16 @@ import { useRef, useState } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import { useStory, useConfig } from '../../../../../app';
-import { PRESET_TYPES } from '../../../../../constants';
-import useAddPreset from '../../../../../utils/useAddPreset';
-import { focusStyle } from '../../../shared';
-import useInspector from '../../../../inspector/useInspector';
-import useApplyStyle from './useApplyStyle';
-import StyleGroup from './styleGroup';
-import StyleManager from './styleManager';
+import { useStory, useConfig } from '../../../../app';
+import { PRESET_TYPES } from '../../../../constants';
+import useAddPreset from '../../../../utils/useAddPreset';
+import useInspector from '../../../inspector/useInspector';
+import StyleGroup from '../../../styleManager/styleGroup';
+import StyleManager, {
+  NoStylesWrapper,
+  MoreButton,
+} from '../../../styleManager';
+import useApplyStyle from '../../../styleManager/useApplyStyle';
 
 const PresetsHeader = styled.div`
   display: flex;
@@ -63,46 +65,14 @@ const StyledButton = styled(Button)`
   margin-left: auto;
 `;
 
-const StyledMoreButton = styled(Button)`
-  ${focusStyle};
-  margin: 12px 0;
-  padding: 0 16px;
-  justify-content: center;
-  align-self: center;
-  svg {
-    transform: rotate(-90deg);
-    height: 32px;
-    width: 32px;
-    margin-left: -4px;
-  }
-`;
-
-const NoStylesWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: calc(100% + 32px);
-  margin: 0 0 -8px -16px;
-  background-color: ${({ theme }) => theme.colors.opacity.black24};
-  height: 64px;
-`;
-
 const NoStylesText = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.tertiary};
 `;
 
 const SPACING = { x: 20 };
 function PresetPanel({ pushUpdate }) {
-  const { globalStoryStyles } = useStory(
-    ({
-      state: {
-        story: { globalStoryStyles },
-      },
-    }) => {
-      return {
-        globalStoryStyles,
-      };
-    }
+  const textStyles = useStory(
+    ({ state }) => state.story.globalStoryStyles.textStyles
   );
 
   const {
@@ -111,7 +81,6 @@ function PresetPanel({ pushUpdate }) {
   const buttonRef = useRef(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
-  const { textStyles } = globalStoryStyles;
   const hasPresets = textStyles.length > 0;
 
   const handleApplyStyle = useApplyStyle({ pushUpdate });
@@ -145,16 +114,15 @@ function PresetPanel({ pushUpdate }) {
               handleClick={handlePresetClick}
             />
           </StylesWrapper>
-          <StyledMoreButton
+          <MoreButton
             ref={buttonRef}
-            type={BUTTON_TYPES.PLAIN}
-            size={BUTTON_SIZES.SMALL}
-            variant={BUTTON_VARIANTS.RECTANGLE}
             onClick={() => setIsPopupOpen(true)}
+            aria-haspopup="dialog"
+            aria-expanded={isPopupOpen}
           >
             {__('More styles', 'web-stories')}
             <Icons.ChevronDownSmall />
-          </StyledMoreButton>
+          </MoreButton>
           <Popup
             topOffset={topOffset}
             isRTL={isRTL}

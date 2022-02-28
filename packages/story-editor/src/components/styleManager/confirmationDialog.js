@@ -32,7 +32,7 @@ import {
 /**
  * Internal dependencies
  */
-import Dialog from '../../../../dialog';
+import Dialog from '../dialog';
 import { STORAGE_KEY } from './constants';
 
 const Label = styled.label`
