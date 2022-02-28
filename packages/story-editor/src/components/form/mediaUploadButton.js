@@ -89,11 +89,12 @@ function MediaUploadButton({ onInsert, renderButton, buttonInsertText }) {
       return [
         ...TRANSCODABLE_MIME_TYPES,
         ...allowedImageMimeTypes,
+        ...allowedVectorMimeTypes,
         ...allowedVideoMimeTypes,
       ];
     }
-    return [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
-  }, [allowedImageMimeTypes, allowedVideoMimeTypes, isTranscodingEnabled]);
+    return [...allowedImageMimeTypes, ...allowedVectorMimeTypes, ...allowedVideoMimeTypes];
+  }, [allowedImageMimeTypes, allowedVectorMimeTypes, allowedVideoMimeTypes, isTranscodingEnabled]);
 
   const transcodableMimeTypes = useMemo(() => {
     return TRANSCODABLE_MIME_TYPES.filter(
