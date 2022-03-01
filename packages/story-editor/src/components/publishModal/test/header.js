@@ -21,9 +21,13 @@ import { axe } from 'jest-axe';
 /**
  * Internal dependencies
  */
+import { StoryContext } from '../../../app/story';
 import renderWithTheme from '../../../testUtils/renderWithTheme';
+import { CheckpointContext } from '../../checklist';
 import Header from '../header';
 
+// todo, comeback and add a few more tests here
+// one for canPublish particularly.
 describe('publishModal/header', () => {
   const mockOnClose = jest.fn();
   const mockOnPublish = jest.fn();
@@ -32,27 +36,46 @@ describe('publishModal/header', () => {
     jest.clearAllMocks();
   });
 
-  it('should have no accessibility issues', async () => {
-    const { container } = renderWithTheme(
-      <Header
-        onClose={mockOnClose}
-        onPublish={mockOnPublish}
-        publishButtonCopy="Publish"
-      />
+  const view = () => {
+    return renderWithTheme(
+      <StoryContext.Provider
+        value={{
+          state: {
+            story: {
+              story: { status: 'draft' },
+            },
+            capabilities: { publish: true },
+            meta: { isSaving: false },
+          },
+        }}
+      >
+        <CheckpointContext.Provider
+          value={{
+            state: {
+              shouldReviewDialogBeSeen: true,
+              checkpoint: 'all',
+            },
+          }}
+        >
+          <Header
+            onClose={mockOnClose}
+            onPublish={mockOnPublish}
+            hasFutureDate={false}
+          />
+        </CheckpointContext.Provider>
+      </StoryContext.Provider>
     );
+  };
+
+  it('should have no accessibility issues', async () => {
+    const { container } = view();
 
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
 
   it('should call onClose when close button is clicked', () => {
-    renderWithTheme(
-      <Header
-        onClose={mockOnClose}
-        onPublish={mockOnPublish}
-        publishButtonCopy="Publish"
-      />
-    );
+    view();
 
     const closeButton = screen.getByLabelText('Close');
     fireEvent.click(closeButton);
@@ -61,13 +84,7 @@ describe('publishModal/header', () => {
   });
 
   it('should call onPublish when publish button is clicked', () => {
-    renderWithTheme(
-      <Header
-        onClose={mockOnClose}
-        onPublish={mockOnPublish}
-        publishButtonCopy="Publish"
-      />
-    );
+    view();
 
     const publishButton = screen.getByText('Publish');
     fireEvent.click(publishButton);

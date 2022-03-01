@@ -32,6 +32,7 @@ import {
  * Internal dependencies
  */
 import { HEADER_BAR_HEIGHT, HEADER_BAR_MARGIN } from '../constants';
+import ButtonWithChecklistWarning from '../../header/buttons/buttonWithChecklistWarning';
 
 const _Header = styled.header`
   width: 100%;
@@ -48,13 +49,16 @@ const CloseButton = styled(Button)`
   margin: 6px auto 5px 6px;
 `;
 
-const PublishButton = styled(Button)`
-  height: 32px;
-  padding: 6px 8px;
+const PublishButtonWrapper = styled.div`
   margin: 6px 6px 5px auto;
 `;
 
-const Header = ({ onClose, onPublish, publishButtonCopy }) => {
+const Header = ({
+  onClose,
+  onPublish,
+  publishButtonDisabled,
+  hasFutureDate,
+}) => {
   return (
     <_Header>
       <CloseButton
@@ -72,14 +76,13 @@ const Header = ({ onClose, onPublish, publishButtonCopy }) => {
       >
         {__('Story Details', 'web-stories')}
       </Headline>
-      <PublishButton
-        variant={BUTTON_VARIANTS.RECTANGLE}
-        size={BUTTON_SIZES.SMALL}
-        type={BUTTON_TYPES.PRIMARY}
-        onClick={onPublish}
-      >
-        {publishButtonCopy}
-      </PublishButton>
+      <PublishButtonWrapper>
+        <ButtonWithChecklistWarning
+          onClick={onPublish}
+          disabled={publishButtonDisabled}
+          hasFutureDate={hasFutureDate}
+        />
+      </PublishButtonWrapper>
     </_Header>
   );
 };
@@ -89,5 +92,6 @@ export default Header;
 Header.propTypes = {
   onClose: PropTypes.func.isRequired,
   onPublish: PropTypes.func.isRequired,
-  publishButtonCopy: PropTypes.string.isRequired,
+  publishButtonDisabled: PropTypes.bool,
+  hasFutureDate: PropTypes.bool,
 };

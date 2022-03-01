@@ -32,7 +32,7 @@ import StoryContext from '../../../../app/story/context';
 import useIsUploadingToStory from '../../../../utils/useIsUploadingToStory';
 import ConfigContext from '../../../../app/config/context';
 import { renderWithTheme } from '../../../../testUtils';
-import { CheckpointContext } from '../../../checklist';
+import { CheckpointContext, PPC_CHECKPOINT_STATE } from '../../../checklist';
 import PublishButton from '../publish';
 
 jest.mock('../../../../utils/useIsUploadingToStory');
@@ -48,7 +48,7 @@ function arrange({
 } = {}) {
   const saveStory = jest.fn();
   const onReviewDialogRequest = jest.fn();
-
+  const updateToAllowPriorityIssues = jest.fn();
   useIsUploadingToStory.mockImplementation(() => extraMediaProps?.isUploading);
 
   const storyContextValue = {
@@ -79,10 +79,12 @@ function arrange({
   const prepublishChecklistContextValue = {
     state: {
       shouldReviewDialogBeSeen: false,
+      checkpoint: PPC_CHECKPOINT_STATE.ALL,
       ...extraChecklistProps,
     },
     actions: {
       onReviewDialogRequest,
+      updateToAllowPriorityIssues,
     },
   };
   renderWithTheme(
@@ -112,6 +114,7 @@ describe('PublishButton', () => {
   afterAll(() => {
     document.documentElement.removeChild(modalWrapper);
     MockDate.reset();
+    jest.clearAllMocks();
   });
 
   it('should be able to publish', () => {
