@@ -243,7 +243,7 @@ jobs:
             PREVIOUS_TAG=$(git tag -l --sort=-version:refname | grep --invert-match $TAG_NAME | head -1)
 
             # If this is the first RC for this version (e.g. v1.5.0-rc.1), the previous version is v1.4.0, without suffix.
-            if [[ $TAG_NAME == *".rc.1" ]]; then
+            if [[ $TAG_NAME == *"-rc.1" ]]; then
               PREVIOUS_TAG=${PREVIOUS_TAG/-rc.*/}
             fi
           else
@@ -466,7 +466,8 @@ jobs:
           commitish: ${{ needs.build.outputs.release_branch || github.ref }}
           draft: true
           prerelease: ${{ env.IS_RC }}
-          body_path: changelog/changelog.txt
+        # TODO: Fix changelog generation.
+        #          body_path: changelog/changelog.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
