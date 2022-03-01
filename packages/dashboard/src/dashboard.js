@@ -16,6 +16,7 @@
 /**
  * External dependencies
  */
+import cloneDeep from 'clone-deep';
 import {
   lightMode,
   ModalGlobalStyle,
@@ -44,7 +45,12 @@ import { KeyboardOnlyOutline } from './utils';
 import defaultConfig from './defaultConfig';
 
 function Dashboard({ config, children }) {
-  const _config = useMemo(() => deepMerge(defaultConfig, config), [config]);
+  // Need `cloneDeep` so that karma tests are not using a modified
+  // `defaultConfig` between runs in CI
+  const _config = useMemo(
+    () => deepMerge(cloneDeep(defaultConfig), config),
+    [config]
+  );
   const { isRTL, flags } = _config;
   const activeTheme = {
     ...externalDesignSystemTheme,
