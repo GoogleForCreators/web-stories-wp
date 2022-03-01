@@ -27,6 +27,7 @@
   "type": "module",
   "main": "./src/index.js",
   "dependencies": {
+    "@googleforcreators/data": "*",
     "@googleforcreators/date": "*",
     "@googleforcreators/design-system": "*",
     "@googleforcreators/i18n": "*",

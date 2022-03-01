@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,12 @@
 /**
  * External dependencies
  */
-import { store } from '@googleforcreators/data';
+import { combineReducers, store } from '@googleforcreators/data';
+import { elementReducer } from '@googleforcreators/elements';
 
-const getDefinitionForType = (type) =>
-  store.getState().element.elementType.find((el) => el.type === type);
-
-export default getDefinitionForType;
+export default function addReducers() {
+  const rootReducer = combineReducers({
+    element: elementReducer,
+  });
+  store.replaceReducer(rootReducer);
+}

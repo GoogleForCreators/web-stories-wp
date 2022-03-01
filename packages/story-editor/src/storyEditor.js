@@ -34,6 +34,7 @@ import {
 } from '@googleforcreators/moveable';
 import { registerElementType } from '@googleforcreators/elements';
 import { elementTypes } from '@googleforcreators/element-library';
+import { store } from '@googleforcreators/data';
 
 /**
  * Internal dependencies
@@ -57,13 +58,17 @@ import DevTools from './components/devTools';
 import { GlobalStyle as CalendarStyle } from './components/form/dateTime/calendarStyle';
 import KeyboardOnlyOutlines from './utils/keyboardOnlyOutline';
 import defaultConfig from './defaultConfig';
+import { addReducers } from './app/store';
 
 function StoryEditor({ config, initialEdits, children }) {
   const _config = useMemo(() => deepMerge(defaultConfig, config), [config]);
   const { storyId, isRTL, flags } = _config;
 
   useEffect(() => {
-    elementTypes.forEach(registerElementType);
+    addReducers();
+    elementTypes.forEach((element) =>
+      store.dispatch(registerElementType(element))
+    );
   }, []);
 
   return (
