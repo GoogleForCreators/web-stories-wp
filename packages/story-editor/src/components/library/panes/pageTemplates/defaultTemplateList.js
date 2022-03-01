@@ -56,7 +56,8 @@ function DefaultTemplateList({
   pageSize,
   handleDelete,
   fetchTemplates,
-   ...rest }) {
+   ...rest
+   }) {
   const { addPage } = useStory(({ actions }) => ({
     addPage: actions.addPage,
   }));
@@ -97,7 +98,7 @@ function DefaultTemplateList({
   }, [currentPageId, pages]);
 
   useEffect(() => {
-      fetchTemplates?.();
+    fetchTemplates?.();
   }, [fetchTemplates]);
 
   useGridViewKeys({
@@ -117,37 +118,39 @@ function DefaultTemplateList({
       role="list"
       aria-label={__('Page Template Options', 'web-stories')}
     >
-      {handleDelete || fetchTemplates ?
-        pages.map((page, index) => (
-          <PageTemplate
-            key={page.id}
-            data-testid={`page_template_${page.id}`}
-            ref={(el) => (pageRefs.current[page.id] = el)}
-            page={page}
-            pageSize={pageSize}
-            onClick={() => handlePageClick(page)}
-            handleDelete={handleDelete}
-            onFocus={() => handleFocus(page.id)}
-            index={index}
-            {...rest}
-          />
-        ))
-      :
-        pages.map((page) => (
-          <DefaultPageTemplate
-            ref={(el) => (pageRefs.current[page.id] = el)}
-            key={page.id}
-            data-testid={`page_template_${page.id}`}
-            page={page}
-            pageSize={pageSize}
-            onFocus={() => handleFocus(page.id)}
-            isActive={currentPageId === page.id}
-            onClick={() => handlePageClick(page.story)}
-            columnWidth={pageSize.width}
-            {...rest}
-          />
+      {handleDelete || fetchTemplates
+        ?
+          pages.map((page, index) => (
+            <PageTemplate
+              key={page.id}
+              data-testid={`page_template_${page.id}`}
+              ref={(el) => (pageRefs.current[page.id] = el)}
+              page={page}
+              pageSize={pageSize}
+              onClick={() => handlePageClick(page)}
+              handleDelete={handleDelete}
+              onFocus={() => handleFocus(page.id)}
+              index={index}
+              {...rest}
+            />
+          ))
+        :
+          pages.map((page) => (
+            <DefaultPageTemplate
+              ref={(el) => (pageRefs.current[page.id] = el)}
+              key={page.id}
+              data-testid={`page_template_${page.id}`}
+              page={page}
+              pageSize={pageSize}
+              onFocus={() => handleFocus(page.id)}
+              isActive={currentPageId === page.id}
+              onClick={() => handlePageClick(page.story)}
+              columnWidth={pageSize.width}
+              {...rest}
+            />
+          )
         )
-      )}
+      }
     </WrapperGrid>
   );
 }
