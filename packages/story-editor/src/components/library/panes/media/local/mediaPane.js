@@ -134,6 +134,7 @@ function MediaPane(props) {
   );
 
   const enableHotlinking = useFeature('enableHotlinking');
+  console.log('true is 2, false is 1', { enableHotlinking });
 
   const {
     capabilities: { hasUploadMediaAction },
