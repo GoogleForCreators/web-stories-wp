@@ -100,7 +100,7 @@ describe('Canvas keys integration', () => {
     expect(await getSelection()).toEqual([]);
   });
 
-  it('should not be able to delete element from a dialog', async () => {
+  fit('should not be able to delete element from a dialog', async () => {
     const colorButton = fixture.querySelector(
       'button[aria-label="Text color"]'
     );
