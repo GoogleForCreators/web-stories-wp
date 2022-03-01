@@ -32,6 +32,7 @@ import { renderPanel } from '../../../shared/test/_utils';
 import SizePosition from '../sizePosition';
 
 jest.mock('@googleforcreators/element-library');
+jest.mock('@googleforcreators/elements');
 
 describe('panels/SizePosition', () => {
   let defaultElement, defaultImage, defaultText, unlockAspectRatioElement;

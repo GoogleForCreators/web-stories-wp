@@ -58,6 +58,7 @@ jest.mock('@googleforcreators/design-system', () => {
     },
   };
 });
+jest.mock('@googleforcreators/element-library');
 jest.mock('../../../../form/color/color', () => {
   const React = require('@googleforcreators/react');
 
