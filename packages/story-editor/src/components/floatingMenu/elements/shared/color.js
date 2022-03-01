@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { PLACEMENT } from '@googleforcreators/design-system';
-import PropTypes from 'styled-components';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies

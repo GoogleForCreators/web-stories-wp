@@ -114,6 +114,7 @@ function BorderWidthAndColor() {
       {hasBoth && <Dash />}
       {hasBorderWidth && (
         <Color
+          label={__('Border color', 'web-stories')}
           value={border.color || BLACK}
           onChange={handleColorChange}
           hasInputs={false}
