@@ -58,31 +58,24 @@ const TemplateImage = styled.img`
 `;
 
 const PageTemplateWrapper = styled.div`
-  position: absolute;
-  top: 0;
   height: ${({ pageSize }) => pageSize.height}px;
   width: ${({ pageSize }) => pageSize.width}px;
   display: flex;
   flex-direction: column;
   cursor: pointer;
   border-radius: ${({ theme }) => theme.borders.radius.small};
-  transform: ${({ translateX, translateY }) =>
-    `translateX(${translateX}px) translateY(${translateY}px)`};
 
   ${({ isHighlighted }) => isHighlighted && themeHelpers.focusCSS};
   ${focusStyle};
 `;
 PageTemplateWrapper.propTypes = {
   pageSize: PageSizePropType.isRequired,
-  translateY: PropTypes.number.isRequired,
-  translateX: PropTypes.number.isRequired,
 };
 
 const PreviewPageWrapper = styled.div`
   position: relative;
   height: ${({ pageSize }) => pageSize.height}px;
   width: ${({ pageSize }) => pageSize.width}px;
-  z-index: -1;
   background-color: ${({ theme }) => theme.colors.interactiveBg.secondary};
   border-radius: ${({ theme }) => theme.borders.radius.small};
   overflow: hidden;
@@ -121,7 +114,7 @@ PageTemplateTitle.propTypes = {
 const BUTTON_NESTING_DEPTH = 2;
 
 function PageTemplate(
-  { page, pageSize, translateY, translateX, handleDelete, index, ...rest },
+  { page, pageSize, handleDelete, ...rest },
   ref
 ) {
   const queuePageImageGeneration = usePageDataUrls(
@@ -216,8 +209,6 @@ function PageTemplate(
       onPointerEnter={makeActive}
       onPointerLeave={makeInactive}
       aria-label={page.title}
-      translateY={translateY}
-      translateX={translateX}
       isHighlighted={page.id === highlightedTemplate}
       onFocus={makeActive}
       onBlur={makeInactive}
@@ -246,7 +237,6 @@ function PageTemplate(
           }}
           aria-label={__('Use template', 'web-stories')}
           $display={isActive}
-          tabIndex={index === 0 ? 0 : -1}
         >
           <Icons.PlusFilledSmall />
         </ActionButton>
@@ -277,10 +267,7 @@ PageTemplate.propTypes = {
   isActive: PropTypes.bool,
   page: PropTypes.object.isRequired,
   pageSize: PageSizePropType.isRequired,
-  translateY: PropTypes.number.isRequired,
-  translateX: PropTypes.number.isRequired,
   handleDelete: PropTypes.func,
-  index: PropTypes.number.isRequired,
 };
 
 PageTemplate.displayName = 'PageTemplate';
