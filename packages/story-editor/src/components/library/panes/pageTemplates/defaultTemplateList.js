@@ -56,8 +56,8 @@ function DefaultTemplateList({
   pageSize,
   handleDelete,
   fetchTemplates,
-   ...rest
-   }) {
+  ...rest
+}) {
   const { addPage } = useStory(({ actions }) => ({
     addPage: actions.addPage,
   }));
@@ -119,8 +119,7 @@ function DefaultTemplateList({
       aria-label={__('Page Template Options', 'web-stories')}
     >
       {handleDelete || fetchTemplates
-        ?
-          pages.map((page, index) => (
+        ? pages.map((page, index) => (
             <PageTemplate
               key={page.id}
               data-testid={`page_template_${page.id}`}
@@ -134,8 +133,7 @@ function DefaultTemplateList({
               {...rest}
             />
           ))
-        :
-          pages.map((page) => (
+        : pages.map((page) => (
             <DefaultPageTemplate
               ref={(el) => (pageRefs.current[page.id] = el)}
               key={page.id}
@@ -148,9 +146,7 @@ function DefaultTemplateList({
               columnWidth={pageSize.width}
               {...rest}
             />
-          )
-        )
-      }
+          ))}
     </WrapperGrid>
   );
 }

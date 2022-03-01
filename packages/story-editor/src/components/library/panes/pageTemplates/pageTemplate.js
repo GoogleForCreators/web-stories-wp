@@ -113,8 +113,7 @@ PageTemplateTitle.propTypes = {
 // This is used for nested roving tab index to detect parent siblings.
 const BUTTON_NESTING_DEPTH = 2;
 
-function PageTemplate({ page, pageSize, handleDelete, index, ...rest }, ref
-) {
+function PageTemplate({ page, pageSize, handleDelete, index, ...rest }, ref) {
   const queuePageImageGeneration = usePageDataUrls(
     ({ actions }) => actions.queuePageImageGeneration
   );
