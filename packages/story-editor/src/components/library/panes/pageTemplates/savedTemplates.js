@@ -40,7 +40,7 @@ import { useAPI } from '../../../../app/api';
 import Dialog from '../../../dialog';
 import useLibrary from '../../useLibrary';
 import { LoadingContainer } from '../shared';
-import TemplateList from './templateList';
+import DefaultTemplateList from './defaultTemplateList';
 
 const Wrapper = styled.div`
   height: 100%;
@@ -120,10 +120,10 @@ function SavedTemplates({ pageSize, loadTemplates, isLoading, ...rest }) {
   );
 
   return (
-    // tabIndex is required for FireFox bug when using keyboard to navigate from Chips to Template
+    // tabIndex is required for FireFox bug when using keyboard to navigate from Saved / Default Templates dropdown to Template
     <Wrapper ref={ref} tabIndex={-1}>
       {!isLoading && ref.current ? (
-        <TemplateList
+        <DefaultTemplateList
           parentRef={ref}
           pageSize={pageSize}
           pages={savedTemplates}

@@ -37,6 +37,7 @@ import { PANE_PADDING } from '../shared';
 import { useConfig } from '../../../../app/config';
 
 import DefaultPageTemplate from './defaultPageTemplate';
+import PageTemplate from './pageTemplate'
 
 const WrapperGrid = styled.div`
   display: grid;
@@ -49,7 +50,8 @@ const WrapperGrid = styled.div`
     `repeat(minmax(${rowHeight}px, 1fr))`};
 `;
 
-function DefaultTemplateList({ pages, parentRef, pageSize, ...rest }) {
+function DefaultTemplateList({ pages, parentRef, pageSize, handleDelete,
+  fetchTemplates, ...rest }) {
   const { addPage } = useStory(({ actions }) => ({
     addPage: actions.addPage,
   }));
@@ -60,11 +62,12 @@ function DefaultTemplateList({ pages, parentRef, pageSize, ...rest }) {
   const pageRefs = useRef({});
 
   const handlePageClick = useCallback(
-    (page) => {
+    ({ templateId, version, title, ...page }) => {
+      // Just using destructuring above so we don't pass unnecessary props to addPage().
       const duplicatedPage = duplicatePage(page);
       addPage({ page: duplicatedPage });
       trackEvent('insert_page_template', {
-        name: page.title,
+        name: title || 'custom', // Custom page templates don't have titles (yet).
       });
       showSnackbar({
         message: __('Page Template added.', 'web-stories'),
@@ -88,6 +91,10 @@ function DefaultTemplateList({ pages, parentRef, pageSize, ...rest }) {
     }
   }, [currentPageId, pages]);
 
+  useEffect(() => {
+      fetchTemplates?.();
+  }, [fetchTemplates]);
+
   useGridViewKeys({
     containerRef: parentRef,
     gridRef: containerRef,
@@ -105,20 +112,36 @@ function DefaultTemplateList({ pages, parentRef, pageSize, ...rest }) {
       role="list"
       aria-label={__('Page Template Options', 'web-stories')}
     >
-      {pages.map((page) => (
-        <DefaultPageTemplate
-          ref={(el) => (pageRefs.current[page.id] = el)}
-          key={page.id}
-          data-testid={`page_template_${page.id}`}
-          page={page}
-          pageSize={pageSize}
-          onFocus={() => handleFocus(page.id)}
-          isActive={currentPageId === page.id}
-          onClick={() => handlePageClick(page.story)}
-          columnWidth={pageSize.width}
-          {...rest}
-        />
-      ))}
+      {handleDelete || fetchTemplates ? (
+        pages.map((page) => (
+          <PageTemplate
+            key={page.id}
+            data-testid={`page_template_${page.id}`}
+            ref={(el) => (pageRefs.current[page.id] = el)}
+            page={page}
+            pageSize={pageSize}
+            onClick={() => handlePageClick(page)}
+            handleDelete={handleDelete}
+            onFocus={() => handleFocus(page.id)}
+            {...rest}
+          />
+         ))
+      ) : (
+         pages.map((page) => (
+          <DefaultPageTemplate
+            ref={(el) => (pageRefs.current[page.id] = el)}
+            key={page.id}
+            data-testid={`page_template_${page.id}`}
+            page={page}
+            pageSize={pageSize}
+            onFocus={() => handleFocus(page.id)}
+            isActive={currentPageId === page.id}
+            onClick={() => handlePageClick(page.story)}
+            columnWidth={pageSize.width}
+            {...rest}
+          />
+        ))
+      )}
     </WrapperGrid>
   );
 }
