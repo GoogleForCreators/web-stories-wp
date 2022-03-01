@@ -35,7 +35,6 @@ describe('Library: Saved Styles', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ libraryTextStyles: true });
     await fixture.render();
     await fixture.collapseHelpCenter();
   });
