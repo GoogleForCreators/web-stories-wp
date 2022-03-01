@@ -21,6 +21,8 @@ import {
   Icons,
   themeHelpers,
   useKeyDownEffect,
+  THEME_CONSTANTS,
+  Text,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import {
@@ -60,10 +62,7 @@ const TemplateImage = styled.img`
 const PageTemplateWrapper = styled.div`
   height: ${({ pageSize }) => pageSize.height}px;
   width: ${({ pageSize }) => pageSize.width}px;
-  display: flex;
-  flex-direction: column;
   cursor: pointer;
-  border-radius: ${({ theme }) => theme.borders.radius.small};
 
   ${({ isHighlighted }) => isHighlighted && themeHelpers.focusCSS};
   ${focusStyle};
@@ -90,25 +89,14 @@ const DeleteButton = styled(ActionButton)`
   right: 4px;
 `;
 
-const PageTemplateTitle = styled.div`
+const PageTemplateTitleContainer = styled.div`
   position: absolute;
   bottom: 0;
-  background-color: ${({ theme }) => theme.colors.opacity.black64};
-  border-radius: ${({ theme }) => theme.borders.radius.small};
-  border-top-right-radius: 0;
-  border-top-left-radius: 0;
-  opacity: ${({ isActive }) => (isActive ? 1 : 0)};
-
-  padding: 8px;
-  font-size: 12px;
-  line-height: 22px;
   width: 100%;
-  align-self: flex-end;
+  padding: 8px;
+  background-color: ${({ theme }) => theme.colors.opacity.black64};
+  opacity: ${({ isActive }) => (isActive ? 1 : 0)};
 `;
-
-PageTemplateTitle.propTypes = {
-  isActive: PropTypes.bool.isRequired,
-};
 
 // This is used for nested roving tab index to detect parent siblings.
 const BUTTON_NESTING_DEPTH = 2;
@@ -250,11 +238,18 @@ function PageTemplate({ page, pageSize, handleDelete, index, ...rest }, ref) {
         >
           <Icons.TrashFilledSmall />
         </DeleteButton>
-      </PreviewPageWrapper>
 
-      {page.title && (
-        <PageTemplateTitle isActive={isActive}>{page.title}</PageTemplateTitle>
-      )}
+        {page.title && (
+          <PageTemplateTitleContainer isActive={isActive}>
+            <Text
+              as="span"
+              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+            >
+              {page.title}
+            </Text>
+          </PageTemplateTitleContainer>
+        )}
+      </PreviewPageWrapper>
     </PageTemplateWrapper>
   );
 }
