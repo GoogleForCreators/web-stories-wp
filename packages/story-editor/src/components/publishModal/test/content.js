@@ -53,9 +53,7 @@ describe('publishModal/content', () => {
     capabilities: {
       hasUploadMediaAction: true,
     },
-    MediaUpload: () => (
-      <button onClick={noop}>{'Media Upload Button!'}</button>
-    ),
+    MediaUpload: () => <button onClick={noop}>{'Media Upload Button!'}</button>,
   };
 
   const inspectorContextValue = {
@@ -82,7 +80,7 @@ describe('publishModal/content', () => {
               },
             },
           }}
-          >
+        >
           <InspectorContext.Provider value={inspectorContextValue}>
             <ChecklistCountProvider hasChecklist>
               <Content handleReviewChecklist={mockHandleReviewChecklist} />
