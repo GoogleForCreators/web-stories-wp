@@ -370,6 +370,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Page Background Audio', 'web-stories' ),
 				'description' => __( 'Enable adding captions to background audio', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @barklund
