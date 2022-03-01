@@ -96,13 +96,13 @@ const menuStyleOverride = css`
 `;
 
 const Button = styled(DefaultButton)(
-  ({ $showImage }) =>
+  ({ showImage }) =>
     css`
       background-color: ${({ theme }) =>
         theme.colors.interactiveBg.secondaryNormal};
       position: relative;
 
-      ${$showImage &&
+      ${showImage &&
       css`
         position: absolute;
         bottom: -8px;
@@ -236,7 +236,7 @@ export const MediaInput = forwardRef(function Media(
               internalRef.current = node;
             }}
             id={buttonId}
-            $showImage={variant !== MEDIA_VARIANTS.NONE}
+            showImage={variant !== MEDIA_VARIANTS.NONE}
             variant={BUTTON_VARIANTS.SQUARE}
             type={BUTTON_TYPES.TERTIARY}
             size={BUTTON_SIZES.SMALL}
