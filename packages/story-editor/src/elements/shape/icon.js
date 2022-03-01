@@ -40,8 +40,8 @@ const Container = styled.div`
 `;
 
 const ShapePreview = styled.div.attrs(({ backgroundColor }) => ({
-  // https://stackoverflow.com/a/58095676
-  // Removes console warning where class was re-generated over 200 times.
+  // Prevents `ShapePreview` class from being generated with each new layer.
+  // https://styled-components.com/docs/faqs#when-to-use-attrs
   style: generatePatternStyles(backgroundColor),
 }))`
   width: 100%;
