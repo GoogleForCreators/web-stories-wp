@@ -19,13 +19,12 @@
  */
 import { useState, useCallback } from '@googleforcreators/react';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
+import { isValidUrl, withProtocol } from '@googleforcreators/url';
 import {
   Button,
   BUTTON_SIZES,
   BUTTON_TYPES,
   BUTTON_VARIANTS,
-  isValidUrl,
-  withProtocol,
   Icons,
   Text,
   THEME_CONSTANTS,
@@ -290,7 +289,11 @@ function CustomFontsSettings({
                     <Divider />
                     <FontUrl>{url}</FontUrl>
                   </FontData>
-                  <Tooltip hasTail title={__('Delete font', 'web-stories')}>
+                  <Tooltip
+                    ignoreMaxOffsetY
+                    hasTail
+                    title={__('Delete font', 'web-stories')}
+                  >
                     <DeleteButton
                       aria-label={__('Remove font', 'web-stories')}
                       type={BUTTON_TYPES.TERTIARY}

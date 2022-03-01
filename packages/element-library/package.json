@@ -32,6 +32,7 @@
     "@googleforcreators/animation": "*",
     "@googleforcreators/design-system": "*",
     "@googleforcreators/elements": "*",
+    "@googleforcreators/dom": "*",
     "@googleforcreators/i18n": "*",
     "@googleforcreators/masks": "*",
     "@googleforcreators/media": "*",

@@ -391,9 +391,6 @@ export class Fixture {
         }
       });
     });
-
-    // @todo: find a stable way to wait for the story to fully render. Can be
-    // implemented via `waitFor`.
   }
 
   /**

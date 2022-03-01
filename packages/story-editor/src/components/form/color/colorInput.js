@@ -37,7 +37,7 @@ import {
   Text,
   THEME_CONSTANTS,
   Swatch,
-  PLACEMENT,
+  Icons,
   Popup,
 } from '@googleforcreators/design-system';
 import {
@@ -99,6 +99,11 @@ const buttonStyle = css`
   background: transparent;
 `;
 
+const minimalInputContainerStyleOverride = css`
+  ${inputContainerStyleOverride};
+  padding-right: 6px;
+`;
+
 const ColorButton = styled(Preview).attrs(buttonAttrs)`
   border-radius: 4px;
   ${buttonStyle}
@@ -129,29 +134,41 @@ const StyledSwatch = styled(Swatch)`
   ${focusStyle};
 `;
 
+const ChevronContainer = styled.div`
+  width: 58px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+`;
+
 const loadReactColor = () =>
   import(/* webpackChunkName: "chunk-react-color" */ 'react-color');
 
-const SPACING = { x: 20 };
+const SPACING = { x: 20, y: 10 };
 const ColorInput = forwardRef(function ColorInput(
   {
     onChange,
-    allowsGradient = false,
-    allowsOpacity = true,
-    allowsSavedColors = false,
     value = null,
     label = null,
     changedStyle,
+    pickerPlacement,
+    isMinimal = false,
+    hasInputs = true,
+    pickerProps,
   },
   ref
 ) {
   const isMixed = value === MULTIPLE_VALUE;
   value = isMixed ? '' : value;
 
-  const previewPattern =
-    isMixed || !value
-      ? { color: { r: 0, g: 0, b: 0, a: 0 } }
-      : getOpaquePattern(value);
+  const previewPattern = !value
+    ? { color: { r: 0, g: 0, b: 0, a: 0 } }
+    : getOpaquePattern(value);
   const previewText = getPreviewText(value);
 
   const [pickerOpen, setPickerOpen] = useState(false);
@@ -168,7 +185,7 @@ const ColorInput = forwardRef(function ColorInput(
 
   const colorType = value?.type;
   // Allow editing always in case of solid color of if color type is missing (mixed)
-  const isEditable = !colorType || colorType === 'solid';
+  const isEditable = (!colorType || colorType === 'solid') && hasInputs;
 
   const buttonProps = {
     onClick: () => setPickerOpen(true),
@@ -183,6 +200,11 @@ const ColorInput = forwardRef(function ColorInput(
   const onClose = useCallback(() => setPickerOpen(false), []);
 
   const tooltip = __('Open color picker', 'web-stories');
+
+  const containerStyle = isMinimal
+    ? minimalInputContainerStyleOverride
+    : inputContainerStyleOverride;
+
   return (
     <>
       {isEditable ? (
@@ -196,7 +218,7 @@ const ColorInput = forwardRef(function ColorInput(
             onChange={onChange}
             isIndeterminate={isMixed}
             placeholder={isMixed ? MULTIPLE_DISPLAY_VALUE : ''}
-            containerStyleOverride={inputContainerStyleOverride}
+            containerStyleOverride={containerStyle}
           />
           <ColorPreview>
             <Tooltip title={tooltip} hasTail>
@@ -210,18 +232,24 @@ const ColorInput = forwardRef(function ColorInput(
           <ColorButton ref={previewRef} {...buttonProps}>
             <ColorPreview>
               <Swatch
-                isSmall
                 isPreview
                 role="status"
                 tabIndex="-1"
                 pattern={previewPattern}
+                isIndeterminate={isMixed}
               />
             </ColorPreview>
-            <TextualPreview>
-              <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-                {previewText}
-              </Text>
-            </TextualPreview>
+            {hasInputs ? (
+              <TextualPreview>
+                <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+                  {previewText}
+                </Text>
+              </TextualPreview>
+            ) : (
+              <ChevronContainer>
+                <Icons.ChevronDown />
+              </ChevronContainer>
+            )}
           </ColorButton>
         </Tooltip>
       )}
@@ -230,7 +258,7 @@ const ColorInput = forwardRef(function ColorInput(
         anchor={previewRef}
         dock={inspector}
         isOpen={pickerOpen}
-        placement={PLACEMENT.LEFT_START}
+        placement={pickerPlacement}
         spacing={SPACING}
         invisible={isEyedropperActive}
         topOffset={topOffset}
@@ -239,12 +267,10 @@ const ColorInput = forwardRef(function ColorInput(
             color={isMixed ? null : value}
             isEyedropperActive={isEyedropperActive}
             onChange={onChange}
-            allowsGradient={allowsGradient}
-            allowsOpacity={allowsOpacity}
-            allowsSavedColors={allowsSavedColors}
             onClose={onClose}
             changedStyle={changedStyle}
             onDimensionChange={propagateDimensionChange}
+            {...pickerProps}
           />
         )}
       />
@@ -254,12 +280,13 @@ const ColorInput = forwardRef(function ColorInput(
 
 ColorInput.propTypes = {
   value: PropTypes.oneOfType([PatternPropType, PropTypes.string]),
-  allowsGradient: PropTypes.bool,
-  allowsOpacity: PropTypes.bool,
-  allowsSavedColors: PropTypes.bool,
+  pickerProps: PropTypes.object,
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string,
   changedStyle: PropTypes.string,
+  pickerPlacement: PropTypes.string,
+  isMinimal: PropTypes.bool,
+  hasInputs: PropTypes.bool,
 };
 
 export default ColorInput;

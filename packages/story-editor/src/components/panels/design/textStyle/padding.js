@@ -30,10 +30,11 @@ import {
   MULTIPLE_VALUE,
   MULTIPLE_DISPLAY_VALUE,
 } from '@googleforcreators/elements';
+import { clamp } from '@googleforcreators/units';
+
 /**
  * Internal dependencies
  */
-import clamp from '../../../../utils/clamp';
 import { Row as DefaultRow, usePresubmitHandler } from '../../../form';
 import {
   focusStyle,

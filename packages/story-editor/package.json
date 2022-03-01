@@ -2,13 +2,15 @@
   "name": "@googleforcreators/story-editor",
   "description": "The core Web Stories editor web application, which is platform-agnostic.",
   "private": false,
-  "version": "0.1.202202071716",
+  "version": "0.1.202203010801",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
   },
   "license": "Apache-2.0",
-  "keywords": ["web stories"],
+  "keywords": [
+    "web stories"
+  ],
   "homepage": "https://github.com/GoogleForCreators/web-stories-wp/blob/main/packages/story-editor/README.md",
   "repository": {
     "type": "git",
@@ -34,6 +36,7 @@
     "@googleforcreators/animation": "*",
     "@googleforcreators/date": "*",
     "@googleforcreators/design-system": "*",
+    "@googleforcreators/dom": "*",
     "@googleforcreators/element-library": "*",
     "@googleforcreators/elements": "*",
     "@googleforcreators/fonts": "*",
@@ -51,12 +54,14 @@
     "@googleforcreators/tracking": "*",
     "@googleforcreators/transform": "*",
     "@googleforcreators/units": "*",
+    "@googleforcreators/url": "*",
     "blurhash": "^1.1.4",
     "classnames": "^2.3.1",
     "clone-deep": "^4.0.1",
     "colorthief": "^2.3.2",
     "draft-js": "^0.11.7",
     "draft-js-export-html": "^1.4.1",
+    "draft-js-import-element": "https://github.com/swissspidy/draft-js-import-element",
     "draft-js-import-html": "^1.4.1",
     "draftjs-filters": "^2.5.0",
     "flagged": "^2.0.1",

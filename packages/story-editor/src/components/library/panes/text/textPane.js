@@ -27,15 +27,15 @@ import {
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import { v4 as uuidv4 } from 'uuid';
-
-/**
- * Internal dependencies
- */
 import {
   Text,
   THEME_CONSTANTS,
   Toggle,
 } from '@googleforcreators/design-system';
+
+/**
+ * Internal dependencies
+ */
 import { Container as SectionContainer } from '../../common/section';
 import { Pane as SharedPane } from '../shared';
 import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
@@ -46,6 +46,7 @@ import paneId from './paneId';
 import { PRESETS } from './textPresets';
 import useInsertPreset from './useInsertPreset';
 import TextSetsPane from './textSets/textSetsPane';
+import PresetPanel from './stylePresets/stylePresets';
 
 // Relative position needed for Moveable to update its position properly.
 const Pane = styled(SharedPane)`
@@ -139,6 +140,7 @@ function TextPane(props) {
           ))}
         </GridContainer>
       </SectionContainer>
+      <PresetPanel />
       {paneRef.current && <TextSetsPane paneRef={paneRef} />}
     </Pane>
   );

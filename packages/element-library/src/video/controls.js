@@ -27,18 +27,13 @@ import PlayPauseButton from './playPauseButton';
 
 function VideoControls({
   box,
-  isSelected,
-  isSingleElement,
-  isEditing,
+  isActive,
   isTransforming,
   elementRef,
   element,
   isRTL,
   topOffset = 0,
 }) {
-  const isActive =
-    isSelected && !isTransforming && isSingleElement && !isEditing;
-
   return (
     <PlayPauseButton
       box={box}
@@ -54,9 +49,7 @@ function VideoControls({
 
 VideoControls.propTypes = {
   box: StoryPropTypes.box.isRequired,
-  isSelected: PropTypes.bool.isRequired,
-  isSingleElement: PropTypes.bool.isRequired,
-  isEditing: PropTypes.bool.isRequired,
+  isActive: PropTypes.bool,
   isTransforming: PropTypes.bool.isRequired,
   elementRef: PropTypes.object.isRequired,
   element: StoryPropTypes.element.isRequired,

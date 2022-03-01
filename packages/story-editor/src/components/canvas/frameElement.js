@@ -90,25 +90,39 @@ const EmptyFrame = styled.div`
 const NOOP = () => {};
 
 function FrameElement({ id }) {
+  const [isTransforming, setIsTransforming] = useState(false);
+
   const {
-    isSelected,
-    isSingleElement,
-    selectedElementIds,
-    isBackground,
-    element,
-  } = useStory(({ state }) => ({
-    isSelected: state.selectedElementIds.includes(id),
-    isSingleElement: state.selectedElementIds.length === 1,
-    isBackground: state.currentPage?.elements[0].id === id,
-    element: state.currentPage?.elements.find((el) => el.id === id),
-    selectedElementIds: state.selectedElementIds,
+    setNodeForElement,
+    handleSelectElement,
+    isEditing,
+    setEditingElement,
+    setEditingElementWithState,
+  } = useCanvas(({ state, actions }) => ({
+    setNodeForElement: actions.setNodeForElement,
+    handleSelectElement: actions.handleSelectElement,
+    isEditing: state.isEditing,
+    setEditingElement: actions.setEditingElement,
+    setEditingElementWithState: actions.setEditingElementWithState,
   }));
-  const { setEditingElement, setEditingElementWithState } = useCanvas(
-    ({ actions }) => ({
-      setEditingElement: actions.setEditingElement,
-      setEditingElementWithState: actions.setEditingElementWithState,
-    })
-  );
+  const { isSelected, selectedElementIds, isActive, isBackground, element } =
+    useStory(({ state }) => ({
+      isSelected: state.selectedElementIds.includes(id),
+      isBackground: state.currentPage?.elements[0].id === id,
+      element: state.currentPage?.elements.find((el) => el.id === id),
+      selectedElementIds: state.selectedElementIds,
+      isActive:
+        state.selectedElementIds.length === 1 &&
+        state.selectedElementIds.includes(id) &&
+        !isTransforming &&
+        !isEditing,
+    }));
+  const { type, flip } = element;
+  const { Frame, isMaskable, Controls } = getDefinitionForType(type);
+  const elementRef = useRef();
+  const [hovering, setHovering] = useState(false);
+  const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
+
   const {
     draggingResource,
     activeDropTargetId,
@@ -127,11 +141,6 @@ function FrameElement({ id }) {
       unregisterDropTarget,
     })
   );
-  const { type, flip } = element;
-  const { Frame, isMaskable, Controls } = getDefinitionForType(type);
-  const elementRef = useRef();
-  const [hovering, setHovering] = useState(false);
-  const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
 
   const onPointerEnter = () => setHovering(true);
   const onPointerLeave = () => setHovering(false);
@@ -139,21 +148,13 @@ function FrameElement({ id }) {
   const isLinkActive = useTransform(
     ({ state }) => !isSelected && hovering && !state.isAnythingTransforming
   );
-  const { setNodeForElement, handleSelectElement, isEditing } = useCanvas(
-    ({ state, actions }) => ({
-      setNodeForElement: actions.setNodeForElement,
-      handleSelectElement: actions.handleSelectElement,
-      isEditing: state.isEditing,
-    })
-  );
+
   const getBox = useUnits(({ actions }) => actions.getBox);
 
   useLayoutEffect(() => {
     setNodeForElement(id, elementRef.current);
   }, [id, setNodeForElement]);
   const box = getBox(element);
-
-  const [isTransforming, setIsTransforming] = useState(false);
 
   useTransformHandler(id, (transform) => {
     const target = elementRef.current;
@@ -214,14 +215,12 @@ function FrameElement({ id }) {
       {Controls && (
         <Controls
           isTransforming={isTransforming}
-          isSelected={isSelected}
-          isSingleElement={isSingleElement}
-          isEditing={isEditing}
           box={box}
           elementRef={elementRef}
           element={element}
           isRTL={isRTL}
           topOffset={topOffset}
+          isActive={isActive}
         />
       )}
       <Wrapper

@@ -16,8 +16,8 @@
 /**
  * External dependencies
  */
-import { stripHTML } from '@googleforcreators/design-system';
 import { StoryPropTypes } from '@googleforcreators/elements';
+import { stripHTML } from '@googleforcreators/dom';
 
 /**
  * Internal dependencies

@@ -29,12 +29,12 @@ import {
 import {
   Text,
   useKeyDownEffect,
-  stripHTML,
   ThemeGlobals,
   themeHelpers,
 } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import { useUnits } from '@googleforcreators/units';
+import { stripHTML } from '@googleforcreators/dom';
 
 /**
  * Internal dependencies

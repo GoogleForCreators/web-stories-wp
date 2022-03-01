@@ -476,7 +476,7 @@ const useQuickActions = () => {
             element: 'none',
           });
         },
-        onMouseDown: handleMouseDown,
+        ...actionMenuProps,
       },
     ];
   }, [
@@ -485,7 +485,6 @@ const useQuickActions = () => {
     handleFocusMediaPanel,
     handleFocusPageBackground,
     handleFocusTextSetsPanel,
-    handleMouseDown,
   ]);
 
   const resetProperties = useMemo(

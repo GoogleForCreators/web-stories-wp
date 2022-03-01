@@ -23,11 +23,11 @@ import { useRef, useEffect } from '@googleforcreators/react';
 import { useUnits } from '@googleforcreators/units';
 import { areEventsDragging } from '@googleforcreators/design-system';
 import { StoryPropTypes } from '@googleforcreators/elements';
+import { getCaretCharacterOffsetWithin } from '@googleforcreators/rich-text';
 
 /**
  * Internal dependencies
  */
-import getCaretCharacterOffsetWithin from '../utils/getCaretCharacterOffsetWithin';
 import {
   elementFillContent,
   elementWithFont,

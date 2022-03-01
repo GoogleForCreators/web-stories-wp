@@ -101,17 +101,17 @@ describe('statusPanel', () => {
     expect(screen.getAllByRole('option')).toHaveLength(3);
     expect(
       screen.getByRole('option', {
-        name: 'Selected Public',
+        name: 'Public Visible to everyone',
       })
     ).toBeInTheDocument();
     expect(
       screen.getByRole('option', {
-        name: 'Private',
+        name: 'Private Visible to site admins & editors only',
       })
     ).toBeInTheDocument();
     expect(
       screen.getByRole('option', {
-        name: 'Password Protected',
+        name: 'Password Protected Visible only to those with the password.',
       })
     ).toBeInTheDocument();
   });
@@ -137,12 +137,12 @@ describe('statusPanel', () => {
 
     expect(
       screen.queryByRole('option', {
-        name: 'Private',
+        name: 'Private Visible to site admins & editors only',
       })
     ).not.toBeInTheDocument();
     expect(
       screen.queryByRole('option', {
-        name: 'Password Protected',
+        name: 'Password Protected Visible only to those with the password.',
       })
     ).not.toBeInTheDocument();
   });
@@ -153,7 +153,7 @@ describe('statusPanel', () => {
 
     fireEvent.click(
       screen.getByRole('option', {
-        name: 'Private',
+        name: 'Private Visible to site admins & editors only',
       })
     );
     expect(windowConfirm).toHaveBeenCalledWith(expect.any(String));
@@ -193,7 +193,7 @@ describe('statusPanel', () => {
 
     fireEvent.click(
       screen.getByRole('option', {
-        name: 'Public',
+        name: 'Public Visible to everyone',
       })
     );
     expect(updateStory).toHaveBeenCalledWith({

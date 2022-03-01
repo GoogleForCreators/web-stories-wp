@@ -24,10 +24,8 @@ import { createSolid } from '@googleforcreators/patterns';
 import { useUnits } from '@googleforcreators/units';
 import { useTransformHandler } from '@googleforcreators/transform';
 import { getHTMLFormatters, getHTMLInfo } from '@googleforcreators/rich-text';
-import {
-  BACKGROUND_TEXT_MODE,
-  stripHTML,
-} from '@googleforcreators/design-system';
+import { stripHTML } from '@googleforcreators/dom';
+import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
 import {
   getResponsiveBorder,
   shouldDisplayBorder,

@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { stripHTML } from '@googleforcreators/design-system';
+import { stripHTML } from '@googleforcreators/dom';
 
 export function characterCountForPage(page) {
   let characterCount = 0;

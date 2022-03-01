@@ -35,7 +35,7 @@ import { StackableGroup, StackableInput } from '../../../form/stackable';
 import { useCommonObjectValue, focusStyle } from '../../shared';
 import Tooltip from '../../../tooltip';
 
-const DEFAULT_BORDER_RADIUS = {
+export const DEFAULT_BORDER_RADIUS = {
   topLeft: 0,
   topRight: 0,
   bottomRight: 0,

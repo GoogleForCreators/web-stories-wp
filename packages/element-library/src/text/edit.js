@@ -28,7 +28,7 @@ import {
 } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { generatePatternStyles } from '@googleforcreators/patterns';
-import { useUnits } from '@googleforcreators/units';
+import { useUnits, calcRotatedResizeOffset } from '@googleforcreators/units';
 import {
   useTransformHandler,
   useTransform,
@@ -38,11 +38,8 @@ import {
   getHTMLInfo,
   useRichText,
 } from '@googleforcreators/rich-text';
-import {
-  BACKGROUND_TEXT_MODE,
-  calcRotatedResizeOffset,
-  stripHTML,
-} from '@googleforcreators/design-system';
+import { stripHTML } from '@googleforcreators/dom';
+import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
 import {
   getBorderPositionCSS,
   shouldDisplayBorder,

@@ -22,13 +22,14 @@ import styled from 'styled-components';
 import { useCallback } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import {
-  stripHTML,
   NumericInput,
   Icons,
   ToggleButton,
   BUTTON_SIZES,
   BUTTON_VARIANTS,
 } from '@googleforcreators/design-system';
+import { stripHTML } from '@googleforcreators/dom';
+import { clamp } from '@googleforcreators/units';
 import {
   MULTIPLE_VALUE,
   MULTIPLE_DISPLAY_VALUE,
@@ -38,7 +39,6 @@ import {
  * Internal dependencies
  */
 import { useFont } from '../../../../app/font';
-import clamp from '../../../../utils/clamp';
 import { Row, usePresubmitHandler } from '../../../form';
 import {
   focusStyle,

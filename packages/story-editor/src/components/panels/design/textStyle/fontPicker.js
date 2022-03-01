@@ -25,11 +25,12 @@ import {
 } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
-import { Datalist, stripHTML } from '@googleforcreators/design-system';
+import { Datalist } from '@googleforcreators/design-system';
 import {
   MULTIPLE_VALUE,
   MULTIPLE_DISPLAY_VALUE,
 } from '@googleforcreators/elements';
+import { stripHTML } from '@googleforcreators/dom';
 
 /**
  * Internal dependencies

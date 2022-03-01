@@ -21,15 +21,13 @@ import PropTypes from 'prop-types';
 import { act, fireEvent, screen } from '@testing-library/react';
 import { createSolid } from '@googleforcreators/patterns';
 import { RichTextContext } from '@googleforcreators/rich-text';
-import {
-  BACKGROUND_TEXT_MODE,
-  calcRotatedResizeOffset,
-} from '@googleforcreators/design-system';
+import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
 import { calculateTextHeight } from '@googleforcreators/element-library';
 import {
   MULTIPLE_VALUE,
   MULTIPLE_DISPLAY_VALUE,
 } from '@googleforcreators/elements';
+import { calcRotatedResizeOffset } from '@googleforcreators/units';
 
 /**
  * Internal dependencies

@@ -19,7 +19,7 @@
  */
 import { waitFor } from '@testing-library/react';
 import { dataFontEm, dataPixels } from '@googleforcreators/units';
-import { stripHTML } from '@googleforcreators/design-system';
+import { stripHTML } from '@googleforcreators/dom';
 
 /**
  * Internal dependencies
