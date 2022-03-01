@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-export { DOCUMENT, DESIGN } from './constants';
+export { INSERT, DOCUMENT, STYLE } from './constants';
 export { default } from './inspector';

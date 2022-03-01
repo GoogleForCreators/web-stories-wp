@@ -60,11 +60,10 @@ const Editor = withOverlay(styled.section.attrs({
   width: 100%;
   display: grid;
   grid:
-    'lib   canv        insp' 1fr
-    'lib   supplementary insp' auto /
-    minmax(${LIBRARY_MIN_WIDTH}px, ${LIBRARY_MAX_WIDTH}px)
-    minmax(${CANVAS_MIN_WIDTH}px, 1fr)
-    minmax(${INSPECTOR_MIN_WIDTH}px, ${INSPECTOR_MAX_WIDTH}px);
+    'insp   canv          ' 1fr
+    'insp   supplementary ' auto /
+    minmax(${INSPECTOR_MIN_WIDTH}px, ${INSPECTOR_MAX_WIDTH}px)
+    minmax(${CANVAS_MIN_WIDTH}px, 1fr);
 `);
 
 const Area = styled.div`
@@ -92,9 +91,6 @@ function Layout({ header, footer = {}, inspectorTabs, children }) {
               <Editor zIndex={3}>
                 <CanvasProvider>
                   <RightClickMenuProvider>
-                    <Area area="lib">
-                      <Library />
-                    </Area>
                     <Workspace header={header} footer={footer} />
                     <RightClickMenu />
                   </RightClickMenuProvider>

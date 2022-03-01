@@ -222,7 +222,8 @@ const ColorInput = forwardRef(function ColorInput(
         </Tooltip>
       )}
       <Popup
-        isRTL={isRTL}
+        // Temp fix making the color picker usable, refactor after the new color picker changes (#10626)?
+        isRTL={!isRTL}
         anchor={previewRef}
         dock={inspector}
         isOpen={pickerOpen}
