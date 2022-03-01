@@ -47,7 +47,6 @@ final class InvalidService
 	 *
 	 * @param string|object $service Class name of the service that was not
 	 *                               recognized.
-	 * @return self
 	 */
 	public static function from_service( $service ): self {
 		$message = \sprintf(
@@ -66,7 +65,6 @@ final class InvalidService
 	 *
 	 * @param string $service_id Identifier of the service that is not being
 	 *                           recognized.
-	 * @return self
 	 */
 	public static function from_service_id( $service_id ): self {
 		$message = \sprintf(

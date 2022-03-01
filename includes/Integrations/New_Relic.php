@@ -56,8 +56,6 @@ class New_Relic extends Service_Base implements Conditional {
 	 * Runs on instantiation.
 	 *
 	 * @since 1.10.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		$this->disable_autorum();
@@ -110,8 +108,6 @@ class New_Relic extends Service_Base implements Conditional {
 	 * https://docs.newrelic.com/docs/browser/new-relic-browser/installation/monitor-amp-pages-new-relic-browser
 	 *
 	 * @since 1.10.0
-	 *
-	 * @return void
 	 */
 	public function disable_autorum(): void {
 		if ( ! $this->context->is_web_story() ) {

@@ -60,8 +60,6 @@ class Experiments extends Service_Base implements HasRequirements {
 
 	/**
 	 * Initializes experiments
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		if ( WEBSTORIES_DEV_MODE ) {
@@ -87,8 +85,6 @@ class Experiments extends Service_Base implements HasRequirements {
 	 * Registers the experiments admin menu page.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
 	public function add_menu_page(): void {
 		add_submenu_page(
@@ -106,8 +102,6 @@ class Experiments extends Service_Base implements HasRequirements {
 	 * Renders the experiments page.
 	 *
 	 * @codeCoverageIgnore
-	 *
-	 * @return void
 	 */
 	public function render(): void {
 		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/admin/experiments.php';
@@ -117,8 +111,6 @@ class Experiments extends Service_Base implements HasRequirements {
 	 * Initializes the experiments settings page.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
 	public function initialize_settings(): void {
 		add_settings_section(
@@ -168,7 +160,6 @@ class Experiments extends Service_Base implements HasRequirements {
 	 *     @type string $label   Experiment label.
 	 *     @type bool   $default Whether the experiment is enabled by default.
 	 * }
-	 * @return void
 	 */
 	public function display_experiment_field( array $args ): void {
 		$is_enabled_by_default = ! empty( $args['default'] );
@@ -193,8 +184,6 @@ class Experiments extends Service_Base implements HasRequirements {
 	 * Display the experiments section.
 	 *
 	 * @codeCoverageIgnore
-	 *
-	 * @return void
 	 */
 	public function display_experiment_section(): void {
 		?>
@@ -319,6 +308,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Updated Publish Story Modal', 'web-stories' ),
 				'description' => __( 'Enable new pre-publish confirmation modal', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @miina
@@ -403,6 +393,17 @@ class Experiments extends Service_Base implements HasRequirements {
 				'description' => __( 'Automatically use semantic heading tags for text elements', 'web-stories' ),
 				'group'       => 'editor',
 				'default'     => true,
+			],
+			/**
+			 * Author: @miina
+			 * Issue: #10113
+			 * Creation date: 2022-02-22
+			 */
+			[
+				'name'        => 'libraryTextStyles',
+				'label'       => __( 'Library: Saved Styles', 'web-stories' ),
+				'description' => __( 'Allow inserting/applying Saved Styles from Text Library', 'web-stories' ),
+				'group'       => 'editor',
 			],
 		];
 	}

@@ -23,4 +23,5 @@ export { default as RichTextContext } from './context';
 export { default as useRichText } from './useRichText';
 export { default as usePasteTextContent } from './usePasteTextContent';
 export { default as getFontVariants } from './getFontVariants';
+export { default as getCaretCharacterOffsetWithin } from './utils/getCaretCharacterOffsetWithin';
 export * from './htmlManipulation';

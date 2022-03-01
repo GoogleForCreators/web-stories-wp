@@ -17,15 +17,20 @@
 /**
  * External dependencies
  */
-import { forwardRef, useCallback, useMemo } from '@googleforcreators/react';
+import {
+  forwardRef,
+  useCallback,
+  useMemo,
+  useEffect,
+} from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
 import { Datalist } from '@googleforcreators/design-system';
+import { stripHTML } from '@googleforcreators/dom';
 
 /**
  * Internal dependencies
  */
-import stripHTML from '../../../../utils/stripHTML';
 import { useFont } from '../../../../app/font';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { getCommonValue } from '../../shared';
@@ -57,17 +62,26 @@ const FontPicker = forwardRef(function FontPicker(
     ensureMenuFontsLoaded,
     ensureCustomFontsLoaded,
     getFontsBySearch,
+    getCustomFonts,
+    getCuratedFonts,
   } = useFont(({ actions, state }) => ({
     getFontsBySearch: actions.getFontsBySearch,
     addRecentFont: actions.addRecentFont,
     ensureMenuFontsLoaded: actions.ensureMenuFontsLoaded,
     ensureCustomFontsLoaded: actions.ensureCustomFontsLoaded,
     maybeEnqueueFontStyle: actions.maybeEnqueueFontStyle,
+    getCuratedFonts: actions.getCuratedFonts,
+    getCustomFonts: actions.getCustomFonts,
     recentFonts: state.recentFonts,
     curatedFonts: state.curatedFonts,
     fonts: state.fonts,
     customFonts: state.customFonts,
   }));
+
+  useEffect(() => {
+    getCustomFonts();
+    getCuratedFonts();
+  }, [getCustomFonts, getCuratedFonts]);
 
   const handleFontPickerChange = useCallback(
     async (newFont) => {

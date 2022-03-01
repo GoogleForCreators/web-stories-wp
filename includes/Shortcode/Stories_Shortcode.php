@@ -43,8 +43,6 @@ class Stories_Shortcode extends Service_Base {
 	 * Initializes the Stories shortcode.
 	 *
 	 * @since 1.5.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		add_shortcode( self::SHORTCODE_NAME, [ $this, 'render_stories' ] );

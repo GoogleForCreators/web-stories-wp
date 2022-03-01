@@ -39,8 +39,6 @@ class PluginRowMeta extends Service_Base {
 	 * Runs on instantiation.
 	 *
 	 * @since 1.6.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		add_filter( 'plugin_row_meta', [ $this, 'get_plugin_row_meta' ], 10, 2 );

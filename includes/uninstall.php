@@ -43,8 +43,6 @@ use WP_Term_Query;
  * Deletes options and transients.
  *
  * @since 1.0.0
- *
- * @return void
  */
 function delete_options(): void {
 	global $wpdb;
@@ -82,8 +80,6 @@ function delete_options(): void {
  * Deletes options and transients on multisite.
  *
  * @since 1.0.0
- *
- * @return void
  */
 function delete_site_options(): void {
 	global $wpdb;
@@ -122,8 +118,6 @@ function delete_site_options(): void {
  * Deletes all associated post meta data.
  *
  * @since 1.0.0
- *
- * @return void
  */
 function delete_stories_post_meta(): void {
 	delete_post_meta_by_key( Base_Color::BASE_COLOR_POST_META_KEY );
@@ -140,8 +134,6 @@ function delete_stories_post_meta(): void {
  * Deletes all associated user meta data.
  *
  * @since 1.3.0
- *
- * @return void
  */
 function delete_stories_user_meta(): void {
 	delete_metadata( 'user', 0, Preferences::OPTIN_META_KEY, '', true );
@@ -153,8 +145,6 @@ function delete_stories_user_meta(): void {
  * Deletes all stories & templates.
  *
  * @since 1.0.0
- *
- * @return void
  */
 function delete_posts(): void {
 	// phpcs:ignore WordPressVIPMinimum.Functions.RestrictedFunctions.get_posts_get_posts -- False positive.
@@ -179,8 +169,6 @@ function delete_posts(): void {
  * Deletes all media source terms.
  *
  * @since 1.10.0
- *
- * @return void
  */
 function delete_terms(): void {
 	$taxonomies = [];
@@ -215,8 +203,6 @@ function delete_terms(): void {
  * Remove user capabilities.
  *
  * @since 1.0.0
- *
- * @return void
  */
 function remove_caps(): void {
 	$capabilities = Services::get( 'user.capabilities' );
@@ -227,8 +213,6 @@ function remove_caps(): void {
  * Delete all data on a site.
  *
  * @since 1.0.0
- *
- * @return void
  */
 function delete_site(): void {
 	delete_options();

@@ -108,8 +108,6 @@ class Settings extends Service_Base {
 	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		register_setting(

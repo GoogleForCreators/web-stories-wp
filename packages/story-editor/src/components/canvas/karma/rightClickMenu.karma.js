@@ -23,7 +23,7 @@ import { waitFor, within } from '@testing-library/react';
  */
 import { useStory } from '../../../app';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
-import { ATTRIBUTES_TO_COPY } from '../../../app/story/useStoryReducer/reducers/copyElementById';
+import { ATTRIBUTES_TO_COPY } from '../../../app/story/useStoryReducer/reducers/copySelectedElement';
 import { Fixture } from '../../../karma';
 import objectPick from '../../../utils/objectPick';
 import useInsertElement from '../useInsertElement';
