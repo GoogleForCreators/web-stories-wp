@@ -269,6 +269,7 @@ PageTemplate.propTypes = {
   page: PropTypes.object.isRequired,
   pageSize: PageSizePropType.isRequired,
   handleDelete: PropTypes.func,
+  index: PropTypes.number,
 };
 
 PageTemplate.displayName = 'PageTemplate';

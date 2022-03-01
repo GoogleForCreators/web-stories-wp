@@ -37,7 +37,7 @@ import { PANE_PADDING } from '../shared';
 import { useConfig } from '../../../../app/config';
 
 import DefaultPageTemplate from './defaultPageTemplate';
-import PageTemplate from './pageTemplate'
+import PageTemplate from './pageTemplate';
 
 const WrapperGrid = styled.div`
   display: grid;
@@ -50,8 +50,13 @@ const WrapperGrid = styled.div`
     `repeat(minmax(${rowHeight}px, 1fr))`};
 `;
 
-function DefaultTemplateList({ pages, parentRef, pageSize, handleDelete,
-  fetchTemplates, ...rest }) {
+function DefaultTemplateList({
+  pages,
+  parentRef,
+  pageSize,
+  handleDelete,
+  fetchTemplates,
+   ...rest }) {
   const { addPage } = useStory(({ actions }) => ({
     addPage: actions.addPage,
   }));
@@ -112,7 +117,7 @@ function DefaultTemplateList({ pages, parentRef, pageSize, handleDelete,
       role="list"
       aria-label={__('Page Template Options', 'web-stories')}
     >
-      {handleDelete || fetchTemplates ? (
+      {handleDelete || fetchTemplates ?
         pages.map((page, index) => (
           <PageTemplate
             key={page.id}
@@ -126,9 +131,9 @@ function DefaultTemplateList({ pages, parentRef, pageSize, handleDelete,
             index={index}
             {...rest}
           />
-         ))
-      ) : (
-         pages.map((page) => (
+        ))
+      :
+        pages.map((page) => (
           <DefaultPageTemplate
             ref={(el) => (pageRefs.current[page.id] = el)}
             key={page.id}
@@ -141,7 +146,7 @@ function DefaultTemplateList({ pages, parentRef, pageSize, handleDelete,
             columnWidth={pageSize.width}
             {...rest}
           />
-        ))
+        )
       )}
     </WrapperGrid>
   );
@@ -155,6 +160,8 @@ DefaultTemplateList.propTypes = {
     })
   ),
   pageSize: PropTypes.object.isRequired,
+  handleDelete: PropTypes.func,
+  fetchTemplates: PropTypes.func,
 };
 
 export default DefaultTemplateList;
