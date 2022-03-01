@@ -54,11 +54,9 @@ describe('publishModal/content', () => {
       hasUploadMediaAction: true,
     },
     MediaUpload: () => (
-      <button onClick={noop}>
-        {'Media Upload Button!'}
-      </button>
+      <button onClick={noop}>{'Media Upload Button!'}</button>
     ),
-  }
+  };
 
   const inspectorContextValue = {
     actions: { loadUsers: jest.fn() },
