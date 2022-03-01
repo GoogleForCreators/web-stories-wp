@@ -82,6 +82,12 @@ describe('Library: Saved Styles', () => {
       expect(lastAdded.type).toBe('text');
       expect(lastAdded.fontSize).toBe(36);
 
+      // Select background for being able to insert another text.
+      await fixture.events.mouse.clickOn(
+        fixture.editor.canvas.framesLayer.frames[0].node,
+        '90%',
+        '90%'
+      );
       // Add a Label and click the same button again with selected text element now.
       await fixture.events.click(fixture.editor.library.text.preset('LABEL'));
       await waitFor(() => {
