@@ -25,7 +25,7 @@ import { waitFor } from '@testing-library/react';
 import { Fixture } from '../../../../karma';
 import { useStory } from '../../../../app/story';
 
-fdescribe('Design Menu: Border width & color', () => {
+describe('Design Menu: Border width & color', () => {
   let fixture;
 
   beforeEach(async () => {

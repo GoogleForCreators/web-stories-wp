@@ -52,7 +52,9 @@ export class DesignMenu extends Container {
     const region = this.queryByRole('region', {
       name: /Color input: Border color/,
     });
-    if (!region) return null;
+    if (!region) {
+      return null;
+    }
     const element = this._get(region, 'borderColor', Color);
     element.label = 'Border color';
     return element;
