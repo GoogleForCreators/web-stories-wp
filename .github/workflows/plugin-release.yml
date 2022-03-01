@@ -220,7 +220,7 @@ jobs:
           fetch-depth: 0 # 0 indicates all history for all branches and tags.
 
       - name: Setup Node
-        uses: actions/setup-node@v2.5.1
+        uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -304,7 +304,7 @@ jobs:
         continue-on-error: true
 
       - name: Setup Node
-        uses: actions/setup-node@v2.5.1
+        uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -515,7 +515,7 @@ jobs:
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       - name: Setup Node
-        uses: actions/setup-node@v2.5.1
+        uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
           cache: npm

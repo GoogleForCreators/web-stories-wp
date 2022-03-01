@@ -78,7 +78,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Setup Node
-        uses: actions/setup-node@v2.5.1
+        uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -96,7 +96,7 @@ jobs:
   build:
     name: Package ZIP files
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     if: >
       github.event.pull_request.draft == false &&
       github.event.pull_request.head.repo.fork == false &&
@@ -106,7 +106,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Setup Node
-        uses: actions/setup-node@v2.5.1
+        uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -171,7 +171,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Setup Node
-        uses: actions/setup-node@v2.5.1
+        uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
           cache: npm

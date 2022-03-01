@@ -46,6 +46,7 @@ import paneId from './paneId';
 import { PRESETS } from './textPresets';
 import useInsertPreset from './useInsertPreset';
 import TextSetsPane from './textSets/textSetsPane';
+import PresetPanel from './stylePresets/stylePresets';
 
 // Relative position needed for Moveable to update its position properly.
 const Pane = styled(SharedPane)`
@@ -139,6 +140,7 @@ function TextPane(props) {
           ))}
         </GridContainer>
       </SectionContainer>
+      <PresetPanel />
       {paneRef.current && <TextSetsPane paneRef={paneRef} />}
     </Pane>
   );
