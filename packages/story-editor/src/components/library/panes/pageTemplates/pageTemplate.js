@@ -114,7 +114,7 @@ PageTemplateTitle.propTypes = {
 const BUTTON_NESTING_DEPTH = 2;
 
 function PageTemplate(
-  { page, pageSize, handleDelete, ...rest },
+  { page, pageSize, handleDelete, index, ...rest },
   ref
 ) {
   const queuePageImageGeneration = usePageDataUrls(
@@ -237,6 +237,7 @@ function PageTemplate(
           }}
           aria-label={__('Use template', 'web-stories')}
           $display={isActive}
+          tabIndex={index === 0 ? 0 : -1}
         >
           <Icons.PlusFilledSmall />
         </ActionButton>

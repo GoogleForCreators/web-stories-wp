@@ -113,7 +113,7 @@ function DefaultTemplateList({ pages, parentRef, pageSize, handleDelete,
       aria-label={__('Page Template Options', 'web-stories')}
     >
       {handleDelete || fetchTemplates ? (
-        pages.map((page) => (
+        pages.map((page, index) => (
           <PageTemplate
             key={page.id}
             data-testid={`page_template_${page.id}`}
@@ -123,6 +123,7 @@ function DefaultTemplateList({ pages, parentRef, pageSize, handleDelete,
             onClick={() => handlePageClick(page)}
             handleDelete={handleDelete}
             onFocus={() => handleFocus(page.id)}
+            index={index}
             {...rest}
           />
          ))
