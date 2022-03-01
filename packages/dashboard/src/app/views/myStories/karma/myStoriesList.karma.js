@@ -152,6 +152,8 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
 
       await fixture.events.keyboard.press('Enter');
 
+      await fixture.snapshot('Rename story');
+
       expect(utils.getByText(/^A New Title$/)).toBeTruthy();
     });
 
@@ -186,6 +188,8 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
       const duplicate = utils.getByText(/^Duplicate/);
 
       await fixture.events.click(duplicate);
+
+      await fixture.snapshot('Duplicate story');
 
       // requery rows
       rows = fixture.screen.getAllByRole('row').slice(1);
@@ -229,6 +233,8 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
       const confirmDeleteButton = fixture.screen.getByRole('button', {
         name: /^Confirm deleting/,
       });
+
+      await fixture.snapshot('Delete story');
 
       await fixture.events.click(confirmDeleteButton);
 
