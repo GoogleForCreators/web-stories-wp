@@ -466,7 +466,8 @@ jobs:
           commitish: ${{ needs.build.outputs.release_branch || github.ref }}
           draft: true
           prerelease: ${{ env.IS_RC }}
-          body_path: changelog/changelog.txt
+        # TODO: Fix changelog generation.
+        #          body_path: changelog/changelog.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
