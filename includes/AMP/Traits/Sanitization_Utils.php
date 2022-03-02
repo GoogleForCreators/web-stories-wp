@@ -179,6 +179,11 @@ trait Sanitization_Utils {
 			$style   = $text_el->getAttribute( 'style' );
 			$matches = [];
 
+			// See https://github.com/GoogleForCreators/web-stories-wp/issues/10726.
+			if ( \strlen( trim( $text_el->textContent ) ) <= 3 ) {
+				continue;
+			}
+
 			if ( ! preg_match( '/font-size:([^em]+)em/', $style, $matches ) ) {
 				continue;
 			}
