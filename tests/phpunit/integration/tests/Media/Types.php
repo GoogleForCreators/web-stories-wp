@@ -38,11 +38,9 @@ class Types extends TestCase {
 
 	/**
 	 * @covers ::get_allowed_mime_types
+	 * @group ms-excluded
 	 */
 	public function test_get_allowed_mime_types(): void {
-		if ( is_multisite() ) {
-			$this->markTestSkipped( 'This should be skipped if is multisite.' );
-		}
 		if ( $this->supportsWebP() ) {
 			$expected = [
 				'image'  => [
