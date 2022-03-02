@@ -51,7 +51,7 @@ import { focusStyle } from '../../../panels/shared';
 import DisplayElement from '../../../canvas/displayElement';
 import InsertionOverlay from '../shared/insertionOverlay';
 import useFocusCanvas from '../../../canvas/useFocusCanvas';
-import { ActionButton } from '../shared';
+import { ActionButton, PageTemplateTitleContainer } from '../shared';
 import useRovingTabIndex from '../../../../utils/useRovingTabIndex';
 
 const TemplateImage = styled.img`
@@ -87,15 +87,6 @@ PreviewPageWrapper.propTypes = {
 const DeleteButton = styled(ActionButton)`
   top: 4px;
   right: 4px;
-`;
-
-const PageTemplateTitleContainer = styled.div`
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  padding: 8px;
-  background-color: ${({ theme }) => theme.colors.opacity.black64};
-  opacity: ${({ isActive }) => (isActive ? 1 : 0)};
 `;
 
 // This is used for nested roving tab index to detect parent siblings.
