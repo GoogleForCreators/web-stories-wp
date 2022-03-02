@@ -83,15 +83,13 @@ const STYLE_BUTTON_WIDTH = 150;
 
 function PresetPanel() {
   const { textStyles, isText, updateSelectedElements } = useStory(
-    ({ state, actions }) => {
-      const isText =
-        state.selectedElements && areAllType(TYPE, state.selectedElements);
-      return {
-        isText,
-        textStyles: state.story?.globalStoryStyles?.textStyles || [],
-        updateSelectedElements: actions.updateSelectedElements,
-      };
-    }
+    ({ state, actions }) => ({
+      isText: Boolean(
+        state.selectedElements && areAllType(TYPE, state.selectedElements)
+      ),
+      textStyles: state.story?.globalStoryStyles?.textStyles || [],
+      updateSelectedElements: actions.updateSelectedElements,
+    })
   );
 
   const { insertElement } = useLibrary((state) => ({

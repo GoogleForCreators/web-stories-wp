@@ -117,14 +117,12 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
 
   const { calculateAccessibleTextColors } = usePageAsCanvas();
 
-  const { isText, updateSelectedElements } = useStory(({ state, actions }) => {
-    const isText =
-      state.selectedElements && areAllType('text', state.selectedElements);
-    return {
-      isText,
-      updateSelectedElements: actions.updateSelectedElements,
-    };
-  });
+  const { isText, updateSelectedElements } = useStory(({ state, actions }) => ({
+    isText: Boolean(
+      state.selectedElements && areAllType('text', state.selectedElements)
+    ),
+    updateSelectedElements: actions.updateSelectedElements,
+  }));
 
   const presetDataRef = useRef({});
   const buttonRef = useRef(null);
@@ -182,7 +180,12 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
       updateSelectedElements({
         properties: (oldElement) => {
           const { fontWeight: newFontWeight } = getHTMLInfo(element.content);
-          const presetAtts = objectWithout(element, ['content', 'width']);
+          const presetAtts = objectWithout(element, [
+            'x',
+            'y',
+            'content',
+            'width',
+          ]);
           const sizeUpdates = getUpdatedSizeAndPosition({
             ...oldElement,
             ...presetAtts,
