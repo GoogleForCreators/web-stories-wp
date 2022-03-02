@@ -35,9 +35,9 @@ async function loadTextSet(name) {
   const data = await import(
     /* webpackChunkName: "chunk-web-stories-textset-[index]" */ `./raw/${name}.json`
   );
-  const migrated = migrate(data, data.version);
+  const migrated = migrate(data.default, data.default.version);
 
-  const textSets = migrated.pages.reduce((sets, page) => {
+  return migrated.pages.reduce((sets, page) => {
     const minMax = {
       minX: Infinity,
       maxX: 0,
@@ -69,8 +69,6 @@ async function loadTextSet(name) {
       },
     ];
   }, []);
-
-  return textSets;
 }
 
 export default async function loadTextSets() {

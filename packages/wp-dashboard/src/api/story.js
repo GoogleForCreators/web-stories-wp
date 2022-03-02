@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { addQueryArgs } from '@googleforcreators/design-system';
+import { addQueryArgs } from '@googleforcreators/url';
 import {
   ORDER_BY_SORT,
   STORIES_PER_REQUEST,
@@ -24,6 +24,7 @@ import {
   STORY_STATUS,
 } from '@googleforcreators/dashboard';
 import { createSolidFromString } from '@googleforcreators/patterns';
+import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/wp-utils';
 
 /**
  * WordPress dependencies
@@ -34,7 +35,7 @@ import apiFetch from '@wordpress/api-fetch';
  * Internal dependencies
  */
 import { STORY_FIELDS, STORY_EMBED } from './constants';
-import { reshapeStoryObject, snakeToCamelCaseObjectKeys } from './utils';
+import { reshapeStoryObject } from './utils';
 
 /**
  * Fetch stories ( When dashboard link is clicked. )

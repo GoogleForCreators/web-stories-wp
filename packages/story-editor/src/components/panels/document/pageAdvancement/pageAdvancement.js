@@ -32,11 +32,11 @@ import {
   Text,
   THEME_CONSTANTS,
 } from '@googleforcreators/design-system';
+import { clamp } from '@googleforcreators/units';
 
 /**
  * Internal dependencies
  */
-import clamp from '../../../../utils/clamp';
 import { useStory } from '../../../../app/story';
 import { Row, Switch } from '../../../form';
 import { SimplePanel } from '../../panel';

@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { snakeToCamelCaseObjectKeys } from './snakeToCamelCase';
+import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/wp-utils';
 
 function transformStoryResponse(post) {
   const { _embedded: embedded = {}, _links: links = {}, ...rest } = post;

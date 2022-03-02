@@ -29,7 +29,7 @@ import { focusStyle } from '../panels/shared';
 import useAddPreset from '../../utils/useAddPreset';
 import { PRESET_TYPES } from '../../constants';
 
-const COLOR_SIZE = 32;
+const COLOR_SIZE = 24;
 const AddColorAction = styled.button`
   cursor: pointer;
   background-color: transparent;

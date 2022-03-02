@@ -17,27 +17,7 @@ updates:
       - Dependencies
       - JavaScript
     ignore:
-      # Blocked by https://github.com/googleforcreators/web-stories-wp/pull/5792.
-      - dependency-name: 'webpack'
-        versions:
-          - '>= 5'
-
-      # Blocked by https://github.com/googleforcreators/web-stories-wp/pull/5792.
-      - dependency-name: 'html-webpack-plugin'
-        versions:
-          - '>= 5'
-
-      # Blocked by https://github.com/googleforcreators/web-stories-wp/pull/5792.
-      - dependency-name: 'karma-webpack'
-        versions:
-          - '>= 5'
-
-      # Blocked by https://github.com/googleforcreators/web-stories-wp/pull/5792.
-      - dependency-name: 'source-map-loader'
-        versions:
-          - '>= 2'
-
-      # styled components is not yet compatible.
+      # styled-components is not yet compatible.
       - dependency-name: 'stylis-plugin-rtl'
         versions:
           - '>= 2'

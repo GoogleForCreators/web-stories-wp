@@ -18,7 +18,8 @@
  */
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import { getExtensionsFromMimeType } from '@googleforcreators/media';
-import { Input, withProtocol } from '@googleforcreators/design-system';
+import { withProtocol } from '@googleforcreators/url';
+import { Input } from '@googleforcreators/design-system';
 import {
   useState,
   useRef,

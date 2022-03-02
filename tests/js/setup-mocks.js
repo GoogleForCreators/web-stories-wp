@@ -26,3 +26,5 @@ jest.mock('react', () => ({
   ...jest.requireActual('react'),
   useLayoutEffect: jest.requireActual('react').useEffect,
 }));
+
+jest.mock('@googleforcreators/story-editor/src/utils/getBlurHashFromImage');

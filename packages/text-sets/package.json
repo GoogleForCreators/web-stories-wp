@@ -2,7 +2,7 @@
   "name": "@googleforcreators/text-sets",
   "description": "A set of predefined text combinations for use in the Web Stories editor.",
   "private": false,
-  "version": "0.1.202202071716",
+  "version": "0.1.202203010801",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -25,6 +25,11 @@
     "npm": ">= 7.3"
   },
   "type": "module",
+  "customExports": {
+    ".": {
+      "default": "./src/index.js"
+    }
+  },
   "main": "dist/index.js",
   "module": "dist-module/index.js",
   "source": "src/index.js",
