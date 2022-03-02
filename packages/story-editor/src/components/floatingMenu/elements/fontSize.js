@@ -17,20 +17,51 @@
 /**
  * External dependencies
  */
-import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
+import { NumericInput } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
-import { IconButton } from './shared';
+import { useStory } from '../../../app';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../constants';
+import {
+  focusStyle,
+  getCommonValue,
+  inputContainerStyleOverride,
+} from '../../panels/shared';
+import { MIN_MAX } from '../../panels/design/textStyle/font';
 
 function FontSize() {
+  const { selectedElements, updateSelectedElements } = useStory(
+    ({ state: { selectedElements }, actions: { updateSelectedElements } }) => {
+      return {
+        selectedElements,
+        updateSelectedElements,
+      };
+    }
+  );
+
+  const fontSize = getCommonValue(selectedElements, 'fontSize');
+
+  const handleChange = (value) =>
+    updateSelectedElements({
+      properties: {
+        fontSize: value,
+      },
+    });
   return (
-    <IconButton
-      Icon={Icons.LetterTArrow}
-      title={__('Change font size', 'web-stories')}
-      onClick={() => {}}
+    <NumericInput
+      aria-label={__('Font size', 'web-stories')}
+      isFloat
+      value={fontSize}
+      onChange={(evt, value) => handleChange(value)}
+      min={MIN_MAX.FONT_SIZE.MIN}
+      max={MIN_MAX.FONT_SIZE.MAX}
+      isIndeterminate={MULTIPLE_VALUE === fontSize}
+      placeholder={MULTIPLE_VALUE === fontSize ? MULTIPLE_DISPLAY_VALUE : null}
+      containerStyleOverride={inputContainerStyleOverride}
+      selectButtonStylesOverride={focusStyle}
     />
   );
 }
