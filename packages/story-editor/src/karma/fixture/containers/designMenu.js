@@ -43,4 +43,8 @@ export class DesignMenu extends Container {
   get borderRadius() {
     return this.queryByRole('textbox', { name: 'Corner Radius' });
   }
+
+  get swapMedia() {
+    return this.getByRole('menuitem', { name: 'Replace media' });
+  }
 }
