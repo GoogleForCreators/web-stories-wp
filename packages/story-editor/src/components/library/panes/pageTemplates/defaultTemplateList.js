@@ -43,6 +43,7 @@ const WrapperGrid = styled.div`
   display: grid;
   width: 100%;
   margin-left: ${PANE_PADDING};
+  margin-bottom: 12px;
   gap: 12px;
   grid-template-columns: ${({ columnWidth }) =>
     `repeat(auto-fit, ${columnWidth}px)`};
