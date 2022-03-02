@@ -24,7 +24,6 @@ import { NumericInput } from '@googleforcreators/design-system';
  * Internal dependencies
  */
 import { useStory } from '../../../app';
-import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import {
   focusStyle,
   getCommonValue,
@@ -58,8 +57,7 @@ function FontSize() {
       onChange={(evt, value) => handleChange(value)}
       min={MIN_MAX.FONT_SIZE.MIN}
       max={MIN_MAX.FONT_SIZE.MAX}
-      isIndeterminate={MULTIPLE_VALUE === fontSize}
-      placeholder={MULTIPLE_VALUE === fontSize ? MULTIPLE_DISPLAY_VALUE : null}
+      placeholder={fontSize}
       containerStyleOverride={inputContainerStyleOverride}
       selectButtonStylesOverride={focusStyle}
     />
