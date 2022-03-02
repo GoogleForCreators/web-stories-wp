@@ -355,7 +355,7 @@ const editorAndDashboard = {
       templateContent,
       templateParameters,
     }),
-  ],
+  ].filter(Boolean),
   optimization: {
     ...sharedConfig.optimization,
     splitChunks: {
