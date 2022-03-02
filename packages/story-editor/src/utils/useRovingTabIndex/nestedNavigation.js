@@ -23,7 +23,7 @@ const SELECTOR = '[tabIndex="-1"]:not(:disabled)';
  * @param {number} depth Nesting depth of the element to see how far up we have to look for the ancestor.
  * @return {Object} Found element.
  */
-function getAncestorByDepth(e, depth) {
+export function getAncestorByDepth(e, depth) {
   let parentElement,
     counter = depth;
 

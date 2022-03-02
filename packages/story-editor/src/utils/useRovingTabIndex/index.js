@@ -23,7 +23,11 @@ import { useKeyDownEffect } from '@googleforcreators/design-system';
  * Internal dependencies
  */
 import { useConfig } from '../../app/config';
-import { getFocusableChild, getNextEnabledElement } from './nestedNavigation';
+import {
+  getAncestorByDepth,
+  getFocusableChild,
+  getNextEnabledElement,
+} from './nestedNavigation';
 import { getNextEnabledSibling } from './flatNavigation';
 
 /**
@@ -153,10 +157,11 @@ export default function useRovingTabIndex(
       const elementDirection = getFocusableElementDirection(isRTL, key);
       const switchFocusToElement = (e) => {
         if (e) {
+          const elToScroll = depth > 0 ? getAncestorByDepth(e, depth) : e;
           element.tabIndex = -1;
           e.tabIndex = 0;
           e.focus();
-          e.scrollIntoView(
+          elToScroll.scrollIntoView(
             /* alignToTop= */ elementDirection === 'previousSibling'
           );
         }
