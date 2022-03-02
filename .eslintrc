@@ -97,7 +97,11 @@
     "no-return-assign": "error",
     "no-return-await": "error",
     "no-sequences": "error",
-    "no-shadow": "error",
+    "no-shadow": ["error", 
+      {
+        "ignoreOnInitialization": true
+      }
+    ],
     "no-template-curly-in-string": "error",
     "no-throw-literal": "error",
     "no-unmodified-loop-condition": "error",

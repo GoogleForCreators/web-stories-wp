@@ -95,4 +95,53 @@ describe('getTextElementTagNames', () => {
       ])
     );
   });
+
+  it('should prefer possible h1 elements higher up on the page', () => {
+    const elements = [
+      ELEMENT_H1,
+      {
+        ...ELEMENT_H1,
+        id: '555',
+        x: 0,
+        y: 0,
+      },
+      ELEMENT_H2,
+      ELEMENT_H3,
+      PARAGRAPH,
+    ];
+
+    expect(getTextElementTagNames(elements)).toStrictEqual(
+      new Map([
+        ['111', 'h2'],
+        ['555', 'h1'],
+        ['222', 'h2'],
+        ['333', 'h3'],
+        ['444', 'p'],
+      ])
+    );
+  });
+
+  it('should ignore elements with short content', () => {
+    const elements = [
+      ELEMENT_H1,
+      {
+        ...ELEMENT_H1,
+        id: '555',
+        content: '#1',
+      },
+      ELEMENT_H2,
+      ELEMENT_H3,
+      PARAGRAPH,
+    ];
+
+    expect(getTextElementTagNames(elements)).toStrictEqual(
+      new Map([
+        ['111', 'h1'],
+        ['555', 'p'],
+        ['222', 'h2'],
+        ['333', 'h3'],
+        ['444', 'p'],
+      ])
+    );
+  });
 });
