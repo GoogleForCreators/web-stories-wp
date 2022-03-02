@@ -41,7 +41,6 @@ function OutputPage({
   page,
   autoAdvance = DEFAULT_AUTO_ADVANCE,
   defaultPageDuration = DEFAULT_PAGE_DURATION,
-  flags,
 }) {
   const {
     id,
@@ -83,10 +82,8 @@ function OutputPage({
   const regularElements = otherElements.map((element) => {
     const { id: elementId, type, tagName = 'auto' } = element;
 
-    if (flags?.semanticHeadingTags) {
-      if ('text' === type && 'auto' === tagName) {
-        element.tagName = tagNamesMap.get(elementId);
-      }
+    if ('text' === type && 'auto' === tagName) {
+      element.tagName = tagNamesMap.get(elementId);
     }
 
     // Remove invalid links.

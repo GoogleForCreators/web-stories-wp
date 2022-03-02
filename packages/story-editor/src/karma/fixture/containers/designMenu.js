@@ -59,4 +59,8 @@ export class DesignMenu extends Container {
     element.label = 'Border color';
     return element;
   }
+
+  get swapMedia() {
+    return this.getByRole('menuitem', { name: 'Replace media' });
+  }
 }

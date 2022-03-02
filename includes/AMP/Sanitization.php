@@ -27,7 +27,6 @@
 namespace Google\Web_Stories\AMP;
 
 use DOMElement;
-use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Settings;
 use Google\Web_Stories\Story_Post_Type;
@@ -63,24 +62,15 @@ class Sanitization {
 	private $settings;
 
 	/**
-	 * Experiments instance.
-	 *
-	 * @var Experiments Experiments instance.
-	 */
-	private $experiments;
-
-	/**
 	 * Analytics constructor.
 	 *
 	 * @since 1.12.0
 	 *
-	 * @param Settings    $settings    Settings instance.
-	 * @param Experiments $experiments Experiments instance.
+	 * @param Settings $settings    Settings instance.
 	 * @return void
 	 */
-	public function __construct( Settings $settings, Experiments $experiments ) {
-		$this->settings    = $settings;
-		$this->experiments = $experiments;
+	public function __construct( Settings $settings ) {
+		$this->settings = $settings;
 	}
 
 	/**
@@ -445,11 +435,10 @@ class Sanitization {
 			];
 
 			$sanitizers[ Story_Sanitizer::class ] = [
-				'publisher_logo'    => $story->get_publisher_logo_url(),
-				'publisher'         => $story->get_publisher_name(),
-				'poster_images'     => array_filter( $poster_images ),
-				'video_cache'       => $video_cache_enabled,
-				'semantic_headings' => $this->experiments->is_experiment_enabled( 'semanticHeadingTags' ),
+				'publisher_logo' => $story->get_publisher_logo_url(),
+				'publisher'      => $story->get_publisher_name(),
+				'poster_images'  => array_filter( $poster_images ),
+				'video_cache'    => $video_cache_enabled,
 			];
 		}
 
