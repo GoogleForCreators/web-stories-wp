@@ -74,8 +74,9 @@ function BorderWidthAndColor() {
   // If both controls are displayed, also add a dash between them
   const hasBoth = hasUniformBorder && hasBorderWidth;
 
-  // NB: Note that it can never be the case, that neither input is shown, so at least
-  // one of them will always render.
+  // NB: Note that it can never be the case, that both of the above bools, hasUniformBorder
+  // and hasBorderWidth, are false. If so, neither input would be shown. But because they
+  // partially contradict each other, one of the inputs will always render.
 
   const handleWidthChange = (value) =>
     updateSelectedElements({
