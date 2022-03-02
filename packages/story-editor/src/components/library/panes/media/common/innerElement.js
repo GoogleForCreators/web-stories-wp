@@ -74,8 +74,8 @@ const MuteWrapper = styled.div`
   height: 24px;
   width: 24px;
   background: ${({ theme }) => theme.colors.opacity.black64};
+  color: ${({ theme }) => theme.colors.fg.primary};
   border-radius: 100px;
-  padding: 4px;
 `;
 const Duration = styled(Text).attrs({
   forwardedAs: 'span',
