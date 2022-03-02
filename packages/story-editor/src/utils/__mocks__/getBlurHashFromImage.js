@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,14 @@
  * limitations under the License.
  */
 
-// Collect all Karma tests together for the test webpack config.
-const testsContext = require.context('.', true, /\.karma\.js$/);
-testsContext.keys().forEach(testsContext);
+/**
+ * mock function for getBlurHashFromImage. Prevents `import.meta` from being called in the jest context.
+ *
+ * @param {string} src The url.
+ * @return {string} The blur hash string.
+ */
+const getBlurHashFromImageMock = (src = 'default') => {
+  return `${src}-blur-hash`;
+};
+
+export default getBlurHashFromImageMock;

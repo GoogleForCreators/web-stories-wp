@@ -28,8 +28,8 @@ import { __ } from '@googleforcreators/i18n';
 import { useCanvas, useConfig } from '../../../app';
 import useElementsWithLinks from '../../../utils/useElementsWithLinks';
 import { OUTLINK_THEME } from '../../../constants';
-import { ReactComponent as DefaultIcon } from './defaultIcon.svg';
-import { ReactComponent as ArrowIcon } from './arrowBar.svg';
+import DefaultIcon from './icons/defaultIcon.svg';
+import ArrowIcon from './icons/arrowBar.svg';
 
 const Wrapper = styled.div`
   position: absolute;
