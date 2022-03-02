@@ -71,7 +71,7 @@ jest.mock('../../config', () => ({
     allowedMimeTypes: {
       image: [],
       video: [],
-      text: [],
+      caption: [],
       vector: [],
     },
   })),
