@@ -27,7 +27,7 @@ export { default as Loop } from './loop';
 export { default as More } from './more';
 export { default as Mute } from './mute';
 export { default as ShapeColor } from './shapeColor';
-export { default as SwapImage } from './swapImage';
+export { default as SwapMedia } from './swapMedia';
 export { default as TextAlign } from './textAlign';
 export { default as TextColor } from './textColor';
 export { default as ToggleBold } from './toggleBold';

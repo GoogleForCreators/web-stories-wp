@@ -34,7 +34,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Install WP-CLI
         run: |
@@ -54,7 +54,7 @@ jobs:
         run: wp package list
 
       - name: Setup Node
-        uses: actions/setup-node@v2.5.1
+        uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
           cache: npm

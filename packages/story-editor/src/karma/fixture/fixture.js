@@ -17,9 +17,6 @@
 /**
  * External dependencies
  */
-import * as React from 'react';
-const { useCallback, useState, useMemo, forwardRef } = React;
-
 import {
   configure,
   render,
@@ -52,6 +49,9 @@ import DocumentPane, {
   PublishModalDocumentPane,
 } from './components/documentPane';
 import { Accessibility, Design, Priority } from './components/checklist';
+
+const React = require('react');
+const { useCallback, useState, useMemo, forwardRef } = React;
 
 if ('true' === WEB_STORIES_CI) {
   configure({

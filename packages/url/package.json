@@ -1,0 +1,41 @@
+{
+  "name": "@googleforcreators/url",
+  "description": "URL utility package for Web Stories editor",
+  "private": false,
+  "version": "0.1.202203010801",
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "web stories"
+  ],
+  "homepage": "https://github.com/GoogleForCreators/web-stories-wp/blob/main/packages/url/README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GoogleForCreators/web-stories-wp.git",
+    "directory": "packages/url"
+  },
+  "bugs": {
+    "url": "https://github.com/googleforcreators/web-stories-wp/issues"
+  },
+  "engines": {
+    "node": ">= 12 || >= 14 || >= 16",
+    "npm": ">= 7.3"
+  },
+  "type": "module",
+  "customExports": {
+    ".": {
+      "default": "./src/index.js"
+    }
+  },
+  "main": "dist/index.js",
+  "module": "dist-module/index.js",
+  "source": "src/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

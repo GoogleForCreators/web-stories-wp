@@ -53,6 +53,7 @@
         "files",
         "type",
         "workspaces",
+        "customExports",
         "exports",
         "main",
         "module",
@@ -102,10 +103,8 @@
     "require-scripts": "off",
     "require-version": "off",
     "scripts-type": "error",
-    "valid-values-author": ["error", [
-      "Google"
-    ]],
-    "valid-values-license": [ "error", [ "Apache-2.0" ] ],
+    "valid-values-author": ["error", ["Google"]],
+    "valid-values-license": ["error", ["Apache-2.0"]],
     "valid-values-private": "off",
     "version-format": "error",
     "version-type": "error"
