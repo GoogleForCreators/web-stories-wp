@@ -29,6 +29,8 @@ const EYEDROPPER_WIDTH = 38; // icon width + spacing
 const WIDTH_INCLUDING_INPUTS = 178;
 const WIDTH_EXCLUDING_INPUTS = 60;
 
+const PICKER_MAX_HEIGHT = 362;
+
 function getWidth(hasInputs, hasEyedropper) {
   return (
     (hasInputs ? WIDTH_INCLUDING_INPUTS : WIDTH_EXCLUDING_INPUTS) +
@@ -42,7 +44,7 @@ function FloatingColor(props) {
   return (
     <Color
       width={width}
-      maxHeight={362}
+      maxHeight={PICKER_MAX_HEIGHT}
       pickerPlacement={PLACEMENT.TOP_END}
       isMinimal
       shouldCloseOnSelection
