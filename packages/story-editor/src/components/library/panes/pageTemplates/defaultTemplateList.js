@@ -37,7 +37,7 @@ import { PANE_PADDING } from '../shared';
 import { useConfig } from '../../../../app/config';
 
 import DefaultPageTemplate from './defaultPageTemplate';
-import PageTemplate from './pageTemplate';
+import SavedPageTemplate from './savedPageTemplate';
 
 const WrapperGrid = styled.div`
   display: grid;
@@ -120,7 +120,7 @@ function DefaultTemplateList({
     >
       {handleDelete || fetchTemplates
         ? pages.map((page, index) => (
-            <PageTemplate
+            <SavedPageTemplate
               key={page.id}
               data-testid={`page_template_${page.id}`}
               ref={(el) => (pageRefs.current[page.id] = el)}

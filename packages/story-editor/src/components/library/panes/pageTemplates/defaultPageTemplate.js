@@ -114,7 +114,7 @@ const DefaultPageTemplate = forwardRef(
           )}
           {isFocused && <InsertionOverlay />}
           {page.title && (
-            <TemplateTitleContainer isActive={isActive}>
+            <TemplateTitleContainer>
               <Text
                 as="span"
                 size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}

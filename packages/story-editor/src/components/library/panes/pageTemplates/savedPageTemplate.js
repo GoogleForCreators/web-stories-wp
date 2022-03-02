@@ -92,7 +92,10 @@ const DeleteButton = styled(ActionButton)`
 // This is used for nested roving tab index to detect parent siblings.
 const BUTTON_NESTING_DEPTH = 2;
 
-function PageTemplate({ page, pageSize, handleDelete, index, ...rest }, ref) {
+function SavedPageTemplate(
+  { page, pageSize, handleDelete, index, ...rest },
+  ref
+) {
   const queuePageImageGeneration = usePageDataUrls(
     ({ actions }) => actions.queuePageImageGeneration
   );
@@ -245,9 +248,9 @@ function PageTemplate({ page, pageSize, handleDelete, index, ...rest }, ref) {
   );
 }
 
-const PageTemplateWithRef = forwardRef(PageTemplate);
+const PageTemplateWithRef = forwardRef(SavedPageTemplate);
 
-PageTemplate.propTypes = {
+SavedPageTemplate.propTypes = {
   isActive: PropTypes.bool,
   page: PropTypes.object.isRequired,
   pageSize: PageSizePropType.isRequired,
@@ -255,6 +258,6 @@ PageTemplate.propTypes = {
   index: PropTypes.number,
 };
 
-PageTemplate.displayName = 'PageTemplate';
+SavedPageTemplate.displayName = 'SavedPageTemplate';
 
 export default PageTemplateWithRef;
