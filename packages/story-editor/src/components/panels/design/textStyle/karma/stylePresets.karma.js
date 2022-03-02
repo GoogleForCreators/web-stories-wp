@@ -54,6 +54,11 @@ describe('Panel: Style Presets', () => {
   describe('CUJ: Creator can Apply or Save Text Style from/to Their Preset Library: Save Text Style', () => {
     it('should allow adding new text style from a text element', async () => {
       await fixture.editor.library.textTab.click();
+
+      // Verify that no styles are added currently.
+      const noStylesText = fixture.screen.getByText('No Styles Saved');
+      expect(noStylesText).toBeDefined();
+
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
       );
@@ -64,9 +69,6 @@ describe('Panel: Style Presets', () => {
         expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
       });
 
-      // Verify that no styles are added currently.
-      const noStylesText = fixture.screen.getAllByText('No Styles Saved');
-      expect(noStylesText.length).toBeGreaterThanOrEqual(1);
       // Click to add a style and verify it was added.
       panel = fixture.editor.inspector.designPanel.textStyle;
       await fixture.events.click(panel.addStyle);
