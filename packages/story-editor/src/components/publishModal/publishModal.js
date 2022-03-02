@@ -102,5 +102,5 @@ PublishModal.propTypes = {
   onPublish: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
   hasFutureDate: PropTypes.bool,
-  publishButtonDisabled: PropTypes.string.isRequired,
+  publishButtonDisabled: PropTypes.bool,
 };
