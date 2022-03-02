@@ -231,7 +231,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 			$ext = end( $exts );
 		}
 
-		$allowed_mime_types = $this->get_media_types();
+		$allowed_mime_types = $this->get_allowed_mime_types();
 		$type               = '';
 		foreach ( $allowed_mime_types as $key => $mime_types ) {
 			if ( \in_array( $mime_type, $mime_types, true ) ) {
@@ -429,7 +429,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 			return $this->add_additional_fields_schema( $this->schema );
 		}
 
-		$allowed_mime_types = $this->get_media_types();
+		$allowed_mime_types = $this->get_allowed_mime_types();
 		$types              = array_keys( $allowed_mime_types );
 		$allowed_mime_types = array_merge( ...array_values( $allowed_mime_types ) );
 		$exts               = $this->types->get_file_type_exts( $allowed_mime_types );
@@ -572,15 +572,13 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	}
 
 	/**
-	 * Retrieves the supported media types.
+	 * Returns a list of allowed mime types per media type (image, audio, video).
 	 *
-	 * Media types are considered the MIME type category.
+	 * @since 1.19.0
 	 *
-	 * @since 1.18.0
-	 *
-	 * @return array Array of supported media types.
+	 * @return array<string, array> List of allowed mime types.
 	 */
-	protected function get_media_types(): array {
+	protected function get_allowed_mime_types(): array {
 		$mime_type = $this->types->get_allowed_mime_types();
 		// TODO: Update once audio elements are supported.
 		$mime_type['audio'] = [];
