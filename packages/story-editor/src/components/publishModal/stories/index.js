@@ -22,7 +22,6 @@ import { useCallback, useState } from '@googleforcreators/react';
  */
 import StoryContext from '../../../app/story/context';
 import { ConfigContext } from '../../../app/config';
-import { noop } from '../../../utils/noop';
 import {
   ChecklistCountProvider,
   CheckpointContext,
