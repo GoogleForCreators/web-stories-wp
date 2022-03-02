@@ -49,6 +49,7 @@ function arrange({
   const saveStory = jest.fn();
   const onReviewDialogRequest = jest.fn();
   const updateToAllowPriorityIssues = jest.fn();
+
   useIsUploadingToStory.mockImplementation(() => extraMediaProps?.isUploading);
 
   const storyContextValue = {
@@ -98,6 +99,7 @@ function arrange({
   );
   return {
     saveStory,
+    updateToAllowPriorityIssues,
   };
 }
 
@@ -118,12 +120,13 @@ describe('PublishButton', () => {
   });
 
   it('should be able to publish', () => {
-    const { saveStory } = arrange();
+    const { saveStory, updateToAllowPriorityIssues } = arrange();
 
     const publishButton = screen.getByRole('button', { name: 'Publish' });
     expect(publishButton).toBeEnabled();
     fireEvent.click(publishButton);
 
+    expect(updateToAllowPriorityIssues).toHaveBeenCalledTimes(1);
     expect(saveStory).toHaveBeenCalledWith({
       status: 'publish',
     });

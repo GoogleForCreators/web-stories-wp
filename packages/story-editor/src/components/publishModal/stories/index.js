@@ -42,20 +42,23 @@ export default {
   title: 'Stories Editor/Components/Dialog/Publish Modal',
   args: {
     canPublish: true,
-    isOpen: true,
     hasChecklist: true,
-    publishButtonDisabled: true,
-    publisher: 'Gotham Bugle',
-    hasFutureDate: true,
+    hasFutureDate: false,
     hasPublisherLogo: true,
     hasFeaturedMedia: true,
     hasUploadMediaAction: true,
     hasPriorityIssues: true,
+    publishButtonDisabled: true,
+    publisher: 'Gotham Bugle',
+    isOpen: true,
     isSaving: false,
   },
   argTypes: {
     onPublish: { action: 'onPublish clicked' },
     onClose: { action: 'onClose clicked' },
+    onPublishDialogChecklistRequest: {
+      action: 'onPublishDialogChecklistRequest clicked',
+    },
     checkpoint: {
       options: Object.values(PPC_CHECKPOINT_STATE),
       control: { type: 'select' },
@@ -79,6 +82,7 @@ export const _default = (args) => {
     hasFeaturedMedia,
     hasPublisherLogo,
     hasPriorityIssues,
+    onPublishDialogChecklistRequest,
     publisher,
     storyStatus,
   } = args;
@@ -153,7 +157,8 @@ export const _default = (args) => {
             <CheckpointContext.Provider
               value={{
                 actions: {
-                  onPublishDialogChecklistRequest: noop,
+                  onPublishDialogChecklistRequest:
+                    onPublishDialogChecklistRequest,
                 },
                 state: {
                   shouldReviewDialogBeSeen: hasPriorityIssues,

@@ -26,8 +26,6 @@ import renderWithTheme from '../../../testUtils/renderWithTheme';
 import { CheckpointContext } from '../../checklist';
 import Header from '../header';
 
-// todo, comeback and add a few more tests here
-// one for canPublish particularly.
 describe('publishModal/header', () => {
   const mockOnClose = jest.fn();
   const mockOnPublish = jest.fn();
@@ -36,15 +34,16 @@ describe('publishModal/header', () => {
     jest.clearAllMocks();
   });
 
-  const view = () => {
+  const view = (args) => {
+    const { storyArgs = {}, capabilitiesArgs = {} } = args || {};
     return renderWithTheme(
       <StoryContext.Provider
         value={{
           state: {
             story: {
-              story: { status: 'draft' },
+              story: { status: 'draft', ...storyArgs },
             },
-            capabilities: { publish: true },
+            capabilities: { publish: true, ...capabilitiesArgs },
             meta: { isSaving: false },
           },
         }}
@@ -90,5 +89,23 @@ describe('publishModal/header', () => {
     fireEvent.click(publishButton);
 
     expect(mockOnPublish).toHaveBeenCalledTimes(1);
+  });
+
+  it('should show submit for review when capability of publish is false', () => {
+    view({ capabilitiesArgs: { publish: false } });
+
+    const reviewButton = screen.getByText('Submit for review');
+    fireEvent.click(reviewButton);
+
+    expect(mockOnPublish).toHaveBeenCalledTimes(1);
+  });
+
+  it('should show tooltip in button when priority issues present', () => {
+    view();
+
+    const publishButton = screen.getByText('Publish');
+    fireEvent.focus(publishButton);
+
+    expect('Make updates before publishing to improve').toBeTruthy();
   });
 });
