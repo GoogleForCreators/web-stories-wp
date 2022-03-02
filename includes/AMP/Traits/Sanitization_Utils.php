@@ -125,7 +125,6 @@ trait Sanitization_Utils {
 	 * @param Document|AMP_Document $document   Document instance.
 	 */
 	private function use_semantic_heading_tags( &$document ): void {
-		
 		$pages = $document->getElementsByTagName( 'amp-story-page' );
 
 		/**
