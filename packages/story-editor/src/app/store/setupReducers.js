@@ -14,7 +14,13 @@
  * limitations under the License.
  */
 /**
- * Internal dependencies
+ * External dependencies
  */
-import './setupReducers';
-import './registerElementTypes';
+import { combineReducers, store } from '@googleforcreators/data';
+import { elementReducer } from '@googleforcreators/elements';
+
+const rootReducer = combineReducers({
+  element: elementReducer,
+});
+
+store.replaceReducer(rootReducer);

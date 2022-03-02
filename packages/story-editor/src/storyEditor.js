@@ -25,16 +25,13 @@ import {
   ModalGlobalStyle,
   deepMerge,
 } from '@googleforcreators/design-system';
-import { useMemo, useEffect } from '@googleforcreators/react';
+import { useMemo } from '@googleforcreators/react';
 import { FlagsProvider } from 'flagged';
 import { TransformProvider } from '@googleforcreators/transform';
 import {
   DefaultMoveableGlobalStyle,
   CropMoveableGlobalStyle,
 } from '@googleforcreators/moveable';
-import { registerElementType } from '@googleforcreators/elements';
-import { elementTypes } from '@googleforcreators/element-library';
-import { store } from '@googleforcreators/data';
 
 /**
  * Internal dependencies
@@ -58,18 +55,12 @@ import DevTools from './components/devTools';
 import { GlobalStyle as CalendarStyle } from './components/form/dateTime/calendarStyle';
 import KeyboardOnlyOutlines from './utils/keyboardOnlyOutline';
 import defaultConfig from './defaultConfig';
-import { addReducers } from './app/store';
+
+import './app/store';
 
 function StoryEditor({ config, initialEdits, children }) {
   const _config = useMemo(() => deepMerge(defaultConfig, config), [config]);
   const { storyId, isRTL, flags } = _config;
-
-  useEffect(() => {
-    addReducers();
-    elementTypes.forEach((element) =>
-      store.dispatch(registerElementType(element))
-    );
-  }, []);
 
   return (
     <FlagsProvider features={flags}>

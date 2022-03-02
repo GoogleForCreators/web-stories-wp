@@ -16,12 +16,8 @@
 /**
  * External dependencies
  */
-import { combineReducers, store } from '@googleforcreators/data';
-import { elementReducer } from '@googleforcreators/elements';
+import { registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
+import { store } from '@googleforcreators/data';
 
-export default function addReducers() {
-  const rootReducer = combineReducers({
-    element: elementReducer,
-  });
-  store.replaceReducer(rootReducer);
-}
+elementTypes.forEach((element) => store.dispatch(registerElementType(element)));
