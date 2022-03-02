@@ -76,7 +76,7 @@ function CaptionsPanelContent({
   clearFileText = __('Remove file', 'web-stories'),
 }) {
   const {
-    allowedMimeTypes: { text: allowedTextMimeTypes },
+    allowedMimeTypes: { caption: allowedTextMimeTypes },
     capabilities: { hasUploadMediaAction },
     MediaUpload,
   } = useConfig();

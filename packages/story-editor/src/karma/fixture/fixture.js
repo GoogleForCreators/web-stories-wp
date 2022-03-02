@@ -94,7 +94,7 @@ export const FIXTURE_DEFAULT_CONFIG = {
   allowedMimeTypes: {
     audio: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
     image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/webp'],
-    text: ['text/vtt'],
+    caption: ['text/vtt'],
     vector: ['image/svg+xml'],
     video: ['video/mp4', 'video/webm'],
   },

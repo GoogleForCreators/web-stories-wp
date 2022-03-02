@@ -61,22 +61,22 @@ class Types {
 	 */
 	public function get_allowed_mime_types(): array {
 		$default_allowed_mime_types = [
-			'image'  => [
+			'image'   => [
 				'image/webp',
 				'image/png',
 				'image/jpeg',
 				'image/jpg',
 				'image/gif',
 			],
-			'audio'  => [
+			'audio'   => [
 				'audio/mpeg',
 				'audio/aac',
 				'audio/wav',
 				'audio/ogg',
 			],
-			'text'   => [ 'text/vtt' ],
-			'vector' => [],
-			'video'  => [
+			'caption' => [ 'text/vtt' ],
+			'vector'  => [],
+			'video'   => [
 				'video/mp4',
 				'video/webm',
 			],

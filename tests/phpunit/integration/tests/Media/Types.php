@@ -43,41 +43,41 @@ class Types extends TestCase {
 	public function test_get_allowed_mime_types(): void {
 		if ( $this->supportsWebP() ) {
 			$expected = [
-				'image'  => [
+				'image'   => [
 					'image/webp',
 					'image/png',
 					'image/jpeg',
 					'image/gif',
 				],
-				'audio'  => [
+				'audio'   => [
 					'audio/mpeg',
 					'audio/aac',
 					'audio/wav',
 					'audio/ogg',
 				],
-				'text'   => [ 'text/vtt' ],
-				'vector' => [],
-				'video'  => [
+				'caption' => [ 'text/vtt' ],
+				'vector'  => [],
+				'video'   => [
 					'video/mp4',
 					'video/webm',
 				],
 			];
 		} else {
 			$expected = [
-				'image'  => [
+				'image'   => [
 					'image/png',
 					'image/jpeg',
 					'image/gif',
 				],
-				'audio'  => [
+				'audio'   => [
 					'audio/mpeg',
 					'audio/aac',
 					'audio/wav',
 					'audio/ogg',
 				],
-				'text'   => [ 'text/vtt' ],
-				'vector' => [],
-				'video'  => [
+				'caption' => [ 'text/vtt' ],
+				'vector'  => [],
+				'video'   => [
 					'video/mp4',
 					'video/webm',
 				],
@@ -96,39 +96,39 @@ class Types extends TestCase {
 	public function test_get_allowed_mime_types_multisite(): void {
 		if ( $this->supportsWebP() ) {
 			$expected = [
-				'image'  => [
+				'image'   => [
 					'image/webp',
 					'image/png',
 					'image/jpeg',
 					'image/gif',
 				],
-				'audio'  => [
+				'audio'   => [
 					'audio/mpeg',
 					'audio/wav',
 					'audio/ogg',
 				],
-				'text'   => [ 'text/vtt' ],
-				'vector' => [],
-				'video'  => [
+				'caption' => [ 'text/vtt' ],
+				'vector'  => [],
+				'video'   => [
 					'video/mp4',
 					'video/webm',
 				],
 			];
 		} else {
 			$expected = [
-				'image'  => [
+				'image'   => [
 					'image/png',
 					'image/jpeg',
 					'image/gif',
 				],
-				'audio'  => [
+				'audio'   => [
 					'audio/mpeg',
 					'audio/wav',
 					'audio/ogg',
 				],
-				'text'   => [ 'text/vtt' ],
-				'vector' => [],
-				'video'  => [
+				'caption' => [ 'text/vtt' ],
+				'vector'  => [],
+				'video'   => [
 					'video/mp4',
 					'video/webm',
 				],

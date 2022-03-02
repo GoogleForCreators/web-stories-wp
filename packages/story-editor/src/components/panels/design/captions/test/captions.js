@@ -43,7 +43,7 @@ describe('Panels/Captions', () => {
       capabilities: {
         hasUploadMediaAction: true,
       },
-      allowedMimeTypes: { text: ['text/vtt'] },
+      allowedMimeTypes: { caption: ['text/vtt'] },
       ...config,
       MediaUpload,
     };

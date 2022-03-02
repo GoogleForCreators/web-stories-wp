@@ -64,7 +64,7 @@ const defaultConfig = {
   allowedMimeTypes: {
     image: ['image/webp', 'image/png', 'image/jpeg', 'image/gif'],
     vector: ['image/svg+xml'],
-    text: ['text/vtt'],
+    caption: ['text/vtt'],
     audio: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
     video: ['video/mp4', 'video/webm'],
   },

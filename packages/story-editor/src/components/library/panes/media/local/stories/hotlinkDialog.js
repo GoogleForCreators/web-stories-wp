@@ -50,7 +50,7 @@ export const _default = ({ insertElement, ...args }) => {
         'image/webp',
       ],
       audio: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
-      text: ['text/vtt'],
+      caption: ['text/vtt'],
       vector: [],
       video: ['video/mp4', 'video/webm'],
     },

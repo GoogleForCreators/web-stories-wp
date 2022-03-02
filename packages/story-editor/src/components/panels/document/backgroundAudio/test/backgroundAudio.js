@@ -41,7 +41,7 @@ function arrange({ backgroundAudio, hasUploadMediaAction = true } = {}) {
     },
     allowedMimeTypes: {
       audio: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
-      text: ['text/vtt'],
+      caption: ['text/vtt'],
     },
     MediaUpload,
   };
