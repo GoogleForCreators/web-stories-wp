@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { waitFor } from '@testing-library/react';
-
-/**
  * Internal dependencies
  */
 import { Fixture } from '../../../../karma';
@@ -42,16 +37,12 @@ describe('Design Menu: Swap Media', () => {
   it('should not render for shapes, text', async () => {
     // Add a shape.
     await fixture.events.click(fixture.editor.library.shapesTab);
-    await fixture.events.click(
-      fixture.editor.library.shapes.shape('Triangle')
-    );
+    await fixture.events.click(fixture.editor.library.shapes.shape('Triangle'));
     expect(() => fixture.editor.canvas.designMenu.swapMedia).toThrow();
 
     // Add a text.
     await fixture.editor.library.textTab.click();
-    await fixture.events.click(
-      fixture.editor.library.text.preset('Paragraph')
-    );
+    await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
     expect(() => fixture.editor.canvas.designMenu.swapMedia).toThrow();
   });
 
