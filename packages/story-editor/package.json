@@ -24,6 +24,11 @@
     "node": ">= 12 || >= 14 || >= 16",
     "npm": ">= 7.3"
   },
+  "customExports": {
+    ".": {
+      "default": "./src/index.js"
+    }
+  },
   "main": "dist/index.js",
   "module": "dist-module/index.js",
   "source": "src/index.js",
@@ -55,7 +60,7 @@
     "@googleforcreators/transform": "*",
     "@googleforcreators/units": "*",
     "@googleforcreators/url": "*",
-    "blurhash": "^1.1.4",
+    "blurhash": "^1.1.5",
     "classnames": "^2.3.1",
     "clone-deep": "^4.0.1",
     "colorthief": "^2.3.2",
