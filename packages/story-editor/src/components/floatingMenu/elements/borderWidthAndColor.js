@@ -83,6 +83,7 @@ function BorderWidthAndColor() {
       properties: ({ border: oldBorder }) => ({
         border: {
           locked: true,
+          color: border.color,
           ...oldBorder,
           left: value,
           right: value,
