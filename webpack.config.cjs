@@ -27,6 +27,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 /**
  * WordPress dependencies
@@ -42,6 +43,10 @@ const DependencyExtractionWebpackPlugin = require('@wordpress/dependency-extract
 function requestToExternal(request) {
   const packages = ['react', 'react-dom', 'react-dom/server'];
   if (packages.includes(request)) {
+    return false;
+  }
+
+  if (request.includes('react-refresh/runtime')) {
     return false;
   }
 
@@ -104,6 +109,9 @@ const sharedConfig = {
               // by default. Use the environment variable option
               // to enable more persistent caching.
               cacheDirectory: process.env.BABEL_CACHE_DIRECTORY || true,
+              plugins: [
+                !isProduction && require.resolve('react-refresh/babel'),
+              ].filter(Boolean),
             },
           },
         ],
@@ -304,6 +312,17 @@ const templateParameters = (compilation, assets, assetTags, options) => ({
 
 const editorAndDashboard = {
   ...sharedConfig,
+  devServer: !isProduction
+    ? {
+      devMiddleware: {
+        writeToDisk: true,
+      },
+      hot: true,
+      allowedHosts: 'all',
+      host: 'localhost',
+      port: 'auto',
+    }
+    : undefined,
   entry: {
     [EDITOR_CHUNK]: './packages/wp-story-editor/src/index.js',
     [DASHBOARD_CHUNK]: './packages/wp-dashboard/src/index.js',
@@ -312,6 +331,8 @@ const editorAndDashboard = {
     ...sharedConfig.plugins.filter(
       (plugin) => !(plugin instanceof DependencyExtractionWebpackPlugin)
     ),
+    // React Fast Refresh.
+    !isProduction && new ReactRefreshWebpackPlugin(),
     new DependencyExtractionWebpackPlugin({
       requestToExternal,
     }),

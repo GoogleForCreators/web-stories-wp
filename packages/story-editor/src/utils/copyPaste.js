@@ -18,14 +18,11 @@
  * External dependencies
  */
 import { renderToStaticMarkup } from '@googleforcreators/react';
+
 /**
  * Internal dependencies
  */
-import {
-  duplicateElement,
-  getDefinitionForType,
-  getOffsetCoordinates,
-} from '../elements';
+import { duplicateElement, getDefinitionForType } from '../elements';
 
 const DOUBLE_DASH_ESCAPE = '_DOUBLEDASH_';
 
@@ -149,5 +146,3 @@ export function addElementsToClipboard(page, elements, animations, evt) {
     `<!-- ${serializedPayload} -->${htmlContent}`
   );
 }
-
-export { getOffsetCoordinates as getPastedCoordinates };
