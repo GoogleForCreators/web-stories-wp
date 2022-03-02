@@ -24,13 +24,25 @@ import { __ } from '@googleforcreators/i18n';
  * Internal dependencies
  */
 import { IconButton } from './shared';
+import useVideoTranscoding from './shared/useVideoTranscoding';
 
 function Mute() {
+  const { canMute, isMuting, isDisabled, handleMute } = useVideoTranscoding();
+
+  if (!canMute) {
+    return null;
+  }
+
+  const title = isMuting
+    ? __('Removing audio', 'web-stories')
+    : __('Remove audio', 'web-stories');
+
   return (
     <IconButton
       Icon={Icons.Muted}
-      title={__('mute video', 'web-stories')}
-      onClick={() => {}}
+      title={title}
+      isDisabled={isDisabled || isMuting}
+      onClick={handleMute}
     />
   );
 }
