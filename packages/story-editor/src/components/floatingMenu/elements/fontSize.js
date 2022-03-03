@@ -23,26 +23,18 @@ import { __ } from '@googleforcreators/i18n';
  * Internal dependencies
  */
 import { useStory } from '../../../app';
-import {
-  focusStyle,
-  getCommonValue,
-  inputContainerStyleOverride,
-} from '../../panels/shared';
+import { focusStyle, inputContainerStyleOverride } from '../../panels/shared';
 import { MIN_MAX } from '../../panels/design/textStyle/font';
 // TODO: https://github.com/GoogleForCreators/web-stories-wp/issues/10799
 import { Input } from './shared';
 
 function FontSize() {
-  const { selectedElements, updateSelectedElements } = useStory(
-    ({ state: { selectedElements }, actions: { updateSelectedElements } }) => {
-      return {
-        selectedElements,
-        updateSelectedElements,
-      };
-    }
+  const { fontSize, updateSelectedElements } = useStory(
+    ({ state, actions }) => ({
+      fontSize: state.selectedElements[0].fontSize,
+      updateSelectedElements: actions.updateSelectedElements,
+    })
   );
-
-  const fontSize = getCommonValue(selectedElements, 'fontSize');
 
   const handleChange = (value) =>
     updateSelectedElements({
