@@ -2,7 +2,7 @@
   "name": "@googleforcreators/i18n",
   "description": "Tiny i18n gettext helper package.",
   "private": false,
-  "version": "0.1.202202071716",
+  "version": "0.1.202203010801",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -25,6 +25,11 @@
   "engines": {
     "node": ">= 12 || >= 14 || >= 16",
     "npm": ">= 7.3"
+  },
+  "customExports": {
+    ".": {
+      "default": "./src/index.js"
+    }
   },
   "main": "dist/index.js",
   "module": "dist-module/index.js",

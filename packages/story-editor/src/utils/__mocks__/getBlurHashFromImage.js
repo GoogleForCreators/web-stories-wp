@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,24 +15,13 @@
  */
 
 /**
- * External dependencies
+ * mock function for getBlurHashFromImage. Prevents `import.meta` from being called in the jest context.
+ *
+ * @param {string} src The url.
+ * @return {string} The blur hash string.
  */
-import { Icons } from '@googleforcreators/design-system';
-import { __ } from '@googleforcreators/i18n';
+const getBlurHashFromImageMock = (src = 'default') => {
+  return `${src}-blur-hash`;
+};
 
-/**
- * Internal dependencies
- */
-import { IconButton } from './shared';
-
-function SwapImage() {
-  return (
-    <IconButton
-      Icon={Icons.PictureSwap}
-      title={__('Swap image', 'web-stories')}
-      onClick={() => {}}
-    />
-  );
-}
-
-export default SwapImage;
+export default getBlurHashFromImageMock;

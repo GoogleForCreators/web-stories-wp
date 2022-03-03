@@ -107,6 +107,9 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
         // eslint-disable-next-line styled-components-a11y/media-has-caption,jsx-a11y/media-has-caption -- False positive.
         <Video
           id={`video-${id}`}
+          // Force React to update the video in the DOM, causing it to properly reload if the URL changes.
+          // See https://github.com/GoogleForCreators/web-stories-wp/issues/10678
+          key={url}
           poster={poster || resource.poster}
           style={style}
           {...videoProps}

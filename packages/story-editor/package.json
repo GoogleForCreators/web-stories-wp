@@ -2,7 +2,7 @@
   "name": "@googleforcreators/story-editor",
   "description": "The core Web Stories editor web application, which is platform-agnostic.",
   "private": false,
-  "version": "0.1.202202071716",
+  "version": "0.1.202203010801",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -23,6 +23,11 @@
   "engines": {
     "node": ">= 12 || >= 14 || >= 16",
     "npm": ">= 7.3"
+  },
+  "customExports": {
+    ".": {
+      "default": "./src/index.js"
+    }
   },
   "main": "dist/index.js",
   "module": "dist-module/index.js",
@@ -52,16 +57,17 @@
     "@googleforcreators/transform": "*",
     "@googleforcreators/units": "*",
     "@googleforcreators/url": "*",
-    "blurhash": "^1.1.4",
+    "blurhash": "^1.1.5",
     "classnames": "^2.3.1",
     "clone-deep": "^4.0.1",
     "colorthief": "^2.3.2",
     "draft-js": "^0.11.7",
     "draft-js-export-html": "^1.4.1",
+    "draft-js-import-element": "https://github.com/swissspidy/draft-js-import-element",
     "draft-js-import-html": "^1.4.1",
     "draftjs-filters": "^2.5.0",
     "flagged": "^2.0.1",
-    "history": "^5.2.0",
+    "history": "^5.3.0",
     "html-to-image": "1.9.0",
     "polished": "^4.1.4",
     "prop-types": "^15.8.1",

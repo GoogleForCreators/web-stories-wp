@@ -32,6 +32,11 @@ const IconContainer = styled.div`
   color: ${({ theme }) => theme.colors.fg.primary};
   border-radius: ${({ theme }) => theme.borders.radius.round};
   pointer-events: none;
+  svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 `;
 
 const Scrim = styled.div`
