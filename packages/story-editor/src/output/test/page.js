@@ -1247,6 +1247,7 @@ describe('Page output', () => {
       expect(content).toContain(
         'background-audio="https://example.com/audio.mp3"'
       );
+      expect(content).not.toContain('amp-video');
     });
     it('should add background audio as amp-video', async () => {
       const props = {
