@@ -52,7 +52,7 @@ function getImageResourceFromAttachment(attachment) {
   const {
     id,
     date_gmt,
-    media_details: { width, height, sizes: _sizes },
+    media_details: { width, height, sizes: _sizes = {} } = {},
     mime_type: mimeType,
     alt_text: alt,
     source_url: src,
