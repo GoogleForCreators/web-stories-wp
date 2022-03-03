@@ -26,11 +26,18 @@ const store = configureStore({
     }),
 });
 
-const { getState, dispatch, subscribe, replaceReducer } = store;
+const { getState, dispatch: reduxDispatch, subscribe, replaceReducer } = store;
 
 const select = (key) => {
   const state = getState();
   return Object.prototype.hasOwnProperty.call(state, key) ? state[key] : null;
+};
+
+const dispatch = (sliceName, action, value) => {
+  return reduxDispatch({
+    type: `${sliceName}/${action}`,
+    payload: value,
+  });
 };
 
 export { store, select, dispatch, subscribe, replaceReducer };

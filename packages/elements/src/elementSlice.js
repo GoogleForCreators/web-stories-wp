@@ -30,5 +30,4 @@ const elementSlice = createSlice({
   },
 });
 
-export const { registerElementType } = elementSlice.actions;
 export default elementSlice.reducer;
