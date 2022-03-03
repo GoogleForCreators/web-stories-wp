@@ -58,11 +58,11 @@ function HighlightsProvider({ children }) {
       }
 
       if (highlight) {
-        const { tab, subTab, ...highlightState } = STATES[highlight];
+        const { tab, section, ...highlightState } = STATES[highlight];
         setHighlighted({
           [highlight]: { ...highlightState, showEffect: true },
           tab,
-          subTab,
+          section,
         });
       }
     },

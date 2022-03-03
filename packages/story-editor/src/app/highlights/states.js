@@ -115,22 +115,22 @@ export const STATES = {
   [keys.MEDIA]: {
     focus: true,
     tab: INSERT,
-    subTab: MEDIA.id,
+    section: MEDIA.id,
   },
   [keys.MEDIA3P]: {
     focus: true,
     tab: INSERT,
-    subTab: MEDIA3P.id,
+    section: MEDIA3P.id,
   },
   [keys.TEXT_SET]: {
     focus: true,
     tab: INSERT,
-    subTab: TEXT_SET.id,
+    section: TEXT_SET.id,
   },
   [keys.PAGE_TEMPLATES]: {
     focus: true,
     tab: INSERT,
-    subTab: PAGE_TEMPLATES.id,
+    section: PAGE_TEMPLATES.id,
   },
 };
 
