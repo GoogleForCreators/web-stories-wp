@@ -138,7 +138,6 @@ module.exports = function (config) {
         defaultViewport: getViewport(config.viewport),
       },
     },
-
     client: {
       args: [
         specsToRetry && '--grep',

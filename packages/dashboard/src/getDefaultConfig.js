@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const defaultConfig = {
+const getDefaultConfig = () => ({
   isRTL: false,
   userId: 1,
   locale: {
@@ -85,6 +85,6 @@ const defaultConfig = {
   styleConstants: {
     topOffset: 0,
   },
-};
+});
 
-export default defaultConfig;
+export default getDefaultConfig;

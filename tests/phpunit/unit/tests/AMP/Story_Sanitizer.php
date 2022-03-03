@@ -543,11 +543,10 @@ class Story_Sanitizer extends TestCase {
 HTML;
 
 		$args = [
-			'publisher_logo'    => '',
-			'publisher'         => '',
-			'poster_images'     => [],
-			'video_cache'       => false,
-			'semantic_headings' => true,
+			'publisher_logo' => '',
+			'publisher'      => '',
+			'poster_images'  => [],
+			'video_cache'    => false,
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -593,11 +592,10 @@ HTML;
 HTML;
 
 		$args = [
-			'publisher_logo'    => '',
-			'publisher'         => '',
-			'poster_images'     => [],
-			'video_cache'       => false,
-			'semantic_headings' => true,
+			'publisher_logo' => '',
+			'publisher'      => '',
+			'poster_images'  => [],
+			'video_cache'    => false,
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -612,56 +610,6 @@ HTML;
 		$this->assertStringContainsString( 'Title 1B</p>', $actual );
 		$this->assertStringContainsString( 'Title 2B</p>', $actual );
 		$this->assertStringContainsString( 'Title 3B</h3>', $actual );
-		$this->assertStringContainsString( 'ParagraphB</p>', $actual );
-	}
-
-	/**
-	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::use_semantic_heading_tags
-	 */
-	public function test_use_semantic_heading_tags_not_enabled(): void {
-		$source = <<<'HTML'
-<html><head></head><body><amp-story>
-	<amp-story-page>
-		<amp-story-grid-layer>
-			<p class="text-wrapper" style="font-size:.582524em">Title 1</p>
-			<p class="text-wrapper" style="font-size:.582524em">Title 1</p>
-			<p class="text-wrapper" style="font-size:.436893em">Title 2</p>
-			<p class="text-wrapper" style="font-size:.339805em">Title 3</p>
-			<p class="text-wrapper" style="font-size:.291262em">Paragraph</p>
-		</amp-story-grid-layer>
-	</amp-story-page>
-	<amp-story-page>
-		<amp-story-grid-layer>
-			<p class="text-wrapper" style="font-size:.582524em">Title 1B</p>
-			<p class="text-wrapper" style="font-size:.339805em">Title 3B</p>
-			<p class="text-wrapper" style="font-size:.436893em">Title 2B</p>
-			<p class="text-wrapper" style="font-size:.582524em">Title 1B</p>
-			<p class="text-wrapper" style="font-size:.291262em">ParagraphB</p>
-		</amp-story-grid-layer>
-	</amp-story-page>
-</amp-story></body></html>
-HTML;
-
-		$args = [
-			'publisher_logo'    => '',
-			'publisher'         => '',
-			'poster_images'     => [],
-			'video_cache'       => false,
-			'semantic_headings' => false,
-		];
-
-		$actual = $this->sanitize_and_get( $source, $args );
-
-		$this->assertStringContainsString( 'Title 1</p>', $actual );
-		$this->assertStringContainsString( 'Title 1</p>', $actual );
-		$this->assertStringContainsString( 'Title 2</p>', $actual );
-		$this->assertStringContainsString( 'Title 3</p>', $actual );
-		$this->assertStringContainsString( 'Paragraph</p>', $actual );
-
-		$this->assertStringContainsString( 'Title 1B</p>', $actual );
-		$this->assertStringContainsString( 'Title 1B</p>', $actual );
-		$this->assertStringContainsString( 'Title 2B</p>', $actual );
-		$this->assertStringContainsString( 'Title 3B</p>', $actual );
 		$this->assertStringContainsString( 'ParagraphB</p>', $actual );
 	}
 
@@ -714,5 +662,4 @@ HTML;
 		$this->assertStringContainsString( 'T3B</p>', $actual );
 		$this->assertStringContainsString( 'PB</p>', $actual );
 	}
-
 }

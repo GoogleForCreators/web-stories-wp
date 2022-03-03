@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const defaultConfig = {
+const getDefaultConfig = () => ({
   locale: {
     locale: 'en-US',
     dateFormat: 'F j, Y',
@@ -90,6 +90,6 @@ const defaultConfig = {
     topOffset: 0,
     leftOffset: 0,
   },
-};
+});
 
-export default defaultConfig;
+export default getDefaultConfig;
