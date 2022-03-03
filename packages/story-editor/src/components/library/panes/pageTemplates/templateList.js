@@ -51,7 +51,7 @@ const WrapperGrid = styled.div`
     `repeat(minmax(${rowHeight}px, 1fr))`};
 `;
 
-function DefaultTemplateList({
+function TemplateList({
   pages,
   parentRef,
   pageSize,
@@ -88,6 +88,8 @@ function DefaultTemplateList({
     setCurrentPageId(id);
   }, []);
 
+  const isSavedTemplates = handleDelete || fetchTemplates;
+
   useEffect(() => {
     if (pages.length > 0) {
       // Set `currentPageId` to first item during initial load, or if we have filtered pages by type
@@ -119,7 +121,7 @@ function DefaultTemplateList({
       role="list"
       aria-label={__('Page Template Options', 'web-stories')}
     >
-      {handleDelete || fetchTemplates
+      {isSavedTemplates
         ? pages.map((page, index) => (
             <SavedPageTemplate
               key={page.id}
@@ -152,7 +154,7 @@ function DefaultTemplateList({
   );
 }
 
-DefaultTemplateList.propTypes = {
+TemplateList.propTypes = {
   parentRef: PropTypes.object.isRequired,
   pages: PropTypes.arrayOf(
     PropTypes.shape({
@@ -164,4 +166,4 @@ DefaultTemplateList.propTypes = {
   fetchTemplates: PropTypes.func,
 };
 
-export default DefaultTemplateList;
+export default TemplateList;
