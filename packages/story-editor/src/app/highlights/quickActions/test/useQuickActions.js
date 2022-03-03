@@ -41,7 +41,6 @@ const {
   CircleSpeed,
   ColorBucket,
   Eraser,
-  LetterTLargeLetterTSmall,
   LetterTPlus,
   Link,
   Media,
