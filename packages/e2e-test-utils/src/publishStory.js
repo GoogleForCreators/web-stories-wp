@@ -22,11 +22,10 @@
  */
 async function publishStory(dismiss = true) {
   await expect(page).toClick('button', { text: 'Publish' });
-
-  await expect(page).toMatchElement('#modal-review-checklist');
-  await expect(page).toMatch(/Review checklist before publishing/);
-  await expect(page).toClick('button', {
-    text: /Continue to publish/,
+  await expect(page).toMatchElement('div[aria-label="Story details"]');
+  await expect(page).toMatch('Story Details');
+  await expect(page).toClick('div[aria-label="Story details"] button', {
+    text: 'Publish',
   });
 
   await expect(page).toMatch('Story published.');

@@ -29,7 +29,10 @@ import {
 } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { PatternPropType, hasGradient } from '@googleforcreators/patterns';
-import { useKeyDownEffect } from '@googleforcreators/design-system';
+import {
+  useKeyDownEffect,
+  themeHelpers,
+} from '@googleforcreators/design-system';
 import { useTransform } from '@googleforcreators/transform';
 
 /**
@@ -40,14 +43,25 @@ import useStory from '../../app/story/useStory';
 import CustomColorPicker from './customColorPicker';
 import BasicColorPicker from './basicColorPicker';
 
+const PICKER_WIDTH = 208;
+
 const Container = styled.div`
   border-radius: 8px;
   background: ${({ theme }) => theme.colors.bg.secondary};
-  width: 256px;
   user-select: none;
   display: flex;
   flex-direction: column;
+  gap: 12px;
   align-items: stretch;
+  ${({ maxHeight }) =>
+    maxHeight
+      ? `
+          height: ${maxHeight}px;
+          width: ${PICKER_WIDTH + themeHelpers.SCROLLBAR_WIDTH}px;
+        `
+      : `
+          width: ${PICKER_WIDTH}px;
+        `};
   overflow: hidden;
 
   &.picker-appear {
@@ -70,9 +84,13 @@ function ColorPicker({
   allowsGradient = false,
   allowsOpacity = true,
   allowsSavedColors = false,
+  hasEyedropper = true,
+  maxHeight = null,
   onClose = () => {},
   changedStyle = 'background',
   onDimensionChange = () => {},
+  allowsSavedColorDeletion = true,
+  shouldCloseOnSelection = false,
 }) {
   const [showDialog, setShowDialog] = useState(false);
   // If initial color is a gradient, start by showing a custom color picker.
@@ -162,6 +180,7 @@ function ColorPicker({
         role="dialog"
         aria-label={__('Color and gradient picker', 'web-stories')}
         ref={containerRef}
+        maxHeight={maxHeight}
       >
         <ActualColorPicker
           color={color}
@@ -171,10 +190,13 @@ function ColorPicker({
           showCustomPicker={showCustomPicker}
           hideCustomPicker={hideCustomPicker}
           handleClose={handleCloseAndRefocus}
+          hasEyedropper={hasEyedropper}
           allowsSavedColors={allowsSavedColors}
           showDialog={showDialog}
           setShowDialog={setShowDialog}
           changedStyle={changedStyle}
+          allowsSavedColorDeletion={allowsSavedColorDeletion}
+          shouldCloseOnSelection={shouldCloseOnSelection}
         />
       </Container>
     </CSSTransition>
@@ -188,9 +210,13 @@ ColorPicker.propTypes = {
   allowsOpacity: PropTypes.bool,
   allowsSavedColors: PropTypes.bool,
   isEyedropperActive: PropTypes.bool,
+  maxHeight: PropTypes.number,
   color: PatternPropType,
   changedStyle: PropTypes.string,
   onDimensionChange: PropTypes.func,
+  hasEyedropper: PropTypes.bool,
+  allowsSavedColorDeletion: PropTypes.bool,
+  shouldCloseOnSelection: PropTypes.bool,
 };
 
 export default ColorPicker;

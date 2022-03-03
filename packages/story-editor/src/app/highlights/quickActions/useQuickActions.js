@@ -38,7 +38,7 @@ import updateProperties from '../../../components/inspector/design/updatePropert
 import useVideoTrim from '../../../components/videoTrim/useVideoTrim';
 import { useHistory } from '../../history';
 import { useConfig } from '../../config';
-import { useLocalMedia } from '../../media';
+import { useLocalMedia, TRANSCODABLE_MIME_TYPES } from '../../media';
 import { ELEMENT_TYPES } from '../../../elements';
 import { useStory, useStoryTriggersDispatch, STORY_EVENTS } from '../../story';
 import useApplyTextAutoStyle from '../../../utils/useApplyTextAutoStyle';
@@ -68,7 +68,6 @@ const {
 
 export const MediaPicker = ({ render, ...props }) => {
   const {
-    allowedTranscodableMimeTypes,
     allowedFileTypes,
     allowedMimeTypes: {
       image: allowedImageMimeTypes,
@@ -113,10 +112,10 @@ export const MediaPicker = ({ render, ...props }) => {
   // Media Upload Props
   let allowedMimeTypes = [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
   if (isTranscodingEnabled) {
-    allowedMimeTypes = allowedMimeTypes.concat(allowedTranscodableMimeTypes);
+    allowedMimeTypes = allowedMimeTypes.concat(TRANSCODABLE_MIME_TYPES);
   }
 
-  const transcodableMimeTypes = allowedTranscodableMimeTypes.filter(
+  const transcodableMimeTypes = TRANSCODABLE_MIME_TYPES.filter(
     (x) => !allowedVideoMimeTypes.includes(x)
   );
 
@@ -477,7 +476,7 @@ const useQuickActions = () => {
             element: 'none',
           });
         },
-        onMouseDown: handleMouseDown,
+        ...actionMenuProps,
       },
     ];
   }, [
@@ -486,7 +485,6 @@ const useQuickActions = () => {
     handleFocusMediaPanel,
     handleFocusPageBackground,
     handleFocusTextSetsPanel,
-    handleMouseDown,
   ]);
 
   const resetProperties = useMemo(

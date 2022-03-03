@@ -17,9 +17,6 @@
 /**
  * External dependencies
  */
-import * as React from 'react';
-const { useCallback, useState, useMemo, forwardRef } = React;
-
 import {
   configure,
   render,
@@ -52,6 +49,9 @@ import DocumentPane, {
   PublishModalDocumentPane,
 } from './components/documentPane';
 import { Accessibility, Design, Priority } from './components/checklist';
+
+const React = require('react');
+const { useCallback, useState, useMemo, forwardRef } = React;
 
 if ('true' === WEB_STORIES_CI) {
   configure({
@@ -100,25 +100,6 @@ export const FIXTURE_DEFAULT_CONFIG = {
   allowedImageMimeTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
   allowedAudioFileTypes: ['mp3', 'aac', 'wav', 'ogg'],
   allowedAudioMimeTypes: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
-  allowedTranscodableMimeTypes: [
-    'video/3gpp',
-    'video/3gpp2',
-    'video/MP2T',
-    'video/mp4',
-    'video/mpeg',
-    'video/ogg',
-    'video/quicktime',
-    'video/webm',
-    'video/x-flv',
-    'video/x-h261',
-    'video/x-h263',
-    'video/x-m4v',
-    'video/x-matroska',
-    'video/x-mjpeg',
-    'video/x-ms-asf',
-    'video/x-msvideo',
-    'video/x-nut',
-  ],
   capabilities: {
     hasUploadMediaAction: true,
   },
@@ -408,9 +389,6 @@ export class Fixture {
         }
       });
     });
-
-    // @todo: find a stable way to wait for the story to fully render. Can be
-    // implemented via `waitFor`.
   }
 
   /**

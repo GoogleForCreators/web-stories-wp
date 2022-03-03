@@ -61,7 +61,6 @@ final class FailedToMakeInstance
 	 *                                                   reference.
 	 * @param InjectionChain $injection_chain    Injection chain that led to the
 	 *                                           circular reference.
-	 * @return self
 	 */
 	public static function for_circular_reference(
 		$interface_or_class,
@@ -87,7 +86,6 @@ final class FailedToMakeInstance
 	 * @since 1.6.0
 	 *
 	 * @param string $interface Interface that was left unresolved.
-	 * @return self
 	 */
 	public static function for_unresolved_interface( $interface ): self {
 		$message = \sprintf(
@@ -106,7 +104,6 @@ final class FailedToMakeInstance
 	 *
 	 * @param string $interface_or_class Interface or class that could not be
 	 *                                   reflected upon.
-	 * @return self
 	 */
 	public static function for_unreflectable_class( $interface_or_class ): self {
 		$message = \sprintf(
@@ -127,7 +124,6 @@ final class FailedToMakeInstance
 	 *                              resolved.
 	 * @param string $class         Class that had the argument in its
 	 *                              constructor.
-	 * @return self
 	 */
 	public static function for_unresolved_argument( $argument_name, $class ): self {
 		$message = \sprintf(
@@ -146,7 +142,6 @@ final class FailedToMakeInstance
 	 * @since 1.6.0
 	 *
 	 * @param string $class Class that was not yet instantiated.
-	 * @return self
 	 */
 	public static function for_uninstantiated_shared_instance( $class ): self {
 		$message = \sprintf(
@@ -164,7 +159,6 @@ final class FailedToMakeInstance
 	 * @since 1.6.0
 	 *
 	 * @param string $class Class for which there is no delegate.
-	 * @return self
 	 */
 	public static function for_invalid_delegate( $class ): self {
 		$message = \sprintf(

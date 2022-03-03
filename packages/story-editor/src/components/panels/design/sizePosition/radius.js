@@ -32,7 +32,7 @@ import { useCommonObjectValue, focusStyle } from '../../shared';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import Tooltip from '../../../tooltip';
 
-const DEFAULT_BORDER_RADIUS = {
+export const DEFAULT_BORDER_RADIUS = {
   topLeft: 0,
   topRight: 0,
   bottomRight: 0,

@@ -31,7 +31,7 @@ describe('useGlobalClipboardHandlers', () => {
     const pasteHandler = jest.fn();
 
     const windowSpy = jest
-      .spyOn(global, 'getSelection')
+      .spyOn(window, 'getSelection')
       .mockImplementation(() => false);
 
     renderHook(() => {

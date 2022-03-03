@@ -34,8 +34,6 @@ namespace Google\Web_Stories;
 class Demo_Content {
 	/**
 	 * Returns the title for the demo story.
-	 *
-	 * @return string
 	 */
 	public function get_title(): string {
 		return __( 'Tips to make the most of Web Stories', 'web-stories' );
@@ -43,8 +41,6 @@ class Demo_Content {
 
 	/**
 	 * Returns the content for the demo story.
-	 *
-	 * @return string
 	 */
 	public function get_content(): string {
 		$content = $this->load_demo_content_from_file();
@@ -164,8 +160,6 @@ class Demo_Content {
 
 	/**
 	 * Loads demo content from JSON file.
-	 *
-	 * @return string
 	 */
 	private function load_demo_content_from_file(): string {
 		$file = WEBSTORIES_PLUGIN_DIR_PATH . 'includes/data/stories/demo.json';

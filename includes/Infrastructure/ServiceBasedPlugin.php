@@ -120,7 +120,6 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @since 1.6.0
 	 *
 	 * @param bool $network_wide Whether the activation was done network-wide.
-	 * @return void
 	 */
 	public function on_plugin_activation( $network_wide ): void {
 		$this->register_services();
@@ -142,7 +141,6 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @since 1.6.0
 	 *
 	 * @param bool $network_wide Whether the deactivation was done network-wide.
-	 * @return void
 	 */
 	public function on_plugin_deactivation( $network_wide ): void {
 		$this->register_services();
@@ -164,7 +162,6 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @since 1.11.0
 	 *
 	 * @param WP_Site $site The site being initialized.
-	 * @return void
 	 */
 	public function on_site_initialization( WP_Site $site ): void {
 		$this->register_services();
@@ -193,7 +190,6 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @since 1.11.0
 	 *
 	 * @param WP_Site $site The site being removed.
-	 * @return void
 	 */
 	public function on_site_removal( WP_Site $site ): void {
 		$this->register_services();
@@ -218,8 +214,6 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @since 1.6.0
 	 *
 	 * @throws InvalidService If a service is not valid.
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		if ( false !== static::REGISTRATION_ACTION ) {
@@ -238,8 +232,6 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 * @since 1.6.0
 	 *
 	 * @throws InvalidService If a service is not valid.
-	 *
-	 * @return void
 	 */
 	public function register_services(): void {
 		// Bail early so we don't instantiate services twice.
@@ -533,7 +525,6 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @param string                       $id ID of the service to register.
 	 * @param HasRequirements|class-string $class Class of the service to register.
-	 * @return void
 	 */
 	protected function schedule_potential_service_registration( $id, $class ): void {
 		if ( is_a( $class, Delayed::class, true ) ) {
@@ -563,7 +554,6 @@ abstract class ServiceBasedPlugin implements Plugin {
 	 *
 	 * @param string              $id ID of the service to register.
 	 * @param class-string|object $class Class of the service to register.
-	 * @return void
 	 */
 	protected function maybe_register_service( $id, $class ): void {
 		// Ensure we don't register the same service more than once.

@@ -41,8 +41,6 @@ class Embed_Shortcode extends Embed_Base {
 	 * Initializes the Web Stories embed shortcode.
 	 *
 	 * @since 1.1.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		add_shortcode( self::SHORTCODE_NAME, [ $this, 'render_shortcode' ] );

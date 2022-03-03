@@ -45,7 +45,6 @@ class Capabilities implements Service, PluginActivationAware, SiteInitialization
 	 * @since 1.6.0
 	 *
 	 * @param bool $network_wide Whether the activation was done network-wide.
-	 * @return void
 	 */
 	public function on_plugin_activation( $network_wide ): void {
 		$this->add_caps_to_roles();
@@ -57,7 +56,6 @@ class Capabilities implements Service, PluginActivationAware, SiteInitialization
 	 * @since 1.11.0
 	 *
 	 * @param WP_Site $site The site being initialized.
-	 * @return void
 	 */
 	public function on_site_initialization( WP_Site $site ): void {
 		$this->add_caps_to_roles();
@@ -69,7 +67,6 @@ class Capabilities implements Service, PluginActivationAware, SiteInitialization
 	 * @since 1.11.0
 	 *
 	 * @param WP_Site $site The site being removed.
-	 * @return void
 	 */
 	public function on_site_removal( WP_Site $site ): void {
 		$this->remove_caps_from_roles();
@@ -82,8 +79,6 @@ class Capabilities implements Service, PluginActivationAware, SiteInitialization
 	 * as they can customize this to their liking.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
 	public function add_caps_to_roles(): void {
 		$all_capabilities_raw = $this->get_all_capabilities();
@@ -137,8 +132,6 @@ class Capabilities implements Service, PluginActivationAware, SiteInitialization
 	 * Removes story capabilities from all user roles.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
 	public function remove_caps_from_roles(): void {
 		$all_capabilities_raw = $this->get_all_capabilities();

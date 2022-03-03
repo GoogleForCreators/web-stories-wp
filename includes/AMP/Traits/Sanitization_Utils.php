@@ -43,7 +43,6 @@ trait Sanitization_Utils {
 	 * @since 1.1.0
 	 *
 	 * @param Document|AMP_Document $document Document instance.
-	 * @return void
 	 */
 	private function transform_html_start_tag( &$document ): void {
 		$document->html->setAttribute( 'amp', '' );
@@ -71,7 +70,6 @@ trait Sanitization_Utils {
 	 * @since 1.1.0
 	 *
 	 * @param Document|AMP_Document $document Document instance.
-	 * @return void
 	 */
 	private function transform_a_tags( &$document ): void {
 		$links = $document->getElementsByTagName( 'a' );
@@ -125,14 +123,8 @@ trait Sanitization_Utils {
 	 * @since 1.18.0
 	 *
 	 * @param Document|AMP_Document $document   Document instance.
-	 * @param bool                  $is_enabled Whether the feature is enabled.
-	 * @return void
 	 */
-	private function use_semantic_heading_tags( &$document, bool $is_enabled ): void {
-		if ( ! $is_enabled ) {
-			return;
-		}
-
+	private function use_semantic_heading_tags( &$document ): void {
 		$pages = $document->getElementsByTagName( 'amp-story-page' );
 
 		/**
@@ -166,7 +158,6 @@ trait Sanitization_Utils {
 	 * @since 1.18.0
 	 *
 	 * @param DOMNodeList $text_elements List of text elements.
-	 * @return void
 	 */
 	private function use_semantic_heading_tags_for_elements( $text_elements ): void {
 		// Matches PAGE_HEIGHT in the editor, as also seen in amp-story-grid-layer[aspect-ratio].
@@ -182,6 +173,11 @@ trait Sanitization_Utils {
 		foreach ( $text_elements as $text_el ) {
 			$style   = $text_el->getAttribute( 'style' );
 			$matches = [];
+
+			// See https://github.com/GoogleForCreators/web-stories-wp/issues/10726.
+			if ( \strlen( trim( $text_el->textContent ) ) <= 3 ) {
+				continue;
+			}
 
 			if ( ! preg_match( '/font-size:([^em]+)em/', $style, $matches ) ) {
 				continue;
@@ -214,7 +210,6 @@ trait Sanitization_Utils {
 	 *
 	 * @param DOMElement $node     Element whose tag name should be changed.
 	 * @param string     $tag_name Desired new tag name, e.g. h1 or h2.
-	 * @return void
 	 */
 	private function change_tag_name( DOMElement $node, string $tag_name ): void {
 		/**
@@ -256,7 +251,6 @@ trait Sanitization_Utils {
 	 * @since 1.13.0
 	 *
 	 * @param Document|AMP_Document $document Document instance.
-	 * @return void
 	 */
 	private function sanitize_amp_story_page_outlink( &$document ): void {
 		$outlink_elements = $document->getElementsByTagName( 'amp-story-page-outlink' );
@@ -287,7 +281,6 @@ trait Sanitization_Utils {
 	 *
 	 * @param Document|AMP_Document $document       Document instance.
 	 * @param string                $publisher_logo Publisher logo.
-	 * @return void
 	 */
 	private function add_publisher_logo( &$document, $publisher_logo ): void {
 		/**
@@ -323,7 +316,6 @@ trait Sanitization_Utils {
 	 *
 	 * @param Document|AMP_Document $document       Document instance.
 	 * @param string                $publisher Publisher logo.
-	 * @return void
 	 */
 	private function add_publisher( &$document, $publisher ): void {
 		/**
@@ -349,7 +341,6 @@ trait Sanitization_Utils {
 	 *
 	 * @param Document|AMP_Document $document      Document instance.
 	 * @param string[]              $poster_images List of poster images, keyed by type.
-	 * @return void
 	 */
 	private function add_poster_images( &$document, $poster_images ): void {
 		/**
@@ -385,7 +376,6 @@ trait Sanitization_Utils {
 	 * @since 1.8.0
 	 *
 	 * @param Document|AMP_Document $document Document instance.
-	 * @return void
 	 */
 	private function deduplicate_inline_styles( $document ): void {
 		$elements_by_inline_style = [];
@@ -447,7 +437,6 @@ trait Sanitization_Utils {
 	 *
 	 * @param Document|AMP_Document $document Document instance.
 	 * @param bool                  $video_cache_enabled Whether video cache is enabled.
-	 * @return void
 	 */
 	private function add_video_cache( &$document, $video_cache_enabled ): void {
 		if ( ! $video_cache_enabled ) {
@@ -484,7 +473,6 @@ trait Sanitization_Utils {
 	 * @since 1.9.0
 	 *
 	 * @param Document|AMP_Document $document Document instance.
-	 * @return void
 	 */
 	private function remove_blob_urls( &$document ): void {
 		/**
@@ -537,7 +525,6 @@ trait Sanitization_Utils {
 	 * @since 1.10.0
 	 *
 	 * @param Document|AMP_Document $document Document instance.
-	 * @return void
 	 */
 	private function sanitize_srcset( &$document ): void {
 		/**
@@ -589,7 +576,6 @@ trait Sanitization_Utils {
 	 * @link https://github.com/googleforcreators/web-stories-wp/issues/9530
 	 *
 	 * @param Document|AMP_Document $document Document instance.
-	 * @return void
 	 */
 	private function remove_page_template_placeholder_images( &$document ): void {
 		// Catches "assets/images/editor/grid-placeholder.png" as well as

@@ -25,10 +25,13 @@ import {
 } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import {
+  isValidUrl,
+  toAbsoluteUrl,
+  withProtocol,
+} from '@googleforcreators/url';
+import {
   Checkbox,
   Input,
-  isValidUrl,
-  withProtocol,
   Text,
   THEME_CONSTANTS,
   ThemeGlobals,
@@ -40,7 +43,6 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { useStory, useCanvas, useAPI } from '../../../../app';
-import { toAbsoluteUrl } from '../../../../utils/url';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
 import { LinkIcon, LinkInput, Row } from '../../../form';
 import { SimplePanel } from '../../panel';

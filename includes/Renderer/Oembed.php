@@ -39,8 +39,6 @@ class Oembed extends Service_Base {
 	 * Filter to render oembed.
 	 *
 	 * @since 1.7.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		add_filter( 'embed_template', [ $this, 'filter_embed_template' ] );

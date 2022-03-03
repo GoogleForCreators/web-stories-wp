@@ -76,8 +76,6 @@ class Status_Check_Controller extends REST_Controller implements HasRequirements
 	 * Registers routes for links.
 	 *
 	 * @see register_rest_route()
-	 *
-	 * @return void
 	 */
 	public function register_routes(): void {
 		register_rest_route(

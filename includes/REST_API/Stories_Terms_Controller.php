@@ -55,8 +55,6 @@ class Stories_Terms_Controller extends WP_REST_Terms_Controller {
 	 * Return namespace.
 	 *
 	 * @since 1.12.0
-	 *
-	 * @return string
 	 */
 	public function get_namespace(): string {
 		return $this->namespace;

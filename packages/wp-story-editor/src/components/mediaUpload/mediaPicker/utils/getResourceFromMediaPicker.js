@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { createResource, getResourceSize } from '@googleforcreators/media';
+import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/wp-utils';
 
 /**
  * Generates a resource object from a WordPress media picker object.
@@ -45,7 +46,7 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
       height,
       length,
       length_formatted: lengthFormatted,
-      sizes,
+      sizes: _sizes,
     },
     web_stories_media_source: mediaSource,
     web_stories_is_muted: isMuted,
@@ -53,6 +54,11 @@ const getResourceFromMediaPicker = (mediaPickerEl) => {
     web_stories_blurhash: blurHash,
     trim_data: trimData,
   } = mediaPickerEl;
+
+  const sizes = Object.entries(_sizes).reduce((sizes, [key, value]) => {
+    sizes[key] = snakeToCamelCaseObjectKeys(value);
+    return sizes;
+  }, {});
 
   return createResource({
     baseColor,

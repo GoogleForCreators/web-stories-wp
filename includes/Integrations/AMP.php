@@ -29,7 +29,6 @@ namespace Google\Web_Stories\Integrations;
 use DOMElement;
 use Google\Web_Stories\AMP\Integration\AMP_Story_Sanitizer;
 use Google\Web_Stories\Context;
-use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Model\Story;
 use Google\Web_Stories\Service_Base;
@@ -70,13 +69,6 @@ class AMP extends Service_Base implements HasRequirements {
 	private $context;
 
 	/**
-	 * Experiments instance.
-	 *
-	 * @var Experiments Experiments instance.
-	 */
-	private $experiments;
-
-	/**
 	 * Analytics constructor.
 	 *
 	 * @since 1.12.0
@@ -84,27 +76,22 @@ class AMP extends Service_Base implements HasRequirements {
 	 * @param Settings        $settings        Settings instance.
 	 * @param Story_Post_Type $story_post_type Experiments instance.
 	 * @param Context         $context         Context instance.
-	 * @param Experiments     $experiments     Experiments instance.
 	 * @return void
 	 */
 	public function __construct(
 		Settings $settings,
 		Story_Post_Type $story_post_type,
-		Context $context,
-		Experiments $experiments
+		Context $context
 	) {
 		$this->settings        = $settings;
 		$this->story_post_type = $story_post_type;
 		$this->context         = $context;
-		$this->experiments     = $experiments;
 	}
 
 	/**
 	 * Initializes all hooks.
 	 *
 	 * @since 1.2.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		add_filter( 'option_amp-options', [ $this, 'filter_amp_options' ] );
@@ -218,11 +205,10 @@ class AMP extends Service_Base implements HasRequirements {
 		}
 
 		$sanitizers[ AMP_Story_Sanitizer::class ] = [
-			'publisher_logo'    => $story->get_publisher_logo_url(),
-			'publisher'         => $story->get_publisher_name(),
-			'poster_images'     => array_filter( $poster_images ),
-			'video_cache'       => $video_cache_enabled,
-			'semantic_headings' => $this->experiments->is_experiment_enabled( 'semanticHeadingTags' ),
+			'publisher_logo' => $story->get_publisher_logo_url(),
+			'publisher'      => $story->get_publisher_name(),
+			'poster_images'  => array_filter( $poster_images ),
+			'video_cache'    => $video_cache_enabled,
 		];
 
 		return $sanitizers;
@@ -331,8 +317,6 @@ class AMP extends Service_Base implements HasRequirements {
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 *
 	 * @since 1.2.0
-	 *
-	 * @return string|null
 	 */
 	protected function get_request_post_type(): ?string {
 		// phpcs:disable WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized

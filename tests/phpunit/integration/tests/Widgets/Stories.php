@@ -35,8 +35,6 @@ class Stories extends DependencyInjectedTestCase {
 
 	/**
 	 * Runs before any method in class is run.
-	 *
-	 * @return void
 	 */
 	public function set_up(): void {
 		parent::set_up();

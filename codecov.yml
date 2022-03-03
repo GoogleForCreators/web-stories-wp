@@ -67,7 +67,8 @@ comment: false
 
 # See https://docs.codecov.io/docs/ignoring-paths
 ignore:
-  - bin/normalize-path.js
+  - bin
+  - tests
   - scoper.inc.php
   - web-stories.php
   - uninstall.php
@@ -75,12 +76,12 @@ ignore:
   - includes/compat
   - includes/polyfills
   - includes/templates
-  - packages/migration/src/cli.js
-  - packages/e2e-tests
-  - packages/e2e-test-utils
-  - packages/karma-fixture
-  - packages/fonts/src/cli.js
-  - packages/templates/src/cli.js
   - includes/AMP/Integration/AMP_Story_Sanitizer.php
   - includes/REST_API/Stories_Settings_Controller.php
   - includes/REST_API/Stories_Users_Controller.php
+  - packages/e2e-tests
+  - packages/e2e-test-utils
+  - packages/fonts/scripts
+  - packages/karma-fixture
+  - packages/migration/scripts
+  - packages/templates/scripts

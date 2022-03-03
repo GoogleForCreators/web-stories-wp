@@ -30,18 +30,16 @@ import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import {
   isValidUrl,
+  toAbsoluteUrl,
   withProtocol,
-  Input,
-  Text,
-  THEME_CONSTANTS,
-} from '@googleforcreators/design-system';
+} from '@googleforcreators/url';
+import { Input, Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 
 import { useStory, useAPI, useCanvas } from '../../../../app';
-import { toAbsoluteUrl } from '../../../../utils/url';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { Row, LinkInput, LinkIcon } from '../../../form';

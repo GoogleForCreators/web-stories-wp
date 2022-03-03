@@ -34,8 +34,6 @@ class Add_Media_Source_Page_Template extends Add_Media_Source {
 	 * Term name.
 	 *
 	 * @since 1.14.0
-	 *
-	 * @return string
 	 */
 	protected function get_term(): string {
 		return 'page-template';

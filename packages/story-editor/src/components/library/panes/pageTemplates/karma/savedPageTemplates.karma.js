@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { waitFor } from '@testing-library/react';
+import { waitFor, within } from '@testing-library/react';
 
 /**
  * Internal dependencies
@@ -123,11 +123,15 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
         fixture.editor.library.pageTemplatesPane.deleteBtnByIndex(0)
       );
 
-      expect(await fixture.screen.findByRole('dialog')).toBeTruthy();
+      const dialog = await fixture.screen.findByRole('dialog', {
+        name: 'Delete Page Template',
+        timeout: 9000,
+      });
 
-      const deleteButton = await fixture.screen.findByRole('button', {
+      const deleteButton = await within(dialog).findByRole('button', {
         name: 'Delete',
       });
+
       await fixture.events.click(deleteButton);
 
       await fixture.events.sleep(200);

@@ -34,7 +34,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Verify semver compatibility
         run: |
@@ -110,7 +110,7 @@ jobs:
 
       # Grab current assets version from `web-stories.php` and pass on to next steps.
       # - name: Checkout
-      #   uses: actions/checkout@v2
+      #   uses: actions/checkout@v3
       #   with:
       #     ref:
 
@@ -126,7 +126,7 @@ jobs:
       #       ASSETS_VERSION_REGEX: "https://wp.stories.google/static/([^']+)"
 
       - name: Checkout wp.stories.google
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           repository: GoogleForCreators/wp.stories.google
           lfs: true
@@ -134,7 +134,7 @@ jobs:
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       - name: Setup Cloud SDK
-        uses: google-github-actions/setup-gcloud@v0.5.0
+        uses: google-github-actions/setup-gcloud@v0.5.1
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           service_account_key: ${{ secrets.GCP_SA_KEY }}
@@ -215,12 +215,12 @@ jobs:
       release_name: ${{ steps.changelog.outputs.release_name }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0 # 0 indicates all history for all branches and tags.
 
       - name: Setup Node
-        uses: actions/setup-node@v2.5.1
+        uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -243,7 +243,7 @@ jobs:
             PREVIOUS_TAG=$(git tag -l --sort=-version:refname | grep --invert-match $TAG_NAME | head -1)
 
             # If this is the first RC for this version (e.g. v1.5.0-rc.1), the previous version is v1.4.0, without suffix.
-            if [[ $TAG_NAME == *".rc.1" ]]; then
+            if [[ $TAG_NAME == *"-rc.1" ]]; then
               PREVIOUS_TAG=${PREVIOUS_TAG/-rc.*/}
             fi
           else
@@ -285,7 +285,7 @@ jobs:
       release_branch: ${{ steps.release_branch.outputs.release_branch }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0 # 0 indicates all history for all branches and tags.
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
@@ -304,7 +304,7 @@ jobs:
         continue-on-error: true
 
       - name: Setup Node
-        uses: actions/setup-node@v2.5.1
+        uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -414,7 +414,7 @@ jobs:
       - name: Bundle development version
         run: |
           rm -rf assets/css/* assets/js/*
-          NODE_ENV=development npx webpack --config webpack.config.cjs
+          npx webpack --node-env=development
           npm run workflow:build-plugin -- --zip web-stories-dev.zip
 
       - name: Prepare release artifacts
@@ -435,7 +435,7 @@ jobs:
     needs: [build, changelog]
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Download release artifacts
         uses: actions/download-artifact@v2
@@ -466,7 +466,8 @@ jobs:
           commitish: ${{ needs.build.outputs.release_branch || github.ref }}
           draft: true
           prerelease: ${{ env.IS_RC }}
-          body_path: changelog/changelog.txt
+        # TODO: Fix changelog generation.
+        #          body_path: changelog/changelog.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
@@ -509,13 +510,13 @@ jobs:
     if: ${{ ! startsWith(github.ref, 'refs/heads/release/') && ! contains(github.event.inputs.version, 'rc') }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           ref: main
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       - name: Setup Node
-        uses: actions/setup-node@v2.5.1
+        uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
           cache: npm

@@ -2,7 +2,7 @@
   "name": "@googleforcreators/units",
   "description": "A collection of utility functions as well as a React context provider for dealing with \"data\" and \"editor\" pixels in the Web Stories editor.",
   "private": false,
-  "version": "0.1.202202071716",
+  "version": "0.1.202203010801",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -23,6 +23,11 @@
   "engines": {
     "node": ">= 12 || >= 14 || >= 16",
     "npm": ">= 7.3"
+  },
+  "customExports": {
+    ".": {
+      "default": "./src/index.js"
+    }
   },
   "main": "dist/index.js",
   "module": "dist-module/index.js",
