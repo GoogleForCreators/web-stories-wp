@@ -26,7 +26,7 @@ import {
   ModalGlobalStyle,
   deepMerge,
 } from '@googleforcreators/design-system';
-import { useMemo, useEffect } from '@googleforcreators/react';
+import { useEffect } from '@googleforcreators/react';
 import { FlagsProvider } from 'flagged';
 import { TransformProvider } from '@googleforcreators/transform';
 import {
@@ -57,10 +57,10 @@ import { PageDataUrlProvider } from './app/pageDataUrls';
 import DevTools from './components/devTools';
 import { GlobalStyle as CalendarStyle } from './components/form/dateTime/calendarStyle';
 import KeyboardOnlyOutlines from './utils/keyboardOnlyOutline';
-import defaultConfig from './defaultConfig';
+import getDefaultConfig from './getDefaultConfig';
 
 function StoryEditor({ config, initialEdits, children }) {
-  const _config = useMemo(() => deepMerge(defaultConfig, config), [config]);
+  const _config = deepMerge(getDefaultConfig(), config);
   const { storyId, isRTL, flags } = _config;
 
   useEffect(() => {
