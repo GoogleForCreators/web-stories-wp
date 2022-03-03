@@ -43,7 +43,7 @@ const minimalInputContainerStyleOverride = css`
   padding-right: 6px;
 `;
 
-function OpacityInput({ value, onChange, isMinimal }) {
+function OpacityInput({ value, onChange, isInDesignMenu }) {
   const [inputValue, setInputValue] = useState('');
 
   // Allow any input, but only persist non-NaN values up-chain
@@ -64,9 +64,9 @@ function OpacityInput({ value, onChange, isMinimal }) {
 
   useEffect(() => updateFromValue(), [updateFromValue, value]);
 
-  const unit = isMinimal ? null : _x('%', 'Percentage', 'web-stories');
+  const unit = isInDesignMenu ? null : _x('%', 'Percentage', 'web-stories');
 
-  const containerStyle = isMinimal
+  const containerStyle = isInDesignMenu
     ? minimalInputContainerStyleOverride
     : inputContainerStyleOverride;
 
@@ -89,7 +89,7 @@ function OpacityInput({ value, onChange, isMinimal }) {
 OpacityInput.propTypes = {
   value: PropTypes.oneOfType([PatternPropType, PropTypes.string]),
   onChange: PropTypes.func.isRequired,
-  isMinimal: PropTypes.bool,
+  isInDesignMenu: PropTypes.bool,
 };
 
 export default OpacityInput;
