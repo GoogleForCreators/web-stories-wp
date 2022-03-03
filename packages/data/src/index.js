@@ -15,4 +15,4 @@
  */
 export * from './react-redux';
 export * from './redux-toolkit';
-export { default as store } from './store';
+export * from './store';

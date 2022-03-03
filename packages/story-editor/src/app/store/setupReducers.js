@@ -16,11 +16,11 @@
 /**
  * External dependencies
  */
-import { combineReducers, store } from '@googleforcreators/data';
+import { combineReducers, replaceReducer } from '@googleforcreators/data';
 import { elementReducer } from '@googleforcreators/elements';
 
 const rootReducer = combineReducers({
   element: elementReducer,
 });
 
-store.replaceReducer(rootReducer);
+replaceReducer(rootReducer);

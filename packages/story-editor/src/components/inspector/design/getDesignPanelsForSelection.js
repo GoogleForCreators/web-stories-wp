@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { PanelTypes } from '@googleforcreators/design-system';
-import { store } from '@googleforcreators/data';
+import { select } from '@googleforcreators/data';
 
 /**
  * Internal dependencies
@@ -111,9 +111,8 @@ function getDesignPanelsForSelection(elements) {
   return elements
     .map(
       ({ type }) =>
-        store
-          .getState()
-          .element.elementType.find((elType) => elType.type === type).panels
+        select('element').elementType.find((elType) => elType.type === type)
+          .panels
     )
     .reduce((commonPanels, panels) => intersect(commonPanels, panels), ALL)
     .map((type) => {

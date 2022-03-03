@@ -26,4 +26,11 @@ const store = configureStore({
     }),
 });
 
-export default store;
+const { getState, dispatch, subscribe, replaceReducer } = store;
+
+const select = (key) => {
+  const state = getState();
+  return Object.prototype.hasOwnProperty.call(state, key) ? state[key] : null;
+};
+
+export { store, select, dispatch, subscribe, replaceReducer };
