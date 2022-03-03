@@ -111,7 +111,7 @@ function getDesignPanelsForSelection(elements) {
   return elements
     .map(
       ({ type }) =>
-        select('element').elementType.find((elType) => elType.type === type)
+        select('element').elementTypes.find((elType) => elType.type === type)
           .panels
     )
     .reduce((commonPanels, panels) => intersect(commonPanels, panels), ALL)

@@ -21,11 +21,11 @@ import { createSlice } from '@googleforcreators/data';
 const elementSlice = createSlice({
   name: 'element',
   initialState: {
-    elementType: [],
+    elementTypes: [],
   },
   reducers: {
     registerElementType: (state, action) => {
-      state.elementType.push(action.payload);
+      state.elementTypes.push(action.payload);
     },
   },
 });

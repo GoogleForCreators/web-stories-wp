@@ -19,6 +19,6 @@
 import { select } from '@googleforcreators/data';
 
 const getDefinitionForType = (type) =>
-  select('element').elementType.find((el) => el.type === type);
+  select('element').elementTypes.find((el) => el.type === type);
 
 export default getDefinitionForType;
