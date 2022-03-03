@@ -113,11 +113,12 @@ function InnerElement({
   // Note: This `useDropTargets` is purposefully separated from the one below since it
   // uses a custom function for checking for equality and is meant for `handleDrag` and `handleDrop` only.
   const { handleDrag, handleDrop } = useDropTargets(
-    ({ actions: { handleDrag, handleDrop } }) => ({
+    ({ state: { dropTargets }, actions: { handleDrag, handleDrop } }) => ({
       handleDrag,
       handleDrop,
+      dropTargets,
     }),
-    () => {
+    (prev, curr) => {
       // If we're dragging this element, always update the actions.
       if (hasSetResourceTracker.current) {
         return false;
@@ -126,6 +127,15 @@ function InnerElement({
         hasSetResourceTracker.current = false;
         return false;
       }
+      // If the drop targets updated meanwhile, also update the actions, otherwise `handleDrag` won't consider those.
+      if (prev?.dropTargets && curr?.dropTargets) {
+        const prevIds = Object.keys(prev.dropTargets);
+        const currentIds = Object.keys(curr.dropTargets);
+        if (prevIds.join() !== currentIds.join()) {
+          return false;
+        }
+      }
+
       // Otherwise ignore the changes in the actions.
       return true;
     }
