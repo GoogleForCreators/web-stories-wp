@@ -38,6 +38,11 @@ import { initializeTracking } from '@googleforcreators/tracking';
 import { bindToCallbacks } from '@web-stories-wp/wp-utils';
 
 /**
+ * WordPress dependencies
+ */
+import '@wordpress/dom-ready'; // Just imported here so it's part of the bundle. Usage is in inline scripts.
+
+/**
  * Internal dependencies
  */
 import {
