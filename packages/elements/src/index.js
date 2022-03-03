@@ -16,4 +16,4 @@
 export * from './constants';
 export * from './utils';
 export * from './types';
-export { default as elementReducer, registerElementType } from './elementSlice';
+export { default as elementReducer } from './elementSlice';
