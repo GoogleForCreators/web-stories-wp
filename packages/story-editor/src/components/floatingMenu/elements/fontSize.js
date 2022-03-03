@@ -29,7 +29,7 @@ import {
   inputContainerStyleOverride,
 } from '../../panels/shared';
 import { MIN_MAX } from '../../panels/design/textStyle/font';
-
+// TODO: https://github.com/GoogleForCreators/web-stories-wp/issues/10799
 import { Input } from './shared';
 
 function FontSize() {
