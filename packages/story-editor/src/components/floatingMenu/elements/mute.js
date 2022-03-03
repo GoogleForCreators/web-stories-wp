@@ -41,7 +41,7 @@ function Mute() {
     <IconButton
       Icon={Icons.Muted}
       title={title}
-      isDisabled={isDisabled || isMuting}
+      disabled={isDisabled || isMuting}
       onClick={handleMute}
     />
   );

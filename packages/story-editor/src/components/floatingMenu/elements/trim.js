@@ -41,7 +41,7 @@ function Trim() {
     <IconButton
       Icon={Icons.Scissors}
       title={title}
-      isDisabled={isDisabled || isTrimming}
+      disabled={isDisabled || isTrimming}
       onClick={handleTrim}
     />
   );
