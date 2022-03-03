@@ -41,15 +41,15 @@ export const CONTEXT_MENU_WIDTH = 218;
 
 const MenuWrapper = styled.div(
   ({ theme }) => css`
-    background-color: ${({ $isSecondary }) =>
-      $isSecondary ? theme.colors.bg.secondary : theme.colors.bg.primary};
-    border-radius: ${({ $isHorizontal }) =>
-      $isHorizontal ? theme.borders.radius.medium : theme.borders.radius.small};
+    background-color: ${({ isSecondary }) =>
+      isSecondary ? theme.colors.bg.secondary : theme.colors.bg.primary};
+    border-radius: ${({ isHorizontal }) =>
+      isHorizontal ? theme.borders.radius.medium : theme.borders.radius.small};
     border: 1px solid ${theme.colors.border.disable};
     gap: 6px;
     display: flex;
-    ${({ $isHorizontal, $isIconMenu }) =>
-      $isHorizontal
+    ${({ isHorizontal, isIconMenu }) =>
+      isHorizontal
         ? `
           height: 52px;
           padding: 7px 10px;
@@ -57,8 +57,8 @@ const MenuWrapper = styled.div(
         `
         : `
           flex-direction: column;
-          width: ${$isIconMenu ? 40 : CONTEXT_MENU_WIDTH}px;
-          padding: ${$isIconMenu ? '4px 3px' : '8px 0'};
+          width: ${isIconMenu ? 40 : CONTEXT_MENU_WIDTH}px;
+          padding: ${isIconMenu ? '4px 3px' : '8px 0'};
         `}
 
     *:last-child {
@@ -67,8 +67,9 @@ const MenuWrapper = styled.div(
   `
 );
 MenuWrapper.propTypes = {
-  $isIconMenu: PropTypes.bool,
-  $isHorizontal: PropTypes.bool,
+  isIconMenu: PropTypes.bool,
+  isHorizontal: PropTypes.bool,
+  isSecondary: PropTypes.bool,
 };
 
 /**
@@ -240,9 +241,9 @@ const Menu = ({
       ref={composedListRef}
       data-testid="context-menu-list"
       role="menu"
-      $isIconMenu={isIconMenu}
-      $isHorizontal={isHorizontal}
-      $isSecondary={isSecondary}
+      isIconMenu={isIconMenu}
+      isHorizontal={isHorizontal}
+      isSecondary={isSecondary}
       // Tabbing out from the list while using 'shift' would
       // focus the list element. Should just travel back to the previous
       // focusable element in the DOM
