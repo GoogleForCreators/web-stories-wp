@@ -32,6 +32,7 @@ import {
   DefaultMoveableGlobalStyle,
   CropMoveableGlobalStyle,
 } from '@googleforcreators/moveable';
+import { Provider, store } from '@googleforcreators/data';
 
 /**
  * Internal dependencies
@@ -63,54 +64,56 @@ function StoryEditor({ config, initialEdits, children }) {
   const { storyId, isRTL, flags } = _config;
 
   return (
-    <FlagsProvider features={flags}>
-      <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
-        <ThemeProvider theme={theme}>
-          <ErrorBoundary>
-            <ConfigProvider config={_config}>
-              <APIProvider>
-                <Media3pApiProvider>
-                  <HistoryProvider size={50}>
-                    <SnackbarProvider>
-                      <StoryProvider
-                        storyId={storyId}
-                        initialEdits={initialEdits}
-                      >
-                        <TaxonomyProvider>
-                          <CurrentUserProvider>
-                            <FontProvider>
-                              <MediaProvider>
-                                <AutoSaveHandler />
-                                <TransformProvider>
-                                  <DropTargetsProvider>
-                                    <HelpCenterProvider>
-                                      <PageDataUrlProvider>
-                                        <GlobalStyle />
-                                        <DevTools />
-                                        <DefaultMoveableGlobalStyle />
-                                        <CropMoveableGlobalStyle />
-                                        <ModalGlobalStyle />
-                                        <CalendarStyle />
-                                        <KeyboardOnlyOutlines />
-                                        {children}
-                                      </PageDataUrlProvider>
-                                    </HelpCenterProvider>
-                                  </DropTargetsProvider>
-                                </TransformProvider>
-                              </MediaProvider>
-                            </FontProvider>
-                          </CurrentUserProvider>
-                        </TaxonomyProvider>
-                      </StoryProvider>
-                    </SnackbarProvider>
-                  </HistoryProvider>
-                </Media3pApiProvider>
-              </APIProvider>
-            </ConfigProvider>
-          </ErrorBoundary>
-        </ThemeProvider>
-      </StyleSheetManager>
-    </FlagsProvider>
+    <Provider store={store}>
+      <FlagsProvider features={flags}>
+        <StyleSheetManager stylisPlugins={isRTL ? [stylisRTLPlugin] : []}>
+          <ThemeProvider theme={theme}>
+            <ErrorBoundary>
+              <ConfigProvider config={_config}>
+                <APIProvider>
+                  <Media3pApiProvider>
+                    <HistoryProvider size={50}>
+                      <SnackbarProvider>
+                        <StoryProvider
+                          storyId={storyId}
+                          initialEdits={initialEdits}
+                        >
+                          <TaxonomyProvider>
+                            <CurrentUserProvider>
+                              <FontProvider>
+                                <MediaProvider>
+                                  <AutoSaveHandler />
+                                  <TransformProvider>
+                                    <DropTargetsProvider>
+                                      <HelpCenterProvider>
+                                        <PageDataUrlProvider>
+                                          <GlobalStyle />
+                                          <DevTools />
+                                          <DefaultMoveableGlobalStyle />
+                                          <CropMoveableGlobalStyle />
+                                          <ModalGlobalStyle />
+                                          <CalendarStyle />
+                                          <KeyboardOnlyOutlines />
+                                          {children}
+                                        </PageDataUrlProvider>
+                                      </HelpCenterProvider>
+                                    </DropTargetsProvider>
+                                  </TransformProvider>
+                                </MediaProvider>
+                              </FontProvider>
+                            </CurrentUserProvider>
+                          </TaxonomyProvider>
+                        </StoryProvider>
+                      </SnackbarProvider>
+                    </HistoryProvider>
+                  </Media3pApiProvider>
+                </APIProvider>
+              </ConfigProvider>
+            </ErrorBoundary>
+          </ThemeProvider>
+        </StyleSheetManager>
+      </FlagsProvider>
+    </Provider>
   );
 }
 

@@ -41,7 +41,6 @@ import { StrictMode, render } from '@googleforcreators/react';
 import { updateSettings } from '@googleforcreators/date';
 import { initializeTracking } from '@googleforcreators/tracking';
 import { bindToCallbacks } from '@web-stories-wp/wp-utils';
-import { Provider, store } from '@googleforcreators/data';
 
 /**
  * Internal dependencies
@@ -95,15 +94,13 @@ window.webStories.initializeStoryEditor = (id, config, initialEdits) => {
 
   render(
     <StrictMode>
-      <Provider store={store}>
-        <StoryEditor config={editorConfig} initialEdits={initialEdits}>
-          <GlobalStyle />
-          <Layout />
-          <PostPublishDialog />
-          <StatusCheck />
-          <PostLock />
-        </StoryEditor>
-      </Provider>
+      <StoryEditor config={editorConfig} initialEdits={initialEdits}>
+        <GlobalStyle />
+        <Layout />
+        <PostPublishDialog />
+        <StatusCheck />
+        <PostLock />
+      </StoryEditor>
     </StrictMode>,
     appElement
   );
