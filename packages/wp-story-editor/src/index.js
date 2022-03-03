@@ -41,6 +41,7 @@ import { StrictMode, render } from '@googleforcreators/react';
 import { updateSettings } from '@googleforcreators/date';
 import { initializeTracking } from '@googleforcreators/tracking';
 import { bindToCallbacks } from '@web-stories-wp/wp-utils';
+import * as data from '@googleforcreators/data';
 
 /**
  * Internal dependencies
@@ -59,6 +60,7 @@ import { GlobalStyle } from './theme.js';
 
 window.webStories = window.webStories || {};
 window.webStories.domReady = domReady;
+window.webStories.data = data;
 
 /**
  * Initializes the web stories editor.
