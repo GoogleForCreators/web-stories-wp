@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, forwardRef } from '@googleforcreators/react';
+import { useCallback } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import Gallery from 'react-photo-album';
 
@@ -30,9 +30,11 @@ import { GalleryContainer } from './styles';
 const PHOTO_MARGIN = 8;
 const TARGET_ROW_HEIGHT = 110;
 
-const ContainerRenderer = forwardRef(({ children }, ref) => {
-  return <GalleryContainer ref={ref}>{children}</GalleryContainer>;
-});
+// eslint-disable-next-line react/prop-types -- disable react/prop-types eslint rule for the local component
+const ContainerRenderer = ({ children, containerRef }) => {
+  return <GalleryContainer ref={containerRef}>{children}</GalleryContainer>;
+};
+
 const RowRenderer = ({ children }) => {
   return children;
 };
