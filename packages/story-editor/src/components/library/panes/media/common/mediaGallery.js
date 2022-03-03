@@ -27,8 +27,9 @@ import Gallery from 'react-photo-album';
 import MediaElement from './mediaElement';
 import { GalleryContainer } from './styles';
 
-const PHOTO_MARGIN = 8;
+const PHOTO_SPACING = 8;
 const TARGET_ROW_HEIGHT = 110;
+const ROW_CONSTRAINTS = { maxPhotos: 2 };
 
 // eslint-disable-next-line react/prop-types -- disable react/prop-types eslint rule for the local component
 const ContainerRenderer = ({ children, containerRef }) => {
@@ -69,7 +70,7 @@ function MediaGallery({ resources, onInsert, providerType, canEditMedia }) {
         <MediaElement
           key={photo.key}
           index={photo.index}
-          margin={`0px 0px ${PHOTO_MARGIN}px 0px`}
+          margin={`0px 0px ${PHOTO_SPACING}px 0px`}
           resource={resources[photo.index]}
           width={layout.width}
           height={layout.height}
@@ -91,11 +92,8 @@ function MediaGallery({ resources, onInsert, providerType, canEditMedia }) {
         renderRowContainer={RowRenderer}
         renderContainer={ContainerRenderer}
         targetRowHeight={TARGET_ROW_HEIGHT}
-        rowConstraints={{
-          maxPhotos: 2,
-        }}
-        // This should match the actual margin the element is styled with.
-        spacing={PHOTO_MARGIN}
+        rowConstraints={ROW_CONSTRAINTS}
+        spacing={PHOTO_SPACING}
       />
     </div>
   );
