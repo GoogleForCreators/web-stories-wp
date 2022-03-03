@@ -36,10 +36,10 @@ import { useFeature } from 'flagged';
 import { useAPI } from '../../app/api';
 import { useStory } from '../../app/story';
 import { useHighlights } from '../../app/highlights';
+import Library from '../library';
 import { DOCUMENT, STYLE, PUBLISH_MODAL_DOCUMENT, INSERT } from './constants';
 import Context from './context';
 import DesignInspector from './design';
-import Library from '../library';
 
 const INSPECTOR_TAB_IDS = new Set([INSERT, DOCUMENT, STYLE]);
 function InspectorProvider({ inspectorTabs, children }) {

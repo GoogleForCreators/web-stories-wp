@@ -190,7 +190,7 @@ describe('Panel: Style Presets', () => {
       });
       await fixture.events.click(paragraphButton);
       // Add a heading.
-      await fixture.events.click(fixture.editor.library.text.preset('Title 1'))
+      await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
       await fixture.events.click(fixture.editor.inspector.designTab);
       panel = fixture.editor.inspector.designPanel.textStyle;
       await fixture.events.click(panel.addStyle);

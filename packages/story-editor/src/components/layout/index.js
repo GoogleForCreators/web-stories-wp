@@ -29,12 +29,9 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import Library from '../library';
 import Workspace from '../workspace';
 import {
   CANVAS_MIN_WIDTH,
-  LIBRARY_MIN_WIDTH,
-  LIBRARY_MAX_WIDTH,
   INSPECTOR_MIN_WIDTH,
   INSPECTOR_MAX_WIDTH,
 } from '../../constants';
@@ -65,13 +62,6 @@ const Editor = withOverlay(styled.section.attrs({
     minmax(${INSPECTOR_MIN_WIDTH}px, ${INSPECTOR_MAX_WIDTH}px)
     minmax(${CANVAS_MIN_WIDTH}px, 1fr);
 `);
-
-const Area = styled.div`
-  grid-area: ${({ area }) => area};
-  position: relative;
-  overflow: hidden;
-  z-index: 2;
-`;
 
 function Layout({ header, footer = {}, inspectorTabs, children }) {
   const snackbarState = useSnackbar(

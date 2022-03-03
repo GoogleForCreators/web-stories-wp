@@ -132,7 +132,9 @@ describe('Styling single text field', () => {
       } = data.fixture.editor.inspector.designPanel.textStyle;
 
       // First enter edit mode, select something, style it with all styles and exit edit mode
-      await data.fixture.events.focus(data.fixture.editor.canvas.framesLayer.frames[1].node);
+      await data.fixture.events.focus(
+        data.fixture.editor.canvas.framesLayer.frames[1].node
+      );
       await data.fixture.events.keyboard.press('Enter');
       await setSelection(6, 8);
       await data.fixture.events.click(letterSpacing, { clickCount: 3 });
@@ -210,7 +212,6 @@ describe('Styling single text field', () => {
   });
 
   describe('CUJ: Creator Can Style Text: Apply B, Apply U, Apply I', () => {
-    // eslint-disable-next-line jasmine/no-disabled-tests -- This isn't implemented yet: Filed in #1977
     it('should apply inline formatting using shortcuts', async () => {
       await data.fixture.events.click(data.fixture.editor.inspector.designTab);
       const { bold, italic, underline } =

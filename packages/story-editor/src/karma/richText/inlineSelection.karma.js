@@ -69,7 +69,9 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       } = data.fixture.editor.inspector.designPanel.textStyle;
 
       // Enter edit-mode
-      await data.fixture.events.focus(data.fixture.editor.canvas.framesLayer.frames[1].node);
+      await data.fixture.events.focus(
+        data.fixture.editor.canvas.framesLayer.frames[1].node
+      );
       await data.fixture.events.keyboard.press('Enter');
       await data.fixture.screen.findByTestId('textEditor');
 
@@ -164,7 +166,6 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       await data.fixture.events.click(fontColor.picker.applySavedColor('#eee'));
       // Wait for debounce in color picker (100ms)
       await data.fixture.events.sleep(100);
-
 
       // Verify all styles again
       expect(bold.checked).toBe(true);
@@ -278,12 +279,16 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
   describe('CUJ: Creator Can Style Text: Apply B, Select weight', () => {
     describe('when there is a mix of font weights', () => {
       beforeEach(async () => {
-        await data.fixture.events.click(data.fixture.editor.inspector.designTab);
+        await data.fixture.events.click(
+          data.fixture.editor.inspector.designTab
+        );
         const { fontWeight } =
           data.fixture.editor.inspector.designPanel.textStyle;
 
         // Enter edit-mode
-        await data.fixture.events.focus(data.fixture.editor.canvas.framesLayer.frames[1].node);
+        await data.fixture.events.focus(
+          data.fixture.editor.canvas.framesLayer.frames[1].node
+        );
         await data.fixture.editor.canvas.waitFocusedWithin();
         await data.fixture.events.keyboard.press('Enter');
 

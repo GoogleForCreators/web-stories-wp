@@ -91,7 +91,7 @@ describe('Border Radius', () => {
 
     it('should allow user to add border radius for media', async () => {
       const mediaItem = fixture.editor.library.media.item(0);
-      await fixture.events.mouse.clickOn(mediaItem, 20, 20)
+      await fixture.events.mouse.clickOn(mediaItem, 20, 20);
       await fixture.events.click(fixture.editor.inspector.designTab);
       const panel = fixture.editor.inspector.designPanel.sizePosition;
 
