@@ -113,10 +113,10 @@ function InnerElement({
   // Note: This `useDropTargets` is purposefully separated from the one below since it
   // uses a custom function for checking for equality and is meant for `handleDrag` and `handleDrop` only.
   const { handleDrag, handleDrop } = useDropTargets(
-    ({ state: { dropTargets }, actions: { handleDrag, handleDrop } }) => ({
-      handleDrag,
-      handleDrop,
-      dropTargets,
+    ({ state, actions }) => ({
+      handleDrag: actions.handleDrag,
+      handleDrop: actions.handleDrop,
+      activeDropTargetId: state.dropTargets,
     }),
     (prev, curr) => {
       // If we're dragging this element, always update the actions.
