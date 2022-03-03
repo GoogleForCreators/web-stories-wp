@@ -17,8 +17,8 @@
 /**
  * Internal dependencies
  */
-export { ReactComponent as Compass } from './compass.svg';
-export { ReactComponent as FloppyDisk } from './floppyDisk.svg';
-export { ReactComponent as HomeWithHeart } from './homeWithHeart.svg';
-export { ReactComponent as Menu } from './menu.svg';
-export { ReactComponent as MoreVertical } from './moreVertical.svg';
+export { default as Compass } from './compass.svg';
+export { default as FloppyDisk } from './floppyDisk.svg';
+export { default as HomeWithHeart } from './homeWithHeart.svg';
+export { default as Menu } from './menu.svg';
+export { default as MoreVertical } from './moreVertical.svg';

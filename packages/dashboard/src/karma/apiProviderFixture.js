@@ -107,6 +107,7 @@ function getStoriesState() {
     storiesOrderById: copiedStories.map(({ id }) => id),
     totalStoriesByStatus: getTotalStoriesByStatus(copiedStories),
     totalPages: 1,
+    allPagesFetched: true,
   };
 }
 

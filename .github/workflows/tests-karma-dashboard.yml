@@ -35,13 +35,23 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  nonce:
+    name: Percy Nonce
+    runs-on: ubuntu-latest
+    outputs:
+      result: ${{ steps.nonce.outputs.result }}
+    steps:
+      - id: nonce
+        run: echo "::set-output name=result::${{ github.run_id }}-$(date +%s)"
+
   karma:
     name: Karma
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    needs: nonce
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -61,13 +71,59 @@ jobs:
       - name: Increase max number of file watchers
         run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
+      - name: Get Chromium executable path
+        id: chromium_path
+        run: |
+          CHROMIUM=$(node -p "const puppeteer = require('puppeteer'); puppeteer.executablePath();")
+          echo "::set-output name=chromium_path::${CHROMIUM}"
+
+      - name: Run integration tests with Percy
+        run: |
+          npx percy exec --parallel --config=percy.config.karma.yml -- \
+            npm run test:karma:dashboard -- --headless --viewport=1600:1000 --coverage --shard=$SHARD || \
+          npx percy exec --parallel --config=percy.config.karma.yml -- \
+            npm run test:karma:dashboard:retry-failed -- --headless --viewport=1600:1000 --shard=$SHARD
+        env:
+          DISABLE_ERROR_BOUNDARIES: true
+          SHARD: ${{ matrix.shard }}
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_DASHBOARD }}
+          PERCY_BROWSER_EXECUTABLE: ${{ steps.chromium_path.outputs.chromium_path }}
+          PERCY_PARALLEL_NONCE: ${{ needs.nonce.outputs.result }}
+        if: github.event.pull_request.draft == false
+
       - name: Run integration tests
         run: npm run test:karma:dashboard -- --headless --viewport=1600:1000 --coverage || npm run test:karma:dashboard:retry-failed -- --headless --viewport=1600:1000
         env:
           DISABLE_ERROR_BOUNDARIES: true
+        if: github.event.pull_request.draft == true
 
       - name: Upload code coverage report
         uses: codecov/codecov-action@v2.1.0
         with:
           file: build/logs/karma-coverage/dashboard/lcov.info
           flags: karmatests
+
+  percy:
+    name: Percy
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    if: always() && github.event.pull_request.draft == false
+    needs: [karma, nonce]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2.5.1
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install @percy/cli
+
+      - name: Finalize Percy build
+        run: npx percy build:finalize
+        env:
+          PERCY_TOKEN: ${{ secrets.PERCY_TOKEN_DASHBOARD }}
+          PERCY_PARALLEL_NONCE: ${{ needs.nonce.outputs.result }}

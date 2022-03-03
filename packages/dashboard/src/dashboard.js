@@ -27,9 +27,9 @@ import {
 } from '@googleforcreators/design-system';
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
+Object.defineProperty(stylisRTLPlugin, 'name', { value: 'stylisRTLPlugin' });
 import PropTypes from 'prop-types';
 import { FlagsProvider } from 'flagged';
-import { useMemo } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
@@ -40,10 +40,10 @@ import { NavProvider } from './components';
 import { RouterProvider } from './app/router';
 import { GlobalStyle } from './theme';
 import { KeyboardOnlyOutline } from './utils';
-import defaultConfig from './defaultConfig';
+import getDefaultConfig from './getDefaultConfig';
 
 function Dashboard({ config, children }) {
-  const _config = useMemo(() => deepMerge(defaultConfig, config), [config]);
+  const _config = deepMerge(getDefaultConfig(), config);
   const { isRTL, flags } = _config;
   const activeTheme = {
     ...externalDesignSystemTheme,

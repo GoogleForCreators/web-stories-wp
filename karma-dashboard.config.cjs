@@ -19,7 +19,7 @@
 /**
  * External dependencies
  */
-const { readFileSync } = require('fs');
+const { readFileSync, existsSync } = require('fs');
 
 /**
  * Internal dependencies
@@ -28,7 +28,10 @@ const getWebpackConfig = require('./webpack.config.test.cjs');
 
 module.exports = function (config) {
   let specsToRetry;
-  if (config.retryFailed) {
+  if (
+    config.retryFailed &&
+    existsSync('build/karma-dashboard-failed-tests.txt')
+  ) {
     // Loads names of failed specs and prepares them for use in a regex.
     specsToRetry = readFileSync(
       'build/karma-dashboard-failed-tests.txt',
@@ -55,11 +58,15 @@ module.exports = function (config) {
 
     // Frameworks to use.
     // Available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine', '@web-stories-wp/karma-puppeteer-client'],
+    frameworks: [
+      'jasmine',
+      '@web-stories-wp/karma-puppeteer-client',
+      'webpack',
+    ],
 
     // list of files / patterns to load in the browser
     files: [
-      { pattern: 'packages/dashboard/src/karma-tests.cjs', watched: false },
+      { pattern: 'packages/dashboard/src/**/karma/**/*.js', watched: false },
       { pattern: 'packages/karma-fixture/src/init.js', watched: false },
       {
         pattern: '__static__/**/*',
@@ -77,7 +84,7 @@ module.exports = function (config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'packages/dashboard/src/karma-tests.cjs': ['webpack', 'sourcemap'],
+      'packages/dashboard/src/**/karma/**/*.js': ['webpack', 'sourcemap'],
     },
 
     proxies: {
@@ -131,7 +138,6 @@ module.exports = function (config) {
         defaultViewport: getViewport(config.viewport),
       },
     },
-
     client: {
       args: [
         specsToRetry && '--grep',

@@ -13,7 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-const defaultConfig = {
+const getDefaultConfig = () => ({
+  isRTL: false,
+  userId: 1,
   locale: {
     locale: 'en-US',
     dateFormat: 'F j, Y',
@@ -61,56 +63,28 @@ const defaultConfig = {
     weekdaysInitials: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
     weekStartsOn: 1,
   },
-  allowedFileTypes: [
-    'gif',
-    'jpe',
-    'jpeg',
-    'jpg',
-    'm4v',
-    'mp4',
-    'png',
-    'svg',
-    'svgz',
-    'webm',
-    'webp',
-  ],
-  allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png', 'webp'],
-  allowedImageMimeTypes: ['image/webp', 'image/png', 'image/jpeg', 'image/gif'],
-  allowedAudioFileTypes: ['aac', 'm4a', 'm4b', 'mp3', 'oga', 'ogg', 'wav'],
-  allowedAudioMimeTypes: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
-  allowedMimeTypes: {
-    image: [
-      'image/webp',
-      'image/png',
-      'image/jpeg',
-      'image/gif',
-      'image/svg+xml',
-    ],
-    audio: [],
-    video: ['video/mp4', 'video/webm'],
-  },
-  isRTL: false,
-  storyId: 1,
+  newStoryURL: '',
+  archiveURL: '',
+  defaultArchiveURL: '',
   cdnURL: 'https://wp.stories.google/static/main/',
-  maxUpload: 314572800,
-  capabilities: {
-    hasUploadMediaAction: false,
-    canManageSettings: false,
-  },
-  metadata: {
-    publisher: '',
-  },
-  canViewDefaultTemplates: true,
-  showMedia3p: true,
+  allowedImageMimeTypes: ['image/webp', 'image/png', 'image/jpeg', 'image/gif'],
+  version: '',
   encodeMarkup: true,
-  ffmpegCoreUrl:
-    'https://wp.stories.google/static/main/js/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js',
+  api: {},
+  maxUpload: 314572800,
+  maxUploadFormatted: '300 MB',
+  capabilities: {
+    canManageSettings: false,
+    canUploadFiles: false,
+  },
+  canViewDefaultTemplates: false,
+  localeData: [],
+  flags: {},
   apiCallbacks: {},
-  MediaUpload: () => null,
+  leftRailSecondaryNavigation: [],
   styleConstants: {
     topOffset: 0,
-    leftOffset: 0,
   },
-};
+});
 
-export default defaultConfig;
+export default getDefaultConfig;

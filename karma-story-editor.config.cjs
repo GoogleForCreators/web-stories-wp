@@ -74,11 +74,12 @@ module.exports = function (config) {
       enableParallelRuns && 'parallel',
       'jasmine',
       '@web-stories-wp/karma-puppeteer-client',
+      'webpack',
     ].filter(Boolean),
 
     // list of files / patterns to load in the browser
     files: [
-      { pattern: 'packages/story-editor/src/karma-tests.cjs', watched: false },
+      { pattern: 'packages/story-editor/src/**/karma/**/*.js', watched: false },
       { pattern: 'packages/karma-fixture/src/init.js', watched: false },
       {
         pattern: '__static__/**/*',
@@ -95,7 +96,7 @@ module.exports = function (config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'packages/story-editor/src/karma-tests.cjs': ['webpack', 'sourcemap'],
+      'packages/story-editor/src/**/karma/**/*.js': ['webpack', 'sourcemap'],
     },
 
     proxies: {
@@ -150,7 +151,6 @@ module.exports = function (config) {
         defaultViewport: getViewport(config.viewport),
       },
     },
-
     client: {
       args: [
         specsToRetry && '--grep',

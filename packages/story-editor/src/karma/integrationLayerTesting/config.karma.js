@@ -24,17 +24,18 @@ import { waitFor } from '@testing-library/react';
  * Internal dependencies
  */
 
-import defaultConfig from '../../defaultConfig';
+import getDefaultConfig from '../../getDefaultConfig';
 import { Fixture, FIXTURE_DEFAULT_CONFIG } from '../fixture';
 import storyResponse from '../fixture/db/storyResponse';
 
 describe('Integration Layer tests : EditorConfig Params :', () => {
   let fixture;
 
-  // fixture.setConfig() doesn't overwrite the whole object but merges therefore optional params need to be set undefined explicitly.
+  // fixture.setConfig() doesn't overwrite the whole object but merges
+  // therefore optional params need to be set undefined explicitly.
   const MINIMUM_CONFIG = {};
 
-  for (const key of Object.keys(defaultConfig)) {
+  for (const key of Object.keys(getDefaultConfig())) {
     MINIMUM_CONFIG[key] = undefined;
   }
 
