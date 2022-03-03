@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-import { NumericInput } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -30,6 +29,8 @@ import {
   inputContainerStyleOverride,
 } from '../../panels/shared';
 import { MIN_MAX } from '../../panels/design/textStyle/font';
+
+import { Input } from './shared';
 
 function FontSize() {
   const { selectedElements, updateSelectedElements } = useStory(
@@ -50,7 +51,7 @@ function FontSize() {
       },
     });
   return (
-    <NumericInput
+    <Input
       aria-label={__('Font size', 'web-stories')}
       isFloat
       value={fontSize}
