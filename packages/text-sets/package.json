@@ -25,6 +25,11 @@
     "npm": ">= 7.3"
   },
   "type": "module",
+  "customExports": {
+    ".": {
+      "default": "./src/index.js"
+    }
+  },
   "main": "dist/index.js",
   "module": "dist-module/index.js",
   "source": "src/index.js",

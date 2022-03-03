@@ -247,7 +247,7 @@ const MultiSelectionMoveable = forwardRef(function MultiSelectionMoveable(
   return (
     <Moveable
       {...props}
-      className={'default-moveable'}
+      className="default-moveable"
       ref={combinedRef}
       zIndex={0}
       target={targetList.map(({ node }) => node)}
