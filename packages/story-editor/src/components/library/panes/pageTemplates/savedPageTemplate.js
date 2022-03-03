@@ -21,8 +21,6 @@ import {
   Icons,
   themeHelpers,
   useKeyDownEffect,
-  THEME_CONSTANTS,
-  Text,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import {
@@ -51,7 +49,7 @@ import { focusStyle } from '../../../panels/shared';
 import DisplayElement from '../../../canvas/displayElement';
 import InsertionOverlay from '../shared/insertionOverlay';
 import useFocusCanvas from '../../../canvas/useFocusCanvas';
-import { ActionButton, PageTemplateTitleContainer } from '../shared';
+import { ActionButton } from '../shared';
 import useRovingTabIndex from '../../../../utils/useRovingTabIndex';
 
 const TemplateImage = styled.img`
@@ -232,17 +230,6 @@ function SavedPageTemplate(
         >
           <Icons.TrashFilledSmall />
         </DeleteButton>
-
-        {page.title && (
-          <PageTemplateTitleContainer isActive={isActive}>
-            <Text
-              as="span"
-              size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-            >
-              {page.title}
-            </Text>
-          </PageTemplateTitleContainer>
-        )}
       </PreviewPageWrapper>
     </PageTemplateWrapper>
   );
