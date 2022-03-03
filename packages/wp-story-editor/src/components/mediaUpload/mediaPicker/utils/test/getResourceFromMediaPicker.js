@@ -209,4 +209,69 @@ describe('getResourceFromMediaPicker', () => {
       })
     );
   });
+
+  it('should return resource for VTT file', () => {
+    const mediaPickerEl = {
+      id: 1234,
+      title: 'captions',
+      filename: 'captions.vtt',
+      url: 'https://example.com/wp-content/uploads/captions.vtt',
+      link: 'https://example.com/captions/',
+      alt: 'captions',
+      author: '1',
+      description: '',
+      caption: '',
+      name: 'captions',
+      status: 'inherit',
+      uploadedTo: 0,
+      date: '2021-11-12T11:15:56.000Z',
+      modified: '2021-11-12T11:15:56.000Z',
+      menuOrder: 0,
+      mime: 'text/vtt',
+      type: 'text',
+      subtype: 'vtt',
+      icon: 'https://example.com/wp-includes/images/media/text.png',
+      dateFormatted: 'November 12, 2021',
+      nonces: {
+        update: 'a43563250f',
+        delete: '813aa798e6',
+        edit: '2a2853a1b9',
+      },
+      editLink: 'https://example.com/wp-admin/post.php?post=1234&action=edit',
+      meta: false,
+      authorName: 'Pascal',
+      authorLink: 'https://example.com/wp-admin/profile.php',
+      filesizeInBytes: 17551,
+      filesizeHumanReadable: '17 KB',
+      context: '',
+      compat: {
+        item: '',
+        meta: '',
+      },
+      web_stories_base_color: '',
+      web_stories_blurhash: '',
+      media_details: [],
+      web_stories_media_source: 'editor',
+    };
+
+    expect(getResourceFromMediaPicker(mediaPickerEl)).toStrictEqual(
+      expect.objectContaining({
+        alt: 'captions',
+        baseColor: '',
+        blurHash: '',
+        creationDate: '2021-11-12T11:15:56.000Z',
+        id: 1234,
+        isExternal: false,
+        isMuted: false,
+        isOptimized: false,
+        isPlaceholder: false,
+        mimeType: 'text/vtt',
+        needsProxy: false,
+        length: 0,
+        src: 'https://example.com/wp-content/uploads/captions.vtt',
+        type: 'text',
+        sizes: {},
+      })
+    );
+  });
 });
