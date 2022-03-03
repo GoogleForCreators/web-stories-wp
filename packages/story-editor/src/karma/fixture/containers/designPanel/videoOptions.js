@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,39 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * Internal dependencies
  */
-import { Container } from './container';
-import { ToggleButton } from './common';
+import { AbstractPanel } from './abstractPanel';
 
-export class DesignMenu extends Container {
+/**
+ * The video options panel containing controls for loop, mute, and trim.
+ */
+export class VideoOptions extends AbstractPanel {
   constructor(node, path) {
     super(node, path);
-  }
-
-  get flipVertical() {
-    return this._get(
-      this.getByRole('menuitem', { name: 'Flip vertically' }),
-      'flipVertical',
-      ToggleButton
-    );
-  }
-
-  get flipHorizontal() {
-    return this._get(
-      this.getByRole('menuitem', { name: 'Flip horizontally' }),
-      'flipHorizontal',
-      ToggleButton
-    );
-  }
-
-  get borderRadius() {
-    return this.queryByRole('textbox', { name: 'Corner Radius' });
-  }
-
-  get swapMedia() {
-    return this.getByRole('menuitem', { name: 'Replace media' });
   }
 
   get loop() {
