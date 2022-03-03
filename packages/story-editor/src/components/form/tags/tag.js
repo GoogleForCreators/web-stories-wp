@@ -29,6 +29,10 @@ import { useMemo } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
+/**
+ * Internal dependencies
+ */
+import { Z_INDEX_STORY_DETAILS } from '../../../constants/zIndex';
 
 const Dismiss = styled.button`
   all: unset;
@@ -83,7 +87,7 @@ function Tag({ children, onDismiss }) {
         title={__('Remove Tag', 'web-stories')}
         placement={TOOLTIP_PLACEMENT.BOTTOM}
         hasTail
-        popupZIndexOverride={10}
+        popupZIndexOverride={Z_INDEX_STORY_DETAILS}
       >
         <Dismiss
           onClick={onDismiss}

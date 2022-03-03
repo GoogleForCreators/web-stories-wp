@@ -33,6 +33,7 @@ import { useMemo } from '@googleforcreators/react';
  * Internal dependencies
  */
 import { useStory } from '../../../app';
+import { Z_INDEX_STORY_DETAILS } from '../../../constants/zIndex';
 import useIsUploadingToStory from '../../../utils/useIsUploadingToStory';
 import {
   useCheckpoint,
@@ -134,7 +135,11 @@ function ButtonWithChecklistWarning({
     ? publishText
     : __('Submit for review', 'web-stories');
   return (
-    <Tooltip title={toolTip} popupZIndexOverride={11} hasTail>
+    <Tooltip
+      title={toolTip}
+      popupZIndexOverride={Z_INDEX_STORY_DETAILS}
+      hasTail
+    >
       <InnerButton
         text={text}
         disabled={disabled || isSaving || isUploading}

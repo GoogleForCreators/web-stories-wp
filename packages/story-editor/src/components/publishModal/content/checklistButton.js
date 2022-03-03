@@ -22,6 +22,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { Z_INDEX_STORY_DETAILS } from '../../../constants/zIndex';
 import { ISSUE_TYPES } from '../../checklist/constants';
 import { useCategoryCount } from '../../checklist/countContext';
 import { ToggleButton } from '../../toggleButton';
@@ -34,7 +35,7 @@ const ChecklistButton = ({ handleReviewChecklist }) => {
       MainIcon={Icons.Checkbox}
       label={__('Checklist', 'web-stories')}
       aria-label={__('Checklist', 'web-stories')}
-      popupZIndexOverride={10}
+      popupZIndexOverride={Z_INDEX_STORY_DETAILS}
       onClick={handleReviewChecklist}
       notificationCount={priorityCount}
     />
