@@ -28,11 +28,6 @@ import './style.css'; // This way the general editor styles are loaded before al
 import './setLocaleData';
 
 /**
- * WordPress dependencies
- */
-import domReady from '@wordpress/dom-ready';
-
-/**
  * External dependencies
  */
 import { StoryEditor } from '@googleforcreators/story-editor';
@@ -58,7 +53,6 @@ import { TIPS, TOOLBAR_HEIGHT, MENU_WIDTH } from './constants';
 import { GlobalStyle } from './theme.js';
 
 window.webStories = window.webStories || {};
-window.webStories.domReady = domReady;
 
 /**
  * Initializes the web stories editor.

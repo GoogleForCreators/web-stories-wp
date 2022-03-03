@@ -28,11 +28,6 @@ import './style.css'; // This way the general dashboard styles are loaded before
 import './setLocaleData';
 
 /**
- * WordPress dependencies
- */
-import domReady from '@wordpress/dom-ready';
-
-/**
  * External dependencies
  */
 import { Dashboard } from '@googleforcreators/dashboard';
@@ -51,7 +46,6 @@ import { LEFT_RAIL_SECONDARY_NAVIGATION, TOOLBAR_HEIGHT } from './constants';
 import { Layout } from './components';
 
 window.webStories = window.webStories || {};
-window.webStories.domReady = domReady;
 
 /**
  * Initializes the Web Stories dashboard screen.
