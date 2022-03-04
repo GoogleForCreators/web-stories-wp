@@ -160,6 +160,34 @@ export async function getPosterMediaById(config, mediaId) {
  * @return {Promise<import('@googleforcreators/media').Resource>} Media resource.
  */
 export function uploadMedia(config, file, additionalData) {
+  const {
+    originalId,
+    mediaId,
+    storyId,
+    templateId,
+    isMuted,
+    mediaSource,
+    trimData,
+    baseColor,
+    blurHash,
+  } = additionalData;
+
+  const wpKeysMapping = {
+    web_stories_media_source: mediaSource,
+    web_stories_is_muted: isMuted,
+    post: templateId || storyId || mediaId,
+    original_id: originalId,
+    web_stories_trim_data: trimData,
+    web_stories_base_color: baseColor,
+    web_stories_blurhash: blurHash,
+  };
+
+  Object.entries(wpKeysMapping).forEach(([key, value]) => {
+    if (value === undefined || value === null) {
+      delete wpKeysMapping.meta[key];
+    }
+  });
+
   // Create upload payload
   const data = new window.FormData();
   data.append('file', file, file.name || file.type.replace('/', '.'));
