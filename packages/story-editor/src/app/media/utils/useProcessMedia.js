@@ -122,10 +122,8 @@ function useProcessMedia({
   const updateOldTranscodedObject = useCallback(
     (oldId, newId, mediaSource) => {
       updateMedia(oldId, {
-        web_stories_media_source: mediaSource,
-        meta: {
-          web_stories_optimized_id: newId,
-        },
+        mediaSource,
+        optimizedId: newId,
       });
     },
     [updateMedia]
@@ -134,9 +132,7 @@ function useProcessMedia({
   const updateOldMutedObject = useCallback(
     (oldId, newId) => {
       updateMedia(oldId, {
-        meta: {
-          web_stories_muted_id: newId,
-        },
+        mutedId: newId,
       });
     },
     [updateMedia]

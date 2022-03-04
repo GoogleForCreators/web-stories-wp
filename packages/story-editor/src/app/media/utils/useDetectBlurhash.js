@@ -63,7 +63,7 @@ function useDetectBlurHash({ updateMediaElement }) {
         });
         if (hasUploadMediaAction) {
           await updateMedia(id, {
-            meta: { web_stories_blurhash: blurHash },
+            blurHash,
           });
         }
       } catch (error) {

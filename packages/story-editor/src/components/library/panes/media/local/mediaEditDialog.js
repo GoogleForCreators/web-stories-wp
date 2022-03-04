@@ -120,7 +120,7 @@ function MediaEditDialog({ resource, onClose }) {
   const updateMediaItem = useCallback(async () => {
     try {
       // Update server.
-      await updateMedia(id, { alt_text: altText });
+      await updateMedia(id, { altText });
       // Update internal state.
       updateMediaElement({ id, data: { alt: altText } });
       onClose();
