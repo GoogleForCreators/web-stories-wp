@@ -125,7 +125,7 @@ function PresetPanel({ pushUpdate }) {
           </MoreButton>
           <Popup
             topOffset={topOffset}
-            // Temp fix, should work the same way as the new color picker (after ongoing refactor is done).
+            // Temp fix, proper will be done in #10803
             isRTL={!isRTL}
             anchor={buttonRef}
             dock={inspector}
