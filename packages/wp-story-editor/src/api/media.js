@@ -184,9 +184,48 @@ export function uploadMedia(config, file, additionalData) {
  * @return {Promise} Media Object Promise.
  */
 export function updateMedia(config, mediaId, data) {
+  const {
+    baseColor,
+    blurHash,
+    isMuted,
+    mediaSource,
+    optimizedId,
+    mutedId,
+    featuredMedia,
+    posterId,
+    storyId,
+    altText,
+  } = data;
+
+  const wpData = {
+    meta: {
+      web_stories_base_color: baseColor,
+      web_stories_blurhash: blurHash,
+      web_stories_optimized_id: optimizedId,
+      web_stories_muted_id: mutedId,
+      web_stories_poster_id: posterId,
+    },
+    web_stories_is_muted: isMuted,
+    web_stories_media_source: mediaSource,
+    featured_media: featuredMedia,
+    post: storyId,
+    alt_text: altText,
+  };
+
+  Object.entries(wpData.meta).forEach(([key, value]) => {
+    if (!value) {
+      delete wpData.meta[key];
+    }
+  });
+
+  Object.entries(wpData).forEach(([key, value]) => {
+    if (!value) {
+      delete wpData[key];
+    }
+  });
   return apiFetch({
     path: `${config.api.media}${mediaId}/`,
-    data,
+    data: wpData,
     method: 'POST',
   }).then(getResourceFromAttachment);
 }
