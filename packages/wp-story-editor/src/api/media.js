@@ -183,7 +183,7 @@ export function uploadMedia(config, file, additionalData) {
   };
 
   Object.entries(wpKeysMapping).forEach(([key, value]) => {
-    if (value === undefined || value === null) {
+    if (value === undefined) {
       delete wpKeysMapping.meta[key];
     }
   });
@@ -241,13 +241,13 @@ export function updateMedia(config, mediaId, data) {
   };
 
   Object.entries(wpKeysMapping.meta).forEach(([key, value]) => {
-    if (value === undefined || value === null) {
+    if (value === undefined) {
       delete wpKeysMapping.meta[key];
     }
   });
 
   Object.entries(wpKeysMapping).forEach(([key, value]) => {
-    if (value === undefined || value === null) {
+    if (value === undefined) {
       delete wpKeysMapping[key];
     }
   });
