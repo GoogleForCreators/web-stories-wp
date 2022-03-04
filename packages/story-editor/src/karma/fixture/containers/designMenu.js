@@ -63,4 +63,8 @@ export class DesignMenu extends Container {
   get swapMedia() {
     return this.getByRole('menuitem', { name: 'Replace media' });
   }
+
+  get loop() {
+    return this.getByRole('checkbox', { name: 'Loop' });
+  }
 }
