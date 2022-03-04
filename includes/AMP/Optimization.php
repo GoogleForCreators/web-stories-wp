@@ -64,6 +64,13 @@ class Optimization {
 		$this->get_optimizer()->optimizeDom( $document, $errors );
 
 		if ( \count( $errors ) > 0 ) {
+			/**
+			 * Error list.
+			 *
+			 * @var Error[] $errors_array Error list.
+			 */
+			$errors_array = iterator_to_array( $errors );
+
 			$error_messages = array_filter(
 				array_map(
 					static function( Error $error ) {
@@ -74,7 +81,7 @@ class Optimization {
 
 						return ' - ' . $error->getCode() . ': ' . $error->getMessage();
 					},
-					iterator_to_array( $errors )
+					$errors_array
 				)
 			);
 
