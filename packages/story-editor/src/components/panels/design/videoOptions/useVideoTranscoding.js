@@ -15,45 +15,48 @@
  */
 
 /**
+ * External dependencies
+ */
+import { useCallback } from '@googleforcreators/react';
+
+/**
  * Internal dependencies
  */
 import { useLocalMedia } from '../../../../app';
 import useVideoTrim from '../../../videoTrim/useVideoTrim';
 import useFFmpeg from '../../../../app/media/utils/useFFmpeg';
-import useProperties from './useProperties';
 
-function useVideoTranscoding() {
-  const { resource } = useProperties(['resource']);
+function useVideoTranscoding({ resource, elementId, isSingleElement = true }) {
   const { isTranscodingEnabled } = useFFmpeg();
   const {
     muteExistingVideo,
-    isResourceTrimming,
+    isElementTrimming,
     isNewResourceMuting,
     canTranscodeResource,
   } = useLocalMedia(
     ({
-      state: { canTranscodeResource, isNewResourceMuting, isResourceTrimming },
+      state: { canTranscodeResource, isNewResourceMuting, isElementTrimming },
       actions: { muteExistingVideo },
     }) => ({
       canTranscodeResource,
       isNewResourceMuting,
-      isResourceTrimming,
+      isElementTrimming,
       muteExistingVideo,
     })
   );
-
   const { isMuted, id: resourceId = 0 } = resource;
-  const isTrimming = isResourceTrimming(resourceId);
+  const isTrimming = isSingleElement ? isElementTrimming(elementId) : false;
   const isMuting = isNewResourceMuting(resourceId);
 
-  const handleMute = () => {
+  const handleMute = useCallback(() => {
     muteExistingVideo({ resource });
-  };
+  }, [resource, muteExistingVideo]);
 
   const shouldDisableVideoActions = !canTranscodeResource(resource);
 
   const canMute =
     isTranscodingEnabled &&
+    isSingleElement &&
     ((!isMuted && canTranscodeResource(resource)) || isMuting);
 
   const { hasTrimMode, toggleTrimMode } = useVideoTrim(

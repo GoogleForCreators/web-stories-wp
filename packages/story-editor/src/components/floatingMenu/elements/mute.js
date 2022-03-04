@@ -23,11 +23,15 @@ import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
-import { IconButton } from './shared';
-import useVideoTranscoding from './shared/useVideoTranscoding';
+import useVideoTranscoding from '../../panels/design/videoOptions/useVideoTranscoding';
+import { IconButton, useProperties } from './shared';
 
 function Mute() {
-  const { canMute, isMuting, isDisabled, handleMute } = useVideoTranscoding();
+  const { id: elementId, resource } = useProperties(['id', 'resource']);
+  const { canMute, isMuting, isDisabled, handleMute } = useVideoTranscoding({
+    elementId,
+    resource,
+  });
 
   if (!canMute) {
     return null;
