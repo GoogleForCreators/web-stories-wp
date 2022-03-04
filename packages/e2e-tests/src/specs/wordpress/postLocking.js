@@ -18,6 +18,7 @@
  * External dependencies
  */
 import {
+  withExperimentalFeatures,
   visitDashboard,
   createNewStory,
   insertStoryTitle,
@@ -33,6 +34,8 @@ const percyCSS = `.dashboard-grid-item-date { display: none; }`;
 const storyTitle = 'Test post lock';
 
 describe('Post Locking', () => {
+  withExperimentalFeatures(['enablePostLocking']);
+
   beforeAll(async () => {
     await createNewStory();
 
