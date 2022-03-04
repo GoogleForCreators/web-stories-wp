@@ -118,7 +118,7 @@ function ChecklistCheckpointProvider({ children }) {
     dispatch(PPC_CHECKPOINT_ACTION.ON_PUBLISH_CLICKED);
   }, []);
 
-  const updateToAllowPriorityIssues = useCallback(
+  const showPriorityIssues = useCallback(
     () => dispatch(PPC_CHECKPOINT_ACTION.ON_PUBLISH_CLICKED),
     []
   );
@@ -144,13 +144,13 @@ function ChecklistCheckpointProvider({ children }) {
         onReviewDialogRequest,
         onResetReviewDialogRequest,
         onPublishDialogChecklistRequest,
-        updateToAllowPriorityIssues,
+        showPriorityIssues,
       },
     }),
     [
       checkpointState,
       onPublishDialogChecklistRequest,
-      updateToAllowPriorityIssues,
+      showPriorityIssues,
       onReviewDialogRequest,
       onResetReviewDialogRequest,
       reviewDialogRequested,

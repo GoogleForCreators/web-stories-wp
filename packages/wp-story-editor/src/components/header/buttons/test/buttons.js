@@ -77,7 +77,7 @@ function arrange({
         <CheckpointContext.Provider
           value={{
             actions: {
-              updateToAllowPriorityIssues: () => {},
+              showPriorityIssues: () => {},
             },
             state: { shouldReviewDialogBeSeen: false, checkpoint: 'all' },
           }}

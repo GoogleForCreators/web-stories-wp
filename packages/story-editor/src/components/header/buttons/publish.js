@@ -57,16 +57,15 @@ function PublishButton({ forceIsSaving }) {
     })
   );
 
-  const { shouldReviewDialogBeSeen, updateToAllowPriorityIssues } =
-    useCheckpoint(
-      ({
-        state: { shouldReviewDialogBeSeen },
-        actions: { updateToAllowPriorityIssues },
-      }) => ({
-        shouldReviewDialogBeSeen,
-        updateToAllowPriorityIssues,
-      })
-    );
+  const { shouldReviewDialogBeSeen, showPriorityIssues } = useCheckpoint(
+    ({
+      state: { shouldReviewDialogBeSeen },
+      actions: { showPriorityIssues },
+    }) => ({
+      shouldReviewDialogBeSeen,
+      showPriorityIssues,
+    })
+  );
 
   const [showDialog, setShowDialog] = useState(false);
 
@@ -99,7 +98,7 @@ function PublishButton({ forceIsSaving }) {
   }, [refreshPostEditURL, saveStory, hasFutureDate, title, canPublish]);
 
   const handlePublish = useCallback(() => {
-    updateToAllowPriorityIssues();
+    showPriorityIssues();
     if (shouldReviewDialogBeSeen || isUpdatedPublishModalEnabled) {
       setShowDialog(true);
       return;
@@ -107,7 +106,7 @@ function PublishButton({ forceIsSaving }) {
 
     publish();
   }, [
-    updateToAllowPriorityIssues,
+    showPriorityIssues,
     shouldReviewDialogBeSeen,
     isUpdatedPublishModalEnabled,
     publish,
