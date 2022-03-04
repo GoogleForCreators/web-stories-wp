@@ -19,19 +19,112 @@
  */
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { IconButton } from './shared';
+import { useStory } from '../../../app';
+import { canSupportMultiBorder } from '../../../masks';
+import { DEFAULT_BORDER } from '../../panels/design/border/shared';
+import { Input, Color, useProperties } from './shared';
+
+const Container = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const Dash = styled.div`
+  width: 8px;
+  height: 1px;
+  background-color: ${({ theme }) => theme.colors.border.defaultNormal};
+`;
+
+function getHasBorderWidth(border) {
+  if (!border) {
+    return false;
+  }
+  const { left, right, top, bottom } = border;
+  return Boolean(left || right || top || bottom);
+}
+
+const BLACK = { color: { r: 0, g: 0, b: 0 } };
 
 function BorderWidthAndColor() {
+  // Note that "mask" never updates on an element,
+  // so selecting it cannot cause re-renders
+  // We need it to determine if border opacity is allowed.
+  const { border = DEFAULT_BORDER, mask } = useProperties(['border', 'mask']);
+  const updateSelectedElements = useStory(
+    (state) => state.actions.updateSelectedElements
+  );
+
+  // Only multi-border elements support border opacity
+  const canHaveBorderOpacity = canSupportMultiBorder({ mask });
+
+  // We only allow editing the current border width, if all borders are identical
+  const hasUniformBorder =
+    border.left === border.right &&
+    border.left === border.top &&
+    border.left === border.bottom;
+
+  // We only allow editing border color, if at least one border has a non-zero width
+  const hasBorderWidth = getHasBorderWidth(border);
+
+  // If both controls are displayed, also add a dash between them
+  const hasBoth = hasUniformBorder && hasBorderWidth;
+
+  // NB: Note that it can never be the case, that both of the above bools, hasUniformBorder
+  // and hasBorderWidth, are false. If so, neither input would be shown. But because they
+  // partially contradict each other, one of the inputs will always render.
+
+  const handleWidthChange = (value) =>
+    updateSelectedElements({
+      properties: ({ border: oldBorder }) => ({
+        border: {
+          locked: true,
+          color: border.color,
+          ...oldBorder,
+          left: value,
+          right: value,
+          top: value,
+          bottom: value,
+        },
+      }),
+    });
+
+  const handleColorChange = (value) =>
+    updateSelectedElements({
+      properties: ({ border: oldBorder }) => ({
+        border: {
+          ...oldBorder,
+          color: value,
+        },
+      }),
+    });
+
   return (
-    <IconButton
-      Icon={Icons.Border}
-      title={__('Change border width and color', 'web-stories')}
-      onClick={() => {}}
-    />
+    <Container>
+      {hasUniformBorder && (
+        <Input
+          suffix={<Icons.BorderBox />}
+          value={border.left || 0}
+          aria-label={__('Border width', 'web-stories')}
+          onChange={(_, value) => handleWidthChange(value)}
+        />
+      )}
+      {hasBoth && <Dash />}
+      {hasBorderWidth && (
+        <Color
+          label={__('Border color', 'web-stories')}
+          value={border.color || BLACK}
+          onChange={handleColorChange}
+          hasInputs={false}
+          hasEyeDropper={false}
+          allowsOpacity={canHaveBorderOpacity}
+        />
+      )}
+    </Container>
   );
 }
 

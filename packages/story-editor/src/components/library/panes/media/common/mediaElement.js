@@ -229,6 +229,8 @@ function Element({
           width={width}
           index={index}
           isLocal={providerType === 'local'}
+          setParentActive={makeActive}
+          setParentInactive={makeInactive}
         />
         {providerType === 'local' && canEditMedia && (
           <DropDownMenu
@@ -238,6 +240,7 @@ function Element({
             onMenuOpen={onMenuOpen}
             onMenuCancelled={onMenuCancelled}
             onMenuSelected={onMenuSelected}
+            setParentActive={makeActive}
           />
         )}
       </InnerContainer>

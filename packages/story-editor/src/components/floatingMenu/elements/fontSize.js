@@ -17,20 +17,42 @@
 /**
  * External dependencies
  */
-import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 
 /**
  * Internal dependencies
  */
-import { IconButton } from './shared';
+import { useStory } from '../../../app';
+import { focusStyle, inputContainerStyleOverride } from '../../panels/shared';
+import { MIN_MAX } from '../../panels/design/textStyle/font';
+// TODO: https://github.com/GoogleForCreators/web-stories-wp/issues/10799
+import { Input } from './shared';
 
 function FontSize() {
+  const { fontSize, updateSelectedElements } = useStory(
+    ({ state, actions }) => ({
+      fontSize: state.selectedElements[0].fontSize,
+      updateSelectedElements: actions.updateSelectedElements,
+    })
+  );
+
+  const handleChange = (value) =>
+    updateSelectedElements({
+      properties: {
+        fontSize: value,
+      },
+    });
   return (
-    <IconButton
-      Icon={Icons.LetterTArrow}
-      title={__('Change font size', 'web-stories')}
-      onClick={() => {}}
+    <Input
+      aria-label={__('Font size', 'web-stories')}
+      isFloat
+      value={fontSize}
+      onChange={(evt, value) => handleChange(value)}
+      min={MIN_MAX.FONT_SIZE.MIN}
+      max={MIN_MAX.FONT_SIZE.MAX}
+      placeholder={fontSize}
+      containerStyleOverride={inputContainerStyleOverride}
+      selectButtonStylesOverride={focusStyle}
     />
   );
 }
