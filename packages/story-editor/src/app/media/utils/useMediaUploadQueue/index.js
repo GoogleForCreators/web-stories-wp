@@ -217,8 +217,8 @@ function useMediaUploadQueue() {
           return;
         }
 
-        additionalData.web_stories_media_source = 'gif-conversion';
-        additionalData.web_stories_is_muted = true;
+        additionalData.mediaSource = 'gif-conversion';
+        additionalData.isMuted = true;
         finishTranscoding({ id, file: newFile, additionalData });
       } catch (error) {
         // Cancel uploading if there were any errors.
@@ -249,7 +249,7 @@ function useMediaUploadQueue() {
 
         additionalData.meta = {
           ...additionalData.meta,
-          web_stories_trim_data: trimData,
+          trimData,
         };
         finishTrimming({ id, file: newFile, additionalData });
       } catch (error) {
@@ -277,7 +277,7 @@ function useMediaUploadQueue() {
           return;
         }
 
-        additionalData.web_stories_is_muted = true;
+        additionalData.isMuted = true;
         finishMuting({ id, file: newFile, additionalData });
       } catch (error) {
         // Cancel uploading if there were any errors.
@@ -304,7 +304,7 @@ function useMediaUploadQueue() {
           return;
         }
 
-        additionalData.web_stories_media_source = 'video-optimization';
+        additionalData.mediaSource = 'video-optimization';
         finishTranscoding({ id, file: newFile, additionalData });
       } catch (error) {
         // Cancel uploading if there were any errors.
@@ -448,22 +448,22 @@ function useMediaUploadQueue() {
           if (
             resource.type === 'video' &&
             resource.isMuted !== null &&
-            additionalData?.web_stories_is_muted === undefined
+            additionalData?.isMuted === undefined
           ) {
-            additionalData.web_stories_is_muted = resource.isMuted;
+            additionalData.isMuted = resource.isMuted;
           }
 
           if (resource?.baseColor) {
             additionalData.meta = {
               ...additionalData.meta,
-              web_stories_base_color: resource.baseColor,
+              baseColor: resource.baseColor,
             };
           }
           // Do not copy over blurhash for new trimmed videos, poster might be different.
           if (resource?.blurHash && !resource?.trimData) {
             additionalData.meta = {
               ...additionalData.meta,
-              web_stories_blurhash: resource.blurHash,
+              blurHash: resource.blurHash,
             };
           }
 

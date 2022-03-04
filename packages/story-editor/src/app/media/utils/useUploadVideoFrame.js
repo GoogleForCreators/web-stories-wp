@@ -69,8 +69,8 @@ function useUploadVideoFrame({ updateMediaElement }) {
       }
 
       const resource = await uploadFile(posterFile, {
-        post: id,
-        web_stories_media_source: 'poster-generation',
+        mediaId: id,
+        mediaSource: 'poster-generation',
       });
       const {
         id: posterId,

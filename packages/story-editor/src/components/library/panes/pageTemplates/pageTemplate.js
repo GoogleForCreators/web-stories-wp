@@ -168,8 +168,8 @@ function PageTemplate(
           'image/jpeg'
         );
         const resource = await uploadFile(file, {
-          post: page.templateId,
-          web_stories_media_source: 'page-template',
+          templateId: page.templateId,
+          mediaSource: 'page-template',
         });
 
         updatePageTemplate(page.templateId, {

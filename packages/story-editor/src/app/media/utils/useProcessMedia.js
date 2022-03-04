@@ -189,8 +189,8 @@ function useProcessMedia({
           onUploadError,
           onUploadProgress,
           additionalData: {
-            original_id: oldResource.id,
-            web_stories_is_muted: oldResource.isMuted,
+            originalId: oldResource.id,
+            isMuted: oldResource.isMuted,
           },
           originalResourceId: oldResource.id,
         });
@@ -279,11 +279,9 @@ function useProcessMedia({
           onUploadError,
           onUploadProgress,
           additionalData: {
-            original_id: resourceId,
-            web_stories_is_muted: isMuted,
-            web_stories_media_source: isOptimized
-              ? 'video-optimization'
-              : 'editor',
+            originalId: resourceId,
+            isMuted,
+            mediaSource: isOptimized ? 'video-optimization' : 'editor',
           },
           trimData,
           resource: {
@@ -364,10 +362,8 @@ function useProcessMedia({
           onUploadError,
           onUploadProgress,
           additionalData: {
-            original_id: resourceId,
-            web_stories_media_source: isOptimized
-              ? 'video-optimization'
-              : 'editor',
+            originalId: resourceId,
+            mediaSource: isOptimized ? 'video-optimization' : 'editor',
           },
           muteVideo: true,
           resource: {
