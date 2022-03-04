@@ -17,22 +17,16 @@
 /**
  * External dependencies
  */
-import { Icons } from '@googleforcreators/design-system';
-import { __ } from '@googleforcreators/i18n';
+
+//todo: style
 
 /**
  * Internal dependencies
  */
-import { IconButton } from './shared';
+import FontPicker from '../../fontPicker';
 
 function FontFamily() {
-  return (
-    <IconButton
-      Icon={Icons.LetterTUppercase}
-      title={__('Change font family', 'web-stories')}
-      onClick={() => {}}
-    />
-  );
+  return <FontPicker />;
 }
 
 export default FontFamily;

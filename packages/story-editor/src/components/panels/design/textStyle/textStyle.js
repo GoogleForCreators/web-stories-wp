@@ -116,16 +116,6 @@ function StylePanel(props) {
       <PanelContent>
         <FontControls
           {...props}
-          fontDropdownRef={(node) => {
-            if (
-              node &&
-              dropdownHighlight?.focus &&
-              dropdownHighlight?.showEffect
-            ) {
-              node.focus();
-              setFontsFocused(true);
-            }
-          }}
           highlightStylesOverride={fontsFocused ? styles.OUTLINE : []}
         />
         <StyleControls {...props} />

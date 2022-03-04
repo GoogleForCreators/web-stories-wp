@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +34,7 @@ import { useFont } from '../../app';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../constants';
 
 const FontPicker = forwardRef(function FontPicker(
-  { onChange, currentValue, highlightStylesOverride },
+  { onChange, currentValue, highlightStylesOverride, showDropdownLabel },
   ref
 ) {
   const {
@@ -135,7 +135,6 @@ const FontPicker = forwardRef(function FontPicker(
         : []),
     ];
   }, [customFonts, recentFonts]);
-
   return (
     <Datalist.DropDown
       ref={ref}
@@ -157,7 +156,7 @@ const FontPicker = forwardRef(function FontPicker(
       onObserve={onObserve}
       renderer={forwardRef(renderer)}
       disabled={!fonts?.length}
-      dropDownLabel={__('Font', 'web-stories')}
+      dropDownLabel={showDropdownLabel ? __('Font', 'web-stories') : null}
     />
   );
 });
@@ -166,6 +165,7 @@ FontPicker.propTypes = {
   onChange: PropTypes.func.isRequired,
   currentValue: PropTypes.string.isRequired,
   highlightStylesOverride: PropTypes.array,
+  showDropdownLabel: PropTypes.bool,
 };
 
 export default FontPicker;
