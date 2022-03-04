@@ -42,8 +42,8 @@ import { getHTMLFormatters } from '@googleforcreators/rich-text';
  * Internal dependencies
  */
 import { useFont, useHistory, useStory } from '../../../../app';
+import { useCalculateAccessibleTextColors } from '../../../../app/pageCanvas';
 import StoryPropTypes from '../../../../types';
-import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
 import useLibrary from '../../useLibrary';
 import LibraryMoveable from '../shared/libraryMoveable';
 import InsertionOverlay from '../shared/insertionOverlay';
@@ -119,7 +119,7 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
     shouldUseSmartColor: state.state.shouldUseSmartColor,
   }));
 
-  const { calculateAccessibleTextColors } = usePageAsCanvas();
+  const calculateAccessibleTextColors = useCalculateAccessibleTextColors();
 
   const { isTextSelected, updateSelectedElements } = useStory(
     ({ state, actions }) => ({
@@ -164,10 +164,10 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
         presetDataRef.current.skipCanvasGeneration = true;
       }
 
-      presetDataRef.current.autoColor = await calculateAccessibleTextColors(
-        { ...element, ...atts },
-        false /* isInserting */
-      );
+      presetDataRef.current.autoColor = await calculateAccessibleTextColors({
+        ...element,
+        ...atts,
+      });
     }
     getPositionAndColor();
   }, [

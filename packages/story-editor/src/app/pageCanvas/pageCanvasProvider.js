@@ -17,124 +17,99 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import {
-  useCallback,
-  useReducer,
-  useEffect,
-  useRef,
-} from '@googleforcreators/react';
-import { FULLBLEED_RATIO, getBox, PAGE_RATIO } from '@googleforcreators/units';
+import { useCallback, useRef } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
  */
-import objectWithout from '../../utils/objectWithout';
-import {
-  requestIdleCallback,
-  cancelIdleCallback,
-} from '../../utils/idleCallback';
 import storyPageToCanvas from '../../utils/storyPageToCanvas';
 import { getAccessibleTextColorsFromPixels } from '../../utils/contrastUtils';
-import { calculateTextHeight } from '../../utils/textMeasurements';
+import useIdleQueue from '../../utils/useIdleTaskQueue';
 import { useStory } from '../story';
+import { STABLE_ARRAY } from '../../constants';
 import Context from './context';
-
-function getPixelDataFromCanvas(canvas, atts) {
-  const ctx = canvas.getContext('2d');
-  // The canvas does not consider danger zone as y = 0, so we need to adjust that.
-  const safeZoneDiff =
-    (canvas.width / FULLBLEED_RATIO - canvas.width / PAGE_RATIO) / 2;
-  const box = getBox(
-    {
-      ...atts,
-      height: atts.height ? atts.height : calculateTextHeight(atts, atts.width),
-    },
-    canvas.width,
-    canvas.height - 2 * safeZoneDiff
-  );
-  const { x, y: origY, width, height } = box;
-  const y = origY + safeZoneDiff;
-  const pixelData = ctx.getImageData(x, y, width, height).data;
-  return pixelData;
-}
-
-const INITIAL_STATE = {};
-
-const reducer = (map, action) => {
-  switch (action.type) {
-    case 'SET_PAGE_CANVAS': {
-      const { pageId, canvas } = action.payload;
-      return {
-        ...map,
-        [pageId]: canvas,
-      };
-    }
-    case 'RESET_PAGE_CANVAS': {
-      const { pageId } = action.payload;
-      return {
-        ...map,
-        [pageId]: 'idle',
-      };
-    }
-    default:
-      return map;
-  }
-};
+import getPixelDataFromCanvas from './getPixelDataFromCanvas';
+import usePageCanvasMap from './usePageCanvasMap';
+import PageCanvasCacheValidator from './pageCanvasCacheValidator';
+import pageWithoutSelection from './pageWithoutSelection';
 
 function PageCanvasProvider({ children }) {
-  const idleCallbackIdRef = useRef(null);
-  const [pageCanvasMap, dispatch] = useReducer(reducer, INITIAL_STATE);
-  const { currentPage } = useStory(({ state }) => ({
+  const queueIdleTask = useIdleQueue();
+  const [pageCanvasMap, actions] = usePageCanvasMap();
+  const pageIds = useStory(({ state }) => state.pages.map(({ id }) => id));
+  const { currentPage, singleElementSelection } = useStory(({ state }) => ({
+    singleElementSelection:
+      state.selectedElementIds?.length === 1
+        ? state.selectedElementIds
+        : STABLE_ARRAY,
     currentPage: state.currentPage,
   }));
 
-  const currentPageRef = useRef(currentPage);
-  currentPageRef.current = currentPage;
-  const currentPageCanvas = pageCanvasMap[currentPageRef.current.id];
-  const getCurrentPageCanvas = useCallback(async () => {
-    if (currentPageCanvas) {
-      return currentPageCanvas;
-    }
-    cancelIdleCallback(idleCallbackIdRef.current);
-    const canvas = await storyPageToCanvas(currentPageRef.current);
-    dispatch({
-      type: 'SET_PAGE_CANVAS',
-      payload: { pageId: currentPageRef.current.id, canvas },
-    });
+  const stateRefValue = {
+    currentPageValue: currentPage,
+    pageCanvasMapValue: pageCanvasMap,
+    singleElementSelectionValue: singleElementSelection,
+  };
+  const stateRef = useRef(stateRefValue);
+  stateRef.current = stateRefValue;
+
+  const generateDefferedPageCanvas = useCallback(
+    ([taskId, page]) => {
+      const cancelIdleTask = queueIdleTask([
+        taskId,
+        async () => {
+          const canvas = await storyPageToCanvas(page, {});
+          actions.setPageCanvas({ pageId: page.id, canvas });
+        },
+      ]);
+      return cancelIdleTask;
+    },
+    [queueIdleTask, actions]
+  );
+
+  const getSelectionExclusionCanvas = useCallback(async () => {
+    const { currentPageValue, singleElementSelectionValue } = stateRef.current;
+    const page = pageWithoutSelection(
+      currentPageValue,
+      singleElementSelectionValue
+    );
+    const canvas = await storyPageToCanvas(page, {});
     return canvas;
-  }, [currentPageCanvas]);
+  }, []);
+
+  const getCanvas = useCallback(async () => {
+    const { currentPageValue, pageCanvasMapValue } = stateRef.current;
+
+    let canvas = pageCanvasMapValue[currentPageValue.id];
+    if (!canvas) {
+      canvas = await storyPageToCanvas(currentPageValue, {});
+      actions.setPageCanvas({ pageId: currentPageValue.id, canvas });
+    }
+    return canvas;
+  }, [actions]);
 
   const calculateAccessibleTextColors = useCallback(
-    async (atts) => {
-      const canvas = await getCurrentPageCanvas();
-      const pixelData = getPixelDataFromCanvas(canvas, atts);
-      const { fontSize } = atts;
-      const accessibleTextColors = await getAccessibleTextColorsFromPixels(
+    async (element) => {
+      const { singleElementSelectionValue } = stateRef.current;
+
+      let canvas;
+      if (singleElementSelectionValue.includes(element.id)) {
+        canvas = await getSelectionExclusionCanvas();
+      } else {
+        canvas = await getCanvas();
+      }
+
+      const { fontSize } = element;
+      const pixelData = getPixelDataFromCanvas(canvas, element);
+      const accessibleTextColors = getAccessibleTextColorsFromPixels(
         pixelData,
         fontSize
       );
+
       return accessibleTextColors;
     },
-    [getCurrentPageCanvas]
+    [getSelectionExclusionCanvas, getCanvas]
   );
-
-  // When the current page updates, its generated canvas
-  // is no longer valid & we need to generate a new one
-  useEffect(() => {
-    dispatch({
-      type: 'RESET_PAGE_CANVAS',
-      payload: { pageId: currentPage.id },
-    });
-
-    cancelIdleCallback(idleCallbackIdRef.current);
-    idleCallbackIdRef.current = requestIdleCallback(async () => {
-      const canvas = await storyPageToCanvas(currentPage);
-      dispatch({
-        type: 'SET_PAGE_CANVAS',
-        payload: { pageId: currentPage.id, canvas },
-      });
-    });
-  }, [currentPage]);
 
   return (
     <Context.Provider
@@ -147,6 +122,13 @@ function PageCanvasProvider({ children }) {
         },
       }}
     >
+      {pageIds.map((pageId) => (
+        <PageCanvasCacheValidator
+          key={pageId}
+          pageId={pageId}
+          clearPageCanvasCache={actions.clearPageCanvas}
+        />
+      ))}
       {children}
     </Context.Provider>
   );

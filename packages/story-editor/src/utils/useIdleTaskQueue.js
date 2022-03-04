@@ -23,6 +23,11 @@ import { useRef, useCallback } from '@googleforcreators/react';
  */
 import { requestIdleCallback, cancelIdleCallback } from './idleCallback';
 
+/**
+ * Creates a FIFO idle task queue
+ *
+ * @return {Function} queueIdleTask
+ */
 function useIdleTaskQueue() {
   const taskQueue = useRef([]);
   const isTaskQueueRunning = useRef(false);
