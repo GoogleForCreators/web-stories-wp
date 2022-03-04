@@ -30,11 +30,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import Workspace from '../workspace';
-import {
-  CANVAS_MIN_WIDTH,
-  INSPECTOR_MIN_WIDTH,
-  INSPECTOR_MAX_WIDTH,
-} from '../../constants';
+import { CANVAS_MIN_WIDTH, INSPECTOR_WIDTH } from '../../constants';
 import { CanvasProvider } from '../../app/canvas';
 import { HighlightsProvider } from '../../app/highlights';
 import LayoutProvider from '../../app/layout/layoutProvider';
@@ -59,7 +55,7 @@ const Editor = withOverlay(styled.section.attrs({
   grid:
     'insp   canv          ' 1fr
     'insp   supplementary ' auto /
-    minmax(${INSPECTOR_MIN_WIDTH}px, ${INSPECTOR_MAX_WIDTH}px)
+    ${INSPECTOR_WIDTH}px
     minmax(${CANVAS_MIN_WIDTH}px, 1fr);
 `);
 
