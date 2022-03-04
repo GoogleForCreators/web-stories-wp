@@ -23,7 +23,7 @@
 		</testsuite>
 	</testsuites>
 
-	<groups>
+  <groups>
     <exclude>
       <group>ms-excluded</group>
     </exclude>
