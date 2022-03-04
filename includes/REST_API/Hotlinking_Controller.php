@@ -582,7 +582,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		$mime_type = $this->types->get_allowed_mime_types();
 		// TODO: Update once audio elements are supported.
 		$mime_type['audio'] = [];
-		// TODO: Add support hotlinking vvt files.
+		// TODO(#10515): Add support hotlinking vtt files.
 		unset( $mime_type['caption'] );
 		// Do not support hotlinking SVGs for security reasons.
 		unset( $mime_type['vector'] );
