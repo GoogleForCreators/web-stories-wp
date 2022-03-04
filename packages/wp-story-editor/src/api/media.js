@@ -225,7 +225,7 @@ export function updateMedia(config, mediaId, data) {
     altText,
   } = data;
 
-  const wpData = {
+  const wpKeysMapping = {
     meta: {
       web_stories_base_color: baseColor,
       web_stories_blurhash: blurHash,
@@ -240,20 +240,20 @@ export function updateMedia(config, mediaId, data) {
     alt_text: altText,
   };
 
-  Object.entries(wpData.meta).forEach(([key, value]) => {
-    if (!value) {
-      delete wpData.meta[key];
+  Object.entries(wpKeysMapping.meta).forEach(([key, value]) => {
+    if (value === undefined || value === null) {
+      delete wpKeysMapping.meta[key];
     }
   });
 
-  Object.entries(wpData).forEach(([key, value]) => {
-    if (!value) {
-      delete wpData[key];
+  Object.entries(wpKeysMapping).forEach(([key, value]) => {
+    if (value === undefined || value === null) {
+      delete wpKeysMapping[key];
     }
   });
   return apiFetch({
     path: `${config.api.media}${mediaId}/`,
-    data: wpData,
+    data: wpKeysMapping,
     method: 'POST',
   }).then(getResourceFromAttachment);
 }

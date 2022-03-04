@@ -83,7 +83,7 @@ function useUploadVideoFrame({ updateMediaElement }) {
       if (id) {
         await updateMedia(id, {
           featuredMedia: posterId,
-          posterId: posterId,
+          posterId,
           storyId,
         });
       }
