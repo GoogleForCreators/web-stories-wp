@@ -32,7 +32,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $dashboard_settings = \Google\Web_Stories\Services::get( 'dashboard' )->get_dashboard_settings();
 
 $init_script = <<<JS
-	webStories.domReady( function() {
+	wp.domReady( function() {
 	  webStories.initializeStoryDashboard( 'web-stories-dashboard', %s );
 	} );
 JS;

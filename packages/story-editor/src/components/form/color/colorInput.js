@@ -157,7 +157,7 @@ const ColorInput = forwardRef(function ColorInput(
     label = null,
     changedStyle,
     pickerPlacement,
-    isMinimal = false,
+    isInDesignMenu = false,
     hasInputs = true,
     pickerProps,
   },
@@ -201,7 +201,7 @@ const ColorInput = forwardRef(function ColorInput(
 
   const tooltip = __('Open color picker', 'web-stories');
 
-  const containerStyle = isMinimal
+  const containerStyle = isInDesignMenu
     ? minimalInputContainerStyleOverride
     : inputContainerStyleOverride;
 
@@ -285,7 +285,7 @@ ColorInput.propTypes = {
   label: PropTypes.string,
   changedStyle: PropTypes.string,
   pickerPlacement: PropTypes.string,
-  isMinimal: PropTypes.bool,
+  isInDesignMenu: PropTypes.bool,
   hasInputs: PropTypes.bool,
 };
 
