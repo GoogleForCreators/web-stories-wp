@@ -37,7 +37,8 @@ import {
 import { useKeyDownEffect } from '../keyboard';
 import { useContextMenu } from './contextMenuProvider';
 
-export const CONTEXT_MENU_WIDTH = 218;
+export const CONTEXT_MENU_MIN_WIDTH = 200;
+const CONTEXT_MENU_MAX_WIDTH = 300;
 
 const MenuWrapper = styled.div(
   ({ theme }) => css`
@@ -48,18 +49,27 @@ const MenuWrapper = styled.div(
     border: 1px solid ${theme.colors.border.disable};
     gap: 6px;
     display: flex;
+
     ${({ isHorizontal, isIconMenu }) =>
       isHorizontal
-        ? `
-          height: 52px;
-          padding: 7px 10px;
-          align-items: center;
-        `
-        : `
-          flex-direction: column;
-          width: ${isIconMenu ? 40 : CONTEXT_MENU_WIDTH}px;
-          padding: ${isIconMenu ? '4px 3px' : '8px 0'};
-        `}
+        ? css`
+            // horizontal menu
+            height: 52px;
+            padding: 7px 10px;
+            align-items: center;
+          `
+        : css`
+            // vertical menu
+            flex-direction: column;
+            width: ${isIconMenu ? '40px' : 'auto'};
+            padding: ${isIconMenu ? '4px 3px' : '8px 0'};
+            max-width: ${CONTEXT_MENU_MAX_WIDTH}px;
+
+            ${!isIconMenu &&
+            css`
+              min-width: ${CONTEXT_MENU_MIN_WIDTH}px;
+            `};
+          `}
 
     *:last-child {
       margin-bottom: 0;
