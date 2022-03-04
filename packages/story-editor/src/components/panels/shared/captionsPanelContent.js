@@ -76,14 +76,14 @@ function CaptionsPanelContent({
   clearFileText = __('Remove file', 'web-stories'),
 }) {
   const {
-    allowedMimeTypes: { caption: allowedTextMimeTypes },
+    allowedMimeTypes: { caption: allowedCaptionMimeTypes },
     capabilities: { hasUploadMediaAction },
     MediaUpload,
   } = useConfig();
 
   if (
-    (!hasUploadMediaAction && !tracks.length) ||
-    !allowedTextMimeTypes.length
+    (!hasUploadMediaAction || !tracks.length) &&
+    !allowedCaptionMimeTypes.length
   ) {
     return null;
   }
@@ -132,7 +132,7 @@ function CaptionsPanelContent({
               'Please choose a VTT file to use as caption.',
               'web-stories'
             )}
-            type={allowedTextMimeTypes}
+            type={allowedCaptionMimeTypes}
             title={captionText}
             buttonInsertText={__('Select caption', 'web-stories')}
             render={renderUploadButton}
