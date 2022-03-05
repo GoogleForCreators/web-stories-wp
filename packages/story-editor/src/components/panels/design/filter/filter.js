@@ -36,7 +36,7 @@ import useCORSProxy from '../../../../utils/useCORSProxy';
 import { useStory } from '../../../../app';
 import convertOverlay from './convertOverlay';
 
-export const OverlayPreset = {
+const OverlayPreset = {
   [OverlayType.NONE]: {
     label: _x('None', 'overlay', 'web-stories'),
   },

@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * Internal dependencies
- */
 /**
  * External dependencies
  */
 import { registerElementType } from '@googleforcreators/elements';
 import { elementTypes } from '@googleforcreators/element-library';
+
+/**
+ * Internal dependencies
+ */
 import getElementProperties from '../getElementProperties';
 
 const COMMON_PROPERTIES = {
