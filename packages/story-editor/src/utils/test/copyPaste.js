@@ -24,8 +24,10 @@ import {
   MEDIA_DEFAULT_ATTRIBUTES,
   elementTypes,
 } from '@googleforcreators/element-library';
-import { registerElementType } from '@googleforcreators/elements';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/design-system';
+import {
+  registerElementType,
+  TEXT_ELEMENT_DEFAULT_FONT,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies

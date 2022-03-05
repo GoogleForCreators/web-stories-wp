@@ -18,7 +18,7 @@
  */
 import { waitFor, within } from '@testing-library/react';
 import { createSolidFromString } from '@googleforcreators/patterns';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/design-system';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies

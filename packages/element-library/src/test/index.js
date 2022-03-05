@@ -22,8 +22,8 @@ import {
   duplicatePage,
   duplicateElement,
   registerElementType,
+  TEXT_ELEMENT_DEFAULT_FONT,
 } from '@googleforcreators/elements';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies

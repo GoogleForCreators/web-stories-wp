@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { waitFor, within } from '@testing-library/react';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/design-system';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies

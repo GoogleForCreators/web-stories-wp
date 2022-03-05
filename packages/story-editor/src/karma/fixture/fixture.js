@@ -24,13 +24,13 @@ import {
   screen,
   waitFor,
 } from '@testing-library/react';
-import {
-  setAppElement,
-  TEXT_ELEMENT_DEFAULT_FONT,
-} from '@googleforcreators/design-system';
+import { setAppElement } from '@googleforcreators/design-system';
 import { FixtureEvents } from '@googleforcreators/karma-fixture';
 import { DATA_VERSION } from '@googleforcreators/migration';
-import { createPage } from '@googleforcreators/elements';
+import {
+  createPage,
+  TEXT_ELEMENT_DEFAULT_FONT,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
