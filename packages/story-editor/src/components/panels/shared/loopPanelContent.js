@@ -36,27 +36,29 @@ const StyledCheckbox = styled(Checkbox)`
   `}
 `;
 
-const Label = styled.label`
-  margin-left: 12px;
+const Wrapper = styled.div`
+  display: flex;
+  gap: 12px;
 `;
 
-function LoopPanelContent({ loop, onChange }) {
+function LoopPanelContent({ loop, className = '', onChange }) {
   const checkboxId = `cb-${uuidv4()}`;
 
   return (
-    <>
+    <Wrapper className={className}>
       <StyledCheckbox id={checkboxId} checked={loop} onChange={onChange} />
-      <Label htmlFor={checkboxId}>
+      <label htmlFor={checkboxId}>
         <Text as="span" size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
           {__('Loop', 'web-stories')}
         </Text>
-      </Label>
-    </>
+      </label>
+    </Wrapper>
   );
 }
 
 LoopPanelContent.propTypes = {
   onChange: PropTypes.func.isRequired,
+  className: PropTypes.string,
   loop: PropTypes.bool,
 };
 
