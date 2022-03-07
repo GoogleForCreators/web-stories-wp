@@ -27,6 +27,7 @@ export function getCurrentUser(config) {
   return apiFetch({
     path: config.api.currentUser,
   }).then((resp) => ({
+    id: resp.id,
     trackingOptin: resp.meta.web_stories_tracking_optin,
     onboarding: resp.meta.web_stories_onboarding,
     mediaOptimization: resp.meta.web_stories_media_optimization,
