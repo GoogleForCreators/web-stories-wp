@@ -26,7 +26,11 @@ import { useLocalMedia } from '../../../../app';
 import useVideoTrim from '../../../videoTrim/useVideoTrim';
 import useFFmpeg from '../../../../app/media/utils/useFFmpeg';
 
-function useVideoTranscoding({ resource, elementId, isSingleElement = true }) {
+function useVideoElementTranscoding({
+  resource,
+  elementId,
+  isSingleElement = true,
+}) {
   const { isTranscodingEnabled } = useFFmpeg();
   const {
     muteExistingVideo,
@@ -81,4 +85,4 @@ function useVideoTranscoding({ resource, elementId, isSingleElement = true }) {
   };
 }
 
-export default useVideoTranscoding;
+export default useVideoElementTranscoding;

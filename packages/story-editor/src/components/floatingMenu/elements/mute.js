@@ -23,7 +23,7 @@ import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
-import useVideoTranscoding from '../../panels/design/videoOptions/useVideoTranscoding';
+import useVideoElementTranscoding from '../../panels/design/videoOptions/useVideoElementTranscoding';
 import { IconButton, useProperties } from './shared';
 
 function Mute() {
@@ -31,7 +31,7 @@ function Mute() {
   const {
     state: { canMute, isMuting, isDisabled },
     actions: { handleMute },
-  } = useVideoTranscoding({
+  } = useVideoElementTranscoding({
     elementId,
     resource,
   });

@@ -39,7 +39,7 @@ import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
 import CircularProgress from '../../../circularProgress';
 import LoopPanelContent from '../../shared/loopPanelContent';
-import useVideoTranscoding from './useVideoTranscoding';
+import useVideoElementTranscoding from './useVideoElementTranscoding';
 
 const Row = styled(DefaultRow)`
   margin-top: 2px;
@@ -78,7 +78,7 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   const {
     state: { canTrim, canMute, isTrimming, isMuting, isDisabled },
     actions: { handleMute, handleTrim },
-  } = useVideoTranscoding({ resource, elementId, isSingleElement });
+  } = useVideoElementTranscoding({ resource, elementId, isSingleElement });
 
   const muteButtonText = isMuting
     ? __('Removing audio…', 'web-stories')

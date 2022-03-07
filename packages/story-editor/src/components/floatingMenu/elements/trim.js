@@ -23,7 +23,7 @@ import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
-import useVideoTranscoding from '../../panels/design/videoOptions/useVideoTranscoding';
+import useVideoElementTranscoding from '../../panels/design/videoOptions/useVideoElementTranscoding';
 import { IconButton, useProperties } from './shared';
 
 function Trim() {
@@ -31,7 +31,7 @@ function Trim() {
   const {
     state: { canTrim, isTrimming, isDisabled },
     actions: { handleTrim },
-  } = useVideoTranscoding({
+  } = useVideoElementTranscoding({
     elementId,
     resource,
   });

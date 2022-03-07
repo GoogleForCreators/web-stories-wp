@@ -24,10 +24,11 @@ import { fireEvent, screen } from '@testing-library/react';
  */
 import { renderWithTheme } from '../../../../testUtils';
 import Trim from '../trim';
-import mockUseVideoTranscoding from '../../../panels/design/videoOptions/useVideoTranscoding';
+import mockUseVideoElementTranscoding from '../../../panels/design/videoOptions/useVideoElementTranscoding';
 
-jest.mock('../../../panels/design/videoOptions/useVideoTranscoding', () =>
-  jest.fn()
+jest.mock(
+  '../../../panels/design/videoOptions/useVideoElementTranscoding',
+  () => jest.fn()
 );
 jest.mock('../shared/useProperties', () =>
   jest.fn().mockImplementation(() => ({}))
@@ -44,7 +45,7 @@ jest.mock('../shared/icon', () =>
 
 describe('Design Menu: Trim video', () => {
   it('should not render if trim is not possible', () => {
-    mockUseVideoTranscoding.mockImplementationOnce(() => ({
+    mockUseVideoElementTranscoding.mockImplementationOnce(() => ({
       state: { canTrim: false },
       actions: {},
     }));
@@ -54,7 +55,7 @@ describe('Design Menu: Trim video', () => {
   });
 
   it('should render if trim is possible', () => {
-    mockUseVideoTranscoding.mockImplementationOnce(() => ({
+    mockUseVideoElementTranscoding.mockImplementationOnce(() => ({
       state: { canTrim: true },
       actions: {},
     }));
@@ -64,7 +65,7 @@ describe('Design Menu: Trim video', () => {
   });
 
   it('should render as disabled with alternate title if trim is ongoing', () => {
-    mockUseVideoTranscoding.mockImplementationOnce(() => ({
+    mockUseVideoElementTranscoding.mockImplementationOnce(() => ({
       state: { canTrim: true, isTrimming: true },
       actions: {},
     }));
@@ -75,7 +76,7 @@ describe('Design Menu: Trim video', () => {
   });
 
   it('should render as disabled if other transcoding is ongoing', () => {
-    mockUseVideoTranscoding.mockImplementationOnce(() => ({
+    mockUseVideoElementTranscoding.mockImplementationOnce(() => ({
       state: { canTrim: true, isDisabled: true },
       actions: {},
     }));
@@ -87,7 +88,7 @@ describe('Design Menu: Trim video', () => {
 
   it('should invoke trim function when clicked', () => {
     const handleTrim = jest.fn();
-    mockUseVideoTranscoding.mockImplementationOnce(() => ({
+    mockUseVideoElementTranscoding.mockImplementationOnce(() => ({
       state: { canTrim: true },
       actions: { handleTrim },
     }));
