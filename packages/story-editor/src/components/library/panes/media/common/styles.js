@@ -19,7 +19,11 @@
  */
 import styled from 'styled-components';
 import { rgba } from 'polished';
-import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import {
+  Text,
+  THEME_CONSTANTS,
+  themeHelpers,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -36,6 +40,13 @@ export const PaneHeader = styled.div`
   flex: 0 1 auto;
 `;
 
+export const GalleryContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`;
+
 export const MediaGalleryContainer = styled.div`
   overflow-y: scroll;
   overflow-x: hidden;
@@ -47,16 +58,10 @@ export const MediaGalleryContainer = styled.div`
   min-height: 100px;
 `;
 
-// 312px is the width of the gallery minus the 24px paddings.
-// We add a -4px l/r margin because the react-photo-gallery adds 4px margins
-// around images.
-// Width is thus 312-(-4)*2=320
-// TODO (pbakaus@): this needs a refactor for less magic numbers, but for now,
-// replacing 320px with the calc below produces the exact result in a dynamic,
-// scalable way.
+// Exceeding the parent's width here so the media items
+// better align with the upload buttons and scroll bar.
 export const MediaGalleryInnerContainer = styled.div`
-  width: calc(100% + 19px);
-  margin: 0 -4px;
+  width: calc(100% + ${themeHelpers.SCROLLBAR_WIDTH}px);
 `;
 
 export const MediaGalleryLoadingPill = styled.div`
