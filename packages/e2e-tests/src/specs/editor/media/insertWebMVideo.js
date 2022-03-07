@@ -71,8 +71,9 @@ describe('Inserting WebM Video', () => {
     const fileName = await uploadMedia('small-video.webm');
     uploadedFiles.push(fileName);
 
-    await page.waitForSelector('[data-testid="mediaElement-video"]');
-    await page.waitForTimeout(100);
+    await page.waitForSelector(
+      `[data-testid="mediaElement-video"] [src*="${fileName}"`
+    );
     // Clicking will only act on the first element.
     await expect(page).toClick('[data-testid="mediaElement-video"]');
     const insertButton = await page.waitForXPath(
@@ -97,9 +98,10 @@ describe('Inserting WebM Video', () => {
     const fileName = await uploadMedia('small-video.webm');
     uploadedFiles.push(fileName);
 
-    await page.waitForSelector('[data-testid="mediaElement-video"]');
+    await page.waitForSelector(
+      `[data-testid="mediaElement-video"] [src*="${fileName}"`
+    );
     // Clicking will only act on the first element.
-    await page.waitForTimeout(100);
     await expect(page).toClick('[data-testid="mediaElement-video"]');
     const insertButton = await page.waitForXPath(
       `//li//span[contains(text(), 'Insert video')]`
