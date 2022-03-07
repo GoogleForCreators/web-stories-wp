@@ -41,7 +41,7 @@ describe('Inserting WebM Video', () => {
     // Open the Accessibility panel.
     const a11yPanel = await page.$('button[aria-label="Accessibility"]');
     const isCollapsed = await page.evaluate(
-      (button) => button.getAttribute('aria-expanded') == 'false',
+      (button) => button.getAttribute('aria-expanded') === 'false',
       a11yPanel
     );
     if (isCollapsed) {
