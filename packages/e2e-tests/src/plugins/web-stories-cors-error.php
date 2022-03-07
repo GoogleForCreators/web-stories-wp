@@ -35,7 +35,7 @@ function change_response( $response, $post, $request ) {
 	 */
 	$data = $response->get_data();
 
-	$data['source_url']             = 'https://wp.stories.google/img/302e7662-696.jpeg'; // todo: Find a better example of an image with cors issue. 
+	$data['source_url']             = 'https://wp.stories.google/img/302e7662-696.jpeg'; // TODO: Find a better example of an image with cors issue.
 	$data['media_details']['sizes'] = [];
 
 	$response->set_data( $data );

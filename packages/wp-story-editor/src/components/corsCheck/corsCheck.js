@@ -41,7 +41,7 @@ function CorsCheck() {
       setDoCheck(false);
       let mediaItems;
       try {
-        mediaItems = await getMediaForCorsCheck({ perPage: 10 });
+        mediaItems = await getMediaForCorsCheck();
       } catch (err) {
         return;
       }
