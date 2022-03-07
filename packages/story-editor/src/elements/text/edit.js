@@ -28,7 +28,7 @@ import {
 } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { generatePatternStyles } from '@googleforcreators/patterns';
-import { useUnits } from '@googleforcreators/units';
+import { useUnits, calcRotatedResizeOffset } from '@googleforcreators/units';
 import {
   useTransformHandler,
   useTransform,
@@ -38,6 +38,7 @@ import {
   getHTMLInfo,
   useRichText,
 } from '@googleforcreators/rich-text';
+import { stripHTML } from '@googleforcreators/dom';
 
 /**
  * Internal dependencies
@@ -53,8 +54,6 @@ import {
 } from '../shared';
 import StoryPropTypes from '../../types';
 import { BACKGROUND_TEXT_MODE } from '../../constants';
-import stripHTML from '../../utils/stripHTML';
-import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import {
   getBorderPositionCSS,
   shouldDisplayBorder,

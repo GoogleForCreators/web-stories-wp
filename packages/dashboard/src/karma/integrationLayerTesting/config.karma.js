@@ -18,7 +18,7 @@
  * Internal dependencies
  */
 import Fixture from '../fixture';
-import defaultConfig from '../../defaultConfig';
+import getDefaultConfig from '../../getDefaultConfig';
 
 describe('Integration Layer tests : EditorConfig Params :', () => {
   let fixture;
@@ -27,7 +27,7 @@ describe('Integration Layer tests : EditorConfig Params :', () => {
 
   beforeAll(() => {
     // fixture.setConfig() doesn't overwrite the whole object but merges therefore optional params need to be set undefined explicitly.
-    for (const key of Object.keys(defaultConfig)) {
+    for (const key of Object.keys(getDefaultConfig())) {
       MINIMUM_CONFIG[key] = undefined;
     }
     MINIMUM_CONFIG.apiCallbacks = {

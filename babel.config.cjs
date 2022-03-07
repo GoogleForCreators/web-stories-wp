@@ -47,12 +47,6 @@ module.exports = function (api) {
     plugins: [
       '@wordpress/babel-plugin-import-jsx-pragma',
       'babel-plugin-styled-components',
-      '@babel/plugin-proposal-class-properties',
-      '@babel/plugin-proposal-private-methods',
-      'babel-plugin-inline-json-import',
-      '@babel/plugin-syntax-top-level-await',
-      '@babel/plugin-proposal-optional-chaining',
-      '@babel/plugin-proposal-nullish-coalescing-operator',
     ],
     sourceMaps: true,
     env: {

@@ -286,6 +286,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Story locking', 'web-stories' ),
 				'description' => __( 'Lock in-progress stories from being edited by other authors', 'web-stories' ),
 				'group'       => 'general',
+				'default'     => true,
 			],
 			/**
 			 * Author: @spacedmonkey
@@ -308,6 +309,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Updated Publish Story Modal', 'web-stories' ),
 				'description' => __( 'Enable new pre-publish confirmation modal', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @miina
@@ -369,6 +371,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Page Background Audio', 'web-stories' ),
 				'description' => __( 'Enable adding captions to background audio', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @barklund
@@ -382,16 +385,15 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'editor',
 			],
 			/**
-			 * Author: @swissspidy
-			 * Issue: #10394
-			 * Creation date: 2022-01-32
+			 * Author: @miina
+			 * Issue: #10113
+			 * Creation date: 2022-02-22
 			 */
 			[
-				'name'        => 'semanticHeadingTags',
-				'label'       => __( 'Semantic Headings', 'web-stories' ),
-				'description' => __( 'Automatically use semantic heading tags for text elements', 'web-stories' ),
+				'name'        => 'libraryTextStyles',
+				'label'       => __( 'Library: Saved Styles', 'web-stories' ),
+				'description' => __( 'Allow inserting/applying Saved Styles from Text Library', 'web-stories' ),
 				'group'       => 'editor',
-				'default'     => true,
 			],
 		];
 	}

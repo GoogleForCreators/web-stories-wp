@@ -21,11 +21,11 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useRef, useEffect } from '@googleforcreators/react';
 import { useUnits } from '@googleforcreators/units';
+import { getCaretCharacterOffsetWithin } from '@googleforcreators/rich-text';
 
 /**
  * Internal dependencies
  */
-import getCaretCharacterOffsetWithin from '../../utils/getCaretCharacterOffsetWithin';
 import { useStory } from '../../app/story';
 import { useCanvas } from '../../app/canvas';
 import {

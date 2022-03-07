@@ -1247,6 +1247,7 @@ describe('Page output', () => {
       expect(content).toContain(
         'background-audio="https://example.com/audio.mp3"'
       );
+      expect(content).not.toContain('amp-video');
     });
     it('should add background audio as amp-video', async () => {
       const props = {
@@ -1299,7 +1300,7 @@ describe('Page output', () => {
       );
     });
 
-    it('should add background audio on non-looping use amp-video', async () => {
+    it('should use amp-video for non-looping background audio', async () => {
       const props = {
         id: '123',
         page: {
@@ -1543,9 +1544,7 @@ describe('Page output', () => {
       await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
     });
 
-    // TODO(#10338): Resolve question about poster requirement.
-    // eslint-disable-next-line jest/no-disabled-tests
-    it.skip('should produce valid output with background audio with captions', async () => {
+    it('should produce valid output with background audio with captions', async () => {
       const props = {
         id: '123',
         backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },
@@ -1579,9 +1578,7 @@ describe('Page output', () => {
       await expect(<PageOutput {...props} />).toBeValidAMPStoryPage();
     });
 
-    // TODO(#10338): Resolve question about poster requirement.
-    // eslint-disable-next-line jest/no-disabled-tests
-    it.skip('should produce valid output with non-looping background audio', async () => {
+    it('should produce valid output with non-looping background audio', async () => {
       const props = {
         id: '123',
         backgroundColor: { type: 'solid', color: { r: 255, g: 255, b: 255 } },

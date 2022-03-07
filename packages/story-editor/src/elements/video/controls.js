@@ -22,20 +22,25 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { useStory } from '../../app/story';
 import StoryPropTypes from '../../types';
 import PlayPauseButton from './playPauseButton';
 
 function VideoControls({
   box,
   isSelected,
-  isSingleElement,
   isEditing,
   isTransforming,
   elementRef,
   element,
 }) {
-  const isActive =
-    isSelected && !isTransforming && isSingleElement && !isEditing;
+  const isActive = useStory(
+    ({ state }) =>
+      state.selectedElementIds.length === 1 &&
+      isSelected &&
+      !isTransforming &&
+      !isEditing
+  );
 
   return (
     <PlayPauseButton
@@ -51,7 +56,6 @@ function VideoControls({
 VideoControls.propTypes = {
   box: StoryPropTypes.box.isRequired,
   isSelected: PropTypes.bool.isRequired,
-  isSingleElement: PropTypes.bool.isRequired,
   isEditing: PropTypes.bool.isRequired,
   isTransforming: PropTypes.bool.isRequired,
   elementRef: PropTypes.object.isRequired,

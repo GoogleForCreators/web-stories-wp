@@ -36,7 +36,7 @@ import useStory from '../../app/story/useStory';
 import getUniquePresets from '../../utils/getUniquePresets';
 
 const StyledButton = styled(Button)`
-  flex-basis: 100%;
+  flex: 0 0 32px;
   margin: 0 16px 16px;
 `;
 

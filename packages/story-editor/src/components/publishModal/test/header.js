@@ -35,7 +35,6 @@ describe('publishModal/header', () => {
   it('should have no accessibility issues', async () => {
     const { container } = renderWithTheme(
       <Header
-        isPublishEnabled
         onClose={mockOnClose}
         onPublish={mockOnPublish}
         publishButtonCopy="Publish"
@@ -49,7 +48,6 @@ describe('publishModal/header', () => {
   it('should call onClose when close button is clicked', () => {
     renderWithTheme(
       <Header
-        isPublishEnabled
         onClose={mockOnClose}
         onPublish={mockOnPublish}
         publishButtonCopy="Publish"
@@ -62,26 +60,9 @@ describe('publishModal/header', () => {
     expect(mockOnClose).toHaveBeenCalledTimes(1);
   });
 
-  it('should not call onPublish when publish button is clicked and isPublishEnabled is false', () => {
+  it('should call onPublish when publish button is clicked', () => {
     renderWithTheme(
       <Header
-        isPublishEnabled={false}
-        onClose={mockOnClose}
-        onPublish={mockOnPublish}
-        publishButtonCopy="Publish"
-      />
-    );
-
-    const publishButton = screen.getByText('Publish');
-    fireEvent.click(publishButton);
-
-    expect(mockOnPublish).toHaveBeenCalledTimes(0);
-  });
-
-  it('should call onPublish when publish button is clicked and isPublishEnabled is true', () => {
-    renderWithTheme(
-      <Header
-        isPublishEnabled
         onClose={mockOnClose}
         onPublish={mockOnPublish}
         publishButtonCopy="Publish"

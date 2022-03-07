@@ -16,8 +16,9 @@
 /**
  * External dependencies
  */
-import { addQueryArgs } from '@googleforcreators/design-system';
+import { addQueryArgs } from '@googleforcreators/url';
 import { DATA_VERSION } from '@googleforcreators/migration';
+import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/wp-utils';
 
 /**
  * WordPress dependencies
@@ -28,11 +29,7 @@ import apiFetch from '@wordpress/api-fetch';
  * Internal dependencies
  */
 import { STORY_EMBED, STORY_FIELDS } from './constants';
-import {
-  base64Encode,
-  transformStoryResponse,
-  snakeToCamelCaseObjectKeys,
-} from './utils';
+import { base64Encode, transformStoryResponse } from './utils';
 
 export function getStoryById(config, storyId) {
   const path = addQueryArgs(`${config.api.stories}${storyId}/`, {

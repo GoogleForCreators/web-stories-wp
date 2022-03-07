@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+const MINIMUM_CONTENT_LENGTH = 3;
+
 /**
  * Returns a map of tag names for text elements.
  *
@@ -24,36 +26,44 @@
  * @return {Map<string, string>} Map of element IDs to tag name.
  */
 function getTextElementTagNames(elements) {
-  return elements.reduce(
-    /**
-     * Reducer.
-     *
-     * @param {Map<string, string>} tagNamesMap Tag names map.
-     * @param {Object} element Text element.
-     * @param {string} element.id Element ID
-     * @param {number} element.fontSize Font size.
-     * @return {Map<string, string>} Tag names map.
-     */
-    (tagNamesMap, { id, fontSize }) => {
-      const hasH1 = Array.from(tagNamesMap.values()).includes('h1');
+  return elements
+    .sort((a, b) => a.y - b.y)
+    .reduce(
+      /**
+       * Reducer.
+       *
+       * @param {Map<string, string>} tagNamesMap Tag names map.
+       * @param {Object} element Text element.
+       * @param {string} element.id Element ID
+       * @param {number} element.fontSize Font size.
+       * @param {string} element.content Text content.
+       * @return {Map<string, string>} Tag names map.
+       */
+      (tagNamesMap, { id, fontSize, content }) => {
+        if (content.length <= MINIMUM_CONTENT_LENGTH) {
+          tagNamesMap.set(id, 'p');
+          return tagNamesMap;
+        }
 
-      if (fontSize >= 36 && !hasH1) {
-        tagNamesMap.set(id, 'h1');
+        const hasH1 = Array.from(tagNamesMap.values()).includes('h1');
+
+        if (fontSize >= 36 && !hasH1) {
+          tagNamesMap.set(id, 'h1');
+          return tagNamesMap;
+        }
+
+        if (fontSize >= 27) {
+          tagNamesMap.set(id, 'h2');
+        } else if (fontSize >= 21) {
+          tagNamesMap.set(id, 'h3');
+        } else {
+          tagNamesMap.set(id, 'p');
+        }
+
         return tagNamesMap;
-      }
-
-      if (fontSize >= 27) {
-        tagNamesMap.set(id, 'h2');
-      } else if (fontSize >= 21) {
-        tagNamesMap.set(id, 'h3');
-      } else {
-        tagNamesMap.set(id, 'p');
-      }
-
-      return tagNamesMap;
-    },
-    new Map()
-  );
+      },
+      new Map()
+    );
 }
 
 export default getTextElementTagNames;

@@ -34,13 +34,13 @@ import {
 } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import { useUnits } from '@googleforcreators/units';
+import { stripHTML } from '@googleforcreators/dom';
 
 /**
  * Internal dependencies
  */
 import { useFont, useHistory } from '../../../../app';
 import StoryPropTypes from '../../../../types';
-import stripHTML from '../../../../utils/stripHTML';
 import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
 import useLibrary from '../../useLibrary';
 import LibraryMoveable from '../shared/libraryMoveable';

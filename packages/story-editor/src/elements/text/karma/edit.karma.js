@@ -163,15 +163,18 @@ describe('TextEdit integration', () => {
 
         // Exit edit mode using the Esc key
         await fixture.events.keyboard.press('Esc');
-        await fixture.events.sleep(100);
-        await waitFor(() =>
-          expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull()
-        );
+
         // The element is still selected and updated.
-        const storyContext = await fixture.renderHook(() => useStory());
-        expect(storyContext.state.selectedElements[0].content).toEqual(
-          'This is some test text.'
-        );
+        await waitFor(async () => {
+          const story = await fixture.renderHook(() => useStory());
+          if (!story.state.selectedElements.length) {
+            throw new Error('story not ready');
+          }
+
+          expect(story.state.selectedElements[0].content).toEqual(
+            'This is some test text.'
+          );
+        });
       });
     });
   });

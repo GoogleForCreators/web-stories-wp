@@ -22,13 +22,13 @@ import { useMemo, useCallback } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import { DropDown, NumericInput } from '@googleforcreators/design-system';
+import { stripHTML } from '@googleforcreators/dom';
+import { clamp } from '@googleforcreators/units';
 
 /**
  * Internal dependencies
  */
 import { useFont } from '../../../../app/font';
-import stripHTML from '../../../../utils/stripHTML';
-import clamp from '../../../../utils/clamp';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import { Row, usePresubmitHandler } from '../../../form';
 import {
@@ -40,7 +40,7 @@ import useRichTextFormatting from './useRichTextFormatting';
 import getFontWeights from './getFontWeights';
 import FontPicker from './fontPicker';
 
-const MIN_MAX = {
+export const MIN_MAX = {
   FONT_SIZE: {
     MIN: 8,
     MAX: 800,

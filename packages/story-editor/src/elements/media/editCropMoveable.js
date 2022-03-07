@@ -19,7 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { useEffect, useRef } from '@googleforcreators/react';
-import { useUnits } from '@googleforcreators/units';
+import { useUnits, calcRotatedResizeOffset } from '@googleforcreators/units';
 import { getFocalFromOffset } from '@googleforcreators/media';
 import { Moveable } from '@googleforcreators/moveable';
 
@@ -27,7 +27,6 @@ import { Moveable } from '@googleforcreators/moveable';
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import calcRotatedResizeOffset from '../../utils/calcRotatedResizeOffset';
 import getTransformFlip from '../shared/getTransformFlip';
 
 function EditCropMoveable({

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useState, useCallback, useEffect } from '@googleforcreators/react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import { _x, __ } from '@googleforcreators/i18n';
 import { PatternPropType } from '@googleforcreators/patterns';
@@ -37,7 +37,13 @@ const Input = styled(NumericInput)`
   }
 `;
 
-function OpacityInput({ value, onChange }) {
+const minimalInputContainerStyleOverride = css`
+  ${inputContainerStyleOverride};
+  width: 70px;
+  padding-right: 6px;
+`;
+
+function OpacityInput({ value, onChange, isInDesignMenu }) {
   const [inputValue, setInputValue] = useState('');
 
   // Allow any input, but only persist non-NaN values up-chain
@@ -58,18 +64,24 @@ function OpacityInput({ value, onChange }) {
 
   useEffect(() => updateFromValue(), [updateFromValue, value]);
 
+  const unit = isInDesignMenu ? null : _x('%', 'Percentage', 'web-stories');
+
+  const containerStyle = isInDesignMenu
+    ? minimalInputContainerStyleOverride
+    : inputContainerStyleOverride;
+
   return (
     <Input
       aria-label={__('Opacity', 'web-stories')}
       onChange={handleChange}
       value={inputValue}
-      unit={_x('%', 'Percentage', 'web-stories')}
+      unit={unit}
       suffix={<Icons.ColorDrop />}
       min={0}
       max={100}
       allowEmpty={false}
       isFloat={false}
-      containerStyleOverride={inputContainerStyleOverride}
+      containerStyleOverride={containerStyle}
     />
   );
 }
@@ -77,6 +89,7 @@ function OpacityInput({ value, onChange }) {
 OpacityInput.propTypes = {
   value: PropTypes.oneOfType([PatternPropType, PropTypes.string]),
   onChange: PropTypes.func.isRequired,
+  isInDesignMenu: PropTypes.bool,
 };
 
 export default OpacityInput;

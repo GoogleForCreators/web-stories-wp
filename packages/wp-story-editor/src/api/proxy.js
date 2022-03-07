@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { addQueryArgs } from '@googleforcreators/design-system';
+import { addQueryArgs } from '@googleforcreators/url';
 
 export function getProxyUrl(config, url) {
   return addQueryArgs(config.api.proxy, { url, _wpnonce: config.nonce });

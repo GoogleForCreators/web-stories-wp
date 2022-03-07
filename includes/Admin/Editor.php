@@ -354,29 +354,28 @@ class Editor extends Service_Base implements HasRequirements {
 		$story->load_from_post( $post );
 
 		$settings = [
-			'autoSaveInterval'             => \defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
-			'isRTL'                        => is_rtl(),
-			'locale'                       => $this->locale->get_locale_settings(),
-			'allowedFileTypes'             => $this->types->get_allowed_file_types(),
-			'allowedTranscodableMimeTypes' => $this->types->get_allowed_transcodable_mime_types(),
-			'allowedImageFileTypes'        => $this->types->get_file_type_exts( $image_mime_types ),
-			'allowedImageMimeTypes'        => $image_mime_types,
-			'allowedAudioFileTypes'        => $this->types->get_file_type_exts( $audio_mime_types ),
-			'allowedAudioMimeTypes'        => $audio_mime_types,
-			'allowedMimeTypes'             => $mime_types,
-			'postType'                     => $this->story_post_type->get_slug(),
-			'storyId'                      => $story_id,
-			'dashboardLink'                => $dashboard_url,
-			'dashboardSettingsLink'        => $dashboard_settings_url,
-			'generalSettingsLink'          => $general_settings_url,
-			'cdnURL'                       => trailingslashit( WEBSTORIES_CDN_URL ),
-			'maxUpload'                    => $max_upload_size,
-			'isDemo'                       => $is_demo,
-			'capabilities'                 => [
+			'autoSaveInterval'        => \defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
+			'isRTL'                   => is_rtl(),
+			'locale'                  => $this->locale->get_locale_settings(),
+			'allowedFileTypes'        => $this->types->get_allowed_file_types(),
+			'allowedImageFileTypes'   => $this->types->get_file_type_exts( $image_mime_types ),
+			'allowedImageMimeTypes'   => $image_mime_types,
+			'allowedAudioFileTypes'   => $this->types->get_file_type_exts( $audio_mime_types ),
+			'allowedAudioMimeTypes'   => $audio_mime_types,
+			'allowedMimeTypes'        => $mime_types,
+			'postType'                => $this->story_post_type->get_slug(),
+			'storyId'                 => $story_id,
+			'dashboardLink'           => $dashboard_url,
+			'dashboardSettingsLink'   => $dashboard_settings_url,
+			'generalSettingsLink'     => $general_settings_url,
+			'cdnURL'                  => trailingslashit( WEBSTORIES_CDN_URL ),
+			'maxUpload'               => $max_upload_size,
+			'isDemo'                  => $is_demo,
+			'capabilities'            => [
 				'hasUploadMediaAction' => current_user_can( 'upload_files' ),
 				'canManageSettings'    => current_user_can( 'manage_options' ),
 			],
-			'api'                          => [
+			'api'                     => [
 				'users'          => '/web-stories/v1/users/',
 				'currentUser'    => '/web-stories/v1/users/me/',
 				'stories'        => trailingslashit( $this->story_post_type->get_rest_url() ),
@@ -392,21 +391,21 @@ class Editor extends Service_Base implements HasRequirements {
 				'metaBoxes'      => $this->meta_boxes->get_meta_box_url( (int) $story_id ),
 				'storyLocking'   => rest_url( sprintf( '%s/%s/lock/', $this->story_post_type->get_rest_url(), $story_id ) ),
 			],
-			'metadata'                     => [
+			'metadata'                => [
 				'publisher' => $story->get_publisher_name(),
 			],
-			'postLock'                     => [
+			'postLock'                => [
 				'interval'         => $time_window,
 				'showLockedDialog' => $show_locked_dialog,
 			],
-			'canViewDefaultTemplates'      => true,
-			'version'                      => WEBSTORIES_VERSION,
-			'nonce'                        => $nonce,
-			'showMedia3p'                  => true,
-			'encodeMarkup'                 => $this->decoder->supports_decoding(),
-			'metaBoxes'                    => $this->meta_boxes->get_meta_boxes_per_location(),
-			'ffmpegCoreUrl'                => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js',
-			'flags'                        => array_merge(
+			'canViewDefaultTemplates' => true,
+			'version'                 => WEBSTORIES_VERSION,
+			'nonce'                   => $nonce,
+			'showMedia3p'             => true,
+			'encodeMarkup'            => $this->decoder->supports_decoding(),
+			'metaBoxes'               => $this->meta_boxes->get_meta_boxes_per_location(),
+			'ffmpegCoreUrl'           => trailingslashit( WEBSTORIES_CDN_URL ) . 'js/@ffmpeg/core@0.10.0/dist/ffmpeg-core.js',
+			'flags'                   => array_merge(
 				$this->experiments->get_experiment_statuses( 'general' ),
 				$this->experiments->get_experiment_statuses( 'editor' )
 			),

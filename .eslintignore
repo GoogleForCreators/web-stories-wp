@@ -1,5 +1,7 @@
 **/node_modules/**
 **/vendor/**
+**/dist/**
+**/dist-module/**
 **/assets/js/*.js
 **/packages/imgareaselect/src/index.js
 **/packages/migration/scripts/module.js

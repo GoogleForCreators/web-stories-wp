@@ -35,6 +35,7 @@ import useLibrary from '../../useLibrary';
 import useInsertPreset from '../../panes/text/useInsertPreset';
 import { TEXT_SET_SIZE } from '../../../../constants';
 import CanvasContext from '../../../../app/canvas/context';
+import StoryContext from '../../../../app/story/context';
 
 jest.mock('../../useLibrary');
 jest.mock('../../../../app/font/useFont');
@@ -83,6 +84,8 @@ describe('TextPane', () => {
       actions: {
         ensureMenuFontsLoaded: () => {},
         ensureCustomFontsLoaded: () => {},
+        getCustomFonts: jest.fn(),
+        getCuratedFonts: jest.fn(),
       },
     };
 
@@ -97,6 +100,30 @@ describe('TextPane', () => {
       actions: {},
     };
 
+    const storyContextValue = {
+      state: {
+        currentPage: {
+          elements: [
+            {
+              id: 'bg',
+              type: 'shape',
+            },
+          ],
+        },
+        selectedElementIds: [],
+        selectedElements: [],
+        story: {
+          globalStoryStyles: {
+            ...{ colors: [], textStyles: [] },
+          },
+          currentStoryStyles: {
+            colors: [],
+          },
+        },
+      },
+      actions: {},
+    };
+
     renderWithTheme(
       <FlagsProvider
         features={{
@@ -104,20 +131,22 @@ describe('TextPane', () => {
           showTextAndShapesSearchInput: false,
         }}
       >
-        <CanvasContext.Provider value={canvasContextValue}>
-          <FontContext.Provider value={fontContextValues}>
-            <UnitsProvider
-              pageSize={{
-                width: TEXT_SET_SIZE,
-                height: TEXT_SET_SIZE / PAGE_RATIO,
-              }}
-              dataToEditorX={jest.fn()}
-              dataToEditorY={jest.fn()}
-            >
-              <TextPane isActive />
-            </UnitsProvider>
-          </FontContext.Provider>
-        </CanvasContext.Provider>
+        <StoryContext.Provider value={storyContextValue}>
+          <CanvasContext.Provider value={canvasContextValue}>
+            <FontContext.Provider value={fontContextValues}>
+              <UnitsProvider
+                pageSize={{
+                  width: TEXT_SET_SIZE,
+                  height: TEXT_SET_SIZE / PAGE_RATIO,
+                }}
+                dataToEditorX={jest.fn()}
+                dataToEditorY={jest.fn()}
+              >
+                <TextPane isActive />
+              </UnitsProvider>
+            </FontContext.Provider>
+          </CanvasContext.Provider>
+        </StoryContext.Provider>
       </FlagsProvider>
     );
 

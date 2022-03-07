@@ -22,11 +22,16 @@ import { trackTiming } from '@googleforcreators/tracking';
 
 const TRACES = {};
 const OBSERVED_EVENTS = ['click', 'pointerdown', 'pointerup'];
+const OBSERVED_ENTRY_TYPE = 'event';
 let performanceObserver;
 
 function usePerformanceTracking({ node, eventData, eventType = 'click' }) {
+  const supportsPerformanceObserving =
+    typeof PerformanceObserver !== 'undefined' &&
+    PerformanceObserver.supportedEntryTypes.includes(OBSERVED_ENTRY_TYPE);
+
   // Start observing all events if not doing so already.
-  if (!performanceObserver && typeof PerformanceObserver !== 'undefined') {
+  if (!performanceObserver && supportsPerformanceObserving) {
     performanceObserver = new PerformanceObserver((entries) => {
       for (const entry of entries.getEntries()) {
         if (
@@ -44,12 +49,12 @@ function usePerformanceTracking({ node, eventData, eventType = 'click' }) {
         }
       }
     });
-    performanceObserver.observe({ entryTypes: ['event'] });
+    performanceObserver.observe({ entryTypes: [OBSERVED_ENTRY_TYPE] });
   }
 
   const { label, category } = eventData;
   useEffect(() => {
-    if (!node) {
+    if (!node || !supportsPerformanceObserving) {
       return undefined;
     }
     const el = node;
@@ -64,7 +69,7 @@ function usePerformanceTracking({ node, eventData, eventType = 'click' }) {
     return () => {
       el.removeEventListener(eventType, traceEvent);
     };
-  }, [category, label, node, eventType]);
+  }, [category, label, node, eventType, supportsPerformanceObserving]);
 }
 
 export default usePerformanceTracking;

@@ -14,10 +14,14 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { clamp } from '@googleforcreators/units';
+
+/**
  * Internal dependencies
  */
 import cleanForSlug from '../../../utils/cleanForSlug';
-import clamp from '../../../utils/clamp';
 
 function formatTag(tag) {
   return tag.replace(/( +)/g, ' ').trim();

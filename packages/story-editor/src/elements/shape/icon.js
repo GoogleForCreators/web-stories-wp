@@ -18,12 +18,12 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { generatePatternStyles } from '@googleforcreators/patterns';
 
 /**
  * Internal dependencies
  */
 import { getMaskByType } from '../../masks';
-import { elementWithBackgroundColor } from '../shared';
 import StoryPropTypes from '../../types';
 import { useStory } from '../../app';
 
@@ -39,12 +39,15 @@ const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.opacity.black10};
 `;
 
-const ShapePreview = styled.div`
+const ShapePreview = styled.div.attrs(({ backgroundColor }) => ({
+  // Prevents `ShapePreview` class from being generated with each new layer.
+  // https://styled-components.com/docs/faqs#when-to-use-attrs
+  style: generatePatternStyles(backgroundColor),
+}))`
   width: 100%;
   height: 100%;
   margin: 1px;
   clip-path: ${({ maskId }) => `url(#${maskId})`};
-  ${elementWithBackgroundColor}
 `;
 
 /* 

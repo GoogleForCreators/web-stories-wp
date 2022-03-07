@@ -39,6 +39,7 @@ import {
   MEDIA_POSTER_IMAGE_MIME_TYPE,
   MEDIA_POSTER_IMAGE_FILE_TYPE,
 } from '../../../constants';
+import { TRANSCODABLE_MIME_TYPES } from '../constants';
 import getPosterName from './getPosterName';
 
 const isDevelopment =
@@ -130,7 +131,6 @@ const FFMPEG_SHARED_CONFIG = [
 function useFFmpeg() {
   const {
     ffmpegCoreUrl,
-    allowedTranscodableMimeTypes,
     capabilities: { hasUploadMediaAction },
   } = useConfig();
   const { currentUser } = useCurrentUser(({ state }) => ({
@@ -464,8 +464,8 @@ function useFFmpeg() {
    * @return {boolean} Whether transcoding is likely possible.
    */
   const canTranscodeFile = useCallback(
-    (file) => allowedTranscodableMimeTypes.includes(file.type),
-    [allowedTranscodableMimeTypes]
+    (file) => TRANSCODABLE_MIME_TYPES.includes(file.type),
+    []
   );
 
   /**

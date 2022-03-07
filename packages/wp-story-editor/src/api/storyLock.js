@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { addQueryArgs } from '@googleforcreators/design-system';
+import { addQueryArgs } from '@googleforcreators/url';
 
 /**
  * WordPress dependencies

@@ -123,13 +123,8 @@ trait Sanitization_Utils {
 	 * @since 1.18.0
 	 *
 	 * @param Document|AMP_Document $document   Document instance.
-	 * @param bool                  $is_enabled Whether the feature is enabled.
 	 */
-	private function use_semantic_heading_tags( &$document, bool $is_enabled ): void {
-		if ( ! $is_enabled ) {
-			return;
-		}
-
+	private function use_semantic_heading_tags( &$document ): void {
 		$pages = $document->getElementsByTagName( 'amp-story-page' );
 
 		/**
@@ -178,6 +173,11 @@ trait Sanitization_Utils {
 		foreach ( $text_elements as $text_el ) {
 			$style   = $text_el->getAttribute( 'style' );
 			$matches = [];
+
+			// See https://github.com/GoogleForCreators/web-stories-wp/issues/10726.
+			if ( \strlen( trim( $text_el->textContent ) ) <= 3 ) {
+				continue;
+			}
 
 			if ( ! preg_match( '/font-size:([^em]+)em/', $style, $matches ) ) {
 				continue;

@@ -28,6 +28,7 @@ import filesize from 'rollup-plugin-filesize';
 import css from 'rollup-plugin-import-css';
 import url from '@rollup/plugin-url';
 import json from '@rollup/plugin-json';
+import image from '@rollup/plugin-image';
 import dynamicImportVars from '@rollup/plugin-dynamic-import-vars';
 import license from 'rollup-plugin-license';
 import del from 'rollup-plugin-delete';
@@ -49,7 +50,7 @@ const plugins = [
     presets: ['@babel/env', '@babel/preset-react'],
     plugins: [
       'babel-plugin-styled-components',
-      'babel-plugin-inline-json-import',
+      'babel-plugin-transform-react-remove-prop-types',
     ],
   }),
   url(),
@@ -59,6 +60,9 @@ const plugins = [
     compact: true,
   }),
   css(),
+  image({
+    include: '/inline-icons/*.svg',
+  }),
   dynamicImportVars(),
   webWorkerLoader({
     inline: true,
@@ -99,6 +103,7 @@ const plugins = [
 /**
  * @typedef {Object} CustomInputOptions
  * @property {string} configPackages Comma-separated list of package names to include.
+ * @property {string} configEntries Comma-separated list of entries to build. Supports "es" and "cjs".
  * @typedef {import('rollup').RollupOptions & CustomInputOptions} CustomInputOptions
  */
 

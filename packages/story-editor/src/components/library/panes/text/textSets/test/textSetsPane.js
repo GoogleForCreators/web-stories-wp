@@ -50,6 +50,8 @@ function setup() {
   const fontsValue = {
     actions: {
       maybeEnqueueFontStyle: jest.fn(),
+      getCustomFonts: jest.fn(),
+      getCuratedFonts: jest.fn(),
     },
   };
   const apiValue = {

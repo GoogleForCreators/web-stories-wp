@@ -2,7 +2,7 @@
   "name": "@googleforcreators/fonts",
   "description": "A list of curated font names as well as all current Google Fonts including their font metrics.",
   "private": false,
-  "version": "0.1.202202071716",
+  "version": "0.1.202203010801",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -27,11 +27,23 @@
     "npm": ">= 7.3"
   },
   "type": "module",
+  "customExports": {
+    "./fonts.json": {
+      "default": "./src/fonts.json"
+    },
+    ".": {
+      "default": "./src/index.js"
+    }
+  },
   "exports": {
-     "./fonts.json": {
-         "import": "./dist-module/fonts.json",
-         "require": "./dist/fonts.json"
-     }
+    "./fonts.json": {
+      "import": "./dist-module/fonts.json",
+      "require": "./dist/fonts.json"
+    },
+    ".": {
+      "import": "./dist-module/index.js",
+      "require": "./dist/index.js"
+    }
   },
   "main": "dist/index.js",
   "module": "dist-module/index.js",

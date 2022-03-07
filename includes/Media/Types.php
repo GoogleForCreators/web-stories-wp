@@ -171,33 +171,4 @@ class Types {
 
 		return array_values( array_intersect( $allowed_mime_types, get_allowed_mime_types() ) );
 	}
-
-	/**
-	 * Returns a list of transcodable mime types.
-	 *
-	 * @since 1.8.0
-	 *
-	 * @return array List of allowed transcodable mime types.
-	 */
-	public function get_allowed_transcodable_mime_types(): array {
-		return [
-			'video/3gpp',
-			'video/3gpp2',
-			'video/MP2T',
-			'video/mp4',
-			'video/mpeg',
-			'video/ogg',
-			'video/quicktime',
-			'video/webm',
-			'video/x-flv',
-			'video/x-h261',
-			'video/x-h263',
-			'video/x-m4v',
-			'video/x-matroska',
-			'video/x-mjpeg',
-			'video/x-ms-asf',
-			'video/x-msvideo',
-			'video/x-nut',
-		];
-	}
 }

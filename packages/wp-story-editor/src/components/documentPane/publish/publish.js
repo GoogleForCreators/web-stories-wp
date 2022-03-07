@@ -76,8 +76,8 @@ const MediaWrapper = styled.div`
 `;
 
 const StyledMedia = styled(Media)`
-  width: ${({ width }) => width}px;
-  height: ${({ height }) => height}px;
+  width: ${({ $width }) => $width}px;
+  height: ${({ $height }) => $height}px;
 `;
 
 const HighlightRow = styled(Row).attrs({
@@ -318,8 +318,8 @@ function PublishPanel({ nameOverride }) {
                     node.focus();
                   }
                 }}
-                width={72}
-                height={96}
+                $width={72}
+                $height={96}
                 cropParams={{
                   width: 640,
                   height: 853,

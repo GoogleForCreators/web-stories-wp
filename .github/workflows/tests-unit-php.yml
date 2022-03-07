@@ -82,7 +82,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       # PHP-Scoper only works on PHP 7.2+ and we need to prefix our dependencies to accurately test them.
       # So we temporarily switch PHP versions, do a full install and then remove the package.

@@ -2,13 +2,15 @@
   "name": "@googleforcreators/rich-text",
   "description": "A wrapper around draft-js and utilities for rich-text editor.",
   "private": false,
-  "version": "0.0.1",
+  "version": "0.1.202203010801",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
   },
   "license": "Apache-2.0",
-  "keywords": ["web stories"],
+  "keywords": [
+    "web stories"
+  ],
   "homepage": "https://github.com/GoogleForCreators/web-stories-wp/blob/main/packages/rich-text/README.md",
   "repository": {
     "type": "git",
@@ -21,6 +23,11 @@
   "engines": {
     "node": ">= 12 || >= 14 || >= 16",
     "npm": ">= 7.3"
+  },
+  "customExports": {
+    ".": {
+      "default": "./src/index.js"
+    }
   },
   "main": "dist/index.js",
   "module": "dist-module/index.js",

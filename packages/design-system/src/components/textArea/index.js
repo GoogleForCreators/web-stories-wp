@@ -91,6 +91,7 @@ const StyledTextArea = styled.textarea(
     outline: none;
     color: ${theme.colors.fg.primary};
     resize: none;
+    box-shadow: none;
     ${themeHelpers.scrollbarCSS};
 
     ${themeHelpers.expandPresetStyles({
@@ -100,6 +101,10 @@ const StyledTextArea = styled.textarea(
         ],
       theme,
     })};
+
+    :focus {
+      box-shadow: none;
+    }
 
     :disabled {
       color: ${theme.colors.fg.disable};

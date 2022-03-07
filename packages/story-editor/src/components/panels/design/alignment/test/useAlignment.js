@@ -30,7 +30,7 @@ import useAlignment from '../useAlignment';
 const DEFAULT_EDITOR_PAGE_WIDTH = 440;
 const DEFAULT_EDITOR_PAGE_HEIGHT = 660;
 
-function renderUseAlignement() {
+function renderUseAlignment() {
   const { result } = renderHook(() => useAlignment());
 
   return result;
@@ -115,7 +115,7 @@ describe('useAlignment', () => {
             registerSubmitHandler={registerSubmitHandler}
           />
         );
-        const result = renderUseAlignement();
+        const result = renderUseAlignment();
         const { setUpdatedSelectedElementsWithFrame } = result.current;
         act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
 
@@ -141,7 +141,7 @@ describe('useAlignment', () => {
             registerSubmitHandler={registerSubmitHandler}
           />
         );
-        const result = renderUseAlignement();
+        const result = renderUseAlignment();
         const { setUpdatedSelectedElementsWithFrame } = result.current;
         act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
         const { handleAlign } = result.current;
@@ -166,7 +166,7 @@ describe('useAlignment', () => {
             registerSubmitHandler={registerSubmitHandler}
           />
         );
-        const result = renderUseAlignement();
+        const result = renderUseAlignment();
 
         const { handleAlignCenter } = result.current;
 
@@ -190,7 +190,7 @@ describe('useAlignment', () => {
             registerSubmitHandler={registerSubmitHandler}
           />
         );
-        const result = renderUseAlignement();
+        const result = renderUseAlignment();
         const { setUpdatedSelectedElementsWithFrame } = result.current;
         act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
         const { handleAlign } = result.current;
@@ -215,7 +215,7 @@ describe('useAlignment', () => {
             registerSubmitHandler={registerSubmitHandler}
           />
         );
-        const result = renderUseAlignement();
+        const result = renderUseAlignment();
         const { setUpdatedSelectedElementsWithFrame } = result.current;
         act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
         const { handleAlign } = result.current;
@@ -240,7 +240,7 @@ describe('useAlignment', () => {
             registerSubmitHandler={registerSubmitHandler}
           />
         );
-        const result = renderUseAlignement();
+        const result = renderUseAlignment();
 
         const { handleAlignMiddle } = result.current;
 
@@ -304,7 +304,7 @@ describe('useAlignment', () => {
             registerSubmitHandler={registerSubmitHandler}
           />
         );
-        const result = renderUseAlignement();
+        const result = renderUseAlignment();
         const { setUpdatedSelectedElementsWithFrame } = result.current;
         act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
 
@@ -330,7 +330,7 @@ describe('useAlignment', () => {
             registerSubmitHandler={registerSubmitHandler}
           />
         );
-        const result = renderUseAlignement();
+        const result = renderUseAlignment();
         const { setUpdatedSelectedElementsWithFrame } = result.current;
         act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
 
@@ -356,7 +356,7 @@ describe('useAlignment', () => {
             registerSubmitHandler={registerSubmitHandler}
           />
         );
-        const result = renderUseAlignement();
+        const result = renderUseAlignment();
         const { setUpdatedSelectedElementsWithFrame } = result.current;
         act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
 
@@ -382,7 +382,7 @@ describe('useAlignment', () => {
             registerSubmitHandler={registerSubmitHandler}
           />
         );
-        const result = renderUseAlignement();
+        const result = renderUseAlignment();
         const { setUpdatedSelectedElementsWithFrame } = result.current;
         act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
 
@@ -408,7 +408,7 @@ describe('useAlignment', () => {
             registerSubmitHandler={registerSubmitHandler}
           />
         );
-        const result = renderUseAlignement();
+        const result = renderUseAlignment();
         const { setUpdatedSelectedElementsWithFrame } = result.current;
         act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
 
@@ -434,7 +434,7 @@ describe('useAlignment', () => {
             registerSubmitHandler={registerSubmitHandler}
           />
         );
-        const result = renderUseAlignement();
+        const result = renderUseAlignment();
         const { setUpdatedSelectedElementsWithFrame } = result.current;
         act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
 
@@ -551,7 +551,7 @@ describe('useAlignment', () => {
           registerSubmitHandler={registerSubmitHandler}
         />
       );
-      const result = renderUseAlignement();
+      const result = renderUseAlignment();
       const { setUpdatedSelectedElementsWithFrame } = result.current;
       act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
 
@@ -581,7 +581,7 @@ describe('useAlignment', () => {
           registerSubmitHandler={registerSubmitHandler}
         />
       );
-      const result = renderUseAlignement();
+      const result = renderUseAlignment();
       const { setUpdatedSelectedElementsWithFrame } = result.current;
       act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
 
@@ -611,7 +611,7 @@ describe('useAlignment', () => {
           registerSubmitHandler={registerSubmitHandler}
         />
       );
-      const result = renderUseAlignement();
+      const result = renderUseAlignment();
       const { setUpdatedSelectedElementsWithFrame } = result.current;
       act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
 
@@ -641,7 +641,7 @@ describe('useAlignment', () => {
           registerSubmitHandler={registerSubmitHandler}
         />
       );
-      const result = renderUseAlignement();
+      const result = renderUseAlignment();
       const { setUpdatedSelectedElementsWithFrame } = result.current;
       act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
 
@@ -671,7 +671,7 @@ describe('useAlignment', () => {
           registerSubmitHandler={registerSubmitHandler}
         />
       );
-      const result = renderUseAlignement();
+      const result = renderUseAlignment();
       const { setUpdatedSelectedElementsWithFrame } = result.current;
       act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
 
@@ -701,7 +701,7 @@ describe('useAlignment', () => {
           registerSubmitHandler={registerSubmitHandler}
         />
       );
-      const result = renderUseAlignement();
+      const result = renderUseAlignment();
       const { setUpdatedSelectedElementsWithFrame } = result.current;
       act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
 
@@ -731,7 +731,7 @@ describe('useAlignment', () => {
           registerSubmitHandler={registerSubmitHandler}
         />
       );
-      const result = renderUseAlignement();
+      const result = renderUseAlignment();
       const { setUpdatedSelectedElementsWithFrame } = result.current;
       act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
 
@@ -765,7 +765,7 @@ describe('useAlignment', () => {
           registerSubmitHandler={registerSubmitHandler}
         />
       );
-      const result = renderUseAlignement();
+      const result = renderUseAlignment();
       const { setUpdatedSelectedElementsWithFrame } = result.current;
       act(() => setUpdatedSelectedElementsWithFrame(updatedElementList));
 

@@ -26,7 +26,7 @@ import { trackEvent } from '@googleforcreators/tracking';
  */
 import { PRESET_TYPES } from '../../../constants';
 import useDeleteColor from '../../../components/colorPicker/useDeleteColor';
-import useDeleteStyle from '../../../components/panels/design/textStyle/stylePresets/useDeleteStyle';
+import useDeleteStyle from '../../../components/styleManager/useDeleteStyle';
 import useAddPreset from '../../../utils/useAddPreset';
 import { noop } from '../../../utils/noop';
 import { useHistory, useStory } from '../..';

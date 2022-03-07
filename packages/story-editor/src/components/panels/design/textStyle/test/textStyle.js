@@ -21,6 +21,7 @@ import PropTypes from 'prop-types';
 import { act, fireEvent, screen } from '@testing-library/react';
 import { createSolid } from '@googleforcreators/patterns';
 import { RichTextContext } from '@googleforcreators/rich-text';
+import { calcRotatedResizeOffset } from '@googleforcreators/units';
 
 /**
  * Internal dependencies
@@ -29,7 +30,6 @@ import TextStyle from '../textStyle';
 import FontContext from '../../../../../app/font/context';
 import { StoryContext } from '../../../../../app/story';
 import { calculateTextHeight } from '../../../../../utils/textMeasurements';
-import calcRotatedResizeOffset from '../../../../../utils/calcRotatedResizeOffset';
 import CanvasContext from '../../../../../app/canvas/context';
 import {
   MULTIPLE_VALUE,
@@ -153,6 +153,8 @@ function Wrapper({ children }) {
                 fallbacks: ['fallback1'],
               }),
               addRecentFont: jest.fn(),
+              getCustomFonts: jest.fn(),
+              getCuratedFonts: jest.fn(),
             },
           }}
         >

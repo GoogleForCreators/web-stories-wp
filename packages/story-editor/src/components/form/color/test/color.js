@@ -26,14 +26,14 @@ import Color from '../color';
 import applyOpacityChange from '../applyOpacityChange';
 import { renderWithTheme } from '../../../../testUtils';
 import { ConfigProvider } from '../../../../app/config';
-import defaultConfig from '../../../../defaultConfig';
+import getDefaultConfig from '../../../../getDefaultConfig';
 
 jest.mock('../applyOpacityChange', () => jest.fn());
 
 function arrange(props = {}) {
   const onChange = jest.fn();
   renderWithTheme(
-    <ConfigProvider config={defaultConfig}>
+    <ConfigProvider config={getDefaultConfig()}>
       <Color label="Color" onChange={onChange} {...props} />
     </ConfigProvider>
   );

@@ -37,9 +37,7 @@ jest.mock('../../../../components/colorPicker/useDeleteColor', () => ({
   __esModule: true,
   default: jest.fn(() => ({ deleteGlobalPreset: jest.fn() })),
 }));
-jest.mock(
-  '../../../../components/panels/design/textStyle/stylePresets/useDeleteStyle'
-);
+jest.mock('../../../../components/styleManager/useDeleteStyle');
 jest.mock('../../../story/useStory');
 
 const mockUseAddPreset = useAddPreset;

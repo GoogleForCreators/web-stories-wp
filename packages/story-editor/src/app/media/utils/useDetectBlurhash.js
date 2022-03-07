@@ -19,6 +19,7 @@
  */
 import { useCallback } from '@googleforcreators/react';
 import { getSmallestUrlForWidth } from '@googleforcreators/media';
+import { trackError } from '@googleforcreators/tracking';
 /**
  * Internal dependencies
  */
@@ -101,7 +102,7 @@ function useDetectBlurHash({ updateMediaElement }) {
         const blurHash = await getBlurHashFromImage(imageSrcProxied);
         await saveBlurHash(resource.id, blurHash);
       } catch (error) {
-        // Do nothing for now.
+        trackError('blurhash_generation', error?.message);
       }
     },
     [getProxiedUrl, getPosterMediaById, saveBlurHash]

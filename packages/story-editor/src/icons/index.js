@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-export { ReactComponent as TenorLogoFull } from './tenor_logo_white.svg';
-export { ReactComponent as UnsplashLogoFull } from './unsplash_logo_full.svg';
+export { default as TenorLogoFull } from './tenor_logo_white.svg';
+export { default as UnsplashLogoFull } from './unsplash_logo_full.svg';

@@ -37,7 +37,7 @@ import { useAPI } from '../../../../app/api';
 import { useStory } from '../../../../app/story';
 import { focusStyle } from '../../../panels/shared';
 import isDefaultPage from '../../../../utils/isDefaultPage';
-import { ReactComponent as Icon } from './images/illustration.svg';
+import Icon from './images/illustration.svg';
 
 const StyledText = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.secondary};

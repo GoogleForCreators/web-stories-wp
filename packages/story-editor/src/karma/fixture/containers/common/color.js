@@ -123,5 +123,9 @@ class ColorPicker extends Container {
     return this.getByRole('button', { name: /Custom/i });
   }
 
+  defaultColor(name) {
+    return this.getByRole('option', { name });
+  }
+
   // @todo: add accessors for remaining options
 }

@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { lerp } from './range';
+import { lerp } from '@googleforcreators/units';
 
 /**
  * Given a media element, calculates where the origin is on the media
@@ -60,13 +60,13 @@ export function getMediaOrigin(
   };
 
   return {
-    horizontal: lerp(
-      isNaN(progress.horizontal) ? 0.5 : progress.horizontal,
-      [0, 100]
-    ),
-    vertical: lerp(
-      isNaN(progress.vertical) ? 0.5 : progress.vertical,
-      [0, 100]
-    ),
+    horizontal: lerp(isNaN(progress.horizontal) ? 0.5 : progress.horizontal, {
+      MIN: 0,
+      MAX: 100,
+    }),
+    vertical: lerp(isNaN(progress.vertical) ? 0.5 : progress.vertical, {
+      MIN: 0,
+      MAX: 100,
+    }),
   };
 }

@@ -19,6 +19,7 @@
  */
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
+Object.defineProperty(stylisRTLPlugin, 'name', { value: 'stylisRTLPlugin' });
 import PropTypes from 'prop-types';
 
 /**

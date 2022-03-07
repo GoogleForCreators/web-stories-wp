@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * Internal dependencies
+ * External dependencies
  */
-import stripHTML from '../../utils/stripHTML';
+import { stripHTML } from '@googleforcreators/dom';
 
 function TextContent({ content }) {
   return stripHTML(content);

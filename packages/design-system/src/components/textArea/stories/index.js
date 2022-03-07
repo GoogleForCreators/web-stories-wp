@@ -90,8 +90,8 @@ export const _default = ({ onHandleChange, ...args }) => {
       <br />
       <Container>
         <Row>
-          <Text isBold>
-            {'Normal'}
+          <div>
+            <Text isBold>{'Normal'}</Text>
             <TextArea
               aria-label="input-one"
               id="one-light"
@@ -100,9 +100,9 @@ export const _default = ({ onHandleChange, ...args }) => {
               onChange={handleChange}
               {...args}
             />
-          </Text>
-          <Text isBold>
-            {'Error'}
+          </div>
+          <div>
+            <Text isBold>{'Error'}</Text>
             <TextArea
               aria-label="input-two"
               id="two-light"
@@ -112,9 +112,9 @@ export const _default = ({ onHandleChange, ...args }) => {
               {...args}
               hasError
             />
-          </Text>
-          <Text isBold>
-            {'Disabled'}
+          </div>
+          <div>
+            <Text isBold>{'Disabled'}</Text>
             <TextArea
               aria-label="disabled-input-one"
               id="three-light"
@@ -124,9 +124,9 @@ export const _default = ({ onHandleChange, ...args }) => {
               {...args}
               disabled
             />
-          </Text>
-          <Text isBold>
-            {'With Counter'}
+          </div>
+          <div>
+            <Text isBold>{'With Counter'}</Text>
             <TextArea
               aria-label="input-four"
               id="four-light"
@@ -137,7 +137,7 @@ export const _default = ({ onHandleChange, ...args }) => {
               showCount
               maxLength={20}
             />
-          </Text>
+          </div>
         </Row>
       </Container>
       <DarkThemeProvider>
