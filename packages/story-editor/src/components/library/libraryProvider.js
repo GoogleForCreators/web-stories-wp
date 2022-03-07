@@ -102,7 +102,7 @@ function LibraryProvider({ children }) {
   const { insertTextSet, insertTextSetByOffset } =
     useInsertTextSet(shouldUseSmartColor);
 
-  const { highlightedTab } = useHighlights(({ tab: highlightedTab }) => ({
+  const { highlightedTab } = useHighlights(({ section: highlightedTab }) => ({
     highlightedTab,
   }));
 
