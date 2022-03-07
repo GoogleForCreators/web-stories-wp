@@ -296,7 +296,7 @@ class Story {
 	 * @return string Publisher Name.
 	 */
 	public function get_publisher_name(): string {
-		return esc_attr( $this->publisher_name );
+		return $this->publisher_name;
 	}
 
 	/**
