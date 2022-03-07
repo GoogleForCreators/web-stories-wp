@@ -191,7 +191,7 @@ function FrameElement({ id }) {
         hasMask={isMaskable}
         data-testid="frameElement"
         maskDisabled={maskDisabled}
-        {...(maskDisabled ? eventHandlers : null)}
+        {...eventHandlers}
       >
         <WithMask
           element={element}
