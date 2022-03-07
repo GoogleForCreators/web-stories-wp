@@ -30,7 +30,7 @@ import './setLocaleData';
 /**
  * External dependencies
  */
-import { StoryEditor } from '@googleforcreators/story-editor';
+import { StoryEditor, PostLock } from '@googleforcreators/story-editor';
 import { setAppElement } from '@googleforcreators/design-system';
 import { StrictMode, render } from '@googleforcreators/react';
 import { updateSettings } from '@googleforcreators/date';
@@ -49,7 +49,6 @@ import {
   Layout,
   PostPublishDialog,
   StatusCheck,
-  PostLock,
   MediaUpload,
 } from './components';
 import * as apiCallbacks from './api';

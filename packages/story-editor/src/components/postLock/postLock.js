@@ -26,20 +26,11 @@ import {
 } from '@googleforcreators/react';
 import { useFeatures } from 'flagged';
 import { trackError } from '@googleforcreators/tracking';
-import {
-  useStory,
-  useConfig,
-  useCurrentUser,
-} from '@googleforcreators/story-editor';
 
 /**
  * Internal dependencies
  */
-import {
-  getStoryLockById,
-  setStoryLockById,
-  deleteStoryLockById,
-} from '../../api/storyLock';
+import { useStory, useConfig, useCurrentUser } from '../../app';
 import PostLockDialog from './postLockDialog';
 import PostTakeOverDialog from './postTakeOverDialog';
 
@@ -53,6 +44,7 @@ function PostLock() {
     nonce: firstNonce,
     postLock: { interval: postLockInterval, showLockedDialog },
     api: { stories, storyLocking },
+    apiCallbacks: { getStoryLockById, setStoryLockById, deleteStoryLockById },
   } = useConfig();
 
   const { previewLink, lockUser } = useStory(
@@ -78,7 +70,7 @@ function PostLock() {
     }
     setUser({});
     setStoryLockById(storyId, stories);
-  }, [enablePostLockingTakeOver, storyId, stories]);
+  }, [enablePostLockingTakeOver, setStoryLockById, storyId, stories]);
 
   const currentUserLoaded = useMemo(
     () => Boolean(Object.keys(currentUser).length),
@@ -115,6 +107,8 @@ function PostLock() {
     enablePostLocking,
     showLockedDialog,
     currentUserLoaded,
+    getStoryLockById,
+    setStoryLockById,
   ]);
 
   // Cache it to make it stable in terms of the below timeout
@@ -150,7 +144,15 @@ function PostLock() {
     return () => {
       window.removeEventListener('beforeunload', releasePostLock);
     };
-  }, [storyId, enablePostLocking, showLockedDialog, user, nonce, storyLocking]);
+  }, [
+    storyId,
+    enablePostLocking,
+    deleteStoryLockById,
+    showLockedDialog,
+    user,
+    nonce,
+    storyLocking,
+  ]);
 
   // Register repeating callback to check lock every 150 seconds.
   useEffect(() => {

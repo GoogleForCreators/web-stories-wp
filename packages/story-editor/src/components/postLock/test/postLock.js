@@ -20,24 +20,15 @@
 import { FlagsProvider } from 'flagged';
 import { setAppElement } from '@googleforcreators/design-system';
 import { screen, act, waitFor } from '@testing-library/react';
-import {
-  ConfigContext,
-  StoryContext,
-  CurrentUserContext,
-} from '@googleforcreators/story-editor';
 
 /**
  * Internal dependencies
  */
 import { renderWithTheme } from '../../../testUtils';
-import {
-  getStoryLockById,
-  setStoryLockById,
-  deleteStoryLockById,
-} from '../../../api/storyLock';
 import PostLock from '../postLock';
-
-jest.mock('../../../api/storyLock');
+import { ConfigContext } from '../../../app/config';
+import { StoryContext } from '../../../app/story';
+import { CurrentUserContext } from '../../../app/currentUser';
 
 function setup(_storyContextValue = {}, _configValue = {}) {
   const configValue = {
@@ -51,6 +42,18 @@ function setup(_storyContextValue = {}, _configValue = {}) {
     api: {
       stories: '',
       storyLocking: '',
+    },
+    apiCallbacks: {
+      getStoryLockById: () => {
+        return Promise.resolve({
+          locked: true,
+          user: 123,
+          nonce: 'fsdfds',
+          _embedded: { author: [{ id: 123, name: 'John Doe' }] },
+        });
+      },
+      setStoryLockById: () => Promise.resolve(),
+      deleteStoryLockById: () => Promise.resolve(),
     },
     flags: {
       enablePostLocking: true,
@@ -103,9 +106,6 @@ describe('PostLock', () => {
     modalWrapper = document.createElement('aside');
     document.documentElement.appendChild(modalWrapper);
     setAppElement(modalWrapper);
-
-    setStoryLockById.mockReturnValue(Promise.resolve());
-    deleteStoryLockById.mockReturnValue(Promise.resolve());
   });
 
   afterAll(() => {
@@ -127,15 +127,6 @@ describe('PostLock', () => {
         },
       },
     };
-
-    getStoryLockById.mockReturnValue(
-      Promise.resolve({
-        locked: true,
-        user: 123,
-        nonce: 'fsdfds',
-        _embedded: { author: [{ id: 123, name: 'John Doe' }] },
-      })
-    );
 
     setup(storyContextValue);
 
@@ -164,15 +155,6 @@ describe('PostLock', () => {
       },
     };
 
-    getStoryLockById.mockReturnValue(
-      Promise.resolve({
-        locked: true,
-        user: 123,
-        nonce: 'fsdfds',
-        _embedded: { author: [{ id: 123, name: 'John Doe' }] },
-      })
-    );
-
     const configValue = {
       flags: {
         enablePostLocking: true,
@@ -195,15 +177,6 @@ describe('PostLock', () => {
   // eslint-disable-next-line jest/no-disabled-tests -- Investigate issues with timer in test.
   it.skip('should display dialog', async () => {
     jest.spyOn(window, 'setInterval');
-
-    getStoryLockById.mockReturnValue(
-      Promise.resolve({
-        locked: true,
-        user: 123,
-        nonce: 'fsdfds',
-        _embedded: { author: [{ id: 123, name: 'John Doe' }] },
-      })
-    );
 
     setup();
 
@@ -230,15 +203,6 @@ describe('PostLock', () => {
   });
 
   it('should not display dialog', () => {
-    getStoryLockById.mockReturnValue(
-      Promise.resolve({
-        locked: true,
-        user: 150,
-        nonce: 'fsdfds',
-        _embedded: { author: [{ id: 150, name: 'John Doe' }] },
-      })
-    );
-
     setup();
 
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
@@ -246,15 +210,6 @@ describe('PostLock', () => {
 
   it('should register beforeunload listener', () => {
     jest.spyOn(window, 'addEventListener');
-
-    getStoryLockById.mockReturnValue(
-      Promise.resolve({
-        locked: true,
-        user: 150,
-        nonce: 'fsdfds',
-        _embedded: { author: [{ id: 150, name: 'John Doe' }] },
-      })
-    );
     setup();
 
     expect(window.addEventListener).toHaveBeenCalledWith(

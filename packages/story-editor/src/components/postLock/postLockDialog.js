@@ -26,11 +26,11 @@ import {
   THEME_CONSTANTS,
   Text,
 } from '@googleforcreators/design-system';
-import { Dialog } from '@googleforcreators/story-editor';
 
 /**
  * Internal dependencies
  */
+import Dialog from '../dialog';
 import { Img } from './shared';
 
 /**

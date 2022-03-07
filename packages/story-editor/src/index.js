@@ -46,6 +46,7 @@ export { default as InterfaceSkeleton } from './components/layout';
 export { default as Tooltip } from './components/tooltip';
 export { default as useInspector } from './components/inspector/useInspector';
 export { default as InspectorContext } from './components/inspector/context';
+export { default as PostLock } from './components/postLock';
 export { default as useIsUploadingToStory } from './utils/useIsUploadingToStory';
 export {
   styles as highlightStyles,
