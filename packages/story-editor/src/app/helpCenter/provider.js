@@ -262,7 +262,7 @@ function HelpCenterProvider({ children }) {
   useEffect(() => {
     if (!isHydrated && currentUser?.onboarding) {
       actions.hydrateReadTipsSuccess({
-        readTips: currentUser.meta.onboarding,
+        readTips: currentUser.onboarding,
       });
     }
   }, [actions, currentUser, isHydrated]);
