@@ -14,14 +14,10 @@
  * limitations under the License.
  */
 /**
- * External dependencies
- */
-import { MULTIPLE_VALUE } from '@googleforcreators/elements';
-
-/**
  * Internal dependencies
  */
 import updateProperties from '../updateProperties';
+import { MULTIPLE_VALUE } from '../../../../constants';
 
 describe('updateProperties', () => {
   let element;

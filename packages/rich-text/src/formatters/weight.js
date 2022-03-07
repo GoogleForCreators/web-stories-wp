@@ -14,14 +14,9 @@
  * limitations under the License.
  */
 /**
- * External dependencies
- */
-import { MULTIPLE_VALUE } from '@googleforcreators/elements';
-
-/**
  * Internal dependencies
  */
-import { NONE, WEIGHT } from '../customConstants';
+import { NONE, WEIGHT, MULTIPLE_VALUE } from '../customConstants';
 import {
   togglePrefixStyle,
   getPrefixStylesInSelection,

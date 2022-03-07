@@ -25,12 +25,11 @@ import {
   isPatternEqual,
   createSolidFromString,
 } from '@googleforcreators/patterns';
-import { MULTIPLE_VALUE } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { NONE, COLOR } from '../customConstants';
+import { NONE, COLOR, MULTIPLE_VALUE } from '../customConstants';
 import {
   togglePrefixStyle,
   getPrefixStylesInSelection,

@@ -13,12 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-import { MULTIPLE_VALUE } from '@googleforcreators/elements';
-
 /**
  * Internal dependencies
  */
@@ -26,7 +20,7 @@ import {
   togglePrefixStyle,
   getPrefixStylesInSelection,
 } from '../../styleManipulation';
-import { NONE, LETTERSPACING } from '../../customConstants';
+import { NONE, LETTERSPACING, MULTIPLE_VALUE } from '../../customConstants';
 import formatter from '../letterSpacing';
 import { getDOMElement } from './_utils';
 

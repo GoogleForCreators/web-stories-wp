@@ -21,20 +21,17 @@ import PropTypes from 'prop-types';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import { useCallback, useMemo } from '@googleforcreators/react';
 import styled from 'styled-components';
-import {
-  MULTIPLE_VALUE,
-  MULTIPLE_DISPLAY_VALUE,
-} from '@googleforcreators/elements';
+import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
-import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 import { Media, Row, TextArea } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue, useCommonObjectValue } from '../../shared';
 import { useConfig } from '../../../../app/config';
 import { styles, states, useHighlights } from '../../../../app/highlights';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 
 const DEFAULT_RESOURCE = {
   alt: null,

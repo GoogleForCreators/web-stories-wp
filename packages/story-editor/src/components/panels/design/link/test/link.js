@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
-import { MULTIPLE_DISPLAY_VALUE } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -29,6 +28,7 @@ import StoryContext from '../../../../../app/story/context';
 import CanvasContext from '../../../../../app/canvas/context';
 import { renderPanel } from '../../../shared/test/_utils';
 import LinkPanel from '../link';
+import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 
 jest.mock('@googleforcreators/element-library');
 

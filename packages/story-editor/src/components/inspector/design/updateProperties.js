@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 /**
- * External dependencies
+ * Internal dependencies
  */
-import { MULTIPLE_VALUE } from '@googleforcreators/elements';
+import { MULTIPLE_VALUE } from '../../../constants';
 
 /**
  * @param {Object} currentProperties The existing element properties.

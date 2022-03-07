@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { createSolid } from '@googleforcreators/patterns';
-import { MULTIPLE_VALUE } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -27,7 +26,7 @@ import {
   togglePrefixStyle,
   getPrefixStylesInSelection,
 } from '../../styleManipulation';
-import { NONE, COLOR } from '../../customConstants';
+import { NONE, COLOR, MULTIPLE_VALUE } from '../../customConstants';
 import formatter from '../color';
 import { getDOMElement } from './_utils';
 

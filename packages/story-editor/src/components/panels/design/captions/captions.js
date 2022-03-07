@@ -29,7 +29,6 @@ import {
   BUTTON_VARIANTS,
   themeHelpers,
 } from '@googleforcreators/design-system';
-import { MULTIPLE_VALUE } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -40,6 +39,7 @@ import { getCommonValue } from '../../shared';
 import { states, styles, useHighlights } from '../../../../app/highlights';
 import { useConfig } from '../../../../app';
 import CaptionsPanelContent from '../../shared/captionsPanelContent';
+import { MULTIPLE_VALUE } from '../../../../constants';
 
 const StyledButton = styled(Button)`
   ${({ theme }) =>

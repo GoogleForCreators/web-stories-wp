@@ -21,10 +21,7 @@ import PropTypes from 'prop-types';
 import { useCallback } from '@googleforcreators/react';
 import { OverlayType } from '@googleforcreators/design-system';
 import { __, _x, sprintf } from '@googleforcreators/i18n';
-import {
-  getDefinitionForType,
-  MULTIPLE_VALUE,
-} from '@googleforcreators/elements';
+import { getDefinitionForType } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -34,6 +31,7 @@ import { SimplePanel } from '../../panel';
 import { useCommonColorValue } from '../../shared';
 import useCORSProxy from '../../../../utils/useCORSProxy';
 import { useStory } from '../../../../app';
+import { MULTIPLE_VALUE } from '../../../../constants';
 import convertOverlay from './convertOverlay';
 
 const OverlayPreset = {

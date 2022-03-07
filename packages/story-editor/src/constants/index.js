@@ -16,6 +16,7 @@
 
 export * from './fonts';
 export * from './media';
+export * from './multipleValue';
 
 export const ADMIN_TOOLBAR_HEIGHT = 32;
 export const HEADER_HEIGHT = 64;

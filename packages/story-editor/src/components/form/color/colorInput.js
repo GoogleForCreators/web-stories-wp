@@ -40,10 +40,6 @@ import {
   Icons,
   Popup,
 } from '@googleforcreators/design-system';
-import {
-  MULTIPLE_VALUE,
-  MULTIPLE_DISPLAY_VALUE,
-} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -53,6 +49,7 @@ import useInspector from '../../inspector/useInspector';
 import DefaultTooltip from '../../tooltip';
 import { focusStyle, inputContainerStyleOverride } from '../../panels/shared';
 import { useCanvas, useConfig } from '../../../app';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 
 const Preview = styled.div`
   height: 36px;

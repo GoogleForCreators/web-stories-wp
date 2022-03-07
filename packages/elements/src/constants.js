@@ -13,10 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * External dependencies
- */
-import { __ } from '@googleforcreators/i18n';
 
 export const ELEMENT_TYPES = {
   IMAGE: 'image',
@@ -34,8 +30,6 @@ export const MEDIA_ELEMENT_TYPES = [
 ];
 
 export const MULTIPLE_VALUE = '((MULTIPLE))';
-
-export const MULTIPLE_DISPLAY_VALUE = __('Mixed', 'web-stories');
 
 // @todo: only provide font family, and use font provider to fill the rest.
 export const TEXT_ELEMENT_DEFAULT_FONT = {

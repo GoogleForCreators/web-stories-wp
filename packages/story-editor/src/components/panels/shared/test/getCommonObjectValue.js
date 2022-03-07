@@ -14,14 +14,10 @@
  * limitations under the License.
  */
 /**
- * External dependencies
- */
-import { MULTIPLE_VALUE } from '@googleforcreators/elements';
-
-/**
  * Internal dependencies
  */
 import getCommonObjectValue from '../getCommonObjectValue';
+import { MULTIPLE_VALUE } from '../../../../constants';
 
 describe('getCommonObjectValue', () => {
   it('should return matching values for the defined properties', () => {

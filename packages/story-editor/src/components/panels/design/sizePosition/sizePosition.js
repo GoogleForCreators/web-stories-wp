@@ -38,11 +38,7 @@ import {
   Tooltip,
   usePerformanceTracking,
 } from '@googleforcreators/design-system';
-import {
-  MULTIPLE_VALUE,
-  MULTIPLE_DISPLAY_VALUE,
-  getDefinitionForType,
-} from '@googleforcreators/elements';
+import { getDefinitionForType } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -56,6 +52,7 @@ import {
   useCommonObjectValue,
 } from '../../shared';
 import useStory from '../../../../app/story/useStory';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import usePresubmitHandlers from './usePresubmitHandlers';
 import { getMultiSelectionMinMaxXY, isNum } from './utils';
 import { MIN_MAX, DEFAULT_FLIP } from './constants';

@@ -26,12 +26,11 @@ import {
 import { getHTMLInfo } from '@googleforcreators/rich-text';
 import { generateFontFamily } from '@googleforcreators/element-library';
 import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
-import { MULTIPLE_VALUE } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { PRESET_TYPES } from '../constants';
+import { PRESET_TYPES, MULTIPLE_VALUE } from '../constants';
 import objectPick from './objectPick';
 
 const TEXT_PRESET_STYLES = [

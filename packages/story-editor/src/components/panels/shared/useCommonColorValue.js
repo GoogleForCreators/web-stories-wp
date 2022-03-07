@@ -22,7 +22,11 @@ import {
   convertToCSS,
   generatePatternStyles,
 } from '@googleforcreators/patterns';
-import { MULTIPLE_VALUE } from '@googleforcreators/elements';
+
+/**
+ * Internal dependencies
+ */
+import { MULTIPLE_VALUE } from '../../../constants';
 
 /**
  * Memoizes the common color value.

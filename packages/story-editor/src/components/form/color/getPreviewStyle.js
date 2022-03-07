@@ -21,7 +21,11 @@ import {
   createSolid,
   generatePatternStyles,
 } from '@googleforcreators/patterns';
-import { MULTIPLE_VALUE } from '@googleforcreators/elements';
+
+/**
+ * Internal dependencies
+ */
+import { MULTIPLE_VALUE } from '../../../constants';
 
 function getPreviewStyle(pattern) {
   if (!pattern || pattern === MULTIPLE_VALUE) {

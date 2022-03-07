@@ -20,13 +20,15 @@
 import PropTypes from 'prop-types';
 import { fireEvent, screen } from '@testing-library/react';
 import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
-import { MULTIPLE_DISPLAY_VALUE } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import TextStyle from '../textStyle';
-import { HIDDEN_PADDING } from '../../../../../constants';
+import {
+  HIDDEN_PADDING,
+  MULTIPLE_DISPLAY_VALUE,
+} from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
 import FontContext from '../../../../../app/font/context';
 import { StoryContext } from '../../../../../app/story';

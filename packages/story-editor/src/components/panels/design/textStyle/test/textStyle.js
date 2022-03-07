@@ -23,10 +23,6 @@ import { createSolid } from '@googleforcreators/patterns';
 import { RichTextContext } from '@googleforcreators/rich-text';
 import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
 import { calculateTextHeight } from '@googleforcreators/element-library';
-import {
-  MULTIPLE_VALUE,
-  MULTIPLE_DISPLAY_VALUE,
-} from '@googleforcreators/elements';
 import { calcRotatedResizeOffset } from '@googleforcreators/units';
 
 /**
@@ -37,6 +33,10 @@ import FontContext from '../../../../../app/font/context';
 import { StoryContext } from '../../../../../app/story';
 import CanvasContext from '../../../../../app/canvas/context';
 import { renderPanel } from '../../../shared/test/_utils';
+import {
+  MULTIPLE_VALUE,
+  MULTIPLE_DISPLAY_VALUE,
+} from '../../../../../constants';
 
 let mockControls;
 jest.mock('@googleforcreators/design-system', () => {

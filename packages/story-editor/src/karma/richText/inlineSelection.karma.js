@@ -14,15 +14,11 @@
  * limitations under the License.
  */
 /**
- * External dependencies
- */
-import { MULTIPLE_DISPLAY_VALUE } from '@googleforcreators/elements';
-
-/**
  * Internal dependencies
  */
 import { Fixture } from '../fixture';
 import { useStory } from '../../app';
+import { MULTIPLE_DISPLAY_VALUE } from '../../constants';
 import { initHelpers } from './_utils';
 
 describe('CUJ: Creator can Add and Write Text: Select an individual word to edit', () => {

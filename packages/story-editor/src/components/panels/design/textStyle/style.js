@@ -30,10 +30,6 @@ import {
 } from '@googleforcreators/design-system';
 import { stripHTML } from '@googleforcreators/dom';
 import { clamp } from '@googleforcreators/units';
-import {
-  MULTIPLE_VALUE,
-  MULTIPLE_DISPLAY_VALUE,
-} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -45,6 +41,7 @@ import {
   getCommonValue,
   inputContainerStyleOverride,
 } from '../../shared';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import useRichTextFormatting from './useRichTextFormatting';
 
 const MIN_MAX = {

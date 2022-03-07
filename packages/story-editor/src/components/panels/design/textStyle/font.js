@@ -24,10 +24,6 @@ import { __ } from '@googleforcreators/i18n';
 import { DropDown, NumericInput } from '@googleforcreators/design-system';
 import { stripHTML } from '@googleforcreators/dom';
 import { clamp } from '@googleforcreators/units';
-import {
-  MULTIPLE_VALUE,
-  MULTIPLE_DISPLAY_VALUE,
-} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -39,6 +35,7 @@ import {
   getCommonValue,
   inputContainerStyleOverride,
 } from '../../shared';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import useRichTextFormatting from './useRichTextFormatting';
 import getFontWeights from './getFontWeights';
 import FontPicker from './fontPicker';

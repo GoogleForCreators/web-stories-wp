@@ -18,13 +18,13 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
-import { MULTIPLE_DISPLAY_VALUE } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { renderPanel } from '../../../shared/test/_utils';
 import ImageAccessibility from '../imageAccessibility';
+import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 
 describe('Panels/ImageAccessibility', () => {
   const defaultElement = {

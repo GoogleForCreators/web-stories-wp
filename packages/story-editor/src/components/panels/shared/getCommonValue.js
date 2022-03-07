@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 /**
- * External dependencies
+ * Internal dependencies
  */
-import { MULTIPLE_VALUE } from '@googleforcreators/elements';
+import { MULTIPLE_VALUE } from '../../../constants';
 
 /**
  * Get the common value `property` for all objects in `list`, if they

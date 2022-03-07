@@ -26,10 +26,6 @@ import {
   LockToggle as DefaultLockToggle,
   NumericInput,
 } from '@googleforcreators/design-system';
-import {
-  MULTIPLE_VALUE,
-  MULTIPLE_DISPLAY_VALUE,
-} from '@googleforcreators/elements';
 import { clamp } from '@googleforcreators/units';
 
 /**
@@ -42,6 +38,7 @@ import {
   useCommonObjectValue,
 } from '../../shared';
 import { metricsForTextPadding } from '../../utils/metricsForTextPadding';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import { getHiddenPadding, removeHiddenPadding } from './utils';
 
 const DEFAULT_PADDING = {

@@ -21,15 +21,12 @@ import { useCallback } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { __, _x } from '@googleforcreators/i18n';
 import { Icons, NumericInput } from '@googleforcreators/design-system';
-import {
-  MULTIPLE_VALUE,
-  MULTIPLE_DISPLAY_VALUE,
-} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { getCommonValue, inputContainerStyleOverride } from '../../shared';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 
 const MIN_MAX = {
   OPACITY: {

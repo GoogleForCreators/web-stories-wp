@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-export const NONE = 'NONE';
-export const ITALIC = 'CUSTOM-ITALIC';
-export const UNDERLINE = 'CUSTOM-UNDERLINE';
-export const WEIGHT = 'CUSTOM-WEIGHT';
-export const COLOR = 'CUSTOM-COLOR';
-export const LETTERSPACING = 'CUSTOM-LETTERSPACING';
-export const UPPERCASE = 'CUSTOM-UPPERCASE';
+/**
+ * External dependencies
+ */
+import { __ } from '@googleforcreators/i18n';
 
 export const MULTIPLE_VALUE = '((MULTIPLE))';
+
+export const MULTIPLE_DISPLAY_VALUE = __('Mixed', 'web-stories');

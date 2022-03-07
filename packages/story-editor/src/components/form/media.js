@@ -25,12 +25,12 @@ import {
   MediaInput as Input,
   themeHelpers,
 } from '@googleforcreators/design-system';
-import { MULTIPLE_VALUE } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { useConfig } from '../../app';
+import { MULTIPLE_VALUE } from '../../constants';
 
 const StyledInput = styled(Input)`
   button:focus {

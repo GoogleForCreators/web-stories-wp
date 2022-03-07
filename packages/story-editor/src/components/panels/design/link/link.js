@@ -34,15 +34,11 @@ import {
   toAbsoluteUrl,
   withProtocol,
 } from '@googleforcreators/url';
-import {
-  MULTIPLE_VALUE,
-  MULTIPLE_DISPLAY_VALUE,
-} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import { useStory, useAPI, useCanvas } from '../../../../app';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
 import { Row, LinkInput, LinkIcon } from '../../../form';

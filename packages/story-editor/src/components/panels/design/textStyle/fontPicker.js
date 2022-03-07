@@ -26,10 +26,6 @@ import {
 import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
 import { Datalist } from '@googleforcreators/design-system';
-import {
-  MULTIPLE_VALUE,
-  MULTIPLE_DISPLAY_VALUE,
-} from '@googleforcreators/elements';
 import { stripHTML } from '@googleforcreators/dom';
 
 /**
@@ -37,6 +33,7 @@ import { stripHTML } from '@googleforcreators/dom';
  */
 import { useFont } from '../../../../app/font';
 import { getCommonValue } from '../../shared';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import useRichTextFormatting from './useRichTextFormatting';
 import getClosestFontWeight from './getClosestFontWeight';
 

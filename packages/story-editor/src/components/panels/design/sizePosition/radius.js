@@ -23,10 +23,6 @@ import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import { LockToggle, Icons } from '@googleforcreators/design-system';
 import { canSupportMultiBorder } from '@googleforcreators/masks';
-import {
-  MULTIPLE_VALUE,
-  MULTIPLE_DISPLAY_VALUE,
-} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -34,6 +30,7 @@ import {
 import { StackableGroup, StackableInput } from '../../../form/stackable';
 import { useCommonObjectValue, focusStyle } from '../../shared';
 import Tooltip from '../../../tooltip';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 
 export const DEFAULT_BORDER_RADIUS = {
   topLeft: 0,
