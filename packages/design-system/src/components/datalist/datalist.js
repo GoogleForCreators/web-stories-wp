@@ -92,6 +92,7 @@ const Datalist = forwardRef(function Datalist(
     highlightStylesOverride,
     hasDropDownBorder = false,
     zIndex,
+    popupContainerStyleOverrides,
     ...rest
   },
   ref
@@ -209,6 +210,7 @@ const Datalist = forwardRef(function Datalist(
           isOpen={isOpen}
           fillWidth={DEFAULT_WIDTH}
           zIndex={zIndex}
+          styleOverrides={popupContainerStyleOverrides}
         >
           {list}
         </Popup>
@@ -237,6 +239,7 @@ Datalist.propTypes = {
   isInline: PropTypes.bool,
   hasDropDownBorder: PropTypes.bool,
   zIndex: PropTypes.number,
+  popupContainerStyleOverrides: PropTypes.array,
 };
 
 export default Datalist;
