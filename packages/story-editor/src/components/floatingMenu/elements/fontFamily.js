@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,15 +18,23 @@
  * External dependencies
  */
 
-//todo: style
+import styled, { css } from 'styled-components';
 
 /**
  * Internal dependencies
  */
 import FontPicker from '../../fontPicker';
 
+const StyledFontPicker = styled(FontPicker)`
+  width: 164px;
+`;
+
+const containerStyleOverrides = css`
+  max-height: 255px;
+`;
+
 function FontFamily() {
-  return <FontPicker />;
+  return <StyledFontPicker containerStyleOverrides={containerStyleOverrides} />;
 }
 
 export default FontFamily;

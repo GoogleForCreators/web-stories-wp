@@ -62,8 +62,6 @@ const Container = styled.div.attrs(
   position: fixed;
   ${({ noOverFlow }) => (noOverFlow ? '' : `overflow-y: auto;`)};
   max-height: ${({ topOffset }) => `calc(100vh - ${topOffset}px)`};
-
-  ${({ styleOverrides }) => styleOverrides}
 `;
 function Popup({
   isRTL = false,
@@ -83,7 +81,6 @@ function Popup({
   zIndex = DEFAULT_POPUP_Z_INDEX,
   noOverFlow = false,
   ignoreMaxOffsetY,
-  styleOverrides,
 }) {
   const [popupState, setPopupState] = useState(null);
   const isMounted = useRef(false);
@@ -170,7 +167,6 @@ function Popup({
           noOverFlow={noOverFlow}
           isRTL={isRTL}
           zIndex={zIndex}
-          styleOverrides={styleOverrides}
         >
           {renderContents
             ? renderContents({ propagateDimensionChange: positionPopup })
@@ -200,7 +196,6 @@ Popup.propTypes = {
   zIndex: PropTypes.number,
   noOverFlow: PropTypes.bool,
   ignoreMaxOffsetY: PropTypes.bool,
-  styleOverrides: PropTypes.array,
 };
 
 export { Popup, PLACEMENT };

@@ -34,7 +34,14 @@ import { useFont } from '../../app';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../constants';
 
 const FontPicker = forwardRef(function FontPicker(
-  { onChange, currentValue, highlightStylesOverride, showDropdownLabel },
+  {
+    onChange,
+    currentValue,
+    highlightStylesOverride,
+    showDropdownLabel,
+    containerStyleOverrides,
+    className,
+  },
   ref
 ) {
   const {
@@ -157,6 +164,8 @@ const FontPicker = forwardRef(function FontPicker(
       renderer={forwardRef(renderer)}
       disabled={!fonts?.length}
       dropDownLabel={showDropdownLabel ? __('Font', 'web-stories') : null}
+      containerStyleOverrides={containerStyleOverrides}
+      className={className}
     />
   );
 });
@@ -166,6 +175,7 @@ FontPicker.propTypes = {
   currentValue: PropTypes.string.isRequired,
   highlightStylesOverride: PropTypes.array,
   showDropdownLabel: PropTypes.bool,
+  containerStyleOverrides: PropTypes.array,
 };
 
 export default FontPicker;

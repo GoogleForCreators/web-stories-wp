@@ -72,6 +72,7 @@ const OptionList = forwardRef(function OptionList(
     onObserve,
     focusSearch = noop,
     listId,
+    containerStyleOverrides,
   },
   listRef
 ) {
@@ -237,6 +238,7 @@ const OptionList = forwardRef(function OptionList(
       onKeyDown={handleKeyPress}
       aria-label={__('Option List Selector', 'web-stories')}
       aria-required={false}
+      containerStyleOverrides={containerStyleOverrides}
     >
       {filteredListGroups.map((group, i) => {
         const groupLabelId = `group-${uuidv4()}`;
@@ -296,6 +298,7 @@ OptionList.propTypes = {
   onObserve: PropTypes.func,
   listId: PropTypes.string.isRequired,
   focusSearch: PropTypes.func,
+  containerStyleOverrides: PropTypes.array,
 };
 
 export default memo(OptionList);
