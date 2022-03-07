@@ -29,10 +29,7 @@ const SUPPORT_URL = __(
   'web-stories'
 );
 
-const CDN_URL = __(
-  'https://wordpress.org/support/plugin/web-stories/',
-  'web-stories'
-);
+const CDN_URL = __('https://wp.stories.google/docs', 'web-stories');
 
 function CorsCheckFailed({ isOpen, onClose }) {
   const onSupportClick = useCallback((evt) => {

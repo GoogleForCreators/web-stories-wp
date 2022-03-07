@@ -70,10 +70,10 @@ export function getMedia(
 }
 
 // Important: Keep in sync with REST API preloading definition.
-export function getMediaForCorsCheck(config, { perPage }) {
+export function getMediaForCorsCheck(config) {
   const path = addQueryArgs(config.api.media, {
     context: 'edit',
-    per_page: perPage,
+    per_page: 10,
     _fields: 'source_url',
   });
 
