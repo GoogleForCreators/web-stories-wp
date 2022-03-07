@@ -24,7 +24,6 @@ export { default as useMouseDownOutsideRef } from './useMouseDownOutsideRef';
 export { default as pointerEventsCss } from './pointerEventsCss';
 export { default as objectWithout } from './objectWithout';
 export { default as getKeyboardMovement } from './getKeyboardMovement';
-export { default as areEventsDragging } from './areEventsDragging';
 export { default as usePerformanceTracking } from './usePerformanceTracking';
 export { default as PanelTypes } from './panelTypes';
 export { default as getTransformFlip } from './getTransformFlip';

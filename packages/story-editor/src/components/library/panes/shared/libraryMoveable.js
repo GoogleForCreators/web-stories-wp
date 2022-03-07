@@ -23,11 +23,14 @@ import styled from 'styled-components';
 import { editorToDataX, editorToDataY } from '@googleforcreators/units';
 import {
   useKeyDownEffect,
-  areEventsDragging,
   usePerformanceTracking,
   TRACKING_EVENTS,
 } from '@googleforcreators/design-system';
-import { Moveable, InOverlay } from '@googleforcreators/moveable';
+import {
+  Moveable,
+  InOverlay,
+  areEventsDragging,
+} from '@googleforcreators/moveable';
 import { useTransform } from '@googleforcreators/transform';
 
 /**

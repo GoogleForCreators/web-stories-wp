@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { useRef } from '@googleforcreators/react';
-import { areEventsDragging } from '@googleforcreators/design-system';
+import { areEventsDragging } from '@googleforcreators/moveable';
 
 /**
  * Internal dependencies
