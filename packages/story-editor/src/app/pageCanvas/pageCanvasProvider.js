@@ -83,6 +83,20 @@ function PageCanvasProvider({ children }) {
   );
 
   /**
+   * Small wrapper around `generateDefferedPageCanvas()` that just passes in the
+   * current page.
+   *
+   * @return {void}
+   */
+  const generateDefferedCurrentPageCanvas = useCallback(() => {
+    const { currentPageValue, pageCanvasMapValue } = valuesRef.current;
+    const canvas = pageCanvasMapValue[currentPageValue.id];
+    if (!canvas) {
+      generateDefferedPageCanvas([currentPageValue.id, currentPageValue]);
+    }
+  }, [generateDefferedPageCanvas]);
+
+  /**
    * Gets or creates a canvas from the page and excludes
    * the current selection from the generated canvas.
    *
@@ -168,6 +182,7 @@ function PageCanvasProvider({ children }) {
         actions: {
           calculateAccessibleTextColors,
           generateDefferedPageCanvas,
+          generateDefferedCurrentPageCanvas,
         },
       }}
     >

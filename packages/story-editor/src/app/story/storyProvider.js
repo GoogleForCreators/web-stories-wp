@@ -57,33 +57,26 @@ function StoryProvider({ storyId, initialEdits, children }) {
   useEffect(() => setHashPageId(current), [current, setHashPageId]);
 
   // Generate current page info.
-  const {
-    currentPageId,
-    currentPageIndex,
-    currentPageNumber,
-    currentPage,
-    currentPageHash,
-  } = useMemo(() => {
-    if (!current) {
+  const { currentPageId, currentPageIndex, currentPageNumber, currentPage } =
+    useMemo(() => {
+      if (!current) {
+        return {
+          currentPageId: null,
+          currentPageIndex: null,
+          currentPageNumber: null,
+          currentPage: null,
+        };
+      }
+      const index = pages.findIndex(({ id }) => id === current);
+      const number = index + 1;
+      const page = pages[index];
       return {
-        currentPageId: null,
-        currentPageIndex: null,
-        currentPageNumber: null,
-        currentPage: null,
-        currentPageHash: null,
+        currentPageId: current,
+        currentPageIndex: index,
+        currentPageNumber: number,
+        currentPage: page,
       };
-    }
-    const index = pages.findIndex(({ id }) => id === current);
-    const number = index + 1;
-    const page = pages[index];
-    return {
-      currentPageId: current,
-      currentPageIndex: index,
-      currentPageNumber: number,
-      currentPage: page,
-      currentPageHash: JSON.stringify(page),
-    };
-  }, [pages, current]);
+    }, [pages, current]);
 
   // Generate selection info
   const selectedElementIds = useMemo(
@@ -148,7 +141,6 @@ function StoryProvider({ storyId, initialEdits, children }) {
     () => ({
       pages,
       currentPage,
-      currentPageHash,
       currentPageId,
       currentPageIndex,
       currentPageNumber,
@@ -170,7 +162,6 @@ function StoryProvider({ storyId, initialEdits, children }) {
     [
       pages,
       currentPage,
-      currentPageHash,
       currentPageId,
       currentPageIndex,
       currentPageNumber,
