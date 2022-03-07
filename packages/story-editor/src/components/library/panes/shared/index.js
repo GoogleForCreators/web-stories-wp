@@ -64,6 +64,22 @@ const ActionButton = styled(Button).attrs({ variant: BUTTON_VARIANTS.ICON })`
   opacity: ${({ $display }) => ($display ? '1' : '0')};
 `;
 
-export { ActionButton, Pane, getPaneId, getTabId, LoadingContainer };
+const PageTemplateTitleContainer = styled.div`
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding: 8px;
+  background-color: ${({ theme }) => theme.colors.opacity.black64};
+  opacity: ${({ isActive }) => (isActive ? 1 : 0)};
+`;
+
+export {
+  ActionButton,
+  Pane,
+  getPaneId,
+  getTabId,
+  LoadingContainer,
+  PageTemplateTitleContainer,
+};
 
 export { default as ChipGroup } from './chipGroup';
