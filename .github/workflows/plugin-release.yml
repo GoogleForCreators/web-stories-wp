@@ -456,51 +456,20 @@ jobs:
           BRANCH=release/$VERSION_WITHOUT_SUFFIX
           echo "::set-output name=RELEASE_BRANCH::${BRANCH/-rc./ RC}"
 
-      # TODO: Replace with maintained action.
-      - name: Create Release Draft
+      - name: Publish Release
         id: create_release
-        uses: actions/create-release@v1
+        uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ env.TAG_NAME }}
-          release_name: ${{ needs.changelog.outputs.release_name }}
-          commitish: ${{ needs.build.outputs.release_branch || github.ref }}
-          draft: true
+          name: ${{ needs.changelog.outputs.release_name }}
+          target_commitish: ${{ needs.build.outputs.release_branch || github.ref }}
           prerelease: ${{ env.IS_RC }}
-        # TODO: Fix changelog generation.
-        #          body_path: changelog/changelog.txt
-        env:
-          GITHUB_TOKEN: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
-
-      - name: Upload regular bundle
-        uses: actions/upload-release-asset@v1.0.2
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: build/web-stories.zip
-          asset_name: web-stories.zip
-          asset_content_type: application/zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
-
-      - name: Upload development bundle
-        uses: actions/upload-release-asset@v1.0.2
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: build/web-stories-dev.zip
-          asset_name: web-stories-dev.zip
-          asset_content_type: application/zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
-
-      # Done so that any triggers/webhooks will have access to the published release
-      # including all the release assets.
-      - name: Publish Release
-        run: |
-          curl \
-            --request PATCH \
-            --url https://api.github.com/repos/${{ github.repository }}/releases/${{ steps.create_release.outputs.id }} \
-            --header 'Authorization: token ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}' \
-            --header "Accept: application/vnd.github.v3+json" \
-            --data-raw '{"draft":false}'
+          generate_release_notes: true
+          files: |
+            build/web-stories.zip
+            build/web-stories-dev.zip
+          fail_on_unmatched_files: true
+          token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
   # Post-release version bumps for non-patch releases.
   post-release:
