@@ -19,6 +19,14 @@
  */
 import { useLayoutEffect } from './react';
 
+/** @typedef {import('./react')} React */
+
+/**
+ *
+ * @param {React.RefObject} ref The element reference
+ * @param {Function} callback Callback that is called when element loses focus
+ * @param {Array<any>} deps Array of dependencies
+ */
 function useFocusOut(ref, callback, deps) {
   useLayoutEffect(() => {
     const node = ref?.current;
