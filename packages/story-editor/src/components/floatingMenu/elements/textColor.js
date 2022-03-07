@@ -17,20 +17,51 @@
 /**
  * External dependencies
  */
-import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
+import { useCallback } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
  */
-import { IconButton } from './shared';
+import useRichTextFormatting from '../../panels/design/textStyle/useRichTextFormatting';
+import updateProperties from '../../inspector/design/updateProperties';
+import { useStory } from '../../../app';
+import { Color, useProperties } from './shared';
 
 function TextColor() {
+  const { content, type } = useProperties(['content', 'type']);
+  const updateSelectedElements = useStory(
+    (state) => state.actions.updateSelectedElements
+  );
+
+  const pushUpdate = useCallback(
+    (update) => {
+      updateSelectedElements({
+        properties: (element) => {
+          const updates = updateProperties(element, update, true);
+          return {
+            ...element,
+            ...updates,
+          };
+        },
+      });
+    },
+    [updateSelectedElements]
+  );
+  const {
+    textInfo: { color },
+    handlers: { handleSetColor },
+  } = useRichTextFormatting([{ content, type }], pushUpdate);
+
   return (
-    <IconButton
-      Icon={Icons.Pipette}
-      title={__('Change text color', 'web-stories')}
-      onClick={() => {}}
+    <Color
+      label={__('Text color', 'web-stories')}
+      value={color}
+      allowsSavedColors
+      onChange={handleSetColor}
+      hasInputs={false}
+      hasEyeDropper
+      allowsOpacity={false}
     />
   );
 }
