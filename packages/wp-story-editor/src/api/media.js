@@ -191,7 +191,7 @@ export function uploadMedia(config, file, additionalData) {
   // Create upload payload
   const data = new window.FormData();
   data.append('file', file, file.name || file.type.replace('/', '.'));
-  Object.entries(additionalData).forEach(([key, value]) =>
+  Object.entries(wpKeysMapping).forEach(([key, value]) =>
     flattenFormData(data, key, value)
   );
 
