@@ -286,6 +286,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Story locking', 'web-stories' ),
 				'description' => __( 'Lock in-progress stories from being edited by other authors', 'web-stories' ),
 				'group'       => 'general',
+				'default'     => true,
 			],
 			/**
 			 * Author: @spacedmonkey
