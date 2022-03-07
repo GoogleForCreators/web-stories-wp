@@ -30,7 +30,7 @@ import { trackError } from '@googleforcreators/tracking';
 /**
  * Internal dependencies
  */
-import { useStory, useConfig, useCurrentUser } from '../../app';
+import { useStory, useConfig, useCurrentUser, useAPI } from '../../app';
 import PostLockDialog from './postLockDialog';
 import PostTakeOverDialog from './postTakeOverDialog';
 
@@ -43,8 +43,10 @@ function PostLock() {
     dashboardLink,
     nonce: firstNonce,
     postLock: { interval: postLockInterval, showLockedDialog },
-    apiCallbacks: { getStoryLockById, setStoryLockById, deleteStoryLockById },
   } = useConfig();
+  const {
+    actions: { getStoryLockById, setStoryLockById, deleteStoryLockById },
+  } = useAPI();
 
   const { previewLink, lockUser } = useStory(
     ({
