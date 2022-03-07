@@ -238,7 +238,7 @@ const OptionList = forwardRef(function OptionList(
       onKeyDown={handleKeyPress}
       aria-label={__('Option List Selector', 'web-stories')}
       aria-required={false}
-      containerStyleOverrides={containerStyleOverrides}
+      $containerStyleOverrides={containerStyleOverrides}
     >
       {filteredListGroups.map((group, i) => {
         const groupLabelId = `group-${uuidv4()}`;
