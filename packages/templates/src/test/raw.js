@@ -193,5 +193,26 @@ describe('raw template files', () => {
       expect(isValid(new Date(metaData.creationDate))).toBe(true);
       expect(isValid(new Date(templateData.creationDate))).toBe(true);
     });
+
+    // eslint-disable-next-line jest/no-disabled-tests -- TODO(#10829): Replace Andada
+    it.skip('should contain fonts from global fonts list', () => {
+      const fonts = JSON.parse(
+        readFileSync(
+          resolve(process.cwd(), 'packages/fonts/src/fonts.json'),
+          'utf8'
+        )
+      );
+      const fontNames = fonts.map(({ family }) => family);
+
+      for (const { elements } of templateData.pages) {
+        for (const element of elements) {
+          if (!['text'].includes(element?.type)) {
+            continue;
+          }
+
+          expect(fontNames).toContain(element.font.family);
+        }
+      }
+    });
   });
 });
