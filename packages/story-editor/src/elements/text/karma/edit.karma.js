@@ -90,6 +90,7 @@ describe('TextEdit integration', () => {
         await fixture.events.mouse.clickOn(frame, 30, 5);
         editor = await fixture.screen.findByTestId('textEditor');
         editLayer = await fixture.screen.findByTestId('editLayer');
+        await fixture.events.click(fixture.editor.inspector.designTab);
         boldToggle = fixture.editor.inspector.designPanel.textStyle.bold;
       });
 

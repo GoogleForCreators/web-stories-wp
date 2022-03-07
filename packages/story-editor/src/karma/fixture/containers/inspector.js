@@ -20,6 +20,7 @@
 import { Container } from './container';
 import { DesignPanel } from './designPanel';
 import { DocumentPanel } from './documentPanel';
+import { Library } from './library';
 
 /**
  * The right-hand side inspector containing tabs and panes for design panel
@@ -30,13 +31,25 @@ export class Inspector extends Container {
     super(node, path);
   }
 
+  get insertTab() {
+    return this.getByRole('tab', { name: /Insert/ });
+  }
+
+  get insertPanel() {
+    return this._get(
+      this.getByRole('tabpanel', { name: /Insert/ }),
+      'library',
+      Library
+    );
+  }
+
   get designTab() {
-    return this.getByRole('tab', { name: /Design/ });
+    return this.getByRole('tab', { name: /Style/ });
   }
 
   get designPanel() {
     return this._get(
-      this.getByRole('tabpanel', { name: /Design/ }),
+      this.getByRole('tabpanel', { name: /Style/ }),
       'designPanel',
       DesignPanel
     );

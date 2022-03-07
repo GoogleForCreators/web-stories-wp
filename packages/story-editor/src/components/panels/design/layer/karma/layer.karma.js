@@ -34,7 +34,7 @@ describe('Layer Panel', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
-    layerPanel = fixture.editor.inspector.designPanel.layerPanel;
+    await fixture.events.click(fixture.editor.inspector.designTab);
 
     insertElement = await fixture.renderHook(() => useInsertElement());
   });
@@ -44,6 +44,7 @@ describe('Layer Panel', () => {
   });
 
   it('should show the number of layers', async () => {
+    layerPanel = fixture.editor.inspector.designPanel.layerPanel;
     expect(layerPanel.layers.length).toBe(1);
     expect(layerPanel.panelBadge.textContent).toBe(
       layerPanel.layers.length.toString()
@@ -82,6 +83,7 @@ describe('Layer Panel', () => {
   });
 
   it('should show ellipsis for overflowing text', async () => {
+    layerPanel = fixture.editor.inspector.designPanel.layerPanel;
     expect(layerPanel.layers.length).toBe(1);
     await fixture.act(() =>
       insertElement('text', {
@@ -100,6 +102,7 @@ describe('Layer Panel', () => {
   });
 
   it('should allow changing the layer panel height via slider', async () => {
+    layerPanel = fixture.editor.inspector.designPanel.layerPanel;
     expect(layerPanel.resizeHandle).toBeTruthy();
     const section = layerPanel.resizeHandle.closest('section');
     const initialHeight = section.clientHeight;
@@ -114,6 +117,7 @@ describe('Layer Panel', () => {
 
   it('should not change the layer panel height when changing page', async () => {
     // resize the panel
+    layerPanel = fixture.editor.inspector.designPanel.layerPanel;
     let section = layerPanel.resizeHandle.closest('section');
     const initialHeight = section.clientHeight;
     await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
@@ -134,6 +138,7 @@ describe('Layer Panel', () => {
 
   it('should not open the layer panel if the panel is collapsed when changing page', async () => {
     // close the panel
+    layerPanel = fixture.editor.inspector.designPanel.layerPanel;
     expect(layerPanel.panelCollapseButton.getAttribute('aria-expanded')).toBe(
       'true'
     );
@@ -152,6 +157,7 @@ describe('Layer Panel', () => {
   });
 
   it('should be able to delete elements with delete action', async () => {
+    await fixture.events.click(fixture.editor.inspector.insertTab);
     await fixture.editor.library.textTab.click();
     await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
     // Select background for being able to insert another text.
@@ -159,6 +165,8 @@ describe('Layer Panel', () => {
     await fixture.events.click(bgLayer);
     await fixture.events.click(fixture.editor.library.text.preset('Title 2'));
 
+    await fixture.events.click(fixture.editor.inspector.designTab);
+    layerPanel = fixture.editor.inspector.designPanel.layerPanel;
     expect(layerPanel.layers.length).toBe(3);
     const elementALayer = layerPanel.getLayerByInnerText('Title 1');
     await fixture.events.hover(elementALayer);
@@ -172,6 +180,7 @@ describe('Layer Panel', () => {
   });
 
   it('should be able to duplicate elements with duplicate action', async () => {
+    await fixture.events.click(fixture.editor.inspector.insertTab);
     await fixture.editor.library.textTab.click();
     await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
     // Select background for being able to insert another text.
@@ -179,6 +188,8 @@ describe('Layer Panel', () => {
     await fixture.events.click(bgLayer);
     await fixture.events.click(fixture.editor.library.text.preset('Title 2'));
 
+    await fixture.events.click(fixture.editor.inspector.designTab);
+    layerPanel = fixture.editor.inspector.designPanel.layerPanel;
     expect(layerPanel.layers.length).toBe(3);
     const elementALayer = layerPanel.getLayerByInnerText('Title 1');
     await fixture.events.hover(elementALayer);

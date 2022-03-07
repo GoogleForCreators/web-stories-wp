@@ -327,15 +327,16 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
 
   describe('Easier/smarter text color', () => {
     it('should add text color based on background', async () => {
-      // Enable the smart colors first.
-      await fixture.editor.library.textTab.click();
-      fixture.editor.library.text.smartColorToggle.click();
-
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.changeBackgroundColorButton
       );
       await fixture.events.keyboard.type('000');
       await fixture.events.keyboard.press('Tab');
+
+      // Enable the smart colors first.
+      await fixture.events.click(fixture.editor.inspector.insertTab);
+      await fixture.editor.library.textTab.click();
+      fixture.editor.library.text.smartColorToggle.click();
 
       // Should be added with white style on black background.
       await fixture.events.mouse.moveRel(
