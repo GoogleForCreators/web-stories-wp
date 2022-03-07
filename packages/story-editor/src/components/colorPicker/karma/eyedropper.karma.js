@@ -71,6 +71,7 @@ describe('Eyedropper', () => {
     );
 
     // Use eyedropper to select the color
+    await fixture.events.click(fixture.editor.inspector.designTab);
     const bgPanel = fixture.editor.inspector.designPanel.pageBackground;
     await fixture.events.click(bgPanel.backgroundColor.button);
     await waitFor(() => {

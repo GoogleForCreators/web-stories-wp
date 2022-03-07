@@ -267,7 +267,8 @@ const ColorInput = forwardRef(function ColorInput(
         </Tooltip>
       )}
       <Popup
-        isRTL={isRTL}
+        // Temp fix, proper will be done in #10803
+        isRTL={!isRTL}
         anchor={previewRef}
         dock={inspector}
         isOpen={pickerOpen}

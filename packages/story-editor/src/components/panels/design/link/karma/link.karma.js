@@ -87,6 +87,7 @@ describe('Link Panel', () => {
           throw new Error('node not ready');
         }
       });
+      await fixture.events.click(fixture.editor.inspector.designTab);
       linkPanel = fixture.editor.inspector.designPanel.link;
     });
 
@@ -184,6 +185,7 @@ describe('Link Panel', () => {
 
       // Select the element again.
       await fixture.events.click(frame);
+      await fixture.events.click(fixture.editor.inspector.designTab);
       await waitFor(() => {
         if (!fixture.editor.inspector.designPanel.link.address) {
           throw new Error('address element not ready');
@@ -260,6 +262,7 @@ describe('Link Panel', () => {
       const frame = fixture.editor.canvas.framesLayer.frame(element.id).node;
       await moveElementToBottom(frame, 0);
 
+      await fixture.events.click(fixture.editor.inspector.designTab);
       await closePanel('Selection');
       await closePanel('Color');
       await closePanel('Border');
@@ -304,6 +307,7 @@ describe('Link Panel', () => {
 
       await moveElementToBottom(frame);
 
+      await fixture.events.click(fixture.editor.inspector.designTab);
       linkPanel = fixture.editor.inspector.designPanel.link;
       await fixture.events.click(linkPanel.address);
 
@@ -356,6 +360,7 @@ describe('Link Panel', () => {
     });
 
     it('should allow changing link for two elements at the same time', async () => {
+      await fixture.events.click(fixture.editor.inspector.designTab);
       linkPanel = fixture.editor.inspector.designPanel.link;
       await fixture.events.click(linkPanel.address);
 
@@ -385,6 +390,7 @@ describe('Link Panel', () => {
           throw new Error('node not ready');
         }
       });
+      await fixture.events.click(fixture.editor.inspector.designTab);
       linkPanel = fixture.editor.inspector.designPanel.link;
       await fixture.events.click(linkPanel.address);
       await fixture.events.keyboard.type('http://google.com');
