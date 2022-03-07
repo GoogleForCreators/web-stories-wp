@@ -76,6 +76,7 @@ describe('useHelpCenter', () => {
           await result.current.actions.goToNext();
         });
         const expected =
+          //eslint-disable-next-line jest/no-conditional-in-test
           i < result.current.state.navigationFlow.length
             ? i
             : result.current.state.navigationFlow.length - 1;
@@ -92,6 +93,7 @@ describe('useHelpCenter', () => {
           await result.current.actions.goToNext();
         });
         const expectedKey = result.current.state.navigationFlow[i];
+        //eslint-disable-next-line jest/no-conditional-in-test
         if (expectedKey !== DONE_TIP_ENTRY[0]) {
           expected[expectedKey] = true;
         }
@@ -115,6 +117,7 @@ describe('useHelpCenter', () => {
       for (let i = 0; i < result.current.state.navigationFlow.length + 5; i++) {
         const lastIndex = result.current.state.navigationFlow.length - 1;
         const currentIndex = lastIndex - i;
+        //eslint-disable-next-line jest/no-conditional-in-test
         const expected = currentIndex > 0 ? currentIndex : 0;
         expect(result.current.state.navigationIndex).toBe(expected);
         // eslint-disable-next-line no-await-in-loop

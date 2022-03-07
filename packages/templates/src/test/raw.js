@@ -56,7 +56,7 @@ describe('raw template files', () => {
     it('should contain replaceable URLs', () => {
       for (const { elements } of templateData.pages) {
         for (const element of elements) {
-          // eslint-disable-next-line jest/no-if
+          // eslint-disable-next-line jest/no-conditional-in-test
           if (!element?.resource?.src) {
             continue;
           }
@@ -71,7 +71,7 @@ describe('raw template files', () => {
     it('should contain replaceable poster URLs', () => {
       for (const { elements } of templateData.pages) {
         for (const element of elements) {
-          // eslint-disable-next-line jest/no-if
+          // eslint-disable-next-line jest/no-conditional-in-test
           if (element?.type !== 'video') {
             continue;
           }
@@ -87,13 +87,14 @@ describe('raw template files', () => {
     it('images and video ids should default to 0', () => {
       for (const { elements } of templateData.pages) {
         for (const element of elements) {
-          // eslint-disable-next-line jest/no-if
+          // eslint-disable-next-line jest/no-conditional-in-test
           if (!['image', 'video', 'gif'].includes(element?.type)) {
             continue;
           }
 
           expect(element?.resource?.id).toBe(0);
 
+          // eslint-disable-next-line jest/no-conditional-in-test
           if ('image' === element?.type) {
             continue;
           }
@@ -124,7 +125,7 @@ describe('raw template files', () => {
     it('should only contain videos marked as optimized', () => {
       for (const { elements } of templateData.pages) {
         for (const element of elements) {
-          // eslint-disable-next-line jest/no-if
+          // eslint-disable-next-line jest/no-conditional-in-test
           if (element?.type !== 'video' || !element?.resource?.src) {
             continue;
           }
@@ -137,7 +138,7 @@ describe('raw template files', () => {
     it('should only contain videos have isMuted attribute', () => {
       for (const { elements } of templateData.pages) {
         for (const element of elements) {
-          // eslint-disable-next-line jest/no-if
+          // eslint-disable-next-line jest/no-conditional-in-test
           if (element?.type !== 'video' || !element?.resource?.src) {
             continue;
           }
@@ -151,7 +152,7 @@ describe('raw template files', () => {
     it('images and videos should have baseColor', () => {
       for (const { elements } of templateData.pages) {
         for (const element of elements) {
-          // eslint-disable-next-line jest/no-if
+          // eslint-disable-next-line jest/no-conditional-in-test
           if (!['image', 'video', 'gif'].includes(element?.type)) {
             continue;
           }
@@ -166,7 +167,7 @@ describe('raw template files', () => {
     it('should contain only valid stickers', () => {
       for (const { elements } of templateData.pages) {
         for (const element of elements) {
-          // eslint-disable-next-line jest/no-if
+          // eslint-disable-next-line jest/no-conditional-in-test
           if (element?.type !== 'sticker' || !element?.sticker?.type) {
             continue;
           }
