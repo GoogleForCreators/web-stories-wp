@@ -136,7 +136,7 @@
     "karma-sourcemap-loader": "^0.3.8",
     "karma-webpack": "^5.0.0",
     "lint-staged": "^12.3.2",
-    "markdownlint-cli": "^0.30.0",
+    "markdownlint-cli": "^0.31.1",
     "mini-css-extract-plugin": "^2.1.0",
     "mockdate": "^3.0.5",
     "npm-package-json-lint": "^5.4.2",
