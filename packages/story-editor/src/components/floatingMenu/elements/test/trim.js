@@ -24,9 +24,14 @@ import { fireEvent, screen } from '@testing-library/react';
  */
 import { renderWithTheme } from '../../../../testUtils';
 import Trim from '../trim';
-import mockUseVideoTranscoding from '../shared/useVideoTranscoding';
+import mockUseVideoTranscoding from '../../../panels/design/videoOptions/useVideoTranscoding';
 
-jest.mock('../shared/useVideoTranscoding', () => jest.fn());
+jest.mock('../../../panels/design/videoOptions/useVideoTranscoding', () =>
+  jest.fn()
+);
+jest.mock('../shared/useProperties', () =>
+  jest.fn().mockImplementation(() => ({}))
+);
 jest.mock('../shared/icon', () =>
   jest.fn().mockImplementation(function MockButton({ title, Icon, ...rest }) {
     return (
@@ -40,7 +45,8 @@ jest.mock('../shared/icon', () =>
 describe('Design Menu: Trim video', () => {
   it('should not render if trim is not possible', () => {
     mockUseVideoTranscoding.mockImplementationOnce(() => ({
-      canTrim: false,
+      state: { canTrim: false },
+      actions: {},
     }));
     renderWithTheme(<Trim />);
     const trim = screen.queryByRole('menuitem', { name: 'Trim video' });
@@ -49,7 +55,8 @@ describe('Design Menu: Trim video', () => {
 
   it('should render if trim is possible', () => {
     mockUseVideoTranscoding.mockImplementationOnce(() => ({
-      canTrim: true,
+      state: { canTrim: true },
+      actions: {},
     }));
     renderWithTheme(<Trim />);
     const trim = screen.getByRole('menuitem', { name: 'Trim video' });
@@ -58,8 +65,8 @@ describe('Design Menu: Trim video', () => {
 
   it('should render as disabled with alternate title if trim is ongoing', () => {
     mockUseVideoTranscoding.mockImplementationOnce(() => ({
-      canTrim: true,
-      isTrimming: true,
+      state: { canTrim: true, isTrimming: true },
+      actions: {},
     }));
     renderWithTheme(<Trim />);
     const trim = screen.getByRole('menuitem', { name: 'Trimming video' });
@@ -69,8 +76,8 @@ describe('Design Menu: Trim video', () => {
 
   it('should render as disabled if other transcoding is ongoing', () => {
     mockUseVideoTranscoding.mockImplementationOnce(() => ({
-      canTrim: true,
-      isDisabled: true,
+      state: { canTrim: true, isDisabled: true },
+      actions: {},
     }));
     renderWithTheme(<Trim />);
     const trim = screen.getByRole('menuitem', { name: 'Trim video' });
@@ -81,8 +88,8 @@ describe('Design Menu: Trim video', () => {
   it('should invoke trim function when clicked', () => {
     const handleTrim = jest.fn();
     mockUseVideoTranscoding.mockImplementationOnce(() => ({
-      canTrim: true,
-      handleTrim,
+      state: { canTrim: true },
+      actions: { handleTrim },
     }));
     renderWithTheme(<Trim />);
     const trim = screen.getByRole('menuitem', { name: 'Trim video' });

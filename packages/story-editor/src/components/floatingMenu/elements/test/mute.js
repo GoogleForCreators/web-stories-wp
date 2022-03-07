@@ -24,9 +24,14 @@ import { fireEvent, screen } from '@testing-library/react';
  */
 import { renderWithTheme } from '../../../../testUtils';
 import Mute from '../mute';
-import mockUseVideoTranscoding from '../shared/useVideoTranscoding';
+import mockUseVideoTranscoding from '../../../panels/design/videoOptions/useVideoTranscoding';
 
-jest.mock('../shared/useVideoTranscoding', () => jest.fn());
+jest.mock('../../../panels/design/videoOptions/useVideoTranscoding', () =>
+  jest.fn()
+);
+jest.mock('../shared/useProperties', () =>
+  jest.fn().mockImplementation(() => ({}))
+);
 jest.mock('../shared/icon', () =>
   jest.fn().mockImplementation(function MockButton({ title, Icon, ...rest }) {
     return (
@@ -40,7 +45,8 @@ jest.mock('../shared/icon', () =>
 describe('Design Menu: Mute video', () => {
   it('should not render if mute is not possible', () => {
     mockUseVideoTranscoding.mockImplementationOnce(() => ({
-      canMute: false,
+      state: { canMute: false },
+      actions: {},
     }));
     renderWithTheme(<Mute />);
     const mute = screen.queryByRole('menuitem', { name: 'Remove audio' });
@@ -49,7 +55,8 @@ describe('Design Menu: Mute video', () => {
 
   it('should render if mute is possible', () => {
     mockUseVideoTranscoding.mockImplementationOnce(() => ({
-      canMute: true,
+      state: { canMute: true },
+      actions: {},
     }));
     renderWithTheme(<Mute />);
     const mute = screen.getByRole('menuitem', { name: 'Remove audio' });
@@ -58,8 +65,8 @@ describe('Design Menu: Mute video', () => {
 
   it('should render as disabled with alternate title if mute is ongoing', () => {
     mockUseVideoTranscoding.mockImplementationOnce(() => ({
-      canMute: true,
-      isMuting: true,
+      state: { canMute: true, isMuting: true },
+      actions: {},
     }));
     renderWithTheme(<Mute />);
     const mute = screen.getByRole('menuitem', { name: 'Removing audio' });
@@ -69,8 +76,8 @@ describe('Design Menu: Mute video', () => {
 
   it('should render as disabled if other transcoding is ongoing', () => {
     mockUseVideoTranscoding.mockImplementationOnce(() => ({
-      canMute: true,
-      isDisabled: true,
+      state: { canMute: true, isDisabled: true },
+      actions: {},
     }));
     renderWithTheme(<Mute />);
     const mute = screen.getByRole('menuitem', { name: 'Remove audio' });
@@ -81,8 +88,8 @@ describe('Design Menu: Mute video', () => {
   it('should invoke mute function when clicked', () => {
     const handleMute = jest.fn();
     mockUseVideoTranscoding.mockImplementationOnce(() => ({
-      canMute: true,
-      handleMute,
+      state: { canMute: true },
+      actions: { handleMute },
     }));
     renderWithTheme(<Mute />);
     const mute = screen.getByRole('menuitem', { name: 'Remove audio' });
