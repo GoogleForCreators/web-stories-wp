@@ -15,10 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { PAGE_RATIO } from '@googleforcreators/units';
-/**
  * Internal dependencies
  */
 import storyPageToNode from './storyPageToNode';
@@ -40,21 +36,19 @@ async function storyPageToCanvas(page, { width = 400, ...options }) {
     /* webpackChunkName: "chunk-html-to-image" */ 'html-to-image'
   );
 
-  const [node, cleanup] = await storyPageToNode(page, width);
+  const [node, cleanup] = await storyPageToNode(page, width, {
+    renderFullHeightThumb: true,
+  });
 
-  const dataUrl = await htmlToImage.toCanvas(node, {
+  const canvas = await htmlToImage.toCanvas(node, {
     ...options,
-    width,
-    height: width * (1 / PAGE_RATIO),
-    canvasHeight: width * (1 / PAGE_RATIO),
-    canvasWidth: width,
     fontEmbedCss: '',
     pixelRatio: 1,
   });
 
   cleanup();
 
-  return dataUrl;
+  return canvas;
 }
 
 export default storyPageToCanvas;

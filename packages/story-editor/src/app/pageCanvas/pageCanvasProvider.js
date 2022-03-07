@@ -30,12 +30,18 @@ import { STABLE_ARRAY } from '../../constants';
 import Context from './context';
 import getPixelDataFromCanvas from './getPixelDataFromCanvas';
 import usePageCanvasMap from './usePageCanvasMap';
+import usePageSnapshot from './usePageSnapshot';
 import PageCanvasCacheValidator from './pageCanvasCacheValidator';
-import pageWithoutSelection from './pageWithoutSelection';
+import getPageWithoutSelection from './getPageWithoutSelection';
+
+/**
+ * @typedef {import('../../../types').Page} Page
+ */
 
 function PageCanvasProvider({ children }) {
   const queueIdleTask = useIdleQueue();
   const [pageCanvasMap, actions] = usePageCanvasMap();
+  const { getSnapshotCanvas, setSnapshot } = usePageSnapshot();
   const pageIds = useStory(({ state }) => state.pages.map(({ id }) => id));
   const { currentPage, singleElementSelection } = useStory(({ state }) => ({
     singleElementSelection:
@@ -45,14 +51,23 @@ function PageCanvasProvider({ children }) {
     currentPage: state.currentPage,
   }));
 
-  const stateRefValue = {
+  // sync values to a ref so callbacks don't cause re-renders
+  // on consuming components
+  const values = {
     currentPageValue: currentPage,
     pageCanvasMapValue: pageCanvasMap,
     singleElementSelectionValue: singleElementSelection,
   };
-  const stateRef = useRef(stateRefValue);
-  stateRef.current = stateRefValue;
+  const valuesRef = useRef(values);
+  valuesRef.current = values;
 
+  /**
+   * makes a request to the idleCallback queue to generate a canvas
+   * for a given story page.
+   *
+   * @param {[string, Page]} PageTuple - a tuple containing a uid for the requested generation task & the page to generate a canvas from
+   * @return {Function} a cleanup function to clear the requested canvas generation
+   */
   const generateDefferedPageCanvas = useCallback(
     ([taskId, page]) => {
       const cancelIdleTask = queueIdleTask([
@@ -67,36 +82,69 @@ function PageCanvasProvider({ children }) {
     [queueIdleTask, actions]
   );
 
-  const getSelectionExclusionCanvas = useCallback(async () => {
-    const { currentPageValue, singleElementSelectionValue } = stateRef.current;
-    const page = pageWithoutSelection(
-      currentPageValue,
-      singleElementSelectionValue
-    );
-    const canvas = await storyPageToCanvas(page, {});
-    return canvas;
-  }, []);
+  /**
+   * Gets or creates a canvas from the page and excludes
+   * the current selection from the generated canvas.
+   *
+   * @return {HTMLCanvasElement} generated canvas
+   */
+  const getSelectionExclusionCanvas = useCallback(
+    async (page, selection) => {
+      const pageWithoutSelection = getPageWithoutSelection(page, selection);
+      let canvas = getSnapshotCanvas(pageWithoutSelection);
+      if (!canvas) {
+        // Generate the page canvas with the excluded elements if we don't already
+        // have a valid canvas in the cache.
+        canvas = await storyPageToCanvas(pageWithoutSelection, {});
+        setSnapshot({
+          page: pageWithoutSelection,
+          canvas,
+        });
+      }
+      return canvas;
+    },
+    [setSnapshot, getSnapshotCanvas]
+  );
 
-  const getCanvas = useCallback(async () => {
-    const { currentPageValue, pageCanvasMapValue } = stateRef.current;
+  /**
+   * Gets or creates a generated canvas from the current story page.
+   *
+   * @return {HTMLCanvasElement} generated canvas
+   */
+  const getCanvas = useCallback(
+    async (page) => {
+      const { pageCanvasMapValue } = valuesRef.current;
 
-    let canvas = pageCanvasMapValue[currentPageValue.id];
-    if (!canvas) {
-      canvas = await storyPageToCanvas(currentPageValue, {});
-      actions.setPageCanvas({ pageId: currentPageValue.id, canvas });
-    }
-    return canvas;
-  }, [actions]);
+      let canvas = pageCanvasMapValue[page.id];
+      if (!canvas) {
+        canvas = await storyPageToCanvas(page, {});
+        actions.setPageCanvas({ pageId: page.id, canvas });
+      }
+      return canvas;
+    },
+    [actions]
+  );
 
+  /**
+   * Given an element, returns accessible text colors relative
+   * to the current page
+   *
+   * @param {} story element
+   * @return {Object} Returns object consisting of color and backgroundColor in case relevant.
+   */
   const calculateAccessibleTextColors = useCallback(
     async (element) => {
-      const { singleElementSelectionValue } = stateRef.current;
+      const { currentPageValue, singleElementSelectionValue } =
+        valuesRef.current;
 
       let canvas;
       if (singleElementSelectionValue.includes(element.id)) {
-        canvas = await getSelectionExclusionCanvas();
+        canvas = await getSelectionExclusionCanvas(
+          currentPageValue,
+          singleElementSelectionValue
+        );
       } else {
-        canvas = await getCanvas();
+        canvas = await getCanvas(currentPageValue);
       }
 
       const { fontSize } = element;
@@ -119,6 +167,7 @@ function PageCanvasProvider({ children }) {
         },
         actions: {
           calculateAccessibleTextColors,
+          generateDefferedPageCanvas,
         },
       }}
     >

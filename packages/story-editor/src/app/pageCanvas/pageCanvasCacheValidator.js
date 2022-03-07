@@ -33,9 +33,15 @@ function PageCanvasCacheValidator({ pageId, clearPageCanvasCache }) {
     )
   );
 
+  // clear pageCanvas whenever a page is updated.
   useEffect(() => {
     clearPageCanvasCache({ pageId: page.id });
   }, [page, clearPageCanvasCache]);
+
+  // clear pageCanvas if the page gets deleted
+  useEffect(() => {
+    return () => clearPageCanvasCache({ pageId });
+  }, [clearPageCanvasCache, pageId]);
 
   return null;
 }

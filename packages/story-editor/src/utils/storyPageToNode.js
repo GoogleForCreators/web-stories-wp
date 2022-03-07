@@ -35,9 +35,6 @@ import { TransformProvider } from '@googleforcreators/transform';
 /**
  * Internal dependencies
  */
-/**
- * Internal dependencies
- */
 import { FontProvider } from '../app/font';
 import DisplayElement from '../components/canvas/displayElement';
 
@@ -62,8 +59,16 @@ const PreviewWrapper = styled.div`
   ${({ background }) => generatePatternStyles(background)}
 `;
 
+const FullHeight = styled.div`
+  position: absolute;
+  top: ${({ yOffset }) => yOffset}px;
+  bottom: ${({ yOffset }) => yOffset}px;
+  right: 0;
+  left: 0;
+`;
+
 const PageWithDependencies = forwardRef(function PageWithDependencies(
-  { page, width, height },
+  { page, width, height, renderFullHeightThumb = false, containerHeight },
   ref
 ) {
   return (
@@ -76,15 +81,25 @@ const PageWithDependencies = forwardRef(function PageWithDependencies(
               height,
             }}
           >
-            <Page ref={ref} height={height} width={width}>
+            <Page
+              ref={ref}
+              height={renderFullHeightThumb ? containerHeight : height}
+              width={width}
+            >
               <PreviewWrapper background={page.backgroundColor}>
-                {page.elements.map((element) => (
-                  <DisplayElement
-                    key={element.id}
-                    previewMode
-                    element={element}
-                  />
-                ))}
+                <FullHeight
+                  yOffset={
+                    renderFullHeightThumb ? (containerHeight - height) / 2 : 0
+                  }
+                >
+                  {page.elements.map((element) => (
+                    <DisplayElement
+                      key={element.id}
+                      previewMode
+                      element={element}
+                    />
+                  ))}
+                </FullHeight>
               </PreviewWrapper>
             </Page>
           </UnitsProvider>
@@ -108,9 +123,11 @@ const PageWithDependencies = forwardRef(function PageWithDependencies(
  *
  * @param {Page} page Page object.
  * @param {number} width desired width of image. Dictates height and container height
+ * @param {{ renderFullHeightThumb: boolean }} opts - options to alter the rendered node.
  * @return {[HTMLElement, Function]} tuple containing DOM node and cleanup method
  */
-async function storyPageToNode(page, width) {
+async function storyPageToNode(page, width, opts = {}) {
+  const { renderFullHeightThumb = false } = opts;
   const height = width * (1 / PAGE_RATIO);
   const containerHeight = width * (1 / FULLBLEED_RATIO);
 
@@ -142,6 +159,7 @@ async function storyPageToNode(page, width) {
         width={width}
         height={height}
         containerHeight={containerHeight}
+        renderFullHeightThumb={renderFullHeightThumb}
       />,
       bufferRoot
     );

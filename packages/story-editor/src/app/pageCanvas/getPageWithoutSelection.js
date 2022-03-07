@@ -16,7 +16,7 @@
 function pageWithoutSelection(page, selection) {
   return {
     ...page,
-    elements: page.element.filter(({ id }) => !selection.includes(id)),
+    elements: page.elements.filter(({ id }) => !selection.includes(id)),
   };
 }
 
