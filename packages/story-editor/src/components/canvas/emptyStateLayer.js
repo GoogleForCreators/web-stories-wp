@@ -27,7 +27,7 @@ import {
   THEME_CONSTANTS,
   theme,
   lightMode,
-  CONTEXT_MENU_WIDTH,
+  CONTEXT_MENU_MIN_WIDTH,
 } from '@googleforcreators/design-system';
 import { useTransform } from '@googleforcreators/transform';
 
@@ -81,7 +81,7 @@ function EmptyStateLayer() {
   const onButtonClick = (e) => {
     const bb = e.target.getBoundingClientRect();
     e.clientX =
-      bb.left - ((isRTL ? -1 : 1) * CONTEXT_MENU_WIDTH) / 2 + bb.width / 2;
+      bb.left - ((isRTL ? -1 : 1) * CONTEXT_MENU_MIN_WIDTH) / 2 + bb.width / 2;
     // Hardcoded because it's not trivial to get the menu height here.
     const EMPTY_STATE_CONTEXT_MENU_HEIGHT = 132;
     e.clientY = bb.top - EMPTY_STATE_CONTEXT_MENU_HEIGHT + bb.height;

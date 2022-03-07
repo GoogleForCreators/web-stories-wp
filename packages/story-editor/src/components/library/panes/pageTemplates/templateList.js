@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,32 +19,39 @@
  */
 import {
   useCallback,
-  useMemo,
   useRef,
+  useState,
   useEffect,
 } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
-import { useVirtual } from 'react-virtual';
+import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import { trackEvent } from '@googleforcreators/tracking';
-import { UnitsProvider } from '@googleforcreators/units';
-import { useSnackbar } from '@googleforcreators/design-system';
+import { useGridViewKeys, useSnackbar } from '@googleforcreators/design-system';
 import { duplicatePage } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { PANE_PADDING } from '../shared';
-import {
-  getVirtualizedItemIndex,
-  VirtualizedContainer,
-  PANEL_GRID_ROW_GAP,
-  VirtualizedWrapper,
-} from '../shared/virtualizedPanelGrid';
 import { useStory } from '../../../../app/story';
-import PageTemplate from './pageTemplate';
+import { useConfig } from '../../../../app/config';
 
-const THRESHOLD = 6;
+import DefaultPageTemplate from './defaultPageTemplate';
+import SavedPageTemplate from './savedPageTemplate';
+
+const WrapperGrid = styled.div`
+  display: grid;
+  width: 100%;
+  margin-left: ${PANE_PADDING};
+  margin-bottom: 12px;
+  gap: 12px;
+  grid-template-columns: ${({ columnWidth }) =>
+    `repeat(auto-fit, ${columnWidth}px)`};
+  grid-template-rows: ${({ rowHeight }) =>
+    `repeat(minmax(${rowHeight}px, 1fr))`};
+`;
+
 function TemplateList({
   pages,
   parentRef,
@@ -56,8 +63,9 @@ function TemplateList({
   const { addPage } = useStory(({ actions }) => ({
     addPage: actions.addPage,
   }));
+  const { isRTL } = useConfig();
   const { showSnackbar } = useSnackbar();
-
+  const [currentPageId, setCurrentPageId] = useState();
   const containerRef = useRef();
   const pageRefs = useRef({});
 
@@ -77,91 +85,73 @@ function TemplateList({
     [addPage, showSnackbar]
   );
 
-  const rowsTotal = useMemo(() => Math.ceil((pages || []).length / 2), [pages]);
+  const handleFocus = useCallback((id) => {
+    setCurrentPageId(id);
+  }, []);
 
-  const rowVirtualizer = useVirtual({
-    size: rowsTotal,
-    parentRef,
-    estimateSize: useCallback(
-      () => pageSize.height + PANEL_GRID_ROW_GAP,
-      [pageSize.height]
-    ),
-    overscan: 4,
-  });
+  const isSavedTemplates = handleDelete || fetchTemplates;
 
   useEffect(() => {
-    if (
-      rowVirtualizer.virtualItems.length &&
-      rowsTotal &&
-      rowsTotal - THRESHOLD <
-        rowVirtualizer.virtualItems[rowVirtualizer.virtualItems.length - 1]
-          .index
-    ) {
-      fetchTemplates?.();
+    if (pages.length > 0) {
+      // Set `currentPageId` to first item during initial load, or if we have filtered pages by type
+      // since the previous `currentPageId` may no longer be present.
+      if (!currentPageId || !pages.some((page) => page.id === currentPageId)) {
+        setCurrentPageId(pages[0].id);
+      }
     }
-  }, [rowVirtualizer, rowsTotal, fetchTemplates]);
+  }, [currentPageId, pages]);
 
-  const columnVirtualizer = useVirtual({
-    horizontal: true,
-    size: 2,
-    parentRef,
-    estimateSize: useCallback(
-      () => pageSize.width + PANEL_GRID_ROW_GAP,
-      [pageSize.width]
-    ),
-    overscan: 0,
+  useEffect(() => {
+    fetchTemplates?.();
+  }, [fetchTemplates]);
+
+  useGridViewKeys({
+    containerRef: parentRef,
+    gridRef: containerRef,
+    itemRefs: pageRefs,
+    items: pages,
+    currentItemId: currentPageId,
+    isRTL,
   });
 
   return (
-    <UnitsProvider
-      pageSize={{
-        width: pageSize.width,
-        height: pageSize.height,
-      }}
+    <WrapperGrid
+      ref={containerRef}
+      columnWidth={pageSize.width}
+      rowHeight={pageSize.containerHeight}
+      role="list"
+      aria-label={__('Page Template Options', 'web-stories')}
     >
-      <VirtualizedWrapper height={rowVirtualizer.totalSize}>
-        <VirtualizedContainer
-          height={rowVirtualizer.totalSize}
-          ref={containerRef}
-          columnWidth={pageSize.width}
-          rowHeight={pageSize.height}
-          paneLeft={PANE_PADDING}
-          role="list"
-          aria-label={__('Page Template Options', 'web-stories')}
-        >
-          {rowVirtualizer.virtualItems.map((virtualRow) =>
-            columnVirtualizer.virtualItems.map((virtualColumn) => {
-              const pageIndex = getVirtualizedItemIndex({
-                columnIndex: virtualColumn.index,
-                rowIndex: virtualRow.index,
-              });
-
-              const page = pages[pageIndex];
-
-              if (!page) {
-                return null;
-              }
-
-              return (
-                <PageTemplate
-                  key={pageIndex}
-                  data-testid={`page_template_${page.id}`}
-                  ref={(el) => (pageRefs.current[page.id] = el)}
-                  translateY={virtualRow.start}
-                  translateX={virtualColumn.start}
-                  page={page}
-                  pageSize={pageSize}
-                  onClick={() => handlePageClick(page)}
-                  handleDelete={handleDelete}
-                  index={pageIndex}
-                  {...rest}
-                />
-              );
-            })
-          )}
-        </VirtualizedContainer>
-      </VirtualizedWrapper>
-    </UnitsProvider>
+      {isSavedTemplates
+        ? pages.map((page, index) => (
+            <SavedPageTemplate
+              key={page.id}
+              data-testid={`page_template_${page.id}`}
+              ref={(el) => (pageRefs.current[page.id] = el)}
+              page={page}
+              pageSize={pageSize}
+              onClick={() => handlePageClick(page)}
+              handleDelete={handleDelete}
+              onFocus={() => handleFocus(page.id)}
+              index={index}
+              {...rest}
+            />
+          ))
+        : pages.map((page) => (
+            <DefaultPageTemplate
+              ref={(el) => (pageRefs.current[page.id] = el)}
+              key={page.id}
+              data-testid={`page_template_${page.id}`}
+              page={page}
+              pageSize={pageSize}
+              onFocus={() => handleFocus(page.id)}
+              isActive={currentPageId === page.id}
+              onClick={() => handlePageClick(page.story)}
+              columnWidth={pageSize.width}
+              {...rest}
+            />
+          ))}
+    </WrapperGrid>
   );
 }
 
@@ -170,9 +160,6 @@ TemplateList.propTypes = {
   pages: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
-      image: PropTypes.shape({
-        url: PropTypes.string,
-      }),
     })
   ),
   pageSize: PropTypes.object.isRequired,
