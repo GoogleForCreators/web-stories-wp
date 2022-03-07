@@ -349,6 +349,7 @@ describe('Drop-Target integration', () => {
           await fixture.events.mouse.clickOn(bgElement, 5, 5);
 
           // And flip it
+          await fixture.events.click(fixture.editor.inspector.designTab);
           await fixture.events.click(
             fixture.editor.inspector.designPanel.pageBackground.flipHorizontal
           );
@@ -400,6 +401,7 @@ describe('Drop-Target integration', () => {
           await fixture.events.mouse.clickOn(element, 1, 1);
 
           // And flip it
+          await fixture.events.click(fixture.editor.inspector.designTab);
           await fixture.events.click(
             fixture.editor.inspector.designPanel.sizePosition.flipHorizontal
           );
@@ -455,6 +457,7 @@ describe('Drop-Target integration', () => {
           await insertMediaByIndex(fixture, 2);
           flippedImageData = (await getElements(fixture))[2];
 
+          await fixture.events.click(fixture.editor.inspector.designTab);
           await fixture.events.click(
             fixture.editor.inspector.designPanel.sizePosition.flipHorizontal
           );

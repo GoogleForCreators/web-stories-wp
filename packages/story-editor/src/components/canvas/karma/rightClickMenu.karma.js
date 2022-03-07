@@ -426,6 +426,7 @@ describe('Right Click Menu integration', () => {
 
     it('should open and close the context menu using keyboard shortcuts', async () => {
       // add an element to the page
+      await fixture.events.click(fixture.editor.inspector.insertTab);
       await fixture.editor.library.textTab.click();
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
@@ -464,6 +465,8 @@ describe('Right Click Menu integration', () => {
   describe('Right click menu: Select Layer', () => {
     it('should allow selecting a layer from the point where the menu was opened from', async () => {
       // Add a Triangle and an image to the same place.
+      await fixture.events.click(fixture.editor.inspector.insertTab);
+      await fixture.events.sleep(100);
       const mediaItem = fixture.editor.library.media.item(0);
       await fixture.events.mouse.clickOn(mediaItem, 20, 20);
       await fixture.events.click(fixture.editor.library.shapesTab);

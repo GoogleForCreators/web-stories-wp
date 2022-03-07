@@ -46,6 +46,7 @@ describe('Page background panel', () => {
 
       // Allow the background to be set.
       await fixture.events.sleep(300);
+      await fixture.events.click(fixture.editor.inspector.designTab);
       await fixture.events.click(
         fixture.editor.inspector.designPanel.pageBackground.detachBg
       );

@@ -52,6 +52,7 @@ describe('CUJ: Creator can Transform an Element: Selection integration', () => {
   }
 
   async function setFontSize(size) {
+    await fixture.events.click(fixture.editor.inspector.designTab);
     const fontSize = fixture.editor.inspector.designPanel.textStyle.fontSize;
     await fixture.events.click(fontSize, { clickCount: 3 });
     await fixture.events.keyboard.type(size);

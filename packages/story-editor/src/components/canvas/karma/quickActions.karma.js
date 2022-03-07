@@ -218,6 +218,7 @@ describe('Quick Actions integration', () => {
       ).toBeNull();
 
       // add animation to image
+      await fixture.events.click(fixture.editor.inspector.designTab);
       const effectChooserToggle =
         fixture.editor.inspector.designPanel.animation.effectChooser;
 
@@ -244,6 +245,7 @@ describe('Quick Actions integration', () => {
       );
 
       // apply filter
+      await fixture.events.click(fixture.editor.inspector.designTab);
       await fixture.events.click(
         fixture.editor.inspector.designPanel.filters.linear
       );
@@ -403,6 +405,7 @@ describe('Quick Actions integration', () => {
       ).toBeNull();
 
       // add animation to shape
+      await fixture.events.click(fixture.editor.inspector.designTab);
       const effectChooserToggle =
         fixture.editor.inspector.designPanel.animation.effectChooser;
 
@@ -581,6 +584,7 @@ describe('Quick Actions integration', () => {
       ).toBeNull();
 
       // add animation to background image
+      await fixture.events.click(fixture.editor.inspector.designTab);
       const effectChooserToggle =
         fixture.editor.inspector.designPanel.animation.effectChooser;
 
@@ -777,6 +781,7 @@ describe('Quick Actions integration', () => {
       ).toBeNull();
 
       // add animation to text
+      await fixture.events.click(fixture.editor.inspector.designTab);
       const effectChooserToggle =
         fixture.editor.inspector.designPanel.animation.effectChooser;
 
@@ -987,6 +992,7 @@ describe('Quick Actions integration', () => {
       ).toBeNull();
 
       // add animation to video
+      await fixture.events.click(fixture.editor.inspector.designTab);
       const effectChooserToggle =
         fixture.editor.inspector.designPanel.animation.effectChooser;
 
@@ -1118,6 +1124,7 @@ describe('Quick Actions integration', () => {
       await clickOnTarget(
         fixture.editor.canvas.framesLayer.frame(sticker.id).node
       );
+      await fixture.events.click(fixture.editor.inspector.designTab);
     });
 
     it(`clicking the \`${ACTIONS.ADD_ANIMATION.text}\` button should select the animation panel and focus the dropdown`, async () => {
@@ -1153,6 +1160,7 @@ describe('Quick Actions integration', () => {
       ).toBeNull();
 
       // add animation to image
+      await fixture.events.click(fixture.editor.inspector.designTab);
       const effectChooserToggle =
         fixture.editor.inspector.designPanel.animation.effectChooser;
 

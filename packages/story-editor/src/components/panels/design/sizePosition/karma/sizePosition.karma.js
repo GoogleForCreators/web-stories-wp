@@ -85,6 +85,7 @@ describe('Selection Panel', () => {
         fixture.editor.library.text.preset('Paragraph')
       );
       await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
+      await fixture.events.click(fixture.editor.inspector.designTab);
       panel = fixture.editor.inspector.designPanel.sizePosition;
 
       // Store original width and height
@@ -121,9 +122,8 @@ describe('Selection Panel', () => {
       );
       await waitFor(() => fixture.editor.canvas.framesLayer.frames[1].node);
 
-      panel = fixture.editor.inspector.designPanel.sizePosition;
-
       // Switch to shapes tab and click the triangle
+      await fixture.events.click(fixture.editor.inspector.insertTab);
       await fixture.events.click(fixture.editor.library.shapesTab);
       await fixture.events.click(
         fixture.editor.library.shapes.shape('Triangle')
@@ -136,6 +136,8 @@ describe('Selection Panel', () => {
       const oHeight2 = elements[1].height;
 
       // Take off lock ratio by clicking on the visible part of the lock aspect ratio checkbox.
+      await fixture.events.click(fixture.editor.inspector.designTab);
+      panel = fixture.editor.inspector.designPanel.sizePosition;
       await fixture.events.click(panel.lockAspectRatio);
       expect(panel.height.placeholder).toBe('Auto');
 

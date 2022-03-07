@@ -183,6 +183,7 @@ describe('Background Copy Paste integration', () => {
     await setBackgroundColor('FF0000');
     await addBackgroundImage(0);
     await fixture.events.sleep(100);
+    await fixture.events.click(fixture.editor.inspector.designTab);
     await fixture.events.click(
       fixture.editor.inspector.designPanel.filters.linear
     );
@@ -190,6 +191,7 @@ describe('Background Copy Paste integration', () => {
     await setBackgroundColor('00FF00');
     await addBackgroundImage(1);
     await fixture.events.sleep(100);
+    await fixture.events.click(fixture.editor.inspector.designTab);
     await fixture.events.click(
       fixture.editor.inspector.designPanel.filters.radial
     );
@@ -253,6 +255,7 @@ describe('Background Copy Paste integration', () => {
   }
   async function setBackgroundColor(hex) {
     await clickBackgroundElement();
+    await fixture.events.click(fixture.editor.inspector.designTab);
     const hexInput = getInputByAriaLabel('Background color');
     // First click the input field to focus it
     await fixture.events.click(hexInput);
@@ -264,8 +267,11 @@ describe('Background Copy Paste integration', () => {
   }
   async function addBackgroundImage(index) {
     // Add image and click "set as background"
+    await fixture.events.click(fixture.editor.inspector.insertTab);
+    await fixture.events.click(fixture.editor.library.mediaTab);
     const image = fixture.editor.library.media.item(index);
     await fixture.events.mouse.clickOn(image, 20, 20);
+    await fixture.events.click(fixture.editor.inspector.designTab);
     await fixture.events.click(
       fixture.editor.inspector.designPanel.sizePosition.setAsBackground
     );
