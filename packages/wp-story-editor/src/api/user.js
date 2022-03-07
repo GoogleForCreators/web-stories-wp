@@ -26,13 +26,33 @@ import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/wp-utils';
 export function getCurrentUser(config) {
   return apiFetch({
     path: config.api.currentUser,
-  });
+  }).then((resp) => ({
+    trackingOptin: resp.meta.web_stories_tracking_optin,
+    onboarding: resp.meta.web_stories_onboarding,
+    mediaOptimization: resp.meta.web_stories_media_optimization,
+  }));
 }
 export function updateCurrentUser(config, data) {
+  const { trackingOptin, onboarding, mediaOptimization } = data;
+
+  const wpKeysMapping = {
+    meta: {
+      web_stories_tracking_optin: trackingOptin,
+      web_stories_onboarding: onboarding,
+      web_stories_media_optimization: mediaOptimization,
+    },
+  };
+
+  Object.entries(wpKeysMapping.meta).forEach(([key, value]) => {
+    if (value === undefined) {
+      delete wpKeysMapping.meta[key];
+    }
+  });
+
   return apiFetch({
     path: config.api.currentUser,
     method: 'POST',
-    data,
+    data: wpKeysMapping,
   }).then((resp) => {
     delete resp._links;
     return snakeToCamelCaseObjectKeys(resp, [
