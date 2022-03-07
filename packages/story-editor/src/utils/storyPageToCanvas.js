@@ -46,8 +46,6 @@ async function storyPageToCanvas(page, { width = 400, ...options }) {
     pixelRatio: 1,
   });
 
-  document.body.appendChild(canvas);
-
   cleanup();
 
   return canvas;
