@@ -19,7 +19,11 @@
  */
 import styled from 'styled-components';
 import { rgba } from 'polished';
-import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
+import {
+  Text,
+  THEME_CONSTANTS,
+  themeHelpers,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -54,11 +58,10 @@ export const MediaGalleryContainer = styled.div`
   min-height: 100px;
 `;
 
-// TODO (pbakaus@): this needs a refactor for less magic numbers, but for now,
-// replacing 320px with the calc below produces the exact result in a dynamic,
-// scalable way.
+// Exceeding the parent's width here so the media items
+// better align with the upload buttons and scroll bar.
 export const MediaGalleryInnerContainer = styled.div`
-  width: calc(100% + 11px);
+  width: calc(100% + ${themeHelpers.SCROLLBAR_WIDTH}px);
 `;
 
 export const MediaGalleryLoadingPill = styled.div`
