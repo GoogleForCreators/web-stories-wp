@@ -20,13 +20,15 @@
 import apiFetch from '@wordpress/api-fetch';
 
 /**
- * Internal dependencies
- */
-/**
  * External dependencies
  */
 import { bindToCallbacks } from '@web-stories-wp/wp-utils';
+
+/**
+ * Internal dependencies
+ */
 import * as apiCallbacks from '..';
+import { flattenFormData } from '../utils';
 import { GET_MEDIA_RESPONSE_HEADER, GET_MEDIA_RESPONSE_BODY } from './_utils';
 
 jest.mock('@wordpress/api-fetch');
@@ -100,6 +102,55 @@ describe('Media API Callbacks', () => {
         path: MEDIA_PATH + `${mediaId}/`,
         method: 'POST',
         data: expectedWpKeysMapping,
+      })
+    );
+  });
+
+  it('uploadMedia converts arguments mapping', () => {
+    apiFetch.mockReturnValue(Promise.resolve(GET_MEDIA_RESPONSE_BODY[0]));
+    const { uploadMedia } = bindToCallbacks(apiCallbacks, {
+      api: { media: MEDIA_PATH },
+    });
+
+    const file = new File([''], 'filename');
+
+    const mockData = {
+      originalId: 11,
+      templateId: 12,
+      isMuted: false,
+      mediaSource: 'source-video',
+      trimData: { data: 'trimData' },
+      baseColor: '#123456',
+      blurHash: 'asdafd-dsfgh',
+    };
+    const expectedWpKeysMapping = {
+      web_stories_media_source: mockData.mediaSource,
+      web_stories_is_muted: mockData.isMuted,
+      post: mockData.templateId,
+      original_id: mockData.originalId,
+      web_stories_trim_data: mockData.trimData,
+      web_stories_base_color: mockData.baseColor,
+      web_stories_blurhash: mockData.blurHash,
+    };
+
+    const expectedDataArgument = new window.FormData();
+    expectedDataArgument.append(
+      'file',
+      file,
+      file.name || file.type.replace('/', '.')
+    );
+
+    Object.entries(expectedWpKeysMapping).forEach(([key, value]) =>
+      flattenFormData(expectedDataArgument, key, value)
+    );
+
+    uploadMedia(file, mockData);
+
+    expect(apiFetch).toHaveBeenCalledWith(
+      expect.objectContaining({
+        path: MEDIA_PATH,
+        method: 'POST',
+        body: expectedDataArgument,
       })
     );
   });
