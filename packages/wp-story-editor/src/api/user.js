@@ -26,13 +26,11 @@ import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/wp-utils';
 export function getCurrentUser(config) {
   return apiFetch({
     path: config.api.currentUser,
-  }).then((resp) => {
-    return {
-      trackingOptin: resp.meta.web_stories_tracking_optin,
-      onboarding: resp.meta.web_stories_onboarding,
-      mediaOptimization: resp.meta.web_stories_media_optimization,
-    };
-  });
+  }).then((resp) => ({
+    trackingOptin: resp.meta.web_stories_tracking_optin,
+    onboarding: resp.meta.web_stories_onboarding,
+    mediaOptimization: resp.meta.web_stories_media_optimization,
+  }));
 }
 export function updateCurrentUser(config, data) {
   const { trackingOptin, onboarding, mediaOptimization } = data;
