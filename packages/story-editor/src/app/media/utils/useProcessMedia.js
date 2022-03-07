@@ -223,7 +223,6 @@ function useProcessMedia({
         original: resourceId,
         start,
         end,
-        elementId,
       };
 
       const onUploadStart = () =>
@@ -283,6 +282,7 @@ function useProcessMedia({
             isMuted,
             mediaSource: isOptimized ? 'video-optimization' : 'editor',
           },
+          elementId,
           trimData,
           resource: {
             ...oldResourceWithoutId,

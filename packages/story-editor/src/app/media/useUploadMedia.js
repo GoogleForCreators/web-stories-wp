@@ -70,7 +70,7 @@ function useUploadMedia({
       isCurrentResourceProcessing,
       isNewResourceTranscoding,
       isNewResourceMuting,
-      isResourceTrimming,
+      isElementTrimming,
       isCurrentResourceUploading,
       isCurrentResourceTranscoding,
       isCurrentResourceMuting,
@@ -241,6 +241,7 @@ function useUploadMedia({
      * @param {import('@googleforcreators/media').Resource} args.resource Resource object.
      * @param {Blob} args.posterFile Blob object of poster.
      * @param {number} args.originalResourceId Original resource id.
+     * @param {string} args.elementId ID of element on the canvas.
      * @return {void}
      */
     async (
@@ -256,6 +257,7 @@ function useUploadMedia({
         resource,
         posterFile,
         originalResourceId,
+        elementId,
       } = {}
     ) => {
       // If there are no files passed, don't try to upload.
@@ -308,6 +310,7 @@ function useUploadMedia({
             muteVideo,
             trimData,
             originalResourceId,
+            elementId,
           });
         })
       );
@@ -330,7 +333,7 @@ function useUploadMedia({
     isCurrentResourceProcessing,
     isNewResourceTranscoding,
     isNewResourceMuting,
-    isResourceTrimming,
+    isElementTrimming,
     isCurrentResourceUploading,
     isCurrentResourceTranscoding,
     isCurrentResourceMuting,

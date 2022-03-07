@@ -37,29 +37,39 @@ import {
 import { useKeyDownEffect } from '../keyboard';
 import { useContextMenu } from './contextMenuProvider';
 
-export const CONTEXT_MENU_WIDTH = 218;
+export const CONTEXT_MENU_MIN_WIDTH = 200;
+const CONTEXT_MENU_MAX_WIDTH = 300;
 
 const MenuWrapper = styled.div(
   ({ theme }) => css`
-    background-color: ${({ $isSecondary }) =>
-      $isSecondary ? theme.colors.bg.secondary : theme.colors.bg.primary};
-    border-radius: ${({ $isHorizontal }) =>
-      $isHorizontal ? theme.borders.radius.medium : theme.borders.radius.small};
+    background-color: ${({ isSecondary }) =>
+      isSecondary ? theme.colors.bg.secondary : theme.colors.bg.primary};
+    border-radius: ${({ isHorizontal }) =>
+      isHorizontal ? theme.borders.radius.medium : theme.borders.radius.small};
     border: 1px solid ${theme.colors.border.disable};
     gap: 6px;
     display: flex;
-    ${({ $isHorizontal, $isIconMenu }) =>
-      $isHorizontal
-        ? `
-          height: 52px;
-          padding: 7px 10px;
-          align-items: center;
-        `
-        : `
-          flex-direction: column;
-          width: ${$isIconMenu ? 40 : CONTEXT_MENU_WIDTH}px;
-          padding: ${$isIconMenu ? '4px 3px' : '8px 0'};
-        `}
+
+    ${({ isHorizontal, isIconMenu }) =>
+      isHorizontal
+        ? css`
+            // horizontal menu
+            height: 52px;
+            padding: 7px 10px;
+            align-items: center;
+          `
+        : css`
+            // vertical menu
+            flex-direction: column;
+            width: ${isIconMenu ? '40px' : 'auto'};
+            padding: ${isIconMenu ? '4px 3px' : '8px 0'};
+            max-width: ${CONTEXT_MENU_MAX_WIDTH}px;
+
+            ${!isIconMenu &&
+            css`
+              min-width: ${CONTEXT_MENU_MIN_WIDTH}px;
+            `};
+          `}
 
     *:last-child {
       margin-bottom: 0;
@@ -67,8 +77,9 @@ const MenuWrapper = styled.div(
   `
 );
 MenuWrapper.propTypes = {
-  $isIconMenu: PropTypes.bool,
-  $isHorizontal: PropTypes.bool,
+  isIconMenu: PropTypes.bool,
+  isHorizontal: PropTypes.bool,
+  isSecondary: PropTypes.bool,
 };
 
 /**
@@ -240,9 +251,9 @@ const Menu = ({
       ref={composedListRef}
       data-testid="context-menu-list"
       role="menu"
-      $isIconMenu={isIconMenu}
-      $isHorizontal={isHorizontal}
-      $isSecondary={isSecondary}
+      isIconMenu={isIconMenu}
+      isHorizontal={isHorizontal}
+      isSecondary={isSecondary}
       // Tabbing out from the list while using 'shift' would
       // focus the list element. Should just travel back to the previous
       // focusable element in the DOM
