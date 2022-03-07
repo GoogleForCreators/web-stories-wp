@@ -27963,35 +27963,6 @@
     }
   },
   {
-    "family": "Open Sans Condensed",
-    "fallbacks": ["sans-serif"],
-    "weights": [300, 700],
-    "styles": ["italic"],
-    "variants": [
-      [0, 300],
-      [1, 300],
-      [0, 700]
-    ],
-    "service": "fonts.google.com",
-    "metrics": {
-      "upm": 2048,
-      "asc": 2189,
-      "des": -600,
-      "tAsc": 1567,
-      "tDes": -492,
-      "tLGap": 132,
-      "wAsc": 2189,
-      "wDes": 600,
-      "xH": 1085,
-      "capH": 1462,
-      "yMin": -512,
-      "yMax": 2132,
-      "hAsc": 2189,
-      "hDes": -600,
-      "lGap": 0
-    }
-  },
-  {
     "family": "Oranienbaum",
     "fallbacks": ["serif"],
     "weights": [400],
@@ -31801,7 +31772,7 @@
   },
   {
     "family": "Roboto Serif",
-    "fallbacks": ["sans-serif"],
+    "fallbacks": ["serif"],
     "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
     "styles": ["regular", "italic"],
     "variants": [
