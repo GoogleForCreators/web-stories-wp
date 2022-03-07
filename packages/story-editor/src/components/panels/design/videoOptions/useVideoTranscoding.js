@@ -67,13 +67,17 @@ function useVideoTranscoding({ resource, elementId, isSingleElement = true }) {
   );
 
   return {
-    canTrim: hasTrimMode,
-    canMute,
-    isTrimming,
-    isMuting,
-    isDisabled: shouldDisableVideoActions,
-    handleMute,
-    handleTrim: toggleTrimMode,
+    state: {
+      canTrim: hasTrimMode,
+      canMute,
+      isTrimming,
+      isMuting,
+      isDisabled: shouldDisableVideoActions,
+    },
+    actions: {
+      handleMute,
+      handleTrim: toggleTrimMode,
+    },
   };
 }
 

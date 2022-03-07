@@ -28,7 +28,10 @@ import { IconButton, useProperties } from './shared';
 
 function Trim() {
   const { id: elementId, resource } = useProperties(['id', 'resource']);
-  const { canTrim, isTrimming, isDisabled, handleTrim } = useVideoTranscoding({
+  const {
+    state: { canTrim, isTrimming, isDisabled },
+    actions: { handleTrim },
+  } = useVideoTranscoding({
     elementId,
     resource,
   });

@@ -28,7 +28,10 @@ import { IconButton, useProperties } from './shared';
 
 function Mute() {
   const { id: elementId, resource } = useProperties(['id', 'resource']);
-  const { canMute, isMuting, isDisabled, handleMute } = useVideoTranscoding({
+  const {
+    state: { canMute, isMuting, isDisabled },
+    actions: { handleMute },
+  } = useVideoTranscoding({
     elementId,
     resource,
   });

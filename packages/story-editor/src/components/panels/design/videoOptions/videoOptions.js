@@ -76,13 +76,8 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   const isSingleElement = selectedElements.length === 1;
 
   const {
-    canTrim,
-    canMute,
-    isTrimming,
-    isMuting,
-    isDisabled,
-    handleMute,
-    handleTrim,
+    state: { canTrim, canMute, isTrimming, isMuting, isDisabled },
+    actions: { handleMute, handleTrim },
   } = useVideoTranscoding({ resource, elementId, isSingleElement });
 
   const muteButtonText = isMuting
