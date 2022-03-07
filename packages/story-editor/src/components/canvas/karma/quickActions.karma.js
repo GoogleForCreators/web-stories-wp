@@ -357,19 +357,6 @@ describe('Quick Actions integration', () => {
       );
     });
 
-    it(`should select the \`${ACTIONS.CHANGE_COLOR.text}\` button and select the shape style panel and focus the input`, async () => {
-      await fixture.events.click(
-        fixture.editor.canvas.quickActionMenu.changeColorButton
-      );
-
-      expect(
-        fixture.editor.inspector.designPanel.shapeStyle.backgroundColor.hex
-      ).not.toBeNull();
-      expect(document.activeElement).toEqual(
-        fixture.editor.inspector.designPanel.shapeStyle.backgroundColor.hex
-      );
-    });
-
     it(`should select the \`${ACTIONS.ADD_ANIMATION.text}\` button and select the animation panel and focus the dropdown`, async () => {
       // click quick menu button
       await fixture.events.click(
@@ -712,36 +699,6 @@ describe('Quick Actions integration', () => {
       );
 
       await fixture.editor.canvas.framesLayer.waitFocusedWithin();
-    });
-
-    it(`clicking the \`${ACTIONS.CHANGE_TEXT_COLOR.text}\` button should select the font styles on the design panel and focus the color input`, async () => {
-      // click quick menu button
-      await fixture.events.click(
-        fixture.editor.canvas.quickActionMenu.textColorButton
-      );
-
-      expect(fixture.editor.inspector.designPanel.textStyle).not.toBeNull();
-
-      const textStyleColorInput = fixture.screen.queryByRole('textbox', {
-        name: /^Text color$/,
-      });
-      expect(textStyleColorInput).toBeDefined();
-      expect(document.activeElement).toEqual(textStyleColorInput);
-    });
-
-    it(`clicking the \`${ACTIONS.CHANGE_FONT.text}\` button should select the font styles on the design panel and focus the font dropdown`, async () => {
-      // click quick menu button
-      await fixture.events.click(
-        fixture.editor.canvas.quickActionMenu.fontButton
-      );
-
-      expect(fixture.editor.inspector.designPanel.textStyle).not.toBeNull();
-
-      const fontDropdown = fixture.screen.queryByRole('button', {
-        name: /^Font family$/,
-      });
-      expect(fontDropdown).toBeDefined();
-      expect(document.activeElement).toEqual(fontDropdown);
     });
 
     it(`clicking the \`${ACTIONS.ADD_ANIMATION.text}\` button should select the animation panel and focus the dropdown`, async () => {
