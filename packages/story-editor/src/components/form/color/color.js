@@ -50,12 +50,12 @@ const containerCss = css`
 
 const Container = styled.section`
   ${containerCss}
-  gap: ${({ isMinimal }) => (isMinimal ? 6 : 8)}px;
+  gap: ${({ isInDesignMenu }) => (isInDesignMenu ? 6 : 8)}px;
 `;
 
 const ColorInputsWrapper = styled.div`
   ${containerCss}
-  gap: ${({ isMinimal }) => (isMinimal ? 0 : 6)}px;
+  gap: ${({ isInDesignMenu }) => (isInDesignMenu ? 0 : 6)}px;
 `;
 
 const Space = styled.div`
@@ -96,7 +96,7 @@ const Color = forwardRef(function Color(
     shouldCloseOnSelection = false,
     allowsSavedColorDeletion = true,
     pickerPlacement = PLACEMENT.LEFT_START,
-    isMinimal = false,
+    isInDesignMenu = false,
     hasInputs = true,
   },
   ref
@@ -121,7 +121,7 @@ const Color = forwardRef(function Color(
   const tooltip = __('Pick a color from canvas', 'web-stories');
 
   return (
-    <Container aria-label={containerLabel} isMinimal={isMinimal}>
+    <Container aria-label={containerLabel} isInDesignMenu={isInDesignMenu}>
       {hasEyedropper && (
         <Tooltip title={tooltip} hasTail>
           <EyeDropperButton
@@ -134,7 +134,7 @@ const Color = forwardRef(function Color(
         </Tooltip>
       )}
 
-      <ColorInputsWrapper isMinimal={isMinimal}>
+      <ColorInputsWrapper isInDesignMenu={isInDesignMenu}>
         <InputWrapper hasInputs={hasInputs}>
           <ColorInput
             ref={ref}
@@ -144,7 +144,7 @@ const Color = forwardRef(function Color(
             changedStyle={changedStyle}
             pickerPlacement={pickerPlacement}
             hasInputs={hasInputs}
-            isMinimal={isMinimal}
+            isInDesignMenu={isInDesignMenu}
             pickerProps={{
               allowsGradient,
               allowsOpacity,
@@ -163,7 +163,7 @@ const Color = forwardRef(function Color(
               <OpacityInput
                 value={value}
                 onChange={handleOpacityChange}
-                isMinimal={isMinimal}
+                isInDesignMenu={isInDesignMenu}
               />
             </OpacityWrapper>
           </>
@@ -187,7 +187,7 @@ Color.propTypes = {
   shouldCloseOnSelection: PropTypes.bool,
   allowsSavedColorDeletion: PropTypes.bool,
   pickerPlacement: PropTypes.string,
-  isMinimal: PropTypes.bool,
+  isInDesignMenu: PropTypes.bool,
   hasInputs: PropTypes.bool,
 };
 

@@ -47,15 +47,9 @@ function OutputPage({
     animations,
     elements,
     backgroundColor,
-    backgroundAudio,
+    backgroundAudio = {},
     pageAttachment = {},
   } = page;
-
-  const {
-    resource: backgroundAudioResource,
-    tracks: backgroundAudioTracks = [],
-    loop: backgroundAudioLoop = true,
-  } = backgroundAudio || {};
 
   const [backgroundElement, ...otherElements] = elements;
 
@@ -101,28 +95,26 @@ function OutputPage({
     )
     .map(({ id: videoId }) => `el-${videoId}-captions`);
 
-  const hasBackgroundAudioWithTracks =
-    backgroundAudioResource?.src && backgroundAudioTracks?.length > 0;
+  const backgroundAudioSrc = backgroundAudio.resource?.src;
+  const hasBackgroundAudioCaptions = backgroundAudio.tracks?.length > 0;
+  const hasNonLoopingBackgroundAudio =
+    false === backgroundAudio.loop && backgroundAudio.resource?.length;
+  const needsEnhancedBackgroundAudio =
+    hasBackgroundAudioCaptions || hasNonLoopingBackgroundAudio;
 
-  if (hasBackgroundAudioWithTracks) {
+  if (backgroundAudioSrc && hasBackgroundAudioCaptions) {
     videoCaptions.push(`el-${id}-captions`);
   }
-
-  const isNonLoopingBackgroundAudio =
-    backgroundAudioResource?.length && !backgroundAudioLoop;
-
-  const backgroundAudioSrc =
-    !hasBackgroundAudioWithTracks &&
-    backgroundAudioLoop &&
-    backgroundAudioResource?.src
-      ? backgroundAudioResource.src
-      : undefined;
 
   return (
     <amp-story-page
       id={id}
       auto-advance-after={autoAdvanceAfter}
-      background-audio={backgroundAudioSrc}
+      background-audio={
+        backgroundAudioSrc && !needsEnhancedBackgroundAudio
+          ? backgroundAudioSrc
+          : undefined
+      }
     >
       <StoryAnimation.Provider animations={animations} elements={elements}>
         <StoryAnimation.AMPAnimations />
@@ -162,7 +154,7 @@ function OutputPage({
         </amp-story-grid-layer>
       </StoryAnimation.Provider>
 
-      {(hasBackgroundAudioWithTracks || isNonLoopingBackgroundAudio) && (
+      {backgroundAudioSrc && needsEnhancedBackgroundAudio && (
         <BackgroundAudio backgroundAudio={backgroundAudio} id={id} />
       )}
 

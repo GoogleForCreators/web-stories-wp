@@ -28,11 +28,6 @@ import './style.css'; // This way the general dashboard styles are loaded before
 import './setLocaleData';
 
 /**
- * WordPress dependencies
- */
-import domReady from '@wordpress/dom-ready';
-
-/**
  * External dependencies
  */
 import { Dashboard } from '@googleforcreators/dashboard';
@@ -43,6 +38,11 @@ import { initializeTracking } from '@googleforcreators/tracking';
 import { bindToCallbacks } from '@web-stories-wp/wp-utils';
 
 /**
+ * WordPress dependencies
+ */
+import '@wordpress/dom-ready'; // Just imported here so it's part of the bundle. Usage is in inline scripts.
+
+/**
  * Internal dependencies
  */
 import * as apiCallbacks from './api';
@@ -51,7 +51,6 @@ import { LEFT_RAIL_SECONDARY_NAVIGATION, TOOLBAR_HEIGHT } from './constants';
 import { Layout } from './components';
 
 window.webStories = window.webStories || {};
-window.webStories.domReady = domReady;
 
 /**
  * Initializes the Web Stories dashboard screen.

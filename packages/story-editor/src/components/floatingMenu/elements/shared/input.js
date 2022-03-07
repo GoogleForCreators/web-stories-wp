@@ -14,9 +14,15 @@
  * limitations under the License.
  */
 
-export { default as Color } from './color';
-export { default as IconButton } from './icon';
-export { default as Input } from './input';
-export { default as Separator } from './separator';
-export { default as TextButton } from './text';
-export { default as useProperties } from './useProperties';
+/**
+ * External dependencies
+ */
+import { NumericInput } from '@googleforcreators/design-system';
+import styled from 'styled-components';
+
+const Input = styled(NumericInput)`
+  width: 70px;
+  flex: 0 0 70px;
+`;
+
+export default Input;

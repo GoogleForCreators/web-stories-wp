@@ -60,6 +60,8 @@ const MediaCircle = styled(MediaRectangle)`
   width: 100%;
 `;
 
+const EmptyMediaWrapper = styled.div``;
+
 const ImageWrapper = styled.div`
   border-radius: ${({ variant }) =>
     variant === MEDIA_VARIANTS.CIRCLE ? 100 : 4}px;
@@ -93,21 +95,31 @@ const menuStyleOverride = css`
   }
 `;
 
-const Button = styled(DefaultButton)`
-  background-color: ${({ theme }) =>
-    theme.colors.interactiveBg.secondaryNormal};
-  position: absolute;
-  bottom: -8px;
-  right: -8px;
-  &:hover {
-    background-color: ${({ theme }) =>
-      theme.colors.interactiveBg.secondaryHover};
-  }
-`;
+const Button = styled(DefaultButton)(
+  ({ showImage }) =>
+    css`
+      background-color: ${({ theme }) =>
+        theme.colors.interactiveBg.secondaryNormal};
+      position: relative;
+
+      ${showImage &&
+      css`
+        position: absolute;
+        bottom: -8px;
+        right: -8px;
+      `}
+
+      &:hover {
+        background-color: ${({ theme }) =>
+          theme.colors.interactiveBg.secondaryHover};
+      }
+    `
+);
 
 const MediaOptions = {
   [MEDIA_VARIANTS.RECTANGLE]: MediaRectangle,
   [MEDIA_VARIANTS.CIRCLE]: MediaCircle,
+  [MEDIA_VARIANTS.NONE]: EmptyMediaWrapper,
 };
 
 const dots = keyframes`
@@ -187,25 +199,28 @@ export const MediaInput = forwardRef(function Media(
   const StyledMedia = MediaOptions[variant];
   // Media input only allows simplified dropdown with one group.
   const options = [{ group: menuOptions }];
+
   return (
-    <StyledMedia className={className} {...rest}>
-      <ImageWrapper variant={variant}>
-        {value ? (
-          <Img
-            src={value}
-            alt={alt}
-            crossOrigin="anonymous"
-            decoding="async"
-            width={imgProps?.width || null}
-            height={imgProps?.height || null}
-          />
-        ) : (
-          <DefaultImageWrapper>
-            <DefaultImage />
-          </DefaultImageWrapper>
-        )}
-        {isLoading && <LoadingDots />}
-      </ImageWrapper>
+    <StyledMedia className={className}>
+      {variant !== MEDIA_VARIANTS.NONE && (
+        <ImageWrapper variant={variant}>
+          {value ? (
+            <Img
+              src={value}
+              alt={alt}
+              crossOrigin="anonymous"
+              decoding="async"
+              width={imgProps?.width || null}
+              height={imgProps?.height || null}
+            />
+          ) : (
+            <DefaultImageWrapper>
+              <DefaultImage />
+            </DefaultImageWrapper>
+          )}
+          {isLoading && <LoadingDots />}
+        </ImageWrapper>
+      )}
       {canUpload && (
         <Tooltip
           title={hasMenu ? null : __('Open media picker', 'web-stories')}
@@ -221,6 +236,7 @@ export const MediaInput = forwardRef(function Media(
               internalRef.current = node;
             }}
             id={buttonId}
+            showImage={variant !== MEDIA_VARIANTS.NONE}
             variant={BUTTON_VARIANTS.SQUARE}
             type={BUTTON_TYPES.TERTIARY}
             size={BUTTON_SIZES.SMALL}

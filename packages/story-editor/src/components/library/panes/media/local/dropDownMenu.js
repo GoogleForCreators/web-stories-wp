@@ -33,6 +33,7 @@ import {
   PLACEMENT,
   Popup,
   useKeyDownEffect,
+  noop,
 } from '@googleforcreators/design-system';
 
 /**
@@ -83,6 +84,7 @@ const MENU_OPTIONS = {
  * @param {Function} props.onMenuOpen Callback for when menu is opened.
  * @param {Function} props.onMenuCancelled Callback for when menu is closed without any selections.
  * @param {Function} props.onMenuSelected Callback for when menu is closed and an option selected.
+ * @param {Function} props.setParentActive Sets the parent element active.
  * @return {null|*} Element or null if should not display the More icon.
  */
 function DropDownMenu({
@@ -92,6 +94,7 @@ function DropDownMenu({
   onMenuOpen,
   onMenuCancelled,
   onMenuSelected,
+  setParentActive = noop,
 }) {
   const options = [
     {
@@ -111,6 +114,14 @@ function DropDownMenu({
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [showEditDialog, setShowEditDialog] = useState(false);
   const moreButtonRef = useRef();
+
+  const onClose = useCallback(() => {
+    onMenuCancelled();
+    moreButtonRef.current?.focus();
+    // Activeness of the parent is lost then due to blurring, we need to set it active "manually"
+    // to focus back on the original button.
+    setParentActive();
+  }, [onMenuCancelled, setParentActive]);
 
   const { canTranscodeResource } = useLocalMedia(
     ({ state: { canTranscodeResource } }) => ({
@@ -133,16 +144,16 @@ function DropDownMenu({
   };
 
   // On Delete dialog closing.
-  const onDeleteDialogClose = useCallback(
-    () => setShowDeleteDialog(false),
-    [setShowDeleteDialog]
-  );
+  const onDeleteDialogClose = useCallback(() => {
+    setShowDeleteDialog(false);
+    onClose();
+  }, [setShowDeleteDialog, onClose]);
 
   // On Edit dialog closing.
-  const onEditDialogClose = useCallback(
-    () => setShowEditDialog(false),
-    [setShowEditDialog]
-  );
+  const onEditDialogClose = useCallback(() => {
+    setShowEditDialog(false);
+    onClose();
+  }, [setShowEditDialog, onClose]);
 
   useRovingTabIndex(
     { ref: moreButtonRef.current || null },
@@ -187,7 +198,7 @@ function DropDownMenu({
                 listId={listId}
                 onMenuItemClick={handleCurrentValue}
                 options={options}
-                onDismissMenu={onMenuCancelled}
+                onDismissMenu={onClose}
                 hasMenuRole
                 menuStylesOverride={menuStylesOverride}
               />
@@ -216,6 +227,7 @@ DropDownMenu.propTypes = {
   onMenuOpen: PropTypes.func.isRequired,
   onMenuCancelled: PropTypes.func.isRequired,
   onMenuSelected: PropTypes.func.isRequired,
+  setParentActive: PropTypes.func,
 };
 
 export default DropDownMenu;

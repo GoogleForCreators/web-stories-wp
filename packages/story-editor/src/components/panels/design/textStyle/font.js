@@ -40,7 +40,7 @@ import useRichTextFormatting from './useRichTextFormatting';
 import getFontWeights from './getFontWeights';
 import FontPicker from './fontPicker';
 
-const MIN_MAX = {
+export const MIN_MAX = {
   FONT_SIZE: {
     MIN: 8,
     MAX: 800,

@@ -16,4 +16,5 @@
 export const MEDIA_VARIANTS = {
   CIRCLE: 'circle',
   RECTANGLE: 'rectangle',
+  NONE: 'none',
 };

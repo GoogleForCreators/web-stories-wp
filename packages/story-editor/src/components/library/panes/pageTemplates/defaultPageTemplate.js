@@ -34,6 +34,7 @@ import {
  * Internal dependencies
  */
 import InsertionOverlay from '../shared/insertionOverlay';
+import { PageTemplateTitleContainer } from '../shared';
 import { PAGE_TEMPLATE_TYPES } from './constants';
 
 const PageTemplateWrapper = styled.div``;
@@ -61,14 +62,7 @@ const PageTemplateButton = styled(Button).attrs({ type: BUTTON_TYPES.PLAIN })`
   }
 `;
 
-const PageTemplateTitleContainer = styled.div`
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  padding: 8px;
-  background-color: ${({ theme }) => theme.colors.opacity.black64};
-  opacity: 0;
-
+const TemplateTitleContainer = styled(PageTemplateTitleContainer)`
   ${PageTemplateButton}:hover &,
   ${PageTemplateButton}:focus & {
     opacity: 1;
@@ -120,14 +114,14 @@ const DefaultPageTemplate = forwardRef(
           )}
           {isFocused && <InsertionOverlay />}
           {page.title && (
-            <PageTemplateTitleContainer>
+            <TemplateTitleContainer>
               <Text
                 as="span"
                 size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
               >
                 {templateTitle}
               </Text>
-            </PageTemplateTitleContainer>
+            </TemplateTitleContainer>
           )}
         </PageTemplateButton>
       </PageTemplateWrapper>

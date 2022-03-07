@@ -23,6 +23,7 @@ import { within } from '@testing-library/react';
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
+import { useStory } from '../../../app/story';
 
 describe('Publish Story Modal', () => {
   let fixture;
@@ -121,6 +122,25 @@ describe('Publish Story Modal', () => {
       expect(typeof autoInput.getAttribute('checked')).toBe('string');
       expect(manualInput.getAttribute('checked')).toBeNull();
     });
+
+    it('should update the featured media', async () => {
+      const originalPoster = fixture.renderHook(() =>
+        useStory(({ state }) => state.story.featuredMedia)
+      );
+
+      const posterImageButton = await getPublishModalElement(
+        'button',
+        'Poster image'
+      );
+
+      await fixture.events.click(posterImageButton);
+
+      const newPoster = fixture.renderHook(() =>
+        useStory(({ state }) => state.story.featuredMedia)
+      );
+
+      expect(originalPoster).not.toEqual(newPoster);
+    });
   });
 
   describe('Keyboard navigation', () => {
@@ -136,6 +156,14 @@ describe('Publish Story Modal', () => {
 
       const publishButton = await getPublishModalElement('button', 'Publish');
       expect(publishButton).toHaveFocus();
+
+      await fixture.events.keyboard.press('tab');
+
+      const updatePosterImageButton = await getPublishModalElement(
+        'button',
+        'Poster image'
+      );
+      expect(updatePosterImageButton).toHaveFocus();
 
       await fixture.events.keyboard.press('tab');
 
