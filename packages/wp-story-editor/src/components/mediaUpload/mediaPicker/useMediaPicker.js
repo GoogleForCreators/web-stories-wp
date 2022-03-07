@@ -85,8 +85,8 @@ function useMediaPicker({
       // Video poster generation for newly added videos is done in <MediaPane>.
       window.wp.Uploader.prototype.success = ({ attributes }) => {
         updateMedia(attributes.id, {
-          web_stories_media_source: 'editor',
-          alt_text: attributes.alt || attributes.title,
+          mediaSource: 'editor',
+          altText: attributes.alt || attributes.title,
         });
       };
     } catch (e) {
@@ -223,12 +223,12 @@ function useMediaPicker({
 
       fileFrame.once('cropped', (attachment) => {
         if (attachment?.id) {
-          const alt_text = attachment.alt || attachment.title;
+          const altText = attachment.alt || attachment.title;
           updateMedia(attachment.id, {
-            web_stories_media_source: 'editor',
-            alt_text,
+            mediaSource: 'editor',
+            altText,
           });
-          attachment.alt = alt_text;
+          attachment.alt = altText;
         }
         onSelect(getResourceFromMediaPicker(attachment));
       });
