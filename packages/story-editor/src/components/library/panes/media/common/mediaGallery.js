@@ -31,14 +31,12 @@ const PHOTO_SPACING = 8;
 const TARGET_ROW_HEIGHT = 110;
 const ROW_CONSTRAINTS = { maxPhotos: 2 };
 
-// eslint-disable-next-line react/prop-types -- disable react/prop-types eslint rule for the local component
+// eslint-disable-next-line react/prop-types -- Negligible here.
 const ContainerRenderer = ({ children, containerRef }) => {
   return <GalleryContainer ref={containerRef}>{children}</GalleryContainer>;
 };
 
-const RowRenderer = ({ children }) => {
-  return children;
-};
+const RowRenderer = ({ children }) => children;
 
 /**
  * @callback InsertionCallback
