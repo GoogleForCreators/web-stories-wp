@@ -262,7 +262,6 @@ describe('Link Panel', () => {
       await moveElementToBottom(frame, 0);
 
       await fixture.events.click(fixture.editor.inspector.designTab);
-      await fixture.events.sleep(100);
       await closePanel('Selection');
       await closePanel('Color');
       await closePanel('Border');
