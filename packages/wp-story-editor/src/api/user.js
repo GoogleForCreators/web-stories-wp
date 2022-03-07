@@ -29,10 +29,22 @@ export function getCurrentUser(config) {
   });
 }
 export function updateCurrentUser(config, data) {
+  const { trackingOptin, onboarding, mediaOptimization } = data;
+
+  const wpKeysMapping = {
+    meta: { trackingOptin, onboarding, mediaOptimization },
+  };
+
+  Object.entries(wpKeysMapping.meta).forEach(([key, value]) => {
+    if (value === undefined) {
+      delete wpKeysMapping.meta[key];
+    }
+  });
+
   return apiFetch({
     path: config.api.currentUser,
     method: 'POST',
-    data,
+    data: wpKeysMapping,
   }).then((resp) => {
     delete resp._links;
     return snakeToCamelCaseObjectKeys(resp, [
