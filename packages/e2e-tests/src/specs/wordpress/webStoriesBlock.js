@@ -150,6 +150,7 @@ describe('Web Stories Block', () => {
       expect(postPermalink).not.toBeNull();
       expect(postPermalink).toStrictEqual(expect.any(String));
 
+      //eslint-disable-next-line jest/no-conditional-in-test
       const ampPostPermaLink = postPermalink.includes('?')
         ? `${postPermalink}&amp`
         : `${postPermalink}?amp`;

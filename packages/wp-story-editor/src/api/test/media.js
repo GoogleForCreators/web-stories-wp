@@ -137,6 +137,7 @@ describe('Media API Callbacks', () => {
     expectedDataArgument.append(
       'file',
       file,
+      // eslint-disable-next-line jest/no-conditional-in-test
       file.name || file.type.replace('/', '.')
     );
 
