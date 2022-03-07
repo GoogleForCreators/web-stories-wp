@@ -710,11 +710,9 @@ class APIProviderFixture {
         () =>
           asyncResponse({
             id: 1,
-            meta: {
-              web_stories_tracking_optin: false,
-              web_stories_onboarding: {},
-              web_stories_media_optimization: true,
-            },
+            trackingOptin: false,
+            onboarding: {},
+            mediaOptimization: true,
           }),
         []
       );
@@ -723,11 +721,9 @@ class APIProviderFixture {
         () =>
           asyncResponse({
             id: 1,
-            meta: {
-              web_stories_tracking_optin: false,
-              web_stories_onboarding: {},
-              web_stories_media_optimization: true,
-            },
+            trackingOptin: false,
+            onboarding: {},
+            mediaOptimization: true,
           }),
         []
       );

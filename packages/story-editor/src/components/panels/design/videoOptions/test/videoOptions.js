@@ -37,9 +37,7 @@ jest.mock('../../../../../app/currentUser', () => ({
   useCurrentUser: jest.fn(() => ({
     state: {
       currentUser: {
-        meta: {
-          web_stories_media_optimization: true,
-        },
+        mediaOptimization: true,
       },
     },
   })),
