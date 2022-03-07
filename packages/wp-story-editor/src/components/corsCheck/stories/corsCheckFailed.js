@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,10 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as PostPublishDialog } from './postPublishDialog';
-export { default as Layout } from './layout';
-export { default as MediaUpload } from './mediaUpload';
-export { default as PostLock } from './postLock';
-export { default as StatusCheck } from './statusCheck';
-export { default as CorsCheck } from './corsCheck';
-export * from './metaBoxes';
+
+/**
+ * Internal dependencies
+ */
+import CorsCheckFailed from '../corsCheckFailed';
+
+export default {
+  title: 'Stories Editor/Components/Dialog/CORS Check Failed',
+  component: CorsCheckFailed,
+  args: {
+    isOpen: true,
+  },
+  argTypes: {
+    onClose: { action: 'closed' },
+  },
+};
+
+export const _default = (args) => {
+  return <CorsCheckFailed {...args} />;
+};

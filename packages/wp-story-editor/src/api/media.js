@@ -69,6 +69,19 @@ export function getMedia(
   }));
 }
 
+// Important: Keep in sync with REST API preloading definition.
+export function getMediaForCorsCheck(config, { perPage }) {
+  const path = addQueryArgs(config.api.media, {
+    context: 'edit',
+    per_page: perPage,
+    _fields: 'source_url',
+  });
+
+  return apiFetch({ path }).then((attachments) =>
+    attachments.map((attachment) => attachment?.source_url)
+  );
+}
+
 /**
  * Get media by ID.
  *
