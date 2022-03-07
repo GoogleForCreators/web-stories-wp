@@ -23,24 +23,36 @@ import { addQueryArgs } from '@googleforcreators/url';
  */
 import apiFetch from '@wordpress/api-fetch';
 
-export function getStoryLockById(storyId, stories) {
-  const path = addQueryArgs(`${stories}${storyId}/lock/`, {
+export function getStoryLockById(config, storyId) {
+  const path = addQueryArgs(`${config.api.stories}${storyId}/lock/`, {
     _embed: 'author',
   });
 
-  return apiFetch({ path });
+  return apiFetch({ path }).then(({ locked, nonce, _embedded }) => {
+    const lockAuthor = {
+      id: _embedded?.author?.[0]?.id || 0,
+      name: _embedded?.author?.[0]?.name || '',
+      avatar: _embedded?.author?.[0]?.avatar_urls?.['96'] || '',
+    };
+
+    return {
+      locked,
+      nonce,
+      lockAuthor,
+    };
+  });
 }
 
-export function setStoryLockById(storyId, stories) {
-  const path = `${stories}${storyId}/lock/`;
+export function setStoryLockById(config, storyId) {
+  const path = `${config.api.stories}${storyId}/lock/`;
   return apiFetch({ path, method: 'POST' });
 }
 
-export function deleteStoryLockById(storyId, nonce, storyLocking) {
+export function deleteStoryLockById(config, storyId, nonce) {
   const data = new window.FormData();
   data.append('_wpnonce', nonce);
 
-  const url = addQueryArgs(storyLocking, { _method: 'DELETE' });
+  const url = addQueryArgs(config.api.storyLocking, { _method: 'DELETE' });
 
   window.navigator.sendBeacon?.(url, data);
 }

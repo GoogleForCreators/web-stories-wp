@@ -43,7 +43,6 @@ function PostLock() {
     dashboardLink,
     nonce: firstNonce,
     postLock: { interval: postLockInterval, showLockedDialog },
-    api: { stories, storyLocking },
     apiCallbacks: { getStoryLockById, setStoryLockById, deleteStoryLockById },
   } = useConfig();
 
@@ -69,8 +68,8 @@ function PostLock() {
       return;
     }
     setUser({});
-    setStoryLockById(storyId, stories);
-  }, [enablePostLockingTakeOver, setStoryLockById, storyId, stories]);
+    setStoryLockById(storyId);
+  }, [enablePostLockingTakeOver, setStoryLockById, storyId]);
 
   const currentUserLoaded = useMemo(
     () => Boolean(Object.keys(currentUser).length),
@@ -80,17 +79,12 @@ function PostLock() {
   // When async call only if dialog is true, current user is loaded and post locking is enabled.
   const doGetStoryLock = useCallback(() => {
     if (enablePostLocking && showLockedDialog && currentUserLoaded) {
-      getStoryLockById(storyId, stories)
-        .then(({ locked, nonce: newNonce, _embedded }) => {
-          const lockAuthor = {
-            id: _embedded?.author?.[0]?.id || 0,
-            name: _embedded?.author?.[0]?.name || '',
-            avatar: _embedded?.author?.[0]?.avatar_urls?.['96'] || '',
-          };
+      getStoryLockById(storyId)
+        .then(({ locked, nonce: newNonce, lockAuthor }) => {
           if (locked && lockAuthor?.id && lockAuthor?.id !== currentUser.id) {
             setUser(lockAuthor);
           } else {
-            setStoryLockById(storyId, stories);
+            setStoryLockById(storyId);
           }
           // Refresh nonce on every request.
           setNonce(newNonce);
@@ -102,7 +96,6 @@ function PostLock() {
   }, [
     setUser,
     storyId,
-    stories,
     currentUser,
     enablePostLocking,
     showLockedDialog,
@@ -135,7 +128,7 @@ function PostLock() {
   useEffect(() => {
     function releasePostLock() {
       if (enablePostLocking && showLockedDialog && user?.id && nonce) {
-        deleteStoryLockById(storyId, nonce, storyLocking);
+        deleteStoryLockById(storyId, nonce);
       }
     }
 
@@ -151,7 +144,6 @@ function PostLock() {
     showLockedDialog,
     user,
     nonce,
-    storyLocking,
   ]);
 
   // Register repeating callback to check lock every 150 seconds.
