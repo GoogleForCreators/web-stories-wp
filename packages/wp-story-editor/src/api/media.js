@@ -184,7 +184,7 @@ export function uploadMedia(config, file, additionalData) {
 
   Object.entries(wpKeysMapping).forEach(([key, value]) => {
     if (value === undefined) {
-      delete wpKeysMapping.meta[key];
+      delete wpKeysMapping[key];
     }
   });
 
