@@ -211,16 +211,12 @@ describe('useProcessMedia', () => {
         type: 'gif',
       });
       expect(updateMedia).toHaveBeenCalledWith(123, {
-        web_stories_media_source: 'source-video',
-        meta: {
-          web_stories_optimized_id: 2,
-        },
+        mediaSource: 'source-video',
+        optimizedId: 2,
       });
       expect(updateMedia).toHaveBeenCalledWith(123, {
-        web_stories_media_source: 'source-video',
-        meta: {
-          web_stories_optimized_id: 2,
-        },
+        mediaSource: 'source-video',
+        optimizedId: 2,
       });
     });
 
@@ -252,10 +248,8 @@ describe('useProcessMedia', () => {
         type: 'gif',
       });
       expect(updateMedia).toHaveBeenCalledWith(123, {
-        web_stories_media_source: 'source-video',
-        meta: {
-          web_stories_optimized_id: 2,
-        },
+        mediaSource: 'source-video',
+        optimizedId: 2,
       });
     });
 
@@ -347,9 +341,7 @@ describe('useProcessMedia', () => {
         type: 'gif',
       });
       expect(updateMedia).toHaveBeenCalledWith(123, {
-        meta: {
-          web_stories_muted_id: 2,
-        },
+        mutedId: 2,
       });
     });
 
@@ -372,9 +364,7 @@ describe('useProcessMedia', () => {
         );
       });
       expect(updateMedia).toHaveBeenCalledWith(123, {
-        meta: {
-          web_stories_muted_id: 2,
-        },
+        mutedId: 2,
       });
     });
 
@@ -409,9 +399,7 @@ describe('useProcessMedia', () => {
         'http://www.google.com/foo.gif'
       );
       expect(updateMedia).toHaveBeenCalledWith(123, {
-        meta: {
-          web_stories_muted_id: 2,
-        },
+        mutedId: 2,
       });
     });
 
@@ -470,10 +458,8 @@ describe('useProcessMedia', () => {
       });
 
       expect(updateMedia).toHaveBeenCalledWith(123, {
-        web_stories_media_source: 'source-image',
-        meta: {
-          web_stories_optimized_id: 2,
-        },
+        mediaSource: 'source-image',
+        optimizedId: 2,
       });
     });
 
@@ -505,10 +491,8 @@ describe('useProcessMedia', () => {
       });
 
       expect(updateMedia).toHaveBeenCalledWith(123, {
-        web_stories_media_source: 'source-image',
-        meta: {
-          web_stories_optimized_id: 2,
-        },
+        mediaSource: 'source-image',
+        optimizedId: 2,
       });
     });
 
