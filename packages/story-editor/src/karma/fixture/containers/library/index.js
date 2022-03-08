@@ -114,14 +114,6 @@ export class Media extends Container {
   item(index) {
     return this.node.querySelectorAll('[data-testid^=mediaElement]')[index];
   }
-
-  get insertByLink() {
-    return this.getByRole('button', { name: /^Insert by link$/ });
-  }
-
-  get upload() {
-    return this.getByRole('button', { name: /^Upload$/ });
-  }
 }
 
 export class Media3P extends Container {
