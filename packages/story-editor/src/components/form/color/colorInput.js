@@ -103,6 +103,7 @@ const minimalInputContainerStyleOverride = css`
 const ColorButton = styled(Preview).attrs(buttonAttrs)`
   border-radius: 4px;
   ${buttonStyle}
+  display: flex;
   &:focus {
     box-shadow: 0px 0px 0 2px ${({ theme }) => theme.colors.bg.primary},
       0px 0px 0 4px ${({ theme }) => theme.colors.border.focus};
@@ -126,14 +127,19 @@ const TextualPreview = styled.div`
   height: 32px;
 `;
 
+const MixedLabel = styled(TextualPreview)`
+  padding: 6px 6px 6px 38px;
+  color: ${({ theme }) => theme.colors.fg.tertiary};
+`;
+
 const StyledSwatch = styled(Swatch)`
   ${focusStyle};
 `;
 
 const ChevronContainer = styled.div`
-  width: 58px;
+  width: ${({ isSmall }) => (isSmall ? '28px' : '58px')};
   display: flex;
-  justify-content: flex-end;
+  justify-content: ${({ isSmall }) => (isSmall ? 'center' : 'flex-end')};
   align-items: center;
 
   svg {
@@ -242,9 +248,19 @@ const ColorInput = forwardRef(function ColorInput(
                 </Text>
               </TextualPreview>
             ) : (
-              <ChevronContainer>
-                <Icons.ChevronDown />
-              </ChevronContainer>
+              <>
+                {/* In case of design menu, we display Mixed value even without inputs */}
+                {isInDesignMenu && isMixed && (
+                  <MixedLabel>
+                    <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+                      {MULTIPLE_DISPLAY_VALUE}
+                    </Text>
+                  </MixedLabel>
+                )}
+                <ChevronContainer isSmall={isInDesignMenu && isMixed}>
+                  <Icons.ChevronDown />
+                </ChevronContainer>
+              </>
             )}
           </ColorButton>
         </Tooltip>
