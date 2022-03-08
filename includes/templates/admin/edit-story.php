@@ -164,7 +164,7 @@ wp_add_inline_script(
 );
 
 $init_script = <<<JS
-	webStories.domReady( function() {
+	wp.domReady( function() {
 	  webStories.initializeStoryEditor( 'web-stories-editor', %s, %s );
 	} );
 JS;

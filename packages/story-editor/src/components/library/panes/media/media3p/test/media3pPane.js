@@ -62,13 +62,6 @@ jest.mock('../../../../../../app/media/media3p/providerConfiguration', () => ({
   },
 }));
 
-jest.mock('react-photo-gallery', () => ({
-  __esModule: true,
-  default: jest.fn(({ photos, renderImage }) => (
-    <>{photos.map((photo, index) => renderImage({ photo, index }))}</>
-  )),
-}));
-
 const createMediaResource = (id, name, provider) =>
   createResource({
     id,

@@ -34,6 +34,7 @@ import { PageBackground } from './pageBackground';
 import { SizePosition } from './sizePosition';
 import { TextStyle } from './textStyle';
 import { VideoPoster } from './videoPoster';
+import { VideoOptions } from './videoOptions';
 import { Captions } from './captions';
 import { ShapeStyle } from './shapeStyle';
 
@@ -120,8 +121,11 @@ export class DesignPanel extends Container {
   }
 
   get videoOptions() {
-    // @todo: implement
-    return null;
+    return this._get(
+      this.getByRole('region', { name: /Video settings/i }),
+      'videoOptions',
+      VideoOptions
+    );
   }
 
   get captions() {

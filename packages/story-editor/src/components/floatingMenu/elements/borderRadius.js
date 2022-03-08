@@ -17,9 +17,8 @@
 /**
  * External dependencies
  */
-import { Icons, NumericInput } from '@googleforcreators/design-system';
+import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
-import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -27,12 +26,7 @@ import styled from 'styled-components';
 import { useStory } from '../../../app';
 import { canSupportMultiBorder } from '../../../masks';
 import { DEFAULT_BORDER_RADIUS } from '../../panels/design/sizePosition/radius';
-import { Separator, useProperties } from './shared';
-
-const StyledInput = styled(NumericInput)`
-  width: 70px;
-  flex: 0 0 70px;
-`;
+import { Input, Separator, useProperties } from './shared';
 
 function BorderRadius() {
   // Note that "mask" never updates on an element,
@@ -69,7 +63,7 @@ function BorderRadius() {
 
   return (
     <>
-      <StyledInput
+      <Input
         suffix={<Icons.Corner />}
         value={borderRadius.topLeft}
         aria-label={__('Corner Radius', 'web-stories')}

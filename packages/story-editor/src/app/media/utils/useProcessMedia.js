@@ -122,10 +122,8 @@ function useProcessMedia({
   const updateOldTranscodedObject = useCallback(
     (oldId, newId, mediaSource) => {
       updateMedia(oldId, {
-        web_stories_media_source: mediaSource,
-        meta: {
-          web_stories_optimized_id: newId,
-        },
+        mediaSource,
+        optimizedId: newId,
       });
     },
     [updateMedia]
@@ -134,9 +132,7 @@ function useProcessMedia({
   const updateOldMutedObject = useCallback(
     (oldId, newId) => {
       updateMedia(oldId, {
-        meta: {
-          web_stories_muted_id: newId,
-        },
+        mutedId: newId,
       });
     },
     [updateMedia]
@@ -193,8 +189,8 @@ function useProcessMedia({
           onUploadError,
           onUploadProgress,
           additionalData: {
-            original_id: oldResource.id,
-            web_stories_is_muted: oldResource.isMuted,
+            originalId: oldResource.id,
+            isMuted: oldResource.isMuted,
           },
           originalResourceId: oldResource.id,
         });
@@ -227,7 +223,6 @@ function useProcessMedia({
         original: resourceId,
         start,
         end,
-        elementId,
       };
 
       const onUploadStart = () =>
@@ -283,12 +278,11 @@ function useProcessMedia({
           onUploadError,
           onUploadProgress,
           additionalData: {
-            original_id: resourceId,
-            web_stories_is_muted: isMuted,
-            web_stories_media_source: isOptimized
-              ? 'video-optimization'
-              : 'editor',
+            originalId: resourceId,
+            isMuted,
+            mediaSource: isOptimized ? 'video-optimization' : 'editor',
           },
+          elementId,
           trimData,
           resource: {
             ...oldResourceWithoutId,
@@ -368,10 +362,8 @@ function useProcessMedia({
           onUploadError,
           onUploadProgress,
           additionalData: {
-            original_id: resourceId,
-            web_stories_media_source: isOptimized
-              ? 'video-optimization'
-              : 'editor',
+            originalId: resourceId,
+            mediaSource: isOptimized ? 'video-optimization' : 'editor',
           },
           muteVideo: true,
           resource: {

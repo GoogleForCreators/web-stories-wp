@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,20 @@
  * limitations under the License.
  */
 
-export { default as Color } from './color';
-export { default as IconButton } from './icon';
-export { default as Input } from './input';
-export { default as Separator } from './separator';
-export { default as TextButton } from './text';
-export { default as useProperties } from './useProperties';
+/**
+ * Internal dependencies
+ */
+import { AbstractPanel } from './abstractPanel';
+
+/**
+ * The video options panel containing controls for loop, mute, and trim.
+ */
+export class VideoOptions extends AbstractPanel {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get loop() {
+    return this.getByRole('checkbox', { name: 'Loop' });
+  }
+}

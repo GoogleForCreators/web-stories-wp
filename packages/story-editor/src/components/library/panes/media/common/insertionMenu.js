@@ -33,6 +33,7 @@ import {
   PLACEMENT,
   Popup,
   useKeyDownEffect,
+  noop,
 } from '@googleforcreators/design-system';
 import {
   getSmallestUrlForWidth,
@@ -82,6 +83,8 @@ const MENU_OPTIONS = {
  * @param {number} props.width Media width.
  * @param {number} props.index Element index in the gallery.
  * @param {boolean} props.isLocal If the menu is for local or 3p media.
+ * @param {Function} props.setParentActive Sets the parent element active.
+ * @param {Function} props.setParentInactive Sets the parent element inactive.
  * @return {null|*} Element or null if should not display the More icon.
  */
 function InsertionMenu({
@@ -91,6 +94,8 @@ function InsertionMenu({
   width,
   index,
   isLocal = false,
+  setParentActive = noop,
+  setParentInactive = noop,
 }) {
   const insertButtonRef = useRef();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -98,7 +103,13 @@ function InsertionMenu({
     e.stopPropagation();
     setIsMenuOpen(true);
   }, []);
-  const onMenuCancelled = useCallback(() => setIsMenuOpen(false), []);
+  const onMenuCancelled = useCallback(() => {
+    // When menu gets closed, we want to focus back on the original button.
+    setIsMenuOpen(false);
+    insertButtonRef.current?.focus();
+    // However, activeness of the parent is also lost then due to blurring, we need to set it active "manually".
+    setParentActive();
+  }, [setParentActive]);
 
   const { currentBackgroundId, combineElements } = useStory((state) => ({
     currentBackgroundId: state.state.currentPage?.elements?.[0]?.id,
@@ -126,7 +137,7 @@ function InsertionMenu({
     const newElement = getElementProperties(resource.type, {
       resource,
     });
-    onMenuCancelled();
+    setIsMenuOpen(false);
     switch (value) {
       case MENU_OPTIONS.INSERT:
         onInsert(resource, thumbnailUrl);
@@ -140,6 +151,8 @@ function InsertionMenu({
       default:
         break;
     }
+    // Since the parent is set active when closing a menu, we need to set it inactive here "manually".
+    setParentInactive();
   };
 
   useRovingTabIndex({ ref: insertButtonRef }, [], BUTTON_NESTING_DEPTH);
@@ -199,6 +212,8 @@ InsertionMenu.propTypes = {
   width: PropTypes.number.isRequired,
   index: PropTypes.number.isRequired,
   isLocal: PropTypes.bool,
+  setParentActive: PropTypes.func,
+  setParentInactive: PropTypes.func,
 };
 
 export default InsertionMenu;

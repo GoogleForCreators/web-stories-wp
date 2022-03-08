@@ -224,7 +224,7 @@ jobs:
   deploy-to-staging:
     name: Deploy to staging environment
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: [build]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
