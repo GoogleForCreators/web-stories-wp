@@ -83,10 +83,29 @@ const DEFAULT_PADDING = {
   hasHiddenPadding: false,
 };
 
-function Wrapper({ children }) {
+const textElement = {
+  id: '1',
+  textAlign: 'normal',
+  fontSize: 30,
+  lineHeight: 1,
+  font: {
+    family: 'ABeeZee',
+  },
+  x: 0,
+  y: 0,
+  height: 100,
+  width: 120,
+  rotationAngle: 0,
+  padding: DEFAULT_PADDING,
+  backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
+};
+
+const mockUpdateSelectedElements = jest.fn();
+
+function Wrapper({ selectedElements, children }) {
   const storyContextValue = {
     state: {
-      selectedElements: [],
+      selectedElements: selectedElements,
       story: {
         globalStoryStyles: {
           ...{ colors: [], textStyles: [] },
@@ -96,7 +115,11 @@ function Wrapper({ children }) {
         },
       },
     },
-    actions: { updateStory: jest.fn(), updateElementsById: jest.fn() },
+    actions: {
+      updateStory: jest.fn(),
+      updateElementsById: jest.fn(),
+      updateSelectedElements: mockUpdateSelectedElements,
+    },
   };
   return (
     <StoryContext.Provider value={storyContextValue}>
@@ -177,27 +200,8 @@ Wrapper.propTypes = {
 };
 
 describe('Panels/TextStyle', () => {
-  let textElement;
-
   beforeEach(() => {
     window.fetch.resetMocks();
-
-    textElement = {
-      id: '1',
-      textAlign: 'normal',
-      fontSize: 30,
-      lineHeight: 1,
-      font: {
-        family: 'ABeeZee',
-      },
-      x: 0,
-      y: 0,
-      height: 100,
-      width: 120,
-      rotationAngle: 0,
-      padding: DEFAULT_PADDING,
-      backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
-    };
 
     mockControls = {};
   });
@@ -235,7 +239,7 @@ describe('Panels/TextStyle', () => {
 
   describe('FontControls', () => {
     it('should select font', async () => {
-      const { pushUpdate } = arrange([textElement]);
+      arrange([textElement]);
       await act(() =>
         mockControls.font.onChange({
           id: 'Neu Font',
@@ -250,23 +254,21 @@ describe('Panels/TextStyle', () => {
           fallbacks: ['fallback1'],
         })
       );
-      expect(pushUpdate).toHaveBeenCalledWith(
-        {
-          font: {
-            id: 'Neu Font',
-            family: 'Neu Font',
-            service: 'foo.bar.baz',
-            styles: ['italic', 'regular'],
-            weights: [400],
-            variants: [
-              [0, 400],
-              [1, 400],
-            ],
-            fallbacks: ['fallback1'],
-          },
+      expect(mockUpdateSelectedElements).toHaveBeenCalledWith({
+        font: {
+          id: 'Neu Font',
+          family: 'Neu Font',
+          service: 'foo.bar.baz',
+          styles: ['italic', 'regular'],
+          weights: [400],
+          variants: [
+            [0, 400],
+            [1, 400],
+          ],
+          fallbacks: ['fallback1'],
         },
-        true
-      );
+        properties: () => {},
+      });
     });
 
     // eslint-disable-next-line jest/no-disabled-tests -- Can't figure out a good way to test this easily
