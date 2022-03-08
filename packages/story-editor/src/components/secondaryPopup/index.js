@@ -31,9 +31,9 @@ const enterStyles = css`
   opacity: 1;
   transform: none;
 `;
-const exitStyles = css`
+const exitStyles = (anchor) => css`
   opacity: 0;
-  transform: translateX(-20px);
+  transform: translateX(${anchor === 'left' ? -20 : 20}px);
 `;
 
 const transitionStyles = {
@@ -46,13 +46,17 @@ const transitionStyles = {
 const Controller = styled.div`
   position: absolute;
   top: -12px;
-  left: 0px;
+  ${({ zIndex }) => (zIndex ? `z-index: ${zIndex};` : '')}
+  ${({ anchor }) => anchor}: 0px;
   opacity: 0;
-  transform: translateX(-20px);
+  transform: translateX(${({ anchor }) => (anchor === 'left' ? -20 : 20)}px);
   transition: opacity ${DURATION}ms ${BEZIER.default},
     transform ${DURATION}ms ${BEZIER.default};
 
-  ${({ state }) => transitionStyles[state]}
+  ${({ state, anchor }) => {
+    const fn = transitionStyles[state];
+    return typeof fn === 'function' ? fn(anchor) : transitionStyles[state];
+  }}
 `;
 
 function Popup({
@@ -61,6 +65,8 @@ function Popup({
   children,
   ariaLabel,
   shouldKeepMounted,
+  zIndex,
+  anchor = 'left',
   onEnter = noop,
   onExited = noop,
 }) {
@@ -79,6 +85,8 @@ function Popup({
           role="dialog"
           aria-label={ariaLabel}
           state={state}
+          anchor={anchor}
+          zIndex={zIndex}
         >
           {children}
         </Controller>
@@ -91,6 +99,8 @@ Popup.propTypes = {
   children: PropTypes.node.isRequired,
   popupId: PropTypes.string,
   ariaLabel: PropTypes.string,
+  zIndex: PropTypes.number,
+  anchor: PropTypes.string,
   shouldKeepMounted: PropTypes.bool,
   onEnter: PropTypes.func,
   onExited: PropTypes.func,
