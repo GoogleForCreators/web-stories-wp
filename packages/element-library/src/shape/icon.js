@@ -90,7 +90,10 @@ function ShapeLayerIcon({
 
 ShapeLayerIcon.propTypes = {
   element: StoryPropTypes.element.isRequired,
-  currentPageBackgroundColor: PropTypes.object,
+  currentPageBackgroundColor: PropTypes.oneOfType([
+    PropTypes.object,
+    PropTypes.bool,
+  ]),
 };
 
 export default ShapeLayerIcon;
