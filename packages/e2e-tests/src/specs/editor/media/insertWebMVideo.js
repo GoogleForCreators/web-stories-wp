@@ -45,7 +45,7 @@ describe('Inserting WebM Video', () => {
     // Open the Accessibility panel.
     const a11yPanel = await page.$('button[aria-label="Accessibility"]');
     const isCollapsed = await page.evaluate(
-      (button) => button.getAttribute('aria-expanded') == 'false',
+      (button) => button.getAttribute('aria-expanded') === 'false',
       a11yPanel
     );
     if (isCollapsed) {
@@ -75,7 +75,9 @@ describe('Inserting WebM Video', () => {
     const fileName = await uploadMedia('small-video.webm');
     uploadedFiles.push(fileName);
 
-    await page.waitForSelector('[data-testid="mediaElement-video"]');
+    await page.waitForSelector(
+      `[data-testid="mediaElement-video"] [src*="${fileName}"`
+    );
     // Clicking will only act on the first element.
     await expect(page).toClick('[data-testid="mediaElement-video"]');
     const insertButton = await page.waitForXPath(
@@ -100,7 +102,9 @@ describe('Inserting WebM Video', () => {
     const fileName = await uploadMedia('small-video.webm');
     uploadedFiles.push(fileName);
 
-    await page.waitForSelector('[data-testid="mediaElement-video"]');
+    await page.waitForSelector(
+      `[data-testid="mediaElement-video"] [src*="${fileName}"`
+    );
     // Clicking will only act on the first element.
     await expect(page).toClick('[data-testid="mediaElement-video"]');
     const insertButton = await page.waitForXPath(

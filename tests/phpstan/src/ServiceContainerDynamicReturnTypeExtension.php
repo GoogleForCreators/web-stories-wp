@@ -1,19 +1,30 @@
 <?php
 /**
- * Copied from szepeviktor/phpstan-wordpress
+ * Class ServiceContainerDynamicReturnTypeExtension
  *
- * @copyright Viktor Szépe
- * @license   MIT
- * @link      https://github.com/szepeviktor/phpstan-wordpress
+ * @link      https://github.com/googleforcreators/web-stories-wp
+ *
+ * @copyright 2021 Google LLC
+ * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
  */
 
 /**
- * Class ServicesDynamicReturnTypeExtension.
+ * Copyright 2021 Google LLC
  *
- * @package Google\Web_Stories
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
-namespace SzepeViktor\PHPStan\WordPress;
+namespace Google\Web_Stories\PHPStan;
 
 use Google\Web_Stories\Plugin;
 use Google\Web_Stories\Infrastructure\Injector;
@@ -26,7 +37,6 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\MethodReflection;
 use PHPStan\Reflection\ParametersAcceptorSelector;
 use PHPStan\ShouldNotHappenException;
-use PHPStan\Type\Constant\ConstantBooleanType;
 use PHPStan\Type\DynamicMethodReturnTypeExtension;
 use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
@@ -48,7 +58,7 @@ final class ServiceContainerDynamicReturnTypeExtension implements DynamicMethodR
 	public function isMethodSupported(
 		MethodReflection $methodReflection
 	): bool {
-		return in_array( $methodReflection->getName(), [ 'get' ], true );
+		return 'get' === $methodReflection->getName();
 	}
 
 	public function getTypeFromMethodCall(

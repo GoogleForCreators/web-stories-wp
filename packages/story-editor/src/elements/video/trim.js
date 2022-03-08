@@ -32,6 +32,7 @@ import { elementWithFlip } from '../shared';
 import getTransformFlip from '../shared/getTransformFlip';
 import PlayPauseButton from './playPauseButton';
 import { getBackgroundStyle, videoWithScale } from './util';
+import Captions from './captions';
 
 const Video = styled.video`
   position: absolute;
@@ -137,17 +138,7 @@ function VideoTrim({ box, element }) {
             {resource.src && (
               <source src={resource.src} type={resource.mimeType} />
             )}
-            {tracks &&
-              tracks.map(({ srclang, label, kind, track: src, id: key }, i) => (
-                <track
-                  srcLang={srclang}
-                  label={label}
-                  kind={kind}
-                  src={src}
-                  key={key}
-                  default={i === 0}
-                />
-              ))}
+            <Captions tracks={tracks} />
           </Video>
         </MediaDisplay>
       </Wrapper>

@@ -110,6 +110,7 @@ describe('Pre-Publish Checklist : Admin User', () => {
       );
 
       //open publish panel if not open
+      //eslint-disable-next-line jest/no-conditional-in-test
       if (!isPublishPanelExpanded) {
         await publishPanelButton.click();
       }

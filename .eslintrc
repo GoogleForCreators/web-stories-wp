@@ -97,7 +97,7 @@
     "no-return-assign": "error",
     "no-return-await": "error",
     "no-sequences": "error",
-    "no-shadow": ["error", 
+    "no-shadow": ["error",
       {
         "ignoreOnInitialization": true
       }
@@ -320,6 +320,7 @@
             "ignore": ["describe"]
           }
         ],
+        "jest/prefer-snapshot-hint": "off",
         "jsdoc/require-jsdoc": "off",
         "testing-library/no-await-sync-events": "error",
         "testing-library/no-debugging-utils": "error",
@@ -422,7 +423,8 @@
               "withUser"
             ]
           }
-        ]
+        ],
+        "jest/prefer-snapshot-hint": "off"
       },
       "globals": {
         "browser": "readonly",
