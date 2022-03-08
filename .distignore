@@ -39,6 +39,7 @@ web-stories-scraper
 .npmpackagejsonlintrc.json
 .npmrc
 .nvmrc
+.phpstorm.config.js
 .phpstorm.meta.php
 .prettierignore
 .prettierrc
@@ -60,7 +61,6 @@ percy.config.yml
 phpcs.xml.dist
 phpmd.xml
 phpstan.neon.dist
-phpstorm.config.js
 phpunit.xml.dist
 phpunit-integration.xml.dist
 phpunit-integration-multisite.xml.dist

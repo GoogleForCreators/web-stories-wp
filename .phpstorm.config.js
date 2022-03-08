@@ -18,5 +18,6 @@
 System.config({
   paths: {
     '@googleforcreators/*': './packages/*/src',
+    '@web-stories-wp/*': './packages/*/src',
   },
 });
