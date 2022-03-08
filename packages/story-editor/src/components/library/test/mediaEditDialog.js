@@ -107,7 +107,7 @@ describe('MediaEditDialog', () => {
     // Mock out `updateMedia`.
     let serverAltText = resource.alt;
     updateMedia.mockImplementation((_id, update) => {
-      serverAltText = update.alt_text;
+      serverAltText = update.altText;
     });
 
     // Mock out `updateMediaElement`.

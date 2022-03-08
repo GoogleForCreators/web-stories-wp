@@ -54,9 +54,7 @@ function VideoOptimizationDialog() {
 
   const onDisable = useCallback(() => {
     updateCurrentUser({
-      meta: {
-        web_stories_media_optimization: false,
-      },
+      mediaOptimization: false,
     });
     setIsDialogDismissedValue(true);
   }, [updateCurrentUser, setIsDialogDismissedValue]);

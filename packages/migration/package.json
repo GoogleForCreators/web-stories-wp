@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.1.3",
-    "rollup": "^2.68.0"
+    "rollup": "^2.70.0"
   },
   "scripts": {
     "migration": "node ./scripts/cli.js"
