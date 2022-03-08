@@ -35,6 +35,7 @@ import { ResourcePropTypes } from '@googleforcreators/media';
 /**
  * Internal dependencies
  */
+import { Z_INDEX_STORY_DETAILS } from '../../constants/zIndex';
 import Tooltip from '../tooltip';
 
 const StyledButton = styled(Button)`
@@ -119,7 +120,7 @@ function AudioPlayer({ title, src, mimeType, tracks = [], audioId }) {
           <Tooltip
             hasTail
             title={__('Pause', 'web-stories')}
-            popupZIndexOverride={10}
+            popupZIndexOverride={Z_INDEX_STORY_DETAILS}
           >
             <StyledButton
               type={BUTTON_TYPES.TERTIARY}
@@ -135,7 +136,7 @@ function AudioPlayer({ title, src, mimeType, tracks = [], audioId }) {
           <Tooltip
             hasTail
             title={__('Play', 'web-stories')}
-            popupZIndexOverride={10}
+            popupZIndexOverride={Z_INDEX_STORY_DETAILS}
           >
             <StyledButton
               type={BUTTON_TYPES.TERTIARY}

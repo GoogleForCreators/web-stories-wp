@@ -27,10 +27,14 @@ import {
   BUTTON_VARIANTS,
   Tooltip,
 } from '@googleforcreators/design-system';
+import { useMemo } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
  */
+import { useStory } from '../../../app';
+import { Z_INDEX_STORY_DETAILS } from '../../../constants/zIndex';
+import useIsUploadingToStory from '../../../utils/useIsUploadingToStory';
 import {
   useCheckpoint,
   PPC_CHECKPOINT_STATE,
@@ -72,18 +76,23 @@ InnerButton.propTypes = {
 };
 
 function ButtonWithChecklistWarning({
-  text,
-  isUploading,
-  canPublish,
+  disabled,
+  hasFutureDate,
   ...buttonProps
 }) {
+  const isUploading = useIsUploadingToStory();
+  const { isSaving, canPublish, status } = useStory(({ state }) => ({
+    isSaving: state.meta?.isSaving,
+    status: state.story.status,
+    canPublish: Boolean(state?.capabilities?.publish),
+  }));
+
   const { checkpoint, shouldReviewDialogBeSeen } = useCheckpoint(
     ({ state: { checkpoint, shouldReviewDialogBeSeen } }) => ({
       checkpoint,
       shouldReviewDialogBeSeen,
     })
   );
-
   const TOOLTIP_TEXT = {
     [PPC_CHECKPOINT_STATE.ALL]: shouldReviewDialogBeSeen
       ? __(
@@ -114,22 +123,37 @@ function ButtonWithChecklistWarning({
     toolTip = TOOLTIP_TEXT_REVIEW;
   }
 
+  const publishText = useMemo(
+    () =>
+      hasFutureDate && status !== 'private'
+        ? __('Schedule', 'web-stories')
+        : __('Publish', 'web-stories'),
+    [hasFutureDate, status]
+  );
+
+  const text = canPublish
+    ? publishText
+    : __('Submit for review', 'web-stories');
   return (
-    <Tooltip title={toolTip} hasTail>
+    <Tooltip
+      title={toolTip}
+      popupZIndexOverride={Z_INDEX_STORY_DETAILS}
+      hasTail
+    >
       <InnerButton
         text={text}
-        {...buttonProps}
+        disabled={disabled || isSaving || isUploading}
         checkpoint={checkpoint}
         shouldReviewDialogBeSeen={shouldReviewDialogBeSeen}
+        {...buttonProps}
       />
     </Tooltip>
   );
 }
 
-ButtonWithChecklistWarning.propTypes = {
-  text: PropTypes.node.isRequired,
-  isUploading: PropTypes.bool,
-  canPublish: PropTypes.bool.isRequired,
-};
-
 export default ButtonWithChecklistWarning;
+
+ButtonWithChecklistWarning.propTypes = {
+  disabled: PropTypes.bool,
+  hasFutureDate: PropTypes.bool,
+};
