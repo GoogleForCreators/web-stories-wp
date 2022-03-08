@@ -23,7 +23,7 @@ import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
-import useVideoElementTranscoding from '../../panels/design/videoOptions/useVideoElementTranscoding';
+import useVideoElementTranscoding from '../../../app/media/utils/useVideoElementTranscoding';
 import { IconButton, useProperties } from './shared';
 
 function Trim() {

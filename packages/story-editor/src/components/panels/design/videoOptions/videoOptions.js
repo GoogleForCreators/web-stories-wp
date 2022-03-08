@@ -34,12 +34,12 @@ import { useEffect } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
+import useVideoElementTranscoding from '../../../../app/media/utils/useVideoElementTranscoding';
 import { Row as DefaultRow } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
 import CircularProgress from '../../../circularProgress';
 import LoopPanelContent from '../../shared/loopPanelContent';
-import useVideoElementTranscoding from './useVideoElementTranscoding';
 
 const Row = styled(DefaultRow)`
   margin-top: 2px;

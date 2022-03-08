@@ -24,11 +24,10 @@ import { fireEvent, screen } from '@testing-library/react';
  */
 import { renderWithTheme } from '../../../../testUtils';
 import Mute from '../mute';
-import mockUseVideoElementTranscoding from '../../../panels/design/videoOptions/useVideoElementTranscoding';
+import mockUseVideoElementTranscoding from '../../../../app/media/utils/useVideoElementTranscoding';
 
-jest.mock(
-  '../../../panels/design/videoOptions/useVideoElementTranscoding',
-  () => jest.fn()
+jest.mock('../../../../app/media/utils/useVideoElementTranscoding', () =>
+  jest.fn()
 );
 jest.mock('../shared/useProperties', () =>
   jest.fn().mockImplementation(() => ({}))
