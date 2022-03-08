@@ -19,6 +19,15 @@
  */
 import { useLayoutEffect } from './react';
 
+/** @typedef {import('react')} React */
+
+/**
+ * Runs a callback function as a side effect when an element, or its descendants, lose focus.
+ *
+ * @param {React.RefObject} ref Reference to the element.
+ * @param {Function} callback Function to call when element loses focus.
+ * @param {Array<any>} deps Array of dependencies for the side effect.
+ */
 function useFocusOut(ref, callback, deps) {
   useLayoutEffect(() => {
     const node = ref?.current;
