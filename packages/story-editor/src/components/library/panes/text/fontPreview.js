@@ -178,19 +178,22 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
       return;
     }
 
-    const position = getPosition(element);
-    const positionedElement = {
-      ...element,
-      ...position,
+    let newElement = element;
+    const insertOpts = {
+      isPositioned: false,
     };
-    let accessibleColors;
     if (shouldUseSmartColor) {
-      accessibleColors = await calculateAccessibleTextColors(positionedElement);
+      const position = getPosition(element);
+      insertOpts.isPositioned = true;
+      newElement = {
+        ...element,
+        ...position,
+      };
+      insertOpts.accessibleColors = await calculateAccessibleTextColors(
+        newElement
+      );
     }
-    insertPreset(positionedElement, {
-      isPositioned: true,
-      accessibleColors,
-    });
+    insertPreset(newElement, insertOpts);
     trackEvent('insert_text_preset', { name: title });
   }, [
     isTextSelected,
