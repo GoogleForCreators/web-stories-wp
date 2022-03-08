@@ -36,7 +36,6 @@ import { useConfig, useStory, useFont } from '../../app';
 import useVideoTrim from '../videoTrim/useVideoTrim';
 
 const Z_INDEX_CANVAS = {
-  MOVABLE: 10,
   FLOAT_PANEL: 11,
 };
 
