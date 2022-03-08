@@ -35,6 +35,11 @@ import useCORSProxy from '../../utils/useCORSProxy';
 import { useConfig, useStory, useFont } from '../../app';
 import useVideoTrim from '../videoTrim/useVideoTrim';
 
+const Z_INDEX_CANVAS = {
+  MOVABLE: 10,
+  FLOAT_PANEL: 11,
+};
+
 const Wrapper = styled.div`
   ${elementWithPosition}
   ${elementWithSize}
@@ -92,6 +97,7 @@ const EditElement = memo(
           setVideoNode={setVideoNode}
           updateElementById={updateElementById}
           maybeEnqueueFontStyle={maybeEnqueueFontStyle}
+          zIndexCanvas={Z_INDEX_CANVAS}
         />
       </Wrapper>
     );

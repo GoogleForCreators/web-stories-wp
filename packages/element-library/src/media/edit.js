@@ -106,6 +106,7 @@ function MediaEdit({
   setLocalProperties,
   getProxiedUrl,
   updateElementById,
+  zIndexCanvas,
 }) {
   const {
     id,
@@ -303,6 +304,7 @@ function MediaEdit({
         width={width}
         height={height}
         scale={scale || 100}
+        zIndexCanvas={zIndexCanvas}
       />
     </Element>
   );
@@ -314,6 +316,7 @@ MediaEdit.propTypes = {
   setLocalProperties: PropTypes.func.isRequired,
   getProxiedUrl: PropTypes.func,
   updateElementById: PropTypes.func,
+  zIndexCanvas: PropTypes.object,
 };
 
 export default MediaEdit;

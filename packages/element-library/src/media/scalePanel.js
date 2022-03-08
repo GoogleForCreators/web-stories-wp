@@ -24,10 +24,6 @@ import { Slider } from '@googleforcreators/design-system';
 import { BG_MIN_SCALE, BG_MAX_SCALE } from '@googleforcreators/animation';
 import { InOverlay } from '@googleforcreators/moveable';
 
-const Z_INDEX_CANVAS = {
-  MOVABLE: 10,
-  FLOAT_PANEL: 11,
-};
 const MIN_WIDTH = 165;
 const HEIGHT = 36;
 const OFFSET_Y = 8;
@@ -51,9 +47,18 @@ const ScaleSlider = styled(Slider)`
     Math.max(width, MIN_WIDTH) - 2 * HORIZONTAL_PADDING}px;
 `;
 
-function ScalePanel({ setProperties, width, height, x, y, scale, ...rest }) {
+function ScalePanel({
+  setProperties,
+  width,
+  height,
+  x,
+  y,
+  scale,
+  zIndexCanvas,
+  ...rest
+}) {
   return (
-    <InOverlay zIndex={Z_INDEX_CANVAS.FLOAT_PANEL} pointerEvents="initial">
+    <InOverlay zIndex={zIndexCanvas.FLOAT_PANEL} pointerEvents="initial">
       <Container x={x} y={y} width={width} height={height}>
         {/*
           @todo: Should maxScale depend on the maximum resolution? Or should that
@@ -84,6 +89,7 @@ ScalePanel.propTypes = {
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
   scale: PropTypes.number.isRequired,
+  zIndexCanvas: PropTypes.object,
 };
 
 export default ScalePanel;
