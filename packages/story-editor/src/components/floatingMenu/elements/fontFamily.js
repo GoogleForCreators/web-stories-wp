@@ -23,9 +23,9 @@ import styled, { css } from 'styled-components';
 /**
  * Internal dependencies
  */
-import FontPicker from '../../fontPicker';
+import StoryFontPicker from '../../storyFontPicker';
 
-const StyledFontPicker = styled(FontPicker)`
+const StyledFontPicker = styled(StoryFontPicker)`
   width: 164px;
 `;
 
