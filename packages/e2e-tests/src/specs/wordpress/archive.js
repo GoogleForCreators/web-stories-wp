@@ -64,10 +64,12 @@ describe.skip('Stories Archive', () => {
       await setPostContent(pageContent);
       await publishPost();
     });
+
     afterAll(async () => {
       await changeStoriesArchivesType('Default');
       await trashAllPosts('page');
     });
+
     it('should select a custom page', async () => {
       await visitSettings();
       await changeStoriesArchivesType('Custom');
@@ -81,6 +83,7 @@ describe.skip('Stories Archive', () => {
       });
       await page.waitForResponse(
         (response) =>
+          //eslint-disable-next-line jest/no-conditional-in-test
           response.url().includes('web-stories/v1/settings') &&
           response.status() === 200
       );

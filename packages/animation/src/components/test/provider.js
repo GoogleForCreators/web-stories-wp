@@ -321,6 +321,7 @@ describe('StoryAnimation.Provider', () => {
         result.current.actions.WAAPIAnimationMethods.setCurrentTime(200)
       );
 
+      /* eslint-disable jest/no-conditional-in-test */
       animationsWithIds.forEach(({ animation, elementId }) => {
         expect(animation.currentTime).toStrictEqual(
           selectedElementIds.includes(elementId) ? 200 : 0
@@ -332,6 +333,7 @@ describe('StoryAnimation.Provider', () => {
           selectedElementIds.includes(elementId) ? 1 : 0
         );
       });
+      /* eslint-enable jest/no-conditional-in-test */
     });
 
     it('excludes cleaned up animation methods when called', () => {
@@ -377,7 +379,7 @@ describe('StoryAnimation.Provider', () => {
         result.current.actions.WAAPIAnimationMethods.setCurrentTime(newTime)
       );
 
-      /* eslint-disable jest/no-conditional-expect */
+      /* eslint-disable jest/no-conditional-expect, jest/no-conditional-in-test */
       animations.map((animation, i) => {
         if (i === unhoistIndex) {
           expect(animation.play).toHaveBeenCalledTimes(0);
@@ -389,7 +391,7 @@ describe('StoryAnimation.Provider', () => {
           expect(animation.currentTime).toStrictEqual(newTime);
         }
       });
-      /* eslint-enable jest/no-conditional-expect */
+      /* eslint-enable jest/no-conditional-expect, jest/no-conditional-in-test */
     });
   });
 
