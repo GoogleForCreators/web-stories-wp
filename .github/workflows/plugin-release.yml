@@ -379,13 +379,13 @@ jobs:
           git add web-stories.php
           git status
 
-          if ! git diff --cached --exit-code > /dev/null; then
-            echo 'No changes to commit; exiting!'
-            echo "::set-output name=changes::no"
-          else
+          if git diff --cached --exit-code > /dev/null; then
             git commit -m "Prepare release $PLUGIN_VERSION"
             git push -u origin HEAD
             echo "::set-output name=changes::yes"
+          else
+            echo 'No changes to commit; exiting!'
+            echo "::set-output name=changes::no"
           fi
 
       # Only non-patch release version bumps should be cherry picked to main
