@@ -23,6 +23,7 @@ import {
   ContextMenu,
   ContextMenuComponents,
   TOOLTIP_PLACEMENT,
+  useKeyDownEffect,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
@@ -128,6 +129,8 @@ function TextAlign() {
     setMenuOpen(false);
     buttonRef.current.focus();
   };
+
+  useKeyDownEffect(buttonRef, 'down', () => setMenuOpen(true), []);
 
   return (
     <>
