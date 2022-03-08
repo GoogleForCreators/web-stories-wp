@@ -207,6 +207,7 @@ describe('raw template files', () => {
 
       for (const { elements } of templateData.pages) {
         for (const element of elements) {
+          // eslint-disable-next-line jest/no-conditional-in-test
           if (!['text'].includes(element?.type)) {
             continue;
           }
