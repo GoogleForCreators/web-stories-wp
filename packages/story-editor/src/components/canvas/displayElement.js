@@ -37,6 +37,7 @@ import {
   getResponsiveBorder,
   shouldDisplayBorder,
 } from '@googleforcreators/masks';
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -44,6 +45,56 @@ import {
 import StoryPropTypes from '../../types';
 import useCORSProxy from '../../utils/useCORSProxy';
 import { useLocalMedia, useFont } from '../../app';
+
+const ElementDisplay = memo(({ type, ...rest }) => {
+  const { Display } = getDefinitionForType(type);
+  return <Display {...rest} />;
+});
+
+ElementDisplay.propTypes = {
+  type: PropTypes.string,
+};
+
+function InnerDisplay({ element, previewMode, box, type }) {
+  const { getProxiedUrl } = useCORSProxy();
+  const { isCurrentResourceProcessing, isCurrentResourceUploading } =
+    useLocalMedia(({ state }) => ({
+      isCurrentResourceProcessing: state.isCurrentResourceProcessing,
+      isCurrentResourceUploading: state.isCurrentResourceUploading,
+    }));
+  const {
+    actions: { maybeEnqueueFontStyle },
+  } = useFont();
+
+  const props = {};
+
+  if (type === ELEMENT_TYPES.VIDEO) {
+    props['getProxiedUrl'] = getProxiedUrl;
+  } else if (type === ELEMENT_TYPES.IMAGE) {
+    props['getProxiedUrl'] = getProxiedUrl;
+    props['isCurrentResourceProcessing'] = isCurrentResourceProcessing;
+    props['isCurrentResourceUploading'] = isCurrentResourceUploading;
+  } else if (type === ELEMENT_TYPES.TEXT) {
+    props['maybeEnqueueFontStyle'] = maybeEnqueueFontStyle;
+  }
+
+  return (
+    <ElementDisplay
+      element={element}
+      previewMode={previewMode}
+      box={box}
+      type={type}
+      {...props}
+    />
+  );
+}
+
+InnerDisplay.propTypes = {
+  previewMode: PropTypes.bool,
+  element: StoryPropTypes.element.isRequired,
+  box: StoryPropTypes.box.isRequired,
+  type: PropTypes.string,
+};
 
 // Using attributes to avoid creation of hundreds of classes by styled components for previewMode.
 const Wrapper = styled.div.attrs(
@@ -108,15 +159,6 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
     getBox: state.actions.getBox,
     dataToEditorX: state.actions.dataToEditorX,
   }));
-  const { getProxiedUrl } = useCORSProxy();
-  const { isCurrentResourceProcessing, isCurrentResourceUploading } =
-    useLocalMedia(({ state }) => ({
-      isCurrentResourceProcessing: state.isCurrentResourceProcessing,
-      isCurrentResourceUploading: state.isCurrentResourceUploading,
-    }));
-  const {
-    actions: { maybeEnqueueFontStyle },
-  } = useFont();
 
   const [replacement, setReplacement] = useState(null);
 
@@ -149,10 +191,6 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
         overlay: isBackground ? replacement.overlay : overlay,
       }
     : null;
-
-  const { Display } = getDefinitionForType(type);
-  const { Display: Replacement } =
-    getDefinitionForType(replacement?.resource.type) || {};
 
   const wrapperRef = useRef(null);
 
@@ -219,14 +257,11 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
           previewMode={previewMode}
           responsiveBorder={responsiveBorder}
         >
-          <Display
+          <InnerDisplay
             element={element}
             previewMode={previewMode}
             box={box}
-            getProxiedUrl={getProxiedUrl}
-            isCurrentResourceProcessing={isCurrentResourceProcessing}
-            isCurrentResourceUploading={isCurrentResourceUploading}
-            maybeEnqueueFontStyle={maybeEnqueueFontStyle}
+            type={type}
           />
         </WithMask>
         {!previewMode && (
@@ -241,13 +276,10 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
                 }}
                 previewMode={previewMode}
               >
-                <Replacement
+                <InnerDisplay
                   element={replacementElement}
                   box={box}
-                  getProxiedUrl={getProxiedUrl}
-                  isCurrentResourceProcessing={isCurrentResourceProcessing}
-                  isCurrentResourceUploading={isCurrentResourceUploading}
-                  maybeEnqueueFontStyle={maybeEnqueueFontStyle}
+                  type={replacement?.resource.type}
                 />
               </WithMask>
             )}
