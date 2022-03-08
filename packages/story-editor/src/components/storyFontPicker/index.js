@@ -25,6 +25,7 @@ import { stripHTML } from '@googleforcreators/dom';
  * Internal dependencies
  */
 import { useFont, useStory } from '../../app';
+import getUpdatedSizeAndPosition from '../../utils/getUpdatedSizeAndPosition';
 import useRichTextFormatting from '../panels/design/textStyle/useRichTextFormatting';
 import getClosestFontWeight from '../panels/design/textStyle/getClosestFontWeight';
 import { getCommonValue } from '../panels/shared';
@@ -44,9 +45,13 @@ const StoryFontPicker = forwardRef(function StoryFontPicker({ ...rest }, ref) {
       updateSelectedElements({
         properties: (element) => {
           const updates = updateProperties(element, update, commitValues);
-
+          const sizeUpdates = getUpdatedSizeAndPosition({
+            ...element,
+            ...updates,
+          });
           return {
             ...updates,
+            ...sizeUpdates,
           };
         },
       });
