@@ -768,11 +768,8 @@ export const RightClickMenu = (args) => {
 export const RightClickMenuStaticValues = (args) => {
   return (
     <Grid>
-      <RightClickMenuOnShapeAndBackground>
+      <RightClickMenuOnShapeAndBackground {...args}>
         <Text>{'Right click menu on top of shape and background'}</Text>
-        <ContextMenu {...args}>
-          {{ ...shapeMenu, ...backgroundMediaMenu }}
-        </ContextMenu>
       </RightClickMenuOnShapeAndBackground>
       <Container>
         <Text>{'Right click on page element'}</Text>

@@ -58,31 +58,21 @@ const TemplateImage = styled.img`
 `;
 
 const PageTemplateWrapper = styled.div`
-  position: absolute;
-  top: 0;
   height: ${({ pageSize }) => pageSize.height}px;
   width: ${({ pageSize }) => pageSize.width}px;
-  display: flex;
-  flex-direction: column;
   cursor: pointer;
-  border-radius: ${({ theme }) => theme.borders.radius.small};
-  transform: ${({ translateX, translateY }) =>
-    `translateX(${translateX}px) translateY(${translateY}px)`};
 
   ${({ isHighlighted }) => isHighlighted && themeHelpers.focusCSS};
   ${focusStyle};
 `;
 PageTemplateWrapper.propTypes = {
   pageSize: PageSizePropType.isRequired,
-  translateY: PropTypes.number.isRequired,
-  translateX: PropTypes.number.isRequired,
 };
 
 const PreviewPageWrapper = styled.div`
   position: relative;
   height: ${({ pageSize }) => pageSize.height}px;
   width: ${({ pageSize }) => pageSize.width}px;
-  z-index: -1;
   background-color: ${({ theme }) => theme.colors.interactiveBg.secondary};
   border-radius: ${({ theme }) => theme.borders.radius.small};
   overflow: hidden;
@@ -97,31 +87,11 @@ const DeleteButton = styled(ActionButton)`
   right: 4px;
 `;
 
-const PageTemplateTitle = styled.div`
-  position: absolute;
-  bottom: 0;
-  background-color: ${({ theme }) => theme.colors.opacity.black64};
-  border-radius: ${({ theme }) => theme.borders.radius.small};
-  border-top-right-radius: 0;
-  border-top-left-radius: 0;
-  opacity: ${({ isActive }) => (isActive ? 1 : 0)};
-
-  padding: 8px;
-  font-size: 12px;
-  line-height: 22px;
-  width: 100%;
-  align-self: flex-end;
-`;
-
-PageTemplateTitle.propTypes = {
-  isActive: PropTypes.bool.isRequired,
-};
-
 // This is used for nested roving tab index to detect parent siblings.
 const BUTTON_NESTING_DEPTH = 2;
 
-function PageTemplate(
-  { page, pageSize, translateY, translateX, handleDelete, index, ...rest },
+function SavedPageTemplate(
+  { page, pageSize, handleDelete, index, ...rest },
   ref
 ) {
   const queuePageImageGeneration = usePageDataUrls(
@@ -168,8 +138,8 @@ function PageTemplate(
           'image/jpeg'
         );
         const resource = await uploadFile(file, {
-          post: page.templateId,
-          web_stories_media_source: 'page-template',
+          templateId: page.templateId,
+          mediaSource: 'page-template',
         });
 
         updatePageTemplate(page.templateId, {
@@ -216,8 +186,6 @@ function PageTemplate(
       onPointerEnter={makeActive}
       onPointerLeave={makeInactive}
       aria-label={page.title}
-      translateY={translateY}
-      translateX={translateX}
       isHighlighted={page.id === highlightedTemplate}
       onFocus={makeActive}
       onBlur={makeInactive}
@@ -263,26 +231,20 @@ function PageTemplate(
           <Icons.TrashFilledSmall />
         </DeleteButton>
       </PreviewPageWrapper>
-
-      {page.title && (
-        <PageTemplateTitle isActive={isActive}>{page.title}</PageTemplateTitle>
-      )}
     </PageTemplateWrapper>
   );
 }
 
-const PageTemplateWithRef = forwardRef(PageTemplate);
+const PageTemplateWithRef = forwardRef(SavedPageTemplate);
 
-PageTemplate.propTypes = {
+SavedPageTemplate.propTypes = {
   isActive: PropTypes.bool,
   page: PropTypes.object.isRequired,
   pageSize: PageSizePropType.isRequired,
-  translateY: PropTypes.number.isRequired,
-  translateX: PropTypes.number.isRequired,
   handleDelete: PropTypes.func,
-  index: PropTypes.number.isRequired,
+  index: PropTypes.number,
 };
 
-PageTemplate.displayName = 'PageTemplate';
+SavedPageTemplate.displayName = 'SavedPageTemplate';
 
 export default PageTemplateWithRef;
