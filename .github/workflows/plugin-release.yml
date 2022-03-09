@@ -32,6 +32,9 @@ jobs:
     name: Checks
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    # This step requires additional review
+    # See https://docs.github.com/en/actions/reference/environments
+    environment: Production
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -437,9 +440,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     needs: [create-release]
-    # This step requires additional review
-    # See https://docs.github.com/en/actions/reference/environments
-    environment: Production
     if: ${{ ! contains(github.event.inputs.version, 'rc') }}
     env:
       PLUGIN_REPO_URL: 'https://plugins.svn.wordpress.org/web-stories'
