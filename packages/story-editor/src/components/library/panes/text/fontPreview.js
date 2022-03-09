@@ -36,7 +36,7 @@ import { trackEvent } from '@googleforcreators/tracking';
 import { useUnits } from '@googleforcreators/units';
 import { stripHTML } from '@googleforcreators/dom';
 import { __, sprintf } from '@googleforcreators/i18n';
-import { getHTMLFormatters, getHTMLInfo } from '@googleforcreators/rich-text';
+import { getHTMLFormatters } from '@googleforcreators/rich-text';
 
 /**
  * Internal dependencies
@@ -48,7 +48,7 @@ import useLibrary from '../../useLibrary';
 import LibraryMoveable from '../shared/libraryMoveable';
 import InsertionOverlay from '../shared/insertionOverlay';
 import useRovingTabIndex from '../../../../utils/useRovingTabIndex';
-import { areAllType } from '../../../../utils/presetUtils';
+import { areAllType, getTextInlineStyles } from '../../../../utils/presetUtils';
 import objectWithout from '../../../../utils/objectWithout';
 import getUpdatedSizeAndPosition from '../../../../utils/getUpdatedSizeAndPosition';
 
@@ -174,12 +174,30 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
     pageCanvasData,
     versionNumber,
   ]);
+
+  const applyStyleOnContent = useCallback(
+    (
+      { fontWeight: newFontWeight, isItalic, isUnderline, letterSpacing },
+      elContent
+    ) => {
+      elContent = htmlFormatters.setFontWeight(elContent, newFontWeight);
+      elContent = htmlFormatters.toggleItalic(elContent, isItalic);
+      elContent = htmlFormatters.toggleUnderline(elContent, isUnderline);
+      elContent = htmlFormatters.setLetterSpacing(elContent, letterSpacing);
+      return elContent;
+    },
+    [htmlFormatters]
+  );
+
   const onClick = useCallback(() => {
     // If we have only text(s) selected, we apply the preset instead of inserting.
     if (isText) {
       updateSelectedElements({
         properties: (oldElement) => {
-          const { fontWeight: newFontWeight } = getHTMLInfo(element.content);
+          const newContent = applyStyleOnContent(
+            getTextInlineStyles(element.content),
+            oldElement.content
+          );
           const presetAtts = objectWithout(element, [
             'x',
             'y',
@@ -194,10 +212,7 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
             ...oldElement,
             ...presetAtts,
             ...sizeUpdates,
-            content: htmlFormatters.setFontWeight(
-              oldElement.content,
-              newFontWeight
-            ),
+            content: newContent,
           };
         },
       });
@@ -222,7 +237,7 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
     title,
     isText,
     updateSelectedElements,
-    htmlFormatters,
+    applyStyleOnContent,
   ]);
 
   const getTextDisplay = (textProps = {}) => {
