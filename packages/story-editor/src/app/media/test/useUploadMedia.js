@@ -70,9 +70,10 @@ jest.mock('../../config', () => ({
   useConfig: jest.fn(() => ({
     allowedMimeTypes: {
       image: [],
+      vector: [],
       video: [],
       caption: [],
-      vector: [],
+      audio: [],
     },
   })),
 }));

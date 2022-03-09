@@ -33,6 +33,7 @@ export async function arrange({ mediaResponse = [] }) {
   const config = {
     api: {},
     allowedMimeTypes: {
+      audio: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
       image: [
         'image/png',
         'image/jpeg',
@@ -40,6 +41,7 @@ export async function arrange({ mediaResponse = [] }) {
         'image/gif',
         'image/webp',
       ],
+      caption: ['text/vtt'],
       vector: [],
       video: ['video/mp4', 'video/webm'],
     },

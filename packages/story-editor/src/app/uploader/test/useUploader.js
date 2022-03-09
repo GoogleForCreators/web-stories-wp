@@ -36,6 +36,7 @@ function setup(args) {
   const configValue = {
     api: {},
     allowedMimeTypes: {
+      audio: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
       image: [
         'image/png',
         'image/jpeg',
@@ -43,6 +44,7 @@ function setup(args) {
         'image/gif',
         'image/webp',
       ],
+      caption: ['text/vtt'],
       vector: [],
       video: ['video/mp4', 'video/webm'],
     },

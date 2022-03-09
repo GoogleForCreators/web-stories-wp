@@ -54,6 +54,7 @@ export function TestFrameElement({
   const configContext = {
     ...inputConfigContext,
     allowedMimeTypes: {
+      audio: [],
       image: [],
       caption: [],
       vector: [],
@@ -124,6 +125,7 @@ export function TestDisplayElement({
   const configContext = {
     ...inputConfigContext,
     allowedMimeTypes: {
+      audio: [],
       image: [],
       caption: [],
       vector: [],

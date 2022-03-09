@@ -48,9 +48,17 @@ function MediaUpload({ render, onSelect }) {
 function arrange(selectedElements) {
   const configValue = {
     allowedMimeTypes: {
-      image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
+      audio: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
+      image: [
+        'image/png',
+        'image/jpeg',
+        'image/jpg',
+        'image/gif',
+        'image/webp',
+      ],
+      caption: ['text/vtt'],
       vector: [],
-      video: [],
+      video: ['video/mp4', 'video/webm'],
     },
     capabilities: {
       hasUploadMediaAction: true,

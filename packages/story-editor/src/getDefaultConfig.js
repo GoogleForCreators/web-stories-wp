@@ -62,10 +62,10 @@ const getDefaultConfig = () => ({
     weekStartsOn: 1,
   },
   allowedMimeTypes: {
-    image: ['image/webp', 'image/png', 'image/jpeg', 'image/gif'],
-    vector: ['image/svg+xml'],
-    caption: ['text/vtt'],
     audio: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
+    image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/webp'],
+    caption: ['text/vtt'],
+    vector: ['image/svg+xml'],
     video: ['video/mp4', 'video/webm'],
   },
   isRTL: false,
