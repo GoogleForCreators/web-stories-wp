@@ -28,4 +28,4 @@ const addSlice = (name, slice) => getState().addSlice(name, slice);
 const select = (sliceName) => getState()[sliceName].state;
 const dispatch = (sliceName) => getState()[sliceName].actions;
 
-export { select, dispatch, addSlice, setState, subscribe, destroy };
+export { select, dispatch, addSlice, getState, setState, subscribe, destroy };
