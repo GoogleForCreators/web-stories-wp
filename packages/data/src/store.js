@@ -16,9 +16,10 @@
 /**
  * External dependencies
  */
-import create from 'zustand/vanilla';
+import { default as createVanillaStore } from 'zustand/vanilla';
+import create from 'zustand';
 
-const store = create((set, get) => ({
+const store = createVanillaStore((set, get) => ({
   addSlice: (name, slice) => set({ [name]: slice(set, get) }),
 }));
 
@@ -28,4 +29,15 @@ const addSlice = (name, slice) => getState().addSlice(name, slice);
 const select = (sliceName) => getState()[sliceName].state;
 const dispatch = (sliceName) => getState()[sliceName].actions;
 
-export { select, dispatch, addSlice, getState, setState, subscribe, destroy };
+const useStore = create(store);
+
+export {
+  select,
+  dispatch,
+  addSlice,
+  getState,
+  setState,
+  subscribe,
+  destroy,
+  useStore,
+};
