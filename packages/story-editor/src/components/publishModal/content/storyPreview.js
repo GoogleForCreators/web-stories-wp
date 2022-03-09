@@ -24,9 +24,10 @@ import {
   THEME_CONSTANTS,
   MEDIA_VARIANTS,
 } from '@googleforcreators/design-system';
-import { useCallback } from '@googleforcreators/react';
+import { useCallback, useMemo } from '@googleforcreators/react';
 import { PAGE_RATIO } from '@googleforcreators/units';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
+import { getExtensionsFromMimeType } from '@googleforcreators/media';
 /**
  * Internal dependencies
  */
@@ -191,23 +192,20 @@ const StoryPreview = () => {
     })
   );
 
-  const {
-    allowedImageFileTypes,
-    allowedImageMimeTypes,
-    hasUploadMediaAction,
-    publisher,
-  } = useConfig(
-    ({
-      allowedImageFileTypes,
-      allowedImageMimeTypes,
-      capabilities,
-      metadata,
-    }) => ({
-      allowedImageFileTypes,
-      allowedImageMimeTypes,
+  const { allowedImageMimeTypes, hasUploadMediaAction, publisher } = useConfig(
+    ({ allowedMimeTypes, capabilities, metadata }) => ({
+      allowedImageMimeTypes: allowedMimeTypes?.image,
       hasUploadMediaAction: capabilities?.hasUploadMediaAction,
       publisher: metadata?.publisher,
     })
+  );
+
+  const allowedImageFileTypes = useMemo(
+    () =>
+      allowedImageMimeTypes
+        .map((type) => getExtensionsFromMimeType(type))
+        .flat(),
+    [allowedImageMimeTypes]
   );
 
   // Honor 2:3 aspect ratio that cover previews have
