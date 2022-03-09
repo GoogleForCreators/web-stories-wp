@@ -54,4 +54,10 @@ describe('isEmptyStory', () => {
     storyWithExtraElements[0].elements.push({});
     expect(isEmptyStory(storyWithExtraElements)).toBeFalse();
   });
+
+  it('should not count story with an attachment as empty', () => {
+    const storyWithAttachment = [createPage()];
+    storyWithAttachment[0].pageAttachemnt.push({});
+    expect(isEmptyStory(storyWithAttachment)).toBeFalse();
+  });
 });
