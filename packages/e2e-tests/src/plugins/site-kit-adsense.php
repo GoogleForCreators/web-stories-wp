@@ -5,11 +5,6 @@
  * Description: Utility plugin to mock sitekit adsense
  * Author:      Google
  * Author URI:  https://opensource.google.com
- *
- * @package   Google\Site_Kit
- * @copyright 2020 Google LLC
- * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://sitekit.withgoogle.com
  */
 
 namespace Google\Web_Stories\E2E\Sitekit\Adsense;
