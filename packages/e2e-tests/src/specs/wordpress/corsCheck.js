@@ -20,9 +20,8 @@
 import {
   withExperimentalFeatures,
   createNewStory,
-  activatePlugin,
-  deactivatePlugin,
   takeSnapshot,
+  withPlugin,
 } from '@web-stories-wp/e2e-test-utils';
 /**
  * Internal dependencies
@@ -31,11 +30,12 @@ import { addAllowedErrorMessage } from '../../config/bootstrap.js';
 
 describe('CORS check', () => {
   withExperimentalFeatures(['enableCORSCheck']);
+  withPlugin('e2e-tests-cors-error');
+
   let removeCORSErrorMessage;
   let removeResourceErrorMessage;
 
-  beforeAll(async () => {
-    await activatePlugin('e2e-tests-cors-error');
+  beforeAll(() => {
     removeCORSErrorMessage = addAllowedErrorMessage(
       'has been blocked by CORS policy'
     );
@@ -44,8 +44,7 @@ describe('CORS check', () => {
     );
   });
 
-  afterAll(async () => {
-    await deactivatePlugin('e2e-tests-cors-error');
+  afterAll(() => {
     removeCORSErrorMessage();
     removeResourceErrorMessage();
   });
