@@ -82,4 +82,20 @@ export class DesignMenu extends Container {
     const dialog = this.getByRole('dialog', { name: 'Text alignment options' });
     return this.getByRoleIn(dialog, 'menuitem', { name });
   }
+
+  get fontSize() {
+    return this.getByRole('textbox', { name: /Font size/ });
+  }
+
+  get fontColor() {
+    const region = this.queryByRole('region', {
+      name: /Color input: Text color/,
+    });
+    if (!region) {
+      return null;
+    }
+    const element = this._get(region, 'textColor', Color);
+    element.label = 'Text color';
+    return element;
+  }
 }

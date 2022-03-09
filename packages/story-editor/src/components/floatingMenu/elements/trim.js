@@ -23,14 +23,33 @@ import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
-import { IconButton } from './shared';
+import useVideoElementTranscoding from '../../../app/media/utils/useVideoElementTranscoding';
+import { IconButton, useProperties } from './shared';
 
 function Trim() {
+  const { id: elementId, resource } = useProperties(['id', 'resource']);
+  const {
+    state: { canTrim, isTrimming, isDisabled },
+    actions: { handleTrim },
+  } = useVideoElementTranscoding({
+    elementId,
+    resource,
+  });
+
+  if (!canTrim) {
+    return null;
+  }
+
+  const title = isTrimming
+    ? __('Trimming video', 'web-stories')
+    : __('Trim video', 'web-stories');
+
   return (
     <IconButton
       Icon={Icons.Scissors}
-      title={__('Trim video', 'web-stories')}
-      onClick={() => {}}
+      title={title}
+      disabled={isDisabled || isTrimming}
+      onClick={handleTrim}
     />
   );
 }

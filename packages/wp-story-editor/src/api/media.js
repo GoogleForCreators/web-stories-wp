@@ -219,7 +219,6 @@ export function updateMedia(config, mediaId, data) {
     mediaSource,
     optimizedId,
     mutedId,
-    featuredMedia,
     posterId,
     storyId,
     altText,
@@ -235,7 +234,7 @@ export function updateMedia(config, mediaId, data) {
     },
     web_stories_is_muted: isMuted,
     web_stories_media_source: mediaSource,
-    featured_media: featuredMedia,
+    featured_media: posterId,
     post: storyId,
     alt_text: altText,
   };

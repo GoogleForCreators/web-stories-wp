@@ -82,7 +82,6 @@ function useUploadVideoFrame({ updateMediaElement }) {
       // If video ID is not set, skip relating media.
       if (id) {
         await updateMedia(id, {
-          featuredMedia: posterId,
           posterId,
           storyId,
         });
