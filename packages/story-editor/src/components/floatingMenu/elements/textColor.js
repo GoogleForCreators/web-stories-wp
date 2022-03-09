@@ -61,6 +61,7 @@ function TextColor() {
       hasInputs={false}
       hasEyedropper
       allowsOpacity
+      allowsGradient={false}
     />
   );
 }
