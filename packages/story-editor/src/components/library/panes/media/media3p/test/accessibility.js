@@ -26,10 +26,29 @@ import ProviderTab from '../providerTab';
 import PaginatedMediaGallery from '../../common/paginatedMediaGallery';
 import { renderWithTheme } from '../../../../../../testUtils';
 import { noop } from '../../../../../../utils/noop';
+import {
+  useCanvas,
+  useCanvasBoundingBox,
+  useLocalMedia,
+} from '../../../../../../app';
+
+jest.mock('../../../../../../app/media');
+
+jest.mock('../../../../../../app/canvas', () => ({
+  ...jest.requireActual('../../../../../../app/canvas'),
+  useCanvas: jest.fn(),
+  useCanvasBoundingBox: jest.fn(),
+}));
+
+const mockCanvasContext = {
+  fullbleedContainer: {},
+  nodesById: {},
+  pageContainer: { getBoundingClientRect: () => ({ x: 0, y: 0 }) },
+};
 
 const RESOURCES = [
   {
-    alt: null,
+    alt: 'alt text',
     attribution: {
       author: {
         displayName: 'Maria',
@@ -61,6 +80,21 @@ const RESOURCES = [
 ];
 
 describe('automated accessibility tests', () => {
+  const mockUseCanvas = useCanvas;
+  const mockUseCanvasBoundingBox = useCanvasBoundingBox;
+
+  beforeEach(() => {
+    mockUseCanvas.mockReturnValue(mockCanvasContext);
+    mockUseCanvasBoundingBox.mockReturnValue({ x: 0, y: 0 });
+    useLocalMedia.mockReturnValue({
+      isCurrentResourceTrimming: jest.fn(),
+      isCurrentResourceMuting: jest.fn(),
+      isCurrentResourceTranscoding: jest.fn(),
+      isCurrentResourceProcessing: jest.fn(),
+      isCurrentResourceUploading: jest.fn(),
+      isNewResourceProcessing: jest.fn(),
+    });
+  });
   it('should render Media3pIcon without accessibility violations', async () => {
     const { container } = renderWithTheme(<Media3pIcon />);
 

@@ -42,7 +42,6 @@ export const CURATED_FONT_NAMES = [
   'Noto Sans',
   'Noto Serif',
   'Open Sans',
-  'Open Sans Condensed',
   'PT Mono',
   'PT Sans',
   'PT Serif',

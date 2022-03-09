@@ -32,7 +32,7 @@ import MenuSelector from './menus';
 const MenuWrapper = styled.section`
   display: flex;
   position: absolute;
-  z-index: 2;
+  z-index: 4;
 `;
 
 const FloatingMenu = memo(

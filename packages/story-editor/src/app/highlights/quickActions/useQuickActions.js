@@ -38,7 +38,6 @@ import {
 import states from '../states';
 import useHighlights from '../useHighlights';
 import updateProperties from '../../../components/inspector/design/updateProperties';
-import useVideoTrim from '../../../components/videoTrim/useVideoTrim';
 import { useHistory } from '../../history';
 import { useConfig } from '../../config';
 import { useLocalMedia, TRANSCODABLE_MIME_TYPES } from '../../media';
@@ -60,13 +59,11 @@ const {
   ColorBucket,
   CircleSpeed,
   Eraser,
-  LetterTLargeLetterTSmall,
   LetterTPlus,
   Link,
   Media,
   PictureSwap,
   Captions,
-  Scissors,
 } = Icons;
 
 export const MediaPicker = ({ render, ...props }) => {
@@ -274,18 +271,6 @@ const useQuickActions = () => {
   const { setHighlights } = useHighlights(({ setHighlights }) => ({
     setHighlights,
   }));
-  const { hasTrimMode, toggleTrimMode } = useVideoTrim(
-    ({ state: { hasTrimMode }, actions: { toggleTrimMode } }) => ({
-      hasTrimMode,
-      toggleTrimMode,
-    })
-  );
-
-  const { canTranscodeResource } = useLocalMedia(
-    ({ state: { canTranscodeResource } }) => ({
-      canTranscodeResource,
-    })
-  );
 
   const undoRef = useRef(undo);
   undoRef.current = undo;
@@ -424,10 +409,7 @@ const useQuickActions = () => {
     handleFocusAnimationPanel,
     handleFocusLinkPanel,
     handleFocusPageBackground,
-    handleFocusTextColor,
-    handleFocusFontPicker,
     handleFocusTextSetsPanel,
-    handleFocusStylePanel,
     handleFocusCaptionsPanel,
   } = useMemo(
     () => ({
@@ -435,9 +417,6 @@ const useQuickActions = () => {
       handleFocusLinkPanel: handleFocusPanel(states.LINK),
       handleFocusPageBackground: handleFocusPanel(states.PAGE_BACKGROUND),
       handleFocusTextSetsPanel: handleFocusPanel(states.TEXT_SET),
-      handleFocusFontPicker: handleFocusPanel(states.FONT),
-      handleFocusTextColor: handleFocusPanel(states.TEXT_COLOR),
-      handleFocusStylePanel: handleFocusPanel(states.STYLE),
       handleFocusCaptionsPanel: handleFocusPanel(states.CAPTIONS),
     }),
     [handleFocusPanel]
@@ -598,30 +577,7 @@ const useQuickActions = () => {
     selectedElement?.type,
   ]);
 
-  const shapeActions = useMemo(
-    () => [
-      {
-        Icon: Bucket,
-        label: ACTIONS.CHANGE_COLOR.text,
-        onClick: (evt) => {
-          handleFocusStylePanel()(evt);
-
-          trackEvent('quick_action', {
-            name: ACTIONS.CHANGE_COLOR.trackingEventName,
-            element: selectedElement?.type,
-          });
-        },
-        ...actionMenuProps,
-      },
-      ...foregroundCommonActions,
-    ],
-    [
-      actionMenuProps,
-      foregroundCommonActions,
-      handleFocusStylePanel,
-      selectedElement?.type,
-    ]
-  );
+  const shapeActions = foregroundCommonActions;
 
   const applyTextAutoStyle = useApplyTextAutoStyle(
     selectedElement,
@@ -633,32 +589,6 @@ const useQuickActions = () => {
   );
   const textActions = useMemo(
     () => [
-      {
-        Icon: Bucket,
-        label: ACTIONS.CHANGE_COLOR.text,
-        onClick: (evt) => {
-          handleFocusTextColor()(evt);
-
-          trackEvent('quick_action', {
-            name: ACTIONS.CHANGE_COLOR.trackingEventName,
-            element: selectedElement?.type,
-          });
-        },
-        ...actionMenuProps,
-      },
-      {
-        Icon: LetterTLargeLetterTSmall,
-        label: ACTIONS.CHANGE_FONT.text,
-        onClick: (evt) => {
-          handleFocusFontPicker()(evt);
-
-          trackEvent('quick_action', {
-            name: ACTIONS.CHANGE_FONT.trackingEventName,
-            element: selectedElement?.type,
-          });
-        },
-        ...actionMenuProps,
-      },
       {
         Icon: ColorBucket,
         label: ACTIONS.AUTO_STYLE_TEXT.text,
@@ -677,41 +607,9 @@ const useQuickActions = () => {
       applyTextAutoStyle,
       foregroundCommonActions,
       actionMenuProps,
-      handleFocusTextColor,
-      handleFocusFontPicker,
       selectedElement?.type,
     ]
   );
-
-  const videoCommonActions = useMemo(() => {
-    const resource = selectedElements?.[0]?.resource;
-    if (!resource) {
-      return [];
-    }
-    return canTranscodeResource(resource) && hasTrimMode
-      ? [
-          {
-            Icon: Scissors,
-            label: ACTIONS.TRIM_VIDEO.text,
-            onClick: () => {
-              toggleTrimMode();
-              trackEvent('quick_action', {
-                name: ACTIONS.TRIM_VIDEO.trackingEventName,
-                element: selectedElement.type,
-              });
-            },
-            ...actionMenuProps,
-          },
-        ]
-      : [];
-  }, [
-    selectedElements,
-    selectedElement,
-    canTranscodeResource,
-    hasTrimMode,
-    actionMenuProps,
-    toggleTrimMode,
-  ]);
 
   const videoActions = useMemo(() => {
     const [baseActions, clearActions] = showClearAction
@@ -736,7 +634,6 @@ const useQuickActions = () => {
         },
         ...actionMenuProps,
       },
-      ...videoCommonActions,
       ...clearActions,
     ];
   }, [
@@ -745,7 +642,6 @@ const useQuickActions = () => {
     handleFocusCaptionsPanel,
     selectedElement?.type,
     showClearAction,
-    videoCommonActions,
   ]);
 
   const backgroundElementMediaActions = useMemo(() => {
@@ -845,7 +741,7 @@ const useQuickActions = () => {
     const isVideo = selectedElement.type === 'video';
     // In case of video, we're also adding actions that are common for video regardless of bg/not.
     if (isVideo) {
-      return [...backgroundElementMediaActions, ...videoCommonActions];
+      return [...backgroundElementMediaActions];
     }
     return backgroundElementMediaActions;
   }

@@ -39,6 +39,7 @@ import { v4 as uuidv4 } from 'uuid';
  * Internal dependencies
  */
 import { useConfig } from '../../../app';
+import { Z_INDEX_STORY_DETAILS } from '../../../constants/zIndex';
 import { BackgroundAudioPropType } from '../../../types';
 import { Row } from '../../form';
 import AudioPlayer from '../../audioPlayer';
@@ -212,7 +213,7 @@ function BackgroundAudioPanelContent({
             <Tooltip
               hasTail
               title={__('Remove file', 'web-stories')}
-              popupZIndexOverride={10}
+              popupZIndexOverride={Z_INDEX_STORY_DETAILS}
             >
               <StyledButton
                 aria-label={__('Remove file', 'web-stories')}

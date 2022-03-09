@@ -163,9 +163,9 @@ function useUploader() {
       validateFileForUpload(file);
 
       const _additionalData = {
-        post: storyId,
-        alt_text: getFileName(file),
-        web_stories_media_source: 'editor',
+        storyId,
+        altText: getFileName(file),
+        mediaSource: 'editor',
         ...additionalData,
       };
 

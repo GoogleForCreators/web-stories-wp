@@ -13,6 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as ContextMenu } from './contextMenu';
-export * as ContextMenuComponents from './components';
-export { MenuPropTypes, CONTEXT_MENU_MIN_WIDTH } from './menu';
+
+// Bring element in front of story details modal
+export const Z_INDEX_STORY_DETAILS = 10;

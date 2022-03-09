@@ -29,6 +29,7 @@ import StoryPropTypes from '../../types';
 import MediaDisplay from '../media/display';
 import useCORSProxy from '../../utils/useCORSProxy';
 import { getBackgroundStyle, videoWithScale } from './util';
+import Captions from './captions';
 
 const Video = styled.video`
   position: absolute;
@@ -121,19 +122,8 @@ function VideoDisplay({ previewMode, box: { width, height }, element }) {
           data-leaf-element="true"
         >
           {url && <source src={url} type={resource.mimeType} />}
-          {tracks &&
-            tracks.map(({ srclang, label, track: src, id: key }, i) => (
-              <track
-                srcLang={srclang}
-                label={label}
-                // Hides the track from the user.
-                // Displaying happens in MediaCaptionsLayer instead.
-                kind="metadata"
-                src={src}
-                key={key}
-                default={i === 0}
-              />
-            ))}
+          {/*Hides the track from the user. Displaying happens in MediaCaptionsLayer instead.*/}
+          <Captions tracks={tracks} kind="metadata" />
         </Video>
       )}
     </MediaDisplay>

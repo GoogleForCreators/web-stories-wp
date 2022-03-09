@@ -108,6 +108,7 @@ describe('<Menu />', () => {
     const OverrideRenderItem = forwardRef(({ isSelected, ...rest }, ref) => {
       return (
         <li {...rest} ref={ref}>
+          {/* eslint-disable-next-line jest/no-conditional-in-test */}
           {isSelected ? 'I AM SELECTED' : 'I AM EXTRA CONTENT'}
         </li>
       );
