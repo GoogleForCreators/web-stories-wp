@@ -50,8 +50,6 @@ function SubMenuTrigger({
   isRTL = false,
   subMenuRef,
   parentMenuRef,
-  Button = MenuItem,
-  children,
   ...buttonProps
 }) {
   const ref = useRef();
@@ -143,7 +141,7 @@ function SubMenuTrigger({
 
   // Menu trigger does not react to clicking.
   return (
-    <Button
+    <MenuItem
       {...buttonProps}
       ref={ref}
       onPointerEnter={openSubMenu}
@@ -156,9 +154,7 @@ function SubMenuTrigger({
       aria-haspopup
       aria-expanded={isSubMenuOpen}
       dismissOnClick={false}
-    >
-      {children}
-    </Button>
+    />
   );
 }
 
@@ -169,8 +165,6 @@ SubMenuTrigger.propTypes = {
   isRTL: PropTypes.bool,
   subMenuRef: PropTypes.object.isRequired,
   parentMenuRef: PropTypes.object.isRequired,
-  children: PropTypes.node,
-  Button: PropTypes.func,
 };
 
 export default SubMenuTrigger;
