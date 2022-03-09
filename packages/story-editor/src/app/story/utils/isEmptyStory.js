@@ -25,7 +25,6 @@ import { shallowEqual } from '@googleforcreators/react';
 import { DEFAULT_PAGE_BACKGROUND_COLOR } from '../../../elements/utils/createPage';
 
 const isEmptyStory = (pages) => {
-  console.log(pages)
   const hasOnlyOnePage = pages.length === 1;
   if (!hasOnlyOnePage) {
     return false;
