@@ -67,4 +67,20 @@ export class DesignMenu extends Container {
   get loop() {
     return this.getByRole('checkbox', { name: 'Loop' });
   }
+
+  get fontSize() {
+    return this.getByRole('textbox', { name: /Font size/ });
+  }
+
+  get fontColor() {
+    const region = this.queryByRole('region', {
+      name: /Color input: Text color/,
+    });
+    if (!region) {
+      return null;
+    }
+    const element = this._get(region, 'textColor', Color);
+    element.label = 'Text color';
+    return element;
+  }
 }

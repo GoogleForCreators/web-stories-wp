@@ -60,7 +60,7 @@ function TextColor() {
       onChange={handleSetColor}
       hasInputs={false}
       hasEyeDropper
-      allowsOpacity={false}
+      allowsOpacity
     />
   );
 }
