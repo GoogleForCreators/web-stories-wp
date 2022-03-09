@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,12 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+const elementSlice = (set) => ({
+  elementTypes: [],
 
-// @todo Create a custom hook to manage state.
-const elementTypes = [];
+  registerElementTypes: (elements) =>
+    set((state) => {
+      state.element.elementTypes.push(elements);
+    }),
+});
 
-function registerElementType(elementType) {
-  elementTypes.push(elementType);
-}
-
-export { registerElementType, elementTypes };
+export default elementSlice;

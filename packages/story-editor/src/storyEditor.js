@@ -26,15 +26,12 @@ import {
   ModalGlobalStyle,
   deepMerge,
 } from '@googleforcreators/design-system';
-import { useEffect } from '@googleforcreators/react';
 import { FlagsProvider } from 'flagged';
 import { TransformProvider } from '@googleforcreators/transform';
 import {
   DefaultMoveableGlobalStyle,
   CropMoveableGlobalStyle,
 } from '@googleforcreators/moveable';
-import { registerElementType } from '@googleforcreators/elements';
-import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
@@ -59,13 +56,11 @@ import { GlobalStyle as CalendarStyle } from './components/form/dateTime/calenda
 import KeyboardOnlyOutlines from './utils/keyboardOnlyOutline';
 import getDefaultConfig from './getDefaultConfig';
 
+import './app/store';
+
 function StoryEditor({ config, initialEdits, children }) {
   const _config = deepMerge(getDefaultConfig(), config);
   const { storyId, isRTL, flags } = _config;
-
-  useEffect(() => {
-    elementTypes.forEach(registerElementType);
-  }, []);
 
   return (
     <FlagsProvider features={flags}>

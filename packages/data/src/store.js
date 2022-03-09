@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,13 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * External dependencies
  */
-import { select } from '@googleforcreators/data';
+import create from 'zustand/vanilla';
 
-const getDefinitionForType = (type) =>
-  select('element').elementTypes.find((el) => el.type === type);
+const store = create((set, get) => ({
+  addSlice: (name, slice) => set({ [name]: slice(set, get) }),
+}));
 
-export default getDefinitionForType;
+const { getState, setState, subscribe, destroy } = store;
+
+const addSlice = (name, slice) => {
+  return getState().addSlice(name, slice);
+};
+
+const select = (sliceName) => {
+  const state = getState();
+  return sliceName && state[sliceName] ? state[sliceName] : state;
+};
+
+const dispatch = (sliceName) => {
+  return select(sliceName);
+};
+
+export { setState, subscribe, destroy, select, dispatch, addSlice };
