@@ -10,6 +10,7 @@ on:
       - 'packages/templates/src/raw/**'
       - 'packages/text-sets/src/raw/**'
       - 'patches/**'
+      - 'packages/fonts/src/fonts.json'
     branches:
       - main
       - release/*
@@ -22,6 +23,7 @@ on:
       - 'packages/templates/src/raw/**'
       - 'packages/text-sets/src/raw/**'
       - 'patches/**'
+      - 'packages/fonts/src/fonts.json'
 
 # Cancels all previous workflow runs for pull requests that have not completed.
 concurrency:
