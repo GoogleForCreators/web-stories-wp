@@ -23,11 +23,11 @@
 		</testsuite>
 	</testsuites>
 
-  <groups>
-    <exclude>
-      <group>ms-excluded</group>
-    </exclude>
-  </groups>
+	<groups>
+		<exclude>
+			<group>ms-excluded</group>
+		</exclude>
+	</groups>
 
 	<filter>
 		<whitelist processUncoveredFilesFromWhitelist="false">
