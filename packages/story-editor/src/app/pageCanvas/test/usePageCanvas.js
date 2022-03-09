@@ -184,7 +184,10 @@ describe('usePageCanvas', () => {
         expect(storyPageToCanvas).toHaveBeenCalledTimes(1);
 
         // update the selected element
-        selectedElement.opacity = 50;
+        currentPage.elements = [
+          ...currentPage.elements.filter(({ id }) => id !== selectedElement.id),
+          { ...selectedElement, opacity: 50 },
+        ];
         act(() => forceUseStoryRender());
 
         // change selection
