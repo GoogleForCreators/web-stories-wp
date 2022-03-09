@@ -100,8 +100,12 @@ const textElement = {
   backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
 };
 
-const mockUpdateSelectedElements = jest.fn();
+let mockUpdateSelectedElements;
 
+function getAndSetMockUpdateSelectedElements() {
+  mockUpdateSelectedElements = jest.fn();
+  return mockUpdateSelectedElements;
+}
 function Wrapper({ selectedElements, children }) {
   const storyContextValue = {
     state: {
@@ -118,7 +122,7 @@ function Wrapper({ selectedElements, children }) {
     actions: {
       updateStory: jest.fn(),
       updateElementsById: jest.fn(),
-      updateSelectedElements: mockUpdateSelectedElements,
+      updateSelectedElements: getAndSetMockUpdateSelectedElements(),
     },
   };
   return (
@@ -254,21 +258,22 @@ describe('Panels/TextStyle', () => {
           fallbacks: ['fallback1'],
         })
       );
-      expect(mockUpdateSelectedElements).toHaveBeenCalledWith({
-        font: {
-          id: 'Neu Font',
-          family: 'Neu Font',
-          service: 'foo.bar.baz',
-          styles: ['italic', 'regular'],
-          weights: [400],
-          variants: [
-            [0, 400],
-            [1, 400],
-          ],
-          fallbacks: ['fallback1'],
-        },
-        properties: () => {},
-      });
+      // updateSelectedElement should get called with the updated font object
+      expect(
+        mockUpdateSelectedElements.mock.calls[0][0].properties(textElement)
+      ).toMatchObject(
+        expect.objectContaining({
+          font: expect.any(Object),
+        })
+      );
+      // when the font gets updated, useRichText calls updateSelectedElements with the content
+      expect(
+        mockUpdateSelectedElements.mock.calls[1][0].properties(textElement)
+      ).toMatchObject(
+        expect.objectContaining({
+          content: expect.any(String),
+        })
+      );
     });
 
     // eslint-disable-next-line jest/no-disabled-tests -- Can't figure out a good way to test this easily
