@@ -49,7 +49,7 @@ function TextFrame({
   element: { id, content, ...rest },
   wrapperRef,
   setEditingElementWithState,
-  selectedElementIds,
+  isOnlySelectedElement,
 }) {
   const { dataToEditorX, dataToEditorY } = useUnits((state) => ({
     dataToEditorX: state.actions.dataToEditorX,
@@ -62,14 +62,11 @@ function TextFrame({
     dataToEditorY,
     element
   );
-  const isElementSelected = selectedElementIds.includes(id);
-  const isElementOnlySelection =
-    isElementSelected && selectedElementIds.length === 1;
 
   const elementRef = useRef();
 
   useEffect(() => {
-    if (!isElementOnlySelection) {
+    if (!isOnlySelectedElement) {
       return undefined;
     }
 
@@ -139,7 +136,7 @@ function TextFrame({
       elementNode.removeEventListener('mousedown', handleMouseDown);
       elementNode.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [id, wrapperRef, isElementOnlySelection, setEditingElementWithState]);
+  }, [id, wrapperRef, isOnlySelectedElement, setEditingElementWithState]);
 
   // data-fix-caret is for allowing caretRangeFromPoint to work in Safari.
   // See https://github.com/googleforcreators/web-stories-wp/issues/7745.
@@ -160,7 +157,7 @@ TextFrame.propTypes = {
   element: StoryPropTypes.elements.text.isRequired,
   wrapperRef: PropTypes.object.isRequired,
   setEditingElementWithState: PropTypes.func,
-  selectedElementIds: PropTypes.array,
+  isOnlySelectedElement: PropTypes.bool,
 };
 
 export default TextFrame;

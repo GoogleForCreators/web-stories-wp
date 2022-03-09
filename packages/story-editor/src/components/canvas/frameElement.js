@@ -105,18 +105,21 @@ function FrameElement({ id }) {
     setEditingElement: actions.setEditingElement,
     setEditingElementWithState: actions.setEditingElementWithState,
   }));
-  const { isSelected, selectedElementIds, isActive, isBackground, element } =
-    useStory(({ state }) => ({
-      isSelected: state.selectedElementIds.includes(id),
-      isBackground: state.currentPage?.elements[0].id === id,
-      element: state.currentPage?.elements.find((el) => el.id === id),
-      selectedElementIds: state.selectedElementIds,
-      isActive:
-        state.selectedElementIds.length === 1 &&
-        state.selectedElementIds.includes(id) &&
-        !isTransforming &&
-        !isEditing,
-    }));
+  const { isSelected, isOnlySelectedElement, isActive, isBackground, element } =
+    useStory(({ state }) => {
+      const isSelected = state.selectedElementIds.includes(id);
+      const isOnlySelectedElement =
+        isSelected && state.selectedElementIds.length === 1;
+      const isActive = isOnlySelectedElement && !isTransforming && !isEditing;
+
+      return {
+        isSelected,
+        isBackground: state.currentPage?.elements[0].id === id,
+        element: state.currentPage?.elements.find((el) => el.id === id),
+        isOnlySelectedElement,
+        isActive,
+      };
+    });
   const { type, flip } = element;
   const { Frame, isMaskable, Controls } = getDefinitionForType(type);
   const elementRef = useRef();
@@ -251,7 +254,7 @@ function FrameElement({ id }) {
               wrapperRef={elementRef}
               element={element}
               box={box}
-              selectedElementIds={selectedElementIds}
+              isOnlySelectedElement={isOnlySelectedElement}
               setEditingElementWithState={setEditingElementWithState}
             />
           ) : (
