@@ -244,34 +244,27 @@ describe('Panels/TextStyle', () => {
   describe('FontControls', () => {
     it('should select font', async () => {
       arrange([textElement]);
-      await act(() =>
-        mockControls.font.onChange({
-          id: 'Neu Font',
-          family: 'Neu Font',
-          service: 'foo.bar.baz',
-          styles: ['italic', 'regular'],
-          weights: [400],
-          variants: [
-            [0, 400],
-            [1, 400],
-          ],
-          fallbacks: ['fallback1'],
-        })
-      );
-      // updateSelectedElement should get called with the updated font object
-      expect(
-        mockUpdateSelectedElements.mock.calls[0][0].properties(textElement)
-      ).toMatchObject(
+      const newFont = {
+        id: 'Neu Font',
+        family: 'Neu Font',
+        service: 'foo.bar.baz',
+        styles: ['italic', 'regular'],
+        weights: [400],
+        variants: [
+          [0, 400],
+          [1, 400],
+        ],
+        fallbacks: ['fallback1'],
+      };
+      await act(() => mockControls.font.onChange(newFont));
+
+      // updateSelectedElement should get called with the updated font object when the font gets updated,
+      // useRichText also calls updateSelectedElements with the element's content as a side effect. We want to check
+      // that the call for the font update matches. So just grab the first mock.call
+      const updatingFontFunction = mockUpdateSelectedElements.mock.calls[0][0];
+      expect(updatingFontFunction.properties(textElement)).toMatchObject(
         expect.objectContaining({
-          font: expect.any(Object),
-        })
-      );
-      // when the font gets updated, useRichText calls updateSelectedElements with the content
-      expect(
-        mockUpdateSelectedElements.mock.calls[1][0].properties(textElement)
-      ).toMatchObject(
-        expect.objectContaining({
-          content: expect.any(String),
+          font: newFont,
         })
       );
     });
