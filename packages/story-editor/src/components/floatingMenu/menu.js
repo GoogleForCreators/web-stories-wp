@@ -26,9 +26,9 @@ import { ContextMenu } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
+import { Z_INDEX_FLOATING_MENU } from '../../constants/zIndex';
 import { FloatingMenuProvider } from './context';
 import MenuSelector from './menus';
-import { Z_INDEX_FLOATING_MENU } from '../../constants/zIndex';
 
 const MenuWrapper = styled.section`
   display: flex;
