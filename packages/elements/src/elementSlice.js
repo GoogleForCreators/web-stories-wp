@@ -14,12 +14,15 @@
  * limitations under the License.
  */
 const elementSlice = (set) => ({
-  elementTypes: [],
-
-  registerElementTypes: (elements) =>
-    set((state) => {
-      state.element.elementTypes.push(elements);
-    }),
+  state: {
+    elementTypes: [],
+  },
+  actions: {
+    registerElementTypes: (elements) =>
+      set((data) => {
+        data.element.state.elementTypes.push(elements);
+      }),
+  },
 });
 
 export default elementSlice;

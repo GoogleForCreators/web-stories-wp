@@ -25,10 +25,7 @@ const store = create((set, get) => ({
 const { getState, setState, subscribe, destroy } = store;
 
 const addSlice = (name, slice) => getState().addSlice(name, slice);
+const select = (sliceName) => getState()[sliceName].state;
+const dispatch = (sliceName) => getState()[sliceName].actions;
 
-const select = (sliceName) => (sliceName ? getState()[sliceName] : getState());
-
-// select() and dispatch() both return actions which can be used to update state.
-const dispatch = select;
-
-export { setState, subscribe, destroy, select, dispatch, addSlice };
+export { select, dispatch, addSlice, setState, subscribe, destroy };
