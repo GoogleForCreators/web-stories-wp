@@ -34,6 +34,7 @@ const LAYERS_HEIGHT_PADDING = 12;
 const Container = styled.div`
   filter: drop-shadow(0px -4px 8px rgba(0, 0, 0, 0.2));
   max-height: ${({ maxHeight }) => maxHeight}px;
+  background-color: ${({ theme }) => theme.colors.bg.secondary};
 `;
 
 function LayerPanel() {
@@ -48,7 +49,7 @@ function LayerPanel() {
 
   return (
     <Container maxHeight={maxHeight}>
-      <PanelContent isSecondary padding={'0'}>
+      <PanelContent padding={'0'}>
         <LayerList layers={layers} />
       </PanelContent>
     </Container>
