@@ -24,7 +24,10 @@ import { generatePatternStyles } from '@googleforcreators/patterns';
 import { useUnits } from '@googleforcreators/units';
 import { StoryAnimation } from '@googleforcreators/animation';
 import { useTransformHandler } from '@googleforcreators/transform';
-import { getDefinitionForType } from '@googleforcreators/elements';
+import {
+  getDefinitionForType,
+  ELEMENT_TYPES,
+} from '@googleforcreators/elements';
 import {
   elementWithPosition,
   elementWithRotation,
@@ -110,10 +113,14 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
   }));
   const { getProxiedUrl } = useCORSProxy();
   const { isCurrentResourceProcessing, isCurrentResourceUploading } =
-    useLocalMedia(({ state }) => ({
-      isCurrentResourceProcessing: state.isCurrentResourceProcessing,
-      isCurrentResourceUploading: state.isCurrentResourceUploading,
-    }));
+    useLocalMedia(({ state }) => {
+      return ELEMENT_TYPES.IMAGE === type
+        ? {
+            isCurrentResourceProcessing: state.isCurrentResourceProcessing,
+            isCurrentResourceUploading: state.isCurrentResourceUploading,
+          }
+        : {};
+    });
   const {
     actions: { maybeEnqueueFontStyle },
   } = useFont();
