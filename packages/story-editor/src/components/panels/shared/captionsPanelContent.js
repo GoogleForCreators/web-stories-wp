@@ -76,14 +76,14 @@ function CaptionsPanelContent({
   clearFileText = __('Remove file', 'web-stories'),
 }) {
   const {
-    allowedMimeTypes: { caption: allowedCaptionMimeTypes },
+    allowedMimeTypes: { caption: allowedCaptionMimeTypes = [] },
     capabilities: { hasUploadMediaAction },
     MediaUpload,
   } = useConfig();
 
   if (
     (!hasUploadMediaAction && !tracks.length) ||
-    !allowedCaptionMimeTypes?.length
+    !allowedCaptionMimeTypes.length
   ) {
     return null;
   }
