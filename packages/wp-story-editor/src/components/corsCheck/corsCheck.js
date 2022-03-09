@@ -27,7 +27,6 @@ import CorsCheckFailed from './corsCheckFailed';
 
 function CorsCheck() {
   const [showDialog, setShowDialog] = useState(false);
-  const [doCheck, setDoCheck] = useState(true);
   const closeDialog = useCallback(() => setShowDialog(false), []);
   const {
     actions: { getMediaForCorsCheck },
@@ -35,10 +34,9 @@ function CorsCheck() {
   const enableCORSCheck = useFeature('enableCORSCheck');
   useEffect(() => {
     (async () => {
-      if (!doCheck || !enableCORSCheck) {
+      if (!enableCORSCheck) {
         return;
       }
-      setDoCheck(false);
       let mediaItems;
       try {
         mediaItems = await getMediaForCorsCheck();
@@ -60,7 +58,8 @@ function CorsCheck() {
         setShowDialog(true);
       }
     })();
-  }, [getMediaForCorsCheck, doCheck, enableCORSCheck]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- Only run this effect once, so do not pass dependencies.
+  }, []);
 
   return <CorsCheckFailed isOpen={showDialog} onClose={closeDialog} />;
 }
