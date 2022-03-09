@@ -102,9 +102,6 @@ function TextAlign() {
   // Record left position of this button in the parent design menu
   useEffect(() => setOffsetLeft(buttonRef.current.offsetLeft + OFFSET_X), []);
 
-  // Only display tooltip while menu is not open
-  const tooltip = isMenuOpen ? '' : __('Change text alignment', 'web-stories');
-
   // When menu has just opened, focus the current button in submenu
   const currentIconMounted = (node) => {
     if (node) {
@@ -130,6 +127,10 @@ function TextAlign() {
     buttonRef.current.focus();
   };
 
+  // Only display tooltip while menu is not open, but always apply as label for a11y
+  const buttonLabel = __('Change text alignment', 'web-stories');
+  const tooltip = isMenuOpen ? '' : buttonLabel;
+
   useKeyDownEffect(buttonRef, 'down', () => setMenuOpen(true), []);
 
   return (
@@ -139,6 +140,7 @@ function TextAlign() {
         onClick={() => setMenuOpen((value) => !value)}
         aria-haspopup="menu"
         aria-expanded={isMenuOpen}
+        aria-label={buttonLabel}
       >
         <StyledMenuIcon title={tooltip} placement={TOOLTIP_PLACEMENT.BOTTOM}>
           <CurrentIcon />

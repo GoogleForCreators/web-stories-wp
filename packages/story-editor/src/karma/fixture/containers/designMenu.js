@@ -67,4 +67,19 @@ export class DesignMenu extends Container {
   get loop() {
     return this.getByRole('checkbox', { name: 'Loop' });
   }
+
+  get textAlign() {
+    return this.getByRole('menuitem', { name: 'Change text alignment' });
+  }
+
+  get textAlignType() {
+    return this.textAlign
+      .querySelector('svg[data-type]')
+      .getAttribute('data-type');
+  }
+
+  textAlignOption(name) {
+    const dialog = this.getByRole('dialog', { name: 'Text alignment options' });
+    return this.getByRoleIn(dialog, 'menuitem', { name });
+  }
 }
