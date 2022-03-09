@@ -24,7 +24,10 @@ import { generatePatternStyles } from '@googleforcreators/patterns';
 import { useUnits } from '@googleforcreators/units';
 import { StoryAnimation } from '@googleforcreators/animation';
 import { useTransformHandler } from '@googleforcreators/transform';
-import { getDefinitionForType } from '@googleforcreators/elements';
+import {
+  getDefinitionForType,
+  ELEMENT_TYPES,
+} from '@googleforcreators/elements';
 import {
   elementWithPosition,
   elementWithRotation,
@@ -37,7 +40,6 @@ import {
   getResponsiveBorder,
   shouldDisplayBorder,
 } from '@googleforcreators/masks';
-import { ELEMENT_TYPES } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
