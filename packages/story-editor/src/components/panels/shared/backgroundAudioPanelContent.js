@@ -37,6 +37,7 @@ import { BackgroundAudioPropType } from '@googleforcreators/elements';
  * Internal dependencies
  */
 import { useConfig } from '../../../app';
+import { Z_INDEX_STORY_DETAILS } from '../../../constants/zIndex';
 import { Row } from '../../form';
 import AudioPlayer from '../../audioPlayer';
 import Tooltip from '../../tooltip';
@@ -204,7 +205,7 @@ function BackgroundAudioPanelContent({
             <Tooltip
               hasTail
               title={__('Remove file', 'web-stories')}
-              popupZIndexOverride={10}
+              popupZIndexOverride={Z_INDEX_STORY_DETAILS}
             >
               <StyledButton
                 aria-label={__('Remove file', 'web-stories')}

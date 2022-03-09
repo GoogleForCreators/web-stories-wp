@@ -18,21 +18,21 @@
  */
 import apiFetch from '@wordpress/api-fetch';
 
-/**
- * External dependencies
- */
-import { snakeToCamelCaseObjectKeys } from '@web-stories-wp/wp-utils';
+function transformResponse(response) {
+  return {
+    id: response.id,
+    trackingOptin: response.meta.web_stories_tracking_optin,
+    onboarding: response.meta.web_stories_onboarding,
+    mediaOptimization: response.meta.web_stories_media_optimization,
+  };
+}
 
 export function getCurrentUser(config) {
   return apiFetch({
     path: config.api.currentUser,
-  }).then((resp) => ({
-    id: resp.id,
-    trackingOptin: resp.meta.web_stories_tracking_optin,
-    onboarding: resp.meta.web_stories_onboarding,
-    mediaOptimization: resp.meta.web_stories_media_optimization,
-  }));
+  }).then(transformResponse);
 }
+
 export function updateCurrentUser(config, data) {
   const { trackingOptin, onboarding, mediaOptimization } = data;
 
@@ -54,12 +54,5 @@ export function updateCurrentUser(config, data) {
     path: config.api.currentUser,
     method: 'POST',
     data: wpKeysMapping,
-  }).then((resp) => {
-    delete resp._links;
-    return snakeToCamelCaseObjectKeys(resp, [
-      'meta',
-      'capabilities',
-      'extra_capabilities',
-    ]);
-  });
+  }).then(transformResponse);
 }
