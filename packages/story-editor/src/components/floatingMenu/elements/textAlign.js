@@ -46,7 +46,7 @@ const SubMenuContainer = styled.div`
 const StyledMenuButton = styled(ContextMenuComponents.MenuButton)`
   flex: 0 0 60px;
   height: 36px;
-  border: 1px solid #393d3f;
+  border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
   padding: 2px 0;
   border-radius: 4px;
 `;
