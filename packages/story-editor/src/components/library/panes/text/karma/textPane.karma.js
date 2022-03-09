@@ -131,6 +131,48 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
         '<span style="font-weight: 700">LABEL</span>'
       );
     });
+
+    it('should overwrite most of the styles but not text color when applying a preset', async () => {
+      // Add label.
+      await fixture.events.click(fixture.editor.library.text.preset('LABEL'));
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.alignment.right
+      );
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.textStyle.fill
+      );
+
+      const { italic, underline, letterSpacing, fontColor } =
+        fixture.editor.inspector.designPanel.textStyle;
+
+      // First enter edit mode, select something, style it with all styles and exit edit mode
+      await fixture.events.click(letterSpacing, { clickCount: 3 });
+      await fixture.events.keyboard.type('50');
+      await fixture.events.keyboard.press('Enter');
+      await fixture.events.keyboard.press('Escape');
+      await fixture.events.click(fontColor.hex, { clickCount: 3 });
+      await fixture.events.keyboard.type('FFFFFF');
+      await fixture.events.keyboard.press('Tab');
+      await fixture.events.keyboard.press('Escape');
+      await fixture.events.click(italic.button);
+      await fixture.events.click(underline.button);
+
+      const [label] = await getSelection();
+      expect(label.content).toBe(
+        '<span style="font-style: italic; text-decoration: underline; color: #fff; letter-spacing: 0.5em">LABEL</span>'
+      );
+
+      // Apply Title 1.
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Apply preset: Title 1')
+      );
+      // Verify the style except for color was overwritten.
+      const [styledLabel] = await getSelection();
+      expect(styledLabel.fontSize).toBe(36);
+      expect(styledLabel.content).toBe(
+        '<span style="font-weight: 700; color: #fff">LABEL</span>'
+      );
+    });
   });
 
   describe('Adding texts consecutively', () => {
