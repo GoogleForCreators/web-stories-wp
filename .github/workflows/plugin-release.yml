@@ -508,3 +508,31 @@ jobs:
           sed -r -i "s/${STABLE_TAG_REGEX}/Stable tag:        ${PLUGIN_VERSION}/g" ./trunk/readme.txt
           svn commit -m "Releasing version $PLUGIN_VERSION" \
            --no-auth-cache --non-interactive  --username "$SVN_USERNAME" --password "$SVN_PASSWORD"
+
+  close-release:
+    name: Close ZenHub release
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: [create-release]
+    if: ${{ ! contains(github.event.inputs.version, 'rc') }}
+    steps:
+      # https://github.com/ZenHubIO/API#get-release-reports-for-a-repository
+      # https://github.com/ZenHubIO/API#add-or-remove-issues-to-or-from-a-release-report
+      - name: Close release report
+        id: zenhub_release
+        run: |
+          echo "Getting list of releases from ZenHub"
+
+          RELEASES=$(curl -s -H "X-Authentication-Token: $ZENHUB_API_TOKEN" "https://api.zenhub.com/p1/repositories/${GITHUB_REPO_ID}/reports/releases")
+          CURRENT_RELEASE=$((echo $RELEASES ) | jq -r "first(.[] | select( .title == \"$PLUGIN_VERSION\" )) | .release_id")
+
+          if [[ -z $CURRENT_RELEASE ]]; then
+            echo "No ZenHub release found. Check whether the release titles match the expected plugin version."
+            exit 1
+          else
+            echo "Closing release report on ZenHub for release: $CURRENT_RELEASE"
+
+            curl -s -H "X-Authentication-Token: $ZENHUB_API_TOKEN" -H 'Content-Type: application/json' -X PATCH "https://api.zenhub.com/p1/reports/release/${CURRENT_RELEASE}" -d '{ "state": "closed" }'
+          fi
+        env:
+          ZENHUB_API_TOKEN: ${{ secrets.ZENHUB_API_TOKEN }}
