@@ -59,7 +59,7 @@ function TextColor() {
       allowsSavedColors
       onChange={handleSetColor}
       hasInputs={false}
-      hasEyeDropper
+      hasEyedropper
       allowsOpacity
     />
   );
