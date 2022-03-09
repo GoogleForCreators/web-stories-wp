@@ -78,7 +78,7 @@ export function getMediaForCorsCheck(config) {
   });
 
   return apiFetch({ path }).then((attachments) =>
-    attachments.map((attachment) => attachment?.source_url)
+    attachments.map((attachment) => attachment.source_url)
   );
 }
 
