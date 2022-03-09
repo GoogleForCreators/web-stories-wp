@@ -112,15 +112,6 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
     dataToEditorX: state.actions.dataToEditorX,
   }));
   const { getProxiedUrl } = useCORSProxy();
-  const { isCurrentResourceProcessing, isCurrentResourceUploading } =
-    useLocalMedia(({ state }) => {
-      return ELEMENT_TYPES.IMAGE === type
-        ? {
-            isCurrentResourceProcessing: state.isCurrentResourceProcessing,
-            isCurrentResourceUploading: state.isCurrentResourceUploading,
-          }
-        : {};
-    });
   const {
     actions: { maybeEnqueueFontStyle },
   } = useFont();
@@ -138,6 +129,16 @@ function DisplayElement({ element, previewMode, isAnimatable = false }) {
     border = {},
     flip,
   } = element;
+
+  const { isCurrentResourceProcessing, isCurrentResourceUploading } =
+    useLocalMedia(({ state }) => {
+      return ELEMENT_TYPES.IMAGE === type
+        ? {
+            isCurrentResourceProcessing: state.isCurrentResourceProcessing,
+            isCurrentResourceUploading: state.isCurrentResourceUploading,
+          }
+        : {};
+    });
 
   const replacementElement = hasReplacement
     ? {
