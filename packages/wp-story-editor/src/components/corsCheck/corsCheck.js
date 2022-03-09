@@ -50,9 +50,11 @@ function CorsCheck() {
       }
       try {
         await Promise.all(
-          mediaItems
-            .filter((url) => !url.startsWith(location.origin))
-            .map((url) => fetch(url, { method: 'HEAD' }))
+          [
+            ...new Set(
+              mediaItems.filter((url) => !url.startsWith(location.origin))
+            ),
+          ].map((url) => fetch(url, { method: 'HEAD' }))
         );
       } catch (err) {
         setShowDialog(true);

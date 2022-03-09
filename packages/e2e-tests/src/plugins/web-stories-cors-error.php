@@ -6,10 +6,8 @@
  * Author:      Google
  * Author URI:  https://opensource.google.com
  *
- * @package   Google\Site_Kit
  * @copyright 2022 Google LLC
  * @license   https://www.apache.org/licenses/LICENSE-2.0 Apache License 2.0
- * @link      https://sitekit.withgoogle.com
  */
 
 namespace Google\Web_Stories\E2E\CORS;
@@ -35,7 +33,7 @@ function change_response( $response, $post, $request ) {
 	 */
 	$data = $response->get_data();
 
-	$data['source_url']             = 'https://wp.stories.google/img/302e7662-696.jpeg'; // TODO: Find a better example of an image with cors issue.
+	$data['source_url']             = 'https://ps.w.org/web-stories/assets/banner-772x250.png';
 	$data['media_details']['sizes'] = [];
 
 	$response->set_data( $data );
