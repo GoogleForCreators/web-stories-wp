@@ -63,7 +63,7 @@ function useDetectBaseColor({ updateMediaElement }) {
           });
           if (hasUploadMediaAction) {
             await updateMedia(id, {
-              meta: { web_stories_base_color: baseColor },
+              baseColor,
             });
           }
         }

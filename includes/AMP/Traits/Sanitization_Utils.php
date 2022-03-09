@@ -27,7 +27,9 @@
 namespace Google\Web_Stories\AMP\Traits;
 
 use AmpProject\Dom\Document as AMP_Document;
+use DOMAttr;
 use DOMElement;
+use DOMNode;
 use DOMNodeList;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 
@@ -227,12 +229,22 @@ trait Sanitization_Utils {
 
 		// Copy over all children first.
 		foreach ( $node->childNodes as $child ) {
+			/**
+			 * Child node.
+			 *
+			 * @var DOMNode $child Child node.
+			 */
 			$new_node->appendChild( $document->importNode( $child, true ) );
 		}
 
 		// Then, copy over all attributes.
 		if ( $node->attributes ) {
 			foreach ( $node->attributes as $attr ) {
+				/**
+				 * Attribute.
+				 *
+				 * @var DOMAttr $attr Attribute.
+				 */
 				$new_node->setAttribute( $attr->nodeName, $attr->nodeValue );
 			}
 		}
