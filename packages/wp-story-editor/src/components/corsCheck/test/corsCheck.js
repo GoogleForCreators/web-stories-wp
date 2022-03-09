@@ -86,11 +86,18 @@ describe('corsCheck', () => {
   });
 
   it('should do nothing if successful', async () => {
-    getMediaForCorsCheck.mockResolvedValue([
-      {
-        source_url: 'https://example.com/logo.png',
-      },
-    ]);
+    getMediaForCorsCheck.mockResolvedValue(['https://example.com/logo.png',]);
+    setup();
+
+    // This seems to be the best way to validate, that a certain
+    // element does *not* appear. Not very elegant, though.
+    await expect(screen.findByRole('dialog')).rejects.toThrow(
+      /Unable to find role="dialog"/
+    );
+  });
+
+  it('should do nothing if same origin', async () => {
+    getMediaForCorsCheck.mockResolvedValue(['http://localhost/logo.png',]);
     setup();
 
     // This seems to be the best way to validate, that a certain
@@ -112,11 +119,7 @@ describe('corsCheck', () => {
   });
 
   it('should display dismissible dialog if failed', async () => {
-    getMediaForCorsCheck.mockResolvedValue([
-      {
-        source_url: 'https://example.com/logo.png',
-      },
-    ]);
+    getMediaForCorsCheck.mockResolvedValue(['https://example.com/logo.png']);
     fetchSpy.mockRejectedValue(() => new Error('request failed'));
 
     setup();
