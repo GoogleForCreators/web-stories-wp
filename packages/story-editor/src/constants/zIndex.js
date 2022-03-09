@@ -23,6 +23,10 @@ export const Z_INDEX_CANVAS_SIDE_MENU = 3;
 // Floating element menu (a context menu) should be behind other popopups
 export const Z_INDEX_FLOATING_MENU = 4;
 
+// Edit Layer holds footer, popups in footer need to be in front of floating menu
 export const Z_INDEX_EDIT_LAYER = Z_INDEX_FLOATING_MENU + 1;
 
+// sibling inherits parent z-index of Z_INDEX_EDIT_LAYER
+// so popups nested in footer need to be placed above that
+// while still retaining position in the DOM for focus purposes
 export const Z_INDEX_FOOTER_POPUP = Z_INDEX_EDIT_LAYER + 1;
