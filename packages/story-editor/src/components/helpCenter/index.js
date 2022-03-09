@@ -26,7 +26,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { useStoryTriggerListener, STORY_EVENTS } from '../../app/story';
-import { Z_INDEX } from '../canvas/layout';
+import { Z_INDEX_FOOTER_POPUP } from '../../constants/zIndex';
 import DirectionAware from '../directionAware';
 import { useHelpCenter } from '../../app/helpCenter';
 import Popup from '../secondaryPopup';
@@ -37,12 +37,7 @@ import { Toggle } from './toggle';
 import { forceFocusCompanion } from './utils';
 
 const Wrapper = styled.div`
-  /**
-   * sibling inherits parent z-index of Z_INDEX.EDIT
-   * so this needs to be placed above that while still
-   * retaining its position in the DOM for focus purposes
-   */
-  z-index: ${Z_INDEX.EDIT + 1};
+  z-index: ${Z_INDEX_FOOTER_POPUP};
 `;
 
 export const HelpCenter = ({ components }) => {

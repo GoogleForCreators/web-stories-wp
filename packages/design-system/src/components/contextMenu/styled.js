@@ -29,9 +29,15 @@ export const Popover = styled.div`
   --translate-y: calc(var(--delta-y, 0) * 1px);
   display: ${({ isOpen }) => (isOpen ? 'block' : 'none')};
   position: ${({ isInline }) => (isInline ? 'relative' : 'absolute')};
-  z-index: ${POPOVER_Z_INDEX};
+  z-index: ${({ popoverZIndex }) => popoverZIndex};
   transform: translate(var(--translate-x), var(--translate-y));
 `;
+Popover.defaultProps = {
+  popoverZIndex: POPOVER_Z_INDEX,
+};
+Popover.propTypes = {
+  popoverZIndex: PropTypes.number,
+};
 
 export const Shadow = styled.div`
   position: absolute;

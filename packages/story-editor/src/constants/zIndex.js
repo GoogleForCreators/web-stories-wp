@@ -16,3 +16,13 @@
 
 // Bring element in front of story details modal
 export const Z_INDEX_STORY_DETAILS = 10;
+
+// Floating menu lays on top of side menu
+export const Z_INDEX_CANVAS_SIDE_MENU = 3;
+
+// Floating element menu (a context menu) should be behind other popopups
+export const Z_INDEX_FLOATING_MENU = 4;
+
+export const Z_INDEX_EDIT_LAYER = Z_INDEX_FLOATING_MENU + 1;
+
+export const Z_INDEX_FOOTER_POPUP = Z_INDEX_EDIT_LAYER + 1;
