@@ -33,7 +33,7 @@ function renderUsePageCanvas() {
 describe('usePageCanvas', () => {
   let mockStoryContext;
   let currentPage;
-  let forceRender;
+  let forceUseStoryRender;
 
   beforeEach(() => {
     currentPage = createMockPage();
@@ -53,9 +53,9 @@ describe('usePageCanvas', () => {
 
     // kind of a jank ass mock implementation of useContextSelector but it works
     const getContextValue = () => mockStoryContext;
-    const { mockUseContextSelector, forceRender: _forceRender } =
+    const { mockUseContextSelector, forceRender } =
       createMockUseContextSelector(getContextValue);
-    forceRender = _forceRender;
+    forceUseStoryRender = forceRender;
     useStory.mockImplementation(mockUseContextSelector);
   });
 
@@ -112,7 +112,7 @@ describe('usePageCanvas', () => {
         };
         mockStoryContext.state.pages = [updatedCurrentPage];
         mockStoryContext.state.currentPage = updatedCurrentPage;
-        act(() => forceRender());
+        act(() => forceUseStoryRender());
 
         // cache populates with generated canvas for updated currentPage
         await act(async () => {
@@ -166,16 +166,16 @@ describe('usePageCanvas', () => {
 
         // update the selected element
         selectedElement.opacity = 50;
-        act(() => forceRender());
+        act(() => forceUseStoryRender());
 
         // change selection
         const anotherElement = currentPage.elements[0];
         mockStoryContext.state.selectedElementIds = [anotherElement.id];
-        act(() => forceRender());
+        act(() => forceUseStoryRender());
 
         // revert selection back to originally selected element
         mockStoryContext.state.selectedElementIds = [selectedElement.id];
-        act(() => forceRender());
+        act(() => forceUseStoryRender());
 
         // since we haven't called calculateAccessibleTextColors since the
         // last story partial page changed, and with the current selection
@@ -213,7 +213,7 @@ describe('usePageCanvas', () => {
         // add a new element
         const newElement = { ...selectedElement, id: uuidv4() };
         currentPage.elements = [...currentPage.elements, newElement];
-        act(() => forceRender());
+        act(() => forceUseStoryRender());
 
         // in this scenario, the snapshot cache is no longer valid
         // because we've added a new element to the currentPage.
