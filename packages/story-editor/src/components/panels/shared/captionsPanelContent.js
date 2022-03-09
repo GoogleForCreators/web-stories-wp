@@ -83,7 +83,7 @@ function CaptionsPanelContent({
 
   if (
     (!hasUploadMediaAction || !tracks.length) &&
-    !allowedCaptionMimeTypes.length
+    !allowedCaptionMimeTypes?.length
   ) {
     return null;
   }
