@@ -20,7 +20,10 @@
 import { fireEvent, screen } from '@testing-library/react';
 import MockDate from 'mockdate';
 import { setAppElement } from '@googleforcreators/design-system';
-import { StoryContext } from '@googleforcreators/story-editor';
+import {
+  StoryContext,
+  CheckpointContext,
+} from '@googleforcreators/story-editor';
 
 /**
  * Internal dependencies
@@ -71,7 +74,16 @@ function arrange({
   renderWithTheme(
     <MetaBoxesContext.Provider value={metaBoxesValue}>
       <StoryContext.Provider value={storyContextValue}>
-        <Buttons />
+        <CheckpointContext.Provider
+          value={{
+            actions: {
+              showPriorityIssues: () => {},
+            },
+            state: { shouldReviewDialogBeSeen: false, checkpoint: 'all' },
+          }}
+        >
+          <Buttons />
+        </CheckpointContext.Provider>
       </StoryContext.Provider>
     </MetaBoxesContext.Provider>
   );
@@ -96,6 +108,7 @@ describe('Buttons', () => {
   afterAll(() => {
     document.documentElement.removeChild(modalWrapper);
     MockDate.reset();
+    jest.clearAllMocks();
   });
 
   it('should always display history and preview buttons', () => {

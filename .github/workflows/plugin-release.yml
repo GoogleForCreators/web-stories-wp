@@ -205,77 +205,6 @@ jobs:
           name: assets-version
           path: public/static/assets_version
 
-  # Generate the changelog before we do any commits.
-  changelog:
-    name: Changelog
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    needs: [checks]
-    outputs:
-      release_name: ${{ steps.changelog.outputs.release_name }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # 0 indicates all history for all branches and tags.
-
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: '.nvmrc'
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-        env:
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
-
-      # For release candidates, generate changelog since last tag (stable release or previous RC)
-      # For stable releases, generate full changelog since last stable release.
-      # TODO: Implement tag logic for patch releases.
-      - name: Generate changelog
-        id: changelog
-        run: |
-          TAG_NAME_WITHOUT_SUFFIX=${TAG_NAME/-rc.*/}
-          if $IS_RC; then
-            # Get the most recent tag.
-            # Note: This will return v1.4.0-rc.1 as it is listed before v1.4.0
-            PREVIOUS_TAG=$(git tag -l --sort=-version:refname | grep --invert-match $TAG_NAME | head -1)
-
-            # If this is the first RC for this version (e.g. v1.5.0-rc.1), the previous version is v1.4.0, without suffix.
-            if [[ $TAG_NAME == *"-rc.1" ]]; then
-              PREVIOUS_TAG=${PREVIOUS_TAG/-rc.*/}
-            fi
-          else
-            # This will return v1.4.0-rc.1 as it is listed before v1.4.0
-            PREVIOUS_TAG=$(git tag -l --sort=-version:refname | grep --invert-match $TAG_NAME_WITHOUT_SUFFIX | head -1)
-            PREVIOUS_TAG=${PREVIOUS_TAG/-rc.*/}
-          fi
-
-          RELEASE_NAME=${PLUGIN_VERSION/-rc./ RC}
-          echo "Gathering list of changes since $PREVIOUS_TAG..."
-          echo "Release name: $RELEASE_NAME"
-
-          CHANGELOG=$(npm run workflow:changelog --silent -- --next-version=$RELEASE_NAME --from=$PREVIOUS_TAG)
-
-          if [[ -z $CHANGELOG ]]; then
-            echo "Warning: Changelog is empty, probably because there were no changes since the last release."
-            CHANGELOG="No merged changes since last release."
-          fi
-
-          mkdir -p build/changelog
-          echo "$CHANGELOG" >> build/changelog/changelog.txt
-
-          echo "::set-output name=release_name::${RELEASE_NAME}"
-        env:
-          GITHUB_AUTH: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: changelog
-          path: build/changelog
-
   build:
     name: Build new version
     runs-on: ubuntu-latest
@@ -283,6 +212,7 @@ jobs:
     needs: [assets-version]
     outputs:
       release_branch: ${{ steps.release_branch.outputs.release_branch }}
+      release_name: ${{ steps.release_branch.outputs.release_name }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -348,6 +278,9 @@ jobs:
 
           echo "::set-output name=release_branch::${BRANCH/-rc./ RC}"
 
+          RELEASE_NAME=${PLUGIN_VERSION/-rc./ RC}
+          echo "::set-output name=release_name::${RELEASE_NAME}"
+
       - name: Update assets version
         run: npm run workflow:assets-version $ASSETS_VERSION
         if: ${{ env.ASSETS_VERSION }}
@@ -379,13 +312,13 @@ jobs:
           git add web-stories.php
           git status
 
-          if ! git diff --cached --exit-code > /dev/null; then
-            echo 'No changes to commit; exiting!'
-            echo "::set-output name=changes::no"
-          else
+          if git diff --cached --exit-code > /dev/null; then
             git commit -m "Prepare release $PLUGIN_VERSION"
             git push -u origin HEAD
             echo "::set-output name=changes::yes"
+          else
+            echo 'No changes to commit; exiting!'
+            echo "::set-output name=changes::no"
           fi
 
       # Only non-patch release version bumps should be cherry picked to main
@@ -432,7 +365,7 @@ jobs:
     name: Create Release
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    needs: [build, changelog]
+    needs: [build]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -443,64 +376,20 @@ jobs:
           name: release-assets
           path: build
 
-      - name: Download changelog
-        uses: actions/download-artifact@v2
-        with:
-          name: changelog
-          path: changelog
-
-      - name: Set branch name
-        id: release_branch
-        run: |
-          VERSION_WITHOUT_SUFFIX=${PLUGIN_VERSION/-rc.*/}
-          BRANCH=release/$VERSION_WITHOUT_SUFFIX
-          echo "::set-output name=RELEASE_BRANCH::${BRANCH/-rc./ RC}"
-
-      # TODO: Replace with maintained action.
-      - name: Create Release Draft
+      - name: Publish Release
         id: create_release
-        uses: actions/create-release@v1
+        uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ env.TAG_NAME }}
-          release_name: ${{ needs.changelog.outputs.release_name }}
-          commitish: ${{ needs.build.outputs.release_branch || github.ref }}
-          draft: true
+          name: ${{ needs.build.outputs.release_name }}
+          target_commitish: ${{ needs.build.outputs.release_branch || github.ref }}
           prerelease: ${{ env.IS_RC }}
-        # TODO: Fix changelog generation.
-        #          body_path: changelog/changelog.txt
-        env:
-          GITHUB_TOKEN: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
-
-      - name: Upload regular bundle
-        uses: actions/upload-release-asset@v1.0.2
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: build/web-stories.zip
-          asset_name: web-stories.zip
-          asset_content_type: application/zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
-
-      - name: Upload development bundle
-        uses: actions/upload-release-asset@v1.0.2
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: build/web-stories-dev.zip
-          asset_name: web-stories-dev.zip
-          asset_content_type: application/zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
-
-      # Done so that any triggers/webhooks will have access to the published release
-      # including all the release assets.
-      - name: Publish Release
-        run: |
-          curl \
-            --request PATCH \
-            --url https://api.github.com/repos/${{ github.repository }}/releases/${{ steps.create_release.outputs.id }} \
-            --header 'Authorization: token ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}' \
-            --header "Accept: application/vnd.github.v3+json" \
-            --data-raw '{"draft":false}'
+          generate_release_notes: true
+          files: |
+            build/web-stories.zip
+            build/web-stories-dev.zip
+          fail_on_unmatched_files: true
+          token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
   # Post-release version bumps for non-patch releases.
   post-release:

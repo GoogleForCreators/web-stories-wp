@@ -473,9 +473,7 @@ function useFFmpeg() {
    *
    * @type {boolean}
    */
-  const isUserSettingEnabled = Boolean(
-    currentUser?.meta?.web_stories_media_optimization
-  );
+  const isUserSettingEnabled = Boolean(currentUser?.mediaOptimization);
 
   /**
    * Whether transcoding as a whole is supported.
