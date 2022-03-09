@@ -86,7 +86,7 @@ describe('corsCheck', () => {
   });
 
   it('should do nothing if successful', async () => {
-    getMediaForCorsCheck.mockResolvedValue(['https://example.com/logo.png',]);
+    getMediaForCorsCheck.mockResolvedValue(['https://example.com/logo.png']);
     setup();
 
     // This seems to be the best way to validate, that a certain
@@ -97,7 +97,7 @@ describe('corsCheck', () => {
   });
 
   it('should do nothing if same origin', async () => {
-    getMediaForCorsCheck.mockResolvedValue(['http://localhost/logo.png',]);
+    getMediaForCorsCheck.mockResolvedValue(['http://localhost/logo.png']);
     setup();
 
     // This seems to be the best way to validate, that a certain
