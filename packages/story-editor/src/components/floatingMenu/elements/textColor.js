@@ -30,7 +30,7 @@ import { useStory } from '../../../app';
 import { Color, useProperties } from './shared';
 
 function TextColor() {
-  const { content, type } = useProperties(['content', 'type']);
+  const { content } = useProperties(['content']);
   const updateSelectedElements = useStory(
     (state) => state.actions.updateSelectedElements
   );
@@ -42,13 +42,7 @@ function TextColor() {
         element: 'text',
       });
       updateSelectedElements({
-        properties: (element) => {
-          const updates = updateProperties(element, update, true);
-          return {
-            ...element,
-            ...updates,
-          };
-        },
+        properties: (element) => updateProperties(element, update, true),
       });
     },
     [updateSelectedElements]
@@ -56,7 +50,7 @@ function TextColor() {
   const {
     textInfo: { color },
     handlers: { handleSetColor },
-  } = useRichTextFormatting([{ content, type }], pushUpdate);
+  } = useRichTextFormatting([{ content, type: 'text' }], pushUpdate);
 
   return (
     <Color

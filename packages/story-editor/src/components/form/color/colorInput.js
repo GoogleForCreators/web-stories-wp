@@ -128,8 +128,8 @@ const TextualPreview = styled.div`
 `;
 
 const MixedLabel = styled(TextualPreview)`
+  align-self: center;
   padding: 6px 6px 6px 38px;
-  color: ${({ theme }) => theme.colors.fg.tertiary};
 `;
 
 const StyledSwatch = styled(Swatch)`
@@ -141,6 +141,7 @@ const ChevronContainer = styled.div`
   display: flex;
   justify-content: ${({ isSmall }) => (isSmall ? 'center' : 'flex-end')};
   align-items: center;
+  align-self: center;
 
   svg {
     width: 24px;
@@ -249,15 +250,15 @@ const ColorInput = forwardRef(function ColorInput(
               </TextualPreview>
             ) : (
               <>
-                {/* In case of design menu, we display Mixed value even without inputs */}
-                {isInDesignMenu && isMixed && (
+                {/* We display Mixed value even without inputs */}
+                {isMixed && (
                   <MixedLabel>
                     <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
                       {MULTIPLE_DISPLAY_VALUE}
                     </Text>
                   </MixedLabel>
                 )}
-                <ChevronContainer isSmall={isInDesignMenu && isMixed}>
+                <ChevronContainer isSmall={isMixed}>
                   <Icons.ChevronDown />
                 </ChevronContainer>
               </>
