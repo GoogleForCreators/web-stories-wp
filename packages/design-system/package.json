@@ -24,6 +24,11 @@
     "node": ">= 12 || >= 14 || >= 16",
     "npm": ">= 7.3"
   },
+  "customExports": {
+    ".": {
+      "default": "./src/index.js"
+    }
+  },
   "main": "dist/index.js",
   "module": "dist-module/index.js",
   "source": "src/index.js",
@@ -48,7 +53,7 @@
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^6.4.13",
-    "@testing-library/react": "^12.1.2",
+    "@testing-library/react": "^12.1.3",
     "@testing-library/react-hooks": "^7.0.2"
   }
 }

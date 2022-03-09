@@ -69,8 +69,8 @@ function useUploadVideoFrame({ updateMediaElement }) {
       }
 
       const resource = await uploadFile(posterFile, {
-        post: id,
-        web_stories_media_source: 'poster-generation',
+        mediaId: id,
+        mediaSource: 'poster-generation',
       });
       const {
         id: posterId,
@@ -82,11 +82,8 @@ function useUploadVideoFrame({ updateMediaElement }) {
       // If video ID is not set, skip relating media.
       if (id) {
         await updateMedia(id, {
-          featured_media: posterId,
-          meta: {
-            web_stories_poster_id: posterId,
-          },
-          post: storyId,
+          posterId,
+          storyId,
         });
       }
 

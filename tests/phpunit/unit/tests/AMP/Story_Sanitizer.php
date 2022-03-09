@@ -543,11 +543,10 @@ class Story_Sanitizer extends TestCase {
 HTML;
 
 		$args = [
-			'publisher_logo'    => '',
-			'publisher'         => '',
-			'poster_images'     => [],
-			'video_cache'       => false,
-			'semantic_headings' => true,
+			'publisher_logo' => '',
+			'publisher'      => '',
+			'poster_images'  => [],
+			'video_cache'    => false,
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -593,11 +592,10 @@ HTML;
 HTML;
 
 		$args = [
-			'publisher_logo'    => '',
-			'publisher'         => '',
-			'poster_images'     => [],
-			'video_cache'       => false,
-			'semantic_headings' => true,
+			'publisher_logo' => '',
+			'publisher'      => '',
+			'poster_images'  => [],
+			'video_cache'    => false,
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
@@ -618,25 +616,25 @@ HTML;
 	/**
 	 * @covers \Google\Web_Stories\AMP\Traits\Sanitization_Utils::use_semantic_heading_tags
 	 */
-	public function test_use_semantic_heading_tags_not_enabled(): void {
+	public function test_use_semantic_heading_tags_short_content(): void {
 		$source = <<<'HTML'
 <html><head></head><body><amp-story>
 	<amp-story-page>
 		<amp-story-grid-layer>
-			<p class="text-wrapper" style="font-size:.582524em">Title 1</p>
-			<p class="text-wrapper" style="font-size:.582524em">Title 1</p>
-			<p class="text-wrapper" style="font-size:.436893em">Title 2</p>
-			<p class="text-wrapper" style="font-size:.339805em">Title 3</p>
-			<p class="text-wrapper" style="font-size:.291262em">Paragraph</p>
+			<p class="text-wrapper" style="font-size:.582524em">T 1</p>
+			<p class="text-wrapper" style="font-size:.582524em">T 1</p>
+			<p class="text-wrapper" style="font-size:.436893em">T 2</p>
+			<p class="text-wrapper" style="font-size:.339805em">T 3</p>
+			<p class="text-wrapper" style="font-size:.291262em">P</p>
 		</amp-story-grid-layer>
 	</amp-story-page>
 	<amp-story-page>
 		<amp-story-grid-layer>
-			<p class="text-wrapper" style="font-size:.582524em">Title 1B</p>
-			<p class="text-wrapper" style="font-size:.339805em">Title 3B</p>
-			<p class="text-wrapper" style="font-size:.436893em">Title 2B</p>
-			<p class="text-wrapper" style="font-size:.582524em">Title 1B</p>
-			<p class="text-wrapper" style="font-size:.291262em">ParagraphB</p>
+			<p class="text-wrapper" style="font-size:.582524em">T1B</p>
+			<p class="text-wrapper" style="font-size:.339805em">T3B</p>
+			<p class="text-wrapper" style="font-size:.436893em">T2B</p>
+			<p class="text-wrapper" style="font-size:.582524em">T1B</p>
+			<p class="text-wrapper" style="font-size:.291262em">PB</p>
 		</amp-story-grid-layer>
 	</amp-story-page>
 </amp-story></body></html>
@@ -647,21 +645,21 @@ HTML;
 			'publisher'         => '',
 			'poster_images'     => [],
 			'video_cache'       => false,
-			'semantic_headings' => false,
+			'semantic_headings' => true,
 		];
 
 		$actual = $this->sanitize_and_get( $source, $args );
 
-		$this->assertStringContainsString( 'Title 1</p>', $actual );
-		$this->assertStringContainsString( 'Title 1</p>', $actual );
-		$this->assertStringContainsString( 'Title 2</p>', $actual );
-		$this->assertStringContainsString( 'Title 3</p>', $actual );
-		$this->assertStringContainsString( 'Paragraph</p>', $actual );
+		$this->assertStringContainsString( 'T 1</p>', $actual );
+		$this->assertStringContainsString( 'T 1</p>', $actual );
+		$this->assertStringContainsString( 'T 2</p>', $actual );
+		$this->assertStringContainsString( 'T 3</p>', $actual );
+		$this->assertStringContainsString( 'P</p>', $actual );
 
-		$this->assertStringContainsString( 'Title 1B</p>', $actual );
-		$this->assertStringContainsString( 'Title 1B</p>', $actual );
-		$this->assertStringContainsString( 'Title 2B</p>', $actual );
-		$this->assertStringContainsString( 'Title 3B</p>', $actual );
-		$this->assertStringContainsString( 'ParagraphB</p>', $actual );
+		$this->assertStringContainsString( 'T1B</p>', $actual );
+		$this->assertStringContainsString( 'T1B</p>', $actual );
+		$this->assertStringContainsString( 'T2B</p>', $actual );
+		$this->assertStringContainsString( 'T3B</p>', $actual );
+		$this->assertStringContainsString( 'PB</p>', $actual );
 	}
 }

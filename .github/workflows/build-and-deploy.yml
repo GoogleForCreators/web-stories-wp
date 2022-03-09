@@ -75,7 +75,7 @@ jobs:
       github.event.pull_request.user.login != 'dependabot[bot]'
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -90,8 +90,8 @@ jobs:
           pattern: '{assets/js/*.js,assets/css/*.css}'
           build-script: 'build:js'
           minimum-change-threshold: 100
-          # Ignore webpack content hash in bundle filenames.
-          strip-hash: '.*-(\w{20})\.js$'
+          # Ignore chunk and module hashes in bundle filenames.
+          strip-hash: '.*-(\w{20})|^(\d{2,5})\.js$'
 
   build:
     name: Package ZIP files
@@ -103,7 +103,7 @@ jobs:
       github.event.pull_request.user.login != 'dependabot[bot]'
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -142,7 +142,7 @@ jobs:
       - name: Bundle development version
         run: |
           rm -rf assets/css/* assets/js/*
-          NODE_ENV=development npx webpack --config webpack.config.cjs
+          npx webpack --node-env=development
           npm run workflow:build-plugin
           mv build/web-stories build/web-stories-dev/
 
@@ -168,7 +168,7 @@ jobs:
       github.event.pull_request.user.login != 'dependabot[bot]'
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -224,13 +224,13 @@ jobs:
   deploy-to-staging:
     name: Deploy to staging environment
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: [build]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Download full bundle
         uses: actions/download-artifact@v2

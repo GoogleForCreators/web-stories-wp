@@ -49,7 +49,7 @@ class AMP_Story_Sanitizer extends AMP_Base_Sanitizer {
 	public function sanitize(): void {
 		$this->transform_html_start_tag( $this->dom );
 		$this->transform_a_tags( $this->dom );
-		$this->use_semantic_heading_tags( $this->dom, $this->args['semantic_headings'] ?? false );
+		$this->use_semantic_heading_tags( $this->dom );
 		$this->add_publisher_logo( $this->dom, $this->args['publisher_logo'] );
 		$this->add_publisher( $this->dom, $this->args['publisher'] );
 		$this->add_poster_images( $this->dom, $this->args['poster_images'] );

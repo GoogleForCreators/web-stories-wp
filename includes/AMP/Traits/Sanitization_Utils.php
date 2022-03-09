@@ -27,7 +27,9 @@
 namespace Google\Web_Stories\AMP\Traits;
 
 use AmpProject\Dom\Document as AMP_Document;
+use DOMAttr;
 use DOMElement;
+use DOMNode;
 use DOMNodeList;
 use Google\Web_Stories_Dependencies\AmpProject\Dom\Document;
 
@@ -123,13 +125,8 @@ trait Sanitization_Utils {
 	 * @since 1.18.0
 	 *
 	 * @param Document|AMP_Document $document   Document instance.
-	 * @param bool                  $is_enabled Whether the feature is enabled.
 	 */
-	private function use_semantic_heading_tags( &$document, bool $is_enabled ): void {
-		if ( ! $is_enabled ) {
-			return;
-		}
-
+	private function use_semantic_heading_tags( &$document ): void {
 		$pages = $document->getElementsByTagName( 'amp-story-page' );
 
 		/**
@@ -179,6 +176,11 @@ trait Sanitization_Utils {
 			$style   = $text_el->getAttribute( 'style' );
 			$matches = [];
 
+			// See https://github.com/GoogleForCreators/web-stories-wp/issues/10726.
+			if ( \strlen( trim( $text_el->textContent ) ) <= 3 ) {
+				continue;
+			}
+
 			if ( ! preg_match( '/font-size:([^em]+)em/', $style, $matches ) ) {
 				continue;
 			}
@@ -227,12 +229,22 @@ trait Sanitization_Utils {
 
 		// Copy over all children first.
 		foreach ( $node->childNodes as $child ) {
+			/**
+			 * Child node.
+			 *
+			 * @var DOMNode $child Child node.
+			 */
 			$new_node->appendChild( $document->importNode( $child, true ) );
 		}
 
 		// Then, copy over all attributes.
 		if ( $node->attributes ) {
 			foreach ( $node->attributes as $attr ) {
+				/**
+				 * Attribute.
+				 *
+				 * @var DOMAttr $attr Attribute.
+				 */
 				$new_node->setAttribute( $attr->nodeName, $attr->nodeValue );
 			}
 		}

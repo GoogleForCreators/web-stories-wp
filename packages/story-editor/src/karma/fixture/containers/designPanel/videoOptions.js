@@ -14,6 +14,20 @@
  * limitations under the License.
  */
 
-// Collect all Karma tests together for the test webpack config.
-const testsContext = require.context('.', true, /\.karma\.js$/);
-testsContext.keys().forEach(testsContext);
+/**
+ * Internal dependencies
+ */
+import { AbstractPanel } from './abstractPanel';
+
+/**
+ * The video options panel containing controls for loop, mute, and trim.
+ */
+export class VideoOptions extends AbstractPanel {
+  constructor(node, path) {
+    super(node, path);
+  }
+
+  get loop() {
+    return this.getByRole('checkbox', { name: 'Loop' });
+  }
+}

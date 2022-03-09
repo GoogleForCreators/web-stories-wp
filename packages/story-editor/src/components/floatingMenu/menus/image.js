@@ -23,7 +23,7 @@ import { memo } from '@googleforcreators/react';
  * Internal dependencies
  */
 import {
-  SwapImage,
+  SwapMedia,
   LayerOpacity,
   FlipHorizontal,
   FlipVertical,
@@ -36,7 +36,7 @@ import {
 const FloatingImageMenu = memo(function FloatingImageMenu() {
   return (
     <>
-      <SwapImage />
+      <SwapMedia />
 
       <Separator />
 

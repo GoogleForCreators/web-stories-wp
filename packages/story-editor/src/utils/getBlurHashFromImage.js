@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import { preloadImage } from '@googleforcreators/media';
 import { getTimeTracker, trackError } from '@googleforcreators/tracking';
-
 /**
  * Internal dependencies
  */
@@ -47,7 +47,8 @@ const getBlurHashFromImage = async (src) => {
 
   const trackTiming = getTimeTracker('load_get_blurhash');
   return new Promise((resolve, reject) => {
-    const worker = new Worker(); // lgtm[js/call-to-non-callable]
+    const worker = new Worker();
+
     worker.postMessage({
       image: data,
       width,

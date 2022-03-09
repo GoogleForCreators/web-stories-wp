@@ -17,22 +17,12 @@
 /**
  * External dependencies
  */
-import { Icons } from '@googleforcreators/design-system';
-import { __ } from '@googleforcreators/i18n';
+import { NumericInput } from '@googleforcreators/design-system';
+import styled from 'styled-components';
 
-/**
- * Internal dependencies
- */
-import { IconButton } from './shared';
+const Input = styled(NumericInput)`
+  width: 70px;
+  flex: 0 0 70px;
+`;
 
-function SwapImage() {
-  return (
-    <IconButton
-      Icon={Icons.PictureSwap}
-      title={__('Swap image', 'web-stories')}
-      onClick={() => {}}
-    />
-  );
-}
-
-export default SwapImage;
+export default Input;

@@ -28,11 +28,6 @@ import './style.css'; // This way the general editor styles are loaded before al
 import './setLocaleData';
 
 /**
- * WordPress dependencies
- */
-import domReady from '@wordpress/dom-ready';
-
-/**
  * External dependencies
  */
 import { StoryEditor } from '@googleforcreators/story-editor';
@@ -41,6 +36,11 @@ import { StrictMode, render } from '@googleforcreators/react';
 import { updateSettings } from '@googleforcreators/date';
 import { initializeTracking } from '@googleforcreators/tracking';
 import { bindToCallbacks } from '@web-stories-wp/wp-utils';
+
+/**
+ * WordPress dependencies
+ */
+import '@wordpress/dom-ready'; // Just imported here so it's part of the bundle. Usage is in inline scripts.
 
 /**
  * Internal dependencies
@@ -58,7 +58,6 @@ import { TIPS, TOOLBAR_HEIGHT, MENU_WIDTH } from './constants';
 import { GlobalStyle } from './theme.js';
 
 window.webStories = window.webStories || {};
-window.webStories.domReady = domReady;
 
 /**
  * Initializes the web stories editor.

@@ -286,6 +286,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Story locking', 'web-stories' ),
 				'description' => __( 'Lock in-progress stories from being edited by other authors', 'web-stories' ),
 				'group'       => 'general',
+				'default'     => true,
 			],
 			/**
 			 * Author: @spacedmonkey
@@ -370,6 +371,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Page Background Audio', 'web-stories' ),
 				'description' => __( 'Enable adding captions to background audio', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @barklund
@@ -381,18 +383,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Floating Menu', 'web-stories' ),
 				'description' => __( 'Enable the new floating design menu', 'web-stories' ),
 				'group'       => 'editor',
-			],
-			/**
-			 * Author: @swissspidy
-			 * Issue: #10394
-			 * Creation date: 2022-01-32
-			 */
-			[
-				'name'        => 'semanticHeadingTags',
-				'label'       => __( 'Semantic Headings', 'web-stories' ),
-				'description' => __( 'Automatically use semantic heading tags for text elements', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
 			],
 		];
 	}

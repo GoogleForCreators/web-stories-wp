@@ -25,6 +25,11 @@
     "npm": ">= 7.3"
   },
   "type": "module",
+  "customExports": {
+    ".": {
+      "default": "./src/index.js"
+    }
+  },
   "main": "dist/index.js",
   "module": "dist-module/index.js",
   "source": "src/index.js",
@@ -37,7 +42,7 @@
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^13.1.3",
-    "rollup": "^2.67.3"
+    "rollup": "^2.70.0"
   },
   "scripts": {
     "migration": "node ./scripts/cli.js"

@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import * as React from 'react';
+
 import {
   act,
   configure,
@@ -40,6 +40,8 @@ import ApiProvider from '../app/api/apiProvider';
 import { AppFrame } from '../components';
 import InterfaceSkeleton from '../components/interfaceSkeleton';
 import ApiProviderFixture from './apiProviderFixture';
+
+const React = require('react');
 
 if ('true' === WEB_STORIES_CI) {
   configure({

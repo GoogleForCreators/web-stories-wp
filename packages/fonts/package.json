@@ -27,10 +27,22 @@
     "npm": ">= 7.3"
   },
   "type": "module",
+  "customExports": {
+    "./fonts.json": {
+      "default": "./src/fonts.json"
+    },
+    ".": {
+      "default": "./src/index.js"
+    }
+  },
   "exports": {
     "./fonts.json": {
       "import": "./dist-module/fonts.json",
       "require": "./dist/fonts.json"
+    },
+    ".": {
+      "import": "./dist-module/index.js",
+      "require": "./dist/index.js"
     }
   },
   "main": "dist/index.js",

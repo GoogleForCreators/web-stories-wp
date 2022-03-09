@@ -97,7 +97,11 @@
     "no-return-assign": "error",
     "no-return-await": "error",
     "no-sequences": "error",
-    "no-shadow": "error",
+    "no-shadow": ["error",
+      {
+        "ignoreOnInitialization": true
+      }
+    ],
     "no-template-curly-in-string": "error",
     "no-throw-literal": "error",
     "no-unmodified-loop-condition": "error",
@@ -240,6 +244,7 @@
     "import/resolver": {
       "@web-stories-wp/eslint-import-resolver": {
         "mapping": {
+          "^@googleforcreators\\/(.*)\\/(.*)": "./packages/$1/src/$2",
           "^@googleforcreators\\/(.*)": "./packages/$1/src/",
           "^@web-stories-wp\\/(.*)": "./packages/$1/src/"
         }
@@ -315,6 +320,7 @@
             "ignore": ["describe"]
           }
         ],
+        "jest/prefer-snapshot-hint": "off",
         "jsdoc/require-jsdoc": "off",
         "testing-library/no-await-sync-events": "error",
         "testing-library/no-debugging-utils": "error",
@@ -344,7 +350,8 @@
         "jasmine"
       ],
       "env": {
-        "jasmine": true
+        "jasmine": true,
+        "node": true
       },
       "rules": {
         "eslint-comments/require-description": "off",
@@ -415,7 +422,8 @@
               "withUser"
             ]
           }
-        ]
+        ],
+        "jest/prefer-snapshot-hint": "off"
       },
       "globals": {
         "browser": "readonly",

@@ -22,8 +22,11 @@ import { useCallback, useState } from '@googleforcreators/react';
  */
 import StoryContext from '../../../app/story/context';
 import { ConfigContext } from '../../../app/config';
-import { noop } from '../../../utils/noop';
-import { ChecklistCountProvider, CheckpointContext } from '../../checklist';
+import {
+  ChecklistCountProvider,
+  CheckpointContext,
+  PPC_CHECKPOINT_STATE,
+} from '../../checklist';
 import InspectorContext from '../../inspector/context';
 import { PageAdvancementPanel, SlugPanel } from '../../panels/document';
 import PublishModal from '../publishModal';
@@ -37,27 +40,50 @@ const MockDocumentPane = () => (
 export default {
   title: 'Stories Editor/Components/Dialog/Publish Modal',
   args: {
-    publishButtonCopy: 'Publish',
-    isOpen: true,
+    canPublish: true,
     hasChecklist: true,
-    publisher: 'Gotham Bugle',
+    hasFutureDate: false,
     hasPublisherLogo: true,
     hasFeaturedMedia: true,
     hasUploadMediaAction: true,
+    hasPriorityIssues: true,
+    publishButtonDisabled: true,
+    publisher: 'Gotham Bugle',
+    isOpen: true,
+    isSaving: false,
   },
   argTypes: {
     onPublish: { action: 'onPublish clicked' },
     onClose: { action: 'onClose clicked' },
+    onPublishDialogChecklistRequest: {
+      action: 'onPublishDialogChecklistRequest clicked',
+    },
+    checkpoint: {
+      options: Object.values(PPC_CHECKPOINT_STATE),
+      control: { type: 'select' },
+      name: "Checklist's given checkpoint",
+    },
+    storyStatus: {
+      options: ['publish', 'future', 'private', 'draft'],
+      control: { type: 'select' },
+      name: 'Status of Story',
+    },
   },
 };
 
 export const _default = (args) => {
   const {
+    canPublish,
+    checkpoint,
+    isSaving,
     hasChecklist,
     hasUploadMediaAction,
     hasFeaturedMedia,
     hasPublisherLogo,
+    hasPriorityIssues,
+    onPublishDialogChecklistRequest,
     publisher,
+    storyStatus,
   } = args;
   const [inputValues, setInputValues] = useState({
     excerpt: '',
@@ -86,6 +112,8 @@ export const _default = (args) => {
         value={{
           actions: { updateStory: handleUpdateStory },
           state: {
+            capabilities: { publish: canPublish },
+            meta: { isSaving: isSaving },
             story: {
               ...inputValues,
               permalinkConfig: {
@@ -102,6 +130,7 @@ export const _default = (args) => {
                 height: 96,
                 width: 158,
               },
+              status: storyStatus,
             },
           },
         }}
@@ -124,19 +153,21 @@ export const _default = (args) => {
           }}
         >
           <ChecklistCountProvider hasChecklist={hasChecklist}>
-            <PublishModal {...args} />
-          </ChecklistCountProvider>
-          <CheckpointContext.Provider
-            value={{
-              actions: {
-                onPublishDialogChecklistRequest: noop,
-              },
-            }}
-          >
-            <ChecklistCountProvider hasChecklist={args.hasChecklist}>
+            <CheckpointContext.Provider
+              value={{
+                actions: {
+                  onPublishDialogChecklistRequest:
+                    onPublishDialogChecklistRequest,
+                },
+                state: {
+                  shouldReviewDialogBeSeen: hasPriorityIssues,
+                  checkpoint: checkpoint,
+                },
+              }}
+            >
               <PublishModal {...args} />
-            </ChecklistCountProvider>
-          </CheckpointContext.Provider>
+            </CheckpointContext.Provider>
+          </ChecklistCountProvider>
         </InspectorContext.Provider>
       </StoryContext.Provider>
     </ConfigContext.Provider>

@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { screen } from '@testing-library/react';
+import { fireEvent, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
 /**
  * Internal dependencies
@@ -26,28 +26,53 @@ import { StoryContext } from '../../../app/story';
 import { ConfigContext } from '../../../app/config';
 import StoryPreview from '../content/storyPreview';
 
+const newPoster = {
+  id: 'new-poster',
+  src: 'new-poster-url',
+  height: '36px',
+  width: '100000px',
+};
+
 describe('publishModal/storyPreview', () => {
+  const mockUpdateStory = jest.fn();
+
   const view = (props) => {
     const {
-      storyTitle = '',
+      allowedImageFileTypes = [],
+      allowedImageMimeTypes = [],
       featuredMedia = '',
-      publisherLogo = '',
+      hasUploadMediaAction = false,
       publisher = '',
+      publisherLogo = '',
+      storyTitle = '',
     } = props || {};
 
     return renderWithTheme(
       <ConfigContext.Provider
         value={{
+          allowedImageFileTypes,
+          allowedImageMimeTypes,
           metadata: {
             publisher: publisher,
           },
           capabilities: {
-            hasUploadMediaAction: false,
+            hasUploadMediaAction,
           },
+          MediaUpload: ({ onSelect }) => (
+            <button
+              data-testid="media-upload-button"
+              onClick={() => onSelect(newPoster)}
+            >
+              {'Media Upload Button!'}
+            </button>
+          ),
         }}
       >
         <StoryContext.Provider
           value={{
+            actions: {
+              updateStory: mockUpdateStory,
+            },
             state: {
               story: {
                 title: storyTitle,
@@ -70,6 +95,10 @@ describe('publishModal/storyPreview', () => {
       </ConfigContext.Provider>
     );
   };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
 
   it('should have no accessibility issues', async () => {
     const { container } = view({
@@ -137,5 +166,30 @@ describe('publishModal/storyPreview', () => {
     const publisherLogo = screen.queryByTestId('story_preview_logo');
 
     expect(publisherLogo).not.toBeInTheDocument();
+  });
+
+  it('should not render the update featured media button if the user does not have update permissions', () => {
+    view();
+    const uploadMediaButton = screen.queryByText('Media Upload Button!');
+
+    expect(uploadMediaButton).not.toBeInTheDocument();
+  });
+
+  it('should update the poster image when the upload media button is clicked', () => {
+    view({ hasUploadMediaAction: true });
+    const uploadMediaButton = screen.queryByText('Media Upload Button!');
+
+    fireEvent.click(uploadMediaButton);
+
+    expect(mockUpdateStory).toHaveBeenCalledWith({
+      properties: {
+        featuredMedia: {
+          id: newPoster.id,
+          url: newPoster.src,
+          height: newPoster.height,
+          width: newPoster.width,
+        },
+      },
+    });
   });
 });

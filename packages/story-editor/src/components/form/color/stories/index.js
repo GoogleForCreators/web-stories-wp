@@ -283,7 +283,7 @@ export function DesignMenu() {
           // Params below are to the color input component
           maxHeight={362}
           pickerPlacement={PLACEMENT.TOP_END}
-          isMinimal
+          isInDesignMenu
           shouldCloseOnSelection
           allowsSavedColors
           allowsSavedColorDeletion={false}
@@ -298,7 +298,7 @@ export function DesignMenu() {
           // Params below are to the color input component
           maxHeight={362}
           pickerPlacement={PLACEMENT.TOP_END}
-          isMinimal
+          isInDesignMenu
           shouldCloseOnSelection
           allowsSavedColors
           allowsSavedColorDeletion={false}
@@ -315,7 +315,7 @@ export function DesignMenu() {
           maxHeight={362}
           pickerPlacement={PLACEMENT.TOP_END}
           hasInputs={false}
-          isMinimal
+          isInDesignMenu
           shouldCloseOnSelection
           allowsSavedColors
           allowsSavedColorDeletion={false}
@@ -329,7 +329,7 @@ export function DesignMenu() {
           maxHeight={362}
           pickerPlacement={PLACEMENT.TOP_END}
           hasInputs={false}
-          isMinimal
+          isInDesignMenu
           shouldCloseOnSelection
           allowsGradient
           allowsSavedColors
@@ -343,7 +343,7 @@ export function DesignMenu() {
           maxHeight={362}
           pickerPlacement={PLACEMENT.TOP_START}
           hasInputs={false}
-          isMinimal
+          isInDesignMenu
           shouldCloseOnSelection
           allowsSavedColors
           allowsSavedColorDeletion={false}

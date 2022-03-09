@@ -22,19 +22,19 @@ import { useInstanceId } from '@wordpress/compose';
 /**
  * Internal dependencies
  */
-import { ReactComponent as CirclesCarouselViewIcon } from './images/view-type/circles-carousel-view.svg';
-import { ReactComponent as CirclesCarouselConfigIcon } from './images/config-panel/circles-carousel-view-panel-icon.svg';
-import { ReactComponent as LatestStoriesBlockIcon } from './icons/block-type/latest-stories-block.svg';
-import { ReactComponent as SelectedStoriesBlockIcon } from './icons/block-type/selected-stories-block.svg';
-import { ReactComponent as EmbedStoriesBlockIcon } from './icons/block-type/embed-story-block.svg';
+import CirclesCarouselViewIcon from './images/view-type/circles-carousel-view.svg';
+import CirclesCarouselConfigIcon from './images/config-panel/circles-carousel-view-panel-icon.svg';
+import LatestStoriesBlockIcon from './icons/block-type/latest-stories-block.svg';
+import SelectedStoriesBlockIcon from './icons/block-type/selected-stories-block.svg';
+import EmbedStoriesBlockIcon from './icons/block-type/embed-story-block.svg';
 
-import { ReactComponent as GridViewIcon } from './icons/view-type/grid-view.svg';
-import { ReactComponent as ListViewIcon } from './icons/view-type/list-view.svg';
-import { ReactComponent as BoxCarouselViewIcon } from './icons/view-type/box-carousel-view.svg';
+import GridViewIcon from './icons/view-type/grid-view.svg';
+import ListViewIcon from './icons/view-type/list-view.svg';
+import BoxCarouselViewIcon from './icons/view-type/box-carousel-view.svg';
 
-import { ReactComponent as GridViewConfigIcon } from './icons/config-panel/grid-view-panel-icon.svg';
-import { ReactComponent as ListViewConfigIcon } from './icons/config-panel/list-view-panel-icon.svg';
-import { ReactComponent as BoxCarouselConfigIcon } from './icons/config-panel/box-carousel-view-panel-icon.svg';
+import GridViewConfigIcon from './icons/config-panel/grid-view-panel-icon.svg';
+import ListViewConfigIcon from './icons/config-panel/list-view-panel-icon.svg';
+import BoxCarouselConfigIcon from './icons/config-panel/box-carousel-view-panel-icon.svg';
 
 // Icons for block types.
 export const LATEST_STORIES_BLOCK_ICON = (

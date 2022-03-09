@@ -19,21 +19,19 @@
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
-  Button,
   Headline,
-  Icons,
   Text,
   THEME_CONSTANTS,
-  BUTTON_VARIANTS,
-  BUTTON_TYPES,
-  BUTTON_SIZES,
+  MEDIA_VARIANTS,
 } from '@googleforcreators/design-system';
+import { useCallback } from '@googleforcreators/react';
 import { PAGE_RATIO } from '@googleforcreators/units';
-import { __ } from '@googleforcreators/i18n';
+import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
 import { useConfig, useStory } from '../../../app';
+import { Media } from '../../form';
 
 // Set the available space for cover preview image + overlay
 const PreviewWrapper = styled.div`
@@ -134,16 +132,10 @@ const PublisherLogo = styled.img`
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.08);
 `;
 
-// TODO https://github.com/GoogleForCreators/web-stories-wp/issues/10584
-const EditFeaturedMedia = styled(Button).attrs({
-  variant: BUTTON_VARIANTS.SQUARE,
-  type: BUTTON_TYPES.SECONDARY,
-  size: BUTTON_SIZES.SMALL,
-})`
+const StyledMedia = styled(Media)`
   grid-area: editButton;
-  height: 32px;
-  width: 32px;
-  margin: 0 0 0 auto;
+  display: flex;
+  flex-direction: row-reverse;
 `;
 
 // The bottom section of the scrim is full width.
@@ -189,26 +181,73 @@ const Publisher = styled(Text).attrs({
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
-// TODO https://github.com/GoogleForCreators/web-stories-wp/issues/10584
-const ENABLE_EDIT_FEATURED_MEDIA = false;
-
 const StoryPreview = () => {
-  const { title, featuredMedia, publisherLogo } = useStory(
-    ({ state: { story } }) => ({
+  const { title, featuredMedia, publisherLogo, updateStory } = useStory(
+    ({ state: { story }, actions }) => ({
       title: story?.title,
       featuredMedia: story?.featuredMedia || {},
       publisherLogo: story?.publisherLogo || {},
+      updateStory: actions.updateStory,
     })
   );
 
-  const publisher = useConfig(({ metadata }) => metadata?.publisher);
-  const hasUploadMediaAction = useConfig(
-    ({ capabilities }) => capabilities?.hasUploadMediaAction
+  const {
+    allowedImageFileTypes,
+    allowedImageMimeTypes,
+    hasUploadMediaAction,
+    publisher,
+  } = useConfig(
+    ({
+      allowedImageFileTypes,
+      allowedImageMimeTypes,
+      capabilities,
+      metadata,
+    }) => ({
+      allowedImageFileTypes,
+      allowedImageMimeTypes,
+      hasUploadMediaAction: capabilities?.hasUploadMediaAction,
+      publisher: metadata?.publisher,
+    })
   );
 
   // Honor 2:3 aspect ratio that cover previews have
   const mediaWidth = 232;
   const mediaHeight = Math.round(mediaWidth / PAGE_RATIO);
+
+  const handleChangePoster = useCallback(
+    /**
+     * Handle story poster change.
+     *
+     * @param {import('@googleforcreators/media').Resource} newPoster The new image.
+     * @return {void}
+     */
+    (newPoster) => {
+      return updateStory({
+        properties: {
+          featuredMedia: {
+            id: newPoster.id,
+            url: newPoster.src,
+            height: newPoster.height,
+            width: newPoster.width,
+          },
+        },
+      });
+    },
+    [updateStory]
+  );
+
+  let posterErrorMessage = __(
+    'No file types are currently supported.',
+    'web-stories'
+  );
+
+  if (allowedImageFileTypes.length) {
+    posterErrorMessage = sprintf(
+      /* translators: %s: list of allowed file types. */
+      __('Please choose only %s as a poster.', 'web-stories'),
+      translateToExclusiveList(allowedImageFileTypes)
+    );
+  }
 
   return (
     <>
@@ -246,12 +285,25 @@ const StoryPreview = () => {
                     data-testid="story_preview_logo"
                   />
                 )}
-                {ENABLE_EDIT_FEATURED_MEDIA && hasUploadMediaAction && (
-                  <EditFeaturedMedia
-                    aria-label={__('Edit Publisher Logo', 'web-stories')}
-                  >
-                    <Icons.Pencil aria-hidden="true" />
-                  </EditFeaturedMedia>
+                {hasUploadMediaAction && (
+                  <StyledMedia
+                    onChange={handleChangePoster}
+                    title={__('Select as poster image', 'web-stories')}
+                    buttonInsertText={__(
+                      'Select as poster image',
+                      'web-stories'
+                    )}
+                    type={allowedImageMimeTypes}
+                    ariaLabel={__('Poster image', 'web-stories')}
+                    onChangeErrorText={posterErrorMessage}
+                    imgProps={featuredMedia}
+                    canUpload={hasUploadMediaAction}
+                    variant={MEDIA_VARIANTS.NONE}
+                    cropParams={{
+                      width: 640,
+                      height: 853,
+                    }}
+                  />
                 )}
               </ScrimTop>
               <ScrimBottom>

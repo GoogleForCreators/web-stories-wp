@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2021 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,5 @@
  * limitations under the License.
  */
 
-// Collect all Karma tests together for the test webpack config.
-const testsContext = require.context('.', true, /\.karma\.js$/);
-testsContext.keys().forEach(testsContext);
+// Bring element in front of story details modal
+export const Z_INDEX_STORY_DETAILS = 10;

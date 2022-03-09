@@ -21,8 +21,10 @@ import { axe } from 'jest-axe';
 /**
  * Internal dependencies
  */
+import { ConfigContext } from '../../../app/config';
 import StoryContext from '../../../app/story/context';
 import renderWithTheme from '../../../testUtils/renderWithTheme';
+import { noop } from '../../../utils/noop';
 import { ChecklistCountProvider } from '../../checklist';
 import InspectorContext from '../../inspector/context';
 import { INPUT_KEYS } from '../constants';
@@ -42,6 +44,18 @@ describe('publishModal/content', () => {
     jest.clearAllMocks();
   });
 
+  const configContextValue = {
+    allowedImageFileTypes: [],
+    allowedImageMimeTypes: [],
+    metadata: {
+      publisher: '',
+    },
+    capabilities: {
+      hasUploadMediaAction: true,
+    },
+    MediaUpload: () => <button onClick={noop}>{'Media Upload Button!'}</button>,
+  };
+
   const inspectorContextValue = {
     actions: { loadUsers: jest.fn() },
     state: {
@@ -56,22 +70,24 @@ describe('publishModal/content', () => {
 
   const view = () => {
     return renderWithTheme(
-      <StoryContext.Provider
-        value={{
-          actions: { updateStory: jest.fn() },
-          state: {
-            story: {
-              ...mockInputValues,
+      <ConfigContext.Provider value={configContextValue}>
+        <StoryContext.Provider
+          value={{
+            actions: { updateStory: jest.fn() },
+            state: {
+              story: {
+                ...mockInputValues,
+              },
             },
-          },
-        }}
-      >
-        <InspectorContext.Provider value={inspectorContextValue}>
-          <ChecklistCountProvider hasChecklist>
-            <Content handleReviewChecklist={mockHandleReviewChecklist} />
-          </ChecklistCountProvider>
-        </InspectorContext.Provider>
-      </StoryContext.Provider>
+          }}
+        >
+          <InspectorContext.Provider value={inspectorContextValue}>
+            <ChecklistCountProvider hasChecklist>
+              <Content handleReviewChecklist={mockHandleReviewChecklist} />
+            </ChecklistCountProvider>
+          </InspectorContext.Provider>
+        </StoryContext.Provider>
+      </ConfigContext.Provider>
     );
   };
   it('should have no accessibility issues', async () => {

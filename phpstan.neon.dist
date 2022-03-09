@@ -1,14 +1,10 @@
 services:
   -
-    class: SzepeViktor\PHPStan\WordPress\GetTermsDynamicFunctionReturnTypeExtension
-    tags:
-      - phpstan.broker.dynamicFunctionReturnTypeExtension
-  -
-    class: SzepeViktor\PHPStan\WordPress\ServiceContainerDynamicReturnTypeExtension
+    class: Google\Web_Stories\PHPStan\ServiceContainerDynamicReturnTypeExtension
     tags:
       - phpstan.broker.dynamicMethodReturnTypeExtension
   -
-    class: SzepeViktor\PHPStan\WordPress\ServicesDynamicReturnTypeExtension
+    class: Google\Web_Stories\PHPStan\ServicesDynamicReturnTypeExtension
     tags:
       - phpstan.broker.dynamicStaticMethodReturnTypeExtension
 

@@ -17,7 +17,7 @@
  * Internal dependencies
  */
 import { Container } from './container';
-import { ToggleButton } from './common';
+import { ToggleButton, Color } from './common';
 
 export class DesignMenu extends Container {
   constructor(node, path) {
@@ -42,5 +42,29 @@ export class DesignMenu extends Container {
 
   get borderRadius() {
     return this.queryByRole('textbox', { name: 'Corner Radius' });
+  }
+
+  get borderWidth() {
+    return this.queryByRole('textbox', { name: 'Border width' });
+  }
+
+  get borderColor() {
+    const region = this.queryByRole('region', {
+      name: /Color input: Border color/,
+    });
+    if (!region) {
+      return null;
+    }
+    const element = this._get(region, 'borderColor', Color);
+    element.label = 'Border color';
+    return element;
+  }
+
+  get swapMedia() {
+    return this.getByRole('menuitem', { name: 'Replace media' });
+  }
+
+  get loop() {
+    return this.getByRole('checkbox', { name: 'Loop' });
   }
 }

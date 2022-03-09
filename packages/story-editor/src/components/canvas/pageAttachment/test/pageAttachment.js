@@ -27,7 +27,7 @@ import CanvasContext from '../../../../app/canvas/context';
 import { renderWithTheme } from '../../../../testUtils';
 import StoryContext from '../../../../app/story/context';
 import { ConfigProvider } from '../../../../app/config';
-import defaultConfig from '../../../../defaultConfig';
+import getDefaultConfig from '../../../../getDefaultConfig';
 
 function setup(props = {}) {
   const { pageAttachment = {}, canvasProps = null } = props;
@@ -51,7 +51,7 @@ function setup(props = {}) {
     },
   };
   return renderWithTheme(
-    <ConfigProvider config={defaultConfig}>
+    <ConfigProvider config={getDefaultConfig()}>
       <StoryContext.Provider value={storyContext}>
         <CanvasContext.Provider value={canvasContext}>
           <PageAttachment pageAttachment={pageAttachment} />
