@@ -119,7 +119,7 @@ function TextAlign() {
 
   const handleTextAlign = (value) => () => {
     trackEvent('floating_menu', {
-      name: 'set_text_alignment',
+      name: `set_text_alignment_${value}`,
       element: 'text',
     });
     updateSelectedElements({
