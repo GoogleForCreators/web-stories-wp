@@ -143,6 +143,11 @@ describe('Text Style Panel', () => {
               currentPage: { elements },
             },
           } = await fixture.renderHook(() => useStory());
+
+          if (!elements) {
+            throw new Error('story elements not ready');
+          }
+
           expect(elements[1].content).toBe(
             '<span style="color: #fff">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>'
           );
