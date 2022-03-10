@@ -40,8 +40,8 @@ const isEmptyStory = (pages) => {
     return false;
   }
 
-  const hasNoAttachment = pages[0].pageAttachment?.length === 0;
-  if (!hasNoAttachment) {
+  const hasPageAttachment = pages[0].pageAttachment?.url;
+  if (hasPageAttachment) {
     return false;
   }
 

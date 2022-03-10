@@ -57,7 +57,9 @@ describe('isEmptyStory', () => {
 
   it('should not count story with an attachment as empty', () => {
     const storyWithAttachment = [createPage()];
-    storyWithAttachment[0].pageAttachemnt.push({});
+    const testUrl = 'https://testurl.com';
+
+    storyWithAttachment[0].pageAttachemnt.push({ url: testUrl });
     expect(isEmptyStory(storyWithAttachment)).toBeFalse();
   });
 });
