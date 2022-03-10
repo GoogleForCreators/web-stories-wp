@@ -32,6 +32,7 @@ import {
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import { useCallback, useRef, useState, memo } from '@googleforcreators/react';
+import { getHTMLFormatters } from '@googleforcreators/rich-text';
 
 /**
  * Internal dependencies
@@ -96,6 +97,15 @@ function PresetPanel() {
     insertElement: state.actions.insertElement,
   }));
 
+  const {
+    setColor,
+    setFontWeight,
+    setLetterSpacing,
+    toggleItalic,
+    toggleBold,
+    toggleUnderline,
+  } = getHTMLFormatters();
+
   const buttonRef = useRef(null);
   const stylesRef = useRef(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -125,9 +135,21 @@ function PresetPanel() {
   const { addGlobalPreset } = useAddPreset({ presetType: PRESET_TYPES.STYLE });
 
   const addStyledText = (preset) => {
+    // Get all the inline styles that saved styles support.
+    const { color, fontWeight, isItalic, isUnderline, letterSpacing, isBold } =
+      preset;
+    let content = DEFAULT_PRESET.content;
+    content = setColor(content, color);
+    content = setFontWeight(content, fontWeight);
+    content = toggleItalic(content, isItalic);
+    content = toggleUnderline(content, isUnderline);
+    content = setLetterSpacing(content, letterSpacing);
+    content = toggleBold(content, isBold);
+
     insertElement(TYPE, {
       ...DEFAULT_PRESET,
       ...preset,
+      content,
     });
   };
 
