@@ -24,7 +24,6 @@ import {
   subMinutes,
   getOptions,
 } from '@googleforcreators/date';
-import { __ } from '@googleforcreators/i18n';
 import { trackEvent } from '@googleforcreators/tracking';
 import PropTypes from 'prop-types';
 import { useFeature } from 'flagged';
@@ -34,7 +33,6 @@ import { useFeature } from 'flagged';
 import { useStory } from '../../../app';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
 import { useCheckpoint, ReviewChecklistDialog } from '../../checklist';
-import useIsUploadingToStory from '../../../utils/useIsUploadingToStory';
 import { PublishModal } from '../../publishModal';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
@@ -42,39 +40,30 @@ function PublishButton({ forceIsSaving }) {
   const isUpdatedPublishModalEnabled = useFeature(
     'enableUpdatedPublishStoryModal'
   );
-  const {
-    isSaving,
-    date,
-    storyId,
-    saveStory,
-    title,
-    editLink,
-    status,
-    canPublish,
-  } = useStory(
+  const { date, storyId, saveStory, title, editLink, canPublish } = useStory(
     ({
       state: {
-        meta: { isSaving },
-        story: { date, storyId, title, editLink, status },
+        story: { date, storyId, title, editLink },
         capabilities,
       },
       actions: { saveStory },
     }) => ({
-      isSaving,
       date,
       storyId,
       saveStory,
       title,
       editLink,
-      status,
       canPublish: Boolean(capabilities?.publish),
     })
   );
-  const isUploading = useIsUploadingToStory();
 
-  const { shouldReviewDialogBeSeen } = useCheckpoint(
-    ({ state: { shouldReviewDialogBeSeen } }) => ({
+  const { shouldReviewDialogBeSeen, showPriorityIssues } = useCheckpoint(
+    ({
+      state: { shouldReviewDialogBeSeen },
+      actions: { showPriorityIssues },
+    }) => ({
       shouldReviewDialogBeSeen,
+      showPriorityIssues,
     })
   );
 
@@ -109,44 +98,36 @@ function PublishButton({ forceIsSaving }) {
   }, [refreshPostEditURL, saveStory, hasFutureDate, title, canPublish]);
 
   const handlePublish = useCallback(() => {
-    if (
-      canPublish &&
-      (shouldReviewDialogBeSeen || isUpdatedPublishModalEnabled)
-    ) {
+    showPriorityIssues();
+    if (shouldReviewDialogBeSeen || isUpdatedPublishModalEnabled) {
       setShowDialog(true);
       return;
     }
 
     publish();
   }, [
+    showPriorityIssues,
     shouldReviewDialogBeSeen,
     isUpdatedPublishModalEnabled,
-    canPublish,
     publish,
   ]);
 
   const closeDialog = useCallback(() => setShowDialog(false), []);
 
-  const text =
-    hasFutureDate && status !== 'private'
-      ? __('Schedule', 'web-stories')
-      : __('Publish', 'web-stories');
-
   return (
     <>
       <ButtonWithChecklistWarning
         onClick={handlePublish}
-        disabled={isSaving || forceIsSaving || isUploading}
-        text={canPublish ? text : __('Submit for review', 'web-stories')}
-        isUploading={isUploading}
-        canPublish={canPublish}
+        disabled={forceIsSaving}
+        hasFutureDate={hasFutureDate}
       />
       {isUpdatedPublishModalEnabled ? (
         <PublishModal
           isOpen={showDialog}
           onPublish={publish}
           onClose={closeDialog}
-          publishButtonCopy={text}
+          hasFutureDate={hasFutureDate}
+          publishButtonDisabled={forceIsSaving}
         />
       ) : (
         <ReviewChecklistDialog

@@ -24,7 +24,7 @@ import {
   takeSnapshot,
 } from '@web-stories-wp/e2e-test-utils';
 
-describe('Story Details Modal', () => {
+describe('Story Details Modal - Admin User', () => {
   const openStoryDetailsModal = async () => {
     await expect(page).toClick('button', { text: 'Publish' });
     await expect(page).toMatchElement('div[aria-label="Story details"]');
@@ -35,7 +35,7 @@ describe('Story Details Modal', () => {
   });
 
   describe('Main Details', () => {
-    it('should allow Title update', async () => {
+    it('should allow title update', async () => {
       await expect(page).toMatchElement('textarea[placeholder="Add title"]');
 
       await page.type(

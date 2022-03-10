@@ -50,6 +50,12 @@ describe('Pending Stories', () => {
     });
 
     await expect(page).toClick('button', { text: 'Submit for review' });
+    // Contributor is now in story details modal
+    await expect(page).toMatchElement('div[aria-label="Story details"]');
+    await expect(page).toClick('div[aria-label="Story details"] button', {
+      text: 'Submit for review',
+    });
+    // Modal closes
     await expect(page).toMatchElement('button:not([disabled]', {
       text: 'Submit for review',
     });

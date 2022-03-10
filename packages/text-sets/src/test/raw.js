@@ -52,6 +52,7 @@ describe('Raw text set files', () => {
 
       for (const { elements } of data.pages) {
         for (const element of elements) {
+          // eslint-disable-next-line jest/no-conditional-in-test
           if (!['text'].includes(element?.type)) {
             continue;
           }
