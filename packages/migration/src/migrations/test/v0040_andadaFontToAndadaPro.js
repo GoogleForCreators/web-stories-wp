@@ -95,7 +95,6 @@ describe('andadaFontToAndadaPro', () => {
                   [1, 800],
                 ],
                 service: 'fonts.google.com',
-                id: 'Andada Pro',
                 metrics: {
                   upm: 1000,
                   asc: 942,
@@ -113,8 +112,6 @@ describe('andadaFontToAndadaPro', () => {
                   hDes: -235,
                   lGap: 0,
                 },
-                name: 'Andada Pro',
-                value: 'Andada Pro',
               },
             },
           ],

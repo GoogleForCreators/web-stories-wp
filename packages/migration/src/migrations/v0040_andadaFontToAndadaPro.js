@@ -63,9 +63,6 @@ const andadaPro = {
     hDes: -235,
     lGap: 0,
   },
-  id: 'Andada Pro',
-  name: 'Andada Pro',
-  value: 'Andada Pro',
 };
 
 function updateElement(element) {
