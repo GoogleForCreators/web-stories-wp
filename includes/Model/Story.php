@@ -148,7 +148,14 @@ class Story {
 	 * @param int|null|WP_Post $_post Post id or Post object.
 	 */
 	public function load_from_post( $_post ): bool {
-		$this->publisher_name = get_bloginfo( 'name' );
+		/**
+		 * Filters the publisher's name
+		 *
+		 * @since 1.7.0
+		 *
+		 * @param string $name Publisher Name.
+		 */
+		$this->publisher_name = apply_filters( 'web_stories_publisher_name', get_bloginfo( 'name' ) );
 
 		$post = get_post( $_post );
 		if ( ! $post instanceof WP_Post || Story_Post_Type::POST_TYPE_SLUG !== $post->post_type ) {
@@ -289,16 +296,7 @@ class Story {
 	 * @return string Publisher Name.
 	 */
 	public function get_publisher_name(): string {
-		/**
-		 * Filters the publisher's name
-		 *
-		 * @since 1.7.0
-		 *
-		 * @param string $name Publisher Name.
-		 */
-		$this->publisher_name = apply_filters( 'web_stories_publisher_name', $this->publisher_name );
-
-		return esc_attr( $this->publisher_name );
+		return $this->publisher_name;
 	}
 
 	/**

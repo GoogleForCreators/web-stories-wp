@@ -353,6 +353,11 @@ class Editor extends Service_Base implements HasRequirements {
 		$story = new Story();
 		$story->load_from_post( $post );
 
+		// Explicitly setting these flags which became the default in PHP 8.1.
+		// Needed for correct single quotes in the editor & output.
+		// See https://github.com/GoogleForCreators/web-stories-wp/issues/10809.
+		$publisher_name = html_entity_decode( $story->get_publisher_name(), ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401 );
+
 		$settings = [
 			'autoSaveInterval'        => \defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 			'isRTL'                   => is_rtl(),
@@ -392,7 +397,7 @@ class Editor extends Service_Base implements HasRequirements {
 				'storyLocking'   => rest_url( sprintf( '%s/%s/lock/', $this->story_post_type->get_rest_url(), $story_id ) ),
 			],
 			'metadata'                => [
-				'publisher' => $story->get_publisher_name(),
+				'publisher' => $publisher_name,
 			],
 			'postLock'                => [
 				'interval'         => $time_window,
