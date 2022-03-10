@@ -18,26 +18,22 @@
  */
 import { default as createVanillaStore } from 'zustand/vanilla';
 import create from 'zustand';
+import shallow from 'zustand/shallow';
 
 const store = createVanillaStore((set, get) => ({
   addSlice: (name, slice) => set({ [name]: slice(set, get) }),
 }));
 
-const { getState, setState, subscribe, destroy } = store;
+const { getState, subscribe, destroy } = store;
 
 const addSlice = (name, slice) => getState().addSlice(name, slice);
-const select = (sliceName) => getState()[sliceName].state;
+const select = (sliceName) =>
+  sliceName ? getState()[sliceName].state : getState();
 const dispatch = (sliceName) => getState()[sliceName].actions;
 
 const useStore = create(store);
-
-export {
-  select,
-  dispatch,
-  addSlice,
-  getState,
-  setState,
-  subscribe,
-  destroy,
-  useStore,
+const useSelect = (sliceName, callback, equalityFn = shallow) => {
+  return useStore((data) => callback(data[sliceName].state), equalityFn);
 };
+
+export { select, dispatch, addSlice, subscribe, destroy, useSelect };
