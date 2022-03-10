@@ -92,6 +92,7 @@ const Datalist = forwardRef(function Datalist(
     highlightStylesOverride,
     hasDropDownBorder = false,
     zIndex,
+    listStyleOverrides,
     containerStyleOverrides,
     ...rest
   },
@@ -145,6 +146,7 @@ const Datalist = forwardRef(function Datalist(
       hasSearch={hasSearch}
       isInline={isInline}
       hasDropDownBorder={hasDropDownBorder}
+      containerStyleOverrides={containerStyleOverrides}
       renderContents={({
         searchKeyword,
         setIsExpanded,
@@ -169,7 +171,7 @@ const Datalist = forwardRef(function Datalist(
           searchResultsLabel={searchResultsLabel}
           focusSearch={focusSearch}
           renderer={renderer}
-          containerStyleOverrides={containerStyleOverrides}
+          listStyleOverrides={listStyleOverrides}
         />
       )}
     />
@@ -240,6 +242,7 @@ Datalist.propTypes = {
   hasDropDownBorder: PropTypes.bool,
   zIndex: PropTypes.number,
   containerStyleOverrides: PropTypes.array,
+  listStyleOverrides: PropTypes.array,
 };
 
 export default Datalist;

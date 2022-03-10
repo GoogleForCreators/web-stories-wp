@@ -64,6 +64,8 @@ const Container = styled.div`
     css`
       border: 1px solid ${theme.colors.border.defaultNormal};
     `}
+
+   ${({ $containerStyleOverrides }) => $containerStyleOverrides};
 `;
 
 const OptionsContainer = forwardRef(function OptionsContainer(
@@ -75,6 +77,7 @@ const OptionsContainer = forwardRef(function OptionsContainer(
     renderContents,
     isInline,
     hasDropDownBorder = false,
+    containerStyleOverrides,
   },
   inputRef
 ) {
@@ -116,6 +119,7 @@ const OptionsContainer = forwardRef(function OptionsContainer(
       ref={ref}
       isInline={isInline}
       hasDropDownBorder={hasDropDownBorder}
+      $containerStyleOverrides={containerStyleOverrides}
     >
       {hasSearch && (
         <SearchInput

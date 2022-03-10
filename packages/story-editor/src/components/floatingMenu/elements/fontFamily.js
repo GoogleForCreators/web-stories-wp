@@ -29,12 +29,19 @@ const StyledFontPicker = styled(StoryFontPicker)`
   width: 164px;
 `;
 
-const containerStyleOverrides = css`
-  max-height: 255px;
+const listStyleOverrides = css`
+  max-height: 200px;
 `;
-
+const containerStyleOverrides = css`
+  border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
+`;
 function FontFamily() {
-  return <StyledFontPicker containerStyleOverrides={containerStyleOverrides} />;
+  return (
+    <StyledFontPicker
+      listStyleOverrides={listStyleOverrides}
+      containerStyleOverrides={containerStyleOverrides}
+    />
+  );
 }
 
 export default FontFamily;

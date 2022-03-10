@@ -39,7 +39,7 @@ export const List = styled.div`
 
   ${themeHelpers.focusableOutlineCSS}
 
-  ${({ $containerStyleOverrides }) => $containerStyleOverrides}
+  ${({ $listStyleOverrides }) => $listStyleOverrides}
 `;
 
 export const Group = styled.ul`

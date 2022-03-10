@@ -39,8 +39,8 @@ const FontPicker = forwardRef(function FontPicker(
     currentValue,
     highlightStylesOverride,
     showDropdownLabel,
+    listStyleOverrides,
     containerStyleOverrides,
-    className,
   },
   ref
 ) {
@@ -165,8 +165,8 @@ const FontPicker = forwardRef(function FontPicker(
       renderer={forwardRef(renderer)}
       disabled={!fonts?.length}
       dropDownLabel={showDropdownLabel ? __('Font', 'web-stories') : null}
+      listStyleOverrides={listStyleOverrides}
       containerStyleOverrides={containerStyleOverrides}
-      className={className}
     />
   );
 });
@@ -176,6 +176,7 @@ FontPicker.propTypes = {
   currentValue: PropTypes.string.isRequired,
   highlightStylesOverride: PropTypes.array,
   showDropdownLabel: PropTypes.bool,
+  listStyleOverrides: PropTypes.array,
   containerStyleOverrides: PropTypes.array,
 };
 
