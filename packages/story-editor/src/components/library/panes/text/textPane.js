@@ -85,8 +85,8 @@ function TextPane(props) {
   const { getPosition, insertPreset } = useInsertPreset({
     shouldUseSmartColor,
   });
-  const generateDefferedCurrentPageCanvas = usePageCanvas(
-    ({ actions }) => actions.generateDefferedCurrentPageCanvas
+  const generateDeferredCurrentPageCanvas = usePageCanvas(
+    ({ actions }) => actions.generateDeferredCurrentPageCanvas
   );
 
   useResizeEffect(
@@ -128,7 +128,7 @@ function TextPane(props) {
       </SmartColorToggle>
       <SectionContainer
         onPointerOver={() =>
-          shouldUseSmartColor && generateDefferedCurrentPageCanvas()
+          shouldUseSmartColor && generateDeferredCurrentPageCanvas()
         }
       >
         <GridContainer>

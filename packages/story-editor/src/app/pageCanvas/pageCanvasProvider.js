@@ -68,7 +68,7 @@ function PageCanvasProvider({ children }) {
    * @param {[string, Page]} PageTuple - a tuple containing a uid for the requested generation task & the page to generate a canvas from
    * @return {Function} a cleanup function to clear the requested canvas generation
    */
-  const generateDefferedPageCanvas = useCallback(
+  const generateDeferredPageCanvas = useCallback(
     ([taskId, page]) => {
       const cancelIdleTask = queueIdleTask([
         taskId,
@@ -83,18 +83,18 @@ function PageCanvasProvider({ children }) {
   );
 
   /**
-   * Small wrapper around `generateDefferedPageCanvas()` that just passes in the
+   * Small wrapper around `generateDeferredPageCanvas()` that just passes in the
    * current page.
    *
    * @return {void}
    */
-  const generateDefferedCurrentPageCanvas = useCallback(() => {
+  const generateDeferredCurrentPageCanvas = useCallback(() => {
     const { currentPageValue, pageCanvasMapValue } = valuesRef.current;
     const canvas = pageCanvasMapValue[currentPageValue.id];
     if (!canvas) {
-      generateDefferedPageCanvas([currentPageValue.id, currentPageValue]);
+      generateDeferredPageCanvas([currentPageValue.id, currentPageValue]);
     }
-  }, [generateDefferedPageCanvas]);
+  }, [generateDeferredPageCanvas]);
 
   /**
    * Gets or creates a canvas from the page and excludes
@@ -181,8 +181,8 @@ function PageCanvasProvider({ children }) {
         },
         actions: {
           calculateAccessibleTextColors,
-          generateDefferedPageCanvas,
-          generateDefferedCurrentPageCanvas,
+          generateDeferredPageCanvas,
+          generateDeferredCurrentPageCanvas,
         },
       }}
     >
