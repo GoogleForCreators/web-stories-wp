@@ -23,14 +23,30 @@ import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
-import { IconButton } from './shared';
+import { useStory } from '../../../app';
+import { Input, useProperties } from './shared';
 
 function LayerOpacity() {
+  const { opacity } = useProperties(['opacity']);
+  const updateSelectedElements = useStory(
+    (state) => state.actions.updateSelectedElements
+  );
+
+  const handleOpacityChange = (_, value) =>
+    updateSelectedElements({
+      properties: () => ({
+        opacity: value ?? 100,
+      }),
+    });
+
   return (
-    <IconButton
-      Icon={Icons.ColorDrop}
-      title={__('Change layer opacity', 'web-stories')}
-      onClick={() => {}}
+    <Input
+      suffix={<Icons.ColorDrop />}
+      value={opacity || 0}
+      aria-label={__('Change layer opacity', 'web-stories')}
+      onChange={handleOpacityChange}
+      min={0}
+      max={100}
     />
   );
 }

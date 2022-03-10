@@ -83,4 +83,8 @@ export class DesignMenu extends Container {
     element.label = 'Text color';
     return element;
   }
+
+  get opacity() {
+    return this.getByRole('textbox', { name: /^Change layer opacity$/ });
+  }
 }
