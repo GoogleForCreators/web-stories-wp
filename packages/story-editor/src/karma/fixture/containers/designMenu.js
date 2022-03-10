@@ -72,10 +72,8 @@ export class DesignMenu extends Container {
     return this.getByRole('menuitem', { name: 'Change text alignment' });
   }
 
-  get textAlignType() {
-    return this.textAlign
-      .querySelector('svg[data-type]')
-      .getAttribute('data-type');
+  textAlignIcon(name) {
+    return this.getByRoleIn(this.textAlign, 'img', { name });
   }
 
   textAlignOption(name) {

@@ -113,9 +113,8 @@ function TextAlign() {
     }
   };
 
-  const CurrentIcon =
-    ALIGNMENTS.find(({ value }) => value === textAlign)?.icon ||
-    Icons.AlignTextLeft;
+  const { icon: CurrentIcon, label: currentLabel } =
+    ALIGNMENTS.find(({ value }) => value === textAlign) || ALIGNMENTS[0];
 
   const handleTextAlign = (value) => () =>
     updateSelectedElements({
@@ -143,7 +142,7 @@ function TextAlign() {
         aria-label={buttonLabel}
       >
         <StyledMenuIcon title={tooltip} placement={TOOLTIP_PLACEMENT.BOTTOM}>
-          <CurrentIcon />
+          <CurrentIcon role="img" aria-label={currentLabel} />
           <Icons.ChevronDownSmall />
         </StyledMenuIcon>
       </StyledMenuButton>

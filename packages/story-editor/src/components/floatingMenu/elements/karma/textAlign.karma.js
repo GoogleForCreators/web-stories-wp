@@ -26,11 +26,7 @@ describe('Design Menu: Text alignment', () => {
   beforeEach(async () => {
     fixture = new Fixture();
     fixture.setFlags({ floatingMenu: true });
-    try {
-      await fixture.render();
-    } catch {
-      // ignore
-    }
+    await fixture.render();
 
     await fixture.collapseHelpCenter();
 
@@ -81,7 +77,8 @@ describe('Design Menu: Text alignment', () => {
       expect(await getTextAlignForSelectedElement()).toBe(value);
 
       // Check that the icon in the  matches
-      expect(fixture.editor.canvas.designMenu.textAlignType).toBe(value);
+      const icon = fixture.editor.canvas.designMenu.textAlignIcon(label);
+      expect(icon).toBeTruthy();
 
       // Click the input and check the icon in the sub menu
       await fixture.events.click(fixture.editor.canvas.designMenu.textAlign);
