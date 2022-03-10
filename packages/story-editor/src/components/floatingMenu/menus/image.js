@@ -35,8 +35,6 @@ import {
 const FloatingImageMenu = memo(function FloatingImageMenu() {
   return (
     <>
-      <Separator />
-
       <LayerOpacity />
 
       <Separator />

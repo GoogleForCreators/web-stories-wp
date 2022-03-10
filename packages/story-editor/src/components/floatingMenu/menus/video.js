@@ -38,8 +38,6 @@ import {
 const FloatingVideoMenu = memo(function FloatingVideoMenu() {
   return (
     <>
-      <Separator />
-
       <LayerOpacity />
 
       <Separator />
