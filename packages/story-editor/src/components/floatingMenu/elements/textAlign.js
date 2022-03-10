@@ -27,6 +27,7 @@ import {
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
+import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
@@ -116,10 +117,15 @@ function TextAlign() {
   const { icon: CurrentIcon, label: currentLabel } =
     ALIGNMENTS.find(({ value }) => value === textAlign) || ALIGNMENTS[0];
 
-  const handleTextAlign = (value) => () =>
+  const handleTextAlign = (value) => () => {
+    trackEvent('floating_menu', {
+      name: 'set_text_alignment',
+      element: 'text',
+    });
     updateSelectedElements({
       properties: { textAlign: value },
     });
+  };
 
   const handleCloseMenu = () => {
     setMenuOpen(false);
