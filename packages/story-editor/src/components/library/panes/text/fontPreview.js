@@ -51,7 +51,9 @@ import useRovingTabIndex from '../../../../utils/useRovingTabIndex';
 import { areAllType, getTextInlineStyles } from '../../../../utils/presetUtils';
 import objectWithout from '../../../../utils/objectWithout';
 import getUpdatedSizeAndPosition from '../../../../utils/getUpdatedSizeAndPosition';
+import { focusStyle } from '../../../panels/shared';
 
+// If text is selected, there's no `+` icon displayed and we display the focus style on the button directly.
 const Preview = styled.button`
   position: relative;
   display: flex;
@@ -64,10 +66,11 @@ const Preview = styled.button`
   border: none;
   cursor: pointer;
   text-align: left;
-  outline: none;
+
+  ${({ isTextSelected }) => (isTextSelected ? focusStyle : 'outline: none;')}
 
   &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} [role='presentation'],
-  &[data-focus-visible-added] [role='presentation'] {
+    &[data-focus-visible-added] [role='presentation'] {
     ${({ theme }) =>
       themeHelpers.focusCSS(
         theme.colors.border.focus,
@@ -117,12 +120,14 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
 
   const { calculateAccessibleTextColors } = usePageAsCanvas();
 
-  const { isText, updateSelectedElements } = useStory(({ state, actions }) => ({
-    isText: Boolean(
-      state.selectedElements && areAllType('text', state.selectedElements)
-    ),
-    updateSelectedElements: actions.updateSelectedElements,
-  }));
+  const { isTextSelected, updateSelectedElements } = useStory(
+    ({ state, actions }) => ({
+      isTextSelected: Boolean(
+        state.selectedElements && areAllType('text', state.selectedElements)
+      ),
+      updateSelectedElements: actions.updateSelectedElements,
+    })
+  );
 
   const presetDataRef = useRef({});
   const buttonRef = useRef(null);
@@ -191,7 +196,7 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
 
   const onClick = useCallback(() => {
     // If we have only text(s) selected, we apply the preset instead of inserting.
-    if (isText) {
+    if (isTextSelected) {
       updateSelectedElements({
         properties: (oldElement) => {
           const newContent = applyStyleOnContent(
@@ -235,7 +240,7 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
     insertPreset,
     element,
     title,
-    isText,
+    isTextSelected,
     updateSelectedElements,
     applyStyleOnContent,
   ]);
@@ -277,8 +282,9 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
       onPointerLeave={makeInactive}
       onBlur={makeInactive}
       tabIndex={index === 0 ? 0 : -1}
+      isTextSelected={isTextSelected}
       aria-label={
-        isText
+        isTextSelected
           ? sprintf(
               /* translators: %s: preset name */
               __('Apply preset: %s', 'web-stories'),
@@ -288,7 +294,7 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
       }
     >
       {getTextDisplay()}
-      {active && !isText && <InsertionOverlay />}
+      {active && !isTextSelected && <InsertionOverlay />}
       <LibraryMoveable
         cloneElement={DragContainer}
         cloneProps={{
