@@ -34,7 +34,7 @@ const formattedStoriesArray = [
     modifiedGmt: '2020-05-21T23:25:51.000Z',
     created: toUTCDate('2020-05-21T23:25:51.000Z'),
     createdGmt: '2020-05-21T23:25:51.000Z',
-    featuredMediaUrl: 'http://placekitten.com/640/853',
+    featuredMediaUrl: 'http://localhost:9876/__static__/featured-media-1.png',
     tags: [],
     categories: [],
     author: {
@@ -59,7 +59,7 @@ const formattedStoriesArray = [
     modifiedGmt: '2020-05-21T23:25:22.000Z',
     created: toUTCDate('2020-05-21T23:25:22.000Z'),
     createdGmt: '2020-05-21T23:25:22.000Z',
-    featuredMediaUrl: 'http://placekitten.com/640/853',
+    featuredMediaUrl: 'http://localhost:9876/__static__/featured-media-2.png',
     tags: [],
     categories: [],
     author: {
@@ -84,7 +84,7 @@ const formattedStoriesArray = [
     modifiedGmt: '2020-05-21T23:24:47.000Z',
     created: toUTCDate('2020-05-21T23:24:47.000Z'),
     createdGmt: '2020-05-21T23:24:47.000Z',
-    featuredMediaUrl: 'http://placekitten.com/640/853',
+    featuredMediaUrl: 'http://localhost:9876/__static__/featured-media-3.png',
     tags: [],
     categories: [],
     author: {
@@ -109,7 +109,7 @@ const formattedStoriesArray = [
     modifiedGmt: '2020-05-21T23:24:06.000Z',
     created: toUTCDate('2020-05-21T23:24:06.000Z'),
     createdGmt: '2020-05-21T23:24:06.000Z',
-    featuredMediaUrl: 'http://placekitten.com/640/853',
+    featuredMediaUrl: 'http://localhost:9876/__static__/featured-media-1.png',
     tags: [],
     categories: [],
     author: {
