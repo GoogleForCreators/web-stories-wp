@@ -33,9 +33,13 @@ import { SELECTED_ELEMENT_TYPES } from './constants';
 import FloatingMenu from './menu';
 
 function FloatingMenuLayer() {
-  const { setMoveableMount } = useCanvas(
-    ({ actions: { setMoveableMount } }) => ({ setMoveableMount })
+  const { setMoveableMount, isEyedropperActive } = useCanvas(
+    ({ actions, state }) => ({
+      setMoveableMount: actions.setMoveableMount,
+      isEyedropperActive: state.isEyedropperActive,
+    })
   );
+
   const { workspaceWidth, workspaceHeight } = useLayout(
     ({ state: { workspaceWidth, workspaceHeight } }) => ({
       workspaceWidth,
@@ -72,6 +76,15 @@ function FloatingMenuLayer() {
     setMoveableMount(() => setMoveable);
     return () => setMoveableMount(null);
   }, [setMoveableMount]);
+
+  // When eyedropper is active, always hide the floating menu, too.
+  useEffect(() => {
+    if (isEyedropperActive) {
+      setDismissed(true);
+    } else {
+      setDismissed(false);
+    }
+  }, [isEyedropperActive]);
 
   // Whenever the workspace resizes, update size
   useEffect(() => {

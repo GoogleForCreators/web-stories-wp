@@ -18,11 +18,14 @@
  * External dependencies
  */
 import { __ } from '@googleforcreators/i18n';
+import { useCallback } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
+import getUpdatedSizeAndPosition from '../../../utils/getUpdatedSizeAndPosition';
+import updateProperties from '../../inspector/design/updateProperties';
 import { focusStyle, inputContainerStyleOverride } from '../../panels/shared';
 import { MIN_MAX } from '../../panels/design/textStyle/font';
 // TODO: https://github.com/GoogleForCreators/web-stories-wp/issues/10799
@@ -36,18 +39,31 @@ function FontSize() {
     })
   );
 
-  const handleChange = (value) =>
-    updateSelectedElements({
-      properties: {
-        fontSize: value,
-      },
-    });
+  const pushUpdate = useCallback(
+    (update) => {
+      updateSelectedElements({
+        properties: (element) => {
+          const updates = updateProperties(element, update, true);
+          const sizeUpdates = getUpdatedSizeAndPosition({
+            ...element,
+            ...updates,
+          });
+          return {
+            ...updates,
+            ...sizeUpdates,
+          };
+        },
+      });
+    },
+    [updateSelectedElements]
+  );
+
   return (
     <Input
       aria-label={__('Font size', 'web-stories')}
       isFloat
       value={fontSize}
-      onChange={(evt, value) => handleChange(value)}
+      onChange={(evt, value) => pushUpdate({ fontSize: value })}
       min={MIN_MAX.FONT_SIZE.MIN}
       max={MIN_MAX.FONT_SIZE.MAX}
       placeholder={fontSize}
