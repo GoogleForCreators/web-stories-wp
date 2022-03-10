@@ -195,8 +195,7 @@ describe('raw template files', () => {
       expect(isValid(new Date(templateData.creationDate))).toBe(true);
     });
 
-    // eslint-disable-next-line jest/no-disabled-tests -- TODO(#10829): Replace Andada
-    it.skip('should contain fonts from global fonts list', () => {
+    it('should contain fonts from global fonts list', () => {
       const fonts = JSON.parse(
         readFileSync(
           resolve(process.cwd(), 'packages/fonts/src/fonts.json'),
