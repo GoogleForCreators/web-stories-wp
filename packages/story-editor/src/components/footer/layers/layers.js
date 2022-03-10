@@ -89,7 +89,7 @@ function Layers() {
       </Popup>
       <Button
         aria-haspopup
-        ariaLabel={__('Layers', 'web-stories')}
+        aria-label={__('Layers', 'web-stories')}
         onClick={() => setIsOpen((state) => !state)}
       >
         <LabelText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>

@@ -32,8 +32,8 @@ export class Layers extends AbstractPanel {
     super(node, path);
   }
 
-  get panelCollapseButton() {
-    return this.getByRole('button', { name: /^Layers$/, hidden: true });
+  get togglePanel() {
+    return this._node;
   }
 
   get panelBadge() {
@@ -46,10 +46,6 @@ export class Layers extends AbstractPanel {
 
   get layers() {
     return getAllByTestId(this.layersList, 'layer-option');
-  }
-
-  get resizeHandle() {
-    return getByLabelText(this.node, /Set panel height/i);
   }
 
   getLayerByInnerText(text) {
