@@ -28,28 +28,51 @@ function reducePage({ elements, ...rest }) {
   };
 }
 
+const andadaPro = {
+  family: 'Andada Pro',
+  fallbacks: ['serif'],
+  weights: [400, 500, 600, 700, 800],
+  styles: ['regular', 'italic'],
+  variants: [
+    [0, 400],
+    [0, 500],
+    [0, 600],
+    [0, 700],
+    [0, 800],
+    [1, 400],
+    [1, 500],
+    [1, 600],
+    [1, 700],
+    [1, 800],
+  ],
+  service: 'fonts.google.com',
+  metrics: {
+    upm: 1000,
+    asc: 942,
+    des: -235,
+    tAsc: 942,
+    tDes: -235,
+    tLGap: 0,
+    wAsc: 1100,
+    wDes: 390,
+    xH: 494,
+    capH: 705,
+    yMin: -382,
+    yMax: 1068,
+    hAsc: 942,
+    hDes: -235,
+    lGap: 0,
+  },
+  id: 'Andada Pro',
+  name: 'Andada Pro',
+  value: 'Andada Pro',
+};
+
 function updateElement(element) {
   if (element.type === 'text' && element?.font?.family === 'Andada') {
-    element.font.id = 'Andada Pro';
-    element.font.family = 'Andada Pro';
-    element.font.name = 'Andada Pro';
-    element.font.value = 'Andada Pro';
-    element.font.metrics = {
-      upm: 1000,
-      asc: 942,
-      des: -235,
-      tAsc: 942,
-      tDes: -235,
-      tLGap: 0,
-      wAsc: 1100,
-      wDes: 390,
-      xH: 494,
-      capH: 705,
-      yMin: -382,
-      yMax: 1068,
-      hAsc: 942,
-      hDes: -235,
-      lGap: 0,
+    element.font = {
+      ...element.font,
+      ...andadaPro,
     };
   }
   return element;
