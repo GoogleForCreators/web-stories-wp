@@ -26,7 +26,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { useStoryTriggerListener, STORY_EVENTS } from '../../app/story';
-import { Z_INDEX_FOOTER_POPUP } from '../../constants/zIndex';
+import { Z_INDEX_FOOTER } from '../../constants/zIndex';
 import DirectionAware from '../directionAware';
 import { useHelpCenter } from '../../app/helpCenter';
 import Popup from '../secondaryPopup';
@@ -37,7 +37,7 @@ import { Toggle } from './toggle';
 import { forceFocusCompanion } from './utils';
 
 const Wrapper = styled.div`
-  z-index: ${Z_INDEX_FOOTER_POPUP};
+  z-index: ${Z_INDEX_FOOTER};
 `;
 
 export const HelpCenter = ({ components }) => {

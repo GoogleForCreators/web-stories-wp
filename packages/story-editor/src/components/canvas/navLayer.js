@@ -28,6 +28,7 @@ import Footer from '../footer';
 import DirectionAware from '../directionAware';
 import PageSideMenu from './pageSideMenu';
 import { FooterArea, HeadArea, Layer, PageMenuArea } from './layout';
+import { Z_INDEX_HEAD_AREA } from '../../constants/zIndex';
 
 function NavLayer({ header, footer }) {
   return (
@@ -35,7 +36,9 @@ function NavLayer({ header, footer }) {
       hasChecklist={Boolean(footer?.secondaryMenu?.checklist)}
     >
       <Layer pointerEvents="none" onMouseDown={(evt) => evt.stopPropagation()}>
-        <HeadArea pointerEvents="initial">{header}</HeadArea>
+        <HeadArea pointerEvents="initial" zIndex={Z_INDEX_HEAD_AREA}>
+          {header}
+        </HeadArea>
         <DirectionAware>
           <PageMenuArea>
             <PageSideMenu />

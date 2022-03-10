@@ -17,6 +17,9 @@
 // Bring element in front of story details modal
 export const Z_INDEX_STORY_DETAILS = 10;
 
+// Lift the head area from under the canvas, only impacts Karma.
+export const Z_INDEX_HEAD_AREA = 3;
+
 // Floating menu lays on top of side menu
 export const Z_INDEX_CANVAS_SIDE_MENU = 3;
 
@@ -29,4 +32,4 @@ export const Z_INDEX_EDIT_LAYER = Z_INDEX_FLOATING_MENU + 1;
 // sibling inherits parent z-index of Z_INDEX_EDIT_LAYER
 // so popups nested in footer need to be placed above that
 // while still retaining position in the DOM for focus purposes
-export const Z_INDEX_FOOTER_POPUP = Z_INDEX_EDIT_LAYER + 1;
+export const Z_INDEX_FOOTER = Z_INDEX_EDIT_LAYER + 1;

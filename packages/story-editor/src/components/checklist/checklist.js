@@ -29,7 +29,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import { Z_INDEX_FOOTER_POPUP } from '../../constants/zIndex';
+import { Z_INDEX_FOOTER } from '../../constants/zIndex';
 import DirectionAware from '../directionAware';
 import Popup, { NavigationWrapper, TopNavigation } from '../secondaryPopup';
 import { Tablist } from '../tablist';
@@ -55,7 +55,7 @@ import { useCheckpoint } from './checkpointContext';
 import { getTabPanelMaxHeight } from './styles';
 
 const Wrapper = styled.div`
-  z-index: ${Z_INDEX_FOOTER_POPUP};
+  z-index: ${Z_INDEX_FOOTER};
 `;
 
 // TODO make this responsive so that title bar is never covered by popup.

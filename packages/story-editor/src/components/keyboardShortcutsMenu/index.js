@@ -28,7 +28,7 @@ import { useEffect, useFocusOut, useRef } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import { Z_INDEX_FOOTER_POPUP } from '../../constants/zIndex';
+import { Z_INDEX_FOOTER } from '../../constants/zIndex';
 import { isKeyboardUser } from '../../utils/keyboardOnlyOutline';
 import Popup from '../secondaryPopup';
 import { ToggleButton } from '../toggleButton';
@@ -46,7 +46,7 @@ const StyledToggleButton = styled(ToggleButton)`
 `;
 
 const Wrapper = styled.div`
-  z-index: ${Z_INDEX_FOOTER_POPUP};
+  z-index: ${Z_INDEX_FOOTER};
 `;
 const MainIcon = styled(Icons.Keyboard)`
   height: 32px;
