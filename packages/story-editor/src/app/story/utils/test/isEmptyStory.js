@@ -59,7 +59,7 @@ describe('isEmptyStory', () => {
     const storyWithAttachment = [createPage()];
     const testUrl = 'https://testurl.com';
 
-    storyWithAttachment[0].pageAttachemnt.push({ url: testUrl });
+    storyWithAttachment[0].pageAttachment = { url: testUrl };
     expect(isEmptyStory(storyWithAttachment)).toBeFalse();
   });
 });
