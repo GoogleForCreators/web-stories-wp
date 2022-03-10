@@ -57,8 +57,9 @@ function ToggleBold() {
     <IconButton
       isToggled={isBold}
       Icon={Icons.LetterBBold}
-      title={__('Toggle bold text', 'web-stories')}
+      title={__('Toggle bold', 'web-stories')}
       onClick={() => handleClickBold(!isBold)}
+      tabIndex="0"
     />
   );
 }

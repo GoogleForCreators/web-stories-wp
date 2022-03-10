@@ -57,8 +57,9 @@ function ToggleItalics() {
     <IconButton
       isToggled={isItalic}
       Icon={Icons.LetterIItalic}
-      title={__('Toggle italic text', 'web-stories')}
+      title={__('Toggle italic', 'web-stories')}
       onClick={handleClickItalic}
+      tabIndex="0"
     />
   );
 }

@@ -57,8 +57,9 @@ function ToggleUnderline() {
     <IconButton
       isToggled={isUnderline}
       Icon={Icons.LetterUUnderline}
-      title={__('Toggle underlined text', 'web-stories')}
+      title={__('Toggle underline', 'web-stories')}
       onClick={handleClickUnderline}
+      tabIndex="0"
     />
   );
 }

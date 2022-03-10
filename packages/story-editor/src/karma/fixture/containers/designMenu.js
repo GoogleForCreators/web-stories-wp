@@ -83,4 +83,28 @@ export class DesignMenu extends Container {
     element.label = 'Text color';
     return element;
   }
+
+  get bold() {
+    return this._get(
+      this.getByRole('menuitem', { name: /Toggle bold/ }),
+      'toggleBold',
+      ToggleButton
+    );
+  }
+
+  get italic() {
+    return this._get(
+      this.getByRole('menuitem', { name: /Toggle italic/ }),
+      'toggleItalic',
+      ToggleButton
+    );
+  }
+
+  get underline() {
+    return this._get(
+      this.getByRole('menuitem', { name: /Toggle underline/ }),
+      'toggleUnderline',
+      ToggleButton
+    );
+  }
 }
