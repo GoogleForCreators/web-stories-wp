@@ -41,6 +41,7 @@ const FontPicker = forwardRef(function FontPicker(
     showDropdownLabel,
     listStyleOverrides,
     containerStyleOverrides,
+    className,
   },
   ref
 ) {
@@ -167,6 +168,7 @@ const FontPicker = forwardRef(function FontPicker(
       dropDownLabel={showDropdownLabel ? __('Font', 'web-stories') : null}
       listStyleOverrides={listStyleOverrides}
       containerStyleOverrides={containerStyleOverrides}
+      className={className}
     />
   );
 });
