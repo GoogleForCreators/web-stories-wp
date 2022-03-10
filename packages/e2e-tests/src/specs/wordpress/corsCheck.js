@@ -36,9 +36,11 @@ describe('CORS check', () => {
   let removeResourceErrorMessage;
 
   beforeAll(() => {
+    // Ignore CORS error, this is present in the test by design. 
     removeCORSErrorMessage = addAllowedErrorMessage(
       'has been blocked by CORS policy'
     );
+    // Ignore resource failing to load. This is only present because of the CORS error.
     removeResourceErrorMessage = addAllowedErrorMessage(
       'Failed to load resource'
     );
