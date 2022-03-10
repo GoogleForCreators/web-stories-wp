@@ -102,7 +102,6 @@ function PresetPanel() {
     setFontWeight,
     setLetterSpacing,
     toggleItalic,
-    toggleBold,
     toggleUnderline,
   } = getHTMLFormatters();
 
@@ -136,15 +135,13 @@ function PresetPanel() {
 
   const addStyledText = (preset) => {
     // Get all the inline styles that saved styles support.
-    const { color, fontWeight, isItalic, isUnderline, letterSpacing, isBold } =
-      preset;
+    const { color, fontWeight, isItalic, isUnderline, letterSpacing } = preset;
     let content = DEFAULT_PRESET.content;
     content = setColor(content, color);
     content = setFontWeight(content, fontWeight);
     content = toggleItalic(content, isItalic);
     content = toggleUnderline(content, isUnderline);
     content = setLetterSpacing(content, letterSpacing);
-    content = toggleBold(content, isBold);
 
     insertElement(TYPE, {
       ...DEFAULT_PRESET,

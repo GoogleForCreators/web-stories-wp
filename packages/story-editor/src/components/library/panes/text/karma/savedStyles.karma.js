@@ -81,6 +81,9 @@ describe('Library: Saved Styles', () => {
       const [lastAdded] = await getSelection();
       expect(lastAdded.type).toBe('text');
       expect(lastAdded.fontSize).toBe(36);
+      expect(lastAdded.content).toBe(
+        '<span style="font-weight: 700">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>'
+      );
 
       // Select background for being able to insert another text.
       await fixture.events.mouse.clickOn(

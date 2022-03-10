@@ -122,9 +122,7 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
 
   const { isTextSelected, updateSelectedElements } = useStory(
     ({ state, actions }) => ({
-      isTextSelected: Boolean(
-        state.selectedElements && areAllType('text', state.selectedElements)
-      ),
+      isTextSelected: areAllType('text', state.selectedElements),
       updateSelectedElements: actions.updateSelectedElements,
     })
   );
