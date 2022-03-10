@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { useCallback, useState } from '@googleforcreators/react';
+import { useCallback, useState, useMemo } from '@googleforcreators/react';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import {
   getImageFromVideo,
@@ -25,6 +25,7 @@ import {
   getVideoLength,
   preloadVideo,
   hasVideoGotAudio,
+  getExtensionsFromMimeType,
 } from '@googleforcreators/media';
 import { v4 as uuidv4 } from 'uuid';
 import { trackError, trackEvent } from '@googleforcreators/tracking';
@@ -69,8 +70,26 @@ function useInsert({ link, setLink, setErrorMsg, onClose }) {
   }));
   const {
     capabilities: { hasUploadMediaAction },
-    allowedFileTypes,
+    allowedMimeTypes: {
+      image: allowedImageMimeTypes,
+      vector: allowedVectorMimeTypes,
+      video: allowedVideoMimeTypes,
+    },
   } = useConfig();
+
+  const allowedMimeTypes = useMemo(
+    () => [
+      ...allowedImageMimeTypes,
+      ...allowedVectorMimeTypes,
+      ...allowedVideoMimeTypes,
+    ],
+    [allowedImageMimeTypes, allowedVectorMimeTypes, allowedVideoMimeTypes]
+  );
+  const allowedFileTypes = useMemo(
+    () =>
+      allowedMimeTypes.map((type) => getExtensionsFromMimeType(type)).flat(),
+    [allowedMimeTypes]
+  );
   const {
     actions: { getHotlinkInfo },
   } = useAPI();

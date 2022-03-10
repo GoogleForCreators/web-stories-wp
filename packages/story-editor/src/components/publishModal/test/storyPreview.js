@@ -38,7 +38,6 @@ describe('publishModal/storyPreview', () => {
 
   const view = (props) => {
     const {
-      allowedImageFileTypes = [],
       allowedImageMimeTypes = [],
       featuredMedia = '',
       hasUploadMediaAction = false,
@@ -50,8 +49,7 @@ describe('publishModal/storyPreview', () => {
     return renderWithTheme(
       <ConfigContext.Provider
         value={{
-          allowedImageFileTypes,
-          allowedImageMimeTypes,
+          allowedMimeTypes: { image: allowedImageMimeTypes },
           metadata: {
             publisher: publisher,
           },
