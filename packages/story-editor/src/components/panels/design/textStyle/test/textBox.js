@@ -54,7 +54,13 @@ jest.mock('../../../../form/color/color', () => {
 function Wrapper({ children }) {
   const storyContextValue = {
     state: {
-      selectedElements: [],
+      selectedElements: [
+        {
+          font: {
+            family: 'ABeeZee',
+          },
+        },
+      ],
       story: {
         globalStoryStyles: {
           ...{ colors: [], textStyles: [] },

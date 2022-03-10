@@ -226,6 +226,20 @@ class Editor extends DependencyInjectedTestCase {
 	}
 
 	/**
+	 * @covers ::get_editor_settings
+	 */
+	public function test_get_editor_settings_passes_publisher_name_without_quotes(): void {
+		$blogname = get_option( 'blogname' );
+		update_option( 'blogname', "S'mores" );
+
+		$results = $this->instance->get_editor_settings();
+
+		update_option( 'blogname', $blogname );
+
+		$this->assertSame( "S'mores", $results['metadata']['publisher'] );
+	}
+
+	/**
 	 * @covers ::setup_lock
 	 */
 	public function test_setup_lock_admin(): void {

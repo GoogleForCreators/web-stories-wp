@@ -19,6 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
+import { getExtensionsFromMimeType } from '@googleforcreators/media';
 import { useCallback, useMemo } from '@googleforcreators/react';
 import styled from 'styled-components';
 
@@ -73,10 +74,17 @@ function VideoAccessibilityPanel({ selectedElements, pushUpdate }) {
   const rawPoster = getCommonValue(selectedElements, 'poster');
   const poster = getCommonValue(selectedElements, 'poster', resource.poster);
   const {
-    allowedImageMimeTypes,
-    allowedImageFileTypes,
+    allowedMimeTypes: { image: allowedImageMimeTypes },
     capabilities: { hasUploadMediaAction },
   } = useConfig();
+
+  const allowedImageFileTypes = useMemo(
+    () =>
+      allowedImageMimeTypes
+        .map((type) => getExtensionsFromMimeType(type))
+        .flat(),
+    [allowedImageMimeTypes]
+  );
 
   const handleChangePoster = useCallback(
     /**

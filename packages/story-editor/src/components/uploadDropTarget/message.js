@@ -17,10 +17,11 @@
 /**
  * External dependencies
  */
+import { getExtensionsFromMimeType } from '@googleforcreators/media';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { memo } from '@googleforcreators/react';
+import { memo, useMemo } from '@googleforcreators/react';
 import {
   Icons,
   Text as DefaultText,
@@ -62,7 +63,27 @@ const Icon = styled(Icons.ArrowCloud)`
 `;
 
 function UploadDropTargetMessage({ message, ...rest }) {
-  const { allowedFileTypes } = useConfig();
+  const {
+    allowedMimeTypes: {
+      image: allowedImageMimeTypes,
+      vector: allowedVectorMimeTypes,
+      video: allowedVideoMimeTypes,
+    },
+  } = useConfig();
+
+  const allowedMimeTypes = useMemo(
+    () => [
+      ...allowedImageMimeTypes,
+      ...allowedVectorMimeTypes,
+      ...allowedVideoMimeTypes,
+    ],
+    [allowedImageMimeTypes, allowedVideoMimeTypes, allowedVectorMimeTypes]
+  );
+  const allowedFileTypes = useMemo(
+    () =>
+      allowedMimeTypes.map((type) => getExtensionsFromMimeType(type)).flat(),
+    [allowedMimeTypes]
+  );
 
   let description = __('No file types are currently supported.', 'web-stories');
 
