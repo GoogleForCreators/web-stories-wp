@@ -101,8 +101,8 @@ describe('publishModal/storyPreview', () => {
   it('should have no accessibility issues', async () => {
     const { container } = view({
       storyTitle: 'Great books to read',
-      featuredMedia: 'http://placekitten.com/230/342',
-      publisherLogo: 'http://placekitten.com/158/96',
+      featuredMedia: 'http://test.com/imageurl',
+      publisherLogo: 'http://test.com/imageurl',
       publisher: 'My Site Title',
     });
 
@@ -125,14 +125,14 @@ describe('publishModal/storyPreview', () => {
   });
 
   it('should render the featured media image when present', () => {
-    view({ featuredMedia: 'http://placekitten.com/230/342' });
+    view({ featuredMedia: 'http://test.com/imageurl' });
     const featuredMedia = screen.getByTestId('story_preview_featured_media');
 
     expect(featuredMedia).toBeInTheDocument();
   });
 
   it('should render the publisher logo when present', () => {
-    view({ publisherLogo: 'http://placekitten.com/158/96' });
+    view({ publisherLogo: 'http://test.com/imageurl' });
     const publisherLogo = screen.getByTestId('story_preview_logo');
 
     expect(publisherLogo).toBeInTheDocument();

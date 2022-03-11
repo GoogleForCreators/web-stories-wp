@@ -32,7 +32,7 @@ import {
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import { useCallback, useRef, useState, memo } from '@googleforcreators/react';
-import { useFeature } from 'flagged';
+import { getHTMLFormatters } from '@googleforcreators/rich-text';
 
 /**
  * Internal dependencies
@@ -83,22 +83,27 @@ const TYPE = 'text';
 const STYLE_BUTTON_WIDTH = 150;
 
 function PresetPanel() {
-  const isStylePaneEnabled = useFeature('libraryTextStyles');
   const { textStyles, isText, updateSelectedElements } = useStory(
-    ({ state, actions }) => {
-      const isText =
-        state.selectedElements && areAllType(TYPE, state.selectedElements);
-      return {
-        isText,
-        textStyles: state.story?.globalStoryStyles?.textStyles || [],
-        updateSelectedElements: actions.updateSelectedElements,
-      };
-    }
+    ({ state, actions }) => ({
+      isText: Boolean(
+        state.selectedElements && areAllType(TYPE, state.selectedElements)
+      ),
+      textStyles: state.story?.globalStoryStyles?.textStyles || [],
+      updateSelectedElements: actions.updateSelectedElements,
+    })
   );
 
   const { insertElement } = useLibrary((state) => ({
     insertElement: state.actions.insertElement,
   }));
+
+  const {
+    setColor,
+    setFontWeight,
+    setLetterSpacing,
+    toggleItalic,
+    toggleUnderline,
+  } = getHTMLFormatters();
 
   const buttonRef = useRef(null);
   const stylesRef = useRef(null);
@@ -128,14 +133,20 @@ function PresetPanel() {
   const handleApplyStyle = useApplyStyle({ pushUpdate });
   const { addGlobalPreset } = useAddPreset({ presetType: PRESET_TYPES.STYLE });
 
-  if (!isStylePaneEnabled) {
-    return null;
-  }
-
   const addStyledText = (preset) => {
+    // Get all the inline styles that saved styles support.
+    const { color, fontWeight, isItalic, isUnderline, letterSpacing } = preset;
+    let content = DEFAULT_PRESET.content;
+    content = setColor(content, color);
+    content = setFontWeight(content, fontWeight);
+    content = toggleItalic(content, isItalic);
+    content = toggleUnderline(content, isUnderline);
+    content = setLetterSpacing(content, letterSpacing);
+
     insertElement(TYPE, {
       ...DEFAULT_PRESET,
       ...preset,
+      content,
     });
   };
 

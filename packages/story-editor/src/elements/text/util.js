@@ -94,7 +94,7 @@ export const getHighlightLineheight = function (
 };
 
 export function calcFontMetrics(element) {
-  if (!element.font.metrics) {
+  if (!element.font?.metrics) {
     return {
       contentAreaPx: 0,
       lineBoxPx: 0,
