@@ -85,6 +85,6 @@ export class DesignMenu extends Container {
   }
 
   get opacity() {
-    return this.getByRole('textbox', { name: /^Change layer opacity$/ });
+    return this.getByRole('textbox', { name: /^Opacity in percent$/ });
   }
 }

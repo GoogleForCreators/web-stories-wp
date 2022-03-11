@@ -79,7 +79,7 @@ describe('Design Menu: Opacity Input', () => {
     await fixture.events.keyboard.type('200');
     await fixture.events.keyboard.press('tab');
 
-    // verify updated opacity
+    // Verify the opacity didn't change
     const finalOpacity = await fixture.renderHook(() =>
       useStory(({ state }) => state.currentPage.elements[1].opacity)
     );

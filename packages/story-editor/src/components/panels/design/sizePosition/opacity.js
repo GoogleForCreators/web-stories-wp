@@ -28,7 +28,7 @@ import { Icons, NumericInput } from '@googleforcreators/design-system';
 import { getCommonValue, inputContainerStyleOverride } from '../../shared';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 
-const MIN_MAX = {
+export const MIN_MAX = {
   OPACITY: {
     MIN: 0,
     MAX: 100,
