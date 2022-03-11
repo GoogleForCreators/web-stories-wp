@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,94 +17,58 @@
 /**
  * External dependencies
  */
-import { useState } from '@googleforcreators/react';
+import styled from 'styled-components';
+import { useState, useRef } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
-import {
-  Icons,
-  Text,
-  NotificationBubble,
-  THEME_CONSTANTS,
-  BUBBLE_VARIANTS,
-} from '@googleforcreators/design-system';
-
 /**
  * Internal dependencies
  */
-import styled, { css } from 'styled-components';
+import { Z_INDEX_FOOTER } from '../../../constants/zIndex';
 import { LayerPanel } from '../../panels/design';
 import useLayers from '../../panels/design/layer/useLayers';
-import Popup from '../../secondaryPopup';
+import Popup, { NavigationWrapper } from '../../secondaryPopup';
+import { ToggleButton } from '../../toggleButton';
+
+const LAYERS_PANEL_WIDTH = 300;
+
+const StyledNavigationWrapper = styled(NavigationWrapper)`
+  width: ${LAYERS_PANEL_WIDTH}px;
+  right: inherit;
+  left: -${LAYERS_PANEL_WIDTH}px;
+`;
 
 const Container = styled.div`
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 300px;
-  border-radius: ${({ theme }) => theme.borders.radius.small};
   background-color: ${({ theme }) => theme.colors.bg.secondary};
   overflow: auto;
+  z-index: ${Z_INDEX_FOOTER};
 `;
-
-export const LabelText = styled(Text)`
-  color: ${({ theme }) => theme.colors.fg.primary};
-  padding-right: 8px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: hidden;
-`;
-
-const Button = styled.button`
-  border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
-  background-color: ${({ theme }) => theme.colors.opacity.footprint};
-  border-radius: ${({ theme }) => theme.borders.radius.small};
-  padding: 5px 8px;
-  cursor: pointer;
-  display: flex;
-`;
-
-export const ChevronWrap = styled.div(
-  ({ theme, isOpen }) => css`
-    color: ${theme.colors.fg.primary};
-    width: 32px;
-    height: 32px;
-    margin: -4px;
-
-    ${isOpen &&
-    css`
-      transform: rotate(180deg);
-    `}
-  `
-);
 
 function Layers() {
-  const layers = useLayers();
+  const layersLength = useLayers().length;
   const [isOpen, setIsOpen] = useState(false);
+  const ref = useRef();
 
   return (
     <>
-      <Popup isOpen={isOpen} anchor="right" zIndex={9999}>
-        <Container>
-          <LayerPanel />
-        </Container>
-      </Popup>
-      <Button
-        aria-haspopup
-        aria-label={__('Layers', 'web-stories')}
-        onClick={() => setIsOpen((state) => !state)}
+      <Popup
+        isOpen={isOpen}
+        anchor="right"
+        zIndex={Z_INDEX_FOOTER}
+        ariaLabel={__('Layers Panel', 'web-stories')}
       >
-        <LabelText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
-          {__('Layers', 'web-stories')}
-        </LabelText>
-        <NotificationBubble
-          data-testid="panel-badge"
-          notificationCount={layers?.length}
-          variant={BUBBLE_VARIANTS.SECONDARY}
-          aria-hidden
-        />
-        <ChevronWrap isOpen={isOpen}>
-          <Icons.ChevronDownSmall />
-        </ChevronWrap>
-      </Button>
+        <StyledNavigationWrapper ref={ref} isOpen={isOpen}>
+          <Container>
+            <LayerPanel />
+          </Container>
+        </StyledNavigationWrapper>
+      </Popup>
+      <ToggleButton
+        isOpen={isOpen}
+        notificationCount={layersLength}
+        copy={__('Layers', 'web-stories')}
+        onClick={() => setIsOpen((state) => !state)}
+        hideTooltip
+      />
     </>
   );
 }
