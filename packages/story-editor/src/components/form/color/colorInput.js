@@ -49,6 +49,7 @@ import useInspector from '../../inspector/useInspector';
 import DefaultTooltip from '../../tooltip';
 import { focusStyle, inputContainerStyleOverride } from '../../panels/shared';
 import { useCanvas, useConfig } from '../../../app';
+import { useFloatingMenu } from '../../floatingMenu/context';
 
 const Preview = styled.div`
   height: 36px;
@@ -186,6 +187,8 @@ const ColorInput = forwardRef(function ColorInput(
     refs: { inspector },
   } = useInspector();
 
+  const { ref: designMenu } = useFloatingMenu();
+
   const colorType = value?.type;
   // Allow editing always in case of solid color of if color type is missing (mixed)
   const isEditable = (!colorType || colorType === 'solid') && hasInputs;
@@ -269,7 +272,7 @@ const ColorInput = forwardRef(function ColorInput(
       <Popup
         isRTL={isRTL}
         anchor={previewRef}
-        dock={inspector}
+        dock={isInDesignMenu ? designMenu : inspector}
         isOpen={pickerOpen}
         placement={pickerPlacement}
         spacing={SPACING}

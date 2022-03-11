@@ -45,7 +45,7 @@ function FloatingColor(props) {
     <Color
       width={width}
       maxHeight={PICKER_MAX_HEIGHT}
-      pickerPlacement={PLACEMENT.TOP}
+      pickerPlacement={PLACEMENT.TOP_START}
       isInDesignMenu
       shouldCloseOnSelection
       allowsGradient={allowsGradient}
