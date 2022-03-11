@@ -17,4 +17,5 @@ export const SPACING = {
   FLOATING_MENU: { x: 0, y: 12 },
   DEFAULT_SIDEBAR: { x: 230, y: 0 },
   SIDEBAR_WITHOUT_EYEDROPPER: { x: 208, y: 0 },
+  IS_RTL: { x: 12, y: 0 },
 };

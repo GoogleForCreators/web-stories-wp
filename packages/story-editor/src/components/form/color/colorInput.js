@@ -50,6 +50,7 @@ import DefaultTooltip from '../../tooltip';
 import { focusStyle, inputContainerStyleOverride } from '../../panels/shared';
 import { useCanvas, useConfig } from '../../../app';
 import { useFloatingMenu } from '../../floatingMenu/context';
+import { SPACING } from './constants';
 
 const Preview = styled.div`
   height: 36px;
@@ -227,6 +228,8 @@ const ColorInput = forwardRef(function ColorInput(
     ? minimalInputContainerStyleOverride
     : inputContainerStyleOverride;
 
+  const spacingAlignment = isRTL && !isInDesignMenu ? SPACING.IS_RTL : spacing;
+
   return (
     <>
       {isEditable ? (
@@ -291,7 +294,7 @@ const ColorInput = forwardRef(function ColorInput(
         dock={isInDesignMenu ? designMenu : inspector}
         isOpen={pickerOpen}
         placement={dynamicPlacement}
-        spacing={spacing}
+        spacing={spacingAlignment}
         invisible={isEyedropperActive}
         topOffset={topOffset}
         refCallback={positionPlacement}
