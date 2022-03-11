@@ -19,46 +19,25 @@
  */
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
-import { useCallback } from '@googleforcreators/react';
-import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
  */
-import updateProperties from '../../inspector/design/updateProperties';
-import useRichTextFormatting from '../../panels/design/textStyle/useRichTextFormatting';
-import { useStory } from '../../../app';
-import { IconButton, useProperties } from './shared';
+import { IconButton, useTextToggle } from './shared';
 
 function ToggleItalics() {
-  const { content } = useProperties(['content']);
-  const updateSelectedElements = useStory(
-    (state) => state.actions.updateSelectedElements
-  );
-
-  const pushUpdate = useCallback(
-    (update) => {
-      trackEvent('floating_menu', {
-        name: 'set_italic',
-        element: 'text',
-      });
-      updateSelectedElements({
-        properties: (element) => updateProperties(element, update, true),
-      });
-    },
-    [updateSelectedElements]
-  );
-  const {
-    textInfo: { isItalic },
-    handlers: { handleClickItalic },
-  } = useRichTextFormatting([{ content, type: 'text' }], pushUpdate);
+  const { isToggled, toggle } = useTextToggle({
+    currentValue: 'isItalic',
+    handler: 'handleClickItalic',
+    eventName: 'set_italic',
+  });
 
   return (
     <IconButton
-      isToggled={isItalic}
+      isToggled={isToggled}
       Icon={Icons.LetterIItalic}
       title={__('Toggle italic', 'web-stories')}
-      onClick={handleClickItalic}
+      onClick={toggle}
       tabIndex="0"
     />
   );

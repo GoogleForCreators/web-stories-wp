@@ -19,46 +19,25 @@
  */
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
-import { useCallback } from '@googleforcreators/react';
-import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
  */
-import updateProperties from '../../inspector/design/updateProperties';
-import useRichTextFormatting from '../../panels/design/textStyle/useRichTextFormatting';
-import { useStory } from '../../../app';
-import { IconButton, useProperties } from './shared';
+import { IconButton, useTextToggle } from './shared';
 
 function ToggleUnderline() {
-  const { content } = useProperties(['content']);
-  const updateSelectedElements = useStory(
-    (state) => state.actions.updateSelectedElements
-  );
-
-  const pushUpdate = useCallback(
-    (update) => {
-      trackEvent('floating_menu', {
-        name: 'set_underline',
-        element: 'text',
-      });
-      updateSelectedElements({
-        properties: (element) => updateProperties(element, update, true),
-      });
-    },
-    [updateSelectedElements]
-  );
-  const {
-    textInfo: { isUnderline },
-    handlers: { handleClickUnderline },
-  } = useRichTextFormatting([{ content, type: 'text' }], pushUpdate);
+  const { isToggled, toggle } = useTextToggle({
+    currentValue: 'isUnderline',
+    handler: 'handleClickUnderline',
+    eventName: 'set_underline',
+  });
 
   return (
     <IconButton
-      isToggled={isUnderline}
+      isToggled={isToggled}
       Icon={Icons.LetterUUnderline}
       title={__('Toggle underline', 'web-stories')}
-      onClick={handleClickUnderline}
+      onClick={toggle}
       tabIndex="0"
     />
   );

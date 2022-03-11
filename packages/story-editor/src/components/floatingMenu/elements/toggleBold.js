@@ -19,46 +19,25 @@
  */
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
-import { trackEvent } from '@googleforcreators/tracking';
-import { useCallback } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
  */
-import useRichTextFormatting from '../../panels/design/textStyle/useRichTextFormatting';
-import updateProperties from '../../inspector/design/updateProperties';
-import { useStory } from '../../../app';
-import { IconButton, useProperties } from './shared';
+import { IconButton, useTextToggle } from './shared';
 
 function ToggleBold() {
-  const { content } = useProperties(['content']);
-  const updateSelectedElements = useStory(
-    (state) => state.actions.updateSelectedElements
-  );
-
-  const pushUpdate = useCallback(
-    (update) => {
-      trackEvent('floating_menu', {
-        name: 'set_bold',
-        element: 'text',
-      });
-      updateSelectedElements({
-        properties: (element) => updateProperties(element, update, true),
-      });
-    },
-    [updateSelectedElements]
-  );
-  const {
-    textInfo: { isBold },
-    handlers: { handleClickBold },
-  } = useRichTextFormatting([{ content, type: 'text' }], pushUpdate);
+  const { isToggled, toggle } = useTextToggle({
+    currentValue: 'isBold',
+    handler: 'handleClickBold',
+    eventName: 'set_bold',
+  });
 
   return (
     <IconButton
-      isToggled={isBold}
+      isToggled={isToggled}
       Icon={Icons.LetterBBold}
       title={__('Toggle bold', 'web-stories')}
-      onClick={() => handleClickBold(!isBold)}
+      onClick={toggle}
       tabIndex="0"
     />
   );
