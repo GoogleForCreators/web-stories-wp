@@ -111,7 +111,7 @@ export const ToggleButton = forwardRef(
         >
           <Wrapper>
             {MainIcon && <MainIcon />}
-            {copy && copy}
+            {copy}
             {hasNotifications && (
               <NotificationCount>{notificationCount}</NotificationCount>
             )}
