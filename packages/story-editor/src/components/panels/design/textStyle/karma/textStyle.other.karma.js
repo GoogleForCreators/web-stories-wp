@@ -59,6 +59,12 @@ describe('Text Style Panel', () => {
       ).toThrow();
       await fixture.snapshot('Collapsed style panel');
 
+      // Select background for being able to insert a text.
+      await fixture.events.mouse.clickOn(
+        fixture.editor.canvas.framesLayer.frames[0].node,
+        '90%',
+        '90%'
+      );
       // Add a new text now.
       await fixture.editor.library.textTab.click();
       await fixture.events.click(
@@ -82,6 +88,12 @@ describe('Text Style Panel', () => {
       // Add 2 text elements.
       await fixture.editor.library.textTab.click();
       await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
+
+      await fixture.events.mouse.clickOn(
+        fixture.editor.canvas.framesLayer.frames[0].node,
+        '90%',
+        '90%'
+      );
       await fixture.events.click(fixture.editor.library.text.preset('Title 2'));
 
       // Select first text as well (the second is selected by default).
@@ -143,6 +155,11 @@ describe('Text Style Panel', () => {
               currentPage: { elements },
             },
           } = await fixture.renderHook(() => useStory());
+
+          if (!elements) {
+            throw new Error('story elements not ready');
+          }
+
           expect(elements[1].content).toBe(
             '<span style="color: #fff">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>'
           );

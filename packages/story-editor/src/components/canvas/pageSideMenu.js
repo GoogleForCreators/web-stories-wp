@@ -33,6 +33,7 @@ import { Fragment } from '@googleforcreators/react';
 import { useLayout } from '../../app';
 import { MediaPicker, useQuickActions } from '../../app/highlights';
 import { ZOOM_SETTING } from '../../constants';
+import { Z_INDEX_CANVAS_SIDE_MENU } from '../../constants/zIndex';
 import PageMenu from './pagemenu/pageMenu';
 
 const MenusWrapper = styled.section`
@@ -41,7 +42,7 @@ const MenusWrapper = styled.section`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  z-index: 9999;
+  z-index: ${Z_INDEX_CANVAS_SIDE_MENU};
   pointer-events: auto;
   min-height: 100%;
   ${({ isZoomed, theme }) =>

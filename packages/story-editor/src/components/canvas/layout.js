@@ -49,11 +49,6 @@ import usePinchToZoom from './usePinchToZoom';
  * for the layering details.
  */
 
-export const Z_INDEX = {
-  NAV: 2,
-  EDIT: 3,
-};
-
 // 8px extra is for the focus outline to display.
 const PAGE_NAV_WIDTH = THEME_CONSTANTS.LARGE_BUTTON_SIZE + 8;
 const PAGE_NAV_GAP = 20;
@@ -127,7 +122,6 @@ const PageAreaContainer = styled(Area).attrs({
     hasVerticalOverflow ? 'flex-start' : 'center'};
   overflow: ${({ showOverflow }) =>
     showOverflow ? 'visible' : 'var(--overflow-x) var(--overflow-y)'};
-
   ${({
     isControlled,
     hasVerticalOverflow,
