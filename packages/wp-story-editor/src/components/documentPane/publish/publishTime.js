@@ -136,7 +136,7 @@ function PublishTime() {
         topOffset={TOOLBAR_HEIGHT}
         anchor={dateFieldRef}
         isOpen={showDatePicker}
-        placement={PLACEMENT.BOTTOM_START}
+        placement={PLACEMENT.BOTTOM}
         isRTL={isRTL}
         zIndex={10}
         renderContents={({ propagateDimensionChange }) => (
