@@ -58,7 +58,7 @@ describe('isEmptyStory', () => {
   it('should not count story with an attachment as empty', () => {
     const storyWithAttachment = [createPage()];
     const testUrl = 'https://testurl.com';
-    const pageAttachmentObject = { url: testUrl }
+    const pageAttachmentObject = { url: testUrl };
 
     storyWithAttachment[0].pageAttachment = pageAttachmentObject;
     expect(isEmptyStory(storyWithAttachment)).toBeFalse();
@@ -73,7 +73,7 @@ describe('isEmptyStory', () => {
   it('should count story without the pageAttachment property set to null as empty', () => {
     const storyWithoutAttachment = [createPage()];
     const pageAttachmentObject = null;
-    
+
     storyWithoutAttachment[0].pageAttachment = pageAttachmentObject;
     expect(isEmptyStory(storyWithoutAttachment)).toBeTrue();
   });
@@ -81,7 +81,7 @@ describe('isEmptyStory', () => {
   it('should count story that has the pageAttachment property with an empty url string as empty', () => {
     const storyWithoutAttachment = [createPage()];
     const testUrl = '';
-    const pageAttachmentObject = { url: testUrl }
+    const pageAttachmentObject = { url: testUrl };
 
     storyWithoutAttachment[0].pageAttachment = pageAttachmentObject;
     expect(isEmptyStory(storyWithoutAttachment)).toBeTrue();
