@@ -57,6 +57,7 @@ import useOnMediaSelect from './useOnMediaSelect';
 import paneId from './paneId';
 import VideoOptimizationDialog from './videoOptimizationDialog';
 import LinkInsertion from './hotlink';
+import MediaRecording from './mediaRecording';
 
 export const ROOT_MARGIN = 300;
 
@@ -132,6 +133,8 @@ function MediaPane(props) {
       };
     }
   );
+
+  const enableMediaRecording = useFeature('mediaRecording');
 
   const {
     capabilities: { hasUploadMediaAction },
@@ -224,6 +227,9 @@ function MediaPane(props) {
             )}
             {!isSearching && (
               <ButtonsWrapper>
+                {enableMediaRecording && hasUploadMediaAction && (
+                  <MediaRecording />
+                )}
                 <LinkInsertion />
                 {hasUploadMediaAction && (
                   <Tooltip title={__('Upload', 'web-stories')}>
