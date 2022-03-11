@@ -28,9 +28,6 @@ import useInspector from '../../../inspector/useInspector';
 import LayerList from './layerList';
 import useLayers from './useLayers';
 
-const HEAD_AREA_HEIGHT = 64;
-const LAYERS_HEIGHT_PADDING = 12;
-
 const Container = styled.div`
   filter: drop-shadow(0px -4px 8px rgba(0, 0, 0, 0.2));
   max-height: ${({ maxHeight }) => maxHeight}px;
@@ -44,11 +41,8 @@ function LayerPanel() {
     ({ state }) => state.inspectorContentHeight
   );
 
-  const maxHeight =
-    inspectorContentHeight - HEAD_AREA_HEIGHT - LAYERS_HEIGHT_PADDING;
-
   return (
-    <Container maxHeight={maxHeight}>
+    <Container maxHeight={inspectorContentHeight}>
       <PanelContent padding={'0'}>
         <LayerList layers={layers} />
       </PanelContent>
