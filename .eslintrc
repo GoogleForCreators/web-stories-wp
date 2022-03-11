@@ -183,6 +183,7 @@
     "react/jsx-fragments": "error",
     "react/jsx-no-literals": "error",
     "react/jsx-no-useless-fragment": "error",
+    "react/jsx-no-target-blank": "off",
     "react/no-unused-prop-types": "error",
     "react/react-in-jsx-scope": "off",
     "react/self-closing-comp": "error",
