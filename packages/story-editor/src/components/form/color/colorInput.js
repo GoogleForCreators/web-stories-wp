@@ -183,11 +183,27 @@ const ColorInput = forwardRef(function ColorInput(
     })
   );
   const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
+  const [dynamicPlacement, setDynamicPlacement] = useState(pickerPlacement);
+
   const {
     refs: { inspector },
   } = useInspector();
 
   const { ref: designMenu } = useFloatingMenu();
+
+  const positionPlacement = useCallback(
+    (popupRef) => {
+      // if the popup was assigned as top as in the case of floating menus, we want to check that it will fit
+      if (pickerPlacement.startsWith('top')) {
+        // check to see if there's an overlap with the window edge
+        const { top } = popupRef.current?.getBoundingClientRect() || {};
+        if (top <= topOffset) {
+          setDynamicPlacement(pickerPlacement.replace('top', 'bottom'));
+        }
+      }
+    },
+    [pickerPlacement, topOffset]
+  );
 
   const colorType = value?.type;
   // Allow editing always in case of solid color of if color type is missing (mixed)
@@ -274,10 +290,11 @@ const ColorInput = forwardRef(function ColorInput(
         anchor={previewRef}
         dock={isInDesignMenu ? designMenu : inspector}
         isOpen={pickerOpen}
-        placement={pickerPlacement}
+        placement={dynamicPlacement}
         spacing={spacing}
         invisible={isEyedropperActive}
         topOffset={topOffset}
+        refCallback={positionPlacement}
         renderContents={({ propagateDimensionChange }) => (
           <ColorPicker
             color={isMixed ? null : value}
