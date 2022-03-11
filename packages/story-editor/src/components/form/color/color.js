@@ -41,6 +41,7 @@ import { focusStyle } from '../../panels/shared';
 import applyOpacityChange from './applyOpacityChange';
 import OpacityInput from './opacityInput';
 import ColorInput from './colorInput';
+import { SPACING } from './constants';
 
 const containerCss = css`
   display: flex;
@@ -120,6 +121,10 @@ const Color = forwardRef(function Color(
   });
   const tooltip = __('Pick a color from canvas', 'web-stories');
 
+  const spacing = hasEyedropper
+    ? SPACING.DEFAULT_SIDEBAR
+    : SPACING.SIDEBAR_WITHOUT_EYEDROPPER;
+
   return (
     <Container aria-label={containerLabel} isInDesignMenu={isInDesignMenu}>
       {hasEyedropper && (
@@ -145,6 +150,7 @@ const Color = forwardRef(function Color(
             pickerPlacement={pickerPlacement}
             hasInputs={hasInputs}
             isInDesignMenu={isInDesignMenu}
+            spacing={isInDesignMenu ? SPACING.FLOATING_MENU : spacing}
             pickerProps={{
               allowsGradient,
               allowsOpacity,

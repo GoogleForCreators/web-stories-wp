@@ -153,7 +153,6 @@ const ChevronContainer = styled.div`
 const loadReactColor = () =>
   import(/* webpackChunkName: "chunk-react-color" */ 'react-color');
 
-const SPACING = { x: 20, y: 10 };
 const ColorInput = forwardRef(function ColorInput(
   {
     onChange,
@@ -164,6 +163,7 @@ const ColorInput = forwardRef(function ColorInput(
     isInDesignMenu = false,
     hasInputs = true,
     pickerProps,
+    spacing,
   },
   ref
 ) {
@@ -275,7 +275,7 @@ const ColorInput = forwardRef(function ColorInput(
         dock={isInDesignMenu ? designMenu : inspector}
         isOpen={pickerOpen}
         placement={pickerPlacement}
-        spacing={SPACING}
+        spacing={spacing}
         invisible={isEyedropperActive}
         topOffset={topOffset}
         renderContents={({ propagateDimensionChange }) => (
@@ -303,6 +303,7 @@ ColorInput.propTypes = {
   pickerPlacement: PropTypes.string,
   isInDesignMenu: PropTypes.bool,
   hasInputs: PropTypes.bool,
+  spacing: PropTypes.object,
 };
 
 export default ColorInput;
