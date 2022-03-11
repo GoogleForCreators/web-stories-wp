@@ -28,6 +28,7 @@ import Carousel from './carousel';
 import PrimaryMenu from './primaryMenu';
 import SecondaryMenu from './secondaryMenu';
 import { MAX_MENU_WIDTH } from './constants';
+import DirectionAware from '../directionAware';
 
 const Wrapper = styled.section`
   position: relative;
@@ -52,17 +53,19 @@ const Area = styled.div`
 
 function FooterLayout({ footer }) {
   return (
-    <Wrapper aria-label={__('Workspace Footer', 'web-stories')}>
-      <Area area="carousel">
-        <Carousel />
-      </Area>
-      <Area area="primary">
-        <PrimaryMenu />
-      </Area>
-      <Area area="secondary">
-        <SecondaryMenu menu={footer?.secondaryMenu} />
-      </Area>
-    </Wrapper>
+    <DirectionAware>
+      <Wrapper aria-label={__('Workspace Footer', 'web-stories')}>
+        <Area area="carousel">
+          <Carousel />
+        </Area>
+        <Area area="primary">
+          <PrimaryMenu />
+        </Area>
+        <Area area="secondary">
+          <SecondaryMenu menu={footer?.secondaryMenu} />
+        </Area>
+      </Wrapper>
+    </DirectionAware>
   );
 }
 
