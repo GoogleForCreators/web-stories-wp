@@ -42,10 +42,6 @@ import DesignInspector from './design';
 
 const INSPECTOR_TAB_IDS = new Set([DOCUMENT, DESIGN]);
 function InspectorProvider({ inspectorTabs, children }) {
-  const isUpdatedPublishModalEnabled = useFeature(
-    'enableUpdatedPublishStoryModal'
-  );
-
   const {
     actions: { getAuthors },
   } = useAPI();
@@ -159,7 +155,7 @@ function InspectorProvider({ inspectorTabs, children }) {
     });
   }
 
-  if (inspectorTabs?.publishModal && isUpdatedPublishModalEnabled) {
+  if (inspectorTabs?.publishModal) {
     state.data.modalInspectorTab = {
       id: PUBLISH_MODAL_DOCUMENT,
       ...inspectorTabs.publishModal,

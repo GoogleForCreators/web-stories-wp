@@ -311,19 +311,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'editor',
 			],
 			/**
-			 * Author: @brittanyirl
-			 * Issue: #10115
-			 * Creation date: 2022-02-02
-			 */
-			[
-				'name'        => 'enableUpdatedPublishStoryModal',
-				'label'       => __( 'Updated Publish Story Modal', 'web-stories' ),
-				'description' => __( 'Enable new pre-publish confirmation modal', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-
-			/**
 			 * Author: @miina
 			 * Issue: #9880
 			 * Creation date: 2021-12-15

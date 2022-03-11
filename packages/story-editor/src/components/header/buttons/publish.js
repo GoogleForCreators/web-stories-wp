@@ -26,20 +26,16 @@ import {
 } from '@googleforcreators/date';
 import { trackEvent } from '@googleforcreators/tracking';
 import PropTypes from 'prop-types';
-import { useFeature } from 'flagged';
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
-import { useCheckpoint, ReviewChecklistDialog } from '../../checklist';
+import { useCheckpoint } from '../../checklist';
 import { PublishModal } from '../../publishModal';
 import ButtonWithChecklistWarning from './buttonWithChecklistWarning';
 
 function PublishButton({ forceIsSaving }) {
-  const isUpdatedPublishModalEnabled = useFeature(
-    'enableUpdatedPublishStoryModal'
-  );
   const { date, storyId, saveStory, title, editLink, canPublish } = useStory(
     ({
       state: {
@@ -57,14 +53,8 @@ function PublishButton({ forceIsSaving }) {
     })
   );
 
-  const { shouldReviewDialogBeSeen, showPriorityIssues } = useCheckpoint(
-    ({
-      state: { shouldReviewDialogBeSeen },
-      actions: { showPriorityIssues },
-    }) => ({
-      shouldReviewDialogBeSeen,
-      showPriorityIssues,
-    })
+  const showPriorityIssues = useCheckpoint(
+    ({ actions: { showPriorityIssues } }) => showPriorityIssues
   );
 
   const [showDialog, setShowDialog] = useState(false);
@@ -99,18 +89,8 @@ function PublishButton({ forceIsSaving }) {
 
   const handlePublish = useCallback(() => {
     showPriorityIssues();
-    if (shouldReviewDialogBeSeen || isUpdatedPublishModalEnabled) {
-      setShowDialog(true);
-      return;
-    }
-
-    publish();
-  }, [
-    showPriorityIssues,
-    shouldReviewDialogBeSeen,
-    isUpdatedPublishModalEnabled,
-    publish,
-  ]);
+    setShowDialog(true);
+  }, [showPriorityIssues]);
 
   const closeDialog = useCallback(() => setShowDialog(false), []);
 
@@ -121,22 +101,13 @@ function PublishButton({ forceIsSaving }) {
         disabled={forceIsSaving}
         hasFutureDate={hasFutureDate}
       />
-      {isUpdatedPublishModalEnabled ? (
-        <PublishModal
-          isOpen={showDialog}
-          onPublish={publish}
-          onClose={closeDialog}
-          hasFutureDate={hasFutureDate}
-          publishButtonDisabled={forceIsSaving}
-        />
-      ) : (
-        <ReviewChecklistDialog
-          isOpen={showDialog}
-          onIgnore={publish}
-          onClose={closeDialog}
-          onReview={closeDialog}
-        />
-      )}
+      <PublishModal
+        isOpen={showDialog}
+        onPublish={publish}
+        onClose={closeDialog}
+        hasFutureDate={hasFutureDate}
+        publishButtonDisabled={forceIsSaving}
+      />
     </>
   );
 }
