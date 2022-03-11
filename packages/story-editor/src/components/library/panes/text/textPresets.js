@@ -54,6 +54,8 @@ const DEFAULT_TEXT_PADDING = {
   hasHiddenPadding: false,
 };
 
+const DEFAULT_TEXT_ALIGN = 'left';
+
 const DEFAULT_PRESET = {
   content: _x(
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -70,6 +72,7 @@ const DEFAULT_PRESET = {
   borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
   backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
   padding: DEFAULT_TEXT_PADDING,
+  textAlign: DEFAULT_TEXT_ALIGN,
 };
 
 const PRESETS = [
@@ -91,6 +94,7 @@ const PRESETS = [
       borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
       backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
       padding: DEFAULT_TEXT_PADDING,
+      textAlign: DEFAULT_TEXT_ALIGN,
     },
   },
   {
@@ -111,6 +115,7 @@ const PRESETS = [
       borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
       backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
       padding: DEFAULT_TEXT_PADDING,
+      textAlign: DEFAULT_TEXT_ALIGN,
     },
   },
   {
@@ -131,6 +136,7 @@ const PRESETS = [
       borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
       backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
       padding: DEFAULT_TEXT_PADDING,
+      textAlign: DEFAULT_TEXT_ALIGN,
     },
   },
   {
@@ -155,6 +161,7 @@ const PRESETS = [
       borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
       backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
       padding: DEFAULT_TEXT_PADDING,
+      textAlign: DEFAULT_TEXT_ALIGN,
     },
   },
   {
@@ -171,6 +178,7 @@ const PRESETS = [
       borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
       backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
       padding: DEFAULT_TEXT_PADDING,
+      textAlign: DEFAULT_TEXT_ALIGN,
     },
   },
 ];

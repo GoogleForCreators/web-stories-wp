@@ -35,18 +35,25 @@ import {
 import { trackEvent } from '@googleforcreators/tracking';
 import { useUnits } from '@googleforcreators/units';
 import { stripHTML } from '@googleforcreators/dom';
+import { __, sprintf } from '@googleforcreators/i18n';
+import { getHTMLFormatters } from '@googleforcreators/rich-text';
 
 /**
  * Internal dependencies
  */
-import { useFont, useHistory } from '../../../../app';
+import { useFont, useHistory, useStory } from '../../../../app';
 import StoryPropTypes from '../../../../types';
 import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
 import useLibrary from '../../useLibrary';
 import LibraryMoveable from '../shared/libraryMoveable';
 import InsertionOverlay from '../shared/insertionOverlay';
 import useRovingTabIndex from '../../../../utils/useRovingTabIndex';
+import { areAllType, getTextInlineStyles } from '../../../../utils/presetUtils';
+import objectWithout from '../../../../utils/objectWithout';
+import getUpdatedSizeAndPosition from '../../../../utils/getUpdatedSizeAndPosition';
+import { focusStyle } from '../../../panels/shared';
 
+// If text is selected, there's no `+` icon displayed and we display the focus style on the button directly.
 const Preview = styled.button`
   position: relative;
   display: flex;
@@ -59,10 +66,11 @@ const Preview = styled.button`
   border: none;
   cursor: pointer;
   text-align: left;
-  outline: none;
+
+  ${({ isTextSelected }) => (isTextSelected ? focusStyle : 'outline: none;')}
 
   &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} [role='presentation'],
-  &[data-focus-visible-added] [role='presentation'] {
+    &[data-focus-visible-added] [role='presentation'] {
     ${({ theme }) =>
       themeHelpers.focusCSS(
         theme.colors.border.focus,
@@ -90,6 +98,7 @@ const DragContainer = styled.div`
 `;
 
 function FontPreview({ title, element, insertPreset, getPosition, index }) {
+  const htmlFormatters = getHTMLFormatters();
   const { font, fontSize, fontWeight, content } = element;
   const {
     actions: { maybeEnqueueFontStyle },
@@ -110,6 +119,13 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
   }));
 
   const { calculateAccessibleTextColors } = usePageAsCanvas();
+
+  const { isTextSelected, updateSelectedElements } = useStory(
+    ({ state, actions }) => ({
+      isTextSelected: areAllType('text', state.selectedElements),
+      updateSelectedElements: actions.updateSelectedElements,
+    })
+  );
 
   const presetDataRef = useRef({});
   const buttonRef = useRef(null);
@@ -162,7 +178,49 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
     versionNumber,
   ]);
 
+  const applyStyleOnContent = useCallback(
+    (
+      { fontWeight: newFontWeight, isItalic, isUnderline, letterSpacing },
+      elContent
+    ) => {
+      elContent = htmlFormatters.setFontWeight(elContent, newFontWeight);
+      elContent = htmlFormatters.toggleItalic(elContent, isItalic);
+      elContent = htmlFormatters.toggleUnderline(elContent, isUnderline);
+      elContent = htmlFormatters.setLetterSpacing(elContent, letterSpacing);
+      return elContent;
+    },
+    [htmlFormatters]
+  );
+
   const onClick = useCallback(() => {
+    // If we have only text(s) selected, we apply the preset instead of inserting.
+    if (isTextSelected) {
+      updateSelectedElements({
+        properties: (oldElement) => {
+          const newContent = applyStyleOnContent(
+            getTextInlineStyles(element.content),
+            oldElement.content
+          );
+          const presetAtts = objectWithout(element, [
+            'x',
+            'y',
+            'content',
+            'width',
+          ]);
+          const sizeUpdates = getUpdatedSizeAndPosition({
+            ...oldElement,
+            ...presetAtts,
+          });
+          return {
+            ...oldElement,
+            ...presetAtts,
+            ...sizeUpdates,
+            content: newContent,
+          };
+        },
+      });
+      return;
+    }
     // We might have pre-calculated data, let's use that, too.
     const isPositioned = Boolean(presetDataRef.current?.positionAtts);
     insertPreset(
@@ -176,7 +234,14 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
     // Reset after insertion.
     presetDataRef.current = {};
     trackEvent('insert_text_preset', { name: title });
-  }, [insertPreset, element, title]);
+  }, [
+    insertPreset,
+    element,
+    title,
+    isTextSelected,
+    updateSelectedElements,
+    applyStyleOnContent,
+  ]);
 
   const getTextDisplay = (textProps = {}) => {
     const { isClone } = textProps;
@@ -215,9 +280,19 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
       onPointerLeave={makeInactive}
       onBlur={makeInactive}
       tabIndex={index === 0 ? 0 : -1}
+      isTextSelected={isTextSelected}
+      aria-label={
+        isTextSelected
+          ? sprintf(
+              /* translators: %s: preset name */
+              __('Apply preset: %s', 'web-stories'),
+              title
+            )
+          : null
+      }
     >
       {getTextDisplay()}
-      {active && <InsertionOverlay />}
+      {active && !isTextSelected && <InsertionOverlay />}
       <LibraryMoveable
         cloneElement={DragContainer}
         cloneProps={{

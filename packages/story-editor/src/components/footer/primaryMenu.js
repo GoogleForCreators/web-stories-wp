@@ -22,6 +22,7 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
+import { Z_INDEX_FOOTER } from '../../constants/zIndex';
 import ZoomSelector from './zoomSelector';
 import { GridViewButton } from './gridview';
 import { FOOTER_MENU_GAP, FOOTER_MARGIN } from './constants';
@@ -32,6 +33,7 @@ const Wrapper = styled.div`
   justify-content: flex-end;
   width: 100%;
   height: 100%;
+  z-index: ${Z_INDEX_FOOTER};
 `;
 
 const MenuItems = styled.div`
