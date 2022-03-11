@@ -33,7 +33,6 @@ const LAYERS_PANEL_WIDTH = 300;
 
 const StyledNavigationWrapper = styled(NavigationWrapper)`
   width: ${LAYERS_PANEL_WIDTH}px;
-  right: inherit;
   left: -${LAYERS_PANEL_WIDTH}px;
 `;
 
@@ -53,7 +52,6 @@ function Layers() {
       <Popup
         isOpen={isOpen}
         anchor="right"
-        zIndex={Z_INDEX_FOOTER}
         ariaLabel={__('Layers Panel', 'web-stories')}
       >
         <StyledNavigationWrapper ref={ref} isOpen={isOpen}>

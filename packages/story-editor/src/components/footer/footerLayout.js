@@ -24,11 +24,11 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import DirectionAware from '../directionAware';
 import Carousel from './carousel';
 import PrimaryMenu from './primaryMenu';
 import SecondaryMenu from './secondaryMenu';
 import { MAX_MENU_WIDTH } from './constants';
-import DirectionAware from '../directionAware';
 
 const Wrapper = styled.section`
   position: relative;
