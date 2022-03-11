@@ -28,8 +28,6 @@ import {
 } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { trackEvent } from '@googleforcreators/tracking';
-import { useFeature } from 'flagged';
-
 /**
  * Internal dependencies
  */
