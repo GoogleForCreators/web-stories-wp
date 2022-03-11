@@ -17,6 +17,7 @@
  * External dependencies
  */
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
+import { getExtensionsFromMimeType } from '@googleforcreators/media';
 import { withProtocol } from '@googleforcreators/url';
 import { Input } from '@googleforcreators/design-system';
 import {
@@ -24,6 +25,7 @@ import {
   useRef,
   useLayoutEffect,
   useCallback,
+  useMemo,
 } from '@googleforcreators/react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -43,10 +45,29 @@ const InputWrapper = styled.form`
 `;
 
 function HotlinkModal({ isOpen, onClose }) {
-  const { allowedFileTypes } = useConfig();
+  const {
+    allowedMimeTypes: {
+      image: allowedImageMimeTypes,
+      vector: allowedVectorMimeTypes,
+      video: allowedVideoMimeTypes,
+    },
+  } = useConfig();
   const [errorMsg, setErrorMsg] = useState(false);
   const inputRef = useRef(null);
 
+  const allowedMimeTypes = useMemo(
+    () => [
+      ...allowedImageMimeTypes,
+      ...allowedVectorMimeTypes,
+      ...allowedVideoMimeTypes,
+    ],
+    [allowedImageMimeTypes, allowedVectorMimeTypes, allowedVideoMimeTypes]
+  );
+  const allowedFileTypes = useMemo(
+    () =>
+      allowedMimeTypes.map((type) => getExtensionsFromMimeType(type)).flat(),
+    [allowedMimeTypes]
+  );
   useLayoutEffect(() => {
     // Wait one tick to ensure the input has been loaded.
     const timeout = setTimeout(() => {

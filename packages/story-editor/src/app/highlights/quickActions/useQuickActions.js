@@ -27,7 +27,10 @@ import {
   Icons,
 } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
-import { resourceList } from '@googleforcreators/media';
+import {
+  resourceList,
+  getExtensionsFromMimeType,
+} from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -65,9 +68,9 @@ const {
 
 export const MediaPicker = ({ render, ...props }) => {
   const {
-    allowedFileTypes,
     allowedMimeTypes: {
       image: allowedImageMimeTypes,
+      vector: allowedVectorMimeTypes,
       video: allowedVideoMimeTypes,
     },
     MediaUpload,
@@ -107,7 +110,19 @@ export const MediaPicker = ({ render, ...props }) => {
   const { showSnackbar } = useSnackbar();
 
   // Media Upload Props
-  let allowedMimeTypes = [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
+  let allowedMimeTypes = useMemo(
+    () => [
+      ...allowedImageMimeTypes,
+      ...allowedVectorMimeTypes,
+      ...allowedVideoMimeTypes,
+    ],
+    [allowedImageMimeTypes, allowedVectorMimeTypes, allowedVideoMimeTypes]
+  );
+  const allowedFileTypes = useMemo(
+    () =>
+      allowedMimeTypes.map((type) => getExtensionsFromMimeType(type)).flat(),
+    [allowedMimeTypes]
+  );
   if (isTranscodingEnabled) {
     allowedMimeTypes = allowedMimeTypes.concat(TRANSCODABLE_MIME_TYPES);
   }

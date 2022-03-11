@@ -215,7 +215,11 @@ describe('useContextValueProvider', () => {
     const configState = {
       api: {},
       allowedMimeTypes: {
+        image: [],
+        vector: [],
         video: [],
+        caption: [],
+        audio: [],
       },
       capabilities: { hasUploadMediaAction: true },
     };

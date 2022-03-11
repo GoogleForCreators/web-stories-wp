@@ -56,7 +56,7 @@ trait Sanitization_Utils {
 
 		$lang = get_bloginfo( 'language' );
 		if ( $lang ) {
-			$document->html->setAttribute( 'lang', esc_attr( $lang ) );
+			$document->html->setAttribute( 'lang', $lang );
 		}
 	}
 
