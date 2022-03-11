@@ -64,7 +64,7 @@ export class Footer extends Container {
 
   get layerPanel() {
     return this._get(
-      this.getByRole('button', { name: 'Layers' }),
+      this.getByRole('button', { name: /^Layers/ }),
       'layerPanel',
       Layers
     );

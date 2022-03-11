@@ -36,10 +36,6 @@ export class Layers extends AbstractPanel {
     return this._node;
   }
 
-  get panelBadge() {
-    return this.getByTestId('panel-badge');
-  }
-
   get layersList() {
     return getByLabelText(this.node.ownerDocument, /layers list/i);
   }
