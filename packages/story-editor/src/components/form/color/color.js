@@ -29,6 +29,7 @@ import {
   BUTTON_VARIANTS,
   Icons,
   PLACEMENT,
+  TOOLTIP_PLACEMENT,
 } from '@googleforcreators/design-system';
 
 /**
@@ -125,10 +126,23 @@ const Color = forwardRef(function Color(
     ? SPACING.DEFAULT_SIDEBAR
     : SPACING.SIDEBAR_WITHOUT_EYEDROPPER;
 
+  const tooltipPlacement =
+    isInDesignMenu || hasEyedropper
+      ? TOOLTIP_PLACEMENT.BOTTOM
+      : TOOLTIP_PLACEMENT.BOTTOM_START;
+
   return (
     <Container aria-label={containerLabel} isInDesignMenu={isInDesignMenu}>
       {hasEyedropper && (
-        <Tooltip title={tooltip} hasTail>
+        <Tooltip
+          title={tooltip}
+          hasTail
+          placement={
+            isInDesignMenu
+              ? TOOLTIP_PLACEMENT.BOTTOM
+              : TOOLTIP_PLACEMENT.BOTTOM_START
+          }
+        >
           <EyeDropperButton
             aria-label={tooltip}
             onClick={initEyedropper()}
@@ -151,6 +165,7 @@ const Color = forwardRef(function Color(
             hasInputs={hasInputs}
             isInDesignMenu={isInDesignMenu}
             spacing={isInDesignMenu ? SPACING.FLOATING_MENU : spacing}
+            tooltipPlacement={tooltipPlacement}
             pickerProps={{
               allowsGradient,
               allowsOpacity,

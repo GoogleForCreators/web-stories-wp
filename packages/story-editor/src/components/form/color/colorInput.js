@@ -165,6 +165,7 @@ const ColorInput = forwardRef(function ColorInput(
     hasInputs = true,
     pickerProps,
     spacing,
+    tooltipPlacement,
   },
   ref
 ) {
@@ -246,14 +247,14 @@ const ColorInput = forwardRef(function ColorInput(
             containerStyleOverride={containerStyle}
           />
           <ColorPreview>
-            <Tooltip title={tooltip} hasTail>
+            <Tooltip title={tooltip} hasTail placement={tooltipPlacement}>
               <StyledSwatch isSmall pattern={previewPattern} {...buttonProps} />
             </Tooltip>
           </ColorPreview>
         </Preview>
       ) : (
         // If not editable, the whole component is a button
-        <Tooltip title={tooltip} hasTail>
+        <Tooltip title={tooltip} hasTail placement={tooltipPlacement}>
           <ColorButton ref={previewRef} {...buttonProps}>
             <ColorPreview>
               <Swatch
@@ -324,6 +325,7 @@ ColorInput.propTypes = {
   isInDesignMenu: PropTypes.bool,
   hasInputs: PropTypes.bool,
   spacing: PropTypes.object,
+  tooltipPlacement: PropTypes.string,
 };
 
 export default ColorInput;

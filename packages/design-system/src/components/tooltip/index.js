@@ -98,6 +98,7 @@ let lastVisibleDelayedTooltip = null;
  * as perceived by the page because of scroll. This is really only true of dropDowns that
  * exist beyond the initial page scroll. Because the editor is a fixed view this only
  * comes up in peripheral pages (dashboard, settings).
+ * @param {Object} props.dock Element to dock popup to
  * @return {import('react').Component} Tooltip element
  */
 function Tooltip({
@@ -116,6 +117,7 @@ function Tooltip({
   className = null,
   popupZIndexOverride,
   ignoreMaxOffsetY = false,
+  dock,
   ...props
 }) {
   const [shown, setShown] = useState(false);
@@ -294,6 +296,7 @@ function Tooltip({
         anchor={forceAnchorRef || anchorRef}
         placement={dynamicPlacement}
         spacing={spacing}
+        dock={dock}
         isOpen={Boolean(shown && (shortcut || title))}
         onPositionUpdate={positionArrow}
         zIndex={popupZIndexOverride}
@@ -345,6 +348,7 @@ const TooltipPropTypes = {
   isDelayed: PropTypes.bool,
   popupZIndexOverride: PropTypes.number,
   ignoreMaxOffsetY: PropTypes.bool,
+  dock: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
 };
 Tooltip.propTypes = TooltipPropTypes;
 
