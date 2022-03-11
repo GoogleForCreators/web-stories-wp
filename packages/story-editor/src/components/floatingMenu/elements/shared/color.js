@@ -39,7 +39,7 @@ function getWidth(hasInputs, hasEyedropper) {
 }
 
 function FloatingColor(props) {
-  const { hasInputs, hasEyedropper } = props;
+  const { hasInputs, hasEyedropper, allowsGradient = true } = props;
   const width = getWidth(hasInputs, hasEyedropper);
   return (
     <Color
@@ -48,7 +48,7 @@ function FloatingColor(props) {
       pickerPlacement={PLACEMENT.TOP_END}
       isInDesignMenu
       shouldCloseOnSelection
-      allowsGradient
+      allowsGradient={allowsGradient}
       allowsSavedColors
       allowsSavedColorDeletion={false}
       pickerHasEyedropper={!hasEyedropper}
@@ -60,6 +60,7 @@ function FloatingColor(props) {
 FloatingColor.propTypes = {
   hasInputs: PropTypes.bool,
   hasEyedropper: PropTypes.bool,
+  allowsGradient: PropTypes.bool,
 };
 
 export default FloatingColor;

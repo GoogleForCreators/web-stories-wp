@@ -36,9 +36,9 @@ import {
   getCommonValue,
   inputContainerStyleOverride,
 } from '../../shared';
+import StoryFontPicker from '../../../storyFontPicker';
 import useRichTextFormatting from './useRichTextFormatting';
 import getFontWeights from './getFontWeights';
-import FontPicker from './fontPicker';
 
 export const MIN_MAX = {
   FONT_SIZE: {
@@ -125,10 +125,8 @@ function FontControls({
     <>
       {fonts && (
         <Row>
-          <FontPicker
+          <StoryFontPicker
             ref={fontDropdownRef}
-            selectedElements={selectedElements}
-            pushUpdate={pushUpdate}
             highlightStylesOverride={highlightStylesOverride}
           />
         </Row>

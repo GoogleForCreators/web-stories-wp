@@ -29,17 +29,15 @@ import {
   BUTTON_VARIANTS,
   useLiveRegion,
 } from '@googleforcreators/design-system';
-import { useCallback, useEffect } from '@googleforcreators/react';
+import { useEffect } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
  */
-import useVideoTrim from '../../../videoTrim/useVideoTrim';
+import useVideoElementTranscoding from '../../../../app/media/utils/useVideoElementTranscoding';
 import { Row as DefaultRow } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
-import useFFmpeg from '../../../../app/media/utils/useFFmpeg';
-import { useLocalMedia } from '../../../../app';
 import CircularProgress from '../../../circularProgress';
 import LoopPanelContent from '../../shared/loopPanelContent';
 
@@ -72,42 +70,16 @@ const HelperText = styled(Text).attrs({
 `;
 
 function VideoOptionsPanel({ selectedElements, pushUpdate }) {
-  const { isTranscodingEnabled } = useFFmpeg();
-  const {
-    muteExistingVideo,
-    isElementTrimming,
-    isNewResourceMuting,
-    canTranscodeResource,
-  } = useLocalMedia(
-    ({
-      state: { canTranscodeResource, isNewResourceMuting, isElementTrimming },
-      actions: { muteExistingVideo },
-    }) => ({
-      canTranscodeResource,
-      isNewResourceMuting,
-      isElementTrimming,
-      muteExistingVideo,
-    })
-  );
   const resource = getCommonValue(selectedElements, 'resource');
-  const { isMuted, id: resourceId = 0 } = resource;
   const elementId = getCommonValue(selectedElements, 'id');
-  const isTrimming =
-    selectedElements.length === 1 ? isElementTrimming(elementId) : false;
-  const isMuting = isNewResourceMuting(resourceId);
   const loop = getCommonValue(selectedElements, 'loop');
   const isSingleElement = selectedElements.length === 1;
 
-  const handleMuteVideo = useCallback(() => {
-    muteExistingVideo({ resource });
-  }, [resource, muteExistingVideo]);
+  const {
+    state: { canTrim, canMute, isTrimming, isMuting, isDisabled },
+    actions: { handleMute, handleTrim },
+  } = useVideoElementTranscoding({ resource, elementId, isSingleElement });
 
-  const shouldDisableVideoActions = !canTranscodeResource(resource);
-
-  const shouldDisplayMuteButton =
-    isTranscodingEnabled &&
-    isSingleElement &&
-    ((!isMuted && canTranscodeResource(resource)) || isMuting);
   const muteButtonText = isMuting
     ? __('Removing audio…', 'web-stories')
     : __('Remove audio', 'web-stories');
@@ -115,13 +87,6 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
   const trimButtonText = isTrimming
     ? __('Trimming…', 'web-stories')
     : __('Trim', 'web-stories');
-
-  const { hasTrimMode, toggleTrimMode } = useVideoTrim(
-    ({ state: { hasTrimMode }, actions: { toggleTrimMode } }) => ({
-      hasTrimMode,
-      toggleTrimMode,
-    })
-  );
 
   const speak = useLiveRegion();
 
@@ -154,14 +119,14 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
     >
       <Row spaceBetween={false}>
         <LoopPanelContent loop={loop} onChange={onChange} />
-        {hasTrimMode && (
+        {canTrim && (
           <TrimWrapper>
             <TrimButton
-              disabled={shouldDisableVideoActions}
+              disabled={isDisabled}
               variant={BUTTON_VARIANTS.RECTANGLE}
               type={BUTTON_TYPES.SECONDARY}
               size={BUTTON_SIZES.SMALL}
-              onClick={toggleTrimMode}
+              onClick={handleTrim}
             >
               {trimButtonText}
             </TrimButton>
@@ -169,15 +134,15 @@ function VideoOptionsPanel({ selectedElements, pushUpdate }) {
           </TrimWrapper>
         )}
       </Row>
-      {shouldDisplayMuteButton && (
+      {canMute && (
         <>
           <Row spaceBetween={false}>
             <StyledButton
-              disabled={shouldDisableVideoActions}
+              disabled={isDisabled}
               variant={BUTTON_VARIANTS.RECTANGLE}
               type={BUTTON_TYPES.SECONDARY}
               size={BUTTON_SIZES.SMALL}
-              onClick={handleMuteVideo}
+              onClick={handleMute}
             >
               {muteButtonText}
             </StyledButton>

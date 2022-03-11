@@ -345,10 +345,12 @@ describe('useQuickActions', () => {
     useStoryTriggersDispatch.mockReturnValue(mockDispatchStoryEvent);
 
     mockUseConfig.mockReturnValue({
-      allowedFileTypes: [],
       allowedMimeTypes: {
         image: [],
+        vector: [],
         video: [],
+        caption: [],
+        audio: [],
       },
       capabilities: { hasUploadMediaAction: true },
       isRTL: true,
@@ -968,10 +970,12 @@ describe('MediaPicker', () => {
     });
 
     mockUseConfig.mockReturnValue({
-      allowedFileTypes: ['pepperoni', 'cheese'],
       allowedMimeTypes: {
         image: ['image/gif'],
+        vector: [],
         video: ['muted'],
+        caption: [],
+        audio: [],
       },
       capabilities: { hasUploadMediaAction: true },
       isRTL: true,

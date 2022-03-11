@@ -45,8 +45,7 @@ describe('publishModal/content', () => {
   });
 
   const configContextValue = {
-    allowedImageFileTypes: [],
-    allowedImageMimeTypes: [],
+    allowedMimeTypes: { image: [] },
     metadata: {
       publisher: '',
     },
