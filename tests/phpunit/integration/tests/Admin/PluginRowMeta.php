@@ -63,8 +63,8 @@ class PluginRowMeta extends TestCase {
 		$expected_meta = array_merge(
 			$initial_meta,
 			[
-				'<a href="https://wordpress.org/support/plugin/web-stories/" target="_blank" rel="noreferrer noopener">Contact support</a>',
-				'<a href="https://wordpress.org/support/plugin/web-stories/reviews/#new-post" target="_blank" rel="noreferrer noopener">Leave review</a>',
+				'<a href="https://wordpress.org/support/plugin/web-stories/" target="_blank">Contact support</a>',
+				'<a href="https://wordpress.org/support/plugin/web-stories/reviews/#new-post" target="_blank">Leave review</a>',
 			]
 		);
 
