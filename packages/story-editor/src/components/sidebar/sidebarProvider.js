@@ -28,7 +28,6 @@ import {
 } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { trackEvent } from '@googleforcreators/tracking';
-
 /**
  * Internal dependencies
  */
