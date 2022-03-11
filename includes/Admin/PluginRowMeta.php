@@ -73,8 +73,8 @@ class PluginRowMeta extends Service_Base {
 			return $meta;
 		}
 		$additional_meta = [
-			'<a href="https://wordpress.org/support/plugin/web-stories/" target="_blank" rel="noreferrer noopener">' . esc_html__( 'Contact support', 'web-stories' ) . '</a>',
-			'<a href="https://wordpress.org/support/plugin/web-stories/reviews/#new-post" target="_blank" rel="noreferrer noopener">' . esc_html__( 'Leave review', 'web-stories' ) . '</a>',
+			'<a href="https://wordpress.org/support/plugin/web-stories/" target="_blank">' . esc_html__( 'Contact support', 'web-stories' ) . '</a>',
+			'<a href="https://wordpress.org/support/plugin/web-stories/reviews/#new-post" target="_blank">' . esc_html__( 'Leave review', 'web-stories' ) . '</a>',
 		];
 
 		return array_merge( $meta, $additional_meta );
