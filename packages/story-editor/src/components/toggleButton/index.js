@@ -26,6 +26,8 @@ import {
   Text,
   TOOLTIP_PLACEMENT,
   Tooltip,
+  themeHelpers,
+  THEME_CONSTANTS,
 } from '@googleforcreators/design-system';
 import { forwardRef } from '@googleforcreators/react';
 
@@ -42,11 +44,20 @@ const Button = styled(dsButton)`
       border-color: ${theme.colors.bg.secondary};
       background-color: ${theme.colors.bg.secondary};
     `}
-  ${({ hasText }) =>
+  ${({ hasText, theme }) =>
     hasText &&
     css`
       padding: 2px 0 2px 8px;
       width: auto;
+      ${themeHelpers.expandPresetStyles({
+        preset: {
+          ...theme.typography.presets.paragraph[
+            THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
+          ],
+        },
+        theme,
+      })};
+
       span {
         padding-left: 6px;
       }
