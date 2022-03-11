@@ -163,7 +163,6 @@ function GoogleAnalyticsSettings({
           a: (
             <InlineLink
               href={analyticsLink}
-              rel="noreferrer"
               target="_blank"
               size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
               onClick={onSiteKitClick}
@@ -198,7 +197,6 @@ function GoogleAnalyticsSettings({
                   a: (
                     <InlineLink
                       href="https://wp.stories.google/docs/seo/"
-                      rel="noreferrer"
                       target="_blank"
                       size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                       onClick={onAutoAnalyticsClick}
@@ -268,7 +266,6 @@ function GoogleAnalyticsSettings({
                 a: (
                   <InlineLink
                     href={TEXT.CONTEXT_LINK}
-                    rel="noreferrer"
                     target="_blank"
                     size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                     as="a"

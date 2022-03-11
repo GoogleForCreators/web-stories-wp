@@ -92,7 +92,6 @@ function ErrorActions({ error, errorInfo }) {
           size={BUTTON_SIZES.SMALL}
           href={reportUrl}
           target="_blank"
-          rel="noreferrer"
         >
           {__('Report Error', 'web-stories')}
         </Button>

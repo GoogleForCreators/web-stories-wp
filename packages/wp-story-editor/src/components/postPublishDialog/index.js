@@ -75,7 +75,6 @@ function PostPublishDialog() {
                 size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                 href={storyURL}
                 target="_blank"
-                rel="noopener noreferrer"
                 onClick={onViewStoryClick}
               />
             ),

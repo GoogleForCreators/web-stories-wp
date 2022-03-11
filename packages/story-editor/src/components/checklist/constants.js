@@ -500,7 +500,6 @@ export const PRIORITY_COPY = {
           a: (
             <Link
               href={__('https://wp.stories.google/docs/', 'web-stories')}
-              rel="noreferrer"
               target="_blank"
               onClick={onAmpErrorClick}
               size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}

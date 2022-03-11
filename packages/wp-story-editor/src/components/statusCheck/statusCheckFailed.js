@@ -51,7 +51,6 @@ function StatusCheckFailed({ isOpen, onClose }) {
                 size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                 href={SUPPORT_URL}
                 target="_blank"
-                rel="noopener noreferrer"
                 onClick={onSupportClick}
               />
             ),

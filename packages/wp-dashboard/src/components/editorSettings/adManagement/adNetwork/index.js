@@ -127,7 +127,6 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
               a: (
                 <InlineLink
                   href={link}
-                  rel="noreferrer"
                   target="_blank"
                   onClick={handleMonetizationClick}
                   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
@@ -136,7 +135,6 @@ function AdNetworkSettings({ adNetwork: adNetworkRaw, handleUpdate }) {
               help: (
                 <InlineLink
                   href={TEXT.HELPER_LINK_ADSENSE_HELP}
-                  rel="noreferrer"
                   target="_blank"
                   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                 />

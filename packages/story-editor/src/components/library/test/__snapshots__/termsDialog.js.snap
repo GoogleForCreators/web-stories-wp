@@ -53,7 +53,6 @@ exports[`TermsDialog should render 1`] = `
   aria-label="Learn more by visiting Web Stories for WordPress"
   class="c0"
   href="https://wp.stories.google/docs#Terms"
-  rel="noreferrer"
   target="_blank"
 >
   <span>

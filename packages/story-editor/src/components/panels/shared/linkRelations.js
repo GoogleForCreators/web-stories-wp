@@ -93,7 +93,6 @@ function LinkRelations({ rel, onChangeRel }) {
           </CheckboxWrapper>
         ))}
         <Link
-          rel="noopener noreferrer"
           target="_blank"
           href={relHelpLink}
           size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}

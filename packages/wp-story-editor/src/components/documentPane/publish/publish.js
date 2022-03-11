@@ -378,7 +378,6 @@ function PublishPanel({ nameOverride }) {
                 <Required />
                 {canManageSettings && (
                   <Link
-                    rel="noopener noreferrer"
                     target="_blank"
                     href={dashboardSettingsLink}
                     size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}

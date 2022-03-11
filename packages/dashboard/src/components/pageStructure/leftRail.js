@@ -225,7 +225,6 @@ function LeftRail() {
                         : path.label
                     )}
                     {...(path.isExternal && {
-                      rel: 'noreferrer',
                       target: '_blank',
                       onClick: (evt) => onExternalLinkClick(evt, path),
                     })}
@@ -269,7 +268,6 @@ function LeftRail() {
                       : path.label
                   }
                   {...(path.isExternal && {
-                    rel: 'noreferrer',
                     target: '_blank',
                     onClick: (evt) => onExternalLinkClick(evt, path),
                   })}

@@ -58,7 +58,6 @@ const Attribution = ({ author, url }) => {
       onBlur={makeInactive}
       href={url}
       target="_blank"
-      rel="noreferrer"
     >
       <StyledText
         forwardedAs="span"

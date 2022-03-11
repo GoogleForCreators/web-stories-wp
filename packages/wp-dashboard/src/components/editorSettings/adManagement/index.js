@@ -120,7 +120,6 @@ function AdManagement({
           a: (
             <InlineLink
               href={adsenseLink}
-              rel="noreferrer"
               target="_blank"
               size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
               onClick={onSiteKitClick}
@@ -146,7 +145,6 @@ function AdManagement({
               a: (
                 <InlineLink
                   href={TEXT.HELPER_LINK_NONE}
-                  rel="noreferrer"
                   target="_blank"
                   onClick={handleMonetizationClick}
                   size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}

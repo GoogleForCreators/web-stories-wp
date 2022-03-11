@@ -87,7 +87,6 @@ function PostLockDialog({
             size={BUTTON_SIZES.SMALL}
             href={previewLink}
             target="_blank"
-            rel="noreferrer"
           >
             {__('Preview', 'web-stories')}
           </Button>

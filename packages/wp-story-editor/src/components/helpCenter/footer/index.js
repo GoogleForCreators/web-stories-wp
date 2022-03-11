@@ -101,28 +101,13 @@ export default function Footer() {
         )}
       </Text>
       <Links>
-        <Link
-          href={DOCS_URL}
-          target="_blank"
-          rel="noreferrer"
-          onClick={onDocsClick}
-        >
+        <Link href={DOCS_URL} target="_blank" onClick={onDocsClick}>
           {__('Read Start Guide', 'web-stories')}
         </Link>
-        <Link
-          href={SUPPORT_URL}
-          target="_blank"
-          rel="noreferrer"
-          onClick={onSupportClick}
-        >
+        <Link href={SUPPORT_URL} target="_blank" onClick={onSupportClick}>
           {__('Visit Support Forums', 'web-stories')}
         </Link>
-        <Link
-          href={YOUTUBE_URL}
-          target="_blank"
-          rel="noreferrer"
-          onClick={onYouTubeClick}
-        >
+        <Link href={YOUTUBE_URL} target="_blank" onClick={onYouTubeClick}>
           {__('Storytime YouTube Series', 'web-stories')}
         </Link>
       </Links>

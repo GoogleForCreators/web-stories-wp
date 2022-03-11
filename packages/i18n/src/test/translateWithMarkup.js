@@ -93,12 +93,8 @@ describe('TranslateWithMarkup component', () => {
     const result = renderToStaticMarkup(
       <TranslateWithMarkup
         mapping={{
-          a: (
-            <Link href="https://example.com" target="_blank" rel="noreferrer" />
-          ),
-          a2: (
-            <Link href="https://example.org" target="_blank" rel="noreferrer" />
-          ),
+          a: <Link href="https://example.com" target="_blank" />,
+          a2: <Link href="https://example.org" target="_blank" />,
         }}
       >
         {'Read the<br/><a>Get Started story</a>, or <a2>this blog post</a2>!'}
@@ -106,16 +102,14 @@ describe('TranslateWithMarkup component', () => {
     );
 
     expect(result).toBe(
-      'Read the<br/><a href="https://example.com" target="_blank" rel="noreferrer">Get Started story</a>, or <a href="https://example.org" target="_blank" rel="noreferrer">this blog post</a>!'
+      'Read the<br/><a href="https://example.com" target="_blank">Get Started story</a>, or <a href="https://example.org" target="_blank">this blog post</a>!'
     );
   });
 
   it('does not preserve HTML attributes', () => {
     const result = renderToStaticMarkup(
       <TranslateWithMarkup mapping={{ a: <a href="https://example.com" /> }}>
-        {
-          'This is a <a href="https://example.org" target="_blank" rel="noreferrer">link</a>!'
-        }
+        {'This is a <a href="https://example.org" target="_blank" >link</a>!'}
       </TranslateWithMarkup>
     );
 

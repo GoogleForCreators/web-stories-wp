@@ -59,29 +59,6 @@ describe('WithLink', () => {
     );
   }
 
-  describe('a[target]', () => {
-    it('should use target=_blank', async () => {
-      render(withLink());
-      const a = screen.getByRole('link');
-      await expect(a.target).toBe('_blank');
-      await expect(a.rel).toBe('noreferrer');
-    });
-  });
-
-  describe('a[rel]', () => {
-    it('should use rel=noreferrer', async () => {
-      render(withLink());
-      const a = screen.getByRole('link');
-      await expect(a.rel).toBe('noreferrer');
-    });
-
-    it('should use rel=noreferrer nofollow', async () => {
-      render(withLink({ rel: ['nofollow'] }));
-      const a = screen.getByRole('link');
-      await expect(a.rel).toBe('nofollow noreferrer');
-    });
-  });
-
   describe('a[data-tooltip-icon]', () => {
     it('should not add data-tooltip-icon attribute if there is no icon', async () => {
       render(withLink({ icon: '' }));

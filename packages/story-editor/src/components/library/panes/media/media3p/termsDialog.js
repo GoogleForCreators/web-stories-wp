@@ -74,7 +74,6 @@ function TermsDialog() {
               <Link
                 size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
                 href={TERMS_URL}
-                rel="noreferrer"
                 target="_blank"
                 aria-label={__(
                   'Learn more by visiting Web Stories for WordPress',

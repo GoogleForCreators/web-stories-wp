@@ -43,7 +43,7 @@ export const _default = () => (
 );
 
 export const ExternalLink = () => (
-  <Link href="https://example.com" target="_blank" rel="noreferrer">
+  <Link href="https://example.com" target="_blank">
     {`Support`}
   </Link>
 );

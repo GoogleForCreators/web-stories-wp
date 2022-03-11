@@ -97,7 +97,6 @@ export function UnsplashAttribution() {
     <a
       href={unsplashUrl}
       target={'_blank'}
-      rel={'noreferrer'}
       aria-label={getAriaLabel(MEDIA_PROVIDER.unsplash)}
     >
       <AttributionPill aria-hidden>
@@ -118,7 +117,6 @@ export function CoverrAttribution() {
     <a
       href={coverrUrl}
       target={'_blank'}
-      rel={'noreferrer'}
       aria-label={getAriaLabel(MEDIA_PROVIDER.coverr)}
     >
       <AttributionPill aria-hidden>
@@ -139,7 +137,6 @@ export function TenorAttribution() {
     <a
       href={tenorUrl}
       target={'_blank'}
-      rel={'noreferrer'}
       aria-label={getAriaLabel(MEDIA_PROVIDER.tenor)}
     >
       <AttributionPill aria-hidden>

@@ -32,10 +32,8 @@ function WithLink({ element, children, ...rest }) {
   if (!url) {
     return children;
   }
-  rel.push('noreferrer');
   const urlWithProtocol = withProtocol(url);
   return (
-    // eslint-disable-next-line react/jsx-no-target-blank -- False positive
     <a
       href={urlWithProtocol}
       data-tooltip-icon={icon || undefined}

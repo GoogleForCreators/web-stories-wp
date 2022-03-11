@@ -131,7 +131,6 @@ export const TelemetryOptInBanner = forwardRef(
                       'https://policies.google.com/privacy',
                       'web-stories'
                     )}
-                    rel="noreferrer"
                     target="_blank"
                     aria-label={__(
                       'Learn more by visiting Google Privacy Policy',

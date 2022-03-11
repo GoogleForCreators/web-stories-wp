@@ -151,7 +151,6 @@ export function QuickTip({
                   a: (
                     <Link
                       size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
-                      rel="noreferrer noopener"
                       target="_blank"
                       href={href}
                     />

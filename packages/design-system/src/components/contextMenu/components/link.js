@@ -94,7 +94,6 @@ function Link({ id, onBlur, onClick, onFocus, openNewTab, ...props }) {
   const newTabProps = openNewTab
     ? {
         target: '_blank',
-        rel: 'noreferrer',
       }
     : {};
 

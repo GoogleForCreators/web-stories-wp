@@ -68,25 +68,13 @@ function Step1() {
   const translatedString = createInterpolateElement(
     __('Read the <a>Get Started story</a>', 'web-stories'),
     {
-      a: (
-        <Link
-          href={demoStoryURL}
-          onClick={onClick}
-          target="_blank"
-          rel="noreferrer"
-        />
-      ),
+      a: <Link href={demoStoryURL} onClick={onClick} target="_blank" />,
     }
   );
 
   return (
     <Wrapper>
-      <Link
-        href={demoStoryURL}
-        onClick={onClick}
-        target="_blank"
-        rel="noreferrer"
-      >
+      <Link href={demoStoryURL} onClick={onClick} target="_blank">
         <Image
           name="tips.png"
           name2x="tips-2x.png"

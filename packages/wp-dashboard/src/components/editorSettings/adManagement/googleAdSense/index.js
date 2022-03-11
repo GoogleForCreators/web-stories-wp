@@ -199,7 +199,6 @@ function GoogleAdSenseSettings({
             a: (
               <InlineLink
                 href={TEXT.PUBLISHER_ID_CONTEXT_LINK}
-                rel="noreferrer"
                 target="_blank"
                 onClick={handleClick}
                 size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
@@ -243,7 +242,6 @@ function GoogleAdSenseSettings({
             a: (
               <InlineLink
                 href={TEXT.SLOT_ID_CONTEXT_LINK}
-                rel="noreferrer"
                 target="_blank"
                 size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
               />
