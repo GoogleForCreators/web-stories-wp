@@ -19,18 +19,42 @@
  */
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
+import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
  */
-import { IconButton } from './shared';
+import { useStory } from '../../../app';
+import { MIN_MAX } from '../../panels/design/sizePosition/opacity';
+import { Input, useProperties } from './shared';
 
 function LayerOpacity() {
+  const { opacity, type } = useProperties(['opacity', 'type']);
+  const updateSelectedElements = useStory(
+    (state) => state.actions.updateSelectedElements
+  );
+
+  const handleOpacityChange = (_, value) => {
+    updateSelectedElements({
+      properties: () => ({
+        opacity: value ?? 100,
+      }),
+    });
+
+    trackEvent('floating_menu', {
+      name: 'set_opacity',
+      element: type,
+    });
+  };
+
   return (
-    <IconButton
-      Icon={Icons.ColorDrop}
-      title={__('Change layer opacity', 'web-stories')}
-      onClick={() => {}}
+    <Input
+      suffix={<Icons.ColorDrop />}
+      value={opacity || 0}
+      aria-label={__('Opacity in percent', 'web-stories')}
+      onChange={handleOpacityChange}
+      min={MIN_MAX.OPACITY.MIN}
+      max={MIN_MAX.OPACITY.MAX}
     />
   );
 }
