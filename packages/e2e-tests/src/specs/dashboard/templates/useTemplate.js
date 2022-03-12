@@ -18,7 +18,6 @@
  * External dependencies
  */
 import {
-  insertStoryTitle,
   takeSnapshot,
   visitDashboard,
   withPlugin,
@@ -67,10 +66,8 @@ describe('Template', () => {
     // Wait for title input to load before continuing.
     await page.waitForSelector('input[placeholder="Add title"]');
 
-    await insertStoryTitle('Use existing template for new story');
-
     // Open style pane
-    await expect(page).toClick('li', { text: /^Style$/ });
+    await expect(page).toClick('li[role="tab"]', { text: /^Style$/ });
 
     await expect(page).toMatch('Layers');
     await expect(page).toMatchElement('input[placeholder="Add title"]');

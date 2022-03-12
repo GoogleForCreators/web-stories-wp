@@ -160,6 +160,15 @@ export const createStoryFromTemplate = async (config, template) => {
       status: 'auto-draft',
       featuredMedia: {
         id: 0,
+        url: '',
+      },
+      title: '',
+      publisherLogo: {
+        url: '',
+      },
+      pages: [],
+      metadata: {
+        publisher: '',
       },
     },
     pages,
