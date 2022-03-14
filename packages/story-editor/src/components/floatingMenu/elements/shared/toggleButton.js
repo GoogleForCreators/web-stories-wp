@@ -18,12 +18,16 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { forwardRef } from '@googleforcreators/react';
 import {
   ContextMenuComponents,
   BUTTON_TYPES,
 } from '@googleforcreators/design-system';
 
-function ToggleButton({ isToggled, children, ...rest }) {
+const ToggleButton = forwardRef(function ToggleButton(
+  { isToggled, children, ...rest },
+  ref
+) {
   // Add extra properties to indicate this is a pushbutton, only if isToggled is a boolean
   const toggleProps =
     typeof isToggled === 'boolean'
@@ -34,11 +38,11 @@ function ToggleButton({ isToggled, children, ...rest }) {
       : {};
 
   return (
-    <ContextMenuComponents.MenuButton {...toggleProps} {...rest}>
+    <ContextMenuComponents.MenuButton ref={ref} {...toggleProps} {...rest}>
       {children}
     </ContextMenuComponents.MenuButton>
   );
-}
+});
 
 ToggleButton.propTypes = {
   isToggled: PropTypes.bool,

@@ -1,8 +1,8 @@
 <?php
 /**
- * Plugin Name: E2E Tests Disable default templates
+ * Plugin Name: E2E Tests CORS error
  * Plugin URI:  https://github.com/googleforcreators/web-stories-wp
- * Description: Disable default templates.
+ * Description: CORS errors on purpose for testing.
  * Author:      Google
  * Author URI:  https://opensource.google.com
  * License: Apache License 2.0
@@ -28,12 +28,35 @@
  * limitations under the License.
  */
 
-namespace Google\Web_Stories\E2E\DefaultTemplates;
+namespace Google\Web_Stories\E2E\CORS;
 
-function change_get_settings( array $settings ): array {
-	$settings['canViewDefaultTemplates'] = false;
+/**
+ * Override the REST request to show an invalid response with cors errors.
+ *
+ * @since 1.19.0
+ *
+ * @param \WP_REST_Response $response Response object.
+ *
+ * @return \WP_REST_Response
+ */
+function change_response( $response, $post, $request ) {
+	// Only filter requests for cors check.
+	if ( $request['per_page'] !== 10 && $request['_fields'] !== 'source_url' ) {
+		return $response;
+	}
+	/**
+	 * Response data.
+	 *
+	 * @var array $data
+	 */
+	$data = $response->get_data();
 
-	return $settings;
+	$data['source_url']             = 'https://ps.w.org/web-stories/assets/banner-772x250.png';
+	$data['media_details']['sizes'] = [];
+
+	$response->set_data( $data );
+
+	return $response;
 }
-add_filter( 'web_stories_editor_settings', __NAMESPACE__ . '\change_get_settings' );
-add_filter( 'web_stories_dashboard_settings', __NAMESPACE__ . '\change_get_settings' );
+
+add_filter( 'web_stories_rest_prepare_attachment', __NAMESPACE__ . '\change_response', 20, 3 );

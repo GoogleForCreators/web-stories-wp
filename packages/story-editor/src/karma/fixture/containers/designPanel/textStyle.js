@@ -78,6 +78,10 @@ export class TextStyle extends AbstractPanel {
     return this.getByRole('textbox', { name: /Line-height/ });
   }
 
+  align(name) {
+    return this.getByRole('button', { name });
+  }
+
   get padding() {
     return this.getByRole('textbox', { name: /Padding/ });
   }
