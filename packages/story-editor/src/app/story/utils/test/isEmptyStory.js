@@ -59,4 +59,36 @@ describe('isEmptyStory', () => {
     storyWithExtraElements[0].elements.push({});
     expect(isEmptyStory(storyWithExtraElements)).toBeFalse();
   });
+
+  it('should not count story with an attachment as empty', () => {
+    const storyWithAttachment = [createPage()];
+    const testUrl = 'https://testurl.com';
+    const pageAttachmentObject = { url: testUrl };
+
+    storyWithAttachment[0].pageAttachment = pageAttachmentObject;
+    expect(isEmptyStory(storyWithAttachment)).toBeFalse();
+  });
+
+  it('should count story without the pageAttachment property as empty', () => {
+    const storyWithoutAttachment = [createPage()];
+
+    expect(isEmptyStory(storyWithoutAttachment)).toBeTrue();
+  });
+
+  it('should count story without the pageAttachment property set to null as empty', () => {
+    const storyWithoutAttachment = [createPage()];
+    const pageAttachmentObject = null;
+
+    storyWithoutAttachment[0].pageAttachment = pageAttachmentObject;
+    expect(isEmptyStory(storyWithoutAttachment)).toBeTrue();
+  });
+
+  it('should count story that has the pageAttachment property with an empty url string as empty', () => {
+    const storyWithoutAttachment = [createPage()];
+    const testUrl = '';
+    const pageAttachmentObject = { url: testUrl };
+
+    storyWithoutAttachment[0].pageAttachment = pageAttachmentObject;
+    expect(isEmptyStory(storyWithoutAttachment)).toBeTrue();
+  });
 });

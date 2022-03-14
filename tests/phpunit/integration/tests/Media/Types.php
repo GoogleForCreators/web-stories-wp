@@ -38,31 +38,46 @@ class Types extends TestCase {
 
 	/**
 	 * @covers ::get_allowed_mime_types
+	 * @group ms-excluded
 	 */
 	public function test_get_allowed_mime_types(): void {
 		if ( $this->supportsWebP() ) {
 			$expected = [
-				'image' => [
+				'image'   => [
 					'image/webp',
 					'image/png',
 					'image/jpeg',
 					'image/gif',
 				],
-				'audio' => [],
-				'video' => [
+				'audio'   => [
+					'audio/mpeg',
+					'audio/aac',
+					'audio/wav',
+					'audio/ogg',
+				],
+				'caption' => [ 'text/vtt' ],
+				'vector'  => [],
+				'video'   => [
 					'video/mp4',
 					'video/webm',
 				],
 			];
 		} else {
 			$expected = [
-				'image' => [
+				'image'   => [
 					'image/png',
 					'image/jpeg',
 					'image/gif',
 				],
-				'audio' => [],
-				'video' => [
+				'audio'   => [
+					'audio/mpeg',
+					'audio/aac',
+					'audio/wav',
+					'audio/ogg',
+				],
+				'caption' => [ 'text/vtt' ],
+				'vector'  => [],
+				'video'   => [
 					'video/mp4',
 					'video/webm',
 				],
@@ -75,26 +90,52 @@ class Types extends TestCase {
 	}
 
 	/**
-	 * @covers ::get_allowed_image_mime_types
+	 * @group ms-required
+	 * @covers ::get_allowed_mime_types
 	 */
-	public function test_get_allowed_image_mime_types(): void {
+	public function test_get_allowed_mime_types_multisite(): void {
 		if ( $this->supportsWebP() ) {
 			$expected = [
-				'image/webp',
-				'image/png',
-				'image/jpeg',
-				'image/gif',
+				'image'   => [
+					'image/webp',
+					'image/png',
+					'image/jpeg',
+					'image/gif',
+				],
+				'audio'   => [
+					'audio/mpeg',
+					'audio/wav',
+					'audio/ogg',
+				],
+				'caption' => [ 'text/vtt' ],
+				'vector'  => [],
+				'video'   => [
+					'video/mp4',
+					'video/webm',
+				],
 			];
 		} else {
-
 			$expected = [
-				'image/png',
-				'image/jpeg',
-				'image/gif',
+				'image'   => [
+					'image/png',
+					'image/jpeg',
+					'image/gif',
+				],
+				'audio'   => [
+					'audio/mpeg',
+					'audio/wav',
+					'audio/ogg',
+				],
+				'caption' => [ 'text/vtt' ],
+				'vector'  => [],
+				'video'   => [
+					'video/mp4',
+					'video/webm',
+				],
 			];
 		}
 
-		$actual = $this->instance->get_allowed_image_mime_types();
+		$actual = $this->instance->get_allowed_mime_types();
 
 		$this->assertEqualSets( $expected, $actual );
 	}

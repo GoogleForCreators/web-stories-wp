@@ -83,10 +83,33 @@ const DEFAULT_PADDING = {
   hasHiddenPadding: false,
 };
 
-function Wrapper({ children }) {
+const textElement = {
+  id: '1',
+  textAlign: 'normal',
+  fontSize: 30,
+  lineHeight: 1,
+  font: {
+    family: 'ABeeZee',
+  },
+  x: 0,
+  y: 0,
+  height: 100,
+  width: 120,
+  rotationAngle: 0,
+  padding: DEFAULT_PADDING,
+  backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
+};
+
+let mockUpdateSelectedElements;
+
+function getAndSetMockUpdateSelectedElements() {
+  mockUpdateSelectedElements = jest.fn();
+  return mockUpdateSelectedElements;
+}
+function Wrapper({ selectedElements, children }) {
   const storyContextValue = {
     state: {
-      selectedElements: [],
+      selectedElements: selectedElements,
       story: {
         globalStoryStyles: {
           ...{ colors: [], textStyles: [] },
@@ -96,7 +119,11 @@ function Wrapper({ children }) {
         },
       },
     },
-    actions: { updateStory: jest.fn(), updateElementsById: jest.fn() },
+    actions: {
+      updateStory: jest.fn(),
+      updateElementsById: jest.fn(),
+      updateSelectedElements: getAndSetMockUpdateSelectedElements(),
+    },
   };
   return (
     <StoryContext.Provider value={storyContextValue}>
@@ -177,27 +204,8 @@ Wrapper.propTypes = {
 };
 
 describe('Panels/TextStyle', () => {
-  let textElement;
-
   beforeEach(() => {
     window.fetch.resetMocks();
-
-    textElement = {
-      id: '1',
-      textAlign: 'normal',
-      fontSize: 30,
-      lineHeight: 1,
-      font: {
-        family: 'ABeeZee',
-      },
-      x: 0,
-      y: 0,
-      height: 100,
-      width: 120,
-      rotationAngle: 0,
-      padding: DEFAULT_PADDING,
-      backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
-    };
 
     mockControls = {};
   });
@@ -235,37 +243,29 @@ describe('Panels/TextStyle', () => {
 
   describe('FontControls', () => {
     it('should select font', async () => {
-      const { pushUpdate } = arrange([textElement]);
-      await act(() =>
-        mockControls.font.onChange({
-          id: 'Neu Font',
-          family: 'Neu Font',
-          service: 'foo.bar.baz',
-          styles: ['italic', 'regular'],
-          weights: [400],
-          variants: [
-            [0, 400],
-            [1, 400],
-          ],
-          fallbacks: ['fallback1'],
+      arrange([textElement]);
+      const newFont = {
+        id: 'Neu Font',
+        family: 'Neu Font',
+        service: 'foo.bar.baz',
+        styles: ['italic', 'regular'],
+        weights: [400],
+        variants: [
+          [0, 400],
+          [1, 400],
+        ],
+        fallbacks: ['fallback1'],
+      };
+      await act(() => mockControls.font.onChange(newFont));
+
+      // updateSelectedElement should get called with the updated font object when the font gets updated,
+      // useRichText also calls updateSelectedElements with the element's content as a side effect. We want to check
+      // that the call for the font update matches. So just grab the first mock.call
+      const updatingFontFunction = mockUpdateSelectedElements.mock.calls[0][0];
+      expect(updatingFontFunction.properties(textElement)).toMatchObject(
+        expect.objectContaining({
+          font: newFont,
         })
-      );
-      expect(pushUpdate).toHaveBeenCalledWith(
-        {
-          font: {
-            id: 'Neu Font',
-            family: 'Neu Font',
-            service: 'foo.bar.baz',
-            styles: ['italic', 'regular'],
-            weights: [400],
-            variants: [
-              [0, 400],
-              [1, 400],
-            ],
-            fallbacks: ['fallback1'],
-          },
-        },
-        true
       );
     });
 

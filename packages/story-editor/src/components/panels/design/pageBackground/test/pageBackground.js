@@ -49,17 +49,18 @@ function MediaUpload({ render, onSelect }) {
 
 function arrange(selectedElements) {
   const configValue = {
-    allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
-    allowedFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
-    allowedImageMimeTypes: [
-      'image/png',
-      'image/jpeg',
-      'image/jpg',
-      'image/gif',
-    ],
     allowedMimeTypes: {
-      image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
-      video: [],
+      audio: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
+      image: [
+        'image/png',
+        'image/jpeg',
+        'image/jpg',
+        'image/gif',
+        'image/webp',
+      ],
+      caption: ['text/vtt'],
+      vector: [],
+      video: ['video/mp4', 'video/webm'],
     },
     capabilities: {
       hasUploadMediaAction: true,

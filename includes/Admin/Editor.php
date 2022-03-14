@@ -346,23 +346,20 @@ class Editor extends Service_Base implements HasRequirements {
 		/** This filter is documented in wp-admin/includes/post.php */
 		$show_locked_dialog = apply_filters( 'show_post_locked_dialog', true, $post, $user );
 		$nonce              = wp_create_nonce( 'wp_rest' );
-		$mime_types         = $this->types->get_allowed_mime_types();
-		$image_mime_types   = $this->types->get_allowed_image_mime_types();
-		$audio_mime_types   = $this->types->get_allowed_audio_mime_types();
 
 		$story = new Story();
 		$story->load_from_post( $post );
+
+		// Explicitly setting these flags which became the default in PHP 8.1.
+		// Needed for correct single quotes in the editor & output.
+		// See https://github.com/GoogleForCreators/web-stories-wp/issues/10809.
+		$publisher_name = html_entity_decode( $story->get_publisher_name(), ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML401 );
 
 		$settings = [
 			'autoSaveInterval'        => \defined( 'AUTOSAVE_INTERVAL' ) ? AUTOSAVE_INTERVAL : null,
 			'isRTL'                   => is_rtl(),
 			'locale'                  => $this->locale->get_locale_settings(),
-			'allowedFileTypes'        => $this->types->get_allowed_file_types(),
-			'allowedImageFileTypes'   => $this->types->get_file_type_exts( $image_mime_types ),
-			'allowedImageMimeTypes'   => $image_mime_types,
-			'allowedAudioFileTypes'   => $this->types->get_file_type_exts( $audio_mime_types ),
-			'allowedAudioMimeTypes'   => $audio_mime_types,
-			'allowedMimeTypes'        => $mime_types,
+			'allowedMimeTypes'        => $this->types->get_allowed_mime_types(),
 			'postType'                => $this->story_post_type->get_slug(),
 			'storyId'                 => $story_id,
 			'dashboardLink'           => $dashboard_url,
@@ -392,7 +389,7 @@ class Editor extends Service_Base implements HasRequirements {
 				'storyLocking'   => rest_url( sprintf( '%s/%s/lock/', $this->story_post_type->get_rest_url(), $story_id ) ),
 			],
 			'metadata'                => [
-				'publisher' => $story->get_publisher_name(),
+				'publisher' => $publisher_name,
 			],
 			'postLock'                => [
 				'interval'         => $time_window,

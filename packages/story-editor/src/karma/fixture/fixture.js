@@ -94,14 +94,12 @@ export const FIXTURE_DEFAULT_CONFIG = {
   storyId: 1,
   api: {},
   allowedMimeTypes: {
+    audio: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
     image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/webp'],
+    caption: ['text/vtt'],
+    vector: ['image/svg+xml'],
     video: ['video/mp4', 'video/webm'],
   },
-  allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4', 'webp', 'webm'],
-  allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
-  allowedImageMimeTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
-  allowedAudioFileTypes: ['mp3', 'aac', 'wav', 'ogg'],
-  allowedAudioMimeTypes: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
   capabilities: {
     hasUploadMediaAction: true,
   },

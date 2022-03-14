@@ -163,7 +163,7 @@ class SVG extends Service_Base {
 	 * @return array
 	 */
 	public function web_stories_allowed_mime_types( array $mime_types ): array {
-		$mime_types['image'][] = self::MIME_TYPE;
+		$mime_types['vector'][] = self::MIME_TYPE;
 
 		return $mime_types;
 	}

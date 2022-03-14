@@ -41,7 +41,7 @@ const fakeStories = [
     link: 'https://example.com',
     editStoryLink: 'https://example.com',
     previewLink: 'https://example.com',
-    featuredMediaUrl: 'http://placekitten.com/640/853',
+    featuredMediaUrl: 'http://localhost:9876/__static__/featured-media-1.png',
     capabilities: {
       hasEditAction: true,
       hasDeleteAction: true,
@@ -56,7 +56,7 @@ const fakeStories = [
     link: 'https://example.com',
     editStoryLink: 'https://example.com',
     previewLink: 'https://example.com',
-    featuredMediaUrl: 'http://placekitten.com/640/853',
+    featuredMediaUrl: 'http://localhost:9876/__static__/featured-media-2.png',
     capabilities: {
       hasEditAction: true,
       hasDeleteAction: true,
@@ -71,7 +71,7 @@ const fakeStories = [
     link: 'https://example.com',
     editStoryLink: 'https://example.com',
     previewLink: 'https://example.com',
-    featuredMediaUrl: 'http://placekitten.com/640/853',
+    featuredMediaUrl: 'http://localhost:9876/__static__/featured-media-3.png',
     locked: true,
     lockUser: {
       name: 'Batgirl',

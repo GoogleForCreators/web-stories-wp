@@ -36,6 +36,11 @@ const isEmptyStory = (pages) => {
     return false;
   }
 
+  const hasPageAttachment = pages[0].pageAttachment?.url;
+  if (hasPageAttachment) {
+    return false;
+  }
+
   const hasDefaultBackgroundColor = shallowEqual(
     DEFAULT_PAGE_BACKGROUND_COLOR.color,
     pages[0].backgroundColor.color

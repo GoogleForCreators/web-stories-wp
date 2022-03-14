@@ -33,7 +33,7 @@ describe('Panel: Style Presets', () => {
   const selectTarget = async (target) => {
     await fixture.events.keyboard.down('Shift');
     await fixture.events.mouse.seq(({ moveRel, down, up }) => [
-      moveRel(target, 50, 20),
+      moveRel(target, 20, 20),
       down(),
       up(),
     ]);
@@ -54,6 +54,11 @@ describe('Panel: Style Presets', () => {
   describe('CUJ: Creator can Apply or Save Text Style from/to Their Preset Library: Save Text Style', () => {
     it('should allow adding new text style from a text element', async () => {
       await fixture.editor.library.textTab.click();
+
+      // Verify that no styles are added currently.
+      const noStylesText = fixture.screen.getByText('No Styles Saved');
+      expect(noStylesText).toBeDefined();
+
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
       );
@@ -64,9 +69,6 @@ describe('Panel: Style Presets', () => {
         expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
       });
 
-      // Verify that no styles are added currently.
-      const noStylesText = fixture.screen.getByText('No Styles Saved');
-      expect(noStylesText).toBeDefined();
       // Click to add a style and verify it was added.
       panel = fixture.editor.inspector.designPanel.textStyle;
       await fixture.events.click(panel.addStyle);
@@ -79,18 +81,23 @@ describe('Panel: Style Presets', () => {
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
       );
+
+      // Select background for being able to insert a text.
+      await fixture.events.mouse.clickOn(
+        fixture.editor.canvas.framesLayer.frames[0].node,
+        '90%',
+        '90%'
+      );
       // Add a heading.
       await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
       await waitFor(() => {
         if (!fixture.editor.canvas.framesLayer.frames[2].node) {
           throw new Error('node not ready');
         }
-        expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
+        expect(fixture.editor.canvas.framesLayer.frames[2].node).toBeTruthy();
       });
       // Select the paragraph as well.
-      await fixture.events.sleep(4000);
       await selectTarget(fixture.editor.canvas.framesLayer.frames[1].node);
-      await fixture.events.sleep(4000);
 
       panel = fixture.editor.inspector.designPanel.textStyle;
 
@@ -160,10 +167,18 @@ describe('Panel: Style Presets', () => {
       panel = fixture.editor.inspector.designPanel.textStyle;
       await fixture.events.click(panel.addStyle);
 
+      // Select background for being able to insert a text.
+      await fixture.events.mouse.clickOn(
+        fixture.editor.canvas.framesLayer.frames[0].node,
+        '90%',
+        '90%'
+      );
+
       // Add a heading.
       await fixture.editor.library.textTab.click();
       await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
 
+      panel = fixture.editor.inspector.designPanel.textStyle;
       await fixture.events.click(panel.applyStyle);
       const storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElements[0].fontSize).toEqual(
@@ -182,6 +197,13 @@ describe('Panel: Style Presets', () => {
         return fixture.editor.library.text.preset('Paragraph');
       });
       await fixture.events.click(paragraphButton);
+
+      // Select background for being able to insert a text.
+      await fixture.events.mouse.clickOn(
+        fixture.editor.canvas.framesLayer.frames[0].node,
+        '90%',
+        '90%'
+      );
       // Add a heading.
       await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
       panel = fixture.editor.inspector.designPanel.textStyle;

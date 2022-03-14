@@ -118,7 +118,7 @@ function getExtractedInlineValue(value) {
   return value !== MULTIPLE_VALUE ? value : null;
 }
 
-function getTextInlineStyles(content) {
+export function getTextInlineStyles(content) {
   const { color, fontWeight, isItalic, isUnderline, letterSpacing } =
     getHTMLInfo(content);
   return {

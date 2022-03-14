@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,18 +13,4 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-import mime from 'mime/lite';
-
-/**
- * Get the file extension for a given mime type.
- *
- * @param {string} mimeType Mime type.
- * @return {string} File extension.
- */
-export default function getExtensionFromMimeType(mimeType) {
-  return mime.getExtension(mimeType);
-}
+export { default } from './corsCheck';

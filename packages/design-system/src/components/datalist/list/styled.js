@@ -38,6 +38,8 @@ export const List = styled.div`
   border-radius: ${({ theme }) => theme.borders.radius.small};
 
   ${themeHelpers.focusableOutlineCSS}
+
+  ${({ $listStyleOverrides }) => $listStyleOverrides}
 `;
 
 export const Group = styled.ul`

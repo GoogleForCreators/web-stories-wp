@@ -36,10 +36,11 @@ import { getDefinitionForType } from '@googleforcreators/elements';
  */
 import StoryPropTypes from '../../types';
 import { useStory, useCanvas } from '../../app';
+import { Z_INDEX_EDIT_LAYER } from '../../constants/zIndex';
 import useVideoTrim from '../videoTrim/useVideoTrim';
 import VideoTrimmer from '../videoTrim/videoTrimmer';
 import EditElement from './editElement';
-import { Layer, PageArea, FooterArea, Z_INDEX } from './layout';
+import { Layer, PageArea, FooterArea } from './layout';
 import useFocusCanvas from './useFocusCanvas';
 import SingleSelectionMoveable from './singleSelectionMoveable';
 
@@ -129,7 +130,7 @@ function EditLayerForElement({ element, showOverflow }) {
       aria-label={_x('Edit layer', 'compound noun', 'web-stories')}
       data-testid="editLayer"
       grayout={editModeGrayout}
-      zIndex={Z_INDEX.EDIT}
+      zIndex={Z_INDEX_EDIT_LAYER}
       onPointerDown={(evt) => {
         if (evt.target === ref.current || evt.target === pageAreaRef.current) {
           clearEditing();
