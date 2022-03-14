@@ -74,7 +74,7 @@ To configure the editor to your needs you can pass various config options to the
 ### `apiCallbacks`
 
 - type : `object`
-- description : takes various callback functions for story editor's side effects. One callback `saveStoryById` is not optional. For detailed documentation of `apiCallbacks`,  see [API Callbacks](./API-Callbacks.md) section.
+- description : Takes various callback functions for story editor's side effects. The only required API callback is `saveStoryById`. For detailed documentation of `apiCallbacks`,  see [API Callbacks](./API-Callbacks.md) section.
 
 
 

@@ -1,6 +1,6 @@
 # API Callbacks
 
-Side effects are added to the Story Editor by defining callbacks. One such callback is `saveStoryById` which is used to save stories and is the only required callback. Other callbacks can be used to add or handle functionalities like first-party media and custom page templates etc. All Callbacks can be asynchronous and should eventually resolve to their corresponding expected responses.
+Side effects are added to the Story Editor by defining callbacks. One such callback is `saveStoryById` which is used to save stories and is the only required callback. Other callbacks can be used to add or handle functionalities like first-party media and custom page templates etc. All API callbacks can be asynchronous and should eventually resolve to their corresponding expected responses.
 
 Below is a list of available api callbacks categoried in different sections.
 
@@ -10,7 +10,7 @@ Below is a list of available api callbacks categoried in different sections.
 
 ### `saveStoryById`
 
-The only required callback, used for saving stories. Properties described in the response would override the current state to the story.
+The only required callback, that is used for saving stories.
 
 Arguments
 
@@ -44,7 +44,7 @@ Arguments
         - `pages`
             - type: `array` <Page>
             - description: Array of page objects in the story. See [page object](#### Page object shape)
-  
+
 #### Page object shape
 
 - `elements`
@@ -124,7 +124,7 @@ An `object` with the following shape
 
 
 
-Expected response
+Example ( Expected response )
 
 ```json
 {
@@ -147,7 +147,7 @@ Expected response
 
 ### `getStoryById`
 
-Fallback of `initialEdits` prop of `StoryEditor` component. If `initialEdits` prop is undefined, this callback will be used to populate the initial story state.
+Fallback of `initialEdits` prop of `StoryEditor` component. If `initialEdits` prop is undefined, this callback will be used to populate the initial story.
 
 Arguments
 
@@ -198,7 +198,7 @@ Expected response
 
 
 
-Expected response
+Example ( Expected response )
 
 ```json
 {
@@ -397,7 +397,7 @@ An array of the template objects whose shape is described below.
 
 
 
-Expected response
+Example ( Expected response )
 
 ```json
 {
@@ -602,7 +602,7 @@ Expected response
 
 
 
-Expected response
+Example ( Expected response )
 
 ```json
 {
@@ -971,7 +971,7 @@ Expected response
     - description: Font metrics.
 
 
-Expected response
+Example ( Expected response )
 
 ```json
 {
@@ -1036,7 +1036,7 @@ Expected response
 | type     | string | YES      | one of `image` or `video` |
 | fileName | string | YES      | file name                 |
 
-Expected response
+Example ( Expected response )
 
 ```json
 {
@@ -1072,7 +1072,7 @@ Expected response
     - required: Yes
     - description: OG image.
 
-Expected response
+Example ( Expected response )
 
 ```json
 {
@@ -1116,7 +1116,7 @@ Expected response
     - description: Flag to know if the user can upload optimized media.
 
 
-Expected response
+Example ( Expected response )
 
 ```json
 {
