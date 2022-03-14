@@ -49,6 +49,7 @@ import {
   Layout,
   PostPublishDialog,
   StatusCheck,
+  CorsCheck,
   PostLock,
   MediaUpload,
 } from './components';
@@ -98,6 +99,7 @@ window.webStories.initializeStoryEditor = (id, config, initialEdits) => {
         <Layout />
         <PostPublishDialog />
         <StatusCheck />
+        <CorsCheck />
         <PostLock />
       </StoryEditor>
     </StrictMode>,

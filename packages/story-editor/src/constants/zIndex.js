@@ -26,10 +26,14 @@ export const Z_INDEX_CANVAS_SIDE_MENU = 3;
 // Floating element menu (a context menu) should be behind other popopups
 export const Z_INDEX_FLOATING_MENU = 4;
 
+// TODO these layers are taking priority over the floating menu but they can't.
+// Visually we want them in front of the floating menu but
+// they actually need to be behind to be usable. This is going to be a much bigger lift.
+// https://github.com/GoogleForCreators/web-stories-wp/issues/10892
 // Edit Layer holds footer, popups in footer need to be in front of floating menu
-export const Z_INDEX_EDIT_LAYER = Z_INDEX_FLOATING_MENU + 1;
+export const Z_INDEX_EDIT_LAYER = 3;
 
 // sibling inherits parent z-index of Z_INDEX_EDIT_LAYER
 // so popups nested in footer need to be placed above that
 // while still retaining position in the DOM for focus purposes
-export const Z_INDEX_FOOTER = Z_INDEX_EDIT_LAYER + 1;
+export const Z_INDEX_FOOTER = 3;

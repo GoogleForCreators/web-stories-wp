@@ -68,6 +68,19 @@ export class DesignMenu extends Container {
     return this.getByRole('checkbox', { name: 'Loop' });
   }
 
+  get textAlign() {
+    return this.getByRole('menuitem', { name: 'Change text alignment' });
+  }
+
+  textAlignIcon(name) {
+    return this.getByRoleIn(this.textAlign, 'img', { name });
+  }
+
+  textAlignOption(name) {
+    const dialog = this.getByRole('dialog', { name: 'Text alignment options' });
+    return this.getByRoleIn(dialog, 'menuitem', { name });
+  }
+
   get fontSize() {
     return this.getByRole('textbox', { name: /Font size/ });
   }
@@ -82,5 +95,9 @@ export class DesignMenu extends Container {
     const element = this._get(region, 'textColor', Color);
     element.label = 'Text color';
     return element;
+  }
+
+  get opacity() {
+    return this.getByRole('textbox', { name: /^Opacity in percent$/ });
   }
 }

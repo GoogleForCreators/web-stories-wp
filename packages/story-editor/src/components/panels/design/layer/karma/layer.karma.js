@@ -160,6 +160,9 @@ describe('Layer Panel', () => {
     await fixture.events.click(fixture.editor.inspector.insertTab);
     await fixture.editor.library.textTab.click();
     await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
+    // Select background for being able to insert another text.
+    const bgLayer = layerPanel.getLayerByInnerText('Background');
+    await fixture.events.click(bgLayer);
     await fixture.events.click(fixture.editor.library.text.preset('Title 2'));
 
     await fixture.events.click(fixture.editor.inspector.designTab);
@@ -180,6 +183,9 @@ describe('Layer Panel', () => {
     await fixture.events.click(fixture.editor.inspector.insertTab);
     await fixture.editor.library.textTab.click();
     await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
+    // Select background for being able to insert another text.
+    const bgLayer = layerPanel.getLayerByInnerText('Background');
+    await fixture.events.click(bgLayer);
     await fixture.events.click(fixture.editor.library.text.preset('Title 2'));
 
     await fixture.events.click(fixture.editor.inspector.designTab);

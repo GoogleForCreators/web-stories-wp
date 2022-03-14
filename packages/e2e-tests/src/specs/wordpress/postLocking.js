@@ -24,9 +24,8 @@ import {
   insertStoryTitle,
   publishStory,
   visitAdminPage,
-  activatePlugin,
-  deactivatePlugin,
   takeSnapshot,
+  withPlugin,
 } from '@web-stories-wp/e2e-test-utils';
 
 const percyCSS = `.dashboard-grid-item-date { display: none; }`;
@@ -35,6 +34,7 @@ const storyTitle = 'Test post lock';
 
 describe('Post Locking', () => {
   withExperimentalFeatures(['enablePostLocking']);
+  withPlugin('e2e-tests-post-lock-mock');
 
   beforeAll(async () => {
     await createNewStory();
@@ -42,12 +42,6 @@ describe('Post Locking', () => {
     await insertStoryTitle(storyTitle);
 
     await publishStory();
-
-    await activatePlugin('e2e-tests-post-lock-mock');
-  });
-
-  afterAll(async () => {
-    await deactivatePlugin('e2e-tests-post-lock-mock');
   });
 
   it('should be able to open the dashboard with locked story', async () => {
