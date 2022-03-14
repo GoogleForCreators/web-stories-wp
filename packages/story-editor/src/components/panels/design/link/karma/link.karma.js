@@ -234,8 +234,12 @@ describe('Link Panel', () => {
   describe('CUJ: Creator Can Add A Link: Link with Page Attachment', () => {
     beforeEach(async () => {
       // Select Page.
-      safezone = fixture.querySelector('[data-testid="safezone"]');
-      await clickOnTarget(safezone);
+      // Click the background element
+      await fixture.events.mouse.clickOn(
+        fixture.editor.canvas.framesLayer.frames[0].node,
+        10,
+        10
+      );
 
       // Add Page Attachment
       await setPageAttachmentLink('http://pageattachment.com');

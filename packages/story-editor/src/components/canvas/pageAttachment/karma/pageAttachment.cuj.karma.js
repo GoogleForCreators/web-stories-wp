@@ -41,8 +41,12 @@ describe('Page Attachment', () => {
     await fixture.collapseHelpCenter();
 
     // Select Page by default.
-    safezone = fixture.querySelector('[data-testid="safezone"]');
-    await clickOnTarget(safezone);
+    // Click the background element
+    await fixture.events.mouse.clickOn(
+      fixture.editor.canvas.framesLayer.frames[0].node,
+      10,
+      10
+    );
   });
 
   afterEach(() => {
