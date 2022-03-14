@@ -91,63 +91,61 @@ const storyWithFontCheckDialog = async (
 };
 
 describe('Font Check', () => {
-  describe('Font Check Dialog', () => {
-    withExperimentalFeatures(['customFonts']);
-    withExperimentalFeatures(['notifyDeletedFonts']);
+  withExperimentalFeatures(['customFonts']);
+  withExperimentalFeatures(['notifyDeletedFonts']);
 
-    it('should show dialog & replace font with default font', async () => {
-      const title = 'Test replace missing font with (default) Roboto';
-      const replacementFont = 'Roboto';
-      await storyWithFontCheckDialog(title);
-      await replaceFontUsingDefault(replacementFont);
-      const selectedText = await page.$eval(
-        'div[role="dialog"] li[aria-selected="true"]',
-        (el) => el.textContent
-      );
-      await expect(selectedText).toBe(replacementFont);
-    });
+  it('should show dialog & replace font with default font', async () => {
+    const title = 'Test replace missing font with (default) Roboto';
+    const replacementFont = 'Roboto';
+    await storyWithFontCheckDialog(title);
+    await replaceFontUsingDefault(replacementFont);
+    const selectedText = await page.$eval(
+      'div[role="dialog"] li[aria-selected="true"]',
+      (el) => el.textContent
+    );
+    await expect(selectedText).toBe(replacementFont);
+  });
 
-    it('should show dialog & replace it with selected font', async () => {
-      const title = 'Test replace missing font with Bungee';
-      const replacementFont = 'Bungee';
-      await storyWithFontCheckDialog(title);
-      await replaceFontWithFontPicker(replacementFont);
-      const selectedText = await page.$eval(
-        'div[role="dialog"] li[aria-selected="true"]',
-        (el) => el.textContent
-      );
-      await expect(selectedText).toBe(replacementFont);
-    });
+  it('should show dialog & replace it with selected font', async () => {
+    const title = 'Test replace missing font with Bungee';
+    const replacementFont = 'Bungee';
+    await storyWithFontCheckDialog(title);
+    await replaceFontWithFontPicker(replacementFont);
+    const selectedText = await page.$eval(
+      'div[role="dialog"] li[aria-selected="true"]',
+      (el) => el.textContent
+    );
+    await expect(selectedText).toBe(replacementFont);
+  });
 
-    it('should show dialog & visit settings page', async () => {
-      const title = 'Test visit to settings from dialog';
-      await storyWithFontCheckDialog(title);
-      await Promise.all([
-        expect(page).toClick('[role="dialog"] a', { text: 'Settings' }),
-        page.waitForNavigation(),
-      ]);
-      await expect(page).toMatchElement('h2', { text: 'Settings' });
-    });
+  it('should show dialog & visit settings page', async () => {
+    const title = 'Test visit to settings from dialog';
+    await storyWithFontCheckDialog(title);
+    await Promise.all([
+      expect(page).toClick('[role="dialog"] a', { text: 'Settings' }),
+      page.waitForNavigation(),
+    ]);
+    await expect(page).toMatchElement('h2', { text: 'Settings' });
+  });
 
-    it('should show dialog & visit dashboard page', async () => {
-      const title = 'Test back to dashboard from dialog';
-      await storyWithFontCheckDialog(title);
-      await Promise.all([
-        expect(page).toClick('a', { text: 'Back to dashboard' }),
-        page.waitForNavigation(),
-      ]);
-      await expect(page).toMatchElement('h2', { text: 'Dashboard' });
-    });
+  it('should show dialog & visit dashboard page', async () => {
+    const title = 'Test back to dashboard from dialog';
+    await storyWithFontCheckDialog(title);
+    await Promise.all([
+      expect(page).toClick('a', { text: 'Back to dashboard' }),
+      page.waitForNavigation(),
+    ]);
+    await expect(page).toMatchElement('h2', { text: 'Dashboard' });
+  });
 
-    it('should visit dashboard page clicking outside dialog', async () => {
-      const title = 'Test back to dashboard from dialog';
-      await storyWithFontCheckDialog(title);
-      // click outside the dialog
-      await Promise.all([
-        await page.mouse.click(100, 100),
-        page.waitForNavigation(),
-      ]);
-      await expect(page).toMatchElement('h2', { text: 'Dashboard' });
-    });
+  it('should visit dashboard page clicking outside dialog', async () => {
+    const title = 'Test back to dashboard from dialog';
+    await storyWithFontCheckDialog(title);
+    // click outside the dialog
+    await Promise.all([
+      await page.mouse.click(100, 100),
+      page.waitForNavigation(),
+    ]);
+    await expect(page).toMatchElement('h2', { text: 'Dashboard' });
   });
 });
