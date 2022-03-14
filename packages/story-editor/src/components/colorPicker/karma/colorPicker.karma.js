@@ -43,8 +43,10 @@ describe('ColorPicker', () => {
 
       it('should display correctly', async () => {
         // Click the background element
-        await fixture.events.click(
-          fixture.editor.canvas.framesLayer.frames[0].node
+        await fixture.events.mouse.clickOn(
+          fixture.editor.canvas.framesLayer.frames[0].node,
+          10,
+          10
         );
 
         const bgPanel = fixture.editor.inspector.designPanel.pageBackground;
