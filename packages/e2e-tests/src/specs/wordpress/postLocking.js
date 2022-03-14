@@ -33,9 +33,6 @@ const percyCSS = `.dashboard-grid-item-date { display: none; }`;
 const storyTitle = 'Test post lock';
 
 describe('Post Locking', () => {
-  withExperimentalFeatures(['enablePostLocking']);
-  withPlugin('e2e-tests-post-lock-mock');
-
   beforeAll(async () => {
     await createNewStory();
 
@@ -43,6 +40,9 @@ describe('Post Locking', () => {
 
     await publishStory();
   });
+
+  withExperimentalFeatures(['enablePostLocking']);
+  withPlugin('e2e-tests-post-lock-mock');
 
   it('should be able to open the dashboard with locked story', async () => {
     await visitDashboard();
