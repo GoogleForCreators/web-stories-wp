@@ -221,7 +221,7 @@ export const _default = () => {
           />
         </TablistPanel>
         <TablistPanel
-          title={'Design'}
+          title={'Style'}
           isExpanded={openPanel === 'design'}
           onClick={handleClick('design')}
           badgeCount={1}

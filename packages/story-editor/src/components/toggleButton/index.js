@@ -26,6 +26,8 @@ import {
   Text,
   TOOLTIP_PLACEMENT,
   Tooltip,
+  themeHelpers,
+  THEME_CONSTANTS,
 } from '@googleforcreators/design-system';
 import { forwardRef } from '@googleforcreators/react';
 
@@ -42,7 +44,29 @@ const Button = styled(dsButton)`
       border-color: ${theme.colors.bg.secondary};
       background-color: ${theme.colors.bg.secondary};
     `}
+  ${({ hasText, theme }) =>
+    hasText &&
+    css`
+      padding: 2px 0 2px 8px;
+      width: auto;
+      ${themeHelpers.expandPresetStyles({
+        preset: {
+          ...theme.typography.presets.paragraph[
+            THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL
+          ],
+        },
+        theme,
+      })};
+
+      span {
+        padding-left: 6px;
+      }
+    `}
 `;
+Button.propTypes = {
+  hasText: PropTypes.bool,
+  isOpen: PropTypes.bool,
+};
 
 const Wrapper = styled.div`
   width: 100%;
@@ -62,6 +86,8 @@ const NotificationCount = styled(Text).attrs({ as: 'span' })`
 export const ToggleButton = forwardRef(
   (
     {
+      copy,
+      hideTooltip,
       isOpen = false,
       notificationCount = 0,
       MainIcon,
@@ -76,7 +102,7 @@ export const ToggleButton = forwardRef(
     return (
       <Tooltip
         hasTail
-        title={label}
+        title={!hideTooltip && label}
         placement={TOOLTIP_PLACEMENT.TOP}
         shortcut={shortcut}
         popupZIndexOverride={popupZIndexOverride}
@@ -86,6 +112,7 @@ export const ToggleButton = forwardRef(
           aria-haspopup
           aria-pressed={isOpen}
           aria-expanded={isOpen}
+          hasText={Boolean(copy)}
           isOpen={isOpen}
           isSquare={!hasNotifications}
           type={BUTTON_TYPES.TERTIARY}
@@ -94,7 +121,8 @@ export const ToggleButton = forwardRef(
           {...rest}
         >
           <Wrapper>
-            <MainIcon />
+            {MainIcon && <MainIcon />}
+            {copy}
             {hasNotifications && (
               <NotificationCount>{notificationCount}</NotificationCount>
             )}
@@ -108,9 +136,11 @@ export const ToggleButton = forwardRef(
 ToggleButton.displayName = 'ToggleButton';
 
 ToggleButton.propTypes = {
+  copy: PropTypes.string,
+  hideTooltip: PropTypes.bool,
   isOpen: PropTypes.bool,
-  label: PropTypes.string.isRequired,
-  MainIcon: PropTypes.object.isRequired,
+  label: PropTypes.string,
+  MainIcon: PropTypes.object,
   notificationCount: PropTypes.number,
   shortcut: PropTypes.string,
   popupZIndexOverride: PropTypes.number,

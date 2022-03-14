@@ -20,6 +20,7 @@
 import { Container } from './container';
 import { Select } from './common';
 import { Carousel } from './carousel';
+import { Layers } from './designPanel/layers';
 
 /**
  * The workspace footer.
@@ -58,6 +59,16 @@ export class Footer extends Container {
       this.getByRole('button', { name: 'Zoom Level' }),
       'zoomSelector',
       Select
+    );
+  }
+
+  get layerPanel() {
+    // The whole panel is aria-hidden for accessibility reasons
+    // thus it cannot be accessed by role:
+    return this._get(
+      this.getByRole('button', { name: /^Layers/ }),
+      'layerPanel',
+      Layers
     );
   }
 }

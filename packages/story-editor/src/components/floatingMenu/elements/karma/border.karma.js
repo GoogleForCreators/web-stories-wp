@@ -63,6 +63,9 @@ describe('Design Menu: Border width & color', () => {
       expect(fixture.editor.canvas.designMenu.borderWidth).not.toBeNull();
       expect(fixture.editor.canvas.designMenu.borderColor).toBeNull();
 
+      // Open style pane
+      await fixture.events.click(fixture.editor.inspector.designTab);
+
       const panel = fixture.editor.inspector.designPanel.border;
       await fixture.events.click(panel.width(), { clickCount: 3 });
       await fixture.events.keyboard.type('10');
@@ -73,6 +76,9 @@ describe('Design Menu: Border width & color', () => {
     });
 
     it('should render border width and color if widths are unlocked but equal', async () => {
+      // Open style pane
+      await fixture.events.click(fixture.editor.inspector.designTab);
+
       const panel = fixture.editor.inspector.designPanel.border;
       await fixture.events.click(panel.width(), { clickCount: 3 });
       await fixture.events.keyboard.type('10');
@@ -85,6 +91,9 @@ describe('Design Menu: Border width & color', () => {
     });
 
     it('should not render border width but still color if widths are uneven', async () => {
+      // Open style pane
+      await fixture.events.click(fixture.editor.inspector.designTab);
+
       const panel = fixture.editor.inspector.designPanel.border;
       await fixture.events.click(panel.width(), { clickCount: 3 });
       await fixture.events.keyboard.type('10');
@@ -144,6 +153,9 @@ describe('Design Menu: Border width & color', () => {
       expect(fixture.editor.canvas.designMenu.borderWidth).not.toBeNull();
       expect(fixture.editor.canvas.designMenu.borderColor).toBeNull();
 
+      // Open style pane
+      await fixture.events.click(fixture.editor.inspector.designTab);
+
       const panel = fixture.editor.inspector.designPanel.border;
       await fixture.events.click(panel.width(), { clickCount: 3 });
       await fixture.events.keyboard.type('10');
@@ -154,6 +166,9 @@ describe('Design Menu: Border width & color', () => {
     });
 
     it('should not allow opacity in color picker', async () => {
+      // Open style pane
+      await fixture.events.click(fixture.editor.inspector.designTab);
+
       const panel = fixture.editor.inspector.designPanel.border;
       await fixture.events.click(panel.width(), { clickCount: 3 });
       await fixture.events.keyboard.type('10');
