@@ -71,7 +71,6 @@ describe('Panel: Style Presets', () => {
 
       // Verify that no styles are added currently.
       await fixture.events.click(fixture.editor.inspector.designTab);
-      const noStylesText = fixture.screen.getByText('No Styles Saved');
       expect(noStylesText).toBeDefined();
       // Click to add a style and verify it was added.
       panel = fixture.editor.inspector.designPanel.textStyle;

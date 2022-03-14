@@ -25,22 +25,12 @@ import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
  * Internal dependencies
  */
 import { useStory } from '../../../app';
-import { LayerPanel } from '../../panels/design';
 import DesignPanels from './designPanels';
 
 const Wrapper = styled.div`
   height: 100%;
-  flex-direction: column;
-  justify-content: space-between;
-  display: flex;
-`;
-
-const TopPanels = styled.div`
   overflow: auto;
-  flex: 1;
 `;
-
-const BottomPanels = styled.div``;
 
 function DesignInspector() {
   const updateAnimationState = useStory(
@@ -53,13 +43,8 @@ function DesignInspector() {
   );
 
   return (
-    <Wrapper>
-      <TopPanels onFocus={resetStoryAnimationState}>
-        <DesignPanels />
-      </TopPanels>
-      <BottomPanels>
-        <LayerPanel />
-      </BottomPanels>
+    <Wrapper onFocus={resetStoryAnimationState}>
+      <DesignPanels />
     </Wrapper>
   );
 }
