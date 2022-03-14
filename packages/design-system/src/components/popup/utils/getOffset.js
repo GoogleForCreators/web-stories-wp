@@ -129,7 +129,7 @@ export function getOffset({
 
   // Horizontal
   const offsetX = () => {
-    if (!dockRect && popupRect?.left <= 0) {
+    if (!dockRect && anchorRect?.left - width <= 0) {
       return isRTL ? width : 0;
     }
     return getXOffset(placement, spacingH, anchorRect, dockRect, isRTL);
