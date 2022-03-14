@@ -46,7 +46,7 @@ const transitionStyles = {
 const Controller = styled.div`
   position: absolute;
   top: -12px;
-  ${({ anchor }) => anchor}: 0px;
+  ${({ placement }) => placement}: 0px;
   opacity: 0;
   transform: translateX(-20px);
   transition: opacity ${DURATION}ms ${BEZIER.default},
@@ -60,7 +60,7 @@ function Popup({
   children,
   ariaLabel,
   shouldKeepMounted,
-  anchor = 'left',
+  placement = 'left',
   onEnter = noop,
   onExited = noop,
 }) {
@@ -79,7 +79,7 @@ function Popup({
           role="dialog"
           aria-label={ariaLabel}
           state={state}
-          anchor={anchor}
+          placement={placement}
         >
           {children}
         </Controller>
@@ -92,7 +92,7 @@ Popup.propTypes = {
   children: PropTypes.node.isRequired,
   popupId: PropTypes.string,
   ariaLabel: PropTypes.string,
-  anchor: PropTypes.string,
+  placement: PropTypes.oneOf(['left', 'right', 'bottom', 'top']),
   shouldKeepMounted: PropTypes.bool,
   onEnter: PropTypes.func,
   onExited: PropTypes.func,

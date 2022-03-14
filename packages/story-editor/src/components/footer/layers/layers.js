@@ -51,7 +51,7 @@ function Layers() {
     <>
       <Popup
         isOpen={isOpen}
-        anchor="right"
+        placement="right"
         ariaLabel={__('Layers Panel', 'web-stories')}
       >
         <StyledNavigationWrapper ref={ref} isOpen={isOpen}>

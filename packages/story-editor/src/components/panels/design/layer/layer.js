@@ -51,10 +51,9 @@ const ActionsContainer = styled.div`
   padding-right: 6px;
   column-gap: 6px;
 
-  --background-color: ${({ theme }) =>
-    theme.colors.interactiveBg.secondaryNormal};
+  --background-color: ${({ theme }) => theme.colors.bg.secondary};
   --background-color-opaque: ${({ theme }) =>
-    rgba(theme.colors.interactiveBg.secondaryNormal, 0)};
+    rgba(theme.colors.bg.secondary, 0)};
   background-color: var(--background-color);
 
   ::before {
