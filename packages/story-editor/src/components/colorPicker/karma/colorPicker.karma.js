@@ -42,8 +42,7 @@ describe('ColorPicker', () => {
       });
 
       it('should display correctly', async () => {
-        await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
-
+        // Click the background element
         await fixture.events.click(
           fixture.editor.canvas.framesLayer.frames[0].node
         );
