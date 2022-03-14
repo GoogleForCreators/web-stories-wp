@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { useRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 
 /**
@@ -26,11 +25,8 @@ import PropTypes from 'prop-types';
 import Context from './context';
 
 function FloatingMenuProvider({ handleDismiss, children }) {
-  const designMenuRef = useRef(null);
-
   const value = {
     state: {},
-    ref: designMenuRef,
     actions: { handleDismiss },
   };
 

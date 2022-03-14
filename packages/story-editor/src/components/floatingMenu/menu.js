@@ -27,7 +27,7 @@ import { ContextMenu } from '@googleforcreators/design-system';
  * Internal dependencies
  */
 import { Z_INDEX_FLOATING_MENU } from '../../constants/zIndex';
-import { FloatingMenuProvider, useFloatingMenu } from './context';
+import { FloatingMenuProvider } from './context';
 import MenuSelector from './menus';
 
 const MenuWrapper = styled.section`
@@ -41,8 +41,6 @@ const FloatingMenu = memo(
     { selectionIdentifier, selectedElementType, handleDismiss },
     ref
   ) {
-    const { ref: designMenuRef } = useFloatingMenu();
-
     useLayoutEffect(() => {
       const node = ref.current;
       const updateSize = () => {
@@ -64,7 +62,6 @@ const FloatingMenu = memo(
       <MenuWrapper ref={ref} aria-label={__('Design menu', 'web-stories')}>
         <FloatingMenuProvider handleDismiss={handleDismiss}>
           <ContextMenu
-            ref={designMenuRef}
             isInline
             isHorizontal
             isSecondary

@@ -49,7 +49,6 @@ import useInspector from '../../inspector/useInspector';
 import DefaultTooltip from '../../tooltip';
 import { focusStyle, inputContainerStyleOverride } from '../../panels/shared';
 import { useCanvas, useConfig } from '../../../app';
-import { useFloatingMenu } from '../../floatingMenu/context';
 import { SPACING } from './constants';
 
 const Preview = styled.div`
@@ -191,8 +190,6 @@ const ColorInput = forwardRef(function ColorInput(
     refs: { inspector },
   } = useInspector();
 
-  const { ref: designMenu } = useFloatingMenu();
-
   const positionPlacement = useCallback(
     (popupRef) => {
       // if the popup was assigned as top as in the case of floating menus, we want to check that it will fit
@@ -292,7 +289,7 @@ const ColorInput = forwardRef(function ColorInput(
       <Popup
         isRTL={isRTL}
         anchor={previewRef}
-        dock={isInDesignMenu ? designMenu : inspector}
+        dock={isInDesignMenu ? null : inspector}
         isOpen={pickerOpen}
         placement={dynamicPlacement}
         spacing={spacingAlignment}

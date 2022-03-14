@@ -128,7 +128,12 @@ export function getOffset({
   const { x: spacingH = 0, y: spacingV = 0 } = spacing || {};
 
   // Horizontal
-  const offsetX = getXOffset(placement, spacingH, anchorRect, dockRect, isRTL);
+  const offsetX = () => {
+    if (!dockRect && popupRect?.left <= 0) {
+      return isRTL ? width : 0;
+    }
+    return getXOffset(placement, spacingH, anchorRect, dockRect, isRTL);
+  };
   const maxOffsetX = bodyRect.width - width - getXTransforms(placement) * width;
 
   // Vertical
@@ -138,7 +143,7 @@ export function getOffset({
 
   // Clamp values
   return {
-    x: Math.max(0, Math.min(offsetX, maxOffsetX)),
+    x: Math.max(0, Math.min(offsetX(), maxOffsetX)),
     y: ignoreMaxOffsetY
       ? offsetY
       : Math.max(topOffset, Math.min(offsetY, maxOffsetY)),
