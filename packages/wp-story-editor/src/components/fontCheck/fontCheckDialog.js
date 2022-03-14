@@ -41,7 +41,7 @@ import {
 
 const DialogContent = styled.div`
   display: grid;
-  row-gap: 21px;
+  row-gap: 20px;
 `;
 
 const ChevronRight = styled(Icons.ChevronRightSmall)`
@@ -53,13 +53,11 @@ const ChevronLeft = styled(ChevronRight)`
   transform: rotate(180deg);
 `;
 
-const DashboardLink = styled.span`
+const StyledLink = styled(Link)`
   display: flex;
-  color: black;
-  align-self: flex-start;
+  color: ${({ theme }) => theme.colors.standard.black};
   align-items: center;
   font-weight: normal;
-  margin-right: 40px;
 `;
 
 export const FontCheckDialog = ({
@@ -104,12 +102,10 @@ export const FontCheckDialog = ({
       contentLabel={__('Missing Fonts', 'web-stories')}
       actions={
         <>
-          <Link href={dashboardLink}>
-            <DashboardLink>
-              <Chevron />
-              {__('Back to dashboard', 'web-stories')}
-            </DashboardLink>
-          </Link>
+          <StyledLink href={dashboardLink}>
+            <Chevron />
+            {__('Back to dashboard', 'web-stories')}
+          </StyledLink>
           <Button
             type={BUTTON_TYPES.SECONDARY}
             size={BUTTON_SIZES.SMALL}
