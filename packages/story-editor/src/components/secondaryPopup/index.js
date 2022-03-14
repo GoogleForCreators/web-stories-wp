@@ -31,9 +31,9 @@ const enterStyles = css`
   opacity: 1;
   transform: none;
 `;
-const exitStyles = (anchor) => css`
+const exitStyles = (placement) => css`
   opacity: 0;
-  transform: translateX(${anchor === 'left' ? -20 : 20}px);
+  transform: translateX(${placement === 'left' ? -20 : 20}px);
 `;
 
 const transitionStyles = {
