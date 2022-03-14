@@ -74,6 +74,9 @@ describe('Design Menu: Border radius', () => {
 
     expect(fixture.editor.canvas.designMenu.borderRadius).not.toBeNull();
 
+    // Open style pane
+    await fixture.events.click(fixture.editor.inspector.designTab);
+
     const panel = fixture.editor.inspector.designPanel.sizePosition;
     await fixture.events.click(panel.lockBorderRadius);
 
@@ -87,6 +90,9 @@ describe('Design Menu: Border radius', () => {
     await fixture.events.click(
       fixture.editor.library.shapes.shape('Rectangle')
     );
+
+    // Open style pane
+    await fixture.events.click(fixture.editor.inspector.designTab);
 
     const panel = fixture.editor.inspector.designPanel.sizePosition;
     await fixture.events.click(panel.radius(), { clickCount: 3 });
