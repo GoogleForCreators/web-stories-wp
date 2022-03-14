@@ -40,7 +40,11 @@ import getPageWithoutSelection from './getPageWithoutSelection';
 
 function PageCanvasProvider({ children }) {
   const queueIdleTask = useIdleQueue();
+  // This is our cache to hold generated canvases for
+  // full story pages within the story we're viewing
   const [pageCanvasMap, actions] = usePageCanvasMap();
+  // This is our cache to hold 1 generated canvas
+  // for a partial page
   const { getSnapshotCanvas, setSnapshot } = usePageSnapshot();
   const pageIds = useStory(({ state }) => state.pages.map(({ id }) => id));
   const { currentPage, singleElementSelection } = useStory(({ state }) => ({

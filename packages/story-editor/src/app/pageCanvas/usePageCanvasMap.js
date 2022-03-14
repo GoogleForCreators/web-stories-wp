@@ -39,6 +39,14 @@ const reducer = {
   },
 };
 
+/**
+ * Cache for holding generated page canvases.
+ *
+ * Small state abstraction to hold a map of pageIds to a generated canvas
+ * for the relevant page.
+ *
+ * @return {[Object, Object]} returns useReduction return tuple [state, actions]
+ */
 function usePageCanvasMap() {
   return useReduction(INITIAL_STATE, reducer);
 }

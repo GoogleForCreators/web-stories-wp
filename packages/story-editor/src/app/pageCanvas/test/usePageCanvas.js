@@ -85,6 +85,9 @@ describe('usePageCanvas', () => {
         const { result } = renderUsePageCanvas(mockStoryContext);
         const element = { id: 'a' };
 
+        // see that no canvas has been generated at this point
+        expect(storyPageToCanvas).toHaveBeenCalledTimes(0);
+
         // cache populates with generated canvas for currentPage
         await act(async () => {
           const [usePageCanvasCurrent] = result.current;
@@ -172,6 +175,13 @@ describe('usePageCanvas', () => {
           );
         });
         expect(storyPageToCanvas).toHaveBeenCalledTimes(1);
+
+        // See that we're calling the story generation on a page partial and
+        // not the full page.
+        const generatedStory = storyPageToCanvas.mock.calls[0][0];
+        for (const element of generatedStory.elements) {
+          expect(element.id).not.toBe(selectedElement.id);
+        }
       });
 
       it('does not generate a new partial page canvas when called and snapshot cache stays valid', async () => {
