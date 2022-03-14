@@ -167,7 +167,7 @@ function PageAttachment({ pageAttachment = {} }) {
                 isRTL={isRTL}
                 anchor={{ current: pageAttachmentContainer }}
                 isOpen
-                placement={'left'}
+                placement="left"
                 spacing={spacing}
                 topOffset={topOffset}
               >

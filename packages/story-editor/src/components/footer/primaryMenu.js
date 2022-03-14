@@ -25,6 +25,7 @@ import styled from 'styled-components';
 import { Z_INDEX_FOOTER } from '../../constants/zIndex';
 import ZoomSelector from './zoomSelector';
 import { GridViewButton } from './gridview';
+import Layers from './layers';
 import { FOOTER_MENU_GAP, FOOTER_MARGIN } from './constants';
 
 const Wrapper = styled.div`
@@ -52,6 +53,7 @@ function PrimaryMenu() {
       <MenuItems id="primary-menu-items">
         <ZoomSelector />
         <GridViewButton />
+        <Layers />
       </MenuItems>
     </Wrapper>
   );
