@@ -29,13 +29,6 @@ import useLayers from '../../panels/design/layer/useLayers';
 import Popup, { NavigationWrapper } from '../../secondaryPopup';
 import { ToggleButton } from '../../toggleButton';
 
-const LAYERS_PANEL_WIDTH = 300;
-
-const StyledNavigationWrapper = styled(NavigationWrapper)`
-  width: ${LAYERS_PANEL_WIDTH}px;
-  left: -${LAYERS_PANEL_WIDTH}px;
-`;
-
 const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.bg.secondary};
   overflow: auto;
@@ -54,11 +47,11 @@ function Layers() {
         placement="right"
         ariaLabel={__('Layers Panel', 'web-stories')}
       >
-        <StyledNavigationWrapper ref={ref} isOpen={isOpen}>
+        <NavigationWrapper alignRight ref={ref} isOpen={isOpen}>
           <Container>
             <LayerPanel />
           </Container>
-        </StyledNavigationWrapper>
+        </NavigationWrapper>
       </Popup>
       <ToggleButton
         isOpen={isOpen}
