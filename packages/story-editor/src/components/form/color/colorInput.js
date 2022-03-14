@@ -296,6 +296,7 @@ const ColorInput = forwardRef(function ColorInput(
         invisible={isEyedropperActive}
         topOffset={topOffset}
         refCallback={positionPlacement}
+        resetXOffset
         renderContents={({ propagateDimensionChange }) => (
           <ColorPicker
             color={isMixed ? null : value}

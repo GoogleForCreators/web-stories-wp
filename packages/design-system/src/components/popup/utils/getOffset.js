@@ -101,6 +101,10 @@ export function getYOffset(placement, spacing = 0, anchorRect) {
  * as perceived by the page because of scroll. This is really only true of dropDowns that
  * exist beyond the initial page scroll. Because the editor is a fixed view this only
  * comes up in peripheral pages (dashboard, settings).
+ * @param {boolean} args.resetXOffset tooltips (which use Popup) can dynamically adjust `placement` when rendered
+ * off screen, eg. when in RTL. However, when using Popup directly, we can run into it being rendered off screen
+ * when in RTL. Flag is sent via `Popup` which will determine whether or not we should force the X offset to zero
+ * or width of popup.
  * @return {Offset} Popup offset.
  */
 export function getOffset({
@@ -112,6 +116,7 @@ export function getOffset({
   isRTL,
   topOffset,
   ignoreMaxOffsetY,
+  resetXOffset,
 }) {
   const anchorRect = anchor.current.getBoundingClientRect();
   const bodyRect = document.body.getBoundingClientRect();
@@ -129,7 +134,7 @@ export function getOffset({
 
   // Horizontal
   const offsetX = () => {
-    if (!dockRect && anchorRect?.left - width <= 0) {
+    if (resetXOffset && popupRect?.left <= 0) {
       return isRTL ? width : 0;
     }
     return getXOffset(placement, spacingH, anchorRect, dockRect, isRTL);
