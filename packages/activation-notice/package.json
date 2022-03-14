@@ -28,7 +28,7 @@
   "dependencies": {
     "@googleforcreators/tracking": "*",
     "@wordpress/element": "^4.0.0",
-    "@wordpress/i18n": "^4.3.0",
+    "@wordpress/i18n": "^4.4.1",
     "flagged": "^2.0.1",
     "polished": "^4.1.4",
     "prop-types": "^15.8.1",

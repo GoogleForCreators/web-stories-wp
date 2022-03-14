@@ -40,7 +40,7 @@
     "@wordpress/data": "^6.1.4",
     "@wordpress/date": "^4.2.2",
     "@wordpress/element": "^4.0.0",
-    "@wordpress/i18n": "^4.3.0",
+    "@wordpress/i18n": "^4.4.1",
     "@wordpress/icons": "^6.1.1",
     "@wordpress/url": "^3.2.1",
     "@wordpress/viewport": "^4.1.1",
