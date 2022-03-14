@@ -46,7 +46,6 @@ describe('Layer Panel', () => {
   });
 
   it('should show the number of layers', async () => {
-    layerPanel = fixture.editor.inspector.designPanel.layerPanel;
     expect(layerPanel.layers.length).toBe(1);
     expect(layerPanel.togglePanel.textContent).toBe('Layers1');
 
@@ -79,7 +78,6 @@ describe('Layer Panel', () => {
   });
 
   it('should show ellipsis for overflowing text', async () => {
-    layerPanel = fixture.editor.inspector.designPanel.layerPanel;
     expect(layerPanel.layers.length).toBe(1);
     await fixture.act(() =>
       insertElement('text', {
