@@ -77,9 +77,9 @@ describe('Media API Callbacks', () => {
       mediaSource: 'source-video',
       optimizedId: 12,
       mutedId: 13,
-      featuredMedia: 14,
       altText: 'New Alt Text',
       storyId: 11,
+      posterId: 14,
     };
     const expectedWpKeysMapping = {
       meta: {
@@ -87,11 +87,12 @@ describe('Media API Callbacks', () => {
         web_stories_blurhash: mockData.blurHash,
         web_stories_optimized_id: mockData.optimizedId,
         web_stories_muted_id: mockData.mutedId,
+        web_stories_poster_id: mockData.posterId,
       },
       web_stories_is_muted: mockData.isMuted,
       web_stories_media_source: mockData.mediaSource,
       post: mockData.storyId,
-      featured_media: mockData.featuredMedia,
+      featured_media: mockData.posterId,
       alt_text: mockData.altText,
     };
 

@@ -32,6 +32,9 @@ jobs:
     name: Checks
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    # This step requires additional review
+    # See https://docs.github.com/en/actions/reference/environments
+    environment: Production
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -134,7 +137,7 @@ jobs:
           token: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
 
       - name: Setup Cloud SDK
-        uses: google-github-actions/setup-gcloud@v0.5.1
+        uses: google-github-actions/setup-gcloud@v0.6.0
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           service_account_key: ${{ secrets.GCP_SA_KEY }}
@@ -205,77 +208,6 @@ jobs:
           name: assets-version
           path: public/static/assets_version
 
-  # Generate the changelog before we do any commits.
-  changelog:
-    name: Changelog
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    needs: [checks]
-    outputs:
-      release_name: ${{ steps.changelog.outputs.release_name }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0 # 0 indicates all history for all branches and tags.
-
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: '.nvmrc'
-          cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-        env:
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
-
-      # For release candidates, generate changelog since last tag (stable release or previous RC)
-      # For stable releases, generate full changelog since last stable release.
-      # TODO: Implement tag logic for patch releases.
-      - name: Generate changelog
-        id: changelog
-        run: |
-          TAG_NAME_WITHOUT_SUFFIX=${TAG_NAME/-rc.*/}
-          if $IS_RC; then
-            # Get the most recent tag.
-            # Note: This will return v1.4.0-rc.1 as it is listed before v1.4.0
-            PREVIOUS_TAG=$(git tag -l --sort=-version:refname | grep --invert-match $TAG_NAME | head -1)
-
-            # If this is the first RC for this version (e.g. v1.5.0-rc.1), the previous version is v1.4.0, without suffix.
-            if [[ $TAG_NAME == *"-rc.1" ]]; then
-              PREVIOUS_TAG=${PREVIOUS_TAG/-rc.*/}
-            fi
-          else
-            # This will return v1.4.0-rc.1 as it is listed before v1.4.0
-            PREVIOUS_TAG=$(git tag -l --sort=-version:refname | grep --invert-match $TAG_NAME_WITHOUT_SUFFIX | head -1)
-            PREVIOUS_TAG=${PREVIOUS_TAG/-rc.*/}
-          fi
-
-          RELEASE_NAME=${PLUGIN_VERSION/-rc./ RC}
-          echo "Gathering list of changes since $PREVIOUS_TAG..."
-          echo "Release name: $RELEASE_NAME"
-
-          CHANGELOG=$(npm run workflow:changelog --silent -- --next-version=$RELEASE_NAME --from=$PREVIOUS_TAG)
-
-          if [[ -z $CHANGELOG ]]; then
-            echo "Warning: Changelog is empty, probably because there were no changes since the last release."
-            CHANGELOG="No merged changes since last release."
-          fi
-
-          mkdir -p build/changelog
-          echo "$CHANGELOG" >> build/changelog/changelog.txt
-
-          echo "::set-output name=release_name::${RELEASE_NAME}"
-        env:
-          GITHUB_AUTH: ${{ secrets.GOOGLEFORCREATORS_BOT_TOKEN }}
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: changelog
-          path: build/changelog
-
   build:
     name: Build new version
     runs-on: ubuntu-latest
@@ -283,6 +215,7 @@ jobs:
     needs: [assets-version]
     outputs:
       release_branch: ${{ steps.release_branch.outputs.release_branch }}
+      release_name: ${{ steps.release_branch.outputs.release_name }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -348,6 +281,9 @@ jobs:
 
           echo "::set-output name=release_branch::${BRANCH/-rc./ RC}"
 
+          RELEASE_NAME=${PLUGIN_VERSION/-rc./ RC}
+          echo "::set-output name=release_name::${RELEASE_NAME}"
+
       - name: Update assets version
         run: npm run workflow:assets-version $ASSETS_VERSION
         if: ${{ env.ASSETS_VERSION }}
@@ -379,13 +315,13 @@ jobs:
           git add web-stories.php
           git status
 
-          if ! git diff --cached --exit-code > /dev/null; then
-            echo 'No changes to commit; exiting!'
-            echo "::set-output name=changes::no"
-          else
+          if git diff --cached --exit-code > /dev/null; then
             git commit -m "Prepare release $PLUGIN_VERSION"
             git push -u origin HEAD
             echo "::set-output name=changes::yes"
+          else
+            echo 'No changes to commit; exiting!'
+            echo "::set-output name=changes::no"
           fi
 
       # Only non-patch release version bumps should be cherry picked to main
@@ -432,7 +368,7 @@ jobs:
     name: Create Release
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    needs: [build, changelog]
+    needs: [build]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -443,25 +379,12 @@ jobs:
           name: release-assets
           path: build
 
-      - name: Download changelog
-        uses: actions/download-artifact@v2
-        with:
-          name: changelog
-          path: changelog
-
-      - name: Set branch name
-        id: release_branch
-        run: |
-          VERSION_WITHOUT_SUFFIX=${PLUGIN_VERSION/-rc.*/}
-          BRANCH=release/$VERSION_WITHOUT_SUFFIX
-          echo "::set-output name=RELEASE_BRANCH::${BRANCH/-rc./ RC}"
-
       - name: Publish Release
         id: create_release
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ env.TAG_NAME }}
-          name: ${{ needs.changelog.outputs.release_name }}
+          name: ${{ needs.build.outputs.release_name }}
           target_commitish: ${{ needs.build.outputs.release_branch || github.ref }}
           prerelease: ${{ env.IS_RC }}
           generate_release_notes: true
@@ -517,9 +440,6 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     needs: [create-release]
-    # This step requires additional review
-    # See https://docs.github.com/en/actions/reference/environments
-    environment: Production
     if: ${{ ! contains(github.event.inputs.version, 'rc') }}
     env:
       PLUGIN_REPO_URL: 'https://plugins.svn.wordpress.org/web-stories'
@@ -588,3 +508,31 @@ jobs:
           sed -r -i "s/${STABLE_TAG_REGEX}/Stable tag:        ${PLUGIN_VERSION}/g" ./trunk/readme.txt
           svn commit -m "Releasing version $PLUGIN_VERSION" \
            --no-auth-cache --non-interactive  --username "$SVN_USERNAME" --password "$SVN_PASSWORD"
+
+  close-release:
+    name: Close ZenHub release
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    needs: [create-release]
+    if: ${{ ! contains(github.event.inputs.version, 'rc') }}
+    steps:
+      # https://github.com/ZenHubIO/API#get-release-reports-for-a-repository
+      # https://github.com/ZenHubIO/API#add-or-remove-issues-to-or-from-a-release-report
+      - name: Close release report
+        id: zenhub_release
+        run: |
+          echo "Getting list of releases from ZenHub"
+
+          RELEASES=$(curl -s -H "X-Authentication-Token: $ZENHUB_API_TOKEN" "https://api.zenhub.com/p1/repositories/${GITHUB_REPO_ID}/reports/releases")
+          CURRENT_RELEASE=$((echo $RELEASES ) | jq -r "first(.[] | select( .title == \"$PLUGIN_VERSION\" )) | .release_id")
+
+          if [[ -z $CURRENT_RELEASE ]]; then
+            echo "No ZenHub release found. Check whether the release titles match the expected plugin version."
+            exit 1
+          else
+            echo "Closing release report on ZenHub for release: $CURRENT_RELEASE"
+
+            curl -s -H "X-Authentication-Token: $ZENHUB_API_TOKEN" -H 'Content-Type: application/json' -X PATCH "https://api.zenhub.com/p1/reports/release/${CURRENT_RELEASE}" -d '{ "state": "closed" }'
+          fi
+        env:
+          ZENHUB_API_TOKEN: ${{ secrets.ZENHUB_API_TOKEN }}

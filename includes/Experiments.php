@@ -300,6 +300,17 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'editor',
 			],
 			/**
+			 * Author: @spacedmonkey
+			 * Issue: #10706
+			 * Creation date: 2022-03-07
+			 */
+			[
+				'name'        => 'enableCORSCheck',
+				'label'       => __( 'CORS check', 'web-stories' ),
+				'description' => __( 'Add a check in the editor for CORS errors.', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
 			 * Author: @brittanyirl
 			 * Issue: #10115
 			 * Creation date: 2022-02-02
@@ -382,17 +393,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'name'        => 'floatingMenu',
 				'label'       => __( 'Floating Menu', 'web-stories' ),
 				'description' => __( 'Enable the new floating design menu', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
-			 * Author: @miina
-			 * Issue: #10113
-			 * Creation date: 2022-02-22
-			 */
-			[
-				'name'        => 'libraryTextStyles',
-				'label'       => __( 'Library: Saved Styles', 'web-stories' ),
-				'description' => __( 'Allow inserting/applying Saved Styles from Text Library', 'web-stories' ),
 				'group'       => 'editor',
 			],
 		];

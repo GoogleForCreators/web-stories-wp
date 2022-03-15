@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,39 +26,30 @@ import {
 import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
 import { Datalist } from '@googleforcreators/design-system';
-import { stripHTML } from '@googleforcreators/dom';
 
 /**
  * Internal dependencies
  */
-import { useFont } from '../../../../app/font';
-import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
-import { getCommonValue } from '../../shared';
-import useRichTextFormatting from './useRichTextFormatting';
-import getClosestFontWeight from './getClosestFontWeight';
+import { useFont } from '../../app';
+import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../constants';
 
 const FontPicker = forwardRef(function FontPicker(
-  { selectedElements, pushUpdate, highlightStylesOverride },
+  {
+    onChange,
+    currentValue,
+    highlightStylesOverride,
+    showDropdownLabel,
+    listStyleOverrides,
+    containerStyleOverrides,
+    className,
+  },
   ref
 ) {
-  const fontFamily = getCommonValue(
-    selectedElements,
-    ({ font }) => font?.family
-  );
-
-  const {
-    textInfo: { fontWeight, isItalic },
-    handlers: { handleResetFontWeight },
-  } = useRichTextFormatting(selectedElements, pushUpdate);
-  const fontStyle = isItalic ? 'italic' : 'normal';
-
   const {
     fonts = [],
     recentFonts = [],
     curatedFonts = [],
     customFonts = [],
-    addRecentFont,
-    maybeEnqueueFontStyle,
     ensureMenuFontsLoaded,
     ensureCustomFontsLoaded,
     getFontsBySearch,
@@ -66,10 +57,8 @@ const FontPicker = forwardRef(function FontPicker(
     getCuratedFonts,
   } = useFont(({ actions, state }) => ({
     getFontsBySearch: actions.getFontsBySearch,
-    addRecentFont: actions.addRecentFont,
     ensureMenuFontsLoaded: actions.ensureMenuFontsLoaded,
     ensureCustomFontsLoaded: actions.ensureCustomFontsLoaded,
-    maybeEnqueueFontStyle: actions.maybeEnqueueFontStyle,
     getCuratedFonts: actions.getCuratedFonts,
     getCustomFonts: actions.getCustomFonts,
     recentFonts: state.recentFonts,
@@ -82,35 +71,6 @@ const FontPicker = forwardRef(function FontPicker(
     getCustomFonts();
     getCuratedFonts();
   }, [getCustomFonts, getCuratedFonts]);
-
-  const handleFontPickerChange = useCallback(
-    async (newFont) => {
-      await maybeEnqueueFontStyle(
-        selectedElements.map(({ content }) => {
-          return {
-            font: newFont,
-            fontStyle,
-            fontWeight,
-            content: stripHTML(content),
-          };
-        })
-      );
-      addRecentFont(newFont);
-      pushUpdate({ font: newFont }, true);
-
-      const newFontWeight = getClosestFontWeight(400, newFont.weights);
-      await handleResetFontWeight(newFontWeight);
-    },
-    [
-      addRecentFont,
-      fontStyle,
-      fontWeight,
-      maybeEnqueueFontStyle,
-      pushUpdate,
-      selectedElements,
-      handleResetFontWeight,
-    ]
-  );
 
   const fontMap = useMemo(() => {
     const map = new Map();
@@ -152,14 +112,14 @@ const FontPicker = forwardRef(function FontPicker(
               : option.name
           }
         >
-          {fontFamily === option.id && (
+          {currentValue === option.id && (
             <Datalist.Selected aria-label={__('Selected', 'web-stories')} />
           )}
           {option.name}
         </Datalist.Option>
       );
     },
-    [fontFamily]
+    [currentValue]
   );
 
   // These option groups will always be shown before others.
@@ -195,25 +155,31 @@ const FontPicker = forwardRef(function FontPicker(
       primaryLabel={__('Recommended', 'web-stories')}
       priorityOptionGroups={priorityOptionGroups}
       searchResultsLabel={__('Search results', 'web-stories')}
-      selectedId={MULTIPLE_VALUE === fontFamily ? '' : fontFamily}
+      selectedId={MULTIPLE_VALUE === currentValue ? '' : currentValue}
       placeholder={
-        MULTIPLE_VALUE === fontFamily ? MULTIPLE_DISPLAY_VALUE : fontFamily
+        MULTIPLE_VALUE === currentValue ? MULTIPLE_DISPLAY_VALUE : currentValue
       }
       hasSearch
       getOptionsByQuery={getFontsBySearch}
-      onChange={handleFontPickerChange}
+      onChange={onChange}
       onObserve={onObserve}
       renderer={forwardRef(renderer)}
       disabled={!fonts?.length}
-      dropDownLabel={__('Font', 'web-stories')}
+      dropDownLabel={showDropdownLabel ? __('Font', 'web-stories') : null}
+      listStyleOverrides={listStyleOverrides}
+      containerStyleOverrides={containerStyleOverrides}
+      className={className}
     />
   );
 });
 
 FontPicker.propTypes = {
-  selectedElements: PropTypes.array.isRequired,
-  pushUpdate: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
+  currentValue: PropTypes.string.isRequired,
   highlightStylesOverride: PropTypes.array,
+  showDropdownLabel: PropTypes.bool,
+  listStyleOverrides: PropTypes.array,
+  containerStyleOverrides: PropTypes.array,
 };
 
 export default FontPicker;

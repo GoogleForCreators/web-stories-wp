@@ -69,6 +69,19 @@ export function getMedia(
   }));
 }
 
+// Important: Keep in sync with REST API preloading definition.
+export function getMediaForCorsCheck(config) {
+  const path = addQueryArgs(config.api.media, {
+    context: 'edit',
+    per_page: 10,
+    _fields: 'source_url',
+  });
+
+  return apiFetch({ path }).then((attachments) =>
+    attachments.map((attachment) => attachment.source_url)
+  );
+}
+
 /**
  * Get media by ID.
  *
@@ -219,7 +232,6 @@ export function updateMedia(config, mediaId, data) {
     mediaSource,
     optimizedId,
     mutedId,
-    featuredMedia,
     posterId,
     storyId,
     altText,
@@ -235,7 +247,7 @@ export function updateMedia(config, mediaId, data) {
     },
     web_stories_is_muted: isMuted,
     web_stories_media_source: mediaSource,
-    featured_media: featuredMedia,
+    featured_media: posterId,
     post: storyId,
     alt_text: altText,
   };

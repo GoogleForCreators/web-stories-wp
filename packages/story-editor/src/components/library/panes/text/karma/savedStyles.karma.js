@@ -35,7 +35,6 @@ describe('Library: Saved Styles', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ libraryTextStyles: true });
     await fixture.render();
     await fixture.collapseHelpCenter();
   });
@@ -82,7 +81,16 @@ describe('Library: Saved Styles', () => {
       const [lastAdded] = await getSelection();
       expect(lastAdded.type).toBe('text');
       expect(lastAdded.fontSize).toBe(36);
+      expect(lastAdded.content).toBe(
+        '<span style="font-weight: 700">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>'
+      );
 
+      // Select background for being able to insert another text.
+      await fixture.events.mouse.clickOn(
+        fixture.editor.canvas.framesLayer.frames[0].node,
+        '90%',
+        '90%'
+      );
       // Add a Label and click the same button again with selected text element now.
       await fixture.events.click(fixture.editor.library.text.preset('LABEL'));
       await waitFor(() => {

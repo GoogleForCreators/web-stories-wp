@@ -41,12 +41,14 @@ const IconWrapper = styled.div`
  * @param {Node} props.children Children to render.
  * @param {TOOLTIP_PLACEMENT} props.placement The tooltip placement.
  * @param {string} props.title The text to display in the tooltip.
+ * @param {string} props.className Optional class name to add to icon wrapper.
  * @return {Node} The react node
  */
 function Icon({
   children,
   placement = TOOLTIP_PLACEMENT.RIGHT,
   title,
+  className = '',
   ...props
 }) {
   return (
@@ -54,7 +56,7 @@ function Icon({
       <VisuallyHidden>{title}</VisuallyHidden>
       <TooltipWrapper>
         <Tooltip placement={placement} title={title} {...props}>
-          <IconWrapper>{children}</IconWrapper>
+          <IconWrapper className={className}>{children}</IconWrapper>
         </Tooltip>
       </TooltipWrapper>
     </>
@@ -64,6 +66,7 @@ Icon.propTypes = {
   children: PropTypes.node,
   placement: PropTypes.oneOf(Object.values(TOOLTIP_PLACEMENT)),
   title: PropTypes.string.isRequired,
+  className: PropTypes.string,
 };
 
 export default Icon;

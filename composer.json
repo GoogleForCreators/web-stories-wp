@@ -82,12 +82,12 @@
       "composer-normalize": {
         "path": "vendor/bin/composer-normalize",
         "type": "phar",
-        "url": "https://github.com/ergebnis/composer-normalize/releases/download/2.23.0/composer-normalize.phar"
+        "url": "https://github.com/ergebnis/composer-normalize/releases/download/2.24.0/composer-normalize.phar"
       },
       "php-scoper": {
         "path": "vendor/bin/php-scoper",
         "type": "phar",
-        "url": "https://github.com/humbug/php-scoper/releases/download/0.17.0/php-scoper.phar"
+        "url": "https://github.com/humbug/php-scoper/releases/download/0.17.2/php-scoper.phar"
       }
     },
     "enable-patching": true,

@@ -42,6 +42,7 @@ export const _default = ({ insertElement, ...args }) => {
   };
   const configContext = {
     allowedMimeTypes: {
+      audio: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
       image: [
         'image/png',
         'image/jpeg',
@@ -49,10 +50,10 @@ export const _default = ({ insertElement, ...args }) => {
         'image/gif',
         'image/webp',
       ],
-      audio: [],
+      caption: ['text/vtt'],
+      vector: [],
       video: ['video/mp4', 'video/webm'],
     },
-    allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4', 'webp', 'webm'],
     capabilities: { hasUploadMediaAction: true },
   };
   return (

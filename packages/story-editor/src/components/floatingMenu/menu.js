@@ -26,13 +26,14 @@ import { ContextMenu } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
+import { Z_INDEX_FLOATING_MENU } from '../../constants/zIndex';
 import { FloatingMenuProvider } from './context';
 import MenuSelector from './menus';
 
 const MenuWrapper = styled.section`
   display: flex;
   position: absolute;
-  z-index: 2;
+  z-index: ${Z_INDEX_FLOATING_MENU};
 `;
 
 const FloatingMenu = memo(
@@ -75,6 +76,7 @@ const FloatingMenu = memo(
               // This prevents the selected element in the canvas from losing focus.
               e.stopPropagation();
             }}
+            popoverZIndex={Z_INDEX_FLOATING_MENU}
           >
             <MenuSelector selectedElementType={selectedElementType} />
           </ContextMenu>
