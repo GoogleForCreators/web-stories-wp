@@ -60,14 +60,12 @@ async function replaceFontWithFontPicker(fontFamily = '') {
   await page.keyboard.press('Enter');
   await expect(page).toClick('button', { text: 'Replace font' });
   await expect(page).toClick('[data-testid="textFrame"]');
-  await expect(page).toClick('button[aria-label="Font family"]');
 }
 
 async function replaceFontUsingDefault() {
   await page.waitForSelector('[role="dialog"]');
   await expect(page).toClick('button', { text: 'Open anyway' });
   await expect(page).toClick('[data-testid="textFrame"]');
-  await expect(page).toClick('button[aria-label="Font family"]');
 }
 
 async function storyWithFontCheckDialog(title) {
@@ -95,11 +93,10 @@ describe('Font Check', () => {
     await takeSnapshot(page, 'Missing fonts dialog');
 
     await replaceFontUsingDefault(replacementFont);
-    const selectedText = await page.$eval(
-      'div[role="dialog"] li[aria-selected="true"]',
-      (el) => el.textContent
-    );
-    await expect(selectedText).toBe(replacementFont);
+
+    await expect(page).toMatchElement('button[aria-label="Font family"]', {
+      text: replacementFont,
+    });
   });
 
   it('should show dialog & replace it with selected font', async () => {
@@ -107,11 +104,10 @@ describe('Font Check', () => {
     const replacementFont = 'Bungee';
     await storyWithFontCheckDialog(title);
     await replaceFontWithFontPicker(replacementFont);
-    const selectedText = await page.$eval(
-      'div[role="dialog"] li[aria-selected="true"]',
-      (el) => el.textContent
-    );
-    await expect(selectedText).toBe(replacementFont);
+
+    await expect(page).toMatchElement('button[aria-label="Font family"]', {
+      text: replacementFont,
+    });
   });
 
   it('should show dialog & visit settings page', async () => {
