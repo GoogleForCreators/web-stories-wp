@@ -45,12 +45,12 @@ import {
 /**
  * Internal dependencies
  */
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import ColorPicker from '../../colorPicker';
 import useInspector from '../../inspector/useInspector';
 import DefaultTooltip from '../../tooltip';
 import { focusStyle, inputContainerStyleOverride } from '../../panels/shared';
 import { useCanvas, useConfig } from '../../../app';
-import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import { SPACING } from './constants';
 
 const Preview = styled.div`
@@ -289,8 +289,7 @@ const ColorInput = forwardRef(function ColorInput(
         </Tooltip>
       )}
       <Popup
-        // Temp fix, proper will be done in #10803
-        isRTL={!isRTL}
+        isRTL={isRTL}
         anchor={previewRef}
         dock={isInDesignMenu ? null : inspector}
         isOpen={pickerOpen}

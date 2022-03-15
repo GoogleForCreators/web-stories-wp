@@ -125,8 +125,7 @@ function PresetPanel({ pushUpdate }) {
           </MoreButton>
           <Popup
             topOffset={topOffset}
-            // Temp fix, proper will be done in #10803
-            isRTL={!isRTL}
+            isRTL={isRTL}
             anchor={buttonRef}
             dock={inspector}
             isOpen={isPopupOpen}
