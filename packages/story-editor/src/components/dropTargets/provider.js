@@ -26,16 +26,13 @@ import {
   ELEMENT_TYPES,
   MEDIA_ELEMENT_TYPES,
 } from '@googleforcreators/elements';
-/**
- * Internal dependencies
- */
-import { noop } from '../../utils/noop';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../app/story';
 import getElementProperties from '../canvas/utils/getElementProperties';
+import { noop } from '../../utils/noop';
 import Context from './context';
 
 const DROP_SOURCE_ALLOWED_TYPES = MEDIA_ELEMENT_TYPES;
