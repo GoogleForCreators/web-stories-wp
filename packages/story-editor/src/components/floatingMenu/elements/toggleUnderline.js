@@ -23,14 +23,22 @@ import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
-import { IconButton } from './shared';
+import { IconButton, useTextToggle } from './shared';
 
 function ToggleUnderline() {
+  const { isToggled, toggle } = useTextToggle({
+    currentValue: 'isUnderline',
+    handler: 'handleClickUnderline',
+    eventName: 'set_underline',
+  });
+
   return (
     <IconButton
+      isToggled={isToggled}
       Icon={Icons.LetterUUnderline}
-      title={__('Toggle underlined text', 'web-stories')}
-      onClick={() => {}}
+      title={__('Toggle underline', 'web-stories')}
+      onClick={toggle}
+      tabIndex="0"
     />
   );
 }
