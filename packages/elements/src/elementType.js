@@ -15,7 +15,7 @@
  */
 
 // @todo Create a custom hook to manage state.
-const elementTypes = [];
+const elementTypes = {};
 
 function registerElementType(elementType) {
   elementTypes[elementType.type] = elementType;
