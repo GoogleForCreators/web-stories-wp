@@ -98,7 +98,6 @@ let lastVisibleDelayedTooltip = null;
  * as perceived by the page because of scroll. This is really only true of dropDowns that
  * exist beyond the initial page scroll. Because the editor is a fixed view this only
  * comes up in peripheral pages (dashboard, settings).
- * @param {Object} props.dock Element to dock popup to
  * @return {import('react').Component} Tooltip element
  */
 function Tooltip({
