@@ -1,6 +1,8 @@
 # Dashboard
 
-If you want a companion dashboard which goes along with the Story editor `@googleforcreators/dashboard` has got you covered. Similar to `StoryEditor` you can use the `Dashboard` in the package `@googleforcreators/dashboard` which can be used to maintain multiple stories stored in a CMS.
+If you want a companion dashboard to show stories created by the user or a list of story templates to choose from, you may use `Dashboard` from the `@googleforcreators/dashboard`  package. The dashboard can also be used to create a settings page for Story Editor.
+
+
 
 
 ## Scaffolding a Story Dashboard
@@ -21,14 +23,10 @@ npm install @googleforcreators/dashboard
 
 ### Step 3: Use the `Dashboard` component to render the dashboard
 
-If you have used CRA, simply replace the contents of `src/App.js` with the code sample given below.
-
 ```js
-import React from "react";
 import { Dashboard, InterfaceSkeleton } from "@googleforcreators/dashboard";
 
-
-const CustomDashboard = () => {
+const EditorDashboard = () => {
   const apiCallbacks = {
     fetchStories: () =>
       Promise.resolve({
@@ -49,18 +47,18 @@ const CustomDashboard = () => {
   );
 };
 
-export default CustomDashboard;
+export default EditorDashboard;
 ```
 
-You should now have the story editor that looks like this.
+You should now have the story dashboard that looks like this.
 
 ![dashboard](./assets/dashboard-minimal.png)
 
 ## Meet The Dashboard
 
-Now that you have a Story Editor up and running, let's get to know a little about it.
+Now that you have a story dashboard up and running, let's get to know a little about it.
 
-The Dashboard has 2 main area that one should know about.
+The Dashboard has 2 main areas that one should know about.
 
 ![dashboard-labelled](./assets/dashboard-labelled.png)
 
@@ -71,4 +69,4 @@ By default, **Left Rail** only has one link to a page which shows all stories a 
 
 ### Page Content - (2)
 
-In this area a page contents will be loaded depending on what link is selected in the left rail. 
+In this area, a page's content will be loaded depending on what link is selected in the left rail.

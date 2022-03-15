@@ -2,7 +2,7 @@
 
 Side effects are added to the Story Editor by defining callbacks. One such callback is `saveStoryById` which is used to save stories and is the only required callback. Other callbacks can be used to add or handle functionalities like first-party media and custom page templates etc. All API callbacks can be asynchronous and should eventually resolve to their corresponding expected responses.
 
-Below is a list of available api callbacks categoried in different sections.
+Below is a list of available api callbacks categorised in different sections.
 
 
 
@@ -15,7 +15,7 @@ The only required callback, that is used for saving stories.
 Arguments
 
 - `storyState`  :
-    - type: `object`
+    - type: `Object`
     - description: The current state of the story. The required shape of the object is described in the table below.
         - `storyId`
             - type: `number`
@@ -34,28 +34,28 @@ Arguments
             - description:  Version of the story saved ( latest is `DATA_VERSION` from @googleforcreators/migration).
 
         - `currentStoryStyles`
-            - type: `object`
+            - type: `Object`
             - description:  Saved styles available the current story (`colors`).
 
         - `globalStoryStyles`
-            - type: `object`
+            - type: `Object`
             - description:  Saved styles available to all stories (`colors` & `textStyles`).
 
         - `pages`
-            - type: `array` <Page>
+            - type: `array<Page>`
             - description: Array of page objects in the story. See [page object](#### Page object shape)
 
 #### Page object shape
 
 - `elements`
-    - type: `array`<Element>
+    - type: `array<Element>`
     - description: Array of elements in this page.
 
 - `backgroundColor`
-    - type: `object`
+    - type: `Object`
     - description: Background color of this page.
         - `color`
-            - type: `object`
+            - type: `Object`
                 - `r`
                     - type: `number`
                     - description: Red value.
@@ -78,7 +78,7 @@ Arguments
 
 Expected response
 
-An `object` with the following shape
+An `Object` with the following shape
 
 `storyId`
 
@@ -106,19 +106,19 @@ An `object` with the following shape
 
 `currentStoryStyles`
 
-- type: `object`
+- type: `Object`
 - require: No
 - description: Saved styles available in the current story (`colors`).
 
 `globalStoryStyles`
 
-- type: `object`
+- type: `Object`
 - require: No
 - description: Saved styles available to all stories (`colors` & `textStyles`).
 
 `pages`
 
-- type: `array`<Page>
+- type: `array<Page>`
 - require: No
 - description: Array of page objects in the story.
 
@@ -160,25 +160,25 @@ Expected response
 
 `title`
 
-- type: `object`
+- type: `Object`
 - required: No
 - description: Tittle of the story.
 
 `excerpt`
 
-- type: `object`
+- type: `Object`
 - required: No
 - description: Story data.
 
 `storyData`
 
-- type: `object`
+- type: `Object`
 - required: No
 - description: Story data.
 
 `author`
 
-- type: `object`
+- type: `Object`
 - required: No
 - description: Details of author who created the story.
     - `id`
@@ -192,7 +192,7 @@ Expected response
 
 `stylePresets`
 
-- type: `object`
+- type: `Object`
 - required: No
 - description: Details of author who created the story.
 
@@ -270,7 +270,7 @@ An array of the template objects whose shape is described below.
 
 `backgroundColor`
 
-- type: `object`
+- type: `Object`
 - required: Yes
 - description: Background color RGB values.
 
@@ -288,7 +288,7 @@ An array of the template objects whose shape is described below.
 
 `image`
 
-- type: `object`
+- type: `Object`
 - required: Yes
 - description: Placeholder image data.
     -`id`
@@ -315,7 +315,7 @@ An array of the template objects whose shape is described below.
     - description: Opacity of element in percent.
 
 - `flip`
-    - type: `object`
+    - type: `Object`
     - description: Flip data of element.
         - `vertical`
             - type: `boolean`
@@ -345,7 +345,7 @@ An array of the template objects whose shape is described below.
     - description: Y focal point in percent.
 
 - `resource`
-    - type: `object`
+    - type: `Object`
     - description: Element resource data.
 
 - `type`
@@ -369,7 +369,7 @@ An array of the template objects whose shape is described below.
     - description: Height coordinate of the element in pixels.
 
 - `mask`
-    - type: `object`
+    - type: `Object`
     - description: Details about mask over the element.
         - `type`
             - type: `string`
@@ -431,7 +431,7 @@ For adding custom page templates.
 Arguments
 
 - `template` :
-    - type: `object`
+    - type: `Object`
     - description: See  [Template Object Shape](####Template-Object-Shape) for object shape.
 
 
@@ -465,7 +465,7 @@ Fetches first-party media in the element library.
 Arguments
 
 - `params` :
-    - type: `object`
+    - type: `Object`
     - description: Describes search or filter parameters which includes `mediaType`, `searchTerm`& `pagingNum`
 - `mediaType`
     - type: `string`
@@ -546,7 +546,7 @@ Expected response
 
 - `sizes` :
 
-    - type: `object`
+    - type: `Object`
     - required: Yes
     - description: Map of media in various sizes (thumbnail, medium, full).
         - `file`
@@ -700,7 +700,7 @@ Arguments
     - description: Media id.
 
 - `data` :
-    - type: `object`
+    - type: `Object`
     - description: Updated data of a media object.
         - `posterId` :
             - type: `number`
@@ -787,7 +787,7 @@ Arguments
             - description: Upload source. One of `video-optimization`, `editor`, `poster-generation`,`gif-conversion`or `page-template`.
 
         - `trimData` :
-            - type: `object`
+            - type: `Object`
             - description: `TrimData` data object linking a trimmed video to its original.
 
         - `baseColor` :
@@ -862,7 +862,7 @@ This modal should provide the user to insert any media already with the CMS or u
     - description: Whether multi-selection should be allowed.
 
 - `cropParams` :
-    - type: `object`
+    - type: `Object`
     - required: No
     - description: Width and height for cropped images.
 
@@ -906,7 +906,7 @@ Customize the Story editor for users to use with custom fonts.
 Arguments
 
 - `params`
-    - type: `object`
+    - type: `Object`
     - description: Filter parameters for fetching fonts.
         - `search`
             - type: `string`
@@ -966,7 +966,7 @@ Expected response
     - description: URL to font service which hosts the font.
 
 - `metrics`
-    - type: `object`
+    - type: `Object`
     - required: No
     - description: Font metrics.
 
@@ -1138,7 +1138,7 @@ Arguments
     - description: User Id.
 
 - `data` 
-    - type: `object`
+    - type: `Object`
     - description: Data to be updated.
         - `trackingOptin` 
             - type: `boolean`

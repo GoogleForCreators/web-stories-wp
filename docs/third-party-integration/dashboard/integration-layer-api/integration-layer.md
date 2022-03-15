@@ -1,22 +1,13 @@
 # Integration Layer
 
-## `Dashboard`
+Similar to Story Editor, Dashboard can be integrated by configuring the `Dashboard` and other components like `InterfaceSkeleton`.
 
-This is the top level component `Dashboard` which has all the provider components but doesn't render any UI itself.
-
-**Props:**
-
-- `config`
-    - type: `object`
-    - required: Yes
-    - description: Used for most of the dashboard configuration. See the [Dashboard Config](## Dashboard Config) section below for full detail.
+As seen in the getting started guide, a minimal dashboard can be created by using the two main components  `Dashboard` and `InterfaceSkeleton`  like below.
 
 ```js
-import React from "react";
 import { Dashboard, InterfaceSkeleton } from "@googleforcreators/dashboard";
 
-
-const CustomDashboard = () => {
+const StoriesDashboard = () => {
   const apiCallbacks = {
     fetchStories: () =>
       Promise.resolve({
@@ -37,8 +28,23 @@ const CustomDashboard = () => {
   );
 };
 
-export default CustomDashboard;
+export default StoriesDashboard;
 ```
+
+
+
+## `Dashboard`
+
+This is the top level component which has all the provider components but doesn't render any UI itself.
+
+**Props:**
+
+- `config`
+    - type: `Object`
+    - required: Yes
+    - description: Used for most of the dashboard configuration. See the [Dashboard Config](#dashboard-config) section below for full detail.
+
+
 
 ## `InterfaceSkeleton`
 
@@ -47,13 +53,13 @@ This component is responsible for rendering the story editor interface UI and ca
 **Props:**
 
 - `additionalRoutes`
-    - type: `array<object>`
+    - type: `array<Object>`
     - required: No
     - description: Used to add additional routes to the left rail.
         - `path`
             - type: `string`
             - required: Yes
-            - description: Unique path to this page. For example - "/editor-settings".
+            - description: Unique path to this page. For example - `/editor-settings`.
         - `component`
             - type: `React.ReactElement`
             - required: Yes
@@ -63,7 +69,8 @@ This component is responsible for rendering the story editor interface UI and ca
 
 
 ## Dashboard Config
-<!-- introduction -->
+
+To configure the dashboard to your needs you can pass various config options to the story dashboard via `config` prop of the `Dashboard` component.
 
 - `isRTL`
     - type: `boolean`
@@ -76,9 +83,9 @@ This component is responsible for rendering the story editor interface UI and ca
     - description: The id of the user who is currently viewing the dashboard.
 
 - `locale`
-    - type: `object`
+    - type: `Object`
     - required: No
-    - description: It is a set of parameters that defines the user's language, region and any special variant preferences that the user wants to see in their user interface   
+    - description: It is a set of parameters that defines the user's language, region and any special variant preferences that the user wants to see in their user interface.
 
 - `newStoryURL`
     - type: `string`
@@ -101,7 +108,7 @@ This component is responsible for rendering the story editor interface UI and ca
     - description: URL to dashboard resources.
 
 - `allowedImageMimeTypes`
-    - type: `array`<string>
+    - type: `array<string>`
     - required: Yes
     - description: It specifies the allowed Image types that are supported by web stories
 
@@ -116,14 +123,14 @@ This component is responsible for rendering the story editor interface UI and ca
     - description: It specifies whether the markup need to be encoded while making api calls. 
 
 - `api`
-    - type: `object`
+    - type: `Object`
     - required: Yes
     - description: It specifies the URL for different api calls.
 
 - `maxUpload`
     - type: `number`
     - required: No
-    - description: It specifies the maximum size of file that can be uploaded to the backend. 
+    - description: It specifies the maximum size of a file that can be uploaded to the backend.
 
 - `maxUploadFormatted`
     - type: `string`
@@ -131,7 +138,7 @@ This component is responsible for rendering the story editor interface UI and ca
     - description: It specifies the maximum size of a formatted file that can be uploaded to the backend
 
 - `capabilities`
-    - type: `object`
+    - type: `Object`
     - required:
     - description: 
         - `canManageSettings`
@@ -154,12 +161,12 @@ This component is responsible for rendering the story editor interface UI and ca
     - description: Returns the translation of the translatable strings.
 
 - `apiCallbacks`
-    - type: `object`
+    - type: `Object`
     - required: Yes
     - description: It consists of functions that are used to make request to API endpoints.
 
 - `leftRailSecondaryNavigation`
-    - type: `array`<object>
+    - type: `array<Object>`
     - required: No
     - description: It shows the navigation panel on the left side.
         - `value`
@@ -180,7 +187,7 @@ This component is responsible for rendering the story editor interface UI and ca
             - description: 
 
 - `styleConstants`
-    - type: `object`
+    - type: `Object`
     - required: No
     - description: This contains various style constants which are used while calculating position for various components in dashboard. 
         - `topOffset`
@@ -189,7 +196,7 @@ This component is responsible for rendering the story editor interface UI and ca
             - description: It defines the top bar height, which is used in calculation for placement of components. 
 
 - `siteKitStatus`
-    - type: `object`
+    - type: `Object`
     - required: No
     - description: It specifies the status of installation of site kit by google.
         - `installed`

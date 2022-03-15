@@ -29,16 +29,16 @@ This is the top level component of the story editor which has all the provider c
 **Props:**
 
 - `config`
-    - type: `object`
+    - type: `Object`
     - required: Yes
     - description: Used for most of the editor configuration. See the Editor Config section below for full detail.
 
 - `initialEdits`
-    - type: `object`
+    - type: `Object`
     - required: Yes
     - description: The initial edits/state of the story editor. Currently it only supports `story`.
         - `story`
-            - type: `object`
+            - type: `Object`
             - required: Yes
             - description: The story editor needs initial story when it loads. You can either provide the initial story object from this prop or via `getStoryById` API callback. See the expected response of `getStoryById` for the shape of this object.
 
@@ -56,12 +56,12 @@ This component is responsible for rendering the story editor interface UI and ca
     - description: Used for rendering the workspace header. See workspace section of getting started guide to get the definition of header.
 
 - `footer`
-    - type: `object`
+    - type: `Object`
     - required: No
     - description: Used for rendering some parts of the footer. See workspace section of getting started guide for the definition of footer.
 
 - `inspectorTabs`
-    - type: `object`
+    - type: `Object`
     - required: No
     - description: Used for rendering the inspector tabs of the story editor. See workspace section of getting started guide for the definition of inspector tabs.
 
@@ -73,7 +73,7 @@ To configure the editor to your needs you can pass various config options to the
 
 ### `apiCallbacks`
 
-- type : `object`
+- type : `Object`
 - description : Takes various callback functions for story editor's side effects. The only required API callback is `saveStoryById`. For detailed documentation of `apiCallbacks`,  see [API Callbacks](./API-Callbacks.md) section.
 
 
@@ -110,7 +110,7 @@ const allowedFileTypes = ['jpeg','mp4'];
 
 ### `allowedMimeTypes` 
 
-- type : `object`
+- type : `Object`
 - description : A map of file mime types accepted by element library.
 - example :
 
@@ -191,7 +191,7 @@ const allowedTranscodableMimeTypes = [
 
 ### `capabilities`
 
-- type : `object`
+- type : `Object`
 - description : Controls story editor's capabilities, currently 2 capabilities can be customized
     - `hasMediaUploadAction`
         - type: `boolean`
@@ -230,7 +230,7 @@ const capabilities = {
 
 ### `flags`
 
-- type : `object`
+- type : `Object`
 - description : Many experimental features can be enabled/disabled in the story editor. Below is a list of all feature flags.
     - `enableSVG`
         - type: `boolean`
@@ -287,7 +287,7 @@ const capabilities = {
 
 ### `locale`
 
-- type : `object`
+- type : `Object`
 - description : locale data 
 - example :
 
@@ -379,7 +379,7 @@ const locale ={
 
 ### `styleConstants`
 
-- type : `object`
+- type : `Object`
 - description : Style constants for story editor modals.
     - `topOffset`
         - type: `number`
