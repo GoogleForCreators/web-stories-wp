@@ -2,6 +2,11 @@
 
 # Common variables.
 DOCKER_COMPOSE_FILE_OPTIONS="-f $(dirname "$0")/docker-compose.yml"
+
+if [ -f "$(dirname "$0")/docker-compose.override.yml" ]; then
+  DOCKER_COMPOSE_FILE_OPTIONS="$DOCKER_COMPOSE_FILE_OPTIONS -f $(dirname "$0")/docker-compose.override.yml"
+fi
+
 # These are the containers and values for the development site.
 CLI='cli'
 CONTAINER='wordpress'
