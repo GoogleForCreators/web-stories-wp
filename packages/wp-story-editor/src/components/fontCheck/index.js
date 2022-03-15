@@ -45,12 +45,9 @@ export const FontCheck = () => {
   const [missingFont, setMissingFont] = useState(null);
   const [showDialog, setShowDialog] = useState(false);
 
-  const closeAndRedirect = useCallback(
-    () => {
-      window.location = dashboardLink;
-    },
-    [dashboardLink]
-  );
+  const closeAndRedirect = useCallback(() => {
+    window.location = dashboardLink;
+  }, [dashboardLink]);
 
   const closeDialog = () => setShowDialog(false);
 
