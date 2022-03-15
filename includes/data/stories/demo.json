@@ -5,7 +5,7 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": [],
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
@@ -1296,7 +1296,7 @@
       "elements": [
         {
           "opacity": 100,
-          "flip": [],
+          "flip": { "vertical": false, "horizontal": false },
           "rotationAngle": 0,
           "lockAspectRatio": true,
           "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
