@@ -23,7 +23,7 @@ import {
   createNewStory,
   insertStoryTitle,
   publishStory,
-  visitAdminPage,
+  editStoryWithTitle,
   takeSnapshot,
   withPlugin,
 } from '@web-stories-wp/e2e-test-utils';
@@ -54,14 +54,7 @@ describe('Post Locking', () => {
   });
 
   it('should be able to open the editor with locked story', async () => {
-    await visitAdminPage('edit.php', 'post_type=web-story');
-
-    await expect(page).toMatch(storyTitle);
-
-    await Promise.all([
-      page.waitForNavigation(),
-      expect(page).toClick('a', { text: storyTitle }),
-    ]);
+    await editStoryWithTitle(storyTitle);
 
     await page.waitForSelector('.ReactModal__Content');
 

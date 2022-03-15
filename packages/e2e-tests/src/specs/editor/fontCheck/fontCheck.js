@@ -19,7 +19,7 @@
 import {
   withExperimentalFeatures,
   createNewStory,
-  visitAdminPage,
+  editStoryWithTitle,
   insertStoryTitle,
   publishStory,
   takeSnapshot,
@@ -27,7 +27,10 @@ import {
   removeCustomFont,
 } from '@web-stories-wp/e2e-test-utils';
 
-const createStoryWithTitle = async (title) => {
+const OPEN_SANS_CONDENSED = 'Open Sans Condensed Light';
+const OPEN_SANS_CONDENSED_URL = `${process.env.WP_BASE_URL}/wp-content/e2e-assets/OpenSansCondensed-Light.ttf`;
+
+async function createStoryWithTitle(title) {
   await createNewStory();
   await insertStoryTitle(title);
   await expect(page).toClick('#library-tab-text');
@@ -38,59 +41,49 @@ const createStoryWithTitle = async (title) => {
   await expect(page).toMatchElement('[data-testid="textFrame"]', {
     text: 'Title 1',
   });
-};
+}
 
-const updateFont = async (fontFamily) => {
+async function updateFont(fontFamily) {
   await expect(page).toClick('button[aria-label="Font family"]');
   await page.keyboard.type(fontFamily);
   await page.keyboard.press('ArrowDown');
   await page.keyboard.press('Enter');
-};
+}
 
-const visitStoryWithTitle = async (title) => {
-  await visitAdminPage('edit.php', 'post_type=web-story');
-  await expect(page).toClick('a', { text: title });
-};
-
-const replaceFontWithFontPicker = async (fontFamily = '') => {
+async function replaceFontWithFontPicker(fontFamily = '') {
   await page.waitForSelector('[role="dialog"]');
   await expect(page).toMatchElement('button', { text: 'Open anyway' });
   await expect(page).toMatchElement('button', { text: 'Replace font' });
-  await takeSnapshot(page, 'Missing fonts dialog');
-  await expect(page).toClick(
-    "div[role='dialog'] div[class^='datalist__'] button"
-  );
+  await expect(page).toClick('button[aria-label="Font family"]');
   await page.keyboard.type(fontFamily);
   await page.keyboard.press('ArrowDown');
   await page.keyboard.press('Enter');
   await expect(page).toClick('button', { text: 'Replace font' });
   await expect(page).toClick('[data-testid="textFrame"]');
   await expect(page).toClick('button[aria-label="Font family"]');
-};
+}
 
-const replaceFontUsingDefault = async () => {
+async function replaceFontUsingDefault() {
   await page.waitForSelector('[role="dialog"]');
   await expect(page).toClick('button', { text: 'Open anyway' });
   await expect(page).toClick('[data-testid="textFrame"]');
   await expect(page).toClick('button[aria-label="Font family"]');
-};
+}
 
-const storyWithFontCheckDialog = async (
-  title,
-  customFont = 'Open Sans Condensed Light'
-) => {
+async function storyWithFontCheckDialog(title) {
   // take steps needed to get Missing Font dialog to show
-  await addCustomFont();
+  await addCustomFont(OPEN_SANS_CONDENSED_URL);
   await createStoryWithTitle(title);
-  await updateFont(customFont);
+  await updateFont(OPEN_SANS_CONDENSED);
   await publishStory();
   await removeCustomFont();
-  await visitStoryWithTitle(title);
+  await editStoryWithTitle(title);
   await page.waitForSelector('[data-testid="textFrame"]');
   await page.waitForSelector('[role="dialog"]');
-};
+}
 
 describe('Font Check', () => {
+  // TODO(#10916): Combine these calls.
   withExperimentalFeatures(['customFonts']);
   withExperimentalFeatures(['notifyDeletedFonts']);
 
@@ -98,6 +91,9 @@ describe('Font Check', () => {
     const title = 'Test replace missing font with (default) Roboto';
     const replacementFont = 'Roboto';
     await storyWithFontCheckDialog(title);
+
+    await takeSnapshot(page, 'Missing fonts dialog');
+
     await replaceFontUsingDefault(replacementFont);
     const selectedText = await page.$eval(
       'div[role="dialog"] li[aria-selected="true"]',
@@ -138,12 +134,22 @@ describe('Font Check', () => {
     await expect(page).toMatchElement('h2', { text: 'Dashboard' });
   });
 
-  it('should visit dashboard page clicking outside dialog', async () => {
+  it('should redirect to dashboard when clicking outside dialog', async () => {
     const title = 'Test back to dashboard from dialog';
     await storyWithFontCheckDialog(title);
     // click outside the dialog
     await Promise.all([
       await page.mouse.click(100, 100),
+      page.waitForNavigation(),
+    ]);
+    await expect(page).toMatchElement('h2', { text: 'Dashboard' });
+  });
+
+  it('should redirect to dashboard when pressing ESC', async () => {
+    const title = 'Test back to dashboard from dialog';
+    await storyWithFontCheckDialog(title);
+    await Promise.all([
+      await page.keyboard.press('Escape'),
       page.waitForNavigation(),
     ]);
     await expect(page).toMatchElement('h2', { text: 'Dashboard' });
