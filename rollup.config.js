@@ -28,7 +28,6 @@ import filesize from 'rollup-plugin-filesize';
 import css from 'rollup-plugin-import-css';
 import url from '@rollup/plugin-url';
 import json from '@rollup/plugin-json';
-import image from '@rollup/plugin-image';
 import dynamicImportVars from '@rollup/plugin-dynamic-import-vars';
 import license from 'rollup-plugin-license';
 import del from 'rollup-plugin-delete';
@@ -53,16 +52,59 @@ const plugins = [
       'babel-plugin-transform-react-remove-prop-types',
     ],
   }),
-  url(),
-  svgr(),
+  url({
+    include: '**/inline-icons/*.svg',
+  }),
+  svgr({
+    include: '**/icons/*.svg',
+    titleProp: true,
+    svgo: true,
+    memo: true,
+    svgoConfig: {
+      plugins: [
+        {
+          name: 'preset-default',
+          params: {
+            overrides: {
+              removeViewBox: false,
+              convertColors: {
+                currentColor: /^(?!url|none)/i,
+              },
+            },
+          },
+        },
+        'removeDimensions',
+      ],
+    },
+  }),
+  svgr({
+    include: '**/images/*.svg',
+    titleProp: true,
+    svgo: true,
+    memo: true,
+    svgoConfig: {
+      plugins: [
+        {
+          name: 'preset-default',
+          params: {
+            overrides: {
+              removeViewBox: false,
+              convertColors: {
+                // See https://github.com/googleforcreators/web-stories-wp/pull/6361
+                currentColor: false,
+              },
+            },
+          },
+        },
+        'removeDimensions',
+      ],
+    },
+  }),
   commonjs(),
   json({
     compact: true,
   }),
   css(),
-  image({
-    include: '/inline-icons/*.svg',
-  }),
   dynamicImportVars(),
   webWorkerLoader({
     inline: true,
