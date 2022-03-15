@@ -58,6 +58,20 @@ const StyledLink = styled(Link)`
   color: ${({ theme }) => theme.colors.standard.black};
   align-items: center;
   font-weight: normal;
+  margin: 0 auto 0 0; /* auto forces left-alignment */
+`;
+
+const StyledButton = styled(Button)`
+  margin-left: 16px;
+`;
+
+// Override the DialogActions default styling
+// so that the dashboard link aligns to the left,
+// while the other actions align to the right.
+const ActionsWrap = styled.div`
+  display: flex;
+  align-self: flex-end;
+  width: 100%;
 `;
 
 export const FontCheckDialog = ({
@@ -101,26 +115,26 @@ export const FontCheckDialog = ({
       title={__('Missing Fonts', 'web-stories')}
       contentLabel={__('Missing Fonts', 'web-stories')}
       actions={
-        <>
+        <ActionsWrap>
           <StyledLink href={dashboardLink}>
             <Chevron />
             {__('Back to dashboard', 'web-stories')}
           </StyledLink>
-          <Button
+          <StyledButton
             type={BUTTON_TYPES.SECONDARY}
             size={BUTTON_SIZES.SMALL}
             onClick={updateMissingFontWithDefault}
           >
             {__('Open anyway', 'web-stories')}
-          </Button>
-          <Button
+          </StyledButton>
+          <StyledButton
             type={BUTTON_TYPES.PRIMARY}
             size={BUTTON_SIZES.SMALL}
             onClick={updateMissingFontWithSelected}
           >
             {__('Replace font', 'web-stories')}
-          </Button>
-        </>
+          </StyledButton>
+        </ActionsWrap>
       }
     >
       <DialogContent>
