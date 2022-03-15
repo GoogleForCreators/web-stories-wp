@@ -117,7 +117,6 @@ function Tooltip({
   className = null,
   popupZIndexOverride,
   ignoreMaxOffsetY = false,
-  dock,
   ...props
 }) {
   const [shown, setShown] = useState(false);
@@ -296,7 +295,6 @@ function Tooltip({
         anchor={forceAnchorRef || anchorRef}
         placement={dynamicPlacement}
         spacing={spacing}
-        dock={dock}
         isOpen={Boolean(shown && (shortcut || title))}
         onPositionUpdate={positionArrow}
         zIndex={popupZIndexOverride}
@@ -348,7 +346,6 @@ const TooltipPropTypes = {
   isDelayed: PropTypes.bool,
   popupZIndexOverride: PropTypes.number,
   ignoreMaxOffsetY: PropTypes.bool,
-  dock: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
 };
 Tooltip.propTypes = TooltipPropTypes;
 

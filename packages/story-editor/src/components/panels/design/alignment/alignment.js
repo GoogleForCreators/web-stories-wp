@@ -212,10 +212,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
     >
       <ElementRow ref={ref}>
         <Tooltip
-          dock={!isRTL ? ref : null}
-          placement={
-            isRTL ? TOOLTIP_PLACEMENT.BOTTOM_START : TOOLTIP_PLACEMENT.BOTTOM
-          }
+          placement={TOOLTIP_PLACEMENT.BOTTOM_START}
           title={__('Distribute horizontally', 'web-stories')}
         >
           <AlignmentButton
