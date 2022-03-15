@@ -39,6 +39,7 @@ import {
   Swatch,
   Icons,
   Popup,
+  PLACEMENT,
 } from '@googleforcreators/design-system';
 
 /**
@@ -50,6 +51,7 @@ import DefaultTooltip from '../../tooltip';
 import { focusStyle, inputContainerStyleOverride } from '../../panels/shared';
 import { useCanvas, useConfig } from '../../../app';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../constants';
+import { SPACING } from './constants';
 
 const Preview = styled.div`
   height: 36px;
@@ -153,17 +155,18 @@ const ChevronContainer = styled.div`
 const loadReactColor = () =>
   import(/* webpackChunkName: "chunk-react-color" */ 'react-color');
 
-const SPACING = { x: 20, y: 10 };
 const ColorInput = forwardRef(function ColorInput(
   {
     onChange,
     value = null,
     label = null,
     changedStyle,
-    pickerPlacement,
+    pickerPlacement = PLACEMENT.RIGHT_START,
     isInDesignMenu = false,
     hasInputs = true,
     pickerProps,
+    spacing,
+    tooltipPlacement,
   },
   ref
 ) {
@@ -183,9 +186,25 @@ const ColorInput = forwardRef(function ColorInput(
     })
   );
   const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
+  const [dynamicPlacement, setDynamicPlacement] = useState(pickerPlacement);
+
   const {
     refs: { inspector },
   } = useInspector();
+
+  const positionPlacement = useCallback(
+    (popupRef) => {
+      // if the popup was assigned as top as in the case of floating menus, we want to check that it will fit
+      if (pickerPlacement?.startsWith('top')) {
+        // check to see if there's an overlap with the window edge
+        const { top } = popupRef.current?.getBoundingClientRect() || {};
+        if (top <= topOffset) {
+          setDynamicPlacement(pickerPlacement.replace('top', 'bottom'));
+        }
+      }
+    },
+    [pickerPlacement, topOffset]
+  );
 
   const colorType = value?.type;
   // Allow editing always in case of solid color of if color type is missing (mixed)
@@ -209,6 +228,8 @@ const ColorInput = forwardRef(function ColorInput(
     ? minimalInputContainerStyleOverride
     : inputContainerStyleOverride;
 
+  const spacingAlignment = isRTL && !isInDesignMenu ? SPACING.IS_RTL : spacing;
+
   return (
     <>
       {isEditable ? (
@@ -225,14 +246,14 @@ const ColorInput = forwardRef(function ColorInput(
             containerStyleOverride={containerStyle}
           />
           <ColorPreview>
-            <Tooltip title={tooltip} hasTail>
+            <Tooltip title={tooltip} hasTail placement={tooltipPlacement}>
               <StyledSwatch isSmall pattern={previewPattern} {...buttonProps} />
             </Tooltip>
           </ColorPreview>
         </Preview>
       ) : (
         // If not editable, the whole component is a button
-        <Tooltip title={tooltip} hasTail>
+        <Tooltip title={tooltip} hasTail placement={tooltipPlacement}>
           <ColorButton ref={previewRef} {...buttonProps}>
             <ColorPreview>
               <Swatch
@@ -268,15 +289,16 @@ const ColorInput = forwardRef(function ColorInput(
         </Tooltip>
       )}
       <Popup
-        // Temp fix, proper will be done in #10803
-        isRTL={!isRTL}
+        isRTL={isRTL}
         anchor={previewRef}
-        dock={inspector}
+        dock={isInDesignMenu ? null : inspector}
         isOpen={pickerOpen}
-        placement={pickerPlacement}
-        spacing={SPACING}
+        placement={dynamicPlacement}
+        spacing={spacingAlignment}
         invisible={isEyedropperActive}
         topOffset={topOffset}
+        refCallback={positionPlacement}
+        resetXOffset
         renderContents={({ propagateDimensionChange }) => (
           <ColorPicker
             color={isMixed ? null : value}
@@ -302,6 +324,8 @@ ColorInput.propTypes = {
   pickerPlacement: PropTypes.string,
   isInDesignMenu: PropTypes.bool,
   hasInputs: PropTypes.bool,
+  spacing: PropTypes.object,
+  tooltipPlacement: PropTypes.string,
 };
 
 export default ColorInput;

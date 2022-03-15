@@ -29,6 +29,7 @@ import {
   BUTTON_VARIANTS,
   Icons,
   PLACEMENT,
+  TOOLTIP_PLACEMENT,
 } from '@googleforcreators/design-system';
 
 /**
@@ -41,6 +42,7 @@ import { MULTIPLE_VALUE } from '../../../constants';
 import applyOpacityChange from './applyOpacityChange';
 import OpacityInput from './opacityInput';
 import ColorInput from './colorInput';
+import { SPACING } from './constants';
 
 const containerCss = css`
   display: flex;
@@ -95,7 +97,7 @@ const Color = forwardRef(function Color(
     maxHeight = null,
     shouldCloseOnSelection = false,
     allowsSavedColorDeletion = true,
-    pickerPlacement = PLACEMENT.LEFT_START,
+    pickerPlacement = PLACEMENT.RIGHT_START,
     isInDesignMenu = false,
     hasInputs = true,
   },
@@ -120,10 +122,27 @@ const Color = forwardRef(function Color(
   });
   const tooltip = __('Pick a color from canvas', 'web-stories');
 
+  const spacing = hasEyedropper
+    ? SPACING.DEFAULT_SIDEBAR
+    : SPACING.SIDEBAR_WITHOUT_EYEDROPPER;
+
+  const tooltipPlacement =
+    isInDesignMenu || hasEyedropper
+      ? TOOLTIP_PLACEMENT.BOTTOM
+      : TOOLTIP_PLACEMENT.BOTTOM_START;
+
   return (
     <Container aria-label={containerLabel} isInDesignMenu={isInDesignMenu}>
       {hasEyedropper && (
-        <Tooltip title={tooltip} hasTail>
+        <Tooltip
+          title={tooltip}
+          hasTail
+          placement={
+            isInDesignMenu
+              ? TOOLTIP_PLACEMENT.BOTTOM
+              : TOOLTIP_PLACEMENT.BOTTOM_START
+          }
+        >
           <EyeDropperButton
             aria-label={tooltip}
             onClick={initEyedropper()}
@@ -145,6 +164,8 @@ const Color = forwardRef(function Color(
             pickerPlacement={pickerPlacement}
             hasInputs={hasInputs}
             isInDesignMenu={isInDesignMenu}
+            spacing={isInDesignMenu ? SPACING.FLOATING_MENU : spacing}
+            tooltipPlacement={tooltipPlacement}
             pickerProps={{
               allowsGradient,
               allowsOpacity,

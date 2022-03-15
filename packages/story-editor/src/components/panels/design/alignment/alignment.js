@@ -41,6 +41,7 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   themeHelpers,
+  TOOLTIP_PLACEMENT,
 } from '@googleforcreators/design-system';
 
 /**
@@ -210,7 +211,10 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
       ariaLabel={__('Alignment', 'web-stories')}
     >
       <ElementRow ref={ref}>
-        <Tooltip title={__('Distribute horizontally', 'web-stories')}>
+        <Tooltip
+          placement={TOOLTIP_PLACEMENT.BOTTOM_START}
+          title={__('Distribute horizontally', 'web-stories')}
+        >
           <AlignmentButton
             disabled={!isDistributionEnabled}
             onClick={() => handleHorizontalDistribution(boundRect, pushUpdate)}
