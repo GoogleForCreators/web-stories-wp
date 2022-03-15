@@ -23,10 +23,6 @@ import styled from 'styled-components';
  */
 import { VisuallyHidden } from '../../visuallyHidden';
 
-const Wrapper = styled.div`
-  margin: 0 auto;
-`;
-
 const IconWrapper = styled.div`
   width: 32px;
   height: 32px;
@@ -44,12 +40,12 @@ const IconWrapper = styled.div`
  */
 function Icon({ children, title, className = '', ...props }) {
   return (
-    <Wrapper>
+    <>
       <VisuallyHidden>{title}</VisuallyHidden>
       <IconWrapper className={className} {...props}>
         {children}
       </IconWrapper>
-    </Wrapper>
+    </>
   );
 }
 Icon.propTypes = {

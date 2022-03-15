@@ -22,6 +22,7 @@ import {
   Icons,
   ContextMenu,
   ContextMenuComponents,
+  Tooltip,
   TOOLTIP_PLACEMENT,
   useKeyDownEffect,
 } from '@googleforcreators/design-system';
@@ -101,7 +102,10 @@ function TextAlign() {
   const [offsetLeft, setOffsetLeft] = useState(0);
 
   // Record left position of this button in the parent design menu
-  useEffect(() => setOffsetLeft(buttonRef.current.offsetLeft + OFFSET_X), []);
+  useEffect(
+    () => setOffsetLeft(buttonRef.current.parentNode.offsetLeft + OFFSET_X),
+    []
+  );
 
   // When menu has just opened, focus the current button in submenu
   const currentIconMounted = (node) => {
@@ -140,20 +144,20 @@ function TextAlign() {
 
   return (
     <>
-      <StyledMenuButton
-        ref={buttonRef}
-        onClick={() => setMenuOpen((value) => !value)}
-        aria-haspopup="menu"
-        aria-expanded={isMenuOpen}
-        aria-label={buttonLabel}
-        title={tooltip}
-        tooltipPlacement={TOOLTIP_PLACEMENT.BOTTOM}
-      >
-        <StyledMenuIcon title={tooltip}>
-          <CurrentIcon role="img" aria-label={currentLabel} />
-          <Icons.ChevronDownSmall />
-        </StyledMenuIcon>
-      </StyledMenuButton>
+      <Tooltip placement={TOOLTIP_PLACEMENT.BOTTOM} title={tooltip}>
+        <StyledMenuButton
+          ref={buttonRef}
+          onClick={() => setMenuOpen((value) => !value)}
+          aria-haspopup="menu"
+          aria-expanded={isMenuOpen}
+          aria-label={buttonLabel}
+        >
+          <StyledMenuIcon title={tooltip}>
+            <CurrentIcon role="img" aria-label={currentLabel} />
+            <Icons.ChevronDownSmall />
+          </StyledMenuIcon>
+        </StyledMenuButton>
+      </Tooltip>
       <SubMenuContainer ref={subMenuRef} style={{ left: `${offsetLeft}px` }}>
         <ContextMenu
           onDismiss={handleCloseMenu}
