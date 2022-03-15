@@ -26,6 +26,7 @@ import { useMemo, forwardRef } from '@googleforcreators/react';
  */
 import { Button as BaseButton } from '../../button';
 import { useContextMenu } from '../contextMenuProvider';
+import { Tooltip, TOOLTIP_PLACEMENT } from '../../tooltip';
 import { menuItemStyles } from './styles';
 
 const StyledButton = styled(BaseButton)`
@@ -84,6 +85,9 @@ const Button = forwardRef(function Button(
     onFocus,
     forcePadding = false,
     dismissOnClick = true,
+    children,
+    title,
+    tooltipPlacement = TOOLTIP_PLACEMENT.RIGHT,
     ...props
   },
   ref
@@ -122,19 +126,23 @@ const Button = forwardRef(function Button(
   };
 
   return (
-    <StyledButton
-      ref={ref}
-      id={elementId}
-      tabIndex={focusedId === elementId ? 0 : -1}
-      role="menuitem"
-      isIconMenu={isIconMenu}
-      isHorizontal={isHorizontal}
-      forcePadding={forcePadding}
-      onBlur={handleBlur}
-      onClick={handleClick}
-      onFocus={handleFocus}
-      {...props}
-    />
+    <Tooltip placement={tooltipPlacement} title={title}>
+      <StyledButton
+        ref={ref}
+        id={elementId}
+        tabIndex={focusedId === elementId ? 0 : -1}
+        role="menuitem"
+        isIconMenu={isIconMenu}
+        isHorizontal={isHorizontal}
+        forcePadding={forcePadding}
+        onBlur={handleBlur}
+        onClick={handleClick}
+        onFocus={handleFocus}
+        {...props}
+      >
+        {children}
+      </StyledButton>
+    </Tooltip>
   );
 });
 
@@ -145,6 +153,7 @@ Button.propTypes = {
   onFocus: PropTypes.func,
   forcePadding: PropTypes.bool,
   dismissOnClick: PropTypes.bool,
+  tooltipPlacement: PropTypes.oneOf(Object.values(TOOLTIP_PLACEMENT)),
 };
 
 export default Button;

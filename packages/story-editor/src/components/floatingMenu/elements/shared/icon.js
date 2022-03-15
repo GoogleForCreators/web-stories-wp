@@ -32,11 +32,13 @@ import ToggleButton from './toggleButton';
 const IconButton = memo(
   forwardRef(function IconButton({ Icon, title, ...rest }, ref) {
     return (
-      <ToggleButton ref={ref} {...rest}>
-        <ContextMenuComponents.MenuIcon
-          title={title}
-          placement={TOOLTIP_PLACEMENT.BOTTOM}
-        >
+      <ToggleButton
+        ref={ref}
+        title={title}
+        tooltipPlacement={TOOLTIP_PLACEMENT.BOTTOM}
+        {...rest}
+      >
+        <ContextMenuComponents.MenuIcon title={title}>
           <Icon />
         </ContextMenuComponents.MenuIcon>
       </ToggleButton>

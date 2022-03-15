@@ -146,8 +146,10 @@ function TextAlign() {
         aria-haspopup="menu"
         aria-expanded={isMenuOpen}
         aria-label={buttonLabel}
+        title={tooltip}
+        tooltipPlacement={TOOLTIP_PLACEMENT.BOTTOM}
       >
-        <StyledMenuIcon title={tooltip} placement={TOOLTIP_PLACEMENT.BOTTOM}>
+        <StyledMenuIcon title={tooltip}>
           <CurrentIcon role="img" aria-label={currentLabel} />
           <Icons.ChevronDownSmall />
         </StyledMenuIcon>

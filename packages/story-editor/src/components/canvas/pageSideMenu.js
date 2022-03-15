@@ -110,12 +110,11 @@ function PageSideMenu() {
                     onClick(evt);
                     externalOnClick(evt);
                   }}
+                  title={label}
+                  tooltipPlacement={tooltipPlacement}
                   {...quickAction}
                 >
-                  <ContextMenuComponents.MenuIcon
-                    title={label}
-                    placement={tooltipPlacement}
-                  >
+                  <ContextMenuComponents.MenuIcon title={label}>
                     <Icon />
                   </ContextMenuComponents.MenuIcon>
                 </ContextMenuComponents.MenuButton>

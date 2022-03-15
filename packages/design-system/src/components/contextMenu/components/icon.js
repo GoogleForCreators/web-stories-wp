@@ -22,9 +22,8 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { VisuallyHidden } from '../../visuallyHidden';
-import { Tooltip, TOOLTIP_PLACEMENT } from '../../tooltip';
 
-const TooltipWrapper = styled.div`
+const Wrapper = styled.div`
   margin: 0 auto;
 `;
 
@@ -39,32 +38,22 @@ const IconWrapper = styled.div`
  *
  * @param {Object} props Attributes to pass to the link.
  * @param {Node} props.children Children to render.
- * @param {TOOLTIP_PLACEMENT} props.placement The tooltip placement.
  * @param {string} props.title The text to display in the tooltip.
  * @param {string} props.className Optional class name to add to icon wrapper.
  * @return {Node} The react node
  */
-function Icon({
-  children,
-  placement = TOOLTIP_PLACEMENT.RIGHT,
-  title,
-  className = '',
-  ...props
-}) {
+function Icon({ children, title, className = '', ...props }) {
   return (
-    <>
+    <Wrapper>
       <VisuallyHidden>{title}</VisuallyHidden>
-      <TooltipWrapper>
-        <Tooltip placement={placement} title={title} {...props}>
-          <IconWrapper className={className}>{children}</IconWrapper>
-        </Tooltip>
-      </TooltipWrapper>
-    </>
+      <IconWrapper className={className} {...props}>
+        {children}
+      </IconWrapper>
+    </Wrapper>
   );
 }
 Icon.propTypes = {
   children: PropTypes.node,
-  placement: PropTypes.oneOf(Object.values(TOOLTIP_PLACEMENT)),
   title: PropTypes.string.isRequired,
   className: PropTypes.string,
 };
