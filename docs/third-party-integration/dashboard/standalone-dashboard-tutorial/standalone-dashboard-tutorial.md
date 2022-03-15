@@ -1,5 +1,11 @@
 # Standalone dashboard tutorial
 
+This tutorial shows you how to create a standalone story dashboard for learning purposes. You will implement the following functionalities while following this tutorial.
+
+- Fetching hard-coded stories.
+- Adding filters for browsing stories.
+- Adding a custom settings page in the dashboard
+
 ## Step 1: Setting up the dashboard with minimum config
 
 Installing dependencies
@@ -21,7 +27,11 @@ const CustomDashboard = () => {
         fetchedStoryIds: [],
         totalPages: 1,
         totalStoriesByStatus: {
-          all: 0,
+          all: 3,
+          draft: 0,
+          future: 0,
+          pending: 0,
+          private: 0,
           publish: 0,
         },
       }),
@@ -37,9 +47,11 @@ const CustomDashboard = () => {
 export default CustomDashboard;
 ```
 
-<!-- Writup explaining fetchStories is required and why this response was send -->
+Minimum requirement for a story dashboard is to fetch stories, so the user can browse them go to the editor to update them. The response for `fetchStories` that is shown in the above code sample emulates a CMS having no stories saved. 
 
 ## Step 2: Adding hard-coded stories and updating `fetchStories` to handle its argument
+
+`fetchStories` callback be updated as shown in the below code sample to serve hard-coded data.
 
 ```js
 const STORIES_RESP = {
@@ -99,7 +111,7 @@ const fetchStories = () => {
 export default fetchStories;
 ```
 
-Update `fetchStories` as below to allow basic filtering an ordering of stories
+You can also update `fetchStories` as below to allow basic filtering an ordering of stories on the basis of their statuses.
 
 ```jsx
   const fetchStories = ({
@@ -137,4 +149,79 @@ Update `fetchStories` as below to allow basic filtering an ordering of stories
 export default fetchStories;
 ```
 
+Similar to how `status` and `sortOrder` in used in the code sample you can add other filer based on parameters passed to `fetchStories`. See [API callbacks](../integration-layer-api/api-callbacks.md) for more information.
+
 ## Step 4: Adding a custom settings page
+
+You can add a custom page or an external link to the dashboard's menu passing required values to `config` and `InterfaceSkeletons`'s prop `additionalRoutes`. Below is a code sample doing just that.
+
+```js
+import { PageHeading, Layout } from "@googleforcreators/dashboard";
+
+export function EditorSettings() {
+  return (
+    <Layout.Provider>
+      <div>
+        <PageHeading heading={"Settings"} />
+        <Layout.Scrollable>
+          <div
+            style={{
+              height: "300px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor:"#EEE"
+            }}
+          >
+            {"Settings"}
+          </div>
+        </Layout.Scrollable>
+      </div>
+    </Layout.Provider>
+  );
+}
+
+export const leftRailRoutes = [
+  {
+    value: "/settings",
+    label: "Settings",
+  },
+  {
+    value: `https://googleforcreators.github.io/web-stories-wp/storybook/iframe.html?id=playground-dashboard--default&args=&viewMode=story#/`,
+    label: "External link",
+    isExternal: true,
+  },
+];
+
+```
+
+Now let's pass the required values to `config` and `additionalRoutes`.
+
+```js
+import { Dashboard, InterfaceSkeleton } from "@googleforcreators/dashboard";
+import fetchStories from "./fetchStories";
+import { leftRailRoutes, EditorSettings } from "./settings";
+
+const CustomDashboard = () => {
+  const apiCallbacks = {
+    fetchStories,
+  };
+
+  return (
+    <Dashboard
+      config={{ apiCallbacks, leftRailSecondaryNavigation: leftRailRoutes }}
+    >
+      <InterfaceSkeleton
+        additionalRoutes={[
+          {
+            path: "/settings",
+            component: <EditorSettings />,
+          },
+        ]}
+      />
+    </Dashboard>
+  );
+};
+
+export default CustomDashboard;
+```

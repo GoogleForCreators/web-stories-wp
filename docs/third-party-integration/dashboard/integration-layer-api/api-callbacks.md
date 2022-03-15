@@ -172,37 +172,6 @@ An `Object` with the following shape.
 - required: No
 - description: Link to display the web-story output.
 
-`lockUser`
-
-- type: `Object`
-
-- required: No
-
-- description: Used to show the user who is currently editing the story.
-  `id`
-
-    - type: `number`
-    - required: No
-    - description: Id of the user who is currently editing the story.
-
-  `name`
-
-    - type: `string`
-    - required: No
-    - description: Name of the user who is currently editing the story.
-
-  `avatar`
-
-    - type: `string`
-    - required: No
-    - description: Link to the avatar picture of the user who is curently editing the story.
-
-`locked`
-
-- type: `boolean`
-- required: No
-- description: Shows whether or not the story is being edited by another user.
-
 `modified`
 
 - type: `string`
@@ -325,23 +294,42 @@ Arguments
             - required: Yes
             - description: The whole web story markup.
         - `story_data`
-            - type: `object`
+            - type: `Object`
             - required: Yes
-            - description: 
+            - description: The json data of the story.
+                `pages`
+                - type: `array<Page>`
+                - required: Yes
+                - description: The array of pages [See Page object shape](../../story-editor/integration-layer-api/api-callbacks.md) that are in the template.
+                `version`
+                - type: `number`,
+                - required: Yes
+                - description: The version of template for migration.
+                `autoAdvance`
+                - type: `boolean`,
+                - required: No,
+                - description: Defines whether pages will be auto advanced.
+                `defaultPageDuration`
+                - type: `number`,
+                - required: No,
+                - description: It shows the default auto advance duration of story.
+                `currentStoryStyles`
+                - type: `Object`
+                - required: No,
+                - description: It shows the custom styles set to this story.
         - `Pages`
             - type: `array<Page>`
             - required: Yes
-            - description: The array of pages [See Page object shape](#page-shape-object) that are in the template.
+            - description: The array of pages [See Page object shape](../../story-editor/integration-layer-api/api-callbacks.md) that are in the template.
         - `meta`
-            - type: `object`
+            - type: `Object`
             - required: No
             - description: The metadata of the template.
         - `featuredMedia`
-            - type: `object`
+            - type: `Object`
             - required: No
             - description: The link of the featured media/poster.
-            - shape
-                - `id`
+                `id`
                 - type: `number`
                 - required: Yes
                 - description: Id of the featured media/poster

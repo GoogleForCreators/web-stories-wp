@@ -57,7 +57,7 @@ For a more in-depth example of making a custom story editor see [Standalone Edit
 
 ## Meet The Story Editor
 
-Now that you have a Story Editor up and running, let's get to know a little about it. You can learn more about all possible visual and functional customizations by reading [Standalone Editor Tutorial](../standalone-editor-tutorial/standalone-editor-tutorial.md) and [Integration Layer Docs](../Integration-Layer-API/Integration-Layer-Docs.md).
+Now that you have a Story Editor up and running, let's get to know a little about it. You can learn more about all possible visual and functional customizations by reading [Standalone Editor Tutorial](../standalone-editor-tutorial/standalone-editor-tutorial.md) and [Integration Layer Docs](../integration-layer-api/integration-layer.md).
 
 The Story editor has 3 main areas that one should know about
 
@@ -84,7 +84,7 @@ This is the main area which includes page thumbnails, page( canvas ), help cente
 
 **Page (Canvas) - (b)**: The main ‘canvas’ that shows the current story page. This is where most of the action happens, and the user designs via drag & drop and other actions.
 
-**Help Center - (c)** Special assistive mode that when active, offers design suggestions to aid the user in producing a beautiful, functional story. Additional tips can be added for custom integrations (checkout [Integration Layer Docs](../Integration-Layer-API/Integration-Layer-Docs.md) for more information).
+**Help Center - (c)** Special assistive mode that when active, offers design suggestions to aid the user in producing a beautiful, functional story. Additional tips can be added for custom integrations (checkout [Integration Layer Docs](../integration-layer-api/integration-layer.md) for more information).
 
 **Checklist-(d)**: The checklist represents another, cleaner way of browsing through all current errors, warnings and suggestions that originate while working with the story.
 
@@ -96,7 +96,7 @@ This is the main area which includes page thumbnails, page( canvas ), help cente
 
 **Inspector Tabs**: This by default has UI interfaces to edit properties of any selected element in the **Design Tab**. An additional panel named **Document tab** can be added to provide controls for story description, publishing, permalink and taxonomies etc.
 
-To learn how to configure a customized **Document Tab** see [Integration Layer Docs](../Integration-Layer-API/Integration-Layer-Docs.md).
+To learn how to configure a customized **Document Tab** see [Integration Layer Docs](../integration-layer-api/integration-layer.md).
 At the bottom of this area, a **Layers (c)** interface is also present for users to configure layers of the current page visible on the canvas.
 
 ### Next
