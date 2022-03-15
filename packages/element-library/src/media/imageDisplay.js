@@ -28,6 +28,7 @@ import {
   getSmallestUrlForWidth,
 } from '@googleforcreators/media';
 import { StoryPropTypes } from '@googleforcreators/elements';
+import { noop } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
@@ -45,8 +46,8 @@ function ImageDisplay({
   box,
   previewMode,
   getProxiedUrl,
-  isCurrentResourceProcessing,
-  isCurrentResourceUploading,
+  isCurrentResourceProcessing = noop,
+  isCurrentResourceUploading = noop,
 }) {
   const { resource, scale, focalX, focalY } = element;
   const { id: resourceId, alt } = resource;
@@ -144,8 +145,8 @@ ImageDisplay.propTypes = {
   box: StoryPropTypes.box.isRequired,
   previewMode: PropTypes.bool,
   getProxiedUrl: PropTypes.func.isRequired,
-  isCurrentResourceProcessing: PropTypes.func.isRequired,
-  isCurrentResourceUploading: PropTypes.func.isRequired,
+  isCurrentResourceProcessing: PropTypes.func,
+  isCurrentResourceUploading: PropTypes.func,
 };
 
 export default ImageDisplay;
