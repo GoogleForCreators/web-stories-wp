@@ -28,11 +28,11 @@ import {
   getSmallestUrlForWidth,
 } from '@googleforcreators/media';
 import { StoryPropTypes } from '@googleforcreators/elements';
-import { noop } from '@web-stories-wp/design-system';
 
 /**
  * Internal dependencies
  */
+import { noop } from '../utils/noop';
 import { mediaWithScale } from './util';
 import MediaDisplay from './display';
 
