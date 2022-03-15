@@ -69,7 +69,6 @@ const NoStylesText = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.tertiary};
 `;
 
-const SPACING = { x: 20 };
 function PresetPanel({ pushUpdate }) {
   const textStyles = useStory(
     ({ state }) => state.story.globalStoryStyles.textStyles
@@ -82,6 +81,7 @@ function PresetPanel({ pushUpdate }) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
   const hasPresets = textStyles.length > 0;
+  const SPACING = { x: isRTL ? 12 : 46 };
 
   const handleApplyStyle = useApplyStyle({ pushUpdate });
   const { addGlobalPreset } = useAddPreset({ presetType: PRESET_TYPES.STYLE });
@@ -125,12 +125,11 @@ function PresetPanel({ pushUpdate }) {
           </MoreButton>
           <Popup
             topOffset={topOffset}
-            // Temp fix, proper will be done in #10803
-            isRTL={!isRTL}
+            isRTL={isRTL}
             anchor={buttonRef}
             dock={inspector}
             isOpen={isPopupOpen}
-            placement={PLACEMENT.LEFT_START}
+            placement={PLACEMENT.RIGHT_START}
             spacing={SPACING}
             renderContents={() => (
               <StyleManager
