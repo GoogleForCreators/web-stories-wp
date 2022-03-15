@@ -18,7 +18,7 @@
  */
 import PropTypes from 'prop-types';
 import { TranslateWithMarkup, __ } from '@googleforcreators/i18n';
-import { trackClick } from '@googleforcreators/tracking';
+import { trackClick, trackEvent } from '@googleforcreators/tracking';
 import styled from 'styled-components';
 import { useState, useCallback } from '@googleforcreators/react';
 import {
@@ -86,11 +86,22 @@ export const FontCheckDialog = ({
     updateElementsByFontFamily: actions.updateElementsByFontFamily,
   }));
 
+  const onClose = useCallback(
+    (evt) => {
+      trackEvent('font_check_cancel');
+
+      defaultCloseAction(evt);
+    },
+    [defaultCloseAction]
+  );
+
   const onSettingsClick = useCallback((evt) => {
-    trackClick(evt, 'click_font_settings');
+    trackClick(evt, 'click_font_check_settings');
   }, []);
 
   const updateMissingFontWithDefault = useCallback(() => {
+    trackEvent('font_check_replace_default');
+
     updateElementsByFontFamily({
       family: missingFont,
       properties: { font: TEXT_ELEMENT_DEFAULT_FONT },
@@ -99,6 +110,8 @@ export const FontCheckDialog = ({
   }, [closeDialog, missingFont, updateElementsByFontFamily]);
 
   const updateMissingFontWithSelected = useCallback(() => {
+    trackEvent('font_check_replace_selected');
+
     updateElementsByFontFamily({
       family: missingFont,
       properties: { font: suggestedFont },
@@ -111,7 +124,7 @@ export const FontCheckDialog = ({
   return (
     <Dialog
       isOpen={isOpen}
-      onClose={defaultCloseAction}
+      onClose={onClose}
       title={__('Missing Fonts', 'web-stories')}
       contentLabel={__('Missing Fonts', 'web-stories')}
       actions={

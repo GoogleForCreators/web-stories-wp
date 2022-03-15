@@ -46,11 +46,8 @@ export const FontCheck = () => {
   const [showDialog, setShowDialog] = useState(false);
 
   const closeAndRedirect = useCallback(
-    (evt) => {
-      if (evt) {
-        // redirect when clicking outside the dialog
-        window.location = dashboardLink;
-      }
+    () => {
+      window.location = dashboardLink;
     },
     [dashboardLink]
   );
