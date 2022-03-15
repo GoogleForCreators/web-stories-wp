@@ -314,14 +314,14 @@ const editorAndDashboard = {
   ...sharedConfig,
   devServer: !isProduction
     ? {
-      devMiddleware: {
-        writeToDisk: true,
-      },
-      hot: true,
-      allowedHosts: 'all',
-      host: 'localhost',
-      port: 'auto',
-    }
+        devMiddleware: {
+          writeToDisk: true,
+        },
+        hot: true,
+        allowedHosts: 'all',
+        host: 'localhost',
+        port: 'auto',
+      }
     : undefined,
   entry: {
     [EDITOR_CHUNK]: './packages/wp-story-editor/src/index.js',
