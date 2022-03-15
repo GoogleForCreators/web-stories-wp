@@ -255,13 +255,13 @@ Arguments
     - description: 
         - `id`
             - type: `number`
-            - description: 
+            - description: The id of the story that needs to be updated
         - `author`
             - type: `number`
-            - description: 
+            - description: The id of the author.
         - `title`
             - type: `number`
-            - description: 
+            - description: The changed story title.
 
 Response:
 An `Object` of `<Story>` shape.
@@ -320,18 +320,31 @@ Arguments
 -  `template`
     - type: `Object`
     - description: 
-        - `createdBy`
-            - type: `number`
+        - `content`
+            - type: `string`
+            - required: Yes
+            - description: The whole web story markup.
+        - `story_data`
+            - type: `object`
+            - required: Yes
             - description: 
-        - `pages`
-            - type: `number`
-            - description: 
-        - `version`
-            - type: `number`
-            - description: 
-        - `colors`
-            - type: `number`
-            - description: 
+        - `Pages`
+            - type: `array<Page>`
+            - required: Yes
+            - description: The array of pages [See Page object shape](#page-shape-object) that are in the template.
+        - `meta`
+            - type: `object`
+            - required: No
+            - description: The metadata of the template.
+        - `featuredMedia`
+            - type: `object`
+            - required: No
+            - description: The link of the featured media/poster.
+            - shape
+                - `id`
+                - type: `number`
+                - required: Yes
+                - description: Id of the featured media/poster
 
 Expected Response:
 An `Object` of the following shape.
