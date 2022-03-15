@@ -19,13 +19,17 @@
  */
 import PropTypes from 'prop-types';
 import { useState, useMemo, useCallback } from '@googleforcreators/react';
-import { noop, useGlobalIsKeyPressed } from '@googleforcreators/design-system';
+import { useGlobalIsKeyPressed } from '@googleforcreators/design-system';
 import { useTransform } from '@googleforcreators/transform';
 import {
   getDefinitionForType,
   ELEMENT_TYPES,
   MEDIA_ELEMENT_TYPES,
 } from '@googleforcreators/elements';
+/**
+ * Internal dependencies
+ */
+import { noop } from '../../utils/noop';
 
 /**
  * Internal dependencies

@@ -23,14 +23,13 @@ import {
   useCallback,
   useRef,
 } from '@googleforcreators/react';
-import { noop } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 import { ScrollToTop, Layout } from '../../../components';
 import { STORY_STATUSES } from '../../../constants';
-import { useStoryView } from '../../../utils';
+import { useStoryView, noop } from '../../../utils';
 import useApi from '../../api/useApi';
 import { useConfig } from '../../config';
 import Content from './content';
