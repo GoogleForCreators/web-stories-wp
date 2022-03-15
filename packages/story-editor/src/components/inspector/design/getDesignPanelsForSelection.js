@@ -109,9 +109,7 @@ function getDesignPanelsForSelection(elements) {
 
   // Find which panels all the selected elements have in common
   return elements
-    .map(
-      ({ type }) => elementTypes.find((elType) => elType.type === type).panels
-    )
+    .map(({ type }) => elementTypes[type].panels)
     .reduce((commonPanels, panels) => intersect(commonPanels, panels), ALL)
     .map((type) => {
       switch (type) {

@@ -19,7 +19,6 @@
  */
 import { elementTypes } from '../elementType';
 
-const getDefinitionForType = (type) =>
-  elementTypes.find((el) => el.type === type);
+const getDefinitionForType = (type) => elementTypes[type];
 
 export default getDefinitionForType;

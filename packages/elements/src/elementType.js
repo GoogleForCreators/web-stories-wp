@@ -18,7 +18,7 @@
 const elementTypes = [];
 
 function registerElementType(elementType) {
-  elementTypes.push(elementType);
+  elementTypes[elementType.type] = elementType;
 }
 
 export { registerElementType, elementTypes };
