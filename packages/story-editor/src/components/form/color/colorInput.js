@@ -39,6 +39,7 @@ import {
   Swatch,
   Icons,
   Popup,
+  PLACEMENT,
 } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
@@ -159,7 +160,7 @@ const ColorInput = forwardRef(function ColorInput(
     value = null,
     label = null,
     changedStyle,
-    pickerPlacement,
+    pickerPlacement = PLACEMENT.RIGHT_START,
     isInDesignMenu = false,
     hasInputs = true,
     pickerProps,
@@ -193,7 +194,7 @@ const ColorInput = forwardRef(function ColorInput(
   const positionPlacement = useCallback(
     (popupRef) => {
       // if the popup was assigned as top as in the case of floating menus, we want to check that it will fit
-      if (pickerPlacement.startsWith('top')) {
+      if (pickerPlacement?.startsWith('top')) {
         // check to see if there's an overlap with the window edge
         const { top } = popupRef.current?.getBoundingClientRect() || {};
         if (top <= topOffset) {
