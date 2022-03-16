@@ -43,7 +43,7 @@ Arguments
 
         - `pages`
             - type: `array<Page>`
-            - description: Array of page objects in the story. See [page object](#### Page object shape)
+            - description: Array of page objects in the story. See [page object shape](#page-object-shape)
 
 #### Page object shape
 
@@ -120,7 +120,7 @@ An `Object` with the following shape
 
 - type: `array<Page>`
 - require: No
-- description: Array of page objects in the story.
+- description: Array of page objects in the story. See [page object shape](#page-object-shape) for more details.
 
 
 
@@ -194,7 +194,7 @@ Expected response
 
 - type: `Object`
 - required: No
-- description: Details of author who created the story.
+- description: Saved style Presets.
 
 
 
@@ -265,7 +265,7 @@ An array of the template objects whose shape is described below.
 
 - type: `array<element>`
 - required: Yes
-- description: Array of elements used in the template. See [element object](#### Element object shape).
+- description: Array of elements used in the template. See [element object](#element-object-shape).
 
 
 `backgroundColor`
@@ -326,7 +326,7 @@ An array of the template objects whose shape is described below.
 
 - `rotationAngle`
     - type: `number`
-    - description: Rotation angle of the elemnt.
+    - description: Rotation angle of the element.
 
 - `lockAspectRatio`
     - type: `boolean`
@@ -432,7 +432,7 @@ Arguments
 
 - `template` :
     - type: `Object`
-    - description: See  [Template Object Shape](####Template-Object-Shape) for object shape.
+    - description: See [Template Object Shape](#template-object-shape) for object shape.
 
 
 Expected response
@@ -467,15 +467,15 @@ Arguments
 - `params` :
     - type: `Object`
     - description: Describes search or filter parameters which includes `mediaType`, `searchTerm`& `pagingNum`
-- `mediaType`
-    - type: `string`
-    - description: Media type requested by the user. One of `image`, `video` or `gif`
-- `searchTerm`
-    - type: `string`
-    - description: Search string enter by the user.
-- `pagingNum`
-    - type: `string`
-    - description: Page number
+    - `mediaType`
+        - type: `string`
+        - description: Media type requested by the user. One of `image`, `video` or `gif`
+    - `searchTerm`
+        - type: `string`
+        - description: Search string enter by the user.
+    - `pagingNum`
+        - type: `string`
+        - description: Page number
 
 
 Expected response
@@ -659,7 +659,7 @@ Arguments
 
 Expected response
 
-- **Media Object** (see [Media Object Shape](####Media-Object-Shape))
+- **Media Object** (see [Media Object Shape](#media-object-shape))
 
 ### `getMutedMediaById`
 
@@ -673,7 +673,7 @@ Arguments
 
 Expected response
 
-- **Media Object** (see [Media Object Shape](####Media-Object-Shape))
+- **Media Object** (see [Media Object Shape](#media-object-shape))
 
 ### `getOptimizedMediaById`
 
@@ -687,7 +687,7 @@ Arguments
 
 Expected response
 
-- **Media Object** (see [Media Object Shape](####Media-Object-Shape))
+- **Media Object** (see [Media Object Shape](#media-object-shape))
 
 ### `updateMedia`
 
@@ -749,7 +749,7 @@ Called when editor uploads -
 - Poster image for a video.
 - Poster image for a story.
 - Poster image for a template.
-- Altered media (muted, trimmed, optimized or converted to gif)
+- Altered media (muted, trimmed, optimized or converted to GIF)
 
 After uploading altered media Story editor calls `updateMedia` to update original version of altered media.
 
@@ -764,7 +764,7 @@ Arguments
     - description: Updated data of a media object.
         - `originalId` :
             - type: `number`
-            - description: Id of a media of which this element is an altered.
+            - description: Id of a media of which this element is an altered version of.
 
         - `mediaId` :
             - type: `number`
@@ -1021,20 +1021,35 @@ Customize the Story editor for users to hotlink media with links rather than upl
 
 ### `getHotlinkInfo`
 
- Used to get data about links while hot linking media in media pane
+Used to get data about links while hot linking media in media pane.
 
 Arguments
 
-- `url` string - External link
+- `url` 
+    - type:`string` 
+    - description: External link.
 
 Expected response
 
-| key      | type   | Required | description               |
-| :------- | ------ | -------- | ------------------------- |
-| ext      | string | YES      | file extension            |
-| mimeType | string | YES      | file mime type            |
-| type     | string | YES      | one of `image` or `video` |
-| fileName | string | YES      | file name                 |
+- `ext` 
+    - type:`string` 
+    - required: Yes
+    - description: File extension.
+
+- `mimeType` 
+    - type:`string`
+    - required: Yes
+    - description: File mime type.
+
+- `type` 
+    - type:`string`
+    - required: Yes 
+    - description: File type. One of `image` or `video`.
+
+- `fileName` 
+    - type:`string`
+    - required: Yes 
+    - description: File name.
 
 Example ( Expected response )
 
@@ -1087,7 +1102,7 @@ Caters Story editor with different capabilities on per-user basis
 
 ### `getCurrentUser`
 
-fetches details about the current user.
+Fetch details about the current user.
 
 Arguments
 
@@ -1129,7 +1144,7 @@ Example ( Expected response )
 
 ### `updateCurrentUser`
 
-updates details about the current user.
+Update details about the current user.
 
 Arguments
 

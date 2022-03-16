@@ -74,7 +74,7 @@ To configure the editor to your needs you can pass various config options to the
 ### `apiCallbacks`
 
 - type : `Object`
-- description : Takes various callback functions for story editor's side effects. The only required API callback is `saveStoryById`. For detailed documentation of `apiCallbacks`,  see [API Callbacks](./API-Callbacks.md) section.
+- description : Takes various callback functions for story editor's side effects. The only required API callback is `saveStoryById`. For detailed documentation of `apiCallbacks`,  see [API Callbacks](./api-callbacks.md) section.
 
 
 
@@ -231,7 +231,7 @@ const capabilities = {
 ### `flags`
 
 - type : `Object`
-- description : Many experimental features can be enabled/disabled in the story editor. Below is a list of all feature flags.
+- description : Many experimental features can be enabled/disabled in the story editor. Below is a list of all feature flags. These features are unstable and susceptible to frequent changes.
     - `enableSVG`
         - type: `boolean`
         - description: Enables SVG support in link icons.
@@ -365,7 +365,7 @@ const locale ={
 ### `MediaUpload`
 
 - type : `React.ReactElement`
-- description : React component used for rendering media upload modal. See [First party Media Support](./API-Callbacks.md#First-party-Media-Support)
+- description : React component used for rendering media upload modal. See [First party Media Support](./api-callbacks.md#First-party-Media-Support)
 
 ### `showMedia3p`
 
@@ -391,7 +391,7 @@ const locale ={
 ## InterfaceSkeleton
 
 Many aspects of the editor can be customized by adding custom components through A component called `InterfaceSkeleton` from `@googleforCreators/story-editor`. This section will give details about what aspects of the story editor can be modified by custom components.
-Before reading this you might want to check out [Getting Started](../Getting-Started/Getting-Started.md) to know about different visual components of the editor.
+Before reading this you might want to check out [Getting Started](../getting-started/getting-started.md) to know about different visual components of the editor.
 
 ## Workspace
 
@@ -400,7 +400,7 @@ Before reading this you might want to check out [Getting Started](../Getting-Sta
 Editor Workspace has reserved space to render a custom header. This can be used to provide custom UI elements for users to interact with. 
 Although you can use custom UI elements in the header, it is advised to use elements provided in `@googleForCreators/design-system`. That will guarantee design consistency and compatibility with the `RTL` layout.
 
-An example use case is available in [Standalone Editor Tutorial](./standalone-editor-tutorial/standalone-editor-tutorial.md) where a few buttons have been added to the header.
+An example use case is available in [Standalone Editor Tutorial](../standalone-editor-tutorial/standalone-editor-tutorial.md) where a few buttons have been added to the header.
 
 ```jsx
 import {

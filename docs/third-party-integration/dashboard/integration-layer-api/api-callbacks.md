@@ -74,6 +74,7 @@ Arguments
     - description: Author name.
 
 Expected Response:
+
 An `Object` with the following shape.
 
 `fetchedStoryIds`
@@ -108,21 +109,16 @@ An `Object` with the following shape.
 `author`
 
 - type: `Object`
-
 - required: No
-
 - description: Name and id of the author for the web-story.
-  `name` 
-
-    - type: `string`
-    - required: No
-    - description: Name of the author.
-
-  `id`
-
-    - type: `number`
-    - required: No
-    - description: Id of the author.
+    - `name`
+        - type: `string`
+        - required: No
+        - description: Name of the author.
+    - `id`
+        - type: `number`
+        - required: No
+        - description: Id of the author.
 
 `bottomTargetAction`
 
@@ -297,26 +293,26 @@ Arguments
             - type: `Object`
             - required: Yes
             - description: The json data of the story.
-                `pages`
-                - type: `array<Page>`
-                - required: Yes
-                - description: The array of pages [See Page object shape](../../story-editor/integration-layer-api/api-callbacks.md) that are in the template.
-                `version`
-                - type: `number`,
-                - required: Yes
-                - description: The version of template for migration.
-                `autoAdvance`
-                - type: `boolean`,
-                - required: No,
-                - description: Defines whether pages will be auto advanced.
-                `defaultPageDuration`
-                - type: `number`,
-                - required: No,
-                - description: It shows the default auto advance duration of story.
-                `currentStoryStyles`
-                - type: `Object`
-                - required: No,
-                - description: It shows the custom styles set to this story.
+                - `pages`
+                    - type: `array<Page>`
+                    - required: Yes
+                    - description: The array of pages [See Page object shape](../../story-editor/integration-layer-api/api-callbacks.md) that are in the template.
+                - `version`
+                    - type: `number`,
+                    - required: Yes
+                    - description: The version of template for migration.
+                - `autoAdvance`
+                    - type: `boolean`,
+                    - required: No,
+                    - description: Defines whether pages will be auto advanced.
+                - `defaultPageDuration`
+                    - type: `number`,
+                    - required: No,
+                    - description: It shows the default auto advance duration of story.
+                - `currentStoryStyles`
+                    - type: `Object`
+                    - required: No,
+                    - description: It shows the custom styles set to this story.
         - `Pages`
             - type: `array<Page>`
             - required: Yes
