@@ -37,7 +37,7 @@ const PAGE_RECT = {
 
 function useAlignment({ selectedElements, updateElements }) {
   const isDistributionEnabled = selectedElements.length > 2;
-  const updatedSelectedElementsWithFrame = useMemo(
+  const selectedElementsWithFrame = useMemo(
     () =>
       selectedElements.map((item) => {
         const { id, x, y, width, height, rotationAngle } = item;
@@ -81,9 +81,7 @@ function useAlignment({ selectedElements, updateElements }) {
     updateElements((properties) => {
       const { id } = properties;
 
-      const element = updatedSelectedElementsWithFrame.find(
-        (item) => item.id === id
-      );
+      const element = selectedElementsWithFrame.find((item) => item.id === id);
       const {
         width = 0,
         height = 0,
@@ -133,7 +131,7 @@ function useAlignment({ selectedElements, updateElements }) {
   };
 
   const handleHorizontalDistribution = () => {
-    const sortedElementsWithFrame = [...updatedSelectedElementsWithFrame];
+    const sortedElementsWithFrame = [...selectedElementsWithFrame];
     sortedElementsWithFrame.sort(
       (a, b) => (a.frameX + a.frameWidth) / 2 - (b.frameX + b.frameWidth) / 2
     );
@@ -163,7 +161,7 @@ function useAlignment({ selectedElements, updateElements }) {
   };
 
   const handleVerticalDistribution = () => {
-    const sortedElementsWithFrame = [...updatedSelectedElementsWithFrame];
+    const sortedElementsWithFrame = [...selectedElementsWithFrame];
     sortedElementsWithFrame.sort(
       (a, b) => (a.frameY + a.frameHeight) / 2 - (b.frameY + b.frameHeight) / 2
     );
