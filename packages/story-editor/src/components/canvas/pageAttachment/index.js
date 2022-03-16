@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { Popup } from '@googleforcreators/design-system';
+import { PLACEMENT, Popup } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 
 /**
@@ -167,7 +167,7 @@ function PageAttachment({ pageAttachment = {} }) {
                 isRTL={isRTL}
                 anchor={{ current: pageAttachmentContainer }}
                 isOpen
-                placement="left"
+                placement={PLACEMENT.LEFT}
                 spacing={spacing}
                 topOffset={topOffset}
               >

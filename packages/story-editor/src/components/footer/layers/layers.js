@@ -20,6 +20,7 @@
 import styled from 'styled-components';
 import { useState, useRef } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
+import { PLACEMENT } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
@@ -44,7 +45,7 @@ function Layers() {
     <>
       <Popup
         isOpen={isOpen}
-        placement="right"
+        placement={PLACEMENT.RIGHT}
         ariaLabel={__('Layers Panel', 'web-stories')}
       >
         <NavigationWrapper alignRight ref={ref} isOpen={isOpen}>
