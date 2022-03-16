@@ -104,14 +104,12 @@ const STORIES_RESP = {
   },
 };
 
-const fetchStories = () => {
-  return Promise.resolve(STORIES_RESP);
-};
+const fetchStories = () => Promise.resolve(STORIES_RESP);
 
 export default fetchStories;
 ```
 
-You can also update `fetchStories` as below to allow basic filtering an ordering of stories on the basis of their statuses.
+You can also update `fetchStories` as below to allow basic filtering and ordering stories on the basis of their statuses.
 
 ```jsx
   const fetchStories = ({
@@ -119,6 +117,7 @@ You can also update `fetchStories` as below to allow basic filtering an ordering
   sortDirection,
 }) => {
   let newFetchedIds = [];
+
   try {
     const statusArray = status.split(",");
     if (statusArray.length === 6) {
@@ -132,28 +131,29 @@ You can also update `fetchStories` as below to allow basic filtering an ordering
         }
       );
     }
+
     if (sortDirection && sortDirection === "desc") {
       newFetchedIds = newFetchedIds.reverse();
     }
+
     return Promise.resolve({
       ...STORIES_RESP,
       fetchedStoryIds: newFetchedIds,
       //stories: newStories,
     });
   } catch (err) {
-    console.log(err);
-    return Promise.resolve();
+    return Promise.reject( err );
   }
 };
 
 export default fetchStories;
 ```
 
-Similar to how `status` and `sortOrder` in used in the code sample you can add other filer based on parameters passed to `fetchStories`. See [API callbacks](../integration-layer-api/api-callbacks.md) for more information.
+Similar to how `status` and `sortOrder` in used in the code sample you can add other filter based on parameters passed to `fetchStories`. See [API callbacks](../integration-layer-api/api-callbacks.md) for more information.
 
 ## Step 4: Adding a custom settings page
 
-You can add a custom page or an external link to the dashboard's menu passing required values to `config` and `InterfaceSkeletons`'s prop `additionalRoutes`. Below is a code sample doing just that.
+You can add a custom page or an external link to the dashboard's menu by passing required values to `config` and `InterfaceSkeletons`'s prop `additionalRoutes`. Below is a code sample doing just that.
 
 ```js
 import { PageHeading, Layout } from "@googleforcreators/dashboard";

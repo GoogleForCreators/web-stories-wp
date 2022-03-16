@@ -59,7 +59,7 @@ For a more in-depth example of making a custom story editor see [Standalone Edit
 
 Now that you have a Story Editor up and running, let's get to know a little about it. You can learn more about all possible visual and functional customizations by reading [Standalone Editor Tutorial](../standalone-editor-tutorial/standalone-editor-tutorial.md) and [Integration Layer Docs](../integration-layer-api/integration-layer.md).
 
-The Story editor has 3 main areas that one should know about
+The Story editor has 3 main areas that one should know
 
 ![editor-labelled](./assets/editor-labelled.png)
 
@@ -71,7 +71,7 @@ All elements which can be added to a story live here. This area has 2 main parts
 
 **Library Tabs (a)** has tabs selector corresponding to every kind of element which can be added to a story. Selecting a new tab related to an element will show its library in the **Library Pane**.
 
-**Library Pane (b)** will have a list of elements corresponding to the element type selected from **Library Tabs** is displayed here. An element's **Library Pane** may have some additional Interfaces for providing additional functionalities.
+**Library Pane (b)** will have a list of elements corresponding to the element type selected from **Library Tabs** which are displayed here. An element's **Library Pane** may have some additional Interfaces for providing additional functionalities.
 	
 
 ### Workspace - (2)
@@ -82,7 +82,7 @@ This is the main area which includes page thumbnails, page( canvas ), help cente
 
 **Header - (a)**: The top section of this area is reserved to add story title and buttons for saving story.
 
-**Page (Canvas) - (b)**: The main ‘canvas’ that shows the current story page. This is where most of the action happens, and the user designs via drag & drop and other actions.
+**Page (Canvas) - (b)**: The main canvas that shows the current story page. This is where most of the action happens, and a user designs using drag & drop and other actions.
 
 **Help Center - (c)** Special assistive mode that when active, offers design suggestions to aid the user in producing a beautiful, functional story. Additional tips can be added for custom integrations (checkout [Integration Layer Docs](../integration-layer-api/integration-layer.md) for more information).
 
