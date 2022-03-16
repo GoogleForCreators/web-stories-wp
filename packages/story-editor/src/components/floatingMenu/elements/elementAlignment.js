@@ -51,6 +51,21 @@ function ElementAlignment() {
   } = useAlignment({ selectedElements, updateElements });
   return (
     <>
+      {isDistributionEnabled && (
+        <>
+          <IconButton
+            Icon={Icons.DistributeHorizontal}
+            title={__('Distribute horizontally', 'web-stories')}
+            onClick={handleHorizontalDistribution}
+          />
+          <IconButton
+            Icon={Icons.DistributeVertical}
+            title={__('Distribute vertically', 'web-stories')}
+            onClick={handleVerticalDistribution}
+          />
+          <Separator />
+        </>
+      )}
       <IconButton
         Icon={Icons.AlignLeft}
         title={__('Align left', 'web-stories')}
@@ -81,21 +96,6 @@ function ElementAlignment() {
         title={__('Align bottom', 'web-stories')}
         onClick={handleAlignBottom}
       />
-      {isDistributionEnabled && (
-        <>
-          <Separator />
-          <IconButton
-            Icon={Icons.DistributeHorizontal}
-            title={__('Distribute horizontally', 'web-stories')}
-            onClick={handleHorizontalDistribution}
-          />
-          <IconButton
-            Icon={Icons.DistributeVertical}
-            title={__('Distribute vertically', 'web-stories')}
-            onClick={handleVerticalDistribution}
-          />
-        </>
-      )}
     </>
   );
 }
