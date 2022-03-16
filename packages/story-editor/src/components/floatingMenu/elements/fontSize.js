@@ -19,6 +19,7 @@
  */
 import { __ } from '@googleforcreators/i18n';
 import { useCallback } from '@googleforcreators/react';
+import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
@@ -41,6 +42,10 @@ function FontSize() {
 
   const pushUpdate = useCallback(
     (update) => {
+      trackEvent('floating_menu', {
+        name: 'set_font_size',
+      });
+
       updateSelectedElements({
         properties: (element) => {
           const updates = updateProperties(element, update, true);

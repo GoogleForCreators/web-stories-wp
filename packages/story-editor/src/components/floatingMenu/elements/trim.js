@@ -19,6 +19,7 @@
  */
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
+import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
@@ -44,12 +45,18 @@ function Trim() {
     ? __('Trimming video', 'web-stories')
     : __('Trim video', 'web-stories');
 
+  const handleClick = () => {
+    trackEvent('floating_menu', {
+      name: 'set_trim',
+    });
+    handleTrim();
+  };
   return (
     <IconButton
       Icon={Icons.Scissors}
       title={title}
       disabled={isDisabled || isTrimming}
-      onClick={handleTrim}
+      onClick={handleClick}
     />
   );
 }
