@@ -35,6 +35,13 @@ const PAGE_RECT = {
   height: PAGE_HEIGHT,
 };
 
+const ALIGNMENT = {
+  LEFT: 'left',
+  RIGHT: 'right',
+  TOP: 'top',
+  BOTTOM: 'bottom',
+};
+
 function useAlignment({ selectedElements, updateElements }) {
   const isDistributionEnabled = selectedElements.length > 2;
   const selectedElementsWithFrame = useMemo(
@@ -89,14 +96,14 @@ function useAlignment({ selectedElements, updateElements }) {
         frameHeight = 0,
       } = element || {};
       const offset =
-        direction === 'left' || direction === 'right'
+        direction === ALIGNMENT.LEFT || direction === ALIGNMENT.RIGHT
           ? (frameWidth - width) / 2
           : (frameHeight - height) / 2;
 
-      if (direction === 'left' || direction === 'right') {
+      if (direction === ALIGNMENT.LEFT || direction === ALIGNMENT.RIGHT) {
         return {
           x:
-            direction === 'left'
+            direction === ALIGNMENT.LEFT
               ? boundRect.startX + offset
               : boundRect.endX - width - offset,
         };
@@ -192,12 +199,12 @@ function useAlignment({ selectedElements, updateElements }) {
 
   return {
     isDistributionEnabled,
-    handleAlignLeft: () => handleAlign('left'),
+    handleAlignLeft: () => handleAlign(ALIGNMENT.LEFT),
     handleAlignCenter,
-    handleAlignRight: () => handleAlign('right'),
-    handleAlignTop: () => handleAlign('top'),
+    handleAlignRight: () => handleAlign(ALIGNMENT.RIGHT),
+    handleAlignTop: () => handleAlign(ALIGNMENT.TOP),
     handleAlignMiddle,
-    handleAlignBottom: () => handleAlign('bottom'),
+    handleAlignBottom: () => handleAlign(ALIGNMENT.BOTTOM),
     handleHorizontalDistribution,
     handleVerticalDistribution,
   };
