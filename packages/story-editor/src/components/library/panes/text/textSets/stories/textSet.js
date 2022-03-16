@@ -106,7 +106,6 @@ export const _default = () => {
       },
       type: 'text',
       content: '<span style="font-weight: 400">Good design is aesthetic</span>',
-      fontWeight: 700,
       x: 0,
       y: 15,
       width: 328,
@@ -187,7 +186,6 @@ export const _default = () => {
       type: 'text',
       content:
         'The possibilities for innovation are not, by any means, exhausted. Technological development is always offering new opportunities for innovative design. But innovative design always develops in tandem with innovative technology, and can never be an end in itself.',
-      fontWeight: 400,
       x: 0,
       y: 110,
       width: 333,

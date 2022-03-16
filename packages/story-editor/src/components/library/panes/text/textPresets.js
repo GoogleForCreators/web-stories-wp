@@ -63,7 +63,6 @@ const DEFAULT_PRESET = {
     'text preset content',
     'web-stories'
   ),
-  fontWeight: FONT_WEIGHT.NORMAL,
   fontSize: dataFontEm(1.33),
   lineHeight: 1.2,
   x: DEFAULT_LEFT_MARGIN,
@@ -85,7 +84,6 @@ const PRESETS = [
         'text preset content',
         'web-stories'
       )}</span>`,
-      fontWeight: FONT_WEIGHT.BOLD,
       fontSize: dataFontEm(2.667),
       lineHeight: 1.19,
       x: DEFAULT_LEFT_MARGIN,
@@ -106,7 +104,6 @@ const PRESETS = [
         'text preset content',
         'web-stories'
       )}</span>`,
-      fontWeight: FONT_WEIGHT.BOLD,
       fontSize: dataFontEm(2),
       lineHeight: 1.2,
       x: DEFAULT_LEFT_MARGIN,
@@ -127,7 +124,6 @@ const PRESETS = [
         'text preset content',
         'web-stories'
       )}</span>`,
-      fontWeight: FONT_WEIGHT.BOLD,
       fontSize: dataFontEm(1.6),
       lineHeight: 1.2,
       x: DEFAULT_LEFT_MARGIN,
@@ -152,7 +148,6 @@ const PRESETS = [
         'text preset content',
         'web-stories'
       )}</span>`,
-      fontWeight: FONT_WEIGHT.NORMAL,
       fontSize: dataFontEm(1),
       lineHeight: 1.2,
       x: DEFAULT_LEFT_MARGIN,
@@ -169,7 +164,6 @@ const PRESETS = [
     title: _x('Label', 'text preset title', 'web-stories').toUpperCase(),
     element: {
       content: _x('Label', 'text preset content', 'web-stories').toUpperCase(),
-      fontWeight: FONT_WEIGHT.NORMAL,
       fontSize: dataFontEm(0.888),
       lineHeight: 1.2,
       x: DEFAULT_LEFT_MARGIN,

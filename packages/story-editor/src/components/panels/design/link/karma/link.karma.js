@@ -233,12 +233,13 @@ describe('Link Panel', () => {
 
   describe('CUJ: Creator Can Add A Link: Link with Page Attachment', () => {
     beforeEach(async () => {
-      // Select Page and remove empty state message.
-      await fixture.events.click(
-        fixture.editor.canvas.quickActionMenu.changeBackgroundColorButton
+      // Select Page.
+      // Click the background element
+      await fixture.events.mouse.clickOn(
+        fixture.editor.canvas.framesLayer.frames[0].node,
+        10,
+        10
       );
-      await fixture.events.keyboard.type('ef');
-      await fixture.events.keyboard.press('Tab');
 
       // Add Page Attachment
       await setPageAttachmentLink('http://pageattachment.com');

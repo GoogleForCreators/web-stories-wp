@@ -182,18 +182,19 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 	 */
 	public function test_get_exclude_tax_query_filter(): void {
 		add_filter( 'web_stories_hide_auto_generated_attachments', '__return_false' );
-		$args    = [
-			'tax_query' => [
-				[
-					'taxonomy' => 'people',
-					'field'    => 'slug',
-					'terms'    => 'bob',
-				],
+		$tax_query = [
+			[
+				'taxonomy' => 'people',
+				'field'    => 'slug',
+				'terms'    => 'bob',
 			],
 		];
-		$results = $this->call_private_method( $this->instance, 'get_exclude_tax_query', [ $args ] );
+		$args      = [
+			'tax_query' => $tax_query,
+		];
+		$results   = $this->call_private_method( $this->instance, 'get_exclude_tax_query', [ $args ] );
 		remove_filter( 'web_stories_hide_auto_generated_attachments', '__return_false' );
-		$this->assertSame( $args, $results );
+		$this->assertSame( $tax_query, $results );
 	}
 
 	/**
@@ -206,14 +207,15 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 		$expected = [
 			'tax_query' => [
 				[
-					'taxonomy' => $tax_slug,
-					'field'    => 'slug',
-					'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
-					'operator' => 'NOT IN',
+					[
+						'taxonomy' => $tax_slug,
+						'field'    => 'slug',
+						'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
+						'operator' => 'NOT IN',
+					],
 				],
 			],
 		];
-
 
 		$actual = $this->instance->filter_ajax_query_attachments_args( [] );
 
@@ -230,22 +232,21 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 		$expected = [
 			'tax_query' => [
 				[
-					'taxonomy' => $tax_slug,
-					'field'    => 'slug',
-					'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
-					'operator' => 'NOT IN',
-				],
-				[
 					[
-						'taxonomy' => 'category',
+						'taxonomy' => $tax_slug,
 						'field'    => 'slug',
-						'terms'    => [ 'uncategorized' ],
+						'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
 						'operator' => 'NOT IN',
 					],
 				],
+				[
+					'taxonomy' => 'category',
+					'field'    => 'slug',
+					'terms'    => [ 'uncategorized' ],
+					'operator' => 'NOT IN',
+				],
 			],
 		];
-
 
 		$actual = $this->instance->filter_ajax_query_attachments_args(
 			[
@@ -285,7 +286,6 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 		$query    = new WP_Query();
 		$expected = $query->get( 'tax_query' );
 
-
 		$this->instance->filter_generated_media_attachments( $query );
 		$actual = $query->get( 'tax_query' );
 
@@ -315,18 +315,18 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 
 		$expected = [
 			[
-				'taxonomy' => $this->instance->get_taxonomy_slug(),
-				'field'    => 'slug',
-				'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
-				'operator' => 'NOT IN',
-			],
-			[
 				[
-					'taxonomy' => 'category',
+					'taxonomy' => $this->instance->get_taxonomy_slug(),
 					'field'    => 'slug',
-					'terms'    => [ 'uncategorized' ],
+					'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
 					'operator' => 'NOT IN',
 				],
+			],
+			[
+				'taxonomy' => 'category',
+				'field'    => 'slug',
+				'terms'    => [ 'uncategorized' ],
+				'operator' => 'NOT IN',
 			],
 		];
 
@@ -361,10 +361,12 @@ class Media_Source_Taxonomy extends DependencyInjectedTestCase {
 		$expected = [
 			'tax_query' => [
 				[
-					'taxonomy' => $tax_slug,
-					'field'    => 'slug',
-					'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
-					'operator' => 'NOT IN',
+					[
+						'taxonomy' => $tax_slug,
+						'field'    => 'slug',
+						'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
+						'operator' => 'NOT IN',
+					],
 				],
 			],
 		];
