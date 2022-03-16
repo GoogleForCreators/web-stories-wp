@@ -31,7 +31,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { ExploreTemplatesView, MyStoriesView } from '../../app/views';
-import { ADMIN_TITLE, APP_ROUTES, ROUTE_TITLES } from '../../constants';
+import { APP_ROUTES, ROUTE_TITLES } from '../../constants';
 import { Route, useRouteHistory } from '../../app/router';
 import { AppFrame, LeftRail, PageContent } from '../pageStructure';
 import useApiAlerts from '../../app/api/useApiAlerts';
@@ -47,8 +47,11 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
     actions: { push },
   } = useRouteHistory();
 
-  const { canViewDefaultTemplates, leftRailSecondaryNavigation = [] } =
-    useConfig();
+  const {
+    canViewDefaultTemplates,
+    leftRailSecondaryNavigation = [],
+    documentTitleSuffix = __('Web Stories', 'web-stories'),
+  } = useConfig();
 
   const { addInitialFetchListener } = useApi(
     ({
@@ -99,13 +102,18 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
 
     document.title = sprintf(
       /* translators: Admin screen title. 1: Admin screen name, 2: Network or site name. */
-      __('%1$s \u2039 %2$s \u2212 WordPress', 'web-stories'),
+      __('%1$s \u2039 %2$s', 'web-stories'),
       dynamicPageTitle,
-      ADMIN_TITLE
+      documentTitleSuffix
     );
 
     trackScreenView(dynamicPageTitle);
-  }, [currentPath, isRedirectComplete, leftRailSecondaryNavigation]);
+  }, [
+    currentPath,
+    isRedirectComplete,
+    leftRailSecondaryNavigation,
+    documentTitleSuffix,
+  ]);
 
   useApiAlerts();
   const { clearSnackbar, removeSnack, placement, currentSnacks } =

@@ -41,8 +41,6 @@ export const APP_ROUTES = {
   TEMPLATE_DETAIL: 'template-detail',
 };
 
-export const ADMIN_TITLE = __('Web Stories', 'web-stories');
-
 export const ROUTE_TITLES = {
   [APP_ROUTES.DASHBOARD]: __('Dashboard', 'web-stories'),
   [APP_ROUTES.TEMPLATES_GALLERY]: __('Explore Templates', 'web-stories'),
