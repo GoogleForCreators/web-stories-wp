@@ -4,50 +4,6 @@ Side effects are added to the Dashboard by defining callbacks. One such callback
 
 Below is a list of available API callbacks categorized in different sections.
 
-## Browsing stories
-
-A dropdown with a list of all the authors for filtering the stories would be added if the callback below is defined.
-
-### `getAuthors`
-
-A callback used to get all the authors of the CMS. Response from this will be used in a dropdown menu from which selecting a particular author will invoke `fetchStories` with the required arguments to get stories created by this author.
-
-Arguments
-
-- `search`
-    - type: `string`
-    - description: Search string entered by the user.
-
-Expected Response:
-
-Array of the `Object` which describes author details.
-
-- `id`
-    - type: `number`
-    - required: Yes
-    - description: User id.
-    
-- `name`
-    - type: `string`
-    - required: Yes
-    - description: Name of the author.
-
-Example ( Expected response )
-
-```json
-[
-    {
-    "id": 1,
-    "name": "dev"
-    },
-    {
-    "id": 2,
-    "name": "admin"
-    }
-]
-```
-
-
 
 ## Story Management
 
@@ -224,7 +180,7 @@ Example ( Story Object )
     "modifiedGmt": "2022-01-18T07:36:32Z",
     "previewLink": "https://example.org/?post_type=web-story&p=1&preview=true",
     "status": "draft",
-    "title": "Test (Copy)",
+    "title": "Test Title",
 }
 ```
 
@@ -466,4 +422,47 @@ Example ( Expected response )
         "hasDeleteAction": true
     }
 }
+```
+
+## Filtering stories
+
+A dropdown with a list of all the authors for filtering the stories would be added if the callback below is defined.
+
+### `getAuthors`
+
+A callback used to get all the authors of the CMS. Response from this will be used in a dropdown menu from which selecting a particular author will invoke `fetchStories` with the required arguments to get stories created by this author.
+
+Arguments
+
+- `search`
+    - type: `string`
+    - description: Search string entered by the user.
+
+Expected Response:
+
+Array of the `Object` which describes author details.
+
+- `id`
+    - type: `number`
+    - required: Yes
+    - description: User id.
+
+- `name`
+    - type: `string`
+    - required: Yes
+    - description: Name of the author.
+
+Example ( Expected response )
+
+```json
+[
+    {
+    "id": 1,
+    "name": "dev"
+    },
+    {
+    "id": 2,
+    "name": "admin"
+    }
+]
 ```
