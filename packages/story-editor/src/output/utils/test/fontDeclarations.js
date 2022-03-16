@@ -87,7 +87,6 @@ describe('FontDeclarations', () => {
               family: 'Lato',
               service: 'fonts.google.com',
             },
-            fontWeight: 400,
           },
           {
             type: 'text',
@@ -95,7 +94,6 @@ describe('FontDeclarations', () => {
               family: 'Lato',
               service: 'fonts.google.com',
             },
-            fontWeight: 400,
           },
         ],
       },
@@ -263,7 +261,6 @@ describe('FontDeclarations', () => {
               family: 'Lato',
               service: 'fonts.google.com',
             },
-            fontWeight: 400,
           },
           {
             type: 'text',
@@ -271,7 +268,6 @@ describe('FontDeclarations', () => {
               family: 'Lato',
               service: 'fonts.google.com',
             },
-            fontWeight: 400,
           },
           {
             type: 'text',
@@ -280,7 +276,6 @@ describe('FontDeclarations', () => {
               service: 'custom',
               url: 'https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/Vazir-Regular.ttf',
             },
-            fontWeight: 400,
           },
         ],
       },

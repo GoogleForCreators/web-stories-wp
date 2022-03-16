@@ -96,10 +96,7 @@ describe('Design Menu: Text Styles', () => {
       );
     });
 
-    // This is failing due to keyboard problems
-    // TODO #10872 https://github.com/GoogleForCreators/web-stories-wp/issues/10872
-    // eslint-disable-next-line jasmine/no-disabled-tests
-    xit('should allow changing text color for a selection from the design menu', async () => {
+    it('should allow changing text color for a selection from the design menu', async () => {
       // Enter edit-mode
       await fixture.events.keyboard.press('Enter');
       await fixture.screen.findByTestId('textEditor');
@@ -144,6 +141,86 @@ describe('Design Menu: Text Styles', () => {
       );
 
       await fixture.snapshot('Mixed color value in the floating menu');
+    });
+  });
+
+  describe('Text Formatting', () => {
+    const { setSelection } = initHelpers(data);
+
+    it('should allow toggling bold, italic, underline from the design menu', async () => {
+      await fixture.events.click(fixture.editor.canvas.designMenu.bold.node);
+      await fixture.events.click(fixture.editor.canvas.designMenu.italic.node);
+      await fixture.events.click(
+        fixture.editor.canvas.designMenu.underline.node
+      );
+
+      expect(fixture.editor.canvas.designMenu.bold.checked).toBeTrue();
+      expect(fixture.editor.canvas.designMenu.italic.checked).toBeTrue();
+      expect(fixture.editor.canvas.designMenu.underline.checked).toBeTrue();
+
+      const formattedText = await getSelectedElement();
+      expect(formattedText.content).toBe(
+        '<span style="font-weight: 700; font-style: italic; text-decoration: underline">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>'
+      );
+
+      // Uncheck all again.
+      await fixture.events.click(fixture.editor.canvas.designMenu.bold.node);
+      await fixture.events.click(fixture.editor.canvas.designMenu.italic.node);
+      await fixture.events.click(
+        fixture.editor.canvas.designMenu.underline.node
+      );
+
+      expect(fixture.editor.canvas.designMenu.bold.checked).toBeFalse();
+      expect(fixture.editor.canvas.designMenu.italic.checked).toBeFalse();
+      expect(fixture.editor.canvas.designMenu.underline.checked).toBeFalse();
+
+      const text = await getSelectedElement();
+      expect(text.content).toBe(
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+      );
+    });
+
+    it('should allow format a selection of a text from the design menu', async () => {
+      // Enter edit-mode
+      await fixture.events.keyboard.press('Enter');
+      await fixture.screen.findByTestId('textEditor');
+
+      // Increase the font size for making sure setting selection works as expected.
+      await fixture.events.click(fixture.editor.canvas.designMenu.fontSize, {
+        clickCount: 3,
+      });
+      await fixture.events.keyboard.type('30');
+      await fixture.events.keyboard.press('tab');
+
+      // Select character 7 and 8 (the part "ip" in "Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
+      await setSelection(6, 8);
+
+      await fixture.events.click(fixture.editor.canvas.designMenu.bold.node);
+      await fixture.events.click(fixture.editor.canvas.designMenu.italic.node);
+      await fixture.events.click(
+        fixture.editor.canvas.designMenu.underline.node
+      );
+
+      expect(fixture.editor.canvas.designMenu.bold.checked).toBeTrue();
+      expect(fixture.editor.canvas.designMenu.italic.checked).toBeTrue();
+      expect(fixture.editor.canvas.designMenu.underline.checked).toBeTrue();
+
+      // Click on background to exit edit mode.
+      await fixture.events.mouse.clickOn(
+        fixture.editor.canvas.framesLayer.frames[0].node,
+        '10%',
+        '10%'
+      );
+
+      const formattedText = await getSelectedElement();
+      expect(formattedText.content).toBe(
+        'Lorem <span style="font-weight: 700; font-style: italic; text-decoration: underline">ip</span>sum dolor sit amet, consectetur adipiscing elit.'
+      );
+
+      // Verify all toggles show false now since we have mixed values inside the text.
+      expect(fixture.editor.canvas.designMenu.bold.checked).toBeFalse();
+      expect(fixture.editor.canvas.designMenu.italic.checked).toBeFalse();
+      expect(fixture.editor.canvas.designMenu.underline.checked).toBeFalse();
     });
   });
 });
