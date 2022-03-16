@@ -1,8 +1,8 @@
 # API Callbacks
 
-Side effects are added to the Story Editor by defining callbacks. One such callback is `saveStoryById` which is used to save stories and is the only required callback. Other callbacks can be used to add or handle functionalities like first-party media and custom page templates etc. All API callbacks can be asynchronous and should eventually resolve to their corresponding expected responses.
+Similar to the dashboard, side effects are added to the Story Editor by defining callbacks. One such callback is `saveStoryById` which is used to save stories and is the only required callback. Other callbacks can be used to add or handle functionalities like first-party media and custom page templates etc. All API callbacks can be asynchronous and should eventually resolve to their corresponding expected responses.
 
-Below is a list of available api callbacks categorised in different sections.
+Below is a list of available API callbacks categorized in different sections.
 
 
 
@@ -36,10 +36,35 @@ Arguments
         - `currentStoryStyles`
             - type: `Object`
             - description:  Saved styles available the current story (`colors`).
+                - `colors`
+                    - type: `array<Object>`
+                        - `r`
+                            - type: `number`
+                            - description: Red value.
+                        - `g`
+                            - type: `number`
+                            - description: Blue value.
+                        - `b`
+                            - type: `number`
+                            - description: Green value.
 
         - `globalStoryStyles`
             - type: `Object`
             - description:  Saved styles available to all stories (`colors` & `textStyles`).
+                - `colors`
+                    - type: `array<Object>`
+                        - `r`
+                            - type: `number`
+                            - description: Red value.
+                        - `g`
+                            - type: `number`
+                            - description: Blue value.
+                        - `b`
+                            - type: `number`
+                            - description: Green value.
+                - `textStyles`
+                    - type: `array<Object>`
+                    - description: Saved text styles. See [text style shape](#text-style-shape) for more detail. 
 
         - `pages`
             - type: `array<Page>`
@@ -75,48 +100,152 @@ Arguments
     - type: `string`
     - description: Unique id for this page.
 
+### Text style shape
+
+- `backgroundColor`
+    - type: `Object`
+    - description: Background color of saved text style.
+        - `color`
+            - type: `Object`
+                - `r`
+                    - type: `number`
+                    - description: Red value.
+                - `g`
+                    - type: `number`
+                    - description: Blue value.
+                - `b`
+                    - type: `number`
+                    - description: Green value.
+- `backgroundTextMode`
+    - type: `Object`
+    - description: Background text mode.
+
+- `font`
+    - type: `Object`
+    - description: Object defining font style. See [font object](#font-object-shape) shape for more detail.  
+
+- `fontSize`
+    - type: `number`
+    - description: Font size in pixels.
+
+- `lineHeight`
+    - type: `number`
+    - description: Line height in pixels
+
+- `padding`
+    - type: `Object`
+    - description: Data about padding
+    
+    - `locked`
+        - type: `boolean`
+        - description: used to lock padding manipulation other styles
+        
+    - `hasHiddenPadding`
+        - type: `boolean`
+        - description: 
+    
+- `textAlign`
+    - type: `string`
+    - description: Text alignment. 
+    
+- `color`
+    - type: `Object`
+    - description: Font color.
+        - `color`
+            - type: `Object`
+                - `r`
+                    - type: `number`
+                    - description: Red value.
+                - `g`
+                    - type: `number`
+                    - description: Blue value.
+                - `b`
+                    - type: `number`
+                    - description: Green value.
+
+- `fontWeight`
+    - type: `number`
+    - description: Font weight.
+
+- `isItalic`
+    - type: `boolean`
+    - description: Flag to denote the text is italic.
+
+- `isUnderline`
+    - type: `boolean`
+    - description: Flag to denote the text has an underline.
+
+- `letterSpacing`
+    - type: `number`
+    - description: Letter spacing in pixels.
+
 
 Expected response
 
 An `Object` with the following shape
 
-`storyId`
+- `storyId`
 
-- type: `number`
-- required: No
-- description: Unique id for the story.
+    - type: `number`
+    - required: No
+    - description: Unique id for the story.
 
-`title`
+- `title`
 
-- type: `string`
-- required: No
-- description: Short description of the story.
+    - type: `string`
+    - required: No
+    - description: Short description of the story.
 
-`excerpt`
+- `excerpt`
 
-- type: `string`
-- require: No
-- description: Short description of the story.
+    - type: `string`
+    - require: No
+    - description: Short description of the story.
 
-`version`
+- `version`
 
-- type: `number`
-- require:  No
-- description: Version of the story saved.
+    - type: `number`
+    - require: No
+    - description: Version of the story saved.
 
-`currentStoryStyles`
+- `currentStoryStyles`
 
-- type: `Object`
-- require: No
-- description: Saved styles available in the current story (`colors`).
+    - type: `Object`
+    - require: No
+    - description: Saved styles available in the current story (`colors`).
+        -  `colors`
+            - type: `array<Object>`
+                - `r`
+                    - type: `number`
+                    - description: Red value.
+                - `g`
+                    - type: `number`
+                    - description: Blue value.
+                - `b`
+                    - type: `number`
+                    - description: Green value.
 
-`globalStoryStyles`
+- `globalStoryStyles`
 
-- type: `Object`
-- require: No
-- description: Saved styles available to all stories (`colors` & `textStyles`).
+    - type: `Object`
+    - require: No
+    - description: Saved styles available to all stories (`colors` & `textStyles`).
+        - `colors`
+            - type: `array<Object>`
+                - `r`
+                    - type: `number`
+                    - description: Red value.
+                - `g`
+                    - type: `number`
+                    - description: Blue value.
+                - `b`
+                    - type: `number`
+                    - description: Green value.
+        - `textStyles`
+            - type: `array<Object>`
+            - description: Saved text styles. See [text style shape](#text-style-shape) for more detail. 
 
-`pages`
+- `pages`
 
 - type: `array<Page>`
 - require: No
@@ -128,12 +257,12 @@ Example ( Expected response )
 
 ```json
 {
-  "storyId": 1,
-  "title": "Epic story",
-  "excerpt": "A totally epic story",
-  "version" : 39,
-  "currentStoryStyles": {
-      "colors": []
+    "storyId": 1,
+    "title": "Epic story",
+    "excerpt": "A totally epic story",
+    "version" : 39,
+    "currentStoryStyles": {
+        "colors": []
     },
     "globalStoryStyles": {
         "textStyles": [],
@@ -158,39 +287,104 @@ Arguments
 
 Expected response
 
-`title`
+- `title`
 
-- type: `Object`
-- required: No
-- description: Tittle of the story.
+    - type: `Object`
+    - required: No
+    - description: Tittle of the story.
 
-`excerpt`
+- `excerpt`
 
-- type: `Object`
-- required: No
-- description: Story data.
+    - type: `Object`
+    - required: No
+    - description: Story description of the story.
 
-`storyData`
+- `storyData`
 
-- type: `Object`
-- required: No
-- description: Story data.
+    - type: `Object`
+    - required: No
+    - description: Story data.
 
-`author`
+        - `version`
+            - type: `number`
+            - required: Yes
+            - description: Version of the story shape used.
 
-- type: `Object`
-- required: No
-- description: Details of author who created the story.
-    - `id`
-        - type: `number`
-        - required: Yes
-        - description: Author id.
-    - `name`
-        - type: `string
-        - required: Yes
-        - description: Author name.
+        - `pages`
+            - type: `array<Page>`
+            - require: No
+            - description: Array of page objects in the story. See [page object shape](#page-object-shape) for more details.
 
-`stylePresets`
+        - `autoAdvance`
+            - type: `boolean`
+            - required: No
+            - description: Flag to denote if pages of the story advances automatically.
+
+        - `defaultPageDuration`
+            - type: `number`
+            - required: No
+            - description: Duration after which a page auto advances to a new page in seconds.
+
+        - `currentStoryStyles`
+            - type: `Object`
+            - require: No
+            - description: Saved styles available in the current story (`colors`).
+                -  `colors`
+                    - type: `array<Object>`
+                        - `r`
+                            - type: `number`
+                            - description: Red value.
+                        - `g`
+                            - type: `number`
+                            - description: Blue value.
+                        - `b`
+                            - type: `number`
+                            - description: Green value.
+
+        - `backgroundAudio`
+            - type: `Object`
+            - required: No
+            - description: Details about background audio.
+                - `resource`
+                    - type: `Object`
+                    - required: Yes
+                    - description: Details about background audio.
+                        - `id`
+                            - type: `number`
+                            - required: Yes
+                            - description: Id of the resource.
+                        - `length`
+                            - type: `number`
+                            - required: Yes
+                            - description: Length of the audio file in seconds.
+                        - `lengthFormated`
+                            - type: `string`
+                            - required: Yes
+                            - description: Length of the audio file formatted as MM:SS.
+                        - `mimeType`
+                            - type: `string`
+                            - required: Yes
+                            - description: Mime type of the audio file.
+                        - `src`
+                            - type: `string`
+                            - required: Yes
+                            - description: URL of the audio file.
+
+- `author`
+
+    - type: `Object`
+    - required: No
+    - description: Details of author who created the story.
+        - `id`
+            - type: `number`
+            - required: Yes
+            - description: Author id.
+        - `name`
+            - type: `string
+            - required: Yes
+            - description: Author name.
+
+- `stylePresets`
 
 - type: `Object`
 - required: No
@@ -249,64 +443,75 @@ An array of the template objects whose shape is described below.
 
 #### Template object shape
 
-`templateId`
+- `templateId`
 
-- type: `number`
-- required: Yes
-- description: Template id.
+    - type: `number`
+    - required: Yes
+    - description: Template id.
 
-`version`
+- `version`
 
-- type: `string`
-- required: Version of the story shape used ( `DATA_VERSION` )
-- description: Details of author who created the story.
+    - type: `string`
+    - required: Version of the story shape used ( `DATA_VERSION` )
+    - description: Details of author who created the story.
 
-`elements`
+- `elements`
 
 - type: `array<element>`
 - required: Yes
 - description: Array of elements used in the template. See [element object](#element-object-shape).
 
 
-`backgroundColor`
+- `backgroundColor`
 
-- type: `Object`
-- required: Yes
-- description: Background color RGB values.
+    - type: `Object`
+    - required: Yes
+    - description: Background color RGB values.
+        - `color`
+            - type: `Object`
+                - `r`
+                    - type: `number`
+                    - description: Red value.
+                - `g`
+                    - type: `number`
+                    - description: Blue value.
+                - `b`
+                    - type: `number`
+                    - description: Green value.
 
-`type`
+- `type`
 
-- type: `string`
-- required: Yes
-- description: Template type.
+    - type: `string`
+    - required: Yes
+    - description: Template type.
 
-`id`
+- `id`
 
-- type: `string`
-- required: Yes
-- description: Page id.
+    - type: `string`
+    - required: Yes
+    - description: Page id.
 
-`image`
+- `image`
 
-- type: `Object`
-- required: Yes
-- description: Placeholder image data.
-    -`id`
-        - type: `string`
-        - required: Yes
-        - description: Image id.
-    -`height`
-        - type: `string`
-        - required: Yes
-        - description: Height of the placeholder image.
-    -`width`
-        - type: `string`
-        - required: Yes
-        - description: Width of the placeholder image.
-    -`url`
-        - type: `string`
-        - required: Yes
-        - description: Link to the placeholder image.
+    - type: `Object`
+    - required: Yes
+    - description: Placeholder image data.
+            -`id`
+                - type: `string`
+                - required: Yes
+                - description: Image id.
+            -`height`
+                - type: `string`
+                - required: Yes
+                - description: Height of the placeholder image.
+            -`width`
+                - type: `string`
+                - required: Yes
+                - description: Width of the placeholder image.
+            -`url`
+                - type: `string`
+                - required: Yes
+                - description: Link to the placeholder image.
 
 #### Element object shape
 
@@ -316,7 +521,7 @@ An array of the template objects whose shape is described below.
 
 - `flip`
     - type: `Object`
-    - description: Flip data of element.
+    - description: Flip data of the element.
         - `vertical`
             - type: `boolean`
             - description: Vertical flip.
@@ -346,7 +551,7 @@ An array of the template objects whose shape is described below.
 
 - `resource`
     - type: `Object`
-    - description: Element resource data.
+    - description: Element resource data. Same as [media object shape](#media-object-shape)
 
 - `type`
     - type: `string`
@@ -362,11 +567,11 @@ An array of the template objects whose shape is described below.
 
 - `width`
     - type: `number`
-    - description: Width coordinate of the element in pixels.
+    - description: Width of the element in pixels.
 
 - `height`
     - type: `number`
-    - description: Height coordinate of the element in pixels.
+    - description: Height of the element in pixels.
 
 - `mask`
     - type: `Object`
@@ -536,13 +741,13 @@ Expected response
 
     - type: `number`
     - required: Yes
-    - description: Media id
+    - description: Media id.
 
 - `alt` :
 
     - type: `string`
     - required: No
-    - description: Media Alt text
+    - description: Media Alt text.
 
 - `sizes` :
 
@@ -598,7 +803,7 @@ Expected response
 
     - type: `boolean`
     - required: No
-    - description: Flag to denote getting media requires proxy.
+    - description: Flag to denote if getting media requires proxy.
 
 
 
@@ -789,6 +994,12 @@ Arguments
         - `trimData` :
             - type: `Object`
             - description: `TrimData` data object linking a trimmed video to its original.
+                - `start`
+                    - type: `string`
+                    - description: Start Time stamp of start time of new video. Example '00:01:02.345'.
+                - `end`
+                    - type: `string`
+                    - description: End Time stamp of end time of new video. Example '00:02:00'.
 
         - `baseColor` :
             - type: `string`
@@ -901,7 +1112,7 @@ Customize the Story editor for users to use with custom fonts.
 
 ### `getFonts`
 
- Used to get fonts
+Used to get fonts
 
 Arguments
 
@@ -938,7 +1149,7 @@ Expected response
 - `value`
     - type: `string`
     - required: No
-    - description: 
+    - description: Font value.
 
 - `family`
     - type: `string`
@@ -1017,7 +1228,7 @@ Example ( Expected response )
 
 ## Hot linking media
 
-Customize the Story editor for users to hotlink media with links rather than uploading files.
+Customize the Story editor for users to be able hotlink media with links rather than uploading files.
 
 ### `getHotlinkInfo`
 
@@ -1064,7 +1275,7 @@ Example ( Expected response )
 
 ## Adding Links to story elements
 
-Links can be added to any elements in the Story editor through design panel with only requirement being defining the callback `getLinkMetadata`
+Links can be added to any elements in the Story editor through design panel, the only requirement being defining the callback `getLinkMetadata`
 
 ### `getLinkMetadata`
 

@@ -1,16 +1,16 @@
 # API Callbacks
 
-Similar to story editor, side effects are added to the Dashboard by defining callbacks. One such callback is `fetchStories` which is used to get stories from the backend and is the only required callback. Other callbacks can be used to add or handle functionalities for story management. All API callbacks can be asynchronous and should eventually resolve to their corresponding expected responses.
+Side effects are added to the Dashboard by defining callbacks. One such callback is `fetchStories` which is used to get stories from the backend and is the only required callback. Other callbacks can be used to add or handle functionalities for story management. All API callbacks are asynchronous and should eventually resolve to their corresponding expected responses.
 
 Below is a list of available API callbacks categorized in different sections.
 
 ## Browsing stories
 
-A dropdown with a list of all the authors for filtering out the stories would be added if the callback below is defined.
+A dropdown with a list of all the authors for filtering the stories would be added if the callback below is defined.
 
 ### `getAuthors`
 
-A callback used to get all the authors who have created a story and is stored in a CMS. Response from this will be used in a dropdown menu from which selecting a particular author will invoke `fetchStories` with the required arguments to get stories created only by this author.
+A callback used to get all the authors of the CMS. Response from this will be used in a dropdown menu from which selecting a particular author will invoke `fetchStories` with the required arguments to get stories created by this author.
 
 Arguments
 
@@ -20,7 +20,7 @@ Arguments
 
 Expected Response:
 
-Array of the author object whose keys are described below
+Array of the `Object` which describes author details.
 
 - `id`
     - type: `number`
@@ -30,22 +30,28 @@ Array of the author object whose keys are described below
 - `name`
     - type: `string`
     - required: Yes
-    - description: Username.
+    - description: Name of the author.
 
 Example ( Expected response )
 
 ```json
-{
+[
+    {
+    "id": 1,
+    "name": "dev"
+    },
+    {
     "id": 2,
     "name": "admin"
-}
+    }
+]
 ```
 
 
 
 ## Story Management
 
-A set of callbacks that help in performing create, update, delete and read operations on a single web-story.
+A set of callbacks that help in performing create, update, delete and read operations on web stories stored in the CMS.
 
 ### `fetchStories`
 
@@ -53,25 +59,27 @@ A callback which fetches stories to be shown in the dashboard.
 
 Arguments
 
-- `status`
-    - type: `string`
-    - description: Status of a story. One of `draft`, `pending`, `public`, `future` or `private`
+- `queryParams`
+    - type: `Object`
+    - description: An object which contains the query parameters.
+        - `status`
+            - type: `string`
+            - description: Status of a story. One of `draft`, `pending`, `public`, `future` or `private`.
+        - `searchTerm`
+            - type: `string`
+            - description: Search string.
 
-- `searchTerm`
-    - type: `string`
-    - description: Search string.
+        - `sortOption`
+            - type: `string`
+            - description: User selected option from a dropdown. Sort by `title`,`date`,`date` or `story_author`.
 
-- `sortOption`
-    - type: `string`
-    - description: User selected option from a dropdown. Sort by `title`,`date`,`date` or `story_author`.
+        - `sortDirection`
+            - type: `string`
+            - description: Sort order. One of `asc` or `desc`.
 
-- `sortDirection`
-    - type: `string`
-    - description: Sort order. One of `asc` or `desc`.
-
-- `author`
-    - type: `string`
-    - description: Author name.
+        - `author`
+            - type: `string`
+            - description: Author name.
 
 Expected Response:
 
@@ -81,13 +89,13 @@ An `Object` with the following shape.
 
 - type: `array<number>`
 - required: Yes
-- description: Array of the story ids. 
+- description: An array of story id's corresponding to the order of the stories to be shown in the dashboard. 
 
 `stories`
 
-- type: `array<Story>`
+- type: `Object`
 - required: Yes
-- description: Array of object consisting of story details of each story where story-id is key. See [Story Shape Object](#story-shape-object) section for full documentation of `Story` object.
+- description:  Object consisting of story details of each story, where story-id is the key and [story object](#story-shape-object) is the value.
   
 
 `totalPages`
@@ -100,112 +108,135 @@ An `Object` with the following shape.
 
 - type: `Object`
 - required: Yes
-- description: Total stories by status of publishing where status is key and value is total stories of that status.
+- description: A map with data about how many stories have a particular status.
 
 
 
 ### Story Shape Object
 
-`author`
+- `author`
+    - type: `Object`
+    - required: No
+    - description: Name and id of the author for the web story.
+        - `name` 
+            - type: `string`
+            - required: No
+            - description: Name of the author.
 
-- type: `Object`
-- required: No
-- description: Name and id of the author for the web-story.
-    - `name`
-        - type: `string`
-        - required: No
-        - description: Name of the author.
-    - `id`
-        - type: `number`
-        - required: No
-        - description: Id of the author.
+        - `id`
+            - type: `number`
+            - required: No
+            - description: Id of the author.
 
-`bottomTargetAction`
+- `bottomTargetAction`
+    - type: `string`
+    - required: No
+    - description: Link to edit the story in story-editor.
 
-- type: `string`
-- required: No
-- description: Link to edit the story in story-editor.
+- `capabilities`
+    - type: `Object`
+    - required: No
+    - description: Capabilities of user to perform on current story.
+        - `hasEditAction`
+            - type: `boolean`
+            - required: No
+            - description: Defines the capability of user to edit the story.
 
-`capabilities`
+        - `hasDeleteAction`
+            - type: `boolean`
+            - required: No
+            - description: Defines the capability of user to delete the story.
+- `created`
+    - type: `string`
+    - required: Yes
+    - description: Created date and time of the story without timezone.
 
-- type: `Object`
-- required: No
-- description: Capabilities of user to perform on current story.
+- `createdGmt`
+    - type: `string`
+    - required: Yes
+    - description: Created date and time of the story with timezone.
 
-`created`
+- `editStoryLink`
+    - type: `string`
+    - required: Yes
+    - description: Link to open story in story-editor.
 
-- type: `string`
-- required: Yes
-- description: Created date and time of the story without timezone.
+- `featuredMediaUrl`
+    - type: `string`
+    - required: No
+    - description: Link to show the featured media/poster.
 
-`createdGmt`
+- `id`
+    - type: `number`
+    - required: Yes
+    - description: Id of the current story.
 
-- type: `string`
-- required: Yes
-- description: Created date and time of the story with timezone.
+- `link`
+    - type: `string`
+    - required: No
+    - description: Link to display the web-story output.
 
-`editStoryLink`
+- `modified`
+    - type: `string`
+    - required: Yes
+    - description: Latest modified date and time of the story without timezone.
 
-- type: `string`
-- required: Yes
-- description: Link to open story in story-editor.
+- `modifiedGmt`
+    - type: `string`
+    - required: Yes
+    - description: Latest modified date and time of the story with timezone.
 
-`featuredMediaUrl`
+- `previewLink`
+    - type: `string`
+    - required: No
+    - description: Link to preview the story.
 
-- type: `string`
-- required: No
-- description: Link to show the featured media/poster.
+- `status`
+    - type: `string`
+    - required: Yes
+    - description: Publishing status of the web story.
 
-`id`
+- `title`
+    - type: `string`
+    - required: Yes
+    - description: Title of the web-story.
 
-- type: `number`
-- required: Yes
-- description: Id of the current story.
+Example ( Story Object )
 
-`link`
-
-- type: `string`
-- required: No
-- description: Link to display the web-story output.
-
-`modified`
-
-- type: `string`
-- required: Yes
-- description: Latest modified date and time of the story without timezone.
-
-`modifiedGmt`
-
-- type: `string`
-- required: Yes
-- description: Latest modified date and time of the story with timezone.
-
-`previewLink`
-
-- type: `string`
-- required: No
-- description: Link to preview the story.
-
-`status`
-
-- type: `string`
-- required: Yes
-- description: Publishing status of the web story.
-
-`title`
-
-- type: `string`
-- required: Yes
-- description: Title of the web-story.
-
-
+```JSON
+{
+    "author": {
+        "name": "dev",
+        "id": 1
+    },
+    "bottomTargetAction": "https://testsite.local/wp-admin/post.php?post=1&action=edit",
+    "capabilities": {
+        "hasEditAction": true,
+        "hasDeleteAction": true
+    },
+    "created": "2022-01-18T07:36:32",
+    "createdGmt": "2022-01-18T07:36:32Z",
+    "editStoryLink": "https://testsite.local/wp-admin/post.php?post=1&action=edit",
+    "featuredMediaUrl": "",
+    "id": 1,
+    "link": "https://testsite.local/?post_type=web-story&p=1",
+    "modified": "2022-01-18T07:36:32",
+    "modifiedGmt": "2022-01-18T07:36:32Z",
+    "previewLink": "https://testsite.local/?post_type=web-story&p=1&preview=true",
+    "status": "draft",
+    "title": "Test (Copy)",
+}
+```
 
 Example ( Expected response )
 
 ```JSON
 {
     "fetchedStoryIds": [],
-    "stories":[{...}],
+    "stories":{
+        "1":{...},
+        "2":{...},
+    },
     "totalPages": 1,
     "totalStoriesByStatus": {...}
 }
@@ -217,7 +248,8 @@ Arguments
 
 - `data`
     - type: `Object`
-    - description: 
+    
+    - description: The Object containing params which contain details to update the story.
         - `id`
             - type: `number`
             - description: The id of the story that needs to be updated
@@ -247,12 +279,6 @@ Example ( Expected response )
         "name": "Dev",
         "id": 1
     },
-    "locked": false,
-    "lockUser": {
-        "id": 0,
-        "name": "",
-        "avatar": null
-    },
     "bottomTargetAction": "https://testsite.local/wp-admin/post.php?post=2247&action=edit",
     "featuredMediaUrl": "",
     "editStoryLink": "https://testsite.local/wp-admin/post.php?post=2247&action=edit",
@@ -271,7 +297,6 @@ Arguments
 
 -  `id`
     - type: `number`
-    - required: Yes
     - description: The story id which needs to be trashed.
 
 Response
@@ -284,51 +309,69 @@ Arguments
 
 -  `template`
     - type: `Object`
-    - description: 
-        - `content`
+    - description: The details of a template
+        - `id`
+            - type: `number`
+            - description: Id of the template
+        - `createdBy`
             - type: `string`
-            - required: Yes
-            - description: The whole web story markup.
-        - `story_data`
-            - type: `Object`
-            - required: Yes
-            - description: The json data of the story.
-                - `pages`
-                    - type: `array<Page>`
-                    - required: Yes
-                    - description: The array of pages [See Page object shape](../../story-editor/integration-layer-api/api-callbacks.md) that are in the template.
-                - `version`
-                    - type: `number`,
-                    - required: Yes
-                    - description: The version of template for migration.
-                - `autoAdvance`
-                    - type: `boolean`,
-                    - required: No,
-                    - description: Defines whether pages will be auto advanced.
-                - `defaultPageDuration`
-                    - type: `number`,
-                    - required: No,
-                    - description: It shows the default auto advance duration of story.
-                - `currentStoryStyles`
-                    - type: `Object`
-                    - required: No,
-                    - description: It shows the custom styles set to this story.
-        - `Pages`
+            - description: Name of the creator of the template.
+        - `modified`
+            <!-- Need to find appropriate datatype since whole date is shown as like "Wed Aug 25 2021 05:30:00 GMT+0530 (India Standard Time)" -->
+            - type: `string`
+            - description: Date and time of modification of the template.
+        - `slug`
+            - type: `string`
+            - description: Slug of the template.
+        - `creationDate`
+            <!-- Need to find appropriate datatype since whole date is shown as like "Wed Aug 25 2021 05:30:00 GMT+0530 (India Standard Time)"-->
+            - type: `string`
+            - description: Date and time of creation of the template.
+        - `title`
+            - type: `string`
+            - description: Title of the template which will be default title for story.
+        - `tags`
+            - type: `Array<string>`            
+            - description: set of words tht describe the template.
+        - `colors`
+            - type: `Array<Object>`            
+            - description: Set of colors which are mostly used in template.
+                - `color`
+                    - type: `string`
+                    - description: Hex code of the color.
+                - `family`
+                    - type: `string`
+                    - description: Name of the base color.
+                - `label`
+                    - type: `string`
+                    - description: Name of the color.
+        - `description`
+            - type: `string`
+            - description: A brief description of the template.
+        - `vertical`
+            - type: `string`
+            - description: Category of the template
+        - `version`
+            - type: `number`
+            - description: Version of the template used for migration.
+        - `pages`
             - type: `array<Page>`
-            - required: Yes
-            - description: The array of pages [See Page object shape](../../story-editor/integration-layer-api/api-callbacks.md) that are in the template.
-        - `meta`
-            - type: `Object`
-            - required: No
-            - description: The metadata of the template.
-        - `featuredMedia`
-            - type: `Object`
-            - required: No
-            - description: The link of the featured media/poster.
-                `id`
-                - type: `number`
-                - required: Yes
-                - description: Id of the featured media/poster
+            - description: Each attay item corrresponds to each page in template.[ page object ](../../story-editor/integration-layer-api/api-callbacks.md/#page-object-shape)
+        - `postersByPage`
+            - type: `array<Object>`
+            - description: Each object consisting of the URL for the page poster.
+                - `png`
+                    - type: `string`
+                    - description: URL for png image.
+                - `type`
+                    - type: `string` 
+                    - description: Type of poster image.
+                - `webp`
+                    - type: `string`
+                    - description: URL for webp image.
+        - `status`
+            - type: `string`
+            - description: String showing the status of template.
 
 Expected Response:
 An `Object` of the following shape.
@@ -338,6 +381,45 @@ An `Object` of the following shape.
 - type: `string`
 - required: Yes
 - description: Link to edit the new story created from template.
+
+Example (Template)
+
+```JSON
+{
+    "id": 51,
+    "createdBy": "Google",
+    "modified": "2020-04-21T00:00:00.000Z",
+    "slug": "celebrity-life-story",
+    "creationDate": "2021-08-25T00:00:00.000Z",
+    "title": "Celebrity Life Story",
+    "tags": [
+        "Entertainment",
+        "Celebrity",
+        "Pop",
+        "Bright",
+        "Black"
+    ],
+    "colors": [
+        {
+            "label": "Phantom Black",
+            "color": "#020202",
+            "family": "Black"
+        },
+        {
+            "label": "Gecko Green",
+            "color": "#80FF44",
+            "family": "Green"
+        }
+    ],
+    "description": "With an upbeat neon green color and a powerful headings font, this template is great for creating stories around pop culture, music and the show business.",
+    "vertical": "Entertainment",
+    "version": 40,
+    "pages": [{...}],
+    "postersByPage": [{...}],
+    "status": "template",
+    "isLocal": false
+}
+```
 
 Example ( Expected Response )
 
@@ -353,7 +435,7 @@ Arguments
 
 - `story`
     - type: `id`
-    - description:
+    - description: Id of the story which is to be dupilicated
 
 Response
 
@@ -373,12 +455,6 @@ Example ( Expected response )
     "author": {
         "name": "Dev",
         "id": 1
-    },
-    "locked": false,
-    "lockUser": {
-        "id": 0,
-        "name": "",
-        "avatar": null
     },
     "bottomTargetAction": "https://testsite.local/wp-admin/post.php?post=2247&action=edit",
     "featuredMediaUrl": "",

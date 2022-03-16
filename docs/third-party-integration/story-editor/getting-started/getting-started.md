@@ -15,7 +15,7 @@ You can quickly spin up a story editor in a few steps described below.
 
 ### Step 1: Set up a React project
 
-The easiest way of setting up an SPA React project is to use [CRA](https://create-react-app.dev/) or to use templates such as [react-boilerplate](https://github.com/react-boilerplate/react-boilerplate).
+The easiest way of setting up an SPA React project is to use [CRA](https://create-react-app.dev/) or to use templates such as [react-webpack-babel-starter](https://github.com/vikpe/react-webpack-babel-starter).
 
 ### Step 2: Install dependencies
 
@@ -27,7 +27,7 @@ npm install @googleforcreators/story-editor
 
 ### Step 3: Use the `StoryEditor` component to render the editor
 
-If you have used CRA, simply replace the contents of `src/App.js` with the code sample given below.
+The code sample given below shows how to scaffold a story editor.
 
 ```jsx
 import { StoryEditor, InterfaceSkeleton } from '@googleforcreators/story-editor';
@@ -94,7 +94,9 @@ This is the main area which includes page thumbnails, page( canvas ), help cente
 
 ![inspector-tabs](./assets/inspector-labelled.png)
 
-**Inspector Tabs**: This by default has UI interfaces to edit properties of any selected element in the **Design Tab**. An additional panel named **Document tab** can be added to provide controls for story description, publishing, permalink and taxonomies etc.
+**Tab Selector (a)** has tabs selector corresponding to every inspector tabs. By default, only design panel can be selected. An additional panel named **Document tab** can be added to provide controls for story description, publishing, permalink and taxonomies etc
+
+**Tab Pane (b)** has UI elements for selected inspector tab. To learn how to configure a customized **Document Tab** see [Integration Layer Docs](../integration-layer-api/integration-layer.md).
 
 To learn how to configure a customized **Document Tab** see [Integration Layer Docs](../integration-layer-api/integration-layer.md).
 At the bottom of this area, a **Layers (c)** interface is also present for users to configure layers of the current page visible on the canvas.

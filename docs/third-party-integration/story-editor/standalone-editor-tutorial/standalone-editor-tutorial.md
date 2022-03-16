@@ -24,8 +24,6 @@ import {
   InterfaceSkeleton,
 } from "@googleforcreators/story-editor";
 
-import React from "react";
-
 const Editor = () => {
   const apiCallbacks = {
     saveStoryById: () => Promise.resolve({}),
@@ -43,9 +41,9 @@ export default Editor;
 
 ## STEP 2: Saving stories in browser's local storage
 
-We will define the API callback `saveStoryById` which is invoked by the editor while saving a story. For details about other API callbacks accepted by the story editor checkout [API Callbacks](../integration-layer-api/api-callbacks.md)
+We will now define the API callback `saveStoryById` which is invoked by the editor while saving a story. For details about other API callbacks accepted by the story editor checkout [API Callbacks](../integration-layer-api/api-callbacks.md)
 
-The following code block is responsible for saving a story to the browser's local storage.
+The following code block given an example how a story can be saved to the browser's local storage.
 
 ```jsx
 import { DATA_VERSION } from "@googleforcreators/migration";
@@ -92,8 +90,6 @@ import {
 } from "@googleforcreators/story-editor";
 import saveStoryById from "./saveStoryById";
 
-import React from "react";
-
 const Editor = () => {
   const apiCallbacks = {
     saveStoryById,
@@ -114,12 +110,11 @@ export default Editor;
 
 ## STEP 3: Adding Save Button
 
-Now you will add a save button into the editor which when clicked will call the `saveStoryById` callback from the previous section to save story data into local storage.
+Now we can add a save button into the editor which when clicked will call the `saveStoryById` callback defined in the previous step to save story data into local storage.
 
 Code block below shows you how to create a button with components from `@googleforcreators/design-system`
 
 ```jsx
-import React from "react";
 import {
   Button,
   BUTTON_SIZES,
@@ -178,10 +173,10 @@ export default SaveButton;
 
 ### Header
 
-Code sample below implements a header component which will be passed to the story editor and will be rendered in the reserved header space. This component uses the save button described earlier.
+Now that we have button we can make a header that would be shown on top of the workspace area.
+Code sample below implements a such header component which will be passed to the story editor. This component will use the save button implemented in the earlier step.
 
 ```jsx
-import React from "react";
 import SaveButton from "./saveButton";
 
 function HeaderLayout() {
@@ -223,8 +218,6 @@ import {
 import saveStoryById from "./saveStoryById";
 import HeaderLayout from "./header";
 
-import React from "react";
-
 const Editor = () => {
   const apiCallbacks = {
     saveStoryById,
@@ -250,7 +243,6 @@ Similar to the save button added in the previous step now we will add a new butt
 
 
 ```jsx
-import React from "react";
 import { Tooltip, useStory } from "@googleforcreators/story-editor";
 import {
   Button,
@@ -278,8 +270,8 @@ function PreviewButton() {
 
     const previewLink = window.origin + "/preview";
 
-    // Start a about:blank popup with waiting message until we complete
-    // the saving operation. That way we will not bust the popup timeout.
+    // Start a about:blank popup with waiting message until saving operation
+    // is done. That way, we will not bust the popup timeout.
     try {
       const popup = window.open("about:blank", "story-preview");
 
@@ -324,7 +316,7 @@ function PreviewButton() {
 export default PreviewButton;
 ```
 
-This new button is very similar to the save button from the previous section, but it styled a little differently and uses an icon (`Icons.Eye`) from the story editor's component library rather than some text.
+This new button is very similar to the save button from earlier steps, but it styled a little differently and uses an icon (`Icons.Eye`) from the story editor's component library rather than some text.
 
 On clicking this button -
 
@@ -370,12 +362,12 @@ export default HeaderLayout;
 
 A new route has to be introduced which will serve a preview of the story. You can use client-side routing provided in the package [React router](https://reactrouter.com/) or handle your routes server side. 
 
-On this route, simply display story markup stored which was stored in the browser's local storage by the callback `saveStoryById` described in step 2.
+On this route, simply display story markup which was stored in the browser's local storage by the callback `saveStoryById` described in step 2.
 
 You can use the following code sample to describe a component which overrides page's HTML with the one in the local storage.
 
 ```jsx
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 function Preview() {
   useEffect(() => {

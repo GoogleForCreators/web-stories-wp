@@ -179,12 +179,12 @@ To configure the dashboard to your needs you can pass various config options to 
             - description: It shows the value to be shown to the user for certain links. 
         - `isExternal`
             - type: `boolean`
-            - required:
-            - description: 
+            - required: No
+            - description: Defines the link is external or not. 
         - `trackingEvent`
             - type: `string`
-            - required:
-            - description: 
+            - required: No
+            - description: defines tracking event for the link for google analytics.
 
 - `styleConstants`
     - type: `Object`

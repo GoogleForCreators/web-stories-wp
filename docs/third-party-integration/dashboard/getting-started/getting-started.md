@@ -11,7 +11,7 @@ You can quickly spin up a dashboard in a few steps described below.
 
 ### Step 1: Set up a React project
 
-The easiest way of setting up an SPA React project is to use [CRA](https://create-react-app.dev/) or to use templates such as [react-boilerplate](https://github.com/react-boilerplate/react-boilerplate).
+The easiest way of setting up an SPA React project is to use [CRA](https://create-react-app.dev/) or to use templates such as [react-webpack-babel-starter](https://github.com/vikpe/react-webpack-babel-starter).
 
 ### Step 2: Install dependencies
 

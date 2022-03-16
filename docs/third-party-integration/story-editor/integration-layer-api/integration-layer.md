@@ -31,7 +31,7 @@ This is the top level component of the story editor which has all the provider c
 - `config`
     - type: `Object`
     - required: Yes
-    - description: Used for most of the editor configuration. See the Editor Config section below for full detail.
+    - description: Used for most of the editor configuration. See the [Editor Config](#editor-config) section below for full detail.
 
 - `initialEdits`
     - type: `Object`
@@ -40,30 +40,30 @@ This is the top level component of the story editor which has all the provider c
         - `story`
             - type: `Object`
             - required: Yes
-            - description: The story editor needs initial story when it loads. You can either provide the initial story object from this prop or via `getStoryById` API callback. See the expected response of `getStoryById` for the shape of this object.
+            - description: The story editor needs initial story when it loads. You can either provide the initial story object from this prop or via `getStoryById` API callback. See the [expected response](./api-callbacks.md#getstorybyid) of `getStoryById` for the shape of this object.
 
 
 
 ## `InterfaceSkeleton`
 
-This component is responsible for rendering the story editor interface UI and can be configured by using multiple props. Please look at the `InterfaceSkeleton` section below for detailed documentation of this component.
+This component is responsible for rendering the story editor interface UI and can be configured by using multiple props. Please look at the [InterfaceSkeleton](#interfaceskeleton) section below for detailed documentation of this component.
 
 **Props:**
 
 - `header`
     - type: `React.ReactElement`
     - required: No
-    - description: Used for rendering the workspace header. See workspace section of getting started guide to get the definition of header.
+    - description: Used for rendering the workspace header. See [workspace section](../getting-started/getting-started.md#workspace) of getting started guide to get the definition of header.
 
 - `footer`
     - type: `Object`
     - required: No
-    - description: Used for rendering some parts of the footer. See workspace section of getting started guide for the definition of footer.
+    - description: Used for rendering some parts of the footer. See [workspace section](../getting-started/getting-started.md#workspace) of getting started guide for the definition of footer.
 
 - `inspectorTabs`
     - type: `Object`
     - required: No
-    - description: Used for rendering the inspector tabs of the story editor. See workspace section of getting started guide for the definition of inspector tabs.
+    - description: Used for rendering the inspector tabs of the story editor. See [workspace section](../getting-started/getting-started.md#workspace) of getting started guide for the definition of inspector tabs.
 
 
 
@@ -81,7 +81,7 @@ To configure the editor to your needs you can pass various config options to the
 ### `additionalTips` 
 
 - type : `array`
-- description : Used to provide additional tips in editor help center 
+- description : Used to provide additional tips in editor help center. 
 - example :
 
 ```js
@@ -168,7 +168,7 @@ const allowedFileTypes = ['image/jpeg', 'image/png'];
 ### `allowedTranscodableMimeTypes` 
 
 - type : `array`
-- description : An array of mime types which can be transcoded
+- description : An array of mime types which can be transcoded.
 - example :
 
 ```js
@@ -187,18 +187,18 @@ const allowedTranscodableMimeTypes = [
 ### `canViewDefaultTemplates`
 
 - type : `boolean`
-- description : flag to allow for enabling default page template
+- description : Flag to allow for enabling default page template in the editor.
 
 ### `capabilities`
 
 - type : `Object`
-- description : Controls story editor's capabilities, currently 2 capabilities can be customized
+- description : Controls story editor's capabilities, currently 2 capabilities can be customized.
     - `hasMediaUploadAction`
         - type: `boolean`
-        - description: Allow media upload
+        - description: Allow media upload.
     - `canManageSettings`
         - type: `boolean`
-        - description: Allow visiting settings page on the dashboard
+        - description: Allow visiting settings page on the dashboard.
 - example :
 
 ```js
@@ -289,6 +289,51 @@ const capabilities = {
 
 - type : `Object`
 - description : locale data 
+    
+    - `locale`
+        - type: `string`
+        - description: Locale code.
+
+    - `dateFormat`
+        - type: `string`
+        - description: Date format used by the editor.
+
+    - `timeFormat`
+        - type: `string`
+        - description: Time format used by the editor.
+
+    - `gmtOffset`
+        - type: `string`
+        - description: GMT offset of user's location
+
+    - `timezone`
+        - type: `string`
+        - description: User's time zone
+
+    - `months`
+        - type: `array<string>`
+        - description: Ordered array of month names.
+
+    - `monthsShort`
+        - type: `array<string>`
+        - description: Ordered array of shortened month names.
+
+    - `weekdays`
+        - type: `array<string>`
+        - description: Ordered array of weekday names.
+
+    - `weekdaysShort`
+        - type: `array<string>`
+        - description: Ordered array of shortened weekday names.
+
+    - `weekdaysInitials`
+        - type: `array<string>`
+        - description: Ordered array of weekday initial.
+
+    - `weekStartsOn`
+        - type: `number`
+        - description: Index of the first day of the week in `weekdays` array
+
 - example :
 
 ```js
@@ -370,7 +415,7 @@ const locale ={
 ### `showMedia3p`
 
 - type : `boolean`
-- description : to enable or disable third party media usage.
+- description : Flag used to enable or disable third party media usage.
 
 ### `storyId`
 
@@ -381,9 +426,12 @@ const locale ={
 
 - type : `Object`
 - description : Style constants for story editor modals.
+  
     - `topOffset`
         - type: `number`
         - description: Top offset for modal overlay.
+
+
     - `leftOffset`
         - type: `number`
         - description: Left offset for modal overlay.
@@ -407,7 +455,6 @@ import {
   StoryEditor,
   InterfaceSkeleton,
 } from "@googleforcreators/story-editor";
-import React, { useState } from "react";
 
 const CustomHeader = () => (
   <div style={{ height: `100px`, width: "100%", backgroundColor: "red" }}>
@@ -415,26 +462,19 @@ const CustomHeader = () => (
   </div>
 );
 
-const App = () => {
-  const [story, setStory] = useState({});
-
+const Editor = () => {
   const apiCallbacks = {
-    saveStoryById: (story) => {
-      setStory(story);
-      return Promise.resolve();
-    },
+    saveStoryById: () => Promise.resolve({}),
   };
 
   return (
     <div style={{ height: "100vh" }}>
-      <StoryEditor config={{ apiCallbacks }} initialEdits={{ story }}>
+      <StoryEditor config={{ apiCallbacks }} initialEdits={{ story:{} }}>
         <InterfaceSkeleton header={<CustomHeader />} />
       </StoryEditor>
     </div>
   );
 };
-
-export default App;
 ```
 
 
@@ -444,30 +484,24 @@ Editor workspace also has a footer space, but unlike header space, this can only
 
 ### Adding a footer to Help Center
 
-Adding a footer to the help center is straightforward, just pass a component to the component as shown below.
+Adding a footer to the help center is straightforward, just pass a component to the `InterfaceSkeleton` component as shown below.
 
 ```jsx
 import {
   StoryEditor,
   InterfaceSkeleton,
 } from "@googleforcreators/story-editor";
-import React, { useState } from "react";
 
 const CustomFooter = () => <div>{" Custom Help Center Footer "}</div>;
 
-const App = () => {
-  const [story, setStory] = useState({});
-
+const Editor = () => {
   const apiCallbacks = {
-    saveStoryById: (story) => {
-      setStory(story);
-      return Promise.resolve();
-    },
+    saveStoryById: () => Promise.resolve({}),
   };
 
   return (
     <div style={{ height: "100vh" }}>
-      <StoryEditor config={{ apiCallbacks }} initialEdits={{ story }}>
+      <StoryEditor config={{ apiCallbacks }} initialEdits={{ story:{} }}>
         <InterfaceSkeleton
           footer={{
             secondaryMenu: {
@@ -481,12 +515,11 @@ const App = () => {
     </div>
   );
 };
-export default App;
 ```
 
 ### Adding a pre-publish checklist
 
-You can also initialize a checklist for the user to see after they are done creating a story. There are many pre-built checks in `@googleForCreators/story-editor` for you to use. Also, you can create your own checks as shown in the later parts of this section.
+You can also initialize a checklist to assist the user by offering design suggestions. There are many pre-built checks in `@googleForCreators/story-editor` for you to use. Also, you can create your own checks as shown in the later parts of this section.
 
 Story editor accepts 3 categories of checks, below is the list of all categories with corresponding pre-built checks available for initializing the checklist.
 
@@ -523,7 +556,7 @@ Priority Checks :
 - `VideoOptimization`
 - `StoryAmpValidationErrors`
 
-### Using pre-built checks
+#### Using pre-built checks
 
 ```jsx
 import {
@@ -536,7 +569,6 @@ import {
   StoryMissingTitle,
   StoryTitleLength,
 } from "@googleforcreators/story-editor";
-import React, { useState } from "react";
 const Accessibility = () => (
   <>
     <PageBackgroundTextLowContrast />
@@ -558,18 +590,13 @@ const Priority = () => (
   </>
 );
 
-const App = () => {
-  const [story, setStory] = useState({});
-
+const Editor = () => {
   const apiCallbacks = {
-    saveStoryById: (story) => {
-      setStory(story);
-      return Promise.resolve();
-    },
+    saveStoryById: () => Promise.resolve({}),
   };
 
   return (
-    <StoryEditor config={{ apiCallbacks }} initialEdits={{ story }}>
+    <StoryEditor config={{ apiCallbacks }} initialEdits={{ story:{} }}>
       <InterfaceSkeleton
         footer={{
           secondaryMenu: {
@@ -584,12 +611,11 @@ const App = () => {
     </StoryEditor>
   );
 };
-export default App;
 ```
 
-### Implementing a custom check
+#### Implementing a custom check
 
-Below is an example of a check, this check will pop up in the checklist if story has less than 2 pages.
+Below is an example of a custom check, this check will pop up in the checklist if story has less than 2 pages.
 
 ```jsx
 import {
@@ -599,7 +625,6 @@ import {
   useIsChecklistMounted,
   useStory,
 } from "@googleforcreators/story-editor";
-import React from "react";
 
 const LessThan2PageCheck = () => {
   const isChecklistMounted = useIsChecklistMounted();
@@ -641,18 +666,13 @@ const CustomDesignChecklist = () => (
   </>
 );
 
-const App = () => {
-  const [story, setStory] = useState({});
-
+const Editor = () => {
   const apiCallbacks = {
-    saveStoryById: (story) => {
-      setStory(story);
-      return Promise.resolve();
-    },
+    saveStoryById: () => Promise.resolve({}),
   };
 
   return (
-    <StoryEditor config={{ apiCallbacks }} initialEdits={{ story }}>
+    <StoryEditor config={{ apiCallbacks }} initialEdits={{ story:{} }}>
       <InterfaceSkeleton
         footer={{
           secondaryMenu: {
@@ -665,9 +685,6 @@ const App = () => {
     </StoryEditor>
   );
 };
-
-export default App;
-
 ```
 
 ## Inspector tabs
@@ -683,24 +700,17 @@ import {
 	InterfaceSkeleton,
 } from '@googleforcreators/story-editor';
 
-import { useState } from '@googleforcreators/react';
-
 const CustomDocumentPanel = ()=>(
 	<div>
 		{" Custom Document Panel "}
 	</div>
 )
 
-const CustomEditor = () =>{
-
-	const [story,setStory] = useState({});
+const Editor = () =>{
 
 	const apiCallbacks = {
-		saveStoryById: (story) =>{
-			setStory(story);
-			return Promise.resolve()
-		}
-	}
+    saveStoryById: () => Promise.resolve({}),
+  };
 
 	return (
     <StoryEditor config={{ apiCallbacks }} initialEdits={{ story }}>
