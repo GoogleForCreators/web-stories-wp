@@ -59,6 +59,10 @@ const EmptyStateMessage = styled.div`
   }
 `;
 
+const StyledButton = styled(Button)`
+  pointer-events: initial;
+`;
+
 function EmptyStateLayer() {
   const { isRTL } = useConfig();
   const { isMenuOpen, onOpenMenu } = useRightClickMenu(
@@ -89,10 +93,14 @@ function EmptyStateLayer() {
   };
 
   return (
-    <Layer onContextMenu={onOpenMenu}>
+    <Layer
+      onContextMenu={onOpenMenu}
+      pointerEvents="none"
+      aria-label={__('Empty state layer', 'web-stories')}
+    >
       <DisplayPageArea withSafezone={false}>
         <EmptyStateMessage>
-          <Button
+          <StyledButton
             type={BUTTON_TYPES.SECONDARY}
             variant={BUTTON_VARIANTS.CIRCLE}
             onClick={onButtonClick}
@@ -102,7 +110,7 @@ function EmptyStateLayer() {
             aria-expanded={isMenuOpen}
           >
             <Icons.Media />
-          </Button>
+          </StyledButton>
           <ThemeProvider theme={{ ...theme, colors: lightMode }}>
             <Text
               id="emptystate-message"
