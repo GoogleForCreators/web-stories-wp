@@ -52,6 +52,8 @@ const DEFAULT_TEXT_BORDER_RADIUS = {
 const DEFAULT_TEXT_PADDING = {
   locked: true,
   hasHiddenPadding: false,
+  horizontal: 0,
+  vertical: 0,
 };
 
 const DEFAULT_TEXT_ALIGN = 'left';
