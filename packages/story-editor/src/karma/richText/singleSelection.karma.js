@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+/**
  * Internal dependencies
  */
 import { Fixture } from '../fixture';
@@ -184,8 +188,12 @@ describe('Styling single text field', () => {
       await data.fixture.events.click(fontColor.picker.custom);
       await data.fixture.events.click(fontColor.picker.hexButton);
       await data.fixture.events.keyboard.type('00FF00');
-      // Wait for debounce in color picker (100ms)
-      await data.fixture.events.sleep(100);
+      // Wait for color panel debounce
+      await waitFor(() => {
+        if (fontColor.hex.value !== '00FF00') {
+          throw new Error('Color not updated yet');
+        }
+      });
       // Verify all styles, now expected to be updated
       expect(bold.checked).toBe(true);
       expect(italic.checked).toBe(true);
@@ -193,10 +201,8 @@ describe('Styling single text field', () => {
       expect(uppercase.checked).toBe(true);
       expect(fontWeight.value).toBe('Bold');
       expect(letterSpacing.value).toBe('100%');
-      expect(fontColor.hex.value).toBe('00FF00');
 
       // Assume text content to match expectation
-      const actual = getTextContent();
       const css = [
         'font-weight: 700',
         'font-style: italic',
@@ -206,7 +212,11 @@ describe('Styling single text field', () => {
         'text-transform: uppercase',
       ].join('; ');
       const expected = `<span style="${css}">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>`;
-      expect(actual).toBe(expected);
+      await waitFor(() => {
+        if (getTextContent() !== expected) {
+          throw new Error('Text not updated yet');
+        }
+      });
     });
   });
 
