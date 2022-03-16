@@ -125,18 +125,6 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
     forward,
   ]);
 
-  useKeyDownEffect(ref, { key: 'mod+{', shift: true }, handleAlignLeft, [
-    handleAlignLeft,
-  ]);
-
-  useKeyDownEffect(ref, { key: 'mod+h', shift: true }, handleAlignCenter, [
-    handleAlignCenter,
-  ]);
-
-  useKeyDownEffect(ref, { key: 'mod+}', shift: true }, handleAlignRight, [
-    handleAlignRight,
-  ]);
-
   return (
     <StyledPanel
       name="alignment"
@@ -166,7 +154,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
             <Icons.DistributeVertical />
           </AlignmentButton>
         </Tooltip>
-        <Tooltip title={__('Align left', 'web-stories')} shortcut="mod+{">
+        <Tooltip title={__('Align left', 'web-stories')}>
           <AlignmentButton
             onClick={handleAlignLeft}
             aria-label={__('Align left', 'web-stories')}
@@ -176,7 +164,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
             <Icons.AlignLeft />
           </AlignmentButton>
         </Tooltip>
-        <Tooltip title={__('Align center', 'web-stories')} shortcut="mod+H">
+        <Tooltip title={__('Align center', 'web-stories')}>
           <AlignmentButton
             onClick={handleAlignCenter}
             aria-label={__('Align center', 'web-stories')}
@@ -186,7 +174,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
             <Icons.AlignCenter />
           </AlignmentButton>
         </Tooltip>
-        <Tooltip title={__('Align right', 'web-stories')} shortcut="mod+}">
+        <Tooltip title={__('Align right', 'web-stories')}>
           <AlignmentButton
             onClick={handleAlignRight}
             aria-label={__('Align right', 'web-stories')}

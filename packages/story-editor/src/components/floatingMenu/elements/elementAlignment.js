@@ -86,12 +86,12 @@ function ElementAlignment() {
           <Separator />
           <IconButton
             Icon={Icons.DistributeHorizontal}
-            title={__('Distribute elements horizontally', 'web-stories')}
+            title={__('Distribute horizontally', 'web-stories')}
             onClick={handleHorizontalDistribution}
           />
           <IconButton
             Icon={Icons.DistributeVertical}
-            title={__('Distribute elements vertically', 'web-stories')}
+            title={__('Distribute vertically', 'web-stories')}
             onClick={handleVerticalDistribution}
           />
         </>
