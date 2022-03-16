@@ -64,7 +64,7 @@ export default function TelemetrySettings({
             <TranslateWithMarkup
               mapping={{
                 a: (
-                  <a
+                  <a // lgtm [js/unsafe-external-link]
                     href={__(
                       'https://policies.google.com/privacy',
                       'web-stories'

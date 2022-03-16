@@ -45,6 +45,8 @@ const AttributionPill = styled.div`
   z-index: 9999;
 `;
 
+const Link = styled.a.attrs({ target: '_blank', rel: 'noreferrer' });
+
 const Text = styled(DefaultText)`
   color: ${({ theme }) => theme.colors.fg.primary};
 `;
@@ -94,11 +96,7 @@ const getAriaLabel = (provider) =>
 
 export function UnsplashAttribution() {
   return (
-    <a
-      href={unsplashUrl}
-      target={'_blank'}
-      aria-label={getAriaLabel(MEDIA_PROVIDER.unsplash)}
-    >
+    <Link href={unsplashUrl} aria-label={getAriaLabel(MEDIA_PROVIDER.unsplash)}>
       <AttributionPill aria-hidden>
         <Text
           forwardedAs="span"
@@ -108,17 +106,13 @@ export function UnsplashAttribution() {
         </Text>
         <UnsplashLogo />
       </AttributionPill>
-    </a>
+    </Link>
   );
 }
 
 export function CoverrAttribution() {
   return (
-    <a
-      href={coverrUrl}
-      target={'_blank'}
-      aria-label={getAriaLabel(MEDIA_PROVIDER.coverr)}
-    >
+    <Link href={coverrUrl} aria-label={getAriaLabel(MEDIA_PROVIDER.coverr)}>
       <AttributionPill aria-hidden>
         <Text
           forwardedAs="span"
@@ -128,20 +122,16 @@ export function CoverrAttribution() {
         </Text>
         <CoverrLogo />
       </AttributionPill>
-    </a>
+    </Link>
   );
 }
 
 export function TenorAttribution() {
   return (
-    <a
-      href={tenorUrl}
-      target={'_blank'}
-      aria-label={getAriaLabel(MEDIA_PROVIDER.tenor)}
-    >
+    <Link href={tenorUrl} aria-label={getAriaLabel(MEDIA_PROVIDER.tenor)}>
       <AttributionPill aria-hidden>
         <TenorLogo />
       </AttributionPill>
-    </a>
+    </Link>
   );
 }
