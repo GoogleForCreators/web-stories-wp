@@ -36,6 +36,7 @@ import { StrictMode, render } from '@googleforcreators/react';
 import { updateSettings } from '@googleforcreators/date';
 import { initializeTracking } from '@googleforcreators/tracking';
 import { bindToCallbacks } from '@web-stories-wp/wp-utils';
+import { __ } from '@googleforcreators/i18n';
 
 /**
  * WordPress dependencies
@@ -73,6 +74,7 @@ window.webStories.initializeStoryDashboard = (id, config) => {
     ...config,
     apiCallbacks: bindToCallbacks(apiCallbacks, config),
     leftRailSecondaryNavigation: LEFT_RAIL_SECONDARY_NAVIGATION,
+    documentTitleSuffix: __('Web Stories \u2212 WordPress', 'web-stories'),
     styleConstants: {
       topOffset: TOOLBAR_HEIGHT,
     },

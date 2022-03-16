@@ -322,18 +322,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'editor',
 				'default'     => true,
 			],
-			/**
-			 * Author: @miina
-			 * Issue #471
-			 * Creation date: 2021-08-10
-			 */
-			[
-				'name'        => 'enableHotlinking',
-				'label'       => __( 'Insert media from link', 'web-stories' ),
-				'description' => __( 'Enable inserting media element from external link', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
 
 			/**
 			 * Author: @barklund
