@@ -64,7 +64,6 @@ export class Footer extends Container {
 
   get layerPanel() {
     // The whole panel is aria-hidden for accessibility reasons
-    // thus it cannot be accessed by role:
     return this._get(
       this.getByRole('button', { name: /^Layers/ }),
       'layerPanel',

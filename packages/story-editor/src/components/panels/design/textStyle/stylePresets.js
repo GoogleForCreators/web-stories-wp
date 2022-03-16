@@ -81,7 +81,7 @@ function PresetPanel({ pushUpdate }) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
   const hasPresets = textStyles.length > 0;
-  const SPACING = { x: isRTL ? 12 : 46 };
+  const spacing = { x: isRTL ? 12 : 46 };
 
   const handleApplyStyle = useApplyStyle({ pushUpdate });
   const { addGlobalPreset } = useAddPreset({ presetType: PRESET_TYPES.STYLE });
@@ -130,7 +130,7 @@ function PresetPanel({ pushUpdate }) {
             dock={inspector}
             isOpen={isPopupOpen}
             placement={PLACEMENT.RIGHT_START}
-            spacing={SPACING}
+            spacing={spacing}
             renderContents={() => (
               <StyleManager
                 styles={textStyles}
