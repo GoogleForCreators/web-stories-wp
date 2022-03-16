@@ -235,6 +235,9 @@ describe('Link Panel', () => {
 
   describe('CUJ: Creator Can Add A Link: Link with Page Attachment', () => {
     beforeEach(async () => {
+      // Open Style Pane
+      await fixture.events.click(fixture.editor.inspector.designTab);
+
       // Select Page.
       // Click the background element
       await fixture.events.mouse.clickOn(
