@@ -20,3 +20,4 @@ export { default as Input } from './input';
 export { default as Separator } from './separator';
 export { default as TextButton } from './text';
 export { default as useProperties } from './useProperties';
+export { default as useTextToggle } from './useTextToggle';

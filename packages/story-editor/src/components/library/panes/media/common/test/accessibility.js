@@ -96,6 +96,7 @@ describe('automated accessibility tests', () => {
         resource={RESOURCE}
         width={RESOURCE.width}
         height={RESOURCE.height}
+        onInsert={() => {}}
       />
     );
 
@@ -119,6 +120,7 @@ describe('automated accessibility tests', () => {
         resource={RESOURCE}
         width={RESOURCE.width}
         height={RESOURCE.height}
+        onInsert={() => {}}
       />
     );
 
