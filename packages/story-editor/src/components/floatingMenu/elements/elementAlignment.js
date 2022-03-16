@@ -73,7 +73,7 @@ function ElementAlignment() {
       />
       <IconButton
         Icon={Icons.AlignMiddle}
-        title={__('Align middle', 'web-stories')}
+        title={__('Align vertical center', 'web-stories')}
         onClick={handleAlignMiddle}
       />
       <IconButton

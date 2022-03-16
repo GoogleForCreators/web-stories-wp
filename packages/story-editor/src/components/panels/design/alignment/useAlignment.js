@@ -110,7 +110,7 @@ function useAlignment({ selectedElements, updateElements }) {
       }
       return {
         y:
-          direction === 'top'
+          direction === ALIGNMENT.TOP
             ? boundRect.startY + offset
             : boundRect.endY - height - offset,
       };
