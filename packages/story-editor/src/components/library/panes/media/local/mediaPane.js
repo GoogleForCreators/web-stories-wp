@@ -133,8 +133,6 @@ function MediaPane(props) {
     }
   );
 
-  const enableHotlinking = useFeature('enableHotlinking');
-
   const {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
@@ -238,7 +236,7 @@ function MediaPane(props) {
                 )}
               </SearchCount>
             )}
-            {!isSearching && enableHotlinking && (
+            {!isSearching && (
               <ButtonsWrapper>
                 <LinkInsertion />
                 {hasUploadMediaAction && (
@@ -251,7 +249,7 @@ function MediaPane(props) {
                 )}
               </ButtonsWrapper>
             )}
-            {!isSearching && !enableHotlinking && hasUploadMediaAction && (
+            {!isSearching && hasUploadMediaAction && (
               <MediaUploadButton
                 renderButton={renderUploadButton}
                 onInsert={onSelect}
