@@ -1,8 +1,9 @@
 # Integration Layer
 
-Story editor can be integrated with any platform by configuring the `StoryEditor` and other components like `InterfaceSkeleton`. This section of the documentation gives a comprehensive guide on what aspects of the story editor can be modified and how to modify them.
+The story editor can be integrated with any platform by configuring the `StoryEditor` and other components like `InterfaceSkeleton`.
+This section of the documentation gives a comprehensive guide on what aspects of the story editor can be modified and how to modify them.
 
-As seen in the getting started guide, a minimal story editor can be created by using the two main components  `StoryEditor` and `InterfaceSkeleton`  like below.
+As seen in the [Getting Started](./getting-started.md) guide, a minimal story editor can be created by using the two main components  `StoryEditor` and `InterfaceSkeleton`  like below.
 
 ```js
 import { StoryEditor, InterfaceSkeleton } from '@googleforcreators/story-editor';
@@ -19,8 +20,6 @@ const Editor = () => {
   );
 };
 ```
-
-
 
 ## `StoryEditor`
 
@@ -42,8 +41,6 @@ This is the top level component of the story editor which has all the provider c
             - required: Yes
             - description: The story editor needs initial story when it loads. You can either provide the initial story object from this prop or via `getStoryById` API callback. See the [expected response](./api-callbacks.md#getstorybyid) of `getStoryById` for the shape of this object.
 
-
-
 ## `InterfaceSkeleton`
 
 This component is responsible for rendering the story editor interface UI and can be configured by using multiple props. Please look at the [InterfaceSkeleton](#interfaceskeleton) section below for detailed documentation of this component.
@@ -53,19 +50,17 @@ This component is responsible for rendering the story editor interface UI and ca
 - `header`
     - type: `React.ReactElement`
     - required: No
-    - description: Used for rendering the workspace header. See [workspace section](../getting-started/getting-started.md#workspace---2) of getting started guide to get the definition of header.
+    - description: Used for rendering the workspace header.
 
 - `footer`
     - type: `Object`
     - required: No
-    - description: Used for rendering some parts of the footer. See [workspace section](../getting-started/getting-started.md#workspace---2) of getting started guide for the definition of footer.
+    - description: Used for rendering some parts of the footer.
 
 - `inspectorTabs`
     - type: `Object`
     - required: No
-    - description: Used for rendering the inspector tabs of the story editor. See [workspace section](../getting-started/getting-started.md#workspace---2) of getting started guide for the definition of inspector tabs.
-
-
+    - description: Used for rendering the inspector/sidebar tabs of the story editor.
 
 ## Editor Config
 
@@ -73,62 +68,60 @@ To configure the editor to your needs you can pass various config options to the
 
 ### `apiCallbacks`
 
-- type : `Object`
-- description : Takes various callback functions for story editor's side effects. The only required API callback is `saveStoryById`. For detailed documentation of `apiCallbacks`,  see [API Callbacks](./api-callbacks.md) section.
-
-
+- type: `Object`
+- description: Takes various callback functions for story editor's side effects. The only required API callback is `saveStoryById`. For detailed documentation of `apiCallbacks`,  see [API Callbacks](./api-callbacks.md) section.
 
 ### `additionalTips` 
 
-- type : `array`
-- description : Used to provide additional tips in editor help center. 
+- type: `array`
+- description: Used to provide additional tips in editor help center. 
 - example :
-
-```js
-const additionalTips = [{
-	title: 'Example Tip Title',
-    figureSrcImg: 'http://link/to/image',
-    figureAlt: 'Figure alt text',
-    description: [
-	    'This is an example tip used for testing. <a>Learn more</a>',
-    ],
-    href: 'https://external/link',
-}]
-```
+  
+  ```js
+  const additionalTips = [{
+    title: 'Example Tip Title',
+      figureSrcImg: 'http://link/to/image',
+      figureAlt: 'Figure alt text',
+      description: [
+        'This is an example tip used for testing. <a>Learn more</a>',
+      ],
+      href: 'https://external/link',
+  }]
+  ```
 
 You can also provide an external link in the description of the tip.
 
 ### `allowedFileTypes`
 
-- type : `array`
-- description : An array of file extensions accepted by element library.
+- type: `array`
+- description: An array of file extensions accepted by element library.
 - example :
-
-```js
-const allowedFileTypes = ['jpeg','mp4'];
-```
+  
+  ```js
+  const allowedFileTypes = ['jpeg','mp4'];
+  ```
 
 ### `allowedMimeTypes` 
 
-- type : `Object`
-- description : A map of file mime types accepted by element library.
+- type: `Object`
+- description: A map of file mime types accepted by element library.
 - example :
-
-```js
-const allowedMimeTypes = {
-	image: [
-            "image/webp",
-            "image/png",
-        ],
-	"audio": [],
-	"video": []
-};
-```
+  
+  ```js
+  const allowedMimeTypes = {
+    image: [
+              "image/webp",
+              "image/png",
+          ],
+    "audio": [],
+    "video": []
+  };
+  ```
 
 ### `allowedAudioFileTypes`
 
-- type : `array`
-- description : An array of file extensions accepted in the design panel.
+- type: `array`
+- description: An array of file extensions accepted in the design panel.
 - example :
 
 ```js
@@ -138,27 +131,27 @@ const allowedAudioFileTypes = ['aac', 'wav'];
 ### `allowedAudioMimeTypes`
 
 - type: `array`
-- description : An array of file mime-types accepted in the design panel.
+- description: An array of file mime-types accepted in the design panel.
 - example :
-
-```js
-const allowedAudioMimeTypes = ['audio/aac', 'audio/wav'];
-```
+  
+  ```js
+  const allowedAudioMimeTypes = ['audio/aac', 'audio/wav'];
+  ```
 
 ### `allowedImageFileTypes`
 
-- type : `array`
-- description : An array of file extensions accepted in the design panel. Generates a message if incorrect file type is uploaded.
+- type: `array`
+- description: An array of file extensions accepted in the design panel. Generates a message if incorrect file type is uploaded.
 - example :
-
-```js
-const allowedFileTypes = ['jpeg','png'];
-```
+  
+  ```js
+  const allowedFileTypes = ['jpeg','png'];
+  ```
 
 ### `allowedImageMimeTypes` 
 
-- type : `array`
-- description : An array of file mime types accepted in the design panel.
+- type: `array`
+- description: An array of file mime types accepted in the design panel.
 - example :
 
 ```js
@@ -167,32 +160,32 @@ const allowedFileTypes = ['image/jpeg', 'image/png'];
 
 ### `allowedTranscodableMimeTypes` 
 
-- type : `array`
-- description : An array of mime types which can be transcoded.
+- type: `array`
+- description: An array of mime types which can be transcoded.
 - example :
-
-```js
-const allowedTranscodableMimeTypes = [
-	"video/3gpp",
-    "video/3gpp2",
-    "video/MP2T",
-]
-```
+  
+  ```js
+  const allowedTranscodableMimeTypes = [
+    "video/3gpp",
+      "video/3gpp2",
+      "video/MP2T",
+  ]
+  ```
 
 ### `autoSaveInterval`
 
-- type : `number`
-- description : Time Interval (in seconds) after which story editor automatically saves a story by calling `saveStoryById`.
+- type: `number`
+- description: Time Interval (in seconds) after which story editor automatically saves a story by calling `saveStoryById`.
 
 ### `canViewDefaultTemplates`
 
-- type : `boolean`
-- description : Flag to allow for enabling default page template in the editor.
+- type: `boolean`
+- description: Flag to allow for enabling default page template in the editor.
 
 ### `capabilities`
 
-- type : `Object`
-- description : Controls story editor's capabilities, currently 2 capabilities can be customized.
+- type: `Object`
+- description: Controls story editor's capabilities, currently 2 capabilities can be customized.
     - `hasMediaUploadAction`
         - type: `boolean`
         - description: Allow media upload.
@@ -200,38 +193,38 @@ const allowedTranscodableMimeTypes = [
         - type: `boolean`
         - description: Allow visiting settings page on the dashboard.
 - example :
-
-```js
-const capabilities = {
-	"hasUploadMediaAction": true,
-	"canManageSettings": true
-}
-```
+  
+  ```js
+  const capabilities = {
+    "hasUploadMediaAction": true,
+    "canManageSettings": true
+  }
+  ```
 
 ### `cdnURL`
 
-- type : `string`
-- description : URL to element resources.
+- type: `string`
+- description: URL to element resources.
 
 ### `dashboardLink`
 
-- type : `string`
-- description : URL to story editor's dashboard.
+- type: `string`
+- description: URL to story editor's dashboard.
 
 ### `encodeMarkup`
 
-- type : `boolean`
-- description : Flag to toggle markup generation in story data.
+- type: `boolean`
+- description: Flag to toggle markup generation in story data.
 
 ### `ffmpegCoreUrl`
 
 - type: `string`
-- description : URL to `ffmpeg` core required for optimizing uploaded media.
+- description: URL to `ffmpeg` core required for optimizing uploaded media.
 
 ### `flags`
 
-- type : `Object`
-- description : Many experimental features can be enabled/disabled in the story editor. Below is a list of all feature flags. These features are unstable and susceptible to frequent changes.
+- type: `Object`
+- description: Many experimental features can be enabled/disabled in the story editor. Below is a list of all feature flags. These features are unstable and susceptible to frequent changes.
     - `enableSVG`
         - type: `boolean`
         - description: Enables SVG support in link icons.
@@ -277,18 +270,18 @@ const capabilities = {
 
 ### `generalSettingsLink`
 
-- type : `string`
-- description : URL for settings page of the dashboard
+- type: `string`
+- description: URL for settings page of the dashboard
 
 ### `isRTL`
 
-- type : `boolean`
-- description : switches all styles to accommodate RTL languages.
+- type: `boolean`
+- description: switches all styles to accommodate RTL languages.
 
 ### `locale`
 
-- type : `Object`
-- description : locale data 
+- type: `Object`
+- description: locale data 
     
     - `locale`
         - type: `string`
@@ -404,33 +397,32 @@ const locale ={
 
 ### `maxUpload`
 
-- type : `number`
-- description : Size limit on uploaded media in bytes.
+- type: `number`
+- description: Size limit on uploaded media in bytes.
 
 ### `MediaUpload`
 
-- type : `React.ReactElement`
-- description : React component used for rendering media upload modal. See [First party Media Support](./api-callbacks.md#First-party-Media-Support)
+- type: `React.ReactElement`
+- description: React component used for rendering media upload modal. See [First party Media Support](./api-callbacks.md#First-party-Media-Support)
 
 ### `showMedia3p`
 
-- type : `boolean`
-- description : Flag used to enable or disable third party media usage.
+- type: `boolean`
+- description: Flag used to enable or disable third party media usage.
 
 ### `storyId`
 
-- type : `number`
-- description : ID of the current story being rendered by the editor.
+- type: `number`
+- description: ID of the current story being rendered by the editor.
 
 ### `styleConstants`
 
-- type : `Object`
-- description : Style constants for story editor modals.
+- type: `Object`
+- description: Style constants for story editor modals.
   
     - `topOffset`
         - type: `number`
         - description: Top offset for modal overlay.
-
 
     - `leftOffset`
         - type: `number`
@@ -439,7 +431,7 @@ const locale ={
 ## InterfaceSkeleton
 
 Many aspects of the editor can be customized by adding custom components through A component called `InterfaceSkeleton` from `@googleforCreators/story-editor`. This section will give details about what aspects of the story editor can be modified by custom components.
-Before reading this you might want to check out [Getting Started](../getting-started/getting-started.md) to know about different visual components of the editor.
+Before reading this you might want to check out [Getting Started](./getting-started.md) to know about different visual components of the editor.
 
 ## Workspace
 
@@ -448,7 +440,7 @@ Before reading this you might want to check out [Getting Started](../getting-sta
 Editor Workspace has reserved space to render a custom header. This can be used to provide custom UI elements for users to interact with. 
 Although you can use custom UI elements in the header, it is advised to use elements provided in `@googleForCreators/design-system`. That will guarantee design consistency and compatibility with the `RTL` layout.
 
-An example use case is available in [Standalone Editor Tutorial](../standalone-editor-tutorial/standalone-editor-tutorial.md) where a few buttons have been added to the header.
+An example use case is available in [Standalone Editor Tutorial](./tutorial.md) where a few buttons have been added to the header.
 
 ```jsx
 import {
@@ -476,7 +468,6 @@ const Editor = () => {
   );
 };
 ```
-
 
 ### Footer 
 
@@ -519,9 +510,9 @@ const Editor = () => {
 
 ### Adding a pre-publish checklist
 
-You can also initialize a checklist to assist the user by offering design suggestions. There are many pre-built checks in `@googleForCreators/story-editor` for you to use. Also, you can create your own checks as shown in the later parts of this section.
+You can also initialize a checklist to assist the user by offering design suggestions. There are many pre-built checks in `@googleForCreators/story-editor` for you to use. It's also possible to add additional checks if needed.
 
-Story editor accepts 3 categories of checks, below is the list of all categories with corresponding pre-built checks available for initializing the checklist.
+The application accepts 3 categories of checks, below is the list of all categories with corresponding pre-built checks available for initializing the checklist.
 
 Accessibility Checks :
 
@@ -687,12 +678,12 @@ const Editor = () => {
 };
 ```
 
-## Inspector tabs
+## Inspector/Sidebar Tabs
 
 ### Document Pane
 
-Story editor can have an additional document pane alongside the design pane, which is meant to provide UI elements for editing data about the story as a whole.
-Document Pane can be configured as shown below.
+The story editor can have an additional Document pane alongside the Insert and Style panes, which is meant to provide UI elements for editing data about the story as a whole.
+The Document pane can be configured as shown below.
 
 ```jsx
 import {

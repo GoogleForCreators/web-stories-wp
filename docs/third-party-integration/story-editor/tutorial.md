@@ -1,14 +1,10 @@
 # Standalone Editor Tutorial
 
-This tutorial shows you how to create a standalone story editor using react that works without any CMS. You will implement the following functionalities while following this tutorial.
+This tutorial explains how to create a standalone story editor using React that works without any CMS. It encompasses saving stories to the browser's local storage as well as previewing created stories.
 
-- Saving stories to browser's local storage.
-- Showing preview of the story created.
+## Step 1: Setting up the editor with minimum config
 
-
-## STEP 1: Setting up the editor with minimum config
-
-You can bootstrap your React project using [CRA](https://create-react-app.dev/) or you can do it on your own. Regardless of the method you choose, the next step going to be the same.
+You can bootstrap your React project using something like [Create React App](https://create-react-app.dev/) or similar.
 
 Let's start with installing the required dependencies.
 
@@ -16,7 +12,7 @@ Let's start with installing the required dependencies.
 npm install @googleforcreators/story-editor @googleforcreators/design-system @googleforcreators/migration
 ```
 
-You can use the below code block to scaffold a minimal story editor 
+The following code block scaffolds a minimal story editor:
 
 ```jsx
 import {
@@ -39,9 +35,11 @@ const Editor = () => {
 export default Editor;
 ```
 
-## STEP 2: Saving stories in browser's local storage
+## Step 2: Saving stories in local storage
 
-We will now define the API callback `saveStoryById` which is invoked by the editor while saving a story. For details about other API callbacks accepted by the story editor checkout [API Callbacks](../integration-layer-api/api-callbacks.md)
+We will now define the API callback `saveStoryById` which is invoked by the editor while saving a story.
+
+For details about other API callbacks accepted by the story editor, check out the [API Callbacks](./api-callbacks.md) section.
 
 The following code block is given to show an example of how a story can be saved to the browser's local storage.
 
@@ -75,13 +73,11 @@ const saveStoryById = ({
 };
 
 export default saveStoryById;
-
-
 ```
 
-Argument to the callback `saveStoryById` is an object which has data about the story (`pages`, `globalStoryStyles`, `currentStoryStyles`) which will be stored in the local storage. Story editor also creates markup for the story with the key `content`, which will also be saved in the local storage and will be used for creating a preview in later sections of the tutorial.
+The `saveStoryById` callback expects an object which has data about the story (`pages`, `globalStoryStyles`, `currentStoryStyles`) which will be stored in the local storage. Story editor also creates markup for the story with the key `content`, which will also be saved in the local storage and will be used for creating a preview in later sections of the tutorial.
 
-Now let's pass down this callback to the editor and use data stored in local storage to hydrate it.
+Now let's pass down this callback to the editor and use the data stored in local storage to hydrate it.
 
 ```jsx
 import {
@@ -108,11 +104,11 @@ const Editor = () => {
 export default Editor;
 ```
 
-## STEP 3: Adding Save Button
+## Step 3: Adding Save Button
 
-Now we can add a save button will call the `saveStoryById` callback defined in the previous step to save story data in local storage.
+Now we can add a Save button which will call the `saveStoryById` callback from the previous step in order to save story data in local storage.
 
-Code block below shows you how to create a button by using components from `@googleforcreators/design-system`
+The following code shows how to accomplish that by using components from `@googleforcreators/design-system`:
 
 ```jsx
 import {
@@ -164,17 +160,15 @@ export default SaveButton;
 
 ```
 
-- Button Component: In the above code sample we have imported a button component from `@googleforcreators/design-system` and used it to create a button that will be displayed in the Workspace's header. You may also create a custom button, but it is advised to import it from `@googleforcreators/design-system` for design consistency.
-	
-- `useStory`: A custom hook that exposes functionality to read and manipulate data of the story currently being edited. In the above code sample, a state variable `isSaving` is being used to disable the save button when a story is being saved and `saveStory` action is being used to save the story.
+In the above code, `useStory` is a custom hook that exposes functionality to read and manipulate data of the story currently being edited. A state variable `isSaving` is being used to disable the save button when a story is being saved and the `saveStory` action is being used to actually save the story.
 
-- `useSnackBar`: A custom hook that exposes functionality to use a snack bar in the Story editor. `showSnackBar` action is being used to show the user that a story has been saved.
-
+The `useSnackBar` hook exposes a `showSnackBar` action to display a snackbar message in the editor.
 
 ### Header
 
-Now that we have a save button we can make a header that would be shown on top of the workspace area.
-Code sample below implements such header component which will be passed to the story editor and will use the save button.
+Now that we have a Save button, we can display it in the editor in a dedicated header area shown at the top of the workspace area.
+
+Here is how such a header component can be passed to the story editor in order to display the Save button:
 
 ```jsx
 import SaveButton from "./saveButton";
@@ -207,8 +201,7 @@ export default HeaderLayout;
 
 ```
 
-
-Let's pass this header to the editor now.
+Passing the component to the editor:
 
 ```jsx
 import {
@@ -236,11 +229,9 @@ const Editor = () => {
 export default Editor;
 ```
 
+## Step 4: Adding Preview button
 
-## STEP 4: Adding Preview button
-
-Similar to the save button added in the previous step now we will add a new button that will open a new tab to show a preview of the story.
-
+Similar to the Save button in the previous step, we can add a new button that will open a new tab with the preview of a story.
 
 ```jsx
 import { Tooltip, useStory } from "@googleforcreators/story-editor";
@@ -316,15 +307,15 @@ function PreviewButton() {
 export default PreviewButton;
 ```
 
-This new button is very similar to the save button from earlier steps, but it is styled a little differently and uses an icon (`Icons.Eye`) from the story editor's component library rather than some text.
+This new button is very similar to the Save button, but it is styled a little differently and uses an icon (`Icons.Eye`) from the component library rather than a text label.
 
-On clicking this button -
+Clicking this button will:
 
-- Story data and markup will be stored in the local storage.
-- A new tab with some waiting state text will be displayed.
-- The new tab will be redirected to preview route after 5 sec
+1. Store the story data and markup in local storage.
+2. Open a new tab with some loading state text.
+3. Redirect to the preview once the preview has been generated, or after a given timeout is reached.
 
-This button then can be added to the header as shown below
+This button can then be displayed in the header area next to the Save button.
 
 ```jsx
 import SaveButton from "./saveButton";
@@ -359,9 +350,9 @@ function HeaderLayout() {
 export default HeaderLayout;
 ```
 
-A new route has to be introduced which will serve a preview of the story. You can use client-side routing provided in the package [React router](https://reactrouter.com/) or handle your routes server side. 
+A new route has to be introduced which will serve a preview of the story, for example using [React Router](https://reactrouter.com/) or a server-side solution. 
 
-On this route, simply display story markup which was stored in the browser's local storage by using the callback `saveStoryById` described in step 2.
+On this route, simply display story markup which was previously stored in the browser's local storage using `saveStoryById`.
 
 You can use the following code sample to describe a component which overrides page's HTML with the one in the local storage.
 
@@ -383,12 +374,8 @@ function Preview() {
 }
 
 export default Preview;
-
 ```
 
-Congratulations! You should now have a working story editor which is capable of saving stories and generating a preview. 
+This is it! You should now have a working story editor which is capable of saving stories and generating a preview. 
 
-
-## Next
-
-Story editor packs many more capabilities than the one shown in this tutorial. [Integration Layer API](../integration-layer-api/integration-layer.md) provides comprehensive documentation of Story Editor's integration layer for you to implement your own custom version.
+Check out the [Integration Layer API](./integration-layer.md) for a comprehensive documentation of the story editor's integration layer if you want to implement your own custom version.

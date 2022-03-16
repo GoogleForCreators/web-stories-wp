@@ -1,9 +1,11 @@
 # API Callbacks
 
-Side effects are added to the Dashboard by defining callbacks. One such callback is `fetchStories` which is used to get stories from the backend and is the only required callback. Other callbacks can be used to add or handle functionalities for story management. All API callbacks are asynchronous and should eventually resolve to their corresponding expected responses.
+Side effects are added to the Dashboard by defining callbacks. One such callback is `fetchStories` which is used to get stories from the backend and is the only required callback.
+Other callbacks can be used to add or handle functionalities for story management.
+
+All API callbacks are asynchronous and should eventually resolve to their corresponding expected responses.
 
 Below is a list of available API callbacks categorized in different sections.
-
 
 ## Story Management
 
@@ -219,7 +221,6 @@ Arguments
 Response:
 An `Object` of `<Story>` shape.
 
-
 Example ( Expected response )
 
 ```JSON
@@ -312,7 +313,7 @@ Arguments
             - description: Version of the template used for migration.
         - `pages`
             - type: `array<Page>`
-            - description: Each attay item corrresponds to each page in template.[ page object ](../../story-editor/integration-layer-api/api-callbacks.md/#page-object-shape)
+            - description: Each attay item corrresponds to each page in template.[ page object ](../story-editor/integration-layer-api/api-callbacks.md/#page-object-shape)
         - `postersByPage`
             - type: `array<Object>`
             - description: Each object consisting of the URL for the page poster.

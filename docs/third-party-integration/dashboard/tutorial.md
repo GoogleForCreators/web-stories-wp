@@ -1,6 +1,6 @@
-# Standalone dashboard tutorial
+# Tutorial
 
-This tutorial shows you how to create a standalone story dashboard for learning purposes. You will implement the following functionalities while following this tutorial.
+This tutorial explains how to create a standalone story dashboard step by step. It covers implementing the following functionalities:
 
 - Fetching hard-coded stories.
 - Adding filters for browsing stories.
@@ -149,7 +149,7 @@ You can also update `fetchStories` as below to allow basic filtering and orderin
 export default fetchStories;
 ```
 
-Similar to how `status` and `sortOrder` in used in the code sample you can add other filter based on parameters passed to `fetchStories`. See [API callbacks](../integration-layer-api/api-callbacks.md) for more information.
+Similar to how `status` and `sortOrder` in used in the code sample you can add other filter based on parameters passed to `fetchStories`. See [API callbacks](./api-callbacks.md) for more information.
 
 ## Step 4: Adding a custom settings page
 

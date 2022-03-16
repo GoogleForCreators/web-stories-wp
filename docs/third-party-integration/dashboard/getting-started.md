@@ -1,9 +1,7 @@
 # Dashboard
 
-If you want a companion dashboard to show stories created by the user or a list of story templates to choose from, you may use `Dashboard` from the `@googleforcreators/dashboard`  package. The dashboard can also be used to create a settings page for Story Editor.
-
-
-
+If you want a companion dashboard to show stories created by the user or a list of story templates to choose from, you may use `Dashboard` from the `@googleforcreators/dashboard` package.
+The dashboard can also be used to create a settings page for the story editor.
 
 ## Scaffolding a Story Dashboard
 
@@ -50,23 +48,15 @@ const EditorDashboard = () => {
 export default EditorDashboard;
 ```
 
-You should now have the story dashboard that looks like this.
+By default, the dashboard looks like this:
 
-![dashboard](./assets/dashboard-minimal.png)
+![dashboard](https://user-images.githubusercontent.com/841956/159524205-43e27097-9321-487c-b236-28f9414f539e.png)
 
-## Meet The Dashboard
+The dashboard application can be split into 2 different areas:
 
-Now that you have a story dashboard up and running, let's get to know a little about it.
+![dashboard-labelled](https://user-images.githubusercontent.com/841956/159524265-bf0a117a-2432-469d-8733-d61f1e94b3aa.png)
 
-The Dashboard has 2 main areas that one should know about.
+The left rail / sidebar (1) provides a list of menu items for different pages configured in the dashboard.
+Clicking on a menu item will display the page's content on the right (2).
 
-![dashboard-labelled](./assets/dashboard-labelled.png)
-
-### Left Rail - (1)
-
-Left rail provides a list of links to different pages configured in the dashboard. Selecting any link by clicking on it will result in its content being loaded in the **Page Content** area.
-By default, **Left Rail** only has one link to a page which shows all stories a user has saved.
-
-### Page Content - (2)
-
-In this area, a page's content will be loaded depending on what link is selected in the left rail.
+Out of the box, the left rail only contains a menu item for the main page showing all existing stories.

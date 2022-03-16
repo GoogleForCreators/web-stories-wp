@@ -1,8 +1,8 @@
 # Integration Layer
 
-Similar to Story Editor, Dashboard can be integrated by configuring the `Dashboard` and other components like `InterfaceSkeleton`.
+Similar to the editor, the Dashboard can be integrated by configuring the `Dashboard` and other components like `InterfaceSkeleton`.
 
-As seen in the getting started guide, a minimal dashboard can be created by using the two main components  `Dashboard` and `InterfaceSkeleton`  like below.
+As seen in the [Getting Started](./getting-started.md) guide, a minimal dashboard can be created by using the two main components  `Dashboard` and `InterfaceSkeleton`  like below.
 
 ```js
 import { Dashboard, InterfaceSkeleton } from "@googleforcreators/dashboard";
@@ -31,8 +31,6 @@ const StoriesDashboard = () => {
 export default StoriesDashboard;
 ```
 
-
-
 ## `Dashboard`
 
 This is the top level component which has all the provider components but doesn't render any UI itself.
@@ -43,8 +41,6 @@ This is the top level component which has all the provider components but doesn'
     - type: `Object`
     - required: Yes
     - description: Used for most of the dashboard configuration. See the [Dashboard Config](#dashboard-config) section below for full detail.
-
-
 
 ## `InterfaceSkeleton`
 
@@ -64,9 +60,6 @@ This component is responsible for rendering the story editor interface UI and ca
             - type: `React.ReactElement`
             - required: Yes
             - description: A component which will be rendered on the page content area if corresponding link is selected
-
-
-
 
 ## Dashboard Config
 

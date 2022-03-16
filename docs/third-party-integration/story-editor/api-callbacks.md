@@ -4,8 +4,6 @@ Similar to the dashboard, side effects are added to the Story Editor by defining
 
 Below is a list of available API callbacks categorized in different sections.
 
-
-
 ## Story Editing
 
 ### `saveStoryById`
@@ -179,7 +177,6 @@ Arguments
     - type: `number`
     - description: Letter spacing in pixels.
 
-
 Expected response
 
 An `Object` with the following shape
@@ -251,8 +248,6 @@ An `Object` with the following shape
 - require: No
 - description: Array of page objects in the story. See [page object shape](#page-object-shape) for more details.
 
-
-
 Example ( Expected response )
 
 ```json
@@ -272,8 +267,6 @@ Example ( Expected response )
 }
 ```
 
-
-
 ### `getStoryById`
 
 Fallback of `initialEdits` prop of `StoryEditor` component. If `initialEdits` prop is undefined, this callback will be used to populate the initial story.
@@ -284,23 +277,19 @@ Arguments
     - type: `number `
     - description: Unique id of a story that needs to be loaded.
 
-
 Expected response
 
 - `title`
-
     - type: `Object`
     - required: No
     - description: Tittle of the story.
 
 - `excerpt`
-
     - type: `Object`
     - required: No
     - description: Story description of the story.
 
 - `storyData`
-
     - type: `Object`
     - required: No
     - description: Story data.
@@ -371,7 +360,6 @@ Expected response
                             - description: URL of the audio file.
 
 - `author`
-
     - type: `Object`
     - required: No
     - description: Details of author who created the story.
@@ -385,22 +373,19 @@ Expected response
             - description: Author name.
 
 - `stylePresets`
-
-- type: `Object`
-- required: No
-- description: Saved style Presets.
-
-
+    - type: `Object`
+    - required: No
+    - description: Saved style Presets.
 
 Example ( Expected response )
 
 ```json
 {
     "title": {
-      "raw": "Epic story",
+      "raw": "Epic story"
     },
     "excerpt": {
-      "raw": "A totally epic story",
+      "raw": "A totally epic story"
     },
     "storyData": {
       "version": 39,
@@ -408,17 +393,17 @@ Example ( Expected response )
       "autoAdvance": true,
       "defaultPageDuration": 7,
       "currentStoryStyles": {},
-      "backgroundAudio": {},
+      "backgroundAudio": {}
     },
     "author": {
       "id": 1,
-      "name": "John Doe",
+      "name": "John Doe"
     },
     "stylePresets": {
         "colors": [],
         "textStyles": []
-    },
-  };
+    }
+}
 ```
 
 ## Custom Page Templates
@@ -432,7 +417,6 @@ For fetching custom page templates.
 Arguments
 
 - `page` :
-  
     - type: `number `
     - description: Page number for a set of template.
 
@@ -444,13 +428,11 @@ An array of the template objects whose shape is described below.
 #### Template object shape
 
 - `templateId`
-
     - type: `number`
     - required: Yes
     - description: Template id.
 
 - `version`
-
     - type: `string`
     - required: Version of the story shape used ( `DATA_VERSION` )
     - description: Details of author who created the story.
@@ -463,7 +445,6 @@ An array of the template objects whose shape is described below.
 
 
 - `backgroundColor`
-
     - type: `Object`
     - required: Yes
     - description: Background color RGB values.
@@ -480,19 +461,16 @@ An array of the template objects whose shape is described below.
                     - description: Green value.
 
 - `type`
-
     - type: `string`
     - required: Yes
     - description: Template type.
 
 - `id`
-
     - type: `string`
     - required: Yes
     - description: Page id.
 
 - `image`
-
     - type: `Object`
     - required: Yes
     - description: Placeholder image data.
@@ -599,9 +577,6 @@ An array of the template objects whose shape is described below.
     - type: `string`
     - description: Unique id for this element.
 
-
-
-
 Example ( Expected response )
 
 ```json
@@ -627,8 +602,6 @@ Example ( Expected response )
 }
 ```
 
-
-
 ### `addPageTemplate`
 
 For adding custom page templates.
@@ -638,7 +611,6 @@ Arguments
 - `template` :
     - type: `Object`
     - description: See [Template Object Shape](#template-object-shape) for object shape.
-
 
 Expected response
 
@@ -653,7 +625,6 @@ Arguments
 - `templateId` :
     - type: `number`
     - description: Template Id.
-
 
 Expected response
 
@@ -806,7 +777,6 @@ Expected response
     - description: Flag to denote if getting media requires proxy.
 
 
-
 Example ( Expected response )
 
 ```json
@@ -896,7 +866,7 @@ Expected response
 
 ### `updateMedia`
 
-Story editor calculates and updates data about media element stored in the back-end using these callbacks. Users can also update data if required interface is added. Out of the box users can only update `altText`
+The story editor calculates and updates data about media elements stored in the back-end using these callbacks. Users can also update data if required interface is added. Out of the box users can only update `altText`.
 
 Arguments
 
@@ -909,11 +879,11 @@ Arguments
     - description: Updated data of a media object.
         - `posterId` :
             - type: `number`
-            - description: Id of the poster image element of this media element.
+            - description: ID of the poster image element of this media element.
 
         - `storyId` :
             - type: `number`
-            - description: Id of the story in which a video element's poster was generated.
+            - description: ID of the story in which a video element's poster was generated.
 
         - `isMuted` :
             - type: `boolean`
@@ -921,7 +891,7 @@ Arguments
 
         - `mutedId` :
             - type: `number`
-            - description: Id of the muted version of this media element.
+            - description: ID of the muted version of this media element.
 
         - `mediaSource` :
             - type: `string`
@@ -929,7 +899,7 @@ Arguments
 
         - `optimizedId` :
             - type: `number`
-            - description: Id of optimized version of this media element.
+            - description: ID of optimized version of this media element.
 
         - `altText` :
             - type: `string`
@@ -969,19 +939,19 @@ Arguments
     - description: Updated data of a media object.
         - `originalId` :
             - type: `number`
-            - description: Id of a media of which this element is an altered version of.
+            - description: ID of a media of which this element is an altered version of.
 
         - `mediaId` :
             - type: `number`
-            - description: Id of a video of which this element is a poster.
+            - description: ID of a video of which this element is a poster.
 
         - `storyId` :
             - type: `number`
-            - description: Id of a story of which this element is a poster.
+            - description: ID of a story of which this element is a poster.
 
         - `templateId` :
             - type: `number`
-            - description: Id of a template of which this element is a poster.
+            - description: ID of a template of which this element is a poster.
 
         - `isMuted` :
             - type: `boolean`
@@ -1021,7 +991,7 @@ Arguments
 
 - `id` :
     - type: `number`
-    - description: Id of a media element which needs to be deleted.
+    - description: ID of a media element which needs to be deleted.
 
 Expected response
 
@@ -1129,7 +1099,6 @@ Arguments
             - type: `string`
             - description: Comma separated names for font in the curated list.
 
-
 Expected response
 
 - Array of **Font Object**
@@ -1139,7 +1108,7 @@ Expected response
 - `id`
     - type: `string`
     - required: No
-    - description: Unique id of the font.
+    - description: Unique ID of the font.
 
 - `name`
     - type: `string`
@@ -1194,14 +1163,14 @@ Example ( Expected response )
         "serif"
     ],
     "weights": [
-        400,
+        400
     ],
     "styles": [
         "regular",
         "italic"
     ],
     "variants": [
-        [0,400],
+        [0,400]
     ],
     "service": "fonts.google.com",
     "metrics": {
@@ -1224,11 +1193,9 @@ Example ( Expected response )
 }
 ```
 
+## Hotlinking media
 
-
-## Hot linking media
-
-Customize the Story editor for users to be able hotlink media with links rather than uploading files.
+Add support for inserting media by URL in addition to or instead of uploading files.
 
 ### `getHotlinkInfo`
 
@@ -1303,7 +1270,7 @@ Example ( Expected response )
 ```json
 {
     "title": "link to external",
-    "icon": "https://link-to-icon",
+    "icon": "https://link-to-icon"
 }
 ```
 
@@ -1349,7 +1316,7 @@ Example ( Expected response )
     "id": 1,
     "trackingOptin": true,
     "onboarding": false,
-    "mediaOptimization": true,
+    "mediaOptimization": true
 }
 ```
 
@@ -1379,4 +1346,3 @@ Arguments
 Expected response
 
 - `null`
-
