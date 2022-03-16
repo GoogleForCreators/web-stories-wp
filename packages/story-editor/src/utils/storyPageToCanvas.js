@@ -15,10 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { PAGE_RATIO } from '@googleforcreators/units';
-/**
  * Internal dependencies
  */
 import storyPageToNode from './storyPageToNode';
@@ -35,24 +31,24 @@ import storyPageToNode from './storyPageToNode';
  * @param {number} options.width desired width of image. Dictates height and container height
  * @return {Promise<string>} jpeg dataUrl
  */
-async function storyPageToDataUrl(page, { width = 400, ...options }) {
+async function storyPageToCanvas(page, { width = 400, ...options }) {
   const htmlToImage = await import(
     /* webpackChunkName: "chunk-html-to-image" */ 'html-to-image'
   );
 
-  const [node, cleanup] = await storyPageToNode(page, width);
+  const [node, cleanup] = await storyPageToNode(page, width, {
+    renderFullHeightThumb: true,
+  });
 
-  const dataUrl = await htmlToImage.toJpeg(node, {
+  const canvas = await htmlToImage.toCanvas(node, {
     ...options,
-    width,
-    height: width * (1 / PAGE_RATIO),
-    canvasHeight: width * (1 / PAGE_RATIO),
-    canvasWidth: width,
+    fontEmbedCss: '',
+    pixelRatio: 1,
   });
 
   cleanup();
 
-  return dataUrl;
+  return canvas;
 }
 
-export default storyPageToDataUrl;
+export default storyPageToCanvas;

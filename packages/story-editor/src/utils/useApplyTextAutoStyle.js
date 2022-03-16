@@ -23,13 +23,13 @@ import { getHTMLFormatters } from '@googleforcreators/rich-text';
  * Internal dependencies
  */
 import { BACKGROUND_TEXT_MODE } from '../constants';
+import { useCalculateAccessibleTextColors } from '../app/pageCanvas';
 import { applyHiddenPadding } from '../components/panels/design/textStyle/utils';
-import usePageAsCanvas from './usePageAsCanvas';
 
 function useApplyTextAutoStyle(element, updater) {
   const htmlFormatters = getHTMLFormatters();
   const { setColor } = htmlFormatters;
-  const { calculateAccessibleTextColors } = usePageAsCanvas(true);
+  const calculateAccessibleTextColors = useCalculateAccessibleTextColors();
 
   const applyTextAutoStyle = async () => {
     const autoColor = await calculateAccessibleTextColors(element);
