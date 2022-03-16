@@ -59,7 +59,6 @@ function Layers() {
         notificationCount={layersLength}
         copy={__('Layers', 'web-stories')}
         onClick={() => setIsOpen((state) => !state)}
-        hideTooltip
       />
     </>
   );
