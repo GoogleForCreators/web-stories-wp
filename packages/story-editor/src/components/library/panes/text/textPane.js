@@ -36,9 +36,9 @@ import {
 /**
  * Internal dependencies
  */
+import { usePageCanvas } from '../../../../app/pageCanvas';
 import { Container as SectionContainer } from '../../common/section';
 import { Pane as SharedPane } from '../shared';
-import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
 import useLibrary from '../../useLibrary';
 import Tooltip from '../../../tooltip';
 import FontPreview from './fontPreview';
@@ -85,7 +85,9 @@ function TextPane(props) {
   const { getPosition, insertPreset } = useInsertPreset({
     shouldUseSmartColor,
   });
-  const { generateCanvasFromPage } = usePageAsCanvas();
+  const generateDeferredCurrentPageCanvas = usePageCanvas(
+    ({ actions }) => actions.generateDeferredCurrentPageCanvas
+  );
 
   useResizeEffect(
     paneRef,
@@ -125,7 +127,9 @@ function TextPane(props) {
         </Tooltip>
       </SmartColorToggle>
       <SectionContainer
-        onPointerOver={() => shouldUseSmartColor && generateCanvasFromPage()}
+        onPointerOver={() =>
+          shouldUseSmartColor && generateDeferredCurrentPageCanvas()
+        }
       >
         <GridContainer>
           {PRESETS.map(({ title, element }, index) => (

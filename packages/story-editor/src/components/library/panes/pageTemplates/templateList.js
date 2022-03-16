@@ -159,7 +159,7 @@ TemplateList.propTypes = {
   parentRef: PropTypes.object.isRequired,
   pages: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
+      id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     })
   ),
   pageSize: PropTypes.object.isRequired,

@@ -23,13 +23,13 @@ import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
+import { useCalculateAccessibleTextColors } from '../app/pageCanvas';
 import { applyHiddenPadding } from '../components/panels/design/textStyle/utils';
-import usePageAsCanvas from './usePageAsCanvas';
 
 function useApplyTextAutoStyle(element, updater) {
   const htmlFormatters = getHTMLFormatters();
   const { setColor } = htmlFormatters;
-  const { calculateAccessibleTextColors } = usePageAsCanvas(true);
+  const calculateAccessibleTextColors = useCalculateAccessibleTextColors();
 
   const applyTextAutoStyle = async () => {
     const autoColor = await calculateAccessibleTextColors(element);

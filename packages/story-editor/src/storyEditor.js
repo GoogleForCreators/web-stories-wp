@@ -54,6 +54,7 @@ import AutoSaveHandler from './components/autoSaveHandler';
 import { DropTargetsProvider } from './components/dropTargets';
 import { HelpCenterProvider } from './app/helpCenter';
 import { PageDataUrlProvider } from './app/pageDataUrls';
+import { PageCanvasProvider } from './app/pageCanvas';
 import DevTools from './components/devTools';
 import { GlobalStyle as CalendarStyle } from './components/form/dateTime/calendarStyle';
 import KeyboardOnlyOutlines from './utils/keyboardOnlyOutline';
@@ -89,16 +90,18 @@ function StoryEditor({ config, initialEdits, children }) {
                                 <TransformProvider>
                                   <DropTargetsProvider>
                                     <HelpCenterProvider>
-                                      <PageDataUrlProvider>
-                                        <GlobalStyle />
-                                        <DevTools />
-                                        <DefaultMoveableGlobalStyle />
-                                        <CropMoveableGlobalStyle />
-                                        <ModalGlobalStyle />
-                                        <CalendarStyle />
-                                        <KeyboardOnlyOutlines />
-                                        {children}
-                                      </PageDataUrlProvider>
+                                      <PageCanvasProvider>
+                                        <PageDataUrlProvider>
+                                          <GlobalStyle />
+                                          <DevTools />
+                                          <DefaultMoveableGlobalStyle />
+                                          <CropMoveableGlobalStyle />
+                                          <ModalGlobalStyle />
+                                          <CalendarStyle />
+                                          <KeyboardOnlyOutlines />
+                                          {children}
+                                        </PageDataUrlProvider>
+                                      </PageCanvasProvider>
                                     </HelpCenterProvider>
                                   </DropTargetsProvider>
                                 </TransformProvider>

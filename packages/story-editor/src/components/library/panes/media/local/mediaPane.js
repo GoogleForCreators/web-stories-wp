@@ -133,8 +133,6 @@ function MediaPane(props) {
     }
   );
 
-  const enableHotlinking = useFeature('enableHotlinking');
-
   const {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
@@ -191,20 +189,6 @@ function MediaPane(props) {
     []
   );
 
-  const renderUploadButton = useCallback(
-    (open) => (
-      <Button
-        variant={BUTTON_VARIANTS.RECTANGLE}
-        type={BUTTON_TYPES.SECONDARY}
-        size={BUTTON_SIZES.SMALL}
-        onClick={open}
-      >
-        {__('Upload', 'web-stories')}
-      </Button>
-    ),
-    []
-  );
-
   return (
     <StyledPane id={paneId} {...props}>
       <PaneInner>
@@ -238,7 +222,7 @@ function MediaPane(props) {
                 )}
               </SearchCount>
             )}
-            {!isSearching && enableHotlinking && (
+            {!isSearching && (
               <ButtonsWrapper>
                 <LinkInsertion />
                 {hasUploadMediaAction && (
@@ -250,12 +234,6 @@ function MediaPane(props) {
                   </Tooltip>
                 )}
               </ButtonsWrapper>
-            )}
-            {!isSearching && !enableHotlinking && hasUploadMediaAction && (
-              <MediaUploadButton
-                renderButton={renderUploadButton}
-                onInsert={onSelect}
-              />
             )}
           </FilterArea>
         </PaneHeader>

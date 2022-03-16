@@ -31,14 +31,14 @@ import { ELEMENT_TYPES } from '@googleforcreators/elements';
  */
 import objectWithout from '../../utils/objectWithout';
 import { useStory } from '../../app/story';
-import usePageAsCanvas from '../../utils/usePageAsCanvas';
+import { useCalculateAccessibleTextColors } from '../../app/pageCanvas';
 import useInsertElement from './useInsertElement';
 
 const SCRIM_PADDING = 24;
 
 function useInsertTextSet(shouldUseSmartColor = false) {
   const insertElement = useInsertElement();
-  const { calculateAccessibleTextColors } = usePageAsCanvas();
+  const calculateAccessibleTextColors = useCalculateAccessibleTextColors();
 
   const { setSelectedElementsById } = useStory(
     ({ actions: { setSelectedElementsById } }) => {
