@@ -249,12 +249,6 @@ function MediaPane(props) {
                 )}
               </ButtonsWrapper>
             )}
-            {!isSearching && hasUploadMediaAction && (
-              <MediaUploadButton
-                renderButton={renderUploadButton}
-                onInsert={onSelect}
-              />
-            )}
           </FilterArea>
         </PaneHeader>
 
