@@ -53,17 +53,17 @@ This component is responsible for rendering the story editor interface UI and ca
 - `header`
     - type: `React.ReactElement`
     - required: No
-    - description: Used for rendering the workspace header. See [workspace section](../getting-started/getting-started.md#workspace) of getting started guide to get the definition of header.
+    - description: Used for rendering the workspace header. See [workspace section](../getting-started/getting-started.md#workspace---2) of getting started guide to get the definition of header.
 
 - `footer`
     - type: `Object`
     - required: No
-    - description: Used for rendering some parts of the footer. See [workspace section](../getting-started/getting-started.md#workspace) of getting started guide for the definition of footer.
+    - description: Used for rendering some parts of the footer. See [workspace section](../getting-started/getting-started.md#workspace---2) of getting started guide for the definition of footer.
 
 - `inspectorTabs`
     - type: `Object`
     - required: No
-    - description: Used for rendering the inspector tabs of the story editor. See [workspace section](../getting-started/getting-started.md#workspace) of getting started guide for the definition of inspector tabs.
+    - description: Used for rendering the inspector tabs of the story editor. See [workspace section](../getting-started/getting-started.md#workspace---2) of getting started guide for the definition of inspector tabs.
 
 
 
