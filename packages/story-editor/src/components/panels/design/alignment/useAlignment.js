@@ -73,7 +73,7 @@ function useAlignment({ selectedElements, updateElements }) {
     [selectedElements]
   );
 
-  // Set boundRect with pageSize when there is only element selected
+  // Set boundRect with pageSize when there is only one element selected
   const boundRect =
     selectedElements.length === 1 ? PAGE_RECT : getBoundRect(selectedElements);
 
