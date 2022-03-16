@@ -47,12 +47,12 @@ import { SPACING } from './constants';
 const containerCss = css`
   display: flex;
   align-items: center;
-  width: 100%;
 `;
 
 const Container = styled.section`
   ${containerCss}
   gap: ${({ isInDesignMenu }) => (isInDesignMenu ? 6 : 8)}px;
+  width: ${({ width }) => (width ? `${width}px` : `100%`)};
 `;
 
 const ColorInputsWrapper = styled.div`
@@ -72,7 +72,8 @@ const InputWrapper = styled.div`
 `;
 
 const OpacityWrapper = styled.div`
-  width: calc(47% - 10px);
+  width: ${({ isInDesignMenu }) =>
+    isInDesignMenu ? `calc(39% - 10px)` : `calc(47% - 10px)`};
 `;
 
 const EyeDropperButton = styled(Button).attrs({
@@ -100,6 +101,7 @@ const Color = forwardRef(function Color(
     pickerPlacement = PLACEMENT.RIGHT_START,
     isInDesignMenu = false,
     hasInputs = true,
+    width,
   },
   ref
 ) {
@@ -132,7 +134,11 @@ const Color = forwardRef(function Color(
       : TOOLTIP_PLACEMENT.BOTTOM_START;
 
   return (
-    <Container aria-label={containerLabel} isInDesignMenu={isInDesignMenu}>
+    <Container
+      aria-label={containerLabel}
+      isInDesignMenu={isInDesignMenu}
+      width={width}
+    >
       {hasEyedropper && (
         <Tooltip
           title={tooltip}
@@ -180,7 +186,7 @@ const Color = forwardRef(function Color(
         {allowsOpacity && displayOpacity && (
           <>
             <Space />
-            <OpacityWrapper>
+            <OpacityWrapper isInDesignMenu={isInDesignMenu}>
               <OpacityInput
                 value={value}
                 onChange={handleOpacityChange}
