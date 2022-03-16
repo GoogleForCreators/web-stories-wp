@@ -23,9 +23,11 @@ import {
   insertStoryTitle,
   uploadMedia,
   deleteMedia,
+  getByTestId,
+  getByAltText,
+  getByText,
+  getByLabelText,
 } from '@web-stories-wp/e2e-test-utils';
-import { getDocument, queries } from 'pptr-testing-library';
-const { getByTestId, getByAltText, getByText, getByLabelText } = queries;
 
 describe('Inserting WebM Video', () => {
   let uploadedFiles;
@@ -40,9 +42,8 @@ describe('Inserting WebM Video', () => {
   });
 
   async function openA11yPanel() {
-    const document = await getDocument(page);
     // Open the Accessibility panel.
-    const a11yPanel = await getByLabelText(document, 'Accessibility');
+    const a11yPanel = await getByLabelText(page, 'Accessibility');
     const isCollapsed = await page.evaluate(
       (button) => button.getAttribute('aria-expanded') === 'false',
       a11yPanel
@@ -64,8 +65,7 @@ describe('Inserting WebM Video', () => {
 
     // Wait for poster image (inside Accessibility panel) to appear.
     await openA11yPanel();
-    const document = await getDocument(page);
-    await getByAltText(document, 'Preview poster image');
+    await getByAltText(page, 'Preview poster image');
     await expect(page).toMatchElement('[alt="Preview poster image"]');
   });
 
@@ -74,19 +74,18 @@ describe('Inserting WebM Video', () => {
 
     const fileName = await uploadMedia('small-video.webm');
     uploadedFiles.push(fileName);
-    const document = await getDocument(page);
-    await getByTestId(document, 'mediaElement-video');
+    await getByTestId(page, 'mediaElement-video');
     // Clicking will only act on the first element.
     await expect(page).toClick('[data-testid="mediaElement-video"]');
-    const insertButton = await getByText(document, 'Insert video');
+    const insertButton = await getByText(page, 'Insert video');
     await insertButton.click();
 
-    await getByTestId(document, 'videoElement');
+    await getByTestId(page, 'videoElement');
     await expect(page).toMatchElement('[data-testid="videoElement"]');
 
     // Wait for poster image (inside Accessibility panel) to appear.
     await openA11yPanel();
-    await getByAltText(document, 'Preview poster image');
+    await getByAltText(page, 'Preview poster image');
     await expect(page).toMatchElement('[alt="Preview poster image"]');
   });
 
@@ -97,19 +96,18 @@ describe('Inserting WebM Video', () => {
 
     const fileName = await uploadMedia('small-video.webm');
     uploadedFiles.push(fileName);
-    const document = await getDocument(page);
-    await getByTestId(document, 'mediaElement-video');
+    await getByTestId(page, 'mediaElement-video');
     // Clicking will only act on the first element.
     await expect(page).toClick('[data-testid="mediaElement-video"]');
-    const insertButton = await getByText(document, 'Insert video');
+    const insertButton = await getByText(page, 'Insert video');
     await insertButton.click();
 
-    await getByTestId(document, 'videoElement');
+    await getByTestId(page, 'videoElement');
     await expect(page).toMatchElement('[data-testid="videoElement"]');
 
     // Wait for poster image (inside Accessibility panel) to appear.
     await openA11yPanel();
-    await getByAltText(document, 'Preview poster image');
+    await getByAltText(page, 'Preview poster image');
     await expect(page).toMatchElement('[alt="Preview poster image"]');
 
     const editorPage = page;

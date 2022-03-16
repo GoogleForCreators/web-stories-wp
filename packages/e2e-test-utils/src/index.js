@@ -55,6 +55,7 @@ export { default as disableCheckbox } from './disableCheckbox';
 export { default as enableCheckbox } from './enableCheckbox';
 export { default as takeSnapshot } from './takeSnapshot';
 export { default as uploadPublisherLogoEditor } from './uploadPublisherLogoEditor';
+export * from './utils.js';
 export {
   getEditedPostContent,
   setPostContent,

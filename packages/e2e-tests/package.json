@@ -35,8 +35,7 @@
     "babel-jest": "^27.4.6",
     "expect-puppeteer": "^6.0.2",
     "jest-extended": "^2.0.0",
-    "jest-puppeteer": "^6.1.0",
-    "pptr-testing-library": "^0.7.0"
+    "jest-puppeteer": "^6.1.0"
   },
   "peerDependencies": {
     "puppeteer": "*"
