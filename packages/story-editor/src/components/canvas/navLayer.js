@@ -44,8 +44,8 @@ function NavLayer({ header, footer }) {
             <PageSideMenu />
           </PageMenuArea>
         </DirectionAware>
-        <FooterArea pointerEvents="initial" zIndex={Z_INDEX_NAV_LAYER}>
-          <Footer footer={footer} />
+        <FooterArea pointerEvents="initial">
+          <Footer footer={footer} zIndex={Z_INDEX_NAV_LAYER} />
         </FooterArea>
       </Layer>
     </ChecklistCountProvider>
