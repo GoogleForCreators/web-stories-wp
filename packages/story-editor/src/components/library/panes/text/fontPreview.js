@@ -99,7 +99,8 @@ const DragContainer = styled.div`
 
 function FontPreview({ title, element, insertPreset, getPosition, index }) {
   const htmlFormatters = getHTMLFormatters();
-  const { font, fontSize, fontWeight, content } = element;
+  const { font, fontSize, content } = element;
+  const { fontWeight } = getTextInlineStyles(content);
   const {
     actions: { maybeEnqueueFontStyle },
   } = useFont();

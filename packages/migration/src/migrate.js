@@ -57,6 +57,7 @@ import changeBaseColorToHex from './migrations/v0036_changeBaseColorToHex';
 import removeTransientMediaProperties from './migrations/v0037_removeTransientMediaProperties';
 import camelCaseResourceSizes from './migrations/v0038_camelCaseResourceSizes';
 import backgroundAudioFormatting from './migrations/v0039_backgroundAudioFormatting';
+import andadaFontToAndadaPro from './migrations/v0040_andadaFontToAndadaPro.js';
 
 const MIGRATIONS = {
   1: [storyDataArrayToObject],
@@ -98,6 +99,7 @@ const MIGRATIONS = {
   37: [removeTransientMediaProperties],
   38: [camelCaseResourceSizes],
   39: [backgroundAudioFormatting],
+  40: [andadaFontToAndadaPro],
 };
 
 export const DATA_VERSION = Math.max.apply(

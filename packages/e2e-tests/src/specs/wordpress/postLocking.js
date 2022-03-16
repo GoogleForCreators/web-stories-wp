@@ -43,6 +43,8 @@ describe('Post Locking', () => {
 
     await publishStory();
 
+    // Not using the withPlugin() here because this plugin
+    // needs to be activated *after* creating this story.
     await activatePlugin('e2e-tests-post-lock-mock');
   });
 

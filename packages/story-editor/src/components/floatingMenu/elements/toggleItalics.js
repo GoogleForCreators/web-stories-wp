@@ -23,14 +23,22 @@ import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
-import { IconButton } from './shared';
+import { IconButton, useTextToggle } from './shared';
 
 function ToggleItalics() {
+  const { isToggled, toggle } = useTextToggle({
+    currentValue: 'isItalic',
+    handler: 'handleClickItalic',
+    eventName: 'set_italic',
+  });
+
   return (
     <IconButton
+      isToggled={isToggled}
       Icon={Icons.LetterIItalic}
-      title={__('Toggle italic text', 'web-stories')}
-      onClick={() => {}}
+      title={__('Toggle italic', 'web-stories')}
+      onClick={toggle}
+      tabIndex="0"
     />
   );
 }

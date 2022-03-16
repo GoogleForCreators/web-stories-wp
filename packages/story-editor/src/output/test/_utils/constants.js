@@ -78,7 +78,6 @@ export const DEFAULT_TEXT = {
   },
   type: 'text',
   content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-  fontWeight: 400,
   x: 40,
   y: 300,
   width: 206,
