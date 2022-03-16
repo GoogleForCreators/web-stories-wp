@@ -209,20 +209,20 @@ Example ( Story Object )
         "name": "dev",
         "id": 1
     },
-    "bottomTargetAction": "https://testsite.local/wp-admin/post.php?post=1&action=edit",
+    "bottomTargetAction": "https://example.org/post.php?post=1&action=edit",
     "capabilities": {
         "hasEditAction": true,
         "hasDeleteAction": true
     },
     "created": "2022-01-18T07:36:32",
     "createdGmt": "2022-01-18T07:36:32Z",
-    "editStoryLink": "https://testsite.local/wp-admin/post.php?post=1&action=edit",
+    "editStoryLink": "https://example.org/post.php?post=1&action=edit",
     "featuredMediaUrl": "",
     "id": 1,
-    "link": "https://testsite.local/?post_type=web-story&p=1",
+    "link": "https://example.org/?post_type=web-story&p=1",
     "modified": "2022-01-18T07:36:32",
     "modifiedGmt": "2022-01-18T07:36:32Z",
-    "previewLink": "https://testsite.local/?post_type=web-story&p=1&preview=true",
+    "previewLink": "https://example.org/?post_type=web-story&p=1&preview=true",
     "status": "draft",
     "title": "Test (Copy)",
 }
@@ -279,11 +279,11 @@ Example ( Expected response )
         "name": "Dev",
         "id": 1
     },
-    "bottomTargetAction": "https://testsite.local/wp-admin/post.php?post=2247&action=edit",
+    "bottomTargetAction": "https://example.org/post.php?post=2247&action=edit",
     "featuredMediaUrl": "",
-    "editStoryLink": "https://testsite.local/wp-admin/post.php?post=2247&action=edit",
-    "previewLink": "https://testsite.local/?post_type=web-story&p=2247&preview=true",
-    "link": "https://testsite.local/?post_type=web-story&p=2247",
+    "editStoryLink": "https://example.org/post.php?post=2247&action=edit",
+    "previewLink": "https://example.org/?post_type=web-story&p=2247&preview=true",
+    "link": "https://example.org/?post_type=web-story&p=2247",
     "capabilities": {
         "hasEditAction": true,
         "hasDeleteAction": true
@@ -425,7 +425,7 @@ Example ( Expected Response )
 
 ```JSON
 {
-    "editLink":"https://testsite.local/wp-admin/post.php?post=1&action=edit"
+    "editLink":"https://example.org/post.php?post=1&action=edit"
 }
 ```
 
@@ -456,11 +456,11 @@ Example ( Expected response )
         "name": "Dev",
         "id": 1
     },
-    "bottomTargetAction": "https://testsite.local/wp-admin/post.php?post=2247&action=edit",
+    "bottomTargetAction": "https://example.org/post.php?post=2247&action=edit",
     "featuredMediaUrl": "",
-    "editStoryLink": "https://testsite.local/wp-admin/post.php?post=2247&action=edit",
-    "previewLink": "https://testsite.local/?post_type=web-story&p=2247&preview=true",
-    "link": "https://testsite.local/?post_type=web-story&p=2247",
+    "editStoryLink": "https://example.org/post.php?post=2247&action=edit",
+    "previewLink": "https://example.org/?post_type=web-story&p=2247&preview=true",
+    "link": "https://example.org/?post_type=web-story&p=2247",
     "capabilities": {
         "hasEditAction": true,
         "hasDeleteAction": true
