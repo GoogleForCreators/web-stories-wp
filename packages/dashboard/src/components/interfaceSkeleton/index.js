@@ -31,12 +31,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { ExploreTemplatesView, MyStoriesView } from '../../app/views';
-import {
-  ADMIN_TITLE,
-  APP_ROUTES,
-  NESTED_APP_ROUTES,
-  ROUTE_TITLES,
-} from '../../constants';
+import { ADMIN_TITLE, APP_ROUTES, ROUTE_TITLES } from '../../constants';
 import { Route, useRouteHistory } from '../../app/router';
 import { AppFrame, LeftRail, PageContent } from '../pageStructure';
 import useApiAlerts from '../../app/api/useApiAlerts';
@@ -47,12 +42,13 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
   const {
     state: {
       currentPath,
-      queryParams: { id: templateId, isLocal },
+      queryParams: { id: templateId },
     },
-    actions: { push, replace },
+    actions: { push },
   } = useRouteHistory();
 
-  const { canViewDefaultTemplates } = useConfig();
+  const { canViewDefaultTemplates, leftRailSecondaryNavigation = [] } =
+    useConfig();
 
   const { addInitialFetchListener } = useApi(
     ({
@@ -92,20 +88,14 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
     if (!isRedirectComplete) {
       return;
     }
-    // backwards compatibility for template details pages,
-    // if templateId is present modal will open to appropriate template
-    if (currentPath.includes(NESTED_APP_ROUTES.TEMPLATES_GALLERY_DETAIL)) {
-      replace(
-        templateId
-          ? `${APP_ROUTES.TEMPLATES_GALLERY}?id=${templateId}&isLocal=${
-              isLocal || false
-            }`
-          : `${APP_ROUTES.TEMPLATES_GALLERY}`
-      );
-      return;
-    }
 
-    const dynamicPageTitle = ROUTE_TITLES[currentPath] || ROUTE_TITLES.DEFAULT;
+    const additionalRouteTitle = leftRailSecondaryNavigation.find(
+      (config) => config.value === currentPath
+    );
+    const dynamicPageTitle =
+      ROUTE_TITLES[currentPath] ||
+      additionalRouteTitle?.label ||
+      ROUTE_TITLES.DEFAULT;
 
     document.title = sprintf(
       /* translators: Admin screen title. 1: Admin screen name, 2: Network or site name. */
@@ -115,7 +105,7 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
     );
 
     trackScreenView(dynamicPageTitle);
-  }, [currentPath, isLocal, isRedirectComplete, replace, templateId]);
+  }, [currentPath, isRedirectComplete, leftRailSecondaryNavigation]);
 
   useApiAlerts();
   const { clearSnackbar, removeSnack, placement, currentSnacks } =
