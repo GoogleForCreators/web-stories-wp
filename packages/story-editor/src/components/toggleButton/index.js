@@ -87,7 +87,6 @@ export const ToggleButton = forwardRef(
   (
     {
       copy,
-      hideTooltip,
       isOpen = false,
       notificationCount = 0,
       MainIcon,
@@ -99,10 +98,11 @@ export const ToggleButton = forwardRef(
     ref
   ) => {
     const hasNotifications = notificationCount > 0;
+
     return (
       <Tooltip
         hasTail
-        title={!hideTooltip && label}
+        title={label}
         placement={TOOLTIP_PLACEMENT.TOP}
         shortcut={shortcut}
         popupZIndexOverride={popupZIndexOverride}
@@ -137,7 +137,6 @@ ToggleButton.displayName = 'ToggleButton';
 
 ToggleButton.propTypes = {
   copy: PropTypes.string,
-  hideTooltip: PropTypes.bool,
   isOpen: PropTypes.bool,
   label: PropTypes.string,
   MainIcon: PropTypes.object,
