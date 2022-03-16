@@ -83,7 +83,6 @@ const savedPageTemplate = {
       padding: { vertical: 0, horizontal: 0, locked: true },
       type: 'text',
       content: 'Fill in some text',
-      fontWeight: 400,
       borderRadius: {
         locked: true,
         topLeft: 2,

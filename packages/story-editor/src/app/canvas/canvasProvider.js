@@ -55,8 +55,6 @@ function CanvasProvider({ children }) {
   const [eyedropperPixelData, setEyedropperPixelData] = useState(null);
   const [isEyedropperActive, setIsEyedropperActive] = useState(null);
   const [eyedropperCallback, setEyedropperCallback] = useState(null);
-  const [pageCanvasData, setPageCanvasData] = useState(null);
-  const [pageCanvasPromise, setPageCanvasPromise] = useState(null);
 
   // IntersectionObserver tracks clientRects which is what we need here.
   // different from use case of useIntersectionEffect because this is extensible
@@ -215,8 +213,6 @@ function CanvasProvider({ children }) {
         eyedropperCallback,
         eyedropperImg,
         eyedropperPixelData,
-        pageCanvasData,
-        pageCanvasPromise,
         boundingBoxes,
         clientRectObserver,
         onMoveableMount,
@@ -239,8 +235,6 @@ function CanvasProvider({ children }) {
         setEyedropperCallback,
         setEyedropperImg,
         setEyedropperPixelData,
-        setPageCanvasData,
-        setPageCanvasPromise,
         setMoveableMount,
       },
     }),
@@ -259,8 +253,6 @@ function CanvasProvider({ children }) {
       eyedropperCallback,
       eyedropperImg,
       eyedropperPixelData,
-      pageCanvasData,
-      pageCanvasPromise,
       boundingBoxes,
       clientRectObserver,
       getNodeForElement,
