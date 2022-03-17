@@ -66,10 +66,12 @@ describe('Template', () => {
     // Wait for title input to load before continuing.
     await page.waitForSelector('input[placeholder="Add title"]');
 
+    // Expand layers popup
+    await expect(page).toClick('button', { text: /^Layers/ });
+
     // Open style pane
     await expect(page).toClick('li[role="tab"]', { text: /^Style$/ });
 
-    await expect(page).toMatch('Layers');
     await expect(page).toMatchElement('input[placeholder="Add title"]');
     await expect(page).toMatchElement('[data-element-id]');
 
@@ -85,7 +87,7 @@ describe('Template', () => {
 
     // Select a text layer so 'Saved Colors' panel is present
     await expect(page).toClick('div[data-testid="layer-option"] button', {
-      text: 'Fresh',
+      text: /^Fresh/,
     });
 
     // Open the color picker
