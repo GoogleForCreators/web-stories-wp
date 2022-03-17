@@ -31,6 +31,7 @@ export { default as arrangeElement } from './arrangeElement';
 export { default as combineElements } from './combineElements';
 export { default as duplicateElementsById } from './duplicateElementsById';
 export { default as copySelectedElement } from './copySelectedElement';
+export { default as updateElementsByFontFamily } from './updateElementsByFontFamily';
 
 // Manipulate current page.
 export { default as setCurrentPage } from './setCurrentPage';

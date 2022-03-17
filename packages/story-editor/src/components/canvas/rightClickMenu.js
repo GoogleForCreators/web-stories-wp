@@ -25,13 +25,13 @@ import {
   useMemo,
   useRef,
 } from '@googleforcreators/react';
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { useRightClickMenu, useConfig } from '../../app';
 import DirectionAware from '../directionAware';
-import { ELEMENT_TYPES } from '../../elements';
 import { useStory } from '../../app/story';
 import {
   ForegroundMediaMenu,

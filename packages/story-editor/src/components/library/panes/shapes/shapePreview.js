@@ -25,18 +25,18 @@ import {
   useRef,
   useState,
 } from '@googleforcreators/react';
-import { ThemeGlobals, themeHelpers } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 import { trackEvent } from '@googleforcreators/tracking';
 import { createSolidFromString } from '@googleforcreators/patterns';
 import { PAGE_WIDTH, useUnits } from '@googleforcreators/units';
+import { ThemeGlobals, themeHelpers } from '@googleforcreators/design-system';
+import { MaskTypes } from '@googleforcreators/masks';
 
 /**
  * Internal dependencies
  */
 import useLibrary from '../../useLibrary';
 import LibraryMoveable from '../shared/libraryMoveable';
-import { MaskTypes } from '../../../../masks/constants';
 import InsertionOverlay from '../shared/insertionOverlay';
 
 // By default, the element should be 33% of the page.

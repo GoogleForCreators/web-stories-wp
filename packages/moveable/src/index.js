@@ -21,3 +21,4 @@ export { GlobalStyle as CropMoveableGlobalStyle } from './cropStyle';
 export { GlobalStyle as DefaultMoveableGlobalStyle } from './moveStyle';
 export { default as InOverlay } from './overlay';
 export { default as withOverlay } from './overlay/withOverlay';
+export { default as areEventsDragging } from './areEventsDragging';

@@ -19,11 +19,7 @@
  */
 import PropTypes from 'prop-types';
 import { ResourcePropTypes } from '@googleforcreators/media';
-
-/**
- * Internal dependencies
- */
-import { BackgroundAudioPropType } from '../../types';
+import { BackgroundAudioPropType } from '@googleforcreators/elements';
 
 function BackgroundAudio({ backgroundAudio, id }) {
   const { resource, tracks, loop } = backgroundAudio || {};

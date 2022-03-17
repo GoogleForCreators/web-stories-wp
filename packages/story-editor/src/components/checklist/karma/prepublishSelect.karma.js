@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { waitFor, within } from '@testing-library/react';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -25,7 +26,6 @@ import { waitFor, within } from '@testing-library/react';
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app';
 import { useInsertElement } from '../../canvas';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 import { ACCESSIBILITY_COPY, DESIGN_COPY, PRIORITY_COPY } from '../constants';
 
 describe('Pre-publish checklist select offending elements onClick', () => {

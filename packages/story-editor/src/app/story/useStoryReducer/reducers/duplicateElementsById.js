@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { duplicateElement } from '../../../../elements';
+import { duplicateElement } from '@googleforcreators/elements';
 
 /**
  * Duplicate all elements specified by `elementIds` on the current page.

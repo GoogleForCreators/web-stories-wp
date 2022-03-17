@@ -21,7 +21,7 @@ import {
   getCurrentUser,
   insertStoryTitle,
   setCurrentUser,
-  visitAdminPage,
+  editStoryWithTitle,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Pending Stories', () => {
@@ -63,9 +63,7 @@ describe('Pending Stories', () => {
 
     await setCurrentUser('admin', 'password');
 
-    await visitAdminPage('edit.php', 'post_type=web-story');
-    await expect(page).toClick('a', { text: 'Submitting for review' });
-    await page.waitForNavigation();
+    await editStoryWithTitle('Submitting for review');
 
     // An admin can take save a pending story (so it stays pending), switch to draft,
     // or publish.

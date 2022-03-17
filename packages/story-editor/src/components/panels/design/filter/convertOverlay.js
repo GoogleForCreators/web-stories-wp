@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { OverlayType } from '../../../../utils/overlay';
+import { OverlayType } from '@googleforcreators/design-system';
 
 function convertToSolid(currentOverlay, currentType) {
   switch (currentType) {

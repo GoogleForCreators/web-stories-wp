@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE } from '../../../../constants';
 import getCommonObjectValue from '../getCommonObjectValue';
+import { MULTIPLE_VALUE } from '../../../../constants';
 
 describe('getCommonObjectValue', () => {
   it('should return matching values for the defined properties', () => {

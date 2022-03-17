@@ -19,12 +19,12 @@
  */
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
+import { canSupportMultiBorder } from '@googleforcreators/masks';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
-import { canSupportMultiBorder } from '../../../masks';
 import { DEFAULT_BORDER_RADIUS } from '../../panels/design/sizePosition/radius';
 import { Input, Separator, useProperties } from './shared';
 

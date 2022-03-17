@@ -1,0 +1,47 @@
+{
+  "name": "@googleforcreators/masks",
+  "description": "Masks package for story-editor elements",
+  "private": false,
+  "version": "0.1.202203010801",
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "license": "Apache-2.0",
+  "keywords": ["web stories"],
+  "homepage": "https://github.com/GoogleForCreators/web-stories-wp/blob/main/packages/masks/README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GoogleForCreators/web-stories-wp.git",
+    "directory": "packages/masks"
+  },
+  "bugs": {
+    "url": "https://github.com/googleforcreators/web-stories-wp/issues"
+  },
+  "engines": {
+    "node": ">= 16",
+    "npm": ">= 7.3"
+  },
+  "customExports": {
+    ".": {
+      "default": "./src/index.js"
+    }
+  },
+  "main": "dist/index.js",
+  "module": "dist-module/index.js",
+  "source": "src/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@googleforcreators/design-system": "*",
+    "@googleforcreators/elements": "*",
+    "@googleforcreators/i18n": "*",
+    "@googleforcreators/react": "*",
+    "@googleforcreators/units": "*",
+    "prop-types": "^15.8.0",
+    "styled-components": "^5.2.1",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {}
+}

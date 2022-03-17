@@ -22,15 +22,15 @@ import { useCallback } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import { LockToggle, Icons } from '@googleforcreators/design-system';
+import { canSupportMultiBorder } from '@googleforcreators/masks';
 
 /**
  * Internal dependencies
  */
-import { canSupportMultiBorder } from '../../../../masks';
 import { StackableGroup, StackableInput } from '../../../form/stackable';
 import Tooltip from '../../../tooltip';
 import { focusStyle, useCommonObjectValue } from '../../shared';
-import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import { DEFAULT_BORDER } from './shared';
 
 const BorderInputsFlexContainer = styled.div`

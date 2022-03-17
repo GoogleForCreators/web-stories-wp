@@ -18,6 +18,7 @@
  */
 import { useEffect, useCallback, useState } from '@googleforcreators/react';
 import { useAPI } from '@googleforcreators/story-editor';
+import { trackError } from '@googleforcreators/tracking';
 import { useFeature } from 'flagged';
 
 /**
@@ -56,6 +57,7 @@ function CorsCheck() {
         );
       } catch (err) {
         setShowDialog(true);
+        trackError('cors_check', err.message);
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps -- Only run this effect once, so do not pass dependencies.

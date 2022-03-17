@@ -34,14 +34,15 @@ import {
   BUTTON_TYPES,
   BUTTON_SIZES,
   BUTTON_VARIANTS,
+  TRACKING_EVENTS,
   Tooltip,
+  usePerformanceTracking,
 } from '@googleforcreators/design-system';
+import { getDefinitionForType } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
-import { getDefinitionForType } from '../../../../elements';
 import { SimplePanel } from '../../panel';
 import FlipControls from '../../shared/flipControls';
 import {
@@ -51,8 +52,7 @@ import {
   useCommonObjectValue,
 } from '../../shared';
 import useStory from '../../../../app/story/useStory';
-import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
-import { TRACKING_EVENTS } from '../../../../constants/performanceTrackingEvents';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import usePresubmitHandlers from './usePresubmitHandlers';
 import { getMultiSelectionMinMaxXY, isNum } from './utils';
 import { MIN_MAX, DEFAULT_FLIP } from './constants';

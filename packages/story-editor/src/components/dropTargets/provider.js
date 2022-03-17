@@ -19,16 +19,20 @@
  */
 import PropTypes from 'prop-types';
 import { useState, useMemo, useCallback } from '@googleforcreators/react';
-import { noop, useGlobalIsKeyPressed } from '@googleforcreators/design-system';
+import { useGlobalIsKeyPressed } from '@googleforcreators/design-system';
 import { useTransform } from '@googleforcreators/transform';
+import {
+  getDefinitionForType,
+  ELEMENT_TYPES,
+  MEDIA_ELEMENT_TYPES,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../app/story';
 import getElementProperties from '../canvas/utils/getElementProperties';
-import { getDefinitionForType } from '../../elements';
-import { ELEMENT_TYPES, MEDIA_ELEMENT_TYPES } from '../../elements/constants';
+import { noop } from '../../utils/noop';
 import Context from './context';
 
 const DROP_SOURCE_ALLOWED_TYPES = MEDIA_ELEMENT_TYPES;

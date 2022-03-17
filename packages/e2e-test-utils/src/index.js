@@ -43,6 +43,7 @@ export { default as getFileName } from './getFileName';
 export { default as trashAllPosts } from './trashAllPosts';
 export { default as trashAllTerms } from './trashAllTerms';
 export { default as visitAdminPage } from './visitAdminPage';
+export { addCustomFont, removeCustomFont } from './customFonts';
 export { setCurrentUser, getCurrentUser } from './user';
 export { default as activatePlugin } from './activatePlugin';
 export { default as deactivatePlugin } from './deactivatePlugin';
@@ -55,6 +56,7 @@ export { default as disableCheckbox } from './disableCheckbox';
 export { default as enableCheckbox } from './enableCheckbox';
 export { default as takeSnapshot } from './takeSnapshot';
 export { default as uploadPublisherLogoEditor } from './uploadPublisherLogoEditor';
+export { default as editStoryWithTitle } from './editStoryWithTitle';
 export {
   getEditedPostContent,
   setPostContent,

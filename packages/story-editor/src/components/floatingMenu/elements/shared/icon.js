@@ -21,6 +21,7 @@ import PropTypes from 'prop-types';
 import { memo, forwardRef } from '@googleforcreators/react';
 import {
   ContextMenuComponents,
+  Tooltip,
   TOOLTIP_PLACEMENT,
 } from '@googleforcreators/design-system';
 
@@ -32,14 +33,13 @@ import ToggleButton from './toggleButton';
 const IconButton = memo(
   forwardRef(function IconButton({ Icon, title, ...rest }, ref) {
     return (
-      <ToggleButton ref={ref} {...rest}>
-        <ContextMenuComponents.MenuIcon
-          title={title}
-          placement={TOOLTIP_PLACEMENT.BOTTOM}
-        >
-          <Icon />
-        </ContextMenuComponents.MenuIcon>
-      </ToggleButton>
+      <Tooltip placement={TOOLTIP_PLACEMENT.BOTTOM} title={title}>
+        <ToggleButton ref={ref} {...rest}>
+          <ContextMenuComponents.MenuIcon title={title}>
+            <Icon />
+          </ContextMenuComponents.MenuIcon>
+        </ToggleButton>
+      </Tooltip>
     );
   })
 );

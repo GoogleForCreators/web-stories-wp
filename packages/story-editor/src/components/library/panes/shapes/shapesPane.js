@@ -21,11 +21,11 @@ import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import { useRef } from '@googleforcreators/react';
 import STICKERS from '@googleforcreators/stickers';
+import { MASKS } from '@googleforcreators/masks';
 
 /**
  * Internal dependencies
  */
-import { MASKS } from '../../../../masks/constants';
 import { Section } from '../../common';
 import { Pane } from '../shared';
 import useRovingTabIndex from '../../../../utils/useRovingTabIndex';

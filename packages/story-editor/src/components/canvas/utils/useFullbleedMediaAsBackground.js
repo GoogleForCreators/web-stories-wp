@@ -14,16 +14,17 @@
  * limitations under the License.
  */
 /**
- * Internal dependencies
- */
-/**
  * External dependencies
  */
 import { useSnackbar } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
+import { MEDIA_ELEMENT_TYPES } from '@googleforcreators/elements';
+
+/**
+ * Internal dependencies
+ */
 import isTargetCoveringContainer from '../../../utils/isTargetCoveringContainer';
 import { useStory, useCanvas } from '../../../app';
-import { MEDIA_ELEMENT_TYPES } from '../../../elements';
 
 function useFullbleedMediaAsBackground({ selectedElement }) {
   const { setBackgroundElement, isDefaultBackground } = useStory((state) => ({

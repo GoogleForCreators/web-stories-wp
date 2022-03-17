@@ -18,12 +18,12 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { CircularProgress } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 import useStory from '../../../../../app/story/useStory';
-import CircularProgress from '../../../../../components/circularProgress';
 import {
   RedoButton,
   PreviewButton,
