@@ -322,18 +322,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'editor',
 				'default'     => true,
 			],
-			/**
-			 * Author: @miina
-			 * Issue #471
-			 * Creation date: 2021-08-10
-			 */
-			[
-				'name'        => 'enableHotlinking',
-				'label'       => __( 'Insert media from link', 'web-stories' ),
-				'description' => __( 'Enable inserting media element from external link', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
 
 			/**
 			 * Author: @barklund
@@ -393,6 +381,17 @@ class Experiments extends Service_Base implements HasRequirements {
 				'name'        => 'floatingMenu',
 				'label'       => __( 'Floating Menu', 'web-stories' ),
 				'description' => __( 'Enable the new floating design menu', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @timarney
+			 * Issue: #10014
+			 * Creation date: 2022-03-03
+			 */
+			[
+				'name'        => 'notifyDeletedFonts',
+				'label'       => __( 'Deleted Fonts', 'web-stories' ),
+				'description' => __( 'Notify user about deleted fonts in story', 'web-stories' ),
 				'group'       => 'editor',
 			],
 		];

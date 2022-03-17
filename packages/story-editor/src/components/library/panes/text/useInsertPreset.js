@@ -31,9 +31,9 @@ import { getHTMLFormatters } from '@googleforcreators/rich-text';
 import getInsertedElementSize from '../../../../utils/getInsertedElementSize';
 import useLibrary from '../../useLibrary';
 import { useHistory } from '../../../../app';
+import { useCalculateAccessibleTextColors } from '../../../../app/pageCanvas';
 import { BACKGROUND_TEXT_MODE } from '../../../../constants';
 import { applyHiddenPadding } from '../../../panels/design/textStyle/utils';
-import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
 import { calculateTextHeight } from '../../../../utils/textMeasurements';
 
 const POSITION_MARGIN = dataFontEm(1);
@@ -54,7 +54,7 @@ function useInsertPreset({ shouldUseSmartColor }) {
   const [presetAtts, setPresetAtts] = useState(null);
 
   const lastPreset = useRef(null);
-  const { calculateAccessibleTextColors } = usePageAsCanvas();
+  const calculateAccessibleTextColors = useCalculateAccessibleTextColors();
 
   useEffect(() => {
     // Version number change is happening due to adding a preset.
@@ -132,8 +132,7 @@ function useInsertPreset({ shouldUseSmartColor }) {
 
   const insertPreset = useCallback(
     async (element, presetProps = {}) => {
-      const { isPositioned, accessibleColors, skipCanvasGeneration } =
-        presetProps;
+      const { isPositioned, accessibleColors } = presetProps;
       // If it's already positioned, skip calculating that.
       const atts = isPositioned ? {} : getPosition(element);
       if (shouldUseSmartColor) {
@@ -147,11 +146,7 @@ function useInsertPreset({ shouldUseSmartColor }) {
           return;
         }
         setAutoColor(
-          await calculateAccessibleTextColors(
-            { ...element, ...atts },
-            null,
-            skipCanvasGeneration
-          )
+          await calculateAccessibleTextColors({ ...element, ...atts })
         );
       } else {
         const addedElement = insertElement(TYPE, {
