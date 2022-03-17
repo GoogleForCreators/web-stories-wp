@@ -69,6 +69,7 @@ describe('Panel: Style Presets', () => {
         expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
       });
 
+      await fixture.events.click(fixture.editor.inspector.designTab);
       // Click to add a style and verify it was added.
       panel = fixture.editor.inspector.designPanel.textStyle;
       await fixture.events.click(panel.addStyle);
