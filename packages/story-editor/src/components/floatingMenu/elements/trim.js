@@ -45,11 +45,11 @@ function Trim() {
     ? __('Trimming video', 'web-stories')
     : __('Trim video', 'web-stories');
 
-  const handleClick = () => {
+  const handleClick = (e) => {
     trackEvent('floating_menu', {
       name: 'set_trim',
     });
-    handleTrim();
+    handleTrim(e);
   };
   return (
     <IconButton
