@@ -36,6 +36,9 @@ const Container = styled.div`
   z-index: ${Z_INDEX_FOOTER};
 `;
 
+const StyledNavigationWrapper = styled(NavigationWrapper)`
+  width: 260px;
+`;
 function Layers() {
   const layersLength = useLayers().length;
   const [isOpen, setIsOpen] = useState(false);
@@ -48,11 +51,11 @@ function Layers() {
         placement={PLACEMENT.RIGHT}
         ariaLabel={__('Layers Panel', 'web-stories')}
       >
-        <NavigationWrapper alignRight ref={ref} isOpen={isOpen}>
+        <StyledNavigationWrapper alignRight ref={ref} isOpen={isOpen}>
           <Container>
             <LayerPanel />
           </Container>
-        </NavigationWrapper>
+        </StyledNavigationWrapper>
       </Popup>
       <ToggleButton
         isOpen={isOpen}
