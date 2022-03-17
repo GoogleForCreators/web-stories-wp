@@ -75,11 +75,9 @@ function useFullbleedMediaAsBackground({ selectedElement }) {
         });
         localStore.setItemByKey(
           LOCAL_STORAGE_PREFIX[DISMISS_BACKGROUND_AUTOSET_MESSAGE_STORAGE_KEY],
-          !isBackgroundSnackbarMessageDismissed
+          true
         );
-        setIsBackgroundSnackbarMessageDismissed(
-          !isBackgroundSnackbarMessageDismissed
-        );
+        setIsBackgroundSnackbarMessageDismissed(true);
       }
     }
   };
