@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './constants';
-export * from './utils';
-export * from './elementType';
-export * from './types';
-export { default as elementSlice } from './elementSlice';
+/**
+ * External dependencies
+ */
+import { elementSlice } from '@googleforcreators/elements';
+import { addSlice } from '@googleforcreators/data';
+
+addSlice('element', elementSlice);

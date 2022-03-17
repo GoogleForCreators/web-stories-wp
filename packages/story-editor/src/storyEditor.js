@@ -60,6 +60,8 @@ import { GlobalStyle as CalendarStyle } from './components/form/dateTime/calenda
 import KeyboardOnlyOutlines from './utils/keyboardOnlyOutline';
 import getDefaultConfig from './getDefaultConfig';
 
+import './app/store';
+
 function StoryEditor({ config, initialEdits, children }) {
   const _config = deepMerge(getDefaultConfig(), config);
   const { storyId, isRTL, flags } = _config;

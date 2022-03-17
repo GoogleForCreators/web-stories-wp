@@ -39,6 +39,7 @@
     "@ap.cx/hues": "^2.4.0",
     "@ffmpeg/ffmpeg": "^0.10.1",
     "@googleforcreators/animation": "*",
+    "@googleforcreators/data": "*",
     "@googleforcreators/date": "*",
     "@googleforcreators/design-system": "*",
     "@googleforcreators/dom": "*",

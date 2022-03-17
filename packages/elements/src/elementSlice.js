@@ -13,8 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './constants';
-export * from './utils';
-export * from './elementType';
-export * from './types';
-export { default as elementSlice } from './elementSlice';
+const elementSlice = (set) => ({
+  state: {
+    elementTypes: [],
+  },
+  actions: {
+    registerElementTypes: (elements) =>
+      set((data) => {
+        data.element.state.elementTypes.push(elements);
+      }),
+  },
+});
+
+export default elementSlice;
