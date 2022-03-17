@@ -16,7 +16,15 @@
 /**
  * External dependencies
  */
-import { useSnackbar } from '@googleforcreators/design-system';
+import { useState } from '@googleforcreators/react';
+import {
+  useSnackbar,
+  LOCAL_STORAGE_PREFIX,
+  localStore,
+} from '@googleforcreators/design-system';
+/**
+ * Internal dependencies
+ */
 import { __ } from '@googleforcreators/i18n';
 import { MEDIA_ELEMENT_TYPES } from '@googleforcreators/elements';
 
@@ -25,8 +33,17 @@ import { MEDIA_ELEMENT_TYPES } from '@googleforcreators/elements';
  */
 import isTargetCoveringContainer from '../../../utils/isTargetCoveringContainer';
 import { useStory, useCanvas } from '../../../app';
+import { CONFIRMATION_BACKGROUND_MESSAGE_STORAGE_KEY } from './constants';
 
 function useFullbleedMediaAsBackground({ selectedElement }) {
+  const [
+    isBackgroundSnackbarMessageDismissed,
+    setIsBackgroundSnackbarMessageDismissed,
+  ] = useState(
+    localStore.getItemByKey(
+      LOCAL_STORAGE_PREFIX[CONFIRMATION_BACKGROUND_MESSAGE_STORAGE_KEY]
+    )
+  );
   const { setBackgroundElement, isDefaultBackground } = useStory((state) => ({
     setBackgroundElement: state.actions.setBackgroundElement,
     isDefaultBackground:
@@ -40,10 +57,6 @@ function useFullbleedMediaAsBackground({ selectedElement }) {
   const { showSnackbar } = useSnackbar();
 
   const handleFullbleedMediaAsBackground = (target) => {
-    let isBackgroundMessageShown = localStorage.getItem(
-      'web_stories_is_background_message_shown'
-    );
-
     if (
       isDefaultBackground &&
       MEDIA_ELEMENT_TYPES.includes(selectedElement.type) &&
@@ -51,7 +64,7 @@ function useFullbleedMediaAsBackground({ selectedElement }) {
     ) {
       setBackgroundElement({ elementId: selectedElement.id });
 
-      if (!isBackgroundMessageShown) {
+      if (!isBackgroundSnackbarMessageDismissed) {
         showSnackbar({
           message: __(
             'Full bleed images and videos are automatically set as background. Double click to scale and position at any time.',
@@ -59,10 +72,12 @@ function useFullbleedMediaAsBackground({ selectedElement }) {
           ),
           dismissible: true,
         });
-        isBackgroundMessageShown = true;
-        localStorage.setItem(
-          'web_stories_is_background_message_shown',
-          isBackgroundMessageShown
+        localStore.setItemByKey(
+          LOCAL_STORAGE_PREFIX[CONFIRMATION_BACKGROUND_MESSAGE_STORAGE_KEY],
+          !isBackgroundSnackbarMessageDismissed
+        );
+        setIsBackgroundSnackbarMessageDismissed(
+          !isBackgroundSnackbarMessageDismissed
         );
       }
     }
