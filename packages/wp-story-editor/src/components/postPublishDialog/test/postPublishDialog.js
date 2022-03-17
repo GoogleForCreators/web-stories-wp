@@ -24,7 +24,7 @@ import {
 } from '@testing-library/react';
 import { setAppElement } from '@googleforcreators/design-system';
 import { StoryContext } from '@googleforcreators/story-editor';
-import { renderWithTheme } from '@web-stories-wp/test-utils';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies

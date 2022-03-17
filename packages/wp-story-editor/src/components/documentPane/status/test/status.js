@@ -19,7 +19,7 @@
  */
 import { fireEvent, screen } from '@testing-library/react';
 import { StoryContext } from '@googleforcreators/story-editor';
-import { renderWithTheme } from '@web-stories-wp/test-utils';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies

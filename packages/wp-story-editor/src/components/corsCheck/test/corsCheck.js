@@ -24,7 +24,7 @@ import {
 import { setAppElement } from '@googleforcreators/design-system';
 import { APIContext } from '@googleforcreators/story-editor';
 import { FlagsProvider } from 'flagged';
-import { renderWithTheme } from '@web-stories-wp/test-utils';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies

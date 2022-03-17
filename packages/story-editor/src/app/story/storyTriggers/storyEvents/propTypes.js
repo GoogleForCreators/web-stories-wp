@@ -17,7 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { OutputStory as storyPropType } from '@web-stories-wp/output'; // @todo Doesn't look correct.
+import { OutputStory as storyPropType } from '@googleforcreators/output'; // @todo Doesn't look correct.
 
 export const registerPropTypes = {
   currentStory: storyPropType,
