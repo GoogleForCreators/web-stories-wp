@@ -33,15 +33,16 @@ import { MEDIA_ELEMENT_TYPES } from '@googleforcreators/elements';
  */
 import isTargetCoveringContainer from '../../../utils/isTargetCoveringContainer';
 import { useStory, useCanvas } from '../../../app';
-import { CONFIRMATION_BACKGROUND_MESSAGE_STORAGE_KEY } from './constants';
 
 function useFullbleedMediaAsBackground({ selectedElement }) {
+  const DISMISS_BACKGROUND_AUTOSET_MESSAGE_STORAGE_KEY =
+    'BACKGROUND_IS_SET_DIALOG_DISMISSED';
   const [
     isBackgroundSnackbarMessageDismissed,
     setIsBackgroundSnackbarMessageDismissed,
   ] = useState(
     localStore.getItemByKey(
-      LOCAL_STORAGE_PREFIX[CONFIRMATION_BACKGROUND_MESSAGE_STORAGE_KEY]
+      LOCAL_STORAGE_PREFIX[DISMISS_BACKGROUND_AUTOSET_MESSAGE_STORAGE_KEY]
     )
   );
   const { setBackgroundElement, isDefaultBackground } = useStory((state) => ({
@@ -73,7 +74,7 @@ function useFullbleedMediaAsBackground({ selectedElement }) {
           dismissible: true,
         });
         localStore.setItemByKey(
-          LOCAL_STORAGE_PREFIX[CONFIRMATION_BACKGROUND_MESSAGE_STORAGE_KEY],
+          LOCAL_STORAGE_PREFIX[DISMISS_BACKGROUND_AUTOSET_MESSAGE_STORAGE_KEY],
           !isBackgroundSnackbarMessageDismissed
         );
         setIsBackgroundSnackbarMessageDismissed(
