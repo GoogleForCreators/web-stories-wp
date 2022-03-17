@@ -192,13 +192,15 @@ const StoryPreview = () => {
     })
   );
 
-  const { allowedImageMimeTypes, hasUploadMediaAction, publisher } = useConfig(
-    ({ allowedMimeTypes, capabilities, metadata }) => ({
-      allowedImageMimeTypes: allowedMimeTypes?.image,
-      hasUploadMediaAction: capabilities?.hasUploadMediaAction,
-      publisher: metadata?.publisher,
-    })
-  );
+  const {
+    allowedImageMimeTypes = [],
+    hasUploadMediaAction,
+    publisher,
+  } = useConfig(({ allowedMimeTypes, capabilities, metadata }) => ({
+    allowedImageMimeTypes: allowedMimeTypes?.image,
+    hasUploadMediaAction: capabilities?.hasUploadMediaAction,
+    publisher: metadata?.publisher,
+  }));
 
   const allowedImageFileTypes = useMemo(
     () =>
