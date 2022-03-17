@@ -21,13 +21,13 @@ import PropTypes from 'prop-types';
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
 import { StoryAnimation } from '@googleforcreators/animation';
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../types';
 import isElementBelowLimit from '../utils/isElementBelowLimit';
-import { ELEMENT_TYPES } from '../elements';
 import { DEFAULT_AUTO_ADVANCE, DEFAULT_PAGE_DURATION } from '../constants';
 import OutputElement from './element';
 import BackgroundAudio from './utils/backgroundAudio';

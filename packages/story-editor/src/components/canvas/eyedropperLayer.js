@@ -21,12 +21,14 @@ import { useRef, useFocusOut } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { rgba, readableColor } from 'polished';
 import { FULLBLEED_RATIO } from '@googleforcreators/units';
-import { useGlobalKeyDownEffect } from '@googleforcreators/design-system';
+import {
+  useGlobalKeyDownEffect,
+  CircularProgress,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
-import CircularProgress from '../circularProgress';
 import { useCanvas, useLayout } from '../../app';
 import { Layer, PageArea } from './layout';
 import getColorFromPixelData from './utils/getColorFromPixelData';

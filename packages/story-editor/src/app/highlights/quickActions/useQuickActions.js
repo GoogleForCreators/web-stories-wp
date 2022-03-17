@@ -27,6 +27,7 @@ import {
   Icons,
 } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 import {
   resourceList,
   getExtensionsFromMimeType,
@@ -41,7 +42,6 @@ import updateProperties from '../../../components/inspector/design/updatePropert
 import { useHistory } from '../../history';
 import { useConfig } from '../../config';
 import { useLocalMedia, TRANSCODABLE_MIME_TYPES } from '../../media';
-import { ELEMENT_TYPES } from '../../../elements';
 import { useStory, useStoryTriggersDispatch, STORY_EVENTS } from '../../story';
 import useApplyTextAutoStyle from '../../../utils/useApplyTextAutoStyle';
 import useFFmpeg from '../../media/utils/useFFmpeg';

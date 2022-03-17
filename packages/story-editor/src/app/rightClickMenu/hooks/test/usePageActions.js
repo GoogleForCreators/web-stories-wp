@@ -17,17 +17,17 @@
  * External dependencies
  */
 import { renderHook } from '@testing-library/react-hooks';
+import { createPage, duplicatePage } from '@googleforcreators/elements';
+
 /**
  * Internal dependencies
  */
 import { usePageActions } from '..';
 import { useStory } from '../../..';
-import { createPage, duplicatePage } from '../../../../elements';
 import { ELEMENT } from './testUtils';
 
 jest.mock('@googleforcreators/tracking'); // should be mocked in the testing env.
-jest.mock('../../../../elements/utils/createPage');
-jest.mock('../../../../elements/utils/duplicatePage');
+jest.mock('@googleforcreators/elements');
 jest.mock('../../../story/useStory');
 
 const mockUseStory = useStory;

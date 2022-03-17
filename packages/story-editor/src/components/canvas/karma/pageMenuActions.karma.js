@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -20,7 +24,6 @@
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
 import { useInsertElement } from '..';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 
 describe('PageMenu integration', () => {
   let fixture;
