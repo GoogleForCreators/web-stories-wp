@@ -96,6 +96,8 @@ describe('Font Check', () => {
 
     await replaceFontUsingDefault(replacementFont);
 
+    // Open the style tab.
+    await expect(page).toClick('li[role="tab"]', { text: /^Style$/ });
     await expect(page).toMatchElement('button[aria-label="Font family"]', {
       text: replacementFont,
     });
@@ -107,6 +109,8 @@ describe('Font Check', () => {
     await storyWithFontCheckDialog(title);
     await replaceFontWithFontPicker(replacementFont);
 
+    // Open the style tab.
+    await expect(page).toClick('li[role="tab"]', { text: /^Style$/ });
     await expect(page).toMatchElement('button[aria-label="Font family"]', {
       text: replacementFont,
     });
