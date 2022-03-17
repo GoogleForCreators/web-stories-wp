@@ -33,10 +33,9 @@
     "@googleforcreators/i18n": "*",
     "@googleforcreators/media": "*",
     "@googleforcreators/migration": "*",
-    "@googleforcreators/react": "*",
     "@googleforcreators/output": "*",
+    "@googleforcreators/react": "*",
     "@googleforcreators/story-editor": "*",
-    "@googleforcreators/test-utils": "*",
     "@googleforcreators/tracking": "*",
     "@googleforcreators/url": "*",
     "@web-stories-wp/wp-utils": "*",
@@ -48,6 +47,7 @@
     "styled-components": "^5.3.3"
   },
   "devDependencies": {
+    "@googleforcreators/test-utils": "*",
     "@testing-library/react": "^12.1.4",
     "@testing-library/react-hooks": "^7.0.1",
     "mockdate": "^3.0.5",

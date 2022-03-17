@@ -1,6 +1,6 @@
 {
     "name": "@googleforcreators/output",
-    "description": "A package for serialization of stories to AMP output",
+    "description": "Package for stories AMP output",
     "private": false,
     "version": "0.1.202203150806",
     "author": {
@@ -46,20 +46,14 @@
         "@googleforcreators/patterns": "*",
         "@googleforcreators/react": "*",
         "@googleforcreators/rich-text": "*",
-        "@googleforcreators/story-editor": "*",
-        "@googleforcreators/test-utils": "*",
         "@googleforcreators/units": "*",
         "@googleforcreators/url": "*",
-        "draft-js": "^0.11.7",
-        "draft-js-export-html": "^1.4.1",
-        "draft-js-import-html": "^1.4.1",
-        "draftjs-filters": "^2.5.0",
-        "flagged": "^2.0.1",
-        "styled-components": "^5.3.3",
         "prop-types": "^15.8.0"
     },
     "devDependencies": {
         "@googleforcreators/element-library": "*",
-        "@testing-library/react": "^12.1.2"
+	    "@googleforcreators/test-utils": "*",
+        "@testing-library/react": "^12.1.2",
+	    "flagged": "^2.0.1"
     }
 }
