@@ -20,6 +20,7 @@
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import { trackEvent } from '@googleforcreators/tracking';
+import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
@@ -53,3 +54,7 @@ function Dismiss({ isMultiple }) {
 }
 
 export default Dismiss;
+
+Dismiss.propTypes = {
+  isMultiple: PropTypes.bool,
+};
