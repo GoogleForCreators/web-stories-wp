@@ -25,11 +25,11 @@ import {
   StoryContext,
   InspectorContext,
 } from '@googleforcreators/story-editor';
+import { renderWithTheme } from '@web-stories-wp/test-utils';
 
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../../testUtils';
 import PublishPanel from '../publish';
 
 jest.mock('./../../../../api/publisherLogos', () => ({

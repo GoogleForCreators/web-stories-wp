@@ -24,17 +24,17 @@ import { PAGE_WIDTH, PAGE_HEIGHT } from '@googleforcreators/units';
 import { MaskTypes } from '@googleforcreators/masks';
 import { registerElementType } from '@googleforcreators/elements';
 import { elementTypes } from '@googleforcreators/element-library';
-
-/**
- * Internal dependencies
- */
-import PageOutput from '../page';
 import {
   queryByAutoAdvanceAfter,
   getByAutoAdvanceAfter,
   queryById,
   getById,
-} from '../../testUtils';
+} from '@googleforcreators/test-utils';
+
+/**
+ * Internal dependencies
+ */
+import PageOutput from '../page';
 
 jest.mock('flagged');
 

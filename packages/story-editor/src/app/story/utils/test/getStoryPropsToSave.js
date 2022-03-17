@@ -14,12 +14,18 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { getStoryMarkup } from '@googleforcreators/output';
+
+/**
  * Internal dependencies
  */
 import getStoryPropsToSave from '../getStoryPropsToSave';
-import getStoryMarkup from '../../../../output/utils/getStoryMarkup';
 
-jest.mock('../../../../output/utils/getStoryMarkup', () => jest.fn());
+jest.mock('@googleforcreators/output', () => ({
+  getStoryMarkup: () => jest.fn(),
+}));
 
 describe('getStoryPropsToSave', () => {
   it('should return correct story properties', () => {

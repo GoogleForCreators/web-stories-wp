@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { FULLBLEED_RATIO, PAGE_RATIO } from '@googleforcreators/units';
+import { theme } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
-import isHexColorString from '../../utils/isHexColorString';
-import theme from '../../theme';
+import isHexColorString from './isHexColorString';
 
 function CustomStyles() {
   const safeToFullRatio = PAGE_RATIO / FULLBLEED_RATIO;

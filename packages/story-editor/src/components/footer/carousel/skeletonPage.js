@@ -24,11 +24,11 @@ import {
   getSolidFromHex,
 } from '@googleforcreators/patterns';
 import { getDefinitionForType } from '@googleforcreators/elements';
+import { isHexColorString } from '@googleforcreators/output';
 
 /**
  * Internal dependencies
  */
-import isHexColorString from '../../../utils/isHexColorString';
 import useCarousel from './useCarousel';
 
 const EmptyPage = styled.li.attrs({ role: 'presentation' })`

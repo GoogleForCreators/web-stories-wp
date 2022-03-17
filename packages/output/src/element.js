@@ -20,8 +20,11 @@
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import { getBox } from '@googleforcreators/units';
 import { StoryAnimation } from '@googleforcreators/animation';
-import { getDefinitionForType } from '@googleforcreators/elements';
 import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
+import {
+  getDefinitionForType,
+  StoryPropTypes,
+} from '@googleforcreators/elements';
 import {
   OutputWithMask as WithMask,
   getBorderPositionCSS,
@@ -33,8 +36,7 @@ import {
 /**
  * Internal dependencies
  */
-import WithLink from '../components/elementLink/output';
-import StoryPropTypes from '../types';
+import WithLink from './components/withLink';
 
 function OutputElement({ element }) {
   const {

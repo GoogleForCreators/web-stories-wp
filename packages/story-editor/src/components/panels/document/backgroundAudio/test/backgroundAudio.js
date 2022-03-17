@@ -18,13 +18,13 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
 import ConfigContext from '../../../../../app/config/context';
 import StoryContext from '../../../../../app/story/context';
-import { renderWithTheme } from '../../../../../testUtils';
 import BackgroundAudioPanel from '../backgroundAudio';
 
 function MediaUpload({ render }) {

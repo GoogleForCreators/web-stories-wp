@@ -24,12 +24,12 @@ import {
   StoryContext,
   CheckpointContext,
 } from '@googleforcreators/story-editor';
+import { renderWithTheme } from '@web-stories-wp/test-utils';
 
 /**
  * Internal dependencies
  */
 import MetaBoxesContext from '../../../metaBoxes/context';
-import { renderWithTheme } from '../../../../testUtils';
 import Buttons from '..';
 
 function arrange({

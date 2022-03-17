@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
 import StoryContext from '../../../../../app/story/context';
-import { renderWithTheme } from '../../../../../testUtils';
 import ExcerptPanel, { EXCERPT_MAX_LENGTH } from '../excerpt';
 
 function arrange() {

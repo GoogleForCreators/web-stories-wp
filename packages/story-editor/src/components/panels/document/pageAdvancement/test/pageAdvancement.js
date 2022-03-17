@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { fireEvent, waitFor, screen } from '@testing-library/react';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
 import StoryContext from '../../../../../app/story/context';
-import { renderWithTheme } from '../../../../../testUtils';
 import PageAdvancementPanel from '../pageAdvancement';
 
 function arrange(configs = {}) {

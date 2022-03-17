@@ -18,11 +18,11 @@
  * External dependencies
  */
 import { fireEvent, waitFor } from '@testing-library/react';
+import { firePointerEvent } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
-import { firePointerEvent } from '../../../../testUtils';
 import { LINE_LENGTH } from '../../constants';
 import { arrange } from './_utils';
 

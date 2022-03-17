@@ -20,6 +20,7 @@
 import { fireEvent, screen } from '@testing-library/react';
 import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
@@ -27,7 +28,6 @@ import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
 import StylePresetPanel from '../stylePresets';
 import StoryContext from '../../../../../app/story/context';
 import { getTextPresets, areAllType } from '../../../../../utils/presetUtils';
-import { renderWithTheme } from '../../../../../testUtils';
 
 jest.mock('../../../../../utils/presetUtils');
 

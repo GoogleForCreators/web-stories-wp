@@ -1,0 +1,2914 @@
+diff --git a/package-lock.json b/package-lock.json
+index b8612040a..cb32a7679 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -2826,6 +2826,10 @@
+       "resolved": "packages/moveable",
+       "link": true
+     },
++    "node_modules/@googleforcreators/output": {
++      "resolved": "packages/output",
++      "link": true
++    },
+     "node_modules/@googleforcreators/patterns": {
+       "resolved": "packages/patterns",
+       "link": true
+@@ -2850,6 +2854,10 @@
+       "resolved": "packages/templates",
+       "link": true
+     },
++    "node_modules/@googleforcreators/test-utils": {
++      "resolved": "packages/test-utils",
++      "link": true
++    },
+     "node_modules/@googleforcreators/text-sets": {
+       "resolved": "packages/text-sets",
+       "link": true
+@@ -21784,23 +21792,6 @@
+         "node": "*"
+       }
+     },
+-    "node_modules/eslint-plugin-react/node_modules/prop-types": {
+-      "version": "15.8.1",
+-      "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-      "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-      "dev": true,
+-      "dependencies": {
+-        "loose-envify": "^1.4.0",
+-        "object-assign": "^4.1.1",
+-        "react-is": "^16.13.1"
+-      }
+-    },
+-    "node_modules/eslint-plugin-react/node_modules/react-is": {
+-      "version": "16.13.1",
+-      "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-      "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==",
+-      "dev": true
+-    },
+     "node_modules/eslint-plugin-react/node_modules/resolve": {
+       "version": "2.0.0-next.3",
+       "resolved": "https://registry.npmjs.org/resolve/-/resolve-2.0.0-next.3.tgz",
+@@ -36097,13 +36088,13 @@
+       }
+     },
+     "node_modules/prop-types": {
+-      "version": "15.7.2",
+-      "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.7.2.tgz",
+-      "integrity": "sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==",
++      "version": "15.8.1",
++      "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
++      "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+       "dependencies": {
+         "loose-envify": "^1.4.0",
+         "object-assign": "^4.1.1",
+-        "react-is": "^16.8.1"
++        "react-is": "^16.13.1"
+       }
+     },
+     "node_modules/prop-types-exact": {
+@@ -44086,21 +44077,6 @@
+         "npm": ">= 7.3"
+       }
+     },
+-    "packages/activation-notice/node_modules/prop-types": {
+-      "version": "15.8.1",
+-      "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-      "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-      "dependencies": {
+-        "loose-envify": "^1.4.0",
+-        "object-assign": "^4.1.1",
+-        "react-is": "^16.13.1"
+-      }
+-    },
+-    "packages/activation-notice/node_modules/react-is": {
+-      "version": "16.13.1",
+-      "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-      "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+-    },
+     "packages/animation": {
+       "name": "@googleforcreators/animation",
+       "version": "0.1.202203150806",
+@@ -44125,21 +44101,6 @@
+         "npm": ">= 7.3"
+       }
+     },
+-    "packages/animation/node_modules/prop-types": {
+-      "version": "15.8.1",
+-      "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-      "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-      "dependencies": {
+-        "loose-envify": "^1.4.0",
+-        "object-assign": "^4.1.1",
+-        "react-is": "^16.13.1"
+-      }
+-    },
+-    "packages/animation/node_modules/react-is": {
+-      "version": "16.13.1",
+-      "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-      "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+-    },
+     "packages/commander": {
+       "name": "@web-stories-wp/commander",
+       "license": "Apache-2.0",
+@@ -44206,21 +44167,6 @@
+         "npm": ">= 7.3"
+       }
+     },
+-    "packages/dashboard/node_modules/prop-types": {
+-      "version": "15.8.1",
+-      "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-      "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-      "dependencies": {
+-        "loose-envify": "^1.4.0",
+-        "object-assign": "^4.1.1",
+-        "react-is": "^16.13.1"
+-      }
+-    },
+-    "packages/dashboard/node_modules/react-is": {
+-      "version": "16.13.1",
+-      "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-      "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+-    },
+     "packages/date": {
+       "name": "@googleforcreators/date",
+       "version": "0.1.202203150806",
+@@ -44267,21 +44213,6 @@
+         "npm": ">= 7.3"
+       }
+     },
+-    "packages/design-system/node_modules/prop-types": {
+-      "version": "15.8.1",
+-      "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-      "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-      "dependencies": {
+-        "loose-envify": "^1.4.0",
+-        "object-assign": "^4.1.1",
+-        "react-is": "^16.13.1"
+-      }
+-    },
+-    "packages/design-system/node_modules/react-is": {
+-      "version": "16.13.1",
+-      "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-      "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+-    },
+     "packages/dom": {
+       "name": "@googleforcreators/dom",
+       "version": "0.1.202203150806",
+@@ -44432,21 +44363,6 @@
+         "npm": ">= 7.3"
+       }
+     },
+-    "packages/i18n/node_modules/prop-types": {
+-      "version": "15.8.1",
+-      "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-      "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-      "dependencies": {
+-        "loose-envify": "^1.4.0",
+-        "object-assign": "^4.1.1",
+-        "react-is": "^16.13.1"
+-      }
+-    },
+-    "packages/i18n/node_modules/react-is": {
+-      "version": "16.13.1",
+-      "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-      "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+-    },
+     "packages/imgareaselect": {
+       "name": "@web-stories-wp/imgareaselect",
+       "license": "Apache-2.0",
+@@ -44470,21 +44386,6 @@
+         "npm": ">= 7.3"
+       }
+     },
+-    "packages/jest-amp/node_modules/prop-types": {
+-      "version": "15.8.1",
+-      "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-      "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-      "dependencies": {
+-        "loose-envify": "^1.4.0",
+-        "object-assign": "^4.1.1",
+-        "react-is": "^16.13.1"
+-      }
+-    },
+-    "packages/jest-amp/node_modules/react-is": {
+-      "version": "16.13.1",
+-      "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-      "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+-    },
+     "packages/jest-parallel-sequencer": {
+       "name": "@web-stories-wp/jest-parallel-sequencer",
+       "license": "Apache-2.0",
+@@ -44598,21 +44499,6 @@
+         "npm": ">= 7.3"
+       }
+     },
+-    "packages/masks/node_modules/prop-types": {
+-      "version": "15.8.1",
+-      "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-      "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-      "dependencies": {
+-        "loose-envify": "^1.4.0",
+-        "object-assign": "^4.1.1",
+-        "react-is": "^16.13.1"
+-      }
+-    },
+-    "packages/masks/node_modules/react-is": {
+-      "version": "16.13.1",
+-      "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-      "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+-    },
+     "packages/media": {
+       "name": "@googleforcreators/media",
+       "version": "0.1.202203150806",
+@@ -44641,21 +44527,6 @@
+         "node": ">=10.0.0"
+       }
+     },
+-    "packages/media/node_modules/prop-types": {
+-      "version": "15.8.1",
+-      "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-      "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-      "dependencies": {
+-        "loose-envify": "^1.4.0",
+-        "object-assign": "^4.1.1",
+-        "react-is": "^16.13.1"
+-      }
+-    },
+-    "packages/media/node_modules/react-is": {
+-      "version": "16.13.1",
+-      "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-      "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+-    },
+     "packages/migration": {
+       "name": "@googleforcreators/migration",
+       "version": "0.1.202203150806",
+@@ -44689,6 +44560,42 @@
+         "npm": ">= 7.3"
+       }
+     },
++    "packages/output": {
++      "name": "@googleforcreators/output",
++      "version": "0.1.202203150806",
++      "license": "Apache-2.0",
++      "dependencies": {
++        "@googleforcreators/animation": "*",
++        "@googleforcreators/design-system": "*",
++        "@googleforcreators/elements": "*",
++        "@googleforcreators/fonts": "*",
++        "@googleforcreators/i18n": "*",
++        "@googleforcreators/masks": "*",
++        "@googleforcreators/media": "*",
++        "@googleforcreators/patterns": "*",
++        "@googleforcreators/react": "*",
++        "@googleforcreators/rich-text": "*",
++        "@googleforcreators/story-editor": "*",
++        "@googleforcreators/test-utils": "*",
++        "@googleforcreators/units": "*",
++        "@googleforcreators/url": "*",
++        "draft-js": "^0.11.7",
++        "draft-js-export-html": "^1.4.1",
++        "draft-js-import-html": "^1.4.1",
++        "draftjs-filters": "^2.5.0",
++        "flagged": "^2.0.1",
++        "prop-types": "^15.8.0",
++        "styled-components": "^5.3.3"
++      },
++      "devDependencies": {
++        "@googleforcreators/element-library": "*",
++        "@testing-library/react": "^12.1.2"
++      },
++      "engines": {
++        "node": ">= 12 || >= 14 || >= 16",
++        "npm": ">= 7.3"
++      }
++    },
+     "packages/patterns": {
+       "name": "@googleforcreators/patterns",
+       "version": "0.1.202203150806",
+@@ -44704,21 +44611,6 @@
+         "npm": ">= 7.3"
+       }
+     },
+-    "packages/patterns/node_modules/prop-types": {
+-      "version": "15.8.1",
+-      "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-      "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-      "dependencies": {
+-        "loose-envify": "^1.4.0",
+-        "object-assign": "^4.1.1",
+-        "react-is": "^16.13.1"
+-      }
+-    },
+-    "packages/patterns/node_modules/react-is": {
+-      "version": "16.13.1",
+-      "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-      "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+-    },
+     "packages/react": {
+       "name": "@googleforcreators/react",
+       "version": "0.1.202203150806",
+@@ -44743,21 +44635,6 @@
+         "react-dom": "^17.0.2"
+       }
+     },
+-    "packages/react/node_modules/prop-types": {
+-      "version": "15.8.1",
+-      "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-      "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-      "dependencies": {
+-        "loose-envify": "^1.4.0",
+-        "object-assign": "^4.1.1",
+-        "react-is": "^16.13.1"
+-      }
+-    },
+-    "packages/react/node_modules/react-is": {
+-      "version": "16.13.1",
+-      "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-      "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+-    },
+     "packages/rich-text": {
+       "name": "@googleforcreators/rich-text",
+       "version": "0.1.202203150806",
+@@ -44794,21 +44671,6 @@
+         "npm": ">= 7.3"
+       }
+     },
+-    "packages/stickers/node_modules/prop-types": {
+-      "version": "15.8.1",
+-      "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-      "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-      "dependencies": {
+-        "loose-envify": "^1.4.0",
+-        "object-assign": "^4.1.1",
+-        "react-is": "^16.13.1"
+-      }
+-    },
+-    "packages/stickers/node_modules/react-is": {
+-      "version": "16.13.1",
+-      "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-      "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+-    },
+     "packages/stories-block": {
+       "name": "@web-stories-wp/stories-block",
+       "license": "Apache-2.0",
+@@ -44839,21 +44701,6 @@
+         "npm": ">= 7.3"
+       }
+     },
+-    "packages/stories-block/node_modules/prop-types": {
+-      "version": "15.8.1",
+-      "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-      "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-      "dependencies": {
+-        "loose-envify": "^1.4.0",
+-        "object-assign": "^4.1.1",
+-        "react-is": "^16.13.1"
+-      }
+-    },
+-    "packages/stories-block/node_modules/react-is": {
+-      "version": "16.13.1",
+-      "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-      "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+-    },
+     "packages/stories-carousel": {
+       "name": "@web-stories-wp/stories-carousel",
+       "license": "Apache-2.0",
+@@ -44898,11 +44745,13 @@
+         "@googleforcreators/media": "*",
+         "@googleforcreators/migration": "*",
+         "@googleforcreators/moveable": "*",
++        "@googleforcreators/output": "*",
+         "@googleforcreators/patterns": "*",
+         "@googleforcreators/react": "*",
+         "@googleforcreators/rich-text": "*",
+         "@googleforcreators/stickers": "*",
+         "@googleforcreators/templates": "*",
++        "@googleforcreators/test-utils": "*",
+         "@googleforcreators/text-sets": "*",
+         "@googleforcreators/tracking": "*",
+         "@googleforcreators/transform": "*",
+@@ -44953,21 +44802,6 @@
+         "npm": ">= 7.3"
+       }
+     },
+-    "packages/story-editor/node_modules/prop-types": {
+-      "version": "15.8.1",
+-      "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-      "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-      "dependencies": {
+-        "loose-envify": "^1.4.0",
+-        "object-assign": "^4.1.1",
+-        "react-is": "^16.13.1"
+-      }
+-    },
+-    "packages/story-editor/node_modules/react-is": {
+-      "version": "16.13.1",
+-      "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-      "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+-    },
+     "packages/templates": {
+       "name": "@googleforcreators/templates",
+       "version": "0.1.202203150806",
+@@ -44987,6 +44821,25 @@
+         "npm": ">= 7.3"
+       }
+     },
++    "packages/test-utils": {
++      "name": "@googleforcreators/test-utils",
++      "version": "0.1.202203150806",
++      "license": "Apache-2.0",
++      "dependencies": {
++        "@googleforcreators/animation": "*",
++        "@googleforcreators/design-system": "*",
++        "@googleforcreators/elements": "*",
++        "prop-types": "^15.8.1",
++        "styled-components": "^5.3.3"
++      },
++      "devDependencies": {
++        "@testing-library/react": "^12.1.2"
++      },
++      "engines": {
++        "node": ">= 12 || >= 14 || >= 16",
++        "npm": ">= 7.3"
++      }
++    },
+     "packages/text-sets": {
+       "name": "@googleforcreators/text-sets",
+       "version": "0.1.202203150806",
+@@ -45021,21 +44874,6 @@
+         "npm": ">= 7.3"
+       }
+     },
+-    "packages/tinymce-button/node_modules/prop-types": {
+-      "version": "15.8.1",
+-      "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-      "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-      "dependencies": {
+-        "loose-envify": "^1.4.0",
+-        "object-assign": "^4.1.1",
+-        "react-is": "^16.13.1"
+-      }
+-    },
+-    "packages/tinymce-button/node_modules/react-is": {
+-      "version": "16.13.1",
+-      "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-      "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+-    },
+     "packages/tracking": {
+       "name": "@googleforcreators/tracking",
+       "version": "0.1.202203150806",
+@@ -45075,21 +44913,6 @@
+         "npm": ">= 7.3"
+       }
+     },
+-    "packages/units/node_modules/prop-types": {
+-      "version": "15.8.1",
+-      "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-      "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-      "dependencies": {
+-        "loose-envify": "^1.4.0",
+-        "object-assign": "^4.1.1",
+-        "react-is": "^16.13.1"
+-      }
+-    },
+-    "packages/units/node_modules/react-is": {
+-      "version": "16.13.1",
+-      "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-      "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+-    },
+     "packages/url": {
+       "name": "@googleforcreators/url",
+       "version": "0.1.202203150806",
+@@ -45147,21 +44970,6 @@
+         "npm": ">= 7.3"
+       }
+     },
+-    "packages/wp-dashboard/node_modules/prop-types": {
+-      "version": "15.8.1",
+-      "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-      "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-      "dependencies": {
+-        "loose-envify": "^1.4.0",
+-        "object-assign": "^4.1.1",
+-        "react-is": "^16.13.1"
+-      }
+-    },
+-    "packages/wp-dashboard/node_modules/react-is": {
+-      "version": "16.13.1",
+-      "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-      "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+-    },
+     "packages/wp-story-editor": {
+       "name": "@web-stories-wp/wp-story-editor",
+       "license": "Apache-2.0",
+@@ -45172,8 +44980,10 @@
+         "@googleforcreators/i18n": "*",
+         "@googleforcreators/media": "*",
+         "@googleforcreators/migration": "*",
++        "@googleforcreators/output": "*",
+         "@googleforcreators/react": "*",
+         "@googleforcreators/story-editor": "*",
++        "@googleforcreators/test-utils": "*",
+         "@googleforcreators/tracking": "*",
+         "@googleforcreators/url": "*",
+         "@web-stories-wp/wp-utils": "*",
+@@ -45195,23 +45005,6 @@
+         "npm": ">= 7.3"
+       }
+     },
+-    "packages/wp-story-editor/node_modules/prop-types": {
+-      "version": "15.8.1",
+-      "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-      "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-      "dev": true,
+-      "dependencies": {
+-        "loose-envify": "^1.4.0",
+-        "object-assign": "^4.1.1",
+-        "react-is": "^16.13.1"
+-      }
+-    },
+-    "packages/wp-story-editor/node_modules/react-is": {
+-      "version": "16.13.1",
+-      "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-      "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==",
+-      "dev": true
+-    },
+     "packages/wp-utils": {
+       "name": "@web-stories-wp/wp-utils",
+       "license": "Apache-2.0",
+@@ -47127,23 +46920,6 @@
+         "styled-components": "^5.3.3",
+         "uuid": "^8.3.2",
+         "web-animations-js": "^2.3.2"
+-      },
+-      "dependencies": {
+-        "prop-types": {
+-          "version": "15.8.1",
+-          "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-          "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-          "requires": {
+-            "loose-envify": "^1.4.0",
+-            "object-assign": "^4.1.1",
+-            "react-is": "^16.13.1"
+-          }
+-        },
+-        "react-is": {
+-          "version": "16.13.1",
+-          "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-          "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+-        }
+       }
+     },
+     "@googleforcreators/dashboard": {
+@@ -47173,23 +46949,6 @@
+         "react": "^17.0.2",
+         "styled-components": "^5.3.3",
+         "stylis-plugin-rtl": "^1.0.0"
+-      },
+-      "dependencies": {
+-        "prop-types": {
+-          "version": "15.8.1",
+-          "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-          "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-          "requires": {
+-            "loose-envify": "^1.4.0",
+-            "object-assign": "^4.1.1",
+-            "react-is": "^16.13.1"
+-          }
+-        },
+-        "react-is": {
+-          "version": "16.13.1",
+-          "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-          "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+-        }
+       }
+     },
+     "@googleforcreators/date": {
+@@ -47220,23 +46979,6 @@
+         "react-transition-group": "^4.4.2",
+         "styled-components": "^5.3.3",
+         "uuid": "^8.3.2"
+-      },
+-      "dependencies": {
+-        "prop-types": {
+-          "version": "15.8.1",
+-          "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-          "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-          "requires": {
+-            "loose-envify": "^1.4.0",
+-            "object-assign": "^4.1.1",
+-            "react-is": "^16.13.1"
+-          }
+-        },
+-        "react-is": {
+-          "version": "16.13.1",
+-          "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-          "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+-        }
+       }
+     },
+     "@googleforcreators/dom": {
+@@ -47293,23 +47035,6 @@
+         "@tannin/sprintf": "^1.2.0",
+         "prop-types": "^15.8.1",
+         "tannin": "^1.2.0"
+-      },
+-      "dependencies": {
+-        "prop-types": {
+-          "version": "15.8.1",
+-          "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-          "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-          "requires": {
+-            "loose-envify": "^1.4.0",
+-            "object-assign": "^4.1.1",
+-            "react-is": "^16.13.1"
+-          }
+-        },
+-        "react-is": {
+-          "version": "16.13.1",
+-          "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-          "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+-        }
+       }
+     },
+     "@googleforcreators/karma-fixture": {
+@@ -47330,23 +47055,6 @@
+         "prop-types": "^15.8.0",
+         "styled-components": "^5.2.1",
+         "uuid": "^8.3.2"
+-      },
+-      "dependencies": {
+-        "prop-types": {
+-          "version": "15.8.1",
+-          "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-          "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-          "requires": {
+-            "loose-envify": "^1.4.0",
+-            "object-assign": "^4.1.1",
+-            "react-is": "^16.13.1"
+-          }
+-        },
+-        "react-is": {
+-          "version": "16.13.1",
+-          "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-          "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+-        }
+       }
+     },
+     "@googleforcreators/media": {
+@@ -47363,21 +47071,6 @@
+           "version": "3.0.0",
+           "resolved": "https://registry.npmjs.org/mime/-/mime-3.0.0.tgz",
+           "integrity": "sha512-jSCU7/VB1loIWBZe14aEYHU/+1UMEHoaO7qxCOVJOw9GgH72VAWppxNcjU+x9a2k3GSIBXNKxXQFqRvvZ7vr3A=="
+-        },
+-        "prop-types": {
+-          "version": "15.8.1",
+-          "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-          "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-          "requires": {
+-            "loose-envify": "^1.4.0",
+-            "object-assign": "^4.1.1",
+-            "react-is": "^16.13.1"
+-          }
+-        },
+-        "react-is": {
+-          "version": "16.13.1",
+-          "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-          "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+         }
+       }
+     },
+@@ -47399,29 +47092,40 @@
+         "styled-components": "^5.3.3"
+       }
+     },
++    "@googleforcreators/output": {
++      "version": "file:packages/output",
++      "requires": {
++        "@googleforcreators/animation": "*",
++        "@googleforcreators/design-system": "*",
++        "@googleforcreators/element-library": "*",
++        "@googleforcreators/elements": "*",
++        "@googleforcreators/fonts": "*",
++        "@googleforcreators/i18n": "*",
++        "@googleforcreators/masks": "*",
++        "@googleforcreators/media": "*",
++        "@googleforcreators/patterns": "*",
++        "@googleforcreators/react": "*",
++        "@googleforcreators/rich-text": "*",
++        "@googleforcreators/story-editor": "*",
++        "@googleforcreators/test-utils": "*",
++        "@googleforcreators/units": "*",
++        "@googleforcreators/url": "*",
++        "@testing-library/react": "^12.1.2",
++        "draft-js": "^0.11.7",
++        "draft-js-export-html": "^1.4.1",
++        "draft-js-import-html": "^1.4.1",
++        "draftjs-filters": "^2.5.0",
++        "flagged": "^2.0.1",
++        "prop-types": "^15.8.0",
++        "styled-components": "^5.3.3"
++      }
++    },
+     "@googleforcreators/patterns": {
+       "version": "file:packages/patterns",
+       "requires": {
+         "@googleforcreators/i18n": "*",
+         "polished": "^4.1.4",
+         "prop-types": "^15.8.1"
+-      },
+-      "dependencies": {
+-        "prop-types": {
+-          "version": "15.8.1",
+-          "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-          "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-          "requires": {
+-            "loose-envify": "^1.4.0",
+-            "object-assign": "^4.1.1",
+-            "react-is": "^16.13.1"
+-          }
+-        },
+-        "react-is": {
+-          "version": "16.13.1",
+-          "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-          "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+-        }
+       }
+     },
+     "@googleforcreators/react": {
+@@ -47434,23 +47138,6 @@
+         "shallow-equal": "^1.2.1",
+         "use-context-selector": "^1.2.11",
+         "use-debounce": "^7.0.1"
+-      },
+-      "dependencies": {
+-        "prop-types": {
+-          "version": "15.8.1",
+-          "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-          "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-          "requires": {
+-            "loose-envify": "^1.4.0",
+-            "object-assign": "^4.1.1",
+-            "react-is": "^16.13.1"
+-          }
+-        },
+-        "react-is": {
+-          "version": "16.13.1",
+-          "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-          "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+-        }
+       }
+     },
+     "@googleforcreators/rich-text": {
+@@ -47473,23 +47160,6 @@
+         "@googleforcreators/i18n": "*",
+         "@googleforcreators/react": "*",
+         "prop-types": "^15.8.1"
+-      },
+-      "dependencies": {
+-        "prop-types": {
+-          "version": "15.8.1",
+-          "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-          "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-          "requires": {
+-            "loose-envify": "^1.4.0",
+-            "object-assign": "^4.1.1",
+-            "react-is": "^16.13.1"
+-          }
+-        },
+-        "react-is": {
+-          "version": "16.13.1",
+-          "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-          "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+-        }
+       }
+     },
+     "@googleforcreators/story-editor": {
+@@ -47510,11 +47180,13 @@
+         "@googleforcreators/media": "*",
+         "@googleforcreators/migration": "*",
+         "@googleforcreators/moveable": "*",
++        "@googleforcreators/output": "*",
+         "@googleforcreators/patterns": "*",
+         "@googleforcreators/react": "*",
+         "@googleforcreators/rich-text": "*",
+         "@googleforcreators/stickers": "*",
+         "@googleforcreators/templates": "*",
++        "@googleforcreators/test-utils": "*",
+         "@googleforcreators/text-sets": "*",
+         "@googleforcreators/tracking": "*",
+         "@googleforcreators/transform": "*",
+@@ -47556,23 +47228,6 @@
+         "styled-components": "^5.3.3",
+         "stylis-plugin-rtl": "^1.0.0",
+         "uuid": "^8.3.2"
+-      },
+-      "dependencies": {
+-        "prop-types": {
+-          "version": "15.8.1",
+-          "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-          "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-          "requires": {
+-            "loose-envify": "^1.4.0",
+-            "object-assign": "^4.1.1",
+-            "react-is": "^16.13.1"
+-          }
+-        },
+-        "react-is": {
+-          "version": "16.13.1",
+-          "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-          "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+-        }
+       }
+     },
+     "@googleforcreators/templates": {
+@@ -47586,6 +47241,17 @@
+         "puppeteer": "*"
+       }
+     },
++    "@googleforcreators/test-utils": {
++      "version": "file:packages/test-utils",
++      "requires": {
++        "@googleforcreators/animation": "*",
++        "@googleforcreators/design-system": "*",
++        "@googleforcreators/elements": "*",
++        "@testing-library/react": "^12.1.2",
++        "prop-types": "^15.8.1",
++        "styled-components": "^5.3.3"
++      }
++    },
+     "@googleforcreators/text-sets": {
+       "version": "file:packages/text-sets",
+       "requires": {
+@@ -47608,23 +47274,6 @@
+       "requires": {
+         "@googleforcreators/react": "*",
+         "prop-types": "^15.8.1"
+-      },
+-      "dependencies": {
+-        "prop-types": {
+-          "version": "15.8.1",
+-          "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-          "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-          "requires": {
+-            "loose-envify": "^1.4.0",
+-            "object-assign": "^4.1.1",
+-            "react-is": "^16.13.1"
+-          }
+-        },
+-        "react-is": {
+-          "version": "16.13.1",
+-          "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-          "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+-        }
+       }
+     },
+     "@googleforcreators/url": {
+@@ -56244,23 +55893,6 @@
+         "prop-types": "^15.8.1",
+         "styled-components": "^5.3.3",
+         "stylis-plugin-rtl": "^1.0.0"
+-      },
+-      "dependencies": {
+-        "prop-types": {
+-          "version": "15.8.1",
+-          "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-          "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-          "requires": {
+-            "loose-envify": "^1.4.0",
+-            "object-assign": "^4.1.1",
+-            "react-is": "^16.13.1"
+-          }
+-        },
+-        "react-is": {
+-          "version": "16.13.1",
+-          "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-          "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+-        }
+       }
+     },
+     "@web-stories-wp/commander": {
+@@ -56325,23 +55957,6 @@
+         "@googleforcreators/react": "*",
+         "amphtml-validator": "1.0.35",
+         "prop-types": "^15.8.1"
+-      },
+-      "dependencies": {
+-        "prop-types": {
+-          "version": "15.8.1",
+-          "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-          "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-          "requires": {
+-            "loose-envify": "^1.4.0",
+-            "object-assign": "^4.1.1",
+-            "react-is": "^16.13.1"
+-          }
+-        },
+-        "react-is": {
+-          "version": "16.13.1",
+-          "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-          "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+-        }
+       }
+     },
+     "@web-stories-wp/jest-parallel-sequencer": {
+@@ -56394,23 +56009,6 @@
+         "classnames": "^2.3.1",
+         "lodash": "^4.17.21",
+         "prop-types": "^15.8.1"
+-      },
+-      "dependencies": {
+-        "prop-types": {
+-          "version": "15.8.1",
+-          "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-          "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-          "requires": {
+-            "loose-envify": "^1.4.0",
+-            "object-assign": "^4.1.1",
+-            "react-is": "^16.13.1"
+-          }
+-        },
+-        "react-is": {
+-          "version": "16.13.1",
+-          "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-          "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+-        }
+       }
+     },
+     "@web-stories-wp/stories-carousel": {
+@@ -56436,23 +56034,6 @@
+         "@wordpress/element": "^4.0.0",
+         "@wordpress/i18n": "^4.3.0",
+         "prop-types": "^15.8.1"
+-      },
+-      "dependencies": {
+-        "prop-types": {
+-          "version": "15.8.1",
+-          "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-          "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-          "requires": {
+-            "loose-envify": "^1.4.0",
+-            "object-assign": "^4.1.1",
+-            "react-is": "^16.13.1"
+-          }
+-        },
+-        "react-is": {
+-          "version": "16.13.1",
+-          "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-          "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+-        }
+       }
+     },
+     "@web-stories-wp/widget": {
+@@ -56487,23 +56068,6 @@
+         "prop-types": "^15.8.1",
+         "styled-components": "^5.3.3",
+         "uuid": "^8.3.2"
+-      },
+-      "dependencies": {
+-        "prop-types": {
+-          "version": "15.8.1",
+-          "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-          "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-          "requires": {
+-            "loose-envify": "^1.4.0",
+-            "object-assign": "^4.1.1",
+-            "react-is": "^16.13.1"
+-          }
+-        },
+-        "react-is": {
+-          "version": "16.13.1",
+-          "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-          "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
+-        }
+       }
+     },
+     "@web-stories-wp/wp-story-editor": {
+@@ -56515,8 +56079,10 @@
+         "@googleforcreators/i18n": "*",
+         "@googleforcreators/media": "*",
+         "@googleforcreators/migration": "*",
++        "@googleforcreators/output": "*",
+         "@googleforcreators/react": "*",
+         "@googleforcreators/story-editor": "*",
++        "@googleforcreators/test-utils": "*",
+         "@googleforcreators/tracking": "*",
+         "@googleforcreators/url": "*",
+         "@testing-library/react": "^12.1.4",
+@@ -56530,25 +56096,6 @@
+         "prop-types": "^15.8.1",
+         "react-calendar": "^3.7.0",
+         "styled-components": "^5.3.3"
+-      },
+-      "dependencies": {
+-        "prop-types": {
+-          "version": "15.8.1",
+-          "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-          "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-          "dev": true,
+-          "requires": {
+-            "loose-envify": "^1.4.0",
+-            "object-assign": "^4.1.1",
+-            "react-is": "^16.13.1"
+-          }
+-        },
+-        "react-is": {
+-          "version": "16.13.1",
+-          "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-          "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==",
+-          "dev": true
+-        }
+       }
+     },
+     "@web-stories-wp/wp-utils": {
+@@ -62622,23 +62169,6 @@
+             "brace-expansion": "^1.1.7"
+           }
+         },
+-        "prop-types": {
+-          "version": "15.8.1",
+-          "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
+-          "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+-          "dev": true,
+-          "requires": {
+-            "loose-envify": "^1.4.0",
+-            "object-assign": "^4.1.1",
+-            "react-is": "^16.13.1"
+-          }
+-        },
+-        "react-is": {
+-          "version": "16.13.1",
+-          "resolved": "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz",
+-          "integrity": "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==",
+-          "dev": true
+-        },
+         "resolve": {
+           "version": "2.0.0-next.3",
+           "resolved": "https://registry.npmjs.org/resolve/-/resolve-2.0.0-next.3.tgz",
+@@ -73357,13 +72887,13 @@
+       }
+     },
+     "prop-types": {
+-      "version": "15.7.2",
+-      "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.7.2.tgz",
+-      "integrity": "sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==",
++      "version": "15.8.1",
++      "resolved": "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz",
++      "integrity": "sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==",
+       "requires": {
+         "loose-envify": "^1.4.0",
+         "object-assign": "^4.1.1",
+-        "react-is": "^16.8.1"
++        "react-is": "^16.13.1"
+       },
+       "dependencies": {
+         "react-is": {
+diff --git a/packages/elements/src/utils/index.js b/packages/elements/src/utils/index.js
+index 6b256fc65..54b195e4d 100644
+--- a/packages/elements/src/utils/index.js
++++ b/packages/elements/src/utils/index.js
+@@ -18,6 +18,7 @@ export { default as createNewElement } from './createNewElement';
+ export { default as createPage } from './createPage';
+ export { DEFAULT_PAGE_BACKGROUND_COLOR } from './createPage';
+ export { default as duplicatePage } from './duplicatePage';
++export { default as isElementBelowLimit } from './isElementBelowLimit';
+ export {
+   default as duplicateElement,
+   getOffsetCoordinates,
+diff --git a/packages/story-editor/src/utils/isElementBelowLimit.js b/packages/elements/src/utils/isElementBelowLimit.js
+similarity index 100%
+rename from packages/story-editor/src/utils/isElementBelowLimit.js
+rename to packages/elements/src/utils/isElementBelowLimit.js
+diff --git a/packages/output/README.md b/packages/output/README.md
+new file mode 100644
+index 000000000..e69de29bb
+diff --git a/packages/output/package.json b/packages/output/package.json
+new file mode 100644
+index 000000000..d372cd19e
+--- /dev/null
++++ b/packages/output/package.json
+@@ -0,0 +1,65 @@
++{
++    "name": "@googleforcreators/output",
++    "description": "A package for serialization of stories to AMP output",
++    "private": false,
++    "version": "0.1.202203150806",
++    "author": {
++        "name": "Google",
++        "url": "https://creators.google/"
++    },
++    "license": "Apache-2.0",
++    "keywords": [
++        "web stories"
++    ],
++    "homepage": "https://github.com/GoogleForCreators/web-stories-wp/blob/main/packages/output/README.md",
++    "repository": {
++        "type": "git",
++        "url": "https://github.com/GoogleForCreators/web-stories-wp.git",
++        "directory": "packages/output"
++    },
++    "bugs": {
++        "url": "https://github.com/googleforcreators/web-stories-wp/issues"
++    },
++    "engines": {
++        "node": ">= 12 || >= 14 || >= 16",
++        "npm": ">= 7.3"
++    },
++    "customExports": {
++        ".": {
++            "default": "./src/index.js"
++        }
++    },
++    "main": "dist/index.js",
++    "module": "dist-module/index.js",
++    "source": "src/index.js",
++    "publishConfig": {
++        "access": "public"
++    },
++    "dependencies": {
++        "@googleforcreators/animation": "*",
++        "@googleforcreators/design-system": "*",
++        "@googleforcreators/elements": "*",
++        "@googleforcreators/fonts": "*",
++        "@googleforcreators/i18n": "*",
++        "@googleforcreators/masks": "*",
++	    "@googleforcreators/media": "*",
++        "@googleforcreators/patterns": "*",
++        "@googleforcreators/react": "*",
++        "@googleforcreators/rich-text": "*",
++        "@googleforcreators/story-editor": "*",
++        "@googleforcreators/test-utils": "*",
++        "@googleforcreators/units": "*",
++        "@googleforcreators/url": "*",
++        "draft-js": "^0.11.7",
++        "draft-js-export-html": "^1.4.1",
++        "draft-js-import-html": "^1.4.1",
++        "draftjs-filters": "^2.5.0",
++        "flagged": "^2.0.1",
++        "styled-components": "^5.3.3",
++        "prop-types": "^15.8.0"
++    },
++    "devDependencies": {
++        "@googleforcreators/element-library": "*",
++        "@testing-library/react": "^12.1.2"
++    }
++}
+diff --git a/packages/story-editor/src/components/elementLink/output.js b/packages/output/src/components/withLink/index.js
+similarity index 89%
+rename from packages/story-editor/src/components/elementLink/output.js
+rename to packages/output/src/components/withLink/index.js
+index a69ce7713..40c8e587c 100644
+--- a/packages/story-editor/src/components/elementLink/output.js
++++ b/packages/output/src/components/withLink/index.js
+@@ -19,15 +19,10 @@
+  */
+ import PropTypes from 'prop-types';
+ import { withProtocol } from '@googleforcreators/url';
+-
+-/**
+- * Internal dependencies
+- */
+-import StoryPropTypes from '../../types';
+-import { getLinkFromElement } from '.';
++import { StoryPropTypes } from '@googleforcreators/elements';
+ 
+ function WithLink({ element, children, ...rest }) {
+-  const link = getLinkFromElement(element) || {};
++  const link = element.link || {};
+   const { url, icon, desc, rel = [] } = link;
+   if (!url) {
+     return children;
+diff --git a/packages/story-editor/src/components/elementLink/test/output.js b/packages/output/src/components/withLink/test/output.js
+similarity index 98%
+rename from packages/story-editor/src/components/elementLink/test/output.js
+rename to packages/output/src/components/withLink/test/output.js
+index b96717e76..d308cdb44 100644
+--- a/packages/story-editor/src/components/elementLink/test/output.js
++++ b/packages/output/src/components/withLink/test/output.js
+@@ -22,7 +22,7 @@ import { render, screen } from '@testing-library/react';
+ /**
+  * Internal dependencies
+  */
+-import WithLink from '../output';
++import WithLink from '..';
+ 
+ describe('WithLink', () => {
+   function withLink(linkProps) {
+diff --git a/packages/wp-story-editor/src/testUtils/index.js b/packages/output/src/constants.js
+similarity index 83%
+rename from packages/wp-story-editor/src/testUtils/index.js
+rename to packages/output/src/constants.js
+index 22cfe0ae9..fba1472a1 100644
+--- a/packages/wp-story-editor/src/testUtils/index.js
++++ b/packages/output/src/constants.js
+@@ -1,5 +1,5 @@
+ /*
+- * Copyright 2021 Google LLC
++ * Copyright 2022 Google LLC
+  *
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+@@ -13,4 +13,5 @@
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  */
+-export { default as renderWithTheme } from './renderWithTheme';
++export const DEFAULT_PAGE_DURATION = 7;
++export const DEFAULT_AUTO_ADVANCE = true;
+diff --git a/packages/story-editor/src/output/element.js b/packages/output/src/element.js
+similarity index 95%
+rename from packages/story-editor/src/output/element.js
+rename to packages/output/src/element.js
+index 31532f34d..c0672f160 100644
+--- a/packages/story-editor/src/output/element.js
++++ b/packages/output/src/element.js
+@@ -20,8 +20,11 @@
+ import { generatePatternStyles } from '@googleforcreators/patterns';
+ import { getBox } from '@googleforcreators/units';
+ import { StoryAnimation } from '@googleforcreators/animation';
+-import { getDefinitionForType } from '@googleforcreators/elements';
+ import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
++import {
++  getDefinitionForType,
++  StoryPropTypes,
++} from '@googleforcreators/elements';
+ import {
+   OutputWithMask as WithMask,
+   getBorderPositionCSS,
+@@ -33,8 +36,7 @@ import {
+ /**
+  * Internal dependencies
+  */
+-import WithLink from '../components/elementLink/output';
+-import StoryPropTypes from '../types';
++import WithLink from './components/withLink';
+ 
+ function OutputElement({ element }) {
+   const {
+diff --git a/packages/story-editor/src/output/index.js b/packages/output/src/index.js
+similarity index 90%
+rename from packages/story-editor/src/output/index.js
+rename to packages/output/src/index.js
+index 9048107da..55fd61aca 100644
+--- a/packages/story-editor/src/output/index.js
++++ b/packages/output/src/index.js
+@@ -16,3 +16,4 @@
+ 
+ export { default as OutputStory } from './story';
+ export { default as getStoryMarkup } from './utils/getStoryMarkup';
++export { default as isHexColorString } from './utils/isHexColorString';
+diff --git a/packages/story-editor/src/output/page.js b/packages/output/src/page.js
+similarity index 96%
+rename from packages/story-editor/src/output/page.js
+rename to packages/output/src/page.js
+index 5e3b00b81..367a0f30e 100644
+--- a/packages/story-editor/src/output/page.js
++++ b/packages/output/src/page.js
+@@ -21,14 +21,16 @@ import PropTypes from 'prop-types';
+ import { generatePatternStyles } from '@googleforcreators/patterns';
+ import { PAGE_HEIGHT, PAGE_WIDTH } from '@googleforcreators/units';
+ import { StoryAnimation } from '@googleforcreators/animation';
+-import { ELEMENT_TYPES } from '@googleforcreators/elements';
++import {
++  ELEMENT_TYPES,
++  StoryPropTypes,
++  isElementBelowLimit,
++} from '@googleforcreators/elements';
+ 
+ /**
+  * Internal dependencies
+  */
+-import StoryPropTypes from '../types';
+-import isElementBelowLimit from '../utils/isElementBelowLimit';
+-import { DEFAULT_AUTO_ADVANCE, DEFAULT_PAGE_DURATION } from '../constants';
++import { DEFAULT_AUTO_ADVANCE, DEFAULT_PAGE_DURATION } from './constants';
+ import OutputElement from './element';
+ import BackgroundAudio from './utils/backgroundAudio';
+ import getTextElementTagNames from './utils/getTextElementTagNames';
+diff --git a/packages/story-editor/src/output/story.js b/packages/output/src/story.js
+similarity index 97%
+rename from packages/story-editor/src/output/story.js
+rename to packages/output/src/story.js
+index caeabe354..f8cea807e 100644
+--- a/packages/story-editor/src/output/story.js
++++ b/packages/output/src/story.js
+@@ -18,12 +18,14 @@
+  * External dependencies
+  */
+ import PropTypes from 'prop-types';
+-import { BackgroundAudioPropType } from '@googleforcreators/elements';
++import {
++  BackgroundAudioPropType,
++  StoryPropTypes,
++} from '@googleforcreators/elements';
+ 
+ /**
+  * Internal dependencies
+  */
+-import StoryPropTypes from '../types';
+ import getUsedAmpExtensions from './utils/getUsedAmpExtensions';
+ import Boilerplate from './utils/ampBoilerplate';
+ import CustomCSS from './utils/styles';
+diff --git a/packages/story-editor/src/output/test/__snapshots__/page.js.snap b/packages/output/src/test/__snapshots__/page.js.snap
+similarity index 100%
+rename from packages/story-editor/src/output/test/__snapshots__/page.js.snap
+rename to packages/output/src/test/__snapshots__/page.js.snap
+diff --git a/packages/story-editor/src/output/test/__snapshots__/textElement.js.snap b/packages/output/src/test/__snapshots__/textElement.js.snap
+similarity index 100%
+rename from packages/story-editor/src/output/test/__snapshots__/textElement.js.snap
+rename to packages/output/src/test/__snapshots__/textElement.js.snap
+diff --git a/packages/story-editor/src/output/test/_utils/constants.js b/packages/output/src/test/_utils/constants.js
+similarity index 100%
+rename from packages/story-editor/src/output/test/_utils/constants.js
+rename to packages/output/src/test/_utils/constants.js
+diff --git a/packages/story-editor/src/output/test/page.js b/packages/output/src/test/page.js
+similarity index 99%
+rename from packages/story-editor/src/output/test/page.js
+rename to packages/output/src/test/page.js
+index b8ce7b552..b348e4079 100644
+--- a/packages/story-editor/src/output/test/page.js
++++ b/packages/output/src/test/page.js
+@@ -24,17 +24,17 @@ import { PAGE_WIDTH, PAGE_HEIGHT } from '@googleforcreators/units';
+ import { MaskTypes } from '@googleforcreators/masks';
+ import { registerElementType } from '@googleforcreators/elements';
+ import { elementTypes } from '@googleforcreators/element-library';
+-
+-/**
+- * Internal dependencies
+- */
+-import PageOutput from '../page';
+ import {
+   queryByAutoAdvanceAfter,
+   getByAutoAdvanceAfter,
+   queryById,
+   getById,
+-} from '../../testUtils';
++} from '@googleforcreators/test-utils';
++
++/**
++ * Internal dependencies
++ */
++import PageOutput from '../page';
+ 
+ jest.mock('flagged');
+ 
+diff --git a/packages/story-editor/src/output/test/story.js b/packages/output/src/test/story.js
+similarity index 100%
+rename from packages/story-editor/src/output/test/story.js
+rename to packages/output/src/test/story.js
+diff --git a/packages/story-editor/src/output/test/textElement.js b/packages/output/src/test/textElement.js
+similarity index 100%
+rename from packages/story-editor/src/output/test/textElement.js
+rename to packages/output/src/test/textElement.js
+diff --git a/packages/story-editor/src/output/utils/ampBoilerplate.js b/packages/output/src/utils/ampBoilerplate.js
+similarity index 100%
+rename from packages/story-editor/src/output/utils/ampBoilerplate.js
+rename to packages/output/src/utils/ampBoilerplate.js
+diff --git a/packages/story-editor/src/output/utils/backgroundAudio.js b/packages/output/src/utils/backgroundAudio.js
+similarity index 100%
+rename from packages/story-editor/src/output/utils/backgroundAudio.js
+rename to packages/output/src/utils/backgroundAudio.js
+diff --git a/packages/story-editor/src/output/utils/fontDeclarations.js b/packages/output/src/utils/fontDeclarations.js
+similarity index 98%
+rename from packages/story-editor/src/output/utils/fontDeclarations.js
+rename to packages/output/src/utils/fontDeclarations.js
+index 7e92bf090..da83b4782 100644
+--- a/packages/story-editor/src/output/utils/fontDeclarations.js
++++ b/packages/output/src/utils/fontDeclarations.js
+@@ -20,11 +20,7 @@
+ import PropTypes from 'prop-types';
+ import { getGoogleFontURL, getFontCSS } from '@googleforcreators/fonts';
+ import { getFontVariants } from '@googleforcreators/rich-text';
+-
+-/**
+- * Internal dependencies
+- */
+-import StoryPropTypes from '../../types';
++import { StoryPropTypes } from '@googleforcreators/elements';
+ 
+ const hasTuple = (tuples, tuple) =>
+   tuples.some((val) => val[0] === tuple[0] && val[1] === tuple[1]);
+diff --git a/packages/story-editor/src/output/utils/getAutoAdvanceAfter.js b/packages/output/src/utils/getAutoAdvanceAfter.js
+similarity index 97%
+rename from packages/story-editor/src/output/utils/getAutoAdvanceAfter.js
+rename to packages/output/src/utils/getAutoAdvanceAfter.js
+index 07b60d927..a7a1eb401 100644
+--- a/packages/story-editor/src/output/utils/getAutoAdvanceAfter.js
++++ b/packages/output/src/utils/getAutoAdvanceAfter.js
+@@ -17,10 +17,11 @@
+  * External dependencies
+  */
+ import { getTotalDuration } from '@googleforcreators/animation';
++
+ /**
+  * Internal dependencies
+  */
+-import { DEFAULT_PAGE_DURATION } from '../../constants';
++import { DEFAULT_PAGE_DURATION } from '../constants';
+ import getLongestMediaElement from './getLongestMediaElement';
+ 
+ function getAutoAdvanceAfter({
+diff --git a/packages/story-editor/src/output/utils/getLongestMediaElement.js b/packages/output/src/utils/getLongestMediaElement.js
+similarity index 100%
+rename from packages/story-editor/src/output/utils/getLongestMediaElement.js
+rename to packages/output/src/utils/getLongestMediaElement.js
+diff --git a/packages/story-editor/src/output/utils/getPreloadResources.js b/packages/output/src/utils/getPreloadResources.js
+similarity index 100%
+rename from packages/story-editor/src/output/utils/getPreloadResources.js
+rename to packages/output/src/utils/getPreloadResources.js
+diff --git a/packages/story-editor/src/output/utils/getStoryMarkup.js b/packages/output/src/utils/getStoryMarkup.js
+similarity index 100%
+rename from packages/story-editor/src/output/utils/getStoryMarkup.js
+rename to packages/output/src/utils/getStoryMarkup.js
+diff --git a/packages/story-editor/src/output/utils/getTextElementTagNames.js b/packages/output/src/utils/getTextElementTagNames.js
+similarity index 100%
+rename from packages/story-editor/src/output/utils/getTextElementTagNames.js
+rename to packages/output/src/utils/getTextElementTagNames.js
+diff --git a/packages/story-editor/src/output/utils/getUsedAmpExtensions.js b/packages/output/src/utils/getUsedAmpExtensions.js
+similarity index 100%
+rename from packages/story-editor/src/output/utils/getUsedAmpExtensions.js
+rename to packages/output/src/utils/getUsedAmpExtensions.js
+diff --git a/packages/story-editor/src/utils/isHexColorString.js b/packages/output/src/utils/isHexColorString.js
+similarity index 100%
+rename from packages/story-editor/src/utils/isHexColorString.js
+rename to packages/output/src/utils/isHexColorString.js
+diff --git a/packages/story-editor/src/output/utils/outlink.js b/packages/output/src/utils/outlink.js
+similarity index 100%
+rename from packages/story-editor/src/output/utils/outlink.js
+rename to packages/output/src/utils/outlink.js
+diff --git a/packages/story-editor/src/output/utils/styles.js b/packages/output/src/utils/styles.js
+similarity index 98%
+rename from packages/story-editor/src/output/utils/styles.js
+rename to packages/output/src/utils/styles.js
+index 8f91510bd..e2b4240cc 100644
+--- a/packages/story-editor/src/output/utils/styles.js
++++ b/packages/output/src/utils/styles.js
+@@ -18,12 +18,12 @@
+  * External dependencies
+  */
+ import { FULLBLEED_RATIO, PAGE_RATIO } from '@googleforcreators/units';
++import { theme } from '@googleforcreators/design-system';
+ 
+ /**
+  * Internal dependencies
+  */
+-import isHexColorString from '../../utils/isHexColorString';
+-import theme from '../../theme';
++import isHexColorString from './isHexColorString';
+ 
+ function CustomStyles() {
+   const safeToFullRatio = PAGE_RATIO / FULLBLEED_RATIO;
+diff --git a/packages/story-editor/src/output/utils/test/fontDeclarations.js b/packages/output/src/utils/test/fontDeclarations.js
+similarity index 100%
+rename from packages/story-editor/src/output/utils/test/fontDeclarations.js
+rename to packages/output/src/utils/test/fontDeclarations.js
+diff --git a/packages/story-editor/src/output/utils/test/getAutoAdvanceAfter.js b/packages/output/src/utils/test/getAutoAdvanceAfter.js
+similarity index 100%
+rename from packages/story-editor/src/output/utils/test/getAutoAdvanceAfter.js
+rename to packages/output/src/utils/test/getAutoAdvanceAfter.js
+diff --git a/packages/story-editor/src/output/utils/test/getLongestMediaElement.js b/packages/output/src/utils/test/getLongestMediaElement.js
+similarity index 100%
+rename from packages/story-editor/src/output/utils/test/getLongestMediaElement.js
+rename to packages/output/src/utils/test/getLongestMediaElement.js
+diff --git a/packages/story-editor/src/output/utils/test/getPreloadResources.js b/packages/output/src/utils/test/getPreloadResources.js
+similarity index 100%
+rename from packages/story-editor/src/output/utils/test/getPreloadResources.js
+rename to packages/output/src/utils/test/getPreloadResources.js
+diff --git a/packages/story-editor/src/output/utils/test/getStoryMarkup.js b/packages/output/src/utils/test/getStoryMarkup.js
+similarity index 100%
+rename from packages/story-editor/src/output/utils/test/getStoryMarkup.js
+rename to packages/output/src/utils/test/getStoryMarkup.js
+diff --git a/packages/story-editor/src/output/utils/test/getTextElementTagNames.js b/packages/output/src/utils/test/getTextElementTagNames.js
+similarity index 100%
+rename from packages/story-editor/src/output/utils/test/getTextElementTagNames.js
+rename to packages/output/src/utils/test/getTextElementTagNames.js
+diff --git a/packages/story-editor/src/output/utils/test/getUsedAmpExtensions.js b/packages/output/src/utils/test/getUsedAmpExtensions.js
+similarity index 100%
+rename from packages/story-editor/src/output/utils/test/getUsedAmpExtensions.js
+rename to packages/output/src/utils/test/getUsedAmpExtensions.js
+diff --git a/packages/rich-text/README.md b/packages/rich-text/README.md
+index 777d0f55c..1cc0a11be 100644
+--- a/packages/rich-text/README.md
++++ b/packages/rich-text/README.md
+@@ -1,4 +1,4 @@
+-# Rich-Text
++# Output
+ 
+ ---
+-A wrapper around `draft-js` and utilities for rich-text editor.
++A package for serialization of stories to AMP output
+diff --git a/packages/story-editor/package.json b/packages/story-editor/package.json
+index 5dbc9e859..9adc0614d 100644
+--- a/packages/story-editor/package.json
++++ b/packages/story-editor/package.json
+@@ -50,11 +50,13 @@
+     "@googleforcreators/media": "*",
+     "@googleforcreators/migration": "*",
+     "@googleforcreators/moveable": "*",
++    "@googleforcreators/output": "*",
+     "@googleforcreators/patterns": "*",
+     "@googleforcreators/react": "*",
+     "@googleforcreators/rich-text": "*",
+     "@googleforcreators/stickers": "*",
+     "@googleforcreators/templates": "*",
++    "@googleforcreators/test-utils": "*",
+     "@googleforcreators/text-sets": "*",
+     "@googleforcreators/tracking": "*",
+     "@googleforcreators/transform": "*",
+diff --git a/packages/story-editor/src/app/pageCanvas/test/usePageCanvas.js b/packages/story-editor/src/app/pageCanvas/test/usePageCanvas.js
+index f4b4470d1..95e4c2004 100644
+--- a/packages/story-editor/src/app/pageCanvas/test/usePageCanvas.js
++++ b/packages/story-editor/src/app/pageCanvas/test/usePageCanvas.js
+@@ -17,6 +17,7 @@
+  * External dependencies
+  */
+ import { act, renderHook } from '@testing-library/react-hooks';
++
+ /**
+  * Internal dependencies
+  */
+diff --git a/packages/story-editor/src/app/story/actions/test/useAutoSave.js b/packages/story-editor/src/app/story/actions/test/useAutoSave.js
+index 5f6df9ccf..7fba436e4 100644
+--- a/packages/story-editor/src/app/story/actions/test/useAutoSave.js
++++ b/packages/story-editor/src/app/story/actions/test/useAutoSave.js
+@@ -18,6 +18,7 @@
+  * External dependencies
+  */
+ import { renderHook, act } from '@testing-library/react-hooks';
++import { getStoryMarkup } from '@googleforcreators/output';
+ 
+ /**
+  * Internal dependencies
+@@ -25,9 +26,10 @@ import { renderHook, act } from '@testing-library/react-hooks';
+ import APIContext from '../../../api/context';
+ import ConfigContext from '../../../config/context';
+ import useAutoSave from '../useAutoSave';
+-import getStoryMarkup from '../../../../output/utils/getStoryMarkup';
+ 
+-jest.mock('../../../../output/utils/getStoryMarkup', () => jest.fn());
++jest.mock('@googleforcreators/output', () => ({
++  getStoryMarkup: jest.fn(),
++}));
+ 
+ function setup(args) {
+   const configValue = {
+diff --git a/packages/story-editor/src/app/story/storyTriggers/storyEvents/propTypes.js b/packages/story-editor/src/app/story/storyTriggers/storyEvents/propTypes.js
+index 5aa2c76a8..5480a44a0 100644
+--- a/packages/story-editor/src/app/story/storyTriggers/storyEvents/propTypes.js
++++ b/packages/story-editor/src/app/story/storyTriggers/storyEvents/propTypes.js
+@@ -17,11 +17,7 @@
+  * External dependencies
+  */
+ import PropTypes from 'prop-types';
+-
+-/**
+- * Internal dependencies
+- */
+-import storyPropType from '../../../../output/story';
++import { OutputStory as storyPropType } from '@web-stories-wp/output'; // @todo Doesn't look correct.
+ 
+ export const registerPropTypes = {
+   currentStory: storyPropType,
+diff --git a/packages/story-editor/src/app/story/utils/getStoryPropsToSave.js b/packages/story-editor/src/app/story/utils/getStoryPropsToSave.js
+index 51deac027..d1159675c 100644
+--- a/packages/story-editor/src/app/story/utils/getStoryPropsToSave.js
++++ b/packages/story-editor/src/app/story/utils/getStoryPropsToSave.js
+@@ -13,11 +13,15 @@
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  */
++/**
++ * External dependencies
++ */
++import { getStoryMarkup } from '@googleforcreators/output';
++
+ /**
+  * Internal dependencies
+  */
+ import objectPick from '../../../utils/objectPick';
+-import getStoryMarkup from '../../../output/utils/getStoryMarkup';
+ 
+ function getStoryPropsToSave({ story, pages, metadata, flags }) {
+   const { terms, ...propsFromStory } = objectPick(story, [
+diff --git a/packages/story-editor/src/app/story/utils/test/getStoryPropsToSave.js b/packages/story-editor/src/app/story/utils/test/getStoryPropsToSave.js
+index d0d86bfcb..3f374df41 100644
+--- a/packages/story-editor/src/app/story/utils/test/getStoryPropsToSave.js
++++ b/packages/story-editor/src/app/story/utils/test/getStoryPropsToSave.js
+@@ -13,13 +13,19 @@
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  */
++/**
++ * External dependencies
++ */
++import { getStoryMarkup } from '@googleforcreators/output';
++
+ /**
+  * Internal dependencies
+  */
+ import getStoryPropsToSave from '../getStoryPropsToSave';
+-import getStoryMarkup from '../../../../output/utils/getStoryMarkup';
+ 
+-jest.mock('../../../../output/utils/getStoryMarkup', () => jest.fn());
++jest.mock('@googleforcreators/output', () => ({
++  getStoryMarkup: () => jest.fn(),
++}));
+ 
+ describe('getStoryPropsToSave', () => {
+   it('should return correct story properties', () => {
+diff --git a/packages/story-editor/src/components/canvas/pageAttachment/test/pageAttachment.js b/packages/story-editor/src/components/canvas/pageAttachment/test/pageAttachment.js
+index 794e5b37b..68c6383b8 100644
+--- a/packages/story-editor/src/components/canvas/pageAttachment/test/pageAttachment.js
++++ b/packages/story-editor/src/components/canvas/pageAttachment/test/pageAttachment.js
+@@ -18,13 +18,13 @@
+  * External dependencies
+  */
+ import { screen } from '@testing-library/react';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+ import PageAttachment from '..';
+ import CanvasContext from '../../../../app/canvas/context';
+-import { renderWithTheme } from '../../../../testUtils';
+ import StoryContext from '../../../../app/story/context';
+ import { ConfigProvider } from '../../../../app/config';
+ import getDefaultConfig from '../../../../getDefaultConfig';
+diff --git a/packages/story-editor/src/components/colorPicker/test/colorPicker/_utils.js b/packages/story-editor/src/components/colorPicker/test/colorPicker/_utils.js
+index c49838e99..1ba5f57d6 100644
+--- a/packages/story-editor/src/components/colorPicker/test/colorPicker/_utils.js
++++ b/packages/story-editor/src/components/colorPicker/test/colorPicker/_utils.js
+@@ -19,13 +19,13 @@
+  */
+ import { screen, within } from '@testing-library/react';
+ import { ThemeProvider } from 'styled-components';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+ import theme from '../../../../theme';
+ import ColorPicker from '../..';
+-import { renderWithTheme } from '../../../../testUtils';
+ 
+ function arrange(customProps = {}) {
+   const onChange = jest.fn();
+diff --git a/packages/story-editor/src/components/colorPicker/test/colorPicker/addStopByPointer.js b/packages/story-editor/src/components/colorPicker/test/colorPicker/addStopByPointer.js
+index 420556963..789a28ed3 100644
+--- a/packages/story-editor/src/components/colorPicker/test/colorPicker/addStopByPointer.js
++++ b/packages/story-editor/src/components/colorPicker/test/colorPicker/addStopByPointer.js
+@@ -18,11 +18,11 @@
+  * External dependencies
+  */
+ import { waitFor } from '@testing-library/react';
++import { firePointerEvent } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+-import { firePointerEvent } from '../../../../testUtils';
+ import { LINE_LENGTH } from '../../constants';
+ import { arrange } from './_utils';
+ 
+diff --git a/packages/story-editor/src/components/colorPicker/test/colorPicker/colorInteraction.js b/packages/story-editor/src/components/colorPicker/test/colorPicker/colorInteraction.js
+index 3dc71e6e5..73ef1f197 100644
+--- a/packages/story-editor/src/components/colorPicker/test/colorPicker/colorInteraction.js
++++ b/packages/story-editor/src/components/colorPicker/test/colorPicker/colorInteraction.js
+@@ -23,6 +23,7 @@ import {
+   BACKGROUND_TEXT_MODE,
+ } from '@googleforcreators/design-system';
+ import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+@@ -35,7 +36,6 @@ import {
+   getPagePreset,
+   areAllType,
+ } from '../../../../utils/presetUtils';
+-import { renderWithTheme } from '../../../../testUtils';
+ 
+ jest.mock('../../../../utils/presetUtils');
+ 
+diff --git a/packages/story-editor/src/components/colorPicker/test/colorPicker/moveStopByPointer.js b/packages/story-editor/src/components/colorPicker/test/colorPicker/moveStopByPointer.js
+index cdbff4b01..b97a85391 100644
+--- a/packages/story-editor/src/components/colorPicker/test/colorPicker/moveStopByPointer.js
++++ b/packages/story-editor/src/components/colorPicker/test/colorPicker/moveStopByPointer.js
+@@ -18,11 +18,11 @@
+  * External dependencies
+  */
+ import { fireEvent, waitFor } from '@testing-library/react';
++import { firePointerEvent } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+-import { firePointerEvent } from '../../../../testUtils';
+ import { LINE_LENGTH } from '../../constants';
+ import { arrange } from './_utils';
+ 
+diff --git a/packages/story-editor/src/components/floatingMenu/elements/test/mute.js b/packages/story-editor/src/components/floatingMenu/elements/test/mute.js
+index 0e4773282..3d3709d78 100644
+--- a/packages/story-editor/src/components/floatingMenu/elements/test/mute.js
++++ b/packages/story-editor/src/components/floatingMenu/elements/test/mute.js
+@@ -18,11 +18,11 @@
+  * External dependencies
+  */
+ import { fireEvent, screen } from '@testing-library/react';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+-import { renderWithTheme } from '../../../../testUtils';
+ import Mute from '../mute';
+ import mockUseVideoElementTranscoding from '../../../../app/media/utils/useVideoElementTranscoding';
+ 
+diff --git a/packages/story-editor/src/components/floatingMenu/elements/test/trim.js b/packages/story-editor/src/components/floatingMenu/elements/test/trim.js
+index d109c3116..1d28bd488 100644
+--- a/packages/story-editor/src/components/floatingMenu/elements/test/trim.js
++++ b/packages/story-editor/src/components/floatingMenu/elements/test/trim.js
+@@ -18,11 +18,11 @@
+  * External dependencies
+  */
+ import { fireEvent, screen } from '@testing-library/react';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+-import { renderWithTheme } from '../../../../testUtils';
+ import Trim from '../trim';
+ import mockUseVideoElementTranscoding from '../../../../app/media/utils/useVideoElementTranscoding';
+ 
+diff --git a/packages/story-editor/src/components/footer/carousel/skeletonPage.js b/packages/story-editor/src/components/footer/carousel/skeletonPage.js
+index bd1f57f1a..d5fc94788 100644
+--- a/packages/story-editor/src/components/footer/carousel/skeletonPage.js
++++ b/packages/story-editor/src/components/footer/carousel/skeletonPage.js
+@@ -24,11 +24,11 @@ import {
+   getSolidFromHex,
+ } from '@googleforcreators/patterns';
+ import { getDefinitionForType } from '@googleforcreators/elements';
++import { isHexColorString } from '@googleforcreators/output';
+ 
+ /**
+  * Internal dependencies
+  */
+-import isHexColorString from '../../../utils/isHexColorString';
+ import useCarousel from './useCarousel';
+ 
+ const EmptyPage = styled.li.attrs({ role: 'presentation' })`
+diff --git a/packages/story-editor/src/components/footer/gridview/test/gridview.js b/packages/story-editor/src/components/footer/gridview/test/gridview.js
+index d44942dad..10e7121be 100644
+--- a/packages/story-editor/src/components/footer/gridview/test/gridview.js
++++ b/packages/story-editor/src/components/footer/gridview/test/gridview.js
+@@ -18,13 +18,16 @@
+  * External dependencies
+  */
+ import { fireEvent } from '@testing-library/react';
++import {
++  queryByAriaLabel,
++  renderWithTheme,
++} from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+ import StoryContext from '../../../../app/story/context';
+ import GridView from '../gridView';
+-import { queryByAriaLabel, renderWithTheme } from '../../../../testUtils';
+ import { noop } from '../../../../utils/noop';
+ 
+ function setupGridView() {
+diff --git a/packages/story-editor/src/components/form/color/test/color.js b/packages/story-editor/src/components/form/color/test/color.js
+index 111145398..60a441630 100644
+--- a/packages/story-editor/src/components/form/color/test/color.js
++++ b/packages/story-editor/src/components/form/color/test/color.js
+@@ -19,12 +19,13 @@
+  */
+ import { fireEvent, screen } from '@testing-library/react';
+ import { createSolid } from '@googleforcreators/patterns';
++import { renderWithTheme } from '@googleforcreators/test-utils';
++
+ /**
+  * Internal dependencies
+  */
+ import Color from '../color';
+ import applyOpacityChange from '../applyOpacityChange';
+-import { renderWithTheme } from '../../../../testUtils';
+ import { ConfigProvider } from '../../../../app/config';
+ import getDefaultConfig from '../../../../getDefaultConfig';
+ 
+diff --git a/packages/story-editor/src/components/form/color/test/colorInput.js b/packages/story-editor/src/components/form/color/test/colorInput.js
+index 4ee2c6c3f..22ccaa453 100644
+--- a/packages/story-editor/src/components/form/color/test/colorInput.js
++++ b/packages/story-editor/src/components/form/color/test/colorInput.js
+@@ -22,11 +22,11 @@ import {
+   createSolid,
+   getPreviewText as getPreviewTextMock,
+ } from '@googleforcreators/patterns';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+-import { renderWithTheme } from '../../../../testUtils';
+ import ColorInput from '../colorInput';
+ import getPreviewStyleMock from '../getPreviewStyle';
+ import { StoryContext } from '../../../../app/story';
+diff --git a/packages/story-editor/src/components/form/color/test/opacityInput.js b/packages/story-editor/src/components/form/color/test/opacityInput.js
+index ce995440c..ecb2e4f83 100644
+--- a/packages/story-editor/src/components/form/color/test/opacityInput.js
++++ b/packages/story-editor/src/components/form/color/test/opacityInput.js
+@@ -22,13 +22,13 @@ import {
+   createSolid,
+   getPreviewText as getPreviewTextMock,
+ } from '@googleforcreators/patterns';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+ import OpacityInput from '../opacityInput';
+ import getPreviewOpacityMock from '../getPreviewOpacity';
+-import { renderWithTheme } from '../../../../testUtils';
+ 
+ jest.mock('../getPreviewOpacity', () => jest.fn());
+ jest.mock('@googleforcreators/patterns', () => ({
+diff --git a/packages/story-editor/src/components/form/test/radioGroup.js b/packages/story-editor/src/components/form/test/radioGroup.js
+index 4101d1634..bb9df0179 100644
+--- a/packages/story-editor/src/components/form/test/radioGroup.js
++++ b/packages/story-editor/src/components/form/test/radioGroup.js
+@@ -20,12 +20,12 @@
+ import { fireEvent, screen } from '@testing-library/react';
+ import '@testing-library/jest-dom/extend-expect';
+ import { __ } from '@googleforcreators/i18n';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+ import RadioGroup from '../radioGroup';
+-import { renderWithTheme } from '../../../testUtils';
+ 
+ describe('RadioGroup', () => {
+   const options = [
+diff --git a/packages/story-editor/src/components/form/test/switch.js b/packages/story-editor/src/components/form/test/switch.js
+index c77ec34b0..b423fe3a9 100644
+--- a/packages/story-editor/src/components/form/test/switch.js
++++ b/packages/story-editor/src/components/form/test/switch.js
+@@ -19,12 +19,12 @@
+  */
+ import { fireEvent, screen } from '@testing-library/react';
+ import '@testing-library/jest-dom/extend-expect';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+ import Switch from '../switch';
+-import { renderWithTheme } from '../../../testUtils';
+ 
+ describe('Switch', () => {
+   it('should render with passed default value', () => {
+diff --git a/packages/story-editor/src/components/header/buttons/test/preview.js b/packages/story-editor/src/components/header/buttons/test/preview.js
+index 28d1e4877..2a665787d 100644
+--- a/packages/story-editor/src/components/header/buttons/test/preview.js
++++ b/packages/story-editor/src/components/header/buttons/test/preview.js
+@@ -18,13 +18,13 @@
+  * External dependencies
+  */
+ import { fireEvent, screen } from '@testing-library/react';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+ import StoryContext from '../../../../app/story/context';
+ import MediaContext from '../../../../app/media/context';
+-import { renderWithTheme } from '../../../../testUtils';
+ import PreviewButton from '../preview';
+ 
+ function arrange({
+diff --git a/packages/story-editor/src/components/header/buttons/test/publish.js b/packages/story-editor/src/components/header/buttons/test/publish.js
+index ad6220f9c..cb0a71850 100644
+--- a/packages/story-editor/src/components/header/buttons/test/publish.js
++++ b/packages/story-editor/src/components/header/buttons/test/publish.js
+@@ -24,6 +24,7 @@ import {
+ } from '@testing-library/react';
+ import MockDate from 'mockdate';
+ import { setAppElement } from '@googleforcreators/design-system';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+@@ -31,7 +32,6 @@ import { setAppElement } from '@googleforcreators/design-system';
+ import StoryContext from '../../../../app/story/context';
+ import useIsUploadingToStory from '../../../../utils/useIsUploadingToStory';
+ import ConfigContext from '../../../../app/config/context';
+-import { renderWithTheme } from '../../../../testUtils';
+ import { CheckpointContext, PPC_CHECKPOINT_STATE } from '../../../checklist';
+ import PublishButton from '../publish';
+ 
+diff --git a/packages/story-editor/src/components/header/buttons/test/switchToDraft.js b/packages/story-editor/src/components/header/buttons/test/switchToDraft.js
+index b42c6dbd3..e78db0770 100644
+--- a/packages/story-editor/src/components/header/buttons/test/switchToDraft.js
++++ b/packages/story-editor/src/components/header/buttons/test/switchToDraft.js
+@@ -18,13 +18,13 @@
+  * External dependencies
+  */
+ import { fireEvent, screen } from '@testing-library/react';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+ import StoryContext from '../../../../app/story/context';
+ import useIsUploadingToStory from '../../../../utils/useIsUploadingToStory';
+-import { renderWithTheme } from '../../../../testUtils';
+ import { CheckpointContext } from '../../../checklist';
+ import SwitchToDraftButton from '../switchToDraft';
+ 
+diff --git a/packages/story-editor/src/components/header/buttons/test/update.js b/packages/story-editor/src/components/header/buttons/test/update.js
+index 2b8adc2ec..983d2ade4 100644
+--- a/packages/story-editor/src/components/header/buttons/test/update.js
++++ b/packages/story-editor/src/components/header/buttons/test/update.js
+@@ -19,6 +19,7 @@
+  */
+ import { fireEvent, screen } from '@testing-library/react';
+ import MockDate from 'mockdate';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+@@ -26,7 +27,6 @@ import MockDate from 'mockdate';
+ import StoryContext from '../../../../app/story/context';
+ import MediaContext from '../../../../app/media/context';
+ import HistoryContext from '../../../../app/history/context';
+-import { renderWithTheme } from '../../../../testUtils';
+ import UpdateButton from '../update';
+ 
+ function arrange({
+diff --git a/packages/story-editor/src/components/library/common/test/searchInput.js b/packages/story-editor/src/components/library/common/test/searchInput.js
+index f87163953..b4346470b 100644
+--- a/packages/story-editor/src/components/library/common/test/searchInput.js
++++ b/packages/story-editor/src/components/library/common/test/searchInput.js
+@@ -18,12 +18,12 @@
+  * External dependencies
+  */
+ import { fireEvent, screen } from '@testing-library/react';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+ import { SearchInput } from '..';
+-import { renderWithTheme } from '../../../../testUtils';
+ 
+ jest.useFakeTimers();
+ 
+diff --git a/packages/story-editor/src/components/library/panes/media/common/test/accessibility.js b/packages/story-editor/src/components/library/panes/media/common/test/accessibility.js
+index afa8d9b91..9f5949fd3 100644
+--- a/packages/story-editor/src/components/library/panes/media/common/test/accessibility.js
++++ b/packages/story-editor/src/components/library/panes/media/common/test/accessibility.js
+@@ -18,11 +18,12 @@
+  * External dependencies
+  */
+ import { axe } from 'jest-axe';
++import { renderWithTheme } from '@googleforcreators/test-utils';
++
+ /**
+  * Internal dependencies
+  */
+ import { useCanvas, useCanvasBoundingBox } from '../../../../../../app';
+-import { renderWithTheme } from '../../../../../../testUtils';
+ import Attribution from '../attribution';
+ import MediaElement from '../mediaElement';
+ import { useLocalMedia } from '../../../../../../app/media';
+diff --git a/packages/story-editor/src/components/library/panes/media/common/test/paginatedMediaGallery.js b/packages/story-editor/src/components/library/panes/media/common/test/paginatedMediaGallery.js
+index 04be9a3c2..f0daa742a 100644
+--- a/packages/story-editor/src/components/library/panes/media/common/test/paginatedMediaGallery.js
++++ b/packages/story-editor/src/components/library/panes/media/common/test/paginatedMediaGallery.js
+@@ -18,6 +18,7 @@
+  * External dependencies
+  */
+ import { waitFor, screen } from '@testing-library/react';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+@@ -27,7 +28,6 @@ import {
+   useCanvasBoundingBox,
+   useLocalMedia,
+ } from '../../../../../../app';
+-import { renderWithTheme } from '../../../../../../testUtils';
+ import PaginatedMediaGallery from '../paginatedMediaGallery';
+ 
+ jest.mock('../../../../../../app/media');
+diff --git a/packages/story-editor/src/components/library/panes/media/local/test/videoOptimizationDialog.js b/packages/story-editor/src/components/library/panes/media/local/test/videoOptimizationDialog.js
+index 3da1e2af8..0532e7cc7 100644
+--- a/packages/story-editor/src/components/library/panes/media/local/test/videoOptimizationDialog.js
++++ b/packages/story-editor/src/components/library/panes/media/local/test/videoOptimizationDialog.js
+@@ -23,6 +23,7 @@ import {
+   LOCAL_STORAGE_PREFIX,
+   setAppElement,
+ } from '@googleforcreators/design-system';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+@@ -30,7 +31,6 @@ import {
+ import CurrentUserContext from '../../../../../../app/currentUser/context';
+ import MediaContext from '../../../../../../app/media/context';
+ import VideoOptimizationDialog from '../videoOptimizationDialog';
+-import { renderWithTheme } from '../../../../../../testUtils';
+ 
+ const updateCurrentUser = jest.fn();
+ const storageKey = LOCAL_STORAGE_PREFIX.VIDEO_OPTIMIZATION_DIALOG_DISMISSED;
+diff --git a/packages/story-editor/src/components/library/panes/media/media3p/test/accessibility.js b/packages/story-editor/src/components/library/panes/media/media3p/test/accessibility.js
+index 3170ef134..725ea240a 100644
+--- a/packages/story-editor/src/components/library/panes/media/media3p/test/accessibility.js
++++ b/packages/story-editor/src/components/library/panes/media/media3p/test/accessibility.js
+@@ -18,13 +18,14 @@
+  * External dependencies
+  */
+ import { axe } from 'jest-axe';
++import { renderWithTheme } from '@googleforcreators/test-utils';
++
+ /**
+  * Internal dependencies
+  */
+ import Media3pIcon from '../media3pIcon';
+ import ProviderTab from '../providerTab';
+ import PaginatedMediaGallery from '../../common/paginatedMediaGallery';
+-import { renderWithTheme } from '../../../../../../testUtils';
+ import { noop } from '../../../../../../utils/noop';
+ import {
+   useCanvas,
+diff --git a/packages/story-editor/src/components/library/panes/media/media3p/test/media3pPane.js b/packages/story-editor/src/components/library/panes/media/media3p/test/media3pPane.js
+index 7c021253f..cc34ed5f8 100644
+--- a/packages/story-editor/src/components/library/panes/media/media3p/test/media3pPane.js
++++ b/packages/story-editor/src/components/library/panes/media/media3p/test/media3pPane.js
+@@ -21,12 +21,12 @@ import PropTypes from 'prop-types';
+ import { fireEvent, screen } from '@testing-library/react';
+ import { registerElementType } from '@googleforcreators/elements';
+ import { elementTypes } from '@googleforcreators/element-library';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+ import { createResource } from '@googleforcreators/media';
+-import { renderWithTheme } from '../../../../../../testUtils';
+ import useLibrary from '../../../../useLibrary';
+ import useConfig from '../../../../../../app/config/useConfig';
+ import useMedia from '../../../../../../app/media/useMedia';
+diff --git a/packages/story-editor/src/components/library/panes/text/textSets/test/textSet.js b/packages/story-editor/src/components/library/panes/text/textSets/test/textSet.js
+index 27a9c3fcd..d2412fa4e 100644
+--- a/packages/story-editor/src/components/library/panes/text/textSets/test/textSet.js
++++ b/packages/story-editor/src/components/library/panes/text/textSets/test/textSet.js
+@@ -19,6 +19,7 @@
+  */
+ import { UnitsProvider, getBox, PAGE_RATIO } from '@googleforcreators/units';
+ import { TransformContext } from '@googleforcreators/transform';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+@@ -28,7 +29,6 @@ import FontContext from '../../../../../../app/font/context';
+ import APIContext from '../../../../../../app/api/context';
+ import ConfigContext from '../../../../../../app/config/context';
+ import TextSet from '../textSet';
+-import { renderWithTheme } from '../../../../../../testUtils';
+ import { TEXT_SET_SIZE } from '../../../../../../constants';
+ import StoryContext from '../../../../../../app/story/context';
+ import { LayoutProvider } from '../../../../../../app/layout';
+diff --git a/packages/story-editor/src/components/library/panes/text/textSets/test/textSetsPane.js b/packages/story-editor/src/components/library/panes/text/textSets/test/textSetsPane.js
+index 8a1d22e6c..e9e8cbb32 100644
+--- a/packages/story-editor/src/components/library/panes/text/textSets/test/textSetsPane.js
++++ b/packages/story-editor/src/components/library/panes/text/textSets/test/textSetsPane.js
+@@ -20,6 +20,7 @@
+ import { useRef } from '@googleforcreators/react';
+ import { screen } from '@testing-library/react';
+ import { TransformContext } from '@googleforcreators/transform';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+@@ -28,7 +29,6 @@ import LibraryContext from '../../../../context';
+ import FontContext from '../../../../../../app/font/context';
+ import APIContext from '../../../../../../app/api/context';
+ import ConfigContext from '../../../../../../app/config/context';
+-import { renderWithTheme } from '../../../../../../testUtils';
+ import StoryContext from '../../../../../../app/story/context';
+ import TextSetsPane from '../textSetsPane';
+ 
+diff --git a/packages/story-editor/src/components/library/test/_utils/index.js b/packages/story-editor/src/components/library/test/_utils/index.js
+index c80b7269d..6dbdb085d 100644
+--- a/packages/story-editor/src/components/library/test/_utils/index.js
++++ b/packages/story-editor/src/components/library/test/_utils/index.js
+@@ -18,6 +18,7 @@
+  * External dependencies
+  */
+ import { act } from '@testing-library/react';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+@@ -27,7 +28,6 @@ import { MediaProvider } from '../../../../app/media';
+ import { ConfigProvider } from '../../../../app/config';
+ import { FontProvider } from '../../../../app/font';
+ import APIContext from '../../../../app/api/context';
+-import { renderWithTheme } from '../../../../testUtils';
+ 
+ export async function arrange({ mediaResponse = [] }) {
+   const config = {
+diff --git a/packages/story-editor/src/components/library/test/deleteDialog.js b/packages/story-editor/src/components/library/test/deleteDialog.js
+index 5d0ff81d7..6f8764653 100644
+--- a/packages/story-editor/src/components/library/test/deleteDialog.js
++++ b/packages/story-editor/src/components/library/test/deleteDialog.js
+@@ -22,12 +22,12 @@ import {
+   setAppElement,
+   SnackbarContext,
+ } from '@googleforcreators/design-system';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+ import DeleteDialog from '../panes/media/local/deleteDialog';
+-import { renderWithTheme } from '../../../testUtils';
+ import ApiContext from '../../../app/api/context';
+ import MediaContext from '../../../app/media/context';
+ 
+diff --git a/packages/story-editor/src/components/library/test/mediaEditDialog.js b/packages/story-editor/src/components/library/test/mediaEditDialog.js
+index 5d6b1b28b..698e4a54b 100644
+--- a/packages/story-editor/src/components/library/test/mediaEditDialog.js
++++ b/packages/story-editor/src/components/library/test/mediaEditDialog.js
+@@ -22,11 +22,12 @@ import {
+   SnackbarContext,
+   setAppElement,
+ } from '@googleforcreators/design-system';
++import { renderWithTheme } from '@googleforcreators/test-utils';
++
+ /**
+  * Internal dependencies
+  */
+ import MediaEditDialog from '../panes/media/local/mediaEditDialog';
+-import { renderWithTheme } from '../../../testUtils';
+ import ApiContext from '../../../app/api/context';
+ import MediaContext from '../../../app/media/context';
+ 
+diff --git a/packages/story-editor/src/components/library/test/mediaElement.js b/packages/story-editor/src/components/library/test/mediaElement.js
+index 3b705296c..2e49138d2 100644
+--- a/packages/story-editor/src/components/library/test/mediaElement.js
++++ b/packages/story-editor/src/components/library/test/mediaElement.js
+@@ -18,12 +18,12 @@
+  * External dependencies
+  */
+ import { axe } from 'jest-axe';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+ import MediaElement from '../panes/media/common/mediaElement';
+-import { renderWithTheme } from '../../../testUtils';
+ import CanvasContext from '../../../app/canvas/context';
+ import StoryContext from '../../../app/story/context';
+ import { useLocalMedia } from '../../../app/media';
+diff --git a/packages/story-editor/src/components/library/test/shapes/shapePreview.js b/packages/story-editor/src/components/library/test/shapes/shapePreview.js
+index 485b24906..c2cea2c62 100644
+--- a/packages/story-editor/src/components/library/test/shapes/shapePreview.js
++++ b/packages/story-editor/src/components/library/test/shapes/shapePreview.js
+@@ -19,12 +19,12 @@
+  */
+ import { screen } from '@testing-library/react';
+ import { UnitsProvider, PAGE_RATIO } from '@googleforcreators/units';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+ import ShapePreview from '../../panes/shapes/shapePreview';
+-import { renderWithTheme } from '../../../../testUtils';
+ import useLibrary from '../../useLibrary';
+ import { TEXT_SET_SIZE } from '../../../../constants';
+ import CanvasContext from '../../../../app/canvas/context';
+diff --git a/packages/story-editor/src/components/library/test/shapes/stickerPreview.js b/packages/story-editor/src/components/library/test/shapes/stickerPreview.js
+index 7e37ab4d3..fdfee5bd3 100644
+--- a/packages/story-editor/src/components/library/test/shapes/stickerPreview.js
++++ b/packages/story-editor/src/components/library/test/shapes/stickerPreview.js
+@@ -20,12 +20,12 @@
+ import { screen } from '@testing-library/react';
+ import { UnitsProvider, PAGE_RATIO } from '@googleforcreators/units';
+ import STICKERS from '@googleforcreators/stickers';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+ import StickerPreview from '../../panes/shapes/stickerPreview';
+-import { renderWithTheme } from '../../../../testUtils';
+ import useLibrary from '../../useLibrary';
+ import { TEXT_SET_SIZE } from '../../../../constants';
+ import CanvasContext from '../../../../app/canvas/context';
+diff --git a/packages/story-editor/src/components/library/test/termsDialog.js b/packages/story-editor/src/components/library/test/termsDialog.js
+index 3a5984ec5..322700876 100644
+--- a/packages/story-editor/src/components/library/test/termsDialog.js
++++ b/packages/story-editor/src/components/library/test/termsDialog.js
+@@ -36,12 +36,12 @@ import {
+   localStore,
+   LOCAL_STORAGE_PREFIX,
+ } from '@googleforcreators/design-system';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+ import TermsDialog from '../panes/media/media3p/termsDialog';
+-import { renderWithTheme } from '../../../testUtils';
+ 
+ jest.mock('@googleforcreators/design-system', () => ({
+   __esModule: true,
+diff --git a/packages/story-editor/src/components/library/test/text/textPane.js b/packages/story-editor/src/components/library/test/text/textPane.js
+index adb8fb929..000aee644 100644
+--- a/packages/story-editor/src/components/library/test/text/textPane.js
++++ b/packages/story-editor/src/components/library/test/text/textPane.js
+@@ -21,11 +21,11 @@ import { fireEvent, screen, waitFor } from '@testing-library/react';
+ import { FlagsProvider } from 'flagged';
+ import { PAGE_RATIO, UnitsProvider } from '@googleforcreators/units';
+ import { CURATED_FONT_NAMES } from '@googleforcreators/fonts';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+-import { renderWithTheme } from '../../../../testUtils';
+ import FontContext from '../../../../app/font/context';
+ import useFont from '../../../../app/font/useFont';
+ import fontsListResponse from '../../../panels/design/textStyle/test/fontsResponse.json';
+diff --git a/packages/story-editor/src/components/panels/design/animation/test/directionRadioInput.js b/packages/story-editor/src/components/panels/design/animation/test/directionRadioInput.js
+index 51f71ff25..2074fd812 100644
+--- a/packages/story-editor/src/components/panels/design/animation/test/directionRadioInput.js
++++ b/packages/story-editor/src/components/panels/design/animation/test/directionRadioInput.js
+@@ -21,11 +21,11 @@ import { useState } from '@googleforcreators/react';
+ import { fireEvent, screen } from '@testing-library/react';
+ import PropTypes from 'prop-types';
+ import { DIRECTION, SCALE_DIRECTION } from '@googleforcreators/animation';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+-import { renderWithTheme } from '../../../../../testUtils';
+ import { DirectionRadioInput } from '../directionRadioInput';
+ 
+ function DirectionRadioInputUncontrolled({ onChange, directions }) {
+diff --git a/packages/story-editor/src/components/panels/design/animation/test/effectInput.js b/packages/story-editor/src/components/panels/design/animation/test/effectInput.js
+index af98387d3..ecfe99e4f 100644
+--- a/packages/story-editor/src/components/panels/design/animation/test/effectInput.js
++++ b/packages/story-editor/src/components/panels/design/animation/test/effectInput.js
+@@ -19,11 +19,11 @@
+  */
+ import { screen } from '@testing-library/react';
+ import { FIELD_TYPES } from '@googleforcreators/animation';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+-import { renderWithTheme } from '../../../../../testUtils';
+ import EffectInput from '../effectInput';
+ 
+ describe('<EffectInput />', () => {
+diff --git a/packages/story-editor/src/components/panels/design/pageBackgroundAudio/test/backgroundAudio.js b/packages/story-editor/src/components/panels/design/pageBackgroundAudio/test/backgroundAudio.js
+index 4cc14b013..c65a33699 100644
+--- a/packages/story-editor/src/components/panels/design/pageBackgroundAudio/test/backgroundAudio.js
++++ b/packages/story-editor/src/components/panels/design/pageBackgroundAudio/test/backgroundAudio.js
+@@ -19,13 +19,13 @@
+  */
+ import { screen } from '@testing-library/react';
+ import { FlagsProvider } from 'flagged';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+ import ConfigContext from '../../../../../app/config/context';
+ import StoryContext from '../../../../../app/story/context';
+-import { renderWithTheme } from '../../../../../testUtils';
+ import BackgroundAudioPanel from '../backgroundAudio';
+ 
+ function MediaUpload({ render }) {
+diff --git a/packages/story-editor/src/components/panels/design/textStyle/test/fontPicker.js b/packages/story-editor/src/components/panels/design/textStyle/test/fontPicker.js
+index afd2ea5bd..a70bdbb17 100644
+--- a/packages/story-editor/src/components/panels/design/textStyle/test/fontPicker.js
++++ b/packages/story-editor/src/components/panels/design/textStyle/test/fontPicker.js
+@@ -20,12 +20,12 @@
+ import { fireEvent, waitFor, screen } from '@testing-library/react';
+ import { Datalist } from '@googleforcreators/design-system';
+ import { CURATED_FONT_NAMES } from '@googleforcreators/fonts';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+ import FontContext from '../../../../../app/font/context';
+-import { renderWithTheme } from '../../../../../testUtils';
+ import fontsListResponse from './fontsResponse';
+ 
+ jest.mock('@googleforcreators/design-system', () => ({
+diff --git a/packages/story-editor/src/components/panels/design/textStyle/test/stylePresetPanel.js b/packages/story-editor/src/components/panels/design/textStyle/test/stylePresetPanel.js
+index a77b7df55..11e84196a 100644
+--- a/packages/story-editor/src/components/panels/design/textStyle/test/stylePresetPanel.js
++++ b/packages/story-editor/src/components/panels/design/textStyle/test/stylePresetPanel.js
+@@ -20,6 +20,7 @@
+ import { fireEvent, screen } from '@testing-library/react';
+ import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
+ import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+@@ -27,7 +28,6 @@ import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
+ import StylePresetPanel from '../stylePresets';
+ import StoryContext from '../../../../../app/story/context';
+ import { getTextPresets, areAllType } from '../../../../../utils/presetUtils';
+-import { renderWithTheme } from '../../../../../testUtils';
+ 
+ jest.mock('../../../../../utils/presetUtils');
+ 
+diff --git a/packages/story-editor/src/components/panels/document/backgroundAudio/test/backgroundAudio.js b/packages/story-editor/src/components/panels/document/backgroundAudio/test/backgroundAudio.js
+index 4fc727e65..6cfd7bd91 100644
+--- a/packages/story-editor/src/components/panels/document/backgroundAudio/test/backgroundAudio.js
++++ b/packages/story-editor/src/components/panels/document/backgroundAudio/test/backgroundAudio.js
+@@ -18,13 +18,13 @@
+  * External dependencies
+  */
+ import { screen } from '@testing-library/react';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+ import ConfigContext from '../../../../../app/config/context';
+ import StoryContext from '../../../../../app/story/context';
+-import { renderWithTheme } from '../../../../../testUtils';
+ import BackgroundAudioPanel from '../backgroundAudio';
+ 
+ function MediaUpload({ render }) {
+diff --git a/packages/story-editor/src/components/panels/document/excerpt/test/excerpt.js b/packages/story-editor/src/components/panels/document/excerpt/test/excerpt.js
+index df56382c5..b51c5d5cc 100644
+--- a/packages/story-editor/src/components/panels/document/excerpt/test/excerpt.js
++++ b/packages/story-editor/src/components/panels/document/excerpt/test/excerpt.js
+@@ -18,12 +18,12 @@
+  * External dependencies
+  */
+ import { screen } from '@testing-library/react';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+ import StoryContext from '../../../../../app/story/context';
+-import { renderWithTheme } from '../../../../../testUtils';
+ import ExcerptPanel, { EXCERPT_MAX_LENGTH } from '../excerpt';
+ 
+ function arrange() {
+diff --git a/packages/story-editor/src/components/panels/document/pageAdvancement/test/pageAdvancement.js b/packages/story-editor/src/components/panels/document/pageAdvancement/test/pageAdvancement.js
+index 81fa941c6..f7bca672d 100644
+--- a/packages/story-editor/src/components/panels/document/pageAdvancement/test/pageAdvancement.js
++++ b/packages/story-editor/src/components/panels/document/pageAdvancement/test/pageAdvancement.js
+@@ -18,12 +18,12 @@
+  * External dependencies
+  */
+ import { fireEvent, waitFor, screen } from '@testing-library/react';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+ import StoryContext from '../../../../../app/story/context';
+-import { renderWithTheme } from '../../../../../testUtils';
+ import PageAdvancementPanel from '../pageAdvancement';
+ 
+ function arrange(configs = {}) {
+diff --git a/packages/story-editor/src/components/panels/document/slug/test/slug.js b/packages/story-editor/src/components/panels/document/slug/test/slug.js
+index 3683fad27..b4c796f15 100644
+--- a/packages/story-editor/src/components/panels/document/slug/test/slug.js
++++ b/packages/story-editor/src/components/panels/document/slug/test/slug.js
+@@ -18,12 +18,12 @@
+  * External dependencies
+  */
+ import { fireEvent, waitFor, screen } from '@testing-library/react';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+ import StoryContext from '../../../../../app/story/context';
+-import { renderWithTheme } from '../../../../../testUtils';
+ import SlugPanel, { MIN_MAX } from '../slug';
+ 
+ function arrange(storyConfig = {}) {
+diff --git a/packages/story-editor/src/components/panels/document/taxonomies/test/taxonomies.js b/packages/story-editor/src/components/panels/document/taxonomies/test/taxonomies.js
+index 3c0607075..38dbc2a81 100644
+--- a/packages/story-editor/src/components/panels/document/taxonomies/test/taxonomies.js
++++ b/packages/story-editor/src/components/panels/document/taxonomies/test/taxonomies.js
+@@ -18,12 +18,12 @@
+  * External dependencies
+  */
+ import { screen } from '@testing-library/react';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+ import TaxonomyContext from '../../../../../app/taxonomy/context';
+-import { renderWithTheme } from '../../../../../testUtils';
+ import TaxonomiesPanel from '../taxonomies';
+ import { StoryContext } from '../../../../../app/story';
+ 
+diff --git a/packages/story-editor/src/components/panels/panel/shared/test/handle.js b/packages/story-editor/src/components/panels/panel/shared/test/handle.js
+index 2abc0a691..a73895d9e 100644
+--- a/packages/story-editor/src/components/panels/panel/shared/test/handle.js
++++ b/packages/story-editor/src/components/panels/panel/shared/test/handle.js
+@@ -18,12 +18,12 @@
+  * External dependencies
+  */
+ import { fireEvent, screen } from '@testing-library/react';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+ import DragHandle from '../handle';
+-import { renderWithTheme } from '../../../../../testUtils';
+ import { noop } from '../../../../../utils/noop';
+ 
+ const handleHeightChange = jest.fn();
+diff --git a/packages/story-editor/src/components/panels/panel/test/simplePanel.js b/packages/story-editor/src/components/panels/panel/test/simplePanel.js
+index c7df3862a..8b90105ad 100644
+--- a/packages/story-editor/src/components/panels/panel/test/simplePanel.js
++++ b/packages/story-editor/src/components/panels/panel/test/simplePanel.js
+@@ -18,12 +18,12 @@
+  * External dependencies
+  */
+ import { screen } from '@testing-library/react';
++import { renderWithTheme } from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+ import SimplePanel from '../simplePanel';
+-import { renderWithTheme } from '../../../../testUtils';
+ 
+ describe('Panels/Panel/SimplePanel', () => {
+   it('should render <SimplePanel /> (collapsed)', () => {
+diff --git a/packages/story-editor/src/components/panels/shared/test/linkRelations.js b/packages/story-editor/src/components/panels/shared/test/linkRelations.js
+index fbde3c827..a6ec00fce 100644
+--- a/packages/story-editor/src/components/panels/shared/test/linkRelations.js
++++ b/packages/story-editor/src/components/panels/shared/test/linkRelations.js
+@@ -18,10 +18,11 @@
+  * External dependencies
+  */
+ import { screen } from '@testing-library/react';
++import { renderWithTheme } from '@googleforcreators/test-utils';
++
+ /**
+  * Internal dependencies
+  */
+-import { renderWithTheme } from '../../../../testUtils';
+ import LinkRelations from '../linkRelations';
+ 
+ /**
+diff --git a/packages/story-editor/src/components/publishModal/test/content.js b/packages/story-editor/src/components/publishModal/test/content.js
+index 695a3544d..d59313247 100644
+--- a/packages/story-editor/src/components/publishModal/test/content.js
++++ b/packages/story-editor/src/components/publishModal/test/content.js
+@@ -18,12 +18,13 @@
+  */
+ import { fireEvent, screen } from '@testing-library/react';
+ import { axe } from 'jest-axe';
++import { renderWithTheme } from '@googleforcreators/test-utils';
++
+ /**
+  * Internal dependencies
+  */
+ import { ConfigContext } from '../../../app/config';
+ import StoryContext from '../../../app/story/context';
+-import renderWithTheme from '../../../testUtils/renderWithTheme';
+ import { noop } from '../../../utils/noop';
+ import { ChecklistCountProvider } from '../../checklist';
+ import InspectorContext from '../../inspector/context';
+diff --git a/packages/story-editor/src/components/publishModal/test/header.js b/packages/story-editor/src/components/publishModal/test/header.js
+index ce5cd3123..985be3f27 100644
+--- a/packages/story-editor/src/components/publishModal/test/header.js
++++ b/packages/story-editor/src/components/publishModal/test/header.js
+@@ -18,11 +18,12 @@
+  */
+ import { fireEvent, screen } from '@testing-library/react';
+ import { axe } from 'jest-axe';
++import { renderWithTheme } from '@googleforcreators/test-utils';
++
+ /**
+  * Internal dependencies
+  */
+ import { StoryContext } from '../../../app/story';
+-import renderWithTheme from '../../../testUtils/renderWithTheme';
+ import { CheckpointContext } from '../../checklist';
+ import Header from '../header';
+ 
+diff --git a/packages/story-editor/src/components/publishModal/test/mainStoryInfo.js b/packages/story-editor/src/components/publishModal/test/mainStoryInfo.js
+index 8244bd4bc..a97437f55 100644
+--- a/packages/story-editor/src/components/publishModal/test/mainStoryInfo.js
++++ b/packages/story-editor/src/components/publishModal/test/mainStoryInfo.js
+@@ -18,11 +18,12 @@
+  */
+ import { fireEvent, screen } from '@testing-library/react';
+ import { axe } from 'jest-axe';
++import { renderWithTheme } from '@googleforcreators/test-utils';
++
+ /**
+  * Internal dependencies
+  */
+ import StoryContext from '../../../app/story/context';
+-import renderWithTheme from '../../../testUtils/renderWithTheme';
+ import { ChecklistCountProvider } from '../../checklist';
+ import InspectorContext from '../../inspector/context';
+ import { INPUT_KEYS } from '../constants';
+diff --git a/packages/story-editor/src/components/publishModal/test/storyPreview.js b/packages/story-editor/src/components/publishModal/test/storyPreview.js
+index 7b7fc7d6c..90e5cc762 100644
+--- a/packages/story-editor/src/components/publishModal/test/storyPreview.js
++++ b/packages/story-editor/src/components/publishModal/test/storyPreview.js
+@@ -18,10 +18,11 @@
+  */
+ import { fireEvent, screen } from '@testing-library/react';
+ import { axe } from 'jest-axe';
++import { renderWithTheme } from '@googleforcreators/test-utils';
++
+ /**
+  * Internal dependencies
+  */
+-import renderWithTheme from '../../../testUtils/renderWithTheme';
+ import { StoryContext } from '../../../app/story';
+ import { ConfigContext } from '../../../app/config';
+ import StoryPreview from '../content/storyPreview';
+diff --git a/packages/story-editor/src/components/videoTrim/test/videoTrimmer.js b/packages/story-editor/src/components/videoTrim/test/videoTrimmer.js
+index 2ad2c890b..7ade7b327 100644
+--- a/packages/story-editor/src/components/videoTrim/test/videoTrimmer.js
++++ b/packages/story-editor/src/components/videoTrim/test/videoTrimmer.js
+@@ -18,6 +18,10 @@
+  * External dependencies
+  */
+ import { fireEvent, screen } from '@testing-library/react';
++import {
++  renderWithTheme,
++  firePointerEvent,
++} from '@googleforcreators/test-utils';
+ 
+ /**
+  * Internal dependencies
+@@ -25,7 +29,6 @@ import { fireEvent, screen } from '@testing-library/react';
+ import VideoTrimmer from '../videoTrimmer';
+ import VideoTrimContext from '../videoTrimContext';
+ import LayoutContext from '../../../app/layout/context';
+-import { renderWithTheme, firePointerEvent } from '../../../testUtils';
+ 
+ jest.mock('../useRailBackground');
+ 
+diff --git a/packages/story-editor/src/index.js b/packages/story-editor/src/index.js
+index 72d0c5983..902cb1137 100644
+--- a/packages/story-editor/src/index.js
++++ b/packages/story-editor/src/index.js
+@@ -34,7 +34,6 @@ export * from './components/checklist';
+ export { default as FontPicker } from './components/fontPicker';
+ export * from './components/checklistCard';
+ export * from './app/currentUser';
+-export * from './output';
+ 
+ export { default as getStoryPropsToSave } from './app/story/utils/getStoryPropsToSave';
+ export { default as useRefreshPostEditURL } from './utils/useRefreshPostEditURL';
+diff --git a/packages/story-editor/src/utils/useElementsWithLinks.js b/packages/story-editor/src/utils/useElementsWithLinks.js
+index 3f776e53c..627443321 100644
+--- a/packages/story-editor/src/utils/useElementsWithLinks.js
++++ b/packages/story-editor/src/utils/useElementsWithLinks.js
+@@ -18,12 +18,12 @@
+  * External dependencies
+  */
+ import { useCallback, useMemo } from '@googleforcreators/react';
++import { isElementBelowLimit } from '@googleforcreators/elements';
+ 
+ /**
+  * Internal dependencies
+  */
+ import { useStory, useCanvas } from '../app';
+-import isElementBelowLimit from './isElementBelowLimit';
+ 
+ function useElementsWithLinks() {
+   const { currentPage, selectedElements } = useStory((state) => ({
+diff --git a/packages/test-utils/README.md b/packages/test-utils/README.md
+new file mode 100644
+index 000000000..51df8d62b
+--- /dev/null
++++ b/packages/test-utils/README.md
+@@ -0,0 +1,3 @@
++# Test Utils
++
++Package for test utilities
+diff --git a/packages/test-utils/package.json b/packages/test-utils/package.json
+new file mode 100644
+index 000000000..4da91c168
+--- /dev/null
++++ b/packages/test-utils/package.json
+@@ -0,0 +1,48 @@
++{
++    "name": "@googleforcreators/test-utils",
++    "description": "Package for test utilities",
++    "private": true,
++    "version": "0.1.202203150806",
++    "author": {
++        "name": "Google",
++        "url": "https://creators.google/"
++    },
++    "license": "Apache-2.0",
++    "keywords": [
++        "web stories"
++    ],
++    "homepage": "https://github.com/GoogleForCreators/web-stories-wp/blob/main/packages/test-utils/README.md",
++    "repository": {
++        "type": "git",
++        "url": "https://github.com/GoogleForCreators/web-stories-wp.git",
++        "directory": "packages/test-utils"
++    },
++    "bugs": {
++        "url": "https://github.com/googleforcreators/web-stories-wp/issues"
++    },
++    "engines": {
++        "node": ">= 12 || >= 14 || >= 16",
++        "npm": ">= 7.3"
++    },
++    "customExports": {
++        ".": {
++            "default": "./src/index.js"
++        }
++    },
++    "main": "dist/index.js",
++    "module": "dist-module/index.js",
++    "source": "src/index.js",
++    "publishConfig": {
++        "access": "public"
++    },
++    "dependencies": {
++        "@googleforcreators/animation": "*",
++        "@googleforcreators/design-system": "*",
++        "@googleforcreators/elements": "*",
++        "prop-types": "^15.8.1",
++        "styled-components": "^5.3.3"
++    },
++    "devDependencies": {
++        "@testing-library/react": "^12.1.2"
++    }
++}
+diff --git a/packages/story-editor/src/testUtils/firePointerEvent.js b/packages/test-utils/src/firePointerEvent.js
+similarity index 100%
+rename from packages/story-editor/src/testUtils/firePointerEvent.js
+rename to packages/test-utils/src/firePointerEvent.js
+diff --git a/packages/story-editor/src/testUtils/index.js b/packages/test-utils/src/index.js
+similarity index 100%
+rename from packages/story-editor/src/testUtils/index.js
+rename to packages/test-utils/src/index.js
+diff --git a/packages/story-editor/src/testUtils/queryByAriaLabel.js b/packages/test-utils/src/queryByAriaLabel.js
+similarity index 100%
+rename from packages/story-editor/src/testUtils/queryByAriaLabel.js
+rename to packages/test-utils/src/queryByAriaLabel.js
+diff --git a/packages/story-editor/src/testUtils/queryByAutoAdvanceAfter.js b/packages/test-utils/src/queryByAutoAdvanceAfter.js
+similarity index 100%
+rename from packages/story-editor/src/testUtils/queryByAutoAdvanceAfter.js
+rename to packages/test-utils/src/queryByAutoAdvanceAfter.js
+diff --git a/packages/story-editor/src/testUtils/queryById.js b/packages/test-utils/src/queryById.js
+similarity index 100%
+rename from packages/story-editor/src/testUtils/queryById.js
+rename to packages/test-utils/src/queryById.js
+diff --git a/packages/story-editor/src/testUtils/renderWithTheme.js b/packages/test-utils/src/renderWithTheme.js
+similarity index 89%
+rename from packages/story-editor/src/testUtils/renderWithTheme.js
+rename to packages/test-utils/src/renderWithTheme.js
+index f7dd001e9..57c96669c 100644
+--- a/packages/story-editor/src/testUtils/renderWithTheme.js
++++ b/packages/test-utils/src/renderWithTheme.js
+@@ -19,12 +19,12 @@
+  */
+ import { render, queries } from '@testing-library/react';
+ import { ThemeProvider } from 'styled-components';
++import { theme } from '@googleforcreators/design-system';
++import PropTypes from 'prop-types';
+ 
+ /**
+  * Internal dependencies
+  */
+-import theme from '../theme';
+-
+ import * as ariaLabelQueries from './queryByAriaLabel';
+ import * as autoAdvanceAfterQueries from './queryByAutoAdvanceAfter';
+ import * as idQueries from './queryById';
+@@ -33,6 +33,10 @@ const WithThemeProvider = ({ children }) => {
+   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+ };
+ 
++WithThemeProvider.propTypes = {
++  children: PropTypes.element,
++};
++
+ const renderWithTheme = (ui, options) =>
+   render(ui, {
+     wrapper: WithThemeProvider,
+diff --git a/packages/wp-story-editor/package.json b/packages/wp-story-editor/package.json
+index 885282e47..6edbc5252 100644
+--- a/packages/wp-story-editor/package.json
++++ b/packages/wp-story-editor/package.json
+@@ -34,7 +34,9 @@
+     "@googleforcreators/media": "*",
+     "@googleforcreators/migration": "*",
+     "@googleforcreators/react": "*",
++    "@googleforcreators/output": "*",
+     "@googleforcreators/story-editor": "*",
++    "@googleforcreators/test-utils": "*",
+     "@googleforcreators/tracking": "*",
+     "@googleforcreators/url": "*",
+     "@web-stories-wp/wp-utils": "*",
+diff --git a/packages/wp-story-editor/src/components/corsCheck/test/corsCheck.js b/packages/wp-story-editor/src/components/corsCheck/test/corsCheck.js
+index 579f4ee50..953eb8973 100644
+--- a/packages/wp-story-editor/src/components/corsCheck/test/corsCheck.js
++++ b/packages/wp-story-editor/src/components/corsCheck/test/corsCheck.js
+@@ -24,11 +24,11 @@ import {
+ import { setAppElement } from '@googleforcreators/design-system';
+ import { APIContext } from '@googleforcreators/story-editor';
+ import { FlagsProvider } from 'flagged';
++import { renderWithTheme } from '@web-stories-wp/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+-import { renderWithTheme } from '../../../testUtils';
+ import CorsCheck from '../corsCheck.js';
+ 
+ const getMediaForCorsCheck = jest.fn();
+diff --git a/packages/wp-story-editor/src/components/documentPane/publish/test/publish.js b/packages/wp-story-editor/src/components/documentPane/publish/test/publish.js
+index 3cdec9627..0b28b58f4 100644
+--- a/packages/wp-story-editor/src/components/documentPane/publish/test/publish.js
++++ b/packages/wp-story-editor/src/components/documentPane/publish/test/publish.js
+@@ -25,11 +25,11 @@ import {
+   StoryContext,
+   InspectorContext,
+ } from '@googleforcreators/story-editor';
++import { renderWithTheme } from '@web-stories-wp/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+-import { renderWithTheme } from '../../../../testUtils';
+ import PublishPanel from '../publish';
+ 
+ jest.mock('./../../../../api/publisherLogos', () => ({
+diff --git a/packages/wp-story-editor/src/components/documentPane/status/test/status.js b/packages/wp-story-editor/src/components/documentPane/status/test/status.js
+index 42b2f66f0..ddd951195 100644
+--- a/packages/wp-story-editor/src/components/documentPane/status/test/status.js
++++ b/packages/wp-story-editor/src/components/documentPane/status/test/status.js
+@@ -19,11 +19,11 @@
+  */
+ import { fireEvent, screen } from '@testing-library/react';
+ import { StoryContext } from '@googleforcreators/story-editor';
++import { renderWithTheme } from '@web-stories-wp/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+-import { renderWithTheme } from '../../../../testUtils';
+ import StatusPanel from '../status';
+ import { STATUS, VISIBILITY } from '../../../../constants';
+ 
+diff --git a/packages/wp-story-editor/src/components/header/buttons/test/buttons.js b/packages/wp-story-editor/src/components/header/buttons/test/buttons.js
+index 4f69e68c8..233bc3350 100644
+--- a/packages/wp-story-editor/src/components/header/buttons/test/buttons.js
++++ b/packages/wp-story-editor/src/components/header/buttons/test/buttons.js
+@@ -24,12 +24,12 @@ import {
+   StoryContext,
+   CheckpointContext,
+ } from '@googleforcreators/story-editor';
++import { renderWithTheme } from '@web-stories-wp/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+ import MetaBoxesContext from '../../../metaBoxes/context';
+-import { renderWithTheme } from '../../../../testUtils';
+ import Buttons from '..';
+ 
+ function arrange({
+diff --git a/packages/wp-story-editor/src/components/postLock/test/postLock.js b/packages/wp-story-editor/src/components/postLock/test/postLock.js
+index 56083e90c..222dc7902 100644
+--- a/packages/wp-story-editor/src/components/postLock/test/postLock.js
++++ b/packages/wp-story-editor/src/components/postLock/test/postLock.js
+@@ -25,11 +25,11 @@ import {
+   StoryContext,
+   CurrentUserContext,
+ } from '@googleforcreators/story-editor';
++import { renderWithTheme } from '@web-stories-wp/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+-import { renderWithTheme } from '../../../testUtils';
+ import {
+   getStoryLockById,
+   setStoryLockById,
+diff --git a/packages/wp-story-editor/src/components/postPublishDialog/test/postPublishDialog.js b/packages/wp-story-editor/src/components/postPublishDialog/test/postPublishDialog.js
+index 5b56f350f..7cdc009ff 100644
+--- a/packages/wp-story-editor/src/components/postPublishDialog/test/postPublishDialog.js
++++ b/packages/wp-story-editor/src/components/postPublishDialog/test/postPublishDialog.js
+@@ -24,11 +24,11 @@ import {
+ } from '@testing-library/react';
+ import { setAppElement } from '@googleforcreators/design-system';
+ import { StoryContext } from '@googleforcreators/story-editor';
++import { renderWithTheme } from '@web-stories-wp/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+-import { renderWithTheme } from '../../../testUtils';
+ import PostPublishDialog from '..';
+ 
+ function setupButtons({ meta: extraMetaProps } = {}) {
+diff --git a/packages/wp-story-editor/src/components/statusCheck/test/statusCheck.js b/packages/wp-story-editor/src/components/statusCheck/test/statusCheck.js
+index 9fc30fc56..c7b840d8d 100644
+--- a/packages/wp-story-editor/src/components/statusCheck/test/statusCheck.js
++++ b/packages/wp-story-editor/src/components/statusCheck/test/statusCheck.js
+@@ -23,11 +23,11 @@ import {
+ } from '@testing-library/react';
+ import { setAppElement } from '@googleforcreators/design-system';
+ import { ConfigContext } from '@googleforcreators/story-editor';
++import { renderWithTheme } from '@web-stories-wp/test-utils';
+ 
+ /**
+  * Internal dependencies
+  */
+-import { renderWithTheme } from '../../../testUtils';
+ import StatusCheck from '../statusCheck';
+ 
+ jest.mock('../../../api/statusCheck');
+diff --git a/packages/wp-story-editor/src/components/statusCheck/utils.js b/packages/wp-story-editor/src/components/statusCheck/utils.js
+index 290ad93f8..44a9b2f22 100644
+--- a/packages/wp-story-editor/src/components/statusCheck/utils.js
++++ b/packages/wp-story-editor/src/components/statusCheck/utils.js
+@@ -17,7 +17,7 @@
+ /**
+  * External dependencies
+  */
+-import { getStoryMarkup } from '@googleforcreators/story-editor';
++import { getStoryMarkup } from '@googleforcreators/output';
+ 
+ export function getContent() {
+   const story = {
+diff --git a/packages/wp-story-editor/src/testUtils/renderWithTheme.js b/packages/wp-story-editor/src/testUtils/renderWithTheme.js
+deleted file mode 100644
+index 3b2f3fb1a..000000000
+--- a/packages/wp-story-editor/src/testUtils/renderWithTheme.js
++++ /dev/null
+@@ -1,34 +0,0 @@
+-/*
+- * Copyright 2020 Google LLC
+- *
+- * Licensed under the Apache License, Version 2.0 (the "License");
+- * you may not use this file except in compliance with the License.
+- * You may obtain a copy of the License at
+- *
+- *     https://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-
+-/**
+- * External dependencies
+- */
+-import { render } from '@testing-library/react';
+-import { ThemeProvider } from 'styled-components';
+-import { theme } from '@googleforcreators/design-system';
+-
+-const WithThemeProvider = ({ children }) => {
+-  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+-};
+-
+-const renderWithTheme = (ui, options) =>
+-  render(ui, {
+-    wrapper: WithThemeProvider,
+-    ...options,
+-  });
+-
+-export default renderWithTheme;

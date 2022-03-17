@@ -22,7 +22,7 @@ import { render, screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import WithLink from '../output';
+import WithLink from '..';
 
 describe('WithLink', () => {
   function withLink(linkProps) {
