@@ -62,6 +62,7 @@ async function replaceFontWithFontPicker(fontFamily = '') {
   await page.keyboard.press('Enter');
   await expect(page).toClick('button', { text: 'Replace font' });
   await expect(page).toClick('[data-testid="textFrame"]');
+  await expect(page).toClick('li[role="tab"]', { text: /^Style$/ });
 }
 
 async function replaceFontUsingDefault() {
