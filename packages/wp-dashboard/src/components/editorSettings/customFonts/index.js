@@ -256,7 +256,6 @@ function CustomFontsSettings({
       <InputsWrapper>
         <InlineForm>
           <SettingsTextInput
-            id="insertFontUrl"
             value={fontUrl}
             onChange={handleUpdateFontUrl}
             onKeyDown={handleOnKeyDown}

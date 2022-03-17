@@ -31,6 +31,7 @@ export * from './components/form';
 export * from './components/panels/panel';
 export * from './components/panels/shared';
 export * from './components/checklist';
+export { default as FontPicker } from './components/fontPicker';
 export * from './components/checklistCard';
 export * from './app/currentUser';
 
@@ -45,6 +46,7 @@ export { default as Tooltip } from './components/tooltip';
 export { default as useInspector } from './components/inspector/useInspector';
 export { default as InspectorContext } from './components/inspector/context';
 export { default as useIsUploadingToStory } from './utils/useIsUploadingToStory';
+export { getInUseFontsForPages } from './utils/getInUseFonts';
 export {
   styles as highlightStyles,
   states as highlightStates,

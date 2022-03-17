@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,11 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as PostPublishDialog } from './postPublishDialog';
-export { default as Layout } from './layout';
-export { default as MediaUpload } from './mediaUpload';
-export { default as PostLock } from './postLock';
-export { default as StatusCheck } from './statusCheck';
-export { default as CorsCheck } from './corsCheck';
-export { default as FontCheck } from './fontCheck';
-export * from './metaBoxes';
+
+/**
+ * Internal dependencies
+ */
+import visitAdminPage from './visitAdminPage';
+
+/**
+ * Open an existing story with a specific title in the editor.
+ *
+ * @param {string} storyTitle Story title.
+ * @return {Promise<void>}
+ */
+async function editStoryWithTitle(storyTitle) {
+  await visitAdminPage('edit.php', 'post_type=web-story');
+  await expect(page).toMatch(storyTitle);
+
+  await Promise.all([
+    page.waitForNavigation(),
+    expect(page).toClick('a', { text: storyTitle }),
+  ]);
+}
+
+export default editStoryWithTitle;
