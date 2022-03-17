@@ -39,19 +39,26 @@ function useFullbleedMediaAsBackground({ selectedElement }) {
   const { showSnackbar } = useSnackbar();
 
   const handleFullbleedMediaAsBackground = (target) => {
+    let isBackgroundMessageShown = localStorage.getItem('web_stories_is_background_message_shown');
+
     if (
       isDefaultBackground &&
       MEDIA_ELEMENT_TYPES.includes(selectedElement.type) &&
       isTargetCoveringContainer(target, fullbleedContainer)
     ) {
       setBackgroundElement({ elementId: selectedElement.id });
-      showSnackbar({
-        message: __(
-          'Full bleed images and videos are automatically set as background. Double click to scale and position at any time.',
-          'web-stories'
-        ),
-        dismissible: true,
-      });
+
+      if (!isBackgroundMessageShown) {
+        showSnackbar({ 
+          message: __(
+            'Full bleed images and videos are automatically set as background. Double click to scale and position at any time.',
+            'web-stories'
+          ),
+          dismissible: true,
+        });
+        isBackgroundMessageShown = true;
+        localStorage.setItem('web_stories_is_background_message_shown', isBackgroundMessageShown);
+      }
     }
   };
 
