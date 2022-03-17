@@ -337,19 +337,6 @@ class Experiments extends Service_Base implements HasRequirements {
 			],
 
 			/**
-			 * Author: @barklund
-			 * Issue: #8973
-			 * Creation date: 2021-09-07
-			 */
-			[
-				'name'        => 'enableThumbnailCaching',
-				'label'       => __( 'Thumbnail Caching', 'web-stories' ),
-				'description' => __( 'Enable thumbnail caching', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-
-			/**
 			 * Author: @miina
 			 * Issue: #9880
 			 * Creation date: 2021-12-15
