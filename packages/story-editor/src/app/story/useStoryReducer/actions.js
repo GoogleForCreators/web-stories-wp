@@ -224,6 +224,14 @@ const copySelectedElement = (dispatch) => () =>
     type: types.COPY_SELECTED_ELEMENT,
   });
 
+const updateElementsByFontFamily =
+  (dispatch) =>
+  ({ family, properties }) =>
+    dispatch({
+      type: types.UPDATE_ELEMENTS_BY_FONT_FAMILY,
+      payload: { family, properties },
+    });
+
 export const exposedActions = {
   addPage,
   addPageAt,
@@ -259,6 +267,7 @@ export const exposedActions = {
   addAnimations,
   updateStory,
   toggleLayer,
+  updateElementsByFontFamily,
 };
 
 // Internal actions
