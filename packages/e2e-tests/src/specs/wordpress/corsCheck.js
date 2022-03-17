@@ -32,13 +32,17 @@ describe('CORS check', () => {
   withExperimentalFeatures(['enableCORSCheck']);
   withPlugin('e2e-tests-cors-error');
 
-  let removeCORSErrorMessage;
+  let removeChromeCORSErrorMessage;
+  let removeFirefoxCORSErrorMessage;
   let removeResourceErrorMessage;
 
   beforeAll(() => {
     // Ignore CORS error, this is present in the test by design.
-    removeCORSErrorMessage = addAllowedErrorMessage(
+    removeChromeCORSErrorMessage = addAllowedErrorMessage(
       'has been blocked by CORS policy'
+    );
+    removeFirefoxCORSErrorMessage = addAllowedErrorMessage(
+      'Cross-Origin Request Blocked'
     );
     // Ignore resource failing to load. This is only present because of the CORS error.
     removeResourceErrorMessage = addAllowedErrorMessage(
@@ -47,7 +51,8 @@ describe('CORS check', () => {
   });
 
   afterAll(() => {
-    removeCORSErrorMessage();
+    removeChromeCORSErrorMessage();
+    removeFirefoxCORSErrorMessage();
     removeResourceErrorMessage();
   });
 
