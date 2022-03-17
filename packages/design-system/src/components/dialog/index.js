@@ -50,8 +50,8 @@ const DialogContent = styled.div`
 
 const DialogActions = styled.div`
   display: flex;
-  align-self: flex-end;
-  margin: 0;
+  justify-content: flex-end;
+  width: 100%;
 
   & > button,
   & > a {

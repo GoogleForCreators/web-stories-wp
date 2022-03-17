@@ -119,6 +119,10 @@ function reducer(state, { type, payload }) {
       return reducers.restore(state, payload);
     }
 
+    case types.UPDATE_ELEMENTS_BY_FONT_FAMILY: {
+      return reducers.updateElementsByFontFamily(state, payload);
+    }
+
     default:
       return state;
   }

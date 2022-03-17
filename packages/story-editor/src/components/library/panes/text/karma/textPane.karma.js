@@ -24,7 +24,7 @@ import { stripHTML } from '@googleforcreators/dom';
 /**
  * Internal dependencies
  */
-import { Fixture } from '../../../../../karma/fixture';
+import { Fixture } from '../../../../../karma';
 import { useStory } from '../../../../../app/story';
 import { PRESETS } from '../textPresets';
 

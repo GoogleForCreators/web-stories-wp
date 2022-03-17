@@ -41,15 +41,16 @@ import {
   Popup,
   PLACEMENT,
 } from '@googleforcreators/design-system';
+
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import ColorPicker from '../../colorPicker';
 import useInspector from '../../inspector/useInspector';
 import DefaultTooltip from '../../tooltip';
 import { focusStyle, inputContainerStyleOverride } from '../../panels/shared';
 import { useCanvas, useConfig } from '../../../app';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import { SPACING } from './constants';
 
 const Preview = styled.div`

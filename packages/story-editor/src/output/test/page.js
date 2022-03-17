@@ -21,6 +21,9 @@ import { renderToStaticMarkup } from '@googleforcreators/react';
 import { render } from '@testing-library/react';
 import { useFeature } from 'flagged';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '@googleforcreators/units';
+import { MaskTypes } from '@googleforcreators/masks';
+import { registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
@@ -32,7 +35,6 @@ import {
   queryById,
   getById,
 } from '../../testUtils';
-import { MaskTypes } from '../../masks/constants';
 
 jest.mock('flagged');
 
@@ -47,6 +49,8 @@ describe('Page output', () => {
 
       return config[feature];
     });
+
+    elementTypes.forEach(registerElementType);
   });
 
   describe('aspect-ratio markup', () => {

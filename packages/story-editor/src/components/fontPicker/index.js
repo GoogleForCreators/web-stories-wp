@@ -35,6 +35,7 @@ import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../constants';
 
 const FontPicker = forwardRef(function FontPicker(
   {
+    zIndex,
     onChange,
     currentValue,
     highlightStylesOverride,
@@ -147,6 +148,7 @@ const FontPicker = forwardRef(function FontPicker(
   return (
     <Datalist.DropDown
       ref={ref}
+      zIndex={zIndex}
       highlightStylesOverride={highlightStylesOverride}
       data-testid="font"
       aria-label={__('Font family', 'web-stories')}
@@ -180,6 +182,7 @@ FontPicker.propTypes = {
   showDropdownLabel: PropTypes.bool,
   listStyleOverrides: PropTypes.array,
   containerStyleOverrides: PropTypes.array,
+  zIndex: PropTypes.number,
 };
 
 export default FontPicker;

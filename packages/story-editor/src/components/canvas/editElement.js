@@ -21,16 +21,23 @@ import { memo, useState, forwardRef } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useUnits } from '@googleforcreators/units';
-
-/**
- * Internal dependencies
- */
-import { getDefinitionForType } from '../../elements';
+import { getDefinitionForType } from '@googleforcreators/elements';
 import {
   elementWithPosition,
   elementWithSize,
   elementWithRotation,
-} from '../../elements/shared';
+} from '@googleforcreators/element-library';
+
+/**
+ * Internal dependencies
+ */
+import useCORSProxy from '../../utils/useCORSProxy';
+import { useConfig, useStory, useFont } from '../../app';
+import useVideoTrim from '../videoTrim/useVideoTrim';
+
+const Z_INDEX_CANVAS = {
+  FLOAT_PANEL: 11,
+};
 
 const Wrapper = styled.div`
   ${elementWithPosition}
@@ -45,6 +52,24 @@ const EditElement = memo(
     const { getBox } = useUnits((state) => ({
       getBox: state.actions.getBox,
     }));
+    const { getProxiedUrl } = useCORSProxy();
+    const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
+    const {
+      actions: { maybeEnqueueFontStyle },
+    } = useFont();
+
+    // Update the true global properties of the current element
+    // This now only happens on unmount
+    const { updateElementById } = useStory((state) => ({
+      updateElementById: state.actions.updateElementById,
+    }));
+    const { isTrimMode, resource, setVideoNode } = useVideoTrim(
+      ({ state: { isTrimMode, videoData }, actions: { setVideoNode } }) => ({
+        isTrimMode,
+        setVideoNode,
+        resource: videoData?.resource,
+      })
+    );
 
     // Needed for elements that can scale in edit mode.
     const [localProperties, setLocalProperties] = useState(null);
@@ -63,6 +88,15 @@ const EditElement = memo(
           editWrapper={editWrapper}
           onResize={onResize}
           setLocalProperties={setLocalProperties}
+          getProxiedUrl={getProxiedUrl}
+          isRTL={isRTL}
+          topOffset={topOffset}
+          isTrimMode={isTrimMode}
+          resource={resource}
+          setVideoNode={setVideoNode}
+          updateElementById={updateElementById}
+          maybeEnqueueFontStyle={maybeEnqueueFontStyle}
+          zIndexCanvas={Z_INDEX_CANVAS}
         />
       </Wrapper>
     );

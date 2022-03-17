@@ -33,6 +33,8 @@ import ConfigProvider from '../../../app/config/configProvider';
 import StoryContext from '../../../app/story/context';
 import theme from '../../../theme';
 import useEditingElement from '../../../app/canvas/useEditingElement';
+import { DropTargetsProvider } from '../../dropTargets';
+import { MediaProvider } from '../../../app/media';
 
 jest.mock('../../../app/canvas/useEditingElement');
 
@@ -96,9 +98,11 @@ export function TestFrameElement({
           <LayoutContext.Provider value={LAYOUT_CONTEXT}>
             <CanvasProvider>
               <TransformProvider>
-                <WithRefs refs={refs}>
-                  <FrameElement id={element.id} />
-                </WithRefs>
+                <DropTargetsProvider>
+                  <WithRefs refs={refs}>
+                    <FrameElement id={element.id} />
+                  </WithRefs>
+                </DropTargetsProvider>
               </TransformProvider>
             </CanvasProvider>
           </LayoutContext.Provider>
@@ -132,6 +136,7 @@ export function TestDisplayElement({
       video: [],
       ...(inputConfigContext && inputConfigContext.allowedMimeTypes),
     },
+    capabilities: { hasUploadMediaAction: true },
   };
   const storyContext = {
     ...inputStoryContext,
@@ -158,11 +163,13 @@ export function TestDisplayElement({
         <StoryContext.Provider value={storyContext}>
           <LayoutContext.Provider value={LAYOUT_CONTEXT}>
             <CanvasProvider>
-              <TransformProvider>
-                <WithRefs refs={refs}>
-                  <DisplayElement element={element} page={null} />
-                </WithRefs>
-              </TransformProvider>
+              <MediaProvider>
+                <TransformProvider>
+                  <WithRefs refs={refs}>
+                    <DisplayElement element={element} page={null} />
+                  </WithRefs>
+                </TransformProvider>
+              </MediaProvider>
             </CanvasProvider>
           </LayoutContext.Provider>
         </StoryContext.Provider>

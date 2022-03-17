@@ -31,7 +31,6 @@ describe('Embedding hotlinked media', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ enableHotlinking: true });
     await fixture.render();
     await fixture.collapseHelpCenter();
   });

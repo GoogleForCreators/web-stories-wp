@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
-import { noop } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
@@ -30,6 +29,7 @@ import {
   STORY_STATUS,
 } from '../../../../../constants';
 import StoriesView from '../storiesView';
+import { noop } from '../../../../../utils';
 
 const fakeStories = [
   {

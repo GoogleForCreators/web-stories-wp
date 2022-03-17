@@ -26,7 +26,7 @@ import { Icons, NumericInput } from '@googleforcreators/design-system';
  * Internal dependencies
  */
 import { getCommonValue, inputContainerStyleOverride } from '../../shared';
-import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 
 export const MIN_MAX = {
   OPACITY: {

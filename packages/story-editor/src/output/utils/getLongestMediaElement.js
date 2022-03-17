@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { getDefinitionForType } from '../../elements';
+import { getDefinitionForType } from '@googleforcreators/elements';
 
 /**
  * Among all elements, returns the media element with the longest duration.

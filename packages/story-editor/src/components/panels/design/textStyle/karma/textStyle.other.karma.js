@@ -101,9 +101,14 @@ describe('Text Style Panel', () => {
 
       // Select first text as well (the second is selected by default).
       await fixture.events.keyboard.down('Shift');
-      await fixture.events.click(
-        fixture.editor.canvas.framesLayer.frames[1].node
+      await fixture.events.mouse.clickOn(
+        fixture.editor.canvas.framesLayer.frames[1].node,
+        10,
+        10
       );
+      // await fixture.events.click(
+      //   fixture.editor.canvas.framesLayer.frames[1].node
+      // );
       await fixture.events.keyboard.up('Shift');
 
       await fixture.events.click(fixture.editor.inspector.designTab);

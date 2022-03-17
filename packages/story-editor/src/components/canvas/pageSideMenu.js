@@ -21,6 +21,7 @@ import {
   ContextMenu,
   ContextMenuComponents,
   noop,
+  Tooltip,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
@@ -104,21 +105,20 @@ function PageSideMenu() {
             const action = (externalOnClick = noop) => (
               <Fragment key={label}>
                 {separator === 'top' && <ContextMenuComponents.MenuSeparator />}
-                <ContextMenuComponents.MenuButton
-                  aria-label={label}
-                  onClick={(evt) => {
-                    onClick(evt);
-                    externalOnClick(evt);
-                  }}
-                  {...quickAction}
-                >
-                  <ContextMenuComponents.MenuIcon
-                    title={label}
-                    placement={tooltipPlacement}
+                <Tooltip placement={tooltipPlacement} title={label}>
+                  <ContextMenuComponents.MenuButton
+                    aria-label={label}
+                    onClick={(evt) => {
+                      onClick(evt);
+                      externalOnClick(evt);
+                    }}
+                    {...quickAction}
                   >
-                    <Icon />
-                  </ContextMenuComponents.MenuIcon>
-                </ContextMenuComponents.MenuButton>
+                    <ContextMenuComponents.MenuIcon title={label}>
+                      <Icon />
+                    </ContextMenuComponents.MenuIcon>
+                  </ContextMenuComponents.MenuButton>
+                </Tooltip>
                 {separator === 'bottom' && (
                   <ContextMenuComponents.MenuSeparator />
                 )}

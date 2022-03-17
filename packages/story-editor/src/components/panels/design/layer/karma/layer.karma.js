@@ -17,12 +17,12 @@
  * External dependencies
  */
 import { within } from '@testing-library/react';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { Fixture } from '../../../../../karma';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../../app/font/defaultFonts';
 import { useInsertElement } from '../../../../canvas';
 
 describe('Layer Panel', () => {

@@ -21,7 +21,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
   useEffect,
-  useLayoutEffect,
   useCallback,
   useRef,
   useState,
@@ -41,9 +40,9 @@ import { getHTMLFormatters } from '@googleforcreators/rich-text';
 /**
  * Internal dependencies
  */
-import { useFont, useHistory, useStory } from '../../../../app';
+import { useFont, useStory } from '../../../../app';
+import { useCalculateAccessibleTextColors } from '../../../../app/pageCanvas';
 import StoryPropTypes from '../../../../types';
-import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
 import useLibrary from '../../useLibrary';
 import LibraryMoveable from '../shared/libraryMoveable';
 import InsertionOverlay from '../shared/insertionOverlay';
@@ -105,21 +104,16 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
     actions: { maybeEnqueueFontStyle },
   } = useFont();
 
-  const {
-    state: { versionNumber },
-  } = useHistory();
-
   const { dataToEditorX, dataToEditorY } = useUnits((state) => ({
     dataToEditorX: state.actions.dataToEditorX,
     dataToEditorY: state.actions.dataToEditorY,
   }));
 
-  const { pageCanvasData, shouldUseSmartColor } = useLibrary((state) => ({
-    pageCanvasData: state.state.pageCanvasData,
+  const { shouldUseSmartColor } = useLibrary((state) => ({
     shouldUseSmartColor: state.state.shouldUseSmartColor,
   }));
 
-  const { calculateAccessibleTextColors } = usePageAsCanvas();
+  const calculateAccessibleTextColors = useCalculateAccessibleTextColors();
 
   const { isTextSelected, updateSelectedElements } = useStory(
     ({ state, actions }) => ({
@@ -128,7 +122,6 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
     })
   );
 
-  const presetDataRef = useRef({});
   const buttonRef = useRef(null);
 
   useEffect(() => {
@@ -140,44 +133,6 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
       },
     ]);
   }, [font, fontWeight, content, maybeEnqueueFontStyle]);
-
-  // Gets the position and the color already once the canvas information is available, to use it directly when inserting.
-  useLayoutEffect(() => {
-    async function getPositionAndColor() {
-      if (!pageCanvasData || !shouldUseSmartColor) {
-        return;
-      }
-      // If nothing changed meanwhile and we already have color data, don't make new calculations.
-      if (
-        presetDataRef.current.versionNumber === versionNumber &&
-        presetDataRef.current.autoColor
-      ) {
-        return;
-      }
-      presetDataRef.current.versionNumber = versionNumber;
-      const atts = getPosition(element);
-      presetDataRef.current.positionAtts = atts;
-
-      // If the element is positioned under the previous element (not default position),
-      // no new image generation needed.
-      if (atts.y !== element.y) {
-        presetDataRef.current.skipCanvasGeneration = true;
-      }
-
-      presetDataRef.current.autoColor = await calculateAccessibleTextColors(
-        { ...element, ...atts },
-        false /* isInserting */
-      );
-    }
-    getPositionAndColor();
-  }, [
-    calculateAccessibleTextColors,
-    element,
-    getPosition,
-    shouldUseSmartColor,
-    pageCanvasData,
-    versionNumber,
-  ]);
 
   const applyStyleOnContent = useCallback(
     (
@@ -193,7 +148,7 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
     [htmlFormatters]
   );
 
-  const onClick = useCallback(() => {
+  const onClick = useCallback(async () => {
     // If we have only text(s) selected, we apply the preset instead of inserting.
     if (isTextSelected) {
       updateSelectedElements({
@@ -222,26 +177,34 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
       });
       return;
     }
-    // We might have pre-calculated data, let's use that, too.
-    const isPositioned = Boolean(presetDataRef.current?.positionAtts);
-    insertPreset(
-      { ...element, ...presetDataRef.current?.positionAtts },
-      {
-        isPositioned,
-        accessibleColors: presetDataRef.current?.autoColor,
-        skipCanvasGeneration: presetDataRef.current?.skipCanvasGeneration,
-      }
-    );
-    // Reset after insertion.
-    presetDataRef.current = {};
+
+    let newElement = element;
+    const insertOpts = {
+      isPositioned: false,
+    };
+    if (shouldUseSmartColor) {
+      const position = getPosition(element);
+      insertOpts.isPositioned = true;
+      newElement = {
+        ...element,
+        ...position,
+      };
+      insertOpts.accessibleColors = await calculateAccessibleTextColors(
+        newElement
+      );
+    }
+    insertPreset(newElement, insertOpts);
     trackEvent('insert_text_preset', { name: title });
   }, [
-    insertPreset,
-    element,
-    title,
     isTextSelected,
+    getPosition,
+    element,
+    shouldUseSmartColor,
+    insertPreset,
+    title,
     updateSelectedElements,
     applyStyleOnContent,
+    calculateAccessibleTextColors,
   ]);
 
   const getTextDisplay = (textProps = {}) => {

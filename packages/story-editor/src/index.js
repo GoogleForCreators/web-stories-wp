@@ -31,6 +31,7 @@ export * from './components/form';
 export * from './components/panels/panel';
 export * from './components/panels/shared';
 export * from './components/checklist';
+export { default as FontPicker } from './components/fontPicker';
 export * from './components/checklistCard';
 export * from './app/currentUser';
 export * from './output';
@@ -38,15 +39,16 @@ export * from './output';
 export { default as getStoryPropsToSave } from './app/story/utils/getStoryPropsToSave';
 export { default as useRefreshPostEditURL } from './utils/useRefreshPostEditURL';
 export { default as FontContext } from './app/font/context';
+export { TEXT_ELEMENT_DEFAULT_FONT } from './app/font/defaultFonts';
 export { default as useLoadFontFiles } from './app/font/actions/useLoadFontFiles';
 export { default as StoryPropTypes } from './types';
 export { GlobalStyle, default as theme } from './theme'; // @todo To be refactored.
-export { default as CircularProgress } from './components/circularProgress';
 export { default as InterfaceSkeleton } from './components/layout';
 export { default as Tooltip } from './components/tooltip';
 export { default as useInspector } from './components/inspector/useInspector';
 export { default as InspectorContext } from './components/inspector/context';
 export { default as useIsUploadingToStory } from './utils/useIsUploadingToStory';
+export { getInUseFontsForPages } from './utils/getInUseFonts';
 export {
   styles as highlightStyles,
   states as highlightStates,

@@ -53,7 +53,6 @@ describe('TextPane', () => {
         },
         actions: {
           insertElement: jest.fn(),
-          setPageCanvasPromise: jest.fn(),
         },
       })
     );
@@ -164,7 +163,6 @@ describe('TextPane', () => {
       expect(insertPreset).toHaveBeenCalledWith(PRESETS[0].element, {
         isPositioned: false,
         accessibleColors: undefined,
-        skipCanvasGeneration: undefined,
       })
     );
   });

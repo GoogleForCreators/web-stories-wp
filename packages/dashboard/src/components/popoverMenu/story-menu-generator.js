@@ -13,15 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-/**
- * External dependencies
- */
-import { noop } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
 import { STORY_CONTEXT_MENU_ACTIONS } from '../../constants';
+import { noop } from '../../utils';
 
 /**
  * Generate story menu.

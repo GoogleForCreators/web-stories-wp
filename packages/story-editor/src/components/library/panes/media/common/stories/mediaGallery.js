@@ -18,7 +18,6 @@
  * External dependencies
  */
 import styled from 'styled-components';
-import { noop } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -26,6 +25,7 @@ import { noop } from '@googleforcreators/design-system';
 import MediaGallery from '../mediaGallery';
 import { CanvasProvider } from '../../../../../../app/canvas';
 import { LayoutProvider } from '../../../../../../app/layout';
+import { noop } from '../../../../../../utils/noop';
 
 import MediaContext from '../../../../../../app/media/context';
 

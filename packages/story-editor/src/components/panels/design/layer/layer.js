@@ -23,21 +23,22 @@ import { __ } from '@googleforcreators/i18n';
 import {
   Button,
   BUTTON_TYPES,
+  TRACKING_EVENTS,
   Icons,
   themeHelpers,
   Tooltip,
+  usePerformanceTracking,
 } from '@googleforcreators/design-system';
 import { useRef, memo } from '@googleforcreators/react';
+import { getDefinitionForType } from '@googleforcreators/elements';
+import { LayerText } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../../../types';
-import { getDefinitionForType } from '../../../../elements';
 import { useStory } from '../../../../app';
-import { LayerText } from '../../../../elements/shared/layerText';
-import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
-import { TRACKING_EVENTS } from '../../../../constants/performanceTrackingEvents';
+import useCORSProxy from '../../../../utils/useCORSProxy';
 import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';
 
@@ -254,13 +255,19 @@ function preventReorder(e) {
 function Layer({ element }) {
   const { LayerIcon, LayerContent } = getDefinitionForType(element.type);
   const { isSelected, handleClick } = useLayerSelection(element);
-  const { duplicateElementsById, deleteElementById } = useStory(
-    ({ actions }) => ({
-      duplicateElementsById: actions.duplicateElementsById,
-      deleteElementById: actions.deleteElementById,
-    })
-  );
+  const { isDefaultBackground } = element;
+  const {
+    duplicateElementsById,
+    deleteElementById,
+    currentPageBackgroundColor,
+  } = useStory(({ actions, state }) => ({
+    duplicateElementsById: actions.duplicateElementsById,
+    deleteElementById: actions.deleteElementById,
+    currentPageBackgroundColor:
+      !isDefaultBackground || state.currentPage?.backgroundColor,
+  }));
 
+  const { getProxiedUrl } = useCORSProxy();
   const layerRef = useRef(null);
   usePerformanceTracking({
     node: layerRef.current,
@@ -284,7 +291,11 @@ function Layer({ element }) {
         isSelected={isSelected}
       >
         <LayerIconWrapper>
-          <LayerIcon element={element} />
+          <LayerIcon
+            element={element}
+            getProxiedUrl={getProxiedUrl}
+            currentPageBackgroundColor={currentPageBackgroundColor}
+          />
         </LayerIconWrapper>
         <LayerDescription>
           <LayerContentContainer>

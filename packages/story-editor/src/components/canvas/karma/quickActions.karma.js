@@ -17,11 +17,12 @@
  * External dependencies
  */
 import { waitFor } from '@testing-library/react';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
+
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 import { ACTIONS } from '../../../app/highlights';
 import { Fixture } from '../../../karma';
 import useInsertElement from '../useInsertElement';

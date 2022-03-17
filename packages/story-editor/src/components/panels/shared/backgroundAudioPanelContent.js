@@ -34,13 +34,13 @@ import {
   getExtensionsFromMimeType,
 } from '@googleforcreators/media';
 import { v4 as uuidv4 } from 'uuid';
+import { BackgroundAudioPropType } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { useConfig } from '../../../app';
 import { Z_INDEX_STORY_DETAILS } from '../../../constants/zIndex';
-import { BackgroundAudioPropType } from '../../../types';
 import { Row } from '../../form';
 import AudioPlayer from '../../audioPlayer';
 import Tooltip from '../../tooltip';

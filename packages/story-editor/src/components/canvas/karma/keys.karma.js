@@ -15,12 +15,16 @@
  */
 
 /**
+ * External dependencies
+ */
+import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
+
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
 import { useInsertElement } from '..';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 
 describe('Canvas keys integration', () => {
   let fixture;
