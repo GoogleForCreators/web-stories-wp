@@ -40,7 +40,9 @@ function useFullbleedMediaAsBackground({ selectedElement }) {
   const { showSnackbar } = useSnackbar();
 
   const handleFullbleedMediaAsBackground = (target) => {
-    let isBackgroundMessageShown = localStorage.getItem('web_stories_is_background_message_shown');
+    let isBackgroundMessageShown = localStorage.getItem(
+      'web_stories_is_background_message_shown'
+    );
 
     if (
       isDefaultBackground &&
@@ -50,7 +52,7 @@ function useFullbleedMediaAsBackground({ selectedElement }) {
       setBackgroundElement({ elementId: selectedElement.id });
 
       if (!isBackgroundMessageShown) {
-        showSnackbar({ 
+        showSnackbar({
           message: __(
             'Full bleed images and videos are automatically set as background. Double click to scale and position at any time.',
             'web-stories'
@@ -58,7 +60,10 @@ function useFullbleedMediaAsBackground({ selectedElement }) {
           dismissible: true,
         });
         isBackgroundMessageShown = true;
-        localStorage.setItem('web_stories_is_background_message_shown', isBackgroundMessageShown);
+        localStorage.setItem(
+          'web_stories_is_background_message_shown',
+          isBackgroundMessageShown
+        );
       }
     }
   };
