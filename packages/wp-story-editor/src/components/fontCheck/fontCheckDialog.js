@@ -36,8 +36,8 @@ import {
   useConfig,
   Dialog,
   FontPicker,
-  TEXT_ELEMENT_DEFAULT_FONT,
 } from '@googleforcreators/story-editor';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
 
 const DialogContent = styled.div`
   display: grid;
