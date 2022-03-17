@@ -20,6 +20,8 @@
 import { render, fireEvent } from '@testing-library/react';
 import { useRef } from '@googleforcreators/react';
 import { TransformContext } from '@googleforcreators/transform';
+import { registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
@@ -35,6 +37,10 @@ const Canvas = () => {
 };
 
 describe('useCanvasKeys', function () {
+  beforeAll(() => {
+    elementTypes.forEach(registerElementType);
+  });
+
   it('should select all elements and collect their IDs when mod+a is pressed.', () => {
     const setSelectedElementsById = jest.fn();
 

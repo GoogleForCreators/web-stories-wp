@@ -20,7 +20,7 @@ import { useMemo } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __, _n, sprintf } from '@googleforcreators/i18n';
-import { Icons, noop } from '@googleforcreators/design-system';
+import { Icons } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -29,6 +29,7 @@ import { ToggleButton } from '../../toggleButton';
 import { useCategoryCount } from '../countContext';
 import { useCheckpoint } from '../checkpointContext';
 import { ISSUE_TYPES, PPC_CHECKPOINT_STATE } from '../constants';
+import { noop } from '../../../utils/noop';
 
 const MainIcon = styled(Icons.Checkbox)`
   height: 32px;

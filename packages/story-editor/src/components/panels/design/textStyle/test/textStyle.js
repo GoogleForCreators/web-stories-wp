@@ -21,6 +21,8 @@ import PropTypes from 'prop-types';
 import { act, fireEvent, screen } from '@testing-library/react';
 import { createSolid } from '@googleforcreators/patterns';
 import { RichTextContext } from '@googleforcreators/rich-text';
+import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
+import { calculateTextHeight } from '@googleforcreators/element-library';
 import { calcRotatedResizeOffset } from '@googleforcreators/units';
 
 /**
@@ -29,17 +31,14 @@ import { calcRotatedResizeOffset } from '@googleforcreators/units';
 import TextStyle from '../textStyle';
 import FontContext from '../../../../../app/font/context';
 import { StoryContext } from '../../../../../app/story';
-import { calculateTextHeight } from '../../../../../utils/textMeasurements';
 import CanvasContext from '../../../../../app/canvas/context';
+import { renderPanel } from '../../../shared/test/_utils';
 import {
   MULTIPLE_VALUE,
   MULTIPLE_DISPLAY_VALUE,
-  BACKGROUND_TEXT_MODE,
 } from '../../../../../constants';
-import { renderPanel } from '../../../shared/test/_utils';
 
 let mockControls;
-jest.mock('../../../../../utils/textMeasurements');
 jest.mock('@googleforcreators/design-system', () => {
   const React = require('@googleforcreators/react');
 
@@ -59,6 +58,7 @@ jest.mock('@googleforcreators/design-system', () => {
     },
   };
 });
+jest.mock('@googleforcreators/element-library');
 jest.mock('../../../../form/color/color', () => {
   const React = require('@googleforcreators/react');
 

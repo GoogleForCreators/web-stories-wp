@@ -324,19 +324,6 @@ class Experiments extends Service_Base implements HasRequirements {
 			],
 
 			/**
-			 * Author: @barklund
-			 * Issue: #8877
-			 * Creation date: 2021-09-01
-			 */
-			[
-				'name'        => 'enableVideoTrim',
-				'label'       => __( 'Video trimming', 'web-stories' ),
-				'description' => __( 'Enable video trimming', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-
-			/**
 			 * Author: @miina
 			 * Issue: #9880
 			 * Creation date: 2021-12-15

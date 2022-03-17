@@ -23,9 +23,9 @@ import { fireEvent, screen } from '@testing-library/react';
  * Internal dependencies
  */
 import VideoAccessibility, { MIN_MAX } from '../videoAccessibility';
-import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
 import ConfigContext from '../../../../../app/config/context';
+import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 
 function MediaUpload({ render, onSelect }) {
   const open = () => {

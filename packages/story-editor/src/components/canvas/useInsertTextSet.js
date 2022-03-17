@@ -24,12 +24,12 @@ import {
   PAGE_WIDTH,
 } from '@googleforcreators/units';
 import { getHTMLFormatters } from '@googleforcreators/rich-text';
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import objectWithout from '../../utils/objectWithout';
-import { ELEMENT_TYPES } from '../../elements';
 import { useStory } from '../../app/story';
 import { useCalculateAccessibleTextColors } from '../../app/pageCanvas';
 import useInsertElement from './useInsertElement';

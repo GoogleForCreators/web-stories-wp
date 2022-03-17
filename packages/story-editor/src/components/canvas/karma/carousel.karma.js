@@ -18,13 +18,14 @@
  * External dependencies
  */
 import { createSolid } from '@googleforcreators/patterns';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
+
 /**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
 import { useInsertElement } from '..';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 
 describe('Carousel integration', () => {
   let fixture;

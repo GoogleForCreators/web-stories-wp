@@ -33,13 +33,13 @@ import {
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE } from '../../../../constants';
 import { usePresubmitHandler } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
 import { states, styles, useHighlights } from '../../../../app/highlights';
 import { useConfig } from '../../../../app';
 import CaptionsPanelContent from '../../shared/captionsPanelContent';
+import { MULTIPLE_VALUE } from '../../../../constants';
 
 const StyledButton = styled(Button)`
   ${({ theme }) =>

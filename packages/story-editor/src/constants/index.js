@@ -52,28 +52,11 @@ export const DESIGN_SPACE_MARGIN = 48;
 
 export const TEXT_SET_SIZE = 150;
 
-export const DEFAULT_ATTRIBUTES_FOR_MEDIA = {
-  scale: 100,
-  focalX: 50,
-  focalY: 50,
-};
-
 export const LAYER_DIRECTIONS = {
   FRONT: 'FRONT',
   BACK: 'BACK',
   FORWARD: 'FORWARD',
   BACKWARD: 'BACKWARD',
-};
-
-export const Z_INDEX_CANVAS = {
-  MOVABLE: 10,
-  FLOAT_PANEL: 11,
-};
-
-export const BACKGROUND_TEXT_MODE = {
-  NONE: 'NONE',
-  FILL: 'FILL',
-  HIGHLIGHT: 'HIGHLIGHT',
 };
 
 export const FONT_WEIGHT = {
