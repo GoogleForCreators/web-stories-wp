@@ -22,9 +22,6 @@ import {
   LOCAL_STORAGE_PREFIX,
   localStore,
 } from '@googleforcreators/design-system';
-/**
- * Internal dependencies
- */
 import { __ } from '@googleforcreators/i18n';
 import { MEDIA_ELEMENT_TYPES } from '@googleforcreators/elements';
 
@@ -34,9 +31,10 @@ import { MEDIA_ELEMENT_TYPES } from '@googleforcreators/elements';
 import isTargetCoveringContainer from '../../../utils/isTargetCoveringContainer';
 import { useStory, useCanvas } from '../../../app';
 
+const DISMISS_BACKGROUND_AUTOSET_MESSAGE_STORAGE_KEY =
+  'BACKGROUND_IS_SET_DIALOG_DISMISSED';
+
 function useFullbleedMediaAsBackground({ selectedElement }) {
-  const DISMISS_BACKGROUND_AUTOSET_MESSAGE_STORAGE_KEY =
-    'BACKGROUND_IS_SET_DIALOG_DISMISSED';
   const [
     isBackgroundSnackbarMessageDismissed,
     setIsBackgroundSnackbarMessageDismissed,
