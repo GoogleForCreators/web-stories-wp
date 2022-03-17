@@ -352,13 +352,13 @@ describe('Checklist integration', () => {
     });
   });
 
-  it('should open the checklist after following "review checklist" button in dialog on publishing story', async () => {
+  it('should open the checklist after following "checklist" button in dialog on publishing story', async () => {
     fixture.events.click(fixture.editor.titleBar.publish);
     // Ensure the debounced callback has taken effect.
-    await fixture.events.sleep(800);
+    // await fixture.events.sleep(800);
 
     const reviewButton = await fixture.screen.getByRole('button', {
-      name: /^Review Checklist$/,
+      name: /^Checklist$/,
     });
     await fixture.events.click(reviewButton);
     // This is the initial load of the checklist tab so we need to wait for it to load
