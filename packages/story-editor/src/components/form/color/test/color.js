@@ -19,12 +19,13 @@
  */
 import { fireEvent, screen } from '@testing-library/react';
 import { createSolid } from '@googleforcreators/patterns';
+import { renderWithTheme } from '@googleforcreators/test-utils';
+
 /**
  * Internal dependencies
  */
 import Color from '../color';
 import applyOpacityChange from '../applyOpacityChange';
-import { renderWithTheme } from '../../../../testUtils';
 import { ConfigProvider } from '../../../../app/config';
 import getDefaultConfig from '../../../../getDefaultConfig';
 

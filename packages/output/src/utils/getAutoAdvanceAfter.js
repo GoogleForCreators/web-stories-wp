@@ -17,10 +17,11 @@
  * External dependencies
  */
 import { getTotalDuration } from '@googleforcreators/animation';
+
 /**
  * Internal dependencies
  */
-import { DEFAULT_PAGE_DURATION } from '../../constants';
+import { DEFAULT_PAGE_DURATION } from '../constants';
 import getLongestMediaElement from './getLongestMediaElement';
 
 function getAutoAdvanceAfter({

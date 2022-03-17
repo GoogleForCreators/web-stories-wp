@@ -23,11 +23,11 @@ import {
 } from '@testing-library/react';
 import { setAppElement } from '@googleforcreators/design-system';
 import { ConfigContext } from '@googleforcreators/story-editor';
+import { renderWithTheme } from '@web-stories-wp/test-utils';
 
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../testUtils';
 import StatusCheck from '../statusCheck';
 
 jest.mock('../../../api/statusCheck');

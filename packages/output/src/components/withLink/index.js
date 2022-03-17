@@ -19,15 +19,10 @@
  */
 import PropTypes from 'prop-types';
 import { withProtocol } from '@googleforcreators/url';
-
-/**
- * Internal dependencies
- */
-import StoryPropTypes from '../../types';
-import { getLinkFromElement } from '.';
+import { StoryPropTypes } from '@googleforcreators/elements';
 
 function WithLink({ element, children, ...rest }) {
-  const link = getLinkFromElement(element) || {};
+  const link = element.link || {};
   const { url, icon, desc, rel = [] } = link;
   if (!url) {
     return children;

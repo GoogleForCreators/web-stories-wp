@@ -1,4 +1,4 @@
-# Rich-Text
+# Output
 
 ---
-A wrapper around `draft-js` and utilities for rich-text editor.
+A package for serialization of stories to AMP output

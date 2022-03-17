@@ -18,12 +18,13 @@
  */
 import { fireEvent, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
+import { renderWithTheme } from '@googleforcreators/test-utils';
+
 /**
  * Internal dependencies
  */
 import { ConfigContext } from '../../../app/config';
 import StoryContext from '../../../app/story/context';
-import renderWithTheme from '../../../testUtils/renderWithTheme';
 import { noop } from '../../../utils/noop';
 import { ChecklistCountProvider } from '../../checklist';
 import InspectorContext from '../../inspector/context';

@@ -20,11 +20,7 @@
 import PropTypes from 'prop-types';
 import { getGoogleFontURL, getFontCSS } from '@googleforcreators/fonts';
 import { getFontVariants } from '@googleforcreators/rich-text';
-
-/**
- * Internal dependencies
- */
-import StoryPropTypes from '../../types';
+import { StoryPropTypes } from '@googleforcreators/elements';
 
 const hasTuple = (tuples, tuple) =>
   tuples.some((val) => val[0] === tuple[0] && val[1] === tuple[1]);

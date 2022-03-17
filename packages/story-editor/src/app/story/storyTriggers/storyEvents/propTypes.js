@@ -17,11 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-
-/**
- * Internal dependencies
- */
-import storyPropType from '../../../../output/story';
+import { OutputStory as storyPropType } from '@web-stories-wp/output'; // @todo Doesn't look correct.
 
 export const registerPropTypes = {
   currentStory: storyPropType,
