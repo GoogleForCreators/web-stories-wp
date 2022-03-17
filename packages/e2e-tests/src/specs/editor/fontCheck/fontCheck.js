@@ -44,6 +44,8 @@ async function createStoryWithTitle(title) {
 }
 
 async function updateFont(fontFamily) {
+  // Open style pane
+  await expect(page).toClick('li[role="tab"]', { text: /^Style$/ });
   await expect(page).toClick('button[aria-label="Font family"]');
   await page.keyboard.type(fontFamily);
   await page.keyboard.press('ArrowDown');
