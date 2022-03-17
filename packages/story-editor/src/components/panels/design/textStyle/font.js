@@ -29,7 +29,6 @@ import { clamp } from '@googleforcreators/units';
  * Internal dependencies
  */
 import { useFont } from '../../../../app/font';
-import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import { Row, usePresubmitHandler } from '../../../form';
 import {
   focusStyle,
@@ -37,6 +36,7 @@ import {
   inputContainerStyleOverride,
 } from '../../shared';
 import StoryFontPicker from '../../../storyFontPicker';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import useRichTextFormatting from './useRichTextFormatting';
 import getFontWeights from './getFontWeights';
 

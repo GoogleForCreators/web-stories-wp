@@ -18,6 +18,8 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
+import { registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
@@ -97,6 +99,7 @@ function arrange(selectedElements) {
 
 describe('Panels/PageBackground', () => {
   beforeAll(() => {
+    elementTypes.forEach(registerElementType);
     localStorage.setItem(
       'web_stories_ui_panel_settings:pageBackground',
       JSON.stringify({ isCollapsed: false })

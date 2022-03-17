@@ -17,15 +17,23 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
+import { getDefinitionForType } from '@googleforcreators/elements';
+
 /**
  * Internal dependencies
  */
-import { getDefinitionForType } from '../../../elements';
+import useCORSProxy from '../../../utils/useCORSProxy';
+import { useStory } from '../../../app';
 
 export const LayerThumbnail = ({ page }) => {
   const { LayerIcon } = getDefinitionForType(page?.type);
+  const { getProxiedUrl } = useCORSProxy();
+  const { isDefaultBackground } = page;
+  const currentPageBackgroundColor = useStory(
+    ({ state }) => !isDefaultBackground || state.currentPage?.backgroundColor
+  );
 
-  const props = { element: page };
+  const props = { element: page, getProxiedUrl, currentPageBackgroundColor };
 
   if (page?.type === 'video') {
     props.showVideoPreviewAsBackup = true;

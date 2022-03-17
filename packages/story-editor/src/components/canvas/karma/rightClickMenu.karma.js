@@ -17,12 +17,12 @@
  * External dependencies
  */
 import { waitFor, within } from '@testing-library/react';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 import { ATTRIBUTES_TO_COPY } from '../../../app/story/useStoryReducer/reducers/copySelectedElement';
 import { Fixture } from '../../../karma';
 import objectPick from '../../../utils/objectPick';

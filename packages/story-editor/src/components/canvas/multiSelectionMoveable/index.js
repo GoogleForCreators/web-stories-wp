@@ -28,13 +28,13 @@ import {
 import { useUnits } from '@googleforcreators/units';
 import { useTransform } from '@googleforcreators/transform';
 import { Moveable } from '@googleforcreators/moveable';
+import { getDefinitionForType } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { useStory, useCanvas, useLayout } from '../../../app';
 import objectWithout from '../../../utils/objectWithout';
-import { getDefinitionForType } from '../../../elements';
 import isTargetOutOfContainer from '../../../utils/isTargetOutOfContainer';
 import useSnapping from '../utils/useSnapping';
 import useUpdateSelectionRectangle from '../utils/useUpdateSelectionRectangle';

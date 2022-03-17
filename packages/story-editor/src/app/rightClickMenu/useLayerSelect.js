@@ -28,6 +28,7 @@ import { __ } from '@googleforcreators/i18n';
 import { Icons } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import styled from 'styled-components';
+import { getDefinitionForType } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -35,7 +36,6 @@ import styled from 'styled-components';
 import useStory from '../story/useStory';
 import createPolygon from '../canvas/utils/createPolygon';
 import { useCanvas } from '../canvas';
-import { getDefinitionForType } from '../../elements';
 import { useConfig } from '../config';
 
 const ReversedIcon = styled(Icons.ChevronRightSmall)`

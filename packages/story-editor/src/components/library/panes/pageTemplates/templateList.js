@@ -28,12 +28,13 @@ import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import { trackEvent } from '@googleforcreators/tracking';
 import { useGridViewKeys, useSnackbar } from '@googleforcreators/design-system';
+import { duplicatePage } from '@googleforcreators/elements';
+
 /**
  * Internal dependencies
  */
-import { duplicatePage } from '../../../../elements';
-import { useStory } from '../../../../app/story';
 import { PANE_PADDING } from '../shared';
+import { useStory } from '../../../../app/story';
 import { useConfig } from '../../../../app/config';
 
 import DefaultPageTemplate from './defaultPageTemplate';
