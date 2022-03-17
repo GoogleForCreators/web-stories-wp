@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { renderHook, act } from '@testing-library/react-hooks';
-import { FlagsProvider } from 'flagged';
 
 /**
  * Internal dependencies
@@ -73,15 +72,13 @@ function setup({
     },
   };
   const wrapper = ({ children }) => (
-    <FlagsProvider features={['enableVideoTrim']}>
-      <CanvasContext.Provider value={canvasCtx}>
-        <APIContext.Provider value={apiCtx}>
-          <StoryContext.Provider value={storyCtx}>
-            {children}
-          </StoryContext.Provider>
-        </APIContext.Provider>
-      </CanvasContext.Provider>
-    </FlagsProvider>
+    <CanvasContext.Provider value={canvasCtx}>
+      <APIContext.Provider value={apiCtx}>
+        <StoryContext.Provider value={storyCtx}>
+          {children}
+        </StoryContext.Provider>
+      </APIContext.Provider>
+    </CanvasContext.Provider>
   );
   const rendering = renderHook(() => useVideoTrimMode(), { wrapper });
 
