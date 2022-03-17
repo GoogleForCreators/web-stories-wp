@@ -15,6 +15,5 @@
  */
 export * from './constants';
 export * from './utils';
-export * from './elementType';
 export * from './types';
 export { default as elementSlice } from './elementSlice';

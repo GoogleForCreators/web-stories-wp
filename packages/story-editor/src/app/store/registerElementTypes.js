@@ -19,6 +19,6 @@
 import { elementTypes } from '@googleforcreators/element-library';
 import { dispatch } from '@googleforcreators/data';
 
-elementTypes.forEach((element) => {
-  dispatch('element').registerElementTypes(element);
+elementTypes.forEach((elementType) => {
+  dispatch('element').registerElementTypes(elementType);
 });

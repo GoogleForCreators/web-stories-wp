@@ -15,10 +15,10 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { elementTypes } from '../elementType';
+import { select } from '@googleforcreators/data';
 
-const getDefinitionForType = (type) => elementTypes[type];
+const getDefinitionForType = (type) => select('element').elementTypes[type];
 
 export default getDefinitionForType;

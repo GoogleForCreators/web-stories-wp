@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { PanelTypes } from '@googleforcreators/design-system';
-import { elementTypes } from '@googleforcreators/elements';
+import { select } from '@googleforcreators/data';
 
 /**
  * Internal dependencies
@@ -109,7 +109,7 @@ function getDesignPanelsForSelection(elements) {
 
   // Find which panels all the selected elements have in common
   return elements
-    .map(({ type }) => elementTypes[type].panels)
+    .map(({ type }) => select('element').elementTypes[type].panels)
     .reduce((commonPanels, panels) => intersect(commonPanels, panels), ALL)
     .map((type) => {
       switch (type) {
