@@ -68,7 +68,7 @@ describe('More button', () => {
   });
 
   it('shape element: should focus the size and position panel when the more button is clicked', async () => {
-    // add text to canvas
+    // add shape to canvas
     await fixture.editor.library.shapesTab.click();
     await fixture.events.click(fixture.editor.library.shapes.shape('Triangle'));
 
@@ -80,7 +80,7 @@ describe('More button', () => {
   });
 
   it('sticker element: should focus the size and position panel when the more button is clicked', async () => {
-    // add text to canvas
+    // add sticker to canvas
     await fixture.editor.library.shapesTab.click();
     await fixture.events.click(
       fixture.editor.library.shapes.sticker(stickerTestType)
