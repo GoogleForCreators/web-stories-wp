@@ -124,4 +124,8 @@ export class DesignMenu extends Container {
       ToggleButton
     );
   }
+
+  get more() {
+    return this.getByRole('menuitem', { name: /^More$/ });
+  }
 }
