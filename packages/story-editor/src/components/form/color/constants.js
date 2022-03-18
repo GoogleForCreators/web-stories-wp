@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,6 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-export { INSERT, DOCUMENT, STYLE } from './constants';
-export { default } from './inspector';
+// TODO: https://github.com/GoogleForCreators/web-stories-wp/issues/10928
+// Weird spacing values for x are because of calculation bug in getOffset
+export const SPACING = {
+  FLOATING_MENU: { x: 0, y: 12 },
+  DEFAULT_SIDEBAR: { x: 230, y: 0 },
+  SIDEBAR_WITHOUT_EYEDROPPER: { x: 208, y: 0 },
+  IS_RTL: { x: 12, y: 0 },
+};

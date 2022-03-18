@@ -37,9 +37,12 @@ describe('Inserting WebM Video', () => {
       await deleteMedia(file);
     }
   });
-
+  
   async function openPanel(name) {
-    // Open the Accessibility panel.
+    // open style pane
+    await expect(page).toClick('li', { text: /^Style$/ });
+
+    // Open the panel.
     const panel = await page.$(`button[aria-label="${name}"]`);
     const isCollapsed = await page.evaluate(
       (button) => button.getAttribute('aria-expanded') === 'false',

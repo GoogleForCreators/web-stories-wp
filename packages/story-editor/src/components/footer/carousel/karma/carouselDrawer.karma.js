@@ -79,7 +79,7 @@ describe('Carousel Drawer', () => {
   });
 
   describe('with a multi-page story', () => {
-    const EXTRA_PAGES = 9;
+    const EXTRA_PAGES = 19;
 
     beforeEach(() => {
       // Let's add some extra pages

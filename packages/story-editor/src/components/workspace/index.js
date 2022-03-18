@@ -38,16 +38,16 @@ function Workspace({ header, footer }) {
   return (
     <VideoTrimProvider>
       <RichTextProvider editingState={editingElementState}>
-        <CanvasArea>
-          <ErrorBoundary>
-            <Canvas header={header} footer={footer} />
-          </ErrorBoundary>
-        </CanvasArea>
         <InspectorArea>
           <ErrorBoundary>
             <Inspector />
           </ErrorBoundary>
         </InspectorArea>
+        <CanvasArea>
+          <ErrorBoundary>
+            <Canvas header={header} footer={footer} />
+          </ErrorBoundary>
+        </CanvasArea>
       </RichTextProvider>
     </VideoTrimProvider>
   );

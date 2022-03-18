@@ -14,6 +14,10 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { waitFor } from '@testing-library/react';
+/**
  * Internal dependencies
  */
 import { Fixture } from '../fixture';
@@ -47,6 +51,7 @@ describe('Styling single text field', () => {
 
   describe('CUJ: Creator Can Style Text: Apply B, Apply U, Apply I, Set text color, Set kerning', () => {
     it('should apply inline formatting correctly for single-style text field', async () => {
+      await data.fixture.events.click(data.fixture.editor.inspector.designTab);
       const {
         bold,
         italic,
@@ -118,6 +123,7 @@ describe('Styling single text field', () => {
     });
 
     it('should apply inline formatting correctly for multi-style text field', async () => {
+      await data.fixture.events.click(data.fixture.editor.inspector.designTab);
       const {
         bold,
         italic,
@@ -129,6 +135,9 @@ describe('Styling single text field', () => {
       } = data.fixture.editor.inspector.designPanel.textStyle;
 
       // First enter edit mode, select something, style it with all styles and exit edit mode
+      await data.fixture.events.focus(
+        data.fixture.editor.canvas.framesLayer.frames[1].node
+      );
       await data.fixture.events.keyboard.press('Enter');
       await setSelection(6, 8);
       await data.fixture.events.click(letterSpacing, { clickCount: 3 });
@@ -169,18 +178,22 @@ describe('Styling single text field', () => {
       await data.fixture.events.sleep(300);
       await data.fixture.events.click(await fontWeight.option('Bold'));
       await data.fixture.events.sleep(300);
-      await data.fixture.events.click(fontColor.button);
-      await data.fixture.events.click(fontColor.picker.custom);
-      await data.fixture.events.click(fontColor.picker.hexButton);
-      await data.fixture.events.keyboard.type('00FF00');
-      // Wait for debounce in color picker (100ms)
-      await data.fixture.events.sleep(100);
       await data.fixture.events.click(letterSpacing, { clickCount: 3 });
       await data.fixture.events.keyboard.type('100');
       await data.fixture.events.keyboard.press('Enter');
       await data.fixture.events.click(uppercase.button);
       await data.fixture.events.keyboard.press('Escape');
-
+      await data.fixture.events.sleep(200);
+      await data.fixture.events.click(fontColor.button);
+      await data.fixture.events.click(fontColor.picker.custom);
+      await data.fixture.events.click(fontColor.picker.hexButton);
+      await data.fixture.events.keyboard.type('00FF00');
+      // Wait for color panel debounce
+      await waitFor(() => {
+        if (fontColor.hex.value !== '00FF00') {
+          throw new Error('Color not updated yet');
+        }
+      });
       // Verify all styles, now expected to be updated
       expect(bold.checked).toBe(true);
       expect(italic.checked).toBe(true);
@@ -188,10 +201,8 @@ describe('Styling single text field', () => {
       expect(uppercase.checked).toBe(true);
       expect(fontWeight.value).toBe('Bold');
       expect(letterSpacing.value).toBe('100%');
-      expect(fontColor.hex.value).toBe('00FF00');
 
       // Assume text content to match expectation
-      const actual = getTextContent();
       const css = [
         'font-weight: 700',
         'font-style: italic',
@@ -201,13 +212,17 @@ describe('Styling single text field', () => {
         'text-transform: uppercase',
       ].join('; ');
       const expected = `<span style="${css}">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>`;
-      expect(actual).toBe(expected);
+      await waitFor(() => {
+        if (getTextContent() !== expected) {
+          throw new Error('Text not updated yet');
+        }
+      });
     });
   });
 
   describe('CUJ: Creator Can Style Text: Apply B, Apply U, Apply I', () => {
-    // eslint-disable-next-line jasmine/no-disabled-tests -- This isn't implemented yet: Filed in #1977
-    xit('should apply inline formatting using shortcuts', async () => {
+    it('should apply inline formatting using shortcuts', async () => {
+      await data.fixture.events.click(data.fixture.editor.inspector.designTab);
       const { bold, italic, underline } =
         data.fixture.editor.inspector.designPanel.textStyle;
 
@@ -240,6 +255,7 @@ describe('Styling single text field', () => {
 
   describe('CUJ: Creator Can Style Text: Apply B, Select weight', () => {
     it('should make black+bold text field non-bold when toggling', async () => {
+      await data.fixture.events.click(data.fixture.editor.inspector.designTab);
       const { bold, fontWeight } =
         data.fixture.editor.inspector.designPanel.textStyle;
 
@@ -280,6 +296,7 @@ describe('Styling single text field', () => {
     });
 
     it('should make bold+regular text field bold when toggling', async () => {
+      await data.fixture.events.click(data.fixture.editor.inspector.designTab);
       const { bold, fontWeight } =
         data.fixture.editor.inspector.designPanel.textStyle;
 
@@ -317,6 +334,7 @@ describe('Styling single text field', () => {
       // This is on purpose and by design.
       // See more in `richText/formatters/weight.js@toggleBold`
 
+      await data.fixture.events.click(data.fixture.editor.inspector.designTab);
       const { bold, fontWeight } =
         data.fixture.editor.inspector.designPanel.textStyle;
 
