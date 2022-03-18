@@ -49,19 +49,20 @@ const Area = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: center;
+  z-index: ${({ zIndex = 'auto' }) => zIndex};
 `;
 
-function FooterLayout({ footer }) {
+function FooterLayout({ footer, zIndex }) {
   return (
     <DirectionAware>
       <Wrapper aria-label={__('Workspace Footer', 'web-stories')}>
         <Area area="carousel">
           <Carousel />
         </Area>
-        <Area area="primary">
+        <Area area="primary" zIndex={zIndex}>
           <PrimaryMenu />
         </Area>
-        <Area area="secondary">
+        <Area area="secondary" zIndex={zIndex}>
           <SecondaryMenu menu={footer?.secondaryMenu} />
         </Area>
       </Wrapper>
@@ -71,6 +72,7 @@ function FooterLayout({ footer }) {
 
 FooterLayout.propTypes = {
   footer: PropTypes.object,
+  zIndex: PropTypes.number,
 };
 
 export default FooterLayout;
