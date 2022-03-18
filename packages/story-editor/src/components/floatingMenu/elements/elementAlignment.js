@@ -23,15 +23,80 @@ import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
-import { IconButton } from './shared';
+import { useStory } from '../../../app';
+import useAlignment from '../../panels/design/alignment/useAlignment';
+import { IconButton, Separator } from './shared';
 
 function ElementAlignment() {
+  const { selectedElements, updateSelectedElements } = useStory(
+    ({ state: { selectedElements }, actions: { updateSelectedElements } }) => ({
+      selectedElements,
+      updateSelectedElements,
+    })
+  );
+
+  const updateElements = (callback) =>
+    updateSelectedElements({ properties: callback });
+
+  const {
+    isDistributionEnabled,
+    handleAlignLeft,
+    handleAlignCenter,
+    handleAlignRight,
+    handleAlignTop,
+    handleAlignMiddle,
+    handleAlignBottom,
+    handleHorizontalDistribution,
+    handleVerticalDistribution,
+  } = useAlignment({ selectedElements, updateElements });
   return (
-    <IconButton
-      Icon={Icons.AlignLeft}
-      title={__('Align elements', 'web-stories')}
-      onClick={() => {}}
-    />
+    <>
+      {isDistributionEnabled && (
+        <>
+          <IconButton
+            Icon={Icons.DistributeHorizontal}
+            title={__('Distribute horizontally', 'web-stories')}
+            onClick={handleHorizontalDistribution}
+          />
+          <IconButton
+            Icon={Icons.DistributeVertical}
+            title={__('Distribute vertically', 'web-stories')}
+            onClick={handleVerticalDistribution}
+          />
+          <Separator />
+        </>
+      )}
+      <IconButton
+        Icon={Icons.AlignLeft}
+        title={__('Align left', 'web-stories')}
+        onClick={handleAlignLeft}
+      />
+      <IconButton
+        Icon={Icons.AlignCenter}
+        title={__('Align center', 'web-stories')}
+        onClick={handleAlignCenter}
+      />
+      <IconButton
+        Icon={Icons.AlignRight}
+        title={__('Align right', 'web-stories')}
+        onClick={handleAlignRight}
+      />
+      <IconButton
+        Icon={Icons.AlignTop}
+        title={__('Align top', 'web-stories')}
+        onClick={handleAlignTop}
+      />
+      <IconButton
+        Icon={Icons.AlignMiddle}
+        title={__('Align vertical center', 'web-stories')}
+        onClick={handleAlignMiddle}
+      />
+      <IconButton
+        Icon={Icons.AlignBottom}
+        title={__('Align bottom', 'web-stories')}
+        onClick={handleAlignBottom}
+      />
+    </>
   );
 }
 
