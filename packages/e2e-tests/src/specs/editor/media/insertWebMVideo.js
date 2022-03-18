@@ -37,7 +37,7 @@ describe('Inserting WebM Video', () => {
       await deleteMedia(file);
     }
   });
-  
+
   async function openPanel(name) {
     // open style pane
     await expect(page).toClick('li', { text: /^Style$/ });
