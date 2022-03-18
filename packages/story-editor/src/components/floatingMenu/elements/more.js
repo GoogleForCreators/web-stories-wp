@@ -39,7 +39,7 @@ function More() {
     });
 
     trackEvent('floating_menu', {
-      name: 'set_opacity',
+      name: 'click_more_button',
       element: selectedElementType,
     });
   };
