@@ -181,8 +181,8 @@ class HTML {
 		$end_tag   = '<meta name="web-stories-replace-head-end"/>';
 
 		// Replace malformed meta tags with correct tags.
-		$content = (string) preg_replace( '/<meta name="web-stories-replace-head-start\s?"\s?\/>/i', $start_tag, $content );
-		$content = (string) preg_replace( '/<meta name="web-stories-replace-head-end\s?"\s?\/>/i', $end_tag, $content );
+		$content = (string) preg_replace( '/<meta name="web-stories-replace-head-start\s?"\s?\/?>/i', $start_tag, $content );
+		$content = (string) preg_replace( '/<meta name="web-stories-replace-head-end\s?"\s?\/?>/i', $end_tag, $content );
 
 		$start_tag_pos = strpos( $content, $start_tag );
 		$end_tag_pos   = strpos( $content, $end_tag );
