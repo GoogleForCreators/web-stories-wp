@@ -87,8 +87,7 @@ function useAlignment({ selectedElements, updateElements, isFloatingMenu }) {
   const handleTrackEvent = (direction) => {
     trackEvent(isFloatingMenu ? 'floating_menu' : 'design_panel', {
       name: `set_alignment_${direction}`,
-      element:
-        selectedElements.length > 1 ? 'multiple' : selectedElements[0]?.type,
+      element: 'multiple',
     });
   };
 
