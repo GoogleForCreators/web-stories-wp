@@ -45,11 +45,11 @@ function Mute() {
     ? __('Removing audio', 'web-stories')
     : __('Remove audio', 'web-stories');
 
-  const handleChange = () => {
+  const handleChange = (e) => {
     trackEvent('floating_menu', {
       name: 'set_mute',
     });
-    handleMute();
+    handleMute(e);
   };
   return (
     <IconButton
