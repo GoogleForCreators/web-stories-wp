@@ -48,7 +48,7 @@ function ElementAlignment() {
     handleAlignBottom,
     handleHorizontalDistribution,
     handleVerticalDistribution,
-  } = useAlignment({ selectedElements, updateElements });
+  } = useAlignment({ selectedElements, updateElements, isFloatingMenu: true });
   return (
     <>
       {isDistributionEnabled && (
