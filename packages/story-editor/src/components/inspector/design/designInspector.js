@@ -25,6 +25,7 @@ import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
  * Internal dependencies
  */
 import { useStory } from '../../../app';
+import { states, styles, useHighlights } from '../../../app/highlights';
 import DesignPanels from './designPanels';
 
 const Wrapper = styled.div`
@@ -37,13 +38,23 @@ function DesignInspector() {
     ({ actions }) => actions.updateAnimationState
   );
 
+  const { highlight, resetHighlight } = useHighlights((state) => ({
+    highlight: state[states.STYLE_PANE],
+    resetHighlight: state.onFocusOut,
+    cancelHighlight: state.cancelEffect,
+  }));
+
   const resetStoryAnimationState = useCallback(
     () => updateAnimationState({ animationState: STORY_ANIMATION_STATE.RESET }),
     [updateAnimationState]
   );
 
   return (
-    <Wrapper onFocus={resetStoryAnimationState}>
+    <Wrapper
+      css={highlight?.showEffect && styles.FLASH}
+      onAnimationEnd={resetHighlight}
+      onFocus={resetStoryAnimationState}
+    >
       <DesignPanels />
     </Wrapper>
   );
