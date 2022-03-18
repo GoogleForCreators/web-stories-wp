@@ -24,6 +24,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import DirectionAware from '../directionAware';
 import Carousel from './carousel';
 import PrimaryMenu from './primaryMenu';
 import SecondaryMenu from './secondaryMenu';
@@ -52,17 +53,19 @@ const Area = styled.div`
 
 function FooterLayout({ footer }) {
   return (
-    <Wrapper aria-label={__('Workspace Footer', 'web-stories')}>
-      <Area area="carousel">
-        <Carousel />
-      </Area>
-      <Area area="primary">
-        <PrimaryMenu />
-      </Area>
-      <Area area="secondary">
-        <SecondaryMenu menu={footer?.secondaryMenu} />
-      </Area>
-    </Wrapper>
+    <DirectionAware>
+      <Wrapper aria-label={__('Workspace Footer', 'web-stories')}>
+        <Area area="carousel">
+          <Carousel />
+        </Area>
+        <Area area="primary">
+          <PrimaryMenu />
+        </Area>
+        <Area area="secondary">
+          <SecondaryMenu menu={footer?.secondaryMenu} />
+        </Area>
+      </Wrapper>
+    </DirectionAware>
   );
 }
 

@@ -32,6 +32,9 @@ describe('Design Menu: Text alignment', () => {
 
     await fixture.editor.library.textTab.click();
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
+
+    // Open style pane
+    await fixture.events.click(fixture.editor.inspector.designTab);
   });
 
   afterEach(() => {

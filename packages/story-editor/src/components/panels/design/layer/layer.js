@@ -52,10 +52,9 @@ const ActionsContainer = styled.div`
   padding-right: 6px;
   column-gap: 6px;
 
-  --background-color: ${({ theme }) =>
-    theme.colors.interactiveBg.secondaryNormal};
+  --background-color: ${({ theme }) => theme.colors.bg.secondary};
   --background-color-opaque: ${({ theme }) =>
-    rgba(theme.colors.interactiveBg.secondaryNormal, 0)};
+    rgba(theme.colors.bg.secondary, 0)};
   background-color: var(--background-color);
 
   ::before {
@@ -113,11 +112,11 @@ const LayerButton = styled(Button).attrs({
   ${({ isSelected, theme }) =>
     isSelected &&
     css`
-      background: ${theme.colors.interactiveBg.secondaryPress};
+      background: ${theme.colors.interactiveBg.tertiaryPress};
       + * {
-        --background-color: ${theme.colors.interactiveBg.secondaryPress};
+        --background-color: ${theme.colors.interactiveBg.tertiaryPress};
         --background-color-opaque: ${rgba(
-          theme.colors.interactiveBg.secondaryPress,
+          theme.colors.interactiveBg.tertiaryPress,
           0
         )};
         --selected-hover-color: ${theme.colors.interactiveBg.tertiaryHover};
@@ -125,23 +124,23 @@ const LayerButton = styled(Button).attrs({
     `}
 
   :hover {
-    background: ${({ theme }) => theme.colors.interactiveBg.secondaryHover};
+    background: ${({ theme }) => theme.colors.interactiveBg.tertiaryHover};
   }
   :hover + * {
     --background-color: ${({ theme }) =>
-      theme.colors.interactiveBg.secondaryHover};
+      theme.colors.interactiveBg.tertiaryHover};
     --background-color-opaque: ${({ theme }) =>
-      rgba(theme.colors.interactiveBg.secondaryHover, 0)};
+      rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
   }
 
   :active {
-    background: ${({ theme }) => theme.colors.interactiveBg.secondaryPress};
+    background: ${({ theme }) => theme.colors.interactiveBg.tertiaryPress};
   }
   :active + * {
     --background-color: ${({ theme }) =>
-      theme.colors.interactiveBg.secondaryPress};
+      theme.colors.interactiveBg.tertiaryPress};
     --background-color-opaque: ${({ theme }) =>
-      rgba(theme.colors.interactiveBg.secondaryPress, 0)};
+      rgba(theme.colors.interactiveBg.tertiaryPress, 0)};
   }
 `;
 

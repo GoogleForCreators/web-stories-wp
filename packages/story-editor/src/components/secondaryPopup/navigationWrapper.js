@@ -16,6 +16,7 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 
 /**
@@ -29,7 +30,7 @@ import {
 
 const NavigationWrapper = styled.div`
   position: absolute;
-  left: 0;
+  ${({ alignRight = false }) => (alignRight ? 'right: 0' : 'left: 0')};
   bottom: 0;
   max-height: calc(100vh - ${DISTANCE_FROM_TOP + DISTANCE_FROM_BOTTOM}px);
   width: ${NAVIGATION_WIDTH + 2}px; /* account for border width */
@@ -49,5 +50,9 @@ const NavigationWrapper = styled.div`
       }
     `}
 `;
+NavigationWrapper.propTypes = {
+  alignRight: PropTypes.bool,
+  isOpen: PropTypes.bool,
+};
 
 export default NavigationWrapper;
