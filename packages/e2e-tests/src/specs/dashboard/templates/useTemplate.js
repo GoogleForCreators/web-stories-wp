@@ -66,14 +66,7 @@ describe('Template', () => {
     // Wait for title input to load before continuing.
     await page.waitForSelector('input[placeholder="Add title"]');
 
-    // Open style pane
-    await expect(page).toClick('li[role="tab"]', { text: /^Style$/ });
-
-    await expect(page).toMatch('Layers');
-    await expect(page).toMatchElement('input[placeholder="Add title"]');
-    await expect(page).toMatchElement('[data-element-id]');
-
-    // Wait for skeleton thumbnails in the carousel to render before taking a screenshot.
+    // Wait for skeleton thumbnails in the carousel to render which gives footer time to also render
     await page.waitForFunction(
       () =>
         !document.querySelector(
@@ -81,12 +74,27 @@ describe('Template', () => {
         ),
       { timeout: 5000 } // requestIdleCallback in the carousel kicks in after 5s the latest.
     );
-    await takeSnapshot(page, 'Story From Template');
+
+    // Expand layers popup
+    await expect(page).toClick('button', { text: /^Layers/ });
 
     // Select a text layer so 'Saved Colors' panel is present
     await expect(page).toClick('div[data-testid="layer-option"] button', {
-      text: 'Fresh',
+      text: /^Fresh/,
     });
+
+    // Collapse layers popup to avoid aXe error about duplicative alt tags
+    await expect(page).toClick('button', { text: /^Layers/ });
+    // make sure popup is closed otherwise aXe will error
+    await page.waitForTimeout(300);
+
+    // Open style pane
+    await expect(page).toClick('li[role="tab"]', { text: /^Style$/ });
+
+    await expect(page).toMatchElement('input[placeholder="Add title"]');
+    await expect(page).toMatchElement('[data-element-id]');
+
+    await takeSnapshot(page, 'Story From Template');
 
     // Open the color picker
     await expect(page).toClick('button[aria-label="Text color"]');

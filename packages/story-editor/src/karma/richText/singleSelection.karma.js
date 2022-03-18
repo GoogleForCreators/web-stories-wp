@@ -17,7 +17,6 @@
  * External dependencies
  */
 import { waitFor } from '@testing-library/react';
-
 /**
  * Internal dependencies
  */

@@ -162,7 +162,6 @@ export const createStoryFromTemplate = async (config, template) => {
         id: 0,
         url: '',
       },
-      title: '',
       publisherLogo: {
         url: '',
       },
@@ -170,6 +169,8 @@ export const createStoryFromTemplate = async (config, template) => {
       metadata: {
         publisher: '',
       },
+      terms: {},
+      title: '',
     },
     pages,
     metadata: {
