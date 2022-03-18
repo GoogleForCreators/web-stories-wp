@@ -31,6 +31,8 @@ export const LOCAL_STORAGE_PREFIX = {
   DELETE_STYLE_PRESET_DIALOG_DISMISSED:
     'web_stories_delete_style_preset_dialog_dismissed',
   DEFAULT_VIEW_PAGE_TEMPLATE_LAYOUT: 'web_stories_default_template_view',
+  BACKGROUND_IS_SET_DIALOG_DISMISSED:
+    'web_stories_background_is_set_dialog_dismissed',
 };
 
 function getItemByKey(key) {
