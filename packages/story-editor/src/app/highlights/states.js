@@ -35,6 +35,9 @@ import {
 const keys = {
   STORY_TITLE: 'STORY_TITLE',
 
+  // Inspector tabs
+  STYLE_PANE: 'STYLE_PANE',
+
   // INSPECTOR
   ANIMATION: 'ANIMATION',
   ASSISTIVE_TEXT: 'ASSISTIVE_TEXT',
@@ -59,6 +62,12 @@ const keys = {
 export const STATES = {
   [keys.STORY_TITLE]: {
     focus: true,
+  },
+
+  // Inspector tabs
+  [keys.STYLE_PANE]: {
+    focus: true,
+    tab: STYLE,
   },
 
   // Inspector

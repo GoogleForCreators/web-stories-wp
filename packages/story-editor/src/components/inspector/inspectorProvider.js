@@ -35,7 +35,7 @@ import { useFeature } from 'flagged';
  */
 import { useAPI } from '../../app/api';
 import { useStory } from '../../app/story';
-import { useHighlights } from '../../app/highlights';
+import { states, useHighlights } from '../../app/highlights';
 import Library from '../library';
 import { DOCUMENT, STYLE, PUBLISH_MODAL_DOCUMENT, INSERT } from './constants';
 import Context from './context';
@@ -55,8 +55,12 @@ function InspectorProvider({ inspectorTabs, children }) {
     currentPage: state.currentPage,
   }));
 
-  const { tab: highlightedTab } = useHighlights(({ tab }) => ({ tab }));
+  const { tab: highlightedTab, highlight } = useHighlights((state) => ({
+    tab: state.tab,
+    highlight: state[states.STYLE_PANE],
+  }));
 
+  // set tab when content is highlighted
   useEffect(() => {
     if (INSPECTOR_TAB_IDS.has(highlightedTab)) {
       setTab(highlightedTab);
@@ -110,6 +114,14 @@ function InspectorProvider({ inspectorTabs, children }) {
       setTab(STYLE);
     }
   }, [currentPage]);
+
+  // focus design pane when highlighted
+  useEffect(() => {
+    const node = designPaneRef.current;
+    if (node && highlight?.focus && highlight?.showEffect) {
+      node.focus();
+    }
+  }, [highlight]);
 
   const loadUsers = useCallback(() => {
     if (!isUsersLoading && users.length === 0) {
