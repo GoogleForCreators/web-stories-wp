@@ -31,7 +31,7 @@ const FloatingMultipleMenu = memo(function FloatingMultipleMenu() {
 
       <Separator />
 
-      <Dismiss />
+      <Dismiss isMultiple />
     </>
   );
 });

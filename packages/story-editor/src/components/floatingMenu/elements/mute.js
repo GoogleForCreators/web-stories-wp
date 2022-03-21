@@ -19,6 +19,7 @@
  */
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
+import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
@@ -44,12 +45,18 @@ function Mute() {
     ? __('Removing audio', 'web-stories')
     : __('Remove audio', 'web-stories');
 
+  const handleChange = (e) => {
+    trackEvent('floating_menu', {
+      name: 'set_mute',
+    });
+    handleMute(e);
+  };
   return (
     <IconButton
       Icon={Icons.Muted}
       title={title}
       disabled={isDisabled || isMuting}
-      onClick={handleMute}
+      onClick={handleChange}
     />
   );
 }

@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
@@ -36,10 +37,15 @@ function Loop() {
     (state) => state.actions.updateSelectedElements
   );
 
-  const handleChange = () =>
+  const handleChange = () => {
+    trackEvent('floating_menu', {
+      name: 'set_loop',
+    });
+
     updateSelectedElements({
       properties: ({ loop: oldLoop }) => ({ loop: !oldLoop }),
     });
+  };
 
   return <StyledLoopContent loop={loop} onChange={handleChange} />;
 }

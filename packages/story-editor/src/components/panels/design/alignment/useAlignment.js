@@ -25,6 +25,7 @@ import {
   calcRotatedObjectPositionAndSize,
   dataPixels,
 } from '@googleforcreators/units';
+import { trackEvent } from '@googleforcreators/tracking';
 
 const PAGE_RECT = {
   startX: 0,
@@ -42,7 +43,7 @@ const ALIGNMENT = {
   BOTTOM: 'bottom',
 };
 
-function useAlignment({ selectedElements, updateElements }) {
+function useAlignment({ selectedElements, updateElements, isFloatingMenu }) {
   const isDistributionEnabled = selectedElements.length > 2;
   const selectedElementsWithFrame = useMemo(
     () =>
@@ -79,12 +80,19 @@ function useAlignment({ selectedElements, updateElements }) {
       }),
     [selectedElements]
   );
-
   // Set boundRect with pageSize when there is only one element selected
   const boundRect =
     selectedElements.length === 1 ? PAGE_RECT : getBoundRect(selectedElements);
 
+  const handleTrackEvent = (direction) => {
+    trackEvent(isFloatingMenu ? 'floating_menu' : 'design_panel', {
+      name: `set_alignment_${direction}`,
+      element: 'multiple',
+    });
+  };
+
   const handleAlign = (direction) => {
+    handleTrackEvent(direction);
     updateElements((properties) => {
       const { id } = properties;
 
@@ -118,6 +126,7 @@ function useAlignment({ selectedElements, updateElements }) {
   };
 
   const handleAlignCenter = () => {
+    handleTrackEvent('center');
     const centerX = (boundRect.endX + boundRect.startX) / 2;
     updateElements((properties) => {
       const { width } = properties;
@@ -128,6 +137,7 @@ function useAlignment({ selectedElements, updateElements }) {
   };
 
   const handleAlignMiddle = () => {
+    handleTrackEvent('middle');
     const centerY = (boundRect.endY + boundRect.startY) / 2;
     updateElements((properties) => {
       const { height } = properties;
@@ -138,6 +148,7 @@ function useAlignment({ selectedElements, updateElements }) {
   };
 
   const handleHorizontalDistribution = () => {
+    handleTrackEvent('horizontal_distribution');
     const sortedElementsWithFrame = [...selectedElementsWithFrame];
     sortedElementsWithFrame.sort(
       (a, b) => (a.frameX + a.frameWidth) / 2 - (b.frameX + b.frameWidth) / 2
@@ -168,6 +179,7 @@ function useAlignment({ selectedElements, updateElements }) {
   };
 
   const handleVerticalDistribution = () => {
+    handleTrackEvent('vertical_distribution');
     const sortedElementsWithFrame = [...selectedElementsWithFrame];
     sortedElementsWithFrame.sort(
       (a, b) => (a.frameY + a.frameHeight) / 2 - (b.frameY + b.frameHeight) / 2
