@@ -78,6 +78,7 @@ const OptionsContainer = forwardRef(function OptionsContainer(
     isInline,
     hasDropDownBorder = false,
     containerStyleOverrides,
+    title,
   },
   inputRef
 ) {
@@ -116,6 +117,7 @@ const OptionsContainer = forwardRef(function OptionsContainer(
   return (
     <Container
       role="dialog"
+      title={title}
       ref={ref}
       isInline={isInline}
       hasDropDownBorder={hasDropDownBorder}
@@ -151,6 +153,7 @@ OptionsContainer.propTypes = {
   renderContents: PropTypes.func.isRequired,
   isInline: PropTypes.bool,
   hasDropDownBorder: PropTypes.bool,
+  title: PropTypes.string,
 };
 
 export default OptionsContainer;

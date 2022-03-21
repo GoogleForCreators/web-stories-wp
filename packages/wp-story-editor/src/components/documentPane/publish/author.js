@@ -109,7 +109,8 @@ function Author() {
       <Datalist.DropDown
         options={queriedUsers}
         searchResultsLabel={__('Search results', 'web-stories')}
-        aria-label={__('Author', 'web-stories')}
+        dropdownButtonLabel={__('Author', 'web-stories')}
+        title={__('Available authors', 'web-stories')}
         {...dropDownParams}
       />
     </Row>

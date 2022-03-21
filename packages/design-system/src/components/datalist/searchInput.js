@@ -135,6 +135,7 @@ const SearchInput = forwardRef(function SearchInput(
         onKeyDown={handleKeyPress}
         placeholder={__('Search', 'web-stories')}
         onChange={onChange}
+        aria-label={__('Search', 'web-stories')}
         {...rest}
       />
       <SearchIconContainer>
