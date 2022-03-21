@@ -187,12 +187,10 @@ function CustomFontsSettings({
   const handleOnSave = useCallback(async () => {
     if (canSave) {
       const urlWithProtocol = withProtocol(fontUrl);
-      let canFetch = false;
       try {
         await fetch(urlWithProtocol, {
           method: 'HEAD',
         });
-        canFetch = true;
       } catch (err) {
         setInputError(
           __(
@@ -200,34 +198,46 @@ function CustomFontsSettings({
             'web-stories'
           )
         );
+        return;
       }
-      if (canFetch) {
-        try {
-          trackEvent('add_custom_font', {
-            url: urlWithProtocol,
-          });
-          const fontData = await getFontDataFromUrl(urlWithProtocol);
-          if (!fontData.family) {
-            setInputError(
-              __('Something went wrong, please try again.', 'web-stories')
-            );
-          } else {
-            await addCustomFont({ ...fontData, url: urlWithProtocol });
-            await fetchCustomFonts();
-            setFontUrl('');
-          }
-        } catch (err) {
+      let fontData;
+      try {
+        trackEvent('add_custom_font', {
+          url: urlWithProtocol,
+        });
+        fontData = await getFontDataFromUrl(urlWithProtocol);
+        if (!fontData.family) {
           setInputError(
-            sprintf(
-              /* translators: %s: list of allowed font types. */
-              __(
-                'Getting font data failed, please ensure the URL points directly to a %s file.',
-                'web-stories'
-              ),
-              translateToExclusiveList(ALLOWED_FONT_TYPES)
-            )
+            __('Something went wrong, please try again.', 'web-stories')
           );
+          return;
         }
+      } catch (err) {
+        setInputError(
+          sprintf(
+            /* translators: %s: list of allowed font types. */
+            __(
+              'Getting font data failed, please ensure the URL points directly to a %s file.',
+              'web-stories'
+            ),
+            translateToExclusiveList(ALLOWED_FONT_TYPES)
+          )
+        );
+        return;
+      }
+
+      try {
+        await addCustomFont({ ...fontData, url: urlWithProtocol });
+        await fetchCustomFonts();
+        setFontUrl('');
+      } catch (err) {
+        setInputError(
+          sprintf(
+            /* translators: %s: font name. */
+            __('A font with this name %s already exists.', 'web-stories'),
+            fontData.family
+          )
+        );
       }
     }
   }, [addCustomFont, fetchCustomFonts, canSave, fontUrl]);
