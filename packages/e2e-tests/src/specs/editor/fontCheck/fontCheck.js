@@ -44,6 +44,8 @@ async function createStoryWithTitle(title) {
 }
 
 async function updateFont(fontFamily) {
+  // Open style pane
+  await expect(page).toClick('li[role="tab"]', { text: /^Style$/ });
   await expect(page).toClick('button[aria-label="Font family"]');
   await page.keyboard.type(fontFamily);
   await page.keyboard.press('ArrowDown');
@@ -60,6 +62,7 @@ async function replaceFontWithFontPicker(fontFamily = '') {
   await page.keyboard.press('Enter');
   await expect(page).toClick('button', { text: 'Replace font' });
   await expect(page).toClick('[data-testid="textFrame"]');
+  await expect(page).toClick('li[role="tab"]', { text: /^Style$/ });
 }
 
 async function replaceFontUsingDefault() {
@@ -94,6 +97,8 @@ describe('Font Check', () => {
 
     await replaceFontUsingDefault(replacementFont);
 
+    // Open the style tab.
+    await expect(page).toClick('li[role="tab"]', { text: /^Style$/ });
     await expect(page).toMatchElement('button[aria-label="Font family"]', {
       text: replacementFont,
     });
@@ -105,6 +110,8 @@ describe('Font Check', () => {
     await storyWithFontCheckDialog(title);
     await replaceFontWithFontPicker(replacementFont);
 
+    // Open the style tab.
+    await expect(page).toClick('li[role="tab"]', { text: /^Style$/ });
     await expect(page).toMatchElement('button[aria-label="Font family"]', {
       text: replacementFont,
     });

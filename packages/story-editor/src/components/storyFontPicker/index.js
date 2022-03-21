@@ -20,6 +20,7 @@
 import { forwardRef, useCallback } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { stripHTML } from '@googleforcreators/dom';
+import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
@@ -78,6 +79,10 @@ const StoryFontPicker = forwardRef(function StoryFontPicker({ ...rest }, ref) {
 
   const onChange = useCallback(
     async (newFont) => {
+      trackEvent('font_family_changed', {
+        name: newFont.name,
+      });
+
       await maybeEnqueueFontStyle(
         selectedElements.map(({ content }) => {
           return {

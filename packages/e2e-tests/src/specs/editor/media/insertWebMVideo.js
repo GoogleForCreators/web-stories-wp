@@ -38,6 +38,9 @@ describe('Inserting WebM Video', () => {
   });
 
   async function openA11yPanel() {
+    // open style pane
+    await expect(page).toClick('li', { text: /^Style$/ });
+
     // Open the Accessibility panel.
     const a11yPanel = await page.$('button[aria-label="Accessibility"]');
     const isCollapsed = await page.evaluate(
