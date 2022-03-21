@@ -17,3 +17,4 @@
 export { default as OutputStory } from './story';
 export { default as getStoryMarkup } from './utils/getStoryMarkup';
 export { default as isHexColorString } from './utils/isHexColorString';
+export * from './constants';
