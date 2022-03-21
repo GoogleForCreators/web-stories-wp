@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,20 +17,29 @@
 /**
  * External dependencies
  */
-import { Icons } from '@googleforcreators/design-system';
-import { __ } from '@googleforcreators/i18n';
+
+import styled, { css } from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { IconButton } from './shared';
+import StoryFontPicker from '../../storyFontPicker';
 
+const StyledFontPicker = styled(StoryFontPicker)`
+  width: 164px;
+`;
+
+const listStyleOverrides = css`
+  max-height: 200px;
+`;
+const containerStyleOverrides = css`
+  border: 1px solid ${({ theme }) => theme.colors.border.defaultNormal};
+`;
 function FontFamily() {
   return (
-    <IconButton
-      Icon={Icons.LetterTUppercase}
-      title={__('Change font family', 'web-stories')}
-      onClick={() => {}}
+    <StyledFontPicker
+      listStyleOverrides={listStyleOverrides}
+      containerStyleOverrides={containerStyleOverrides}
     />
   );
 }

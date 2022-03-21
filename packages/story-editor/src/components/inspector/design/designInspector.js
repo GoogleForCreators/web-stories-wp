@@ -25,27 +25,24 @@ import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
  * Internal dependencies
  */
 import { useStory } from '../../../app';
-import { LayerPanel } from '../../panels/design';
+import { states, styles, useHighlights } from '../../../app/highlights';
 import DesignPanels from './designPanels';
 
 const Wrapper = styled.div`
   height: 100%;
-  flex-direction: column;
-  justify-content: space-between;
-  display: flex;
-`;
-
-const TopPanels = styled.div`
   overflow: auto;
-  flex: 1;
 `;
-
-const BottomPanels = styled.div``;
 
 function DesignInspector() {
   const updateAnimationState = useStory(
     ({ actions }) => actions.updateAnimationState
   );
+
+  const { highlight, resetHighlight } = useHighlights((state) => ({
+    highlight: state[states.STYLE_PANE],
+    resetHighlight: state.onFocusOut,
+    cancelHighlight: state.cancelEffect,
+  }));
 
   const resetStoryAnimationState = useCallback(
     () => updateAnimationState({ animationState: STORY_ANIMATION_STATE.RESET }),
@@ -53,13 +50,12 @@ function DesignInspector() {
   );
 
   return (
-    <Wrapper>
-      <TopPanels onFocus={resetStoryAnimationState}>
-        <DesignPanels />
-      </TopPanels>
-      <BottomPanels>
-        <LayerPanel />
-      </BottomPanels>
+    <Wrapper
+      css={highlight?.showEffect && styles.FLASH}
+      onAnimationEnd={resetHighlight}
+      onFocus={resetStoryAnimationState}
+    >
+      <DesignPanels />
     </Wrapper>
   );
 }

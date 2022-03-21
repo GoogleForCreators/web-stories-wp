@@ -18,6 +18,8 @@
  * External dependencies
  */
 jest.mock('flagged');
+import { registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
@@ -25,6 +27,10 @@ jest.mock('flagged');
 import getStoryMarkup from '../getStoryMarkup';
 
 describe('getStoryMarkup', () => {
+  beforeAll(() => {
+    elementTypes.forEach(registerElementType);
+  });
+
   it('should generate expected story markup', () => {
     const story = {
       storyId: 1,

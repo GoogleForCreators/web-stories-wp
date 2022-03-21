@@ -42,7 +42,7 @@ const Inner = styled(Outer)`
   margin-right: ${({ marginRight }) => marginRight}px;
 `;
 
-function Footer({ footer }) {
+function Footer({ footer, zIndex }) {
   const ref = useRef();
   const [workspaceWidth, setWorkspaceWidth] = useState(0);
 
@@ -57,7 +57,7 @@ function Footer({ footer }) {
       <KeyboardShortcutsMenuProvider>
         <Outer ref={ref}>
           <Inner marginRight={margin}>
-            <FooterLayout footer={footer} />
+            <FooterLayout footer={footer} zIndex={zIndex} />
           </Inner>
         </Outer>
       </KeyboardShortcutsMenuProvider>
@@ -67,6 +67,7 @@ function Footer({ footer }) {
 
 Footer.propTypes = {
   footer: PropTypes.object,
+  zIndex: PropTypes.number,
 };
 
 // Don't rerender the workspace footer needlessly e.g. on element selection change.

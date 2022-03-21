@@ -19,7 +19,7 @@
  */
 import { renderHook } from '@testing-library/react-hooks';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { Icons, noop, useSnackbar } from '@googleforcreators/design-system';
+import { Icons, useSnackbar } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -34,6 +34,7 @@ import useApplyTextAutoStyle from '../../../../utils/useApplyTextAutoStyle';
 import { useConfig, useLocalMedia } from '../../..';
 import useFFmpeg from '../../../media/utils/useFFmpeg';
 import { MediaPicker } from '../useQuickActions';
+import { noop } from '../../../../utils/noop';
 
 const {
   Bucket,

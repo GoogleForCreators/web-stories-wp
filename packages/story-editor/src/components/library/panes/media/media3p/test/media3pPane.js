@@ -19,6 +19,8 @@
  */
 import PropTypes from 'prop-types';
 import { fireEvent, screen } from '@testing-library/react';
+import { registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
@@ -155,6 +157,8 @@ describe('Media3pPane', () => {
   let useMediaResult;
 
   beforeAll(() => {
+    elementTypes.forEach(registerElementType);
+
     useConfig.mockImplementation(() => ({
       capabilities: {
         hasUploadMediaAction: true,

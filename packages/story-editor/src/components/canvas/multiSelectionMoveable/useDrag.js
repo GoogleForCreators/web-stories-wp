@@ -18,11 +18,11 @@
  * External dependencies
  */
 import { useRef } from '@googleforcreators/react';
+import { areEventsDragging } from '@googleforcreators/moveable';
 
 /**
  * Internal dependencies
  */
-import areEventsDragging from '../../../utils/areEventsDragging';
 import { useDropTargets } from '../../dropTargets';
 import { useCanvas } from '../../../app';
 

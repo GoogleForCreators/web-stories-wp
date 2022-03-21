@@ -47,6 +47,7 @@ describe('Animation Panel', function () {
         throw new Error('node not ready');
       }
     });
+    await fixture.events.click(fixture.editor.inspector.designTab);
     const panel = fixture.editor.inspector.designPanel.animation;
     expect(panel).not.toBeNull();
   });
@@ -61,6 +62,7 @@ describe('Animation Panel', function () {
         throw new Error('node not ready');
       }
     });
+    await fixture.events.click(fixture.editor.inspector.designTab);
     const panel = fixture.editor.inspector.designPanel.animation;
 
     const effectChooser = panel.effectChooser;
@@ -82,6 +84,7 @@ describe('Animation Panel', function () {
         throw new Error('node not ready');
       }
     });
+    await fixture.events.click(fixture.editor.inspector.designTab);
     const panel = fixture.editor.inspector.designPanel.animation;
 
     const effectChooser = panel.effectChooser;
@@ -108,6 +111,7 @@ describe('Animation Panel', function () {
         throw new Error('node not ready');
       }
     });
+    await fixture.events.click(fixture.editor.inspector.designTab);
     const panel = fixture.editor.inspector.designPanel.animation;
 
     const effectChooser = panel.effectChooser;

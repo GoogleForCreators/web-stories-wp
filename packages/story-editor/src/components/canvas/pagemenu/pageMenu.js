@@ -20,15 +20,17 @@
 import styled from 'styled-components';
 import { memo, useCallback, useRef } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
-import { Icons } from '@googleforcreators/design-system';
+import {
+  Icons,
+  usePerformanceTracking,
+  TRACKING_EVENTS,
+} from '@googleforcreators/design-system';
+import { createPage, duplicatePage } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
-import { createPage, duplicatePage } from '../../../elements';
-import usePerformanceTracking from '../../../utils/usePerformanceTracking';
-import { TRACKING_EVENTS } from '../../../constants/performanceTrackingEvents';
 import PageMenuButton from './pageMenuButton';
 import AnimationToggle from './animationToggle';
 

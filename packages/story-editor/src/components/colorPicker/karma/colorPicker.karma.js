@@ -42,12 +42,14 @@ describe('ColorPicker', () => {
       });
 
       it('should display correctly', async () => {
-        await fixture.events.click(fixture.editor.canvas.pageActions.addPage);
-
-        await fixture.events.click(
-          fixture.editor.canvas.framesLayer.frames[0].node
+        // Click the background element
+        await fixture.events.mouse.clickOn(
+          fixture.editor.canvas.framesLayer.frames[0].node,
+          10,
+          10
         );
 
+        await fixture.events.click(fixture.editor.inspector.designTab);
         const bgPanel = fixture.editor.inspector.designPanel.pageBackground;
 
         // Click the background page panel color preview
@@ -106,6 +108,7 @@ describe('ColorPicker', () => {
           fixture.editor.library.shapes.shape('Triangle')
         );
 
+        await fixture.events.click(fixture.editor.inspector.designTab);
         await fixture.events.click(
           fixture.editor.inspector.designPanel.shapeStyle.backgroundColor.button
         );
@@ -129,6 +132,7 @@ describe('ColorPicker', () => {
           fixture.editor.library.shapes.shape('Triangle')
         );
 
+        await fixture.events.click(fixture.editor.inspector.designTab);
         await fixture.events.click(
           fixture.editor.inspector.designPanel.shapeStyle.backgroundColor.button
         );
@@ -151,6 +155,8 @@ describe('ColorPicker', () => {
         await fixture.events.click(
           fixture.editor.library.shapes.shape('Triangle')
         );
+
+        await fixture.events.click(fixture.editor.inspector.designTab);
         await fixture.events.click(
           fixture.editor.inspector.designPanel.shapeStyle.backgroundColor.button
         );
@@ -161,6 +167,7 @@ describe('ColorPicker', () => {
         );
 
         // Add text and apply the previously saved color.
+        await fixture.events.click(fixture.editor.inspector.insertTab);
         await fixture.editor.library.textTab.click();
         await fixture.events.click(
           fixture.editor.library.text.preset('Paragraph')
@@ -171,6 +178,8 @@ describe('ColorPicker', () => {
           }
           expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
         });
+
+        await fixture.events.click(fixture.editor.inspector.designTab);
         await fixture.events.click(
           fixture.editor.inspector.designPanel.textStyle.fontColor.button
         );
@@ -190,6 +199,8 @@ describe('ColorPicker', () => {
         await fixture.events.click(
           fixture.editor.library.shapes.shape('Triangle')
         );
+
+        await fixture.events.click(fixture.editor.inspector.designTab);
         await fixture.events.click(
           fixture.editor.inspector.designPanel.shapeStyle.backgroundColor.button
         );
@@ -200,6 +211,7 @@ describe('ColorPicker', () => {
         );
 
         // Add text and apply the previously saved color.
+        await fixture.events.click(fixture.editor.inspector.insertTab);
         await fixture.editor.library.textTab.click();
         await fixture.events.click(
           fixture.editor.library.text.preset('Paragraph')
@@ -210,6 +222,8 @@ describe('ColorPicker', () => {
           }
           expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
         });
+
+        await fixture.events.click(fixture.editor.inspector.designTab);
         await fixture.events.click(
           fixture.editor.inspector.designPanel.textStyle.fontColor.button
         );
@@ -237,6 +251,7 @@ describe('ColorPicker', () => {
           expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
         });
         // add fill
+        await fixture.events.click(fixture.editor.inspector.designTab);
         await fixture.events.click(
           fixture.editor.inspector.designPanel.textStyle.fill
         );
@@ -267,6 +282,8 @@ describe('ColorPicker', () => {
           }
           expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
         });
+
+        await fixture.events.click(fixture.editor.inspector.designTab);
         await fixture.events.click(
           fixture.editor.inspector.designPanel.textStyle.fontColor.button
         );

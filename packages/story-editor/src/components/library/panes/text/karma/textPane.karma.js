@@ -24,7 +24,7 @@ import { stripHTML } from '@googleforcreators/dom';
 /**
  * Internal dependencies
  */
-import { Fixture } from '../../../../../karma/fixture';
+import { Fixture } from '../../../../../karma';
 import { useStory } from '../../../../../app/story';
 import { PRESETS } from '../textPresets';
 
@@ -48,6 +48,12 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
   });
 
   async function addPreset(name) {
+    // Select background for being able to insert a text.
+    await fixture.events.mouse.clickOn(
+      fixture.editor.canvas.framesLayer.frames[0].node,
+      '90%',
+      '90%'
+    );
     // Imitate the movement of real use to trigger the background processes while the user is moving the mouse.
     await fixture.events.mouse.moveRel(
       fixture.editor.library.text.preset(name),
@@ -56,6 +62,11 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       { steps: 2 }
     );
     await fixture.events.click(fixture.editor.library.text.preset(name));
+  }
+
+  async function getSelection() {
+    const storyContext = await fixture.renderHook(() => useStory());
+    return storyContext.state.selectedElements;
   }
 
   describe('Adding text presets', () => {
@@ -85,6 +96,89 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       ]);
       // Now background + 1 extra element
       expect(fixture.editor.canvas.framesLayer.frames.length).toBe(2);
+    });
+  });
+
+  describe('Applying text presets', () => {
+    beforeEach(async () => {
+      await fixture.editor.library.textTab.click();
+      // Give some time for everything to be ready for the tests.
+      await fixture.events.sleep(800);
+      await waitFor(() => {
+        if (!fixture.editor.canvas.framesLayer.frames[0].node) {
+          throw new Error('node not ready');
+        }
+      });
+    });
+
+    it('should apply Title preset to a label', async () => {
+      // Only background initially
+      expect(fixture.editor.canvas.framesLayer.frames.length).toBe(1);
+
+      // Add label.
+      await fixture.events.click(fixture.editor.library.text.preset('LABEL'));
+      const [label] = await getSelection();
+      expect(label.fontSize).toBe(12);
+
+      // Apply Title 1.
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Apply preset: Title 1')
+      );
+      // Verify the font size and font weight were applied.
+      const [styledLabel] = await getSelection();
+      expect(styledLabel.fontSize).toBe(36);
+      expect(styledLabel.content).toBe(
+        '<span style="font-weight: 700">LABEL</span>'
+      );
+    });
+
+    it('should overwrite most of the styles but not text color when applying a preset', async () => {
+      // Add label.
+      await fixture.events.click(fixture.editor.library.text.preset('LABEL'));
+
+      // Open style pane
+      await fixture.events.click(fixture.editor.inspector.designTab);
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.alignment.right
+      );
+      await fixture.events.click(
+        fixture.editor.inspector.designPanel.textStyle.fill
+      );
+
+      const { italic, underline, letterSpacing, fontColor } =
+        fixture.editor.inspector.designPanel.textStyle;
+
+      // First enter edit mode, select something, style it with all styles and exit edit mode
+      await fixture.events.click(letterSpacing, { clickCount: 3 });
+      await fixture.events.keyboard.type('50');
+      await fixture.events.keyboard.press('Enter');
+      await fixture.events.keyboard.press('Escape');
+      await fixture.events.click(fontColor.hex, { clickCount: 3 });
+      await fixture.events.keyboard.type('FFFFFF');
+      await fixture.events.keyboard.press('Tab');
+      await fixture.events.keyboard.press('Escape');
+      await fixture.events.click(italic.button);
+      await fixture.events.click(underline.button);
+
+      const [label] = await getSelection();
+      expect(label.content).toBe(
+        '<span style="font-style: italic; text-decoration: underline; color: #fff; letter-spacing: 0.5em">LABEL</span>'
+      );
+
+      // Go to text tab in insert panel
+      await fixture.events.click(fixture.editor.inspector.insertTab);
+      await fixture.editor.library.textTab.click();
+
+      // Apply Title 1.
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Apply preset: Title 1')
+      );
+      // Verify the style except for color was overwritten.
+      const [styledLabel] = await getSelection();
+      expect(styledLabel.fontSize).toBe(36);
+      expect(styledLabel.content).toBe(
+        '<span style="font-weight: 700; color: #fff">LABEL</span>'
+      );
     });
   });
 
@@ -238,22 +332,18 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
     });
   });
 
-  const getSelection = async () => {
-    const storyContext = await fixture.renderHook(() => useStory());
-    return storyContext.state.selectedElements;
-  };
-
   describe('Easier/smarter text color', () => {
     it('should add text color based on background', async () => {
-      // Enable the smart colors first.
-      await fixture.editor.library.textTab.click();
-      fixture.editor.library.text.smartColorToggle.click();
-
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.changeBackgroundColorButton
       );
       await fixture.events.keyboard.type('000');
       await fixture.events.keyboard.press('Tab');
+
+      // Enable the smart colors first.
+      await fixture.events.click(fixture.editor.inspector.insertTab);
+      await fixture.editor.library.textTab.click();
+      fixture.editor.library.text.smartColorToggle.click();
 
       // Should be added with white style on black background.
       await fixture.events.mouse.moveRel(
@@ -262,6 +352,12 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
         10
       );
       await fixture.events.sleep(800);
+      // Select background for being able to insert another text.
+      await fixture.events.mouse.clickOn(
+        fixture.editor.canvas.framesLayer.frames[0].node,
+        '90%',
+        '90%'
+      );
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
       );
@@ -279,6 +375,12 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
         '<span style="color: #fff">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>'
       );
 
+      // Select background for being able to insert another text.
+      await fixture.events.mouse.clickOn(
+        fixture.editor.canvas.framesLayer.frames[0].node,
+        '90%',
+        '90%'
+      );
       await fixture.events.mouse.moveRel(
         fixture.editor.library.text.preset('Title 1'),
         10,

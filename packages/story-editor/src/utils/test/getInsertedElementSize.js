@@ -13,6 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
@@ -20,6 +25,10 @@
 import getInsertedElementSize from '../getInsertedElementSize';
 
 describe('getInsertedElementSize', () => {
+  beforeAll(() => {
+    elementTypes.forEach(registerElementType);
+  });
+
   it('should return original size if set', () => {
     const { width, height } = getInsertedElementSize('text', 100, 100, {
       x: 10,

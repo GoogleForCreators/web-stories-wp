@@ -28,8 +28,11 @@ import {
   useCallback,
   useEffect,
 } from '@googleforcreators/react';
-import { useFeature } from 'flagged';
 import { TransformProvider } from '@googleforcreators/transform';
+import {
+  usePerformanceTracking,
+  TRACKING_EVENTS,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -40,8 +43,6 @@ import {
   cancelIdleCallback,
 } from '../../../utils/idleCallback';
 import DisplayElement from '../../canvas/displayElement';
-import usePerformanceTracking from '../../../utils/usePerformanceTracking';
-import { TRACKING_EVENTS } from '../../../constants/performanceTrackingEvents';
 
 const Page = styled.button`
   display: block;
@@ -111,26 +112,20 @@ function PagePreview({
   const [pageNode, setPageNode] = useState();
   const setPageRef = useCallback((node) => node && setPageNode(node), []);
   const pageAtGenerationTime = useRef();
-  const enableThumbnailCaching =
-    useFeature('enableThumbnailCaching') && isCacheable;
 
   // Whenever the page is re-generated
   // remove the old (and now stale) image blob
   useEffect(() => {
-    if (
-      enableThumbnailCaching &&
-      isActive &&
-      pageAtGenerationTime.current !== page
-    ) {
+    if (isCacheable && isActive && pageAtGenerationTime.current !== page) {
       setCachedImage({ pageId: page.id, cachedImage: null });
       pageAtGenerationTime.current = null;
     }
-  }, [page, setCachedImage, isActive, enableThumbnailCaching]);
+  }, [page, setCachedImage, isActive, isCacheable]);
 
   useEffect(() => {
     // If this is not the active page, there is a page node, we
     // don't already have a snapshot and thumbnail caching is active
-    if (enableThumbnailCaching && !isActive && pageNode && !cachedImage) {
+    if (isCacheable && !isActive && pageNode && !cachedImage) {
       // Schedule an idle callback to actually generate the image
       const id = requestIdleCallback(
         () => {
@@ -153,14 +148,7 @@ function PagePreview({
     }
     // Required because of eslint: consistent-return
     return undefined;
-  }, [
-    enableThumbnailCaching,
-    isActive,
-    pageNode,
-    cachedImage,
-    setCachedImage,
-    page,
-  ]);
+  }, [isCacheable, isActive, pageNode, cachedImage, setCachedImage, page]);
 
   usePerformanceTracking({
     node: pageNode,

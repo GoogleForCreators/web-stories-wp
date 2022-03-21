@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import { DOCUMENT, DESIGN } from '../../components/inspector';
+import { INSERT, DOCUMENT, STYLE } from '../../components/inspector';
 import {
   MEDIA,
   MEDIA3P,
@@ -34,6 +34,9 @@ import {
 
 const keys = {
   STORY_TITLE: 'STORY_TITLE',
+
+  // Inspector tabs
+  STYLE_PANE: 'STYLE_PANE',
 
   // INSPECTOR
   ANIMATION: 'ANIMATION',
@@ -61,6 +64,12 @@ export const STATES = {
     focus: true,
   },
 
+  // Inspector tabs
+  [keys.STYLE_PANE]: {
+    focus: true,
+    tab: STYLE,
+  },
+
   // Inspector
   [keys.POSTER]: {
     focus: true,
@@ -76,57 +85,61 @@ export const STATES = {
   },
   [keys.CAPTIONS]: {
     focus: true,
-    tab: DESIGN,
+    tab: STYLE,
   },
   [keys.ASSISTIVE_TEXT]: {
     focus: true,
-    tab: DESIGN,
+    tab: STYLE,
   },
   [keys.PAGE_BACKGROUND]: {
     focus: true,
-    tab: DESIGN,
+    tab: STYLE,
   },
   [keys.ANIMATION]: {
     focus: true,
-    tab: DESIGN,
+    tab: STYLE,
   },
   [keys.FONT]: {
     focus: true,
-    tab: DESIGN,
+    tab: STYLE,
   },
   [keys.LINK]: {
     focus: true,
-    tab: DESIGN,
+    tab: STYLE,
   },
   [keys.VIDEO_A11Y_POSTER]: {
     focus: true,
-    tab: DESIGN,
+    tab: STYLE,
   },
   [keys.STYLE]: {
     focus: true,
-    tab: DESIGN,
+    tab: STYLE,
   },
   [keys.TEXT_COLOR]: {
     focus: true,
-    tab: DESIGN,
+    tab: STYLE,
   },
 
   // Library
   [keys.MEDIA]: {
     focus: true,
-    tab: MEDIA.id,
+    tab: INSERT,
+    section: MEDIA.id,
   },
   [keys.MEDIA3P]: {
     focus: true,
-    tab: MEDIA3P.id,
+    tab: INSERT,
+    section: MEDIA3P.id,
   },
   [keys.TEXT_SET]: {
     focus: true,
-    tab: TEXT_SET.id,
+    tab: INSERT,
+    section: TEXT_SET.id,
   },
   [keys.PAGE_TEMPLATES]: {
     focus: true,
-    tab: PAGE_TEMPLATES.id,
+    tab: INSERT,
+    section: PAGE_TEMPLATES.id,
   },
 };
 

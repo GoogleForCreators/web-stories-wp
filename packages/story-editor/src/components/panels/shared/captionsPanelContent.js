@@ -35,9 +35,9 @@ import { ResourcePropTypes } from '@googleforcreators/media';
  * Internal dependencies
  */
 import { Row } from '../../form';
-import { MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import Tooltip from '../../tooltip';
 import { useConfig } from '../../../app/config';
+import { MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import { focusStyle } from './styles';
 
 const InputRow = styled.div`

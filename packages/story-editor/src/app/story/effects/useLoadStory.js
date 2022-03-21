@@ -19,13 +19,13 @@
  */
 import { useEffect } from '@googleforcreators/react';
 import { migrate } from '@googleforcreators/migration';
+import { createPage } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { useAPI } from '../../api';
 import { useHistory } from '../../history';
-import { createPage } from '../../../elements';
 import getUniquePresets from '../../../utils/getUniquePresets';
 
 function loadStory(storyId, post, restore, clearHistory) {

@@ -21,7 +21,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
   useEffect,
-  useLayoutEffect,
   useCallback,
   useRef,
   useState,
@@ -35,18 +34,25 @@ import {
 import { trackEvent } from '@googleforcreators/tracking';
 import { useUnits } from '@googleforcreators/units';
 import { stripHTML } from '@googleforcreators/dom';
+import { __, sprintf } from '@googleforcreators/i18n';
+import { getHTMLFormatters } from '@googleforcreators/rich-text';
 
 /**
  * Internal dependencies
  */
-import { useFont, useHistory } from '../../../../app';
+import { useFont, useStory } from '../../../../app';
+import { useCalculateAccessibleTextColors } from '../../../../app/pageCanvas';
 import StoryPropTypes from '../../../../types';
-import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
 import useLibrary from '../../useLibrary';
 import LibraryMoveable from '../shared/libraryMoveable';
 import InsertionOverlay from '../shared/insertionOverlay';
 import useRovingTabIndex from '../../../../utils/useRovingTabIndex';
+import { areAllType, getTextInlineStyles } from '../../../../utils/presetUtils';
+import objectWithout from '../../../../utils/objectWithout';
+import getUpdatedSizeAndPosition from '../../../../utils/getUpdatedSizeAndPosition';
+import { focusStyle } from '../../../panels/shared';
 
+// If text is selected, there's no `+` icon displayed and we display the focus style on the button directly.
 const Preview = styled.button`
   position: relative;
   display: flex;
@@ -59,10 +65,11 @@ const Preview = styled.button`
   border: none;
   cursor: pointer;
   text-align: left;
-  outline: none;
+
+  ${({ isTextSelected }) => (isTextSelected ? focusStyle : 'outline: none;')}
 
   &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} [role='presentation'],
-  &[data-focus-visible-added] [role='presentation'] {
+    &[data-focus-visible-added] [role='presentation'] {
     ${({ theme }) =>
       themeHelpers.focusCSS(
         theme.colors.border.focus,
@@ -90,28 +97,31 @@ const DragContainer = styled.div`
 `;
 
 function FontPreview({ title, element, insertPreset, getPosition, index }) {
-  const { font, fontSize, fontWeight, content } = element;
+  const htmlFormatters = getHTMLFormatters();
+  const { font, fontSize, content } = element;
+  const { fontWeight } = getTextInlineStyles(content);
   const {
     actions: { maybeEnqueueFontStyle },
   } = useFont();
-
-  const {
-    state: { versionNumber },
-  } = useHistory();
 
   const { dataToEditorX, dataToEditorY } = useUnits((state) => ({
     dataToEditorX: state.actions.dataToEditorX,
     dataToEditorY: state.actions.dataToEditorY,
   }));
 
-  const { pageCanvasData, shouldUseSmartColor } = useLibrary((state) => ({
-    pageCanvasData: state.state.pageCanvasData,
+  const { shouldUseSmartColor } = useLibrary((state) => ({
     shouldUseSmartColor: state.state.shouldUseSmartColor,
   }));
 
-  const { calculateAccessibleTextColors } = usePageAsCanvas();
+  const calculateAccessibleTextColors = useCalculateAccessibleTextColors();
 
-  const presetDataRef = useRef({});
+  const { isTextSelected, updateSelectedElements } = useStory(
+    ({ state, actions }) => ({
+      isTextSelected: areAllType('text', state.selectedElements),
+      updateSelectedElements: actions.updateSelectedElements,
+    })
+  );
+
   const buttonRef = useRef(null);
 
   useEffect(() => {
@@ -124,59 +134,78 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
     ]);
   }, [font, fontWeight, content, maybeEnqueueFontStyle]);
 
-  // Gets the position and the color already once the canvas information is available, to use it directly when inserting.
-  useLayoutEffect(() => {
-    async function getPositionAndColor() {
-      if (!pageCanvasData || !shouldUseSmartColor) {
-        return;
-      }
-      // If nothing changed meanwhile and we already have color data, don't make new calculations.
-      if (
-        presetDataRef.current.versionNumber === versionNumber &&
-        presetDataRef.current.autoColor
-      ) {
-        return;
-      }
-      presetDataRef.current.versionNumber = versionNumber;
-      const atts = getPosition(element);
-      presetDataRef.current.positionAtts = atts;
+  const applyStyleOnContent = useCallback(
+    (
+      { fontWeight: newFontWeight, isItalic, isUnderline, letterSpacing },
+      elContent
+    ) => {
+      elContent = htmlFormatters.setFontWeight(elContent, newFontWeight);
+      elContent = htmlFormatters.toggleItalic(elContent, isItalic);
+      elContent = htmlFormatters.toggleUnderline(elContent, isUnderline);
+      elContent = htmlFormatters.setLetterSpacing(elContent, letterSpacing);
+      return elContent;
+    },
+    [htmlFormatters]
+  );
 
-      // If the element is positioned under the previous element (not default position),
-      // no new image generation needed.
-      if (atts.y !== element.y) {
-        presetDataRef.current.skipCanvasGeneration = true;
-      }
+  const onClick = useCallback(async () => {
+    // If we have only text(s) selected, we apply the preset instead of inserting.
+    if (isTextSelected) {
+      updateSelectedElements({
+        properties: (oldElement) => {
+          const newContent = applyStyleOnContent(
+            getTextInlineStyles(element.content),
+            oldElement.content
+          );
+          const presetAtts = objectWithout(element, [
+            'x',
+            'y',
+            'content',
+            'width',
+          ]);
+          const sizeUpdates = getUpdatedSizeAndPosition({
+            ...oldElement,
+            ...presetAtts,
+          });
+          return {
+            ...oldElement,
+            ...presetAtts,
+            ...sizeUpdates,
+            content: newContent,
+          };
+        },
+      });
+      return;
+    }
 
-      presetDataRef.current.autoColor = await calculateAccessibleTextColors(
-        { ...element, ...atts },
-        false /* isInserting */
+    let newElement = element;
+    const insertOpts = {
+      isPositioned: false,
+    };
+    if (shouldUseSmartColor) {
+      const position = getPosition(element);
+      insertOpts.isPositioned = true;
+      newElement = {
+        ...element,
+        ...position,
+      };
+      insertOpts.accessibleColors = await calculateAccessibleTextColors(
+        newElement
       );
     }
-    getPositionAndColor();
-  }, [
-    calculateAccessibleTextColors,
-    element,
-    getPosition,
-    shouldUseSmartColor,
-    pageCanvasData,
-    versionNumber,
-  ]);
-
-  const onClick = useCallback(() => {
-    // We might have pre-calculated data, let's use that, too.
-    const isPositioned = Boolean(presetDataRef.current?.positionAtts);
-    insertPreset(
-      { ...element, ...presetDataRef.current?.positionAtts },
-      {
-        isPositioned,
-        accessibleColors: presetDataRef.current?.autoColor,
-        skipCanvasGeneration: presetDataRef.current?.skipCanvasGeneration,
-      }
-    );
-    // Reset after insertion.
-    presetDataRef.current = {};
+    insertPreset(newElement, insertOpts);
     trackEvent('insert_text_preset', { name: title });
-  }, [insertPreset, element, title]);
+  }, [
+    isTextSelected,
+    getPosition,
+    element,
+    shouldUseSmartColor,
+    insertPreset,
+    title,
+    updateSelectedElements,
+    applyStyleOnContent,
+    calculateAccessibleTextColors,
+  ]);
 
   const getTextDisplay = (textProps = {}) => {
     const { isClone } = textProps;
@@ -215,9 +244,19 @@ function FontPreview({ title, element, insertPreset, getPosition, index }) {
       onPointerLeave={makeInactive}
       onBlur={makeInactive}
       tabIndex={index === 0 ? 0 : -1}
+      isTextSelected={isTextSelected}
+      aria-label={
+        isTextSelected
+          ? sprintf(
+              /* translators: %s: preset name */
+              __('Apply preset: %s', 'web-stories'),
+              title
+            )
+          : null
+      }
     >
       {getTextDisplay()}
-      {active && <InsertionOverlay />}
+      {active && !isTextSelected && <InsertionOverlay />}
       <LibraryMoveable
         cloneElement={DragContainer}
         cloneProps={{

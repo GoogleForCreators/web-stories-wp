@@ -38,6 +38,7 @@ const ContextMenu = ({
   isHorizontal = false,
   isInline = false,
   onDismiss = noop,
+  popoverZIndex,
   ...props
 }) => {
   const { isRTL } = props;
@@ -58,6 +59,7 @@ const ContextMenu = ({
         role={isAlwaysVisible ? null : 'dialog'}
         isOpen={isAlwaysVisible || props.isOpen}
         isRTL={isRTL}
+        popoverZIndex={popoverZIndex}
       >
         <Menu aria-expanded={props.isOpen} {...props}>
           {children}
@@ -80,6 +82,7 @@ ContextMenu.propTypes = {
   isRTL: PropTypes.bool,
   isInline: PropTypes.bool,
   isHorizontal: PropTypes.bool,
+  popoverZIndex: PropTypes.number,
 };
 
 export default ContextMenu;

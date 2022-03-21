@@ -300,6 +300,18 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'editor',
 			],
 			/**
+			 * Author: @spacedmonkey
+			 * Issue: #10706
+			 * Creation date: 2022-03-07
+			 */
+			[
+				'name'        => 'enableCORSCheck',
+				'label'       => __( 'CORS check', 'web-stories' ),
+				'description' => __( 'Add a check in the editor for CORS errors.', 'web-stories' ),
+				'group'       => 'editor',
+				'default'     => true,
+			],
+			/**
 			 * Author: @brittanyirl
 			 * Issue: #10115
 			 * Creation date: 2022-02-02
@@ -308,44 +320,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'name'        => 'enableUpdatedPublishStoryModal',
 				'label'       => __( 'Updated Publish Story Modal', 'web-stories' ),
 				'description' => __( 'Enable new pre-publish confirmation modal', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @miina
-			 * Issue #471
-			 * Creation date: 2021-08-10
-			 */
-			[
-				'name'        => 'enableHotlinking',
-				'label'       => __( 'Insert media from link', 'web-stories' ),
-				'description' => __( 'Enable inserting media element from external link', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-
-			/**
-			 * Author: @barklund
-			 * Issue: #8877
-			 * Creation date: 2021-09-01
-			 */
-			[
-				'name'        => 'enableVideoTrim',
-				'label'       => __( 'Video trimming', 'web-stories' ),
-				'description' => __( 'Enable video trimming', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-
-			/**
-			 * Author: @barklund
-			 * Issue: #8973
-			 * Creation date: 2021-09-07
-			 */
-			[
-				'name'        => 'enableThumbnailCaching',
-				'label'       => __( 'Thumbnail Caching', 'web-stories' ),
-				'description' => __( 'Enable thumbnail caching', 'web-stories' ),
 				'group'       => 'editor',
 				'default'     => true,
 			],
@@ -385,14 +359,14 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'editor',
 			],
 			/**
-			 * Author: @miina
-			 * Issue: #10113
-			 * Creation date: 2022-02-22
+			 * Author: @timarney
+			 * Issue: #10014
+			 * Creation date: 2022-03-03
 			 */
 			[
-				'name'        => 'libraryTextStyles',
-				'label'       => __( 'Library: Saved Styles', 'web-stories' ),
-				'description' => __( 'Allow inserting/applying Saved Styles from Text Library', 'web-stories' ),
+				'name'        => 'notifyDeletedFonts',
+				'label'       => __( 'Deleted Fonts', 'web-stories' ),
+				'description' => __( 'Notify user about deleted fonts in story', 'web-stories' ),
 				'group'       => 'editor',
 			],
 		];

@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { calculateTextHeight } from '../textMeasurements';
+import { calculateTextHeight } from '@googleforcreators/element-library';
 
 describe('textMeasurements', () => {
   let element;

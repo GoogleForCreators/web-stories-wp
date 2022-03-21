@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,7 +34,16 @@ import { useFont } from '../../app';
 import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../constants';
 
 const FontPicker = forwardRef(function FontPicker(
-  { onChange, currentValue, highlightStylesOverride },
+  {
+    zIndex,
+    onChange,
+    currentValue,
+    highlightStylesOverride,
+    showDropdownLabel,
+    listStyleOverrides,
+    containerStyleOverrides,
+    className,
+  },
   ref
 ) {
   const {
@@ -139,6 +148,7 @@ const FontPicker = forwardRef(function FontPicker(
   return (
     <Datalist.DropDown
       ref={ref}
+      zIndex={zIndex}
       highlightStylesOverride={highlightStylesOverride}
       data-testid="font"
       aria-label={__('Font family', 'web-stories')}
@@ -157,7 +167,10 @@ const FontPicker = forwardRef(function FontPicker(
       onObserve={onObserve}
       renderer={forwardRef(renderer)}
       disabled={!fonts?.length}
-      dropDownLabel={__('Font', 'web-stories')}
+      dropDownLabel={showDropdownLabel ? __('Font', 'web-stories') : null}
+      listStyleOverrides={listStyleOverrides}
+      containerStyleOverrides={containerStyleOverrides}
+      className={className}
     />
   );
 });
@@ -166,6 +179,10 @@ FontPicker.propTypes = {
   onChange: PropTypes.func.isRequired,
   currentValue: PropTypes.string.isRequired,
   highlightStylesOverride: PropTypes.array,
+  showDropdownLabel: PropTypes.bool,
+  listStyleOverrides: PropTypes.array,
+  containerStyleOverrides: PropTypes.array,
+  zIndex: PropTypes.number,
 };
 
 export default FontPicker;

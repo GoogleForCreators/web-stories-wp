@@ -10,6 +10,7 @@ node_modules
 /build
 /bin/build
 /bin/local-env/data
+bin/local-env/docker-compose.override.yml
 /includes/vendor
 /includes/composer.json
 /plugin-assets

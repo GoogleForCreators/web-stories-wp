@@ -63,6 +63,7 @@ describe('Alignment Panel', () => {
     describe('CUJ: Creator can Transform an Element: Align element to page', () => {
       it('should not show a border when focusing an alignment button using mouse', async () => {
         // Click left align
+        await fixture.events.click(fixture.editor.inspector.designTab);
         await fixture.events.click(
           fixture.editor.inspector.designPanel.alignment.left
         );
@@ -84,6 +85,7 @@ describe('Alignment Panel', () => {
 
       it('should show a border when focusing an alignment button using keyboard', async () => {
         // Click left align
+        await fixture.events.click(fixture.editor.inspector.designTab);
         await fixture.events.click(
           fixture.editor.inspector.designPanel.alignment.left
         );
