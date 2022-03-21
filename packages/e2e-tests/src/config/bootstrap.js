@@ -229,8 +229,6 @@ async function runAxeTestsForStoriesEditor() {
       'region',
       'aria-allowed-attr',
       'nested-interactive',
-      // Because of WordPress Toolbar
-      'landmark-unique',
     ],
   });
 }
