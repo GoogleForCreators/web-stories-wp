@@ -23,10 +23,28 @@ import {
   removeCustomFont,
 } from '@web-stories-wp/e2e-test-utils';
 
+/**
+ * Internal dependencies
+ */
+import { addAllowedErrorMessage } from '../../../../config/bootstrap.js';
+
 const OPEN_SANS_CONDENSED_URL = `${process.env.WP_BASE_URL}/wp-content/e2e-assets/OpenSansCondensed-Light.ttf`;
 
 describe('Custom Fonts', () => {
   withExperimentalFeatures(['customFonts']);
+
+  let removeResourceErrorMessage;
+
+  beforeAll(() => {
+    // Ignore resource failing to load. This is only present because of the REST API error.
+    removeResourceErrorMessage = addAllowedErrorMessage(
+      'Failed to load resource'
+    );
+  });
+
+  afterAll(() => {
+    removeResourceErrorMessage();
+  });
 
   afterEach(async () => {
     await removeCustomFont();
