@@ -19,6 +19,8 @@
  */
 import { waitForElementToBeRemoved } from '@testing-library/react';
 import { createSolid } from '@googleforcreators/patterns';
+import { elementTypes } from '@googleforcreators/element-library';
+import { registerElementType } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -31,6 +33,7 @@ describe('GridView integration', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
+    elementTypes.forEach(registerElementType);
     fixture.setPages([
       { id: 'page1', backgroundColor: createSolid(255, 255, 255) },
       { id: 'page2', backgroundColor: createSolid(255, 0, 0) },
