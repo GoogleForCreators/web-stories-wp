@@ -18,11 +18,7 @@
  * External dependencies
  */
 import { createSolid } from '@googleforcreators/patterns';
-import {
-  TEXT_ELEMENT_DEFAULT_FONT,
-  registerElementType,
-} from '@googleforcreators/elements';
-import { elementTypes } from '@googleforcreators/element-library';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -37,7 +33,6 @@ describe('Carousel integration', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    elementTypes.forEach(registerElementType);
     fixture.setPages([
       { id: 'page1', backgroundColor: createSolid(255, 255, 255) },
       { id: 'page2', backgroundColor: createSolid(255, 0, 0) },
