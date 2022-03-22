@@ -33,12 +33,13 @@ import { trackEvent } from '@googleforcreators/tracking';
  */
 import { useAPI } from '../../app/api';
 import { useStory } from '../../app/story';
-import { useHighlights } from '../../app/highlights';
-import { DOCUMENT, DESIGN, PUBLISH_MODAL_DOCUMENT } from './constants';
+import { states, useHighlights } from '../../app/highlights';
+import Library from '../library';
+import { DOCUMENT, STYLE, PUBLISH_MODAL_DOCUMENT, INSERT } from './constants';
 import Context from './context';
 import DesignInspector from './design';
 
-const INSPECTOR_TAB_IDS = new Set([DOCUMENT, DESIGN]);
+const INSPECTOR_TAB_IDS = new Set([INSERT, DOCUMENT, STYLE]);
 function InspectorProvider({ inspectorTabs, children }) {
   const {
     actions: { getAuthors },
@@ -48,8 +49,12 @@ function InspectorProvider({ inspectorTabs, children }) {
     currentPage: state.currentPage,
   }));
 
-  const { tab: highlightedTab } = useHighlights(({ tab }) => ({ tab }));
+  const { tab: highlightedTab, highlight } = useHighlights((state) => ({
+    tab: state.tab,
+    highlight: state[states.STYLE_PANE],
+  }));
 
+  // set tab when content is highlighted
   useEffect(() => {
     if (INSPECTOR_TAB_IDS.has(highlightedTab)) {
       setTab(highlightedTab);
@@ -61,18 +66,20 @@ function InspectorProvider({ inspectorTabs, children }) {
 
   const inspectorRef = useRef(null);
 
-  const [tab, setTab] = useState(DESIGN);
+  const [tab, setTab] = useState(INSERT);
   const [users, setUsers] = useState([]);
   const [inspectorContentHeight, setInspectorContentHeight] = useState(null);
   const inspectorContentRef = useRef();
   const tabRef = useRef(tab);
 
+  const insertPaneRef = useRef(null);
   const designPaneRef = useRef(null);
   const documentPaneRef = useRef(null);
 
   const tabRefs = useMemo(
     () => ({
-      [DESIGN]: designPaneRef,
+      [INSERT]: insertPaneRef,
+      [STYLE]: designPaneRef,
       [DOCUMENT]: documentPaneRef,
     }),
     []
@@ -92,15 +99,23 @@ function InspectorProvider({ inspectorTabs, children }) {
 
   useEffect(() => {
     if (selectedElementIds.length > 0 && tabRef.current === DOCUMENT) {
-      setTab(DESIGN);
+      setTab(STYLE);
     }
   }, [selectedElementIds]);
 
   useEffect(() => {
     if (tabRef.current === DOCUMENT) {
-      setTab(DESIGN);
+      setTab(STYLE);
     }
   }, [currentPage]);
+
+  // focus design pane when highlighted
+  useEffect(() => {
+    const node = designPaneRef.current;
+    if (node && highlight?.focus && highlight?.showEffect) {
+      node.focus();
+    }
+  }, [highlight]);
 
   const loadUsers = useCallback(() => {
     if (!isUsersLoading && users.length === 0) {
@@ -138,8 +153,13 @@ function InspectorProvider({ inspectorTabs, children }) {
     data: {
       tabs: [
         {
-          id: DESIGN,
-          title: __('Design', 'web-stories'),
+          id: INSERT,
+          title: __('Insert', 'web-stories'),
+          Pane: Library,
+        },
+        {
+          id: STYLE,
+          title: __('Style', 'web-stories'),
           Pane: DesignInspector,
         },
       ],

@@ -118,6 +118,7 @@ describe('CUJ: Page Templates: Custom Saved Templates', () => {
       await fixture.events.hover(
         fixture.editor.library.pageTemplatesPane.pageTemplates[0]
       );
+      await fixture.events.sleep(100);
       // Choose the Delete button of the first item.
       await fixture.events.click(
         fixture.editor.library.pageTemplatesPane.deleteBtnByIndex(0)

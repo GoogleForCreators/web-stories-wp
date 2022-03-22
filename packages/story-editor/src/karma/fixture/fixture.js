@@ -30,7 +30,9 @@ import { DATA_VERSION } from '@googleforcreators/migration';
 import {
   createPage,
   TEXT_ELEMENT_DEFAULT_FONT,
+  registerElementType,
 } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
@@ -302,6 +304,7 @@ export class Fixture {
    * @param {Array<Object>} pages Pages.
    */
   setPages(pages) {
+    elementTypes.forEach(registerElementType);
     this.apiProviderFixture_.setPages(pages);
   }
 

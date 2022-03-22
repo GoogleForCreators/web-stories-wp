@@ -42,6 +42,7 @@ describe('Video Accessibility Panel', () => {
     beforeEach(async () => {
       const mediaItem = fixture.editor.library.media.item(5);
       await fixture.events.mouse.clickOn(mediaItem, 20, 20); // item 5 is a video
+      await fixture.events.click(fixture.editor.inspector.designTab);
       vaPanel = fixture.editor.inspector.designPanel.videoAccessibility;
     });
 

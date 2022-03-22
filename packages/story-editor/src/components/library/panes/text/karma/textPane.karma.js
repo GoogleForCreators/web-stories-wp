@@ -135,6 +135,9 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
     it('should overwrite most of the styles but not text color when applying a preset', async () => {
       // Add label.
       await fixture.events.click(fixture.editor.library.text.preset('LABEL'));
+
+      // Open style pane
+      await fixture.events.click(fixture.editor.inspector.designTab);
       await fixture.events.click(
         fixture.editor.inspector.designPanel.alignment.right
       );
@@ -161,6 +164,10 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       expect(label.content).toBe(
         '<span style="font-style: italic; text-decoration: underline; color: #fff; letter-spacing: 0.5em">LABEL</span>'
       );
+
+      // Go to text tab in insert panel
+      await fixture.events.click(fixture.editor.inspector.insertTab);
+      await fixture.editor.library.textTab.click();
 
       // Apply Title 1.
       await fixture.events.click(
@@ -327,15 +334,16 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
 
   describe('Easier/smarter text color', () => {
     it('should add text color based on background', async () => {
-      // Enable the smart colors first.
-      await fixture.editor.library.textTab.click();
-      fixture.editor.library.text.smartColorToggle.click();
-
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.changeBackgroundColorButton
       );
       await fixture.events.keyboard.type('000');
       await fixture.events.keyboard.press('Tab');
+
+      // Enable the smart colors first.
+      await fixture.events.click(fixture.editor.inspector.insertTab);
+      await fixture.editor.library.textTab.click();
+      fixture.editor.library.text.smartColorToggle.click();
 
       // Should be added with white style on black background.
       await fixture.events.mouse.moveRel(

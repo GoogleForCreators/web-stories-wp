@@ -23,7 +23,7 @@ import Proptypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { Z_INDEX_HEAD_AREA } from '../../constants/zIndex';
+import { Z_INDEX_NAV_LAYER } from '../../constants/zIndex';
 import { ChecklistCountProvider } from '../checklist';
 import Footer from '../footer';
 import DirectionAware from '../directionAware';
@@ -36,7 +36,7 @@ function NavLayer({ header, footer }) {
       hasChecklist={Boolean(footer?.secondaryMenu?.checklist)}
     >
       <Layer pointerEvents="none" onMouseDown={(evt) => evt.stopPropagation()}>
-        <HeadArea pointerEvents="initial" zIndex={Z_INDEX_HEAD_AREA}>
+        <HeadArea pointerEvents="initial" zIndex={Z_INDEX_NAV_LAYER}>
           {header}
         </HeadArea>
         <DirectionAware>
@@ -45,7 +45,7 @@ function NavLayer({ header, footer }) {
           </PageMenuArea>
         </DirectionAware>
         <FooterArea pointerEvents="initial">
-          <Footer footer={footer} />
+          <Footer footer={footer} zIndex={Z_INDEX_NAV_LAYER} />
         </FooterArea>
       </Layer>
     </ChecklistCountProvider>

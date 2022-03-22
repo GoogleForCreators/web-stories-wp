@@ -24,6 +24,7 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import DirectionAware from '../directionAware';
 import Carousel from './carousel';
 import PrimaryMenu from './primaryMenu';
 import SecondaryMenu from './secondaryMenu';
@@ -48,26 +49,30 @@ const Area = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: center;
+  z-index: ${({ zIndex = 'auto' }) => zIndex};
 `;
 
-function FooterLayout({ footer }) {
+function FooterLayout({ footer, zIndex }) {
   return (
-    <Wrapper aria-label={__('Workspace Footer', 'web-stories')}>
-      <Area area="carousel">
-        <Carousel />
-      </Area>
-      <Area area="primary">
-        <PrimaryMenu />
-      </Area>
-      <Area area="secondary">
-        <SecondaryMenu menu={footer?.secondaryMenu} />
-      </Area>
-    </Wrapper>
+    <DirectionAware>
+      <Wrapper aria-label={__('Workspace Footer', 'web-stories')}>
+        <Area area="carousel">
+          <Carousel />
+        </Area>
+        <Area area="primary" zIndex={zIndex}>
+          <PrimaryMenu />
+        </Area>
+        <Area area="secondary" zIndex={zIndex}>
+          <SecondaryMenu menu={footer?.secondaryMenu} />
+        </Area>
+      </Wrapper>
+    </DirectionAware>
   );
 }
 
 FooterLayout.propTypes = {
   footer: PropTypes.object,
+  zIndex: PropTypes.number,
 };
 
 export default FooterLayout;

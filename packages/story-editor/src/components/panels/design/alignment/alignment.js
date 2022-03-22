@@ -17,22 +17,10 @@
 /**
  * External dependencies
  */
-import {
-  useMemo,
-  useRef,
-  useCallback,
-  useState,
-  useEffect,
-} from '@googleforcreators/react';
+import { useRef, useCallback, useState } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
-import {
-  PAGE_WIDTH,
-  PAGE_HEIGHT,
-  getBoundRect,
-  calcRotatedObjectPositionAndSize,
-} from '@googleforcreators/units';
 import {
   useKeyDownEffect,
   Icons,
@@ -41,6 +29,7 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   themeHelpers,
+  TOOLTIP_PLACEMENT,
 } from '@googleforcreators/design-system';
 
 /**
@@ -72,15 +61,6 @@ const alignmentButtonIds = [
   'alignBottom',
 ];
 
-const PAGE_RECT = {
-  startX: 0,
-  startY: 0,
-  endX: PAGE_WIDTH,
-  endY: PAGE_HEIGHT,
-  width: PAGE_WIDTH,
-  height: PAGE_HEIGHT,
-};
-
 const AlignmentButton = styled(Button).attrs({
   variant: BUTTON_VARIANTS.SQUARE,
   type: BUTTON_TYPES.TERTIARY,
@@ -103,60 +83,20 @@ const StyledPanel = styled(Panel)`
 
 function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
   const { isRTL } = useConfig();
-  // Set boundRect with pageSize when there is only element selected
-  const boundRect =
-    selectedElements.length === 1 ? PAGE_RECT : getBoundRect(selectedElements);
 
-  const updatedSelectedElementsWithFrame = useMemo(
-    () =>
-      selectedElements.map((item) => {
-        const { id, x, y, width, height, rotationAngle } = item;
-        let frameX = x;
-        let frameY = y;
-        let frameWidth = width;
-        let frameHeight = height;
-        if (rotationAngle) {
-          const elementFrame = calcRotatedObjectPositionAndSize(
-            rotationAngle,
-            x,
-            y,
-            width,
-            height
-          );
-          frameX = elementFrame.x;
-          frameY = elementFrame.y;
-          frameWidth = elementFrame.width;
-          frameHeight = elementFrame.height;
-        }
-        return {
-          id,
-          x,
-          y,
-          width,
-          height,
-          frameX,
-          frameY,
-          frameWidth,
-          frameHeight,
-        };
-      }),
-    [selectedElements]
-  );
+  const updateElements = (callback) => pushUpdate(callback, true);
 
   const {
-    setUpdatedSelectedElementsWithFrame,
-    handleAlign,
+    isDistributionEnabled,
+    handleAlignLeft,
     handleAlignCenter,
+    handleAlignRight,
+    handleAlignTop,
     handleAlignMiddle,
+    handleAlignBottom,
     handleHorizontalDistribution,
     handleVerticalDistribution,
-  } = useAlignment();
-  useEffect(
-    () => setUpdatedSelectedElementsWithFrame(updatedSelectedElementsWithFrame),
-    [updatedSelectedElementsWithFrame, setUpdatedSelectedElementsWithFrame]
-  );
-
-  const isDistributionEnabled = selectedElements.length > 2;
+  } = useAlignment({ selectedElements, updateElements });
 
   const ref = useRef();
   const [currentButton, setCurrentButton] = useState(null);
@@ -176,32 +116,15 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
     [currentButton, setCurrentButton]
   );
 
-  useKeyDownEffect(ref, 'left', () => handleNavigation(isRTL ? 1 : -1), [
+  const forward = isRTL ? -1 : 1;
+  useKeyDownEffect(ref, 'left', () => handleNavigation(forward), [
     handleNavigation,
-    isRTL,
+    forward,
   ]);
-  useKeyDownEffect(ref, 'right', () => handleNavigation(isRTL ? -11 : 1), [
+  useKeyDownEffect(ref, 'right', () => handleNavigation(-forward), [
     handleNavigation,
-    isRTL,
+    forward,
   ]);
-
-  useKeyDownEffect(
-    ref,
-    { key: 'mod+{', shift: true },
-    () => handleAlign('left'),
-    [handleAlign]
-  );
-
-  useKeyDownEffect(ref, { key: 'mod+h', shift: true }, handleAlignCenter, [
-    handleAlignCenter,
-  ]);
-
-  useKeyDownEffect(
-    ref,
-    { key: 'mod+}', shift: true },
-    () => handleAlign('right'),
-    [handleAlign]
-  );
 
   return (
     <StyledPanel
@@ -210,10 +133,13 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
       ariaLabel={__('Alignment', 'web-stories')}
     >
       <ElementRow ref={ref}>
-        <Tooltip title={__('Distribute horizontally', 'web-stories')}>
+        <Tooltip
+          placement={TOOLTIP_PLACEMENT.BOTTOM_START}
+          title={__('Distribute horizontally', 'web-stories')}
+        >
           <AlignmentButton
             disabled={!isDistributionEnabled}
-            onClick={() => handleHorizontalDistribution(boundRect, pushUpdate)}
+            onClick={handleHorizontalDistribution}
             aria-label={__('Distribute horizontally', 'web-stories')}
             id={alignmentButtonIds[0]}
             onFocus={() => setCurrentButton(alignmentButtonIds[0])}
@@ -224,7 +150,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
         <Tooltip title={__('Distribute vertically', 'web-stories')}>
           <AlignmentButton
             disabled={!isDistributionEnabled}
-            onClick={() => handleVerticalDistribution(boundRect, pushUpdate)}
+            onClick={handleVerticalDistribution}
             aria-label={__('Distribute vertically', 'web-stories')}
             id={alignmentButtonIds[1]}
             onFocus={() => setCurrentButton(alignmentButtonIds[1])}
@@ -232,9 +158,9 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
             <Icons.DistributeVertical />
           </AlignmentButton>
         </Tooltip>
-        <Tooltip title={__('Align left', 'web-stories')} shortcut="mod+{">
+        <Tooltip title={__('Align left', 'web-stories')}>
           <AlignmentButton
-            onClick={() => handleAlign('left', boundRect, pushUpdate)}
+            onClick={handleAlignLeft}
             aria-label={__('Align left', 'web-stories')}
             id={alignmentButtonIds[2]}
             onFocus={() => setCurrentButton(alignmentButtonIds[2])}
@@ -242,9 +168,9 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
             <Icons.AlignLeft />
           </AlignmentButton>
         </Tooltip>
-        <Tooltip title={__('Align center', 'web-stories')} shortcut="mod+H">
+        <Tooltip title={__('Align center', 'web-stories')}>
           <AlignmentButton
-            onClick={() => handleAlignCenter(boundRect, pushUpdate)}
+            onClick={handleAlignCenter}
             aria-label={__('Align center', 'web-stories')}
             id={alignmentButtonIds[3]}
             onFocus={() => setCurrentButton(alignmentButtonIds[3])}
@@ -252,9 +178,9 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
             <Icons.AlignCenter />
           </AlignmentButton>
         </Tooltip>
-        <Tooltip title={__('Align right', 'web-stories')} shortcut="mod+}">
+        <Tooltip title={__('Align right', 'web-stories')}>
           <AlignmentButton
-            onClick={() => handleAlign('right', boundRect, pushUpdate)}
+            onClick={handleAlignRight}
             aria-label={__('Align right', 'web-stories')}
             id={alignmentButtonIds[4]}
             onFocus={() => setCurrentButton(alignmentButtonIds[4])}
@@ -264,7 +190,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
         </Tooltip>
         <Tooltip title={__('Align top', 'web-stories')}>
           <AlignmentButton
-            onClick={() => handleAlign('top', boundRect, pushUpdate)}
+            onClick={handleAlignTop}
             aria-label={__('Align top', 'web-stories')}
             id={alignmentButtonIds[5]}
             onFocus={() => setCurrentButton(alignmentButtonIds[5])}
@@ -274,7 +200,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
         </Tooltip>
         <Tooltip title={__('Align vertical center', 'web-stories')}>
           <AlignmentButton
-            onClick={() => handleAlignMiddle(boundRect, pushUpdate)}
+            onClick={handleAlignMiddle}
             aria-label={__('Align vertical center', 'web-stories')}
             id={alignmentButtonIds[6]}
             onFocus={() => setCurrentButton(alignmentButtonIds[6])}
@@ -284,7 +210,7 @@ function ElementAlignmentPanel({ selectedElements, pushUpdate }) {
         </Tooltip>
         <Tooltip title={__('Align bottom', 'web-stories')}>
           <AlignmentButton
-            onClick={() => handleAlign('bottom', boundRect, pushUpdate)}
+            onClick={handleAlignBottom}
             aria-label={__('Align bottom', 'web-stories')}
             id={alignmentButtonIds[7]}
             onFocus={() => setCurrentButton(alignmentButtonIds[7])}
