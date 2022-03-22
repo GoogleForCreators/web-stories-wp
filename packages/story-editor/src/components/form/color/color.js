@@ -47,13 +47,13 @@ import { SPACING } from './constants';
 const containerCss = css`
   display: flex;
   align-items: center;
-  width: ${({ width, ignoreWidth }) =>
-    (ignoreWidth && 'inherit') || (width ? `${width}px` : `100%`)};
 `;
 
 const Container = styled.section`
   ${containerCss}
   gap: ${({ isInDesignMenu }) => (isInDesignMenu ? 6 : 8)}px;
+  width: ${({ width, ignoreWidth }) =>
+    (ignoreWidth && 'inherit') || (width ? `${width}px` : `100%`)};
 `;
 
 const ColorInputsWrapper = styled.div`
@@ -106,7 +106,6 @@ const Color = forwardRef(function Color(
   },
   ref
 ) {
-  console.log({ label, value });
   const handleOpacityChange = useCallback(
     (newOpacity) => onChange(applyOpacityChange(value, newOpacity)),
     [value, onChange]
