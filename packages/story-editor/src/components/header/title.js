@@ -43,6 +43,8 @@ const Input = styled.input`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  ${({ theme }) => themeHelpers.focusableOutlineCSS(theme.colors.border.focus)};
+
   ${({ isHighlighted }) =>
     isHighlighted &&
     css`
