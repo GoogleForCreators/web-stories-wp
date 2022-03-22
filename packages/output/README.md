@@ -1,3 +1,3 @@
 # Output
 
-Package for stories AMP output
+Package for Web Stories AMP output

@@ -1,6 +1,6 @@
 {
     "name": "@googleforcreators/output",
-    "description": "Package for stories AMP output",
+    "description": "Package for Web Stories AMP output",
     "private": false,
     "version": "0.1.202203150806",
     "author": {
