@@ -31,8 +31,7 @@ export function initHelpers(data) {
   }
 
   async function setFontSize(size) {
-    const fontSize =
-      data.fixture.editor.inspector.designPanel.textStyle.fontSize;
+    const fontSize = data.fixture.editor.sidebar.designPanel.textStyle.fontSize;
     await data.fixture.events.click(fontSize, { clickCount: 3 });
     await data.fixture.events.keyboard.type(size);
     await data.fixture.events.keyboard.press('tab');

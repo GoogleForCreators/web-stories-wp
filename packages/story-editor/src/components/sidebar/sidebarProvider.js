@@ -41,8 +41,8 @@ import { DOCUMENT, STYLE, PUBLISH_MODAL_DOCUMENT, INSERT } from './constants';
 import Context from './context';
 import DesignInspector from './design';
 
-const INSPECTOR_TAB_IDS = new Set([INSERT, DOCUMENT, STYLE]);
-function InspectorProvider({ inspectorTabs, children }) {
+const SIDEBAR_TAB_IDS = new Set([INSERT, DOCUMENT, STYLE]);
+function SidebarProvider({ sidebarTabs, children }) {
   const isUpdatedPublishModalEnabled = useFeature(
     'enableUpdatedPublishStoryModal'
   );
@@ -62,7 +62,7 @@ function InspectorProvider({ inspectorTabs, children }) {
 
   // set tab when content is highlighted
   useEffect(() => {
-    if (INSPECTOR_TAB_IDS.has(highlightedTab)) {
+    if (SIDEBAR_TAB_IDS.has(highlightedTab)) {
       setTab(highlightedTab);
       trackEvent('quick_action_tab_change', {
         name: highlightedTab,
@@ -70,12 +70,12 @@ function InspectorProvider({ inspectorTabs, children }) {
     }
   }, [highlightedTab]);
 
-  const inspectorRef = useRef(null);
+  const sidebarRef = useRef(null);
 
   const [tab, setTab] = useState(INSERT);
   const [users, setUsers] = useState([]);
-  const [inspectorContentHeight, setInspectorContentHeight] = useState(null);
-  const inspectorContentRef = useRef();
+  const [sidebarContentHeight, setSidebarContentHeight] = useState(null);
+  const sidebarContentRef = useRef();
   const tabRef = useRef(tab);
 
   const insertPaneRef = useRef(null);
@@ -93,13 +93,13 @@ function InspectorProvider({ inspectorTabs, children }) {
 
   const [isUsersLoading, setIsUsersLoading] = useState(false);
 
-  const setInspectorContentNode = useCallback((node) => {
-    inspectorContentRef.current = node;
+  const setSidebarContentNode = useCallback((node) => {
+    sidebarContentRef.current = node;
   }, []);
 
   useResizeEffect(
-    inspectorContentRef,
-    ({ height }) => setInspectorContentHeight(height),
+    sidebarContentRef,
+    ({ height }) => setSidebarContentHeight(height),
     []
   );
 
@@ -145,16 +145,16 @@ function InspectorProvider({ inspectorTabs, children }) {
       tab,
       tabRefs,
       users,
-      inspectorContentHeight,
+      sidebarContentHeight,
       isUsersLoading,
     },
     refs: {
-      inspector: inspectorRef,
+      sidebar: sidebarRef,
     },
     actions: {
       setTab,
       loadUsers,
-      setInspectorContentNode,
+      setSidebarContentNode,
     },
     data: {
       tabs: [
@@ -172,26 +172,26 @@ function InspectorProvider({ inspectorTabs, children }) {
     },
   };
 
-  if (inspectorTabs?.document) {
+  if (sidebarTabs?.document) {
     state.data.tabs.push({
       id: DOCUMENT,
-      ...inspectorTabs.document,
+      ...sidebarTabs.document,
     });
   }
 
-  if (inspectorTabs?.publishModal && isUpdatedPublishModalEnabled) {
-    state.data.modalInspectorTab = {
+  if (sidebarTabs?.publishModal && isUpdatedPublishModalEnabled) {
+    state.data.modalSidebarTab = {
       id: PUBLISH_MODAL_DOCUMENT,
-      ...inspectorTabs.publishModal,
+      ...sidebarTabs.publishModal,
     };
   }
 
   return <Context.Provider value={state}>{children}</Context.Provider>;
 }
 
-InspectorProvider.propTypes = {
+SidebarProvider.propTypes = {
   children: PropTypes.node,
-  inspectorTabs: PropTypes.object,
+  sidebarTabs: PropTypes.object,
 };
 
-export default InspectorProvider;
+export default SidebarProvider;

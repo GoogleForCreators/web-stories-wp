@@ -18,7 +18,7 @@
  */
 import { createNewStory, withUser } from '@web-stories-wp/e2e-test-utils';
 
-describe('Inspector', () => {
+describe('Sidebar', () => {
   describe('Document', () => {
     it('should display publisher logo upload', async () => {
       await createNewStory();

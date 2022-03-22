@@ -25,7 +25,7 @@ describe('Publish panel in document tab', () => {
 
     //find publish panel button
     const publishPanelButton = await expect(page).toMatchElement(
-      '#inspector-tab-document button',
+      '#sidebar-tab-document button',
       { text: 'Publishing' }
     );
 

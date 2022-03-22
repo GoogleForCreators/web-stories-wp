@@ -90,8 +90,8 @@ describe('TextEdit integration', () => {
         await fixture.events.mouse.clickOn(frame, 30, 5);
         editor = await fixture.screen.findByTestId('textEditor');
         editLayer = await fixture.screen.findByTestId('editLayer');
-        await fixture.events.click(fixture.editor.inspector.designTab);
-        boldToggle = fixture.editor.inspector.designPanel.textStyle.bold;
+        await fixture.events.click(fixture.editor.sidebar.designTab);
+        boldToggle = fixture.editor.sidebar.designPanel.textStyle.bold;
       });
 
       it('should mount editor', async () => {
@@ -103,7 +103,7 @@ describe('TextEdit integration', () => {
       it('should handle a command, exit and save', async () => {
         // Increase the font size for ensuring the clicks to be in correct places.
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.textStyle.fontSize,
+          fixture.editor.sidebar.designPanel.textStyle.fontSize,
           { clickCount: 3 }
         );
         await fixture.events.keyboard.type('30');

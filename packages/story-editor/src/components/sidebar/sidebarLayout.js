@@ -27,12 +27,12 @@ import { useEscapeToBlurEffect } from '@googleforcreators/design-system';
  * Internal dependencies
  */
 import TabView from '../tabview';
-import useInspector from './useInspector';
-import InspectorContent from './inspectorContent';
+import useSidebar from './useSidebar';
+import SidebarContent from './sidebarContent';
 import { getTabId } from './utils';
 
 const Layout = styled.section.attrs({
-  'aria-label': __('Inspector', 'web-stories'),
+  'aria-label': __('Sidebar', 'web-stories'),
 })`
   height: 100%;
   display: flex;
@@ -41,7 +41,7 @@ const Layout = styled.section.attrs({
   color: ${({ theme }) => theme.colors.fg.secondary};
 `;
 
-const InspectorContainer = styled.div`
+const SidebarContainer = styled.div`
   height: 100%;
   padding: 0;
   overflow: auto;
@@ -51,13 +51,13 @@ const UnjustifiedTabView = styled(TabView)`
   justify-content: center;
 `;
 
-function InspectorLayout() {
+function SidebarLayout() {
   const {
     state: { tab, tabRefs },
-    actions: { setInspectorContentNode, setTab },
-    refs: { inspector },
+    actions: { setSidebarContentNode, setTab },
+    refs: { sidebar },
     data: { tabs },
-  } = useInspector();
+  } = useSidebar();
 
   const onTabChange = useCallback(
     (id) => {
@@ -69,11 +69,11 @@ function InspectorLayout() {
     [setTab]
   );
 
-  useEscapeToBlurEffect(inspector);
+  useEscapeToBlurEffect(sidebar);
   return (
-    <Layout ref={inspector}>
+    <Layout ref={sidebar}>
       <UnjustifiedTabView
-        label={__('Inspector Selection', 'web-stories')}
+        label={__('Sidebar Selection', 'web-stories')}
         tabs={tabs}
         tab={tab}
         tabRefs={tabRefs}
@@ -81,11 +81,11 @@ function InspectorLayout() {
         getAriaControlsId={getTabId}
         shortcut="mod+option+3"
       />
-      <InspectorContainer ref={setInspectorContentNode}>
-        <InspectorContent />
-      </InspectorContainer>
+      <SidebarContainer ref={setSidebarContentNode}>
+        <SidebarContent />
+      </SidebarContainer>
     </Layout>
   );
 }
 
-export default InspectorLayout;
+export default SidebarLayout;

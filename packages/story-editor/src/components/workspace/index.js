@@ -23,7 +23,7 @@ import { RichTextProvider } from '@googleforcreators/rich-text';
 /**
  * Internal dependencies
  */
-import Inspector from '../inspector';
+import Sidebar from '../sidebar';
 import Canvas from '../canvas';
 import { VideoTrimProvider } from '../videoTrim';
 import ErrorBoundary from '../errorBoundary';
@@ -40,7 +40,7 @@ function Workspace({ header, footer }) {
       <RichTextProvider editingState={editingElementState}>
         <SidebarArea>
           <ErrorBoundary>
-            <Inspector />
+            <Sidebar />
           </ErrorBoundary>
         </SidebarArea>
         <CanvasArea>

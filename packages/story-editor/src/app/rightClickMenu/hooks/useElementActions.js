@@ -24,7 +24,7 @@ import { trackEvent } from '@googleforcreators/tracking';
  * Internal dependencies
  */
 import { useCanvas, useHistory, useStory } from '../..';
-import updateProperties from '../../../components/inspector/design/updateProperties';
+import updateProperties from '../../../components/sidebar/design/updateProperties';
 import { UNDO_HELP_TEXT } from './constants';
 
 /**
