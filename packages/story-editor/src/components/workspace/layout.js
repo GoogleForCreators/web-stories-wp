@@ -31,6 +31,6 @@ const Area = styled.div`
 `;
 
 const CanvasArea = styled(Area).attrs({ area: 'canv', zIndex: 1 })``;
-const InspectorArea = styled(Area).attrs({ area: 'insp', zIndex: 2 })``;
+const SidebarArea = styled(Area).attrs({ area: 'insp', zIndex: 2 })``;
 
-export { CanvasArea, InspectorArea };
+export { CanvasArea, SidebarArea };
