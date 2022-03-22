@@ -91,7 +91,7 @@
     "babel-loader": "^8.2.3",
     "babel-plugin-styled-components": "^2.0.6",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
-    "browserslist": "^4.19.1",
+    "browserslist": "^4.20.2",
     "commander": "^9.0.0",
     "core-js": "^3.20.3",
     "css-loader": "^6.2.0",
