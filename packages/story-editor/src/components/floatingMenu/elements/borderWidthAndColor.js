@@ -139,8 +139,9 @@ function BorderWidthAndColor() {
           hasInputs={false}
           hasEyedropper={false}
           allowsOpacity={canHaveBorderOpacity}
+          allowsGradient={false}
           pickerHasEyedropper={false} // override shared floating menu Color component TODO https://github.com/GoogleForCreators/web-stories-wp/issues/11024
-          allowsSavedColors={false} // if this changes to true, need to change allowsGradient to false because borders cannot be gradient.
+          allowsSavedColors={false}
         />
       )}
     </Container>
