@@ -52,7 +52,6 @@ const containerCss = css`
 const Container = styled.section`
   ${containerCss}
   gap: ${({ isInDesignMenu }) => (isInDesignMenu ? 6 : 8)}px;
-  width: ${({ width }) => (width ? `${width}px` : `100%`)};
 `;
 
 const ColorInputsWrapper = styled.div`
@@ -130,11 +129,7 @@ const Color = forwardRef(function Color(
       : TOOLTIP_PLACEMENT.BOTTOM_START;
 
   return (
-    <Container
-      aria-label={containerLabel}
-      isInDesignMenu={isInDesignMenu}
-      width={width}
-    >
+    <Container aria-label={containerLabel} isInDesignMenu={isInDesignMenu}>
       {hasEyedropper && (
         <Tooltip
           title={tooltip}

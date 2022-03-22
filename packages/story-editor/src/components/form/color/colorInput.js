@@ -272,7 +272,10 @@ const ColorInput = forwardRef(function ColorInput(
                 {/* We display Mixed value even without inputs */}
                 {isMixed && (
                   <MixedLabel>
-                    <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
+                    <Text
+                      size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
+                      as="span"
+                    >
                       {MULTIPLE_DISPLAY_VALUE}
                     </Text>
                   </MixedLabel>
