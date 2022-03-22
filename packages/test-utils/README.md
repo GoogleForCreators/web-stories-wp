@@ -1,3 +1,3 @@
 # Test Utils
 
-Package for test utilities
+Package for Web Stories test utilities

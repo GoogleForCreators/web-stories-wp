@@ -1,6 +1,6 @@
 {
     "name": "@googleforcreators/test-utils",
-    "description": "Package for test utilities",
+    "description": "Package for Web Stories test utilities",
     "private": true,
     "version": "0.1.202203150806",
     "author": {
