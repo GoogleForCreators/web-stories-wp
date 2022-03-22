@@ -83,7 +83,7 @@
   <config name="testVersion" value="7.2-" />
   <rule ref="PHPCompatibilityWP" />
 
-  <!-- The main plugin file should be parsable by PHP < 7.0. -->
+  <!-- The main plugin file should be parsable by PHP 5.6. -->
   <rule ref="Generic.Arrays.DisallowLongArraySyntax.Found">
     <exclude-pattern>web-stories.php</exclude-pattern>
     <exclude-pattern
@@ -95,17 +95,22 @@
     >tests/phpunit/integration/includes/REST_Setup.php</exclude-pattern>
   </rule>
 
-  <rule
-    ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint"
-  >
+  <rule ref="SlevomatCodingStandard.TypeHints.ReturnTypeHint">
     <properties>
       <property name="enableStaticTypeHint" value="false" />
       <property name="enableMixedTypeHint" value="false" />
       <property name="enableUnionTypeHint" value="false" />
     </properties>
+    <exclude
+      name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingTraversableTypeHintSpecification"
+    />
+
+    <!-- The main plugin file should be parsable by PHP 5.6. -->
     <exclude-pattern>web-stories.php</exclude-pattern>
     <exclude-pattern
     >includes/compat/Web_Stories_Compatibility.php</exclude-pattern>
+
+    <!-- To ensure backward compatibility for developers using these. -->
     <exclude-pattern>includes/Interfaces/FieldState.php</exclude-pattern>
     <exclude-pattern>includes/Interfaces/FieldStateFactory.php</exclude-pattern>
     <exclude-pattern>includes/Renderer/Stories/*</exclude-pattern>

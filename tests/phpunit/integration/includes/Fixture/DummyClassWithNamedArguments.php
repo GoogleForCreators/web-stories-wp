@@ -15,10 +15,16 @@ final class DummyClassWithNamedArguments {
 		$this->argument_b = $argument_b;
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function get_argument_a() {
 		return $this->argument_a;
 	}
 
+	/**
+	 * @return mixed
+	 */
 	public function get_argument_b() {
 		return $this->argument_b;
 	}

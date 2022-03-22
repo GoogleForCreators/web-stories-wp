@@ -50,6 +50,8 @@ function setup() {
   const fontsValue = {
     actions: {
       maybeEnqueueFontStyle: jest.fn(),
+      getCustomFonts: jest.fn(),
+      getCuratedFonts: jest.fn(),
     },
   };
   const apiValue = {
@@ -86,7 +88,6 @@ function setup() {
   );
 }
 
-// eslint-disable-next-line react/prop-types
 function MockPane({ children }) {
   const ref = useRef();
   return <div ref={ref}>{children(ref)}</div>;

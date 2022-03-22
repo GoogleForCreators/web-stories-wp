@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {
   useCallback,
@@ -24,10 +25,6 @@ import {
   useState,
   useDebouncedCallback,
 } from '@googleforcreators/react';
-
-/**
- * External dependencies
- */
 import { __ } from '@googleforcreators/i18n';
 import { trackEvent } from '@googleforcreators/tracking';
 import {
@@ -35,11 +32,11 @@ import {
   Text,
   THEME_CONSTANTS,
 } from '@googleforcreators/design-system';
+import { clamp } from '@googleforcreators/units';
 
 /**
  * Internal dependencies
  */
-import clamp from '../../../../utils/clamp';
 import { useStory } from '../../../../app/story';
 import { Row, Switch } from '../../../form';
 import { SimplePanel } from '../../panel';
@@ -66,7 +63,7 @@ const MIN_MAX = {
   },
 };
 
-function PageAdvancementPanel() {
+function PageAdvancementPanel({ nameOverride }) {
   const { autoAdvance, defaultPageDuration, updateStory } = useStory(
     ({
       state: {
@@ -124,7 +121,7 @@ function PageAdvancementPanel() {
 
   return (
     <SimplePanel
-      name="pageAdvancement"
+      name={nameOverride || 'pageAdvancement'}
       title={__('Page Advancement', 'web-stories')}
       collapsedByDefault={false}
     >
@@ -166,3 +163,7 @@ function PageAdvancementPanel() {
 }
 
 export default PageAdvancementPanel;
+
+PageAdvancementPanel.propTypes = {
+  nameOverride: PropTypes.string,
+};

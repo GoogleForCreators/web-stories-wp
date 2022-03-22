@@ -28,47 +28,52 @@ import {
   BUTTON_TYPES,
   BUTTON_VARIANTS,
   Icons,
+  PLACEMENT,
+  TOOLTIP_PLACEMENT,
 } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE } from '../../../constants';
 import useEyedropper from '../../eyedropper';
 import Tooltip from '../../tooltip';
 import { focusStyle } from '../../panels/shared';
+import { MULTIPLE_VALUE } from '../../../constants';
 import applyOpacityChange from './applyOpacityChange';
 import OpacityInput from './opacityInput';
 import ColorInput from './colorInput';
+import { SPACING } from './constants';
 
 const containerCss = css`
   display: flex;
   align-items: center;
-  width: 100%;
 `;
 
 const Container = styled.section`
   ${containerCss}
+  gap: ${({ isInDesignMenu }) => (isInDesignMenu ? 6 : 8)}px;
+  width: ${({ width }) => (width ? `${width}px` : `100%`)};
 `;
 
 const ColorInputsWrapper = styled.div`
   ${containerCss}
+  gap: ${({ isInDesignMenu }) => (isInDesignMenu ? 0 : 6)}px;
 `;
 
 const Space = styled.div`
   width: 8px;
   height: 1px;
-  margin: 6px;
   background-color: ${({ theme }) => theme.colors.divider.primary};
 `;
 
 // 10px comes from divider / 2
 const InputWrapper = styled.div`
-  width: calc(53% - 10px);
+  ${({ hasInputs }) => hasInputs && `width: calc(53% - 10px);`}
 `;
 
 const OpacityWrapper = styled.div`
-  width: calc(47% - 10px);
+  width: ${({ isInDesignMenu }) =>
+    isInDesignMenu ? `calc(39% - 10px)` : `calc(47% - 10px)`};
 `;
 
 const EyeDropperButton = styled(Button).attrs({
@@ -76,7 +81,6 @@ const EyeDropperButton = styled(Button).attrs({
   type: BUTTON_TYPES.TERTIARY,
   size: BUTTON_SIZES.SMALL,
 })`
-  margin-right: 8px;
   ${focusStyle};
 `;
 
@@ -90,6 +94,14 @@ const Color = forwardRef(function Color(
     label = null,
     changedStyle = null,
     hasEyedropper = false,
+    pickerHasEyedropper = true,
+    maxHeight = null,
+    shouldCloseOnSelection = false,
+    allowsSavedColorDeletion = true,
+    pickerPlacement = PLACEMENT.RIGHT_START,
+    isInDesignMenu = false,
+    hasInputs = true,
+    width,
   },
   ref
 ) {
@@ -105,17 +117,38 @@ const Color = forwardRef(function Color(
   );
 
   const displayOpacity =
-    value !== MULTIPLE_VALUE && Boolean(getPreviewText(value));
+    value !== MULTIPLE_VALUE && Boolean(getPreviewText(value)) && hasInputs;
 
   const { initEyedropper } = useEyedropper({
     onChange: (color) => onChange({ color }),
   });
   const tooltip = __('Pick a color from canvas', 'web-stories');
 
+  const spacing = hasEyedropper
+    ? SPACING.DEFAULT_SIDEBAR
+    : SPACING.SIDEBAR_WITHOUT_EYEDROPPER;
+
+  const tooltipPlacement =
+    isInDesignMenu || hasEyedropper
+      ? TOOLTIP_PLACEMENT.BOTTOM
+      : TOOLTIP_PLACEMENT.BOTTOM_START;
+
   return (
-    <Container aria-label={containerLabel}>
+    <Container
+      aria-label={containerLabel}
+      isInDesignMenu={isInDesignMenu}
+      width={width}
+    >
       {hasEyedropper && (
-        <Tooltip title={tooltip} hasTail>
+        <Tooltip
+          title={tooltip}
+          hasTail
+          placement={
+            isInDesignMenu
+              ? TOOLTIP_PLACEMENT.BOTTOM
+              : TOOLTIP_PLACEMENT.BOTTOM_START
+          }
+        >
           <EyeDropperButton
             aria-label={tooltip}
             onClick={initEyedropper()}
@@ -126,24 +159,39 @@ const Color = forwardRef(function Color(
         </Tooltip>
       )}
 
-      <ColorInputsWrapper>
-        <InputWrapper>
+      <ColorInputsWrapper isInDesignMenu={isInDesignMenu}>
+        <InputWrapper hasInputs={hasInputs}>
           <ColorInput
             ref={ref}
             onChange={onChange}
-            allowsGradient={allowsGradient}
-            allowsOpacity={allowsOpacity}
             value={value}
             label={label}
-            allowsSavedColors={allowsSavedColors}
             changedStyle={changedStyle}
+            pickerPlacement={pickerPlacement}
+            hasInputs={hasInputs}
+            isInDesignMenu={isInDesignMenu}
+            spacing={isInDesignMenu ? SPACING.FLOATING_MENU : spacing}
+            tooltipPlacement={tooltipPlacement}
+            pickerProps={{
+              allowsGradient,
+              allowsOpacity,
+              allowsSavedColors,
+              hasEyedropper: pickerHasEyedropper,
+              allowsSavedColorDeletion,
+              maxHeight,
+              shouldCloseOnSelection,
+            }}
           />
         </InputWrapper>
         {allowsOpacity && displayOpacity && (
           <>
             <Space />
-            <OpacityWrapper>
-              <OpacityInput value={value} onChange={handleOpacityChange} />
+            <OpacityWrapper isInDesignMenu={isInDesignMenu}>
+              <OpacityInput
+                value={value}
+                onChange={handleOpacityChange}
+                isInDesignMenu={isInDesignMenu}
+              />
             </OpacityWrapper>
           </>
         )}
@@ -161,6 +209,13 @@ Color.propTypes = {
   label: PropTypes.string.isRequired,
   changedStyle: PropTypes.string,
   hasEyedropper: PropTypes.bool,
+  pickerHasEyedropper: PropTypes.bool,
+  maxHeight: PropTypes.number,
+  shouldCloseOnSelection: PropTypes.bool,
+  allowsSavedColorDeletion: PropTypes.bool,
+  pickerPlacement: PropTypes.string,
+  isInDesignMenu: PropTypes.bool,
+  hasInputs: PropTypes.bool,
 };
 
 export default Color;

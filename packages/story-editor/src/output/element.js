@@ -20,21 +20,21 @@
 import { generatePatternStyles } from '@googleforcreators/patterns';
 import { getBox } from '@googleforcreators/units';
 import { StoryAnimation } from '@googleforcreators/animation';
+import { getDefinitionForType } from '@googleforcreators/elements';
+import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
+import {
+  OutputWithMask as WithMask,
+  getBorderPositionCSS,
+  getBorderRadius,
+  getBorderStyle,
+  shouldDisplayBorder,
+} from '@googleforcreators/masks';
 
 /**
  * Internal dependencies
  */
 import WithLink from '../components/elementLink/output';
-import { getDefinitionForType } from '../elements';
-import WithMask from '../masks/output';
 import StoryPropTypes from '../types';
-import {
-  getBorderPositionCSS,
-  getBorderRadius,
-  getBorderStyle,
-  shouldDisplayBorder,
-} from '../utils/elementBorder';
-import { BACKGROUND_TEXT_MODE } from '../constants';
 
 function OutputElement({ element }) {
   const {

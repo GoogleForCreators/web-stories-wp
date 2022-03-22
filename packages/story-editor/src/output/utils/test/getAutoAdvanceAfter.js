@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
+
+/**
  * Internal dependencies
  */
 import getAutoAdvanceAfter from '../getAutoAdvanceAfter';
@@ -21,6 +27,10 @@ import getAutoAdvanceAfter from '../getAutoAdvanceAfter';
 const id = 999;
 
 describe('getAutoAdvanceAfter', () => {
+  beforeAll(() => {
+    elementTypes.forEach((element) => registerElementType(element));
+  });
+
   it('should return the media element with the longest duration', () => {
     const elements = [
       { id: 123, type: 'video', resource: { length: 1 } },

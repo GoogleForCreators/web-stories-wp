@@ -19,5 +19,4 @@ export { default as getOffPageOffset } from './getOffPageOffset';
 export { getTotalDuration } from './getTotalDuration';
 export { getMediaBoundOffsets, hasOffsets } from './mediaPositions';
 export { getExclusion, orderByKeys } from './objectOperations';
-export { clamp, lerp, progress } from './range';
 export { getMediaOrigin } from './getMediaOrigin';

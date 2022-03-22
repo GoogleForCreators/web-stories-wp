@@ -67,8 +67,6 @@ class Poster extends Service_Base implements HasMeta {
 	 * Init.
 	 *
 	 * @since 1.10.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		$this->register_meta();
@@ -81,8 +79,6 @@ class Poster extends Service_Base implements HasMeta {
 	 * Register meta for attachment post type.
 	 *
 	 * @since 1.10.0
-	 *
-	 * @return void
 	 */
 	public function register_meta(): void {
 		register_meta(
@@ -104,8 +100,6 @@ class Poster extends Service_Base implements HasMeta {
 	 * Registers additional REST API fields upon API initialization.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
 	public function rest_api_init(): void {
 		register_rest_field(
@@ -223,7 +217,6 @@ class Poster extends Service_Base implements HasMeta {
 	 * @since 1.0.0
 	 *
 	 * @param int $attachment_id ID of the attachment to be deleted.
-	 * @return void
 	 */
 	public function delete_video_poster( int $attachment_id ): void {
 		/**
@@ -250,7 +243,6 @@ class Poster extends Service_Base implements HasMeta {
 	 * @since 1.2.1
 	 *
 	 * @param int $post_id Attachment ID.
-	 * @return bool
 	 */
 	protected function is_poster( int $post_id ): bool {
 		$terms = get_the_terms( $post_id, $this->media_source_taxonomy->get_taxonomy_slug() );

@@ -117,9 +117,7 @@ function DesignPanel({
   );
 
   const submit = useCallback(() => {
-    // The `setTimeout()` below only depends on the `ref` and thus save from
-    // dismount issues.
-    // eslint-disable-next-line @wordpress/react-no-unsafe-timeout
+    // eslint-disable-next-line @wordpress/react-no-unsafe-timeout -- Only depends on the `ref` and thus save from dismount issues.
     setTimeout(() => {
       const form = formRef.current;
       if (form) {

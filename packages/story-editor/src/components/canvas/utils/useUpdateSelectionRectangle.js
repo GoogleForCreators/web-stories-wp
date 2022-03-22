@@ -39,8 +39,7 @@ function useUpdateSelectionRectangle(moveableRef, dependencies = []) {
       mounted = false;
       clearTimeout(timeout);
     };
-    // Disable reason: ref is stable, deps are the only thing that matters
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- ref is stable, deps are the only thing that matters
   }, dependencies);
 }
 

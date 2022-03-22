@@ -13,6 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
@@ -78,6 +83,10 @@ const VIDEO_RESOURCE = {
 };
 
 describe('getElementProperties', () => {
+  beforeAll(() => {
+    elementTypes.forEach(registerElementType);
+  });
+
   it('should default x/y to (48, 0) if not provided', () => {
     const properties = getElementProperties('shape', {
       ...BASIC_SHAPE,

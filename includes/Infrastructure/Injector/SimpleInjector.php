@@ -144,7 +144,6 @@ final class SimpleInjector implements Injector {
 	 *
 	 * @param string $from Interface or class to bind an implementation to.
 	 * @param string $to   Interface or class that provides the implementation.
-	 * @return Injector
 	 */
 	public function bind( $from, $to ): Injector {
 		$this->mappings[ $from ] = $to;
@@ -161,7 +160,6 @@ final class SimpleInjector implements Injector {
 	 *                                   for.
 	 * @param string $argument_name      Argument name to bind a value to.
 	 * @param mixed  $value              Value to bind the argument to.
-	 * @return Injector
 	 */
 	public function bind_argument(
 		$interface_or_class,
@@ -180,7 +178,6 @@ final class SimpleInjector implements Injector {
 	 * @since 1.6.0
 	 *
 	 * @param string $interface_or_class Interface or class to reuse.
-	 * @return Injector
 	 */
 	public function share( $interface_or_class ): Injector {
 		$this->shared_instances[ $interface_or_class ] = null;
@@ -196,7 +193,6 @@ final class SimpleInjector implements Injector {
 	 * @param string   $interface_or_class Interface or class to delegate the
 	 *                                     instantiation of.
 	 * @param callable $callable           Callable to use for instantiation.
-	 * @return Injector
 	 */
 	public function delegate( $interface_or_class, callable $callable ): Injector {
 		$this->delegates[ $interface_or_class ] = $callable;
@@ -335,7 +331,6 @@ final class SimpleInjector implements Injector {
 	 * @throws FailedToMakeInstance If the interface could not be resolved.
 	 *
 	 * @param ReflectionClass $reflection Reflected class to check.
-	 * @return void
 	 */
 	private function ensure_is_instantiable( ReflectionClass $reflection ): void {
 		if ( ! $reflection->isInstantiable() ) {

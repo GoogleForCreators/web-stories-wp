@@ -34,7 +34,7 @@ import { NAVIGATION_HEIGHT } from '../../secondaryPopup';
 import { GUTTER_WIDTH } from '../constants';
 import { useConfig } from '../../../app';
 import { Transitioner } from './transitioner';
-import { ReactComponent as DoneCheckmark } from './doneCheckmark.svg';
+import DoneCheckmark from './icons/doneCheckmark.svg';
 
 const Panel = styled.div`
   width: 100%;
@@ -126,7 +126,7 @@ export function QuickTip({
           {/* `figureSrcImg` is temporary until we get an animation for the embed quick tip.
           Once we have the animation then the .png image won't be necessary */}
           {figureSrcImg && (
-            //eslint-disable-next-line jsx-a11y/media-has-caption
+            //eslint-disable-next-line jsx-a11y/media-has-caption -- False positive because it's actually an image.
             <Video
               as="img"
               alt={figureAlt}
@@ -142,7 +142,7 @@ export function QuickTip({
           <Title>{title}</Title>
           {description.map((paragraph, i) => (
             <Paragraph
-              // eslint-disable-next-line react/no-array-index-key
+              // eslint-disable-next-line react/no-array-index-key -- Should be OK due to also using the title.
               key={`${title}-${i}`}
               size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
             >

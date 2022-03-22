@@ -26,7 +26,7 @@ import {
   useRef,
 } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
-import { clamp } from '@googleforcreators/animation';
+import { clamp } from '@googleforcreators/units';
 import {
   localStore,
   LOCAL_STORAGE_PREFIX,
@@ -126,18 +126,18 @@ export const getInitial = (additionalInitialState) => ({
     goToNext:
       () =>
       ({ navigationIndex, navigationFlow }) => ({
-        navigationIndex: clamp(navigationIndex + 1, [
-          0,
-          navigationFlow.length - 1,
-        ]),
+        navigationIndex: clamp(navigationIndex + 1, {
+          MIN: 0,
+          MAX: navigationFlow.length - 1,
+        }),
       }),
     goToPrev:
       () =>
       ({ navigationIndex, navigationFlow }) => ({
-        navigationIndex: clamp(navigationIndex - 1, [
-          0,
-          navigationFlow.length - 1,
-        ]),
+        navigationIndex: clamp(navigationIndex - 1, {
+          MIN: 0,
+          MAX: navigationFlow.length - 1,
+        }),
       }),
     goToMenu: () => () => ({ navigationIndex: -1 }),
     goToTip:
@@ -260,9 +260,9 @@ function HelpCenterProvider({ children }) {
 
   // Hydrate unread tips once from current user endpoint.
   useEffect(() => {
-    if (!isHydrated && currentUser?.meta?.web_stories_onboarding) {
+    if (!isHydrated && currentUser?.onboarding) {
       actions.hydrateReadTipsSuccess({
-        readTips: currentUser.meta.web_stories_onboarding,
+        readTips: currentUser.onboarding,
       });
     }
   }, [actions, currentUser, isHydrated]);
@@ -281,9 +281,7 @@ function HelpCenterProvider({ children }) {
       return;
     }
     updateCurrentUser({
-      meta: {
-        web_stories_onboarding: createBooleanMapFromKey(persistenceKey),
-      },
+      onboarding: createBooleanMapFromKey(persistenceKey),
     }).catch(actions.persistingReadTipsError);
   }, [
     actions,
@@ -332,8 +330,7 @@ function HelpCenterProvider({ children }) {
         trackEvent('tutorial_complete');
       }
     }
-    // Disable reason: avoid sending duplicate tracking events.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- avoid sending duplicate tracking events.
   }, [navigationIndex]);
 
   const contextValue = useMemo(

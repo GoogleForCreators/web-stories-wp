@@ -109,6 +109,22 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/googleforcreators/web-stories-wp/releases).
 
+= 1.18.1 =
+
+**Release Date:** March 8, 2022.
+
+* Fixes an issue where adding video captions did not work.
+
+= 1.18.0 =
+
+**Release Date:** March 1, 2022.
+
+* Enhancement: new pre-publish confirmation dialog.
+* Enhancement: new canvas appearance when creating a new story.
+* Enhancement: use semantic heading tags (`h1`, `h2`, etc.) based on font size.
+* Bumped minimum PHP version requirement to 7.2.
+* Bug fixes and performance improvements.
+
 = 1.17.0 =
 
 **Release Date:** February 1, 2022.
@@ -119,36 +135,16 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Enhancement: improved element resizing handling.
 * Bug fixes and performance improvements.
 
-= 1.16.0 =
-
-**Release Date:** January 18, 2022.
-
-* Compatibility with WordPress 5.9
-* New feature: improved video captions appearance in the editor.
-* New feature: duplicate elements via right-click menu.
-* Enhancement: use static images for displaying saved templates in the editor.
-* Enhancement: improved appearance when exploring templates in the dashboard.
-* Bug fixes and performance improvements.
-
-= 1.15.1 =
-
-**Release Date:** December 7, 2021.
-
-* Fixes a rare issue with crashing and failing to load particular stories.
-* Fixes an issue with mangled Unicode characters.
-* Fixes an issue with styling differences between the editor and the preview.
-
 == Upgrade Notice ==
+
+= 1.18.1 =
+
+This release fixes an issue where adding video captions did not work.
+
+= 1.18.0 =
+
+New pre-publish confirmation dialog, semantic headings, and several bug fixes and performance improvements.
 
 = 1.17.0 =
 
 Various smaller enhancements throughout the editor, plus several bug fixes and performance improvements.
-
-= 1.16.0 =
-
-WordPress 5.9 compatibility, various UI refinements, right-click menu element duplication, and several bug fixes and performance improvements.
-
-= 1.15.1 =
-
-Several bug fixes to address the editor crashing and styling differences between editor and preview.
-

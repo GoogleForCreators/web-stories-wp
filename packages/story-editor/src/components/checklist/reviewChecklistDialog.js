@@ -66,8 +66,7 @@ function ReviewChecklistDialog({
   const onPrimary = useCallback(() => {
     onReview?.();
     // Focus Checklist Tab
-    // Disable reason: If component unmounts, nothing bad can happen
-    // eslint-disable-next-line @wordpress/react-no-unsafe-timeout
+    // eslint-disable-next-line @wordpress/react-no-unsafe-timeout -- If component unmounts, nothing bad can happen
     setTimeout(() => openChecklist(), TRANSITION_DURATION);
   }, [onReview, openChecklist]);
 

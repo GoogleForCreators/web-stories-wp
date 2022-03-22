@@ -30,7 +30,6 @@ import { PRIMARY_PATHS } from '../../../constants';
 describe('<LeftRail />', () => {
   const toggleSideBarFn = jest.fn();
 
-  // eslint-disable-next-line react/prop-types
   const MockedNavProvider = ({ children }) => {
     return (
       <NavContext.Provider

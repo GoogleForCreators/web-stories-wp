@@ -97,8 +97,6 @@ class Web_Stories_Block extends Embed_Base {
 	 * Initializes the Web Stories embed block.
 	 *
 	 * @since 1.5.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		parent::register();
@@ -118,8 +116,6 @@ class Web_Stories_Block extends Embed_Base {
 	 * Registers a block type from metadata stored in the `block.json` file.
 	 *
 	 * @since 1.9.0
-	 *
-	 * @return void
 	 */
 	protected function register_block_type(): void {
 		$base_path = $this->assets->get_base_path( 'blocks/embed/block.json' );

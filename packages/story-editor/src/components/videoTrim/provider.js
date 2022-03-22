@@ -65,6 +65,7 @@ function VideoTrimProvider({ children }) {
       // This is the ID of the resource that's currently on canvas and needs to be cloned.
       // It's only different from the above resource, if the canvas resource is a trim of the other.
       canvasResourceId: element.resource.id,
+      elementId: element.id,
       start: formatMsToHMS(startOffset),
       end: formatMsToHMS(endOffset),
     });

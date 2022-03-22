@@ -25,8 +25,10 @@ import {
   useGlobalKeyDownEffect,
   Headline,
   THEME_CONSTANTS,
+  TRACKING_EVENTS,
   themeHelpers,
   ThemeGlobals,
+  usePerformanceTracking,
 } from '@googleforcreators/design-system';
 
 /**
@@ -34,8 +36,6 @@ import {
  */
 import { useConfig } from '../../app';
 import Tooltip from '../tooltip';
-import usePerformanceTracking from '../../utils/usePerformanceTracking';
-import { TRACKING_EVENTS } from '../../constants/performanceTrackingEvents';
 
 const ALERT_ICON_SIZE = 28;
 export const TAB_HEIGHT = 32;
@@ -158,7 +158,7 @@ function UnreffedTab(
     ? TRACKING_EVENTS.LIBRARY_PANEL_CLICK
     : TRACKING_EVENTS.DESIGN_PANEL_CLICK;
   usePerformanceTracking({
-    node: tabRefs[refId]?.current,
+    node: tabRefs?.[refId]?.current,
     eventData: {
       ...eventData,
       label: `${refId}_tab`,

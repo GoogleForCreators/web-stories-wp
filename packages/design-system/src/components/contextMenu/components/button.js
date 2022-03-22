@@ -32,7 +32,6 @@ const StyledButton = styled(BaseButton)`
   ${menuItemStyles};
 
   width: 100%;
-  background-color: transparent;
 
   ${({ isHorizontal, isIconMenu, forcePadding, theme }) => {
     const hasHeight = isHorizontal; // In a horizontal menu, all buttons are 32px high
@@ -77,7 +76,7 @@ const StyledButton = styled(BaseButton)`
  * @param {Object} ref Ref object.
  * @return {Node} The react node
  */
-function ButtonWithRef(
+const Button = forwardRef(function Button(
   {
     id,
     onBlur,
@@ -137,9 +136,8 @@ function ButtonWithRef(
       {...props}
     />
   );
-}
+});
 
-const Button = forwardRef(ButtonWithRef);
 Button.propTypes = {
   id: PropTypes.string,
   onBlur: PropTypes.func,
@@ -148,7 +146,5 @@ Button.propTypes = {
   forcePadding: PropTypes.bool,
   dismissOnClick: PropTypes.bool,
 };
-
-ButtonWithRef.propTypes = Button.propTypes;
 
 export default Button;

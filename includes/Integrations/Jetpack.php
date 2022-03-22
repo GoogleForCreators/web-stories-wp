@@ -28,7 +28,6 @@ namespace Google\Web_Stories\Integrations;
 
 use Google\Web_Stories\Context;
 use Google\Web_Stories\Media\Media_Source_Taxonomy;
-use Google\Web_Stories\Media\Types;
 use Google\Web_Stories\Service_Base;
 use Google\Web_Stories\Story_Post_Type;
 use WP_Post;
@@ -79,33 +78,22 @@ class Jetpack extends Service_Base {
 	private $context;
 
 	/**
-	 * Types instance.
-	 *
-	 * @var Types Types instance.
-	 */
-	private $types;
-
-	/**
 	 * Jetpack constructor.
 	 *
 	 * @since 1.12.0
 	 *
 	 * @param Media_Source_Taxonomy $media_source_taxonomy Media_Source_Taxonomy instance.
 	 * @param Context               $context               Context instance.
-	 * @param Types                 $types                 Types instance.
 	 */
-	public function __construct( Media_Source_Taxonomy $media_source_taxonomy, Context $context, Types $types ) {
+	public function __construct( Media_Source_Taxonomy $media_source_taxonomy, Context $context ) {
 		$this->media_source_taxonomy = $media_source_taxonomy;
 		$this->context               = $context;
-		$this->types                 = $types;
 	}
 
 	/**
 	 * Initializes all hooks.
 	 *
 	 * @since 1.2.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		// See https://github.com/Automattic/jetpack/blob/4b85be883b3c584c64eeb2fb0f3fcc15dabe2d30/modules/custom-post-types/portfolios.php#L80.
@@ -177,19 +165,7 @@ class Jetpack extends Service_Base {
 		}
 
 		if ( \in_array( self::VIDEOPRESS_MIME_TYPE, $args['post_mime_type'], true ) ) {
-			$allowed_mime_types = $this->types->get_allowed_mime_types();
-			$allowed_mime_types = array_merge( ...array_values( $allowed_mime_types ) );
-
-			if ( ! array_diff( $allowed_mime_types, $args['post_mime_type'] ) ) {
-				// Load filter at 15, so it load after Media\Media\wp_prepare_attachment_for_js which is loaded at 10.
-				add_filter( 'wp_prepare_attachment_for_js', [ $this, 'filter_admin_ajax_response' ], 15, 2 );
-			}
-
-			$allowed_mime_types_transcodable = array_merge( $allowed_mime_types, $this->types->get_allowed_transcodable_mime_types() );
-			if ( ! array_diff( $allowed_mime_types_transcodable, $args['post_mime_type'] ) ) {
-				// Load filter at 15, so it load after Media\Media\wp_prepare_attachment_for_js which is loaded at 10.
-				add_filter( 'wp_prepare_attachment_for_js', [ $this, 'filter_admin_ajax_response' ], 15, 2 );
-			}
+			add_filter( 'wp_prepare_attachment_for_js', [ $this, 'filter_admin_ajax_response' ], 15, 2 );
 		}
 
 		return $args;
@@ -262,7 +238,6 @@ class Jetpack extends Service_Base {
 	 *
 	 * @param WP_REST_Response $response The response object.
 	 * @param WP_Post          $post     The original attachment post.
-	 * @return WP_REST_Response
 	 */
 	public function filter_rest_api_response( WP_REST_Response $response, WP_Post $post ): WP_REST_Response {
 		if ( self::VIDEOPRESS_MIME_TYPE !== $post->post_mime_type ) {
@@ -319,7 +294,6 @@ class Jetpack extends Service_Base {
 	 * @since 1.7.2
 	 *
 	 * @param int $milliseconds Milliseconds to converted to minutes and seconds.
-	 * @return string
 	 */
 	protected function format_milliseconds( $milliseconds ): string {
 		$seconds = floor( $milliseconds / 1000 );
@@ -343,7 +317,6 @@ class Jetpack extends Service_Base {
 	 * @param int    $mid         The meta ID after successful update.
 	 * @param int    $object_id   ID of the object metadata is for.
 	 * @param string $meta_key    Metadata key.
-	 * @return void
 	 */
 	public function add_term( $mid, $object_id, $meta_key ): void {
 		if ( self::VIDEOPRESS_POSTER_META_KEY !== $meta_key ) {

@@ -19,4 +19,5 @@ export {
   useRegisterCheck,
   useIsChecklistEmpty,
   useCategoryCount,
+  useHasChecklist,
 } from './checkCountContext';

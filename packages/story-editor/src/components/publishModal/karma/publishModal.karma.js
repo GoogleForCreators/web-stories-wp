@@ -23,6 +23,7 @@ import { within } from '@testing-library/react';
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
+import { useStory } from '../../../app/story';
 
 describe('Publish Story Modal', () => {
   let fixture;
@@ -63,24 +64,6 @@ describe('Publish Story Modal', () => {
   });
 
   describe('Functionality', () => {
-    it('should only allow publish of a Story when both title and description are not empty', async () => {
-      let publishButton = await getPublishModalElement('button', 'Publish');
-      expect(typeof publishButton.getAttribute('disabled')).toBe('string');
-
-      const storyTitle = await getPublishModalElement('textbox', 'Story Title');
-      await fixture.events.focus(storyTitle);
-      await fixture.events.keyboard.type('my test story');
-      const storyDescription = await getPublishModalElement(
-        'textbox',
-        'Story Description'
-      );
-      await fixture.events.focus(storyDescription);
-      await fixture.events.keyboard.type('my test description for my story');
-
-      publishButton = await getPublishModalElement('button', 'Publish');
-      expect(publishButton.getAttribute('disabled')).toBeNull();
-    });
-
     it('should close publish modal and open the checklist when checklist button is clicked', async () => {
       const checklistButton = await getPublishModalElement(
         'button',
@@ -97,6 +80,67 @@ describe('Publish Story Modal', () => {
         fixture.editor.checklist.issues.getAttribute('data-isexpanded')
       ).toBe('true');
     });
+
+    it('should not update story permalink when title is updated if permalink already exists', async () => {
+      // Give story initial title
+      const storyTitle = await getPublishModalElement('textbox', 'Story Title');
+      await fixture.events.focus(storyTitle);
+      await fixture.events.keyboard.type('Stews for long journeys');
+      await fixture.events.keyboard.press('tab');
+
+      const storySlug = await getPublishModalElement('textbox', 'URL slug');
+      // that initial title should give us an initial slug
+      expect(storySlug.getAttribute('value')).toBe('stews-for-long-journeys');
+
+      await fixture.events.focus(storySlug);
+      await fixture.events.keyboard.type(
+        "bilbo's favorite 30 minute rabbit stew"
+      );
+      await fixture.events.keyboard.press('tab');
+      // now we've updated the slug independent of title
+      expect(storySlug.getAttribute('value')).toBe(
+        'bilbos-favorite-30-minute-rabbit-stew'
+      );
+
+      // Update the title
+      await fixture.events.focus(storyTitle);
+      await fixture.events.keyboard.type('Travel Stews With Bilbo');
+      await fixture.events.keyboard.press('tab');
+
+      // slug should remain as it was
+      expect(storySlug.getAttribute('value')).toBe(
+        'bilbos-favorite-30-minute-rabbit-stew'
+      );
+    });
+
+    it('should toggle from auto page advancement by default to manual', async () => {
+      const manualInput = await getPublishModalElement('radio', 'Manual');
+      const autoInput = await getPublishModalElement('radio', 'Auto');
+
+      await fixture.events.click(manualInput.closest('label'));
+
+      expect(typeof autoInput.getAttribute('checked')).toBe('string');
+      expect(manualInput.getAttribute('checked')).toBeNull();
+    });
+
+    it('should update the featured media', async () => {
+      const originalPoster = fixture.renderHook(() =>
+        useStory(({ state }) => state.story.featuredMedia)
+      );
+
+      const posterImageButton = await getPublishModalElement(
+        'button',
+        'Poster image'
+      );
+
+      await fixture.events.click(posterImageButton);
+
+      const newPoster = fixture.renderHook(() =>
+        useStory(({ state }) => state.story.featuredMedia)
+      );
+
+      expect(originalPoster).not.toEqual(newPoster);
+    });
   });
 
   describe('Keyboard navigation', () => {
@@ -107,6 +151,19 @@ describe('Publish Story Modal', () => {
 
       const closeButton = await getPublishModalElement('button', 'Close');
       expect(closeButton).toHaveFocus();
+
+      await fixture.events.keyboard.press('tab');
+
+      const publishButton = await getPublishModalElement('button', 'Publish');
+      expect(publishButton).toHaveFocus();
+
+      await fixture.events.keyboard.press('tab');
+
+      const updatePosterImageButton = await getPublishModalElement(
+        'button',
+        'Poster image'
+      );
+      expect(updatePosterImageButton).toHaveFocus();
 
       await fixture.events.keyboard.press('tab');
 

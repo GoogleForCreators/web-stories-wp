@@ -27,18 +27,18 @@ import {
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
 import { v4 as uuidv4 } from 'uuid';
-
-/**
- * Internal dependencies
- */
 import {
   Text,
   THEME_CONSTANTS,
   Toggle,
 } from '@googleforcreators/design-system';
+
+/**
+ * Internal dependencies
+ */
+import { usePageCanvas } from '../../../../app/pageCanvas';
 import { Container as SectionContainer } from '../../common/section';
 import { Pane as SharedPane } from '../shared';
-import usePageAsCanvas from '../../../../utils/usePageAsCanvas';
 import useLibrary from '../../useLibrary';
 import Tooltip from '../../../tooltip';
 import FontPreview from './fontPreview';
@@ -46,6 +46,7 @@ import paneId from './paneId';
 import { PRESETS } from './textPresets';
 import useInsertPreset from './useInsertPreset';
 import TextSetsPane from './textSets/textSetsPane';
+import PresetPanel from './stylePresets/stylePresets';
 
 // Relative position needed for Moveable to update its position properly.
 const Pane = styled(SharedPane)`
@@ -84,7 +85,9 @@ function TextPane(props) {
   const { getPosition, insertPreset } = useInsertPreset({
     shouldUseSmartColor,
   });
-  const { generateCanvasFromPage } = usePageAsCanvas();
+  const generateDeferredCurrentPageCanvas = usePageCanvas(
+    ({ actions }) => actions.generateDeferredCurrentPageCanvas
+  );
 
   useResizeEffect(
     paneRef,
@@ -124,20 +127,24 @@ function TextPane(props) {
         </Tooltip>
       </SmartColorToggle>
       <SectionContainer
-        onPointerOver={() => shouldUseSmartColor && generateCanvasFromPage()}
+        onPointerOver={() =>
+          shouldUseSmartColor && generateDeferredCurrentPageCanvas()
+        }
       >
         <GridContainer>
-          {PRESETS.map(({ title, element }) => (
+          {PRESETS.map(({ title, element }, index) => (
             <FontPreview
               key={title}
               title={title}
               element={element}
               insertPreset={insertPreset}
               getPosition={getPosition}
+              index={index}
             />
           ))}
         </GridContainer>
       </SectionContainer>
+      <PresetPanel />
       {paneRef.current && <TextSetsPane paneRef={paneRef} />}
     </Pane>
   );

@@ -29,21 +29,15 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import Library from '../library';
 import Workspace from '../workspace';
-import {
-  CANVAS_MIN_WIDTH,
-  LIBRARY_MIN_WIDTH,
-  LIBRARY_MAX_WIDTH,
-  INSPECTOR_MIN_WIDTH,
-  INSPECTOR_MAX_WIDTH,
-} from '../../constants';
+import { CANVAS_MIN_WIDTH, INSPECTOR_WIDTH } from '../../constants';
 import { CanvasProvider } from '../../app/canvas';
 import { HighlightsProvider } from '../../app/highlights';
 import LayoutProvider from '../../app/layout/layoutProvider';
 import { ChecklistCheckpointProvider } from '../checklist';
 import { RightClickMenuProvider } from '../../app/rightClickMenu';
 import RightClickMenu from '../canvas/rightClickMenu';
+import InspectorProvider from '../inspector/inspectorProvider';
 
 const Editor = withOverlay(styled.section.attrs({
   'aria-label': __('Web Stories Editor', 'web-stories'),
@@ -54,24 +48,16 @@ const Editor = withOverlay(styled.section.attrs({
   background-color: ${({ theme }) => theme.colors.bg.primary};
 
   position: relative;
+  max-height: 100vh;
   height: 100%;
   width: 100%;
-
   display: grid;
   grid:
-    'lib   canv        insp' 1fr
-    'lib   supplementary insp' auto /
-    minmax(${LIBRARY_MIN_WIDTH}px, ${LIBRARY_MAX_WIDTH}px)
-    minmax(${CANVAS_MIN_WIDTH}px, 1fr)
-    minmax(${INSPECTOR_MIN_WIDTH}px, ${INSPECTOR_MAX_WIDTH}px);
+    'insp   canv          ' 1fr
+    'insp   supplementary ' auto /
+    ${INSPECTOR_WIDTH}px
+    minmax(${CANVAS_MIN_WIDTH}px, 1fr);
 `);
-
-const Area = styled.div`
-  grid-area: ${({ area }) => area};
-  position: relative;
-  overflow: hidden;
-  z-index: 2;
-`;
 
 function Layout({ header, footer = {}, inspectorTabs, children }) {
   const snackbarState = useSnackbar(
@@ -87,22 +73,17 @@ function Layout({ header, footer = {}, inspectorTabs, children }) {
       <LayoutProvider>
         <ChecklistCheckpointProvider>
           <HighlightsProvider>
-            <Editor zIndex={3}>
-              <CanvasProvider>
-                <RightClickMenuProvider>
-                  <Area area="lib">
-                    <Library />
-                  </Area>
-                  <Workspace
-                    header={header}
-                    inspectorTabs={inspectorTabs}
-                    footer={footer}
-                  />
-                  <RightClickMenu />
-                </RightClickMenuProvider>
-              </CanvasProvider>
-              {children}
-            </Editor>
+            <InspectorProvider inspectorTabs={inspectorTabs}>
+              <Editor zIndex={3}>
+                <CanvasProvider>
+                  <RightClickMenuProvider>
+                    <Workspace header={header} footer={footer} />
+                    <RightClickMenu />
+                  </RightClickMenuProvider>
+                </CanvasProvider>
+                {children}
+              </Editor>
+            </InspectorProvider>
           </HighlightsProvider>
         </ChecklistCheckpointProvider>
       </LayoutProvider>

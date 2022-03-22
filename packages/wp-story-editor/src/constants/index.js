@@ -15,3 +15,4 @@
  */
 export * from './tips';
 export * from './wpAdmin.js';
+export * from './status.js';

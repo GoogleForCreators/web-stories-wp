@@ -114,7 +114,7 @@ function MediaCaptionsLayer() {
           {Array.from({ length: mediaTrackCount }).map((_, index) => (
             <TrackRenderer
               key={
-                // eslint-disable-next-line react/no-array-index-key
+                // eslint-disable-next-line react/no-array-index-key -- Order should never change.
                 index
               }
               elementId={mediaElementId}

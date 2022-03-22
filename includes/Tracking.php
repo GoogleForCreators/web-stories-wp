@@ -116,8 +116,6 @@ class Tracking extends Service_Base {
 	 * Registers the setting in WordPress.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		// By not passing an actual script src we can print only the inline script.
@@ -177,9 +175,17 @@ class Tracking extends Service_Base {
 		$role        = ! empty( wp_get_current_user()->roles ) ? wp_get_current_user()->roles[0] : '';
 		$experiments = implode( ',', $this->experiments->get_enabled_experiments() );
 
+		$active_plugins = [];
+
+		if ( class_exists( 'woocommerce' ) ) {
+			$active_plugins[] = 'woocommerce';
+		}
+
 		$site_kit_status = $this->site_kit->get_plugin_status();
-		$active_plugins  = $site_kit_status['active'] ? 'google-site-kit' : '';
 		$analytics       = $site_kit_status['analyticsActive'] ? 'google-site-kit' : ! empty( $this->settings->get_setting( $this->settings::SETTING_NAME_TRACKING_ID ) );
+		if ( $site_kit_status['active'] ) {
+			$active_plugins[] = 'google-site-kit';
+		}
 
 		/**
 		 * Ad network type.
@@ -196,9 +202,10 @@ class Tracking extends Service_Base {
 			'wpVersion'          => get_bloginfo( 'version' ),
 			'phpVersion'         => PHP_VERSION,
 			'isMultisite'        => (int) is_multisite(),
+			'serverEnvironment'  => wp_get_environment_type(),
 			'adNetwork'          => $ad_network,
 			'analytics'          => $analytics,
-			'activePlugins'      => $active_plugins,
+			'activePlugins'      => implode( ',', $active_plugins ),
 		];
 	}
 

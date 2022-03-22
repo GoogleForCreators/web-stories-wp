@@ -31,21 +31,27 @@ import './setLocaleData';
  * External dependencies
  */
 import { Dashboard } from '@googleforcreators/dashboard';
-import { domReady, setAppElement } from '@googleforcreators/design-system';
+import { setAppElement } from '@googleforcreators/design-system';
 import { StrictMode, render } from '@googleforcreators/react';
 import { updateSettings } from '@googleforcreators/date';
 import { initializeTracking } from '@googleforcreators/tracking';
+import { bindToCallbacks } from '@web-stories-wp/wp-utils';
+import { __ } from '@googleforcreators/i18n';
+
+/**
+ * WordPress dependencies
+ */
+import '@wordpress/dom-ready'; // Just imported here so it's part of the bundle. Usage is in inline scripts.
 
 /**
  * Internal dependencies
  */
-import getApiCallbacks from './api/utils/getApiCallbacks';
+import * as apiCallbacks from './api';
 import { GlobalStyle } from './theme';
 import { LEFT_RAIL_SECONDARY_NAVIGATION, TOOLBAR_HEIGHT } from './constants';
 import { Layout } from './components';
 
 window.webStories = window.webStories || {};
-window.webStories.domReady = domReady;
 
 /**
  * Initializes the Web Stories dashboard screen.
@@ -66,8 +72,9 @@ window.webStories.initializeStoryDashboard = (id, config) => {
 
   const dashboardConfig = {
     ...config,
-    apiCallbacks: getApiCallbacks(config),
+    apiCallbacks: bindToCallbacks(apiCallbacks, config),
     leftRailSecondaryNavigation: LEFT_RAIL_SECONDARY_NAVIGATION,
+    documentTitleSuffix: __('Web Stories \u2212 WordPress', 'web-stories'),
     styleConstants: {
       topOffset: TOOLBAR_HEIGHT,
     },

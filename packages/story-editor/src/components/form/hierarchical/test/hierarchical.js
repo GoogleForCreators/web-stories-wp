@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
+// eslint-disable-next-line import/no-internal-modules -- Importing testUtils is OK.
 import { renderWithProviders } from '@googleforcreators/design-system/src/testUtils';
 
 /**

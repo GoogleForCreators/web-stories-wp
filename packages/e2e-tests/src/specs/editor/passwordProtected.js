@@ -32,7 +32,10 @@ describe('Password protected stories', () => {
     await addTextElement();
 
     await expect(page).toClick('li[role="tab"]', { text: 'Document' });
-    await expect(page).toClick('label', { text: 'Password Protected' });
+    await expect(page).toClick('button', { text: 'Public' });
+    await expect(page).toClick('li[role="option"]', {
+      text: /^Password Protected/,
+    });
 
     await expect(page).toMatchElement('input[placeholder="Enter a password"]');
     await page.type('input[placeholder="Enter a password"]', 'password');

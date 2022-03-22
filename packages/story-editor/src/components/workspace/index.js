@@ -30,7 +30,7 @@ import ErrorBoundary from '../errorBoundary';
 import { useCanvas } from '../../app';
 import { CanvasArea, InspectorArea } from './layout';
 
-function Workspace({ header, footer, inspectorTabs }) {
+function Workspace({ header, footer }) {
   const { editingElementState } = useCanvas((state) => ({
     editingElementState: state.state.editingElementState,
   }));
@@ -38,16 +38,16 @@ function Workspace({ header, footer, inspectorTabs }) {
   return (
     <VideoTrimProvider>
       <RichTextProvider editingState={editingElementState}>
+        <InspectorArea>
+          <ErrorBoundary>
+            <Inspector />
+          </ErrorBoundary>
+        </InspectorArea>
         <CanvasArea>
           <ErrorBoundary>
             <Canvas header={header} footer={footer} />
           </ErrorBoundary>
         </CanvasArea>
-        <InspectorArea>
-          <ErrorBoundary>
-            <Inspector inspectorTabs={inspectorTabs} />
-          </ErrorBoundary>
-        </InspectorArea>
       </RichTextProvider>
     </VideoTrimProvider>
   );
@@ -56,7 +56,6 @@ function Workspace({ header, footer, inspectorTabs }) {
 Workspace.propTypes = {
   header: PropTypes.node,
   footer: PropTypes.object,
-  inspectorTabs: PropTypes.object,
 };
 
 export default Workspace;

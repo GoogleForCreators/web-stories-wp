@@ -20,6 +20,8 @@
 jest.mock('flagged');
 import { useFeature } from 'flagged';
 import { renderToStaticMarkup } from '@googleforcreators/react';
+import { registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
@@ -35,6 +37,8 @@ describe('Story output', () => {
 
       return config[feature];
     });
+
+    elementTypes.forEach(registerElementType);
   });
 
   it('should include Google Fonts stylesheet', () => {

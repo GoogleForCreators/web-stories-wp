@@ -111,8 +111,6 @@ class Customizer extends Service_Base implements Conditional {
 	 * Initializes the customizer logic.
 	 *
 	 * @since 1.5.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		add_action( 'customize_register', [ $this, 'register_customizer_settings' ] );
@@ -139,7 +137,6 @@ class Customizer extends Service_Base implements Conditional {
 	 * @since 1.5.0
 	 *
 	 * @param WP_Customize_Manager $wp_customize WP_Customize_Manager instance.
-	 * @return void
 	 */
 	public function register_customizer_settings( WP_Customize_Manager $wp_customize ): void {
 		$this->wp_customize = $wp_customize;
@@ -537,7 +534,6 @@ class Customizer extends Service_Base implements Conditional {
 	 *
 	 * @param WP_Error $validity WP_Error object.
 	 * @param int      $value    Value to be validated.
-	 * @return WP_Error
 	 */
 	public function validate_number_of_stories( $validity, $value ): WP_Error {
 		$value = (int) $value;
@@ -555,7 +551,6 @@ class Customizer extends Service_Base implements Conditional {
 	 *
 	 * @param WP_Error $validity WP_Error object.
 	 * @param int      $value Value to be validated.
-	 * @return WP_Error
 	 */
 	public function validate_number_of_columns( $validity, $value ): WP_Error {
 		$value = (int) $value;
@@ -573,8 +568,6 @@ class Customizer extends Service_Base implements Conditional {
 	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
 	 *
 	 * @since 1.5.0
-	 *
-	 * @return string
 	 */
 	public function render_stories(): string {
 		$options = (array) $this->settings->get_setting( self::STORY_OPTION );

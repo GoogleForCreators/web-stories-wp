@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import * as React from 'react';
+
 import {
   act,
   configure,
@@ -25,7 +25,7 @@ import {
   screen,
   waitFor,
 } from '@testing-library/react';
-import { setAppElement, noop } from '@googleforcreators/design-system';
+import { setAppElement } from '@googleforcreators/design-system';
 import {
   FixtureEvents,
   ComponentStub,
@@ -39,7 +39,10 @@ import Dashboard from '../dashboard';
 import ApiProvider from '../app/api/apiProvider';
 import { AppFrame } from '../components';
 import InterfaceSkeleton from '../components/interfaceSkeleton';
+import { noop } from '../utils';
 import ApiProviderFixture from './apiProviderFixture';
+
+const React = require('react');
 
 if ('true' === WEB_STORIES_CI) {
   configure({

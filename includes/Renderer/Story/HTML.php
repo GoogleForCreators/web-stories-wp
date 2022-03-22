@@ -181,8 +181,8 @@ class HTML {
 		$end_tag   = '<meta name="web-stories-replace-head-end"/>';
 
 		// Replace malformed meta tags with correct tags.
-		$content = (string) preg_replace( '/<meta name="web-stories-replace-head-start\s?"\s?\/>/i', $start_tag, $content );
-		$content = (string) preg_replace( '/<meta name="web-stories-replace-head-end\s?"\s?\/>/i', $end_tag, $content );
+		$content = (string) preg_replace( '/<meta name="web-stories-replace-head-start\s?"\s?\/?>/i', $start_tag, $content );
+		$content = (string) preg_replace( '/<meta name="web-stories-replace-head-end\s?"\s?\/?>/i', $end_tag, $content );
 
 		$start_tag_pos = strpos( $content, $start_tag );
 		$end_tag_pos   = strpos( $content, $end_tag );
@@ -201,7 +201,6 @@ class HTML {
 	 * @since 1.1.0
 	 *
 	 * @param string $content String to replace.
-	 * @return string
 	 */
 	protected function replace_url_scheme( string $content ): string {
 		if ( is_ssl() ) {
@@ -220,7 +219,6 @@ class HTML {
 	 * @since 1.2.0
 	 *
 	 * @param string $content String to replace.
-	 * @return string
 	 */
 	protected function print_analytics( string $content ): string {
 		ob_start();
@@ -245,7 +243,6 @@ class HTML {
 	 * @since 1.6.0
 	 *
 	 * @param string $content String to replace.
-	 * @return string
 	 */
 	protected function print_social_share( string $content ): string {
 		$share_providers = [

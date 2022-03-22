@@ -26,11 +26,11 @@ import APIContext from '../../../../../app/api/context';
 import ConfigContext from '../../../../../app/config/context';
 import StoryContext from '../../../../../app/story/context';
 import CanvasContext from '../../../../../app/canvas/context';
-import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
 import LinkPanel from '../link';
+import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 
-jest.mock('../../../../../elements');
+jest.mock('@googleforcreators/element-library');
 
 function MediaUpload({ render }) {
   const open = jest.fn();
@@ -42,13 +42,19 @@ function arrange(selectedElements) {
     capabilities: {
       hasUploadMediaAction: true,
     },
-    allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
-    allowedImageMimeTypes: [
-      'image/png',
-      'image/jpeg',
-      'image/jpg',
-      'image/gif',
-    ],
+    allowedMimeTypes: {
+      audio: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
+      image: [
+        'image/png',
+        'image/jpeg',
+        'image/jpg',
+        'image/gif',
+        'image/webp',
+      ],
+      caption: ['text/vtt'],
+      vector: [],
+      video: ['video/mp4', 'video/webm'],
+    },
     MediaUpload,
   };
 

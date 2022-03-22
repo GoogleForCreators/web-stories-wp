@@ -62,8 +62,7 @@ describe('cleanForSlug', () => {
     expect(result).toBe('hello-world');
   });
 
-  // Disable reason: not implemented yet.
-  // eslint-disable-next-line jest/no-disabled-tests
+  // eslint-disable-next-line jest/no-disabled-tests -- not implemented yet.
   it.skip('should replace umlauts if locale is de-*', () => {
     expect(cleanForSlug('Übergrössengeschäft')).toBe('uebergroessengeschaeft');
   });

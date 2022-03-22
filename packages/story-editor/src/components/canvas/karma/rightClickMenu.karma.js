@@ -17,13 +17,13 @@
  * External dependencies
  */
 import { waitFor, within } from '@testing-library/react';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
-import { ATTRIBUTES_TO_COPY } from '../../../app/story/useStoryReducer/reducers/copyElementById';
+import { ATTRIBUTES_TO_COPY } from '../../../app/story/useStoryReducer/reducers/copySelectedElement';
 import { Fixture } from '../../../karma';
 import objectPick from '../../../utils/objectPick';
 import useInsertElement from '../useInsertElement';
@@ -36,6 +36,7 @@ describe('Right Click Menu integration', () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
+    await fixture.events.click(fixture.editor.footer.layerPanel.togglePanel);
 
     insertElement = await fixture.renderHook(() => useInsertElement());
 
@@ -414,18 +415,16 @@ describe('Right Click Menu integration', () => {
     it('right clicking a layer in the layer panel should open the custom right click menu', async () => {
       await addEarthImage();
 
-      await fixture.events.click(
-        fixture.editor.inspector.designPanel.layerPanel.layers[0],
-        {
-          button: 'right',
-        }
-      );
+      await fixture.events.click(fixture.editor.footer.layerPanel.layers[0], {
+        button: 'right',
+      });
 
       expect(rightClickMenu()).not.toBeNull();
     });
 
     it('should open and close the context menu using keyboard shortcuts', async () => {
       // add an element to the page
+      await fixture.events.click(fixture.editor.inspector.insertTab);
       await fixture.editor.library.textTab.click();
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
@@ -464,7 +463,10 @@ describe('Right Click Menu integration', () => {
   describe('Right click menu: Select Layer', () => {
     it('should allow selecting a layer from the point where the menu was opened from', async () => {
       // Add a Triangle and an image to the same place.
-      await fixture.events.click(fixture.editor.library.media.item(0));
+      await fixture.events.click(fixture.editor.inspector.insertTab);
+      await fixture.events.sleep(100);
+      const mediaItem = fixture.editor.library.media.item(0);
+      await fixture.events.mouse.clickOn(mediaItem, 20, 20);
       await fixture.events.click(fixture.editor.library.shapesTab);
       await fixture.events.click(
         fixture.editor.library.shapes.shape('Triangle')
@@ -500,12 +502,9 @@ describe('Right Click Menu integration', () => {
     it('should not display the option to select layer when opening from the layer panel', async () => {
       await addEarthImage();
 
-      await fixture.events.click(
-        fixture.editor.inspector.designPanel.layerPanel.layers[0],
-        {
-          button: 'right',
-        }
-      );
+      await fixture.events.click(fixture.editor.footer.layerPanel.layers[0], {
+        button: 'right',
+      });
 
       expect(() => selectLayerButton()).toThrow();
     });
@@ -759,18 +758,16 @@ describe('Right Click Menu integration', () => {
       );
 
       // verify multiple layers
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers.length
-      ).toBe(4);
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers[2].textContent
-      ).toContain('Earth');
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers[1].textContent
-      ).toContain('beach');
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers[0].textContent
-      ).toContain('Ranger');
+      expect(fixture.editor.footer.layerPanel.layers.length).toBe(4);
+      expect(fixture.editor.footer.layerPanel.layers[2].textContent).toContain(
+        'Earth'
+      );
+      expect(fixture.editor.footer.layerPanel.layers[1].textContent).toContain(
+        'beach'
+      );
+      expect(fixture.editor.footer.layerPanel.layers[0].textContent).toContain(
+        'Ranger'
+      );
 
       // More than one layer so some movement buttons will be enabled
       expect(sendBackward().disabled).toBeFalse();
@@ -782,15 +779,15 @@ describe('Right Click Menu integration', () => {
       await fixture.events.click(sendBackward());
 
       // verify new layer order
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers[2].textContent
-      ).toContain('Earth');
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers[1].textContent
-      ).toContain('Ranger');
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers[0].textContent
-      ).toContain('beach');
+      expect(fixture.editor.footer.layerPanel.layers[2].textContent).toContain(
+        'Earth'
+      );
+      expect(fixture.editor.footer.layerPanel.layers[1].textContent).toContain(
+        'Ranger'
+      );
+      expect(fixture.editor.footer.layerPanel.layers[0].textContent).toContain(
+        'beach'
+      );
 
       // right click image
       await rightClickOnTarget(
@@ -807,15 +804,15 @@ describe('Right Click Menu integration', () => {
       // Move image with 'Bring forward' button
       await fixture.events.click(bringForward());
 
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers[2].textContent
-      ).toContain('Earth');
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers[1].textContent
-      ).toContain('beach');
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers[0].textContent
-      ).toContain('Ranger');
+      expect(fixture.editor.footer.layerPanel.layers[2].textContent).toContain(
+        'Earth'
+      );
+      expect(fixture.editor.footer.layerPanel.layers[1].textContent).toContain(
+        'beach'
+      );
+      expect(fixture.editor.footer.layerPanel.layers[0].textContent).toContain(
+        'Ranger'
+      );
 
       // Move image all the way to back
       await rightClickOnTarget(
@@ -827,15 +824,15 @@ describe('Right Click Menu integration', () => {
       await rightClickOnTarget(
         fixture.editor.canvas.framesLayer.frame(rangerImage.id).node
       );
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers[2].textContent
-      ).toContain('Ranger');
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers[1].textContent
-      ).toContain('Earth');
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers[0].textContent
-      ).toContain('beach');
+      expect(fixture.editor.footer.layerPanel.layers[2].textContent).toContain(
+        'Ranger'
+      );
+      expect(fixture.editor.footer.layerPanel.layers[1].textContent).toContain(
+        'Earth'
+      );
+      expect(fixture.editor.footer.layerPanel.layers[0].textContent).toContain(
+        'beach'
+      );
 
       // verify 'back' buttons are disabled since ranger image is under everything
       // except the background
@@ -848,15 +845,15 @@ describe('Right Click Menu integration', () => {
       await fixture.events.click(bringToFront());
 
       // verify positioning
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers[2].textContent
-      ).toContain('Earth');
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers[1].textContent
-      ).toContain('beach');
-      expect(
-        fixture.editor.inspector.designPanel.layerPanel.layers[0].textContent
-      ).toContain('Ranger');
+      expect(fixture.editor.footer.layerPanel.layers[2].textContent).toContain(
+        'Earth'
+      );
+      expect(fixture.editor.footer.layerPanel.layers[1].textContent).toContain(
+        'beach'
+      );
+      expect(fixture.editor.footer.layerPanel.layers[0].textContent).toContain(
+        'Ranger'
+      );
 
       // verify 'forward' buttons are disabled since ranger image is under everything
       // except the background

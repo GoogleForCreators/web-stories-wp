@@ -115,8 +115,8 @@ class ApiFetcher {
     pageSize = null,
     pageToken = null,
   } = {}) {
-    validateListMediaOrderBy(orderBy);
-    validatePageSize(pageSize);
+    await validateListMediaOrderBy(orderBy);
+    await validatePageSize(pageSize);
 
     const params = new URLSearchParams(
       [
@@ -128,8 +128,7 @@ class ApiFetcher {
       ].filter((entry) => Boolean(entry[1]))
     );
 
-    // eslint-disable-next-line no-return-await
-    return await this.fetchPath({ params, path: Paths.LIST_MEDIA });
+    return this.fetchPath({ params, path: Paths.LIST_MEDIA });
   }
 
   /**
@@ -154,8 +153,8 @@ class ApiFetcher {
     orderBy = null,
     pageSize = null,
   } = {}) {
-    validateCategoriesOrderBy(orderBy);
-    validatePageSize(pageSize);
+    await validateCategoriesOrderBy(orderBy);
+    await validatePageSize(pageSize);
 
     const params = new URLSearchParams(
       [
@@ -165,8 +164,7 @@ class ApiFetcher {
       ].filter((entry) => Boolean(entry[1]))
     );
 
-    // eslint-disable-next-line no-return-await
-    return await this.fetchPath({
+    return this.fetchPath({
       params,
       path: Paths.LIST_CATEGORIES,
     });
@@ -179,16 +177,15 @@ class ApiFetcher {
    *
    * @param {Object} obj - An object with the options for the request.
    * @param {string} obj.registerUsageUrl Url to call to register media usage.
-   * @return {Promise<undefined>} The response from the API.
+   * @return {Promise<void>} The response from the API.
    */
   async registerUsage({ registerUsageUrl }) {
-    validateRegisterUsageUrl(registerUsageUrl);
+    await validateRegisterUsageUrl(registerUsageUrl);
 
-    // eslint-disable-next-line no-return-await
-    return await this.fetchUrl({
+    await this.fetchUrl({
       url: new URL(registerUsageUrl),
       method: 'POST',
-    }).then(() => undefined);
+    });
   }
 
   /**
@@ -200,13 +197,13 @@ class ApiFetcher {
    * @param {?string} obj.method A string to set request's method.
    * @return {Promise<Object>} The response from the API.
    */
-  async fetchPath({ path, params, method }) {
+  fetchPath({ path, params, method }) {
     const url = new URL(API_DOMAIN + path);
     params.forEach((value, key) => {
       url.searchParams.append(key, value);
     });
-    // eslint-disable-next-line no-return-await
-    return await this.fetchUrl({ url, method });
+
+    return this.fetchUrl({ url, method });
   }
 
   /**

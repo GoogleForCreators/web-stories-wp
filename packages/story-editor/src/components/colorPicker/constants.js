@@ -19,8 +19,8 @@
  */
 import { createSolidFromString } from '@googleforcreators/patterns';
 
-export const LINE_LENGTH = 154;
-export const LINE_WIDTH = 16;
+export const LINE_LENGTH = 112;
+export const LINE_WIDTH = 12;
 
 export const GRADIENT_STOP_SIZE = 14;
 

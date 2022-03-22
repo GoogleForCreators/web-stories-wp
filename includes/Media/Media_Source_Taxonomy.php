@@ -75,8 +75,6 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 * Init.
 	 *
 	 * @since 1.10.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		$this->register_taxonomy();
@@ -115,8 +113,6 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 * Registers additional REST API fields upon API initialization.
 	 *
 	 * @since 1.10.0
-	 *
-	 * @return void
 	 */
 	public function rest_api_init(): void {
 		// Custom field, as built in term update require term id and not slug.
@@ -168,7 +164,6 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 * @since 1.0.0
 	 *
 	 * @param array $prepared Prepared data before response.
-	 * @return string
 	 */
 	public function get_callback_media_source( $prepared ): string {
 		$id = $prepared['id'];
@@ -206,6 +201,8 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 * @return array  Tax query arg.
 	 */
 	private function get_exclude_tax_query( array $args ): array {
+		$tax_query = ! empty( $args['tax_query'] ) ? $args['tax_query'] : [];
+
 		/**
 		 * Filter whether generated attachments should be hidden in the media library.
 		 *
@@ -216,17 +213,8 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 		 */
 		$enabled = apply_filters( 'web_stories_hide_auto_generated_attachments', true, $args );
 		if ( true !== $enabled ) {
-			return $args;
+			return $tax_query;
 		}
-
-		$tax_query = [
-			[
-				'taxonomy' => $this->taxonomy_slug,
-				'field'    => 'slug',
-				'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
-				'operator' => 'NOT IN',
-			],
-		];
 
 		/**
 		 *  Merge with existing tax query if needed,
@@ -239,9 +227,17 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 		 *   [ [ any ], [ existing ], [ tax queries] ]
 		 * ]
 		 */
-		if ( ! empty( $args['tax_query'] ) ) {
-			$tax_query[] = $args['tax_query'];
-		}
+		array_unshift(
+			$tax_query,
+			[
+				[
+					'taxonomy' => $this->taxonomy_slug,
+					'field'    => 'slug',
+					'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
+					'operator' => 'NOT IN',
+				],
+			]
+		);
 
 		return $tax_query;
 	}
@@ -273,7 +269,6 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 * @since 1.10.0
 	 *
 	 * @param WP_Query $query WP_Query instance, passed by reference.
-	 * @return void
 	 */
 	public function filter_generated_media_attachments( &$query ): void {
 		if ( is_admin() && $query->is_main_query() && $this->context->is_upload_screen() ) {

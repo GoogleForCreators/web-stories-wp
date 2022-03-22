@@ -94,7 +94,10 @@ export function deriveUnreadTipsCount(previous, next) {
 }
 
 export function deriveAutoOpen(previous, next) {
-  if (WEB_STORIES_DISABLE_QUICK_TIPS === 'true') {
+  if (
+    typeof WEB_STORIES_DISABLE_QUICK_TIPS !== 'undefined' &&
+    WEB_STORIES_DISABLE_QUICK_TIPS === 'true'
+  ) {
     return {};
   }
   if (isInitialHydrate(previous, next)) {
@@ -107,7 +110,10 @@ export function deriveAutoOpen(previous, next) {
 // If there are any unread tips, we respect users last open setting.
 // If all tips are read, we want the popup closed regardless of user setting.
 export function deriveInitialOpen(persisted) {
-  if (WEB_STORIES_DISABLE_QUICK_TIPS === 'true') {
+  if (
+    typeof WEB_STORIES_DISABLE_QUICK_TIPS !== 'undefined' &&
+    WEB_STORIES_DISABLE_QUICK_TIPS === 'true'
+  ) {
     return {};
   }
   const hasUnreadTips = Boolean(persisted?.unreadTipsCount);

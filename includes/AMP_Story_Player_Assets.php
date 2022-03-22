@@ -44,8 +44,6 @@ class AMP_Story_Player_Assets implements Service, Registerable {
 	 * Runs on instantiation.
 	 *
 	 * @since 1.8.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		add_action( 'wp_default_styles', [ $this, 'register_style' ] );
@@ -58,7 +56,6 @@ class AMP_Story_Player_Assets implements Service, Registerable {
 	 * @since 1.8.0
 	 *
 	 * @param WP_Styles $wp_styles WP_Styles instance.
-	 * @return void
 	 */
 	public function register_style( WP_Styles $wp_styles ): void {
 		$wp_styles->add(
@@ -75,7 +72,6 @@ class AMP_Story_Player_Assets implements Service, Registerable {
 	 * @since 1.8.0
 	 *
 	 * @param WP_Scripts $wp_scripts WP_Scripts instance.
-	 * @return void
 	 */
 	public function register_script( WP_Scripts $wp_scripts ): void {
 		$wp_scripts->add(

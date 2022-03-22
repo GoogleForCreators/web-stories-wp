@@ -38,14 +38,15 @@ const INITIAL_STATE = {
   [ISSUE_TYPES.DESIGN]: {},
   [ISSUE_TYPES.ACCESSIBILITY]: {},
 };
-function ChecklistCountProvider({ children }) {
-  const value = useState(INITIAL_STATE);
+function ChecklistCountProvider({ hasChecklist, children }) {
+  const value = useState({ ...INITIAL_STATE, hasChecklist });
   return (
     <CountContext.Provider value={value}>{children}</CountContext.Provider>
   );
 }
 ChecklistCountProvider.propTypes = {
   children: PropTypes.node,
+  hasChecklist: PropTypes.bool,
 };
 
 function ChecklistCategoryProvider({ children, category }) {
@@ -116,10 +117,22 @@ function useCategoryCount(category) {
   ).length;
 }
 
+function useHasChecklist() {
+  const countContext = useContext(CountContext)?.[0];
+  if (!countContext) {
+    throw new Error(
+      'Cannot use `useHasChecklist` outside of `ChecklistCountProvider`'
+    );
+  }
+  const { hasChecklist } = countContext;
+  return hasChecklist;
+}
+
 export {
   ChecklistCountProvider,
   ChecklistCategoryProvider,
   useRegisterCheck,
   useIsChecklistEmpty,
   useCategoryCount,
+  useHasChecklist,
 };

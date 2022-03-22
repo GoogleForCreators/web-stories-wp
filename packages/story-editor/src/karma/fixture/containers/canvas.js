@@ -19,6 +19,7 @@
  */
 import { Container } from './container';
 import { QuickActionMenu } from './quickActionMenu';
+import { DesignMenu } from './designMenu';
 
 /**
  * The editor's canvas. Includes: display, frames, editor layers,
@@ -74,6 +75,14 @@ export class Canvas extends Container {
       this.getByRole('group', { name: 'Page actions' }),
       'pageActions',
       PageActions
+    );
+  }
+
+  get designMenu() {
+    return this._get(
+      this.getByRole('region', { name: 'Design menu' }),
+      'designMenu',
+      DesignMenu
     );
   }
 }

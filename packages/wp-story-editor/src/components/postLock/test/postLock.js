@@ -192,8 +192,7 @@ describe('PostLock', () => {
     expect(takeOverButton).not.toBeInTheDocument();
   });
 
-  // TODO: Investigate issues with timer in test.
-  // eslint-disable-next-line jest/no-disabled-tests
+  // eslint-disable-next-line jest/no-disabled-tests -- Investigate issues with timer in test.
   it.skip('should display dialog', async () => {
     jest.spyOn(window, 'setInterval');
 

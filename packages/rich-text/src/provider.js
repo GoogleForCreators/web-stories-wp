@@ -43,6 +43,13 @@ import customExport from './customExport';
 import useHandlePastedText from './useHandlePastedText';
 import useSelectionManipulation from './useSelectionManipulation';
 
+const INITIAL_SELECTION_INFO = {
+  isBold: false,
+  isItalic: false,
+  isUnderline: false,
+  isUppercase: false,
+};
+
 function RichTextProvider({ children, editingState }) {
   const [editorState, setEditorState] = useState(null);
   const lastKnownStyle = useRef(null);
@@ -51,12 +58,7 @@ function RichTextProvider({ children, editingState }) {
     if (editorState) {
       return getStateInfo(editorState);
     }
-    return {
-      isBold: false,
-      isItalic: false,
-      isUnderline: false,
-      isUppercase: false,
-    };
+    return INITIAL_SELECTION_INFO;
   }, [editorState]);
 
   const setStateFromContent = useCallback(

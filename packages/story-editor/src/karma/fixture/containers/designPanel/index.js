@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { getByLabelText } from '@testing-library/react';
-
-/**
  * Internal dependencies
  */
 import { Container } from '../container';
@@ -28,12 +23,12 @@ import { Animation } from './animationPanel';
 import { Filter } from './filter';
 import { Border } from './border';
 import { ColorPreset } from './colorPreset';
-import { Layers } from './layers';
 import { Link } from './link';
 import { PageBackground } from './pageBackground';
 import { SizePosition } from './sizePosition';
 import { TextStyle } from './textStyle';
 import { VideoPoster } from './videoPoster';
+import { VideoOptions } from './videoOptions';
 import { Captions } from './captions';
 import { ShapeStyle } from './shapeStyle';
 
@@ -120,8 +115,11 @@ export class DesignPanel extends Container {
   }
 
   get videoOptions() {
-    // @todo: implement
-    return null;
+    return this._get(
+      this.getByRole('region', { name: /Video settings/i }),
+      'videoOptions',
+      VideoOptions
+    );
   }
 
   get captions() {
@@ -145,16 +143,6 @@ export class DesignPanel extends Container {
       this.getByRole('region', { name: /^Page Background$/i }),
       'pageBackground',
       PageBackground
-    );
-  }
-
-  get layerPanel() {
-    // The whole panel is aria-hidden now for accessibility reasons
-    // thus it cannot be accessed by role:
-    return this._get(
-      getByLabelText(this._node, 'Layers'),
-      'layerPanel',
-      Layers
     );
   }
 }

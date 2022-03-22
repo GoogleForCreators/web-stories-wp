@@ -21,25 +21,74 @@ import { useCallback, useState } from '@googleforcreators/react';
  * Internal dependencies
  */
 import StoryContext from '../../../app/story/context';
-import { noop } from '../../../utils/noop';
-import { CheckpointContext } from '../../checklist';
+import { ConfigContext } from '../../../app/config';
+import {
+  ChecklistCountProvider,
+  CheckpointContext,
+  PPC_CHECKPOINT_STATE,
+} from '../../checklist';
+import InspectorContext from '../../inspector/context';
+import { PageAdvancementPanel, SlugPanel } from '../../panels/document';
 import PublishModal from '../publishModal';
 
+const MockDocumentPane = () => (
+  <>
+    <SlugPanel />
+    <PageAdvancementPanel />
+  </>
+);
 export default {
   title: 'Stories Editor/Components/Dialog/Publish Modal',
   args: {
+    canPublish: true,
+    hasChecklist: true,
+    hasFutureDate: false,
+    hasPublisherLogo: true,
+    hasFeaturedMedia: true,
+    hasUploadMediaAction: true,
+    hasPriorityIssues: true,
+    publishButtonDisabled: true,
+    publisher: 'Gotham Bugle',
     isOpen: true,
+    isSaving: false,
   },
   argTypes: {
     onPublish: { action: 'onPublish clicked' },
     onClose: { action: 'onClose clicked' },
+    onPublishDialogChecklistRequest: {
+      action: 'onPublishDialogChecklistRequest clicked',
+    },
+    checkpoint: {
+      options: Object.values(PPC_CHECKPOINT_STATE),
+      control: { type: 'select' },
+      name: "Checklist's given checkpoint",
+    },
+    storyStatus: {
+      options: ['publish', 'future', 'private', 'draft'],
+      control: { type: 'select' },
+      name: 'Status of Story',
+    },
   },
 };
 
 export const _default = (args) => {
+  const {
+    canPublish,
+    checkpoint,
+    isSaving,
+    hasChecklist,
+    hasUploadMediaAction,
+    hasFeaturedMedia,
+    hasPublisherLogo,
+    hasPriorityIssues,
+    onPublishDialogChecklistRequest,
+    publisher,
+    storyStatus,
+  } = args;
   const [inputValues, setInputValues] = useState({
     excerpt: '',
     title: '',
+    link: 'http://sample.com/post_type=web-story&p=274',
   });
 
   const handleUpdateStory = useCallback(({ properties }) => {
@@ -49,23 +98,78 @@ export const _default = (args) => {
     }));
   }, []);
   return (
-    <StoryContext.Provider
+    <ConfigContext.Provider
       value={{
-        actions: { updateStory: handleUpdateStory },
-        state: {
-          story: inputValues,
+        metadata: {
+          publisher: publisher,
+        },
+        capabilities: {
+          hasUploadMediaAction: hasUploadMediaAction,
         },
       }}
     >
-      <CheckpointContext.Provider
+      <StoryContext.Provider
         value={{
-          actions: {
-            onPublishDialogChecklistRequest: noop,
+          actions: { updateStory: handleUpdateStory },
+          state: {
+            capabilities: { publish: canPublish },
+            meta: { isSaving: isSaving },
+            story: {
+              ...inputValues,
+              permalinkConfig: {
+                prefix: 'http://sample.com/',
+                suffix: '',
+              },
+              featuredMedia: {
+                url: hasFeaturedMedia ? 'http://placekitten.com/230/342' : '',
+                height: 333,
+                width: 250,
+              },
+              publisherLogo: {
+                url: hasPublisherLogo ? 'http://placekitten.com/158/96' : '',
+                height: 96,
+                width: 158,
+              },
+              status: storyStatus,
+            },
           },
         }}
       >
-        <PublishModal {...args} />
-      </CheckpointContext.Provider>
-    </StoryContext.Provider>
+        <InspectorContext.Provider
+          value={{
+            actions: {
+              loadUsers: () => {},
+            },
+            data: {
+              modalInspectorTab: {
+                title: 'document panel',
+                DocumentPane: MockDocumentPane,
+              },
+            },
+            state: {
+              users: {},
+              inspectorContentHeight: 600,
+            },
+          }}
+        >
+          <ChecklistCountProvider hasChecklist={hasChecklist}>
+            <CheckpointContext.Provider
+              value={{
+                actions: {
+                  onPublishDialogChecklistRequest:
+                    onPublishDialogChecklistRequest,
+                },
+                state: {
+                  shouldReviewDialogBeSeen: hasPriorityIssues,
+                  checkpoint: checkpoint,
+                },
+              }}
+            >
+              <PublishModal {...args} />
+            </CheckpointContext.Provider>
+          </ChecklistCountProvider>
+        </InspectorContext.Provider>
+      </StoryContext.Provider>
+    </ConfigContext.Provider>
   );
 };

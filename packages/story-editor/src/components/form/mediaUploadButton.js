@@ -19,6 +19,7 @@
  */
 import { useSnackbar } from '@googleforcreators/design-system';
 import { useCallback, useMemo } from '@googleforcreators/react';
+import { getExtensionsFromMimeType } from '@googleforcreators/media';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 
@@ -27,17 +28,33 @@ import PropTypes from 'prop-types';
  */
 import { useConfig, useLocalMedia } from '../../app';
 import useFFmpeg from '../../app/media/utils/useFFmpeg';
+import { TRANSCODABLE_MIME_TYPES } from '../../app/media';
 
 function MediaUploadButton({ onInsert, renderButton, buttonInsertText }) {
   const {
-    allowedTranscodableMimeTypes,
-    allowedFileTypes,
     allowedMimeTypes: {
       image: allowedImageMimeTypes,
+      vector: allowedVectorMimeTypes,
       video: allowedVideoMimeTypes,
     },
     MediaUpload,
   } = useConfig();
+
+  const allowedUploadMimeTypes = useMemo(
+    () => [
+      ...allowedImageMimeTypes,
+      ...allowedVectorMimeTypes,
+      ...allowedVideoMimeTypes,
+    ],
+    [allowedImageMimeTypes, allowedVectorMimeTypes, allowedVideoMimeTypes]
+  );
+  const allowedFileTypes = useMemo(
+    () =>
+      allowedUploadMimeTypes
+        .map((type) => getExtensionsFromMimeType(type))
+        .flat(),
+    [allowedUploadMimeTypes]
+  );
 
   const {
     canTranscodeResource,
@@ -70,24 +87,29 @@ function MediaUploadButton({ onInsert, renderButton, buttonInsertText }) {
   const allowedMimeTypes = useMemo(() => {
     if (isTranscodingEnabled) {
       return [
-        ...allowedTranscodableMimeTypes,
+        ...TRANSCODABLE_MIME_TYPES,
         ...allowedImageMimeTypes,
+        ...allowedVectorMimeTypes,
         ...allowedVideoMimeTypes,
       ];
     }
-    return [...allowedImageMimeTypes, ...allowedVideoMimeTypes];
+    return [
+      ...allowedImageMimeTypes,
+      ...allowedVectorMimeTypes,
+      ...allowedVideoMimeTypes,
+    ];
   }, [
     allowedImageMimeTypes,
+    allowedVectorMimeTypes,
     allowedVideoMimeTypes,
     isTranscodingEnabled,
-    allowedTranscodableMimeTypes,
   ]);
 
   const transcodableMimeTypes = useMemo(() => {
-    return allowedTranscodableMimeTypes.filter(
+    return TRANSCODABLE_MIME_TYPES.filter(
       (x) => !allowedVideoMimeTypes.includes(x)
     );
-  }, [allowedTranscodableMimeTypes, allowedVideoMimeTypes]);
+  }, [allowedVideoMimeTypes]);
 
   let onSelectErrorMessage = __(
     'No file types are currently supported.',

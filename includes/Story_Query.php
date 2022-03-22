@@ -149,8 +149,6 @@ class Story_Query {
 	 * Renders the stories output.
 	 *
 	 * @since 1.5.0
-	 *
-	 * @return string
 	 */
 	public function render(): string {
 		$this->renderer = $this->get_renderer();

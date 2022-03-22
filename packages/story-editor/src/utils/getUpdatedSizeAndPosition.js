@@ -17,13 +17,8 @@
 /**
  * External dependencies
  */
-import { dataPixels } from '@googleforcreators/units';
-
-/**
- * Internal dependencies
- */
-import { calculateTextHeight } from './textMeasurements';
-import calcRotatedResizeOffset from './calcRotatedResizeOffset';
+import { dataPixels, calcRotatedResizeOffset } from '@googleforcreators/units';
+import { calculateTextHeight } from '@googleforcreators/element-library';
 
 /**
  * Gets updated size and position of the element if relevant properties have changed.

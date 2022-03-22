@@ -23,6 +23,7 @@ import {
   BackgroundAudioPanel,
   TaxonomiesPanel,
 } from '@googleforcreators/story-editor';
+import styled from 'styled-components';
 
 /**
  * Internal dependencies
@@ -41,6 +42,38 @@ function DocumentPane() {
       <BackgroundAudioPanel />
       <TaxonomiesPanel />
     </>
+  );
+}
+
+// Panels require a name override to have their own local storage set for panel collapse
+export function PublishModalDocumentPane() {
+  return (
+    <>
+      <PublishPanel nameOverride="storyDetailsPublishing" />
+      <SlugPanel nameOverride="storyDetailsExcerpt" />
+      <PageAdvancementPanel nameOverride="storyDetailsPageAdvancement" />
+      <BackgroundAudioPanel nameOverride="storyDetailsBackgroundAudio" />
+      <TaxonomiesPanel nameOverride="storyDetailsTaxonomies" />
+    </>
+  );
+}
+
+// Isolated Status Panel should not collapse and
+// should have its own name to prevent collapse
+// based on other implementations that have default name
+
+const IsolatedPanel = styled(StatusPanel)`
+  padding: 4px 4px 8px;
+`;
+
+export function IsolatedStatusPanel() {
+  return (
+    <IsolatedPanel
+      nameOverride="storyDetailsStatus"
+      canCollapse={false}
+      isPersistable={false}
+      popupZIndex={11}
+    />
   );
 }
 

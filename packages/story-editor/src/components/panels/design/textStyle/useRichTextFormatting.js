@@ -34,8 +34,8 @@ import {
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE } from '../../../../constants';
 import { useCanvas } from '../../../../app';
+import { MULTIPLE_VALUE } from '../../../../constants';
 
 /**
  * Equality function for *primitives and color patterns* only.
@@ -84,10 +84,13 @@ function reduceWithMultiple(reduced, info) {
 }
 
 function useRichTextFormatting(selectedElements, pushUpdate) {
-  const {
-    state: { hasCurrentEditor, selectionInfo },
-    actions: { selectionActions },
-  } = useRichText();
+  const { hasCurrentEditor, selectionInfo, selectionActions } = useRichText(
+    ({ state, actions }) => ({
+      hasCurrentEditor: state.hasCurrentEditor,
+      selectionInfo: state.selectionInfo,
+      selectionActions: actions.selectionActions,
+    })
+  );
 
   const { clearEditing } = useCanvas(({ actions: { clearEditing } }) => ({
     clearEditing,
@@ -98,7 +101,7 @@ function useRichTextFormatting(selectedElements, pushUpdate) {
       return selectionInfo;
     }
 
-    // loop over all elements, find info for content and reduce to common value
+    // loop over all text elements, find info for content and reduce to common value
     // (setting MULTIPLE_VALUE appropriately)
     return selectedElements
       .map(({ content }) => content)

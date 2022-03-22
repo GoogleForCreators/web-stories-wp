@@ -64,6 +64,7 @@ const mockUploadFile = jest.fn().mockImplementation((file) =>
       id: 123,
       src: 'http://example.com/file.ext',
       mimeType: file.type,
+      elementId: 456,
     })
   )
 );
@@ -141,7 +142,7 @@ describe('useMediaUploadQueue', () => {
         isCurrentResourceProcessing: expect.any(Function),
         isNewResourceTranscoding: expect.any(Function),
         isCurrentResourceTranscoding: expect.any(Function),
-        isResourceTrimming: expect.any(Function),
+        isElementTrimming: expect.any(Function),
         isCurrentResourceTrimming: expect.any(Function),
         isCurrentResourceUploading: expect.any(Function),
         canTranscodeResource: expect.any(Function),
@@ -304,7 +305,7 @@ describe('useMediaUploadQueue', () => {
     ).toBeTrue();
 
     expect(result.current.state.isNewResourceProcessing(123)).toBeFalse();
-    expect(result.current.state.isResourceTrimming(123)).toBeFalse();
+    expect(result.current.state.isElementTrimming(456)).toBeFalse();
   });
 
   it('allows removing items from the queue', async () => {
@@ -355,7 +356,7 @@ describe('useMediaUploadQueue', () => {
         isCurrentResourceProcessing: expect.any(Function),
         isNewResourceTranscoding: expect.any(Function),
         isCurrentResourceTranscoding: expect.any(Function),
-        isResourceTrimming: expect.any(Function),
+        isElementTrimming: expect.any(Function),
         isCurrentResourceTrimming: expect.any(Function),
         isCurrentResourceUploading: expect.any(Function),
         canTranscodeResource: expect.any(Function),

@@ -81,8 +81,6 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return void
-	 *
 	 * @todo  refactor
 	 */
 	public function register(): void {
@@ -115,8 +113,6 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	 * Get post type slug.
 	 *
 	 * @since 1.14.0
-	 *
-	 * @return string
 	 */
 	public function get_slug(): string {
 		return self::POST_TYPE_SLUG;
@@ -197,8 +193,6 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	 * Register post meta.
 	 *
 	 * @since 1.12.0
-	 *
-	 * @return void
 	 */
 	public function register_meta(): void {
 		$active_publisher_logo_id = absint( $this->settings->get_setting( $this->settings::SETTING_NAME_ACTIVE_PUBLISHER_LOGO, 0 ) );
@@ -307,7 +301,6 @@ class Story_Post_Type extends Post_Type_Base implements HasRequirements, HasMeta
 	 *
 	 * @param int     $post_id Post ID.
 	 * @param WP_Post $post    Post object.
-	 * @return void
 	 */
 	public function clear_user_posts_count( $post_id, $post ): void {
 		if ( ! $post instanceof WP_Post || $this->get_slug() !== $post->post_type ) {

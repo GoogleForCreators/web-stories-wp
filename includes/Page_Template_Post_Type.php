@@ -60,8 +60,6 @@ class Page_Template_Post_Type extends Post_Type_Base implements HasRequirements 
 
 	/**
 	 * Init
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		parent::register();
@@ -73,8 +71,6 @@ class Page_Template_Post_Type extends Post_Type_Base implements HasRequirements 
 	 * Get post type slug.
 	 *
 	 * @since 1.14.0
-	 *
-	 * @return string
 	 */
 	public function get_slug(): string {
 		return self::POST_TYPE_SLUG;
@@ -179,7 +175,6 @@ class Page_Template_Post_Type extends Post_Type_Base implements HasRequirements 
 	 * @since 1.14.0
 	 *
 	 * @param int $post_id Post ID.
-	 * @return void
 	 */
 	public function delete_poster_image( int $post_id ): void {
 		if ( get_post_type( $post_id ) !== $this->get_slug() ) {

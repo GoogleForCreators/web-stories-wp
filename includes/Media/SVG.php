@@ -88,8 +88,6 @@ class SVG extends Service_Base {
 	 * Register filters and actions.
 	 *
 	 * @since 1.3.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		if ( ! $this->experiments->is_experiment_enabled( 'enableSVG' ) ) {
@@ -116,8 +114,6 @@ class SVG extends Service_Base {
 	 * Helper function to check if svg uploads are already enabled.
 	 *
 	 * @since 1.3.0
-	 *
-	 * @return bool
 	 */
 	private function svg_already_enabled(): bool {
 		$allowed_mime_types = get_allowed_mime_types();
@@ -167,7 +163,7 @@ class SVG extends Service_Base {
 	 * @return array
 	 */
 	public function web_stories_allowed_mime_types( array $mime_types ): array {
-		$mime_types['image'][] = self::MIME_TYPE;
+		$mime_types['vector'][] = self::MIME_TYPE;
 
 		return $mime_types;
 	}

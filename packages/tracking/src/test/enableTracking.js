@@ -22,8 +22,7 @@ jest.mock('../shared');
 import { config } from '../shared';
 import enableTracking from '../enableTracking';
 
-// Disable reason: Not yet testable due to the Promise in loadTrackingScript().
-//eslint-disable-next-line jest/no-disabled-tests
+//eslint-disable-next-line jest/no-disabled-tests -- Not yet testable due to the Promise in loadTrackingScript().
 describe.skip('enableTracking', () => {
   afterEach(() => {
     config.trackingAllowed = undefined;

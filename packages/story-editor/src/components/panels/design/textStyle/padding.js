@@ -26,10 +26,11 @@ import {
   LockToggle as DefaultLockToggle,
   NumericInput,
 } from '@googleforcreators/design-system';
+import { clamp } from '@googleforcreators/units';
+
 /**
  * Internal dependencies
  */
-import clamp from '../../../../utils/clamp';
 import { Row as DefaultRow, usePresubmitHandler } from '../../../form';
 import {
   focusStyle,
@@ -37,7 +38,7 @@ import {
   useCommonObjectValue,
 } from '../../shared';
 import { metricsForTextPadding } from '../../utils/metricsForTextPadding';
-import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import { getHiddenPadding, removeHiddenPadding } from './utils';
 
 const DEFAULT_PADDING = {

@@ -22,10 +22,10 @@ import { screen } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 import ConfigContext from '../../../../../app/config/context';
 import { renderPanel } from '../../../shared/test/_utils';
 import Captions from '../captions';
+import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 
 function MediaUpload({ render }) {
   const open = jest.fn();
@@ -43,6 +43,7 @@ describe('Panels/Captions', () => {
       capabilities: {
         hasUploadMediaAction: true,
       },
+      allowedMimeTypes: { caption: ['text/vtt'] },
       ...config,
       MediaUpload,
     };

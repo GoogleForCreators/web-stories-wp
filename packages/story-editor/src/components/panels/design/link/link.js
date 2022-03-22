@@ -28,22 +28,19 @@ import {
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
+import { Input, Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 import {
   isValidUrl,
+  toAbsoluteUrl,
   withProtocol,
-  Input,
-  Text,
-  THEME_CONSTANTS,
-} from '@googleforcreators/design-system';
+} from '@googleforcreators/url';
 
 /**
  * Internal dependencies
  */
-
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import { useStory, useAPI, useCanvas } from '../../../../app';
-import { toAbsoluteUrl } from '../../../../utils/url';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
-import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../../../constants';
 import { Row, LinkInput, LinkIcon } from '../../../form';
 import { createLink } from '../../../elementLink';
 import { SimplePanel } from '../../panel';

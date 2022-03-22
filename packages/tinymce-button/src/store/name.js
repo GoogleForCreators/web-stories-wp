@@ -14,5 +14,6 @@
  * limitations under the License.
  */
 
-// eslint-disable-next-line no-global-assign
-export default name = 'web-stories-mce';
+const name = 'web-stories-mce';
+
+export default name;

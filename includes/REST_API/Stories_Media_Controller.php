@@ -67,8 +67,6 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 * Register the service.
 	 *
 	 * @since 1.7.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		$this->register_routes();
@@ -429,6 +427,11 @@ class Stories_Media_Controller extends WP_REST_Attachments_Controller implements
 	 * @return array Array of supported media types.
 	 */
 	protected function get_media_types(): array {
-		return $this->types->get_allowed_mime_types();
+		$mime_type = $this->types->get_allowed_mime_types();
+		// TODO: Update once audio elements are supported.
+		$mime_type['audio'] = [];
+		unset( $mime_type['caption'] );
+
+		return $mime_type;
 	}
 }

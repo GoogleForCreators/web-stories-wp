@@ -17,20 +17,63 @@
 /**
  * External dependencies
  */
-import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
+import { useCallback } from '@googleforcreators/react';
+import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
  */
-import { IconButton } from './shared';
+import { useStory } from '../../../app';
+import getUpdatedSizeAndPosition from '../../../utils/getUpdatedSizeAndPosition';
+import updateProperties from '../../inspector/design/updateProperties';
+import { focusStyle, inputContainerStyleOverride } from '../../panels/shared';
+import { MIN_MAX } from '../../panels/design/textStyle/font';
+// TODO: https://github.com/GoogleForCreators/web-stories-wp/issues/10799
+import { Input } from './shared';
 
 function FontSize() {
+  const { fontSize, updateSelectedElements } = useStory(
+    ({ state, actions }) => ({
+      fontSize: state.selectedElements[0].fontSize,
+      updateSelectedElements: actions.updateSelectedElements,
+    })
+  );
+
+  const pushUpdate = useCallback(
+    (update) => {
+      trackEvent('floating_menu', {
+        name: 'set_font_size',
+      });
+
+      updateSelectedElements({
+        properties: (element) => {
+          const updates = updateProperties(element, update, true);
+          const sizeUpdates = getUpdatedSizeAndPosition({
+            ...element,
+            ...updates,
+          });
+          return {
+            ...updates,
+            ...sizeUpdates,
+          };
+        },
+      });
+    },
+    [updateSelectedElements]
+  );
+
   return (
-    <IconButton
-      Icon={Icons.LetterTArrow}
-      title={__('Change font size', 'web-stories')}
-      onClick={() => {}}
+    <Input
+      aria-label={__('Font size', 'web-stories')}
+      isFloat
+      value={fontSize}
+      onChange={(evt, value) => pushUpdate({ fontSize: value })}
+      min={MIN_MAX.FONT_SIZE.MIN}
+      max={MIN_MAX.FONT_SIZE.MAX}
+      placeholder={fontSize}
+      containerStyleOverride={inputContainerStyleOverride}
+      selectButtonStylesOverride={focusStyle}
     />
   );
 }

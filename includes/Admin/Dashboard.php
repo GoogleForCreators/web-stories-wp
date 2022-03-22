@@ -173,8 +173,6 @@ class Dashboard extends Service_Base {
 	 * Initializes the dashboard logic.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		add_action( 'admin_menu', [ $this, 'add_menu_page' ] );
@@ -200,8 +198,6 @@ class Dashboard extends Service_Base {
 	 * Registers the dashboard admin menu page.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
 	public function add_menu_page(): void {
 		$parent = 'edit.php?post_type=' . $this->story_post_type->get_slug();
@@ -247,8 +243,6 @@ class Dashboard extends Service_Base {
 	 * @codeCoverageIgnore
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
 	public function redirect_menu_page(): void {
 		global $pagenow;
@@ -279,8 +273,6 @@ class Dashboard extends Service_Base {
 	 * Important: keep in sync with usage & definition in React app.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
 	public function load_stories_dashboard(): void {
 		$rest_url = trailingslashit( $this->story_post_type->get_rest_url() );
@@ -362,8 +354,6 @@ class Dashboard extends Service_Base {
 	 * Renders the dashboard page.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
 	public function render(): void {
 		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/admin/dashboard.php';
@@ -375,7 +365,6 @@ class Dashboard extends Service_Base {
 	 * @since 1.0.0
 	 *
 	 * @param string $hook_suffix The current admin page.
-	 * @return void
 	 */
 	public function enqueue_assets( $hook_suffix ): void {
 		if ( $this->get_hook_suffix( 'stories-dashboard' ) !== $hook_suffix ) {
@@ -421,6 +410,8 @@ class Dashboard extends Service_Base {
 		if ( ! $max_upload_size ) {
 			$max_upload_size = 0;
 		}
+		$mime_types               = $this->types->get_allowed_mime_types();
+		$allowed_image_mime_types = $mime_types['image'];
 
 		$settings = [
 			'isRTL'                   => is_rtl(),
@@ -430,7 +421,7 @@ class Dashboard extends Service_Base {
 			'archiveURL'              => $this->story_post_type->get_archive_link(),
 			'defaultArchiveURL'       => $this->story_post_type->get_archive_link( true ),
 			'cdnURL'                  => trailingslashit( WEBSTORIES_CDN_URL ),
-			'allowedImageMimeTypes'   => $this->types->get_allowed_image_mime_types(),
+			'allowedImageMimeTypes'   => $allowed_image_mime_types,
 			'version'                 => WEBSTORIES_VERSION,
 			'encodeMarkup'            => $this->decoder->supports_decoding(),
 			'api'                     => [
@@ -471,8 +462,6 @@ class Dashboard extends Service_Base {
 	 * Displays a link to the Web Stories dashboard on the WordPress list table view.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
 	public function display_link_to_dashboard(): void {
 		if ( ! $this->context->is_story_editor() ) {

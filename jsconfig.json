@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@googleforcreators/*": ["./packages/*/src"],
+      "@web-stories-wp/*": ["./packages/*/src"]
+    }
+  },
+  "exclude": [
+    "dist",
+    "dist-module",
+    "node_modules",
+    "packages/e2e-tests/src/plugins",
+    "vendor"
+  ]
+}

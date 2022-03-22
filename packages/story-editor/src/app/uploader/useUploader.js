@@ -19,7 +19,10 @@
  */
 import { useCallback, useMemo } from '@googleforcreators/react';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
-import { getFileName } from '@googleforcreators/media';
+import {
+  getFileName,
+  getExtensionsFromMimeType,
+} from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -40,14 +43,23 @@ function useUploader() {
     maxUpload,
     allowedMimeTypes: {
       image: allowedImageMimeTypes,
+      vector: allowedVectorMimeTypes,
       video: allowedVideoMimeTypes,
     },
-    allowedFileTypes,
     capabilities: { hasUploadMediaAction },
   } = useConfig();
   const allowedMimeTypes = useMemo(
-    () => [...allowedImageMimeTypes, ...allowedVideoMimeTypes],
-    [allowedImageMimeTypes, allowedVideoMimeTypes]
+    () => [
+      ...allowedImageMimeTypes,
+      ...allowedVectorMimeTypes,
+      ...allowedVideoMimeTypes,
+    ],
+    [allowedImageMimeTypes, allowedVectorMimeTypes, allowedVideoMimeTypes]
+  );
+  const allowedFileTypes = useMemo(
+    () =>
+      allowedMimeTypes.map((type) => getExtensionsFromMimeType(type)).flat(),
+    [allowedMimeTypes]
   );
 
   const isValidType = useCallback(
@@ -151,9 +163,9 @@ function useUploader() {
       validateFileForUpload(file);
 
       const _additionalData = {
-        post: storyId,
-        alt_text: getFileName(file),
-        web_stories_media_source: 'editor',
+        storyId,
+        altText: getFileName(file),
+        mediaSource: 'editor',
         ...additionalData,
       };
 

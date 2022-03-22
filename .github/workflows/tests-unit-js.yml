@@ -10,6 +10,7 @@ on:
       - 'packages/templates/src/raw/**'
       - 'packages/text-sets/src/raw/**'
       - 'patches/**'
+      - 'packages/fonts/src/fonts.json'
     branches:
       - main
       - release/*
@@ -22,6 +23,7 @@ on:
       - 'packages/templates/src/raw/**'
       - 'packages/text-sets/src/raw/**'
       - 'patches/**'
+      - 'packages/fonts/src/fonts.json'
 
 # Cancels all previous workflow runs for pull requests that have not completed.
 concurrency:
@@ -41,16 +43,16 @@ jobs:
         shard: ['1/2', '2/2']
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Node
-        uses: actions/setup-node@v2.5.1
+        uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
           cache: npm
 
       - name: Setup Jest cache
-        uses: actions/cache@v2.1.7
+        uses: actions/cache@v3
         id: cache-jest-cache
         with:
           path: .jest-cache

@@ -35,6 +35,7 @@ describe('Inserting Media from Media Library', () => {
     await page.waitForSelector('[data-testid="mediaElement-image"]');
     // Clicking will only act on the first element.
     await expect(page).toClick('[data-testid="mediaElement-image"]');
+    await expect(page).toClick('menuitem', { text: 'Insert image' });
 
     await page.waitForSelector('[data-testid="frameElement"]:nth-of-type(2)');
 

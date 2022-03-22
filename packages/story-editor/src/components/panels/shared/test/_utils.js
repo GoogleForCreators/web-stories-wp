@@ -59,7 +59,7 @@ function TestPanel({
   );
   const Wrapper = wrapperComp;
   if (Wrapper) {
-    return <Wrapper>{panel}</Wrapper>;
+    return <Wrapper selectedElements={selectedElements}>{panel}</Wrapper>;
   }
   return panel;
 }

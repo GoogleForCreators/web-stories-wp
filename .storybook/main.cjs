@@ -16,7 +16,25 @@
 /**
  * External dependencies
  */
+const path = require('path');
 const webpack = require('webpack');
+
+/**
+ * Storybook Workaround: https://github.com/storybookjs/storybook/issues/14877#issuecomment-1000441696
+ *
+ * @param {string} filePath Original file path
+ * @param {string} newExtension Extension to use (such as .cjs or .html)
+ * @return {Object} updated path
+ */
+const replaceFileExtension = (filePath, newExtension) => {
+  const { name, root, dir } = path.parse(filePath);
+  return path.format({
+    name,
+    root,
+    dir,
+    ext: newExtension,
+  });
+};
 
 module.exports = {
   stories: [
@@ -33,28 +51,38 @@ module.exports = {
     '@storybook/addon-essentials',
     '@storybook/addon-storysource/register',
   ],
+  core: {
+    builder: 'webpack5',
+  },
   reactOptions: {
-    fastRefresh: true,
+    // Disabled due to compatibility issues with webpack 5.
+    // See https://github.com/pmmmwh/react-refresh-webpack-plugin/issues/308
+    fastRefresh: false,
     strictMode: true,
   },
-  //eslint-disable-next-line require-await
+  //eslint-disable-next-line require-await -- Negligible.
   webpackFinal: async (config) => {
-    // Modifies storybook's webpack config to use svgr instead of file-loader.
-    // see https://github.com/storybookjs/storybook/issues/5613
-
-    const assetRule = config.module.rules.find(({ test }) => test.test('.svg'));
-    const assetLoader = {
-      loader: assetRule.loader,
-      options: assetRule.options || assetRule.query,
+    // webpack < 5 used to include polyfills for node.js core modules by default.
+    // Prevent ModuleNotFoundError for this dependency.
+    config.resolve = {
+      ...config.resolve,
+      // Fixes resolving packages in the monorepo so we use the "src" folder, not "dist".
+      // This should be sync'd with the config in `webpack.config.cjs`.
+      exportsFields: ['customExports', 'exports'],
     };
+
+    // Avoid having to provide full file extension for imports.
+    // See https://webpack.js.org/configuration/module/#resolvefullyspecified
+
+    config.module.rules = config.module.rules.map((rule) => ({
+      ...rule,
+      resolve: {
+        ...rule.resolve,
+        fullySpecified: false,
+      },
+    }));
 
     // These should be sync'd with the config in `webpack.config.cjs`.
-
-    config.resolve = {
-      // Fixes resolving packages in the monorepo so we use the "src" folder, not "dist".
-      // TODO: Revisit after upgrading to webpack v5 or when splitting repository.
-      mainFields: ['browser', 'module', 'main', 'source'],
-    };
     config.plugins.push(
       new webpack.DefinePlugin({
         WEB_STORIES_CI: JSON.stringify(process.env.CI),
@@ -74,76 +102,147 @@ module.exports = {
       })
     );
 
+    // These should be sync'd with the config in `webpack.config.cjs`.
+
+    config.plugins.push(
+      new webpack.DefinePlugin({
+        WEB_STORIES_CI: JSON.stringify(process.env.CI),
+        WEB_STORIES_ENV: JSON.stringify(process.env.NODE_ENV),
+        WEB_STORIES_DISABLE_ERROR_BOUNDARIES: JSON.stringify(
+          process.env.DISABLE_ERROR_BOUNDARIES
+        ),
+        WEB_STORIES_DISABLE_OPTIMIZED_RENDERING: JSON.stringify(
+          process.env.DISABLE_OPTIMIZED_RENDERING
+        ),
+        WEB_STORIES_DISABLE_PREVENT: JSON.stringify(
+          process.env.DISABLE_PREVENT
+        ),
+        WEB_STORIES_DISABLE_QUICK_TIPS: JSON.stringify(
+          process.env.DISABLE_QUICK_TIPS
+        ),
+      })
+    );
+
+    // Ensure SVGR is the only loader used for files with .svg extension.
+    const assetRule = config.module.rules.find(({ test }) => test.test('.svg'));
+    assetRule.exclude = /\.svg/;
+
     config.module.rules.unshift(
       {
         test: /\.svg$/,
-        use: [
+        // Use asset SVG and SVGR together.
+        // Not using resourceQuery because it doesn't work well with Rollup.
+        // https://react-svgr.com/docs/webpack/#use-svgr-and-asset-svg-in-the-same-project
+        oneOf: [
           {
-            loader: '@svgr/webpack',
-            options: {
-              titleProp: true,
-              svgo: true,
-              memo: true,
-              svgoConfig: {
-                plugins: [
-                  {
-                    removeViewBox: false,
-                    removeDimensions: true,
-                    convertColors: {
-                      currentColor: /^(?!url|none)/i,
-                    },
-                  },
-                ],
-              },
-            },
+            type: 'asset/inline',
+            include: [/inline-icons\/.*\.svg$/],
           },
-          'url-loader',
-          assetLoader,
-        ],
-        exclude: [/images\/.*\.svg$/],
-      },
-      {
-        test: /\.svg$/,
-        use: [
           {
-            loader: '@svgr/webpack',
-            options: {
-              titleProp: true,
-              svgo: true,
-              memo: true,
-              svgoConfig: {
-                plugins: [
-                  {
-                    removeViewBox: false,
-                    removeDimensions: true,
-                    convertColors: {
-                      // See https://github.com/googleforcreators/web-stories-wp/pull/6361
-                      currentColor: false,
-                    },
+            issuer: /\.js?$/,
+            include: [/\/icons\/.*\.svg$/],
+            use: [
+              {
+                loader: '@svgr/webpack',
+                options: {
+                  titleProp: true,
+                  svgo: true,
+                  memo: true,
+                  svgoConfig: {
+                    plugins: [
+                      {
+                        name: 'preset-default',
+                        params: {
+                          overrides: {
+                            removeViewBox: false,
+                            convertColors: {
+                              currentColor: /^(?!url|none)/i,
+                            },
+                          },
+                        },
+                      },
+                      'removeDimensions',
+                    ],
                   },
-                ],
+                },
               },
-            },
+            ],
           },
-          'url-loader',
+          {
+            issuer: /\.js?$/,
+            include: [/images\/.*\.svg$/],
+            use: [
+              {
+                loader: '@svgr/webpack',
+                options: {
+                  titleProp: true,
+                  svgo: true,
+                  memo: true,
+                  svgoConfig: {
+                    plugins: [
+                      {
+                        name: 'preset-default',
+                        params: {
+                          overrides: {
+                            removeViewBox: false,
+                            convertColors: {
+                              // See https://github.com/googleforcreators/web-stories-wp/pull/6361
+                              currentColor: false,
+                            },
+                          },
+                        },
+                      },
+                      'removeDimensions',
+                    ],
+                  },
+                },
+              },
+            ],
+          },
         ],
-        include: [/images\/.*\.svg$/],
       },
       {
         test: /\.(png|jpe?g|gif|webp)$/i,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              outputPath: 'images',
-            },
-          },
-        ],
+        type: 'asset/resource',
+        generator: {
+          outputPath: 'images/',
+        },
       }
     );
 
-    // only the first matching rule is used when there is a match.
-    config.module.rules = [{ oneOf: config.module.rules }];
+    /*
+    Webpack + Storybook 6.4 - webpack crashing due to plugins
+    that are compiled to CJS while project uses ESM.
+    TODO: 10696: Remove with storybook 6.5
+    */
+    // https://github.com/storybookjs/storybook/issues/14877#issuecomment-1000441696
+
+    // Find the plugin instance that needs to be mutated
+    const virtualModulesPlugin = config.plugins.find(
+      (plugin) => plugin.constructor.name === 'VirtualModulesPlugin'
+    );
+
+    // Change the file extension to .cjs for all files that end with "generated-stories-entry.js"
+    virtualModulesPlugin._staticModules = Object.fromEntries(
+      Object.entries(virtualModulesPlugin._staticModules).map(
+        ([key, value]) => {
+          if (key.endsWith('generated-stories-entry.js')) {
+            return [replaceFileExtension(key, '.cjs'), value];
+          }
+          return [key, value];
+        }
+      )
+    );
+
+    // Change the entry points to point to the appropriate .cjs files
+    config.entry = config.entry.map((entry) => {
+      if (entry.endsWith('generated-stories-entry.js')) {
+        return replaceFileExtension(entry, '.cjs');
+      }
+      return entry;
+    });
+
+    /* End storybook 6.4 non .cjs extension patch */
 
     return config;
   },

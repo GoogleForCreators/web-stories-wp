@@ -63,6 +63,10 @@ describe('Inserting 3P Media', () => {
     await expect(page).toClick(
       '#library-pane-media3p [data-testid="mediaElement-image"]'
     );
+    const insertButton = await page.waitForXPath(
+      `//li//span[contains(text(), 'Insert image')]`
+    );
+    await insertButton.click();
 
     await page.waitForSelector('[data-testid="imageElement"]');
     await expect(page).toMatchElement('[data-testid="imageElement"]');

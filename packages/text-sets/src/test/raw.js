@@ -25,20 +25,40 @@ describe('Raw text set files', () => {
     resolve(process.cwd(), 'packages/text-sets/src/raw')
   );
 
-  it.each(textSets)(
-    '%s text set should contain at least two non-background elements',
-    (textSet) => {
-      const category = basename(textSet, '.json');
-      const rawData = readFileSync(
-        resolve(process.cwd(), `packages/text-sets/src/raw/${category}.json`),
-        'utf8'
-      );
-      const data = JSON.parse(rawData);
+  describe.each(textSets)('%s text set', (textSet) => {
+    const category = basename(textSet, '.json');
+    const rawData = readFileSync(
+      resolve(process.cwd(), `packages/text-sets/src/raw/${category}.json`),
+      'utf8'
+    );
+    const data = JSON.parse(rawData);
 
+    it('should contain at least two non-background elements', () => {
       for (const { elements } of data.pages) {
         // 3 since one is background element.
         expect(elements.length >= 3).toBeTrue();
       }
-    }
-  );
+    });
+
+    it('should contain fonts from global fonts list', () => {
+      const fonts = JSON.parse(
+        readFileSync(
+          resolve(process.cwd(), 'packages/fonts/src/fonts.json'),
+          'utf8'
+        )
+      );
+      const fontNames = fonts.map(({ family }) => family);
+
+      for (const { elements } of data.pages) {
+        for (const element of elements) {
+          // eslint-disable-next-line jest/no-conditional-in-test
+          if (!['text'].includes(element?.type)) {
+            continue;
+          }
+
+          expect(fontNames).toContain(element.font.family);
+        }
+      }
+    });
+  });
 });

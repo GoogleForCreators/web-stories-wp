@@ -19,10 +19,12 @@
  */
 import { enableFetchMocks } from 'jest-fetch-mock';
 
-// eslint-disable-next-line jest/require-hook
+// eslint-disable-next-line jest/require-hook -- test setup
 enableFetchMocks();
 
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
   useLayoutEffect: jest.requireActual('react').useEffect,
 }));
+
+jest.mock('@googleforcreators/story-editor/src/utils/getBlurHashFromImage');

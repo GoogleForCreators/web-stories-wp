@@ -51,6 +51,11 @@ final class SimpleServiceContainer
 			throw InvalidService::from_service_id( $id );
 		}
 
+		/**
+		 * Service.
+		 *
+		 * @var Service $service Service.
+		 */
 		$service = $this->offsetGet( $id );
 
 		// Instantiate actual services if they were stored lazily.
@@ -69,7 +74,6 @@ final class SimpleServiceContainer
 	 * @since 1.6.0
 	 *
 	 * @param string $id Identifier of the service to look for.
-	 * @return bool
 	 */
 	public function has( $id ): bool {
 		return $this->offsetExists( $id );
@@ -83,7 +87,6 @@ final class SimpleServiceContainer
 	 * @param string  $id      Identifier of the service to put into the
 	 *                         container.
 	 * @param Service $service Service to put into the container.
-	 * @return void
 	 */
 	public function put( $id, Service $service ): void {
 		$this->offsetSet( $id, $service );

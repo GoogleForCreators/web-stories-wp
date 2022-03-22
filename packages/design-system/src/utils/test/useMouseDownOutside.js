@@ -25,11 +25,10 @@ import useMouseDownOutsideRef from '../useMouseDownOutsideRef';
 
 describe('useMouseDownOutsideRef', () => {
   const TestComponent = ({
-    // eslint-disable-next-line react/prop-types
     handleMouseDownOutside,
-    // eslint-disable-next-line react/prop-types
+
     childTestId = 'child',
-    // eslint-disable-next-line react/prop-types
+
     containerTestId = 'container',
   }) => {
     const ref = useMouseDownOutsideRef(handleMouseDownOutside);

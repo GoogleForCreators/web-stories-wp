@@ -21,7 +21,9 @@ import { axe } from 'jest-axe';
 /**
  * Internal dependencies
  */
+import { StoryContext } from '../../../app/story';
 import renderWithTheme from '../../../testUtils/renderWithTheme';
+import { CheckpointContext } from '../../checklist';
 import Header from '../header';
 
 describe('publishModal/header', () => {
@@ -32,27 +34,47 @@ describe('publishModal/header', () => {
     jest.clearAllMocks();
   });
 
-  it('should have no accessibility issues', async () => {
-    const { container } = renderWithTheme(
-      <Header
-        isPublishEnabled
-        onClose={mockOnClose}
-        onPublish={mockOnPublish}
-      />
+  const view = (args) => {
+    const { storyArgs = {}, capabilitiesArgs = {} } = args || {};
+    return renderWithTheme(
+      <StoryContext.Provider
+        value={{
+          state: {
+            story: {
+              story: { status: 'draft', ...storyArgs },
+            },
+            capabilities: { publish: true, ...capabilitiesArgs },
+            meta: { isSaving: false },
+          },
+        }}
+      >
+        <CheckpointContext.Provider
+          value={{
+            state: {
+              shouldReviewDialogBeSeen: true,
+              checkpoint: 'all',
+            },
+          }}
+        >
+          <Header
+            onClose={mockOnClose}
+            onPublish={mockOnPublish}
+            hasFutureDate={false}
+          />
+        </CheckpointContext.Provider>
+      </StoryContext.Provider>
     );
+  };
+
+  it('should have no accessibility issues', async () => {
+    const { container } = view();
 
     const results = await axe(container);
     expect(results).toHaveNoViolations();
   });
 
   it('should call onClose when close button is clicked', () => {
-    renderWithTheme(
-      <Header
-        isPublishEnabled
-        onClose={mockOnClose}
-        onPublish={mockOnPublish}
-      />
-    );
+    view();
 
     const closeButton = screen.getByLabelText('Close');
     fireEvent.click(closeButton);
@@ -60,33 +82,30 @@ describe('publishModal/header', () => {
     expect(mockOnClose).toHaveBeenCalledTimes(1);
   });
 
-  it('should not call onPublish when publish button is clicked and isPublishEnabled is false', () => {
-    renderWithTheme(
-      <Header
-        isPublishEnabled={false}
-        onClose={mockOnClose}
-        onPublish={mockOnPublish}
-      />
-    );
-
-    const publishButton = screen.getByText('Publish');
-    fireEvent.click(publishButton);
-
-    expect(mockOnPublish).toHaveBeenCalledTimes(0);
-  });
-
-  it('should call onPublish when publish button is clicked and isPublishEnabled is true', () => {
-    renderWithTheme(
-      <Header
-        isPublishEnabled
-        onClose={mockOnClose}
-        onPublish={mockOnPublish}
-      />
-    );
+  it('should call onPublish when publish button is clicked', () => {
+    view();
 
     const publishButton = screen.getByText('Publish');
     fireEvent.click(publishButton);
 
     expect(mockOnPublish).toHaveBeenCalledTimes(1);
+  });
+
+  it('should show submit for review when capability of publish is false', () => {
+    view({ capabilitiesArgs: { publish: false } });
+
+    const reviewButton = screen.getByText('Submit for review');
+    fireEvent.click(reviewButton);
+
+    expect(mockOnPublish).toHaveBeenCalledTimes(1);
+  });
+
+  it('should show tooltip in button when priority issues present', () => {
+    view();
+
+    const publishButton = screen.getByText('Publish');
+    fireEvent.focus(publishButton);
+
+    expect('Make updates before publishing to improve').toBeTruthy();
   });
 });

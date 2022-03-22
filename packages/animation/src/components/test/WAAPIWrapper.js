@@ -78,13 +78,12 @@ describe('StoryAnimation.WAAPIWrapper', () => {
       )
     );
     const ElementsWithWrapper = ({
-      // eslint-disable-next-line react/prop-types
       animations,
-      // eslint-disable-next-line react/prop-types
+
       elements,
-      // eslint-disable-next-line react/prop-types
+
       ElOneWAAPIInvocationTracker,
-      // eslint-disable-next-line react/prop-types
+
       ElTwoWAAPIInvocationTracker,
     }) => (
       <Provider animations={animations} elements={elements}>

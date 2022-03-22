@@ -59,8 +59,6 @@ class KSES extends Service_Base implements HasRequirements {
 	 * Initializes KSES filters for stories.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		add_filter( 'wp_insert_post_data', [ $this, 'filter_insert_post_data' ], 10, 3 );

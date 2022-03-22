@@ -111,6 +111,7 @@ function TextSets({ paneRef, filteredTextSets }) {
                   isActive={isActive}
                   onFocus={() => handleGridItemFocus(textSet.id)}
                   elements={textSet.elements}
+                  index={gridIndex}
                 />
               );
             })

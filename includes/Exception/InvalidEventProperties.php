@@ -46,7 +46,6 @@ final class InvalidEventProperties
 	 * @since 1.6.0
 	 *
 	 * @param mixed $properties Properties value that has the wrong type.
-	 * @return self
 	 */
 	public static function from_invalid_type( $properties ): self {
 		$type = \is_object( $properties )
@@ -68,7 +67,6 @@ final class InvalidEventProperties
 	 * @since 1.6.0
 	 *
 	 * @param mixed $property Property element that has the wrong type.
-	 * @return self
 	 */
 	public static function from_invalid_element_key_type( $property ): self {
 		$type = \is_object( $property )
@@ -88,7 +86,6 @@ final class InvalidEventProperties
 	 * the wrong value type for one or more of its elements.
 	 *
 	 * @param mixed $property Property element that has the wrong type.
-	 * @return self
 	 */
 	public static function from_invalid_element_value_type( $property ): self {
 		$type = \is_object( $property )

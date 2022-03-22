@@ -36,8 +36,6 @@ class Add_VideoPress_Poster_Generation_Media_Source extends Migration_Meta_To_Te
 	 * Get name of meta key to be used in migration.
 	 *
 	 * @since 1.7.2
-	 *
-	 * @return string
 	 */
 	protected function get_post_meta_key(): string {
 		return Jetpack::VIDEOPRESS_POSTER_META_KEY;

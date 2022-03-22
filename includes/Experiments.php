@@ -60,8 +60,6 @@ class Experiments extends Service_Base implements HasRequirements {
 
 	/**
 	 * Initializes experiments
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		if ( WEBSTORIES_DEV_MODE ) {
@@ -87,8 +85,6 @@ class Experiments extends Service_Base implements HasRequirements {
 	 * Registers the experiments admin menu page.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
 	public function add_menu_page(): void {
 		add_submenu_page(
@@ -106,8 +102,6 @@ class Experiments extends Service_Base implements HasRequirements {
 	 * Renders the experiments page.
 	 *
 	 * @codeCoverageIgnore
-	 *
-	 * @return void
 	 */
 	public function render(): void {
 		require_once WEBSTORIES_PLUGIN_DIR_PATH . 'includes/templates/admin/experiments.php';
@@ -117,8 +111,6 @@ class Experiments extends Service_Base implements HasRequirements {
 	 * Initializes the experiments settings page.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
 	public function initialize_settings(): void {
 		add_settings_section(
@@ -168,7 +160,6 @@ class Experiments extends Service_Base implements HasRequirements {
 	 *     @type string $label   Experiment label.
 	 *     @type bool   $default Whether the experiment is enabled by default.
 	 * }
-	 * @return void
 	 */
 	public function display_experiment_field( array $args ): void {
 		$is_enabled_by_default = ! empty( $args['default'] );
@@ -193,8 +184,6 @@ class Experiments extends Service_Base implements HasRequirements {
 	 * Display the experiments section.
 	 *
 	 * @codeCoverageIgnore
-	 *
-	 * @return void
 	 */
 	public function display_experiment_section(): void {
 		?>
@@ -297,6 +286,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Story locking', 'web-stories' ),
 				'description' => __( 'Lock in-progress stories from being edited by other authors', 'web-stories' ),
 				'group'       => 'general',
+				'default'     => true,
 			],
 			/**
 			 * Author: @spacedmonkey
@@ -310,6 +300,18 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'editor',
 			],
 			/**
+			 * Author: @spacedmonkey
+			 * Issue: #10706
+			 * Creation date: 2022-03-07
+			 */
+			[
+				'name'        => 'enableCORSCheck',
+				'label'       => __( 'CORS check', 'web-stories' ),
+				'description' => __( 'Add a check in the editor for CORS errors.', 'web-stories' ),
+				'group'       => 'editor',
+				'default'     => true,
+			],
+			/**
 			 * Author: @brittanyirl
 			 * Issue: #10115
 			 * Creation date: 2022-02-02
@@ -318,43 +320,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'name'        => 'enableUpdatedPublishStoryModal',
 				'label'       => __( 'Updated Publish Story Modal', 'web-stories' ),
 				'description' => __( 'Enable new pre-publish confirmation modal', 'web-stories' ),
-				'group'       => 'editor',
-			],
-			/**
-			 * Author: @miina
-			 * Issue #471
-			 * Creation date: 2021-08-10
-			 */
-			[
-				'name'        => 'enableHotlinking',
-				'label'       => __( 'Insert media from link', 'web-stories' ),
-				'description' => __( 'Enable inserting media element from external link', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-
-			/**
-			 * Author: @barklund
-			 * Issue: #8877
-			 * Creation date: 2021-09-01
-			 */
-			[
-				'name'        => 'enableVideoTrim',
-				'label'       => __( 'Video trimming', 'web-stories' ),
-				'description' => __( 'Enable video trimming', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-
-			/**
-			 * Author: @barklund
-			 * Issue: #8973
-			 * Creation date: 2021-09-07
-			 */
-			[
-				'name'        => 'enableThumbnailCaching',
-				'label'       => __( 'Thumbnail Caching', 'web-stories' ),
-				'description' => __( 'Enable thumbnail caching', 'web-stories' ),
 				'group'       => 'editor',
 				'default'     => true,
 			],
@@ -380,6 +345,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Page Background Audio', 'web-stories' ),
 				'description' => __( 'Enable adding captions to background audio', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @barklund
@@ -393,14 +359,14 @@ class Experiments extends Service_Base implements HasRequirements {
 				'group'       => 'editor',
 			],
 			/**
-			 * Author: @swissspidy
-			 * Issue: #10394
-			 * Creation date: 2022-01-32
+			 * Author: @timarney
+			 * Issue: #10014
+			 * Creation date: 2022-03-03
 			 */
 			[
-				'name'        => 'semanticHeadingTags',
-				'label'       => __( 'Semantic Headings', 'web-stories' ),
-				'description' => __( 'Automatically use semantic heading tags for text elements', 'web-stories' ),
+				'name'        => 'notifyDeletedFonts',
+				'label'       => __( 'Deleted Fonts', 'web-stories' ),
+				'description' => __( 'Notify user about deleted fonts in story', 'web-stories' ),
 				'group'       => 'editor',
 			],
 		];

@@ -28,31 +28,40 @@ import {
   Icons,
   THEME_CONSTANTS,
 } from '@googleforcreators/design-system';
+/**
+ * Internal dependencies
+ */
+import { HEADER_BAR_HEIGHT, HEADER_BAR_MARGIN } from '../constants';
+import ButtonWithChecklistWarning from '../../header/buttons/buttonWithChecklistWarning';
 
 const _Header = styled.header`
   width: 100%;
-  height: 44px;
+  height: ${HEADER_BAR_HEIGHT};
   display: flex;
   align-items: center;
-  margin-bottom: 1px;
+  margin-bottom: ${HEADER_BAR_MARGIN};
   background-color: ${({ theme }) => theme.colors.bg.secondary};
-
-  & > button:first-of-type {
-    margin: 0 auto 0 6px;
-  }
-  & > button:last-of-type {
-    margin: 0 6px 0 auto;
-  }
+  border-top-left-radius: ${({ theme }) => theme.borders.radius.medium};
+  border-top-right-radius: ${({ theme }) => theme.borders.radius.medium};
 `;
 
-const PublishButton = styled(Button)`
-  height: 32px;
+const CloseButton = styled(Button)`
+  margin: 6px auto 5px 6px;
 `;
 
-const Header = ({ isPublishEnabled, onClose, onPublish }) => {
+const PublishButtonWrapper = styled.div`
+  margin: 6px 6px 5px auto;
+`;
+
+const Header = ({
+  onClose,
+  onPublish,
+  publishButtonDisabled,
+  hasFutureDate,
+}) => {
   return (
     <_Header>
-      <Button
+      <CloseButton
         variant={BUTTON_VARIANTS.SQUARE}
         size={BUTTON_SIZES.SMALL}
         type={BUTTON_TYPES.TERTIARY}
@@ -60,22 +69,20 @@ const Header = ({ isPublishEnabled, onClose, onPublish }) => {
         aria-label={__('Close', 'web-stories')}
       >
         <Icons.Cross />
-      </Button>
+      </CloseButton>
       <Headline
         as="h2"
         size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.XXX_SMALL}
       >
         {__('Story Details', 'web-stories')}
       </Headline>
-      <PublishButton
-        variant={BUTTON_VARIANTS.RECTANGLE}
-        size={BUTTON_SIZES.SMALL}
-        type={BUTTON_TYPES.PRIMARY}
-        disabled={!isPublishEnabled}
-        onClick={onPublish}
-      >
-        {__('Publish', 'web-stories')}
-      </PublishButton>
+      <PublishButtonWrapper>
+        <ButtonWithChecklistWarning
+          onClick={onPublish}
+          disabled={publishButtonDisabled}
+          hasFutureDate={hasFutureDate}
+        />
+      </PublishButtonWrapper>
     </_Header>
   );
 };
@@ -83,7 +90,8 @@ const Header = ({ isPublishEnabled, onClose, onPublish }) => {
 export default Header;
 
 Header.propTypes = {
-  isPublishEnabled: PropTypes.bool,
   onClose: PropTypes.func.isRequired,
   onPublish: PropTypes.func.isRequired,
+  publishButtonDisabled: PropTypes.bool,
+  hasFutureDate: PropTypes.bool,
 };

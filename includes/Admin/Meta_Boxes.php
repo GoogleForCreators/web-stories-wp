@@ -47,8 +47,6 @@ class Meta_Boxes extends Service_Base {
 	 * Init.
 	 *
 	 * @since 1.2.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		add_action( 'add_meta_boxes_' . Story_Post_Type::POST_TYPE_SLUG, [ $this, 'remove_meta_boxes' ], PHP_INT_MAX );
@@ -65,8 +63,6 @@ class Meta_Boxes extends Service_Base {
 	 * @since 1.2.0
 	 *
 	 * @see do_meta_boxes()
-	 *
-	 * @return void
 	 */
 	public function remove_meta_boxes(): void {
 		global $wp_meta_boxes;

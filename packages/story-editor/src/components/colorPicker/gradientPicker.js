@@ -38,8 +38,8 @@ import GradientLine from './gradientLine';
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
-  padding: 0 16px 16px;
+  align-items: center;
+  padding: 16px 16px 0;
   height: 60px;
 `;
 
@@ -52,7 +52,6 @@ const SmallButton = styled(Button)`
   width: 24px;
   height: 24px;
   padding: 0;
-  margin-bottom: -3px;
   svg {
     width: 24px;
     height: 24px;

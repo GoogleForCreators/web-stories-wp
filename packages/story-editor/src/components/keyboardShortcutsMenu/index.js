@@ -28,10 +28,10 @@ import { useEffect, useFocusOut, useRef } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
+import { Z_INDEX_FOOTER } from '../../constants/zIndex';
 import { isKeyboardUser } from '../../utils/keyboardOnlyOutline';
 import Popup from '../secondaryPopup';
 import { ToggleButton } from '../toggleButton';
-import { Z_INDEX } from '../canvas/layout';
 import DirectionAware from '../directionAware';
 import { KEYBOARD_SHORTCUTS_PADDING } from '../footer/constants';
 import ShortcutMenu from './shortcutMenu';
@@ -43,15 +43,11 @@ const StyledToggleButton = styled(ToggleButton)`
   padding-right: ${KEYBOARD_SHORTCUTS_PADDING}px;
   width: auto;
   display: block;
+  background-color: ${({ theme }) => theme.colors.bg.primary};
 `;
 
 const Wrapper = styled.div`
-  /**
-    * sibling inherits parent z-index of Z_INDEX.EDIT
-    * so this needs to be placed above that while still
-    * retaining its position in the DOM for focus purposes
-    */
-  z-index: ${Z_INDEX.EDIT + 1};
+  z-index: ${Z_INDEX_FOOTER};
 `;
 const MainIcon = styled(Icons.Keyboard)`
   height: 32px;

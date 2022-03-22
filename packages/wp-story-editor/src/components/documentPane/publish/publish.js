@@ -17,13 +17,16 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import {
   useState,
   useEffect,
+  useMemo,
   useCallback,
   forwardRef,
 } from '@googleforcreators/react';
 import styled from 'styled-components';
+import { getExtensionsFromMimeType } from '@googleforcreators/media';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import {
   Link,
@@ -75,8 +78,8 @@ const MediaWrapper = styled.div`
 `;
 
 const StyledMedia = styled(Media)`
-  width: ${({ width }) => width}px;
-  height: ${({ height }) => height}px;
+  width: ${({ $width }) => $width}px;
+  height: ${({ $height }) => $height}px;
 `;
 
 const HighlightRow = styled(Row).attrs({
@@ -114,7 +117,7 @@ const LogoImg = styled.img`
   max-height: 96px;
 `;
 
-function PublishPanel() {
+function PublishPanel({ nameOverride }) {
   const {
     state: { users },
   } = useInspector();
@@ -125,12 +128,19 @@ function PublishPanel() {
   const { getPublisherLogos, addPublisherLogo } = apiCallbacks;
 
   const {
-    allowedImageMimeTypes,
-    allowedImageFileTypes,
+    allowedMimeTypes: { image: allowedImageMimeTypes },
     dashboardSettingsLink,
     capabilities: { hasUploadMediaAction, canManageSettings },
     MediaUpload,
   } = useConfig();
+
+  const allowedImageFileTypes = useMemo(
+    () =>
+      allowedImageMimeTypes
+        .map((type) => getExtensionsFromMimeType(type))
+        .flat(),
+    [allowedImageMimeTypes]
+  );
 
   const [publisherLogos, setPublisherLogos] = useState([]);
 
@@ -291,7 +301,7 @@ function PublishPanel() {
 
   return (
     <Panel
-      name="publishing"
+      name={nameOverride || 'publishing'}
       collapsedByDefault={false}
       isPersistable={!(highlightLogo || highlightPoster)}
     >
@@ -317,8 +327,8 @@ function PublishPanel() {
                     node.focus();
                   }
                 }}
-                width={72}
-                height={96}
+                $width={72}
+                $height={96}
                 cropParams={{
                   width: 640,
                   height: 853,
@@ -349,6 +359,7 @@ function PublishPanel() {
                 renderer={publisherLogoOptionRenderer}
                 activeItemRenderer={activeItemRenderer}
                 selectedId={publisherLogo.id}
+                zIndex={10}
                 disabled={!publisherLogosWithUploadOption.length}
                 ref={(node) => {
                   if (
@@ -385,3 +396,7 @@ function PublishPanel() {
 }
 
 export default PublishPanel;
+
+PublishPanel.propTypes = {
+  nameOverride: PropTypes.string,
+};

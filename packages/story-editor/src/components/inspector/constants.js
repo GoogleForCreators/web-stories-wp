@@ -13,5 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const DESIGN = 'design';
+export const INSERT = 'insert';
+export const STYLE = 'design';
 export const DOCUMENT = 'document';
+export const PUBLISH_MODAL_DOCUMENT = 'publish_modal_document';

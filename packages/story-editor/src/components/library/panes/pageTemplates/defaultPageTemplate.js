@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { forwardRef } from '@googleforcreators/react';
+import { forwardRef, useState } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { _x, sprintf, __ } from '@googleforcreators/i18n';
 import {
@@ -26,10 +26,15 @@ import {
   BUTTON_TYPES,
   THEME_CONSTANTS,
   Text,
+  themeHelpers,
+  ThemeGlobals,
 } from '@googleforcreators/design-system';
+
 /**
  * Internal dependencies
  */
+import InsertionOverlay from '../shared/insertionOverlay';
+import { PageTemplateTitleContainer } from '../shared';
 import { PAGE_TEMPLATE_TYPES } from './constants';
 
 const PageTemplateWrapper = styled.div``;
@@ -40,16 +45,24 @@ const PageTemplateButton = styled(Button).attrs({ type: BUTTON_TYPES.PLAIN })`
   padding: 0;
   border-radius: ${({ theme }) => theme.borders.radius.small};
   overflow: hidden;
+
+  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR},
+    &[data-focus-visible-added]
+    [role='presentation'] {
+    box-shadow: none;
+  }
+
+  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} [role='presentation'],
+  &[data-focus-visible-added] [role='presentation'] {
+    ${({ theme }) =>
+      themeHelpers.focusCSS(
+        theme.colors.border.focus,
+        theme.colors.bg.secondary
+      )};
+  }
 `;
 
-const PageTemplateTitleContainer = styled.div`
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  padding: 8px;
-  background-color: ${({ theme }) => theme.colors.opacity.black64};
-  opacity: 0;
-
+const TemplateTitleContainer = styled(PageTemplateTitleContainer)`
   ${PageTemplateButton}:hover &,
   ${PageTemplateButton}:focus & {
     opacity: 1;
@@ -62,13 +75,14 @@ const PosterImg = styled.img`
 `;
 
 const DefaultPageTemplate = forwardRef(
-  ({ page, columnWidth, isActive, ...rest }, ref) => {
+  ({ page, columnWidth, isActive, onFocus, ...rest }, ref) => {
     const templateTitle = sprintf(
       /* translators: 1: template name. 2: page template name. */
       _x('%1$s %2$s', 'page template title', 'web-stories'),
       page.title,
       PAGE_TEMPLATE_TYPES[page.type].name
     );
+    const [isFocused, setIsFocused] = useState(false);
 
     return (
       <PageTemplateWrapper ref={ref} role="listitem">
@@ -76,6 +90,13 @@ const DefaultPageTemplate = forwardRef(
           columnWidth={columnWidth}
           tabIndex={isActive ? 0 : -1}
           aria-label={templateTitle}
+          onPointerEnter={() => setIsFocused(true)}
+          onPointerLeave={() => setIsFocused(false)}
+          onFocus={() => {
+            setIsFocused(true);
+            onFocus?.();
+          }}
+          onBlur={() => setIsFocused(false)}
           {...rest}
         >
           {page.png && (
@@ -91,15 +112,16 @@ const DefaultPageTemplate = forwardRef(
               draggable={false}
             />
           )}
+          {isFocused && <InsertionOverlay />}
           {page.title && (
-            <PageTemplateTitleContainer>
+            <TemplateTitleContainer>
               <Text
                 as="span"
                 size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}
               >
                 {templateTitle}
               </Text>
-            </PageTemplateTitleContainer>
+            </TemplateTitleContainer>
           )}
         </PageTemplateButton>
       </PageTemplateWrapper>

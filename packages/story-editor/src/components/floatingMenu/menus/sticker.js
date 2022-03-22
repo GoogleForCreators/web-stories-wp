@@ -31,7 +31,7 @@ import {
   Dismiss,
 } from '../elements';
 
-const FloatingShapeMenu = memo(function FloatingShapeMenu() {
+const FloatingStickerMenu = memo(function FloatingStickerMenu() {
   return (
     <>
       <LayerOpacity />
@@ -52,4 +52,4 @@ const FloatingShapeMenu = memo(function FloatingShapeMenu() {
   );
 });
 
-export default FloatingShapeMenu;
+export default FloatingStickerMenu;

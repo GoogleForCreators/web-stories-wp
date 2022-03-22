@@ -20,13 +20,13 @@
 const path = require('path');
 const glob = require('glob');
 const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const RtlCssPlugin = require('rtlcss-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const WebpackBar = require('webpackbar');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 /**
  * WordPress dependencies
@@ -55,8 +55,7 @@ const mode = isProduction ? 'production' : 'development';
 const sharedConfig = {
   resolve: {
     // Fixes resolving packages in the monorepo so we use the "src" folder, not "dist".
-    // TODO: Revisit after upgrading to webpack v5 or when splitting repository.
-    mainFields: ['browser', 'module', 'main', 'source'],
+    exportsFields: ['customExports', 'exports'],
   },
   mode,
   devtool: !isProduction ? 'source-map' : undefined,
@@ -65,53 +64,23 @@ const sharedConfig = {
     filename: '[name].js',
     chunkFilename: '[name].js?v=[chunkhash]',
     publicPath: '',
-    /**
-     * If multiple webpack runtimes (from different compilations) are used on the same webpage,
-     * there is a risk of conflicts of on-demand chunks in the global namespace.
-     *
-     * @see (@link https://webpack.js.org/configuration/output/#outputjsonpfunction)
-     */
-    jsonpFunction: '__webStories_webpackJsonp',
   },
+  target: 'browserslist',
   module: {
     rules: [
-      // This is a workaround to circumvent exports mangling in webpack v4,
-      // which would break i18n string extraction.
-      // While introducing global variables is not ideal, it helps ensuring
-      // i18n works while retaining all tree shaking functionality in webpack.
-      // See https://github.com/googleforcreators/web-stories-wp/pull/9001 for context.
-      // TODO(#5792): Use `mangleExports` option in webpack v5 instead.
-      {
-        test: require.resolve('./packages/i18n/src'),
-        loader: 'expose-loader',
-        options: {
-          exposes: [
-            {
-              globalName: 'webStories.i18n.__',
-              moduleLocalName: '__',
-            },
-            {
-              globalName: 'webStories.i18n._n',
-              moduleLocalName: '_n',
-            },
-            {
-              globalName: 'webStories.i18n._x',
-              moduleLocalName: '_x',
-            },
-            {
-              globalName: 'webStories.i18n._nx',
-              moduleLocalName: '_nx',
-            },
-          ],
-        },
-      },
       !isProduction && {
-        test: /\.js$/,
+        test: /\.m?js$/,
         use: ['source-map-loader'],
+        // html-to-image and react-blurhash reference source maps but don't currently ship with any.
+        exclude: /node_modules\/html-to-image|node_modules\/react-blurhash/,
         enforce: 'pre',
+        resolve: {
+          fullySpecified: false,
+        },
       },
       {
         test: /\.worker\.js$/,
+        exclude: /node_modules/,
         use: {
           loader: 'worker-loader',
           options: {
@@ -120,12 +89,16 @@ const sharedConfig = {
         },
       },
       {
-        test: /\.js$/,
+        test: /\.m?js$/,
         exclude: /node_modules/,
+        resolve: {
+          // Avoid having to provide full file extension for imports.
+          // See https://webpack.js.org/configuration/module/#resolvefullyspecified
+          fullySpecified: false,
+        },
         use: [
-          require.resolve('thread-loader'),
           {
-            loader: require.resolve('babel-loader'),
+            loader: 'babel-loader',
             options: {
               // Babel uses a directory within local node_modules
               // by default. Use the environment variable option
@@ -138,56 +111,76 @@ const sharedConfig = {
       // These should be sync'd with the config in `.storybook/main.cjs`.
       {
         test: /\.svg$/,
-        use: [
+        // Use asset SVG and SVGR together.
+        // Not using resourceQuery because it doesn't work well with Rollup.
+        // https://react-svgr.com/docs/webpack/#use-svgr-and-asset-svg-in-the-same-project
+        oneOf: [
           {
-            loader: '@svgr/webpack',
-            options: {
-              titleProp: true,
-              svgo: true,
-              memo: true,
-              svgoConfig: {
-                plugins: [
-                  {
-                    removeViewBox: false,
-                    removeDimensions: true,
-                    convertColors: {
-                      currentColor: /^(?!url|none)/i,
-                    },
-                  },
-                ],
-              },
-            },
+            type: 'asset/inline',
+            include: [/inline-icons\/.*\.svg$/],
           },
-          'url-loader',
-        ],
-        exclude: [/images\/.*\.svg$/],
-      },
-      {
-        test: /\.svg$/,
-        use: [
           {
-            loader: '@svgr/webpack',
-            options: {
-              titleProp: true,
-              svgo: true,
-              memo: true,
-              svgoConfig: {
-                plugins: [
-                  {
-                    removeViewBox: false,
-                    removeDimensions: true,
-                    convertColors: {
-                      // See https://github.com/googleforcreators/web-stories-wp/pull/6361
-                      currentColor: false,
-                    },
+            issuer: /\.js?$/,
+            include: [/\/icons\/.*\.svg$/],
+            use: [
+              {
+                loader: '@svgr/webpack',
+                options: {
+                  titleProp: true,
+                  svgo: true,
+                  memo: true,
+                  svgoConfig: {
+                    plugins: [
+                      {
+                        name: 'preset-default',
+                        params: {
+                          overrides: {
+                            removeViewBox: false,
+                            convertColors: {
+                              currentColor: /^(?!url|none)/i,
+                            },
+                          },
+                        },
+                      },
+                      'removeDimensions',
+                    ],
                   },
-                ],
+                },
               },
-            },
+            ],
           },
-          'url-loader',
+          {
+            issuer: /\.js?$/,
+            include: [/images\/.*\.svg$/],
+            use: [
+              {
+                loader: '@svgr/webpack',
+                options: {
+                  titleProp: true,
+                  svgo: true,
+                  memo: true,
+                  svgoConfig: {
+                    plugins: [
+                      {
+                        name: 'preset-default',
+                        params: {
+                          overrides: {
+                            removeViewBox: false,
+                            convertColors: {
+                              // See https://github.com/googleforcreators/web-stories-wp/pull/6361
+                              currentColor: false,
+                            },
+                          },
+                        },
+                      },
+                      'removeDimensions',
+                    ],
+                  },
+                },
+              },
+            ],
+          },
         ],
-        include: [/images\/.*\.svg$/],
       },
       {
         test: /\.css$/,
@@ -196,14 +189,10 @@ const sharedConfig = {
       },
       {
         test: /\.(png|jpe?g|gif|webp)$/i,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              outputPath: '../images',
-            },
-          },
-        ],
+        type: 'asset/resource',
+        generator: {
+          filename: 'images/[hash][ext]',
+        },
       },
     ].filter(Boolean),
   },
@@ -239,11 +228,10 @@ const sharedConfig = {
     splitChunks: {
       automaticNameDelimiter: '-',
     },
+    mangleExports: false,
     minimizer: [
       new TerserPlugin({
         parallel: true,
-        sourceMap: false,
-        cache: true,
         terserOptions: {
           // We preserve function names that start with capital letters as
           // they're _likely_ component names, and these are useful to have
@@ -255,7 +243,7 @@ const sharedConfig = {
         },
         extractComments: false,
       }),
-      new OptimizeCSSAssetsPlugin({}),
+      new CssMinimizerPlugin(),
     ],
   },
 };
@@ -310,7 +298,8 @@ const templateParameters = (compilation, assets, assetTags, options) => ({
     files: assets,
     options,
   },
-  chunkNames: compilation.chunks.map(({ name }) => name),
+  // compilation.chunks is a Set.
+  chunkNames: [...compilation.chunks].map(({ name }) => name).filter(Boolean),
 });
 
 const editorAndDashboard = {

@@ -146,10 +146,16 @@ class Story {
 	 * @since 1.0.0
 	 *
 	 * @param int|null|WP_Post $_post Post id or Post object.
-	 * @return bool
 	 */
 	public function load_from_post( $_post ): bool {
-		$this->publisher_name = get_bloginfo( 'name' );
+		/**
+		 * Filters the publisher's name
+		 *
+		 * @since 1.7.0
+		 *
+		 * @param string $name Publisher Name.
+		 */
+		$this->publisher_name = apply_filters( 'web_stories_publisher_name', get_bloginfo( 'name' ) );
 
 		$post = get_post( $_post );
 		if ( ! $post instanceof WP_Post || Story_Post_Type::POST_TYPE_SLUG !== $post->post_type ) {
@@ -204,8 +210,6 @@ class Story {
 	 * Getter for poster source set sizes.
 	 *
 	 * @since 1.18.0
-	 *
-	 * @return string
 	 */
 	public function get_poster_sizes(): string {
 		return (string) $this->poster_sizes;
@@ -215,8 +219,6 @@ class Story {
 	 * Getter for poster source set.
 	 *
 	 * @since 1.18.0
-	 *
-	 * @return string
 	 */
 	public function get_poster_srcset(): string {
 		return (string) $this->poster_srcset;
@@ -226,8 +228,6 @@ class Story {
 	 * Getter for title attribute.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return string
 	 */
 	public function get_title(): string {
 		return (string) $this->title;
@@ -235,8 +235,6 @@ class Story {
 
 	/**
 	 * Getter for excerpt attribute.
-	 *
-	 * @return string
 	 */
 	public function get_excerpt(): string {
 		return (string) $this->excerpt;
@@ -246,8 +244,6 @@ class Story {
 	 * Getter for url attribute.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return string
 	 */
 	public function get_url(): string {
 		return (string) $this->url;
@@ -257,8 +253,6 @@ class Story {
 	 * Getter for markup attribute.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return string
 	 */
 	public function get_markup(): string {
 		return (string) $this->markup;
@@ -268,8 +262,6 @@ class Story {
 	 * Getter for poster portrait attribute.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return string
 	 */
 	public function get_poster_portrait(): string {
 		return (string) $this->poster_portrait;
@@ -277,8 +269,6 @@ class Story {
 
 	/**
 	 * Get the story ID.
-	 *
-	 * @return int
 	 */
 	public function get_id(): int {
 		return (int) $this->id;
@@ -286,8 +276,6 @@ class Story {
 
 	/**
 	 * Get author of the story.
-	 *
-	 * @return string
 	 */
 	public function get_author(): string {
 		return (string) $this->author;
@@ -295,8 +283,6 @@ class Story {
 
 	/**
 	 * Date for the story.
-	 *
-	 * @return string
 	 */
 	public function get_date(): string {
 		return (string) $this->date;
@@ -310,16 +296,7 @@ class Story {
 	 * @return string Publisher Name.
 	 */
 	public function get_publisher_name(): string {
-		/**
-		 * Filters the publisher's name
-		 *
-		 * @since 1.7.0
-		 *
-		 * @param string $name Publisher Name.
-		 */
-		$this->publisher_name = apply_filters( 'web_stories_publisher_name', $this->publisher_name );
-
-		return esc_attr( $this->publisher_name );
+		return $this->publisher_name;
 	}
 
 	/**

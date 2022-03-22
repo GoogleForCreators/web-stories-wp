@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 
@@ -35,7 +36,7 @@ const StyledSimplePanel = styled(SimplePanel)`
   padding-right: 0;
 `;
 
-function TaxonomiesPanel(props) {
+function TaxonomiesPanel({ nameOverride, ...props }) {
   const { capabilities } = useStory(({ state: { capabilities } }) => ({
     capabilities,
   }));
@@ -63,7 +64,7 @@ function TaxonomiesPanel(props) {
 
   return (
     <StyledSimplePanel
-      name="taxonomies"
+      name={nameOverride || 'taxonomies'}
       title={__('Taxonomies', 'web-stories')}
       {...props}
     >
@@ -94,3 +95,7 @@ function TaxonomiesPanel(props) {
 }
 
 export default TaxonomiesPanel;
+
+TaxonomiesPanel.propTypes = {
+  nameOverride: PropTypes.string,
+};

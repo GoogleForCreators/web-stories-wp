@@ -23,9 +23,9 @@ import { fireEvent, screen } from '@testing-library/react';
  * Internal dependencies
  */
 import VideoAccessibility, { MIN_MAX } from '../videoAccessibility';
-import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 import { renderPanel } from '../../../shared/test/_utils';
 import ConfigContext from '../../../../../app/config/context';
+import { MULTIPLE_DISPLAY_VALUE } from '../../../../../constants';
 
 function MediaUpload({ render, onSelect }) {
   const open = () => {
@@ -38,13 +38,19 @@ function MediaUpload({ render, onSelect }) {
 
 function arrange(selectedElements) {
   const configValue = {
-    allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
-    allowedImageMimeTypes: [
-      'image/png',
-      'image/jpeg',
-      'image/jpg',
-      'image/gif',
-    ],
+    allowedMimeTypes: {
+      audio: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
+      image: [
+        'image/png',
+        'image/jpeg',
+        'image/jpg',
+        'image/gif',
+        'image/webp',
+      ],
+      caption: ['text/vtt'],
+      vector: [],
+      video: ['video/mp4', 'video/webm'],
+    },
     capabilities: {
       hasUploadMediaAction: true,
     },

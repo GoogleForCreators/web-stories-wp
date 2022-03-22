@@ -17,4 +17,3 @@ export { default as flattenFormData } from './flattenFormData';
 export { default as base64Encode } from './base64Encode';
 export { default as getResourceFromAttachment } from './getResourceFromAttachment';
 export { default as transformStoryResponse } from './transformStoryResponse';
-export * from './snakeToCamelCase';

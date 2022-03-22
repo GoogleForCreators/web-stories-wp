@@ -34,7 +34,8 @@ describe('Carousel Drawer', () => {
     await fixture.render();
     await fixture.collapseHelpCenter();
     // We add some content to the first page to make the thumbnail more interesting
-    await fixture.events.click(fixture.editor.library.media.item(0));
+    const mediaItem = fixture.editor.library.media.item(0);
+    await fixture.events.mouse.clickOn(mediaItem, 20, 20);
 
     await waitFor(() => {
       if (fixture.editor.footer.carousel.pages.length === 0) {
@@ -78,7 +79,7 @@ describe('Carousel Drawer', () => {
   });
 
   describe('with a multi-page story', () => {
-    const EXTRA_PAGES = 9;
+    const EXTRA_PAGES = 19;
 
     beforeEach(() => {
       // Let's add some extra pages

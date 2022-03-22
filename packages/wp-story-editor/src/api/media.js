@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { addQueryArgs } from '@googleforcreators/design-system';
+import { addQueryArgs } from '@googleforcreators/url';
 
 /**
  * WordPress dependencies
@@ -67,6 +67,19 @@ export function getMedia(
       totalPages: headers['X-WP-TotalPages'],
     },
   }));
+}
+
+// Important: Keep in sync with REST API preloading definition.
+export function getMediaForCorsCheck(config) {
+  const path = addQueryArgs(config.api.media, {
+    context: 'edit',
+    per_page: 10,
+    _fields: 'source_url',
+  });
+
+  return apiFetch({ path }).then((attachments) =>
+    attachments.map((attachment) => attachment.source_url)
+  );
 }
 
 /**
@@ -160,10 +173,38 @@ export async function getPosterMediaById(config, mediaId) {
  * @return {Promise<import('@googleforcreators/media').Resource>} Media resource.
  */
 export function uploadMedia(config, file, additionalData) {
+  const {
+    originalId,
+    mediaId,
+    storyId,
+    templateId,
+    isMuted,
+    mediaSource,
+    trimData,
+    baseColor,
+    blurHash,
+  } = additionalData;
+
+  const wpKeysMapping = {
+    web_stories_media_source: mediaSource,
+    web_stories_is_muted: isMuted,
+    post: templateId || storyId || mediaId,
+    original_id: originalId,
+    web_stories_trim_data: trimData,
+    web_stories_base_color: baseColor,
+    web_stories_blurhash: blurHash,
+  };
+
+  Object.entries(wpKeysMapping).forEach(([key, value]) => {
+    if (value === undefined) {
+      delete wpKeysMapping[key];
+    }
+  });
+
   // Create upload payload
   const data = new window.FormData();
   data.append('file', file, file.name || file.type.replace('/', '.'));
-  Object.entries(additionalData).forEach(([key, value]) =>
+  Object.entries(wpKeysMapping).forEach(([key, value]) =>
     flattenFormData(data, key, value)
   );
 
@@ -184,9 +225,47 @@ export function uploadMedia(config, file, additionalData) {
  * @return {Promise} Media Object Promise.
  */
 export function updateMedia(config, mediaId, data) {
+  const {
+    baseColor,
+    blurHash,
+    isMuted,
+    mediaSource,
+    optimizedId,
+    mutedId,
+    posterId,
+    storyId,
+    altText,
+  } = data;
+
+  const wpKeysMapping = {
+    meta: {
+      web_stories_base_color: baseColor,
+      web_stories_blurhash: blurHash,
+      web_stories_optimized_id: optimizedId,
+      web_stories_muted_id: mutedId,
+      web_stories_poster_id: posterId,
+    },
+    web_stories_is_muted: isMuted,
+    web_stories_media_source: mediaSource,
+    featured_media: posterId,
+    post: storyId,
+    alt_text: altText,
+  };
+
+  Object.entries(wpKeysMapping.meta).forEach(([key, value]) => {
+    if (value === undefined) {
+      delete wpKeysMapping.meta[key];
+    }
+  });
+
+  Object.entries(wpKeysMapping).forEach(([key, value]) => {
+    if (value === undefined) {
+      delete wpKeysMapping[key];
+    }
+  });
   return apiFetch({
     path: `${config.api.media}${mediaId}/`,
-    data,
+    data: wpKeysMapping,
     method: 'POST',
   }).then(getResourceFromAttachment);
 }

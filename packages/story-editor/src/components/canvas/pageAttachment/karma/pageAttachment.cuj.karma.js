@@ -40,12 +40,13 @@ describe('Page Attachment', () => {
     await fixture.render();
     await fixture.collapseHelpCenter();
 
-    // Select Page by default and remove empty state.
-    await fixture.events.click(
-      fixture.editor.canvas.quickActionMenu.changeBackgroundColorButton
+    // Select Page by default.
+    // Click the background element
+    await fixture.events.mouse.clickOn(
+      fixture.editor.canvas.framesLayer.frames[0].node,
+      10,
+      10
     );
-    await fixture.events.keyboard.type('ef');
-    await fixture.events.keyboard.press('Tab');
   });
 
   afterEach(() => {
@@ -85,6 +86,8 @@ describe('Page Attachment', () => {
   };
 
   const setPageAttachmentLink = async (link) => {
+    // Open style pane
+    await fixture.events.click(fixture.editor.inspector.designTab);
     const input = fixture.screen.getByLabelText(
       'Type an address to add a page attachment link'
     );

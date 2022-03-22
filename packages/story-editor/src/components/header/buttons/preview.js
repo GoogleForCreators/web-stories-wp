@@ -27,13 +27,13 @@ import {
   BUTTON_VARIANTS,
   Icons,
 } from '@googleforcreators/design-system';
+import { escapeHTML } from '@googleforcreators/dom';
 import PropTypes from 'prop-types';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
-import escapeHTML from '../../../utils/escapeHTML';
 import PreviewErrorDialog from '../previewErrorDialog';
 import Tooltip from '../../tooltip';
 import useIsUploadingToStory from '../../../utils/useIsUploadingToStory';

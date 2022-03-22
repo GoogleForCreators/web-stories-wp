@@ -31,6 +31,7 @@ import json from '@rollup/plugin-json';
 import dynamicImportVars from '@rollup/plugin-dynamic-import-vars';
 import license from 'rollup-plugin-license';
 import del from 'rollup-plugin-delete';
+import copy from 'rollup-plugin-copy';
 import webWorkerLoader from 'rollup-plugin-web-worker-loader';
 import workspacesRun from 'workspaces-run';
 
@@ -48,11 +49,57 @@ const plugins = [
     presets: ['@babel/env', '@babel/preset-react'],
     plugins: [
       'babel-plugin-styled-components',
-      'babel-plugin-inline-json-import',
+      'babel-plugin-transform-react-remove-prop-types',
     ],
   }),
-  url(),
-  svgr(),
+  url({
+    include: '**/inline-icons/*.svg',
+  }),
+  svgr({
+    include: '**/icons/*.svg',
+    titleProp: true,
+    svgo: true,
+    memo: true,
+    svgoConfig: {
+      plugins: [
+        {
+          name: 'preset-default',
+          params: {
+            overrides: {
+              removeViewBox: false,
+              convertColors: {
+                currentColor: /^(?!url|none)/i,
+              },
+            },
+          },
+        },
+        'removeDimensions',
+      ],
+    },
+  }),
+  svgr({
+    include: '**/images/*.svg',
+    titleProp: true,
+    svgo: true,
+    memo: true,
+    svgoConfig: {
+      plugins: [
+        {
+          name: 'preset-default',
+          params: {
+            overrides: {
+              removeViewBox: false,
+              convertColors: {
+                // See https://github.com/googleforcreators/web-stories-wp/pull/6361
+                currentColor: false,
+              },
+            },
+          },
+        },
+        'removeDimensions',
+      ],
+    },
+  }),
   commonjs(),
   json({
     compact: true,
@@ -98,6 +145,7 @@ const plugins = [
 /**
  * @typedef {Object} CustomInputOptions
  * @property {string} configPackages Comma-separated list of package names to include.
+ * @property {string} configEntries Comma-separated list of entries to build. Supports "es" and "cjs".
  * @typedef {import('rollup').RollupOptions & CustomInputOptions} CustomInputOptions
  */
 
@@ -149,42 +197,64 @@ async function config(cliArgs) {
       ]),
     ];
 
+    const sourceDir = dirname(resolvePath(pkg.dir, pkg.config.source));
+
     if (entriesToBuild.includes('es')) {
+      const moduleDir = dirname(resolvePath(pkg.dir, pkg.config.module));
+      const _plugins = [
+        del({
+          targets: [moduleDir],
+          runOnce: false !== cliArgs.watch,
+        }),
+      ];
+
+      if ('@googleforcreators/fonts' === pkg.name) {
+        _plugins.push(
+          copy({
+            targets: [{ src: `${sourceDir}/fonts.json`, dest: moduleDir }],
+          })
+        );
+      }
+
       entries.push({
         input,
         output: {
-          dir: dirname(resolvePath(pkg.dir, pkg.config.module)),
+          dir: moduleDir,
           format: 'es',
           preserveModules: true,
         },
-        plugins: [
-          ...plugins,
-          del({
-            targets: [dirname(resolvePath(pkg.dir, pkg.config.module))],
-            runOnce: false !== cliArgs.watch,
-          }),
-        ],
+        plugins: [...plugins, ..._plugins],
         external,
         context: 'window',
       });
     }
 
     if (entriesToBuild.includes('cjs')) {
+      const mainDir = dirname(resolvePath(pkg.dir, pkg.config.main));
+      const _plugins = [
+        del({
+          targets: [mainDir],
+          runOnce: false !== cliArgs.watch,
+        }),
+      ];
+
+      if ('@googleforcreators/fonts' === pkg.name) {
+        _plugins.push(
+          copy({
+            targets: [{ src: `${sourceDir}/fonts.json`, dest: mainDir }],
+          })
+        );
+      }
+
       entries.push({
         input,
         output: {
-          dir: dirname(resolvePath(pkg.dir, pkg.config.main)),
+          dir: mainDir,
           format: 'cjs',
           exports: 'auto',
           preserveModules: true,
         },
-        plugins: [
-          ...plugins,
-          del({
-            targets: [dirname(resolvePath(pkg.dir, pkg.config.main))],
-            runOnce: false !== cliArgs.watch,
-          }),
-        ],
+        plugins: [...plugins, ..._plugins],
         external,
         context: 'window',
       });

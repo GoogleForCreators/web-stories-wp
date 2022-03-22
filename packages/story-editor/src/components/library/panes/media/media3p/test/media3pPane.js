@@ -19,6 +19,8 @@
  */
 import PropTypes from 'prop-types';
 import { fireEvent, screen } from '@testing-library/react';
+import { registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
@@ -60,13 +62,6 @@ jest.mock('../../../../../../app/media/media3p/providerConfiguration', () => ({
       fetchCategoriesErrorMessage: 'Error loading categories from Provider 1',
     },
   },
-}));
-
-jest.mock('react-photo-gallery', () => ({
-  __esModule: true,
-  default: jest.fn(({ photos, renderImage }) => (
-    <>{photos.map((photo, index) => renderImage({ photo, index }))}</>
-  )),
 }));
 
 const createMediaResource = (id, name, provider) =>
@@ -162,6 +157,8 @@ describe('Media3pPane', () => {
   let useMediaResult;
 
   beforeAll(() => {
+    elementTypes.forEach(registerElementType);
+
     useConfig.mockImplementation(() => ({
       capabilities: {
         hasUploadMediaAction: true,
@@ -315,10 +312,11 @@ describe('Media3pPane', () => {
     useMediaResult.searchTerm = '';
     renderWithTheme(<Media3pPane isActive />);
 
-    fireEvent.keyDown(screen.queryAllByTestId(/^mediaElement-/)[0], {
-      key: 'Enter',
-      which: 13,
-    });
+    fireEvent.click(
+      screen.queryAllByRole('button', { name: 'Open insertion menu' })[0]
+    );
+
+    fireEvent.click(screen.getByText(/Insert image/));
 
     expect(registerUsage).toHaveBeenCalledWith({
       registerUsageUrl: 'https://registerUsageUrl.com/register',

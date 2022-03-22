@@ -15,6 +15,7 @@ exports[`Page output background audio should add background audio as amp-video 2
   id="page-123-background-audio"
   layout="nodisplay"
   loop="loop"
+  poster=""
 >
   <source
     src="https://example.com/audio.mp3"
@@ -29,11 +30,12 @@ exports[`Page output background audio should add background audio as amp-video 2
 </amp-video>
 `;
 
-exports[`Page output background audio should add background audio on non-looping use amp-video 1`] = `
+exports[`Page output background audio should use amp-video for non-looping background audio 1`] = `
 <amp-video
   autoplay="autoplay"
   id="page-123-background-audio"
   layout="nodisplay"
+  poster=""
 >
   <source
     src="https://example.com/audio.mp3"

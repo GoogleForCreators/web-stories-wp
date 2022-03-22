@@ -32,6 +32,7 @@ import { withOverlay, InOverlay } from '@googleforcreators/moveable';
  * Internal dependencies
  */
 import { useStory, useCanvas } from '../../app';
+import { STABLE_ARRAY } from '../../constants';
 
 const LASSO_ACTIVE_THRESHOLD = 10;
 
@@ -59,19 +60,20 @@ const Lasso = styled.div`
   z-index: 1;
 `;
 
-const EMPTY_ARR = [];
-
 function SelectionCanvas({ children }) {
-  const { selectedElements, currentPage, clearSelection } = useStory(
-    ({
-      state: { selectedElements, currentPage },
-      actions: { clearSelection },
-    }) => ({
+  // Have page elements shallowly equaled for scenarios like animation
+  // updates where elements don't change, but we get a new page elements
+  // array
+  const currentPageElements = useStory(
+    ({ state }) => state.currentPage?.elements || STABLE_ARRAY
+  );
+  const { selectedElements, clearSelection } = useStory(
+    ({ state: { selectedElements }, actions: { clearSelection } }) => ({
       selectedElements,
-      currentPage,
       clearSelection,
     })
   );
+
   const {
     fullbleedContainer,
     isEditing,
@@ -134,7 +136,6 @@ function SelectionCanvas({ children }) {
     lasso.style.display = lassoMode === LassoMode.ON ? 'block' : 'none';
   }, [getLassoBox]);
 
-  const currentPageElements = currentPage?.elements || EMPTY_ARR;
   const onMouseDown = useCallback(
     (evt) => {
       // Selecting the background element should be handled at the frameElement level

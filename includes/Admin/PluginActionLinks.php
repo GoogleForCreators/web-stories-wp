@@ -39,8 +39,6 @@ class PluginActionLinks extends Service_Base {
 	 * Runs on instantiation.
 	 *
 	 * @since 1.6.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		$basename = plugin_basename( WEBSTORIES_PLUGIN_FILE );

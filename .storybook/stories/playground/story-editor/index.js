@@ -17,11 +17,12 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
 import {
   StoryEditor,
   InterfaceSkeleton,
 } from '@googleforcreators/story-editor';
+import { elementTypes } from '@googleforcreators/element-library';
+import { registerElementType } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -34,20 +35,17 @@ export default {
   title: 'Playground/Stories Editor',
 };
 
-const AppContainer = styled.div`
-  height: 100vh;
-`;
-
 export const _default = () => {
   const content = window.localStorage.getItem(LOCAL_STORAGE_CONTENT_KEY);
   const story = content ? JSON.parse(content) : {};
   const apiCallbacks = { saveStoryById, getMedia, getFonts };
 
+  // @todo This is a temporary fix for element type registration error in storybook, not generally required.
+  elementTypes.forEach(registerElementType);
+
   return (
-    <AppContainer>
-      <StoryEditor config={{ apiCallbacks }} initialEdits={{ story }}>
-        <InterfaceSkeleton header={<HeaderLayout />} />
-      </StoryEditor>
-    </AppContainer>
+    <StoryEditor config={{ apiCallbacks }} initialEdits={{ story }}>
+      <InterfaceSkeleton header={<HeaderLayout />} />
+    </StoryEditor>
   );
 };

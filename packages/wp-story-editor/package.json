@@ -29,20 +29,24 @@
   "dependencies": {
     "@googleforcreators/date": "*",
     "@googleforcreators/design-system": "*",
+    "@googleforcreators/elements": "*",
     "@googleforcreators/i18n": "*",
     "@googleforcreators/media": "*",
     "@googleforcreators/migration": "*",
     "@googleforcreators/react": "*",
     "@googleforcreators/story-editor": "*",
     "@googleforcreators/tracking": "*",
+    "@googleforcreators/url": "*",
+    "@web-stories-wp/wp-utils": "*",
     "@wordpress/api-fetch": "^6.0.1",
+    "@wordpress/dom-ready": "^3.3.1",
     "flagged": "^2.0.1",
     "polished": "^4.1.4",
     "react-calendar": "^3.7.0",
     "styled-components": "^5.3.3"
   },
   "devDependencies": {
-    "@testing-library/react": "^12.1.2",
+    "@testing-library/react": "^12.1.4",
     "@testing-library/react-hooks": "^7.0.1",
     "mockdate": "^3.0.5",
     "prop-types": "^15.8.1"

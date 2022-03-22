@@ -75,10 +75,10 @@ jobs:
       github.event.pull_request.user.login != 'dependabot[bot]'
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Node
-        uses: actions/setup-node@v2.5.1
+        uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -90,23 +90,23 @@ jobs:
           pattern: '{assets/js/*.js,assets/css/*.css}'
           build-script: 'build:js'
           minimum-change-threshold: 100
-          # Ignore webpack content hash in bundle filenames.
-          strip-hash: '.*-(\w{20})\.js$'
+          # Ignore chunk and module hashes in bundle filenames.
+          strip-hash: '.*-(\w{20})|^(\d{2,5})\.js$'
 
   build:
     name: Package ZIP files
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     if: >
       github.event.pull_request.draft == false &&
       github.event.pull_request.head.repo.fork == false &&
       github.event.pull_request.user.login != 'dependabot[bot]'
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Node
-        uses: actions/setup-node@v2.5.1
+        uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -142,7 +142,7 @@ jobs:
       - name: Bundle development version
         run: |
           rm -rf assets/css/* assets/js/*
-          NODE_ENV=development npx webpack --config webpack.config.cjs
+          npx webpack --node-env=development
           npm run workflow:build-plugin
           mv build/web-stories build/web-stories-dev/
 
@@ -168,10 +168,10 @@ jobs:
       github.event.pull_request.user.login != 'dependabot[bot]'
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Node
-        uses: actions/setup-node@v2.5.1
+        uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
           cache: npm
@@ -208,7 +208,7 @@ jobs:
         working-directory: ${{ github.ref }}
 
       - name: Setup Cloud SDK
-        uses: google-github-actions/setup-gcloud@v0.5.0
+        uses: google-github-actions/setup-gcloud@v0.6.0
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           service_account_key: ${{ secrets.GCP_SA_KEY }}
@@ -224,13 +224,13 @@ jobs:
   deploy-to-staging:
     name: Deploy to staging environment
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     needs: [build]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Download full bundle
         uses: actions/download-artifact@v2

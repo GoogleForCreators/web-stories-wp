@@ -23,6 +23,7 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { Text } from '../typography';
+import { THEME_CONSTANTS } from '../../theme';
 
 export const DropDownContainer = styled.div`
   display: flex;
@@ -30,7 +31,9 @@ export const DropDownContainer = styled.div`
   width: 100%;
 `;
 
-export const Hint = styled(Text)`
+export const Hint = styled(Text).attrs({
+  size: THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL,
+})`
   margin-top: 12px;
   padding-left: 2px;
   color: ${({ theme, hasError }) =>

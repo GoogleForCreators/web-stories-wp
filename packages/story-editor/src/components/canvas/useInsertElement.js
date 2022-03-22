@@ -18,11 +18,11 @@
  * External dependencies
  */
 import { useCallback } from '@googleforcreators/react';
+import { createNewElement } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { createNewElement } from '../../elements';
 import { useStory } from '../../app/story';
 import { useLayout } from '../../app/layout';
 import { ZOOM_SETTING } from '../../constants';

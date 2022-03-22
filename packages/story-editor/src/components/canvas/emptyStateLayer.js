@@ -27,6 +27,7 @@ import {
   THEME_CONSTANTS,
   theme,
   lightMode,
+  CONTEXT_MENU_MIN_WIDTH,
 } from '@googleforcreators/design-system';
 import { useTransform } from '@googleforcreators/transform';
 
@@ -34,7 +35,6 @@ import { useTransform } from '@googleforcreators/transform';
  * Internal dependencies
  */
 import { __ } from '@googleforcreators/i18n';
-import { CONTEXT_MENU_WIDTH } from '@googleforcreators/design-system/src/components/contextMenu/menu';
 import { useConfig, useRightClickMenu } from '../../app';
 import useStory from '../../app/story/useStory';
 import isEmptyStory from '../../app/story/utils/isEmptyStory';
@@ -59,6 +59,10 @@ const EmptyStateMessage = styled.div`
   }
 `;
 
+const StyledButton = styled(Button)`
+  pointer-events: initial;
+`;
+
 function EmptyStateLayer() {
   const { isRTL } = useConfig();
   const { isMenuOpen, onOpenMenu } = useRightClickMenu(
@@ -81,7 +85,7 @@ function EmptyStateLayer() {
   const onButtonClick = (e) => {
     const bb = e.target.getBoundingClientRect();
     e.clientX =
-      bb.left - ((isRTL ? -1 : 1) * CONTEXT_MENU_WIDTH) / 2 + bb.width / 2;
+      bb.left - ((isRTL ? -1 : 1) * CONTEXT_MENU_MIN_WIDTH) / 2 + bb.width / 2;
     // Hardcoded because it's not trivial to get the menu height here.
     const EMPTY_STATE_CONTEXT_MENU_HEIGHT = 132;
     e.clientY = bb.top - EMPTY_STATE_CONTEXT_MENU_HEIGHT + bb.height;
@@ -89,10 +93,14 @@ function EmptyStateLayer() {
   };
 
   return (
-    <Layer onContextMenu={onOpenMenu}>
+    <Layer
+      onContextMenu={onOpenMenu}
+      pointerEvents="none"
+      aria-label={__('Empty state layer', 'web-stories')}
+    >
       <DisplayPageArea withSafezone={false}>
         <EmptyStateMessage>
-          <Button
+          <StyledButton
             type={BUTTON_TYPES.SECONDARY}
             variant={BUTTON_VARIANTS.CIRCLE}
             onClick={onButtonClick}
@@ -102,7 +110,7 @@ function EmptyStateLayer() {
             aria-expanded={isMenuOpen}
           >
             <Icons.Media />
-          </Button>
+          </StyledButton>
           <ThemeProvider theme={{ ...theme, colors: lightMode }}>
             <Text
               id="emptystate-message"

@@ -2,7 +2,7 @@
   "name": "@googleforcreators/stickers",
   "description": "A large set of stickers to be used by a collection of Web Stories templates.",
   "private": false,
-  "version": "0.1.202202071716",
+  "version": "0.1.202203150806",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -23,6 +23,11 @@
   "engines": {
     "node": ">= 12 || >= 14 || >= 16",
     "npm": ">= 7.3"
+  },
+  "customExports": {
+    ".": {
+      "default": "./src/index.js"
+    }
   },
   "main": "dist/index.js",
   "module": "dist-module/index.js",

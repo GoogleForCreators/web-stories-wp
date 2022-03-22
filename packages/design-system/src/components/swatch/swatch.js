@@ -32,9 +32,7 @@ import {
  */
 import { themeHelpers } from '../../theme';
 
-const RADIUS_LARGE = 32;
-const RADIUS_SMALL = 24;
-const ICON_SIZE = 32;
+const SIZE = 24;
 
 const Transparent = styled.div`
   width: 100%;
@@ -51,8 +49,8 @@ const SwatchButton = styled.button`
   padding: 0;
   border-width: 0;
   display: block;
-  width: ${({ isSmall }) => (isSmall ? RADIUS_SMALL : RADIUS_LARGE)}px;
-  height: ${({ isSmall }) => (isSmall ? RADIUS_SMALL : RADIUS_LARGE)}px;
+  width: ${SIZE}px;
+  height: ${SIZE}px;
   border-radius: 100%;
   overflow: hidden;
   position: relative;
@@ -82,7 +80,8 @@ const SwatchButton = styled.button`
 
 const SwatchPreview = styled(SwatchButton).attrs({ as: 'div', type: '' })``;
 
-const presetCSS = css`
+const SwatchItem = styled.div`
+  transform: rotate(${({ displaySplit }) => (displaySplit ? -45 : 0)}deg);
   display: block;
   width: 100%;
   height: 100%;
@@ -90,27 +89,19 @@ const presetCSS = css`
   position: relative;
 
   svg {
-    width: ${ICON_SIZE}px;
-    height: ${ICON_SIZE}px;
+    width: ${SIZE}px;
+    height: ${SIZE}px;
     position: absolute;
-    top: calc(50% - ${ICON_SIZE / 2}px);
-    left: calc(50% - ${ICON_SIZE / 2}px);
+    top: calc(50% - ${SIZE / 2}px);
+    left: calc(50% - ${SIZE / 2}px);
     filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.4));
-  }
-`;
-const SwatchItem = styled.div`
-  ${presetCSS}
-  ${({ $pattern }) => generatePatternStyles($pattern)}
-  transform: rotate(${({ displaySplit }) => (displaySplit ? -45 : 0)}deg);
-
-  svg {
     color: ${({ theme }) => theme.colors.fg.primary};
     transform: rotate(${({ displaySplit }) => (displaySplit ? 45 : 0)}deg);
   }
 `;
 
 const OpaqueColorWrapper = styled.div`
-  height: ${({ isSmall }) => (isSmall ? RADIUS_SMALL : RADIUS_LARGE)}px;
+  height: ${SIZE}px;
   width: 50%;
   overflow: hidden;
   position: absolute;
@@ -119,8 +110,8 @@ const OpaqueColorWrapper = styled.div`
 `;
 
 const OpaqueColor = styled.div`
-  height: ${({ isSmall }) => (isSmall ? RADIUS_SMALL : RADIUS_LARGE)}px;
-  width: ${({ isSmall }) => (isSmall ? RADIUS_SMALL : RADIUS_LARGE)}px;
+  height: ${SIZE}px;
+  width: ${SIZE}px;
   position: absolute;
   top: 0;
   left: 0;
@@ -129,10 +120,10 @@ const OpaqueColor = styled.div`
 
 function Swatch({
   pattern,
-  isDisabled = false,
-  isSmall = false,
   children,
-  isPreview,
+  isPreview = false,
+  isDisabled = false,
+  isIndeterminate = false,
   className = '',
   ...props
 }) {
@@ -144,21 +135,20 @@ function Swatch({
   const opaquePattern = swatchHasTransparency
     ? getOpaquePattern(pattern)
     : pattern;
-  // Small swatches and gradient swatches are never split.
-  const displaySplit = !isSmall && !swatchIsGradient && swatchHasTransparency;
+  // gradient swatches and indeterminates are never split
+  const displaySplit =
+    !swatchIsGradient && swatchHasTransparency && !isIndeterminate;
   const SwatchDisplay = isPreview ? SwatchPreview : SwatchButton;
   return (
-    <SwatchDisplay
-      disabled={isDisabled}
-      isSmall={isSmall}
-      className={className}
-      {...props}
-    >
+    <SwatchDisplay disabled={isDisabled} className={className} {...props}>
       {swatchHasTransparency && <Transparent />}
-      <SwatchItem $pattern={pattern} displaySplit={displaySplit}>
+      <SwatchItem
+        style={generatePatternStyles(pattern)}
+        displaySplit={displaySplit}
+      >
         {displaySplit && (
-          <OpaqueColorWrapper isSmall={isSmall}>
-            <OpaqueColor isSmall={isSmall} pattern={opaquePattern} />
+          <OpaqueColorWrapper>
+            <OpaqueColor style={generatePatternStyles(opaquePattern)} />
           </OpaqueColorWrapper>
         )}
         {children}
@@ -170,9 +160,9 @@ function Swatch({
 Swatch.propTypes = {
   children: PropTypes.node,
   pattern: PatternPropType,
-  isDisabled: PropTypes.bool,
-  isSmall: PropTypes.bool,
   isPreview: PropTypes.bool,
+  isDisabled: PropTypes.bool,
+  isIndeterminate: PropTypes.bool,
   className: PropTypes.string,
 };
 

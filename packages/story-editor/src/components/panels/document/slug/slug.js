@@ -17,6 +17,7 @@
 /**
  * External dependencies
  */
+import PropTypes from 'prop-types';
 import { useCallback, useEffect, useState } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
@@ -62,7 +63,7 @@ const LinkContainer = styled.div`
   margin-bottom: 16px;
 `;
 
-function SlugPanel() {
+function SlugPanel({ nameOverride }) {
   const {
     slug: savedSlug,
     link,
@@ -112,7 +113,7 @@ function SlugPanel() {
   // In case of non-pretty permalinks, we're not showing the input.
   return (
     <SimplePanel
-      name="permalink"
+      name={nameOverride || 'permalink'}
       title={__('Permalink', 'web-stories')}
       collapsedByDefault={false}
     >
@@ -145,3 +146,7 @@ function SlugPanel() {
 }
 
 export default SlugPanel;
+
+SlugPanel.propTypes = {
+  nameOverride: PropTypes.string,
+};

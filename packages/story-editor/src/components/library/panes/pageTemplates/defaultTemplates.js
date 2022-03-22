@@ -41,7 +41,7 @@ import { useAPI } from '../../../../app/api';
 import { ChipGroup, LoadingContainer } from '../shared';
 import { virtualPaneContainer } from '../shared/virtualizedPanelGrid';
 import { PAGE_TEMPLATE_TYPES } from './constants';
-import DefaultTemplateList from './defaultTemplateList';
+import TemplateList from './templateList';
 
 const ActionRow = styled.div`
   display: flex;
@@ -151,7 +151,7 @@ function DefaultTemplates({ pageSize }) {
           </Headline>
         </ActionRow>
         {!isLoading && pageTemplatesParentRef.current ? (
-          <DefaultTemplateList
+          <TemplateList
             pageSize={pageSize}
             parentRef={pageTemplatesParentRef}
             pages={filteredPages}

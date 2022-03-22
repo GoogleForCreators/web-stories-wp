@@ -19,18 +19,44 @@
  */
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
+import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
  */
-import { IconButton } from './shared';
+import useVideoElementTranscoding from '../../../app/media/utils/useVideoElementTranscoding';
+import { IconButton, useProperties } from './shared';
 
 function Mute() {
+  const { id: elementId, resource } = useProperties(['id', 'resource']);
+  const {
+    state: { canMute, isMuting, isDisabled },
+    actions: { handleMute },
+  } = useVideoElementTranscoding({
+    elementId,
+    resource,
+  });
+
+  if (!canMute) {
+    return null;
+  }
+
+  const title = isMuting
+    ? __('Removing audio', 'web-stories')
+    : __('Remove audio', 'web-stories');
+
+  const handleChange = (e) => {
+    trackEvent('floating_menu', {
+      name: 'set_mute',
+    });
+    handleMute(e);
+  };
   return (
     <IconButton
       Icon={Icons.Muted}
-      title={__('mute video', 'web-stories')}
-      onClick={() => {}}
+      title={title}
+      disabled={isDisabled || isMuting}
+      onClick={handleChange}
     />
   );
 }

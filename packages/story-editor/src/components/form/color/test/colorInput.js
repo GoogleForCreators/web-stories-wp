@@ -26,13 +26,13 @@ import {
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import { renderWithTheme } from '../../../../testUtils';
 import ColorInput from '../colorInput';
 import getPreviewStyleMock from '../getPreviewStyle';
 import { StoryContext } from '../../../../app/story';
 import { ConfigContext } from '../../../../app/config';
-import defaultConfig from '../../../../defaultConfig.js';
+import getDefaultConfig from '../../../../getDefaultConfig';
+import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 
 jest.mock('../getPreviewStyle', () => jest.fn());
 jest.mock('@googleforcreators/patterns', () => {
@@ -61,7 +61,7 @@ function arrange(children = null) {
   };
 
   renderWithTheme(
-    <ConfigContext.Provider value={defaultConfig}>
+    <ConfigContext.Provider value={getDefaultConfig()}>
       <StoryContext.Provider value={storyContextValue}>
         {children}
       </StoryContext.Provider>

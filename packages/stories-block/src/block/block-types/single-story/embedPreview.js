@@ -45,10 +45,11 @@ function EmbedPreview({ url, title, poster, isSelected, width, height }, ref) {
 
   const hideOverlay = useCallback(() => setInteractive(true), [setInteractive]);
 
-  // Disabled because the overlay div doesn't actually have a role or functionality
-  // as far as the user is concerned. We're just catching the first click so that
-  // the block can be selected without interacting with the embed preview that the overlay covers.
-  /* eslint-disable jsx-a11y/no-static-element-interactions */
+  /* eslint-disable jsx-a11y/no-static-element-interactions --
+   * The overlay div doesn't actually have a role or functionality
+   * as far as the user is concerned. We're just catching the first click so that
+   * the block can be selected without interacting with the embed preview that the overlay covers.
+   */
   return (
     <div
       className="web-stories-embed-preview wp-block-embed__wrapper"
@@ -74,7 +75,7 @@ function EmbedPreview({ url, title, poster, isSelected, width, height }, ref) {
       )}
     </div>
   );
-  /* eslint-enable jsx-a11y/no-static-element-interactions */
+  /* eslint-enable jsx-a11y/no-static-element-interactions -- Just re-enabling the rules */
 }
 
 const EmbedPreviewWithRef = forwardRef(EmbedPreview);

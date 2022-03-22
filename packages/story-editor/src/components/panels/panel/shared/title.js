@@ -254,7 +254,11 @@ function Title({
         aria-controls={panelContentId}
         isCollapsed={isCollapsed}
       >
-        <IconWrapper>{canCollapse && <Icons.ChevronDownSmall />}</IconWrapper>
+        {canCollapse && (
+          <IconWrapper>
+            <Icons.ChevronDownSmall />
+          </IconWrapper>
+        )}
         <Heading
           isCollapsed={isCollapsed}
           id={panelTitleId}

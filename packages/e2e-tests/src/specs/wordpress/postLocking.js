@@ -23,7 +23,7 @@ import {
   createNewStory,
   insertStoryTitle,
   publishStory,
-  visitAdminPage,
+  editStoryWithTitle,
   activatePlugin,
   deactivatePlugin,
   takeSnapshot,
@@ -43,6 +43,8 @@ describe('Post Locking', () => {
 
     await publishStory();
 
+    // Not using the withPlugin() here because this plugin
+    // needs to be activated *after* creating this story.
     await activatePlugin('e2e-tests-post-lock-mock');
   });
 
@@ -60,14 +62,7 @@ describe('Post Locking', () => {
   });
 
   it('should be able to open the editor with locked story', async () => {
-    await visitAdminPage('edit.php', 'post_type=web-story');
-
-    await expect(page).toMatch(storyTitle);
-
-    await Promise.all([
-      page.waitForNavigation(),
-      expect(page).toClick('a', { text: storyTitle }),
-    ]);
+    await editStoryWithTitle(storyTitle);
 
     await page.waitForSelector('.ReactModal__Content');
 

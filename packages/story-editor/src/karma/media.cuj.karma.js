@@ -15,17 +15,14 @@
  */
 
 describe('CUJ: Creator Can Add Image/Video to Page: Upload media via upload button', () => {
-  // Disable reason: Not implemented yet
-  // eslint-disable-next-line jasmine/no-disabled-tests
+  // eslint-disable-next-line jasmine/no-disabled-tests -- Not implemented yet
   xit('it should upload image via upload button');
 
-  // Disable reason: Not implemented yet
-  // eslint-disable-next-line jasmine/no-disabled-tests
+  // eslint-disable-next-line jasmine/no-disabled-tests -- Not implemented yet
   xit('it should upload video via upload button');
 
   describe('CUJ: Creator Can Add Image/Video to Page: Search media, Drag image/video from desktop to canvas', () => {
-    // Disable reason: Not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
+    // eslint-disable-next-line jasmine/no-disabled-tests -- Not implemented yet
     xit('it should allow searching for media and adding it to the canvas');
   });
 });

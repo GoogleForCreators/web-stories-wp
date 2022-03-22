@@ -35,8 +35,6 @@ interface Migration {
 	 * Migrate
 	 *
 	 * @since 1.7.0
-	 *
-	 * @return void
 	 */
 	public function migrate(): void;
 }

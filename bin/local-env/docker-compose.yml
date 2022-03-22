@@ -10,6 +10,7 @@ services:
       WORDPRESS_DB_USER: root
       WORDPRESS_DB_PASSWORD: example
       WORDPRESS_DB_NAME: wordpress
+      WP_ENVIRONMENT_TYPE: local
       ABSPATH: /usr/src/wordpress/
       WORDPRESS_DEBUG: 1
       WORDPRESS_CONFIG_EXTRA: |
@@ -43,7 +44,7 @@ services:
     command: tail -f /dev/null
 
   mysql:
-    image: mysql:5.7
+    image: mariadb:focal
     command: --max-allowed-packet=16777216
     environment:
       MYSQL_ROOT_PASSWORD: example

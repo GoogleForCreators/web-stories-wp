@@ -115,6 +115,7 @@ const opacity = {
   white16: rgba(standard.white, 0.16),
   white8: rgba(standard.white, 0.08),
   black64: rgba(standard.black, 0.64),
+  black40: rgba(standard.black, 0.4),
   black32: rgba(standard.black, 0.32),
   black24: rgba(standard.black, 0.24),
   black10: rgba(standard.black, 0.1),
@@ -263,7 +264,7 @@ const lightTheme = {
     positiveHover: brand.green[30],
     positivePress: brand.green[40],
     previewOverlay: opacity.white16,
-    modalScrim: opacity.black32,
+    modalScrim: opacity.black40,
   },
   border: {
     focus: brand.blue[40],

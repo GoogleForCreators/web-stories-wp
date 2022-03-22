@@ -46,7 +46,7 @@ function useWhyDidYouUpdate(name, props) {
       });
 
       if (Object.keys(changesObj).length) {
-        // eslint-disable-next-line no-console
+        // eslint-disable-next-line no-console -- Needed for debugging.
         console.log('[why-did-you-update]', name, changesObj);
       }
     }

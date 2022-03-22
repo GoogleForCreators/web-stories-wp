@@ -95,8 +95,6 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 	 * Hooked into admin_init and walks through an array of upgrade methods.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		add_action( 'admin_init', [ $this, 'run_upgrades' ], 5 );
@@ -108,7 +106,6 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 	 * @since 1.6.0
 	 *
 	 * @param bool $network_wide Whether the activation was done network-wide.
-	 * @return void
 	 */
 	public function on_plugin_activation( $network_wide ): void {
 		$this->run_upgrades();
@@ -120,7 +117,6 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 	 * @since 1.11.0
 	 *
 	 * @param WP_Site $site The site being initialized.
-	 * @return void
 	 */
 	public function on_site_initialization( WP_Site $site ): void {
 		$this->run_upgrades();
@@ -130,8 +126,6 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 	 * Run all upgrade routines in order.
 	 *
 	 * @since 1.11.0
-	 *
-	 * @return void
 	 */
 	public function run_upgrades(): void {
 		/**
@@ -158,7 +152,6 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 	 * @param string $class           The Class to call.
 	 * @param string $version         The new version.
 	 * @param string $current_version The current set version.
-	 * @return void
 	 */
 	protected function run_upgrade_routine( string $class, string $version, string $current_version ): void {
 		if ( version_compare( $current_version, $version, '<' ) ) {
@@ -176,7 +169,6 @@ class Database_Upgrader implements Service, Registerable, PluginActivationAware,
 	 * @since 1.0.0
 	 *
 	 * @param string $previous_version The previous version.
-	 * @return void
 	 */
 	protected function finish_up( string $previous_version ): void {
 		update_option( self::PREVIOUS_OPTION, $previous_version );

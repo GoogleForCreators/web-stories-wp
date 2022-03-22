@@ -219,18 +219,23 @@ const toggleLayer =
       payload: { metaKey, shiftKey, elementId },
     });
 
-const copyElementById =
+const copySelectedElement = (dispatch) => () =>
+  dispatch({
+    type: types.COPY_SELECTED_ELEMENT,
+  });
+
+const updateElementsByFontFamily =
   (dispatch) =>
-  ({ elementId }) =>
+  ({ family, properties }) =>
     dispatch({
-      type: types.COPY_ELEMENT_BY_ID,
-      payload: { elementId: elementId },
+      type: types.UPDATE_ELEMENTS_BY_FONT_FAMILY,
+      payload: { family, properties },
     });
 
 export const exposedActions = {
   addPage,
   addPageAt,
-  copyElementById,
+  copySelectedElement,
   deletePage,
   deleteCurrentPage,
   updatePageProperties,
@@ -262,6 +267,7 @@ export const exposedActions = {
   addAnimations,
   updateStory,
   toggleLayer,
+  updateElementsByFontFamily,
 };
 
 // Internal actions

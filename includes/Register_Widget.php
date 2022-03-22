@@ -56,8 +56,6 @@ class Register_Widget implements Service, Registerable {
 	 * Register Widgets.
 	 *
 	 * @since 1.6.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		add_action( 'widgets_init', [ $this, 'register_widget' ] );
@@ -69,8 +67,6 @@ class Register_Widget implements Service, Registerable {
 	 * Register widget.
 	 *
 	 * @since 1.9.0
-	 *
-	 * @return void
 	 */
 	public function register_widget(): void {
 		register_widget( $this->stories );

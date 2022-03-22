@@ -51,9 +51,10 @@ describe('nativeCopyPasteExpected', () => {
     expect(nativeCopyPasteExpected()).toBe(true);
   });
 
-  // Disable reason: jsdom does not actually support checking for contenteditable.
-  // See https://github.com/jsdom/jsdom/issues/1670
-  //eslint-disable-next-line jest/no-disabled-tests
+  /* eslint-disable-next-line jest/no-disabled-tests --
+   * jsdom does not actually support checking for contenteditable.
+   * See https://github.com/jsdom/jsdom/issues/1670
+   **/
   it.skip('should detect selection correctly for contenteditable element', () => {
     const contentEditable = document.createElement('div');
     contentEditable.setAttribute('contenteditable', 'true');
@@ -64,7 +65,7 @@ describe('nativeCopyPasteExpected', () => {
 
   it('should detect selection correctly for unsupported input', () => {
     const windowSpy = jest
-      .spyOn(global, 'getSelection')
+      .spyOn(window, 'getSelection')
       .mockImplementation(() => false);
 
     const incorrectInput = document.createElement('input');
@@ -80,7 +81,7 @@ describe('nativeCopyPasteExpected', () => {
 
   it('should use native copypaste if there is selection', () => {
     const windowSpy = jest
-      .spyOn(global, 'getSelection')
+      .spyOn(window, 'getSelection')
       .mockImplementation(() => ({
         rangeCount: 1,
         collapsed: false,

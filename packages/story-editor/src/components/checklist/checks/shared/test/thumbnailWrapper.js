@@ -25,7 +25,6 @@ import { theme as dsTheme } from '@googleforcreators/design-system';
 import { ThumbnailWrapper } from '..';
 import { MAX_THUMBNAILS_DISPLAYED } from '../../../../checklistCard';
 
-// eslint-disable-next-line react/prop-types
 const Wrapper = ({ children }) => (
   <ThemeProvider theme={dsTheme}>{children}</ThemeProvider>
 );

@@ -24,16 +24,16 @@ import { memo } from '@googleforcreators/react';
  */
 import { ElementAlignment, Dismiss, Separator } from '../elements';
 
-const FloatingMixedMenu = memo(function FloatingMixedMenu() {
+const FloatingMultipleMenu = memo(function FloatingMultipleMenu() {
   return (
     <>
       <ElementAlignment />
 
       <Separator />
 
-      <Dismiss />
+      <Dismiss isMultiple />
     </>
   );
 });
 
-export default FloatingMixedMenu;
+export default FloatingMultipleMenu;

@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-export { default } from './excerpt';
+export { default, EXCERPT_MAX_LENGTH } from './excerpt';

@@ -66,13 +66,13 @@ describe('Story Editor', () => {
     await toggleVideoOptimization();
   });
 
-  // TODO: Fix implementation/tests: https://github.com/GoogleForCreators/web-stories-wp/issues/10526
-  // eslint-disable-next-line jest/no-disabled-tests
-  it.skip('should preview story with development mode', async () => {
+  it('should preview story with development mode', async () => {
     await createNewStory();
 
     const editorPage = page;
     const previewPage = await previewStory(editorPage);
+
+    await previewPage.waitForSelector('.i-amphtml-story-dev-tools-header');
 
     await expect(previewPage).toMatch(/Preview/i);
     await expect(previewPage).toMatch(/Debug/i);

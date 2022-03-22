@@ -33,7 +33,7 @@ const rgba = ({ r, g, b, a }) => {
   return `rgb(${al(r)}, ${al(g)}, ${al(b)})`;
 };
 
-const POINTER_SIZE = 24;
+const POINTER_SIZE = 16;
 const BORDER_WIDTH = 2;
 
 // The attrs method is more performant for frequently changed styles.

@@ -28,24 +28,34 @@ import {
 import { useUnits } from '@googleforcreators/units';
 import { useTransformHandler } from '@googleforcreators/transform';
 import PropTypes from 'prop-types';
-
-/**
- * Internal dependencies
- */
-import { getDefinitionForType } from '../../elements';
-import { useStory, useTransform, useCanvas } from '../../app';
+import { getDefinitionForType } from '@googleforcreators/elements';
 import {
   elementWithPosition,
   elementWithSize,
   elementWithRotation,
-} from '../../elements/shared';
-import WithMask from '../../masks/frame';
+} from '@googleforcreators/element-library';
+import {
+  FrameWithMask as WithMask,
+  getElementMask,
+  MaskTypes,
+} from '@googleforcreators/masks';
+import {
+  usePerformanceTracking,
+  TRACKING_EVENTS,
+} from '@googleforcreators/design-system';
+
+/**
+ * Internal dependencies
+ */
+import {
+  useStory,
+  useTransform,
+  useCanvas,
+  useConfig,
+  useDropTargets,
+} from '../../app';
 import WithLink from '../elementLink/frame';
-import { getElementMask } from '../../masks';
-import { MaskTypes } from '../../masks/constants';
 import useDoubleClick from '../../utils/useDoubleClick';
-import usePerformanceTracking from '../../utils/usePerformanceTracking';
-import { TRACKING_EVENTS } from '../../constants/performanceTrackingEvents';
 
 // @todo: should the frame borders follow clip lines?
 
@@ -80,21 +90,60 @@ const EmptyFrame = styled.div`
 const NOOP = () => {};
 
 function FrameElement({ id }) {
-  const { isSelected, isSingleElement, isBackground, element } = useStory(
-    ({ state }) => ({
-      isSelected: state.selectedElementIds.includes(id),
-      isSingleElement: state.selectedElementIds.length === 1,
-      isBackground: state.currentPage?.elements[0].id === id,
-      element: state.currentPage?.elements.find((el) => el.id === id),
-    })
-  );
-  const setEditingElement = useCanvas(
-    ({ actions }) => actions.setEditingElement
-  );
+  const [isTransforming, setIsTransforming] = useState(false);
+
+  const {
+    setNodeForElement,
+    handleSelectElement,
+    isEditing,
+    setEditingElement,
+    setEditingElementWithState,
+  } = useCanvas(({ state, actions }) => ({
+    setNodeForElement: actions.setNodeForElement,
+    handleSelectElement: actions.handleSelectElement,
+    isEditing: state.isEditing,
+    setEditingElement: actions.setEditingElement,
+    setEditingElementWithState: actions.setEditingElementWithState,
+  }));
+  const { isSelected, isOnlySelectedElement, isActive, isBackground, element } =
+    useStory(({ state }) => {
+      const isSelected = state.selectedElementIds.includes(id);
+      const isOnlySelectedElement =
+        isSelected && state.selectedElementIds.length === 1;
+      const isActive = isOnlySelectedElement && !isTransforming && !isEditing;
+
+      return {
+        isSelected,
+        isBackground: state.currentPage?.elements[0].id === id,
+        element: state.currentPage?.elements.find((el) => el.id === id),
+        isOnlySelectedElement,
+        isActive,
+      };
+    });
   const { type, flip } = element;
   const { Frame, isMaskable, Controls } = getDefinitionForType(type);
   const elementRef = useRef();
   const [hovering, setHovering] = useState(false);
+  const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
+
+  const {
+    draggingResource,
+    activeDropTargetId,
+    isDropSource,
+    registerDropTarget,
+    unregisterDropTarget,
+  } = useDropTargets(
+    ({
+      state: { draggingResource, activeDropTargetId },
+      actions: { isDropSource, registerDropTarget, unregisterDropTarget },
+    }) => ({
+      draggingResource,
+      activeDropTargetId,
+      isDropSource,
+      registerDropTarget,
+      unregisterDropTarget,
+    })
+  );
 
   const onPointerEnter = () => setHovering(true);
   const onPointerLeave = () => setHovering(false);
@@ -102,21 +151,13 @@ function FrameElement({ id }) {
   const isLinkActive = useTransform(
     ({ state }) => !isSelected && hovering && !state.isAnythingTransforming
   );
-  const { setNodeForElement, handleSelectElement, isEditing } = useCanvas(
-    ({ state, actions }) => ({
-      setNodeForElement: actions.setNodeForElement,
-      handleSelectElement: actions.handleSelectElement,
-      isEditing: state.isEditing,
-    })
-  );
+
   const getBox = useUnits(({ actions }) => actions.getBox);
 
   useLayoutEffect(() => {
     setNodeForElement(id, elementRef.current);
   }, [id, setNodeForElement]);
   const box = getBox(element);
-
-  const [isTransforming, setIsTransforming] = useState(false);
 
   useTransformHandler(id, (transform) => {
     const target = elementRef.current;
@@ -177,20 +218,19 @@ function FrameElement({ id }) {
       {Controls && (
         <Controls
           isTransforming={isTransforming}
-          isSelected={isSelected}
-          isSingleElement={isSingleElement}
-          isEditing={isEditing}
           box={box}
           elementRef={elementRef}
           element={element}
+          isRTL={isRTL}
+          topOffset={topOffset}
+          isActive={isActive}
         />
       )}
       <Wrapper
         ref={elementRef}
         data-element-id={id}
         {...box}
-        // Needed for being able to focus on the selected element on canvas, e.g. for entering edit mode.
-        // eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex
+        // eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex -- Needed for being able to focus on the selected element on canvas, e.g. for entering edit mode.
         tabIndex={0}
         aria-labelledby={`layer-${id}`}
         hasMask={isMaskable}
@@ -203,9 +243,20 @@ function FrameElement({ id }) {
           fill
           flip={flip}
           eventHandlers={!maskDisabled ? eventHandlers : null}
+          draggingResource={draggingResource}
+          activeDropTargetId={activeDropTargetId}
+          isDropSource={isDropSource}
+          registerDropTarget={registerDropTarget}
+          unregisterDropTarget={unregisterDropTarget}
         >
           {Frame ? (
-            <Frame wrapperRef={elementRef} element={element} box={box} />
+            <Frame
+              wrapperRef={elementRef}
+              element={element}
+              box={box}
+              isOnlySelectedElement={isOnlySelectedElement}
+              setEditingElementWithState={setEditingElementWithState}
+            />
           ) : (
             <EmptyFrame />
           )}

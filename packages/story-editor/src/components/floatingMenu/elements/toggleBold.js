@@ -23,14 +23,22 @@ import { __ } from '@googleforcreators/i18n';
 /**
  * Internal dependencies
  */
-import { IconButton } from './shared';
+import { IconButton, useTextToggle } from './shared';
 
 function ToggleBold() {
+  const { isToggled, toggle } = useTextToggle({
+    currentValue: 'isBold',
+    handler: 'handleClickBold',
+    eventName: 'set_bold',
+  });
+
   return (
     <IconButton
+      isToggled={isToggled}
       Icon={Icons.LetterBBold}
-      title={__('Toggle bold text', 'web-stories')}
-      onClick={() => {}}
+      title={__('Toggle bold', 'web-stories')}
+      onClick={toggle}
+      tabIndex="0"
     />
   );
 }

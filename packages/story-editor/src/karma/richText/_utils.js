@@ -51,6 +51,12 @@ export function initHelpers(data) {
       // Move the first text field 10 steps down to avoid placing these on top of each other.
       await repeatPress('ArrowDown', 10);
       await data.fixture.editor.library.textTab.click();
+      // Select background for being able to insert another text.
+      await data.fixture.events.mouse.clickOn(
+        data.fixture.editor.canvas.framesLayer.frames[0].node,
+        '90%',
+        '90%'
+      );
       await data.fixture.events.click(
         data.fixture.editor.library.text.preset('Paragraph')
       );

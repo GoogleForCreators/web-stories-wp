@@ -42,7 +42,6 @@ function render({ pages = [] }) {
     },
   };
 
-  //eslint-disable-next-line react/prop-types
   const Wrapper = ({ children }) => (
     <StoryContext.Provider value={storyContextValue}>
       <MediaContext.Provider value={mediaContextValue}>

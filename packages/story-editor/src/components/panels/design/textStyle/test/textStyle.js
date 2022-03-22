@@ -21,6 +21,9 @@ import PropTypes from 'prop-types';
 import { act, fireEvent, screen } from '@testing-library/react';
 import { createSolid } from '@googleforcreators/patterns';
 import { RichTextContext } from '@googleforcreators/rich-text';
+import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
+import { calculateTextHeight } from '@googleforcreators/element-library';
+import { calcRotatedResizeOffset } from '@googleforcreators/units';
 
 /**
  * Internal dependencies
@@ -28,20 +31,17 @@ import { RichTextContext } from '@googleforcreators/rich-text';
 import TextStyle from '../textStyle';
 import FontContext from '../../../../../app/font/context';
 import { StoryContext } from '../../../../../app/story';
-import { calculateTextHeight } from '../../../../../utils/textMeasurements';
-import calcRotatedResizeOffset from '../../../../../utils/calcRotatedResizeOffset';
 import CanvasContext from '../../../../../app/canvas/context';
+import { renderPanel } from '../../../shared/test/_utils';
 import {
   MULTIPLE_VALUE,
   MULTIPLE_DISPLAY_VALUE,
-  BACKGROUND_TEXT_MODE,
 } from '../../../../../constants';
-import { renderPanel } from '../../../shared/test/_utils';
 
 let mockControls;
-jest.mock('../../../../../utils/textMeasurements');
 jest.mock('@googleforcreators/design-system', () => {
   const React = require('@googleforcreators/react');
+
   const _PropTypes = require('prop-types');
   const FakeControl = React.forwardRef(function FakeControl(props, ref) {
     mockControls[props['data-testid']] = props;
@@ -58,8 +58,10 @@ jest.mock('@googleforcreators/design-system', () => {
     },
   };
 });
+jest.mock('@googleforcreators/element-library');
 jest.mock('../../../../form/color/color', () => {
   const React = require('@googleforcreators/react');
+
   const _PropTypes = require('prop-types');
   const FakeControl = React.forwardRef(function FakeControl(props, ref) {
     mockControls[props['data-testid']] = props;
@@ -81,10 +83,33 @@ const DEFAULT_PADDING = {
   hasHiddenPadding: false,
 };
 
-function Wrapper({ children }) {
+const textElement = {
+  id: '1',
+  textAlign: 'normal',
+  fontSize: 30,
+  lineHeight: 1,
+  font: {
+    family: 'ABeeZee',
+  },
+  x: 0,
+  y: 0,
+  height: 100,
+  width: 120,
+  rotationAngle: 0,
+  padding: DEFAULT_PADDING,
+  backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
+};
+
+let mockUpdateSelectedElements;
+
+function getAndSetMockUpdateSelectedElements() {
+  mockUpdateSelectedElements = jest.fn();
+  return mockUpdateSelectedElements;
+}
+function Wrapper({ selectedElements, children }) {
   const storyContextValue = {
     state: {
-      selectedElements: [],
+      selectedElements: selectedElements,
       story: {
         globalStoryStyles: {
           ...{ colors: [], textStyles: [] },
@@ -94,7 +119,11 @@ function Wrapper({ children }) {
         },
       },
     },
-    actions: { updateStory: jest.fn(), updateElementsById: jest.fn() },
+    actions: {
+      updateStory: jest.fn(),
+      updateElementsById: jest.fn(),
+      updateSelectedElements: getAndSetMockUpdateSelectedElements(),
+    },
   };
   return (
     <StoryContext.Provider value={storyContextValue}>
@@ -151,6 +180,8 @@ function Wrapper({ children }) {
                 fallbacks: ['fallback1'],
               }),
               addRecentFont: jest.fn(),
+              getCustomFonts: jest.fn(),
+              getCuratedFonts: jest.fn(),
             },
           }}
         >
@@ -173,27 +204,8 @@ Wrapper.propTypes = {
 };
 
 describe('Panels/TextStyle', () => {
-  let textElement;
-
   beforeEach(() => {
     window.fetch.resetMocks();
-
-    textElement = {
-      id: '1',
-      textAlign: 'normal',
-      fontSize: 30,
-      lineHeight: 1,
-      font: {
-        family: 'ABeeZee',
-      },
-      x: 0,
-      y: 0,
-      height: 100,
-      width: 120,
-      rotationAngle: 0,
-      padding: DEFAULT_PADDING,
-      backgroundTextMode: BACKGROUND_TEXT_MODE.NONE,
-    };
 
     mockControls = {};
   });
@@ -231,42 +243,33 @@ describe('Panels/TextStyle', () => {
 
   describe('FontControls', () => {
     it('should select font', async () => {
-      const { pushUpdate } = arrange([textElement]);
-      await act(() =>
-        mockControls.font.onChange({
-          id: 'Neu Font',
-          family: 'Neu Font',
-          service: 'foo.bar.baz',
-          styles: ['italic', 'regular'],
-          weights: [400],
-          variants: [
-            [0, 400],
-            [1, 400],
-          ],
-          fallbacks: ['fallback1'],
+      arrange([textElement]);
+      const newFont = {
+        id: 'Neu Font',
+        family: 'Neu Font',
+        service: 'foo.bar.baz',
+        styles: ['italic', 'regular'],
+        weights: [400],
+        variants: [
+          [0, 400],
+          [1, 400],
+        ],
+        fallbacks: ['fallback1'],
+      };
+      await act(() => mockControls.font.onChange(newFont));
+
+      // updateSelectedElement should get called with the updated font object when the font gets updated,
+      // useRichText also calls updateSelectedElements with the element's content as a side effect. We want to check
+      // that the call for the font update matches. So just grab the first mock.call
+      const updatingFontFunction = mockUpdateSelectedElements.mock.calls[0][0];
+      expect(updatingFontFunction.properties(textElement)).toMatchObject(
+        expect.objectContaining({
+          font: newFont,
         })
-      );
-      expect(pushUpdate).toHaveBeenCalledWith(
-        {
-          font: {
-            id: 'Neu Font',
-            family: 'Neu Font',
-            service: 'foo.bar.baz',
-            styles: ['italic', 'regular'],
-            weights: [400],
-            variants: [
-              [0, 400],
-              [1, 400],
-            ],
-            fallbacks: ['fallback1'],
-          },
-        },
-        true
       );
     });
 
-    // Disable reason: Can't figure out a good way to test this easily
-    // eslint-disable-next-line jest/no-disabled-tests
+    // eslint-disable-next-line jest/no-disabled-tests -- Can't figure out a good way to test this easily
     it.skip('should select font weight', () => {
       const { pushUpdate } = arrange([textElement]);
       fireEvent.click(screen.getByRole('button', { name: 'Font weight' }));

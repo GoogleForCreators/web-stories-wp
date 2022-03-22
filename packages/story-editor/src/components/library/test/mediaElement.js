@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import { fireEvent, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
 
 /**
@@ -85,6 +84,7 @@ const renderMediaElement = (resource, providerType, canEditMedia = true) => {
     },
     actions: {
       addElement: jest.fn(),
+      combineElements: jest.fn(),
     },
   };
   return renderWithTheme(
@@ -142,17 +142,12 @@ describe('MediaElement', () => {
       ...mockedReturnValue,
       canTranscodeResource: () => true,
     });
-    const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
+    const { getByAriaLabel } = renderMediaElement(
       {
         ...IMAGE_RESOURCE,
       },
       'local'
     );
-    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
-
-    const element = screen.getByAltText('image :)');
-    fireEvent.focus(element);
-
     expect(getByAriaLabel('More')).toBeInTheDocument();
   });
 
@@ -161,17 +156,12 @@ describe('MediaElement', () => {
       ...mockedReturnValue,
       canTranscodeResource: () => true,
     });
-    const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
+    const { getByAriaLabel } = renderMediaElement(
       {
         ...VIDEO_RESOURCE,
       },
       'local'
     );
-    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
-
-    const element = screen.getByTitle('video :)');
-    fireEvent.focus(element);
-
     expect(getByAriaLabel('More')).toBeInTheDocument();
   });
 
@@ -180,79 +170,12 @@ describe('MediaElement', () => {
       ...mockedReturnValue,
       canTranscodeResource: () => true,
     });
-    const { getByAriaLabel, queryByAriaLabel } = renderMediaElement(
+    const { getByAriaLabel } = renderMediaElement(
       {
         ...GIF_RESOURCE,
       },
       'local'
     );
-    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
-
-    const element = screen.getByTitle('gif :)');
-    fireEvent.focus(element);
-
     expect(getByAriaLabel('More')).toBeInTheDocument();
-  });
-
-  it("should render dropdown menu's more icon users without permission", () => {
-    useLocalMedia.mockReturnValue({
-      ...mockedReturnValue,
-      canTranscodeResource: () => true,
-    });
-    const { queryByAriaLabel } = renderMediaElement(
-      {
-        ...VIDEO_RESOURCE,
-      },
-      'local',
-      false
-    );
-    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
-
-    const element = screen.getByTitle('video :)');
-    fireEvent.focus(element);
-
-    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
-  });
-
-  it("should not render dropdown menu's more icon for not uploaded image", () => {
-    useLocalMedia.mockReturnValue({
-      ...mockedReturnValue,
-      canTranscodeResource: () => false,
-    });
-    const { queryByAriaLabel } = renderMediaElement(IMAGE_RESOURCE, 'local');
-    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
-
-    const element = screen.getByAltText('image :)');
-    fireEvent.focus(element);
-
-    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
-  });
-
-  it("should not render dropdown menu's more icon for not uploaded video", () => {
-    useLocalMedia.mockReturnValue({
-      ...mockedReturnValue,
-      canTranscodeResource: () => false,
-    });
-    const { queryByAriaLabel } = renderMediaElement(VIDEO_RESOURCE, 'local');
-    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
-
-    const element = screen.getByTitle('video :)');
-    fireEvent.focus(element);
-
-    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
-  });
-
-  it("should not render dropdown menu's more icon for not uploaded gif", () => {
-    useLocalMedia.mockReturnValue({
-      ...mockedReturnValue,
-      canTranscodeResource: () => false,
-    });
-    const { queryByAriaLabel } = renderMediaElement(GIF_RESOURCE, 'local');
-    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
-
-    const element = screen.getByTitle('gif :)');
-    fireEvent.focus(element);
-
-    expect(queryByAriaLabel('More')).not.toBeInTheDocument();
   });
 });

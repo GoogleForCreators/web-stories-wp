@@ -24,7 +24,10 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { default as Header } from '../header';
 import { MetaBoxes, MetaBoxesProvider } from '../metaBoxes';
-import DocumentPane from '../documentPane';
+import DocumentPane, {
+  PublishModalDocumentPane,
+  IsolatedStatusPanel,
+} from '../documentPane';
 import { Priority, Design, Accessibility } from '../checklist';
 import { Footer } from '../helpCenter';
 
@@ -49,6 +52,10 @@ function Layout() {
           document: {
             title: __('Document', 'web-stories'),
             Pane: DocumentPane,
+          },
+          publishModal: {
+            DocumentPane: PublishModalDocumentPane,
+            IsolatedStatusPanel: IsolatedStatusPanel,
           },
         }}
       >

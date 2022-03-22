@@ -67,8 +67,6 @@ class Image_Sizes extends Service_Base {
 	 * Init.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		$this->add_image_sizes();
@@ -81,8 +79,6 @@ class Image_Sizes extends Service_Base {
 	 * @since 1.10.0
 	 *
 	 * @link https://amp.dev/documentation/components/amp-story/#poster-guidelines-for-poster-portrait-src-poster-landscape-src-and-poster-square-src.
-	 *
-	 * @return void
 	 */
 	protected function add_image_sizes(): void {
 		// Used for amp-story[poster-portrait-src]: The story poster in portrait format (3x4 aspect ratio).

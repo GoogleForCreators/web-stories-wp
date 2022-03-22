@@ -113,8 +113,6 @@ class Context {
 	 * Whether we're currently on a block editor screen.
 	 *
 	 * @since 1.15.0
-	 *
-	 * @return bool
 	 */
 	public function is_block_editor(): bool {
 		$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;

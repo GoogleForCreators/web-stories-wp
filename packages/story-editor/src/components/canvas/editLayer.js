@@ -29,15 +29,18 @@ import {
 import { _x, __ } from '@googleforcreators/i18n';
 import { useKeyDownEffect } from '@googleforcreators/design-system';
 import { withOverlay } from '@googleforcreators/moveable';
+import { getDefinitionForType } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../types';
-import { getDefinitionForType } from '../../elements';
 import { useStory, useCanvas } from '../../app';
+import { Z_INDEX_EDIT_LAYER } from '../../constants/zIndex';
+import useVideoTrim from '../videoTrim/useVideoTrim';
+import VideoTrimmer from '../videoTrim/videoTrimmer';
 import EditElement from './editElement';
-import { Layer, PageArea, FooterArea, Z_INDEX } from './layout';
+import { Layer, PageArea, FooterArea } from './layout';
 import useFocusCanvas from './useFocusCanvas';
 import SingleSelectionMoveable from './singleSelectionMoveable';
 
@@ -79,7 +82,10 @@ function EditLayer() {
 function EditLayerForElement({ element, showOverflow }) {
   const ref = useRef(null);
   const pageAreaRef = useRef(null);
-  const { editModeGrayout, EditMenu } = getDefinitionForType(element.type);
+  const { editModeGrayout } = getDefinitionForType(element.type);
+  const { isTrimMode } = useVideoTrim(({ state: { isTrimMode } }) => ({
+    isTrimMode,
+  }));
 
   const { clearEditing, onMoveableMount } = useCanvas((state) => ({
     clearEditing: state.actions.clearEditing,
@@ -124,7 +130,7 @@ function EditLayerForElement({ element, showOverflow }) {
       aria-label={_x('Edit layer', 'compound noun', 'web-stories')}
       data-testid="editLayer"
       grayout={editModeGrayout}
-      zIndex={Z_INDEX.EDIT}
+      zIndex={Z_INDEX_EDIT_LAYER}
       onPointerDown={(evt) => {
         if (evt.target === ref.current || evt.target === pageAreaRef.current) {
           clearEditing();
@@ -156,9 +162,9 @@ function EditLayerForElement({ element, showOverflow }) {
           ref={setRef}
         />
       )}
-      {EditMenu && (
+      {isTrimMode && (
         <FooterArea showOverflow>
-          <EditMenu />
+          <VideoTrimmer />
         </FooterArea>
       )}
     </LayerWithGrayout>

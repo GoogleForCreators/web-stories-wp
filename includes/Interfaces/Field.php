@@ -19,8 +19,6 @@ interface Field {
 	 * Whether to display the field.
 	 *
 	 * @since 1.5.0
-	 *
-	 * @return bool
 	 */
 	public function show(): bool;
 
@@ -28,8 +26,6 @@ interface Field {
 	 * Label for current field.
 	 *
 	 * @since 1.5.0
-	 *
-	 * @return string
 	 */
 	public function label(): string;
 
@@ -37,8 +33,6 @@ interface Field {
 	 * Whether the field is hidden.
 	 *
 	 * @since 1.5.0
-	 *
-	 * @return bool
 	 */
 	public function hidden(): bool;
 }

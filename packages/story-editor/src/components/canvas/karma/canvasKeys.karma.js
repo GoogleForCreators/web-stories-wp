@@ -24,15 +24,20 @@ describe('Canvas Keyboard Shortcuts', () => {
   let fixture;
   let elementIds;
 
+  async function insertMediaByIndex(index) {
+    const mediaItem = fixture.editor.library.media.item(index);
+    await fixture.events.mouse.clickOn(mediaItem, 20, 20);
+  }
+
   beforeEach(async () => {
     fixture = new Fixture();
     await fixture.render();
     await fixture.collapseHelpCenter();
 
     // Let's insert three images
-    await fixture.events.click(fixture.editor.library.media.item(0));
-    await fixture.events.click(fixture.editor.library.media.item(1));
-    await fixture.events.click(fixture.editor.library.media.item(2));
+    await insertMediaByIndex(0);
+    await insertMediaByIndex(1);
+    await insertMediaByIndex(2);
 
     // And let's get the ID's of those three elements for easy access later
     const storyContext = await fixture.renderHook(() => useStory());

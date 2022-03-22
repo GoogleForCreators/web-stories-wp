@@ -28,6 +28,14 @@ import {
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { __ } from '@googleforcreators/i18n';
+import {
+  Icons,
+  Button,
+  BUTTON_SIZES,
+  BUTTON_VARIANTS,
+  BUTTON_TYPES,
+  CircularProgress,
+} from '@googleforcreators/design-system';
 
 const Saturation = lazy(() =>
   import(
@@ -48,34 +56,17 @@ const Alpha = lazy(() =>
 /**
  * Internal dependencies
  */
-import {
-  Icons,
-  Button,
-  BUTTON_SIZES,
-  BUTTON_VARIANTS,
-  BUTTON_TYPES,
-} from '@googleforcreators/design-system';
-import CircularProgress from '../circularProgress';
 import useEyedropper from '../eyedropper';
 import Pointer from './pointer';
 import EditablePreview from './editablePreview';
 
 const CONTAINER_PADDING = 16;
 const HEADER_FOOTER_HEIGHT = 36;
-const BODY_HEIGHT = 156;
-const CONTROLS_HEIGHT = 28;
+const BODY_HEIGHT = 116;
+const CONTROLS_HEIGHT = 20;
 const CONTROLS_BORDER_RADIUS = 50;
 const OPACITY_WIDTH = 52;
 const HEX_WIDTH = 74;
-
-const Container = styled.div`
-  user-select: none;
-  padding: 0 ${CONTAINER_PADDING}px;
-`;
-
-const Body = styled.div`
-  padding-bottom: 0;
-`;
 
 const BodyFallback = styled.div`
   height: ${BODY_HEIGHT + 3 * CONTROLS_HEIGHT + 4 * CONTAINER_PADDING}px;
@@ -86,14 +77,14 @@ const BodyFallback = styled.div`
 
 const SaturationWrapper = styled.div`
   position: relative;
-  height: ${BODY_HEIGHT}px;
-  margin-bottom: 16px;
+  margin: 0 16px;
+  flex: 0 1 ${BODY_HEIGHT}px;
 `;
 
 const wrapperCSS = css`
-  margin-bottom: 16px;
+  margin: 0 16px;
   border: 1px solid ${({ theme }) => theme.colors.shadow.active};
-  height: ${CONTROLS_HEIGHT}px;
+  flex: 0 0 ${CONTROLS_HEIGHT}px;
   position: relative;
   border-radius: ${CONTROLS_BORDER_RADIUS}px;
   background-clip: padding-box;
@@ -120,10 +111,9 @@ const Footer = styled.div`
   height: ${HEADER_FOOTER_HEIGHT}px;
   line-height: 19px;
   position: relative;
-  margin-top: 7px;
+  margin: 0 16px;
   display: flex;
-  gap: 10px;
-  margin-bottom: 16px;
+  justify-content: space-between;
 `;
 
 const HexValue = styled.div`
@@ -134,7 +124,15 @@ const Opacity = styled.div`
   width: ${OPACITY_WIDTH}px;
 `;
 
-function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
+function CurrentColorPicker({
+  rgb,
+  hsl,
+  hsv,
+  hex,
+  onChange,
+  showOpacity,
+  hasEyedropper,
+}) {
   const alphaPercentage = String(Math.round(rgb.a * 100));
   const hexValue = hex[0] === '#' ? hex.substr(1) : hex;
 
@@ -162,65 +160,65 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
   });
 
   return (
-    <Container data-testid="colorPicker">
-      <Body showOpacity={showOpacity}>
-        <Suspense fallback={null}>
-          <SaturationWrapper>
-            <Saturation
-              radius="8px"
-              pointer={() => (
-                <Pointer offsetX={-12} offsetY={-12} currentColor={rgb} />
-              )}
-              hsl={hsl}
-              hsv={hsv}
-              onChange={onChange}
-            />
-          </SaturationWrapper>
-          <HueWrapper>
-            <Hue
+    <>
+      <Suspense fallback={null}>
+        <SaturationWrapper>
+          <Saturation
+            radius="8px"
+            pointer={() => (
+              <Pointer offsetX={-8} offsetY={-8} currentColor={rgb} />
+            )}
+            hsl={hsl}
+            hsv={hsv}
+            onChange={onChange}
+          />
+        </SaturationWrapper>
+        <HueWrapper>
+          <Hue
+            direction="horizontal"
+            height={`${CONTROLS_HEIGHT}px`}
+            radius={`${CONTROLS_BORDER_RADIUS}px`}
+            pointer={() => (
+              <Pointer offsetX={-8} offsetY={1} currentColor={rgb} />
+            )}
+            hsl={hsl}
+            onChange={onChange}
+          />
+        </HueWrapper>
+        {showOpacity && (
+          <AlphaWrapper>
+            <Alpha
               direction="horizontal"
               height={`${CONTROLS_HEIGHT}px`}
               radius={`${CONTROLS_BORDER_RADIUS}px`}
               pointer={() => (
-                <Pointer offsetX={-12} offsetY={1} currentColor={rgb} />
+                <Pointer
+                  offsetX={-8}
+                  offsetY={1}
+                  currentColor={rgb}
+                  withAlpha
+                />
               )}
+              rgb={rgb}
               hsl={hsl}
               onChange={onChange}
             />
-          </HueWrapper>
-          {showOpacity && (
-            <AlphaWrapper>
-              <Alpha
-                direction="horizontal"
-                height={`${CONTROLS_HEIGHT}px`}
-                radius={`${CONTROLS_BORDER_RADIUS}px`}
-                pointer={() => (
-                  <Pointer
-                    offsetX={-12}
-                    offsetY={1}
-                    currentColor={rgb}
-                    withAlpha
-                  />
-                )}
-                rgb={rgb}
-                hsl={hsl}
-                onChange={onChange}
-              />
-            </AlphaWrapper>
-          )}
-        </Suspense>
-      </Body>
+          </AlphaWrapper>
+        )}
+      </Suspense>
       <Footer>
-        <Button
-          variant={BUTTON_VARIANTS.SQUARE}
-          type={BUTTON_TYPES.QUATERNARY}
-          size={BUTTON_SIZES.SMALL}
-          aria-label={__('Pick a color from canvas', 'web-stories')}
-          onClick={initEyedropper()}
-          onPointerEnter={initEyedropper(false)}
-        >
-          <Icons.Pipette />
-        </Button>
+        {hasEyedropper && (
+          <Button
+            variant={BUTTON_VARIANTS.SQUARE}
+            type={BUTTON_TYPES.QUATERNARY}
+            size={BUTTON_SIZES.SMALL}
+            aria-label={__('Pick a color from canvas', 'web-stories')}
+            onClick={initEyedropper()}
+            onPointerEnter={initEyedropper(false)}
+          >
+            <Icons.Pipette />
+          </Button>
+        )}
         <HexValue>
           <EditablePreview
             label={__('Edit hex value', 'web-stories')}
@@ -243,7 +241,7 @@ function CurrentColorPicker({ rgb, hsl, hsv, hex, onChange, showOpacity }) {
           </Opacity>
         )}
       </Footer>
-    </Container>
+    </>
   );
 }
 
@@ -254,6 +252,7 @@ CurrentColorPicker.propTypes = {
   hex: PropTypes.string,
   hsl: PropTypes.object,
   hsv: PropTypes.object,
+  hasEyedropper: PropTypes.bool,
 };
 
 CurrentColorPicker.defaultProps = {

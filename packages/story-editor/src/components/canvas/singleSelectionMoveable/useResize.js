@@ -19,13 +19,13 @@
  */
 import classnames from 'classnames';
 import { useUnits } from '@googleforcreators/units';
+import { getDefinitionForType } from '@googleforcreators/elements';
 import { useState } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
-import { getDefinitionForType } from '../../../elements';
 import useElementOutOfCanvas from '../utils/useElementOutOfCanvas';
 import useFullbleedMediaAsBackground from '../utils/useFullbleedMediaAsBackground';
 

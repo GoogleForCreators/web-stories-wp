@@ -18,13 +18,13 @@
  */
 import { waitFor, within } from '@testing-library/react';
 import { createSolidFromString } from '@googleforcreators/patterns';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { Fixture } from '../../../../../karma';
 import useInsertElement from '../../../../canvas/useInsertElement';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../../app/font/defaultFonts';
 
 describe('Link Panel', () => {
   let fixture;
@@ -43,8 +43,8 @@ describe('Link Panel', () => {
 
   const moveElementToBottom = async (frame, frameY = 0) => {
     safezone = fixture.querySelector('[data-testid="safezone"]');
-    const safezoneHeight = safezone.getBoundingClientRect().height;
-    const frameHeight = frame.getBoundingClientRect().height;
+    const safezoneHeight = safezone?.getBoundingClientRect()?.height;
+    const frameHeight = frame?.getBoundingClientRect()?.height;
     await fixture.events.mouse.seq(({ moveRel, moveBy, down, up }) => [
       moveRel(frame, 10, 10),
       down(),
@@ -87,6 +87,7 @@ describe('Link Panel', () => {
           throw new Error('node not ready');
         }
       });
+      await fixture.events.click(fixture.editor.inspector.designTab);
       linkPanel = fixture.editor.inspector.designPanel.link;
     });
 
@@ -184,6 +185,7 @@ describe('Link Panel', () => {
 
       // Select the element again.
       await fixture.events.click(frame);
+      await fixture.events.click(fixture.editor.inspector.designTab);
       await waitFor(() => {
         if (!fixture.editor.inspector.designPanel.link.address) {
           throw new Error('address element not ready');
@@ -206,47 +208,43 @@ describe('Link Panel', () => {
       );
     });
 
-    // Disable reason: tests not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
+    // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
     xit('should invoke API when looking up link');
 
-    // Disable reason: tests not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
+    // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
     xit('should display error when API errors');
 
-    // Disable reason: tests not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
+    // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
     xit('should display link details when API succeeds');
 
-    // Disable reason: tests not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
+    // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
     xit('should be able to apply a link to a shape element');
 
-    // Disable reason: tests not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
+    // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
     xit('should be able to apply a link to a image element');
 
-    // Disable reason: tests not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
+    // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
     xit('should be able to apply a link to a video element');
 
-    // Disable reason: tests not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
+    // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
     xit('should not be able to apply a link to a background shape element');
 
-    // Disable reason: tests not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
+    // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
     xit('should not be able to apply a link to a background media element');
   });
 
   describe('CUJ: Creator Can Add A Link: Link with Page Attachment', () => {
     beforeEach(async () => {
-      // Select Page and remove empty state message.
-      await fixture.events.click(
-        fixture.editor.canvas.quickActionMenu.changeBackgroundColorButton
+      // Open Style Pane
+      await fixture.events.click(fixture.editor.inspector.designTab);
+
+      // Select Page.
+      // Click the background element
+      await fixture.events.mouse.clickOn(
+        fixture.editor.canvas.framesLayer.frames[0].node,
+        10,
+        10
       );
-      await fixture.events.keyboard.type('ef');
-      await fixture.events.keyboard.press('Tab');
 
       // Add Page Attachment
       await setPageAttachmentLink('http://pageattachment.com');
@@ -267,6 +265,7 @@ describe('Link Panel', () => {
       const frame = fixture.editor.canvas.framesLayer.frame(element.id).node;
       await moveElementToBottom(frame, 0);
 
+      await fixture.events.click(fixture.editor.inspector.designTab);
       await closePanel('Selection');
       await closePanel('Color');
       await closePanel('Border');
@@ -311,6 +310,7 @@ describe('Link Panel', () => {
 
       await moveElementToBottom(frame);
 
+      await fixture.events.click(fixture.editor.inspector.designTab);
       linkPanel = fixture.editor.inspector.designPanel.link;
       await fixture.events.click(linkPanel.address);
 
@@ -363,6 +363,7 @@ describe('Link Panel', () => {
     });
 
     it('should allow changing link for two elements at the same time', async () => {
+      await fixture.events.click(fixture.editor.inspector.designTab);
       linkPanel = fixture.editor.inspector.designPanel.link;
       await fixture.events.click(linkPanel.address);
 
@@ -392,26 +393,24 @@ describe('Link Panel', () => {
           throw new Error('node not ready');
         }
       });
+      await fixture.events.click(fixture.editor.inspector.designTab);
       linkPanel = fixture.editor.inspector.designPanel.link;
       await fixture.events.click(linkPanel.address);
       await fixture.events.keyboard.type('http://google.com');
     });
 
-    // Disable reason: tests not implemented yet
-    // eslint-disable-next-line jasmine/no-disabled-tests
+    // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
     xit('should be able to removed an applied a link');
   });
 
-  // Disable reason: tests not implemented yet
-  // eslint-disable-next-line jasmine/no-disabled-tests
+  // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
   xdescribe('CUJ: Creator Can Add A Link: Edit brand icon', () => {
     it('should be able to edit brand icon');
 
     it('should be able to remove brand icon');
   });
 
-  // Disable reason: tests not implemented yet
-  // eslint-disable-next-line jasmine/no-disabled-tests
+  // eslint-disable-next-line jasmine/no-disabled-tests -- tests not implemented yet
   xdescribe('CUJ: Creator Can Add A Link: Edit description', () => {
     it('should be able to edit description');
   });

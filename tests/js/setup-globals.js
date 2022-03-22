@@ -22,7 +22,7 @@ global.webStoriesBlockSettings = {
 };
 
 global.wp = {};
-// eslint-disable-next-line jest/prefer-spy-on
+// eslint-disable-next-line jest/prefer-spy-on  -- test setup
 global.wp.media = jest.fn(() => ({
   state: () => ({
     get: () => ({
@@ -61,7 +61,7 @@ global.ResizeObserver = class ResizeObserver {
   disconnect() {}
 };
 
-// eslint-disable-next-line jest/prefer-spy-on
+// eslint-disable-next-line jest/prefer-spy-on -- test-setup
 global.matchMedia = jest.fn().mockImplementation((query) => ({
   matches: false,
   media: query,
@@ -83,7 +83,7 @@ File.prototype.arrayBuffer = () =>
 // Prevent React warnings when setting the `muted` attribute on `<video>` elements.
 // See https://github.com/testing-library/react-testing-library/issues/470
 // See https://github.com/facebook/react/issues/10389
-// eslint-disable-next-line jest/require-hook
+// eslint-disable-next-line jest/require-hook -- test-setup
 Object.defineProperty(HTMLMediaElement.prototype, 'muted', {
   set: () => {},
 });

@@ -87,7 +87,7 @@ export function EffectFlyIn({
         ...FadeWAAPIAnimation.keyframes,
       },
     },
-    // eslint-disable-next-line react/prop-types
+    // eslint-disable-next-line react/prop-types -- Negligible.
     AMPTarget: function AMPTarget({ children, style }) {
       return (
         <FadeAMPTarget style={style}>

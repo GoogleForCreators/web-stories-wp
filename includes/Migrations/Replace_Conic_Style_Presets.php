@@ -36,8 +36,6 @@ class Replace_Conic_Style_Presets extends Migrate_Base {
 	 * Replaces conic color type with linear.
 	 *
 	 * @since 1.7.0
-	 *
-	 * @return void
 	 */
 	public function migrate(): void {
 		$style_presets = get_option( Story_Post_Type::STYLE_PRESETS_OPTION, false );

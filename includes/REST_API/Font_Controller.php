@@ -63,8 +63,6 @@ class Font_Controller extends WP_REST_Posts_Controller {
 	 * @since 1.16.0
 	 *
 	 * @see register_rest_route()
-	 *
-	 * @return void
 	 */
 	public function register_routes(): void {
 		register_rest_route(

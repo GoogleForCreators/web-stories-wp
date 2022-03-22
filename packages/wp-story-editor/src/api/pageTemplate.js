@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { addQueryArgs } from '@googleforcreators/design-system';
+import { addQueryArgs } from '@googleforcreators/url';
 
 /**
  * WordPress dependencies
@@ -35,7 +35,11 @@ const TEMPLATE_FIELDS = [
 const TEMPLATE_EMBED = 'wp:featuredmedia';
 
 function transformResponse(template) {
-  const { _embedded: embedded = {}, id: templateId, story_data } = template;
+  const {
+    _embedded: embedded = {},
+    id: templateId,
+    story_data = {},
+  } = template;
   const image = {
     id: embedded?.['wp:featuredmedia']?.[0].id || 0,
     height: embedded?.['wp:featuredmedia']?.[0]?.media_details?.height || 0,
@@ -43,7 +47,7 @@ function transformResponse(template) {
     url: embedded?.['wp:featuredmedia']?.[0]?.source_url || '',
   };
 
-  return { ...story_data, templateId, image };
+  return { id: templateId, elements: [], ...story_data, templateId, image };
 }
 
 export function getCustomPageTemplates(config, page = 1) {

@@ -47,8 +47,7 @@ const FloatingMenuSelector = memo(function FloatingMenuSelector({
     case SELECTED_ELEMENT_TYPES.TEXT:
       return <Text />;
     case SELECTED_ELEMENT_TYPES.VIDEO:
-      // Disable reason: False positive
-      // eslint-disable-next-line jsx-a11y/media-has-caption
+      // eslint-disable-next-line jsx-a11y/media-has-caption -- False positive
       return <Video />;
     default:
       return null;
@@ -56,7 +55,7 @@ const FloatingMenuSelector = memo(function FloatingMenuSelector({
 });
 
 FloatingMenuSelector.propTypes = {
-  selectedElementTypes: PropTypes.arrayOf(PropTypes.string).isRequired,
+  selectedElementType: PropTypes.string.isRequired,
 };
 
 export default FloatingMenuSelector;

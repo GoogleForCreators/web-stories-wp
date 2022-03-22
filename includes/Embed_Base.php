@@ -70,8 +70,6 @@ abstract class Embed_Base extends Service_Base {
 	 * Initializes the Web Stories embed block.
 	 *
 	 * @since 1.1.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		if ( wp_style_is( self::SCRIPT_HANDLE, 'registered' ) ) {
@@ -102,8 +100,6 @@ abstract class Embed_Base extends Service_Base {
 	 * Prints required inline CSS when using the AMP for WP plugin.
 	 *
 	 * @since 1.13.0
-	 *
-	 * @return void
 	 */
 	public function add_amp_post_template_css(): void {
 		$path = $this->assets->get_base_path( sprintf( 'assets/css/%s%s.css', self::SCRIPT_HANDLE, is_rtl() ? '-rtl' : '' ) );

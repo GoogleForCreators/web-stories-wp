@@ -64,7 +64,6 @@ export const renderWithProviders = (
 
   const ProvidedWrapper = wrapper;
 
-  // eslint-disable-next-line react/prop-types
   const Wrapper = ({ children }) => (
     <ProvidedWrapper>
       <FlagsProvider features={mergedProviderValues.features}>

@@ -23,22 +23,21 @@ import {
   useCallback,
   useMemo,
   useRef,
+  useState,
 } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { trackEvent } from '@googleforcreators/tracking';
 import { createSolidFromString } from '@googleforcreators/patterns';
 import { PAGE_WIDTH, useUnits } from '@googleforcreators/units';
-import {
-  ThemeGlobals,
-  BUTTON_TRANSITION_TIMING,
-} from '@googleforcreators/design-system';
+import { ThemeGlobals, themeHelpers } from '@googleforcreators/design-system';
+import { MaskTypes } from '@googleforcreators/masks';
+
 /**
  * Internal dependencies
  */
 import useLibrary from '../../useLibrary';
 import LibraryMoveable from '../shared/libraryMoveable';
-import { focusStyle } from '../../../panels/shared';
-import { MaskTypes } from '../../../../masks/constants';
+import InsertionOverlay from '../shared/insertionOverlay';
 
 // By default, the element should be 33% of the page.
 export const DEFAULT_ELEMENT_WIDTH = PAGE_WIDTH / 3;
@@ -54,16 +53,14 @@ const Aspect = styled.button`
   border-radius: ${({ theme }) => theme.borders.radius.small};
   background-color: ${({ theme }) => theme.colors.interactiveBg.previewOverlay};
 
-  transition: background-color ${BUTTON_TRANSITION_TIMING};
-
-  &:hover,
-  &:focus,
-  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} {
-    background-color: ${({ theme }) =>
-      theme.colors.interactiveBg.secondaryHover};
+  &.${ThemeGlobals.FOCUS_VISIBLE_SELECTOR} [role='presentation'],
+  &[data-focus-visible-added] [role='presentation'] {
+    ${({ theme }) =>
+      themeHelpers.focusCSS(
+        theme.colors.border.focus,
+        theme.colors.bg.secondary
+      )};
   }
-
-  ${focusStyle};
 `;
 
 const AspectInner = styled.div`
@@ -123,6 +120,10 @@ function ShapePreview({ mask, isPreview, index }) {
     dataToEditorY: state.actions.dataToEditorY,
   }));
 
+  const [active, setActive] = useState(false);
+  const makeActive = () => setActive(true);
+  const makeInactive = () => setActive(false);
+
   const ref = useRef();
   // Creating a ref to the Path so that it can be used as a drag icon.
   // This avoids the drag image that follows the cursor from being the whole
@@ -180,12 +181,17 @@ function ShapePreview({ mask, isPreview, index }) {
       onClick={onClick}
       tabIndex={index === 0 ? 0 : -1}
       aria-label={mask.name}
+      onPointerEnter={makeActive}
+      onFocus={makeActive}
+      onPointerLeave={makeInactive}
+      onBlur={makeInactive}
     >
       <AspectInner>
         <ShapePreviewContainer key={mask.type}>
           <ShapePreviewSizer />
           {getSVG()}
         </ShapePreviewContainer>
+        {active && <InsertionOverlay />}
       </AspectInner>
       <LibraryMoveable
         type={'shape'}

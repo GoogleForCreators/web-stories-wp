@@ -28,7 +28,7 @@ import {
  * Internal dependencies
  */
 import { TenorLogoFull, UnsplashLogoFull } from '../../../icons';
-import { ReactComponent as CoverrLogoFull } from '../../../images/coverr_logo.svg';
+import CoverrLogoFull from '../../../images/coverr_logo.svg';
 
 const AttributionPill = styled.div`
   position: absolute;

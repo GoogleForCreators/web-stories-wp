@@ -23,7 +23,6 @@ const ELEMENT_H1 = {
   id: '111',
   content: 'Title 1',
   fontSize: 36,
-  fontWeight: 400,
   type: 'text',
   x: 10,
   y: 10,
@@ -33,7 +32,6 @@ const ELEMENT_H2 = {
   id: '222',
   content: 'Title 2',
   fontSize: 27,
-  fontWeight: 400,
   type: 'text',
   x: 10,
   y: 10,
@@ -43,7 +41,6 @@ const ELEMENT_H3 = {
   id: '333',
   content: 'Title 3',
   fontSize: 21,
-  fontWeight: 400,
   type: 'text',
   x: 10,
   y: 10,
@@ -53,7 +50,6 @@ const PARAGRAPH = {
   id: '444',
   content: 'Paragraph',
   fontSize: 17,
-  fontWeight: 400,
   type: 'text',
   x: 10,
   y: 10,
@@ -89,6 +85,55 @@ describe('getTextElementTagNames', () => {
       new Map([
         ['111', 'h1'],
         ['555', 'h2'],
+        ['222', 'h2'],
+        ['333', 'h3'],
+        ['444', 'p'],
+      ])
+    );
+  });
+
+  it('should prefer possible h1 elements higher up on the page', () => {
+    const elements = [
+      ELEMENT_H1,
+      {
+        ...ELEMENT_H1,
+        id: '555',
+        x: 0,
+        y: 0,
+      },
+      ELEMENT_H2,
+      ELEMENT_H3,
+      PARAGRAPH,
+    ];
+
+    expect(getTextElementTagNames(elements)).toStrictEqual(
+      new Map([
+        ['111', 'h2'],
+        ['555', 'h1'],
+        ['222', 'h2'],
+        ['333', 'h3'],
+        ['444', 'p'],
+      ])
+    );
+  });
+
+  it('should ignore elements with short content', () => {
+    const elements = [
+      ELEMENT_H1,
+      {
+        ...ELEMENT_H1,
+        id: '555',
+        content: '#1',
+      },
+      ELEMENT_H2,
+      ELEMENT_H3,
+      PARAGRAPH,
+    ];
+
+    expect(getTextElementTagNames(elements)).toStrictEqual(
+      new Map([
+        ['111', 'h1'],
+        ['555', 'p'],
         ['222', 'h2'],
         ['333', 'h3'],
         ['444', 'p'],

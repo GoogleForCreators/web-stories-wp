@@ -18,6 +18,8 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
+import { registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
@@ -47,17 +49,18 @@ function MediaUpload({ render, onSelect }) {
 
 function arrange(selectedElements) {
   const configValue = {
-    allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
-    allowedFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
-    allowedImageMimeTypes: [
-      'image/png',
-      'image/jpeg',
-      'image/jpg',
-      'image/gif',
-    ],
     allowedMimeTypes: {
-      image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
-      video: [],
+      audio: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
+      image: [
+        'image/png',
+        'image/jpeg',
+        'image/jpg',
+        'image/gif',
+        'image/webp',
+      ],
+      caption: ['text/vtt'],
+      vector: [],
+      video: ['video/mp4', 'video/webm'],
     },
     capabilities: {
       hasUploadMediaAction: true,
@@ -96,6 +99,7 @@ function arrange(selectedElements) {
 
 describe('Panels/PageBackground', () => {
   beforeAll(() => {
+    elementTypes.forEach(registerElementType);
     localStorage.setItem(
       'web_stories_ui_panel_settings:pageBackground',
       JSON.stringify({ isCollapsed: false })

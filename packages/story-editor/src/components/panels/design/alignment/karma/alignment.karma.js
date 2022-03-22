@@ -41,8 +41,7 @@ describe('Alignment Panel', () => {
     fixture.restore();
   });
 
-  // Disable reason: not implemented yet
-  // eslint-disable-next-line jasmine/no-disabled-tests
+  // eslint-disable-next-line jasmine/no-disabled-tests -- not implemented yet
   xit('should have no active alignment buttons');
 
   describe('When there is one element on canvas', () => {
@@ -64,6 +63,7 @@ describe('Alignment Panel', () => {
     describe('CUJ: Creator can Transform an Element: Align element to page', () => {
       it('should not show a border when focusing an alignment button using mouse', async () => {
         // Click left align
+        await fixture.events.click(fixture.editor.inspector.designTab);
         await fixture.events.click(
           fixture.editor.inspector.designPanel.alignment.left
         );
@@ -85,6 +85,7 @@ describe('Alignment Panel', () => {
 
       it('should show a border when focusing an alignment button using keyboard', async () => {
         // Click left align
+        await fixture.events.click(fixture.editor.inspector.designTab);
         await fixture.events.click(
           fixture.editor.inspector.designPanel.alignment.left
         );
@@ -101,38 +102,30 @@ describe('Alignment Panel', () => {
         );
       });
 
-      // Disable reason: not implemented yet
-      // eslint-disable-next-line jasmine/no-disabled-tests
+      // eslint-disable-next-line jasmine/no-disabled-tests -- not implemented yet
       xit('should have the correct active alignment buttons');
 
-      // Disable reason: not implemented yet
-      // eslint-disable-next-line jasmine/no-disabled-tests
+      // eslint-disable-next-line jasmine/no-disabled-tests -- not implemented yet
       xit('should align element left on canvas');
 
-      // Disable reason: not implemented yet
-      // eslint-disable-next-line jasmine/no-disabled-tests
+      // eslint-disable-next-line jasmine/no-disabled-tests -- not implemented yet
       xit('should align element center on canvas');
 
-      // Disable reason: not implemented yet
-      // eslint-disable-next-line jasmine/no-disabled-tests
+      // eslint-disable-next-line jasmine/no-disabled-tests -- not implemented yet
       xit('should align element right on canvas');
 
-      // Disable reason: not implemented yet
-      // eslint-disable-next-line jasmine/no-disabled-tests
+      // eslint-disable-next-line jasmine/no-disabled-tests -- not implemented yet
       xit('should align element top on canvas');
 
-      // Disable reason: not implemented yet
-      // eslint-disable-next-line jasmine/no-disabled-tests
+      // eslint-disable-next-line jasmine/no-disabled-tests -- not implemented yet
       xit('should align element middle on canvas');
 
-      // Disable reason: not implemented yet
-      // eslint-disable-next-line jasmine/no-disabled-tests
+      // eslint-disable-next-line jasmine/no-disabled-tests -- not implemented yet
       xit('should align element bottom on canvas');
     });
 
     describe('CUJ: Creator can Transform an Element: Align element to on another', () => {
-      // Disable reason: not implemented yet
-      // eslint-disable-next-line jasmine/no-disabled-tests
+      // eslint-disable-next-line jasmine/no-disabled-tests -- not implemented yet
       xdescribe('When there are two elements on canvas', () => {
         beforeEach(async () => {
           // Add second text element

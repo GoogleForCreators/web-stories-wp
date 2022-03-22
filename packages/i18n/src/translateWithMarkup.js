@@ -126,7 +126,7 @@ function TranslateWithMarkup({ mapping = {}, children }) {
     ? transform(
         node,
         mapping
-        //eslint-disable-next-line react/no-array-index-key
+        //eslint-disable-next-line react/no-array-index-key -- Order should never change.
       ).map((element, index) => <Fragment key={index}>{element}</Fragment>)
     : [];
 }

@@ -35,10 +35,14 @@ describe('Contributor User', () => {
 
     await expect(page).toClick('li[role="tab"]', { text: 'Document' });
 
-    await expect(page).toMatchElement('label', { text: 'Public' });
-    await expect(page).not.toMatchElement('label', { text: 'Private' });
-    await expect(page).not.toMatchElement('label', {
-      text: 'Password Protected',
+    await expect(page).toMatchElement('button[disabled]', {
+      text: /^Public/,
+    });
+    await expect(page).not.toMatchElement('li[role="option"]', {
+      text: /^Private/,
+    });
+    await expect(page).not.toMatchElement('li[role="option"]', {
+      text: /^Password Protected/,
     });
   });
 });

@@ -20,7 +20,7 @@
 import * as types from './types';
 import * as reducers from './reducers';
 
-/* eslint-disable complexity */
+// eslint-disable-next-line complexity -- reducer function, negligible.
 function reducer(state, { type, payload }) {
   switch (type) {
     case types.ADD_PAGE: {
@@ -111,18 +111,21 @@ function reducer(state, { type, payload }) {
       return reducers.addAnimations(state, payload);
     }
 
-    case types.COPY_ELEMENT_BY_ID: {
-      return reducers.copyElementById(state, payload);
+    case types.COPY_SELECTED_ELEMENT: {
+      return reducers.copySelectedElement(state, payload);
     }
 
     case types.RESTORE: {
       return reducers.restore(state, payload);
     }
 
+    case types.UPDATE_ELEMENTS_BY_FONT_FAMILY: {
+      return reducers.updateElementsByFontFamily(state, payload);
+    }
+
     default:
       return state;
   }
 }
-/* eslint-enable complexity */
 
 export default reducer;

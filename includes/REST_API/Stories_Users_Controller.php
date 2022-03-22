@@ -66,8 +66,6 @@ class Stories_Users_Controller extends WP_REST_Users_Controller implements Servi
 	 * Register the service.
 	 *
 	 * @since 1.7.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		$this->register_routes();

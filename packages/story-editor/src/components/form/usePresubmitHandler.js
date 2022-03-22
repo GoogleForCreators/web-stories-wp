@@ -30,10 +30,12 @@ import useFormContext from './useFormContext';
  * @param {Array|undefined} deps The handler dependencies. See `useCallback`.
  */
 function usePresubmitHandler(handler, deps = undefined) {
-  const { registerPresubmitHandler } = useFormContext();
+  const registerPresubmitHandler = useFormContext(
+    (value) => value.registerPresubmitHandler
+  );
   useEffect(
     () => registerPresubmitHandler(handler),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- Pass through provided deps.
     [registerPresubmitHandler].concat(deps || [])
   );
 }

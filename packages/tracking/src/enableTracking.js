@@ -85,6 +85,7 @@ async function loadTrackingScript(sendPageView = true) {
       dimension14: 'isMultisite',
       dimension15: 'name',
       dimension16: 'activePlugins',
+      dimension20: 'serverEnvironment',
     },
   });
 

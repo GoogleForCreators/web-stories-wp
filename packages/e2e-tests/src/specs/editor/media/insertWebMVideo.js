@@ -23,6 +23,7 @@ import {
   insertStoryTitle,
   uploadMedia,
   deleteMedia,
+  uploadFile,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Inserting WebM Video', () => {
@@ -37,16 +38,24 @@ describe('Inserting WebM Video', () => {
     }
   });
 
-  async function openA11yPanel() {
-    // Open the Accessibility panel.
-    const a11yPanel = await page.$('button[aria-label="Accessibility"]');
+  async function openPanel(name) {
+    // open style pane
+    await expect(page).toClick('li', { text: /^Style$/ });
+
+    // Open the panel.
+    const panel = await page.$(`button[aria-label="${name}"]`);
     const isCollapsed = await page.evaluate(
-      (button) => button.getAttribute('aria-expanded') == 'false',
-      a11yPanel
+      (button) => button.getAttribute('aria-expanded') === 'false',
+      panel
     );
     if (isCollapsed) {
-      a11yPanel.click();
+      panel.click();
     }
+  }
+
+  async function openA11yPanel() {
+    // Open the Accessibility panel.
+    await openPanel('Accessibility');
   }
 
   it('should insert a video via media modal', async () => {
@@ -65,15 +74,48 @@ describe('Inserting WebM Video', () => {
     await expect(page).toMatchElement('[alt="Preview poster image"]');
   });
 
+  it('should insert a video via media modal and add captions', async () => {
+    await createNewStory();
+
+    const fileName = await uploadMedia('small-video.webm', false);
+    uploadedFiles.push(fileName);
+
+    await expect(page).toClick('button', { text: 'Insert into page' });
+
+    await expect(page).toMatchElement('[data-testid="videoElement"]');
+
+    await openPanel('Caption and Subtitles');
+
+    await expect(page).toClick('button', { text: 'Upload a file' });
+
+    await expect(page).toClick('.media-modal #menu-item-upload', {
+      text: 'Upload files',
+      visible: true,
+    });
+
+    const fileNameCaptions = await uploadFile('test.vtt');
+    uploadedFiles.push(fileNameCaptions);
+
+    await expect(page).toClick('button', { text: 'Select caption' });
+
+    await expect(page).toMatch('test.vtt');
+  });
+
   it('should insert a video via media library', async () => {
     await createNewStory();
 
     const fileName = await uploadMedia('small-video.webm');
     uploadedFiles.push(fileName);
 
-    await page.waitForSelector('[data-testid="mediaElement-video"]');
+    await page.waitForSelector(
+      `[data-testid="mediaElement-video"] [src*="${fileName}"`
+    );
     // Clicking will only act on the first element.
     await expect(page).toClick('[data-testid="mediaElement-video"]');
+    const insertButton = await page.waitForXPath(
+      `//li//span[contains(text(), 'Insert video')]`
+    );
+    await insertButton.click();
 
     await page.waitForSelector('[data-testid="videoElement"]');
     await expect(page).toMatchElement('[data-testid="videoElement"]');
@@ -92,9 +134,15 @@ describe('Inserting WebM Video', () => {
     const fileName = await uploadMedia('small-video.webm');
     uploadedFiles.push(fileName);
 
-    await page.waitForSelector('[data-testid="mediaElement-video"]');
+    await page.waitForSelector(
+      `[data-testid="mediaElement-video"] [src*="${fileName}"`
+    );
     // Clicking will only act on the first element.
     await expect(page).toClick('[data-testid="mediaElement-video"]');
+    const insertButton = await page.waitForXPath(
+      `//li//span[contains(text(), 'Insert video')]`
+    );
+    await insertButton.click();
 
     await page.waitForSelector('[data-testid="videoElement"]');
     await expect(page).toMatchElement('[data-testid="videoElement"]');

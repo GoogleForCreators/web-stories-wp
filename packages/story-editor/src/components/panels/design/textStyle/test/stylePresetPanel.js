@@ -18,16 +18,16 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
+import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import StylePresetPanel from '../stylePresets';
 import StoryContext from '../../../../../app/story/context';
-import { BACKGROUND_TEXT_MODE } from '../../../../../constants';
 import { getTextPresets, areAllType } from '../../../../../utils/presetUtils';
 import { renderWithTheme } from '../../../../../testUtils';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../../app/font/defaultFonts';
 
 jest.mock('../../../../../utils/presetUtils');
 

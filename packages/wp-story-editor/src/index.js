@@ -31,10 +31,16 @@ import './setLocaleData';
  * External dependencies
  */
 import { StoryEditor } from '@googleforcreators/story-editor';
-import { setAppElement, domReady } from '@googleforcreators/design-system';
+import { setAppElement } from '@googleforcreators/design-system';
 import { StrictMode, render } from '@googleforcreators/react';
 import { updateSettings } from '@googleforcreators/date';
 import { initializeTracking } from '@googleforcreators/tracking';
+import { bindToCallbacks } from '@web-stories-wp/wp-utils';
+
+/**
+ * WordPress dependencies
+ */
+import '@wordpress/dom-ready'; // Just imported here so it's part of the bundle. Usage is in inline scripts.
 
 /**
  * Internal dependencies
@@ -43,16 +49,17 @@ import {
   Layout,
   PostPublishDialog,
   StatusCheck,
+  CorsCheck,
+  FontCheck,
   PostLock,
   MediaUpload,
 } from './components';
-import getApiCallbacks from './api/utils/getApiCallbacks';
+import * as apiCallbacks from './api';
 import { transformStoryResponse } from './api/utils';
 import { TIPS, TOOLBAR_HEIGHT, MENU_WIDTH } from './constants';
 import { GlobalStyle } from './theme.js';
 
 window.webStories = window.webStories || {};
-window.webStories.domReady = domReady;
 
 /**
  * Initializes the web stories editor.
@@ -77,7 +84,7 @@ window.webStories.initializeStoryEditor = (id, config, initialEdits) => {
 
   const editorConfig = {
     ...config,
-    apiCallbacks: getApiCallbacks(config),
+    apiCallbacks: bindToCallbacks(apiCallbacks, config),
     additionalTips: TIPS,
     MediaUpload,
     styleConstants: {
@@ -93,6 +100,8 @@ window.webStories.initializeStoryEditor = (id, config, initialEdits) => {
         <Layout />
         <PostPublishDialog />
         <StatusCheck />
+        <CorsCheck />
+        <FontCheck />
         <PostLock />
       </StoryEditor>
     </StrictMode>,

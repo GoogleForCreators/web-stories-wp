@@ -36,8 +36,6 @@ class Captions extends Service_Base {
 	 * Initializes the File_Type logic.
 	 *
 	 * @since 1.7.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		add_filter( 'site_option_upload_filetypes', [ $this, 'filter_list_of_allowed_filetypes' ] );

@@ -59,8 +59,6 @@ class Admin extends Service_Base {
 	 * Initialize admin-related functionality.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		add_filter( 'admin_body_class', [ $this, 'admin_body_class' ], 99 );

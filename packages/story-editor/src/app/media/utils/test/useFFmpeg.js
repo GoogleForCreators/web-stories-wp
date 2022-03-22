@@ -39,30 +39,9 @@ jest.mock('@ffmpeg/ffmpeg', () => {
 
 function arrange({ userSettingEnabled, hasUploadMediaAction }) {
   const currentUser = {
-    meta: {
-      web_stories_media_optimization: userSettingEnabled,
-    },
+    mediaOptimization: userSettingEnabled,
   };
   const configState = {
-    allowedTranscodableMimeTypes: [
-      'video/3gpp',
-      'video/3gpp2',
-      'video/MP2T',
-      'video/mp4',
-      'video/mpeg',
-      'video/ogg',
-      'video/quicktime',
-      'video/webm',
-      'video/x-flv',
-      'video/x-h261',
-      'video/x-h263',
-      'video/x-m4v',
-      'video/x-matroska',
-      'video/x-mjpeg',
-      'video/x-ms-asf',
-      'video/x-msvideo',
-      'video/x-nut',
-    ],
     capabilities: {
       hasUploadMediaAction,
     },

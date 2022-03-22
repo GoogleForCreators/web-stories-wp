@@ -21,6 +21,7 @@ import {
   ContextMenu,
   ContextMenuComponents,
   noop,
+  Tooltip,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
@@ -33,6 +34,7 @@ import { Fragment } from '@googleforcreators/react';
 import { useLayout } from '../../app';
 import { MediaPicker, useQuickActions } from '../../app/highlights';
 import { ZOOM_SETTING } from '../../constants';
+import { Z_INDEX_CANVAS_SIDE_MENU } from '../../constants/zIndex';
 import PageMenu from './pagemenu/pageMenu';
 
 const MenusWrapper = styled.section`
@@ -41,7 +43,7 @@ const MenusWrapper = styled.section`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  z-index: 9999;
+  z-index: ${Z_INDEX_CANVAS_SIDE_MENU};
   pointer-events: auto;
   min-height: 100%;
   ${({ isZoomed, theme }) =>
@@ -103,21 +105,20 @@ function PageSideMenu() {
             const action = (externalOnClick = noop) => (
               <Fragment key={label}>
                 {separator === 'top' && <ContextMenuComponents.MenuSeparator />}
-                <ContextMenuComponents.MenuButton
-                  aria-label={label}
-                  onClick={(evt) => {
-                    onClick(evt);
-                    externalOnClick(evt);
-                  }}
-                  {...quickAction}
-                >
-                  <ContextMenuComponents.MenuIcon
-                    title={label}
-                    placement={tooltipPlacement}
+                <Tooltip placement={tooltipPlacement} title={label}>
+                  <ContextMenuComponents.MenuButton
+                    aria-label={label}
+                    onClick={(evt) => {
+                      onClick(evt);
+                      externalOnClick(evt);
+                    }}
+                    {...quickAction}
                   >
-                    <Icon />
-                  </ContextMenuComponents.MenuIcon>
-                </ContextMenuComponents.MenuButton>
+                    <ContextMenuComponents.MenuIcon title={label}>
+                      <Icon />
+                    </ContextMenuComponents.MenuIcon>
+                  </ContextMenuComponents.MenuButton>
+                </Tooltip>
                 {separator === 'bottom' && (
                   <ContextMenuComponents.MenuSeparator />
                 )}

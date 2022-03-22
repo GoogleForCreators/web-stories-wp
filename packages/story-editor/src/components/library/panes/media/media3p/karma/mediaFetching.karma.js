@@ -358,6 +358,12 @@ describe('Media3pPane fetching', () => {
     await waitForInitialMediaLoad();
     await fixture.events.click(fixture.editor.library.media3p.coverrTab);
 
+    const mediaGallery = fixture.editor.library.media3p.mediaGallery;
+    mediaGallery.scrollTo(
+      0,
+      mediaGallery.scrollHeight - mediaGallery.clientHeight - ROOT_MARGIN / 2
+    );
+
     // Wait for the debounce
     await expectMediaElements(
       fixture.editor.library.media3p.coverrSection,
@@ -433,34 +439,47 @@ describe('Media3pPane fetching', () => {
   });
 
   describe('Gallery navigation', () => {
-    it('should handle pressing right when focused', async () => {
+    it('should handle pressing right and left when focused', async () => {
       await fixture.events.click(fixture.editor.library.media3pTab);
       // 3p media fetching can take extra time to load, waiting to prevent flakey tests
       await waitForInitialMediaLoad();
-      const { mediaElements, unsplashSection } = fixture.editor.library.media3p;
+      const { unsplashSection } = fixture.editor.library.media3p;
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      await fixture.events.focus(mediaElements[0]);
+      await fixture.events.focus(
+        fixture.editor.library.media3p.insertionBtnByIndex(0)
+      );
 
       await fixture.events.keyboard.press('ArrowRight');
 
-      expect(document.activeElement).toBe(mediaElements[1]);
+      expect(document.activeElement).toBe(
+        fixture.editor.library.media3p.insertionBtnByIndex(1)
+      );
+
+      await fixture.events.keyboard.press('ArrowLeft');
+      expect(document.activeElement).toBe(
+        fixture.editor.library.media3p.insertionBtnByIndex(0)
+      );
     });
 
     it('should handle pressing right when at the end of a row', async () => {
       await fixture.events.click(fixture.editor.library.media3pTab);
       // 3p media fetching can take extra time to load, waiting to prevent flakey tests
       await waitForInitialMediaLoad();
-      const { mediaElements, unsplashSection } = fixture.editor.library.media3p;
+      const { unsplashSection } = fixture.editor.library.media3p;
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      await fixture.events.focus(mediaElements[1]);
+      await fixture.events.focus(
+        fixture.editor.library.media3p.insertionBtnByIndex(1)
+      );
 
       await fixture.events.keyboard.press('ArrowRight');
 
-      expect(document.activeElement).toBe(mediaElements[2]);
+      expect(document.activeElement).toBe(
+        fixture.editor.library.media3p.insertionBtnByIndex(2)
+      );
     });
 
     it('should handle pressing right when the last element is focused', async () => {
@@ -479,122 +498,120 @@ describe('Media3pPane fetching', () => {
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      await fixture.events.focus(mediaElements[mediaElements.length - 1]);
+      await fixture.events.focus(
+        fixture.editor.library.media3p.insertionBtnByIndex(
+          mediaElements.length - 1
+        )
+      );
 
       await fixture.events.keyboard.press('ArrowRight');
 
       expect(document.activeElement).toBe(
-        mediaElements[mediaElements.length - 1]
+        fixture.editor.library.media3p.insertionBtnByIndex(
+          mediaElements.length - 1
+        )
       );
-    });
-
-    it('should handle pressing left when focused', async () => {
-      await fixture.events.click(fixture.editor.library.media3pTab);
-      // 3p media fetching can take extra time to load, waiting to prevent flakey tests
-      await waitForInitialMediaLoad();
-      const { mediaElements, unsplashSection } = fixture.editor.library.media3p;
-
-      await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
-
-      await fixture.events.focus(mediaElements[1]);
-
-      await fixture.events.keyboard.press('ArrowLeft');
-
-      expect(document.activeElement).toBe(mediaElements[0]);
     });
 
     it('should handle pressing left at the beginning of a row', async () => {
       await fixture.events.click(fixture.editor.library.media3pTab);
       // 3p media fetching can take extra time to load, waiting to prevent flakey tests
       await waitForInitialMediaLoad();
-      const { mediaElements, unsplashSection } = fixture.editor.library.media3p;
+      const { unsplashSection } = fixture.editor.library.media3p;
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      await fixture.events.focus(mediaElements[2]);
+      await fixture.events.focus(
+        fixture.editor.library.media3p.insertionBtnByIndex(2)
+      );
 
       await fixture.events.keyboard.press('ArrowLeft');
 
-      expect(document.activeElement).toBe(mediaElements[1]);
+      expect(document.activeElement).toBe(
+        fixture.editor.library.media3p.insertionBtnByIndex(1)
+      );
     });
 
     it('should handle pressing left when the first element is focused', async () => {
       await fixture.events.click(fixture.editor.library.media3pTab);
       // 3p media fetching can take extra time to load, waiting to prevent flakey tests
       await waitForInitialMediaLoad();
-      const { mediaElements, unsplashSection } = fixture.editor.library.media3p;
+      const { unsplashSection } = fixture.editor.library.media3p;
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      await fixture.events.focus(mediaElements[0]);
+      await fixture.events.focus(
+        fixture.editor.library.media3p.insertionBtnByIndex(0)
+      );
 
       await fixture.events.keyboard.press('ArrowLeft');
 
-      expect(document.activeElement).toBe(mediaElements[0]);
+      expect(document.activeElement).toBe(
+        fixture.editor.library.media3p.insertionBtnByIndex(0)
+      );
     });
 
     it('should handle pressing down', async () => {
       await fixture.events.click(fixture.editor.library.media3pTab);
       // 3p media fetching can take extra time to load, waiting to prevent flakey tests
       await waitForInitialMediaLoad();
-      const { mediaElements, unsplashSection } = fixture.editor.library.media3p;
+      const { unsplashSection } = fixture.editor.library.media3p;
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      await fixture.events.focus(mediaElements[1]);
+      await fixture.events.focus(
+        fixture.editor.library.media3p.insertionBtnByIndex(1)
+      );
 
       await fixture.events.keyboard.press('ArrowDown');
 
-      expect(document.activeElement).toBe(mediaElements[3]);
+      expect(document.activeElement).toBe(
+        fixture.editor.library.media3p.insertionBtnByIndex(3)
+      );
     });
 
     it('should handle pressing up', async () => {
       await fixture.events.click(fixture.editor.library.media3pTab);
       // 3p media fetching can take extra time to load, waiting to prevent flakey tests
       await waitForInitialMediaLoad();
-      const { mediaElements, unsplashSection } = fixture.editor.library.media3p;
+      const { unsplashSection } = fixture.editor.library.media3p;
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      await fixture.events.focus(mediaElements[3]);
+      await fixture.events.focus(
+        fixture.editor.library.media3p.insertionBtnByIndex(3)
+      );
 
       await fixture.events.keyboard.press('ArrowUp');
 
-      expect(document.activeElement).toBe(mediaElements[1]);
+      expect(document.activeElement).toBe(
+        fixture.editor.library.media3p.insertionBtnByIndex(1)
+      );
     });
 
-    it('should handle pressing Home', async () => {
+    it('should handle pressing End and Home', async () => {
       mockListMedia();
       await fixture.events.click(fixture.editor.library.media3pTab);
       // 3p media fetching can take extra time to load, waiting to prevent flakey tests
       await waitForInitialMediaLoad();
-
-      const { mediaElements, unsplashSection } = fixture.editor.library.media3p;
-
-      await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
-
-      await fixture.events.focus(mediaElements[6]);
-
-      await fixture.events.keyboard.press('Home');
-
-      expect(document.activeElement).toBe(mediaElements[0]);
-    });
-
-    it('should handle pressing End', async () => {
-      mockListMedia();
-      await fixture.events.click(fixture.editor.library.media3pTab);
-      // 3p media fetching can take extra time to load, waiting to prevent flakey tests
-      await waitForInitialMediaLoad();
-      const { mediaElements, unsplashSection } = fixture.editor.library.media3p;
+      const { unsplashSection } = fixture.editor.library.media3p;
 
       await expectMediaElements(unsplashSection, MEDIA_PER_PAGE);
 
-      await fixture.events.focus(mediaElements[6]);
+      await fixture.events.focus(
+        fixture.editor.library.media3p.insertionBtnByIndex(0)
+      );
 
       await fixture.events.keyboard.press('End');
 
       expect(document.activeElement).toBe(
-        mediaElements[mediaElements.length - 1]
+        fixture.editor.library.media3p.insertionBtnByIndex([MEDIA_PER_PAGE - 1])
+      );
+
+      await fixture.events.keyboard.press('Home');
+
+      expect(document.activeElement).toBe(
+        fixture.editor.library.media3p.insertionBtnByIndex(0)
       );
     });
   });

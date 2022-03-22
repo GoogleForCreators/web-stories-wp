@@ -14,11 +14,21 @@
  * limitations under the License.
  */
 /**
+ * External dependencies
+ */
+import { registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
+
+/**
  * Internal dependencies
  */
 import { setupReducer } from './_utils';
 
 describe('duplicateElementsById', () => {
+  beforeAll(() => {
+    elementTypes.forEach(registerElementType);
+  });
+
   it('duplicates an element at index after specified element', () => {
     const { restore, duplicateElementsById } = setupReducer();
 

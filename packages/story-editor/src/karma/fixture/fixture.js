@@ -17,9 +17,6 @@
 /**
  * External dependencies
  */
-import * as React from 'react';
-const { useCallback, useState, useMemo, forwardRef } = React;
-
 import {
   configure,
   render,
@@ -30,6 +27,12 @@ import {
 import { setAppElement } from '@googleforcreators/design-system';
 import { FixtureEvents } from '@googleforcreators/karma-fixture';
 import { DATA_VERSION } from '@googleforcreators/migration';
+import {
+  createPage,
+  TEXT_ELEMENT_DEFAULT_FONT,
+  registerElementType,
+} from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
@@ -38,8 +41,6 @@ import StoryEditor from '../../storyEditor';
 import APIProvider from '../../app/api/apiProvider';
 import APIContext from '../../app/api/context';
 import Layout from '../../components/layout';
-import { createPage } from '../../elements';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import formattedTemplatesArray from '../../dataUtils/formattedTemplatesArray';
 import { PRESET_TYPES } from '../../constants';
 import getMediaResponse from './db/getMediaResponse';
@@ -48,8 +49,13 @@ import taxonomiesResponse from './db/getTaxonomiesResponse';
 import singleSavedTemplate from './db/singleSavedTemplate';
 import HeaderLayout from './components/header';
 import storyResponse from './db/storyResponse';
-import DocumentPane from './components/documentPane';
+import DocumentPane, {
+  PublishModalDocumentPane,
+} from './components/documentPane';
 import { Accessibility, Design, Priority } from './components/checklist';
+
+const React = require('react');
+const { useCallback, useState, useMemo, forwardRef } = React;
 
 if ('true' === WEB_STORIES_CI) {
   configure({
@@ -90,33 +96,12 @@ export const FIXTURE_DEFAULT_CONFIG = {
   storyId: 1,
   api: {},
   allowedMimeTypes: {
+    audio: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
     image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/webp'],
+    caption: ['text/vtt'],
+    vector: ['image/svg+xml'],
     video: ['video/mp4', 'video/webm'],
   },
-  allowedFileTypes: ['png', 'jpeg', 'jpg', 'gif', 'mp4', 'webp', 'webm'],
-  allowedImageFileTypes: ['gif', 'jpe', 'jpeg', 'jpg', 'png'],
-  allowedImageMimeTypes: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
-  allowedAudioFileTypes: ['mp3', 'aac', 'wav', 'ogg'],
-  allowedAudioMimeTypes: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
-  allowedTranscodableMimeTypes: [
-    'video/3gpp',
-    'video/3gpp2',
-    'video/MP2T',
-    'video/mp4',
-    'video/mpeg',
-    'video/ogg',
-    'video/quicktime',
-    'video/webm',
-    'video/x-flv',
-    'video/x-h261',
-    'video/x-h263',
-    'video/x-m4v',
-    'video/x-matroska',
-    'video/x-mjpeg',
-    'video/x-ms-asf',
-    'video/x-msvideo',
-    'video/x-nut',
-  ],
   capabilities: {
     hasUploadMediaAction: true,
   },
@@ -319,6 +304,7 @@ export class Fixture {
    * @param {Array<Object>} pages Pages.
    */
   setPages(pages) {
+    elementTypes.forEach(registerElementType);
     this.apiProviderFixture_.setPages(pages);
   }
 
@@ -352,6 +338,9 @@ export class Fixture {
             document: {
               title: 'Document',
               Pane: DocumentPane,
+            },
+            publishModal: {
+              DocumentPane: PublishModalDocumentPane,
             },
           }}
         />
@@ -403,9 +392,6 @@ export class Fixture {
         }
       });
     });
-
-    // @todo: find a stable way to wait for the story to fully render. Can be
-    // implemented via `waitFor`.
   }
 
   /**
@@ -727,11 +713,9 @@ class APIProviderFixture {
         () =>
           asyncResponse({
             id: 1,
-            meta: {
-              web_stories_tracking_optin: false,
-              web_stories_onboarding: {},
-              web_stories_media_optimization: true,
-            },
+            trackingOptin: false,
+            onboarding: {},
+            mediaOptimization: true,
           }),
         []
       );
@@ -740,11 +724,9 @@ class APIProviderFixture {
         () =>
           asyncResponse({
             id: 1,
-            meta: {
-              web_stories_tracking_optin: false,
-              web_stories_onboarding: {},
-              web_stories_media_optimization: true,
-            },
+            trackingOptin: false,
+            onboarding: {},
+            mediaOptimization: true,
           }),
         []
       );

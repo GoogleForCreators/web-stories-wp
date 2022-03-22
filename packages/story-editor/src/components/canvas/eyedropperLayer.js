@@ -21,12 +21,14 @@ import { useRef, useFocusOut } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { rgba, readableColor } from 'polished';
 import { FULLBLEED_RATIO } from '@googleforcreators/units';
-import { useGlobalKeyDownEffect } from '@googleforcreators/design-system';
+import {
+  useGlobalKeyDownEffect,
+  CircularProgress,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
-import CircularProgress from '../circularProgress';
 import { useCanvas, useLayout } from '../../app';
 import { Layer, PageArea } from './layout';
 import getColorFromPixelData from './utils/getColorFromPixelData';
@@ -164,8 +166,7 @@ function EyedropperLayer() {
   if (isEyedropperActive && !img) {
     return (
       <>
-        {/* Disable reason: No keyboard navigation for Eyedropper. */}
-        {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions */}
+        {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions -- No keyboard navigation for Eyedropper. */}
         <Center onClick={closeEyedropper}>
           <CircularProgress />
         </Center>
@@ -269,8 +270,7 @@ function EyedropperLayer() {
     >
       {/* Remove the safe zone so we don't have to move the canvas image up (we have fullbleed image). */}
       <DisplayPageArea withSafezone={false} showOverflow>
-        {/* Disable reason: No pixel-by-pixel keyboard navigation. */}
-        {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions */}
+        {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions -- No pixel-by-pixel keyboard navigation. */}
         <EyedropperCanvas ref={eyedropperCanvas} onClick={onClick}>
           <CanvasImage ref={imgRef} src={img} alt="" />
           <Magnifier ref={magnifierInfo}>

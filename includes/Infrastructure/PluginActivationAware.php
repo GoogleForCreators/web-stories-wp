@@ -38,7 +38,6 @@ interface PluginActivationAware {
 	 * @since 1.6.0
 	 *
 	 * @param bool $network_wide Whether the activation was done network-wide.
-	 * @return void
 	 */
 	public function on_plugin_activation( $network_wide ): void;
 }

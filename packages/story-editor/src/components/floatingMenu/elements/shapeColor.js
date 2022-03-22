@@ -17,20 +17,48 @@
 /**
  * External dependencies
  */
-import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
+import { useCallback } from '@googleforcreators/react';
+import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
  */
-import { IconButton } from './shared';
+import { useStory } from '../../../app';
+import { Color } from './shared';
 
 function ShapeColor() {
+  const { backgroundColor, updateSelectedElements } = useStory(
+    ({ state, actions }) => ({
+      backgroundColor: state.selectedElements[0].backgroundColor,
+      updateSelectedElements: actions.updateSelectedElements,
+    })
+  );
+  const pushUpdate = useCallback(
+    (value) => {
+      trackEvent('floating_menu', {
+        name: 'set_shape_color',
+        element: 'shape',
+      });
+      updateSelectedElements({
+        properties: () => ({
+          backgroundColor: value,
+        }),
+      });
+    },
+    [updateSelectedElements]
+  );
+
   return (
-    <IconButton
-      Icon={Icons.Shapes}
-      title={__('Change shape color', 'web-stories')}
-      onClick={() => {}}
+    <Color
+      label={__('Shape color', 'web-stories')}
+      value={backgroundColor}
+      allowsSavedColors
+      onChange={pushUpdate}
+      hasInputs
+      hasEyedropper
+      allowsOpacity
+      allowsGradient
     />
   );
 }

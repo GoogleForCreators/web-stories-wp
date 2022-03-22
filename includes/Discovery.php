@@ -71,8 +71,6 @@ class Discovery extends Service_Base implements HasRequirements {
 	 * Initialize discovery functionality.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
 	public function register(): void {
 		add_action( 'web_stories_story_head', [ $this, 'print_metadata' ] );
@@ -112,8 +110,6 @@ class Discovery extends Service_Base implements HasRequirements {
 	 * @since 1.0.0
 	 *
 	 * @see _wp_render_title_tag().
-	 *
-	 * @return void
 	 */
 	public function print_metadata(): void {
 		/**
@@ -137,8 +133,6 @@ class Discovery extends Service_Base implements HasRequirements {
 	 * Prints the schema.org metadata on the single story template.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
 	public function print_schemaorg_metadata(): void {
 		/**
@@ -241,8 +235,6 @@ class Discovery extends Service_Base implements HasRequirements {
 	 * Prints Open Graph metadata.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
 	public function print_open_graph_metadata(): void {
 		/**
@@ -316,8 +308,6 @@ class Discovery extends Service_Base implements HasRequirements {
 	 * Prints Twitter card metadata.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
 	public function print_twitter_metadata(): void {
 		/**
@@ -381,8 +371,6 @@ class Discovery extends Service_Base implements HasRequirements {
 	 * Add RSS feed link for stories, if theme supports automatic-feed-links.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return void
 	 */
 	public function print_feed_link(): void {
 		if ( ! current_theme_supports( 'automatic-feed-links' ) ) {

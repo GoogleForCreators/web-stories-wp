@@ -50,7 +50,6 @@ class Assets {
 	 * @since 1.8.0
 	 *
 	 * @param string $path Path.
-	 * @return string
 	 */
 	public function get_base_path( string $path ): string {
 		return WEBSTORIES_PLUGIN_DIR_PATH . $path;
@@ -62,7 +61,6 @@ class Assets {
 	 * @since 1.8.0
 	 *
 	 * @param string $path Path.
-	 * @return string
 	 */
 	public function get_base_url( string $path ): string {
 		return WEBSTORIES_PLUGIN_DIR_URL . $path;
@@ -110,7 +108,6 @@ class Assets {
 	 * @param string $script_handle Handle of script.
 	 * @param array  $script_dependencies Array of extra dependencies.
 	 * @param bool   $with_i18n Optional. Whether to setup i18n for this asset. Default true.
-	 * @return void
 	 */
 	public function register_script_asset( string $script_handle, array $script_dependencies = [], bool $with_i18n = true ): void {
 		if ( isset( $this->register_scripts[ $script_handle ] ) ) {
@@ -179,7 +176,6 @@ class Assets {
 	 * @param string $script_handle Handle of script.
 	 * @param array  $script_dependencies Array of extra dependencies.
 	 * @param bool   $with_i18n Optional. Whether to setup i18n for this asset. Default true.
-	 * @return void
 	 */
 	public function enqueue_script_asset( string $script_handle, array $script_dependencies = [], bool $with_i18n = true ): void {
 		$this->register_script_asset( $script_handle, $script_dependencies, $with_i18n );
@@ -193,7 +189,6 @@ class Assets {
 	 *
 	 * @param string $style_handle Handle of style.
 	 * @param array  $style_dependencies Array of extra dependencies.
-	 * @return void
 	 */
 	public function register_style_asset( string $style_handle, array $style_dependencies = [] ): void {
 		if ( isset( $this->register_styles[ $style_handle ] ) ) {
@@ -234,7 +229,6 @@ class Assets {
 	 *
 	 * @param string $style_handle Handle of style.
 	 * @param array  $style_dependencies Array of extra dependencies.
-	 * @return void
 	 */
 	public function enqueue_style_asset( string $style_handle, array $style_dependencies = [] ): void {
 		$this->register_style_asset( $style_handle, $style_dependencies );
@@ -319,7 +313,6 @@ class Assets {
 	 * @param string           $media  Optional. The media for which this stylesheet has been defined.
 	 *                                 Default 'all'. Accepts media types like 'all', 'print' and 'screen', or media queries like
 	 *                                 '(orientation: portrait)' and '(max-width: 640px)'.
-	 * @return void
 	 */
 	public function enqueue_style( string $style_handle, string $src = '', array $deps = [], $ver = false, string $media = 'all' ): void {
 		$this->register_style( $style_handle, $src, $deps, $ver, $media );
@@ -344,7 +337,6 @@ class Assets {
 	 * @param bool             $in_footer Optional. Whether to enqueue the script before </body> instead of in the <head>.
 	 *                                    Default 'false'.
 	 * @param bool             $with_i18n Optional. Whether to setup i18n for this asset. Default true.
-	 * @return void
 	 */
 	public function enqueue_script( string $script_handle, string $src = '', array $deps = [], $ver = false, bool $in_footer = false, bool $with_i18n = false ): void {
 		$this->register_script( $script_handle, $src, $deps, $ver, $in_footer, $with_i18n );
@@ -357,7 +349,6 @@ class Assets {
 	 * @since 1.8.0
 	 *
 	 * @param array $styles Array to style to be removed.
-	 * @return void
 	 */
 	public function remove_admin_style( array $styles ): void {
 		wp_styles()->registered['wp-admin']->deps = array_diff( wp_styles()->registered['wp-admin']->deps, $styles );

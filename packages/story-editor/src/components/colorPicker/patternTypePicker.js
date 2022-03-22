@@ -36,7 +36,7 @@ const Wrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   height: ${HEADER_FOOTER_HEIGHT}px;
-  padding: 8px 16px 16px;
+  padding: 0 16px;
   position: relative;
   gap: 8px;
 `;

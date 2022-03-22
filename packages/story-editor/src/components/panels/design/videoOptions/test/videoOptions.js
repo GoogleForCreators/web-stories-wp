@@ -37,9 +37,7 @@ jest.mock('../../../../../app/currentUser', () => ({
   useCurrentUser: jest.fn(() => ({
     state: {
       currentUser: {
-        meta: {
-          web_stories_media_optimization: true,
-        },
+        mediaOptimization: true,
       },
     },
   })),
@@ -61,7 +59,7 @@ describe('Panels/VideoOptions', () => {
     );
 
     useLocalMedia.mockReturnValue({
-      isResourceTrimming: jest.fn(),
+      isElementTrimming: jest.fn(),
       isNewResourceMuting: jest.fn(),
       canTranscodeResource: jest.fn(),
     });

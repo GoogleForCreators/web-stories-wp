@@ -17,19 +17,40 @@
 /**
  * External dependencies
  */
-import { addQueryArgs } from '@googleforcreators/design-system';
+import { addQueryArgs } from '@googleforcreators/url';
 
 /**
  * WordPress dependencies
  */
 import apiFetch from '@wordpress/api-fetch';
 
-export function getFonts(config, { include, search, service }) {
+/**
+ * Assembles the `&include` query parameter.
+ *
+ * Works around a bug in WordPress.
+ *
+ * @see https://github.com/GoogleForCreators/web-stories-wp/issues/10710
+ * @param {string} include Comma-separated list of fonts to include.
+ * @return {string} include query parameter with bracket notation.
+ */
+function getIncludeQueryArgs(include = '') {
+  return include
+    .split(',')
+    .filter(Boolean)
+    .map((item) => `include[]=${encodeURI(item)}`)
+    .join('&');
+}
+
+export function getFonts(config, { include: _include, search, service }) {
+  let path = addQueryArgs(`${config.api.fonts}`, {
+    search,
+    service,
+  });
+  const include = getIncludeQueryArgs(_include);
+  if (include.length > 0) {
+    path += path.includes('?') ? `&${include}` : `?${include}`;
+  }
   return apiFetch({
-    path: addQueryArgs(`${config.api.fonts}`, {
-      include,
-      search,
-      service,
-    }),
+    path,
   });
 }

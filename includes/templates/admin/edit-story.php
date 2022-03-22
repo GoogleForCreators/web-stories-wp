@@ -67,6 +67,13 @@ $preload_paths = [
 			),
 		]
 	),
+	'/web-stories/v1/media/?' . build_query(
+		[
+			'context'  => 'edit',
+			'per_page' => 10,
+			'_fields'  => 'source_url',
+		]
+	),
 	'/web-stories/v1/users/?' . build_query(
 		[
 			'per_page' => 100,
@@ -164,7 +171,7 @@ wp_add_inline_script(
 );
 
 $init_script = <<<JS
-	webStories.domReady( function() {
+	wp.domReady( function() {
 	  webStories.initializeStoryEditor( 'web-stories-editor', %s, %s );
 	} );
 JS;

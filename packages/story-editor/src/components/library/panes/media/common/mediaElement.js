@@ -28,18 +28,18 @@ import {
 } from '@googleforcreators/react';
 import { rgba } from 'polished';
 import { __ } from '@googleforcreators/i18n';
-import { LoadingBar, useKeyDownEffect } from '@googleforcreators/design-system';
+import { LoadingBar } from '@googleforcreators/design-system';
 import { Blurhash } from 'react-blurhash';
+
 /**
  * Internal dependencies
  */
 import DropDownMenu from '../local/dropDownMenu';
-import { KEYBOARD_USER_SELECTOR } from '../../../../../utils/keyboardOnlyOutline';
-import useRovingTabIndex from '../../../../../utils/useRovingTabIndex';
 import { ContentType, useLocalMedia } from '../../../../../app/media';
 import Tooltip from '../../../../tooltip';
 import Attribution from './attribution';
 import InnerElement from './innerElement';
+import InsertionMenu from './insertionMenu';
 
 const AUTOPLAY_PREVIEW_VIDEO_DELAY_MS = 600;
 
@@ -61,9 +61,6 @@ const InnerContainer = styled.div`
   margin-bottom: 10px;
   background-color: ${({ theme, $baseColor }) =>
     $baseColor ? $baseColor : rgba(theme.colors.standard.black, 0.3)};
-  body${KEYBOARD_USER_SELECTOR} .mediaElement:focus > & {
-    outline: solid 2px #fff;
-  }
 `;
 
 const BlurhashContainer = styled(Blurhash)`
@@ -177,29 +174,7 @@ function Element({
 
   const ref = useRef();
 
-  useRovingTabIndex({ ref });
-
   const onLoad = useCallback(() => setLoaded(true), []);
-
-  const handleKeyDown = useCallback(
-    ({ key }) => {
-      if (key === 'Enter') {
-        onInsert(resource, width, height);
-      } else if (key === ' ') {
-        setIsMenuOpen(true);
-      }
-    },
-    [onInsert, setIsMenuOpen, resource, width, height]
-  );
-
-  useKeyDownEffect(
-    ref,
-    {
-      key: ['enter', 'space'],
-    },
-    handleKeyDown,
-    [handleKeyDown]
-  );
 
   const isPlaceholder = !isLoaded && !active;
 
@@ -216,7 +191,7 @@ function Element({
       onFocus={makeActive}
       onPointerLeave={makeInactive}
       onBlur={makeInactive}
-      tabIndex={index === 0 ? 0 : -1}
+      tabIndex="-1"
     >
       <InnerContainer $baseColor={isPlaceholder && baseColor}>
         <InnerElement
@@ -247,6 +222,16 @@ function Element({
           isCurrentResourceUploading(resourceId)) && (
           <LoadingBar loadingMessage={__('Uploading media…', 'web-stories')} />
         )}
+        <InsertionMenu
+          resource={resource}
+          display={active}
+          onInsert={onInsert}
+          width={width}
+          index={index}
+          isLocal={providerType === 'local'}
+          setParentActive={makeActive}
+          setParentInactive={makeInactive}
+        />
         {providerType === 'local' && canEditMedia && (
           <DropDownMenu
             resource={resource}
@@ -255,6 +240,7 @@ function Element({
             onMenuOpen={onMenuOpen}
             onMenuCancelled={onMenuCancelled}
             onMenuSelected={onMenuSelected}
+            setParentActive={makeActive}
           />
         )}
       </InnerContainer>

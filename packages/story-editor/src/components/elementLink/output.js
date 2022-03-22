@@ -18,7 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { withProtocol } from '@googleforcreators/design-system';
+import { withProtocol } from '@googleforcreators/url';
 
 /**
  * Internal dependencies
@@ -35,8 +35,7 @@ function WithLink({ element, children, ...rest }) {
   rel.push('noreferrer');
   const urlWithProtocol = withProtocol(url);
   return (
-    // False positive.
-    // eslint-disable-next-line react/jsx-no-target-blank
+    // eslint-disable-next-line react/jsx-no-target-blank -- False positive
     <a
       href={urlWithProtocol}
       data-tooltip-icon={icon || undefined}

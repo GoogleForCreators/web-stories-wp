@@ -23,28 +23,32 @@ import Proptypes from 'prop-types';
 /**
  * Internal dependencies
  */
+import { Z_INDEX_NAV_LAYER } from '../../constants/zIndex';
+import { ChecklistCountProvider } from '../checklist';
 import Footer from '../footer';
 import DirectionAware from '../directionAware';
 import PageSideMenu from './pageSideMenu';
-import { FooterArea, HeadArea, Layer, PageMenuArea, Z_INDEX } from './layout';
+import { FooterArea, HeadArea, Layer, PageMenuArea } from './layout';
 
 function NavLayer({ header, footer }) {
   return (
-    <Layer
-      pointerEvents="none"
-      zIndex={Z_INDEX.NAV}
-      onMouseDown={(evt) => evt.stopPropagation()}
+    <ChecklistCountProvider
+      hasChecklist={Boolean(footer?.secondaryMenu?.checklist)}
     >
-      <HeadArea pointerEvents="initial">{header}</HeadArea>
-      <DirectionAware>
-        <PageMenuArea>
-          <PageSideMenu />
-        </PageMenuArea>
-      </DirectionAware>
-      <FooterArea pointerEvents="initial">
-        <Footer footer={footer} />
-      </FooterArea>
-    </Layer>
+      <Layer pointerEvents="none" onMouseDown={(evt) => evt.stopPropagation()}>
+        <HeadArea pointerEvents="initial" zIndex={Z_INDEX_NAV_LAYER}>
+          {header}
+        </HeadArea>
+        <DirectionAware>
+          <PageMenuArea>
+            <PageSideMenu />
+          </PageMenuArea>
+        </DirectionAware>
+        <FooterArea pointerEvents="initial">
+          <Footer footer={footer} zIndex={Z_INDEX_NAV_LAYER} />
+        </FooterArea>
+      </Layer>
+    </ChecklistCountProvider>
   );
 }
 

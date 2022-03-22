@@ -42,7 +42,7 @@ function useTransformHandler(id, handler, deps = undefined) {
 
   useEffect(
     () => registerTransformHandler(id, handler),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- We want to pass through provided deps.
     deps
   );
 }

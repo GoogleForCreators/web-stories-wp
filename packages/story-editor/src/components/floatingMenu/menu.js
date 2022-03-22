@@ -26,13 +26,14 @@ import { ContextMenu } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
+import { Z_INDEX_FLOATING_MENU } from '../../constants/zIndex';
 import { FloatingMenuProvider } from './context';
 import MenuSelector from './menus';
 
 const MenuWrapper = styled.section`
   display: flex;
   position: absolute;
-  z-index: 2;
+  z-index: ${Z_INDEX_FLOATING_MENU};
 `;
 
 const FloatingMenu = memo(
@@ -42,9 +43,19 @@ const FloatingMenu = memo(
   ) {
     useLayoutEffect(() => {
       const node = ref.current;
-      const bounds = node.getBoundingClientRect();
-      node.style.setProperty('--width', `${bounds.width.toFixed(2)}px`);
-      node.style.setProperty('--height', `${bounds.height.toFixed(2)}px`);
+      const updateSize = () => {
+        node.style.width = '';
+        const bounds = node.getBoundingClientRect();
+        node.style.setProperty('--width', `${bounds.width.toFixed(2)}px`);
+        node.style.setProperty('--height', `${bounds.height.toFixed(2)}px`);
+        node.style.width = 'var(--width)';
+      };
+      updateSize();
+      // If the menu children list changes, update the size again
+      const observer = new MutationObserver(updateSize);
+      const menu = node.querySelector('[role=menu]');
+      observer.observe(menu, { childList: true });
+      return () => observer.disconnect();
     }, [ref, selectionIdentifier]);
 
     return (
@@ -65,6 +76,7 @@ const FloatingMenu = memo(
               // This prevents the selected element in the canvas from losing focus.
               e.stopPropagation();
             }}
+            popoverZIndex={Z_INDEX_FLOATING_MENU}
           >
             <MenuSelector selectedElementType={selectedElementType} />
           </ContextMenu>

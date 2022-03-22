@@ -18,27 +18,34 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import { memo } from '@googleforcreators/react';
+import { memo, forwardRef } from '@googleforcreators/react';
 import {
   ContextMenuComponents,
+  Tooltip,
   TOOLTIP_PLACEMENT,
 } from '@googleforcreators/design-system';
 
-const IconButton = memo(function IconButton({ Icon, title, ...rest }) {
-  return (
-    <ContextMenuComponents.MenuButton {...rest}>
-      <ContextMenuComponents.MenuIcon
-        title={title}
-        placement={TOOLTIP_PLACEMENT.BOTTOM}
-      >
-        <Icon />
-      </ContextMenuComponents.MenuIcon>
-    </ContextMenuComponents.MenuButton>
-  );
-});
+/**
+ * Internal dependencies
+ */
+import ToggleButton from './toggleButton';
+
+const IconButton = memo(
+  forwardRef(function IconButton({ Icon, title, ...rest }, ref) {
+    return (
+      <Tooltip placement={TOOLTIP_PLACEMENT.BOTTOM} title={title}>
+        <ToggleButton ref={ref} {...rest}>
+          <ContextMenuComponents.MenuIcon title={title}>
+            <Icon />
+          </ContextMenuComponents.MenuIcon>
+        </ToggleButton>
+      </Tooltip>
+    );
+  })
+);
 
 IconButton.propTypes = {
-  Icon: PropTypes.node.isRequired,
+  Icon: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
   title: PropTypes.string,
 };

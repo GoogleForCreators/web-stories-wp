@@ -1,5 +1,6 @@
 .git
 .github
+.husky
 .idea
 .storybook
 .wordpress-org
@@ -38,6 +39,7 @@ web-stories-scraper
 .npmpackagejsonlintrc.json
 .npmrc
 .nvmrc
+.phpstorm.config.js
 .phpstorm.meta.php
 .prettierignore
 .prettierrc
@@ -49,6 +51,7 @@ codecov.yml
 composer.lock
 CONTRIBUTING.md
 jest-puppeteer.config.cjs
+jsconfig.json
 karma-story-editor.config.cjs
 karma-dashboard.config.cjs
 package.json

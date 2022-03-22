@@ -28,18 +28,22 @@ import {
   themeHelpers,
 } from '@googleforcreators/design-system';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
-import { useCallback } from '@googleforcreators/react';
-import { ResourcePropTypes } from '@googleforcreators/media';
+import { useCallback, useMemo } from '@googleforcreators/react';
+import {
+  ResourcePropTypes,
+  getExtensionsFromMimeType,
+} from '@googleforcreators/media';
 import { v4 as uuidv4 } from 'uuid';
+import { BackgroundAudioPropType } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
+import { useConfig } from '../../../app';
+import { Z_INDEX_STORY_DETAILS } from '../../../constants/zIndex';
 import { Row } from '../../form';
 import AudioPlayer from '../../audioPlayer';
 import Tooltip from '../../tooltip';
-import { useConfig } from '../../../app';
-import { BackgroundAudioPropType } from '../../../types';
 import CaptionsPanelContent from './captionsPanelContent';
 import LoopPanelContent from './loopPanelContent';
 
@@ -63,12 +67,17 @@ function BackgroundAudioPanelContent({
   audioId,
 }) {
   const {
-    allowedAudioMimeTypes,
-    allowedAudioFileTypes,
+    allowedMimeTypes: { audio: allowedAudioMimeTypes },
     capabilities: { hasUploadMediaAction },
     MediaUpload,
   } = useConfig();
-
+  const allowedAudioFileTypes = useMemo(
+    () =>
+      allowedAudioMimeTypes
+        .map((type) => getExtensionsFromMimeType(type))
+        .flat(),
+    [allowedAudioMimeTypes]
+  );
   const { resource, tracks = [], loop = true } = backgroundAudio || {};
 
   const onSelectErrorMessage = sprintf(
@@ -201,7 +210,11 @@ function BackgroundAudioPanelContent({
               tracks={tracks}
               audioId={audioId}
             />
-            <Tooltip hasTail title={__('Remove file', 'web-stories')}>
+            <Tooltip
+              hasTail
+              title={__('Remove file', 'web-stories')}
+              popupZIndexOverride={Z_INDEX_STORY_DETAILS}
+            >
               <StyledButton
                 aria-label={__('Remove file', 'web-stories')}
                 type={BUTTON_TYPES.TERTIARY}

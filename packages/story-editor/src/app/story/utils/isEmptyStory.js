@@ -18,11 +18,7 @@
  * External dependencies
  */
 import { shallowEqual } from '@googleforcreators/react';
-
-/**
- * Internal dependencies
- */
-import { DEFAULT_PAGE_BACKGROUND_COLOR } from '../../../elements/utils/createPage';
+import { DEFAULT_PAGE_BACKGROUND_COLOR } from '@googleforcreators/elements';
 
 const isEmptyStory = (pages) => {
   const hasOnlyOnePage = pages.length === 1;
@@ -37,6 +33,11 @@ const isEmptyStory = (pages) => {
 
   const hasNoBackgroundMedia = pages[0].elements[0].isDefaultBackground;
   if (!hasNoBackgroundMedia) {
+    return false;
+  }
+
+  const hasPageAttachment = pages[0].pageAttachment?.url;
+  if (hasPageAttachment) {
     return false;
   }
 

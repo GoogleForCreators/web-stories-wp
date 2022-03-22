@@ -37,7 +37,6 @@ Remove extraneous attributes on the base `svg` component and make sure your comp
 
 ```js
 const title = __('Some Descriptor', 'web-stories');
-/* eslint-disable-next-line react/prop-types */
 function MySticker({ style }) {
   return (
     <svg
@@ -67,11 +66,7 @@ Create a new `index.js` file under your `<template_name>` directory and add your
 
 ```js
 //...
-import { default as mySticker } from './mySticker';
-export default {
-  //...
-  mySticker,
-};
+export { default as  mySticker } from './mySticker';
 ```
 
 The last step of this process is navigating to `packages/stickers/src/index.js` and adding your new stickers to the default export object:

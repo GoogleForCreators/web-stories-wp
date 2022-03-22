@@ -144,7 +144,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
     isCurrentResourceProcessing,
     isNewResourceTranscoding,
     isNewResourceMuting,
-    isResourceTrimming,
+    isElementTrimming,
     isCurrentResourceUploading,
     isCurrentResourceTranscoding,
     isCurrentResourceMuting,
@@ -181,13 +181,15 @@ export default function useContextValueProvider(reducerState, reducerActions) {
   stateRef.current = reducerState;
 
   const resetWithFetch = useCallback(() => {
-    // eslint-disable-next-line no-shadow
-    const { mediaType, pageToken, searchTerm } = stateRef.current;
+    const { mediaType: currentMediaType } = stateRef.current;
 
     resetFilters();
-    const isFirstPage = !pageToken;
-    if (!mediaType && !searchTerm && isFirstPage) {
-      fetchMedia({ mediaType, cacheBust: true }, fetchMediaSuccess);
+    const isFirstPage = !stateRef.current.pageToken;
+    if (!currentMediaType && !stateRef.current.searchTerm && isFirstPage) {
+      fetchMedia(
+        { mediaType: currentMediaType, cacheBust: true },
+        fetchMediaSuccess
+      );
     }
   }, [fetchMedia, fetchMediaSuccess, resetFilters]);
 
@@ -349,7 +351,7 @@ export default function useContextValueProvider(reducerState, reducerActions) {
       isCurrentResourceProcessing,
       isNewResourceTranscoding,
       isNewResourceMuting,
-      isResourceTrimming,
+      isElementTrimming,
       isCurrentResourceUploading,
       isCurrentResourceTranscoding,
       isCurrentResourceMuting,

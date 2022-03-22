@@ -17,20 +17,51 @@
 /**
  * External dependencies
  */
-import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
+import { useCallback } from '@googleforcreators/react';
+import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
  */
-import { IconButton } from './shared';
+import useRichTextFormatting from '../../panels/design/textStyle/useRichTextFormatting';
+import updateProperties from '../../inspector/design/updateProperties';
+import { useStory } from '../../../app';
+import { Color, useProperties } from './shared';
 
 function TextColor() {
+  const { content } = useProperties(['content']);
+  const updateSelectedElements = useStory(
+    (state) => state.actions.updateSelectedElements
+  );
+
+  const pushUpdate = useCallback(
+    (update) => {
+      trackEvent('floating_menu', {
+        name: 'set_text_color',
+        element: 'text',
+      });
+      updateSelectedElements({
+        properties: (element) => updateProperties(element, update, true),
+      });
+    },
+    [updateSelectedElements]
+  );
+  const {
+    textInfo: { color },
+    handlers: { handleSetColor },
+  } = useRichTextFormatting([{ content, type: 'text' }], pushUpdate);
+
   return (
-    <IconButton
-      Icon={Icons.Pipette}
-      title={__('Change text color', 'web-stories')}
-      onClick={() => {}}
+    <Color
+      label={__('Text color', 'web-stories')}
+      value={color}
+      allowsSavedColors
+      onChange={handleSetColor}
+      hasInputs={false}
+      hasEyedropper
+      allowsOpacity
+      allowsGradient={false}
     />
   );
 }

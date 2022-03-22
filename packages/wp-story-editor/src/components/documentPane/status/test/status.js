@@ -25,12 +25,14 @@ import { StoryContext } from '@googleforcreators/story-editor';
  */
 import { renderWithTheme } from '../../../../testUtils';
 import StatusPanel from '../status';
+import { STATUS, VISIBILITY } from '../../../../constants';
 
 function arrange(
   capabilities = {
     publish: true,
   },
-  password = ''
+  password = '',
+  visibility = VISIBILITY.PUBLIC
 ) {
   const updateStory = jest.fn();
   const saveStory = jest.fn();
@@ -38,11 +40,12 @@ function arrange(
   const storyContextValue = {
     state: {
       story: {
-        status: 'draft',
+        status: STATUS.DRAFT,
         password,
         title: '',
         storyId: 123,
         editLink: 'http://localhost/wp-admin/post.php?post=123&action=edit',
+        visibility,
       },
       capabilities,
     },
@@ -61,6 +64,13 @@ function arrange(
 }
 
 const windowConfirm = jest.fn(() => true);
+
+const clickDropdown = () => {
+  const dropdownBtn = screen.getByRole('button', {
+    name: 'Public',
+  });
+  fireEvent.click(dropdownBtn);
+};
 
 describe('statusPanel', () => {
   beforeAll(() => {
@@ -86,42 +96,71 @@ describe('statusPanel', () => {
 
   it('should render Status Panel', () => {
     arrange();
-    const element = screen.getByRole('button', {
-      name: 'Visibility',
-    });
-    expect(element).toBeInTheDocument();
+    clickDropdown();
 
-    const radioOptions = screen.getAllByRole('radio');
-    expect(radioOptions).toHaveLength(3);
-    expect(screen.getByLabelText('Public')).toBeInTheDocument();
-    expect(screen.getByLabelText('Private')).toBeInTheDocument();
-    expect(screen.getByLabelText('Password Protected')).toBeInTheDocument();
+    expect(screen.getAllByRole('option')).toHaveLength(3);
+    expect(
+      screen.getByRole('option', {
+        name: 'Public Visible to everyone',
+      })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('option', {
+        name: 'Private Visible to site admins & editors only',
+      })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('option', {
+        name: 'Password Protected Visible only to those with the password.',
+      })
+    ).toBeInTheDocument();
   });
 
   it('should always render the "Public" visibility option', () => {
     arrange({
       publish: false,
     });
-    expect(screen.getByLabelText('Public')).toBeInTheDocument();
+    clickDropdown();
+
+    expect(
+      screen.getByRole('button', {
+        name: 'Public',
+      })
+    ).toBeInTheDocument();
   });
 
   it('should not render other visibility options if lacking permissions', () => {
     arrange({
       publish: false,
     });
-    expect(screen.queryByLabelText('Private')).not.toBeInTheDocument();
+    clickDropdown();
+
     expect(
-      screen.queryByLabelText('Password Protected')
+      screen.queryByRole('option', {
+        name: 'Private Visible to site admins & editors only',
+      })
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('option', {
+        name: 'Password Protected Visible only to those with the password.',
+      })
     ).not.toBeInTheDocument();
   });
 
   it('should update the status when marking a story private', () => {
     const { saveStory } = arrange();
-    fireEvent.click(screen.getByLabelText('Private'));
+    clickDropdown();
+
+    fireEvent.click(
+      screen.getByRole('option', {
+        name: 'Private Visible to site admins & editors only',
+      })
+    );
     expect(windowConfirm).toHaveBeenCalledWith(expect.any(String));
     expect(saveStory).toHaveBeenCalledWith({
-      status: 'private',
+      status: STATUS.PRIVATE,
       password: '',
+      visibility: VISIBILITY.PRIVATE,
     });
   });
 
@@ -130,26 +169,49 @@ describe('statusPanel', () => {
       {
         publish: true,
       },
-      'test'
+      'password',
+      'protected'
     );
+
     expect(screen.getByLabelText('Password')).toBeInTheDocument();
   });
 
-  it('should hide password field when changing visibility', () => {
+  it('should update properties changing visibility', () => {
     const { updateStory } = arrange(
       {
         publish: true,
       },
-      'test'
+      'password',
+      VISIBILITY.PASSWORD_PROTECTED
     );
     expect(screen.getByLabelText('Password')).toBeInTheDocument();
-    fireEvent.click(screen.getByText('Public'));
+
+    const dropdownBtn = screen.getByRole('button', {
+      name: 'Password Protected',
+    });
+    fireEvent.click(dropdownBtn);
+
+    fireEvent.click(
+      screen.getByRole('option', {
+        name: 'Public Visible to everyone',
+      })
+    );
     expect(updateStory).toHaveBeenCalledWith({
       properties: {
         status: 'draft',
         password: '',
+        visibility: VISIBILITY.PUBLIC,
       },
     });
+  });
+  it('should hide password when public visibility', () => {
+    arrange(
+      {
+        publish: true,
+      },
+      undefined,
+      VISIBILITY.PUBLIC
+    );
     expect(screen.queryByLabelText('Password')).not.toBeInTheDocument();
   });
 });

@@ -1054,7 +1054,7 @@
       "xH": 495,
       "capH": 591,
       "yMin": -288,
-      "yMax": 784,
+      "yMax": 800,
       "hAsc": 900,
       "hDes": -300,
       "lGap": 0
@@ -2477,20 +2477,20 @@
     "variants": [[0, 400]],
     "service": "fonts.google.com",
     "metrics": {
-      "upm": 2048,
-      "asc": 1699,
-      "des": -433,
-      "tAsc": 1699,
-      "tDes": -433,
+      "upm": 1000,
+      "asc": 830,
+      "des": -212,
+      "tAsc": 830,
+      "tDes": -212,
       "tLGap": 0,
-      "wAsc": 1699,
-      "wDes": 433,
-      "xH": 922,
-      "capH": 1262,
-      "yMin": -433,
-      "yMax": 1699,
-      "hAsc": 1699,
-      "hDes": -433,
+      "wAsc": 830,
+      "wDes": 211,
+      "xH": 450,
+      "capH": 616,
+      "yMin": -211,
+      "yMax": 830,
+      "hAsc": 830,
+      "hDes": -212,
       "lGap": 0
     }
   },
@@ -4112,6 +4112,31 @@
     }
   },
   {
+    "family": "BhuTuka Expanded One",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 826,
+      "des": -182,
+      "tAsc": 826,
+      "tDes": -182,
+      "tLGap": 0,
+      "wAsc": 844,
+      "wDes": 464,
+      "xH": 357,
+      "capH": 520,
+      "yMin": -464,
+      "yMax": 844,
+      "hAsc": 826,
+      "hDes": -182,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Big Shoulders Display",
     "fallbacks": ["cursive"],
     "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
@@ -4942,25 +4967,28 @@
   {
     "family": "Brawler",
     "fallbacks": ["serif"],
-    "weights": [400],
+    "weights": [400, 700],
     "styles": ["regular"],
-    "variants": [[0, 400]],
+    "variants": [
+      [0, 400],
+      [0, 700]
+    ],
     "service": "fonts.google.com",
     "metrics": {
-      "upm": 2048,
-      "asc": 1988,
-      "des": -506,
-      "tAsc": 1988,
-      "tDes": -506,
+      "upm": 1000,
+      "asc": 971,
+      "des": -248,
+      "tAsc": 971,
+      "tDes": -248,
       "tLGap": 0,
-      "wAsc": 1988,
-      "wDes": 506,
-      "xH": 1065,
-      "capH": 1434,
-      "yMin": -506,
-      "yMax": 1988,
-      "hAsc": 1988,
-      "hDes": -506,
+      "wAsc": 998,
+      "wDes": 275,
+      "xH": 500,
+      "capH": 700,
+      "yMin": -275,
+      "yMax": 971,
+      "hAsc": 971,
+      "hDes": -248,
       "lGap": 0
     }
   },
@@ -10922,6 +10950,37 @@
     }
   },
   {
+    "family": "Fredoka",
+    "fallbacks": ["sans-serif"],
+    "weights": [300, 400, 500, 600, 700],
+    "styles": ["regular"],
+    "variants": [
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 974,
+      "des": -236,
+      "tAsc": 974,
+      "tDes": -236,
+      "tLGap": 0,
+      "wAsc": 999,
+      "wDes": 252,
+      "xH": 500,
+      "capH": 700,
+      "yMin": -252,
+      "yMax": 950,
+      "hAsc": 974,
+      "hDes": -236,
+      "lGap": 0
+    }
+  },
+  {
     "family": "Fredoka One",
     "fallbacks": ["cursive"],
     "weights": [400],
@@ -13482,6 +13541,31 @@
       "yMax": 892,
       "hAsc": 892,
       "hDes": -204,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Hubballi",
+    "fallbacks": ["cursive"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 765,
+      "des": -191,
+      "tAsc": 765,
+      "tDes": -191,
+      "tLGap": 0,
+      "wAsc": 816,
+      "wDes": 580,
+      "xH": 392,
+      "capH": 535,
+      "yMin": -580,
+      "yMax": 816,
+      "hAsc": 765,
+      "hDes": -191,
       "lGap": 0
     }
   },
@@ -16990,6 +17074,31 @@
     }
   },
   {
+    "family": "League Gothic",
+    "fallbacks": ["sans-serif"],
+    "weights": [400],
+    "styles": ["regular"],
+    "variants": [[0, 400]],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 2000,
+      "asc": 1935,
+      "des": -465,
+      "tAsc": 1935,
+      "tDes": -465,
+      "tLGap": 0,
+      "wAsc": 2103,
+      "wDes": 500,
+      "xH": 1094,
+      "capH": 1470,
+      "yMin": -500,
+      "yMax": 2103,
+      "hAsc": 1935,
+      "hDes": -465,
+      "lGap": 0
+    }
+  },
+  {
     "family": "League Script",
     "fallbacks": ["cursive"],
     "weights": [400],
@@ -17011,6 +17120,41 @@
       "yMax": 1315,
       "hAsc": 1100,
       "hDes": -600,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "League Spartan",
+    "fallbacks": ["sans-serif"],
+    "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+    "styles": ["regular"],
+    "variants": [
+      [0, 100],
+      [0, 200],
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800],
+      [0, 900]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 2000,
+      "asc": 1400,
+      "des": -440,
+      "tAsc": 1400,
+      "tDes": -440,
+      "tLGap": 0,
+      "wAsc": 2305,
+      "wDes": 675,
+      "xH": 821,
+      "capH": 1320,
+      "yMin": -440,
+      "yMax": 2119,
+      "hAsc": 1400,
+      "hDes": -440,
       "lGap": 0
     }
   },
@@ -27819,35 +27963,6 @@
     }
   },
   {
-    "family": "Open Sans Condensed",
-    "fallbacks": ["sans-serif"],
-    "weights": [300, 700],
-    "styles": ["italic"],
-    "variants": [
-      [0, 300],
-      [1, 300],
-      [0, 700]
-    ],
-    "service": "fonts.google.com",
-    "metrics": {
-      "upm": 2048,
-      "asc": 2189,
-      "des": -600,
-      "tAsc": 1567,
-      "tDes": -492,
-      "tLGap": 132,
-      "wAsc": 2189,
-      "wDes": 600,
-      "xH": 1085,
-      "capH": 1462,
-      "yMin": -512,
-      "yMax": 2132,
-      "hAsc": 2189,
-      "hDes": -600,
-      "lGap": 0
-    }
-  },
-  {
     "family": "Oranienbaum",
     "fallbacks": ["serif"],
     "weights": [400],
@@ -31657,7 +31772,7 @@
   },
   {
     "family": "Roboto Serif",
-    "fallbacks": ["sans-serif"],
+    "fallbacks": ["serif"],
     "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
     "styles": ["regular", "italic"],
     "variants": [
@@ -34084,6 +34199,41 @@
       "yMax": 1159,
       "hAsc": 950,
       "hDes": -450,
+      "lGap": 0
+    }
+  },
+  {
+    "family": "Smooch Sans",
+    "fallbacks": ["sans-serif"],
+    "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
+    "styles": ["regular"],
+    "variants": [
+      [0, 100],
+      [0, 200],
+      [0, 300],
+      [0, 400],
+      [0, 500],
+      [0, 600],
+      [0, 700],
+      [0, 800],
+      [0, 900]
+    ],
+    "service": "fonts.google.com",
+    "metrics": {
+      "upm": 1000,
+      "asc": 900,
+      "des": -300,
+      "tAsc": 900,
+      "tDes": -300,
+      "tLGap": 0,
+      "wAsc": 1011,
+      "wDes": 300,
+      "xH": 470,
+      "capH": 620,
+      "yMin": -245,
+      "yMax": 906,
+      "hAsc": 900,
+      "hDes": -300,
       "lGap": 0
     }
   },
@@ -37964,20 +38114,20 @@
     "variants": [[0, 400]],
     "service": "fonts.google.com",
     "metrics": {
-      "upm": 2048,
-      "asc": 1821,
-      "des": -430,
-      "tAsc": 1821,
-      "tDes": -430,
+      "upm": 1000,
+      "asc": 890,
+      "des": -210,
+      "tAsc": 890,
+      "tDes": -210,
       "tLGap": 0,
-      "wAsc": 1821,
-      "wDes": 430,
-      "xH": 1044,
-      "capH": 1454,
-      "yMin": -430,
-      "yMax": 1821,
-      "hAsc": 1821,
-      "hDes": -430,
+      "wAsc": 890,
+      "wDes": 210,
+      "xH": 500,
+      "capH": 700,
+      "yMin": -210,
+      "yMax": 889,
+      "hAsc": 890,
+      "hDes": -210,
       "lGap": 0
     }
   },

@@ -89,8 +89,6 @@ class Publisher_Logos_Controller extends REST_Controller implements HasRequireme
 	 * @since 1.12.0
 	 *
 	 * @see register_rest_route()
-	 *
-	 * @return void
 	 */
 	public function register_routes(): void {
 		register_rest_route(

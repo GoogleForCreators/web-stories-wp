@@ -16,7 +16,37 @@
 /**
  * Internal dependencies
  */
-import { getSiblingDirection } from '../useRovingTabIndex';
+import { getFocusableElementDirection } from '../useRovingTabIndex';
+import { getNextEnabledSibling } from '../useRovingTabIndex/flatNavigation';
+
+describe('getNextEnabledSibling', () => {
+  it('should get next sibling', () => {
+    const wrapper = document.createElement('div');
+    const button1 = document.createElement('button');
+    wrapper.appendChild(button1);
+    const button2 = document.createElement('button');
+    wrapper.appendChild(button2);
+    const button3 = document.createElement('button3');
+    wrapper.appendChild(button3);
+
+    expect(getNextEnabledSibling(button2, 'previousSibling')).toBe(button1);
+    expect(getNextEnabledSibling(button2, 'nextSibling')).toBe(button3);
+  });
+
+  it('should skip disabled sibling', () => {
+    const wrapper = document.createElement('div');
+    const button1 = document.createElement('button');
+    wrapper.appendChild(button1);
+    const button2 = document.createElement('button');
+    button2.disabled = 'true';
+    wrapper.appendChild(button2);
+    const button3 = document.createElement('button3');
+    wrapper.appendChild(button3);
+
+    expect(getNextEnabledSibling(button3, 'previousSibling')).toBe(button1);
+    expect(getNextEnabledSibling(button1, 'nextSibling')).toBe(button3);
+  });
+});
 
 describe('getSiblingDirection', () => {
   describe('RTL', () => {
@@ -24,7 +54,9 @@ describe('getSiblingDirection', () => {
       'given key: %s returns "previousSibling"',
       (key) => {
         const isRTL = true;
-        expect(getSiblingDirection(isRTL, key)).toBe('previousSibling');
+        expect(getFocusableElementDirection(isRTL, key)).toBe(
+          'previousSibling'
+        );
       }
     );
 
@@ -32,7 +64,7 @@ describe('getSiblingDirection', () => {
       'given key: %s returns "nextSibling"',
       (key) => {
         const isRTL = true;
-        expect(getSiblingDirection(isRTL, key)).toBe('nextSibling');
+        expect(getFocusableElementDirection(isRTL, key)).toBe('nextSibling');
       }
     );
   });
@@ -42,7 +74,9 @@ describe('getSiblingDirection', () => {
       'given key: %s returns "previousSibling"',
       (key) => {
         const isRTL = false;
-        expect(getSiblingDirection(isRTL, key)).toBe('previousSibling');
+        expect(getFocusableElementDirection(isRTL, key)).toBe(
+          'previousSibling'
+        );
       }
     );
 
@@ -50,7 +84,7 @@ describe('getSiblingDirection', () => {
       'given key: %s returns "nextSibling"',
       (key) => {
         const isRTL = false;
-        expect(getSiblingDirection(isRTL, key)).toBe('nextSibling');
+        expect(getFocusableElementDirection(isRTL, key)).toBe('nextSibling');
       }
     );
   });

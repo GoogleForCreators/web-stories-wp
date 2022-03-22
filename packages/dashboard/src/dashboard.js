@@ -23,13 +23,15 @@ import {
   theme as externalDesignSystemTheme,
   ThemeGlobals,
   deepMerge,
-  setAppElement,
 } from '@googleforcreators/design-system';
+import { useEffect } from '@googleforcreators/react';
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
+Object.defineProperty(stylisRTLPlugin, 'name', { value: 'stylisRTLPlugin' });
 import PropTypes from 'prop-types';
 import { FlagsProvider } from 'flagged';
-import { useMemo } from '@googleforcreators/react';
+import { registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
@@ -40,19 +42,19 @@ import { NavProvider } from './components';
 import { RouterProvider } from './app/router';
 import { GlobalStyle } from './theme';
 import { KeyboardOnlyOutline } from './utils';
-import defaultConfig from './defaultConfig';
+import getDefaultConfig from './getDefaultConfig';
 
 function Dashboard({ config, children }) {
-  const _config = useMemo(() => deepMerge(defaultConfig, config), [config]);
+  const _config = deepMerge(getDefaultConfig(), config);
   const { isRTL, flags } = _config;
   const activeTheme = {
     ...externalDesignSystemTheme,
     colors: lightMode,
   };
-  // Set up modal focus trap on app's mount
 
-  document.body.setAttribute('id', 'dashboardWrapper');
-  setAppElement('#dashboardWrapper > div:first-of-type');
+  useEffect(() => {
+    elementTypes.forEach(registerElementType);
+  }, []);
 
   return (
     <FlagsProvider features={flags}>

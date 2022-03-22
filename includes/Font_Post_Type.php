@@ -61,8 +61,6 @@ class Font_Post_Type extends Post_Type_Base implements HasRequirements {
 	 * Get post type slug.
 	 *
 	 * @since 1.16.0
-	 *
-	 * @return string
 	 */
 	public function get_slug(): string {
 		return self::POST_TYPE_SLUG;

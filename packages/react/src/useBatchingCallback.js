@@ -37,7 +37,7 @@ import { useCallback } from './react';
 function useBatchingCallback(callback, deps = undefined) {
   return useCallback(
     (...args) => batchedUpdates(() => callback(...args)),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- Pass through provided deps.
     deps
   );
 }
