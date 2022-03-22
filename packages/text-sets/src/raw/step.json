@@ -1880,7 +1880,7 @@
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Open Sans Condensed",
+            "family": "Roboto Condensed",
             "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [300, 700],
@@ -1908,14 +1908,14 @@
               "lGap": 0
             }
           },
-          "fontSize": 24,
+          "fontSize": 23,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.3,
           "textAlign": "center",
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "type": "text",
-          "content": "<span style=\"color: #444; letter-spacing: 0.04em\">Quick Tutorial for Beginners</span>",
-          "fontWeight": 400,
+          "content": "<span style=\"font-weight: 300; color: #444; letter-spacing: 0.02em\">Quick Tutorial for Beginners</span>",
+          "fontWeight": 300,
           "width": 332,
           "height": 33,
           "scale": 100,
@@ -1924,14 +1924,14 @@
           "basedOn": "be70352c-fbed-4b24-90f0-330e03e8beff",
           "id": "c6758347-f6c5-4225-a276-e1853ecff8eb",
           "x": 40,
-          "y": 513
+          "y": 518
         }
       ],
       "animations": [],
       "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
-      "fonts": ["Dancing Script", "Open Sans Condensed"],
+      "fonts": ["Dancing Script", "Roboto Condensed"],
       "id": "f3ff9526-189a-4eb5-8e5b-1b38228a562b"
     }
   ],
