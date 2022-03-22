@@ -47,6 +47,8 @@ import { SPACING } from './constants';
 const containerCss = css`
   display: flex;
   align-items: center;
+  width: ${({ width, ignoreWidth }) =>
+    (ignoreWidth && 'inherit') || (width ? `${width}px` : `100%`)};
 `;
 
 const Container = styled.section`
@@ -104,6 +106,7 @@ const Color = forwardRef(function Color(
   },
   ref
 ) {
+  console.log({ label, value });
   const handleOpacityChange = useCallback(
     (newOpacity) => onChange(applyOpacityChange(value, newOpacity)),
     [value, onChange]
@@ -128,8 +131,17 @@ const Color = forwardRef(function Color(
       ? TOOLTIP_PLACEMENT.BOTTOM
       : TOOLTIP_PLACEMENT.BOTTOM_START;
 
+  // Sometimes the value of the set color is "(MULTIPLE)", this is the only time the color comes back a string not an object.
+  // When there's multiple colors the input displays "Mixed" (in english) and takes up a different amount of space.
+  // By checking here to ignore that value based on mixed colors we prevent overlaps in any language too.
+  const ignoreSetWidth = typeof value === 'string';
   return (
-    <Container aria-label={containerLabel} isInDesignMenu={isInDesignMenu}>
+    <Container
+      aria-label={containerLabel}
+      isInDesignMenu={isInDesignMenu}
+      width={width}
+      ignoreWidth={ignoreSetWidth}
+    >
       {hasEyedropper && (
         <Tooltip
           title={tooltip}
