@@ -31,7 +31,7 @@ import useRichTextFormatting from '../panels/design/textStyle/useRichTextFormatt
 import getClosestFontWeight from '../panels/design/textStyle/getClosestFontWeight';
 import { getCommonValue } from '../panels/shared';
 import FontPicker from '../fontPicker';
-import updateProperties from '../sidebar/design/updateProperties';
+import updateProperties from '../design/updateProperties';
 
 const StoryFontPicker = forwardRef(function StoryFontPicker({ ...rest }, ref) {
   const { updateSelectedElements, selectedElements } = useStory(

@@ -25,7 +25,7 @@ import { v4 as uuidv4 } from 'uuid';
  * Internal dependencies
  */
 import { PRESET_TYPES } from '../../../constants';
-import updateProperties from '../../../components/sidebar/design/updateProperties';
+import updateProperties from '../../../components/design/updateProperties';
 import useApplyStyle from '../../../components/styleManager/useApplyStyle';
 import getUpdatedSizeAndPosition from '../../../utils/getUpdatedSizeAndPosition';
 import { getTextPresets } from '../../../utils/presetUtils';

@@ -22,8 +22,8 @@ import { useCallback, useEffect, useMemo } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../app';
-import useHandlers from '../../../utils/useHandlers';
+import { useStory } from '../../app';
+import useHandlers from '../../utils/useHandlers';
 import updateProperties from './updateProperties';
 import getDesignPanelsForSelection from './getDesignPanelsForSelection';
 

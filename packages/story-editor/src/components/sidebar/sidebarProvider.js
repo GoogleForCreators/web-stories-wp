@@ -37,9 +37,9 @@ import { useAPI } from '../../app/api';
 import { useStory } from '../../app/story';
 import { states, useHighlights } from '../../app/highlights';
 import Library from '../library';
+import DesignInspector from '../design';
 import { DOCUMENT, STYLE, PUBLISH_MODAL_DOCUMENT, INSERT } from './constants';
 import Context from './context';
-import DesignInspector from './design';
 
 const SIDEBAR_TAB_IDS = new Set([INSERT, DOCUMENT, STYLE]);
 function SidebarProvider({ sidebarTabs, children }) {

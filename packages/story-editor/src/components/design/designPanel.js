@@ -29,9 +29,9 @@ import {
 /**
  * Internal dependencies
  */
-import StoryPropTypes from '../../../types';
-import FormContext from '../../form/context';
-import useHandlers from '../../../utils/useHandlers';
+import StoryPropTypes from '../../types';
+import FormContext from '../form/context';
+import useHandlers from '../../utils/useHandlers';
 import updateProperties from './updateProperties';
 
 const Form = styled.form`

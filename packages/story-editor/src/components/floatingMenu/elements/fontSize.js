@@ -26,7 +26,7 @@ import { trackEvent } from '@googleforcreators/tracking';
  */
 import { useStory } from '../../../app';
 import getUpdatedSizeAndPosition from '../../../utils/getUpdatedSizeAndPosition';
-import updateProperties from '../../sidebar/design/updateProperties';
+import updateProperties from '../../design/updateProperties';
 import { focusStyle, inputContainerStyleOverride } from '../../panels/shared';
 import { MIN_MAX } from '../../panels/design/textStyle/font';
 // TODO: https://github.com/GoogleForCreators/web-stories-wp/issues/10799
