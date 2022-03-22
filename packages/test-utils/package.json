@@ -1,45 +1,45 @@
 {
-    "name": "@googleforcreators/test-utils",
-    "description": "Package for Web Stories test utilities",
-    "private": true,
-    "version": "0.1.202203150806",
-    "author": {
-        "name": "Google",
-        "url": "https://creators.google/"
-    },
-    "license": "Apache-2.0",
-    "keywords": [
-        "web stories"
-    ],
-    "homepage": "https://github.com/GoogleForCreators/web-stories-wp/blob/main/packages/test-utils/README.md",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/GoogleForCreators/web-stories-wp.git",
-        "directory": "packages/test-utils"
-    },
-    "bugs": {
-        "url": "https://github.com/googleforcreators/web-stories-wp/issues"
-    },
-    "engines": {
-        "node": ">= 12 || >= 14 || >= 16",
-        "npm": ">= 7.3"
-    },
-    "customExports": {
-        ".": {
-            "default": "./src/index.js"
-        }
-    },
-    "main": "dist/index.js",
-    "module": "dist-module/index.js",
-    "source": "src/index.js",
-    "publishConfig": {
-        "access": "public"
-    },
-    "dependencies": {},
-    "devDependencies": {
-        "@googleforcreators/design-system": "*",
-        "@testing-library/react": "^12.1.2",
-        "prop-types": "^15.8.1",
-        "styled-components": "^5.3.3"
+  "name": "@googleforcreators/test-utils",
+  "description": "Package for Web Stories test utilities",
+  "private": true,
+  "version": "0.1.202203150806",
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "web stories"
+  ],
+  "homepage": "https://github.com/GoogleForCreators/web-stories-wp/blob/main/packages/test-utils/README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GoogleForCreators/web-stories-wp.git",
+    "directory": "packages/test-utils"
+  },
+  "bugs": {
+    "url": "https://github.com/googleforcreators/web-stories-wp/issues"
+  },
+  "engines": {
+    "node": ">= 12 || >= 14 || >= 16",
+    "npm": ">= 7.3"
+  },
+  "customExports": {
+    ".": {
+     "default": "./src/index.js"
     }
+  },
+  "main": "dist/index.js",
+  "module": "dist-module/index.js",
+  "source": "src/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@googleforcreators/design-system": "*",
+    "@testing-library/react": "^12.1.2",
+    "prop-types": "^15.8.1",
+    "styled-components": "^5.3.3"
+  }
 }
