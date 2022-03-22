@@ -28,7 +28,7 @@ import { canSupportMultiBorder } from '@googleforcreators/masks';
  */
 import { useStory } from '../../../app';
 import { DEFAULT_BORDER } from '../../panels/design/border/shared';
-import { Input, Color, useProperties } from './shared';
+import { Input, Color, Separator, useProperties } from './shared';
 
 const Container = styled.div`
   display: flex;
@@ -63,25 +63,23 @@ function BorderWidthAndColor() {
   const updateSelectedElements = useStory(
     (state) => state.actions.updateSelectedElements
   );
-
-  // Only multi-border elements support border opacity
-  const canHaveBorderOpacity = canSupportMultiBorder({ mask });
-
   // We only allow editing the current border width, if all borders are identical
   const hasUniformBorder =
     border.left === border.right &&
     border.left === border.top &&
     border.left === border.bottom;
 
+  // Border width and color inputs should only be rendered if all sides of the border are the same.
+  // Both checks are needed since not all shaped have lockedWidth eg. circles.
+  if (!border.lockedWidth && !hasUniformBorder) {
+    return null;
+  }
+
+  // Only multi-border elements support border opacity
+  const canHaveBorderOpacity = canSupportMultiBorder({ mask });
+
   // We only allow editing border color, if at least one border has a non-zero width
   const hasBorderWidth = getHasBorderWidth(border);
-
-  // If both controls are displayed, also add a dash between them
-  const hasBoth = hasUniformBorder && hasBorderWidth;
-
-  // NB: Note that it can never be the case, that both of the above bools, hasUniformBorder
-  // and hasBorderWidth, are false. If so, neither input would be shown. But because they
-  // partially contradict each other, one of the inputs will always render.
 
   const handleWidthChange = (value) => {
     trackEvent('floating_menu', {
@@ -121,30 +119,30 @@ function BorderWidthAndColor() {
   };
 
   return (
-    <Container>
-      {hasUniformBorder && (
+    <>
+      <Container>
         <Input
           suffix={<Icons.BorderBox />}
           value={border.left || 0}
           aria-label={__('Border width', 'web-stories')}
           onChange={(_, value) => handleWidthChange(value)}
         />
-      )}
-      {hasBoth && <Dash />}
-      {hasBorderWidth && (
-        <Color
-          label={__('Border color', 'web-stories')}
-          value={border.color || BLACK}
-          onChange={handleColorChange}
-          hasInputs={false}
-          hasEyedropper={false}
-          allowsOpacity={canHaveBorderOpacity}
-          allowsGradient={false}
-          pickerHasEyedropper={false} // override shared floating menu Color component TODO https://github.com/GoogleForCreators/web-stories-wp/issues/11024
-          allowsSavedColors={false}
-        />
-      )}
-    </Container>
+        {hasBorderWidth && (
+          <>
+            <Dash />
+            <Color
+              label={__('Border color', 'web-stories')}
+              value={border.color || BLACK}
+              onChange={handleColorChange}
+              hasInputs={false}
+              hasEyeDropper={false}
+              allowsOpacity={canHaveBorderOpacity}
+            />
+          </>
+        )}
+      </Container>
+      <Separator />
+    </>
   );
 }
 
