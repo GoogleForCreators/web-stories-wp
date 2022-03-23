@@ -14,19 +14,5 @@
  * limitations under the License.
  */
 
-/**
- * Internal dependencies
- */
-import { UploadDropTarget } from '../uploadDropTarget';
-
-import InspectorLayout from './inspectorLayout';
-
-function Inspector() {
-  return (
-    <UploadDropTarget disabled>
-      <InspectorLayout />
-    </UploadDropTarget>
-  );
-}
-
-export default Inspector;
+export { INSERT, DOCUMENT, STYLE } from './constants';
+export { default } from './sidebar';

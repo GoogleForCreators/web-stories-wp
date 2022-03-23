@@ -59,11 +59,11 @@ describe('Design Menu: Video loop toggle', () => {
 
   it('should render the checkbox as checked if the video is set to loop', async () => {
     // Open style pane
-    await fixture.events.click(fixture.editor.inspector.designTab);
+    await fixture.events.click(fixture.editor.sidebar.designTab);
 
     // Toggle the loop property using the design panel
     await fixture.events.click(
-      fixture.editor.inspector.designPanel.videoOptions.loop
+      fixture.editor.sidebar.designPanel.videoOptions.loop
     );
 
     expect(await getSelectedElementLoop()).toBe(true);

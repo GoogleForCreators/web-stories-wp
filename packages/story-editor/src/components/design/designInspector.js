@@ -24,8 +24,8 @@ import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
 /**
  * Internal dependencies
  */
-import { useStory } from '../../../app';
-import { states, styles, useHighlights } from '../../../app/highlights';
+import { useStory } from '../../app';
+import { states, styles, useHighlights } from '../../app/highlights';
 import DesignPanels from './designPanels';
 
 const Wrapper = styled.div`

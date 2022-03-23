@@ -23,7 +23,7 @@ import { themeHelpers } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import useInspector from '../../inspector/useInspector';
+import useSidebar from '../../sidebar/useSidebar';
 import { useHasChecklist } from '../../checklist';
 import { HEADER_BAR_HEIGHT, HEADER_BAR_MARGIN } from '../constants';
 import MainStoryInfo from './mainStoryInfo';
@@ -88,8 +88,8 @@ const Footer = styled.div`
 `;
 
 const Content = ({ handleReviewChecklist }) => {
-  const { DocumentPane, id: paneId } = useInspector(
-    ({ data }) => data?.modalInspectorTab || {}
+  const { DocumentPane, id: paneId } = useSidebar(
+    ({ data }) => data?.modalSidebarTab || {}
   );
   const hasChecklist = useHasChecklist();
 

@@ -21,38 +21,38 @@ import styled from 'styled-components';
 /**
  * Internal dependencies
  */
-import useInspector from './useInspector';
+import useSidebar from './useSidebar';
 import { getTabId } from './utils';
 
-const InspectorPane = styled.div.attrs({ role: 'tabpanel' })`
+const SidebarPane = styled.div.attrs({ role: 'tabpanel' })`
   height: 100%;
   overflow: overlay;
 `;
 
-const InspectorPanes = styled.section`
+const SidebarPanes = styled.section`
   height: 100%;
 `;
 
-function Inspector() {
+function Sidebar() {
   const {
     state: { tab },
     data: { tabs },
-  } = useInspector();
+  } = useSidebar();
 
   return (
-    <InspectorPanes>
+    <SidebarPanes>
       {tabs.map(({ id, Pane }) => (
-        <InspectorPane
+        <SidebarPane
           aria-labelledby={id}
           id={getTabId(id)}
           key={id}
           hidden={id !== tab}
         >
           {id === tab && <Pane />}
-        </InspectorPane>
+        </SidebarPane>
       ))}
-    </InspectorPanes>
+    </SidebarPanes>
   );
 }
 
-export default Inspector;
+export default Sidebar;

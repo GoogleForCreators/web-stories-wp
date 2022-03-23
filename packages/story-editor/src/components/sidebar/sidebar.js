@@ -15,11 +15,18 @@
  */
 
 /**
- * Helper to generate tab html ID.
- *
- * @param {string}id ID as string
- * @return {string} Formatted ID.
+ * Internal dependencies
  */
-export const getTabId = (id) => {
-  return `inspector-tab-${id}`;
-};
+import { UploadDropTarget } from '../uploadDropTarget';
+
+import SidebarLayout from './sidebarLayout';
+
+function Sidebar() {
+  return (
+    <UploadDropTarget disabled>
+      <SidebarLayout />
+    </UploadDropTarget>
+  );
+}
+
+export default Sidebar;

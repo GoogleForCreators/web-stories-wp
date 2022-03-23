@@ -15,16 +15,11 @@
  */
 
 /**
- * External dependencies
+ * Helper to generate tab html ID.
+ *
+ * @param {string}id ID as string
+ * @return {string} Formatted ID.
  */
-import { identity, useContextSelector } from '@googleforcreators/react';
-/**
- * Internal dependencies
- */
-import Context from './context';
-
-function useInspector(selector) {
-  return useContextSelector(Context, selector ?? identity);
-}
-
-export default useInspector;
+export const getTabId = (id) => {
+  return `sidebar-tab-${id}`;
+};

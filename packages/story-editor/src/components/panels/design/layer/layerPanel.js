@@ -24,7 +24,7 @@ import styled from 'styled-components';
  * Internal dependencies
  */
 import { PanelContent } from '../../panel';
-import useInspector from '../../../inspector/useInspector';
+import useSidebar from '../../../sidebar/useSidebar';
 import LayerList from './layerList';
 import useLayers from './useLayers';
 
@@ -37,12 +37,12 @@ const Container = styled.div`
 function LayerPanel() {
   const layers = useLayers();
 
-  const inspectorContentHeight = useInspector(
-    ({ state }) => state.inspectorContentHeight
+  const sidebarContentHeight = useSidebar(
+    ({ state }) => state.sidebarContentHeight
   );
 
   return (
-    <Container maxHeight={inspectorContentHeight}>
+    <Container maxHeight={sidebarContentHeight}>
       <PanelContent padding={'0'}>
         <LayerList layers={layers} />
       </PanelContent>

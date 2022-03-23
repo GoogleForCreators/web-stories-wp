@@ -14,5 +14,17 @@
  * limitations under the License.
  */
 
-export { INSERT, DOCUMENT, STYLE } from './constants';
-export { default } from './inspector';
+/**
+ * External dependencies
+ */
+import { identity, useContextSelector } from '@googleforcreators/react';
+/**
+ * Internal dependencies
+ */
+import Context from './context';
+
+function useSidebar(selector) {
+  return useContextSelector(Context, selector ?? identity);
+}
+
+export default useSidebar;

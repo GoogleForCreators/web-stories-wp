@@ -57,10 +57,10 @@ This component is responsible for rendering the story editor interface UI and ca
     - required: No
     - description: Used for rendering some parts of the footer.
 
-- `inspectorTabs`
+- `sidebarTabs`
     - type: `Object`
     - required: No
-    - description: Used for rendering the inspector/sidebar tabs of the story editor.
+    - description: Used for rendering the sidebar tabs of the story editor.
 
 ## Editor Config
 
@@ -678,7 +678,7 @@ const Editor = () => {
 };
 ```
 
-## Inspector/Sidebar Tabs
+## Sidebar Tabs
 
 ### Document Pane
 
@@ -706,7 +706,7 @@ const Editor = () =>{
 	return (
     <StoryEditor config={{ apiCallbacks }} initialEdits={{ story }}>
       <InterfaceSkeleton  
-        inspectorTabs={{
+        sidebarTabs={{
           document: {
             title: __('Document', 'web-stories'),
             Pane: DocumentPane,
