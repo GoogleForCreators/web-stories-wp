@@ -92,9 +92,9 @@ describe('Design Menu: Border width & color', () => {
 
     it('should render border width and color if widths are locked', async () => {
       // Open style pane
-      await fixture.events.click(fixture.editor.inspector.designTab);
+      await fixture.events.click(fixture.editor.sidebar.designTab);
 
-      const panel = fixture.editor.inspector.designPanel.border;
+      const panel = fixture.editor.sidebar.designPanel.border;
       await fixture.events.click(panel.width(), { clickCount: 3 });
       await fixture.events.keyboard.type('10');
       await fixture.events.keyboard.press('tab');
