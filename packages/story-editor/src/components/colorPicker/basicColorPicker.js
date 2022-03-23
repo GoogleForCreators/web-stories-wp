@@ -197,41 +197,40 @@ function BasicColorPicker({
             </StyledText>
           </EyedropperWrapper>
         )}
-        <SavedColors>
-          {allowsSavedColors && (
-            <>
-              <Label id="colorpicker-story-colors-title">
-                {__('Current story', 'web-stories')}
-              </Label>
-              <BasicColorList
-                color={color}
-                colors={storyColors}
-                handleClick={handleClick}
-                isLocal
-                allowsOpacity={allowsOpacity}
-                allowsGradient={allowsGradient}
-                aria-labelledby="colorpicker-story-colors-title"
-                isEditMode={isEditMode}
-                data-testid="saved-story-colors"
-                changedStyle={changedStyle}
-              />
-              <Label id="colorpicker-saved-colors-title">
-                {__('Saved colors', 'web-stories')}
-              </Label>
-              <BasicColorList
-                color={color}
-                colors={savedColors}
-                isGlobal
-                handleClick={handleClick}
-                allowsOpacity={allowsOpacity}
-                allowsGradient={allowsGradient}
-                aria-labelledby="colorpicker-saved-colors-title"
-                isEditMode={isEditMode}
-                changedStyle={changedStyle}
-              />
-            </>
-          )}
-        </SavedColors>
+        {allowsSavedColors && (
+          <SavedColors>
+            <Label id="colorpicker-story-colors-title">
+              {__('Current story', 'web-stories')}
+            </Label>
+            <BasicColorList
+              color={color}
+              colors={storyColors}
+              handleClick={handleClick}
+              isLocal
+              allowsOpacity={allowsOpacity}
+              allowsGradient={allowsGradient}
+              aria-labelledby="colorpicker-story-colors-title"
+              isEditMode={isEditMode}
+              data-testid="saved-story-colors"
+              changedStyle={changedStyle}
+            />
+            <Label id="colorpicker-saved-colors-title">
+              {__('Saved colors', 'web-stories')}
+            </Label>
+            <BasicColorList
+              color={color}
+              colors={savedColors}
+              isGlobal
+              handleClick={handleClick}
+              allowsOpacity={allowsOpacity}
+              allowsGradient={allowsGradient}
+              aria-labelledby="colorpicker-saved-colors-title"
+              isEditMode={isEditMode}
+              changedStyle={changedStyle}
+            />
+          </SavedColors>
+        )}
+
         <DefaultColors>
           <Label id="colorpicker-default-colors-title">
             {__('Default', 'web-stories')}
