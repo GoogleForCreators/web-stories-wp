@@ -25,7 +25,6 @@ export function getXOffset(
   dockRect,
   isRTL
 ) {
-  // TODO: https://github.com/GoogleForCreators/web-stories-wp/issues/10928
   // doctRect.left can have a valid value of zero, if dockRect exists, it takes precedence.
   const leftAligned = (dockRect ? dockRect.left : anchorRect.left) - spacing;
   const rightAligned = (dockRect ? dockRect.right : anchorRect.right) + spacing;
