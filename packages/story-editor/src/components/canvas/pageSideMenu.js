@@ -77,69 +77,77 @@ function PageSideMenu() {
       aria-label={__('Page side menu', 'web-stories')}
       isZoomed={isZoomed}
     >
-      <ContextMenu
-        isInline
-        isAlwaysVisible
-        isIconMenu
-        disableControlledTabNavigation
-        aria-label={__(
-          'Group of available options for selected element',
-          'web-stories'
-        )}
-        onMouseDown={(e) => {
-          // Stop the event from bubbling if the user clicks in between buttons.
-          // This prevents the selected element in the canvas from losing focus.
-          e.stopPropagation();
-        }}
-      >
-        {quickActions.map(
-          ({
-            Icon,
-            label,
-            onClick,
-            separator,
-            tooltipPlacement,
-            wrapWithMediaPicker,
-            ...quickAction
-          }) => {
-            const action = (externalOnClick = noop) => (
-              <Fragment key={label}>
-                {separator === 'top' && <ContextMenuComponents.MenuSeparator />}
-                <Tooltip placement={tooltipPlacement} title={label}>
-                  <ContextMenuComponents.MenuButton
-                    aria-label={label}
-                    onClick={(evt) => {
-                      onClick(evt);
-                      externalOnClick(evt);
-                    }}
-                    {...quickAction}
-                  >
-                    <ContextMenuComponents.MenuIcon title={label}>
-                      <Icon />
-                    </ContextMenuComponents.MenuIcon>
-                  </ContextMenuComponents.MenuButton>
-                </Tooltip>
-                {separator === 'bottom' && (
-                  <ContextMenuComponents.MenuSeparator />
-                )}
-              </Fragment>
-            );
+      {
+        // Dont render a menu wrapper if there are no quick actions
+        quickActions.length ? (
+          <ContextMenu
+            isInline
+            isAlwaysVisible
+            isIconMenu
+            disableControlledTabNavigation
+            data-testid={'Element quick actions'}
+            aria-label={__(
+              'Group of available options for selected element',
+              'web-stories'
+            )}
+            onMouseDown={(e) => {
+              // Stop the event from bubbling if the user clicks in between buttons.
+              // This prevents the selected element in the canvas from losing focus.
+              e.stopPropagation();
+            }}
+          >
+            {quickActions.map(
+              ({
+                Icon,
+                label,
+                onClick,
+                separator,
+                tooltipPlacement,
+                wrapWithMediaPicker,
+                ...quickAction
+              }) => {
+                const action = (externalOnClick = noop) => (
+                  <Fragment key={label}>
+                    {separator === 'top' && (
+                      <ContextMenuComponents.MenuSeparator />
+                    )}
+                    <Tooltip placement={tooltipPlacement} title={label}>
+                      <ContextMenuComponents.MenuButton
+                        aria-label={label}
+                        onClick={(evt) => {
+                          onClick(evt);
+                          externalOnClick(evt);
+                        }}
+                        {...quickAction}
+                      >
+                        <ContextMenuComponents.MenuIcon title={label}>
+                          <Icon />
+                        </ContextMenuComponents.MenuIcon>
+                      </ContextMenuComponents.MenuButton>
+                    </Tooltip>
+                    {separator === 'bottom' && (
+                      <ContextMenuComponents.MenuSeparator />
+                    )}
+                  </Fragment>
+                );
 
-            if (wrapWithMediaPicker) {
-              return (
-                <MediaPicker
-                  key={label}
-                  render={({ onClick: openMediaPicker }) =>
-                    action(openMediaPicker)
-                  }
-                />
-              );
-            }
+                if (wrapWithMediaPicker) {
+                  return (
+                    <MediaPicker
+                      key={label}
+                      render={({ onClick: openMediaPicker }) =>
+                        action(openMediaPicker)
+                      }
+                    />
+                  );
+                }
 
-            return action();
-          }
-        )}
-      </ContextMenu>
+                return action();
+              }
+            )}
+          </ContextMenu>
+        ) : null
+      }
       {isZoomed && <Divider />}
       <PageMenu />
     </MenusWrapper>
