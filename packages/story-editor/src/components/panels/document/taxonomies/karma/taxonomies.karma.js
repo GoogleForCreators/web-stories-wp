@@ -39,11 +39,11 @@ describe('Taxonomies Panel', () => {
 
   async function openTaxonomiesPanel() {
     // open document panel
-    await fixture.events.click(fixture.editor.inspector.documentTab);
+    await fixture.events.click(fixture.editor.sidebar.documentTab);
 
     // expand the taxonomies panel
     await fixture.events.click(
-      fixture.editor.inspector.documentPanel.taxonomies.taxonomiesButton
+      fixture.editor.sidebar.documentPanel.taxonomies.taxonomiesButton
     );
   }
 
@@ -59,7 +59,7 @@ describe('Taxonomies Panel', () => {
 
   it('should have no aXe accessibility violations', async () => {
     await openTaxonomiesPanel();
-    const { taxonomies } = fixture.editor.inspector.documentPanel;
+    const { taxonomies } = fixture.editor.sidebar.documentPanel;
     await expectAsync(taxonomies.node).toHaveNoViolations();
   });
 
@@ -68,7 +68,7 @@ describe('Taxonomies Panel', () => {
       it('should add categories and remove categories', async () => {
         await openTaxonomiesPanel();
 
-        const { taxonomies } = fixture.editor.inspector.documentPanel;
+        const { taxonomies } = fixture.editor.sidebar.documentPanel;
 
         // track initial story categories
         const initialStoryTerms = await getStoryTerms();
@@ -98,7 +98,7 @@ describe('Taxonomies Panel', () => {
       it('should add new categories', async () => {
         await openTaxonomiesPanel();
 
-        const { taxonomies } = fixture.editor.inspector.documentPanel;
+        const { taxonomies } = fixture.editor.sidebar.documentPanel;
 
         // track initial categories
         const initialCategories = taxonomies.categories;
@@ -129,7 +129,7 @@ describe('Taxonomies Panel', () => {
 
       it('should add a new category as a child of an existing category', async () => {
         await openTaxonomiesPanel();
-        const { taxonomies } = fixture.editor.inspector.documentPanel;
+        const { taxonomies } = fixture.editor.sidebar.documentPanel;
         // find initial categories
         const initialCategories = taxonomies.categories;
 
@@ -179,7 +179,7 @@ describe('Taxonomies Panel', () => {
       xit('should add categories and remove categories', async () => {
         await openTaxonomiesPanel();
 
-        const { taxonomies } = fixture.editor.inspector.documentPanel;
+        const { taxonomies } = fixture.editor.sidebar.documentPanel;
 
         // track initial story categories
         const initialStoryTerms = await getStoryTerms();
@@ -215,7 +215,7 @@ describe('Taxonomies Panel', () => {
       it('should add new categories', async () => {
         await openTaxonomiesPanel();
 
-        const { taxonomies } = fixture.editor.inspector.documentPanel;
+        const { taxonomies } = fixture.editor.sidebar.documentPanel;
 
         // focus the panel button
         await fixture.events.focus(taxonomies.taxonomiesButton);
@@ -263,7 +263,7 @@ describe('Taxonomies Panel', () => {
       it('should add a new category as a child of an existing category', async () => {
         await openTaxonomiesPanel();
 
-        const { taxonomies } = fixture.editor.inspector.documentPanel;
+        const { taxonomies } = fixture.editor.sidebar.documentPanel;
 
         // focus the panel button
         await fixture.events.focus(taxonomies.taxonomiesButton);
@@ -328,7 +328,7 @@ describe('Taxonomies Panel', () => {
       it('should submit new categories with Enter button', async () => {
         await openTaxonomiesPanel();
 
-        const { taxonomies } = fixture.editor.inspector.documentPanel;
+        const { taxonomies } = fixture.editor.sidebar.documentPanel;
 
         // focus the panel button
         await fixture.events.focus(taxonomies.taxonomiesButton);
@@ -374,7 +374,7 @@ describe('Taxonomies Panel', () => {
       it('should focus toggle on cancel', async () => {
         await openTaxonomiesPanel();
 
-        const { taxonomies } = fixture.editor.inspector.documentPanel;
+        const { taxonomies } = fixture.editor.sidebar.documentPanel;
 
         // focus the panel button
         await fixture.events.focus(taxonomies.taxonomiesButton);
@@ -426,7 +426,7 @@ describe('Taxonomies Panel', () => {
       const tag2Name = 'another tag';
       let currentStoryTerms = await getStoryTerms();
       const initialTagsLength = currentStoryTerms['web_story_tag'].length;
-      const { taxonomies } = fixture.editor.inspector.documentPanel;
+      const { taxonomies } = fixture.editor.sidebar.documentPanel;
       const tagsInput = taxonomies.tagsInput;
       // enter in the first tag
       await fixture.events.focus(tagsInput);
@@ -489,7 +489,7 @@ describe('Taxonomies Panel', () => {
       await openTaxonomiesPanel();
       let currentStoryTerms = await getStoryTerms();
       const initialTagsLength = currentStoryTerms['web_story_tag'].length;
-      const { tagsInput } = fixture.editor.inspector.documentPanel.taxonomies;
+      const { tagsInput } = fixture.editor.sidebar.documentPanel.taxonomies;
       const initialTokens = await fixture.screen.getAllByTestId(
         /^flat-term-token/
       );
@@ -518,7 +518,7 @@ describe('Taxonomies Panel', () => {
     it('can delete tags with mouse', async () => {
       await openTaxonomiesPanel();
       let currentStoryTerms = await getStoryTerms();
-      const { taxonomies } = fixture.editor.inspector.documentPanel;
+      const { taxonomies } = fixture.editor.sidebar.documentPanel;
       const initialTokens = fixture.screen.getAllByTestId(/^flat-term-token/);
       const initialTagsLength = currentStoryTerms['web_story_tag'].length;
       // delete tag with mouse

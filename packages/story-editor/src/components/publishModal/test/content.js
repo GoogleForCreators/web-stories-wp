@@ -27,7 +27,7 @@ import { ConfigContext } from '../../../app/config';
 import StoryContext from '../../../app/story/context';
 import { noop } from '../../../utils/noop';
 import { ChecklistCountProvider } from '../../checklist';
-import InspectorContext from '../../inspector/context';
+import SidebarContext from '../../sidebar/context';
 import { INPUT_KEYS } from '../constants';
 import Content from '../content';
 
@@ -56,13 +56,13 @@ describe('publishModal/content', () => {
     MediaUpload: () => <button onClick={noop}>{'Media Upload Button!'}</button>,
   };
 
-  const inspectorContextValue = {
+  const sidebarContextValue = {
     actions: { loadUsers: jest.fn() },
     state: {
       users: [{ value: 'foo' }, { value: 'bar' }],
     },
     data: {
-      modalInspectorTab: {
+      modalSidebarTab: {
         DocumentPane: null,
       },
     },
@@ -81,11 +81,11 @@ describe('publishModal/content', () => {
             },
           }}
         >
-          <InspectorContext.Provider value={inspectorContextValue}>
+          <SidebarContext.Provider value={sidebarContextValue}>
             <ChecklistCountProvider hasChecklist>
               <Content handleReviewChecklist={mockHandleReviewChecklist} />
             </ChecklistCountProvider>
-          </InspectorContext.Provider>
+          </SidebarContext.Provider>
         </StoryContext.Provider>
       </ConfigContext.Provider>
     );

@@ -71,8 +71,8 @@ describe('Eyedropper', () => {
     );
 
     // Use eyedropper to select the color
-    await fixture.events.click(fixture.editor.inspector.designTab);
-    const bgPanel = fixture.editor.inspector.designPanel.pageBackground;
+    await fixture.events.click(fixture.editor.sidebar.designTab);
+    const bgPanel = fixture.editor.sidebar.designPanel.pageBackground;
     await fixture.events.click(bgPanel.backgroundColor.button);
     await waitFor(() => {
       if (!bgPanel.backgroundColor.picker) {
@@ -113,7 +113,7 @@ describe('Eyedropper', () => {
         throw new Error('bg color not updated yet');
       }
       expect(
-        fixture.editor.inspector.designPanel.pageBackground.backgroundColor.hex
+        fixture.editor.sidebar.designPanel.pageBackground.backgroundColor.hex
           .value
       ).toBe('DBB198');
     });

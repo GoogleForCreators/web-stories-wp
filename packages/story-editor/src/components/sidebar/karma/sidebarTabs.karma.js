@@ -24,7 +24,7 @@ import { waitFor } from '@testing-library/react';
  */
 import { Fixture } from '../../../karma';
 
-describe('Inspector Tabs integration', () => {
+describe('Sidebar Tabs integration', () => {
   let fixture;
 
   beforeEach(async () => {
@@ -37,30 +37,30 @@ describe('Inspector Tabs integration', () => {
     fixture.restore();
   });
 
-  describe('Inspector Tabs aXe tests', () => {
+  describe('Sidebar Tabs aXe tests', () => {
     it('should have no aXe violations', async () => {
-      const { documentTab } = fixture.editor.inspector;
+      const { documentTab } = fixture.editor.sidebar;
 
       // Click document tab
       await fixture.events.click(documentTab);
       // actual color contrast of toggle is 7.1 however it's set on a child span absolutely positioned so aXe doesn't pick it up
       await expectAsync(
-        fixture.editor.inspector.documentPanel.node
+        fixture.editor.sidebar.documentPanel.node
       ).toHaveNoViolations();
     });
   });
 
   describe('keyboard navigation', () => {
     it('should return focus to current tab when pressing mod+alt+3', async () => {
-      const { documentTab } = fixture.editor.inspector;
+      const { documentTab } = fixture.editor.sidebar;
 
       // Click document tab
       await fixture.events.click(documentTab);
       await waitFor(() => {
-        if (!fixture.editor.inspector.documentPanel) {
+        if (!fixture.editor.sidebar.documentPanel) {
           throw new Error('panel not ready');
         }
-        expect(fixture.editor.inspector.documentPanel).toBeTruthy();
+        expect(fixture.editor.sidebar.documentPanel).toBeTruthy();
       });
 
       expect(documentTab).toHaveFocus();

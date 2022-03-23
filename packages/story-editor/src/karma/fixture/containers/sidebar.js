@@ -23,10 +23,9 @@ import { DocumentPanel } from './documentPanel';
 import { Library } from './library';
 
 /**
- * The right-hand side inspector containing tabs and panes for design panel
- * and document panel.
+ * Sidebar containing tabs and panes for insert, style and document panels.
  */
-export class Inspector extends Container {
+export class Sidebar extends Container {
   constructor(node, path) {
     super(node, path);
   }

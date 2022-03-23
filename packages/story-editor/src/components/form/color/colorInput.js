@@ -47,7 +47,7 @@ import {
  */
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import ColorPicker from '../../colorPicker';
-import useInspector from '../../inspector/useInspector';
+import useSidebar from '../../sidebar/useSidebar';
 import DefaultTooltip from '../../tooltip';
 import { focusStyle, inputContainerStyleOverride } from '../../panels/shared';
 import { useCanvas, useConfig } from '../../../app';
@@ -189,8 +189,8 @@ const ColorInput = forwardRef(function ColorInput(
   const [dynamicPlacement, setDynamicPlacement] = useState(pickerPlacement);
 
   const {
-    refs: { inspector },
-  } = useInspector();
+    refs: { sidebar },
+  } = useSidebar();
 
   const positionPlacement = useCallback(
     (popupRef) => {
@@ -291,7 +291,7 @@ const ColorInput = forwardRef(function ColorInput(
       <Popup
         isRTL={isRTL}
         anchor={previewRef}
-        dock={isInDesignMenu ? null : inspector}
+        dock={isInDesignMenu ? null : sidebar}
         isOpen={pickerOpen}
         placement={dynamicPlacement}
         spacing={spacingAlignment}

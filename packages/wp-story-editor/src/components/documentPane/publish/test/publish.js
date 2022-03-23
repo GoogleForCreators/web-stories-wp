@@ -23,7 +23,7 @@ import {
   APIContext,
   ConfigContext,
   StoryContext,
-  InspectorContext,
+  SidebarContext,
 } from '@googleforcreators/story-editor';
 import { renderWithTheme } from '@googleforcreators/test-utils';
 
@@ -81,7 +81,7 @@ function arrange(
   };
   const loadUsers = jest.fn();
 
-  const inspectorContextValue = {
+  const sidebarContextValue = {
     actions: { loadUsers },
     state: {
       users: [{ value: 'foo' }, { value: 'bar' }],
@@ -94,9 +94,9 @@ function arrange(
     <ConfigContext.Provider value={config}>
       <APIContext.Provider value={{ actions }}>
         <StoryContext.Provider value={storyContextValue}>
-          <InspectorContext.Provider value={inspectorContextValue}>
+          <SidebarContext.Provider value={sidebarContextValue}>
             <PublishPanel />
-          </InspectorContext.Provider>
+          </SidebarContext.Provider>
         </StoryContext.Provider>
       </APIContext.Provider>
     </ConfigContext.Provider>

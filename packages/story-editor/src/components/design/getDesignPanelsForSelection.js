@@ -38,7 +38,7 @@ import {
   ElementAlignmentPanel,
   VideoOptionsPanel,
   PageBackgroundAudioPanel,
-} from '../../panels/design';
+} from '../panels/design';
 
 const ALL = Object.values(PanelTypes);
 
