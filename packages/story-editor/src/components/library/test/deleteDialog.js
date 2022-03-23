@@ -22,12 +22,12 @@ import {
   setAppElement,
   SnackbarContext,
 } from '@googleforcreators/design-system';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
 import DeleteDialog from '../panes/media/local/deleteDialog';
-import { renderWithTheme } from '../../../testUtils';
 import ApiContext from '../../../app/api/context';
 import MediaContext from '../../../app/media/context';
 

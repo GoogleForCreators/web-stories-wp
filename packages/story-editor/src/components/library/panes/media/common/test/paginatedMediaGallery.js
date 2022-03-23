@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { waitFor, screen } from '@testing-library/react';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
@@ -27,7 +28,6 @@ import {
   useCanvasBoundingBox,
   useLocalMedia,
 } from '../../../../../../app';
-import { renderWithTheme } from '../../../../../../testUtils';
 import PaginatedMediaGallery from '../paginatedMediaGallery';
 
 jest.mock('../../../../../../app/media');

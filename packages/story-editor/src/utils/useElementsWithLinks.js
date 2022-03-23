@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { useCallback, useMemo } from '@googleforcreators/react';
+import { isElementBelowLimit } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import { useStory, useCanvas } from '../app';
-import isElementBelowLimit from './isElementBelowLimit';
 
 function useElementsWithLinks() {
   const { currentPage, selectedElements } = useStory((state) => ({

@@ -18,6 +18,7 @@ export { default as createNewElement } from './createNewElement';
 export { default as createPage } from './createPage';
 export { DEFAULT_PAGE_BACKGROUND_COLOR } from './createPage';
 export { default as duplicatePage } from './duplicatePage';
+export { default as isElementBelowLimit } from './isElementBelowLimit';
 export {
   default as duplicateElement,
   getOffsetCoordinates,

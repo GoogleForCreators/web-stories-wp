@@ -17,17 +17,35 @@
 /**
  * External dependencies
  */
-import { render } from '@testing-library/react';
+import { render, queries } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 import { theme } from '@googleforcreators/design-system';
+import PropTypes from 'prop-types';
+
+/**
+ * Internal dependencies
+ */
+import * as ariaLabelQueries from './queryByAriaLabel';
+import * as autoAdvanceAfterQueries from './queryByAutoAdvanceAfter';
+import * as idQueries from './queryById';
 
 const WithThemeProvider = ({ children }) => {
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 };
 
+WithThemeProvider.propTypes = {
+  children: PropTypes.element,
+};
+
 const renderWithTheme = (ui, options) =>
   render(ui, {
     wrapper: WithThemeProvider,
+    queries: {
+      ...queries,
+      ...ariaLabelQueries,
+      ...autoAdvanceAfterQueries,
+      ...idQueries,
+    },
     ...options,
   });
 

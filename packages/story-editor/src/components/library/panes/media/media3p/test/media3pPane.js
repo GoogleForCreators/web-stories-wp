@@ -21,12 +21,12 @@ import PropTypes from 'prop-types';
 import { fireEvent, screen } from '@testing-library/react';
 import { registerElementType } from '@googleforcreators/elements';
 import { elementTypes } from '@googleforcreators/element-library';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
 import { createResource } from '@googleforcreators/media';
-import { renderWithTheme } from '../../../../../../testUtils';
 import useLibrary from '../../../../useLibrary';
 import useConfig from '../../../../../../app/config/useConfig';
 import useMedia from '../../../../../../app/media/useMedia';

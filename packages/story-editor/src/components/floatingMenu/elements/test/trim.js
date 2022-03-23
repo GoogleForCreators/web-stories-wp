@@ -18,11 +18,11 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../../testUtils';
 import Trim from '../trim';
 import mockUseVideoElementTranscoding from '../../../../app/media/utils/useVideoElementTranscoding';
 
