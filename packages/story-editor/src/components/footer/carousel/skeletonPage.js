@@ -22,9 +22,9 @@ import PropTypes from 'prop-types';
 import {
   generatePatternStyles,
   getSolidFromHex,
+  isHexColorString,
 } from '@googleforcreators/patterns';
 import { getDefinitionForType } from '@googleforcreators/elements';
-import { isHexColorString } from '@googleforcreators/output';
 
 /**
  * Internal dependencies
