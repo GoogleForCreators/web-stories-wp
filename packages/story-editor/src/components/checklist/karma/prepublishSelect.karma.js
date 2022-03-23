@@ -254,7 +254,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       );
     });
 
-    it('should open the design sidebar panel and focus the text input', async () => {
+    it('should open the style pane and focus the text input', async () => {
       await fixture.act(() => {
         insertElement('image', {
           x: 0,
