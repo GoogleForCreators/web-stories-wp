@@ -45,8 +45,14 @@ function BorderRadius() {
   // Only multi-border elements support border radius
   const canHaveBorderRadius = canSupportMultiBorder({ mask });
 
+  // We only allow editing the current border radii, if all corners are identical
+  const hasUniformBorder =
+    borderRadius.topLeft === borderRadius.topRight &&
+    borderRadius.topLeft === borderRadius.bottomLeft &&
+    borderRadius.topLeft === borderRadius.bottomRight;
+
   // Render nothing if radii not supported or not locked
-  if (!canHaveBorderRadius || !borderRadius.locked) {
+  if (!canHaveBorderRadius || (!borderRadius.locked && !hasUniformBorder)) {
     return null;
   }
 

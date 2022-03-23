@@ -48,8 +48,6 @@ const FloatingShapeMenu = memo(function FloatingShapeMenu() {
 
       <BorderWidthAndColor />
 
-      <Separator />
-
       <More />
 
       <Separator />
