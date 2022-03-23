@@ -13,6 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 /**
  * External dependencies
  */
@@ -23,6 +24,7 @@ import {
   removeCustomFont,
   getFontList,
   getSelectedFont,
+  takeSnapshot,
 } from '@web-stories-wp/e2e-test-utils';
 
 const FONT_BASE_URL = `${process.env.WP_BASE_URL}/wp-content/e2e-assets`;
@@ -95,5 +97,7 @@ describe('Custom Fonts', () => {
     await expect(page).toMatchElement(
       `button[aria-label="Delete ${OPEN_SANS_CONDENSED_LIGHT}"]`
     );
+
+    await takeSnapshot(page, 'Custom Fonts Settings');
   });
 });
