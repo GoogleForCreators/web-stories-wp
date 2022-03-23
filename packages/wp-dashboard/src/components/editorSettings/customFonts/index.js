@@ -207,7 +207,8 @@ function CustomFontsSettings({
         await fetch(urlWithProtocol, {
           method: 'HEAD',
         });
-      } catch {
+      } catch (err) {
+        trackError('add_custom_font', err?.message);
         setInputError(
           __(
             'Please ensure correct CORS settings for allowing font usage on this site.',
