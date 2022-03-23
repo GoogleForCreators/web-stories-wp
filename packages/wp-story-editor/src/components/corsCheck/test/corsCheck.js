@@ -24,11 +24,11 @@ import {
 import { setAppElement } from '@googleforcreators/design-system';
 import { APIContext } from '@googleforcreators/story-editor';
 import { FlagsProvider } from 'flagged';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../testUtils';
 import CorsCheck from '../corsCheck.js';
 
 const getMediaForCorsCheck = jest.fn();

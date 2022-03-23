@@ -102,6 +102,9 @@ describe('Font Check', () => {
     await expect(page).toMatchElement('button[aria-label="Font family"]', {
       text: replacementFont,
     });
+
+    // Switch tabs to avoid an aXe issue, see https://github.com/GoogleForCreators/web-stories-wp/issues/11028.
+    await expect(page).toClick('li[role="tab"]', { text: /^Insert$/ });
   });
 
   it('should show dialog & replace it with selected font', async () => {
@@ -115,6 +118,9 @@ describe('Font Check', () => {
     await expect(page).toMatchElement('button[aria-label="Font family"]', {
       text: replacementFont,
     });
+
+    // Switch tabs to avoid an aXe issue, see https://github.com/GoogleForCreators/web-stories-wp/issues/11028.
+    await expect(page).toClick('li[role="tab"]', { text: /^Insert$/ });
   });
 
   it('should show dialog & visit settings page', async () => {

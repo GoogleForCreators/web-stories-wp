@@ -83,13 +83,16 @@ describe('Template', () => {
       text: /^Fresh/,
     });
 
-    // Collapse layers popup to avoid aXe error about duplicative alt tags
-    await expect(page).toClick('button', { text: /^Layers/ });
-    // make sure popup is closed otherwise aXe will error
-    await page.waitForTimeout(300);
-
     // Open style pane
     await expect(page).toClick('li[role="tab"]', { text: /^Style$/ });
+
+    // Collapse layers popup to avoid aXe error about duplicative alt tags
+    await expect(page).toClick('button', { text: /^Layers/ });
+    // close floating menu
+    await expect(page).toClick('button', { text: 'Dismiss menu' });
+
+    // make sure popup is closed otherwise aXe will error
+    await page.waitForTimeout(300);
 
     await expect(page).toMatchElement('input[placeholder="Add title"]');
     await expect(page).toMatchElement('[data-element-id]');
