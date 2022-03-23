@@ -88,9 +88,8 @@ function LibraryProvider({ children }) {
             ...t,
             ...template,
           };
-        } else {
-          return t;
         }
+        return t;
       });
     });
   }, []);
