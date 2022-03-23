@@ -35,10 +35,10 @@ import {
 /**
  * Internal dependencies
  */
+import { MULTIPLE_VALUE } from '../../../constants';
 import useEyedropper from '../../eyedropper';
 import Tooltip from '../../tooltip';
 import { focusStyle } from '../../panels/shared';
-import { MULTIPLE_VALUE } from '../../../constants';
 import applyOpacityChange from './applyOpacityChange';
 import OpacityInput from './opacityInput';
 import ColorInput from './colorInput';
