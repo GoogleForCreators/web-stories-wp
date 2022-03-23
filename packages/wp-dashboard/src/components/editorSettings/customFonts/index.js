@@ -31,7 +31,7 @@ import {
   Tooltip,
 } from '@googleforcreators/design-system';
 import styled from 'styled-components';
-import { trackEvent } from '@googleforcreators/tracking';
+import { trackEvent, trackError } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
@@ -191,7 +191,7 @@ function CustomFontsSettings({
         await fetch(urlWithProtocol, {
           method: 'HEAD',
         });
-      } catch (err) {
+      } catch {
         setInputError(
           __(
             'Please ensure correct CORS settings for allowing font usage on this site.',
@@ -213,6 +213,7 @@ function CustomFontsSettings({
           return;
         }
       } catch (err) {
+        trackError('add_custom_font', err?.message);
         setInputError(
           sprintf(
             /* translators: %s: list of allowed font types. */
@@ -231,6 +232,7 @@ function CustomFontsSettings({
         await fetchCustomFonts();
         setFontUrl('');
       } catch (err) {
+        trackError('add_custom_font', err?.message);
         setInputError(
           sprintf(
             /* translators: %s: font name. */
