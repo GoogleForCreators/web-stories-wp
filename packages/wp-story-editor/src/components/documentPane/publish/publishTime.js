@@ -27,7 +27,6 @@ import { format, formatTime, is12Hour } from '@googleforcreators/date';
 import { __ } from '@googleforcreators/i18n';
 import {
   DropDownSelect,
-  PLACEMENT,
   useKeyDownEffect,
   Popup,
 } from '@googleforcreators/design-system';
@@ -136,7 +135,6 @@ function PublishTime() {
         topOffset={TOOLBAR_HEIGHT}
         anchor={dateFieldRef}
         isOpen={showDatePicker}
-        placement={PLACEMENT.BOTTOM_END}
         isRTL={isRTL}
         zIndex={10}
         renderContents={({ propagateDimensionChange }) => (

@@ -32,6 +32,10 @@ import {
   Tooltip,
 } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
+import {
+  getDefinitionForType,
+  createNewElement,
+} from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -44,10 +48,10 @@ import {
 } from '../../../checklist';
 import { SimplePanel } from '../../panel';
 import { FlipControls } from '../../shared';
-import { createNewElement, getDefinitionForType } from '../../../../elements';
 import { states, styles, useHighlights } from '../../../../app/highlights';
 import getElementProperties from '../../../canvas/utils/getElementProperties';
 import Warning from '../warning';
+import useCORSProxy from '../../../../utils/useCORSProxy';
 
 const DEFAULT_FLIP = { horizontal: false, vertical: false };
 
@@ -97,17 +101,22 @@ const Text = styled(DefaultText)`
 `;
 
 function PageBackgroundPanel({ selectedElements, pushUpdate }) {
+  const { isDefaultBackground } = selectedElements[0];
   const {
     combineElements,
     currentPage,
     clearBackgroundElement,
     updateCurrentPageProperties,
+    currentPageBackgroundColor,
   } = useStory(({ state, actions }) => ({
     currentPage: state.currentPage,
     clearBackgroundElement: actions.clearBackgroundElement,
     combineElements: actions.combineElements,
     updateCurrentPageProperties: actions.updateCurrentPageProperties,
+    currentPageBackgroundColor:
+      !isDefaultBackground || state.currentPage?.backgroundColor,
   }));
+  const { getProxiedUrl } = useCORSProxy();
 
   const {
     capabilities: { hasUploadMediaAction },
@@ -193,7 +202,6 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
   if (!backgroundEl || !backgroundEl.isBackground) {
     return null;
   }
-  const isDefaultBackground = backgroundEl.isDefaultBackground;
   const isMedia = backgroundEl.isBackground && !isDefaultBackground;
 
   const { backgroundColor } = currentPage;
@@ -235,7 +243,11 @@ function PageBackgroundPanel({ selectedElements, pushUpdate }) {
         <Row expand={false}>
           <SelectedMedia>
             <MediaWrapper>
-              <LayerIcon element={backgroundEl} />
+              <LayerIcon
+                element={backgroundEl}
+                getProxiedUrl={getProxiedUrl}
+                currentPageBackgroundColor={currentPageBackgroundColor}
+              />
             </MediaWrapper>
             <Text size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.SMALL}>
               {__('Media', 'web-stories')}

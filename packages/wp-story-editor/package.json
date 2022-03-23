@@ -29,9 +29,11 @@
   "dependencies": {
     "@googleforcreators/date": "*",
     "@googleforcreators/design-system": "*",
+    "@googleforcreators/elements": "*",
     "@googleforcreators/i18n": "*",
     "@googleforcreators/media": "*",
     "@googleforcreators/migration": "*",
+    "@googleforcreators/output": "*",
     "@googleforcreators/react": "*",
     "@googleforcreators/story-editor": "*",
     "@googleforcreators/tracking": "*",
@@ -45,6 +47,7 @@
     "styled-components": "^5.3.3"
   },
   "devDependencies": {
+    "@googleforcreators/test-utils": "*",
     "@testing-library/react": "^12.1.4",
     "@testing-library/react-hooks": "^7.0.1",
     "mockdate": "^3.0.5",

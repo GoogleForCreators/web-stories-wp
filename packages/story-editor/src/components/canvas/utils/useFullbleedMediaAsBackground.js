@@ -14,18 +14,35 @@
  * limitations under the License.
  */
 /**
- * Internal dependencies
- */
-/**
  * External dependencies
  */
-import { useSnackbar } from '@googleforcreators/design-system';
+import { useState } from '@googleforcreators/react';
+import {
+  useSnackbar,
+  LOCAL_STORAGE_PREFIX,
+  localStore,
+} from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
+import { MEDIA_ELEMENT_TYPES } from '@googleforcreators/elements';
+
+/**
+ * Internal dependencies
+ */
 import isTargetCoveringContainer from '../../../utils/isTargetCoveringContainer';
 import { useStory, useCanvas } from '../../../app';
-import { MEDIA_ELEMENT_TYPES } from '../../../elements';
+
+const DISMISS_BACKGROUND_AUTOSET_MESSAGE_STORAGE_KEY =
+  'BACKGROUND_IS_SET_DIALOG_DISMISSED';
 
 function useFullbleedMediaAsBackground({ selectedElement }) {
+  const [
+    isBackgroundSnackbarMessageDismissed,
+    setIsBackgroundSnackbarMessageDismissed,
+  ] = useState(
+    localStore.getItemByKey(
+      LOCAL_STORAGE_PREFIX[DISMISS_BACKGROUND_AUTOSET_MESSAGE_STORAGE_KEY]
+    )
+  );
   const { setBackgroundElement, isDefaultBackground } = useStory((state) => ({
     setBackgroundElement: state.actions.setBackgroundElement,
     isDefaultBackground:
@@ -45,13 +62,21 @@ function useFullbleedMediaAsBackground({ selectedElement }) {
       isTargetCoveringContainer(target, fullbleedContainer)
     ) {
       setBackgroundElement({ elementId: selectedElement.id });
-      showSnackbar({
-        message: __(
-          'Full bleed images and videos are automatically set as background. Double click to scale and position at any time.',
-          'web-stories'
-        ),
-        dismissible: true,
-      });
+
+      if (!isBackgroundSnackbarMessageDismissed) {
+        showSnackbar({
+          message: __(
+            'Full bleed images and videos are automatically set as background. Double click to scale and position at any time.',
+            'web-stories'
+          ),
+          dismissible: true,
+        });
+        localStore.setItemByKey(
+          LOCAL_STORAGE_PREFIX[DISMISS_BACKGROUND_AUTOSET_MESSAGE_STORAGE_KEY],
+          true
+        );
+        setIsBackgroundSnackbarMessageDismissed(true);
+      }
     }
   };
 

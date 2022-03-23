@@ -22,10 +22,10 @@ import { render, act, fireEvent } from '@testing-library/react';
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE } from '../../../../constants';
 import useFormContext from '../../../form/useFormContext';
 import { usePresubmitHandler } from '../../../form';
 import DesignPanel from '../designPanel';
+import { MULTIPLE_VALUE } from '../../../../constants';
 
 describe('DesignPanel', () => {
   let element1, element2;

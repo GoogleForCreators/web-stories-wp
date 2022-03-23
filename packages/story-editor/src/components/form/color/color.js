@@ -29,28 +29,30 @@ import {
   BUTTON_VARIANTS,
   Icons,
   PLACEMENT,
+  TOOLTIP_PLACEMENT,
 } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
-import { MULTIPLE_VALUE } from '../../../constants';
 import useEyedropper from '../../eyedropper';
 import Tooltip from '../../tooltip';
 import { focusStyle } from '../../panels/shared';
+import { MULTIPLE_VALUE } from '../../../constants';
 import applyOpacityChange from './applyOpacityChange';
 import OpacityInput from './opacityInput';
 import ColorInput from './colorInput';
+import { SPACING } from './constants';
 
 const containerCss = css`
   display: flex;
   align-items: center;
-  width: 100%;
 `;
 
 const Container = styled.section`
   ${containerCss}
   gap: ${({ isInDesignMenu }) => (isInDesignMenu ? 6 : 8)}px;
+  width: ${({ width }) => (width ? `${width}px` : `100%`)};
 `;
 
 const ColorInputsWrapper = styled.div`
@@ -70,7 +72,8 @@ const InputWrapper = styled.div`
 `;
 
 const OpacityWrapper = styled.div`
-  width: calc(47% - 10px);
+  width: ${({ isInDesignMenu }) =>
+    isInDesignMenu ? `calc(39% - 10px)` : `calc(47% - 10px)`};
 `;
 
 const EyeDropperButton = styled(Button).attrs({
@@ -95,9 +98,10 @@ const Color = forwardRef(function Color(
     maxHeight = null,
     shouldCloseOnSelection = false,
     allowsSavedColorDeletion = true,
-    pickerPlacement = PLACEMENT.LEFT_START,
+    pickerPlacement = PLACEMENT.RIGHT_START,
     isInDesignMenu = false,
     hasInputs = true,
+    width,
   },
   ref
 ) {
@@ -120,10 +124,31 @@ const Color = forwardRef(function Color(
   });
   const tooltip = __('Pick a color from canvas', 'web-stories');
 
+  const spacing = hasEyedropper
+    ? SPACING.DEFAULT_SIDEBAR
+    : SPACING.SIDEBAR_WITHOUT_EYEDROPPER;
+
+  const tooltipPlacement =
+    isInDesignMenu || hasEyedropper
+      ? TOOLTIP_PLACEMENT.BOTTOM
+      : TOOLTIP_PLACEMENT.BOTTOM_START;
+
   return (
-    <Container aria-label={containerLabel} isInDesignMenu={isInDesignMenu}>
+    <Container
+      aria-label={containerLabel}
+      isInDesignMenu={isInDesignMenu}
+      width={width}
+    >
       {hasEyedropper && (
-        <Tooltip title={tooltip} hasTail>
+        <Tooltip
+          title={tooltip}
+          hasTail
+          placement={
+            isInDesignMenu
+              ? TOOLTIP_PLACEMENT.BOTTOM
+              : TOOLTIP_PLACEMENT.BOTTOM_START
+          }
+        >
           <EyeDropperButton
             aria-label={tooltip}
             onClick={initEyedropper()}
@@ -145,6 +170,8 @@ const Color = forwardRef(function Color(
             pickerPlacement={pickerPlacement}
             hasInputs={hasInputs}
             isInDesignMenu={isInDesignMenu}
+            spacing={isInDesignMenu ? SPACING.FLOATING_MENU : spacing}
+            tooltipPlacement={tooltipPlacement}
             pickerProps={{
               allowsGradient,
               allowsOpacity,
@@ -159,7 +186,7 @@ const Color = forwardRef(function Color(
         {allowsOpacity && displayOpacity && (
           <>
             <Space />
-            <OpacityWrapper>
+            <OpacityWrapper isInDesignMenu={isInDesignMenu}>
               <OpacityInput
                 value={value}
                 onChange={handleOpacityChange}

@@ -22,6 +22,7 @@ import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import {
   Text,
+  CircularProgress,
   THEME_CONSTANTS,
   Button,
   BUTTON_SIZES,
@@ -38,7 +39,6 @@ import useVideoElementTranscoding from '../../../../app/media/utils/useVideoElem
 import { Row as DefaultRow } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
-import CircularProgress from '../../../circularProgress';
 import LoopPanelContent from '../../shared/loopPanelContent';
 
 const Row = styled(DefaultRow)`

@@ -112,5 +112,52 @@ describe('Background Audio', () => {
 
       await expect(page).toMatchElement('button[aria-label="Play"]');
     });
+
+    it('should allow adding background audio with captions', async () => {
+      await createNewStory();
+
+      // Select the current page by clicking bg change quick action (because of empty state).
+      await expect(page).toClick('button', { text: 'Change background color' });
+
+      await expect(page).toMatch('Page Background Audio');
+
+      await expect(page).toClick('button', { text: 'Upload an audio file' });
+
+      await page.waitForSelector('.media-modal', {
+        visible: true,
+      });
+
+      await expect(page).toClick('.media-modal #menu-item-upload', {
+        text: 'Upload files',
+        visible: true,
+      });
+
+      const fileName = await uploadFile('audio.mp3');
+      uploadedFiles.push(fileName);
+
+      await expect(page).toClick('button', { text: 'Select audio file' });
+
+      await page.waitForSelector('.media-modal', {
+        visible: false,
+      });
+
+      await expect(page).toMatch(fileName);
+
+      await expect(page).toMatchElement('button[aria-label="Play"]');
+
+      await expect(page).toClick('button', { text: 'Upload audio captions' });
+
+      await expect(page).toClick('.media-modal #menu-item-upload', {
+        text: 'Upload files',
+        visible: true,
+      });
+
+      const fileNameCaptions = await uploadFile('test.vtt');
+      uploadedFiles.push(fileNameCaptions);
+
+      await expect(page).toClick('button', { text: 'Select caption' });
+
+      await expect(page).toMatch('test.vtt');
+    });
   });
 });

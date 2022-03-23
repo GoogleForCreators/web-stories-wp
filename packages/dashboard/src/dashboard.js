@@ -23,13 +23,15 @@ import {
   theme as externalDesignSystemTheme,
   ThemeGlobals,
   deepMerge,
-  setAppElement,
 } from '@googleforcreators/design-system';
+import { useEffect } from '@googleforcreators/react';
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 Object.defineProperty(stylisRTLPlugin, 'name', { value: 'stylisRTLPlugin' });
 import PropTypes from 'prop-types';
 import { FlagsProvider } from 'flagged';
+import { registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
@@ -49,10 +51,10 @@ function Dashboard({ config, children }) {
     ...externalDesignSystemTheme,
     colors: lightMode,
   };
-  // Set up modal focus trap on app's mount
 
-  document.body.setAttribute('id', 'dashboardWrapper');
-  setAppElement('#dashboardWrapper > div:first-of-type');
+  useEffect(() => {
+    elementTypes.forEach(registerElementType);
+  }, []);
 
   return (
     <FlagsProvider features={flags}>

@@ -23,21 +23,22 @@ import { __ } from '@googleforcreators/i18n';
 import {
   Button,
   BUTTON_TYPES,
+  TRACKING_EVENTS,
   Icons,
   themeHelpers,
   Tooltip,
+  usePerformanceTracking,
 } from '@googleforcreators/design-system';
 import { useRef, memo } from '@googleforcreators/react';
+import { getDefinitionForType } from '@googleforcreators/elements';
+import { LayerText } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
  */
 import StoryPropTypes from '../../../../types';
-import { getDefinitionForType } from '../../../../elements';
 import { useStory } from '../../../../app';
-import { LayerText } from '../../../../elements/shared/layerText';
-import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
-import { TRACKING_EVENTS } from '../../../../constants/performanceTrackingEvents';
+import useCORSProxy from '../../../../utils/useCORSProxy';
 import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';
 
@@ -51,10 +52,9 @@ const ActionsContainer = styled.div`
   padding-right: 6px;
   column-gap: 6px;
 
-  --background-color: ${({ theme }) =>
-    theme.colors.interactiveBg.secondaryNormal};
+  --background-color: ${({ theme }) => theme.colors.bg.secondary};
   --background-color-opaque: ${({ theme }) =>
-    rgba(theme.colors.interactiveBg.secondaryNormal, 0)};
+    rgba(theme.colors.bg.secondary, 0)};
   background-color: var(--background-color);
 
   ::before {
@@ -112,11 +112,11 @@ const LayerButton = styled(Button).attrs({
   ${({ isSelected, theme }) =>
     isSelected &&
     css`
-      background: ${theme.colors.interactiveBg.secondaryPress};
+      background: ${theme.colors.interactiveBg.tertiaryPress};
       + * {
-        --background-color: ${theme.colors.interactiveBg.secondaryPress};
+        --background-color: ${theme.colors.interactiveBg.tertiaryPress};
         --background-color-opaque: ${rgba(
-          theme.colors.interactiveBg.secondaryPress,
+          theme.colors.interactiveBg.tertiaryPress,
           0
         )};
         --selected-hover-color: ${theme.colors.interactiveBg.tertiaryHover};
@@ -124,23 +124,23 @@ const LayerButton = styled(Button).attrs({
     `}
 
   :hover {
-    background: ${({ theme }) => theme.colors.interactiveBg.secondaryHover};
+    background: ${({ theme }) => theme.colors.interactiveBg.tertiaryHover};
   }
   :hover + * {
     --background-color: ${({ theme }) =>
-      theme.colors.interactiveBg.secondaryHover};
+      theme.colors.interactiveBg.tertiaryHover};
     --background-color-opaque: ${({ theme }) =>
-      rgba(theme.colors.interactiveBg.secondaryHover, 0)};
+      rgba(theme.colors.interactiveBg.tertiaryHover, 0)};
   }
 
   :active {
-    background: ${({ theme }) => theme.colors.interactiveBg.secondaryPress};
+    background: ${({ theme }) => theme.colors.interactiveBg.tertiaryPress};
   }
   :active + * {
     --background-color: ${({ theme }) =>
-      theme.colors.interactiveBg.secondaryPress};
+      theme.colors.interactiveBg.tertiaryPress};
     --background-color-opaque: ${({ theme }) =>
-      rgba(theme.colors.interactiveBg.secondaryPress, 0)};
+      rgba(theme.colors.interactiveBg.tertiaryPress, 0)};
   }
 `;
 
@@ -255,13 +255,19 @@ function preventReorder(e) {
 function Layer({ element }) {
   const { LayerIcon, LayerContent } = getDefinitionForType(element.type);
   const { isSelected, handleClick } = useLayerSelection(element);
-  const { duplicateElementsById, deleteElementById } = useStory(
-    ({ actions }) => ({
-      duplicateElementsById: actions.duplicateElementsById,
-      deleteElementById: actions.deleteElementById,
-    })
-  );
+  const { isDefaultBackground } = element;
+  const {
+    duplicateElementsById,
+    deleteElementById,
+    currentPageBackgroundColor,
+  } = useStory(({ actions, state }) => ({
+    duplicateElementsById: actions.duplicateElementsById,
+    deleteElementById: actions.deleteElementById,
+    currentPageBackgroundColor:
+      !isDefaultBackground || state.currentPage?.backgroundColor,
+  }));
 
+  const { getProxiedUrl } = useCORSProxy();
   const layerRef = useRef(null);
   usePerformanceTracking({
     node: layerRef.current,
@@ -285,7 +291,11 @@ function Layer({ element }) {
         isSelected={isSelected}
       >
         <LayerIconWrapper>
-          <LayerIcon element={element} />
+          <LayerIcon
+            element={element}
+            getProxiedUrl={getProxiedUrl}
+            currentPageBackgroundColor={currentPageBackgroundColor}
+          />
         </LayerIconWrapper>
         <LayerDescription>
           <LayerContentContainer>

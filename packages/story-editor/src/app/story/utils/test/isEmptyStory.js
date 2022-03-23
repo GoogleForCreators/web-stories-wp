@@ -18,14 +18,19 @@
  * External dependencies
  */
 import { createSolidFromString } from '@googleforcreators/patterns';
+import { createPage, registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
  */
 import isEmptyStory from '../isEmptyStory';
-import { createPage } from '../../../../elements';
 
 describe('isEmptyStory', () => {
+  beforeAll(() => {
+    elementTypes.forEach(registerElementType);
+  });
+
   it('should count newly created story as empty', () => {
     const newlyCreatedStoryPages = [createPage()];
     expect(isEmptyStory(newlyCreatedStoryPages)).toBeTrue();

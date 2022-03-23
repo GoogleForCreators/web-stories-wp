@@ -25,7 +25,7 @@ import { fireEvent, screen } from '@testing-library/react';
 import Alignment from '../alignment';
 import { renderPanel } from '../../../shared/test/_utils';
 
-jest.mock('../../../../../elements');
+jest.mock('@googleforcreators/element-library');
 
 describe('Panels/Alignment', () => {
   let defaultElement, defaultText, defaultImage;

@@ -19,12 +19,13 @@
  */
 import { _x } from '@googleforcreators/i18n';
 import { dataFontEm, PAGE_HEIGHT } from '@googleforcreators/units';
+import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import { FONT_WEIGHT, BACKGROUND_TEXT_MODE } from '../../../../constants';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../../app/font/defaultFonts';
+import { FONT_WEIGHT } from '../../../../constants';
 
 // Measured in editor. As small as you can make
 // width with preset font before line wraps
@@ -52,6 +53,8 @@ const DEFAULT_TEXT_BORDER_RADIUS = {
 const DEFAULT_TEXT_PADDING = {
   locked: true,
   hasHiddenPadding: false,
+  horizontal: 0,
+  vertical: 0,
 };
 
 const DEFAULT_TEXT_ALIGN = 'left';

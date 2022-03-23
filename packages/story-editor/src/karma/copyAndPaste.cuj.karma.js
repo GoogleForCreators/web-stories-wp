@@ -125,7 +125,8 @@ function sequencedForEach(htmlCollection, op) {
      * See https://github.com/googleforcreators/web-stories-wp/pull/6162
      **/
     xit('retains all foreground animations', async () => {
-      // open effect chooser
+      // open effect
+      await fixture.events.click(fixture.editor.inspector.designTab);
       const effectChooserToggle =
         fixture.editor.inspector.designPanel.animation.effectChooser;
       await fixture.events.click(effectChooserToggle, { clickCount: 1 });
@@ -218,6 +219,7 @@ describe('Background Copy & Paste', () => {
   };
 
   const openEffectChooser = async () => {
+    await fixture.events.click(fixture.editor.inspector.designTab);
     const effectChooserToggle =
       fixture.editor.inspector.designPanel.animation.effectChooser;
     await fixture.events.click(effectChooserToggle, { clickCount: 1 });
@@ -236,6 +238,7 @@ describe('Background Copy & Paste', () => {
     await goToPreviousPage();
     const bgMedia = fixture.editor.library.media.item(0);
     await fixture.events.mouse.clickOn(bgMedia, 20, 20);
+    await fixture.events.click(fixture.editor.inspector.designTab);
     await fixture.events.click(
       fixture.editor.inspector.designPanel.sizePosition.setAsBackground
     );

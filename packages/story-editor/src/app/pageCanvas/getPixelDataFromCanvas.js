@@ -17,11 +17,7 @@
  * External dependencies
  */
 import { FULLBLEED_RATIO, getBox, PAGE_RATIO } from '@googleforcreators/units';
-
-/**
- * Internal dependencies
- */
-import { calculateTextHeight } from '../../utils/textMeasurements';
+import { calculateTextHeight } from '@googleforcreators/element-library';
 
 function getPixelDataFromCanvas(canvas, attrs) {
   const ctx = canvas.getContext('2d');

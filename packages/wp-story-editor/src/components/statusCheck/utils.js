@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { getStoryMarkup } from '@googleforcreators/story-editor';
+import { getStoryMarkup } from '@googleforcreators/output';
 
 export function getContent() {
   const story = {

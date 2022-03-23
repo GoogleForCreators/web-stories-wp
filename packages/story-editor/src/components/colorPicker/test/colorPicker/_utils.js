@@ -19,13 +19,13 @@
  */
 import { screen, within } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
 import theme from '../../../../theme';
 import ColorPicker from '../..';
-import { renderWithTheme } from '../../../../testUtils';
 
 function arrange(customProps = {}) {
   const onChange = jest.fn();

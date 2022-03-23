@@ -17,6 +17,7 @@
  * External dependencies
  */
 import { act, renderHook } from '@testing-library/react-hooks';
+
 /**
  * Internal dependencies
  */

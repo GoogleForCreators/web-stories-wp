@@ -21,12 +21,14 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { useCallback, useRef } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
-import { PillGroup } from '@googleforcreators/design-system';
+import {
+  PillGroup,
+  BACKGROUND_TEXT_MODE,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
-import { BACKGROUND_TEXT_MODE } from '../../../../constants';
 import { Color, Row } from '../../../form';
 import { useCommonColorValue, getCommonValue, focusStyle } from '../../shared';
 import { applyHiddenPadding, removeHiddenPadding } from './utils';

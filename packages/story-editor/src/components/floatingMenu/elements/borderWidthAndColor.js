@@ -19,13 +19,14 @@
  */
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
+import { trackEvent } from '@googleforcreators/tracking';
 import styled from 'styled-components';
+import { canSupportMultiBorder } from '@googleforcreators/masks';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
-import { canSupportMultiBorder } from '../../../masks';
 import { DEFAULT_BORDER } from '../../panels/design/border/shared';
 import { Input, Color, useProperties } from './shared';
 
@@ -54,7 +55,11 @@ function BorderWidthAndColor() {
   // Note that "mask" never updates on an element,
   // so selecting it cannot cause re-renders
   // We need it to determine if border opacity is allowed.
-  const { border = DEFAULT_BORDER, mask } = useProperties(['border', 'mask']);
+  const {
+    border = DEFAULT_BORDER,
+    mask,
+    type,
+  } = useProperties(['border', 'mask', 'type']);
   const updateSelectedElements = useStory(
     (state) => state.actions.updateSelectedElements
   );
@@ -78,7 +83,12 @@ function BorderWidthAndColor() {
   // and hasBorderWidth, are false. If so, neither input would be shown. But because they
   // partially contradict each other, one of the inputs will always render.
 
-  const handleWidthChange = (value) =>
+  const handleWidthChange = (value) => {
+    trackEvent('floating_menu', {
+      name: 'set_border_width',
+      element: type,
+    });
+
     updateSelectedElements({
       properties: ({ border: oldBorder }) => ({
         border: {
@@ -92,8 +102,14 @@ function BorderWidthAndColor() {
         },
       }),
     });
+  };
 
-  const handleColorChange = (value) =>
+  const handleColorChange = (value) => {
+    trackEvent('floating_menu', {
+      name: 'set_border_color',
+      element: type,
+    });
+
     updateSelectedElements({
       properties: ({ border: oldBorder }) => ({
         border: {
@@ -102,6 +118,7 @@ function BorderWidthAndColor() {
         },
       }),
     });
+  };
 
   return (
     <Container>

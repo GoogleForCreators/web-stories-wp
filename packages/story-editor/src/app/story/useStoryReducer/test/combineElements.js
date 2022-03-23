@@ -13,14 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import { MaskTypes } from '@googleforcreators/masks';
+import { registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
  */
-import { MaskTypes } from '../../../../masks/constants';
 import { setupReducer } from './_utils';
 
 describe('combineElements', () => {
+  beforeAll(() => {
+    elementTypes.forEach(registerElementType);
+  });
+
   it('should do nothing if first element is missing', () => {
     const { restore, combineElements } = setupReducer();
 

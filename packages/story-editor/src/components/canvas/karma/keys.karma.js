@@ -15,12 +15,16 @@
  */
 
 /**
+ * External dependencies
+ */
+import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
+
+/**
  * Internal dependencies
  */
 import { Fixture } from '../../../karma';
 import { useStory } from '../../../app/story';
 import { useInsertElement } from '..';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../../app/font/defaultFonts';
 
 describe('Canvas keys integration', () => {
   let fixture;
@@ -81,6 +85,7 @@ describe('Canvas keys integration', () => {
   });
 
   it('should delete element from the design panel', async () => {
+    await fixture.events.click(fixture.editor.inspector.designTab);
     const bold = fixture.editor.inspector.designPanel.textStyle.bold.button;
     await fixture.events.focus(bold);
     expect(await getSelection()).toEqual([element1.id]);
@@ -101,6 +106,7 @@ describe('Canvas keys integration', () => {
   });
 
   it('should not be able to delete element from a dialog', async () => {
+    await fixture.events.click(fixture.editor.inspector.designTab);
     const colorButton = fixture.querySelector(
       'button[aria-label="Text color"]'
     );

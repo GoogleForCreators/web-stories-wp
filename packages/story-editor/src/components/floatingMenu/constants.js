@@ -15,9 +15,9 @@
  */
 
 /**
- * Internal dependencies
+ * External dependencies
  */
-import { ELEMENT_TYPES } from '../../elements';
+import { ELEMENT_TYPES } from '@googleforcreators/elements';
 
 export const SELECTED_ELEMENT_TYPES = {
   ...ELEMENT_TYPES,

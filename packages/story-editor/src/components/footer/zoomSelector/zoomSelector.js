@@ -31,6 +31,7 @@ import { useLayout } from '../../../app/layout';
 const selectButtonCSS = css`
   height: 36px;
   padding: 8px;
+  background-color: ${({ theme }) => theme.colors.bg.primary};
 
   span {
     padding: 0;
