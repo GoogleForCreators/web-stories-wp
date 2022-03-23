@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import { INSERT, DOCUMENT, STYLE } from '../../components/inspector';
+import { INSERT, DOCUMENT, STYLE } from '../../components/sidebar';
 import {
   MEDIA,
   MEDIA3P,
@@ -28,17 +28,17 @@ import {
  * Highlight state object
  *
  * @typedef {Highlight} Highlight The current state of editor highlights
- * @property {string} tab The ID of the Inspector tab to highlight
+ * @property {string} tab The ID of the Sidebar tab to highlight
  * @property {boolean} focus Whether there is a focusable element, use for accessibility
  */
 
 const keys = {
   STORY_TITLE: 'STORY_TITLE',
 
-  // Inspector tabs
+  // Sidebar tabs
   STYLE_PANE: 'STYLE_PANE',
 
-  // INSPECTOR
+  // STYLE
   ANIMATION: 'ANIMATION',
   ASSISTIVE_TEXT: 'ASSISTIVE_TEXT',
   CAPTIONS: 'CAPTIONS',
@@ -64,13 +64,12 @@ export const STATES = {
     focus: true,
   },
 
-  // Inspector tabs
+  // Sidebar tabs
   [keys.STYLE_PANE]: {
     focus: true,
     tab: STYLE,
   },
 
-  // Inspector
   [keys.POSTER]: {
     focus: true,
     tab: DOCUMENT,

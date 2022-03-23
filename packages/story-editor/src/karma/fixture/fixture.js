@@ -334,7 +334,7 @@ export class Fixture {
               },
             },
           }}
-          inspectorTabs={{
+          sidebarTabs={{
             document: {
               title: 'Document',
               Pane: DocumentPane,

@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
 import { SearchInput } from '..';
-import { renderWithTheme } from '../../../../testUtils';
 
 jest.useFakeTimers();
 

@@ -24,7 +24,7 @@ import {
   Row,
   useStory,
   useAPI,
-  useInspector,
+  useSidebar,
 } from '@googleforcreators/story-editor';
 
 function Author() {
@@ -34,7 +34,7 @@ function Author() {
   const {
     state: { users, isUsersLoading },
     actions: { loadUsers },
-  } = useInspector();
+  } = useSidebar();
   const { isSaving, author, updateStory } = useStory(
     ({
       state: {

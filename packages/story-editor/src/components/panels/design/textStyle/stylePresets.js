@@ -39,7 +39,7 @@ import { useRef, useState } from '@googleforcreators/react';
 import { useStory, useConfig } from '../../../../app';
 import { PRESET_TYPES } from '../../../../constants';
 import useAddPreset from '../../../../utils/useAddPreset';
-import useInspector from '../../../inspector/useInspector';
+import useSidebar from '../../../sidebar/useSidebar';
 import StyleGroup from '../../../styleManager/styleGroup';
 import StyleManager, {
   NoStylesWrapper,
@@ -75,8 +75,8 @@ function PresetPanel({ pushUpdate }) {
   );
 
   const {
-    refs: { inspector },
-  } = useInspector();
+    refs: { sidebar },
+  } = useSidebar();
   const buttonRef = useRef(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
@@ -127,7 +127,7 @@ function PresetPanel({ pushUpdate }) {
             topOffset={topOffset}
             isRTL={isRTL}
             anchor={buttonRef}
-            dock={inspector}
+            dock={sidebar}
             isOpen={isPopupOpen}
             placement={PLACEMENT.RIGHT_START}
             spacing={spacing}

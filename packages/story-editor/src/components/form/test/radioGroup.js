@@ -20,12 +20,12 @@
 import { fireEvent, screen } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { __ } from '@googleforcreators/i18n';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
 import RadioGroup from '../radioGroup';
-import { renderWithTheme } from '../../../testUtils';
 
 describe('RadioGroup', () => {
   const options = [

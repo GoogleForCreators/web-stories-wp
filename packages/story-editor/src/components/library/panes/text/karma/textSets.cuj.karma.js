@@ -230,7 +230,7 @@ describe('CUJ: Text Sets (Text and Shape Combinations): Using Text Sets', () => 
       await fixture.events.keyboard.type('000');
       await fixture.events.keyboard.press('Tab');
 
-      await fixture.events.click(fixture.editor.inspector.insertTab);
+      await fixture.events.click(fixture.editor.sidebar.insertTab);
       await fixture.editor.library.textTab.click();
       await fixture.editor.library.text.smartColorToggle.click();
 
