@@ -87,7 +87,7 @@ Different actions will be rendered depending on the Element that is right clicke
 |Bring to front|Place shape in front of all other elements. Disabled if the element is all the way forward.|
 |Copy shape styles|Copy styles from the shape to the clipboard. A snackbar is displayed on completion.|
 |Paste shape styles|Add styles from the clipboard to the selected shape. A snackbar is displayed on completion.|
-|Add color to "Saved colors"|The color(s) of the currently selected shape is saved to the "Saved colors" panel in the sidebar. This action opens the design tab, opens the "Saved colors" panel, and collapses all other panels in the sidebar. The "Saved colors" panel should be highlighted when opened. A snackbar is displayed on completion.|
+|Add color to "Saved colors"|The color(s) of the currently selected shape is saved to the "Saved colors" panel in the style pane. This action opens the design tab, opens the "Saved colors" panel, and collapses all other panels in the style pane. The "Saved colors" panel should be highlighted when opened. A snackbar is displayed on completion.|
 
 </details>
 
