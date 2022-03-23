@@ -43,7 +43,7 @@ const removeAllFonts = async () => {
   }
 
   for (let i = 0; i < fonts.length; i++) {
-    // eslint-disable-next-line no-await-in-loop -- async for
+    // eslint-disable-next-line no-await-in-loop -- Can't be done in parallel because of the confirmation dialog.
     await removeCustomFont(fonts[i].name);
   }
 
