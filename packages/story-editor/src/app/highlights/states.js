@@ -35,7 +35,7 @@ import {
 const keys = {
   STORY_TITLE: 'STORY_TITLE',
 
-  // Style tabs
+  // Sidebar tabs
   STYLE_PANE: 'STYLE_PANE',
 
   // STYLE
