@@ -24,6 +24,7 @@ import {
 } from '@testing-library/react';
 import MockDate from 'mockdate';
 import { setAppElement } from '@googleforcreators/design-system';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
@@ -31,7 +32,6 @@ import { setAppElement } from '@googleforcreators/design-system';
 import StoryContext from '../../../../app/story/context';
 import useIsUploadingToStory from '../../../../utils/useIsUploadingToStory';
 import ConfigContext from '../../../../app/config/context';
-import { renderWithTheme } from '../../../../testUtils';
 import { CheckpointContext, PPC_CHECKPOINT_STATE } from '../../../checklist';
 import PublishButton from '../publish';
 

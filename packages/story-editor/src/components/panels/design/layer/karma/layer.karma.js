@@ -36,7 +36,7 @@ describe('Layer Panel', () => {
     await fixture.collapseHelpCenter();
     layerPanel = fixture.editor.footer.layerPanel;
     await fixture.events.click(layerPanel.togglePanel);
-    await fixture.events.click(fixture.editor.inspector.designTab);
+    await fixture.events.click(fixture.editor.sidebar.designTab);
 
     insertElement = await fixture.renderHook(() => useInsertElement());
   });
@@ -96,7 +96,7 @@ describe('Layer Panel', () => {
   });
 
   it('should be able to delete elements with delete action', async () => {
-    await fixture.events.click(fixture.editor.inspector.insertTab);
+    await fixture.events.click(fixture.editor.sidebar.insertTab);
     await fixture.editor.library.textTab.click();
     await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
     // Select background for being able to insert another text.
@@ -104,7 +104,7 @@ describe('Layer Panel', () => {
     await fixture.events.click(bgLayer);
     await fixture.events.click(fixture.editor.library.text.preset('Title 2'));
 
-    await fixture.events.click(fixture.editor.inspector.designTab);
+    await fixture.events.click(fixture.editor.sidebar.designTab);
     expect(layerPanel.layers.length).toBe(3);
     const elementALayer = layerPanel.getLayerByInnerText('Title 1');
     await fixture.events.hover(elementALayer);
@@ -118,7 +118,7 @@ describe('Layer Panel', () => {
   });
 
   it('should be able to duplicate elements with duplicate action', async () => {
-    await fixture.events.click(fixture.editor.inspector.insertTab);
+    await fixture.events.click(fixture.editor.sidebar.insertTab);
     await fixture.editor.library.textTab.click();
     await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
     // Select background for being able to insert another text.
@@ -126,7 +126,7 @@ describe('Layer Panel', () => {
     await fixture.events.click(bgLayer);
     await fixture.events.click(fixture.editor.library.text.preset('Title 2'));
 
-    await fixture.events.click(fixture.editor.inspector.designTab);
+    await fixture.events.click(fixture.editor.sidebar.designTab);
     expect(layerPanel.layers.length).toBe(3);
     const elementALayer = layerPanel.getLayerByInnerText('Title 1');
     await fixture.events.hover(elementALayer);

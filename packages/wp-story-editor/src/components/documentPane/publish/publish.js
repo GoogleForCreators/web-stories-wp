@@ -47,7 +47,7 @@ import {
   useStory,
   useConfig,
   useHighlights,
-  useInspector,
+  useSidebar,
 } from '@googleforcreators/story-editor';
 
 /**
@@ -120,7 +120,7 @@ const LogoImg = styled.img`
 function PublishPanel({ nameOverride }) {
   const {
     state: { users },
-  } = useInspector();
+  } = useSidebar();
   const {
     api: { publisherLogos: publisherLogosPath },
   } = useConfig();

@@ -18,10 +18,11 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
+import { renderWithTheme } from '@googleforcreators/test-utils';
+
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../../testUtils';
 import LinkRelations from '../linkRelations';
 
 /**

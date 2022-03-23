@@ -27,7 +27,7 @@ import {
   CheckpointContext,
   PPC_CHECKPOINT_STATE,
 } from '../../checklist';
-import InspectorContext from '../../inspector/context';
+import SidebarContext from '../../sidebar/context';
 import { PageAdvancementPanel, SlugPanel } from '../../panels/document';
 import PublishModal from '../publishModal';
 
@@ -135,20 +135,20 @@ export const _default = (args) => {
           },
         }}
       >
-        <InspectorContext.Provider
+        <SidebarContext.Provider
           value={{
             actions: {
               loadUsers: () => {},
             },
             data: {
-              modalInspectorTab: {
+              modalSidebarTab: {
                 title: 'document panel',
                 DocumentPane: MockDocumentPane,
               },
             },
             state: {
               users: {},
-              inspectorContentHeight: 600,
+              sidebarContentHeight: 600,
             },
           }}
         >
@@ -168,7 +168,7 @@ export const _default = (args) => {
               <PublishModal {...args} />
             </CheckpointContext.Provider>
           </ChecklistCountProvider>
-        </InspectorContext.Provider>
+        </SidebarContext.Provider>
       </StoryContext.Provider>
     </ConfigContext.Provider>
   );

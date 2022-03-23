@@ -87,7 +87,7 @@ describe('Page Attachment', () => {
 
   const setPageAttachmentLink = async (link) => {
     // Open style pane
-    await fixture.events.click(fixture.editor.inspector.designTab);
+    await fixture.events.click(fixture.editor.sidebar.designTab);
     const input = fixture.screen.getByLabelText(
       'Type an address to add a page attachment link'
     );
