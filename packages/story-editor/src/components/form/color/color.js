@@ -130,10 +130,10 @@ const Color = forwardRef(function Color(
       ? TOOLTIP_PLACEMENT.BOTTOM
       : TOOLTIP_PLACEMENT.BOTTOM_START;
 
-  // Sometimes the value of the set color is "(MULTIPLE)", this is the only time the color comes back a string not an object.
+  // Sometimes there's more than 1 color to an element.
   // When there's multiple colors the input displays "Mixed" (in english) and takes up a different amount of space.
-  // By checking here to ignore that value based on mixed colors we prevent overlaps in any language too.
-  const ignoreSetWidth = typeof value === 'string';
+  // By checking here to ignore that value based on mixed colors we prevent visual spill over of content.
+  const ignoreSetWidth = value === MULTIPLE_VALUE;
   return (
     <Container
       aria-label={containerLabel}
