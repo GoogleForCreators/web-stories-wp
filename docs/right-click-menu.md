@@ -44,8 +44,8 @@ Different actions will be rendered depending on the Element that is right clicke
 |Bring to front|Set the text element in front of all elements on the page.|
 |Copy style|The styles of the selected text element are copied to the clipboard. A snackbar is displayed on completion.|
 |Paste style|The styles that are saved to the clipboard are pasted to the currently selected text box. This does not update the text in the textbox. A snackbar is shown on completion.|
-|Add style to "Saved styles"|The style of the currently selected textbox is saved to the "Saved styles" panel in the sidebar. This action opens the design tab, opens the "Saved styles" panel, and collapses all other panels in the sidebar. The "Saved styles" panel should be highlighted when opened.|
-|Add color to "Saved colors"|The color(s) of the currently selected textbox is saved to the "Saved colors" panel in the sidebar. This action opens the design tab, opens the "Saved colors" panel, and collapses all other panels in the sidebar. The "Saved colors" panel should be highlighted when opened. A snackbar is displayed on completion.|
+|Add style to "Saved styles"|The style of the currently selected textbox is saved to the "Saved styles" panel in the style pane. This action opens the design tab, opens the "Saved styles" panel, and collapses all other panels in the style pane. The "Saved styles" panel should be highlighted when opened.|
+|Add color to "Saved colors"|The color(s) of the currently selected textbox is saved to the "Saved colors" panel in the style pane. This action opens the design tab, opens the "Saved colors" panel, and collapses all other panels in the style pane. The "Saved colors" panel should be highlighted when opened. A snackbar is displayed on completion.|
 
 </details>
 
