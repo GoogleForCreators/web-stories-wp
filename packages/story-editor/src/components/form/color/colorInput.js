@@ -51,7 +51,6 @@ import useInspector from '../../inspector/useInspector';
 import DefaultTooltip from '../../tooltip';
 import { focusStyle, inputContainerStyleOverride } from '../../panels/shared';
 import { useCanvas, useConfig } from '../../../app';
-import { SPACING } from './constants';
 
 const Preview = styled.div`
   height: 36px;
@@ -228,8 +227,6 @@ const ColorInput = forwardRef(function ColorInput(
     ? minimalInputContainerStyleOverride
     : inputContainerStyleOverride;
 
-  const spacingAlignment = isRTL && !isInDesignMenu ? SPACING.IS_RTL : spacing;
-
   return (
     <>
       {isEditable ? (
@@ -294,7 +291,7 @@ const ColorInput = forwardRef(function ColorInput(
         dock={isInDesignMenu ? null : inspector}
         isOpen={pickerOpen}
         placement={dynamicPlacement}
-        spacing={spacingAlignment}
+        spacing={spacing}
         invisible={isEyedropperActive}
         topOffset={topOffset}
         refCallback={positionPlacement}

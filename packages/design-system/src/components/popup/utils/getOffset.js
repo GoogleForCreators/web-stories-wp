@@ -30,7 +30,7 @@ export function getXOffset(
   const leftAligned = (dockRect ? dockRect.left : anchorRect.left) - spacing;
   const rightAligned = (dockRect ? dockRect.right : anchorRect.right) + spacing;
   const centerAligned = dockRect
-    ? dockRect.left
+    ? dockRect.left + dockRect.width / 2
     : anchorRect.left + anchorRect.width / 2;
 
   switch (placement) {
