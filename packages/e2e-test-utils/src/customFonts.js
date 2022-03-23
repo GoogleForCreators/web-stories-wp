@@ -89,8 +89,8 @@ export const addCustomFont = async (fontUrl) => {
  * @return {Promise<void>}
  */
 export const removeCustomFont = async (fontName) => {
-  const numChildren = await page.evaluate(() => {
-    return document.querySelector('div[role=listbox]')?.children?.length;
+  const numberOfFonts = await page.evaluate(() => {
+    return document.querySelector('div[role=listbox]')?.children?.length || 0;
   });
 
   const selector = `[aria-label="Delete ${fontName}"]`;
@@ -100,12 +100,12 @@ export const removeCustomFont = async (fontName) => {
   await page.waitForSelector('[role="dialog"]');
   await expect(page).toClick('button', { text: 'Delete Font' });
   await page.waitForFunction(
-    (originalNumChildren) => {
+    (expectedNumberOfFonts) => {
       const count =
-        document.querySelector('div[role=listbox]')?.children?.length;
-      return !count || count === originalNumChildren - 1 ? true : false;
+        document.querySelector('div[role=listbox]')?.children?.length || 0;
+      return count === expectedNumberOfFonts;
     },
     {},
-    numChildren
+    numberOfFonts - 1
   );
 };
