@@ -30,7 +30,7 @@ function FlipVertical() {
   const { vertical, toggle } = useFlip('vertical');
   return (
     <IconButton
-      Icon={Icons.MirrorUpdown}
+      Icon={Icons.MirrorUpDown}
       title={__('Flip vertically', 'web-stories')}
       onClick={toggle}
       isToggled={vertical}

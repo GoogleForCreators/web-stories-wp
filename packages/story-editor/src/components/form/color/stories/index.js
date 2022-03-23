@@ -200,10 +200,10 @@ function DesignMenuColorInput({ label, width, atStart = false, ...props }) {
             <Icons.ColorBucket />
           </DummyButton>
           <DummyButton>
-            <Icons.MirrorLeftright />
+            <Icons.MirrorLeftRight />
           </DummyButton>
           <DummyButton>
-            <Icons.MirrorUpdown />
+            <Icons.MirrorUpDown />
           </DummyButton>
           {!atStart && (
             <>
