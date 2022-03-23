@@ -252,7 +252,7 @@ function CustomFontsSettings({
         setInputError(
           sprintf(
             /* translators: %s: font name. */
-            __('A font with this name %s already exists.', 'web-stories'),
+            __('A font with the name %s already exists.', 'web-stories'),
             fontData.family
           )
         );
