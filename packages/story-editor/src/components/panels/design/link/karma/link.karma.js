@@ -87,8 +87,8 @@ describe('Link Panel', () => {
           throw new Error('node not ready');
         }
       });
-      await fixture.events.click(fixture.editor.inspector.designTab);
-      linkPanel = fixture.editor.inspector.designPanel.link;
+      await fixture.events.click(fixture.editor.sidebar.designTab);
+      linkPanel = fixture.editor.sidebar.designPanel.link;
     });
 
     it('should correctly show focus border both when using keyboard and mouse', async () => {
@@ -185,14 +185,14 @@ describe('Link Panel', () => {
 
       // Select the element again.
       await fixture.events.click(frame);
-      await fixture.events.click(fixture.editor.inspector.designTab);
+      await fixture.events.click(fixture.editor.sidebar.designTab);
       await waitFor(() => {
-        if (!fixture.editor.inspector.designPanel.link.address) {
+        if (!fixture.editor.sidebar.designPanel.link.address) {
           throw new Error('address element not ready');
         }
       });
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.link.address,
+        fixture.editor.sidebar.designPanel.link.address,
         { clickCount: 3 }
       );
       await fixture.events.sleep(500);
@@ -236,7 +236,7 @@ describe('Link Panel', () => {
   describe('CUJ: Creator Can Add A Link: Link with Page Attachment', () => {
     beforeEach(async () => {
       // Open Style Pane
-      await fixture.events.click(fixture.editor.inspector.designTab);
+      await fixture.events.click(fixture.editor.sidebar.designTab);
 
       // Select Page.
       // Click the background element
@@ -265,12 +265,12 @@ describe('Link Panel', () => {
       const frame = fixture.editor.canvas.framesLayer.frame(element.id).node;
       await moveElementToBottom(frame, 0);
 
-      await fixture.events.click(fixture.editor.inspector.designTab);
+      await fixture.events.click(fixture.editor.sidebar.designTab);
       await closePanel('Selection');
       await closePanel('Color');
       await closePanel('Border');
 
-      linkPanel = fixture.editor.inspector.designPanel.link;
+      linkPanel = fixture.editor.sidebar.designPanel.link;
       await fixture.events.click(linkPanel.address);
 
       await fixture.snapshot('Page Attachment warning & dashed line visible');
@@ -310,8 +310,8 @@ describe('Link Panel', () => {
 
       await moveElementToBottom(frame);
 
-      await fixture.events.click(fixture.editor.inspector.designTab);
-      linkPanel = fixture.editor.inspector.designPanel.link;
+      await fixture.events.click(fixture.editor.sidebar.designTab);
+      linkPanel = fixture.editor.sidebar.designPanel.link;
       await fixture.events.click(linkPanel.address);
 
       await fixture.snapshot(
@@ -363,8 +363,8 @@ describe('Link Panel', () => {
     });
 
     it('should allow changing link for two elements at the same time', async () => {
-      await fixture.events.click(fixture.editor.inspector.designTab);
-      linkPanel = fixture.editor.inspector.designPanel.link;
+      await fixture.events.click(fixture.editor.sidebar.designTab);
+      linkPanel = fixture.editor.sidebar.designPanel.link;
       await fixture.events.click(linkPanel.address);
 
       expect(linkPanel.address.value).toBe('');
@@ -393,8 +393,8 @@ describe('Link Panel', () => {
           throw new Error('node not ready');
         }
       });
-      await fixture.events.click(fixture.editor.inspector.designTab);
-      linkPanel = fixture.editor.inspector.designPanel.link;
+      await fixture.events.click(fixture.editor.sidebar.designTab);
+      linkPanel = fixture.editor.sidebar.designPanel.link;
       await fixture.events.click(linkPanel.address);
       await fixture.events.keyboard.type('http://google.com');
     });

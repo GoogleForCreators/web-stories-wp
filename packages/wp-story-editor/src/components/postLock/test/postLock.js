@@ -25,11 +25,11 @@ import {
   StoryContext,
   CurrentUserContext,
 } from '@googleforcreators/story-editor';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../testUtils';
 import {
   getStoryLockById,
   setStoryLockById,

@@ -26,12 +26,6 @@ import {
 } from '@googleforcreators/react';
 import { useLiveRegion } from '@googleforcreators/design-system';
 
-/* translators: %d: new position. */
-const REORDER_MESSAGE = __(
-  'Reordering. Press Escape to abort. Release mouse to drop in position %d.',
-  'web-stories'
-);
-
 function useReordering(onPositionChange, numChildren) {
   const [isReordering, setIsReordering] = useState(false);
   const [currentSeparator, setCurrentSeparator] = useState(null);
@@ -108,7 +102,14 @@ function useReordering(onPositionChange, numChildren) {
   useEffect(() => {
     if (isReordering && currentSeparator) {
       const position = numChildren - currentSeparator;
-      const message = sprintf(REORDER_MESSAGE, position);
+      const message = sprintf(
+        /* translators: %d: new position. */
+        __(
+          'Reordering. Press Escape to abort. Release mouse to drop in position %d.',
+          'web-stories'
+        ),
+        position
+      );
       speak(message);
     }
   }, [isReordering, currentSeparator, numChildren, speak]);

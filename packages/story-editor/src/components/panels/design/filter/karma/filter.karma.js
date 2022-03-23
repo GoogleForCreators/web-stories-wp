@@ -66,8 +66,8 @@ describe('Filter Panel', () => {
         const elements = await getElements();
         bgImageId = elements[0].id;
 
-        await fixture.events.click(fixture.editor.inspector.designTab);
-        filterPanel = fixture.editor.inspector.designPanel.filters;
+        await fixture.events.click(fixture.editor.sidebar.designTab);
+        filterPanel = fixture.editor.sidebar.designPanel.filters;
         getBackgroundElementOverlay = () =>
           fixture.editor.canvas.displayLayer.display(bgImageId).overlay;
       });
@@ -153,8 +153,8 @@ describe('Filter Panel', () => {
       beforeEach(async () => {
         const mediaItem = fixture.editor.library.media.item(0);
         await fixture.events.mouse.clickOn(mediaItem, 20, 20);
-        await fixture.events.click(fixture.editor.inspector.designTab);
-        filterPanel = fixture.editor.inspector.designPanel.filters;
+        await fixture.events.click(fixture.editor.sidebar.designTab);
+        filterPanel = fixture.editor.sidebar.designPanel.filters;
       });
 
       it('should display the filter panel for non-bg media', () => {

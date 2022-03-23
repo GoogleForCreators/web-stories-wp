@@ -29,13 +29,14 @@ const Image = styled.img`
 `;
 
 function VisibleImage({ ...attrs }) {
-  // eslint-disable-next-line styled-components-a11y/alt-text -- Attributes passed in.
-  return <Image {...attrs} decoding="async" crossOrigin="anonymous" />;
+  // The image is purely decorative by default, because the alt text is already used
+  // for the layer description. Hence using alt="" to avoid repetition.
+  return <Image alt="" {...attrs} decoding="async" crossOrigin="anonymous" />;
 }
 
 VisibleImage.propTypes = {
   src: PropTypes.string.isRequired,
-  alt: PropTypes.string.isRequired,
+  alt: PropTypes.string,
   width: PropTypes.number.isRequired,
   height: PropTypes.number.isRequired,
 };

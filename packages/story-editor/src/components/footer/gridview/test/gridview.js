@@ -18,13 +18,16 @@
  * External dependencies
  */
 import { fireEvent } from '@testing-library/react';
+import {
+  queryByAriaLabel,
+  renderWithTheme,
+} from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
 import StoryContext from '../../../../app/story/context';
 import GridView from '../gridView';
-import { queryByAriaLabel, renderWithTheme } from '../../../../testUtils';
 import { noop } from '../../../../utils/noop';
 
 function setupGridView() {

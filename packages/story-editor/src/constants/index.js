@@ -22,7 +22,7 @@ export const ADMIN_TOOLBAR_HEIGHT = 32;
 export const HEADER_HEIGHT = 64;
 export const HEADER_GAP = 16;
 export const CANVAS_MIN_WIDTH = 570;
-export const INSPECTOR_WIDTH = 360;
+export const SIDEBAR_WIDTH = 360;
 export const PAGE_NAV_PADDING = 60;
 export const PAGE_NAV_BUTTON_SIZE = 40;
 export const PAGE_NAV_WIDTH = PAGE_NAV_PADDING + PAGE_NAV_BUTTON_SIZE;
@@ -82,6 +82,3 @@ export const PRESET_TYPES = {
 };
 
 export const STABLE_ARRAY = [];
-
-export const DEFAULT_AUTO_ADVANCE = true;
-export const DEFAULT_PAGE_DURATION = 7;

@@ -18,12 +18,12 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
 import SimplePanel from '../simplePanel';
-import { renderWithTheme } from '../../../../testUtils';
 
 describe('Panels/Panel/SimplePanel', () => {
   it('should render <SimplePanel /> (collapsed)', () => {

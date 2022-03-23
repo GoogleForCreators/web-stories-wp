@@ -137,16 +137,16 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       await fixture.events.click(fixture.editor.library.text.preset('LABEL'));
 
       // Open style pane
-      await fixture.events.click(fixture.editor.inspector.designTab);
+      await fixture.events.click(fixture.editor.sidebar.designTab);
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.alignment.right
+        fixture.editor.sidebar.designPanel.alignment.right
       );
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.textStyle.fill
+        fixture.editor.sidebar.designPanel.textStyle.fill
       );
 
       const { italic, underline, letterSpacing, fontColor } =
-        fixture.editor.inspector.designPanel.textStyle;
+        fixture.editor.sidebar.designPanel.textStyle;
 
       // First enter edit mode, select something, style it with all styles and exit edit mode
       await fixture.events.click(letterSpacing, { clickCount: 3 });
@@ -166,7 +166,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       );
 
       // Go to text tab in insert panel
-      await fixture.events.click(fixture.editor.inspector.insertTab);
+      await fixture.events.click(fixture.editor.sidebar.insertTab);
       await fixture.editor.library.textTab.click();
 
       // Apply Title 1.
@@ -341,7 +341,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       await fixture.events.keyboard.press('Tab');
 
       // Enable the smart colors first.
-      await fixture.events.click(fixture.editor.inspector.insertTab);
+      await fixture.events.click(fixture.editor.sidebar.insertTab);
       await fixture.editor.library.textTab.click();
       fixture.editor.library.text.smartColorToggle.click();
 

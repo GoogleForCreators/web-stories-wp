@@ -27,27 +27,29 @@ import { StoryPropTypes } from '@googleforcreators/elements';
 import VideoImage from '../media/videoImage';
 import VisibleImage from '../media/visibleImage';
 
-function VideoLayerContent({
+function VideoLayerIcon({
   element: {
-    resource: { poster: defaultPoster, alt, src },
+    resource: { poster: defaultPoster, src },
     poster,
   },
   showVideoPreviewAsBackup,
 }) {
   const iconImage = poster?.length ? poster : defaultPoster;
 
+  // The image/video is purely decorative by default, because the alt text is already used
+  // for the layer description. Hence using alt="" / title="" to avoid repetition.
   if (!iconImage && showVideoPreviewAsBackup) {
-    return <VideoImage src={src} alt={alt} />;
+    return <VideoImage src={src} alt="" />;
   } else if (!iconImage) {
-    return <Icons.Video width={21} height={21} title={alt} />;
+    return <Icons.Video width={21} height={21} title="" />;
   }
 
-  return <VisibleImage src={iconImage} alt={alt} width={21} height={21} />;
+  return <VisibleImage src={iconImage} width={21} height={21} />;
 }
 
-VideoLayerContent.propTypes = {
+VideoLayerIcon.propTypes = {
   element: StoryPropTypes.element.isRequired,
   showVideoPreviewAsBackup: PropTypes.bool,
 };
 
-export default VideoLayerContent;
+export default VideoLayerIcon;

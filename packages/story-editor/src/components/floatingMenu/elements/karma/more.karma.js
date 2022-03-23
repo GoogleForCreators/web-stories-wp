@@ -52,7 +52,7 @@ describe('More button', () => {
     await fixture.events.click(fixture.editor.canvas.designMenu.more);
 
     // verify that first input in size and position panel is focused
-    expect(document.activeElement).toBe(fixture.editor.inspector.designTab);
+    expect(document.activeElement).toBe(fixture.editor.sidebar.designTab);
   });
 
   it('text element: should focus the size and position panel when the more button is clicked', async () => {
@@ -64,7 +64,7 @@ describe('More button', () => {
     await fixture.events.click(fixture.editor.canvas.designMenu.more);
 
     // verify that first input in size and position panel is focused
-    expect(document.activeElement).toBe(fixture.editor.inspector.designTab);
+    expect(document.activeElement).toBe(fixture.editor.sidebar.designTab);
   });
 
   it('shape element: should focus the size and position panel when the more button is clicked', async () => {
@@ -76,7 +76,7 @@ describe('More button', () => {
     await fixture.events.click(fixture.editor.canvas.designMenu.more);
 
     // verify that first input in size and position panel is focused
-    expect(document.activeElement).toBe(fixture.editor.inspector.designTab);
+    expect(document.activeElement).toBe(fixture.editor.sidebar.designTab);
   });
 
   it('sticker element: should focus the size and position panel when the more button is clicked', async () => {
@@ -90,6 +90,6 @@ describe('More button', () => {
     await fixture.events.click(fixture.editor.canvas.designMenu.more);
 
     // verify that first input in size and position panel is focused
-    expect(document.activeElement).toBe(fixture.editor.inspector.designTab);
+    expect(document.activeElement).toBe(fixture.editor.sidebar.designTab);
   });
 });

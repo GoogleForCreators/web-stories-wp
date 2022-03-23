@@ -24,7 +24,7 @@ import { useCallback } from '@googleforcreators/react';
  * Internal dependencies
  */
 import useRichTextFormatting from '../../../panels/design/textStyle/useRichTextFormatting';
-import updateProperties from '../../../inspector/design/updateProperties';
+import updateProperties from '../../../design/updateProperties';
 import { useStory } from '../../../../app';
 import useProperties from './useProperties';
 

@@ -17,11 +17,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-
-/**
- * Internal dependencies
- */
-import storyPropType from '../../../../output/story';
+import { OutputStory as storyPropType } from '@googleforcreators/output'; // @todo See issue #11015
 
 export const registerPropTypes = {
   currentStory: storyPropType,
