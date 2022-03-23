@@ -334,6 +334,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Custom Fonts', 'web-stories' ),
 				'description' => __( 'Enable adding custom fonts', 'web-stories' ),
 				'group'       => 'general',
+				'default'     => true,
 			],
 			/**
 			 * Author: @spacedmonkey
