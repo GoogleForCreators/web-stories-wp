@@ -27,6 +27,11 @@ import {
   takeSnapshot,
 } from '@web-stories-wp/e2e-test-utils';
 
+/**
+ * Internal dependencies
+ */
+import { addAllowedErrorMessage } from '../../../../config/bootstrap.js';
+
 const FONT_BASE_URL = `${process.env.WP_BASE_URL}/wp-content/e2e-assets`;
 const OPEN_SANS_CONDENSED_LIGHT = 'Open Sans Condensed Light';
 const OPEN_SANS_CONDENSED_LIGHT_URL = `${FONT_BASE_URL}/OpenSansCondensed-Light.ttf`;
@@ -55,6 +60,19 @@ const removeAllFonts = async () => {
 
 describe('Custom Fonts', () => {
   withExperimentalFeatures(['customFonts']);
+
+  let removeResourceErrorMessage;
+
+  beforeAll(() => {
+    // Ignore resource failing to load. This is only present because of the REST API error.
+    removeResourceErrorMessage = addAllowedErrorMessage(
+      'Failed to load resource'
+    );
+  });
+
+  afterAll(() => {
+    removeResourceErrorMessage();
+  });
 
   beforeEach(async () => {
     await visitSettings();
@@ -99,5 +117,14 @@ describe('Custom Fonts', () => {
     );
 
     await takeSnapshot(page, 'Custom Fonts Settings');
+  });
+
+  it('should show error on trying add font twice', async () => {
+    await addCustomFont(OPEN_SANS_CONDENSED_LIGHT_URL);
+    await addCustomFont(OPEN_SANS_CONDENSED_LIGHT_URL);
+
+    await expect(page).toMatch(
+      'A font with this name Open Sans Condensed Light already exists.'
+    );
   });
 });
