@@ -79,8 +79,13 @@ const FontPicker = forwardRef(function FontPicker(
     fonts.forEach((f) => {
       map.set(f.id, f);
     });
+
+    customFonts?.forEach((f) => {
+      map.set(f.id, f);
+    });
+
     return map;
-  }, [fonts]);
+  }, [fonts, customFonts]);
 
   const onObserve = useCallback(
     (observedFonts) => {
