@@ -142,22 +142,14 @@ function PlayPauseButton({
         videoNode.pause();
         videoNode.currentTime = 0;
       }
-      setIsPlaying(false);
       setShowControls(false);
     }
-    const syncTimer = setTimeout(() => {
-      if (isActive && videoNode && !videoNode.paused && hasVideoSrc) {
-        setIsPlaying(true);
-      }
-    });
-    return () => clearTimeout(syncTimer);
-  }, [getVideoNode, id, isActive, hasVideoSrc]);
+  }, [getVideoNode, isActive]);
 
   useEffect(() => {
     const videoNode = getVideoNode();
     if (videoNode && !videoNode.paused && !isTransforming) {
       videoNode.pause();
-      setIsPlaying(false);
     }
   }, [getVideoNode, isTransforming]);
 
@@ -167,13 +159,21 @@ function PlayPauseButton({
       return undefined;
     }
 
+    const onVideoPlay = () => setIsPlaying(true);
+    const onVideoPause = () => setIsPlaying(false);
     const onVideoEnd = () => {
       videoNode.currentTime = 0;
       setIsPlaying(false);
-      setShowControls(true);
     };
+
+    videoNode.addEventListener('play', onVideoPlay);
+    videoNode.addEventListener('pause', onVideoPause);
     videoNode.addEventListener('ended', onVideoEnd);
-    return () => videoNode.removeEventListener('ended', onVideoEnd);
+    return () => {
+      videoNode.removeEventListener('play', onVideoPlay);
+      videoNode.removeEventListener('pause', onVideoPause);
+      videoNode.removeEventListener('ended', onVideoEnd);
+    };
   }, [shouldResetOnEnd, getVideoNode, id]);
 
   const checkShowControls = useDebouncedCallback(() => {
@@ -195,10 +195,6 @@ function PlayPauseButton({
     setHovering(isHovering);
     setShowControls(true);
     checkShowControls();
-    const videoNode = getVideoNode();
-    if (videoNode) {
-      setIsPlaying(!videoNode.paused);
-    }
   }, 10);
 
   useEffect(() => {
@@ -216,13 +212,9 @@ function PlayPauseButton({
 
     if (isPlaying) {
       videoNode.pause();
-      setIsPlaying(false);
       setShowControls(true);
     } else {
-      videoNode
-        .play()
-        .then(() => setIsPlaying(true))
-        .catch(() => {});
+      videoNode.play();
     }
   };
   useKeyDownEffect(
