@@ -223,7 +223,7 @@ function PlayPauseButton({
       videoNode.pause();
       setShowControls(true);
     } else {
-      videoNode.play();
+      videoNode.play().catch(() => {});
     }
   };
   useKeyDownEffect(
