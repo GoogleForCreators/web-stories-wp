@@ -60,8 +60,9 @@ function BorderWidthAndColor() {
     mask,
     type,
   } = useProperties(['border', 'mask', 'type']);
+
   const updateSelectedElements = useStory(
-    (state) => state.actions.updateSelectedElements
+    ({ actions }) => actions.updateSelectedElements
   );
   // We only allow editing the current border width, if all borders are identical
   const hasUniformBorder =
