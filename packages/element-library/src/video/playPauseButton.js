@@ -159,20 +159,29 @@ function PlayPauseButton({
       return undefined;
     }
 
-    const onVideoPlay = () => setIsPlaying(true);
-    const onVideoPause = () => setIsPlaying(false);
     const onVideoEnd = () => {
       videoNode.currentTime = 0;
       setIsPlaying(false);
     };
 
+    videoNode.addEventListener('ended', onVideoEnd);
+    return () => videoNode.removeEventListener('ended', onVideoEnd);
+  }, [shouldResetOnEnd, getVideoNode, id]);
+
+  useEffect(() => {
+    const videoNode = getVideoNode();
+    if (!videoNode) {
+      return undefined;
+    }
+
+    const onVideoPlay = () => setIsPlaying(true);
+    const onVideoPause = () => setIsPlaying(false);
+
     videoNode.addEventListener('play', onVideoPlay);
     videoNode.addEventListener('pause', onVideoPause);
-    videoNode.addEventListener('ended', onVideoEnd);
     return () => {
       videoNode.removeEventListener('play', onVideoPlay);
       videoNode.removeEventListener('pause', onVideoPause);
-      videoNode.removeEventListener('ended', onVideoEnd);
     };
   }, [shouldResetOnEnd, getVideoNode, id]);
 
