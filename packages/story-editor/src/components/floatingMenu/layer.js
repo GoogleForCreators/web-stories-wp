@@ -27,7 +27,7 @@ import {
 /**
  * Internal dependencies
  */
-import { useCanvas, useLayout, useStory } from '../../app';
+import { useCanvas, useLayout, useStory, useTransform } from '../../app';
 import { FLOATING_MENU_DISTANCE } from '../../constants';
 import { SELECTED_ELEMENT_TYPES } from './constants';
 import FloatingMenu from './menu';
@@ -58,6 +58,10 @@ function FloatingMenuLayer() {
           : SELECTED_ELEMENT_TYPES.NONE,
       selectionIdentifier: selectedElements.map(({ id }) => id).join(''),
     })
+  );
+
+  const isAnythingTransforming = useTransform(
+    ({ state }) => state.isAnythingTransforming
   );
 
   const [moveable, setMoveable] = useState(null);
@@ -139,6 +143,7 @@ function FloatingMenuLayer() {
       handleDismiss={handleDismiss}
       selectedElementType={selectedElementType}
       selectionIdentifier={selectionIdentifier}
+      visuallyHidden={isAnythingTransforming}
     />
   );
 }
