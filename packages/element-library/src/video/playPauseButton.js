@@ -183,7 +183,7 @@ function PlayPauseButton({
       videoNode.removeEventListener('play', onVideoPlay);
       videoNode.removeEventListener('pause', onVideoPause);
     };
-  }, [shouldResetOnEnd, getVideoNode, id]);
+  }, [getVideoNode, id]);
 
   const checkShowControls = useDebouncedCallback(() => {
     if (!isPlayAbove) {
