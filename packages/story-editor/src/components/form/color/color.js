@@ -52,9 +52,12 @@ const containerCss = css`
 const Container = styled.section`
   ${containerCss}
   gap: ${({ isInDesignMenu }) => (isInDesignMenu ? 6 : 8)}px;
-  width: ${({ width, ignoreWidth }) =>
-    (ignoreWidth && 'inherit') || (width ? `${width}px` : `100%`)};
+  width: ${({ width }) => (width ? `${width}px` : 'inherit')};
 `;
+Container.propTypes = {
+  isInDesignMenu: PropTypes.bool,
+  width: PropTypes.string,
+};
 
 const ColorInputsWrapper = styled.div`
   ${containerCss}
@@ -133,13 +136,12 @@ const Color = forwardRef(function Color(
   // Sometimes there's more than 1 color to an element.
   // When there's multiple colors the input displays "Mixed" (in english) and takes up a different amount of space.
   // By checking here to ignore that value based on mixed colors we prevent visual spill over of content.
-  const ignoreSetWidth = value === MULTIPLE_VALUE;
+  const ignoreSetWidth = width && value === MULTIPLE_VALUE;
   return (
     <Container
       aria-label={containerLabel}
       isInDesignMenu={isInDesignMenu}
-      width={width}
-      ignoreWidth={ignoreSetWidth}
+      width={!ignoreSetWidth && width}
     >
       {hasEyedropper && (
         <Tooltip
