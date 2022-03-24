@@ -124,10 +124,6 @@ const Color = forwardRef(function Color(
   });
   const tooltip = __('Pick a color from canvas', 'web-stories');
 
-  const spacing = hasEyedropper
-    ? SPACING.DEFAULT_SIDEBAR
-    : SPACING.SIDEBAR_WITHOUT_EYEDROPPER;
-
   const tooltipPlacement =
     isInDesignMenu || hasEyedropper
       ? TOOLTIP_PLACEMENT.BOTTOM
@@ -170,7 +166,9 @@ const Color = forwardRef(function Color(
             pickerPlacement={pickerPlacement}
             hasInputs={hasInputs}
             isInDesignMenu={isInDesignMenu}
-            spacing={isInDesignMenu ? SPACING.FLOATING_MENU : spacing}
+            spacing={
+              isInDesignMenu ? SPACING.FLOATING_MENU : SPACING.DEFAULT_SIDEBAR
+            }
             tooltipPlacement={tooltipPlacement}
             pickerProps={{
               allowsGradient,

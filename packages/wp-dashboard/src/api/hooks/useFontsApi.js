@@ -67,14 +67,7 @@ export default function useFontsApi() {
   );
 
   const addCustomFont = useCallback(
-    async (font) => {
-      try {
-        const response = await addCustomFontCallback(fontsApiPath, font);
-        return response;
-      } catch (e) {
-        return null;
-      }
-    },
+    (font) => addCustomFontCallback(fontsApiPath, font),
     [fontsApiPath]
   );
 

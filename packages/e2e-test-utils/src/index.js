@@ -43,7 +43,12 @@ export { default as getFileName } from './getFileName';
 export { default as trashAllPosts } from './trashAllPosts';
 export { default as trashAllTerms } from './trashAllTerms';
 export { default as visitAdminPage } from './visitAdminPage';
-export { addCustomFont, removeCustomFont } from './customFonts';
+export {
+  addCustomFont,
+  removeCustomFont,
+  getFontList,
+  getSelectedFont,
+} from './customFonts';
 export { setCurrentUser, getCurrentUser } from './user';
 export { default as activatePlugin } from './activatePlugin';
 export { default as deactivatePlugin } from './deactivatePlugin';

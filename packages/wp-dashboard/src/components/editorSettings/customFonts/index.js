@@ -17,7 +17,12 @@
 /**
  * External dependencies
  */
-import { useState, useCallback } from '@googleforcreators/react';
+import {
+  useState,
+  useCallback,
+  useRef,
+  useEffect,
+} from '@googleforcreators/react';
 import { __, sprintf, translateToExclusiveList } from '@googleforcreators/i18n';
 import { isValidUrl, withProtocol } from '@googleforcreators/url';
 import {
@@ -29,9 +34,10 @@ import {
   Text,
   THEME_CONSTANTS,
   Tooltip,
+  themeHelpers,
 } from '@googleforcreators/design-system';
 import styled from 'styled-components';
-import { trackEvent } from '@googleforcreators/tracking';
+import { trackEvent, trackError } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
@@ -94,6 +100,9 @@ const ListHeading = styled(Text)`
 const FontsList = styled.div`
   padding: 12px 0;
   border: ${({ theme }) => `1px solid ${theme.colors.divider.primary}`};
+  :focus-within {
+    ${({ theme }) => themeHelpers.focusCSS(theme.colors.border.focus)}
+  }
 `;
 
 // Hidden by default.
@@ -101,6 +110,9 @@ const DeleteButton = styled(Button)`
   visibility: hidden;
   opacity: 0;
   transition: visibility 0s, opacity ease-in-out 300ms;
+  &:focus {
+    ${({ theme }) => themeHelpers.focusCSS(theme.colors.border.focus)}
+  }
 `;
 
 const FontRow = styled.div`
@@ -110,6 +122,7 @@ const FontRow = styled.div`
   width: 100%;
   justify-content: space-between;
   transition: background-color ease-in-out 300ms;
+  &[aria-selected='true'],
   &:hover,
   &:focus {
     background-color: ${({ theme }) => theme.colors.bg.secondary};
@@ -151,7 +164,6 @@ const Divider = styled.div`
 `;
 
 const ALLOWED_FONT_TYPES = ['.otf', '.ttf', '.woff'];
-
 function CustomFontsSettings({
   customFonts = [],
   addCustomFont,
@@ -163,6 +175,10 @@ function CustomFontsSettings({
   const [showDialog, setShowDialog] = useState(false);
   const [toDelete, setToDelete] = useState(null);
   const canSave = !inputError && fontUrl;
+  const currentFontsContainerRef = useRef(null);
+  const currentFontsRowsRef = useRef([]);
+  const [currentFontsFocusIndex, setCurrentFontsFocusIndex] = useState(0);
+  const [currentFontsActiveId, setCurrentFontsActiveId] = useState();
 
   const handleUpdateFontUrl = useCallback((event) => {
     const { value } = event.target;
@@ -187,47 +203,60 @@ function CustomFontsSettings({
   const handleOnSave = useCallback(async () => {
     if (canSave) {
       const urlWithProtocol = withProtocol(fontUrl);
-      let canFetch = false;
       try {
         await fetch(urlWithProtocol, {
           method: 'HEAD',
         });
-        canFetch = true;
       } catch (err) {
+        trackError('add_custom_font', err?.message);
         setInputError(
           __(
             'Please ensure correct CORS settings for allowing font usage on this site.',
             'web-stories'
           )
         );
+        return;
       }
-      if (canFetch) {
-        try {
-          trackEvent('add_custom_font', {
-            url: urlWithProtocol,
-          });
-          const fontData = await getFontDataFromUrl(urlWithProtocol);
-          if (!fontData.family) {
-            setInputError(
-              __('Something went wrong, please try again.', 'web-stories')
-            );
-          } else {
-            await addCustomFont({ ...fontData, url: urlWithProtocol });
-            await fetchCustomFonts();
-            setFontUrl('');
-          }
-        } catch (err) {
+      let fontData;
+      try {
+        trackEvent('add_custom_font', {
+          url: urlWithProtocol,
+        });
+        fontData = await getFontDataFromUrl(urlWithProtocol);
+        if (!fontData.family) {
           setInputError(
-            sprintf(
-              /* translators: %s: list of allowed font types. */
-              __(
-                'Getting font data failed, please ensure the URL points directly to a %s file.',
-                'web-stories'
-              ),
-              translateToExclusiveList(ALLOWED_FONT_TYPES)
-            )
+            __('Something went wrong, please try again.', 'web-stories')
           );
+          return;
         }
+      } catch (err) {
+        trackError('add_custom_font', err?.message);
+        setInputError(
+          sprintf(
+            /* translators: %s: list of allowed font types. */
+            __(
+              'Getting font data failed, please ensure the URL points directly to a %s file.',
+              'web-stories'
+            ),
+            translateToExclusiveList(ALLOWED_FONT_TYPES)
+          )
+        );
+        return;
+      }
+
+      try {
+        await addCustomFont({ ...fontData, url: urlWithProtocol });
+        await fetchCustomFonts();
+        setFontUrl('');
+      } catch (err) {
+        trackError('add_custom_font', err?.message);
+        setInputError(
+          sprintf(
+            /* translators: %s: font name. */
+            __('A font with the name %s already exists.', 'web-stories'),
+            fontData.family
+          )
+        );
       }
     }
   }, [addCustomFont, fetchCustomFonts, canSave, fontUrl]);
@@ -240,6 +269,37 @@ function CustomFontsSettings({
       }
     },
     [handleOnSave]
+  );
+
+  useEffect(() => {
+    const el = currentFontsRowsRef.current[`row-${currentFontsFocusIndex}`];
+    if (el) {
+      el.focus();
+      setCurrentFontsActiveId(el.id);
+    }
+  }, [currentFontsFocusIndex]);
+
+  const isListBoxActiveRow = (index) => currentFontsFocusIndex === index;
+
+  // Handles managing the which `font row` index has focus
+  // Arrows move the index up or down by 1
+  // unless we're at the start or the end
+  // after we update the index using setCurrentFontsFocusIndex
+  // the element will get focus via the useEffect above el.focus();
+  const handleListBoxNav = useCallback(
+    (evt) => {
+      const { key } = evt;
+      if (key === 'ArrowUp') {
+        evt.preventDefault();
+        setCurrentFontsFocusIndex((index) => Math.max(0, index - 1));
+      } else if (key === 'ArrowDown') {
+        evt.preventDefault();
+        setCurrentFontsFocusIndex((index) =>
+          Math.min(customFonts.length - 1, index + 1)
+        );
+      }
+    },
+    [customFonts]
   );
 
   return (
@@ -280,9 +340,28 @@ function CustomFontsSettings({
         {customFonts?.length > 0 && (
           <FontsWrapper>
             <ListHeading forwardedAs="span">{TEXT.FONTS_HEADING}</ListHeading>
-            <FontsList>
-              {customFonts.map(({ id, family, url }) => (
-                <FontRow key={family}>
+            <FontsList
+              ref={currentFontsContainerRef}
+              role="listbox"
+              tabIndex={0}
+              onKeyDown={handleListBoxNav}
+              aria-activedescendant={
+                // sets the active descendant for the listbox to font-${id}
+                // if a font "row" is selected
+                // defaults to the 1st font in the array which 'will' get focus by default
+                currentFontsActiveId ? currentFontsActiveId : customFonts[0]?.id
+              }
+            >
+              {customFonts.map(({ id, family, url }, index) => (
+                <FontRow
+                  id={`font-${id}`}
+                  ref={
+                    (el) => (currentFontsRowsRef.current[`row-${index}`] = el) // track the active font row
+                  }
+                  key={family}
+                  role="option"
+                  aria-selected={isListBoxActiveRow(index)}
+                >
                   <FontData>
                     <StyledText>{family}</StyledText>
                     <Divider />
@@ -294,7 +373,11 @@ function CustomFontsSettings({
                     title={__('Delete font', 'web-stories')}
                   >
                     <DeleteButton
-                      aria-label={__('Remove font', 'web-stories')}
+                      aria-label={sprintf(
+                        /*translators: %s: font family. */
+                        __('Delete %s', 'web-stories'),
+                        family
+                      )}
                       type={BUTTON_TYPES.TERTIARY}
                       size={BUTTON_SIZES.SMALL}
                       variant={BUTTON_VARIANTS.SQUARE}
