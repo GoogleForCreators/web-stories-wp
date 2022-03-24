@@ -92,7 +92,7 @@ function AudioPlayer({ title, src, mimeType, tracks = [], audioId, loop }) {
     if (isPlaying) {
       player.pause();
     } else {
-      player.play();
+      player.play().catch(() => {});
     }
   }, [isPlaying]);
 
