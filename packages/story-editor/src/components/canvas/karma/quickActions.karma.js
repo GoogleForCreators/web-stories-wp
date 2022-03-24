@@ -60,52 +60,27 @@ describe('Quick Actions integration', () => {
     it('quick menu should not be visible if no quick actions are present', async () => {
       // when two different elements types are selected, there may not be any quick actions to show
       // in that case, we shouldn't be rendering the context menu at all
-      const insertElement = await fixture.renderHook(() => useInsertElement());
-      const shapeElement = await fixture.act(() =>
-        insertElement('shape', {
-          backgroundColor: {
-            color: {
-              r: 203,
-              g: 103,
-              b: 103,
-            },
-          },
-          type: 'shape',
-          x: 48,
-          y: 0,
-          width: 148,
-          height: 137,
-          scale: 100,
-          focalX: 50,
-          focalY: 50,
-          mask: {
-            type: 'heart',
-          },
-          id: 'cb89750a-3ffd-4876-8ed9-d715c553e05b',
-          link: null,
-        })
+      // add shape to canvas
+      await fixture.editor.library.shapesTab.click();
+      await fixture.events.click(
+        fixture.editor.library.shapes.shape('Triangle')
       );
 
-      await fixture.act(() =>
-        insertElement('text', {
-          font: TEXT_ELEMENT_DEFAULT_FONT,
-          content: 'Hello world!',
-          x: 10,
-          y: 20,
-          width: 400,
-        })
+      // add text to canvas
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
       );
-
       await fixture.editor.canvas.framesLayer.waitFocusedWithin();
 
       expect(
         fixture.screen.queryByTestId('Element quick actions')
       ).not.toBeNull();
 
+      // select both text and shape elements
       await fixture.events.keyboard.down('Shift');
-      await clickOnTarget(
-        fixture.editor.canvas.framesLayer.frame(shapeElement.id).node
-      );
+      const triangle = fixture.editor.canvas.framesLayer.frames[1].node;
+      await clickOnTarget(triangle);
       await fixture.events.keyboard.up('Shift');
 
       expect(fixture.screen.queryByTestId('Element quick actions')).toBeNull();

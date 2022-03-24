@@ -85,7 +85,7 @@ function PageSideMenu() {
             isAlwaysVisible
             isIconMenu
             disableControlledTabNavigation
-            data-testid={'Element quick actions'}
+            data-testid="Element quick actions"
             aria-label={__(
               'Group of available options for selected element',
               'web-stories'
