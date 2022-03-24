@@ -167,7 +167,6 @@ const ALLOWED_FONT_TYPES = ['.otf', '.ttf', '.woff'];
 function CustomFontsSettings({
   customFonts = [],
   addCustomFont,
-  fetchCustomFonts,
   deleteCustomFont,
 }) {
   const [fontUrl, setFontUrl] = useState('');
@@ -195,10 +194,10 @@ function CustomFontsSettings({
 
   const handleDelete = useCallback(async () => {
     await deleteCustomFont(toDelete);
-    await fetchCustomFonts();
     setToDelete(null);
     setShowDialog(false);
-  }, [toDelete, deleteCustomFont, fetchCustomFonts]);
+    setInputError('');
+  }, [toDelete, deleteCustomFont]);
 
   const handleOnSave = useCallback(async () => {
     if (canSave) {
@@ -246,7 +245,6 @@ function CustomFontsSettings({
 
       try {
         await addCustomFont({ ...fontData, url: urlWithProtocol });
-        await fetchCustomFonts();
         setFontUrl('');
       } catch (err) {
         trackError('add_custom_font', err?.message);
@@ -259,7 +257,7 @@ function CustomFontsSettings({
         );
       }
     }
-  }, [addCustomFont, fetchCustomFonts, canSave, fontUrl]);
+  }, [addCustomFont, canSave, fontUrl]);
 
   const handleOnKeyDown = useCallback(
     (e) => {
@@ -413,7 +411,6 @@ function CustomFontsSettings({
 CustomFontsSettings.propTypes = {
   customFonts: PropTypes.array,
   addCustomFont: PropTypes.func.isRequired,
-  fetchCustomFonts: PropTypes.func.isRequired,
   deleteCustomFont: PropTypes.func.isRequired,
 };
 
