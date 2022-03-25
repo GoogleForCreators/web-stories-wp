@@ -36,9 +36,8 @@ describe('<LeftRail />', () => {
         value={{
           actions: {
             toggleSideBar: toggleSideBarFn,
-            updateNumNewTemplates: () => {},
           },
-          state: { sideBarVisible: false, numNewTemplates: 0 },
+          state: { sideBarVisible: false },
         }}
       >
         {children}
