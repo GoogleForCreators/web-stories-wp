@@ -48,6 +48,7 @@ export {
   removeCustomFont,
   getFontList,
   getSelectedFont,
+  removeAllFonts,
 } from './customFonts';
 export { setCurrentUser, getCurrentUser } from './user';
 export { default as activatePlugin } from './activatePlugin';
