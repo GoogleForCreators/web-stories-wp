@@ -246,35 +246,71 @@ class Link_Controller extends REST_Controller implements HasRequirements {
 		}
 
 		if ( ! $title ) {
+			/**
+			 * List of found elements.
+			 *
+			 * @var DOMNodeList<DOMElement> $og_title_query
+			 */
 			$og_title_query = $xpath->query( '//meta[@property="og:title"]' );
 			$title          = $this->get_dom_attribute_content( $og_title_query, 'content' );
 		}
 
 		if ( ! $title ) {
+			/**
+			 * List of found elements.
+			 *
+			 * @var DOMNodeList<DOMElement> $og_site_name_query
+			 */
 			$og_site_name_query = $xpath->query( '//meta[@property="og:site_name"]' );
 			$title              = $this->get_dom_attribute_content( $og_site_name_query, 'content' );
 		}
 
 		// Site icon.
 
+		/**
+		 * List of found elements.
+		 *
+		 * @var DOMNodeList<DOMElement> $og_image_query
+		 */
 		$og_image_query = $xpath->query( '//meta[@property="og:image"]' );
 		$image          = $this->get_dom_attribute_content( $og_image_query, 'content' );
 
 		if ( ! $image ) {
+			/**
+			 * List of found elements.
+			 *
+			 * @var DOMNodeList<DOMElement> $icon_query
+			 */
 			$icon_query = $xpath->query( '//link[contains(@rel, "icon")]' );
 			$image      = $this->get_dom_attribute_content( $icon_query, 'content' );
 		}
 
 		if ( ! $image ) {
+			/**
+			 * List of found elements.
+			 *
+			 * @var DOMNodeList<DOMElement> $touch_icon_query
+			 */
 			$touch_icon_query = $xpath->query( '//link[contains(@rel, "apple-touch-icon")]' );
 			$image            = $this->get_dom_attribute_content( $touch_icon_query, 'href' );
 		}
 
 		// Link description.
+
+		/**
+		 * List of found elements.
+		 *
+		 * @var DOMNodeList<DOMElement> $description_query
+		 */
 		$description_query = $xpath->query( '//meta[@name="description"]' );
 		$description       = $this->get_dom_attribute_content( $description_query, 'content' );
 
 		if ( ! $description ) {
+			/**
+			 * List of found elements.
+			 *
+			 * @var DOMNodeList<DOMElement> $og_description_query
+			 */
 			$og_description_query = $xpath->query( '//meta[@property="og:description"]' );
 			$description          = $this->get_dom_attribute_content( $og_description_query, 'content' );
 		}
