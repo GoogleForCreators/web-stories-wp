@@ -25,15 +25,12 @@ export function getXOffset(
   dockRect,
   isRTL
 ) {
-  // TODO: https://github.com/GoogleForCreators/web-stories-wp/issues/10928
-  // doctRect?.left can have a valid value of zero, however in this case, the falsey
-  // value gets ignored and we end up using anchor.left. Additionally, if using `dock`
-  // anchor.width shouldn't need be added
-  const leftAligned = (dockRect?.left || anchorRect.left) - spacing;
-  const rightAligned =
-    (dockRect?.left || anchorRect.left) + anchorRect.width + spacing;
-  const centerAligned =
-    (dockRect?.left || anchorRect.left) + anchorRect.width / 2;
+  // doctRect.left can have a valid value of zero, if dockRect exists, it takes precedence.
+  const leftAligned = (dockRect ? dockRect.left : anchorRect.left) - spacing;
+  const rightAligned = (dockRect ? dockRect.right : anchorRect.right) + spacing;
+  const centerAligned = dockRect
+    ? dockRect.left + dockRect.width / 2
+    : anchorRect.left + anchorRect.width / 2;
 
   switch (placement) {
     case PLACEMENT.BOTTOM_START:

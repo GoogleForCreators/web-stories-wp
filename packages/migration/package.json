@@ -2,7 +2,7 @@
   "name": "@googleforcreators/migration",
   "description": "Utility package for migrating stories to the latest data format.",
   "private": false,
-  "version": "0.1.202203150806",
+  "version": "0.1.202203241635",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
