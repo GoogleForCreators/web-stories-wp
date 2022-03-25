@@ -35,6 +35,7 @@ import {
   THEME_CONSTANTS,
   Tooltip,
   themeHelpers,
+  useSnackbar,
 } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 import { trackEvent, trackError } from '@googleforcreators/tracking';
@@ -52,6 +53,7 @@ import {
   SettingSubheading,
   TextInputHelperText,
 } from '../components';
+import { ERRORS } from '../../../constants';
 import ConfirmationDialog from './confirmationDialog';
 import getFontDataFromUrl from './utils/getFontDataFromUrl';
 
@@ -179,6 +181,7 @@ function CustomFontsSettings({
   const currentFontsRowsRef = useRef([]);
   const [currentFontsFocusIndex, setCurrentFontsFocusIndex] = useState(0);
   const [currentFontsActiveId, setCurrentFontsActiveId] = useState();
+  const { showSnackbar } = useSnackbar();
 
   const handleUpdateFontUrl = useCallback((event) => {
     const { value } = event.target;
@@ -194,10 +197,20 @@ function CustomFontsSettings({
   }, []);
 
   const handleDelete = useCallback(async () => {
-    await deleteCustomFont(toDelete);
-    await fetchCustomFonts();
-    setToDelete(null);
-    setShowDialog(false);
+    try {
+      await deleteCustomFont(toDelete);
+      await fetchCustomFonts();
+    } catch (err) {
+      trackError('remove_custom_font', err?.message);
+      showSnackbar({
+        'aria-label': ERRORS.REMOVE_FONT.MESSAGE,
+        message: ERRORS.REMOVE_FONT.MESSAGE,
+        dismissible: true,
+      });
+    } finally {
+      setToDelete(null);
+      setShowDialog(false);
+    }
   }, [toDelete, deleteCustomFont, fetchCustomFonts]);
 
   const handleOnSave = useCallback(async () => {
