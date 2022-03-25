@@ -60,5 +60,30 @@ describe('Raw text set files', () => {
         }
       }
     });
+
+    // @see https://github.com/GoogleForCreators/web-stories-wp/issues/10727
+    it('should not contain extraneous properties', () => {
+      const textSetData = JSON.parse(
+        readFileSync(
+          resolve(process.cwd(), `packages/text-sets/src/raw/${textSet}`),
+          'utf8'
+        )
+      );
+
+      expect(textSetData.current).toBeNull();
+      expect(textSetData.selection).toStrictEqual([]);
+      expect(textSetData.story.globalStoryStyles).toBeUndefined();
+    });
+
+    it('should not contain invisible characters', () => {
+      const textSetData = JSON.parse(
+        readFileSync(
+          resolve(process.cwd(), `packages/text-sets/src/raw/${textSet}`),
+          'utf8'
+        )
+      );
+
+      expect(textSetData).not.toContain('\u2028');
+    });
   });
 });
