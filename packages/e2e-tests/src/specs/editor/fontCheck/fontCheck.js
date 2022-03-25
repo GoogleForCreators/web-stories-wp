@@ -26,6 +26,7 @@ import {
   addCustomFont,
   removeCustomFont,
   visitSettings,
+  removeAllFonts,
 } from '@web-stories-wp/e2e-test-utils';
 
 const OPEN_SANS_CONDENSED_LIGHT = 'Open Sans Condensed Light';
@@ -87,9 +88,12 @@ async function storyWithFontCheckDialog(title) {
 }
 
 describe('Font Check', () => {
-  // TODO(#10916): Combine these calls.
-  withExperimentalFeatures(['customFonts']);
-  withExperimentalFeatures(['notifyDeletedFonts']);
+  withExperimentalFeatures(['customFonts', 'notifyDeletedFonts']);
+
+  beforeAll(async () => {
+    await visitSettings();
+    await removeAllFonts();
+  });
 
   it('should show dialog & replace font with default font', async () => {
     const title = 'Test replace missing font with (default) Roboto';

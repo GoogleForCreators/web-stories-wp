@@ -26,7 +26,10 @@ import getVideoLengthDisplay from './getVideoLengthDisplay';
  * @return {Object<{length: number, lengthFormatted: string}>} Video length information.
  */
 function getVideoLength(video) {
-  const duration = !isNaN(video.duration) ? video.duration : 0;
+  // If the element's media doesn't have a known duration—such as for live media streams—the value of duration is +Infinity.
+  // See https://developer.mozilla.org/en-US/docs/Web/API/HTMLMediaElement/duration
+  const isNumber = !isNaN(video.duration) && Infinity !== video.duration;
+  const duration = isNumber ? video.duration : 0;
   const length = Math.round(duration);
   const lengthFormatted = getVideoLengthDisplay(length);
   return {

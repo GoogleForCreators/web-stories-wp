@@ -21,7 +21,7 @@ import {
   withExperimentalFeatures,
   visitSettings,
   addCustomFont,
-  removeCustomFont,
+  removeAllFonts,
   getFontList,
   getSelectedFont,
   takeSnapshot,
@@ -40,23 +40,6 @@ const OPEN_SANS_CONDENSED_BOLD_URL = `${FONT_BASE_URL}/OpenSansCondensed-Bold.tt
 const OPEN_SANS_CONDENSED_LIGHT_ITALIC_URL = `${FONT_BASE_URL}/OpenSansCondensed-LightItalic.ttf`;
 
 const findByUrl = (arr, val) => arr.find((o) => o.url === val);
-
-const removeAllFonts = async () => {
-  await visitSettings();
-  const fonts = await getFontList();
-
-  if (fonts.length === 0) {
-    return;
-  }
-
-  for (let i = 0; i < fonts.length; i++) {
-    // eslint-disable-next-line no-await-in-loop -- Can't be done in parallel because of the confirmation dialog.
-    await removeCustomFont(fonts[i].name);
-  }
-
-  const fontsAfter = await getFontList();
-  await expect(fontsAfter).toHaveLength(0);
-};
 
 describe('Custom Fonts', () => {
   withExperimentalFeatures(['customFonts']);

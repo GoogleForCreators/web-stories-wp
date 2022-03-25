@@ -355,7 +355,8 @@ function PublishPanel({ nameOverride }) {
                 options={publisherLogosWithUploadOption}
                 primaryOptions={publisherLogosWithUploadOption}
                 onChange={onPublisherLogoChange}
-                aria-label={__('Publisher Logo', 'web-stories')}
+                title={__('Available publisher logos', 'web-stories')}
+                dropdownButtonLabel={__('Publisher Logo', 'web-stories')}
                 renderer={publisherLogoOptionRenderer}
                 activeItemRenderer={activeItemRenderer}
                 selectedId={publisherLogo.id}
