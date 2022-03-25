@@ -24,7 +24,6 @@ import {
   useRef,
 } from '@googleforcreators/react';
 import { trackClick, trackEvent } from '@googleforcreators/tracking';
-import { getTemplateMetaData } from '@googleforcreators/templates';
 import { __, sprintf } from '@googleforcreators/i18n';
 import {
   Button,
@@ -141,6 +140,9 @@ function LeftRail() {
     let mounted = true;
 
     async function refreshNewTemplateCount() {
+      const { getTemplateMetaData } = await import(
+        /* webpackChunkName: "chunk-web-stories-templates" */ '@googleforcreators/templates'
+      );
       const metaData = await getTemplateMetaData();
       if (metaData) {
         const newTemplates = getNewTemplatesMetaData(
