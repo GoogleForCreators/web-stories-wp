@@ -24,6 +24,7 @@ import {
   useMemo,
   useRef,
 } from '@googleforcreators/react';
+import { seekVideo } from '@googleforcreators/media';
 
 /**
  * Internal dependencies
@@ -53,7 +54,7 @@ function useVideoNode(videoData) {
     if (isDraggingHandles) {
       videoNode.pause();
     } else {
-      videoNode.currentTime = startOffset / 1000;
+      seekVideo(videoNode, startOffset / 1000);
       videoNode.play();
     }
   }, [videoNode, isDraggingHandles, startOffset]);
@@ -74,7 +75,7 @@ function useVideoNode(videoData) {
     }
 
     function restart(at) {
-      videoNode.currentTime = at / 1000;
+      seekVideo(videoNode, at / 1000);
       videoNode.play();
     }
 
@@ -111,7 +112,7 @@ function useVideoNode(videoData) {
       offset = Math.min(endOffset - MEDIA_VIDEO_MINIMUM_DURATION, offset);
       offset = Math.max(0, offset);
       rawSetStartOffset(offset);
-      videoNode.currentTime = offset / 1000;
+      seekVideo(videoNode, offset / 1000);
     },
     [videoNode, endOffset]
   );
@@ -122,7 +123,7 @@ function useVideoNode(videoData) {
       offset = Math.max(startOffset + MEDIA_VIDEO_MINIMUM_DURATION, offset);
       offset = Math.min(maxOffset, offset);
       rawSetEndOffset(offset);
-      videoNode.currentTime = offset / 1000;
+      seekVideo(videoNode, offset / 1000);
     },
     [videoNode, startOffset, maxOffset]
   );

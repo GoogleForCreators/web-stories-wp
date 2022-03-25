@@ -35,6 +35,7 @@ import {
   Popup,
 } from '@googleforcreators/design-system';
 import { StoryPropTypes } from '@googleforcreators/elements';
+import { seekVideo } from '@googleforcreators/media';
 
 const PLAY_BUTTON_SIZE = 82;
 const ICON_SVG_SIZE = 72;
@@ -140,7 +141,7 @@ function PlayPauseButton({
     if (!isActive) {
       if (videoNode) {
         videoNode.pause();
-        videoNode.currentTime = 0;
+        seekVideo(videoNode, 0);
       }
       setIsPlaying(false);
       setShowControls(false);
@@ -168,7 +169,7 @@ function PlayPauseButton({
     }
 
     const onVideoEnd = () => {
-      videoNode.currentTime = 0;
+      seekVideo(videoNode, 0);
       setIsPlaying(false);
       setShowControls(true);
     };
