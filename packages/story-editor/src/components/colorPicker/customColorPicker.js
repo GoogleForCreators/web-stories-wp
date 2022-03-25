@@ -100,7 +100,7 @@ function CustomColorPicker({
         handleColorChange({ color: e.rgb });
       }
     },
-    [updateCurrentColor]
+    [updateCurrentColor, handleColorChange]
   );
 
   return (
