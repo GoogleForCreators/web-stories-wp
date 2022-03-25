@@ -209,6 +209,7 @@ function BackgroundAudioPanelContent({
               mimeType={resource?.mimeType}
               tracks={tracks}
               audioId={audioId}
+              loop={loop}
             />
             <Tooltip
               hasTail

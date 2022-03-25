@@ -10014,62 +10014,7 @@
       "id": "2c847372-cd79-456e-a6e0-fb837487fa0d"
     }
   ],
-  "current": "e21ff914-108e-4f32-9dbd-b3c8a276aa13",
-  "selection": ["48b4df6b-1a5a-44d4-a10f-0e5dc8dc1e8d"],
-  "story": {
-    "globalStoryStyles": {
-      "textStyles": [
-        {
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "IBM Plex Serif",
-            "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [100, 200, 300, 400, 500, 600, 700],
-            "styles": ["italic", "regular"],
-            "variants": [
-              [0, 100],
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [1, 100],
-              [1, 200],
-              [1, 300],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700]
-            ]
-          },
-          "fontSize": 37,
-          "lineHeight": 1.2,
-          "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
-          "textAlign": "initial",
-          "color": { "color": { "r": 0, "g": 0, "b": 0 } },
-          "fontWeight": 600,
-          "isItalic": false,
-          "isUnderline": false,
-          "letterSpacing": 0
-        }
-      ],
-      "colors": [
-        { "color": { "r": 33, "g": 33, "b": 33 } },
-        { "color": { "r": 0, "g": 92, "b": 255 } },
-        { "color": { "r": 61, "g": 46, "b": 255 } },
-        { "color": { "r": 200, "g": 122, "b": 255 } },
-        { "color": { "r": 255, "g": 163, "b": 214 } },
-        { "color": { "r": 255, "g": 187, "b": 196 } },
-        { "color": { "r": 255, "g": 187, "b": 196, "a": 0.6 } },
-        { "color": { "r": 246, "g": 147, "b": 147, "a": 0.6 } },
-        { "color": { "r": 240, "g": 176, "b": 119, "a": 0.6 } },
-        { "color": { "r": 220, "g": 211, "b": 67, "a": 0.6 } },
-        { "color": { "r": 153, "g": 199, "b": 39, "a": 0.6 } },
-        { "color": { "r": 119, "g": 151, "b": 18, "a": 0.6 } }
-      ]
-    }
-  }
+  "current": null,
+  "selection": [],
+  "story": {}
 }

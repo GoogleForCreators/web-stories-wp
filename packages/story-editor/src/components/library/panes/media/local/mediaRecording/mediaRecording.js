@@ -33,16 +33,21 @@ import { useState } from '@googleforcreators/react';
  */
 import { focusStyle } from '../../../../../panels/shared';
 import Tooltip from '../../../../../tooltip';
-import HotlinkModal from './hotlinkModal';
+import Modal from './modal';
 
 const Button = styled(DefaultButton)`
   ${focusStyle};
   margin: 0 10px 0 0;
 `;
 
-function Hotlink() {
+const Camera = styled(Icons.Camera)`
+  width: 24px !important;
+  height: 24px !important;
+`;
+
+function MediaRecording() {
   const [isOpen, setIsOpen] = useState(false);
-  const label = __('Insert by link', 'web-stories');
+  const label = __('Record audio/video', 'web-stories');
   return (
     <>
       <Tooltip title={label}>
@@ -53,12 +58,12 @@ function Hotlink() {
           onClick={() => setIsOpen(true)}
           aria-label={label}
         >
-          <Icons.Link />
+          <Camera />
         </Button>
       </Tooltip>
-      <HotlinkModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </>
   );
 }
 
-export default Hotlink;
+export default MediaRecording;
