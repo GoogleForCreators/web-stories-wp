@@ -211,7 +211,7 @@ function CustomFontsSettings({
       setToDelete(null);
       setShowDialog(false);
     }
-  }, [toDelete, deleteCustomFont, fetchCustomFonts]);
+  }, [deleteCustomFont, toDelete, fetchCustomFonts, showSnackbar]);
 
   const handleOnSave = useCallback(async () => {
     if (canSave) {
