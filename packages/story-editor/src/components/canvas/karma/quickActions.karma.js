@@ -56,6 +56,35 @@ describe('Quick Actions integration', () => {
 
       expect(fixture.screen.queryByTestId('quick-actions-menu')).toBeNull();
     });
+
+    it('quick menu should not be visible if no quick actions are present', async () => {
+      // when two different elements types are selected, there may not be any quick actions to show
+      // in that case, we shouldn't be rendering the context menu at all
+      // add shape to canvas
+      await fixture.editor.library.shapesTab.click();
+      await fixture.events.click(
+        fixture.editor.library.shapes.shape('Triangle')
+      );
+
+      // add text to canvas
+      await fixture.editor.library.textTab.click();
+      await fixture.events.click(
+        fixture.editor.library.text.preset('Paragraph')
+      );
+      await fixture.editor.canvas.framesLayer.waitFocusedWithin();
+
+      expect(
+        fixture.screen.queryByTestId('Element quick actions')
+      ).not.toBeNull();
+
+      // select both text and shape elements
+      await fixture.events.keyboard.down('Shift');
+      const triangle = fixture.editor.canvas.framesLayer.frames[1].node;
+      await clickOnTarget(triangle);
+      await fixture.events.keyboard.up('Shift');
+
+      expect(fixture.screen.queryByTestId('Element quick actions')).toBeNull();
+    });
   });
 
   describe('quick action menu should have no aXe accessibility violations', () => {
