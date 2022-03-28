@@ -64,7 +64,6 @@ function EditorSettings() {
     getPageById,
     customFonts,
     addCustomFont,
-    fetchCustomFonts,
     deleteCustomFont,
     publisherLogos,
     addPublisherLogo,
@@ -74,7 +73,7 @@ function EditorSettings() {
   } = useEditorSettings(
     ({
       actions: {
-        fontsApi: { addCustomFont, fetchCustomFonts, deleteCustomFont },
+        fontsApi: { addCustomFont, deleteCustomFont },
         settingsApi: { fetchSettings, updateSettings },
         pagesApi: { searchPages, getPageById },
         mediaApi: { uploadMedia },
@@ -120,7 +119,6 @@ function EditorSettings() {
       getPageById,
       customFonts,
       addCustomFont,
-      fetchCustomFonts,
       deleteCustomFont,
       fetchPublisherLogos,
       addPublisherLogo,
@@ -340,7 +338,6 @@ function EditorSettings() {
               <CustomFontsSettings
                 customFonts={customFonts}
                 addCustomFont={addCustomFont}
-                fetchCustomFonts={fetchCustomFonts}
                 deleteCustomFont={deleteCustomFont}
               />
             )}
