@@ -30,6 +30,7 @@
     "@googleforcreators/date": "*",
     "@googleforcreators/design-system": "*",
     "@googleforcreators/elements": "*",
+    "@googleforcreators/element-library": "*",
     "@googleforcreators/i18n": "*",
     "@googleforcreators/media": "*",
     "@googleforcreators/migration": "*",

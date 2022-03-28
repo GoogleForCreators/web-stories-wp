@@ -24,14 +24,11 @@ import {
   ThemeGlobals,
   deepMerge,
 } from '@googleforcreators/design-system';
-import { useEffect } from '@googleforcreators/react';
 import { StyleSheetManager, ThemeProvider } from 'styled-components';
 import stylisRTLPlugin from 'stylis-plugin-rtl';
 Object.defineProperty(stylisRTLPlugin, 'name', { value: 'stylisRTLPlugin' });
 import PropTypes from 'prop-types';
 import { FlagsProvider } from 'flagged';
-import { registerElementType } from '@googleforcreators/elements';
-import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
@@ -51,10 +48,6 @@ function Dashboard({ config, children }) {
     ...externalDesignSystemTheme,
     colors: lightMode,
   };
-
-  useEffect(() => {
-    elementTypes.forEach(registerElementType);
-  }, []);
 
   return (
     <FlagsProvider features={flags}>
