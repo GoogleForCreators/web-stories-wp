@@ -27,14 +27,17 @@ import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import { Fragment } from '@googleforcreators/react';
+import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
  */
 import { useLayout } from '../../app';
-import { MediaPicker, useQuickActions } from '../../app/highlights';
+import { MediaPicker, useQuickActions, ACTIONS } from '../../app/highlights';
 import { ZOOM_SETTING } from '../../constants';
 import { Z_INDEX_CANVAS_SIDE_MENU } from '../../constants/zIndex';
+import { DEFAULT_PRESET } from '../library/panes/text/textPresets';
+import useInsertElement from './useInsertElement';
 import PageMenu from './pagemenu/pageMenu';
 
 const MenusWrapper = styled.section`
@@ -71,6 +74,12 @@ function PageSideMenu() {
   const quickActions = useQuickActions();
 
   const isZoomed = zoomSetting !== ZOOM_SETTING.FIT;
+  const insertElement = useInsertElement();
+  const handleAddText = (evt) => {
+    evt.stopPropagation();
+    insertElement('text', DEFAULT_PRESET);
+    trackEvent('library_text_quick_action');
+  };
 
   return (
     <MenusWrapper
@@ -116,6 +125,11 @@ function PageSideMenu() {
                         aria-label={label}
                         onClick={(evt) => {
                           onClick(evt);
+
+                          if (label === ACTIONS.INSERT_TEXT.text) {
+                            handleAddText(evt);
+                          }
+
                           externalOnClick(evt);
                         }}
                         {...quickAction}

@@ -121,12 +121,12 @@ describe('Quick Actions integration', () => {
       expect(document.activeElement).toEqual(fixture.editor.library.mediaTab);
     });
 
-    it(`clicking the \`${ACTIONS.INSERT_TEXT.text}\` button should select the background and open the text tab in the library`, async () => {
+    it(`clicking the \`${ACTIONS.INSERT_TEXT.text}\` button should select the background, open the text tab in the library and insert the default text`, async () => {
       // click quick menu button
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.insertTextButton
       );
-
+      expect(fixture.editor.canvas.framesLayer.frames.length).toBe(1);
       expect(fixture.editor.library.text).not.toBeNull();
       expect(document.activeElement).toEqual(fixture.editor.library.textTab);
     });
