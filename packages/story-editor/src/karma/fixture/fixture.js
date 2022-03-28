@@ -219,6 +219,8 @@ export class Fixture {
         JSON.stringify({ isCollapsed: false })
       );
     });
+
+    elementTypes.forEach(registerElementType);
   }
 
   restore() {
@@ -304,7 +306,6 @@ export class Fixture {
    * @param {Array<Object>} pages Pages.
    */
   setPages(pages) {
-    elementTypes.forEach(registerElementType);
     this.apiProviderFixture_.setPages(pages);
   }
 
@@ -320,8 +321,6 @@ export class Fixture {
 
     // see http://reactcommunity.org/react-modal/accessibility/
     setAppElement(root);
-
-    elementTypes.forEach(registerElementType);
 
     const { container, getByRole } = render(
       <StoryEditor key={Math.random()} config={this._config}>
