@@ -60,11 +60,7 @@ const DEFAULT_TEXT_PADDING = {
 const DEFAULT_TEXT_ALIGN = 'left';
 
 const DEFAULT_PRESET = {
-  content: _x(
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    'text preset content',
-    'web-stories'
-  ),
+  content: _x('Fill in some text', 'text preset content', 'web-stories'),
   fontSize: dataFontEm(1.33),
   lineHeight: 1.2,
   x: DEFAULT_LEFT_MARGIN,
@@ -82,7 +78,7 @@ const PRESETS = [
     title: _x('Title 1', 'text preset title', 'web-stories'),
     element: {
       content: `<span style="font-weight: ${FONT_WEIGHT.BOLD}">${_x(
-        'Title 1',
+        'Fill in some text',
         'text preset content',
         'web-stories'
       )}</span>`,
@@ -102,7 +98,7 @@ const PRESETS = [
     title: _x('Title 2', 'text preset title', 'web-stories'),
     element: {
       content: `<span style="font-weight: ${FONT_WEIGHT.BOLD}">${_x(
-        'Title 2',
+        'Fill in some text',
         'text preset content',
         'web-stories'
       )}</span>`,
@@ -119,10 +115,10 @@ const PRESETS = [
     },
   },
   {
-    title: _x('Title 3', 'text preset title', 'web-stories'),
+    title: _x('Fill in some text', 'text preset title', 'web-stories'),
     element: {
       content: `<span style="font-weight: ${FONT_WEIGHT.BOLD}">${_x(
-        'Title 3',
+        'Fill in some text',
         'text preset content',
         'web-stories'
       )}</span>`,
@@ -146,7 +142,7 @@ const PRESETS = [
     title: _x('Caption', 'text preset title', 'web-stories'),
     element: {
       content: `<span style="font-weight: ${FONT_WEIGHT.NORMAL}">${_x(
-        'Caption',
+        'Fill in some text',
         'text preset content',
         'web-stories'
       )}</span>`,
@@ -165,7 +161,11 @@ const PRESETS = [
   {
     title: _x('Label', 'text preset title', 'web-stories').toUpperCase(),
     element: {
-      content: _x('Label', 'text preset content', 'web-stories').toUpperCase(),
+      content: _x(
+        'Fill in some text',
+        'text preset content',
+        'web-stories'
+      ).toUpperCase(),
       fontSize: dataFontEm(0.888),
       lineHeight: 1.2,
       x: DEFAULT_LEFT_MARGIN,
