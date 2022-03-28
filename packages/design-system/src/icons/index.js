@@ -47,6 +47,7 @@ export { default as Box1 } from './box1.svg';
 export { default as Box4 } from './box4.svg';
 export { default as Box4Alternate } from './box4_alternate.svg';
 export { default as Bucket } from './bucket.svg';
+export { default as Camera } from './camera.svg';
 export { default as Captions } from './captions.svg';
 export { default as Checkbox } from './checkbox.svg';
 export { default as Checklist } from './checklist.svg';

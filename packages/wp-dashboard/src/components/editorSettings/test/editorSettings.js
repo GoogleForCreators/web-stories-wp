@@ -57,7 +57,6 @@ jest.mock('../../../api/publisherLogo', () => ({
 
 jest.mock('../../../api/fonts', () => ({
   addCustomFont: () => mockedPromise,
-  fetchCustomFonts: () => mockedPromise,
   deleteCustomFont: () => mockedPromise,
 }));
 
@@ -92,7 +91,6 @@ const mockAddPublisherLogo = jest.fn();
 const mockRemovePublisherLogo = jest.fn();
 const mockSetPublisherLogoAsDefault = jest.fn();
 const mockAddCustomFont = jest.fn();
-const mockFetchCustomFonts = jest.fn();
 const mockDeleteCustomFont = jest.fn();
 
 function createProviderValues({
@@ -179,7 +177,6 @@ function createProviderValues({
         },
         fontsApi: {
           addCustomFont: mockAddCustomFont,
-          fetchCustomFonts: mockFetchCustomFonts,
           deleteCustomFont: mockDeleteCustomFont,
         },
       },

@@ -371,6 +371,17 @@ class Experiments extends Service_Base implements HasRequirements {
 				'description' => __( 'Notify user about deleted fonts in story', 'web-stories' ),
 				'group'       => 'editor',
 			],
+			/**
+			 * Author: @swissspidy
+			 * Issue: #10930
+			 * Creation date: 2022-03-17
+			 */
+			[
+				'name'        => 'mediaRecording',
+				'label'       => __( 'Media Recording', 'web-stories' ),
+				'description' => __( 'Enable recording from webcam/microphone', 'web-stories' ),
+				'group'       => 'editor',
+			],
 		];
 	}
 

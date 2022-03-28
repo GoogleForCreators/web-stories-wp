@@ -13,12 +13,29 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 function parseText(optionsText) {
   return optionsText.map((option) => {
     const [name, url] = option.split('\n');
     return { name, url };
   });
 }
+
+export const removeAllFonts = async () => {
+  const fonts = await getFontList();
+
+  if (fonts.length === 0) {
+    return;
+  }
+
+  for (let i = 0; i < fonts.length; i++) {
+    // eslint-disable-next-line no-await-in-loop -- Can't be done in parallel because of the confirmation dialog.
+    await removeCustomFont(fonts[i].name);
+  }
+
+  const fontsAfter = await getFontList();
+  await expect(fontsAfter).toHaveLength(0);
+};
 
 /**
  * @typedef {Object} FontData font data parsed from custom font listbox
