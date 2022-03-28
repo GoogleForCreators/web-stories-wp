@@ -35,6 +35,7 @@ import {
   THEME_CONSTANTS,
   Tooltip,
   themeHelpers,
+  useSnackbar,
 } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 import { trackEvent, trackError } from '@googleforcreators/tracking';
@@ -52,6 +53,7 @@ import {
   SettingSubheading,
   TextInputHelperText,
 } from '../components';
+import { ERRORS } from '../../../constants';
 import ConfirmationDialog from './confirmationDialog';
 import getFontDataFromUrl from './utils/getFontDataFromUrl';
 
@@ -167,7 +169,6 @@ const ALLOWED_FONT_TYPES = ['.otf', '.ttf', '.woff'];
 function CustomFontsSettings({
   customFonts = [],
   addCustomFont,
-  fetchCustomFonts,
   deleteCustomFont,
 }) {
   const [fontUrl, setFontUrl] = useState('');
@@ -179,6 +180,7 @@ function CustomFontsSettings({
   const currentFontsRowsRef = useRef([]);
   const [currentFontsFocusIndex, setCurrentFontsFocusIndex] = useState(0);
   const [currentFontsActiveId, setCurrentFontsActiveId] = useState();
+  const { showSnackbar } = useSnackbar();
 
   const handleUpdateFontUrl = useCallback((event) => {
     const { value } = event.target;
@@ -194,11 +196,21 @@ function CustomFontsSettings({
   }, []);
 
   const handleDelete = useCallback(async () => {
-    await deleteCustomFont(toDelete);
-    await fetchCustomFonts();
-    setToDelete(null);
-    setShowDialog(false);
-  }, [toDelete, deleteCustomFont, fetchCustomFonts]);
+    try {
+      await deleteCustomFont(toDelete);
+    } catch (err) {
+      trackError('remove_custom_font', err?.message);
+      showSnackbar({
+        'aria-label': ERRORS.REMOVE_FONT.MESSAGE,
+        message: ERRORS.REMOVE_FONT.MESSAGE,
+        dismissible: true,
+      });
+    } finally {
+      setToDelete(null);
+      setShowDialog(false);
+      setInputError('');
+    }
+  }, [deleteCustomFont, toDelete, showSnackbar]);
 
   const handleOnSave = useCallback(async () => {
     if (canSave) {
@@ -246,7 +258,6 @@ function CustomFontsSettings({
 
       try {
         await addCustomFont({ ...fontData, url: urlWithProtocol });
-        await fetchCustomFonts();
         setFontUrl('');
       } catch (err) {
         trackError('add_custom_font', err?.message);
@@ -259,7 +270,7 @@ function CustomFontsSettings({
         );
       }
     }
-  }, [addCustomFont, fetchCustomFonts, canSave, fontUrl]);
+  }, [addCustomFont, canSave, fontUrl]);
 
   const handleOnKeyDown = useCallback(
     (e) => {
@@ -413,7 +424,6 @@ function CustomFontsSettings({
 CustomFontsSettings.propTypes = {
   customFonts: PropTypes.array,
   addCustomFont: PropTypes.func.isRequired,
-  fetchCustomFonts: PropTypes.func.isRequired,
   deleteCustomFont: PropTypes.func.isRequired,
 };
 
