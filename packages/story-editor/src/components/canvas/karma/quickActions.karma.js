@@ -126,7 +126,7 @@ describe('Quick Actions integration', () => {
       await fixture.events.click(
         fixture.editor.canvas.quickActionMenu.insertTextButton
       );
-      expect(fixture.editor.canvas.framesLayer.frames.length).toBe(1);
+      expect(fixture.editor.canvas.framesLayer.frames.length).toBe(2);
       expect(fixture.editor.library.text).not.toBeNull();
       expect(document.activeElement).toEqual(fixture.editor.library.textTab);
     });
