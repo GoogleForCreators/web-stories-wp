@@ -29,6 +29,7 @@ import { useStory } from '../../../../../app/story';
 import { PRESETS } from '../textPresets';
 
 const TIMEOUT_INTERVAL = 300000;
+const DEFAULT_TEXT = 'Fill in some text';
 
 describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => {
   let fixture;
@@ -222,8 +223,6 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
 
     it('should ensure staggered presets fit on the page', async () => {
       const POSITION_MARGIN = dataFontEm(1);
-      const PARAGRAPH_TEXT =
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
       let lastY;
       let lastHeight;
       let nextY;
@@ -304,29 +303,29 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
 
       // Stagger all different text presets.
       await addPreset('Title 1');
-      await verifyDefaultPosition('Title 1', 'Title 1');
+      await verifyDefaultPosition('Title 1', DEFAULT_TEXT);
 
       await addPreset('Paragraph');
-      await verifyStaggeredPosition(PARAGRAPH_TEXT);
+      await verifyStaggeredPosition(DEFAULT_TEXT);
 
       await addPreset('Title 2');
-      await verifyStaggeredPosition('Title 2');
+      await verifyStaggeredPosition(DEFAULT_TEXT);
 
       await addPreset('Paragraph');
-      await verifyStaggeredPosition(PARAGRAPH_TEXT);
+      await verifyStaggeredPosition(DEFAULT_TEXT);
 
       // Title 3 should be positioned in the default position again.
       await addPreset('Title 3');
-      await verifyStaggeredPosition('Title 3');
+      await verifyStaggeredPosition(DEFAULT_TEXT);
 
       await addPreset('Caption');
-      await verifyStaggeredPosition('Caption');
+      await verifyStaggeredPosition(DEFAULT_TEXT);
 
       await addPreset('Paragraph');
-      await verifyDefaultPosition('Paragraph', PARAGRAPH_TEXT);
+      await verifyDefaultPosition('Paragraph', DEFAULT_TEXT);
 
       await addPreset('LABEL');
-      await verifyStaggeredPosition('LABEL');
+      await verifyStaggeredPosition(DEFAULT_TEXT);
 
       await fixture.snapshot('staggered all text presets');
     });
@@ -372,7 +371,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
 
       const [text1] = await getSelection();
       expect(text1.content).toEqual(
-        '<span style="color: #fff">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>'
+        `<span style="color: #fff">${DEFAULT_TEXT}</span>`
       );
 
       // Select background for being able to insert another text.
@@ -396,7 +395,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
       });
       const [title] = await getSelection();
       expect(title.content).toEqual(
-        '<span style="font-weight: 700; color: #fff">Title 1</span>'
+        `<span style="font-weight: 700; color: #fff">${DEFAULT_TEXT}</span>`
       );
     });
   });
