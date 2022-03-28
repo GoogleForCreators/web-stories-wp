@@ -370,6 +370,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Deleted Fonts', 'web-stories' ),
 				'description' => __( 'Notify user about deleted fonts in story', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @swissspidy
