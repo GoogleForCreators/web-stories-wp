@@ -7,11 +7,15 @@ As seen in the [Getting Started](./getting-started.md) guide, a minimal story ed
 
 ```js
 import { StoryEditor, InterfaceSkeleton } from '@googleforcreators/story-editor';
+import { elementTypes } from '@googleforcreators/element-library';
+import { registerElementType } from '@googleforcreators/elements';
 
 const Editor = () => {
   const apiCallbacks = {
     saveStoryById: () => Promise.resolve({}),
   };
+
+  elementTypes.forEach(registerElementType);
 
   return (
     <StoryEditor config={{ apiCallbacks }} initialEdits={{ story: {} }}>
@@ -381,6 +385,8 @@ import {
   StoryEditor,
   InterfaceSkeleton,
 } from "@googleforcreators/story-editor";
+import { elementTypes } from '@googleforcreators/element-library';
+import { registerElementType } from '@googleforcreators/elements';
 
 const CustomHeader = () => (
   <div style={{ height: `100px`, width: "100%", backgroundColor: "red" }}>
@@ -392,6 +398,8 @@ const Editor = () => {
   const apiCallbacks = {
     saveStoryById: () => Promise.resolve({}),
   };
+
+  elementTypes.forEach(registerElementType);
 
   return (
     <div style={{ height: "100vh" }}>
@@ -416,6 +424,8 @@ import {
   StoryEditor,
   InterfaceSkeleton,
 } from "@googleforcreators/story-editor";
+import { elementTypes } from '@googleforcreators/element-library';
+import { registerElementType } from '@googleforcreators/elements';
 
 const CustomFooter = () => <div>{" Custom Help Center Footer "}</div>;
 
@@ -423,6 +433,8 @@ const Editor = () => {
   const apiCallbacks = {
     saveStoryById: () => Promise.resolve({}),
   };
+
+  elementTypes.forEach(registerElementType);
 
   return (
     <div style={{ height: "100vh" }}>
@@ -494,6 +506,9 @@ import {
   StoryMissingTitle,
   StoryTitleLength,
 } from "@googleforcreators/story-editor";
+import { elementTypes } from '@googleforcreators/element-library';
+import { registerElementType } from '@googleforcreators/elements';
+
 const Accessibility = () => (
   <>
     <PageBackgroundTextLowContrast />
@@ -519,6 +534,8 @@ const Editor = () => {
   const apiCallbacks = {
     saveStoryById: () => Promise.resolve({}),
   };
+
+  elementTypes.forEach(registerElementType);
 
   return (
     <StoryEditor config={{ apiCallbacks }} initialEdits={{ story:{} }}>
@@ -582,6 +599,8 @@ import {
   StoryEditor,
   InterfaceSkeleton,
 } from "@googleforcreators/story-editor";
+import { elementTypes } from '@googleforcreators/element-library';
+import { registerElementType } from '@googleforcreators/elements';
 import React, { useState } from "react";
 import { LessThan2PageCheck } from "./footer/checks";
 
@@ -595,6 +614,8 @@ const Editor = () => {
   const apiCallbacks = {
     saveStoryById: () => Promise.resolve({}),
   };
+
+  elementTypes.forEach(registerElementType);
 
   return (
     <StoryEditor config={{ apiCallbacks }} initialEdits={{ story:{} }}>
@@ -624,6 +645,8 @@ import {
 	StoryEditor,
 	InterfaceSkeleton,
 } from '@googleforcreators/story-editor';
+import { elementTypes } from '@googleforcreators/element-library';
+import { registerElementType } from '@googleforcreators/elements';
 
 const CustomDocumentPanel = ()=>(
 	<div>
@@ -634,8 +657,10 @@ const CustomDocumentPanel = ()=>(
 const Editor = () =>{
 
 	const apiCallbacks = {
-    saveStoryById: () => Promise.resolve({}),
-  };
+      saveStoryById: () => Promise.resolve({}),
+    };
+
+    elementTypes.forEach(registerElementType);
 
 	return (
     <StoryEditor config={{ apiCallbacks }} initialEdits={{ story }}>
