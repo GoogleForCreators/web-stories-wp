@@ -29,8 +29,8 @@
   "dependencies": {
     "@googleforcreators/date": "*",
     "@googleforcreators/design-system": "*",
-    "@googleforcreators/elements": "*",
     "@googleforcreators/element-library": "*",
+    "@googleforcreators/elements": "*",
     "@googleforcreators/i18n": "*",
     "@googleforcreators/media": "*",
     "@googleforcreators/migration": "*",
