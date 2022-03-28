@@ -1,0 +1,35 @@
+{
+	"presets": [
+		[
+			"@babel/preset-env",
+			{
+				"modules": false
+			}
+		],
+		"@babel/preset-react"
+	],
+	"plugins": [
+		"react-hot-loader/babel",
+		[
+			"module-resolver",
+			{
+				"root": [
+					"./src"
+				]
+			}
+		]
+	],
+	"env": {
+		"test": {
+			"presets": [
+				"@babel/preset-env",
+				"@babel/preset-react",
+				"es2015",
+				"stage-0"
+			],
+			"plugins": [
+				"transform-es2015-modules-commonjs"
+			]
+		}
+	}
+}
