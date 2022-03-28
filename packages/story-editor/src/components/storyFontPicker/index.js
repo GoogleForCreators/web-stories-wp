@@ -80,9 +80,7 @@ const StoryFontPicker = forwardRef(function StoryFontPicker({ ...rest }, ref) {
   const onChange = useCallback(
     async (newFont) => {
       const { id, name, value, ...newFontFormatted } = newFont;
-      trackEvent('font_family_changed', {
-        name: newFontFormatted.family,
-      });
+      trackEvent('font_family_changed', { name });
 
       await maybeEnqueueFontStyle(
         selectedElements.map(({ content }) => {
