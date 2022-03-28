@@ -321,6 +321,8 @@ export class Fixture {
     // see http://reactcommunity.org/react-modal/accessibility/
     setAppElement(root);
 
+    elementTypes.forEach(registerElementType);
+
     const { container, getByRole } = render(
       <StoryEditor key={Math.random()} config={this._config}>
         <Layout
