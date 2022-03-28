@@ -58,10 +58,10 @@ export default function useFontsApi() {
 
   const deleteCustomFont = useCallback(
     async (id) => {
-        const response = await deleteCustomFontCallback(fontsApiPath, id);
-        const newCustomFonts = customFonts.filter((font) => font.id !== id);
-        setCustomFonts(newCustomFonts);
-        return response;
+      const response = await deleteCustomFontCallback(fontsApiPath, id);
+      const newCustomFonts = customFonts.filter((font) => font.id !== id);
+      setCustomFonts(newCustomFonts);
+      return response;
     },
     [customFonts, fontsApiPath]
   );
