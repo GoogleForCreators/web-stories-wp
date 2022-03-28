@@ -44,7 +44,7 @@
     "@googleforcreators/units": "*",
     "flagged": "^2.0.1",
     "prop-types": "^15.8.1",
-    "styled-components": "^5.3.3",
+    "styled-components": "^5.3.5",
     "uuid": "^8.3.2",
     "web-animations-js": "^2.3.2"
   },

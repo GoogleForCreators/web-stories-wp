@@ -48,7 +48,7 @@
     "prop-types": "^15.8.1",
     "react-modal": "^3.14.4",
     "react-transition-group": "^4.4.2",
-    "styled-components": "^5.3.3",
+    "styled-components": "^5.3.5",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

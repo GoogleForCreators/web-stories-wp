@@ -42,7 +42,7 @@
     "@googleforcreators/react": "*",
     "@googleforcreators/units": "*",
     "prop-types": "^15.8.0",
-    "styled-components": "^5.2.1",
+    "styled-components": "^5.3.5",
     "uuid": "^8.3.2"
   },
   "devDependencies": {}
