@@ -109,6 +109,19 @@ Web Stories are powered by [AMP](https://amp.dev/), which adds some restrictions
 
 For the plugin's full changelog, please see [the Releases page on GitHub](https://github.com/googleforcreators/web-stories-wp/releases).
 
+= 1.19.0 =
+
+**Release Date:** March 29, 2022.
+
+* New feature: floating menu bar for easier editing.
+* New feature: support for adding captions and disabling looping for page background audio.
+* New feature: ability to upload custom fonts.
+* New feature: story locking, displaying a message if someone else is already editing a story.
+* Enhancement: overhauled workspace, consolidating sidebar to create more space for the canvas.
+* Enhancement: make it easier to apply saved styles.
+* Enhancement: add detection for possible server misconfiguration related to CORS.
+* Bug fixes and performance improvements.
+
 = 1.18.1 =
 
 **Release Date:** March 8, 2022.
@@ -125,17 +138,11 @@ For the plugin's full changelog, please see [the Releases page on GitHub](https:
 * Bumped minimum PHP version requirement to 7.2.
 * Bug fixes and performance improvements.
 
-= 1.17.0 =
-
-**Release Date:** February 1, 2022.
-
-* New feature: border support for shapes.
-* Enhancement: added contrast check to color picker.
-* Enhancement: added support for `tel:` and `mailto:` links.
-* Enhancement: improved element resizing handling.
-* Bug fixes and performance improvements.
-
 == Upgrade Notice ==
+
+= 1.19.0 =
+
+Feature-packed release bringing you a revamped workspace UI with a consolidated sidebar, floating menu bar, background audio captions, custom fonts, and much more!
 
 = 1.18.1 =
 
@@ -144,7 +151,3 @@ This release fixes an issue where adding video captions did not work.
 = 1.18.0 =
 
 New pre-publish confirmation dialog, semantic headings, and several bug fixes and performance improvements.
-
-= 1.17.0 =
-
-Various smaller enhancements throughout the editor, plus several bug fixes and performance improvements.
