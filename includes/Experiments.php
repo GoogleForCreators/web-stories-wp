@@ -334,6 +334,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Custom Fonts', 'web-stories' ),
 				'description' => __( 'Enable adding custom fonts', 'web-stories' ),
 				'group'       => 'general',
+				'default'     => true,
 			],
 			/**
 			 * Author: @spacedmonkey
@@ -368,6 +369,18 @@ class Experiments extends Service_Base implements HasRequirements {
 				'name'        => 'notifyDeletedFonts',
 				'label'       => __( 'Deleted Fonts', 'web-stories' ),
 				'description' => __( 'Notify user about deleted fonts in story', 'web-stories' ),
+				'group'       => 'editor',
+				'default'     => true,
+			],
+			/**
+			 * Author: @swissspidy
+			 * Issue: #10930
+			 * Creation date: 2022-03-17
+			 */
+			[
+				'name'        => 'mediaRecording',
+				'label'       => __( 'Media Recording', 'web-stories' ),
+				'description' => __( 'Enable recording from webcam/microphone', 'web-stories' ),
 				'group'       => 'editor',
 			],
 		];

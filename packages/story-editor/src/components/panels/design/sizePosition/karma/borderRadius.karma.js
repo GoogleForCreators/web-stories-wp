@@ -53,12 +53,12 @@ describe('Border Radius', () => {
         }
       });
       // Choose Fill as background for visibility.
-      await fixture.events.click(fixture.editor.inspector.designTab);
+      await fixture.events.click(fixture.editor.sidebar.designTab);
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.textStyle.fill
+        fixture.editor.sidebar.designPanel.textStyle.fill
       );
 
-      const panel = fixture.editor.inspector.designPanel.sizePosition;
+      const panel = fixture.editor.sidebar.designPanel.sizePosition;
       await fixture.events.click(panel.radius(), { clickCount: 3 });
       await fixture.events.keyboard.type('30');
       await fixture.events.keyboard.press('tab');
@@ -92,8 +92,8 @@ describe('Border Radius', () => {
     it('should allow user to add border radius for media', async () => {
       const mediaItem = fixture.editor.library.media.item(0);
       await fixture.events.mouse.clickOn(mediaItem, 20, 20);
-      await fixture.events.click(fixture.editor.inspector.designTab);
-      const panel = fixture.editor.inspector.designPanel.sizePosition;
+      await fixture.events.click(fixture.editor.sidebar.designTab);
+      const panel = fixture.editor.sidebar.designPanel.sizePosition;
 
       // Take off lock.
       await fixture.events.click(panel.lockBorderRadius);
@@ -133,8 +133,8 @@ describe('Border Radius', () => {
       fixture.editor.library.shapes.shape('Rectangle')
     );
 
-    await fixture.events.click(fixture.editor.inspector.designTab);
-    const panel = fixture.editor.inspector.designPanel.sizePosition;
+    await fixture.events.click(fixture.editor.sidebar.designTab);
+    const panel = fixture.editor.sidebar.designPanel.sizePosition;
     await fixture.events.click(panel.radius(), {
       clickCount: 3,
     });
@@ -153,9 +153,9 @@ describe('Border Radius', () => {
     await fixture.events.click(fixture.editor.library.shapesTab);
     await fixture.events.click(fixture.editor.library.shapes.shape('Circle'));
     // Verify that the radius input is not found.
-    await fixture.events.click(fixture.editor.inspector.designTab);
+    await fixture.events.click(fixture.editor.sidebar.designTab);
     expect(() =>
-      fixture.editor.inspector.designPanel.sizePosition.radius()
+      fixture.editor.sidebar.designPanel.sizePosition.radius()
     ).toThrow();
   });
 });

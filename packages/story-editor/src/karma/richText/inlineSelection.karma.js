@@ -57,7 +57,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       expect(storyContext.state.selectedElements[0].content).toBe(
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
       );
-      await data.fixture.events.click(data.fixture.editor.inspector.designTab);
+      await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
       const {
         bold,
         italic,
@@ -66,7 +66,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
         letterSpacing,
         fontColor,
         uppercase,
-      } = data.fixture.editor.inspector.designPanel.textStyle;
+      } = data.fixture.editor.sidebar.designPanel.textStyle;
 
       // Enter edit-mode
       await data.fixture.events.focus(
@@ -208,9 +208,9 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
 
   describe('CUJ: Creator Can Style Text: Apply B, Apply U, Apply I, Apply Uppercase', () => {
     it('should apply inline formats using shortcuts', async () => {
-      await data.fixture.events.click(data.fixture.editor.inspector.designTab);
+      await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
       const { bold, italic, underline } =
-        data.fixture.editor.inspector.designPanel.textStyle;
+        data.fixture.editor.sidebar.designPanel.textStyle;
 
       // Enter edit-mode
       await data.fixture.events.keyboard.press('Enter');
@@ -248,8 +248,8 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
     });
 
     it('should apply inline format for uppercase', async () => {
-      await data.fixture.events.click(data.fixture.editor.inspector.designTab);
-      const { uppercase } = data.fixture.editor.inspector.designPanel.textStyle;
+      await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
+      const { uppercase } = data.fixture.editor.sidebar.designPanel.textStyle;
 
       // Enter edit-mode
       await data.fixture.events.keyboard.press('Enter');
@@ -279,11 +279,9 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
   describe('CUJ: Creator Can Style Text: Apply B, Select weight', () => {
     describe('when there is a mix of font weights', () => {
       beforeEach(async () => {
-        await data.fixture.events.click(
-          data.fixture.editor.inspector.designTab
-        );
+        await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
         const { fontWeight } =
-          data.fixture.editor.inspector.designPanel.textStyle;
+          data.fixture.editor.sidebar.designPanel.textStyle;
 
         // Enter edit-mode
         await data.fixture.events.focus(
@@ -314,7 +312,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
         await setSelection(0, 2);
 
         const { bold, fontWeight } =
-          data.fixture.editor.inspector.designPanel.textStyle;
+          data.fixture.editor.sidebar.designPanel.textStyle;
 
         // Check that bold toggle is on but font weight is "multiple"
         expect(bold.checked).toBe(true);
@@ -338,7 +336,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
 
       it('should make bold+regular selection bold when toggling', async () => {
         const { bold, fontWeight } =
-          data.fixture.editor.inspector.designPanel.textStyle;
+          data.fixture.editor.sidebar.designPanel.textStyle;
 
         // Select second and third characters (700 and 400)
         await setSelection(1, 3);
@@ -371,7 +369,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
 
       it('should make black+bold+regular selection black when toggling', async () => {
         const { bold, fontWeight } =
-          data.fixture.editor.inspector.designPanel.textStyle;
+          data.fixture.editor.sidebar.designPanel.textStyle;
 
         // Select first three characters (900, 700 and 400)
         await setSelection(0, 3);
@@ -411,11 +409,10 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
         return window.getComputedStyle(paragraph);
       };
 
-      await data.fixture.events.click(data.fixture.editor.inspector.designTab);
+      await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
       const initialLineHeight = parseFloat(getDisplayTextStyles().lineHeight);
 
-      const { lineHeight } =
-        data.fixture.editor.inspector.designPanel.textStyle;
+      const { lineHeight } = data.fixture.editor.sidebar.designPanel.textStyle;
 
       // Enter edit-mode
       await data.fixture.events.keyboard.press('Enter');
@@ -455,8 +452,8 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
 
       // Select everything and make bold
       await setSelection(0, 17);
-      await data.fixture.events.click(data.fixture.editor.inspector.designTab);
-      const { bold } = data.fixture.editor.inspector.designPanel.textStyle;
+      await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
+      const { bold } = data.fixture.editor.sidebar.designPanel.textStyle;
       await data.fixture.events.click(bold.button);
     });
 

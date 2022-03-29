@@ -25,10 +25,12 @@ import {
   takeSnapshot,
   addCustomFont,
   removeCustomFont,
+  visitSettings,
+  removeAllFonts,
 } from '@web-stories-wp/e2e-test-utils';
 
-const OPEN_SANS_CONDENSED = 'Open Sans Condensed Light';
-const OPEN_SANS_CONDENSED_URL = `${process.env.WP_BASE_URL}/wp-content/e2e-assets/OpenSansCondensed-Light.ttf`;
+const OPEN_SANS_CONDENSED_LIGHT = 'Open Sans Condensed Light';
+const OPEN_SANS_CONDENSED_LIGHT_URL = `${process.env.WP_BASE_URL}/wp-content/e2e-assets/OpenSansCondensed-Light.ttf`;
 
 async function createStoryWithTitle(title) {
   await createNewStory();
@@ -73,20 +75,25 @@ async function replaceFontUsingDefault() {
 
 async function storyWithFontCheckDialog(title) {
   // take steps needed to get Missing Font dialog to show
-  await addCustomFont(OPEN_SANS_CONDENSED_URL);
+  await visitSettings();
+  await addCustomFont(OPEN_SANS_CONDENSED_LIGHT_URL);
   await createStoryWithTitle(title);
-  await updateFont(OPEN_SANS_CONDENSED);
+  await updateFont(OPEN_SANS_CONDENSED_LIGHT);
   await publishStory();
-  await removeCustomFont();
+  await visitSettings();
+  await removeCustomFont(OPEN_SANS_CONDENSED_LIGHT);
   await editStoryWithTitle(title);
   await page.waitForSelector('[data-testid="textFrame"]');
   await page.waitForSelector('[role="dialog"]');
 }
 
 describe('Font Check', () => {
-  // TODO(#10916): Combine these calls.
-  withExperimentalFeatures(['customFonts']);
-  withExperimentalFeatures(['notifyDeletedFonts']);
+  withExperimentalFeatures(['customFonts', 'notifyDeletedFonts']);
+
+  beforeAll(async () => {
+    await visitSettings();
+    await removeAllFonts();
+  });
 
   it('should show dialog & replace font with default font', async () => {
     const title = 'Test replace missing font with (default) Roboto';

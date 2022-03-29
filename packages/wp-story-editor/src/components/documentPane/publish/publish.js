@@ -47,7 +47,7 @@ import {
   useStory,
   useConfig,
   useHighlights,
-  useInspector,
+  useSidebar,
 } from '@googleforcreators/story-editor';
 
 /**
@@ -120,7 +120,7 @@ const LogoImg = styled.img`
 function PublishPanel({ nameOverride }) {
   const {
     state: { users },
-  } = useInspector();
+  } = useSidebar();
   const {
     api: { publisherLogos: publisherLogosPath },
   } = useConfig();
@@ -355,7 +355,8 @@ function PublishPanel({ nameOverride }) {
                 options={publisherLogosWithUploadOption}
                 primaryOptions={publisherLogosWithUploadOption}
                 onChange={onPublisherLogoChange}
-                aria-label={__('Publisher Logo', 'web-stories')}
+                title={__('Available publisher logos', 'web-stories')}
+                dropdownButtonLabel={__('Publisher Logo', 'web-stories')}
                 renderer={publisherLogoOptionRenderer}
                 activeItemRenderer={activeItemRenderer}
                 selectedId={publisherLogo.id}

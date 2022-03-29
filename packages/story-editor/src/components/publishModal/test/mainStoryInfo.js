@@ -25,7 +25,7 @@ import { renderWithTheme } from '@googleforcreators/test-utils';
  */
 import StoryContext from '../../../app/story/context';
 import { ChecklistCountProvider } from '../../checklist';
-import InspectorContext from '../../inspector/context';
+import SidebarContext from '../../sidebar/context';
 import { INPUT_KEYS } from '../constants';
 import MainStoryInfo from '../content/mainStoryInfo';
 
@@ -42,13 +42,13 @@ describe('publishModal/mainStoryInfo', () => {
     jest.clearAllMocks();
   });
 
-  const inspectorContextValue = {
+  const sidebarContextValue = {
     actions: { loadUsers: jest.fn() },
     state: {
       users: [{ value: 'foo' }, { value: 'bar' }],
     },
     data: {
-      modalInspectorTab: {
+      modalSidebarTab: {
         DocumentPane: null,
       },
     },
@@ -66,11 +66,11 @@ describe('publishModal/mainStoryInfo', () => {
           },
         }}
       >
-        <InspectorContext.Provider value={inspectorContextValue}>
+        <SidebarContext.Provider value={sidebarContextValue}>
           <ChecklistCountProvider hasChecklist>
             <MainStoryInfo />
           </ChecklistCountProvider>
-        </InspectorContext.Provider>
+        </SidebarContext.Provider>
       </StoryContext.Provider>
     );
   };

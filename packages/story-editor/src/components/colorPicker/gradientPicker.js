@@ -93,7 +93,7 @@ function GradientPicker({
             size={BUTTON_SIZES.SMALL}
             variant={BUTTON_VARIANTS.SQUARE}
           >
-            <Icons.ArrowsLeftright />
+            <Icons.ArrowsLeftRight />
           </SmallButton>
         </Tooltip>
         {canRotate && (

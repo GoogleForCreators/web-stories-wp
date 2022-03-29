@@ -64,7 +64,7 @@ describe('Design Menu: Border radius', () => {
     expect(fixture.editor.canvas.designMenu.borderRadius).toBeNull();
   });
 
-  it('should render for rectangular shape but only while radii are locked', async () => {
+  it('should render for rectangular shape but only while radii are equal', async () => {
     await fixture.events.click(fixture.editor.library.shapesTab);
     await waitFor(() => fixture.editor.library.shapes);
 
@@ -75,10 +75,14 @@ describe('Design Menu: Border radius', () => {
     expect(fixture.editor.canvas.designMenu.borderRadius).not.toBeNull();
 
     // Open style pane
-    await fixture.events.click(fixture.editor.inspector.designTab);
+    await fixture.events.click(fixture.editor.sidebar.designTab);
 
-    const panel = fixture.editor.inspector.designPanel.sizePosition;
+    const panel = fixture.editor.sidebar.designPanel.sizePosition;
     await fixture.events.click(panel.lockBorderRadius);
+
+    await fixture.events.click(panel.radius('Top left'), { clickCount: 3 });
+    await fixture.events.keyboard.type('10');
+    await fixture.events.keyboard.press('tab');
 
     expect(fixture.editor.canvas.designMenu.borderRadius).toBeNull();
   });
@@ -92,9 +96,9 @@ describe('Design Menu: Border radius', () => {
     );
 
     // Open style pane
-    await fixture.events.click(fixture.editor.inspector.designTab);
+    await fixture.events.click(fixture.editor.sidebar.designTab);
 
-    const panel = fixture.editor.inspector.designPanel.sizePosition;
+    const panel = fixture.editor.sidebar.designPanel.sizePosition;
     await fixture.events.click(panel.radius(), { clickCount: 3 });
     await fixture.events.keyboard.type('10');
     await fixture.events.keyboard.press('tab');

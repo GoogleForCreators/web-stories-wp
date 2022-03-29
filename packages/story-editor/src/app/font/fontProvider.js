@@ -59,10 +59,11 @@ function FontProvider({ children }) {
     }
 
     const formattedFonts = _customFonts.map((font) => ({
+      ...font,
+      // The font picker & preview expects the ID to be the font family name.
       id: font.family,
       name: font.family,
       value: font.family,
-      ...font,
     }));
 
     setCustomFonts(formattedFonts);
@@ -193,7 +194,8 @@ function FontProvider({ children }) {
   const ensureCustomFontsLoaded = useCallback(
     (fontsToLoad) => {
       for (const font of fontsToLoad) {
-        const fontObj = fonts.find(({ family }) => family === font);
+        const fontObj = customFonts.find(({ family }) => family === font);
+
         if (!fontObj) {
           continue;
         }
@@ -201,7 +203,7 @@ function FontProvider({ children }) {
         maybeLoadFont(fontObj);
       }
     },
-    [fonts, maybeLoadFont]
+    [customFonts, maybeLoadFont]
   );
 
   const state = {

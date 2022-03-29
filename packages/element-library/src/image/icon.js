@@ -26,16 +26,10 @@ import { StoryPropTypes } from '@googleforcreators/elements';
  */
 import VisibleImage from '../media/visibleImage';
 
-function ImageLayerIcon({
-  element: {
-    resource,
-    resource: { alt },
-  },
-  getProxiedUrl,
-}) {
+function ImageLayerIcon({ element: { resource }, getProxiedUrl }) {
   const url = getSmallestUrlForWidth(0, resource);
   const src = getProxiedUrl(resource, url);
-  return <VisibleImage src={src} alt={alt} height={21} width={21} />;
+  return <VisibleImage src={src} height={21} width={21} />;
 }
 
 ImageLayerIcon.propTypes = {

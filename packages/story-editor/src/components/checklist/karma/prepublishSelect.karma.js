@@ -254,7 +254,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       );
     });
 
-    it('should open the design inspector panel and focus the text input', async () => {
+    it('should open the style pane and focus the text input', async () => {
       await fixture.act(() => {
         insertElement('image', {
           x: 0,
@@ -289,9 +289,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       await fixture.events.click(thumbnail);
       await fixture.events.sleep(500);
       expect(
-        fixture.editor.inspector.designPanel.node.contains(
-          document.activeElement
-        )
+        fixture.editor.sidebar.designPanel.node.contains(document.activeElement)
       ).toBeTrue();
       await fixture.snapshot(
         'design tab opened and focused by checklist panel'
@@ -333,7 +331,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       await fixture.events.click(thumbnail);
       await fixture.events.sleep(500);
 
-      const mediaButton = await fixture.editor.inspector.designPanel
+      const mediaButton = await fixture.editor.sidebar.designPanel
         .videoAccessibility.posterMenuButton;
       expect(mediaButton.contains(document.activeElement)).toBeTrue();
 
@@ -374,7 +372,7 @@ describe('Pre-publish checklist select offending elements onClick', () => {
       // press enter on video preview in card
       await fixture.events.keyboard.press('Enter');
 
-      const mediaButton = await fixture.editor.inspector.designPanel
+      const mediaButton = await fixture.editor.sidebar.designPanel
         .videoAccessibility.posterMenuButton;
       expect(mediaButton.contains(document.activeElement)).toBeTrue();
 

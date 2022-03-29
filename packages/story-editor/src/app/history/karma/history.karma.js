@@ -36,7 +36,7 @@ describe('CUJ: Creator can View and Modify Document Settings: Navigating without
     // Click on the shapes tab.
     await fixture.events.click(fixture.editor.library.shapesTab);
     // Click on the document tab.
-    await fixture.events.click(fixture.editor.inspector.documentTab);
+    await fixture.events.click(fixture.editor.sidebar.documentTab);
     // Wait to ensure any processes (in case of bugs) would be finished.
     await fixture.events.sleep(500);
 

@@ -34,7 +34,7 @@ describe('Design Menu: Text alignment', () => {
     await fixture.events.click(fixture.editor.library.text.preset('Paragraph'));
 
     // Open style pane
-    await fixture.events.click(fixture.editor.inspector.designTab);
+    await fixture.events.click(fixture.editor.sidebar.designTab);
   });
 
   afterEach(() => {
@@ -73,7 +73,7 @@ describe('Design Menu: Text alignment', () => {
     it(`should display the correct control when the alignment is "${value}"`, async () => {
       // Select the relevant alignment in the text style panel
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.textStyle.align(label)
+        fixture.editor.sidebar.designPanel.textStyle.align(label)
       );
 
       // Check that the value on the element matches
@@ -93,7 +93,7 @@ describe('Design Menu: Text alignment', () => {
     it(`should set the alignment to "${value}" when selected`, async () => {
       // Select another alignment in the text style panel
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.textStyle.align(otherLabel)
+        fixture.editor.sidebar.designPanel.textStyle.align(otherLabel)
       );
 
       // Check that the value on the element is not a match
