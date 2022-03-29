@@ -139,7 +139,6 @@ function BorderWidthAndColor() {
             hasEyedropper={false}
             allowsGradient={false}
             allowsSavedColors={false}
-            changedStyle="border-color"
           />
         </>
       )}
