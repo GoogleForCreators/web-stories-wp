@@ -87,7 +87,7 @@ describe('<Color />', () => {
       value: createSolid(255, 0, 0),
       width: 300,
     });
-    expect(colorSection.getAttribute('width')).toBe('300');
+    expect(colorSection).toHaveAttribute('width', '300');
   });
 
   it("should pass false as width prop to the color's section when width is specified and current value is mixed", () => {
@@ -95,20 +95,20 @@ describe('<Color />', () => {
       value: MULTIPLE_VALUE,
       width: 300,
     });
-    expect(colorSection.getAttribute('width')).toBe(null);
+    expect(colorSection).not.toHaveAttribute('width');
   });
 
   it("should pass null as width prop to the color's section when width is not specified and current value is mixed", () => {
     const { colorSection } = arrange({
       value: MULTIPLE_VALUE,
     });
-    expect(colorSection.getAttribute('width')).toBe(null);
+    expect(colorSection).not.toHaveAttribute('width');
   });
 
   it("should pass null as width prop to the color's section when width is not specified and current value is not mixed", () => {
     const { colorSection } = arrange({
       value: createSolid(255, 0, 0),
     });
-    expect(colorSection.getAttribute('width')).toBe(null);
+    expect(colorSection).not.toHaveAttribute('width');
   });
 });
