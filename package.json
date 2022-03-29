@@ -48,7 +48,7 @@
     "@jsdevtools/coverage-istanbul-loader": "^3.0.5",
     "@percy/cli": "^1.0.0-beta.75",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.4",
-    "@prettier/plugin-xml": "^1.2.0",
+    "@prettier/plugin-xml": "^2.0.1",
     "@rollup/plugin-babel": "^5.3.1",
     "@rollup/plugin-commonjs": "^21.0.3",
     "@rollup/plugin-dynamic-import-vars": "^1.4.2",
