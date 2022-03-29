@@ -388,7 +388,7 @@ Example ( Expected Response )
 
 Note that when the "Use template" button is clicked, it internally needs to know the registered element types.
 Therefore, you need to register them using `elementTypes.forEach(registerElementType)` in the same way as 
-it is done for the Story Editor ( See [Getting Started](./../story-editor/getting-started.md) )
+it is done for the editor itself (see [Getting Started](./../story-editor/getting-started.md)).
 
 ### `duplicateStory`
 
