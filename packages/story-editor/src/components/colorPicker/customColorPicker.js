@@ -94,7 +94,7 @@ function CustomColorPicker({
       // If using the eyedropper in floating menu, the popup unmounts
       // so the generatedColor won't ever be updated
       // check for unmount and if so, we know this change event
-      // if from the eyedropper so we can just grab the rgb and
+      // is from the eyedropper so we can just grab the rgb and
       // trigger the rest of the change for the element.
       if (!isMounted.current && e?.rgb) {
         handleColorChange({ color: e.rgb });
