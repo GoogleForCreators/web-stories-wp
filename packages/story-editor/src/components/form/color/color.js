@@ -52,7 +52,7 @@ const containerCss = css`
 const Container = styled.section`
   ${containerCss}
   gap: ${({ isInDesignMenu }) => (isInDesignMenu ? 6 : 8)}px;
-  width: ${({ width }) => (width ? `${width}px` : 'inherit')};
+  width: ${({ width }) => (width || width === 0 ? `${width}px` : 'inherit')};
 `;
 Container.propTypes = {
   isInDesignMenu: PropTypes.bool,
@@ -141,7 +141,7 @@ const Color = forwardRef(function Color(
     <Container
       aria-label={containerLabel}
       isInDesignMenu={isInDesignMenu}
-      width={!ignoreSetWidth && width}
+      width={!ignoreSetWidth && width ? width : null}
     >
       {hasEyedropper && (
         <Tooltip

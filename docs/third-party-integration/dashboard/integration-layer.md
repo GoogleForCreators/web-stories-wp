@@ -179,6 +179,11 @@ To configure the dashboard to your needs you can pass various config options to 
             - required: No
             - description: defines tracking event for the link for google analytics.
 
+- `documentTitleSuffix`
+    - type: `string`
+    - required: No
+    - description: Suffix to be used in the document title.
+
 - `styleConstants`
     - type: `Object`
     - required: No
