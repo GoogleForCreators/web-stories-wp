@@ -42,6 +42,21 @@ describe('Stories Dashboard', () => {
     await takeSnapshot(page, 'Stories Dashboard', { percyCSS });
   });
 
+  it('should choose sort option for display', async () => {
+    await visitDashboard();
+    await expect(page).toClick('[aria-label="Dashboard"]', {
+      text: 'Dashboard',
+    });
+    const sortButtonSelector =
+      'button[aria-label="Choose sort option for display"]';
+    await expect(page).toClick(sortButtonSelector, { text: 'Last Modified' });
+    await takeSnapshot(page, 'Dashboard sort option dropdown', { percyCSS });
+    await expect(page).toClick('li', { text: 'Created By' });
+    await expect(page).toMatchElement(sortButtonSelector, {
+      text: 'Created By',
+    });
+  });
+
   describe('RTL', () => {
     withRTL();
 

@@ -7,11 +7,15 @@ As seen in the [Getting Started](./getting-started.md) guide, a minimal story ed
 
 ```js
 import { StoryEditor, InterfaceSkeleton } from '@googleforcreators/story-editor';
+import { elementTypes } from '@googleforcreators/element-library';
+import { registerElementType } from '@googleforcreators/elements';
 
 const Editor = () => {
   const apiCallbacks = {
     saveStoryById: () => Promise.resolve({}),
   };
+
+  elementTypes.forEach(registerElementType);
 
   return (
     <StoryEditor config={{ apiCallbacks }} initialEdits={{ story: {} }}>
@@ -91,16 +95,6 @@ To configure the editor to your needs you can pass various config options to the
 
 You can also provide an external link in the description of the tip.
 
-### `allowedFileTypes`
-
-- type: `array`
-- description: An array of file extensions accepted by element library.
-- example :
-  
-  ```js
-  const allowedFileTypes = ['jpeg','mp4'];
-  ```
-
 ### `allowedMimeTypes` 
 
 - type: `Object`
@@ -109,67 +103,11 @@ You can also provide an external link in the description of the tip.
   
   ```js
   const allowedMimeTypes = {
-    image: [
-              "image/webp",
-              "image/png",
-          ],
-    "audio": [],
-    "video": []
+    audio: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
+    image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/webp'],
+    caption: ['text/vtt'],
+    vector: ['image/svg+xml']
   };
-  ```
-
-### `allowedAudioFileTypes`
-
-- type: `array`
-- description: An array of file extensions accepted in the design panel.
-- example :
-
-```js
-const allowedAudioFileTypes = ['aac', 'wav'];
-```
-
-### `allowedAudioMimeTypes`
-
-- type: `array`
-- description: An array of file mime-types accepted in the design panel.
-- example :
-  
-  ```js
-  const allowedAudioMimeTypes = ['audio/aac', 'audio/wav'];
-  ```
-
-### `allowedImageFileTypes`
-
-- type: `array`
-- description: An array of file extensions accepted in the design panel. Generates a message if incorrect file type is uploaded.
-- example :
-  
-  ```js
-  const allowedFileTypes = ['jpeg','png'];
-  ```
-
-### `allowedImageMimeTypes` 
-
-- type: `array`
-- description: An array of file mime types accepted in the design panel.
-- example :
-
-```js
-const allowedFileTypes = ['image/jpeg', 'image/png'];
-```
-
-### `allowedTranscodableMimeTypes` 
-
-- type: `array`
-- description: An array of mime types which can be transcoded.
-- example :
-  
-  ```js
-  const allowedTranscodableMimeTypes = [
-    "video/3gpp",
-      "video/3gpp2",
-      "video/MP2T",
-  ]
   ```
 
 ### `autoSaveInterval`
@@ -447,6 +385,8 @@ import {
   StoryEditor,
   InterfaceSkeleton,
 } from "@googleforcreators/story-editor";
+import { elementTypes } from '@googleforcreators/element-library';
+import { registerElementType } from '@googleforcreators/elements';
 
 const CustomHeader = () => (
   <div style={{ height: `100px`, width: "100%", backgroundColor: "red" }}>
@@ -458,6 +398,8 @@ const Editor = () => {
   const apiCallbacks = {
     saveStoryById: () => Promise.resolve({}),
   };
+
+  elementTypes.forEach(registerElementType);
 
   return (
     <div style={{ height: "100vh" }}>
@@ -482,6 +424,8 @@ import {
   StoryEditor,
   InterfaceSkeleton,
 } from "@googleforcreators/story-editor";
+import { elementTypes } from '@googleforcreators/element-library';
+import { registerElementType } from '@googleforcreators/elements';
 
 const CustomFooter = () => <div>{" Custom Help Center Footer "}</div>;
 
@@ -489,6 +433,8 @@ const Editor = () => {
   const apiCallbacks = {
     saveStoryById: () => Promise.resolve({}),
   };
+
+  elementTypes.forEach(registerElementType);
 
   return (
     <div style={{ height: "100vh" }}>
@@ -560,6 +506,9 @@ import {
   StoryMissingTitle,
   StoryTitleLength,
 } from "@googleforcreators/story-editor";
+import { elementTypes } from '@googleforcreators/element-library';
+import { registerElementType } from '@googleforcreators/elements';
+
 const Accessibility = () => (
   <>
     <PageBackgroundTextLowContrast />
@@ -585,6 +534,8 @@ const Editor = () => {
   const apiCallbacks = {
     saveStoryById: () => Promise.resolve({}),
   };
+
+  elementTypes.forEach(registerElementType);
 
   return (
     <StoryEditor config={{ apiCallbacks }} initialEdits={{ story:{} }}>
@@ -648,6 +599,8 @@ import {
   StoryEditor,
   InterfaceSkeleton,
 } from "@googleforcreators/story-editor";
+import { elementTypes } from '@googleforcreators/element-library';
+import { registerElementType } from '@googleforcreators/elements';
 import React, { useState } from "react";
 import { LessThan2PageCheck } from "./footer/checks";
 
@@ -661,6 +614,8 @@ const Editor = () => {
   const apiCallbacks = {
     saveStoryById: () => Promise.resolve({}),
   };
+
+  elementTypes.forEach(registerElementType);
 
   return (
     <StoryEditor config={{ apiCallbacks }} initialEdits={{ story:{} }}>
@@ -690,6 +645,8 @@ import {
 	StoryEditor,
 	InterfaceSkeleton,
 } from '@googleforcreators/story-editor';
+import { elementTypes } from '@googleforcreators/element-library';
+import { registerElementType } from '@googleforcreators/elements';
 
 const CustomDocumentPanel = ()=>(
 	<div>
@@ -700,8 +657,10 @@ const CustomDocumentPanel = ()=>(
 const Editor = () =>{
 
 	const apiCallbacks = {
-    saveStoryById: () => Promise.resolve({}),
-  };
+      saveStoryById: () => Promise.resolve({}),
+    };
+
+    elementTypes.forEach(registerElementType);
 
 	return (
     <StoryEditor config={{ apiCallbacks }} initialEdits={{ story }}>
