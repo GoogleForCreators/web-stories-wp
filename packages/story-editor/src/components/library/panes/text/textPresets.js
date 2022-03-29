@@ -78,7 +78,7 @@ const PRESETS = [
     title: _x('Title 1', 'text preset title', 'web-stories'),
     element: {
       content: `<span style="font-weight: ${FONT_WEIGHT.BOLD}">${_x(
-        'Fill in some text',
+        'Title 1',
         'text preset content',
         'web-stories'
       )}</span>`,
@@ -98,7 +98,7 @@ const PRESETS = [
     title: _x('Title 2', 'text preset title', 'web-stories'),
     element: {
       content: `<span style="font-weight: ${FONT_WEIGHT.BOLD}">${_x(
-        'Fill in some text',
+        'Title 2',
         'text preset content',
         'web-stories'
       )}</span>`,
@@ -115,10 +115,10 @@ const PRESETS = [
     },
   },
   {
-    title: _x('Fill in some text', 'text preset title', 'web-stories'),
+    title: _x('Title 3', 'text preset title', 'web-stories'),
     element: {
       content: `<span style="font-weight: ${FONT_WEIGHT.BOLD}">${_x(
-        'Fill in some text',
+        'Title 3',
         'text preset content',
         'web-stories'
       )}</span>`,
@@ -142,7 +142,7 @@ const PRESETS = [
     title: _x('Caption', 'text preset title', 'web-stories'),
     element: {
       content: `<span style="font-weight: ${FONT_WEIGHT.NORMAL}">${_x(
-        'Fill in some text',
+        'Caption',
         'text preset content',
         'web-stories'
       )}</span>`,
@@ -161,11 +161,7 @@ const PRESETS = [
   {
     title: _x('Label', 'text preset title', 'web-stories').toUpperCase(),
     element: {
-      content: _x(
-        'Fill in some text',
-        'text preset content',
-        'web-stories'
-      ).toUpperCase(),
+      content: _x('Label', 'text preset content', 'web-stories').toUpperCase(),
       fontSize: dataFontEm(0.888),
       lineHeight: 1.2,
       x: DEFAULT_LEFT_MARGIN,
