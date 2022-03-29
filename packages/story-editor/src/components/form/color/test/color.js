@@ -24,10 +24,11 @@ import { renderWithTheme } from '@googleforcreators/test-utils';
 /**
  * Internal dependencies
  */
-import Color from '../color';
-import applyOpacityChange from '../applyOpacityChange';
 import { ConfigProvider } from '../../../../app/config';
 import getDefaultConfig from '../../../../getDefaultConfig';
+import { MULTIPLE_VALUE } from '../../../../constants';
+import Color from '../color';
+import applyOpacityChange from '../applyOpacityChange';
 
 jest.mock('../applyOpacityChange', () => jest.fn());
 
@@ -39,9 +40,13 @@ function arrange(props = {}) {
     </ConfigProvider>
   );
   const colorPreview = screen.getByRole('button', { name: 'Color' });
+  const colorSection = screen.getByRole('region', {
+    name: 'Color input: Color',
+  });
   const opacityInput = screen.queryByLabelText(/Opacity/);
   return {
     colorPreview,
+    colorSection,
     opacityInput,
     onChange,
   };
@@ -75,5 +80,35 @@ describe('<Color />', () => {
     );
 
     expect(onChange).toHaveBeenCalledWith(createSolid(255, 0, 0, 0.3));
+  });
+
+  it("should pass 300 as width prop to the color's section when width is specified and current value is not mixed", () => {
+    const { colorSection } = arrange({
+      value: createSolid(255, 0, 0),
+      width: 300,
+    });
+    expect(colorSection.getAttribute('width')).toBe('300');
+  });
+
+  it("should pass false as width prop to the color's section when width is specified and current value is mixed", () => {
+    const { colorSection } = arrange({
+      value: MULTIPLE_VALUE,
+      width: 300,
+    });
+    expect(colorSection.getAttribute('width')).toBe(null);
+  });
+
+  it("should pass null as width prop to the color's section when width is not specified and current value is mixed", () => {
+    const { colorSection } = arrange({
+      value: MULTIPLE_VALUE,
+    });
+    expect(colorSection.getAttribute('width')).toBe(null);
+  });
+
+  it("should pass null as width prop to the color's section when width is not specified and current value is not mixed", () => {
+    const { colorSection } = arrange({
+      value: createSolid(255, 0, 0),
+    });
+    expect(colorSection.getAttribute('width')).toBe(null);
   });
 });

@@ -56,7 +56,7 @@ const Container = styled.section`
 `;
 Container.propTypes = {
   isInDesignMenu: PropTypes.bool,
-  width: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  width: PropTypes.number,
 };
 
 const ColorInputsWrapper = styled.div`
@@ -141,7 +141,7 @@ const Color = forwardRef(function Color(
     <Container
       aria-label={containerLabel}
       isInDesignMenu={isInDesignMenu}
-      width={!ignoreSetWidth && width ? width : ''}
+      width={!ignoreSetWidth && width ? width : null}
     >
       {hasEyedropper && (
         <Tooltip
