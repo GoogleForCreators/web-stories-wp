@@ -85,7 +85,7 @@ function RichTextEditor({ content, onChange }, ref) {
   const { hasCommandModifier } = KeyBindingUtil;
 
   function bindKeys(e) {
-    if (e.code === 'KeyA' && hasCommandModifier(e)) {
+    if (e.code === 'KeyAX' && hasCommandModifier(e)) {
       return 'selectall';
     }
     return getDefaultKeyBinding(e);

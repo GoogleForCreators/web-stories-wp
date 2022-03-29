@@ -149,6 +149,17 @@ describe('TextEdit integration', () => {
           '<span style="font-weight: 700">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>'
         );
       });
+
+      // eslint-disable-next-line jasmine/no-focused-tests
+      fit('should select all text and delete it', async () => {
+        // Testing this on the BROKEN version
+        await fixture.events.mouse.clickOn(frame, 30, 5); // enter the edit mode by clicking
+        await fixture.events.keyboard.shortcut('mod+a'); // doesn't work on macOS, maybe will work on Ubuntu
+        //document.execCommand("selectAll"); // selects all, but it's not the same as MOD+A, so we can't use it
+        await fixture.events.keyboard.type('BAR');
+        // result: BAR, expected: Lorem...BAR...ipsum
+        expect(frame.querySelector('p').innerHTML).not.toEqual('BAR');
+      });
     });
 
     describe('shortcuts', () => {
