@@ -135,8 +135,11 @@ function BorderWidthAndColor() {
             value={border.color || BLACK}
             onChange={handleColorChange}
             hasInputs={false}
-            hasEyeDropper={false}
             allowsOpacity={canHaveBorderOpacity}
+            hasEyedropper={false}
+            allowsGradient={false}
+            allowsSavedColors={false}
+            changedStyle="border-color"
           />
         </>
       )}
