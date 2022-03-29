@@ -134,8 +134,11 @@ function BorderWidthAndColor() {
             value={border.color || BLACK}
             onChange={handleColorChange}
             hasInputs={false}
-            hasEyeDropper={false}
+            hasEyedropper={false}
             allowsOpacity={canHaveBorderOpacity}
+            allowsGradient={false}
+            pickerHasEyedropper={false} // override shared floating menu Color component TODO https://github.com/GoogleForCreators/web-stories-wp/issues/11024
+            allowsSavedColors={false}
           />
         </>
       )}
