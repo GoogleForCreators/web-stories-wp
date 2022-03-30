@@ -14,6 +14,16 @@
  * limitations under the License.
  */
 
+/**
+ * External dependencies
+ */
+import styled from 'styled-components';
+
+/**
+ * Internal dependencies
+ */
+import { getTransforms } from './utils';
+
 export const PLACEMENT = {
   // TOP
   TOP: 'top',
@@ -51,3 +61,30 @@ export const RTL_PLACEMENT = {
   [PLACEMENT.LEFT_START]: PLACEMENT.RIGHT_START,
   [PLACEMENT.LEFT_END]: PLACEMENT.RIGHT_END,
 };
+
+export const PopupContainer = styled.div.attrs(
+  ({
+    $offset: { x, y, width, height },
+    fillWidth,
+    fillHeight,
+    placement,
+    isRTL,
+    invisible,
+    zIndex,
+  }) => ({
+    style: {
+      transform: `translate(${x}px, ${y}px) ${getTransforms(placement, isRTL)}`,
+      ...(fillWidth ? { width: `${width}px` } : {}),
+      ...(fillHeight ? { height: `${height}px` } : {}),
+      ...(invisible ? { visibility: 'hidden' } : {}),
+      zIndex,
+    },
+  })
+)`
+  /*! @noflip */
+  left: 0px;
+  top: 0px;
+  position: fixed;
+  ${({ noOverFlow }) => (noOverFlow ? '' : `overflow-y: auto;`)};
+  max-height: ${({ topOffset }) => `calc(100vh - ${topOffset}px)`};
+`;

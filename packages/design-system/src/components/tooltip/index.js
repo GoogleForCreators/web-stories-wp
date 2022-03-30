@@ -26,16 +26,20 @@ import {
   useCallback,
   useDebouncedCallback,
   useEffect,
+  useLayoutEffect,
+  useResizeEffect,
+  createPortal,
 } from '@googleforcreators/react';
 
 /**
  * Internal dependencies
  */
-import { Popup, PLACEMENT } from '../popup';
+import { PLACEMENT } from '../popup';
 import { prettifyShortcut } from '../keyboard';
 import { THEME_CONSTANTS } from '../../theme';
 import { Text } from '../typography';
-import { RTL_PLACEMENT } from '../popup/constants';
+import { RTL_PLACEMENT, PopupContainer } from '../popup/constants';
+import { getOffset } from '../popup/utils';
 import { noop } from '../../utils';
 import { SvgForTail, Tail, SVG_TOOLTIP_TAIL_ID, TAIL_HEIGHT } from './tail';
 
@@ -98,6 +102,8 @@ let lastVisibleDelayedTooltip = null;
  * as perceived by the page because of scroll. This is really only true of dropDowns that
  * exist beyond the initial page scroll. Because the editor is a fixed view this only
  * comes up in peripheral pages (dashboard, settings).
+ * @param props.isRTL RTL flag from config
+ * @param props.topOffset offset due to top banner in wp nav
  * @return {import('react').Component} Tooltip element
  */
 function Tooltip({
@@ -111,13 +117,18 @@ function Tooltip({
   onFocus = noop,
   onBlur = noop,
   isDelayed = false,
-  forceAnchorRef = null,
+  // forceAnchorRef = null,
   tooltipProps = null,
   className = null,
   popupZIndexOverride,
   ignoreMaxOffsetY = false,
+  isRTL = false,
+  topOffset = 32,
   ...props
 }) {
+  const [popupState, setPopupState] = useState(null);
+  const isPopupMounted = useRef(false);
+  const popup = useRef(null);
   const [shown, setShown] = useState(false);
   const [arrowDelta, setArrowDelta] = useState(null);
   const anchorRef = useRef(null);
@@ -125,14 +136,7 @@ function Tooltip({
   const placementRef = useRef(placement);
   const [dynamicPlacement, setDynamicPlacement] = useState(placement);
   const isMounted = useRef(false);
-
-  useEffect(() => {
-    isMounted.current = true;
-
-    return () => {
-      isMounted.current = false;
-    };
-  }, []);
+  const isOpen = Boolean(shown && (shortcut || title));
 
   const spacing = useMemo(
     () => ({
@@ -224,6 +228,75 @@ function Tooltip({
     [positionPlacement]
   );
 
+  const positionPopup = useCallback(
+    (evt) => {
+      if (!isMounted.current || !anchorRef?.current) {
+        return;
+      }
+      // If scrolling within the popup, ignore.
+      if (evt?.target?.nodeType && popup.current?.contains(evt.target)) {
+        return;
+      }
+      setPopupState({
+        offset: anchorRef.current
+          ? getOffset({
+              anchor: anchorRef,
+              placement,
+              spacing,
+              popup,
+              isRTL,
+              ignoreMaxOffsetY,
+              topOffset,
+            })
+          : {},
+        height: popup.current?.getBoundingClientRect()?.height,
+      });
+    },
+    [placement, spacing, isRTL, ignoreMaxOffsetY, topOffset]
+  );
+
+  useEffect(() => {
+    // If the popup height changes meanwhile, let's update the popup, too.
+    if (
+      popupState?.height &&
+      popupState.height !== popup.current?.getBoundingClientRect()?.height
+    ) {
+      positionPopup();
+    }
+  }, [popupState?.height, positionPopup]);
+
+  useLayoutEffect(() => {
+    if (!isOpen) {
+      return undefined;
+    }
+    isPopupMounted.current = true;
+    positionPopup();
+    // Adjust the position when scrolling.
+    document.addEventListener('scroll', positionPopup, true);
+    return () => {
+      document.removeEventListener('scroll', positionPopup, true);
+      isPopupMounted.current = false;
+    };
+  }, [isOpen, positionPopup]);
+
+  useLayoutEffect(() => {
+    if (!isPopupMounted.current) {
+      return;
+    }
+
+    positionArrow(popupState);
+  }, [popupState, positionArrow]);
+
+  useResizeEffect({ current: document.body }, positionPopup, [positionPopup]);
+
+  useEffect(() => {
+    isMounted.current = true;
+
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
   const resetPlacement = useDebouncedCallback(() => {
     setDynamicPlacement(placementRef.current);
   }, 100);
@@ -290,41 +363,51 @@ function Tooltip({
         {children}
       </Wrapper>
 
-      <Popup
-        anchor={forceAnchorRef || anchorRef}
-        placement={dynamicPlacement}
-        spacing={spacing}
-        isOpen={Boolean(shown && (shortcut || title))}
-        onPositionUpdate={positionArrow}
-        zIndex={popupZIndexOverride}
-        noOverFlow
-        ignoreMaxOffsetY={ignoreMaxOffsetY}
-      >
-        <TooltipContainer
-          className={className}
-          ref={tooltipRef}
-          placement={dynamicPlacement}
-          shown={shown}
-          {...tooltipProps}
-        >
-          <TooltipText size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}>
-            {shortcut ? `${title} (${prettifyShortcut(shortcut)})` : title}
-          </TooltipText>
-          {hasTail && (
-            <>
-              <SvgForTail>
-                <clipPath
-                  id={SVG_TOOLTIP_TAIL_ID}
-                  clipPathUnits="objectBoundingBox"
+      {popupState && isOpen
+        ? createPortal(
+            <PopupContainer
+              ref={popup}
+              placement={placement}
+              $offset={popupState.offset}
+              noOverFlow
+              isRTL={isRTL}
+              zIndex={9999999999}
+            >
+              <TooltipContainer
+                className={className}
+                ref={tooltipRef}
+                placement={dynamicPlacement}
+                shown={shown}
+                {...tooltipProps}
+              >
+                <TooltipText
+                  size={THEME_CONSTANTS.TYPOGRAPHY.PRESET_SIZES.X_SMALL}
                 >
-                  <path d="M1,1 L0.868,1 C0.792,1,0.72,0.853,0.676,0.606 L0.585,0.098 C0.562,-0.033,0.513,-0.033,0.489,0.098 L0.399,0.606 C0.355,0.853,0.283,1,0.207,1 L0,1 L1,1" />
-                </clipPath>
-              </SvgForTail>
-              <Tail placement={dynamicPlacement} translateX={arrowDelta} />
-            </>
-          )}
-        </TooltipContainer>
-      </Popup>
+                  {shortcut
+                    ? `${title} (${prettifyShortcut(shortcut)})`
+                    : title}
+                </TooltipText>
+                {hasTail && (
+                  <>
+                    <SvgForTail>
+                      <clipPath
+                        id={SVG_TOOLTIP_TAIL_ID}
+                        clipPathUnits="objectBoundingBox"
+                      >
+                        <path d="M1,1 L0.868,1 C0.792,1,0.72,0.853,0.676,0.606 L0.585,0.098 C0.562,-0.033,0.513,-0.033,0.489,0.098 L0.399,0.606 C0.355,0.853,0.283,1,0.207,1 L0,1 L1,1" />
+                      </clipPath>
+                    </SvgForTail>
+                    <Tail
+                      placement={dynamicPlacement}
+                      translateX={arrowDelta}
+                    />
+                  </>
+                )}
+              </TooltipContainer>
+            </PopupContainer>,
+            document.body
+          )
+        : null}
     </>
   );
 }
@@ -339,12 +422,14 @@ const TooltipPropTypes = {
   onPointerLeave: PropTypes.func,
   shortcut: PropTypes.string,
   title: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-  forceAnchorRef: PropTypes.object,
+  // forceAnchorRef: PropTypes.object,
   tooltipProps: PropTypes.object,
   className: PropTypes.string,
   isDelayed: PropTypes.bool,
   popupZIndexOverride: PropTypes.number,
   ignoreMaxOffsetY: PropTypes.bool,
+  isRTL: PropTypes.bool,
+  topOffset: PropTypes.number,
 };
 Tooltip.propTypes = TooltipPropTypes;
 

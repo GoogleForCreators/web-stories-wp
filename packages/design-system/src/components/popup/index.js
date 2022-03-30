@@ -66,21 +66,33 @@ const Container = styled.div.attrs(
 function Popup({
   isRTL = false,
   anchor,
-  dock,
-  children,
-  renderContents,
   placement = PLACEMENT.BOTTOM,
   spacing,
   isOpen,
-  invisible = false,
-  fillWidth = false,
-  fillHeight = false,
-  onPositionUpdate = noop,
-  refCallback = noop,
-  topOffset = DEFAULT_TOPOFFSET,
+  children,
+  //data list, tooltip, dropdown, search, publish time
   zIndex = DEFAULT_POPUP_Z_INDEX,
+  //color input, style presets
+  dock,
+  //data list, color input, text style, style presets, publish time,
+  renderContents,
+  // color input
+  invisible = false,
+  //data list, dropdown, search,
+  fillWidth = false,
+  // none
+  fillHeight = false,
+  // tooltip
+  onPositionUpdate = noop,
+  // dropdown and color input
+  refCallback = noop,
+  //PlayPauseButton - loads straight popup use, style text, canvas elements, publish time, etc
+  topOffset = DEFAULT_TOPOFFSET,
+  //tooltip
   noOverFlow = false,
+  // dropdown and one tooltip
   ignoreMaxOffsetY,
+  // color input - docking or floating
   resetXOffset = false,
 }) {
   const [popupState, setPopupState] = useState(null);
