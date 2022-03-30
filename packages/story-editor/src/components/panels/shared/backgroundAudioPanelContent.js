@@ -148,7 +148,7 @@ function BackgroundAudioPanelContent({
         kind: 'captions',
         srclang: '',
         label: '',
-        needsProxy
+        needsProxy,
       };
       updateTracks([...tracks, newTracks]);
     },

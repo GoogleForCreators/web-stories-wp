@@ -163,7 +163,9 @@ describe('Background Audio', () => {
         await createNewStory();
 
         // Select the current page by clicking bg change quick action (because of empty state).
-        await expect(page).toClick('button', { text: 'Change background color' });
+        await expect(page).toClick('button', {
+          text: 'Change background color',
+        });
 
         await expect(page).toMatch('Page Background Audio');
 
