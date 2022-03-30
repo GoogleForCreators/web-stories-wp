@@ -150,13 +150,12 @@ describe('TextEdit integration', () => {
         );
       });
 
-      // eslint-disable-next-line jasmine/no-focused-tests
-      fit('should select all text and delete it', async () => {
+      it('should select all text and delete it', async () => {
         // Testing this on the BROKEN version
         await fixture.events.mouse.clickOn(frame, 30, 5); // enter the edit mode by clicking
 
         if (navigator.userAgentData.platform === 'macOS') {
-          document.execCommand('selectAll'); // not the same as mod+a
+          document.execCommand('selectAll'); // not the same as mod+a, but does work on macOS
         } else {
           await fixture.events.keyboard.shortcut('mod+a'); // doesn't work on macOS, works on Ubuntu
         }
