@@ -29,7 +29,12 @@ import {
   themeHelpers,
 } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
-import { ResourcePropTypes } from '@googleforcreators/media';
+import { useState, useMemo } from '@googleforcreators/react';
+import {
+  getExtensionsFromMimeType,
+  ResourcePropTypes,
+} from '@googleforcreators/media';
+import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -39,11 +44,16 @@ import Tooltip from '../../tooltip';
 import { useConfig } from '../../../app/config';
 import { MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import { focusStyle } from './styles';
+import HotlinkModal from './hotLinkModel';
 
 const InputRow = styled.div`
   display: flex;
   flex-grow: 1;
   margin-right: 8px;
+`;
+
+const ButtonRow = styled(Row)`
+  gap: 12px;
 `;
 
 const StyledFileInput = styled(Input)(
@@ -66,6 +76,10 @@ const StyledButton = styled(Button)`
     )};
 `;
 
+const HotlinkButton = styled(Button)`
+  padding: 12px 8px;
+`;
+
 function CaptionsPanelContent({
   isIndeterminate = false,
   tracks = [],
@@ -80,13 +94,26 @@ function CaptionsPanelContent({
     capabilities: { hasUploadMediaAction },
     MediaUpload,
   } = useConfig();
+  const [isOpen, setIsOpen] = useState(false);
 
-  if (
-    (!hasUploadMediaAction && !tracks?.length) ||
-    !allowedCaptionMimeTypes?.length
-  ) {
+  const enableCaptionHotlinking = useFeature('captionHotlinking');
+
+  const allowedFileTypes = useMemo(
+    () =>
+      allowedCaptionMimeTypes
+        .map((type) => getExtensionsFromMimeType(type))
+        .flat(),
+    [allowedCaptionMimeTypes]
+  );
+
+  if (!allowedCaptionMimeTypes?.length) {
     return null;
   }
+
+  const onSelect = (track) => {
+    handleChangeTrack(track);
+    setIsOpen(false);
+  };
 
   return (
     <>
@@ -124,8 +151,8 @@ function CaptionsPanelContent({
           </Tooltip>
         </Row>
       ))}
-      {!tracks.length && !isIndeterminate && (
-        <Row expand>
+      <ButtonRow spaceBetween={false}>
+        {!tracks.length && hasUploadMediaAction && !isIndeterminate && (
           <MediaUpload
             onSelect={handleChangeTrack}
             onSelectErrorMessage={__(
@@ -137,8 +164,26 @@ function CaptionsPanelContent({
             buttonInsertText={__('Select caption', 'web-stories')}
             render={renderUploadButton}
           />
-        </Row>
-      )}
+        )}
+        {!tracks.length && enableCaptionHotlinking && !isIndeterminate && (
+          <>
+            <HotlinkButton
+              variant={BUTTON_VARIANTS.RECTANGLE}
+              type={BUTTON_TYPES.SECONDARY}
+              size={BUTTON_SIZES.SMALL}
+              onClick={() => setIsOpen(true)}
+            >
+              {__('Hotlink', 'web-stories')}
+            </HotlinkButton>
+            <HotlinkModal
+              isOpen={isOpen}
+              onSelect={onSelect}
+              onClose={() => setIsOpen(false)}
+              allowedFileTypes={allowedFileTypes}
+            />
+          </>
+        )}
+      </ButtonRow>
     </>
   );
 }
