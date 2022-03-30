@@ -19,7 +19,6 @@
  */
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import { addDecorator, addParameters } from '@storybook/react';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import {
   theme as designSystemTheme,
@@ -55,7 +54,7 @@ window.wp.media = {
 
 const { ipad, ipad10p, ipad12p } = INITIAL_VIEWPORTS;
 
-addParameters({
+export const parameters = {
   a11y: {
     element: '#root',
     config: {},
@@ -76,68 +75,74 @@ addParameters({
       { name: 'Dark', value: 'rgba(0, 0, 0, 0.9)', default: true },
     ],
   },
-});
+};
 
-addDecorator((story, context) => {
-  const { id } = context;
-  // TODO(#10380): Replacement add-on for RTL feature
-  const isRTL = false;
+export const decorators = [
+  (Story, context) => {
+    const { id } = context;
+    // TODO(#10380): Replacement add-on for RTL feature
+    const isRTL = false;
 
-  const isDesignSystemStorybook = id.startsWith('designsystem');
-  const isDashboardStorybook = id.startsWith('dashboard');
+    const isDesignSystemStorybook = id.startsWith('designsystem');
+    const isDashboardStorybook = id.startsWith('dashboard');
 
-  if (isDashboardStorybook) {
-    return (
-      <ThemeProvider
-        theme={{
-          ...designSystemTheme,
-          colors: lightMode,
-        }}
-      >
-        <DashboardConfigProvider
-          config={{
-            api: { stories: 'stories' },
-            apiCallbacks: {
-              getUser: () => Promise.resolve({ id: 1 }),
-            },
-            editStoryURL: 'editStory',
-            isRTL,
-            styleConstants: {
-              topOffset: 0,
-            },
+    if (isDashboardStorybook) {
+      return (
+        <ThemeProvider
+          theme={{
+            ...designSystemTheme,
+            colors: lightMode,
           }}
         >
-          <ApiProvider>
-            <DashboardGlobalStyle />
-            <ModalGlobalStyle />
-            <DashboardKeyboardOnlyOutline />
-            {story()}
-          </ApiProvider>
-        </DashboardConfigProvider>
-      </ThemeProvider>
-    );
-  }
+          <DashboardConfigProvider
+            config={{
+              api: { stories: 'stories' },
+              apiCallbacks: {
+                getUser: () => Promise.resolve({ id: 1 }),
+              },
+              editStoryURL: 'editStory',
+              isRTL,
+              styleConstants: {
+                topOffset: 0,
+              },
+            }}
+          >
+            <ApiProvider>
+              <DashboardGlobalStyle />
+              <ModalGlobalStyle />
+              <DashboardKeyboardOnlyOutline />
+              {Story()}
+            </ApiProvider>
+          </DashboardConfigProvider>
+        </ThemeProvider>
+      );
+    }
 
-  if (isDesignSystemStorybook) {
-    // override darkMode colors
-    const dsTheme = { ...designSystemTheme, colors: lightMode };
+    if (isDesignSystemStorybook) {
+      // override darkMode colors
+      const dsTheme = { ...designSystemTheme, colors: lightMode };
+      return (
+        <ThemeProvider theme={dsTheme}>
+          <ThemeGlobals.Styles />
+          <ModalGlobalStyle />
+          {Story()}
+        </ThemeProvider>
+      );
+    }
+
     return (
-      <ThemeProvider theme={dsTheme}>
-        <ThemeGlobals.Styles />
-        <ModalGlobalStyle />
-        {story()}
+      <ThemeProvider theme={theme}>
+        <EditorConfigProvider config={{ isRTL }}>
+          <GlobalStyle />
+          <CropMoveableGlobalStyle />
+          <ModalGlobalStyle />
+          {Story()}
+        </EditorConfigProvider>
       </ThemeProvider>
     );
-  }
+  },
+];
 
-  return (
-    <ThemeProvider theme={theme}>
-      <EditorConfigProvider config={{ isRTL }}>
-        <GlobalStyle />
-        <CropMoveableGlobalStyle />
-        <ModalGlobalStyle />
-        {story()}
-      </EditorConfigProvider>
-    </ThemeProvider>
-  );
-});
+// addDecorator((story, context) => {
+
+// });
