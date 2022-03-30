@@ -9,7 +9,7 @@ You can bootstrap your React project using something like [Create React App](htt
 Let's start with installing the required dependencies.
 
 ```sh
-npm install @googleforcreators/story-editor @googleforcreators/design-system @googleforcreators/migration
+npm install @googleforcreators/story-editor @googleforcreators/design-system @googleforcreators/migration @googleforcreators/elements @googleforcreators/element-library
 ```
 
 The following code block scaffolds a minimal story editor:
@@ -19,11 +19,15 @@ import {
   StoryEditor,
   InterfaceSkeleton,
 } from "@googleforcreators/story-editor";
+import { elementTypes } from '@googleforcreators/element-library';
+import { registerElementType } from '@googleforcreators/elements';
 
 const Editor = () => {
   const apiCallbacks = {
     saveStoryById: () => Promise.resolve({}),
   };
+
+  elementTypes.forEach(registerElementType);
 
   return (
     <StoryEditor config={{ apiCallbacks }} initialEdits={{ story: {} }}>
@@ -84,12 +88,16 @@ import {
   StoryEditor,
   InterfaceSkeleton,
 } from "@googleforcreators/story-editor";
+import { elementTypes } from '@googleforcreators/element-library';
+import { registerElementType } from '@googleforcreators/elements';
 import saveStoryById from "./saveStoryById";
 
 const Editor = () => {
   const apiCallbacks = {
     saveStoryById,
   };
+
+  elementTypes.forEach(registerElementType);
 
   const content = window.localStorage.getItem("STORY_CONTENT");
   const story = content ? JSON.parse(content) : {};
@@ -208,6 +216,8 @@ import {
   StoryEditor,
   InterfaceSkeleton,
 } from "@googleforcreators/story-editor";
+import { elementTypes } from '@googleforcreators/element-library';
+import { registerElementType } from '@googleforcreators/elements';
 import saveStoryById from "./saveStoryById";
 import HeaderLayout from "./header";
 
@@ -215,6 +225,8 @@ const Editor = () => {
   const apiCallbacks = {
     saveStoryById,
   };
+
+  elementTypes.forEach(registerElementType);
 
   const content = window.localStorage.getItem("STORY_CONTENT");
   const story = content ? JSON.parse(content) : {};

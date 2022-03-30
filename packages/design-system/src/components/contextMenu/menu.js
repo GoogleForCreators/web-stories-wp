@@ -128,13 +128,22 @@ const Menu = ({
   const menuRef = useRef(null);
   const composedListRef = useCombinedRefs(mouseDownOutsideRef, menuRef);
 
+  /**
+   * Focus the first element when the user focuses the wrapper
+   * with their keyboard.
+   *
+   * Clicking in the wrapper should not automatically focus the first
+   * focusable element.
+   */
   const handleFocus = useCallback(
     (evt) => {
       onFocus(evt);
 
-      const focusableChildren = getFocusableChildren(menuRef.current);
-
-      if (menuRef.current === evt.target) {
+      if (
+        menuRef.current === evt.target &&
+        !menuRef.current.contains(evt.target)
+      ) {
+        const focusableChildren = getFocusableChildren(menuRef.current);
         focusableChildren?.[0]?.focus();
       }
     },

@@ -35,10 +35,10 @@ import {
 /**
  * Internal dependencies
  */
+import { MULTIPLE_VALUE } from '../../../constants';
 import useEyedropper from '../../eyedropper';
 import Tooltip from '../../tooltip';
 import { focusStyle } from '../../panels/shared';
-import { MULTIPLE_VALUE } from '../../../constants';
 import applyOpacityChange from './applyOpacityChange';
 import OpacityInput from './opacityInput';
 import ColorInput from './colorInput';
@@ -52,8 +52,12 @@ const containerCss = css`
 const Container = styled.section`
   ${containerCss}
   gap: ${({ isInDesignMenu }) => (isInDesignMenu ? 6 : 8)}px;
-  width: ${({ width }) => (width ? `${width}px` : `100%`)};
+  width: ${({ width }) => (width ? `${width}px` : 'inherit')};
 `;
+Container.propTypes = {
+  isInDesignMenu: PropTypes.bool,
+  width: PropTypes.number,
+};
 
 const ColorInputsWrapper = styled.div`
   ${containerCss}
@@ -129,11 +133,15 @@ const Color = forwardRef(function Color(
       ? TOOLTIP_PLACEMENT.BOTTOM
       : TOOLTIP_PLACEMENT.BOTTOM_START;
 
+  // Sometimes there's more than 1 color to an element.
+  // When there's multiple colors the input displays "Mixed" (in english) and takes up a different amount of space.
+  // By checking here to ignore that value based on mixed colors we prevent visual spill over of content.
+  const ignoreSetWidth = width && value === MULTIPLE_VALUE;
   return (
     <Container
       aria-label={containerLabel}
       isInDesignMenu={isInDesignMenu}
-      width={width}
+      width={!ignoreSetWidth && width ? width : null}
     >
       {hasEyedropper && (
         <Tooltip

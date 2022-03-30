@@ -44,8 +44,10 @@ export const _default = () => {
   elementTypes.forEach(registerElementType);
 
   return (
-    <StoryEditor config={{ apiCallbacks }} initialEdits={{ story }}>
-      <InterfaceSkeleton header={<HeaderLayout />} />
-    </StoryEditor>
+    <div style={{ height: '100vh' }}>
+      <StoryEditor config={{ apiCallbacks }} initialEdits={{ story }}>
+        <InterfaceSkeleton header={<HeaderLayout />} />
+      </StoryEditor>
+    </div>
   );
 };

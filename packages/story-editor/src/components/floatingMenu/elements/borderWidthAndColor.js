@@ -28,7 +28,7 @@ import { canSupportMultiBorder } from '@googleforcreators/masks';
  */
 import { useStory } from '../../../app';
 import { DEFAULT_BORDER } from '../../panels/design/border/shared';
-import { Input, Color, Separator, useProperties } from './shared';
+import { Input, Color, useProperties } from './shared';
 
 const Container = styled.div`
   display: flex;
@@ -119,30 +119,30 @@ function BorderWidthAndColor() {
   };
 
   return (
-    <>
-      <Container>
-        <Input
-          suffix={<Icons.BorderBox />}
-          value={border.left || 0}
-          aria-label={__('Border width', 'web-stories')}
-          onChange={(_, value) => handleWidthChange(value)}
-        />
-        {hasBorderWidth && (
-          <>
-            <Dash />
-            <Color
-              label={__('Border color', 'web-stories')}
-              value={border.color || BLACK}
-              onChange={handleColorChange}
-              hasInputs={false}
-              hasEyeDropper={false}
-              allowsOpacity={canHaveBorderOpacity}
-            />
-          </>
-        )}
-      </Container>
-      <Separator />
-    </>
+    <Container>
+      <Input
+        suffix={<Icons.BorderBox />}
+        value={border.left || 0}
+        aria-label={__('Border width', 'web-stories')}
+        onChange={(_, value) => handleWidthChange(value)}
+      />
+      {hasBorderWidth && (
+        <>
+          <Dash />
+          <Color
+            label={__('Border color', 'web-stories')}
+            value={border.color || BLACK}
+            onChange={handleColorChange}
+            hasInputs={false}
+            hasEyedropper={false}
+            allowsOpacity={canHaveBorderOpacity}
+            allowsGradient={false}
+            pickerHasEyedropper={false} // override shared floating menu Color component TODO https://github.com/GoogleForCreators/web-stories-wp/issues/11024
+            allowsSavedColors={false}
+          />
+        </>
+      )}
+    </Container>
   );
 }
 
