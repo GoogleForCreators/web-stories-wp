@@ -154,11 +154,27 @@ describe('TextEdit integration', () => {
       fit('should select all text and delete it', async () => {
         // Testing this on the BROKEN version
         await fixture.events.mouse.clickOn(frame, 30, 5); // enter the edit mode by clicking
-        await fixture.events.keyboard.shortcut('mod+a'); // doesn't work on macOS, maybe will work on Ubuntu
-        //document.execCommand("selectAll"); // selects all, but it's not the same as MOD+A, so we can't use it
-        await fixture.events.keyboard.type('BAR');
-        // result: BAR, expected: Lorem...BAR...ipsum
-        expect(frame.querySelector('p').innerHTML).not.toEqual('BAR');
+
+        if (navigator.userAgentData.platform === 'macOS') {
+          document.execCommand('selectAll'); // not the same as mod+a
+        } else {
+          await fixture.events.keyboard.shortcut('mod+a'); // doesn't work on macOS, works on Ubuntu
+        }
+        const text = '461';
+        await fixture.events.keyboard.type(text);
+
+        // Exit edit mode using the Esc key
+        await fixture.events.keyboard.press('Esc');
+
+        // The element is still selected and updated.
+        await waitFor(async () => {
+          const story = await fixture.renderHook(() => useStory());
+          if (!story.state.selectedElements.length) {
+            throw new Error('story not ready');
+          }
+
+          expect(story.state.selectedElements[0].content).toEqual(text);
+        });
       });
     });
 
