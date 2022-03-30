@@ -22,6 +22,7 @@ import {
   uploadFile,
   deleteMedia,
   takeSnapshot,
+  withExperimentalFeatures,
 } from '@web-stories-wp/e2e-test-utils';
 
 describe('Background Audio', () => {
@@ -154,6 +155,48 @@ describe('Background Audio', () => {
       await expect(page).toClick('button', { text: 'Select caption' });
 
       await expect(page).toMatch('test.vtt');
+    });
+    describe('Hotlink captions', () => {
+      withExperimentalFeatures(['captionHotlinking']);
+
+      it('should allow adding background audio with captions', async () => {
+        await createNewStory();
+
+        // Select the current page by clicking bg change quick action (because of empty state).
+        await expect(page).toClick('button', { text: 'Change background color' });
+
+        await expect(page).toMatch('Page Background Audio');
+
+        await expect(page).toClick('button', { text: 'Upload an audio file' });
+
+        await page.waitForSelector('.media-modal', {
+          visible: true,
+        });
+
+        await expect(page).toClick('.media-modal #menu-item-upload', {
+          text: 'Upload files',
+          visible: true,
+        });
+
+        const fileName = await uploadFile('audio.mp3');
+        uploadedFiles.push(fileName);
+
+        await expect(page).toClick('button', { text: 'Select audio file' });
+
+        await page.waitForSelector('.media-modal', {
+          visible: false,
+        });
+
+        await expect(page).toMatch(fileName);
+
+        await expect(page).toMatchElement('button[aria-label="Play"]');
+
+        await expect(page).toClick('button', { text: 'Hotlink' });
+
+        await page.waitForSelector('[role="dialog"]');
+
+        await expect(page).toMatchElement('[role="dialog"]');
+      });
     });
   });
 });

@@ -93,7 +93,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
   );
 
   const handleChangeTrack = useCallback(
-    ({ src = '', id }) => {
+    ({ src = '', id, needsProxy = false }) => {
       const newTracks = {
         track: src,
         trackId: id,
@@ -102,6 +102,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
         kind: 'captions',
         srclang: '',
         label: '',
+        needsProxy,
       };
 
       pushUpdate({ tracks: [...tracks, newTracks] }, true);
