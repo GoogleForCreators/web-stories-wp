@@ -82,6 +82,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
 	 * @param Types           $types Types instance.
+	 * @param Experiments     $experiments Experiments instance.
 	 * @return void
 	 */
 	public function __construct( Story_Post_Type $story_post_type, Types $types, Experiments $experiments ) {
