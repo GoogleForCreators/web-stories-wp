@@ -28,7 +28,6 @@ import { renderWithTheme } from '@googleforcreators/test-utils';
 import StoryContext from '../../../../app/story/context';
 import useIsUploadingToStory from '../../../../utils/useIsUploadingToStory';
 import ConfigContext from '../../../../app/config/context';
-import { renderWithTheme } from '../../../../testUtils';
 import {
   CheckpointContext,
   ChecklistCountProvider,
