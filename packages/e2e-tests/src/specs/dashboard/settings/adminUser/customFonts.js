@@ -83,7 +83,7 @@ describe('Custom Fonts', () => {
     await page.keyboard.press('ArrowDown');
     await page.keyboard.press('ArrowUp');
     const selected = await getSelectedFont();
-    expect(selected.name).toStrictEqual(OPEN_SANS_CONDENSED_LIGHT);
+    expect(selected.name).toStrictEqual(fonts[1].name);
 
     const listbox = await page.$('[role="listbox"]');
 
