@@ -26,7 +26,6 @@ import {
   MIN_IMG_HEIGHT,
   useConfig,
 } from '@googleforcreators/dashboard';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -127,8 +126,6 @@ function EditorSettings() {
       publisherLogos,
     })
   );
-
-  const isCustomFontsEnabled = useFeature('customFonts');
 
   const {
     capabilities: { canUploadFiles, canManageSettings } = {},
@@ -334,13 +331,11 @@ function EditorSettings() {
                 />
               </>
             )}
-            {isCustomFontsEnabled && (
-              <CustomFontsSettings
-                customFonts={customFonts}
-                addCustomFont={addCustomFont}
-                deleteCustomFont={deleteCustomFont}
-              />
-            )}
+            <CustomFontsSettings
+              customFonts={customFonts}
+              addCustomFont={addCustomFont}
+              deleteCustomFont={deleteCustomFont}
+            />
             <TelemetrySettings
               disabled={disableOptedIn}
               onCheckboxSelected={toggleWebStoriesTrackingOptIn}

@@ -18,7 +18,6 @@
  * External dependencies
  */
 import {
-  withExperimentalFeatures,
   visitSettings,
   addCustomFont,
   removeAllFonts,
@@ -42,8 +41,6 @@ const OPEN_SANS_CONDENSED_LIGHT_ITALIC_URL = `${FONT_BASE_URL}/OpenSansCondensed
 const findByUrl = (arr, val) => arr.find((o) => o.url === val);
 
 describe('Custom Fonts', () => {
-  withExperimentalFeatures(['customFonts']);
-
   let removeResourceErrorMessage;
 
   beforeAll(() => {
