@@ -53,7 +53,7 @@ function Popup({
   renderContents,
 
   // color input
-  // invisible = false, removed!
+  // invisible = false, removed! -- If we leave color input as is, using this we will need to keep it.
 
   //data list, dropdown, search,
   fillWidth = false,
@@ -62,7 +62,7 @@ function Popup({
   // fillHeight = false, removed!
 
   // dropdown and color input
-  // refCallback = noop, removed!
+  // refCallback = noop, removed!  -- If we leave color input as is, using this we will need to keep it.
 
   //PlayPauseButton - all direct popup uses, style text, canvas elements, publish time, etc -
   topOffset = DEFAULT_TOPOFFSET,
@@ -72,7 +72,7 @@ function Popup({
 
   // color input - docking or floating ??? mainly needed because we are getting weird x values in the
   // layer panel popup which has tooltip inside.
-  // resetXOffset = false, removed!
+  // resetXOffset = false, removed!  -- If we leave color input as is, using this we will need to keep it. Or just fix that layers panel issue
 
   // tooltip only
   //  onPositionUpdate = noop, removed!

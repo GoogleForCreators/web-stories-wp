@@ -64,6 +64,7 @@ const TooltipContainer = styled.div`
   transition: 0.4s opacity;
   opacity: ${({ shown }) => (shown ? 1 : 0)};
   pointer-events: ${({ shown }) => (shown ? 'all' : 'none')};
+  // why is this hardcoded?
   z-index: 9999;
   border-radius: 4px;
   background-color: ${({ theme }) => theme.colors.inverted.bg.primary};
@@ -118,6 +119,7 @@ function Tooltip({
   isDelayed = false,
   // forceAnchorRef = null, needed for WithLink so that the url tooltip hovers the element, and isn't anchor
   // to just the canvas. Also used in Slider, but I couldn't trigger it.
+  // could remove tooltipProps, do we need it anymore
   tooltipProps = null,
   className = null,
   popupZIndexOverride,
