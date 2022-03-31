@@ -215,6 +215,7 @@ Color.propTypes = {
   allowsGradient: PropTypes.bool,
   allowsOpacity: PropTypes.bool,
   allowsSavedColors: PropTypes.bool,
+  containerLabelBase: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
   changedStyle: PropTypes.string,
