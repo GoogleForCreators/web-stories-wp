@@ -1,0 +1,42 @@
+{
+  "type": "custom",
+  "displayName": "Editor",
+  "description": "See the story editor in action. It has capability to save a story in local storage and also serves preview",
+  "dependencies": [
+    "@googleforcreators/story-editor",
+    "@googleforcreators/elements",
+    "@googleforcreators/element-library",
+    "react-router-dom"
+  ],
+  "devDependencies": [],
+  "replacements": [
+    {
+      "src": "gitignore",
+      "dest": ".gitignore"
+    },
+    {
+      "src": "webpack-configs",
+      "dest": "webpack-configs"
+    },
+    {
+      "src": ".babelrc",
+      "dest": ".babelrc"
+    },
+    {
+      "src": "express.js",
+      "dest": "express.js"
+    },
+    {
+      "src": "package.json",
+      "dest": "package.json"
+    },
+    {
+      "src": "src/assets",
+      "dest": "src/assets"
+    },
+    {
+      "src": "src/index.js",
+      "dest": "src/index.js"
+    }
+  ]
+}

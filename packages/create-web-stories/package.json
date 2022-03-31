@@ -6,9 +6,12 @@
     "name": "Google",
     "url": "https://creators.google/"
   },
-  "version": "0.1.202203241635",
+  "type": "module",
+  "version": "0.1.202203311537",
   "license": "Apache-2.0",
-  "keywords": ["web stories"],
+  "keywords": [
+    "web stories"
+  ],
   "homepage": "https://github.com/GoogleForCreators/web-stories-wp/blob/main/packages/create-web-stories/README.md",
   "repository": {
     "type": "git",
@@ -19,7 +22,7 @@
     "url": "https://github.com/googleforcreators/web-stories-wp/issues"
   },
   "bin": {
-    "create-web-stories": "./bin/index.cjs"
+    "create-web-stories": "./bin/index.js"
   },
   "engines": {
     "node": ">= 12 || >= 14 || >= 16",
@@ -27,7 +30,9 @@
   },
   "dependencies": {
     "commander": "^9.0.0",
-    "fs-extra": "^10.0.1"
+    "fs-extra": "^10.0.1",
+    "prompts": "^2.4.2",
+    "chalk": "^5.0.1"
   },
   "devDependencies": {}
 }

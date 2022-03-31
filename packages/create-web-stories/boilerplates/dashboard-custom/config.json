@@ -1,0 +1,44 @@
+{
+  "type": "custom",
+  "displayName": "Dashboard",
+  "description": "See a simple dashboard in action. It uses hardcoded data to hydrate itself.",
+  "dependencies": [
+    "@googleforcreators/dashboard",
+    "@googleforcreators/design-system"
+  ],
+  "devDependencies": [],
+  "replacements": [
+    {
+      "src": "gitignore",
+      "dest": ".gitignore"
+    },
+    {
+      "src": "webpack-configs",
+      "dest": "webpack-configs"
+    },
+    {
+      "src": ".babelrc",
+      "dest": ".babelrc"
+    },
+    {
+      "src": "express.js",
+      "dest": "express.js"
+    },
+    {
+      "src": "package.json",
+      "dest": "package.json"
+    },
+    {
+      "src": "src/assets",
+      "dest": "src/assets"
+    },
+    {
+      "src": "src/index.js",
+      "dest": "src/index.js"
+    },
+    {
+      "src": "src/dashboard.js",
+      "dest": "src/dashboard.js"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "type": "CRA",
+  "displayName": "Dashboard",
+  "description": "See a simple dashboard in action. It uses hardcoded data to hydrate itself",
+  "dependencies": [
+    "@googleforcreators/dashboard",
+    "@googleforcreators/design-system"
+  ],
+  "devDependencies": [],
+  "replacements": [
+    {
+      "src": "src/dashboard.js",
+      "dest": "src/components/dashboard.js"
+    },
+    {
+      "src": "public/favicon.ico",
+      "dest": "public/favicon.ico"
+    }
+  ]
+}

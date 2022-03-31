@@ -1,0 +1,43 @@
+{
+  "type": "custom",
+  "displayName": "Editor and Dashboard",
+  "description": "A Standalone project combining dashboard for story management and the editor for editing them.",
+  "dependencies": [
+    "@googleforcreators/story-editor",
+    "@googleforcreators/dashboard",
+    "@googleforcreators/elements",
+    "@googleforcreators/element-library",
+    "react-router-dom"
+  ],
+  "devDependencies": [],
+  "replacements": [
+    {
+      "src": "gitignore",
+      "dest": ".gitignore"
+    },
+    {
+      "src": "webpack-configs",
+      "dest": "webpack-configs"
+    },
+    {
+      "src": ".babelrc",
+      "dest": ".babelrc"
+    },
+    {
+      "src": "express.js",
+      "dest": "express.js"
+    },
+    {
+      "src": "package.json",
+      "dest": "package.json"
+    },
+    {
+      "src": "src/assets",
+      "dest": "src/assets"
+    },
+    {
+      "src": "src/index.js",
+      "dest": "src/index.js"
+    }
+  ]
+}

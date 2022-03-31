@@ -1,0 +1,12 @@
+{
+  "type": "CRA",
+  "displayName": "Editor",
+  "description": "See the story editor in action. It has capability to save a story in local storage and also serves preview",
+  "dependencies": [
+    "@googleforcreators/story-editor",
+    "@googleforcreators/elements",
+    "@googleforcreators/element-library",
+    "react-router-dom"
+  ],
+  "devDependencies": []
+}
