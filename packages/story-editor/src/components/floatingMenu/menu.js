@@ -34,11 +34,13 @@ const MenuWrapper = styled.section`
   display: flex;
   position: absolute;
   z-index: ${Z_INDEX_FLOATING_MENU};
+  opacity: ${({ visuallyHidden }) => (visuallyHidden ? 0 : 1)};
+  transition: 140ms opacity;
 `;
 
 const FloatingMenu = memo(
   forwardRef(function FloatingMenu(
-    { selectionIdentifier, selectedElementType, handleDismiss },
+    { selectionIdentifier, selectedElementType, handleDismiss, visuallyHidden },
     ref
   ) {
     useLayoutEffect(() => {
@@ -59,7 +61,11 @@ const FloatingMenu = memo(
     }, [ref, selectionIdentifier]);
 
     return (
-      <MenuWrapper ref={ref} aria-label={__('Design menu', 'web-stories')}>
+      <MenuWrapper
+        ref={ref}
+        aria-label={__('Design menu', 'web-stories')}
+        visuallyHidden={visuallyHidden}
+      >
         <FloatingMenuProvider handleDismiss={handleDismiss}>
           <ContextMenu
             isInline
@@ -90,6 +96,7 @@ FloatingMenu.propTypes = {
   handleDismiss: PropTypes.func.isRequired,
   selectedElementType: PropTypes.string.isRequired,
   selectionIdentifier: PropTypes.string.isRequired,
+  visuallyHidden: PropTypes.bool,
 };
 
 export default FloatingMenu;

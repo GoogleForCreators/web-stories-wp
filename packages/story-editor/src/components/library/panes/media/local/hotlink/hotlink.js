@@ -37,7 +37,7 @@ import HotlinkModal from './hotlinkModal';
 
 const Button = styled(DefaultButton)`
   ${focusStyle};
-  margin: 0 10px;
+  margin: 0 10px 0 0;
 `;
 
 function Hotlink() {

@@ -19,6 +19,7 @@
  */
 import { UnitsProvider, getBox, PAGE_RATIO } from '@googleforcreators/units';
 import { TransformContext } from '@googleforcreators/transform';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
@@ -28,7 +29,6 @@ import FontContext from '../../../../../../app/font/context';
 import APIContext from '../../../../../../app/api/context';
 import ConfigContext from '../../../../../../app/config/context';
 import TextSet from '../textSet';
-import { renderWithTheme } from '../../../../../../testUtils';
 import { TEXT_SET_SIZE } from '../../../../../../constants';
 import StoryContext from '../../../../../../app/story/context';
 import { LayoutProvider } from '../../../../../../app/layout';

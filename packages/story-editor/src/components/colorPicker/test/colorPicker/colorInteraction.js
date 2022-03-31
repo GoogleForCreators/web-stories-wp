@@ -23,6 +23,7 @@ import {
   BACKGROUND_TEXT_MODE,
 } from '@googleforcreators/design-system';
 import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
@@ -35,7 +36,6 @@ import {
   getPagePreset,
   areAllType,
 } from '../../../../utils/presetUtils';
-import { renderWithTheme } from '../../../../testUtils';
 
 jest.mock('../../../../utils/presetUtils');
 

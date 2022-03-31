@@ -48,7 +48,7 @@ function Layout() {
             },
           },
         }}
-        inspectorTabs={{
+        sidebarTabs={{
           document: {
             title: __('Document', 'web-stories'),
             Pane: DocumentPane,

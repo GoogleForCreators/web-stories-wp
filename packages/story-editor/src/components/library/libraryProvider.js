@@ -80,6 +80,20 @@ function LibraryProvider({ children }) {
     []
   );
 
+  const updateSavedTemplate = useCallback((template) => {
+    _setSavedTemplates((_savedTemplates) => {
+      return _savedTemplates.map((t) => {
+        if (t.templateId === template.templateId) {
+          return {
+            ...t,
+            ...template,
+          };
+        }
+        return t;
+      });
+    });
+  }, []);
+
   const { showElementsTab } = useFeatures();
 
   const tabs = useMemo(
@@ -151,6 +165,7 @@ function LibraryProvider({ children }) {
         insertTextSet,
         insertTextSetByOffset,
         setSavedTemplates,
+        updateSavedTemplate,
         setNextTemplatesToFetch,
         setShouldUseSmartColor,
       },
@@ -172,6 +187,7 @@ function LibraryProvider({ children }) {
       setNextTemplatesToFetch,
       shouldUseSmartColor,
       setSavedTemplates,
+      updateSavedTemplate,
     ]
   );
   useEffect(() => {

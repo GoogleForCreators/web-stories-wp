@@ -51,11 +51,8 @@ describe('Inline style override', () => {
     describe('CUJ: Creator Can Style Text: Apply Uppercase', () => {
       it('should have correct formatting when pressing uppercase toggle, then inserting text', async () => {
         // Verify that uppercase is untoggled in design panel
-        await data.fixture.events.click(
-          data.fixture.editor.inspector.designTab
-        );
-        const { uppercase } =
-          data.fixture.editor.inspector.designPanel.textStyle;
+        await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
+        const { uppercase } = data.fixture.editor.sidebar.designPanel.textStyle;
         expect(uppercase.checked).toBe(false);
 
         // Toggle uppercase by button
@@ -85,10 +82,8 @@ describe('Inline style override', () => {
     describe('CUJ: Creator Can Style Text: Apply B', () => {
       it('should have correct formatting when pressing mod+b for bold, then inserting text', async () => {
         // Verify that bold is untoggled in design panel
-        await data.fixture.events.click(
-          data.fixture.editor.inspector.designTab
-        );
-        const { bold } = data.fixture.editor.inspector.designPanel.textStyle;
+        await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
+        const { bold } = data.fixture.editor.sidebar.designPanel.textStyle;
         expect(bold.checked).toBe(false);
 
         // Toggle bold by keyboard command
@@ -116,10 +111,8 @@ describe('Inline style override', () => {
 
       it('should have correct formatting when pressing bold toggle, then inserting text', async () => {
         // Verify that bold is untoggled in design panel
-        await data.fixture.events.click(
-          data.fixture.editor.inspector.designTab
-        );
-        const { bold } = data.fixture.editor.inspector.designPanel.textStyle;
+        await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
+        const { bold } = data.fixture.editor.sidebar.designPanel.textStyle;
         expect(bold.checked).toBe(false);
 
         // Toggle bold by button
@@ -149,11 +142,9 @@ describe('Inline style override', () => {
     describe('CUJ: Creator Can Style Text: Apply U, Apply I', () => {
       it('should have correct formatting when pressing underline toggle, then mod+i, then inserting text', async () => {
         // Verify that italic and underline are untoggled in design panel
-        await data.fixture.events.click(
-          data.fixture.editor.inspector.designTab
-        );
+        await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
         const { italic, underline } =
-          data.fixture.editor.inspector.designPanel.textStyle;
+          data.fixture.editor.sidebar.designPanel.textStyle;
         expect(italic.checked).toBe(false);
         expect(underline.checked).toBe(false);
 
@@ -188,11 +179,9 @@ describe('Inline style override', () => {
        **/
       xit('should have correct formatting when pressing mod+i, then underline toggle, then inserting text', async () => {
         // Verify that italic and underline are untoggled in design panel
-        await data.fixture.events.click(
-          data.fixture.editor.inspector.designTab
-        );
+        await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
         const { italic, underline } =
-          data.fixture.editor.inspector.designPanel.textStyle;
+          data.fixture.editor.sidebar.designPanel.textStyle;
         expect(italic.checked).toBe(false);
         expect(underline.checked).toBe(false);
 
@@ -225,11 +214,9 @@ describe('Inline style override', () => {
     describe('CUJ: Creator Can Style Text: Select weight', () => {
       it('should have correct formatting when selecting font weight, then inserting text', async () => {
         // Verify that bold is untoggled in design panel
-        await data.fixture.events.click(
-          data.fixture.editor.inspector.designTab
-        );
+        await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
         const { fontWeight } =
-          data.fixture.editor.inspector.designPanel.textStyle;
+          data.fixture.editor.sidebar.designPanel.textStyle;
         expect(fontWeight.value).toBe('Regular');
 
         // Open dropdown and select "Black"
@@ -271,9 +258,9 @@ describe('Inline style override', () => {
       // Place cursor at start and then move to after second character
       await setSelection(2, 2);
 
-      await data.fixture.events.click(data.fixture.editor.inspector.designTab);
+      await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
       const { italic, bold } =
-        data.fixture.editor.inspector.designPanel.textStyle;
+        data.fixture.editor.sidebar.designPanel.textStyle;
 
       // Verify that italic is toggled, bold is not
       expect(italic.checked).toBe(true);
@@ -314,9 +301,8 @@ describe('Inline style override', () => {
     // Make just this character italic
     await data.fixture.events.keyboard.shortcut('mod+i');
 
-    await data.fixture.events.click(data.fixture.editor.inspector.designTab);
-    const { italic, bold } =
-      data.fixture.editor.inspector.designPanel.textStyle;
+    await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
+    const { italic, bold } = data.fixture.editor.sidebar.designPanel.textStyle;
 
     // Verify that both italic and bold are toggled
     expect(italic.checked).toBe(true);

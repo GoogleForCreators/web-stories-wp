@@ -22,11 +22,11 @@ import {
   createSolid,
   getPreviewText as getPreviewTextMock,
 } from '@googleforcreators/patterns';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../../testUtils';
 import ColorInput from '../colorInput';
 import getPreviewStyleMock from '../getPreviewStyle';
 import { StoryContext } from '../../../../app/story';

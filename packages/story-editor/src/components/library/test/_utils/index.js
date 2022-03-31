@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { act } from '@testing-library/react';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
@@ -27,7 +28,6 @@ import { MediaProvider } from '../../../../app/media';
 import { ConfigProvider } from '../../../../app/config';
 import { FontProvider } from '../../../../app/font';
 import APIContext from '../../../../app/api/context';
-import { renderWithTheme } from '../../../../testUtils';
 
 export async function arrange({ mediaResponse = [] }) {
   const config = {

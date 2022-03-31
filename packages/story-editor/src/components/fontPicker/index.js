@@ -79,8 +79,13 @@ const FontPicker = forwardRef(function FontPicker(
     fonts.forEach((f) => {
       map.set(f.id, f);
     });
+
+    customFonts?.forEach((f) => {
+      map.set(f.id, f);
+    });
+
     return map;
-  }, [fonts]);
+  }, [fonts, customFonts]);
 
   const onObserve = useCallback(
     (observedFonts) => {
@@ -151,7 +156,8 @@ const FontPicker = forwardRef(function FontPicker(
       zIndex={zIndex}
       highlightStylesOverride={highlightStylesOverride}
       data-testid="font"
-      aria-label={__('Font family', 'web-stories')}
+      title={__('Available font families', 'web-stories')}
+      dropdownButtonLabel={__('Font family', 'web-stories')}
       options={fonts}
       primaryOptions={curatedFonts}
       primaryLabel={__('Recommended', 'web-stories')}

@@ -183,17 +183,17 @@ describe('Background Copy Paste integration', () => {
     await setBackgroundColor('FF0000');
     await addBackgroundImage(0);
     await fixture.events.sleep(100);
-    await fixture.events.click(fixture.editor.inspector.designTab);
+    await fixture.events.click(fixture.editor.sidebar.designTab);
     await fixture.events.click(
-      fixture.editor.inspector.designPanel.filters.linear
+      fixture.editor.sidebar.designPanel.filters.linear
     );
     await gotoPage(2);
     await setBackgroundColor('00FF00');
     await addBackgroundImage(1);
     await fixture.events.sleep(100);
-    await fixture.events.click(fixture.editor.inspector.designTab);
+    await fixture.events.click(fixture.editor.sidebar.designTab);
     await fixture.events.click(
-      fixture.editor.inspector.designPanel.filters.radial
+      fixture.editor.sidebar.designPanel.filters.radial
     );
 
     // Verify setup - 1 image on each page with correct overlay
@@ -255,7 +255,7 @@ describe('Background Copy Paste integration', () => {
   }
   async function setBackgroundColor(hex) {
     await clickBackgroundElement();
-    await fixture.events.click(fixture.editor.inspector.designTab);
+    await fixture.events.click(fixture.editor.sidebar.designTab);
     const hexInput = getInputByAriaLabel('Background color');
     // First click the input field to focus it
     await fixture.events.click(hexInput);
@@ -267,13 +267,13 @@ describe('Background Copy Paste integration', () => {
   }
   async function addBackgroundImage(index) {
     // Add image and click "set as background"
-    await fixture.events.click(fixture.editor.inspector.insertTab);
+    await fixture.events.click(fixture.editor.sidebar.insertTab);
     await fixture.events.click(fixture.editor.library.mediaTab);
     const image = fixture.editor.library.media.item(index);
     await fixture.events.mouse.clickOn(image, 20, 20);
-    await fixture.events.click(fixture.editor.inspector.designTab);
+    await fixture.events.click(fixture.editor.sidebar.designTab);
     await fixture.events.click(
-      fixture.editor.inspector.designPanel.sizePosition.setAsBackground
+      fixture.editor.sidebar.designPanel.sizePosition.setAsBackground
     );
   }
   async function getNumElements() {

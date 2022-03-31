@@ -58,6 +58,7 @@ import removeTransientMediaProperties from './migrations/v0037_removeTransientMe
 import camelCaseResourceSizes from './migrations/v0038_camelCaseResourceSizes';
 import backgroundAudioFormatting from './migrations/v0039_backgroundAudioFormatting';
 import andadaFontToAndadaPro from './migrations/v0040_andadaFontToAndadaPro.js';
+import removeFontProperties from './migrations/v0041_removeFontProperties.js';
 
 const MIGRATIONS = {
   1: [storyDataArrayToObject],
@@ -100,6 +101,7 @@ const MIGRATIONS = {
   38: [camelCaseResourceSizes],
   39: [backgroundAudioFormatting],
   40: [andadaFontToAndadaPro],
+  41: [removeFontProperties],
 };
 
 export const DATA_VERSION = Math.max.apply(

@@ -31,7 +31,7 @@ import useRichTextFormatting from '../panels/design/textStyle/useRichTextFormatt
 import getClosestFontWeight from '../panels/design/textStyle/getClosestFontWeight';
 import { getCommonValue } from '../panels/shared';
 import FontPicker from '../fontPicker';
-import updateProperties from '../inspector/design/updateProperties';
+import updateProperties from '../design/updateProperties';
 
 const StoryFontPicker = forwardRef(function StoryFontPicker({ ...rest }, ref) {
   const { updateSelectedElements, selectedElements } = useStory(
@@ -79,14 +79,13 @@ const StoryFontPicker = forwardRef(function StoryFontPicker({ ...rest }, ref) {
 
   const onChange = useCallback(
     async (newFont) => {
-      trackEvent('font_family_changed', {
-        name: newFont.name,
-      });
+      const { id, name, value, ...newFontFormatted } = newFont;
+      trackEvent('font_family_changed', { name });
 
       await maybeEnqueueFontStyle(
         selectedElements.map(({ content }) => {
           return {
-            font: newFont,
+            font: newFontFormatted,
             fontStyle,
             fontWeight,
             content: stripHTML(content),
@@ -94,9 +93,9 @@ const StoryFontPicker = forwardRef(function StoryFontPicker({ ...rest }, ref) {
         })
       );
       addRecentFont(newFont);
-      pushUpdate({ font: newFont }, true);
+      pushUpdate({ font: newFontFormatted }, true);
 
-      const newFontWeight = getClosestFontWeight(400, newFont.weights);
+      const newFontWeight = getClosestFontWeight(400, newFontFormatted.weights);
       await handleResetFontWeight(newFontWeight);
     },
     [

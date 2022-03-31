@@ -26,7 +26,6 @@ import {
   MIN_IMG_HEIGHT,
   useConfig,
 } from '@googleforcreators/dashboard';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -64,7 +63,6 @@ function EditorSettings() {
     getPageById,
     customFonts,
     addCustomFont,
-    fetchCustomFonts,
     deleteCustomFont,
     publisherLogos,
     addPublisherLogo,
@@ -74,7 +72,7 @@ function EditorSettings() {
   } = useEditorSettings(
     ({
       actions: {
-        fontsApi: { addCustomFont, fetchCustomFonts, deleteCustomFont },
+        fontsApi: { addCustomFont, deleteCustomFont },
         settingsApi: { fetchSettings, updateSettings },
         pagesApi: { searchPages, getPageById },
         mediaApi: { uploadMedia },
@@ -120,7 +118,6 @@ function EditorSettings() {
       getPageById,
       customFonts,
       addCustomFont,
-      fetchCustomFonts,
       deleteCustomFont,
       fetchPublisherLogos,
       addPublisherLogo,
@@ -129,8 +126,6 @@ function EditorSettings() {
       publisherLogos,
     })
   );
-
-  const isCustomFontsEnabled = useFeature('customFonts');
 
   const {
     capabilities: { canUploadFiles, canManageSettings } = {},
@@ -336,14 +331,11 @@ function EditorSettings() {
                 />
               </>
             )}
-            {isCustomFontsEnabled && (
-              <CustomFontsSettings
-                customFonts={customFonts}
-                addCustomFont={addCustomFont}
-                fetchCustomFonts={fetchCustomFonts}
-                deleteCustomFont={deleteCustomFont}
-              />
-            )}
+            <CustomFontsSettings
+              customFonts={customFonts}
+              addCustomFont={addCustomFont}
+              deleteCustomFont={deleteCustomFont}
+            />
             <TelemetrySettings
               disabled={disableOptedIn}
               onCheckboxSelected={toggleWebStoriesTrackingOptIn}

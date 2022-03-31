@@ -20,12 +20,12 @@
 import { fireEvent, waitFor, screen } from '@testing-library/react';
 import { Datalist } from '@googleforcreators/design-system';
 import { CURATED_FONT_NAMES } from '@googleforcreators/fonts';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
 import FontContext from '../../../../../app/font/context';
-import { renderWithTheme } from '../../../../../testUtils';
 import fontsListResponse from './fontsResponse';
 
 jest.mock('@googleforcreators/design-system', () => ({

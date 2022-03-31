@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { Editor } from 'draft-js';
+import { Editor, getDefaultKeyBinding, KeyBindingUtil } from 'draft-js';
 import PropTypes from 'prop-types';
 import {
   useEffect,
@@ -58,9 +58,7 @@ function RichTextEditor({ content, onChange }, ref) {
       return;
     }
     const newContent = getContentFromState(editorState);
-    if (newContent) {
-      onChange(newContent);
-    }
+    onChange(newContent);
   }, [onChange, getContentFromState, editorState]);
 
   const hasEditorState = Boolean(editorState);
@@ -82,6 +80,15 @@ function RichTextEditor({ content, onChange }, ref) {
     return null;
   }
 
+  const { hasCommandModifier } = KeyBindingUtil;
+
+  function bindKeys(e) {
+    if (e.code === 'KeyA' && hasCommandModifier(e)) {
+      return 'selectall';
+    }
+    return getDefaultKeyBinding(e);
+  }
+
   // Handle basic key commands such as bold, italic and underscore.
   const handleKeyCommand = getHandleKeyCommand();
   return (
@@ -91,6 +98,7 @@ function RichTextEditor({ content, onChange }, ref) {
       editorState={editorState}
       handleKeyCommand={handleKeyCommand}
       handlePastedText={handlePastedText}
+      keyBindingFn={bindKeys}
       customStyleFn={customInlineDisplay}
       spellCheck
       stripPastedStyles

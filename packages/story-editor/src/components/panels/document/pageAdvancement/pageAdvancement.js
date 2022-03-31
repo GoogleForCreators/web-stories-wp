@@ -33,6 +33,10 @@ import {
   THEME_CONSTANTS,
 } from '@googleforcreators/design-system';
 import { clamp } from '@googleforcreators/units';
+import {
+  DEFAULT_PAGE_DURATION,
+  DEFAULT_AUTO_ADVANCE,
+} from '@googleforcreators/output';
 
 /**
  * Internal dependencies
@@ -41,10 +45,6 @@ import { useStory } from '../../../../app/story';
 import { Row, Switch } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { inputContainerStyleOverride } from '../../shared';
-import {
-  DEFAULT_AUTO_ADVANCE,
-  DEFAULT_PAGE_DURATION,
-} from '../../../../constants';
 
 const SwitchRow = styled.div`
   margin-bottom: 16px;
