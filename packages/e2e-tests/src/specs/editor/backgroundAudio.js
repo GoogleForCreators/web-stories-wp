@@ -23,7 +23,10 @@ import {
   deleteMedia,
   takeSnapshot,
   withExperimentalFeatures,
+  withPlugin,
 } from '@web-stories-wp/e2e-test-utils';
+
+const VTT_URL = `${process.env.WP_BASE_URL}/wp-content/e2e-assets/test.vtt`;
 
 describe('Background Audio', () => {
   let uploadedFiles;
@@ -156,8 +159,10 @@ describe('Background Audio', () => {
 
       await expect(page).toMatch('test.vtt');
     });
+
     describe('Hotlink captions', () => {
       withExperimentalFeatures(['captionHotlinking']);
+      withPlugin('e2e-tests-hotlink-hotwire');
 
       it('should allow adding background audio with captions', async () => {
         await createNewStory();
@@ -195,9 +200,19 @@ describe('Background Audio', () => {
 
         await expect(page).toClick('button', { text: 'Link to file' });
 
-        await page.waitForSelector('[role="dialog"]');
+        const dialogSelector = '.ReactModal__Content';
 
-        await expect(page).toMatchElement('[role="dialog"]');
+        await page.waitForSelector(dialogSelector);
+
+        const dialog = await expect(page).toMatchElement(dialogSelector);
+
+        await page.keyboard.type(VTT_URL);
+
+        await expect(dialog).toClick('button', { text: 'Insert' });
+
+        await expect(page).not.toMatchElement(dialogSelector);
+
+        await expect(page).toMatch('test.vtt');
       });
     });
   });
