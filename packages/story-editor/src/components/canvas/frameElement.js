@@ -204,8 +204,19 @@ function FrameElement({ id }) {
     onClick: isMedia ? handleMediaClick(id) : null,
   };
 
+  const withMaskRef = useRef(null);
+
   usePerformanceTracking({
     node: maskDisabled ? elementRef.current : null,
+    eventData: {
+      ...TRACKING_EVENTS.SELECT_ELEMENT,
+      label: element.type,
+    },
+    eventType: 'pointerdown',
+  });
+
+  usePerformanceTracking({
+    node: withMaskRef.current,
     eventData: {
       ...TRACKING_EVENTS.SELECT_ELEMENT,
       label: element.type,
@@ -239,6 +250,7 @@ function FrameElement({ id }) {
         {...(maskDisabled ? eventHandlers : null)}
       >
         <WithMask
+          ref={withMaskRef}
           element={element}
           fill
           flip={flip}

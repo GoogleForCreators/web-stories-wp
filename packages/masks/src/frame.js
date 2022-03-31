@@ -19,13 +19,14 @@
  */
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
-import { useRef, useEffect, useState } from '@googleforcreators/react';
-import { StoryPropTypes } from '@googleforcreators/elements';
 import {
-  usePerformanceTracking,
-  TRACKING_EVENTS,
-  getTransformFlip,
-} from '@googleforcreators/design-system';
+  useRef,
+  useEffect,
+  useState,
+  forwardRef,
+} from '@googleforcreators/react';
+import { StoryPropTypes } from '@googleforcreators/elements';
+import { getTransformFlip } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -170,105 +171,102 @@ WithDropTarget.propTypes = {
   unregisterDropTarget: PropTypes.func,
 };
 
-export default function WithMask({
-  element,
-  fill,
-  style,
-  children,
-  eventHandlers = null,
-  flip,
-  draggingResource,
-  activeDropTargetId,
-  isDropSource,
-  registerDropTarget,
-  unregisterDropTarget,
-  ...rest
-}) {
-  const [hover, setHover] = useState(false);
-  const { isBackground } = element;
-  const ref = useRef(null);
-  usePerformanceTracking({
-    node: ref.current,
-    eventData: {
-      ...TRACKING_EVENTS.SELECT_ELEMENT,
-      label: element.type,
+const WithMask = forwardRef(
+  (
+    {
+      element,
+      fill,
+      style,
+      children,
+      eventHandlers = null,
+      flip,
+      draggingResource,
+      activeDropTargetId,
+      isDropSource,
+      registerDropTarget,
+      unregisterDropTarget,
+      ...rest
     },
-    eventType: 'pointerdown',
-  });
-  const dropTargets = {
-    draggingResource,
-    activeDropTargetId,
-    isDropSource,
-    registerDropTarget,
-    unregisterDropTarget,
-  };
+    ref
+  ) => {
+    const [hover, setHover] = useState(false);
+    const { isBackground } = element;
 
-  const mask = getElementMask(element);
-  const flipStyle = flip ? { transform: getTransformFlip(flip) } : null;
-  if (!mask?.type || (isBackground && mask.type !== MaskTypes.RECTANGLE)) {
+    const dropTargets = {
+      draggingResource,
+      activeDropTargetId,
+      isDropSource,
+      registerDropTarget,
+      unregisterDropTarget,
+    };
+
+    const mask = getElementMask(element);
+    const flipStyle = flip ? { transform: getTransformFlip(flip) } : null;
+    if (!mask?.type || (isBackground && mask.type !== MaskTypes.RECTANGLE)) {
+      return (
+        <div
+          style={{
+            ...(fill ? FILL_STYLE : {}),
+            ...style,
+            ...flipStyle,
+          }}
+          {...rest}
+        >
+          {children}
+        </div>
+      );
+    }
+
+    // @todo: Chrome cannot do inline clip-path using data: URLs.
+    // See https://bugs.chromium.org/p/chromium/issues/detail?id=1041024.
+
+    const maskId = `mask-${mask.type}-${element.id}-frame`;
+
     return (
       <div
+        ref={ref}
         style={{
           ...(fill ? FILL_STYLE : {}),
           ...style,
           ...flipStyle,
+          ...(!isBackground ? { clipPath: `url(#${maskId})` } : {}),
         }}
         {...rest}
+        {...eventHandlers}
+        onPointerOver={() => setHover(true)}
+        onPointerOut={() => setHover(false)}
       >
-        {children}
+        <svg width={0} height={0}>
+          <defs>
+            <clipPath
+              id={maskId}
+              transform={`scale(1 ${mask.ratio})`}
+              clipPathUnits="objectBoundingBox"
+            >
+              <path d={mask.path} />
+            </clipPath>
+          </defs>
+        </svg>
+        <Filler
+          viewBox={`0 0 1 ${1 / mask.ratio}`}
+          width="100%"
+          height="100%"
+          preserveAspectRatio="none"
+        >
+          <FillerPath fill="none" d={mask?.path} />
+        </Filler>
+        <WithDropTarget
+          element={element}
+          hover={hover}
+          {...dropTargets}
+          {...rest}
+        >
+          {children}
+        </WithDropTarget>
       </div>
     );
   }
-
-  // @todo: Chrome cannot do inline clip-path using data: URLs.
-  // See https://bugs.chromium.org/p/chromium/issues/detail?id=1041024.
-
-  const maskId = `mask-${mask.type}-${element.id}-frame`;
-
-  return (
-    <div
-      ref={ref}
-      style={{
-        ...(fill ? FILL_STYLE : {}),
-        ...style,
-        ...flipStyle,
-        ...(!isBackground ? { clipPath: `url(#${maskId})` } : {}),
-      }}
-      {...rest}
-      {...eventHandlers}
-      onPointerOver={() => setHover(true)}
-      onPointerOut={() => setHover(false)}
-    >
-      <svg width={0} height={0}>
-        <defs>
-          <clipPath
-            id={maskId}
-            transform={`scale(1 ${mask.ratio})`}
-            clipPathUnits="objectBoundingBox"
-          >
-            <path d={mask.path} />
-          </clipPath>
-        </defs>
-      </svg>
-      <Filler
-        viewBox={`0 0 1 ${1 / mask.ratio}`}
-        width="100%"
-        height="100%"
-        preserveAspectRatio="none"
-      >
-        <FillerPath fill="none" d={mask?.path} />
-      </Filler>
-      <WithDropTarget
-        element={element}
-        hover={hover}
-        {...dropTargets}
-        {...rest}
-      >
-        {children}
-      </WithDropTarget>
-    </div>
-  );
-}
+);
 
 WithMask.propTypes = {
   element: StoryPropTypes.element.isRequired,
@@ -286,3 +284,5 @@ WithMask.propTypes = {
   registerDropTarget: PropTypes.func,
   unregisterDropTarget: PropTypes.func,
 };
+
+export default WithMask;
