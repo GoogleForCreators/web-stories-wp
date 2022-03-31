@@ -135,7 +135,10 @@ export function getOffset({
 
   // Horizontal
   const offsetX = () => {
-    if (resetXOffset && popupRect?.left <= 0) {
+    // resetXOffset was added because the layers panel popup is getting weird x values in the negative range. So if we
+    // just check for popupRect.left <= 0 we end up pushing the tooltips inside the layers panel off to the edge. We
+    // should figure out why the layer's panel is getting whacked values.
+    if (resetXOffset && popupRect && popupRect.left <= 0) {
       return isRTL ? width : 0;
     }
     return getXOffset(placement, spacingH, anchorRect, dockRect, isRTL);

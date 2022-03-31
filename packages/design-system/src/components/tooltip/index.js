@@ -161,7 +161,6 @@ function Tooltip({
       case PLACEMENT.TOP_START:
       case PLACEMENT.RIGHT_START:
         // {placement}-START shouldn't ever appear in overflow so do nothing
-        //  in RTL mode, it is getting cutoff on the left when screen is too small possibly cause rtl is switch in editor's tooltip
         break;
       case PLACEMENT.BOTTOM_END:
       case PLACEMENT.TOP_END:
@@ -210,6 +209,8 @@ function Tooltip({
           setDynamicPlacement(PLACEMENT.TOP);
         }
       } else if (isOverFlowingLeft) {
+        //  in RTL mode, it is getting cutoff on the left when screen is too small possibly cause rtl is switch in editor's tooltip
+        // maybe fix getOffset to not let this happen instead of changing placement 🤔?
         updatePlacement();
       }
     },

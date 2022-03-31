@@ -62,7 +62,8 @@ function Popup({
   topOffset = DEFAULT_TOPOFFSET,
   // dropdown and one tooltip - used in dashboard due to the document.body getting set to a weird height.
   // ignoreMaxOffsetY, removed!
-  // color input - docking or floating
+  // color input - docking or floating ??? mainly needed because we are getting weird x values in the
+  // layer panel popup which has tooltip inside.
   resetXOffset = false,
   // tooltip only
   //  onPositionUpdate = noop, removed!
