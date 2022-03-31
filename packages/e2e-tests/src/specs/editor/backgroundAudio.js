@@ -212,7 +212,9 @@ describe('Background Audio', () => {
 
         await expect(page).not.toMatchElement(dialogSelector);
 
-        await expect(page).toMatch('test.vtt');
+        await expect(page).not.toMatchElement('button', {
+          text: 'Link to file',
+        });
       });
     });
   });
