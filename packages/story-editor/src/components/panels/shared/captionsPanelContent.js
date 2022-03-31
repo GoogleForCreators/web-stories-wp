@@ -151,39 +151,41 @@ function CaptionsPanelContent({
           </Tooltip>
         </Row>
       ))}
-      <ButtonRow spaceBetween={false}>
-        {!tracks.length && hasUploadMediaAction && !isIndeterminate && (
-          <MediaUpload
-            onSelect={handleChangeTrack}
-            onSelectErrorMessage={__(
-              'Please choose a VTT file to use as caption.',
-              'web-stories'
-            )}
-            type={allowedCaptionMimeTypes}
-            title={captionText}
-            buttonInsertText={__('Select caption', 'web-stories')}
-            render={renderUploadButton}
-          />
-        )}
-        {!tracks.length && enableCaptionHotlinking && !isIndeterminate && (
-          <>
-            <HotlinkButton
-              variant={BUTTON_VARIANTS.RECTANGLE}
-              type={BUTTON_TYPES.SECONDARY}
-              size={BUTTON_SIZES.SMALL}
-              onClick={() => setIsOpen(true)}
-            >
-              {__('Link to file', 'web-stories')}
-            </HotlinkButton>
-            <HotlinkModal
-              isOpen={isOpen}
-              onSelect={onSelect}
-              onClose={() => setIsOpen(false)}
-              allowedFileTypes={allowedFileTypes}
+      {!tracks.length && !isIndeterminate && (
+        <ButtonRow spaceBetween={false}>
+          {hasUploadMediaAction && (
+            <MediaUpload
+              onSelect={handleChangeTrack}
+              onSelectErrorMessage={__(
+                'Please choose a VTT file to use as caption.',
+                'web-stories'
+              )}
+              type={allowedCaptionMimeTypes}
+              title={captionText}
+              buttonInsertText={__('Select caption', 'web-stories')}
+              render={renderUploadButton}
             />
-          </>
-        )}
-      </ButtonRow>
+          )}
+          {enableCaptionHotlinking && (
+            <>
+              <HotlinkButton
+                variant={BUTTON_VARIANTS.RECTANGLE}
+                type={BUTTON_TYPES.SECONDARY}
+                size={BUTTON_SIZES.SMALL}
+                onClick={() => setIsOpen(true)}
+              >
+                {__('Link to file', 'web-stories')}
+              </HotlinkButton>
+              <HotlinkModal
+                isOpen={isOpen}
+                onSelect={onSelect}
+                onClose={() => setIsOpen(false)}
+                allowedFileTypes={allowedFileTypes}
+              />
+            </>
+          )}
+        </ButtonRow>
+      )}
     </>
   );
 }
