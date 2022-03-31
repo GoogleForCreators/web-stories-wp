@@ -190,9 +190,6 @@ You can also provide an external link in the description of the tip.
     - `enableThumbnailCaching`
         - type: `boolean`
         - description: Enable thumbnail caching.
-    - `enhancedPageBackgroundAudio`
-        - type: `boolean`
-        - description: Enable adding captions to background audio.
     - `floatingMenu`
         - type: `boolean`
         - description: Enable the new floating design menu.
