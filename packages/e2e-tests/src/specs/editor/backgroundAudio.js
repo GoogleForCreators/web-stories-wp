@@ -193,7 +193,7 @@ describe('Background Audio', () => {
 
         await expect(page).toMatchElement('button[aria-label="Play"]');
 
-        await expect(page).toClick('button', { text: 'Hotlink' });
+        await expect(page).toClick('button', { text: 'Link to file' });
 
         await page.waitForSelector('[role="dialog"]');
 

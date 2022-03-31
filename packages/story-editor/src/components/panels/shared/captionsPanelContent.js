@@ -173,7 +173,7 @@ function CaptionsPanelContent({
               size={BUTTON_SIZES.SMALL}
               onClick={() => setIsOpen(true)}
             >
-              {__('Hotlink', 'web-stories')}
+              {__('Link to file', 'web-stories')}
             </HotlinkButton>
             <HotlinkModal
               isOpen={isOpen}

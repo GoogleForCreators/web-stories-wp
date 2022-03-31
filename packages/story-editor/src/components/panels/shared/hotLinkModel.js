@@ -119,7 +119,7 @@ function HotlinkModal({ isOpen, onClose, onSelect, allowedFileTypes = [] }) {
 
       // After getting link metadata and before actual insertion
       // is a great opportunity to measure usage in a reasonably accurate way.
-      trackEvent('hotlink_captions', {
+      trackEvent('hotlink_file', {
         event_label: link,
         file_size: hotlinkInfo.fileSize,
         file_type: hotlinkInfo.mimeType,
@@ -129,7 +129,7 @@ function HotlinkModal({ isOpen, onClose, onSelect, allowedFileTypes = [] }) {
       onSelect({ src: link, needsProxy: shouldProxy });
       setLink('');
     } catch (err) {
-      trackError('hotlink_captions', err?.message);
+      trackError('hotlink_file', err?.message);
 
       setErrorMsg(getErrorMessage(err.code, description));
     } finally {
@@ -157,7 +157,12 @@ function HotlinkModal({ isOpen, onClose, onSelect, allowedFileTypes = [] }) {
 
   return (
     <Dialog
-      onClose={onClose}
+      onClose={() => {
+        onClose();
+        setLink('');
+        setErrorMsg(false);
+        setIsInserting(false);
+      }}
       isOpen={isOpen}
       title={__('Insert external captions', 'web-stories')}
       onPrimary={() => onInsert()}
