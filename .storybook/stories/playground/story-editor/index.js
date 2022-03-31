@@ -40,7 +40,6 @@ export const _default = () => {
   const story = content ? JSON.parse(content) : {};
   const apiCallbacks = { saveStoryById, getMedia, getFonts };
 
-  // @todo This is a temporary fix for element type registration error in storybook, not generally required.
   elementTypes.forEach(registerElementType);
 
   return (

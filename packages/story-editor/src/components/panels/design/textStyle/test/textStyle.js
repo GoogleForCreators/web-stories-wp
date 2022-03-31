@@ -257,14 +257,15 @@ describe('Panels/TextStyle', () => {
         fallbacks: ['fallback1'],
       };
       await act(() => mockControls.font.onChange(newFont));
-
+      const expectedFont = newFont;
+      delete expectedFont.id;
       // updateSelectedElement should get called with the updated font object when the font gets updated,
       // useRichText also calls updateSelectedElements with the element's content as a side effect. We want to check
       // that the call for the font update matches. So just grab the first mock.call
       const updatingFontFunction = mockUpdateSelectedElements.mock.calls[0][0];
       expect(updatingFontFunction.properties(textElement)).toMatchObject(
         expect.objectContaining({
-          font: newFont,
+          font: expectedFont,
         })
       );
     });
