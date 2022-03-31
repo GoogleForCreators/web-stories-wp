@@ -30,6 +30,8 @@ export { NumericInput } from './input/numericInput';
 export * from './menu';
 export * from './pill';
 export { Popup, PLACEMENT } from './popup';
+export { PopupContainer } from './popup/constants';
+export { getOffset } from './popup/utils';
 export * from './radio';
 export * from './search';
 export * from './slider';

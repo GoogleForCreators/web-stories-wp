@@ -25,6 +25,10 @@ import {
   useState,
   useRef,
   useUnmount,
+  createPortal,
+  useEffect,
+  useLayoutEffect,
+  useResizeEffect,
 } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import {
@@ -38,8 +42,9 @@ import {
   THEME_CONSTANTS,
   Swatch,
   Icons,
-  Popup,
   PLACEMENT,
+  PopupContainer,
+  getOffset,
 } from '@googleforcreators/design-system';
 
 /**
@@ -166,6 +171,7 @@ const ColorInput = forwardRef(function ColorInput(
     pickerProps,
     spacing,
     tooltipPlacement,
+    resetXOffset = true,
   },
   ref
 ) {
@@ -186,6 +192,9 @@ const ColorInput = forwardRef(function ColorInput(
   );
   const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
   const [dynamicPlacement, setDynamicPlacement] = useState(pickerPlacement);
+  const [popupState, setPopupState] = useState(null);
+  const isMounted = useRef(false);
+  const popup = useRef(null);
 
   const {
     refs: { sidebar },
@@ -226,6 +235,83 @@ const ColorInput = forwardRef(function ColorInput(
   const containerStyle = isInDesignMenu
     ? minimalInputContainerStyleOverride
     : inputContainerStyleOverride;
+
+  const positionPopup = useCallback(
+    (evt) => {
+      if (!isMounted.current || !previewRef?.current) {
+        return;
+      }
+      // If scrolling within the popup, ignore.
+      if (evt?.target?.nodeType && popup.current?.contains(evt.target)) {
+        return;
+      }
+      setPopupState({
+        offset: previewRef.current
+          ? getOffset({
+              placement: dynamicPlacement,
+              spacing,
+              anchor: previewRef,
+              dock: isInDesignMenu ? null : sidebar,
+              popup,
+              isRTL,
+              topOffset,
+              resetXOffset,
+            })
+          : {},
+        height: popup.current?.getBoundingClientRect()?.height,
+      });
+    },
+    [
+      dynamicPlacement,
+      spacing,
+      isInDesignMenu,
+      sidebar,
+      isRTL,
+      topOffset,
+      resetXOffset,
+    ]
+  );
+
+  useEffect(() => {
+    isMounted.current = true;
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    // If the popup height changes meanwhile, let's update the popup, too.
+    if (
+      popupState?.height &&
+      popupState.height !== popup.current?.getBoundingClientRect()?.height
+    ) {
+      positionPopup();
+    }
+  }, [popupState?.height, positionPopup]);
+
+  useLayoutEffect(() => {
+    if (!pickerOpen) {
+      return undefined;
+    }
+    isMounted.current = true;
+    positionPopup();
+    // Adjust the position when scrolling.
+    document.addEventListener('scroll', positionPopup, true);
+    return () => {
+      document.removeEventListener('scroll', positionPopup, true);
+      isMounted.current = false;
+    };
+  }, [pickerOpen, positionPopup]);
+
+  useLayoutEffect(() => {
+    if (!isMounted.current) {
+      return;
+    }
+
+    positionPlacement(popup);
+  }, [popupState, positionPlacement]);
+
+  useResizeEffect({ current: document.body }, positionPopup, [positionPopup]);
 
   return (
     <>
@@ -288,29 +374,30 @@ const ColorInput = forwardRef(function ColorInput(
           </ColorButton>
         </Tooltip>
       )}
-      <Popup
-        isRTL={isRTL}
-        anchor={previewRef}
-        dock={isInDesignMenu ? null : sidebar}
-        isOpen={pickerOpen}
-        placement={dynamicPlacement}
-        spacing={spacing}
-        invisible={isEyedropperActive}
-        topOffset={topOffset}
-        refCallback={positionPlacement}
-        resetXOffset
-        renderContents={({ propagateDimensionChange }) => (
-          <ColorPicker
-            color={isMixed ? null : value}
-            isEyedropperActive={isEyedropperActive}
-            onChange={onChange}
-            onClose={onClose}
-            changedStyle={changedStyle}
-            onDimensionChange={propagateDimensionChange}
-            {...pickerProps}
-          />
-        )}
-      />
+      {popupState && pickerOpen
+        ? createPortal(
+            <PopupContainer
+              ref={popup}
+              placement={dynamicPlacement}
+              $offset={popupState.offset}
+              invisible={isEyedropperActive}
+              topOffset={topOffset}
+              isRTL={isRTL}
+              zIndex={99999999999}
+            >
+              <ColorPicker
+                color={isMixed ? null : value}
+                isEyedropperActive={isEyedropperActive}
+                onChange={onChange}
+                onClose={onClose}
+                changedStyle={changedStyle}
+                onDimensionChange={positionPopup}
+                {...pickerProps}
+              />
+            </PopupContainer>,
+            document.body
+          )
+        : null}
     </>
   );
 });

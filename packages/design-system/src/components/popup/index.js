@@ -31,7 +31,6 @@ import PropTypes from 'prop-types';
 /**
  * Internal dependencies
  */
-import { noop } from '../../utils';
 import { getOffset } from './utils';
 import { PLACEMENT, PopupContainer } from './constants';
 const DEFAULT_TOPOFFSET = 0;
@@ -46,25 +45,35 @@ function Popup({
   children,
   zIndex = DEFAULT_POPUP_Z_INDEX,
   // the above are used by all implementations
+
   //color input, style presets
   dock,
+
   //data list, color input, text style, style presets, publish time,
   renderContents,
+
   // color input
-  invisible = false,
+  // invisible = false, removed!
+
   //data list, dropdown, search,
   fillWidth = false,
+
   // none
   // fillHeight = false, removed!
+
   // dropdown and color input
-  refCallback = noop,
+  // refCallback = noop, removed!
+
   //PlayPauseButton - all direct popup uses, style text, canvas elements, publish time, etc -
   topOffset = DEFAULT_TOPOFFSET,
+
   // dropdown and one tooltip - used in dashboard due to the document.body getting set to a weird height.
   // ignoreMaxOffsetY, removed!
+
   // color input - docking or floating ??? mainly needed because we are getting weird x values in the
   // layer panel popup which has tooltip inside.
-  resetXOffset = false,
+  // resetXOffset = false, removed!
+
   // tooltip only
   //  onPositionUpdate = noop, removed!
 }) {
@@ -98,13 +107,12 @@ function Popup({
               popup,
               isRTL,
               topOffset,
-              resetXOffset,
             })
           : {},
         height: popup.current?.getBoundingClientRect()?.height,
       });
     },
-    [anchor, placement, spacing, dock, isRTL, topOffset, resetXOffset]
+    [anchor, placement, spacing, dock, isRTL, topOffset]
   );
   useEffect(() => {
     // If the popup height changes meanwhile, let's update the popup, too.
@@ -130,14 +138,6 @@ function Popup({
     };
   }, [isOpen, positionPopup]);
 
-  useLayoutEffect(() => {
-    if (!isMounted.current) {
-      return;
-    }
-
-    refCallback(popup);
-  }, [popupState, refCallback]);
-
   useResizeEffect({ current: document.body }, positionPopup, [positionPopup]);
   return popupState && isOpen
     ? createPortal(
@@ -146,7 +146,6 @@ function Popup({
           fillWidth={fillWidth}
           placement={placement}
           $offset={popupState.offset}
-          invisible={invisible}
           topOffset={topOffset}
           isRTL={isRTL}
           zIndex={zIndex}
