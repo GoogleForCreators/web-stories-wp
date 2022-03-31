@@ -81,6 +81,23 @@ describe('TextEdit integration', () => {
       );
     });
 
+    it('should delete the element if content is empty', async () => {
+      expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
+      await fixture.events.focus(
+        fixture.editor.canvas.framesLayer.frames[1].node
+      );
+      await fixture.events.keyboard.press('Enter');
+      expect(fixture.querySelector('[data-testid="textEditor"]')).toBeDefined();
+      // Remove all text
+      await fixture.events.keyboard.press('Backspace');
+      // Exit edit mode using the Esc key
+      await fixture.events.keyboard.press('Esc');
+      // The element should be deleted.
+      const layerPanel = fixture.editor.footer.layerPanel;
+      await fixture.events.click(layerPanel.togglePanel);
+      expect(layerPanel.layers.length).toBe(1);
+    });
+
     describe('edit mode', () => {
       let editor;
       let editLayer;

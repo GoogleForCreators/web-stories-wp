@@ -58,9 +58,7 @@ function RichTextEditor({ content, onChange }, ref) {
       return;
     }
     const newContent = getContentFromState(editorState);
-    if (newContent) {
-      onChange(newContent);
-    }
+    onChange(newContent);
   }, [onChange, getContentFromState, editorState]);
 
   const hasEditorState = Boolean(editorState);

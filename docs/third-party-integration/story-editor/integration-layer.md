@@ -166,9 +166,6 @@ You can also provide an external link in the description of the tip.
     - `enableSVG`
         - type: `boolean`
         - description: Enables SVG support in link icons.
-    - `customFonts`
-        - type: `boolean`
-        - description: Enables custom fonts in rich text elements.
     - `enableExperimentalAnimationEffects`
         - type: `boolean`
         - description: Enables experimental animations effects.
