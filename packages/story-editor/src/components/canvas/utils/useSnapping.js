@@ -114,20 +114,12 @@ function useSnapping({
     center: true,
     middle: true,
   };
-  const elementSnapDirections = {
-    left: true,
-    top: true,
-    right: true,
-    bottom: true,
-    center: true,
-    middle: true,
-  };
 
   return {
     snappable: canSnap,
     snapGap: canSnap,
     snapDirections,
-    elementSnapDirections,
+    elementSnapDirections: snapDirections,
     isDisplaySnapDigit: false,
     onSnap: handleSnap,
     horizontalGuidelines,
