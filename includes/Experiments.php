@@ -392,7 +392,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'name'        => 'captionHotlinking',
 				'label'       => __( 'Caption hotlinking', 'web-stories' ),
 				'description' => __( 'Enable hotlinking of captions', 'web-stories' ),
-				'group'       => 'general',
+				'group'       => 'editor',
 			],
 		];
 	}
