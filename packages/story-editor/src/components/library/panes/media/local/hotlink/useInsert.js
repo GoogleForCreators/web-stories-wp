@@ -43,8 +43,7 @@ import { useConfig } from '../../../../../../app/config';
 import { useAPI } from '../../../../../../app/api';
 import useCORSProxy from '../../../../../../utils/useCORSProxy';
 import useDetectBaseColor from '../../../../../../app/media/utils/useDetectBaseColor';
-import getErrorMessage from '../../../../../../utils/getErrorMessage';
-import { isValidUrlForHotlinking } from './utils';
+import { isValidUrlForHotlinking, getErrorMessage } from './utils';
 
 function useInsert({ link, setLink, setErrorMsg, onClose }) {
   const { insertElement } = useLibrary((state) => ({

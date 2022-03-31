@@ -33,10 +33,12 @@ import { withProtocol } from '@googleforcreators/url';
  * Internal dependencies
  */
 import Dialog from '../../dialog';
-import { isValidUrlForHotlinking } from '../../library/panes/media/local/hotlink/utils';
+import {
+  isValidUrlForHotlinking,
+  getErrorMessage,
+} from '../../library/panes/media/local/hotlink/utils';
 import { useAPI } from '../../../app/api';
 import useCORSProxy from '../../../utils/useCORSProxy';
-import getErrorMessage from '../../../utils/getErrorMessage';
 
 const InputWrapper = styled.form`
   margin: 16px 4px;
