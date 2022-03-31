@@ -184,9 +184,6 @@ You can also provide an external link in the description of the tip.
     - `enableHotlinking`
         - type: `boolean`
         - description: Enables hot-linking media using external URLs.
-    - `enableVideoTrim`
-        - type: `boolean`
-        - description: Enables functionality to trim videos.
     - `enableThumbnailCaching`
         - type: `boolean`
         - description: Enable thumbnail caching.
