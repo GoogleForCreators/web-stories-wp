@@ -37,6 +37,7 @@ import AnimationToggle from './animationToggle';
 const Wrapper = styled.div`
   margin-top: auto;
   padding: 0 4px;
+  pointer-events: all;
 `;
 
 function PageMenu() {
