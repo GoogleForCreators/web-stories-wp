@@ -23,6 +23,10 @@ import {
   useMemo,
   useRef,
   useState,
+  createPortal,
+  useEffect,
+  useLayoutEffect,
+  useResizeEffect,
 } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
@@ -32,7 +36,9 @@ import { __, sprintf } from '@googleforcreators/i18n';
  * Internal dependencies
  */
 import { Menu, MENU_OPTIONS } from '../menu';
-import { Popup, PLACEMENT } from '../popup';
+import { PLACEMENT } from '../popup';
+import { getOffset } from '../popup/utils';
+import { PopupContainer } from '../popup/constants';
 import { DropDownContainer, Hint } from './components';
 import DropDownSelect from './select';
 import useDropDown from './useDropDown';
@@ -80,18 +86,25 @@ export const DropDown = forwardRef(
       isInline = false,
       selectedValue = '',
       className,
+      isRTL,
+      ignoreMaxOffsetY = true, // true needed for dashboard, but if we fix the document.body issue maybe it won't be needed?
+      // not currently used anywhere, remove it or change way we currently limit height 🤔 ?
+      popupFillHeight,
       ...rest
     },
     ref
   ) => {
     const internalRef = useRef();
     const [dynamicPlacement, setDynamicPlacement] = useState(placement);
+    const [popupState, setPopupState] = useState(null);
+    const isMounted = useRef(false);
+    const popup = useRef(null);
 
     const { activeOption, isOpen, normalizedOptions } = useDropDown({
       options,
       selectedValue,
     });
-
+    // perhaps this can come from a shared util? Does anyone else use it? Tooltip does not. Maybe color input will 🤔
     const positionPlacement = useCallback(
       (popupRef) => {
         // check to see if there's an overlap with the window edge
@@ -140,6 +153,73 @@ export const DropDown = forwardRef(
     const listId = useMemo(() => `list-${uuidv4()}`, []);
     const selectButtonId = useMemo(() => `select-button-${uuidv4()}`, []);
 
+    const positionPopup = useCallback(
+      (evt) => {
+        if (!isMounted.current || !internalRef?.current) {
+          return;
+        }
+        // If scrolling within the popup, ignore.
+        if (evt?.target?.nodeType && popup.current?.contains(evt.target)) {
+          return;
+        }
+        setPopupState({
+          offset: internalRef.current
+            ? getOffset({
+                placement,
+                anchor: internalRef,
+                popup,
+                isRTL,
+                ignoreMaxOffsetY,
+              })
+            : {},
+          height: popup.current?.getBoundingClientRect()?.height,
+        });
+      },
+      [placement, isRTL, ignoreMaxOffsetY]
+    );
+
+    useEffect(() => {
+      isMounted.current = true;
+      return () => {
+        isMounted.current = false;
+      };
+    }, []);
+
+    // is this needed don't see any changes or use cases when popup height would change?
+    // useEffect(() => {
+    //   // If the popup height changes meanwhile, let's update the popup, too.
+    //   if (
+    //     popupState?.height &&
+    //     popupState.height !== popup.current?.getBoundingClientRect()?.height
+    //   ) {
+    //     positionPopup();
+    //   }
+    // }, [popupState?.height, positionPopup]);
+
+    useLayoutEffect(() => {
+      if (!isOpen) {
+        return undefined;
+      }
+      isMounted.current = true;
+      positionPopup();
+      // Adjust the position when scrolling.
+      document.addEventListener('scroll', positionPopup, true);
+      return () => {
+        document.removeEventListener('scroll', positionPopup, true);
+        isMounted.current = false;
+      };
+    }, [isOpen, positionPopup]);
+
+    useLayoutEffect(() => {
+      if (!isMounted.current) {
+        return;
+      }
+
+      positionPlacement(popup);
+    }, [popupState, positionPlacement]);
+
+    useResizeEffect({ current: document.body }, positionPopup, [positionPopup]);
+
     const menu = (
       <Menu
         activeValue={activeOption?.value}
@@ -184,21 +264,27 @@ export const DropDown = forwardRef(
           }}
           {...rest}
         />
-        {!disabled && isInline ? (
-          isOpen.value && menu
-        ) : (
-          <Popup
-            anchor={internalRef}
-            isOpen={isOpen.value}
-            placement={dynamicPlacement}
-            refCallback={positionPlacement}
-            fillWidth={popupFillWidth}
-            zIndex={popupZIndex}
-            ignoreMaxOffsetY
-          >
-            {menu}
-          </Popup>
-        )}
+        {/* fix this double nested logic */}
+        {!disabled && isInline
+          ? isOpen.value && menu
+          : popupState && isOpen.value
+          ? createPortal(
+              <PopupContainer
+                ref={popup}
+                fillWidth={popupFillWidth}
+                // removed fillHeight from container, since height is already accounted for, but it may be more straight forward using this prop?
+                fillHeight={popupFillHeight}
+                placement={placement}
+                $offset={popupState.offset}
+                isRTL={isRTL}
+                // find correct zIndex needed; update all dropdown uses to use the minimum.
+                zIndex={9999999999999}
+              >
+                {menu}
+              </PopupContainer>,
+              document.body
+            )
+          : null}
         {hint && <Hint hasError={hasError}>{hint}</Hint>}
       </DropDownContainer>
     );

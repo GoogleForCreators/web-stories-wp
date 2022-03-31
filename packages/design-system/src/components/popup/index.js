@@ -44,8 +44,8 @@ function Popup({
   spacing,
   isOpen,
   children,
-  //data list, tooltip, dropdown, search, publish time
   zIndex = DEFAULT_POPUP_Z_INDEX,
+  // the above are used by all implementations
   //color input, style presets
   dock,
   //data list, color input, text style, style presets, publish time,
@@ -55,16 +55,17 @@ function Popup({
   //data list, dropdown, search,
   fillWidth = false,
   // none
-  fillHeight = false,
+  // fillHeight = false, removed!
   // dropdown and color input
   refCallback = noop,
-  //PlayPauseButton - all straight up popup uses, style text, canvas elements, publish time, etc -
-  // tooltip technically only needs it for getOffset util, but we could just pass in 0.
+  //PlayPauseButton - all direct popup uses, style text, canvas elements, publish time, etc -
   topOffset = DEFAULT_TOPOFFSET,
   // dropdown and one tooltip - used in dashboard due to the document.body getting set to a weird height.
-  ignoreMaxOffsetY,
+  // ignoreMaxOffsetY, removed!
   // color input - docking or floating
   resetXOffset = false,
+  // tooltip only
+  //  onPositionUpdate = noop, removed!
 }) {
   const [popupState, setPopupState] = useState(null);
   const isMounted = useRef(false);
@@ -96,23 +97,13 @@ function Popup({
               popup,
               isRTL,
               topOffset,
-              ignoreMaxOffsetY,
               resetXOffset,
             })
           : {},
         height: popup.current?.getBoundingClientRect()?.height,
       });
     },
-    [
-      anchor,
-      placement,
-      spacing,
-      dock,
-      isRTL,
-      topOffset,
-      ignoreMaxOffsetY,
-      resetXOffset,
-    ]
+    [anchor, placement, spacing, dock, isRTL, topOffset, resetXOffset]
   );
   useEffect(() => {
     // If the popup height changes meanwhile, let's update the popup, too.
@@ -152,7 +143,6 @@ function Popup({
         <PopupContainer
           ref={popup}
           fillWidth={fillWidth}
-          fillHeight={fillHeight}
           placement={placement}
           $offset={popupState.offset}
           invisible={invisible}
