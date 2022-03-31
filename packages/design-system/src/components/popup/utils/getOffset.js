@@ -115,7 +115,7 @@ export function getOffset({
   dock,
   popup,
   isRTL,
-  topOffset,
+  topOffset = 0, // set default then we won't have to send it in with Tooltip
   ignoreMaxOffsetY,
   resetXOffset,
 }) {

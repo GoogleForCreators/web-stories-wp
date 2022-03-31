@@ -103,7 +103,6 @@ let lastVisibleDelayedTooltip = null;
  * exist beyond the initial page scroll. Because the editor is a fixed view this only
  * comes up in peripheral pages (dashboard, settings).
  * @param props.isRTL RTL flag from config
- * @param props.topOffset offset due to top banner in wp nav
  * @return {import('react').Component} Tooltip element
  */
 function Tooltip({
@@ -117,13 +116,13 @@ function Tooltip({
   onFocus = noop,
   onBlur = noop,
   isDelayed = false,
-  // forceAnchorRef = null,
+  // forceAnchorRef = null, needed for WithLink so that the url tooltip hovers the element, and isn't anchor
+  // to just the canvas. Also used in Slider, but I couldn't trigger it.
   tooltipProps = null,
   className = null,
   popupZIndexOverride,
   ignoreMaxOffsetY = false,
   isRTL = false,
-  topOffset = 32,
   ...props
 }) {
   const [popupState, setPopupState] = useState(null);
@@ -135,7 +134,9 @@ function Tooltip({
   const tooltipRef = useRef(null);
   const placementRef = useRef(placement);
   const [dynamicPlacement, setDynamicPlacement] = useState(placement);
+  // probably won't need isMounted and isPopupMounted
   const isMounted = useRef(false);
+  // could probably combine this with shown ?
   const isOpen = Boolean(shown && (shortcut || title));
 
   const spacing = useMemo(
@@ -194,6 +195,10 @@ function Tooltip({
         neededVerticalSpace >= window.innerHeight;
       // check that the tooltip isn't cutoff on the left edge of the screen.
       // right-cutoff is already taken care of with `getOffset`
+
+      // we should try to account for wp admin bar. maybe we can use leftOffset
+      // from useConfig, or adjust the getOffset with this? 🤷🏻‍♀️
+
       const isOverFlowingLeft = offset.popupLeft < 0;
       if (shouldMoveToTop) {
         if (dynamicPlacement.endsWith('-start')) {
@@ -227,7 +232,7 @@ function Tooltip({
     },
     [positionPlacement]
   );
-
+  // perhaps this is could be shared as a util func 🤷🏻‍♀️
   const positionPopup = useCallback(
     (evt) => {
       if (!isMounted.current || !anchorRef?.current) {
@@ -244,17 +249,19 @@ function Tooltip({
               placement,
               spacing,
               popup,
+              // would need to check on RTL use in story-editor vs dashboard since tooltips in editor switch
+              // placement when in rtl but use in dashboard they are auto switched.
               isRTL,
               ignoreMaxOffsetY,
-              topOffset,
             })
           : {},
         height: popup.current?.getBoundingClientRect()?.height,
       });
     },
-    [placement, spacing, isRTL, ignoreMaxOffsetY, topOffset]
+    [placement, spacing, isRTL, ignoreMaxOffsetY]
   );
 
+  // not sure if this would be needed for tooltip, can't see a scenerio when a tooltip changes height 🤔
   useEffect(() => {
     // If the popup height changes meanwhile, let's update the popup, too.
     if (
@@ -371,6 +378,8 @@ function Tooltip({
               $offset={popupState.offset}
               noOverFlow
               isRTL={isRTL}
+              // need to find the right constant for general tooltips each tooltip would then need to be checked and
+              // updated if needed to be higher, ie in publish modal
               zIndex={9999999999}
             >
               <TooltipContainer
@@ -429,7 +438,6 @@ const TooltipPropTypes = {
   popupZIndexOverride: PropTypes.number,
   ignoreMaxOffsetY: PropTypes.bool,
   isRTL: PropTypes.bool,
-  topOffset: PropTypes.number,
 };
 Tooltip.propTypes = TooltipPropTypes;
 

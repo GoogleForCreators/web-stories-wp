@@ -17,7 +17,6 @@
 /**
  * External dependencies
  */
-import styled from 'styled-components';
 import {
   useLayoutEffect,
   useEffect,
@@ -33,36 +32,11 @@ import PropTypes from 'prop-types';
  * Internal dependencies
  */
 import { noop } from '../../utils';
-import { getTransforms, getOffset } from './utils';
-import { PLACEMENT } from './constants';
+import { getOffset } from './utils';
+import { PLACEMENT, PopupContainer } from './constants';
 const DEFAULT_TOPOFFSET = 0;
 const DEFAULT_POPUP_Z_INDEX = 2;
-const Container = styled.div.attrs(
-  ({
-    $offset: { x, y, width, height },
-    fillWidth,
-    fillHeight,
-    placement,
-    isRTL,
-    invisible,
-    zIndex,
-  }) => ({
-    style: {
-      transform: `translate(${x}px, ${y}px) ${getTransforms(placement, isRTL)}`,
-      ...(fillWidth ? { width: `${width}px` } : {}),
-      ...(fillHeight ? { height: `${height}px` } : {}),
-      ...(invisible ? { visibility: 'hidden' } : {}),
-      zIndex,
-    },
-  })
-)`
-  /*! @noflip */
-  left: 0px;
-  top: 0px;
-  position: fixed;
-  ${({ noOverFlow }) => (noOverFlow ? '' : `overflow-y: auto;`)};
-  max-height: ${({ topOffset }) => `calc(100vh - ${topOffset}px)`};
-`;
+
 function Popup({
   isRTL = false,
   anchor,
@@ -82,15 +56,12 @@ function Popup({
   fillWidth = false,
   // none
   fillHeight = false,
-  // tooltip
-  onPositionUpdate = noop,
   // dropdown and color input
   refCallback = noop,
-  //PlayPauseButton - loads straight popup use, style text, canvas elements, publish time, etc
+  //PlayPauseButton - all straight up popup uses, style text, canvas elements, publish time, etc -
+  // tooltip technically only needs it for getOffset util, but we could just pass in 0.
   topOffset = DEFAULT_TOPOFFSET,
-  //tooltip
-  noOverFlow = false,
-  // dropdown and one tooltip
+  // dropdown and one tooltip - used in dashboard due to the document.body getting set to a weird height.
   ignoreMaxOffsetY,
   // color input - docking or floating
   resetXOffset = false,
@@ -172,14 +143,13 @@ function Popup({
       return;
     }
 
-    onPositionUpdate(popupState);
     refCallback(popup);
-  }, [popupState, onPositionUpdate, refCallback]);
+  }, [popupState, refCallback]);
 
   useResizeEffect({ current: document.body }, positionPopup, [positionPopup]);
   return popupState && isOpen
     ? createPortal(
-        <Container
+        <PopupContainer
           ref={popup}
           fillWidth={fillWidth}
           fillHeight={fillHeight}
@@ -187,14 +157,13 @@ function Popup({
           $offset={popupState.offset}
           invisible={invisible}
           topOffset={topOffset}
-          noOverFlow={noOverFlow}
           isRTL={isRTL}
           zIndex={zIndex}
         >
           {renderContents
             ? renderContents({ propagateDimensionChange: positionPopup })
             : children}
-        </Container>,
+        </PopupContainer>,
         document.body
       )
     : null;
