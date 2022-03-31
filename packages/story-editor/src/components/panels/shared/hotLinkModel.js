@@ -127,7 +127,6 @@ function HotlinkModal({ isOpen, onClose, onSelect, allowedFileTypes = [] }) {
       });
 
       onSelect({ src: link, needsProxy: shouldProxy });
-      setLink('');
     } catch (err) {
       trackError('hotlink_file', err?.message);
 
