@@ -151,9 +151,9 @@ describe('TextEdit integration', () => {
       });
 
       it('should select all text and delete it', async () => {
-        // Testing this on the BROKEN version
         await fixture.events.mouse.clickOn(frame, 30, 5); // enter the edit mode by clicking
 
+        // Needed because of https://github.com/puppeteer/puppeteer/issues/1313
         if (navigator.userAgentData.platform === 'macOS') {
           document.execCommand('selectAll'); // not the same as mod+a, but does work on macOS
         } else {
