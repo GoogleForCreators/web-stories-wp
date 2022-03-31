@@ -22,13 +22,13 @@ import PropTypes from 'prop-types';
 import {
   generatePatternStyles,
   getSolidFromHex,
+  isHexColorString,
 } from '@googleforcreators/patterns';
+import { getDefinitionForType } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
-import isHexColorString from '../../../utils/isHexColorString';
-import { getDefinitionForType } from '../../../elements';
 import useCarousel from './useCarousel';
 
 const EmptyPage = styled.li.attrs({ role: 'presentation' })`

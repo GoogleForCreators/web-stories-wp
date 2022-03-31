@@ -17,23 +17,24 @@
 // Bring element in front of story details modal
 export const Z_INDEX_STORY_DETAILS = 10;
 
-// Lift the head area from under the canvas, only impacts Karma.
-export const Z_INDEX_HEAD_AREA = 3;
-
 // Floating menu lays on top of side menu
 export const Z_INDEX_CANVAS_SIDE_MENU = 3;
 
 // Floating element menu (a context menu) should be behind other popopups
 export const Z_INDEX_FLOATING_MENU = 4;
 
-// TODO these layers are taking priority over the floating menu but they can't.
-// Visually we want them in front of the floating menu but
-// they actually need to be behind to be usable. This is going to be a much bigger lift.
-// https://github.com/GoogleForCreators/web-stories-wp/issues/10892
 // Edit Layer holds footer, popups in footer need to be in front of floating menu
 export const Z_INDEX_EDIT_LAYER = 3;
 
-// sibling inherits parent z-index of Z_INDEX_EDIT_LAYER
-// so popups nested in footer need to be placed above that
-// while still retaining position in the DOM for focus purposes
+// Nav layer doesn't have it's own stacking context, so we apply this
+// to the header and footer to be in the same stacking context as
+// floating menu layer & edit layer
+export const Z_INDEX_NAV_LAYER = 5;
+
+// idk why these are defined in here. they're used through out parts of the
+// codebase, but they're not in the same stacking as the other layers in this
+// file. Keeping them in here to avoid regressions in the codebase, but
+// we should look into only storing z-index constants that apply to the same
+// stacking context
 export const Z_INDEX_FOOTER = 3;
+export const Z_INDEX_HEAD_AREA = 3;

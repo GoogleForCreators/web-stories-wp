@@ -16,7 +16,7 @@
 /**
  * Internal dependencies
  */
-import { DOCUMENT, DESIGN } from '../../components/inspector';
+import { INSERT, DOCUMENT, STYLE } from '../../components/sidebar';
 import {
   MEDIA,
   MEDIA3P,
@@ -28,14 +28,17 @@ import {
  * Highlight state object
  *
  * @typedef {Highlight} Highlight The current state of editor highlights
- * @property {string} tab The ID of the Inspector tab to highlight
+ * @property {string} tab The ID of the Sidebar tab to highlight
  * @property {boolean} focus Whether there is a focusable element, use for accessibility
  */
 
 const keys = {
   STORY_TITLE: 'STORY_TITLE',
 
-  // INSPECTOR
+  // Sidebar tabs
+  STYLE_PANE: 'STYLE_PANE',
+
+  // STYLE
   ANIMATION: 'ANIMATION',
   ASSISTIVE_TEXT: 'ASSISTIVE_TEXT',
   CAPTIONS: 'CAPTIONS',
@@ -61,7 +64,12 @@ export const STATES = {
     focus: true,
   },
 
-  // Inspector
+  // Sidebar tabs
+  [keys.STYLE_PANE]: {
+    focus: true,
+    tab: STYLE,
+  },
+
   [keys.POSTER]: {
     focus: true,
     tab: DOCUMENT,
@@ -76,57 +84,61 @@ export const STATES = {
   },
   [keys.CAPTIONS]: {
     focus: true,
-    tab: DESIGN,
+    tab: STYLE,
   },
   [keys.ASSISTIVE_TEXT]: {
     focus: true,
-    tab: DESIGN,
+    tab: STYLE,
   },
   [keys.PAGE_BACKGROUND]: {
     focus: true,
-    tab: DESIGN,
+    tab: STYLE,
   },
   [keys.ANIMATION]: {
     focus: true,
-    tab: DESIGN,
+    tab: STYLE,
   },
   [keys.FONT]: {
     focus: true,
-    tab: DESIGN,
+    tab: STYLE,
   },
   [keys.LINK]: {
     focus: true,
-    tab: DESIGN,
+    tab: STYLE,
   },
   [keys.VIDEO_A11Y_POSTER]: {
     focus: true,
-    tab: DESIGN,
+    tab: STYLE,
   },
   [keys.STYLE]: {
     focus: true,
-    tab: DESIGN,
+    tab: STYLE,
   },
   [keys.TEXT_COLOR]: {
     focus: true,
-    tab: DESIGN,
+    tab: STYLE,
   },
 
   // Library
   [keys.MEDIA]: {
     focus: true,
-    tab: MEDIA.id,
+    tab: INSERT,
+    section: MEDIA.id,
   },
   [keys.MEDIA3P]: {
     focus: true,
-    tab: MEDIA3P.id,
+    tab: INSERT,
+    section: MEDIA3P.id,
   },
   [keys.TEXT_SET]: {
     focus: true,
-    tab: TEXT_SET.id,
+    tab: INSERT,
+    section: TEXT_SET.id,
   },
   [keys.PAGE_TEMPLATES]: {
     focus: true,
-    tab: PAGE_TEMPLATES.id,
+    tab: INSERT,
+    section: PAGE_TEMPLATES.id,
   },
 };
 

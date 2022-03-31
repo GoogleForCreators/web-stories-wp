@@ -1,0 +1,60 @@
+{
+  "name": "@googleforcreators/element-library",
+  "description": "A library of all elements used in story-editor",
+  "private": false,
+  "version": "0.1.202203241635",
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "web stories"
+  ],
+  "homepage": "https://github.com/GoogleForCreators/web-stories-wp/blob/main/packages/element-library/README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GoogleForCreators/web-stories-wp.git",
+    "directory": "packages/element-library"
+  },
+  "bugs": {
+    "url": "https://github.com/googleforcreators/web-stories-wp/issues"
+  },
+  "engines": {
+    "node": ">= 16",
+    "npm": ">= 7.3"
+  },
+  "customExports": {
+    ".": {
+      "default": "./src/index.js"
+    }
+  },
+  "main": "dist/index.js",
+  "module": "dist-module/index.js",
+  "source": "src/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@googleforcreators/animation": "*",
+    "@googleforcreators/design-system": "*",
+    "@googleforcreators/dom": "*",
+    "@googleforcreators/elements": "*",
+    "@googleforcreators/i18n": "*",
+    "@googleforcreators/masks": "*",
+    "@googleforcreators/media": "*",
+    "@googleforcreators/moveable": "*",
+    "@googleforcreators/patterns": "*",
+    "@googleforcreators/react": "*",
+    "@googleforcreators/rich-text": "*",
+    "@googleforcreators/stickers": "*",
+    "@googleforcreators/transform": "*",
+    "@googleforcreators/units": "*",
+    "classnames": "^2.3.1",
+    "polished": "^4.1.3",
+    "prop-types": "^15.7.2",
+    "react-transition-group": "^4.4.2",
+    "styled-components": "^5.2.1"
+  },
+  "devDependencies": {}
+}

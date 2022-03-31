@@ -15,6 +15,12 @@
  */
 
 /**
+ * External dependencies
+ */
+import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
+
+/**
  * Internal dependencies
  */
 import {
@@ -23,9 +29,8 @@ import {
   getShapePresets,
   getTextPresets,
 } from '../presetUtils';
-import { BACKGROUND_TEXT_MODE, PRESET_TYPES } from '../../constants';
+import { PRESET_TYPES } from '../../constants';
 import objectWithout from '../objectWithout';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 
 describe('presetUtils', () => {
   const TEST_COLOR = {

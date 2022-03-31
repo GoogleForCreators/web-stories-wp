@@ -17,82 +17,35 @@
 /**
  * External dependencies
  */
-import { __ } from '@googleforcreators/i18n';
-import { useMemo, memo } from '@googleforcreators/react';
+import { memo } from '@googleforcreators/react';
 import styled from 'styled-components';
 
 /**
  * Internal dependencies
  */
-import { Panel, PanelTitle, PanelContent } from '../../panel';
-import useInspector from '../../../inspector/useInspector';
-import { TAB_HEIGHT, TAB_VERTICAL_MARGIN } from '../../../tabview';
+import { PanelContent } from '../../panel';
+import useSidebar from '../../../sidebar/useSidebar';
 import LayerList from './layerList';
 import useLayers from './useLayers';
 
 const Container = styled.div`
-  margin: 0 4px;
   filter: drop-shadow(0px -4px 8px rgba(0, 0, 0, 0.2));
-`;
-
-const StyledPanelTitle = styled(PanelTitle)`
-  height: 48px;
-  border-top-left-radius: ${({ theme }) => theme.borders.radius.small};
-  border-top-right-radius: ${({ theme }) => theme.borders.radius.small};
-`;
-
-const DividerContainer = styled.div`
-  background: ${({ theme }) => theme.colors.bg.tertiary};
-`;
-
-const Divider = styled.div`
-  border-bottom: 1px solid ${({ theme }) => theme.colors.divider.tertiary};
-  margin: 0 16.5px;
+  max-height: ${({ maxHeight }) => maxHeight}px;
+  background-color: ${({ theme }) => theme.colors.bg.secondary};
 `;
 
 function LayerPanel() {
   const layers = useLayers();
 
-  const inspectorContentHeight = useInspector(
-    ({ state }) => state.inspectorContentHeight
+  const sidebarContentHeight = useSidebar(
+    ({ state }) => state.sidebarContentHeight
   );
 
-  // We want the max height to fill the space underneath the document/design tab bar.
-  // Since the document/design tab bar has top and bottom margin in addition to a static
-  // height subtract sum from the full height of the inspector.
-  const tabHeight = 2 * TAB_VERTICAL_MARGIN + TAB_HEIGHT;
-  const maxHeight = inspectorContentHeight - tabHeight + 2;
-
-  const initialHeight = useMemo(() => Math.round(window.innerHeight / 4), []);
-
   return (
-    <Container>
-      <Panel
-        name="layer-panel"
-        initialHeight={initialHeight}
-        resizable
-        showDragHandle
-        showFocusStyles={false}
-        ariaHidden
-        collapsedByDefault={false}
-      >
-        <StyledPanelTitle
-          isSecondary
-          isResizable
-          count={layers?.length}
-          maxHeight={maxHeight}
-        >
-          {__('Layers', 'web-stories')}
-        </StyledPanelTitle>
-
-        <DividerContainer>
-          <Divider />
-        </DividerContainer>
-
-        <PanelContent isSecondary padding={'0'}>
-          <LayerList layers={layers} />
-        </PanelContent>
-      </Panel>
+    <Container maxHeight={sidebarContentHeight}>
+      <PanelContent padding={'0'}>
+        <LayerList layers={layers} />
+      </PanelContent>
     </Container>
   );
 }

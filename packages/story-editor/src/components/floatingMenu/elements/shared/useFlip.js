@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
+/**
+ * External dependencies
+ */
+import { trackEvent } from '@googleforcreators/tracking';
 /**
  * Internal dependencies
  */
@@ -21,11 +24,15 @@ import { useStory } from '../../../../app';
 import useProperties from './useProperties';
 
 function useFlip(property) {
-  const { flip } = useProperties(['flip']);
+  const { flip, type } = useProperties(['flip', 'type']);
   const updateSelectedElements = useStory(
     (state) => state.actions.updateSelectedElements
   );
-  const toggle = () =>
+  const toggle = () => {
+    trackEvent('floating_menu', {
+      name: `set_flip_${property}`,
+      element: type,
+    });
     updateSelectedElements({
       properties: (oldElement) => ({
         flip: {
@@ -34,6 +41,7 @@ function useFlip(property) {
         },
       }),
     });
+  };
   return {
     [property]: flip[property] || false,
     toggle,

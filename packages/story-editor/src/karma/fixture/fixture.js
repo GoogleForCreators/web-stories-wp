@@ -27,6 +27,12 @@ import {
 import { setAppElement } from '@googleforcreators/design-system';
 import { FixtureEvents } from '@googleforcreators/karma-fixture';
 import { DATA_VERSION } from '@googleforcreators/migration';
+import {
+  createPage,
+  TEXT_ELEMENT_DEFAULT_FONT,
+  registerElementType,
+} from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
@@ -35,8 +41,6 @@ import StoryEditor from '../../storyEditor';
 import APIProvider from '../../app/api/apiProvider';
 import APIContext from '../../app/api/context';
 import Layout from '../../components/layout';
-import { createPage } from '../../elements';
-import { TEXT_ELEMENT_DEFAULT_FONT } from '../../app/font/defaultFonts';
 import formattedTemplatesArray from '../../dataUtils/formattedTemplatesArray';
 import { PRESET_TYPES } from '../../constants';
 import getMediaResponse from './db/getMediaResponse';
@@ -300,6 +304,7 @@ export class Fixture {
    * @param {Array<Object>} pages Pages.
    */
   setPages(pages) {
+    elementTypes.forEach(registerElementType);
     this.apiProviderFixture_.setPages(pages);
   }
 
@@ -329,7 +334,7 @@ export class Fixture {
               },
             },
           }}
-          inspectorTabs={{
+          sidebarTabs={{
             document: {
               title: 'Document',
               Pane: DocumentPane,

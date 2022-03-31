@@ -1,0 +1,49 @@
+{
+  "name": "@googleforcreators/elements",
+  "description": "Provides various APIs to register & retrieve element types.",
+  "private": false,
+  "version": "0.1.202203241635",
+  "author": {
+    "name": "Google",
+    "url": "https://creators.google/"
+  },
+  "license": "Apache-2.0",
+  "keywords": [
+    "web stories"
+  ],
+  "homepage": "https://github.com/GoogleForCreators/web-stories-wp/blob/main/packages/elements/README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GoogleForCreators/web-stories-wp.git",
+    "directory": "packages/elements"
+  },
+  "bugs": {
+    "url": "https://github.com/googleforcreators/web-stories-wp/issues"
+  },
+  "engines": {
+    "node": ">= 16",
+    "npm": ">= 7.3"
+  },
+  "customExports": {
+    ".": {
+      "default": "./src/index.js"
+    }
+  },
+  "main": "dist/index.js",
+  "module": "dist-module/index.js",
+  "source": "src/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@googleforcreators/animation": "*",
+    "@googleforcreators/design-system": "*",
+    "@googleforcreators/i18n": "*",
+    "@googleforcreators/media": "*",
+    "@googleforcreators/patterns": "*",
+    "@googleforcreators/units": "*",
+    "prop-types": "^15.7.2",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {}
+}

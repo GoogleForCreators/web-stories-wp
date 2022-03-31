@@ -15,11 +15,6 @@
  */
 
 /**
- * External dependencies
- */
-import { load } from 'opentype.js';
-
-/**
  * @typedef {Object} FontMetrics font metrics.
  * @property {number} upm units per em.
  * @property {number} asc ascender.
@@ -45,6 +40,9 @@ import { load } from 'opentype.js';
  * @return {Object} Font data, including metrics, name.
  */
 async function getFontDataFromUrl(fontURL) {
+  const { load } = await import(
+    /* webpackChunkName: "chunk-opentype" */ 'opentype.js'
+  );
   const fontInfo = await load(fontURL);
 
   return {

@@ -21,11 +21,11 @@ import { fireEvent, screen, waitFor } from '@testing-library/react';
 import { FlagsProvider } from 'flagged';
 import { PAGE_RATIO, UnitsProvider } from '@googleforcreators/units';
 import { CURATED_FONT_NAMES } from '@googleforcreators/fonts';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
-import { renderWithTheme } from '../../../../testUtils';
 import FontContext from '../../../../app/font/context';
 import useFont from '../../../../app/font/useFont';
 import fontsListResponse from '../../../panels/design/textStyle/test/fontsResponse.json';
@@ -53,7 +53,6 @@ describe('TextPane', () => {
         },
         actions: {
           insertElement: jest.fn(),
-          setPageCanvasPromise: jest.fn(),
         },
       })
     );
@@ -164,7 +163,6 @@ describe('TextPane', () => {
       expect(insertPreset).toHaveBeenCalledWith(PRESETS[0].element, {
         isPositioned: false,
         accessibleColors: undefined,
-        skipCanvasGeneration: undefined,
       })
     );
   });

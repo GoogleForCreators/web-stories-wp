@@ -51,6 +51,7 @@ import InsertionOverlay from '../shared/insertionOverlay';
 import useFocusCanvas from '../../../canvas/useFocusCanvas';
 import { ActionButton } from '../shared';
 import useRovingTabIndex from '../../../../utils/useRovingTabIndex';
+import useLibrary from '../../useLibrary';
 
 const TemplateImage = styled.img`
   width: 100%;
@@ -94,12 +95,6 @@ function SavedPageTemplate(
   { page, pageSize, handleDelete, index, ...rest },
   ref
 ) {
-  const queuePageImageGeneration = usePageDataUrls(
-    ({ actions }) => actions.queuePageImageGeneration
-  );
-  const pageDataUrl = usePageDataUrls(
-    ({ state: { dataUrls } }) => dataUrls[page.id]
-  );
   const {
     capabilities: { hasUploadMediaAction },
   } = useConfig();
@@ -109,6 +104,16 @@ function SavedPageTemplate(
   const {
     actions: { uploadFile },
   } = useUploader();
+
+  const { updateSavedTemplate } = useLibrary((state) => ({
+    updateSavedTemplate: state.actions.updateSavedTemplate,
+  }));
+  const queuePageImageGeneration = usePageDataUrls(
+    ({ actions }) => actions.queuePageImageGeneration
+  );
+  const pageDataUrl = usePageDataUrls(
+    ({ state: { dataUrls } }) => dataUrls[page.id]
+  );
   const [isActive, setIsActive] = useState(false);
 
   useFocusOut(ref, () => setIsActive(false), []);
@@ -145,6 +150,15 @@ function SavedPageTemplate(
         updatePageTemplate(page.templateId, {
           featured_media: resource.id,
         });
+        updateSavedTemplate({
+          templateId: page.templateId,
+          image: {
+            id: resource.id,
+            height: resource.height,
+            width: resource.width,
+            url: resource.src,
+          },
+        });
       } catch (err) {
         // Catch upload errors, e.g. if the file is too large,
         // so that the page template can still be added, albeit without an image.
@@ -157,6 +171,7 @@ function SavedPageTemplate(
     updatePageTemplate,
     page.templateId,
     shouldPostBlob,
+    updateSavedTemplate,
   ]);
 
   useEffect(() => {

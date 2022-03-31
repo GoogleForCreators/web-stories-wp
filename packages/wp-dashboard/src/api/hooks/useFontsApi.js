@@ -35,17 +35,19 @@ export default function useFontsApi() {
   } = useConfig();
   const [customFonts, setCustomFonts] = useState(null);
 
-  const fetchCustomFonts = useCallback(() => {
-    getCustomFontsCallback(fontsApiPath)
-      .then((response) => {
-        const filteredFonts = response.map(({ id, family, url }) => ({
-          id,
-          family,
-          url,
-        }));
-        setCustomFonts(filteredFonts);
-      })
-      .catch(() => null);
+  const fetchCustomFonts = useCallback(async () => {
+    try {
+      const response = await getCustomFontsCallback(fontsApiPath);
+      const filteredFonts = response.map(({ id, family, url }) => ({
+        id,
+        family,
+        url,
+      }));
+      setCustomFonts(filteredFonts);
+      return filteredFonts;
+    } catch {
+      return null;
+    }
   }, [fontsApiPath]);
 
   useEffect(() => {
@@ -56,30 +58,27 @@ export default function useFontsApi() {
 
   const deleteCustomFont = useCallback(
     async (id) => {
-      try {
-        const response = await deleteCustomFontCallback(fontsApiPath, id);
-        return response;
-      } catch (e) {
-        return null;
-      }
+      const response = await deleteCustomFontCallback(fontsApiPath, id);
+      const newCustomFonts = customFonts.filter((font) => font.id !== id);
+      setCustomFonts(newCustomFonts);
+      return response;
     },
-    [fontsApiPath]
+    [customFonts, fontsApiPath]
   );
 
   const addCustomFont = useCallback(
     async (font) => {
-      try {
-        const response = await addCustomFontCallback(fontsApiPath, font);
-        return response;
-      } catch (e) {
-        return null;
-      }
+      const response = await addCustomFontCallback(fontsApiPath, font);
+      const { id, family, url } = response;
+      const newFont = { id, family, url };
+      setCustomFonts([newFont, ...customFonts]);
+      return newFont;
     },
-    [fontsApiPath]
+    [customFonts, fontsApiPath]
   );
 
   return {
     customFonts,
-    api: { addCustomFont, fetchCustomFonts, deleteCustomFont },
+    api: { addCustomFont, deleteCustomFont },
   };
 }

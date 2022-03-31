@@ -57,6 +57,7 @@ import useOnMediaSelect from './useOnMediaSelect';
 import paneId from './paneId';
 import VideoOptimizationDialog from './videoOptimizationDialog';
 import LinkInsertion from './hotlink';
+import MediaRecording from './mediaRecording';
 
 export const ROOT_MARGIN = 300;
 
@@ -133,7 +134,7 @@ function MediaPane(props) {
     }
   );
 
-  const enableHotlinking = useFeature('enableHotlinking');
+  const enableMediaRecording = useFeature('mediaRecording');
 
   const {
     capabilities: { hasUploadMediaAction },
@@ -191,20 +192,6 @@ function MediaPane(props) {
     []
   );
 
-  const renderUploadButton = useCallback(
-    (open) => (
-      <Button
-        variant={BUTTON_VARIANTS.RECTANGLE}
-        type={BUTTON_TYPES.SECONDARY}
-        size={BUTTON_SIZES.SMALL}
-        onClick={open}
-      >
-        {__('Upload', 'web-stories')}
-      </Button>
-    ),
-    []
-  );
-
   return (
     <StyledPane id={paneId} {...props}>
       <PaneInner>
@@ -238,8 +225,11 @@ function MediaPane(props) {
                 )}
               </SearchCount>
             )}
-            {!isSearching && enableHotlinking && (
+            {!isSearching && (
               <ButtonsWrapper>
+                {enableMediaRecording && hasUploadMediaAction && (
+                  <MediaRecording />
+                )}
                 <LinkInsertion />
                 {hasUploadMediaAction && (
                   <Tooltip title={__('Upload', 'web-stories')}>
@@ -250,12 +240,6 @@ function MediaPane(props) {
                   </Tooltip>
                 )}
               </ButtonsWrapper>
-            )}
-            {!isSearching && !enableHotlinking && hasUploadMediaAction && (
-              <MediaUploadButton
-                renderButton={renderUploadButton}
-                onInsert={onSelect}
-              />
             )}
           </FilterArea>
         </PaneHeader>

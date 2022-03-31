@@ -18,10 +18,11 @@
  */
 import { fireEvent, screen } from '@testing-library/react';
 import { axe } from 'jest-axe';
+import { renderWithTheme } from '@googleforcreators/test-utils';
+
 /**
  * Internal dependencies
  */
-import renderWithTheme from '../../../testUtils/renderWithTheme';
 import { StoryContext } from '../../../app/story';
 import { ConfigContext } from '../../../app/config';
 import StoryPreview from '../content/storyPreview';

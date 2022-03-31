@@ -32,6 +32,9 @@ export const ERRORS = {
   REMOVE_PUBLISHER_LOGO: {
     MESSAGE: __('Unable to remove publisher logo', 'web-stories'),
   },
+  REMOVE_FONT: {
+    MESSAGE: __('Unable to remove font', 'web-stories'),
+  },
   UPDATE_PUBLISHER_LOGO: {
     MESSAGE: __('Unable to update publisher logo', 'web-stories'),
   },

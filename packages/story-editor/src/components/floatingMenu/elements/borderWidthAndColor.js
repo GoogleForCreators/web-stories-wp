@@ -19,13 +19,14 @@
  */
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
+import { trackEvent } from '@googleforcreators/tracking';
 import styled from 'styled-components';
+import { canSupportMultiBorder } from '@googleforcreators/masks';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
-import { canSupportMultiBorder } from '../../../masks';
 import { DEFAULT_BORDER } from '../../panels/design/border/shared';
 import { Input, Color, useProperties } from './shared';
 
@@ -54,31 +55,39 @@ function BorderWidthAndColor() {
   // Note that "mask" never updates on an element,
   // so selecting it cannot cause re-renders
   // We need it to determine if border opacity is allowed.
-  const { border = DEFAULT_BORDER, mask } = useProperties(['border', 'mask']);
+  const {
+    border = DEFAULT_BORDER,
+    mask,
+    type,
+  } = useProperties(['border', 'mask', 'type']);
+
   const updateSelectedElements = useStory(
-    (state) => state.actions.updateSelectedElements
+    ({ actions }) => actions.updateSelectedElements
   );
-
-  // Only multi-border elements support border opacity
-  const canHaveBorderOpacity = canSupportMultiBorder({ mask });
-
   // We only allow editing the current border width, if all borders are identical
   const hasUniformBorder =
     border.left === border.right &&
     border.left === border.top &&
     border.left === border.bottom;
 
+  // Border width and color inputs should only be rendered if all sides of the border are the same.
+  // Both checks are needed since not all shaped have lockedWidth eg. circles.
+  if (!border.lockedWidth && !hasUniformBorder) {
+    return null;
+  }
+
+  // Only multi-border elements support border opacity
+  const canHaveBorderOpacity = canSupportMultiBorder({ mask });
+
   // We only allow editing border color, if at least one border has a non-zero width
   const hasBorderWidth = getHasBorderWidth(border);
 
-  // If both controls are displayed, also add a dash between them
-  const hasBoth = hasUniformBorder && hasBorderWidth;
+  const handleWidthChange = (value) => {
+    trackEvent('floating_menu', {
+      name: 'set_border_width',
+      element: type,
+    });
 
-  // NB: Note that it can never be the case, that both of the above bools, hasUniformBorder
-  // and hasBorderWidth, are false. If so, neither input would be shown. But because they
-  // partially contradict each other, one of the inputs will always render.
-
-  const handleWidthChange = (value) =>
     updateSelectedElements({
       properties: ({ border: oldBorder }) => ({
         border: {
@@ -92,8 +101,14 @@ function BorderWidthAndColor() {
         },
       }),
     });
+  };
 
-  const handleColorChange = (value) =>
+  const handleColorChange = (value) => {
+    trackEvent('floating_menu', {
+      name: 'set_border_color',
+      element: type,
+    });
+
     updateSelectedElements({
       properties: ({ border: oldBorder }) => ({
         border: {
@@ -102,27 +117,31 @@ function BorderWidthAndColor() {
         },
       }),
     });
+  };
 
   return (
     <Container>
-      {hasUniformBorder && (
-        <Input
-          suffix={<Icons.BorderBox />}
-          value={border.left || 0}
-          aria-label={__('Border width', 'web-stories')}
-          onChange={(_, value) => handleWidthChange(value)}
-        />
-      )}
-      {hasBoth && <Dash />}
+      <Input
+        suffix={<Icons.BorderBox />}
+        value={border.left || 0}
+        aria-label={__('Border width', 'web-stories')}
+        onChange={(_, value) => handleWidthChange(value)}
+      />
       {hasBorderWidth && (
-        <Color
-          label={__('Border color', 'web-stories')}
-          value={border.color || BLACK}
-          onChange={handleColorChange}
-          hasInputs={false}
-          hasEyeDropper={false}
-          allowsOpacity={canHaveBorderOpacity}
-        />
+        <>
+          <Dash />
+          <Color
+            label={__('Border color', 'web-stories')}
+            value={border.color || BLACK}
+            onChange={handleColorChange}
+            hasInputs={false}
+            hasEyedropper={false}
+            allowsOpacity={canHaveBorderOpacity}
+            allowsGradient={false}
+            pickerHasEyedropper={false} // override shared floating menu Color component TODO https://github.com/GoogleForCreators/web-stories-wp/issues/11024
+            allowsSavedColors={false}
+          />
+        </>
       )}
     </Container>
   );

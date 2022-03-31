@@ -50,12 +50,13 @@ describe('Text Style Panel', () => {
 
     it('should have the style panel always expanded', async () => {
       await fixture.snapshot('Default panels state with only style panel open');
+      await fixture.events.click(fixture.editor.sidebar.designTab);
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.textStyle.collapse
+        fixture.editor.sidebar.designPanel.textStyle.collapse
       );
       // Expect the inputs not to be visible since tha panel is collapsed.
       expect(
-        () => fixture.editor.inspector.designPanel.textStyle.lineHeight
+        () => fixture.editor.sidebar.designPanel.textStyle.lineHeight
       ).toThrow();
       await fixture.snapshot('Collapsed style panel');
 
@@ -66,6 +67,7 @@ describe('Text Style Panel', () => {
         '90%'
       );
       // Add a new text now.
+      await fixture.events.click(fixture.editor.sidebar.insertTab);
       await fixture.editor.library.textTab.click();
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
@@ -77,8 +79,9 @@ describe('Text Style Panel', () => {
         expect(fixture.editor.canvas.framesLayer.frames[2].node).toBeTruthy();
       });
       // Expect the inputs to be visible again, since the panel should be expanded again.
+      await fixture.events.click(fixture.editor.sidebar.designTab);
       expect(
-        fixture.editor.inspector.designPanel.textStyle.lineHeight
+        fixture.editor.sidebar.designPanel.textStyle.lineHeight
       ).toBeDefined();
     });
   });
@@ -98,13 +101,19 @@ describe('Text Style Panel', () => {
 
       // Select first text as well (the second is selected by default).
       await fixture.events.keyboard.down('Shift');
-      await fixture.events.click(
-        fixture.editor.canvas.framesLayer.frames[1].node
+      await fixture.events.mouse.clickOn(
+        fixture.editor.canvas.framesLayer.frames[1].node,
+        10,
+        10
       );
+      // await fixture.events.click(
+      //   fixture.editor.canvas.framesLayer.frames[1].node
+      // );
       await fixture.events.keyboard.up('Shift');
 
+      await fixture.events.click(fixture.editor.sidebar.designTab);
       expect(
-        fixture.editor.inspector.designPanel.textStyle.adaptiveColor.disabled
+        fixture.editor.sidebar.designPanel.textStyle.adaptiveColor.disabled
       ).toBeTrue();
     });
 
@@ -117,12 +126,14 @@ describe('Text Style Panel', () => {
       await fixture.events.keyboard.press('Tab');
 
       // Add text element.
+      await fixture.events.click(fixture.editor.sidebar.insertTab);
       await fixture.editor.library.textTab.click();
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
       );
+      await fixture.events.click(fixture.editor.sidebar.designTab);
       await fixture.events.click(
-        fixture.editor.inspector.designPanel.textStyle.adaptiveColor
+        fixture.editor.sidebar.designPanel.textStyle.adaptiveColor
       );
 
       await waitFor(
@@ -175,11 +186,12 @@ describe('Text Style Panel', () => {
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
       );
+      await fixture.events.click(fixture.editor.sidebar.designTab);
     });
 
     it('should display padding and line-height correctly', async () => {
       const { padding, lineHeight } =
-        fixture.editor.inspector.designPanel.textStyle;
+        fixture.editor.sidebar.designPanel.textStyle;
       await fixture.events.focus(padding);
       await fixture.events.keyboard.type('10');
 
@@ -221,10 +233,11 @@ describe('Text Style Panel', () => {
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
       );
+      await fixture.events.click(fixture.editor.sidebar.designTab);
     });
 
     it('should allow whole number font sizes', async () => {
-      const { fontSize } = fixture.editor.inspector.designPanel.textStyle;
+      const { fontSize } = fixture.editor.sidebar.designPanel.textStyle;
 
       const size = 42;
 
@@ -241,7 +254,7 @@ describe('Text Style Panel', () => {
     });
 
     it('should allow fractional font sizes', async () => {
-      const { fontSize } = fixture.editor.inspector.designPanel.textStyle;
+      const { fontSize } = fixture.editor.sidebar.designPanel.textStyle;
 
       const size = 15.25;
 
@@ -264,6 +277,7 @@ describe('Text Style Panel', () => {
       await fixture.events.click(
         fixture.editor.library.text.preset('Paragraph')
       );
+      await fixture.events.click(fixture.editor.sidebar.designTab);
     });
     const getOptions = () => {
       return fixture.screen
@@ -321,7 +335,7 @@ describe('Text Style Panel', () => {
         await fixture.events.click(option);
         await fixture.events.sleep(TIMEOUT);
 
-        const { fontWeight } = fixture.editor.inspector.designPanel.textStyle;
+        const { fontWeight } = fixture.editor.sidebar.designPanel.textStyle;
         expect(fontWeight.value).toBe('Regular');
 
         await fixture.events.click(fontWeight.select);
@@ -340,7 +354,7 @@ describe('Text Style Panel', () => {
         await fixture.events.click(option2);
         await fixture.events.sleep(600);
         const updatedFontWeight =
-          fixture.editor.inspector.designPanel.textStyle.fontWeight;
+          fixture.editor.sidebar.designPanel.textStyle.fontWeight;
 
         expect(updatedFontWeight.value).toBe('Regular');
       });

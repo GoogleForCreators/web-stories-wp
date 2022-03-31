@@ -152,21 +152,35 @@ export const createStoryFromTemplate = async (config, template) => {
   });
 
   const { createdBy, pages, version, colors } = template;
-  const { getStoryPropsToSave } = await import(
-    /* webpackChunkName: "chunk-getStoryPropsToSave" */ '@googleforcreators/story-editor'
+  const { getStoryMarkup } = await import(
+    /* webpackChunkName: "chunk-getStoryMarkup" */ '@googleforcreators/output'
   );
-  const storyPropsToSave = await getStoryPropsToSave({
-    story: {
-      status: 'auto-draft',
-      featuredMedia: {
-        id: 0,
-      },
+
+  const story = {
+    featuredMedia: {
+      id: 0,
+      url: '',
     },
-    pages,
-    metadata: {
-      publisher: createdBy,
+    publisherLogo: {
+      url: '',
     },
+    title: '',
+  };
+
+  const content = getStoryMarkup(story, pages, {
+    publisher: createdBy,
   });
+
+  const storyPropsToSave = {
+    content,
+    pages,
+    featuredMedia: story.featuredMedia,
+    title: story.title,
+    status: 'auto-draft',
+    meta: {
+      web_stories_publisher_logo: story.publisherLogo.id,
+    },
+  };
 
   const convertedColors = colors.map(({ color }) =>
     createSolidFromString(color)

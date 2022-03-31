@@ -35,6 +35,7 @@ import { MULTIPLE_DISPLAY_VALUE, MULTIPLE_VALUE } from '../../constants';
 
 const FontPicker = forwardRef(function FontPicker(
   {
+    zIndex,
     onChange,
     currentValue,
     highlightStylesOverride,
@@ -78,8 +79,13 @@ const FontPicker = forwardRef(function FontPicker(
     fonts.forEach((f) => {
       map.set(f.id, f);
     });
+
+    customFonts?.forEach((f) => {
+      map.set(f.id, f);
+    });
+
     return map;
-  }, [fonts]);
+  }, [fonts, customFonts]);
 
   const onObserve = useCallback(
     (observedFonts) => {
@@ -147,9 +153,11 @@ const FontPicker = forwardRef(function FontPicker(
   return (
     <Datalist.DropDown
       ref={ref}
+      zIndex={zIndex}
       highlightStylesOverride={highlightStylesOverride}
       data-testid="font"
-      aria-label={__('Font family', 'web-stories')}
+      title={__('Available font families', 'web-stories')}
+      dropdownButtonLabel={__('Font family', 'web-stories')}
       options={fonts}
       primaryOptions={curatedFonts}
       primaryLabel={__('Recommended', 'web-stories')}
@@ -180,6 +188,7 @@ FontPicker.propTypes = {
   showDropdownLabel: PropTypes.bool,
   listStyleOverrides: PropTypes.array,
   containerStyleOverrides: PropTypes.array,
+  zIndex: PropTypes.number,
 };
 
 export default FontPicker;

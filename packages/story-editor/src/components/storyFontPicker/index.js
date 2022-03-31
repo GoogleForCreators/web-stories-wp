@@ -20,6 +20,7 @@
 import { forwardRef, useCallback } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { stripHTML } from '@googleforcreators/dom';
+import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
@@ -30,7 +31,7 @@ import useRichTextFormatting from '../panels/design/textStyle/useRichTextFormatt
 import getClosestFontWeight from '../panels/design/textStyle/getClosestFontWeight';
 import { getCommonValue } from '../panels/shared';
 import FontPicker from '../fontPicker';
-import updateProperties from '../inspector/design/updateProperties';
+import updateProperties from '../design/updateProperties';
 
 const StoryFontPicker = forwardRef(function StoryFontPicker({ ...rest }, ref) {
   const { updateSelectedElements, selectedElements } = useStory(
@@ -78,6 +79,10 @@ const StoryFontPicker = forwardRef(function StoryFontPicker({ ...rest }, ref) {
 
   const onChange = useCallback(
     async (newFont) => {
+      trackEvent('font_family_changed', {
+        name: newFont.name,
+      });
+
       await maybeEnqueueFontStyle(
         selectedElements.map(({ content }) => {
           return {

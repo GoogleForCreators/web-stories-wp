@@ -309,6 +309,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'CORS check', 'web-stories' ),
 				'description' => __( 'Add a check in the editor for CORS errors.', 'web-stories' ),
 				'group'       => 'editor',
+				'default'     => true,
 			],
 			/**
 			 * Author: @brittanyirl
@@ -319,44 +320,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'name'        => 'enableUpdatedPublishStoryModal',
 				'label'       => __( 'Updated Publish Story Modal', 'web-stories' ),
 				'description' => __( 'Enable new pre-publish confirmation modal', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-			/**
-			 * Author: @miina
-			 * Issue #471
-			 * Creation date: 2021-08-10
-			 */
-			[
-				'name'        => 'enableHotlinking',
-				'label'       => __( 'Insert media from link', 'web-stories' ),
-				'description' => __( 'Enable inserting media element from external link', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-
-			/**
-			 * Author: @barklund
-			 * Issue: #8877
-			 * Creation date: 2021-09-01
-			 */
-			[
-				'name'        => 'enableVideoTrim',
-				'label'       => __( 'Video trimming', 'web-stories' ),
-				'description' => __( 'Enable video trimming', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-
-			/**
-			 * Author: @barklund
-			 * Issue: #8973
-			 * Creation date: 2021-09-07
-			 */
-			[
-				'name'        => 'enableThumbnailCaching',
-				'label'       => __( 'Thumbnail Caching', 'web-stories' ),
-				'description' => __( 'Enable thumbnail caching', 'web-stories' ),
 				'group'       => 'editor',
 				'default'     => true,
 			],
@@ -371,6 +334,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Custom Fonts', 'web-stories' ),
 				'description' => __( 'Enable adding custom fonts', 'web-stories' ),
 				'group'       => 'general',
+				'default'     => true,
 			],
 			/**
 			 * Author: @spacedmonkey
@@ -393,6 +357,30 @@ class Experiments extends Service_Base implements HasRequirements {
 				'name'        => 'floatingMenu',
 				'label'       => __( 'Floating Menu', 'web-stories' ),
 				'description' => __( 'Enable the new floating design menu', 'web-stories' ),
+				'group'       => 'editor',
+				'default'     => true,
+			],
+			/**
+			 * Author: @timarney
+			 * Issue: #10014
+			 * Creation date: 2022-03-03
+			 */
+			[
+				'name'        => 'notifyDeletedFonts',
+				'label'       => __( 'Deleted Fonts', 'web-stories' ),
+				'description' => __( 'Notify user about deleted fonts in story', 'web-stories' ),
+				'group'       => 'editor',
+				'default'     => true,
+			],
+			/**
+			 * Author: @swissspidy
+			 * Issue: #10930
+			 * Creation date: 2022-03-17
+			 */
+			[
+				'name'        => 'mediaRecording',
+				'label'       => __( 'Media Recording', 'web-stories' ),
+				'description' => __( 'Enable recording from webcam/microphone', 'web-stories' ),
 				'group'       => 'editor',
 			],
 		];

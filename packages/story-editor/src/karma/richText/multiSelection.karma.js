@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 /**
  * Internal dependencies
  */
@@ -58,8 +57,9 @@ describe('Styling multiple text fields', () => {
     // When fixing this, ensure that uppercase is also handled here.
     // eslint-disable-next-line jasmine/no-disabled-tests
     xit('should apply formatting correctly for identically styled text fields', async () => {
+      await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
       const { bold, italic, underline, fontWeight, letterSpacing, fontColor } =
-        data.fixture.editor.inspector.designPanel.textStyle;
+        data.fixture.editor.sidebar.designPanel.textStyle;
 
       // Select both text fields
       await selectBothTextFields();
@@ -116,6 +116,7 @@ describe('Styling multiple text fields', () => {
     });
 
     it('should apply formatting correctly for multi-style text field', async () => {
+      await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
       const {
         bold,
         italic,
@@ -124,7 +125,7 @@ describe('Styling multiple text fields', () => {
         fontWeight,
         letterSpacing,
         fontColor,
-      } = data.fixture.editor.inspector.designPanel.textStyle;
+      } = data.fixture.editor.sidebar.designPanel.textStyle;
 
       // Edit formatting for second text field
       await data.fixture.events.click(letterSpacing, { clickCount: 3 });
@@ -163,17 +164,22 @@ describe('Styling multiple text fields', () => {
       await data.fixture.events.sleep(300);
       await data.fixture.events.click(await fontWeight.option('Bold'));
       await data.fixture.events.sleep(300);
-      await data.fixture.events.click(fontColor.button);
-      await data.fixture.events.click(fontColor.picker.custom);
-      await data.fixture.events.click(fontColor.picker.hexButton);
-      await data.fixture.events.keyboard.type('00FF00');
-      // Wait for debounce in color picker (100ms)
-      await data.fixture.events.sleep(100);
       await data.fixture.events.click(letterSpacing, { clickCount: 3 });
       await data.fixture.events.keyboard.type('100');
       await data.fixture.events.keyboard.press('Enter');
       await data.fixture.events.click(uppercase.button);
       await data.fixture.events.keyboard.press('Escape');
+      await data.fixture.events.click(fontColor.button);
+      await data.fixture.events.click(fontColor.picker.custom);
+      await data.fixture.events.click(fontColor.picker.hexButton);
+      await data.fixture.events.keyboard.type('00FF00');
+      await data.fixture.events.keyboard.press('Enter');
+      await data.fixture.events.keyboard.press('Escape');
+      await data.fixture.events.sleep(100);
+      await data.fixture.events.keyboard.press('Escape');
+      // Wait for debounce in color picker (100ms)
+      await data.fixture.events.sleep(100);
+      await selectBothTextFields();
 
       // Verify all styles, now expected to be updated
       expect(bold.checked).toBe(true);
@@ -203,8 +209,9 @@ describe('Styling multiple text fields', () => {
 
   describe('CUJ: Creator Can Style Text: Apply B, Select weight', () => {
     it('should make black text field + bold text field non-bold when toggling', async () => {
+      await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
       const { bold, fontWeight } =
-        data.fixture.editor.inspector.designPanel.textStyle;
+        data.fixture.editor.sidebar.designPanel.textStyle;
 
       // Make text field 1 black
       await selectTextField(0);
@@ -244,8 +251,9 @@ describe('Styling multiple text fields', () => {
     });
 
     it('should make bold text field + light text field bold when toggling', async () => {
+      await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
       const { bold, fontWeight } =
-        data.fixture.editor.inspector.designPanel.textStyle;
+        data.fixture.editor.sidebar.designPanel.textStyle;
 
       // Make text field 1 black
       await selectTextField(0);

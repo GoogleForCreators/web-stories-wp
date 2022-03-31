@@ -34,7 +34,7 @@ import {
 /**
  * Internal dependencies
  */
-import useInspector from '../../../inspector/useInspector';
+import useSidebar from '../../../sidebar/useSidebar';
 import panelContext from '../context';
 import { PANEL_COLLAPSED_THRESHOLD } from '../panel';
 import { focusStyle } from '../../shared';
@@ -195,14 +195,13 @@ function Title({
     },
   } = useContext(panelContext);
   const {
-    state: { inspectorContentHeight },
-  } = useInspector();
+    state: { sidebarContentHeight },
+  } = useSidebar();
 
   useEffect(confirmTitle, [confirmTitle]);
 
   // Default max panel height is set to 70% of full available height.
-  const maxHeight =
-    maxHeightOverride || Math.round(inspectorContentHeight * 0.7);
+  const maxHeight = maxHeightOverride || Math.round(sidebarContentHeight * 0.7);
 
   const handleHeightChange = useCallback(
     (deltaHeight) =>

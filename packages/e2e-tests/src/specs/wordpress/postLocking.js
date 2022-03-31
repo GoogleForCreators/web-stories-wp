@@ -23,9 +23,10 @@ import {
   createNewStory,
   insertStoryTitle,
   publishStory,
-  visitAdminPage,
+  editStoryWithTitle,
+  activatePlugin,
+  deactivatePlugin,
   takeSnapshot,
-  withPlugin,
 } from '@web-stories-wp/e2e-test-utils';
 
 const percyCSS = `.dashboard-grid-item-date { display: none; }`;
@@ -34,7 +35,6 @@ const storyTitle = 'Test post lock';
 
 describe('Post Locking', () => {
   withExperimentalFeatures(['enablePostLocking']);
-  withPlugin('e2e-tests-post-lock-mock');
 
   beforeAll(async () => {
     await createNewStory();
@@ -42,6 +42,14 @@ describe('Post Locking', () => {
     await insertStoryTitle(storyTitle);
 
     await publishStory();
+
+    // Not using the withPlugin() here because this plugin
+    // needs to be activated *after* creating this story.
+    await activatePlugin('e2e-tests-post-lock-mock');
+  });
+
+  afterAll(async () => {
+    await deactivatePlugin('e2e-tests-post-lock-mock');
   });
 
   it('should be able to open the dashboard with locked story', async () => {
@@ -54,14 +62,7 @@ describe('Post Locking', () => {
   });
 
   it('should be able to open the editor with locked story', async () => {
-    await visitAdminPage('edit.php', 'post_type=web-story');
-
-    await expect(page).toMatch(storyTitle);
-
-    await Promise.all([
-      page.waitForNavigation(),
-      expect(page).toClick('a', { text: storyTitle }),
-    ]);
+    await editStoryWithTitle(storyTitle);
 
     await page.waitForSelector('.ReactModal__Content');
 

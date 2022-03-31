@@ -45,8 +45,9 @@ describe('Text Panel: Contrast Warning', () => {
       }
       expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
     }); //change font color to white
+    await fixture.events.click(fixture.editor.sidebar.designTab);
     await fixture.events.click(
-      fixture.editor.inspector.designPanel.textStyle.fontColor.button
+      fixture.editor.sidebar.designPanel.textStyle.fontColor.button
     );
     await fixture.events.click(
       await fixture.screen.findByRole('option', { name: '#fff' })
@@ -67,8 +68,9 @@ describe('Text Panel: Contrast Warning', () => {
       }
       expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
     }); //change font color to white
+    await fixture.events.click(fixture.editor.sidebar.designTab);
     await fixture.events.click(
-      fixture.editor.inspector.designPanel.textStyle.fontColor.button
+      fixture.editor.sidebar.designPanel.textStyle.fontColor.button
     );
     await fixture.events.click(
       await fixture.screen.findByRole('option', { name: '#fff' })

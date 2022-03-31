@@ -13,16 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export const PILL_LABEL_TYPES = {
-  FLOATING: 'floating',
-  SWATCH: 'swatch',
-  DEFAULT: 'default',
-};
-
-export const PILL_INPUT_TYPES = {
-  CHECKBOX: 'checkbox',
-  RADIO: 'radio',
-};
 
 export const BUTTON_TYPES = {
   CTA: 'cta',
@@ -31,32 +21,10 @@ export const BUTTON_TYPES = {
   SECONDARY: 'secondary',
 };
 
-export const CHIP_TYPES = {
-  STANDARD: 'standard',
-  SMALL: 'small',
-};
-
 export const DROPDOWN_TYPES = {
   MENU: 'menu',
   PANEL: 'panel',
   COLOR_PANEL: 'color_panel',
 };
-
-export const KEYS = {
-  ENTER: 'Enter',
-  ESC: 'Escape',
-  UP: 'ArrowUp',
-  DOWN: 'ArrowDown',
-};
-
-export const ALERT_SEVERITY = {
-  ERROR: 'error',
-  WARNING: 'warning',
-  INFO: 'info',
-  SUCCESS: 'success',
-  DEFAULT: 'default',
-};
-
-export const AUTO_REMOVE_ALERT_TIME_INTERVAL = 10000;
 
 export const DEFAULT_FILE_UPLOAD_TYPES = ['.jpg', '.jpeg', '.png', '.gif'];

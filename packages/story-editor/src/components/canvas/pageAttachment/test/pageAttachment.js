@@ -18,13 +18,13 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
 import PageAttachment from '..';
 import CanvasContext from '../../../../app/canvas/context';
-import { renderWithTheme } from '../../../../testUtils';
 import StoryContext from '../../../../app/story/context';
 import { ConfigProvider } from '../../../../app/config';
 import getDefaultConfig from '../../../../getDefaultConfig';

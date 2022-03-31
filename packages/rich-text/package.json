@@ -2,7 +2,7 @@
   "name": "@googleforcreators/rich-text",
   "description": "A wrapper around draft-js and utilities for rich-text editor.",
   "private": false,
-  "version": "0.1.202203150806",
+  "version": "0.1.202203241635",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
@@ -36,6 +36,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@googleforcreators/elements": "*",
     "@googleforcreators/patterns": "*",
     "@googleforcreators/react": "*",
     "draft-js": "^0.11.7",

@@ -19,6 +19,7 @@
  */
 import { UnitsProvider, getBox, PAGE_RATIO } from '@googleforcreators/units';
 import { TransformContext } from '@googleforcreators/transform';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
@@ -28,7 +29,6 @@ import FontContext from '../../../../../../app/font/context';
 import APIContext from '../../../../../../app/api/context';
 import ConfigContext from '../../../../../../app/config/context';
 import TextSet from '../textSet';
-import { renderWithTheme } from '../../../../../../testUtils';
 import { TEXT_SET_SIZE } from '../../../../../../constants';
 import StoryContext from '../../../../../../app/story/context';
 import { LayoutProvider } from '../../../../../../app/layout';
@@ -80,7 +80,6 @@ const SET = [
     },
     type: 'text',
     content: '<span style="font-weight: 400">Good design is aesthetic</span>',
-    fontWeight: 700,
     x: 40,
     y: 291,
     width: 328,
@@ -161,7 +160,6 @@ const SET = [
     type: 'text',
     content:
       'The possibilities for innovation are not, by any means, exhausted. Technological development is always offering new opportunities for innovative design. But innovative design always develops in tandem with innovative technology, and can never be an end in itself.',
-    fontWeight: 400,
     x: 40,
     y: 411,
     width: 333,

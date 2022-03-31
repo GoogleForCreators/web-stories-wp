@@ -27,7 +27,6 @@ import {
 } from '@googleforcreators/design-system';
 import styled from 'styled-components';
 import { useState } from '@googleforcreators/react';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -38,15 +37,11 @@ import HotlinkModal from './hotlinkModal';
 
 const Button = styled(DefaultButton)`
   ${focusStyle};
-  margin: 0 10px;
+  margin: 0 10px 0 0;
 `;
 
 function Hotlink() {
   const [isOpen, setIsOpen] = useState(false);
-  const enableHotlinking = useFeature('enableHotlinking');
-  if (!enableHotlinking) {
-    return null;
-  }
   const label = __('Insert by link', 'web-stories');
   return (
     <>

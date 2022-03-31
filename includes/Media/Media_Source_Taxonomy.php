@@ -201,6 +201,8 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 	 * @return array  Tax query arg.
 	 */
 	private function get_exclude_tax_query( array $args ): array {
+		$tax_query = ! empty( $args['tax_query'] ) ? $args['tax_query'] : [];
+
 		/**
 		 * Filter whether generated attachments should be hidden in the media library.
 		 *
@@ -211,17 +213,8 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 		 */
 		$enabled = apply_filters( 'web_stories_hide_auto_generated_attachments', true, $args );
 		if ( true !== $enabled ) {
-			return $args;
+			return $tax_query;
 		}
-
-		$tax_query = [
-			[
-				'taxonomy' => $this->taxonomy_slug,
-				'field'    => 'slug',
-				'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
-				'operator' => 'NOT IN',
-			],
-		];
 
 		/**
 		 *  Merge with existing tax query if needed,
@@ -234,9 +227,17 @@ class Media_Source_Taxonomy extends Taxonomy_Base {
 		 *   [ [ any ], [ existing ], [ tax queries] ]
 		 * ]
 		 */
-		if ( ! empty( $args['tax_query'] ) ) {
-			$tax_query[] = $args['tax_query'];
-		}
+		array_unshift(
+			$tax_query,
+			[
+				[
+					'taxonomy' => $this->taxonomy_slug,
+					'field'    => 'slug',
+					'terms'    => [ 'poster-generation', 'source-video', 'source-image', 'page-template' ],
+					'operator' => 'NOT IN',
+				],
+			]
+		);
 
 		return $tax_query;
 	}

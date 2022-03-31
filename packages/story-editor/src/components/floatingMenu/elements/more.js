@@ -18,13 +18,32 @@
  * External dependencies
  */
 import { _x } from '@googleforcreators/i18n';
+import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
  */
+import { useStory } from '../../../app';
+import { states, useHighlights } from '../../../app/highlights';
 import { TextButton } from './shared';
 
 function More() {
+  const setHighlights = useHighlights(({ setHighlights }) => setHighlights);
+  const selectedElementType = useStory(
+    ({ state }) => state.selectedElements[0].type
+  );
+
+  const handleHighlightDesignPanel = () => {
+    setHighlights({
+      highlight: states.STYLE_PANE,
+    });
+
+    trackEvent('floating_menu', {
+      name: 'click_more_button',
+      element: selectedElementType,
+    });
+  };
+
   return (
     <TextButton
       text={_x(
@@ -32,7 +51,7 @@ function More() {
         'Link to more options in design panel for selected element',
         'web-stories'
       )}
-      onClick={() => {}}
+      onClick={handleHighlightDesignPanel}
     />
   );
 }

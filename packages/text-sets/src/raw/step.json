@@ -1880,7 +1880,7 @@
           "lockAspectRatio": false,
           "backgroundTextMode": "NONE",
           "font": {
-            "family": "Open Sans Condensed",
+            "family": "Roboto Condensed",
             "service": "fonts.google.com",
             "fallbacks": ["sans-serif"],
             "weights": [300, 700],
@@ -1908,14 +1908,14 @@
               "lGap": 0
             }
           },
-          "fontSize": 24,
+          "fontSize": 23,
           "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
           "lineHeight": 1.3,
           "textAlign": "center",
           "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
           "type": "text",
-          "content": "<span style=\"color: #444; letter-spacing: 0.04em\">Quick Tutorial for Beginners</span>",
-          "fontWeight": 400,
+          "content": "<span style=\"font-weight: 300; color: #444; letter-spacing: 0.02em\">Quick Tutorial for Beginners</span>",
+          "fontWeight": 300,
           "width": 332,
           "height": 33,
           "scale": 100,
@@ -1924,73 +1924,18 @@
           "basedOn": "be70352c-fbed-4b24-90f0-330e03e8beff",
           "id": "c6758347-f6c5-4225-a276-e1853ecff8eb",
           "x": 40,
-          "y": 513
+          "y": 518
         }
       ],
       "animations": [],
       "backgroundOverlay": "none",
       "backgroundColor": { "color": { "r": 255, "g": 255, "b": 255 } },
       "type": "page",
-      "fonts": ["Dancing Script", "Open Sans Condensed"],
+      "fonts": ["Dancing Script", "Roboto Condensed"],
       "id": "f3ff9526-189a-4eb5-8e5b-1b38228a562b"
     }
   ],
-  "current": "f3ff9526-189a-4eb5-8e5b-1b38228a562b",
+  "current": null,
   "selection": [],
-  "story": {
-    "globalStoryStyles": {
-      "textStyles": [
-        {
-          "backgroundColor": { "color": { "r": 196, "g": 196, "b": 196 } },
-          "backgroundTextMode": "NONE",
-          "font": {
-            "family": "IBM Plex Serif",
-            "service": "fonts.google.com",
-            "fallbacks": ["serif"],
-            "weights": [100, 200, 300, 400, 500, 600, 700],
-            "styles": ["italic", "regular"],
-            "variants": [
-              [0, 100],
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [1, 100],
-              [1, 200],
-              [1, 300],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700]
-            ]
-          },
-          "fontSize": 37,
-          "lineHeight": 1.2,
-          "padding": { "locked": true, "horizontal": 0, "vertical": 0 },
-          "textAlign": "initial",
-          "color": { "color": { "r": 0, "g": 0, "b": 0 } },
-          "fontWeight": 600,
-          "isItalic": false,
-          "isUnderline": false,
-          "letterSpacing": 0
-        }
-      ],
-      "colors": [
-        { "color": { "r": 33, "g": 33, "b": 33 } },
-        { "color": { "r": 0, "g": 92, "b": 255 } },
-        { "color": { "r": 61, "g": 46, "b": 255 } },
-        { "color": { "r": 200, "g": 122, "b": 255 } },
-        { "color": { "r": 255, "g": 163, "b": 214 } },
-        { "color": { "r": 255, "g": 187, "b": 196 } },
-        { "color": { "r": 255, "g": 187, "b": 196, "a": 0.6 } },
-        { "color": { "r": 246, "g": 147, "b": 147, "a": 0.6 } },
-        { "color": { "r": 240, "g": 176, "b": 119, "a": 0.6 } },
-        { "color": { "r": 220, "g": 211, "b": 67, "a": 0.6 } },
-        { "color": { "r": 153, "g": 199, "b": 39, "a": 0.6 } },
-        { "color": { "r": 119, "g": 151, "b": 18, "a": 0.6 } }
-      ]
-    }
-  }
+  "story": {}
 }

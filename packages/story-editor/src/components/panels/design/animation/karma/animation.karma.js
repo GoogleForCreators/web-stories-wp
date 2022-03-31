@@ -47,7 +47,8 @@ describe('Animation Panel', function () {
         throw new Error('node not ready');
       }
     });
-    const panel = fixture.editor.inspector.designPanel.animation;
+    await fixture.events.click(fixture.editor.sidebar.designTab);
+    const panel = fixture.editor.sidebar.designPanel.animation;
     expect(panel).not.toBeNull();
   });
 
@@ -61,7 +62,8 @@ describe('Animation Panel', function () {
         throw new Error('node not ready');
       }
     });
-    const panel = fixture.editor.inspector.designPanel.animation;
+    await fixture.events.click(fixture.editor.sidebar.designTab);
+    const panel = fixture.editor.sidebar.designPanel.animation;
 
     const effectChooser = panel.effectChooser;
     await fixture.events.click(effectChooser);
@@ -82,7 +84,8 @@ describe('Animation Panel', function () {
         throw new Error('node not ready');
       }
     });
-    const panel = fixture.editor.inspector.designPanel.animation;
+    await fixture.events.click(fixture.editor.sidebar.designTab);
+    const panel = fixture.editor.sidebar.designPanel.animation;
 
     const effectChooser = panel.effectChooser;
     await fixture.events.click(effectChooser);
@@ -108,7 +111,8 @@ describe('Animation Panel', function () {
         throw new Error('node not ready');
       }
     });
-    const panel = fixture.editor.inspector.designPanel.animation;
+    await fixture.events.click(fixture.editor.sidebar.designTab);
+    const panel = fixture.editor.sidebar.designPanel.animation;
 
     const effectChooser = panel.effectChooser;
     await fixture.events.click(effectChooser, { clickCount: 1 });

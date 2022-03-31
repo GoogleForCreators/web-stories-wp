@@ -29,7 +29,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { useConfig, useStory } from '../../../app';
 import { updateSlug } from '../../../utils/storyUpdates';
-import useInspector from '../../inspector/useInspector';
+import useSidebar from '../../sidebar/useSidebar';
 import { EXCERPT_MAX_LENGTH } from '../../panels/document/excerpt';
 import { INPUT_KEYS } from '../constants';
 
@@ -66,8 +66,8 @@ const MainStoryInfo = () => {
     }) => slug
   );
 
-  const IsolatedStatusPanel = useInspector(
-    ({ data }) => data?.modalInspectorTab?.IsolatedStatusPanel
+  const IsolatedStatusPanel = useSidebar(
+    ({ data }) => data?.modalSidebarTab?.IsolatedStatusPanel
   );
 
   const [inputValues, setInputValues] = useState(_inputValues);

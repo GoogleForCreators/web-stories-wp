@@ -255,20 +255,19 @@ const OptionList = forwardRef(function OptionList(
                 </GroupLabel>
               )}
               {group.options.map((option, j) => {
+                const optionInset = getInset(filteredListGroups, i, j);
+
                 return (
                   <OptionRenderer
                     key={option.id || ''}
                     role={'option'}
                     tabIndex="-1"
                     aria-selected={value === option.id}
-                    aria-posinset={getInset(filteredListGroups, i, j)}
+                    aria-posinset={optionInset + 1}
                     aria-setsize={filteredOptions.length}
                     data-option={option.id}
                     onClick={() => onSelect(option)}
-                    ref={(el) =>
-                      (optionsRef.current[getInset(filteredListGroups, i, j)] =
-                        el)
-                    }
+                    ref={(el) => (optionsRef.current[optionInset] = el)}
                     option={option}
                     value={value}
                   />

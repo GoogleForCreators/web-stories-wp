@@ -29,3 +29,4 @@ export { default as getSolidFromHex } from './getSolidFromHex';
 export { default as hasGradient } from './hasGradient';
 export { default as hasOpacity } from './hasOpacity';
 export { default as isPatternEqual } from './isPatternEqual';
+export { default as isHexColorString } from './isHexColorString';

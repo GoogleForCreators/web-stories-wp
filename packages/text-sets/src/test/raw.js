@@ -40,8 +40,7 @@ describe('Raw text set files', () => {
       }
     });
 
-    // eslint-disable-next-line jest/no-disabled-tests -- TODO(#10828): Replace Open Sans Condensed
-    it.skip('should contain fonts from global fonts list', () => {
+    it('should contain fonts from global fonts list', () => {
       const fonts = JSON.parse(
         readFileSync(
           resolve(process.cwd(), 'packages/fonts/src/fonts.json'),
@@ -60,6 +59,31 @@ describe('Raw text set files', () => {
           expect(fontNames).toContain(element.font.family);
         }
       }
+    });
+
+    // @see https://github.com/GoogleForCreators/web-stories-wp/issues/10727
+    it('should not contain extraneous properties', () => {
+      const textSetData = JSON.parse(
+        readFileSync(
+          resolve(process.cwd(), `packages/text-sets/src/raw/${textSet}`),
+          'utf8'
+        )
+      );
+
+      expect(textSetData.current).toBeNull();
+      expect(textSetData.selection).toStrictEqual([]);
+      expect(textSetData.story.globalStoryStyles).toBeUndefined();
+    });
+
+    it('should not contain invisible characters', () => {
+      const textSetData = JSON.parse(
+        readFileSync(
+          resolve(process.cwd(), `packages/text-sets/src/raw/${textSet}`),
+          'utf8'
+        )
+      );
+
+      expect(textSetData).not.toContain('\u2028');
     });
   });
 });

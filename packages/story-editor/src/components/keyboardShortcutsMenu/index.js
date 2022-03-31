@@ -43,6 +43,7 @@ const StyledToggleButton = styled(ToggleButton)`
   padding-right: ${KEYBOARD_SHORTCUTS_PADDING}px;
   width: auto;
   display: block;
+  background-color: ${({ theme }) => theme.colors.bg.primary};
 `;
 
 const Wrapper = styled.div`

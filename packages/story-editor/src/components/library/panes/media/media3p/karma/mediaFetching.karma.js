@@ -358,6 +358,12 @@ describe('Media3pPane fetching', () => {
     await waitForInitialMediaLoad();
     await fixture.events.click(fixture.editor.library.media3p.coverrTab);
 
+    const mediaGallery = fixture.editor.library.media3p.mediaGallery;
+    mediaGallery.scrollTo(
+      0,
+      mediaGallery.scrollHeight - mediaGallery.clientHeight - ROOT_MARGIN / 2
+    );
+
     // Wait for the debounce
     await expectMediaElements(
       fixture.editor.library.media3p.coverrSection,

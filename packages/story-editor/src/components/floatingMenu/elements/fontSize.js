@@ -19,13 +19,14 @@
  */
 import { __ } from '@googleforcreators/i18n';
 import { useCallback } from '@googleforcreators/react';
+import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
  */
 import { useStory } from '../../../app';
 import getUpdatedSizeAndPosition from '../../../utils/getUpdatedSizeAndPosition';
-import updateProperties from '../../inspector/design/updateProperties';
+import updateProperties from '../../design/updateProperties';
 import { focusStyle, inputContainerStyleOverride } from '../../panels/shared';
 import { MIN_MAX } from '../../panels/design/textStyle/font';
 // TODO: https://github.com/GoogleForCreators/web-stories-wp/issues/10799
@@ -41,6 +42,10 @@ function FontSize() {
 
   const pushUpdate = useCallback(
     (update) => {
+      trackEvent('floating_menu', {
+        name: 'set_font_size',
+      });
+
       updateSelectedElements({
         properties: (element) => {
           const updates = updateProperties(element, update, true);

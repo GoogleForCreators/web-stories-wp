@@ -36,23 +36,26 @@ export async function toggleExperiments(features, enable) {
     'post_type=web-story&page=web-stories-experiments'
   );
 
-  await Promise.all(
-    features.map(async (feature) => {
-      const selector = `#${feature}`;
-      await page.waitForSelector(selector);
-      const checkedSelector = `${selector}[checked=checked]`;
-      const isChecked = Boolean(await page.$(checkedSelector));
-      if ((!isChecked && enable) || (isChecked && !enable)) {
-        await page.click(selector);
-      }
-    })
-  );
+  /* eslint-disable no-await-in-loop */
+  for (let i = 0; i < features.length; i++) {
+    const selector = `#${features[i]}`;
+    await page.waitForSelector(selector);
+    const checkedSelector = `${selector}:checked`;
+    const isChecked = Boolean(await page.$(checkedSelector));
 
-  await Promise.all([
-    page.waitForNavigation({ waitUntil: 'networkidle0' }),
-    page.click('#submit'),
-  ]);
+    if ((!isChecked && enable) || (isChecked && !enable)) {
+      await page.click(selector);
+    }
+  }
+  /* eslint-enable no-await-in-loop */
 
+  // Ensures the button is visible and can be clicked on in Firefox.
+  await page.evaluate(() => {
+    document.getElementById('submit').scrollIntoView();
+  });
+
+  await Promise.all([page.waitForNavigation(), page.click('#submit')]);
+  await expect(page).toMatch('Settings saved.');
   await setCurrentUser(currentUser.username, currentUser.password);
 }
 
