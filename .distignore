@@ -29,6 +29,7 @@ web-stories-scraper
 .editorconfig
 .eslintignore
 .eslintrc
+.git-blame-ignore-revs
 .gitattributes
 .gitignore
 .imgbotconfig

@@ -26,6 +26,7 @@ import {
   useRef,
   useState,
   useCallback,
+  useEffect,
 } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { PatternPropType, hasGradient } from '@googleforcreators/patterns';
@@ -118,9 +119,25 @@ function ColorPicker({
     leading: true,
   });
 
+  // Floating menu color picker doesn't stay mounted
+  // So, if the eyedropper is used from inside a floating menu color picker
+  // the debounced onChange can never be seen.
+  // this gives us a way to process that change when no longer mounted
+  const isMounted = useRef(true);
+  useEffect(() => {
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
   const handleColorChange = useCallback(
     (newColor) => {
-      onDebouncedChange(newColor);
+      if (isMounted.current) {
+        onDebouncedChange(newColor);
+      } else {
+        onChange(newColor);
+      }
+
       selectedElementIds.forEach((id) => {
         pushTransform(id, {
           color: newColor,
@@ -129,7 +146,13 @@ function ColorPicker({
         });
       });
     },
-    [onDebouncedChange, selectedElementIds, changedStyle, pushTransform]
+    [
+      onChange,
+      onDebouncedChange,
+      selectedElementIds,
+      changedStyle,
+      pushTransform,
+    ]
   );
 
   const maybeClose = () => {
