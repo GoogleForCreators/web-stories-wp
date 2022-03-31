@@ -53,7 +53,6 @@ function setup(_storyContextValue = {}, _configValue = {}) {
       storyLocking: '',
     },
     flags: {
-      enablePostLocking: true,
       enablePostLockingTakeOver: true,
     },
     ..._configValue,
@@ -175,7 +174,6 @@ describe('PostLock', () => {
 
     const configValue = {
       flags: {
-        enablePostLocking: true,
         enablePostLockingTakeOver: false,
       },
     };
