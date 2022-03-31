@@ -177,6 +177,7 @@ function CaptionsPanelContent({
                 {__('Link to file', 'web-stories')}
               </HotlinkButton>
               <HotlinkModal
+                title={__('Insert external captions', 'web-stories')}
                 isOpen={isOpen}
                 onSelect={onSelect}
                 onClose={() => setIsOpen(false)}

@@ -44,7 +44,13 @@ const InputWrapper = styled.form`
   height: 100px;
 `;
 
-function HotlinkModal({ isOpen, onClose, onSelect, allowedFileTypes = [] }) {
+function HotlinkModal({
+  isOpen,
+  onClose,
+  onSelect,
+  allowedFileTypes = [],
+  title,
+}) {
   const [isInserting, setIsInserting] = useState(false);
   const [link, setLink] = useState('');
   const [errorMsg, setErrorMsg] = useState(false);
@@ -163,7 +169,7 @@ function HotlinkModal({ isOpen, onClose, onSelect, allowedFileTypes = [] }) {
         setIsInserting(false);
       }}
       isOpen={isOpen}
-      title={__('Insert external captions', 'web-stories')}
+      title={title}
       onPrimary={() => onInsert()}
       primaryText={primaryText}
       secondaryText={__('Cancel', 'web-stories')}
@@ -191,6 +197,7 @@ HotlinkModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onSelect: PropTypes.func.isRequired,
   allowedFileTypes: PropTypes.array,
+  title: PropTypes.string,
 };
 
 export default HotlinkModal;
