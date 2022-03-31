@@ -342,6 +342,7 @@ function Layer({ element }) {
               title={__('Duplicate Layer', 'web-stories')}
               hasTail
               isDelayed
+              placement={'bottom-end'}
             >
               <LayerAction
                 aria-label={__('Duplicate', 'web-stories')}

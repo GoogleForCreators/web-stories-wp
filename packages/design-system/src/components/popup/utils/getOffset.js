@@ -149,10 +149,12 @@ export function getOffset({
   const offsetY = getYOffset(placement, spacingV, anchorRect);
   const maxOffsetY =
     bodyRect.height + bodyRect.y - height - getYTransforms(placement) * height;
+  // maybe pull in leftOffset from config to account to LTR wp-admin bar?
+  const leftEdge = popupRect?.left <= 0 ? (popupRect?.width + spacingH) / 2 : 0;
 
   // Clamp values
   return {
-    x: Math.max(0, Math.min(offsetX(), maxOffsetX)),
+    x: Math.max(leftEdge, Math.min(offsetX(), maxOffsetX)),
     y: ignoreMaxOffsetY
       ? offsetY
       : Math.max(topOffset, Math.min(offsetY, maxOffsetY)),
