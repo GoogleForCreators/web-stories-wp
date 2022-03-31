@@ -17,20 +17,18 @@
 /**
  * External dependencies
  */
-import React from 'react';
 import { ThemeProvider } from 'styled-components';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
+/**
+ * Internal dependencies
+ */
 import {
   theme as designSystemTheme,
   lightMode,
   ThemeGlobals,
   ModalGlobalStyle,
+  // } from '../packages/design-system/src';
 } from '@googleforcreators/design-system';
-import {
-  theme,
-  GlobalStyle,
-  EditorConfigProvider,
-} from '@googleforcreators/story-editor';
 import { CropMoveableGlobalStyle } from '@googleforcreators/moveable';
 import {
   DashboardGlobalStyle,
@@ -38,6 +36,13 @@ import {
   ConfigProvider as DashboardConfigProvider,
   ApiProvider,
 } from '@googleforcreators/dashboard';
+// import {
+//   // theme,
+//   // GlobalStyle,
+//   // EditorConfigProvider,
+// } from '../packages/story-editor/src';
+// import { theme } from '../packages/story-editor/src';
+// import { theme } from '../packages/story-editor/src';
 
 // @todo: Find better way to mock these.
 const wp = {};
@@ -130,19 +135,16 @@ export const decorators = [
       );
     }
 
-    return (
-      <ThemeProvider theme={theme}>
-        <EditorConfigProvider config={{ isRTL }}>
-          <GlobalStyle />
-          <CropMoveableGlobalStyle />
-          <ModalGlobalStyle />
-          {Story()}
-        </EditorConfigProvider>
-      </ThemeProvider>
-    );
+    return null;
+    // return (
+    //   <ThemeProvider theme={theme}>
+    //     <EditorConfigProvider config={{ isRTL }}>
+    //       <GlobalStyle />
+    //       <CropMoveableGlobalStyle />
+    //       <ModalGlobalStyle />
+    //       {Story()}
+    //     </EditorConfigProvider>
+    //   </ThemeProvider>
+    // );
   },
 ];
-
-// addDecorator((story, context) => {
-
-// });
