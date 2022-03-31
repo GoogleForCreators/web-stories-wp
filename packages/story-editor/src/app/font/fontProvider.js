@@ -21,7 +21,6 @@ import PropTypes from 'prop-types';
 import { useCallback, useRef, useState } from '@googleforcreators/react';
 import { CURATED_FONT_NAMES } from '@googleforcreators/fonts';
 import { loadStylesheet } from '@googleforcreators/dom';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -34,7 +33,6 @@ import useLoadFontFiles from './actions/useLoadFontFiles';
 export const GOOGLE_MENU_FONT_URL = 'https://fonts.googleapis.com/css';
 
 function FontProvider({ children }) {
-  const isCustomFontsEnabled = useFeature('customFonts');
   const [queriedFonts, setQueriedFonts] = useState([]);
   const [curatedFonts, setCuratedFonts] = useState([]);
   const [recentFonts, setRecentFonts] = useState([]);
@@ -46,7 +44,7 @@ function FontProvider({ children }) {
   const fonts = queriedFonts.length > 0 ? queriedFonts : curatedFonts;
 
   const getCustomFonts = useCallback(async () => {
-    if (customFonts || !getFonts || !isCustomFontsEnabled) {
+    if (customFonts || !getFonts) {
       return;
     }
 
@@ -67,7 +65,7 @@ function FontProvider({ children }) {
     }));
 
     setCustomFonts(formattedFonts);
-  }, [getFonts, customFonts, isCustomFontsEnabled]);
+  }, [getFonts, customFonts]);
 
   const getCuratedFonts = useCallback(async () => {
     if (curatedFonts.length || !getFonts) {
@@ -109,11 +107,7 @@ function FontProvider({ children }) {
         return [];
       }
 
-      // If there are custom fonts in the DB, we should not include those to search when custom fonts are not enabled.
-      const newFonts = await getFonts({
-        search,
-        service: isCustomFontsEnabled ? null : 'builtin',
-      });
+      const newFonts = await getFonts({ search });
 
       const formattedFonts = newFonts.map((font) => ({
         ...font,
@@ -125,7 +119,7 @@ function FontProvider({ children }) {
       setQueriedFonts(formattedFonts);
       return formattedFonts;
     },
-    [getFonts, isCustomFontsEnabled]
+    [getFonts]
   );
 
   const getFontWeight = useCallback(
