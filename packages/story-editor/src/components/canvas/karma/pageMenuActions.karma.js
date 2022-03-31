@@ -30,11 +30,7 @@ describe('PageMenu integration', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    try {
-      await fixture.render();
-    } catch {
-      // ignore
-    }
+    await fixture.render();
     await fixture.collapseHelpCenter();
   });
 
