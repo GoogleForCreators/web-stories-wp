@@ -380,4 +380,23 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 		$this->assertErrorResponse( 'rest_invalid_ext', $response, 400 );
 	}
 
+	/**
+	 * @covers ::get_allowed_mime_types
+	 */
+	public function test_get_allowed_mime_types(){
+		$story_post_type = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
+		$types           = $this->injector->make( \Google\Web_Stories\Media\Types::class );
+		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$experiments->method( 'is_experiment_enabled' )
+		            ->willReturn( true );
+		$controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller( $story_post_type, $types, $experiments );
+		$mime_types = $this->call_private_method($controller, 'get_allowed_mime_types');
+		$this->assertArrayHasKey( 'audio', $mime_types );
+		$this->assertArrayHasKey( 'video', $mime_types );
+		$this->assertArrayHasKey( 'caption', $mime_types );
+		$this->assertArrayHasKey( 'video', $mime_types );
+		$this->assertSame( 'text/vtt', $mime_types['caption'][0] );
+
+	}
+
 }
