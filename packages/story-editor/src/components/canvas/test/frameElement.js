@@ -19,7 +19,7 @@
  */
 import { render, fireEvent } from '@testing-library/react';
 import { createSolid } from '@googleforcreators/patterns';
-import { registerElementType } from '@googleforcreators/elements';
+import { registerElementTypes } from '@googleforcreators/elements';
 import { elementTypes } from '@googleforcreators/element-library';
 
 /**
@@ -31,7 +31,7 @@ import { TestFrameElement } from './_utils';
 
 describe('FrameElement selection', () => {
   beforeAll(() => {
-    elementTypes.forEach(registerElementType);
+    registerElementTypes(elementTypes);
   });
 
   let setSelectedElementsById;

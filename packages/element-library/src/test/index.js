@@ -21,7 +21,7 @@ import {
   createPage,
   duplicatePage,
   duplicateElement,
-  registerElementType,
+  registerElementTypes,
   TEXT_ELEMENT_DEFAULT_FONT,
 } from '@googleforcreators/elements';
 
@@ -32,7 +32,7 @@ import elementTypes from '../elementTypes';
 
 describe('Element', () => {
   beforeAll(() => {
-    elementTypes.forEach(registerElementType);
+    registerElementTypes(elementTypes);
   });
 
   describe('createNewElement', () => {

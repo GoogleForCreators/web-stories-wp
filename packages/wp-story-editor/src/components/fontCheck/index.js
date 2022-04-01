@@ -27,12 +27,10 @@ import {
 /**
  * Internal dependencies
  */
-import { useFeature } from 'flagged';
 import { FontCheckDialog } from './fontCheckDialog';
 
 export const FontCheck = () => {
   const { dashboardLink } = useConfig();
-  const notifyDeletedFonts = useFeature('notifyDeletedFonts');
   const { isStoryLoaded } = useStory(({ state: { pages } }) => ({
     isStoryLoaded: pages.length > 0,
   }));
@@ -70,10 +68,6 @@ export const FontCheck = () => {
       }
     })();
   }, [isStoryLoaded, storyPages, getFonts]);
-
-  if (!notifyDeletedFonts) {
-    return null;
-  }
 
   return (
     <FontCheckDialog

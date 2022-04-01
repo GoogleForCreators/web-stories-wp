@@ -2704,62 +2704,7 @@
       "id": "56e39edb-0d25-4186-b950-76d5c1536651"
     }
   ],
-  "current": "f9edfdfb-84c5-48eb-8a55-8377d634102e",
+  "current": null,
   "selection": [],
-  "story": {
-    "globalStoryStyles": {
-      "textStyles": [
-        {
-          "backgroundColor": { "color": { "r": 243, "g": 21, "b": 21 } },
-          "backgroundTextMode": "FILL",
-          "font": {
-            "family": "Poppins",
-            "service": "fonts.google.com",
-            "fallbacks": ["sans-serif"],
-            "weights": [100, 200, 300, 400, 500, 600, 700, 800, 900],
-            "styles": ["italic", "regular"],
-            "variants": [
-              [0, 100],
-              [0, 200],
-              [0, 300],
-              [0, 400],
-              [0, 500],
-              [0, 600],
-              [0, 700],
-              [0, 800],
-              [0, 900],
-              [1, 100],
-              [1, 200],
-              [1, 300],
-              [1, 400],
-              [1, 500],
-              [1, 600],
-              [1, 700],
-              [1, 800],
-              [1, 900]
-            ]
-          },
-          "fontSize": 35,
-          "lineHeight": 1,
-          "padding": { "horizontal": 0, "vertical": 0 },
-          "textAlign": "initial",
-          "color": { "color": { "r": 255, "g": 255, "b": 255 } },
-          "fontWeight": 400,
-          "isItalic": false,
-          "isUnderline": false,
-          "letterSpacing": 0
-        }
-      ],
-      "colors": [
-        { "color": { "r": 0, "g": 0, "b": 0 } },
-        { "color": { "r": 22, "g": 114, "b": 175 } },
-        { "color": { "r": 27, "g": 219, "b": 79 } },
-        { "color": { "r": 196, "g": 208, "b": 215 } },
-        { "color": { "r": 196, "g": 208, "b": 215 } },
-        { "color": { "r": 196, "g": 208, "b": 215 } },
-        { "color": { "r": 196, "g": 208, "b": 215 } },
-        { "color": { "r": 196, "g": 196, "b": 196 } }
-      ]
-    }
-  }
+  "story": {}
 }

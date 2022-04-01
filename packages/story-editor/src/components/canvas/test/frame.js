@@ -19,7 +19,7 @@
  */
 import { render, fireEvent, act, screen } from '@testing-library/react';
 import { createSolid } from '@googleforcreators/patterns';
-import { registerElementType } from '@googleforcreators/elements';
+import { registerElementTypes } from '@googleforcreators/elements';
 import { elementTypes } from '@googleforcreators/element-library';
 
 /**
@@ -38,7 +38,7 @@ describe('TextFrame: enter edit mode', () => {
   let editingElementContext;
 
   beforeAll(() => {
-    elementTypes.forEach(registerElementType);
+    registerElementTypes(elementTypes);
   });
 
   beforeEach(() => {

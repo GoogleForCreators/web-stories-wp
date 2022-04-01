@@ -30,7 +30,9 @@ import { DATA_VERSION } from '@googleforcreators/migration';
 import {
   createPage,
   TEXT_ELEMENT_DEFAULT_FONT,
+  registerElementTypes,
 } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
@@ -217,6 +219,8 @@ export class Fixture {
         JSON.stringify({ isCollapsed: false })
       );
     });
+
+    registerElementTypes(elementTypes);
   }
 
   restore() {
@@ -331,7 +335,7 @@ export class Fixture {
               },
             },
           }}
-          inspectorTabs={{
+          sidebarTabs={{
             document: {
               title: 'Document',
               Pane: DocumentPane,

@@ -18,7 +18,7 @@
  * External dependencies
  */
 import { renderToStaticMarkup } from '@googleforcreators/react';
-import { registerElementType } from '@googleforcreators/elements';
+import { registerElementTypes } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
@@ -30,7 +30,7 @@ const elementTypes = [{ type: 'text', name: 'Text' }];
 
 describe('WithMask', () => {
   beforeAll(() => {
-    elementTypes.forEach(registerElementType);
+    registerElementTypes(elementTypes);
   });
 
   it('should produce valid AMP output when no mask is set', async () => {

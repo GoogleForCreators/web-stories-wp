@@ -17,7 +17,6 @@
  * External dependencies
  */
 import {
-  withExperimentalFeatures,
   createNewStory,
   editStoryWithTitle,
   insertStoryTitle,
@@ -25,10 +24,12 @@ import {
   takeSnapshot,
   addCustomFont,
   removeCustomFont,
+  visitSettings,
+  removeAllFonts,
 } from '@web-stories-wp/e2e-test-utils';
 
-const OPEN_SANS_CONDENSED = 'Open Sans Condensed Light';
-const OPEN_SANS_CONDENSED_URL = `${process.env.WP_BASE_URL}/wp-content/e2e-assets/OpenSansCondensed-Light.ttf`;
+const OPEN_SANS_CONDENSED_LIGHT = 'Open Sans Condensed Light';
+const OPEN_SANS_CONDENSED_LIGHT_URL = `${process.env.WP_BASE_URL}/wp-content/e2e-assets/OpenSansCondensed-Light.ttf`;
 
 async function createStoryWithTitle(title) {
   await createNewStory();
@@ -44,6 +45,8 @@ async function createStoryWithTitle(title) {
 }
 
 async function updateFont(fontFamily) {
+  // Open style pane
+  await expect(page).toClick('li[role="tab"]', { text: /^Style$/ });
   await expect(page).toClick('button[aria-label="Font family"]');
   await page.keyboard.type(fontFamily);
   await page.keyboard.press('ArrowDown');
@@ -60,6 +63,7 @@ async function replaceFontWithFontPicker(fontFamily = '') {
   await page.keyboard.press('Enter');
   await expect(page).toClick('button', { text: 'Replace font' });
   await expect(page).toClick('[data-testid="textFrame"]');
+  await expect(page).toClick('li[role="tab"]', { text: /^Style$/ });
 }
 
 async function replaceFontUsingDefault() {
@@ -70,20 +74,23 @@ async function replaceFontUsingDefault() {
 
 async function storyWithFontCheckDialog(title) {
   // take steps needed to get Missing Font dialog to show
-  await addCustomFont(OPEN_SANS_CONDENSED_URL);
+  await visitSettings();
+  await addCustomFont(OPEN_SANS_CONDENSED_LIGHT_URL);
   await createStoryWithTitle(title);
-  await updateFont(OPEN_SANS_CONDENSED);
+  await updateFont(OPEN_SANS_CONDENSED_LIGHT);
   await publishStory();
-  await removeCustomFont();
+  await visitSettings();
+  await removeCustomFont(OPEN_SANS_CONDENSED_LIGHT);
   await editStoryWithTitle(title);
   await page.waitForSelector('[data-testid="textFrame"]');
   await page.waitForSelector('[role="dialog"]');
 }
 
 describe('Font Check', () => {
-  // TODO(#10916): Combine these calls.
-  withExperimentalFeatures(['customFonts']);
-  withExperimentalFeatures(['notifyDeletedFonts']);
+  beforeAll(async () => {
+    await visitSettings();
+    await removeAllFonts();
+  });
 
   it('should show dialog & replace font with default font', async () => {
     const title = 'Test replace missing font with (default) Roboto';
@@ -94,9 +101,14 @@ describe('Font Check', () => {
 
     await replaceFontUsingDefault(replacementFont);
 
+    // Open the style tab.
+    await expect(page).toClick('li[role="tab"]', { text: /^Style$/ });
     await expect(page).toMatchElement('button[aria-label="Font family"]', {
       text: replacementFont,
     });
+
+    // Switch tabs to avoid an aXe issue, see https://github.com/GoogleForCreators/web-stories-wp/issues/11028.
+    await expect(page).toClick('li[role="tab"]', { text: /^Insert$/ });
   });
 
   it('should show dialog & replace it with selected font', async () => {
@@ -105,9 +117,14 @@ describe('Font Check', () => {
     await storyWithFontCheckDialog(title);
     await replaceFontWithFontPicker(replacementFont);
 
+    // Open the style tab.
+    await expect(page).toClick('li[role="tab"]', { text: /^Style$/ });
     await expect(page).toMatchElement('button[aria-label="Font family"]', {
       text: replacementFont,
     });
+
+    // Switch tabs to avoid an aXe issue, see https://github.com/GoogleForCreators/web-stories-wp/issues/11028.
+    await expect(page).toClick('li[role="tab"]', { text: /^Insert$/ });
   });
 
   it('should show dialog & visit settings page', async () => {

@@ -17,7 +17,7 @@
  * External dependencies
  */
 import { MaskTypes } from '@googleforcreators/masks';
-import { registerElementType } from '@googleforcreators/elements';
+import { registerElementTypes } from '@googleforcreators/elements';
 import { elementTypes } from '@googleforcreators/element-library';
 
 /**
@@ -27,7 +27,7 @@ import { setupReducer } from './_utils';
 
 describe('combineElements', () => {
   beforeAll(() => {
-    elementTypes.forEach(registerElementType);
+    registerElementTypes(elementTypes);
   });
 
   it('should do nothing if first element is missing', () => {

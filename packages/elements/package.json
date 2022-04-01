@@ -2,13 +2,15 @@
   "name": "@googleforcreators/elements",
   "description": "Provides various APIs to register & retrieve element types.",
   "private": false,
-  "version": "0.1.202203010801",
+  "version": "0.1.202203241635",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
   },
   "license": "Apache-2.0",
-  "keywords": ["web stories"],
+  "keywords": [
+    "web stories"
+  ],
   "homepage": "https://github.com/GoogleForCreators/web-stories-wp/blob/main/packages/elements/README.md",
   "repository": {
     "type": "git",
@@ -24,7 +26,7 @@
   },
   "customExports": {
     ".": {
-       "default": "./src/index.js"
+      "default": "./src/index.js"
     }
   },
   "main": "dist/index.js",

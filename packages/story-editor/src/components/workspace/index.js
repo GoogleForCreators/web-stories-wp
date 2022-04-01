@@ -23,12 +23,12 @@ import { RichTextProvider } from '@googleforcreators/rich-text';
 /**
  * Internal dependencies
  */
-import Inspector from '../inspector';
+import Sidebar from '../sidebar';
 import Canvas from '../canvas';
 import { VideoTrimProvider } from '../videoTrim';
 import ErrorBoundary from '../errorBoundary';
 import { useCanvas } from '../../app';
-import { CanvasArea, InspectorArea } from './layout';
+import { CanvasArea, SidebarArea } from './layout';
 
 function Workspace({ header, footer }) {
   const { editingElementState } = useCanvas((state) => ({
@@ -38,16 +38,16 @@ function Workspace({ header, footer }) {
   return (
     <VideoTrimProvider>
       <RichTextProvider editingState={editingElementState}>
+        <SidebarArea>
+          <ErrorBoundary>
+            <Sidebar />
+          </ErrorBoundary>
+        </SidebarArea>
         <CanvasArea>
           <ErrorBoundary>
             <Canvas header={header} footer={footer} />
           </ErrorBoundary>
         </CanvasArea>
-        <InspectorArea>
-          <ErrorBoundary>
-            <Inspector />
-          </ErrorBoundary>
-        </InspectorArea>
       </RichTextProvider>
     </VideoTrimProvider>
   );

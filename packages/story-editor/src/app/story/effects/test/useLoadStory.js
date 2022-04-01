@@ -19,7 +19,7 @@
  */
 import { renderHook } from '@testing-library/react-hooks';
 import PropTypes from 'prop-types';
-import { registerElementType } from '@googleforcreators/elements';
+import { registerElementTypes } from '@googleforcreators/elements';
 import { elementTypes } from '@googleforcreators/element-library';
 
 /**
@@ -52,7 +52,7 @@ ContextWrapper.propTypes = {
 
 describe('useLoadStory', () => {
   beforeAll(() => {
-    elementTypes.forEach(registerElementType);
+    registerElementTypes(elementTypes);
   });
 
   beforeEach(() => {

@@ -17,3 +17,4 @@ export * from './constants';
 export * from './utils';
 export * from './types';
 export { default as elementSlice } from './elementSlice';
+export { default as registerElementTypes } from './registerElementTypes';

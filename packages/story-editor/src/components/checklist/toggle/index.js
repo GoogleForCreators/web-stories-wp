@@ -39,6 +39,7 @@ const MainIcon = styled(Icons.Checkbox)`
 
 const StyledToggleButton = styled(ToggleButton)`
   display: block;
+  background-color: ${({ theme }) => theme.colors.bg.primary};
 `;
 
 function Toggle({ isOpen = false, popupId = '', onClick = noop }) {

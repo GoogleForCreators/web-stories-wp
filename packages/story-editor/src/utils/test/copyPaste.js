@@ -25,7 +25,7 @@ import {
   elementTypes,
 } from '@googleforcreators/element-library';
 import {
-  registerElementType,
+  registerElementTypes,
   TEXT_ELEMENT_DEFAULT_FONT,
 } from '@googleforcreators/elements';
 
@@ -39,7 +39,7 @@ const getDefinitionForType = (type) =>
 
 describe('copyPaste utils', () => {
   beforeAll(() => {
-    elementTypes.forEach(registerElementType);
+    registerElementTypes(elementTypes);
   });
 
   const PAGE = {

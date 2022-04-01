@@ -379,8 +379,13 @@ class Embed_Controller extends REST_Controller implements HasRequirements {
 		if ( ! $doc ) {
 			return false;
 		}
-		$xpath     = $doc->xpath;
-		$amp_story = $xpath->query( '//amp-story' );
+
+		/**
+		 * List of <amp-story> elements.
+		 *
+		 * @var DOMNodeList<DOMElement> $amp_story
+		 */
+		$amp_story = $doc->xpath->query( '//amp-story' );
 
 		if ( ! $amp_story instanceof DOMNodeList || 0 === $amp_story->length ) {
 			return false;

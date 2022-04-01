@@ -39,7 +39,7 @@ import { useRef, useState } from '@googleforcreators/react';
 import { useStory, useConfig } from '../../../../app';
 import { PRESET_TYPES } from '../../../../constants';
 import useAddPreset from '../../../../utils/useAddPreset';
-import useInspector from '../../../inspector/useInspector';
+import useSidebar from '../../../sidebar/useSidebar';
 import StyleGroup from '../../../styleManager/styleGroup';
 import StyleManager, {
   NoStylesWrapper,
@@ -69,15 +69,16 @@ const NoStylesText = styled(Text)`
   color: ${({ theme }) => theme.colors.fg.tertiary};
 `;
 
-const SPACING = { x: 20 };
+const SPACING = { x: 12 };
+
 function PresetPanel({ pushUpdate }) {
   const textStyles = useStory(
     ({ state }) => state.story.globalStoryStyles.textStyles
   );
 
   const {
-    refs: { inspector },
-  } = useInspector();
+    refs: { sidebar },
+  } = useSidebar();
   const buttonRef = useRef(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
@@ -127,9 +128,9 @@ function PresetPanel({ pushUpdate }) {
             topOffset={topOffset}
             isRTL={isRTL}
             anchor={buttonRef}
-            dock={inspector}
+            dock={sidebar}
             isOpen={isPopupOpen}
-            placement={PLACEMENT.LEFT_START}
+            placement={PLACEMENT.RIGHT_START}
             spacing={SPACING}
             renderContents={() => (
               <StyleManager

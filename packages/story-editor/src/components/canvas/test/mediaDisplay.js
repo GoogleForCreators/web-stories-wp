@@ -19,7 +19,7 @@
  */
 import { render, act } from '@testing-library/react';
 import { resourceList } from '@googleforcreators/media';
-import { registerElementType } from '@googleforcreators/elements';
+import { registerElementTypes } from '@googleforcreators/elements';
 import { elementTypes } from '@googleforcreators/element-library';
 
 /**
@@ -36,7 +36,7 @@ describe('MediaDisplay', () => {
   let refs;
 
   beforeAll(() => {
-    elementTypes.forEach(registerElementType);
+    registerElementTypes(elementTypes);
   });
 
   beforeEach(() => {

@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { registerElementType } from '@googleforcreators/elements';
+import { registerElementTypes } from '@googleforcreators/elements';
 import { elementTypes } from '@googleforcreators/element-library';
 
 /**
@@ -26,7 +26,7 @@ import { setupReducer } from './_utils';
 
 describe('duplicateElementsById', () => {
   beforeAll(() => {
-    elementTypes.forEach(registerElementType);
+    registerElementTypes(elementTypes);
   });
 
   it('duplicates an element at index after specified element', () => {

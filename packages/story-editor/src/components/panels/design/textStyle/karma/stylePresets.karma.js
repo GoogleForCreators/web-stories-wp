@@ -69,8 +69,9 @@ describe('Panel: Style Presets', () => {
         expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
       });
 
+      await fixture.events.click(fixture.editor.sidebar.designTab);
       // Click to add a style and verify it was added.
-      panel = fixture.editor.inspector.designPanel.textStyle;
+      panel = fixture.editor.sidebar.designPanel.textStyle;
       await fixture.events.click(panel.addStyle);
       expect(panel.applyStyle).toBeDefined();
     });
@@ -99,7 +100,8 @@ describe('Panel: Style Presets', () => {
       // Select the paragraph as well.
       await selectTarget(fixture.editor.canvas.framesLayer.frames[1].node);
 
-      panel = fixture.editor.inspector.designPanel.textStyle;
+      await fixture.events.click(fixture.editor.sidebar.designTab);
+      panel = fixture.editor.sidebar.designPanel.textStyle;
 
       // Verify that two presets have been added.
       await fixture.events.click(panel.addStyle);
@@ -121,7 +123,8 @@ describe('Panel: Style Presets', () => {
         }
         expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
       });
-      panel = fixture.editor.inspector.designPanel.textStyle;
+      await fixture.events.click(fixture.editor.sidebar.designTab);
+      panel = fixture.editor.sidebar.designPanel.textStyle;
       await fixture.events.click(panel.addStyle);
 
       // Open the style manager.
@@ -164,7 +167,8 @@ describe('Panel: Style Presets', () => {
       });
 
       // Add a preset
-      panel = fixture.editor.inspector.designPanel.textStyle;
+      await fixture.events.click(fixture.editor.sidebar.designTab);
+      panel = fixture.editor.sidebar.designPanel.textStyle;
       await fixture.events.click(panel.addStyle);
 
       // Select background for being able to insert a text.
@@ -175,10 +179,12 @@ describe('Panel: Style Presets', () => {
       );
 
       // Add a heading.
+      await fixture.events.click(fixture.editor.sidebar.insertTab);
       await fixture.editor.library.textTab.click();
       await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
 
-      panel = fixture.editor.inspector.designPanel.textStyle;
+      await fixture.events.click(fixture.editor.sidebar.designTab);
+      panel = fixture.editor.sidebar.designPanel.textStyle;
       await fixture.events.click(panel.applyStyle);
       const storyContext = await fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElements[0].fontSize).toEqual(
@@ -206,7 +212,8 @@ describe('Panel: Style Presets', () => {
       );
       // Add a heading.
       await fixture.events.click(fixture.editor.library.text.preset('Title 1'));
-      panel = fixture.editor.inspector.designPanel.textStyle;
+      await fixture.events.click(fixture.editor.sidebar.designTab);
+      panel = fixture.editor.sidebar.designPanel.textStyle;
       await fixture.events.click(panel.addStyle);
 
       await waitFor(() => {

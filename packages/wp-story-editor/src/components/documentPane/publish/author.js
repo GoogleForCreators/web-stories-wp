@@ -24,7 +24,7 @@ import {
   Row,
   useStory,
   useAPI,
-  useInspector,
+  useSidebar,
 } from '@googleforcreators/story-editor';
 
 function Author() {
@@ -34,7 +34,7 @@ function Author() {
   const {
     state: { users, isUsersLoading },
     actions: { loadUsers },
-  } = useInspector();
+  } = useSidebar();
   const { isSaving, author, updateStory } = useStory(
     ({
       state: {
@@ -109,7 +109,8 @@ function Author() {
       <Datalist.DropDown
         options={queriedUsers}
         searchResultsLabel={__('Search results', 'web-stories')}
-        aria-label={__('Author', 'web-stories')}
+        dropdownButtonLabel={__('Author', 'web-stories')}
+        title={__('Available authors', 'web-stories')}
         {...dropDownParams}
       />
     </Row>

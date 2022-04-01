@@ -18,13 +18,14 @@
  * External dependencies
  */
 import { axe } from 'jest-axe';
+import { renderWithTheme } from '@googleforcreators/test-utils';
+
 /**
  * Internal dependencies
  */
 import Media3pIcon from '../media3pIcon';
 import ProviderTab from '../providerTab';
 import PaginatedMediaGallery from '../../common/paginatedMediaGallery';
-import { renderWithTheme } from '../../../../../../testUtils';
 import { noop } from '../../../../../../utils/noop';
 import {
   useCanvas,

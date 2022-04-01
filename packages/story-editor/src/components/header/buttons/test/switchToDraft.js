@@ -18,13 +18,13 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
 import StoryContext from '../../../../app/story/context';
 import useIsUploadingToStory from '../../../../utils/useIsUploadingToStory';
-import { renderWithTheme } from '../../../../testUtils';
 import { CheckpointContext } from '../../../checklist';
 import SwitchToDraftButton from '../switchToDraft';
 

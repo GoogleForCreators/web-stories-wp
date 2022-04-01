@@ -49,7 +49,8 @@ describe('ColorPicker', () => {
           10
         );
 
-        const bgPanel = fixture.editor.inspector.designPanel.pageBackground;
+        await fixture.events.click(fixture.editor.sidebar.designTab);
+        const bgPanel = fixture.editor.sidebar.designPanel.pageBackground;
 
         // Click the background page panel color preview
         await fixture.events.click(bgPanel.backgroundColor.button);
@@ -107,17 +108,18 @@ describe('ColorPicker', () => {
           fixture.editor.library.shapes.shape('Triangle')
         );
 
+        await fixture.events.click(fixture.editor.sidebar.designTab);
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.shapeStyle.backgroundColor.button
+          fixture.editor.sidebar.designPanel.shapeStyle.backgroundColor.button
         );
 
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.shapeStyle.backgroundColor.picker.addSavedColor(
+          fixture.editor.sidebar.designPanel.shapeStyle.backgroundColor.picker.addSavedColor(
             'global'
           )
         );
         expect(
-          fixture.editor.inspector.designPanel.shapeStyle.backgroundColor.picker.applySavedColor(
+          fixture.editor.sidebar.designPanel.shapeStyle.backgroundColor.picker.applySavedColor(
             '#c4c4c4'
           )
         ).toBeTruthy();
@@ -130,17 +132,18 @@ describe('ColorPicker', () => {
           fixture.editor.library.shapes.shape('Triangle')
         );
 
+        await fixture.events.click(fixture.editor.sidebar.designTab);
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.shapeStyle.backgroundColor.button
+          fixture.editor.sidebar.designPanel.shapeStyle.backgroundColor.button
         );
 
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.shapeStyle.backgroundColor.picker.addSavedColor(
+          fixture.editor.sidebar.designPanel.shapeStyle.backgroundColor.picker.addSavedColor(
             'local'
           )
         );
         expect(
-          fixture.editor.inspector.designPanel.shapeStyle.backgroundColor.picker.applySavedColor(
+          fixture.editor.sidebar.designPanel.shapeStyle.backgroundColor.picker.applySavedColor(
             '#c4c4c4'
           )
         ).toBeTruthy();
@@ -152,16 +155,19 @@ describe('ColorPicker', () => {
         await fixture.events.click(
           fixture.editor.library.shapes.shape('Triangle')
         );
+
+        await fixture.events.click(fixture.editor.sidebar.designTab);
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.shapeStyle.backgroundColor.button
+          fixture.editor.sidebar.designPanel.shapeStyle.backgroundColor.button
         );
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.shapeStyle.backgroundColor.picker.addSavedColor(
+          fixture.editor.sidebar.designPanel.shapeStyle.backgroundColor.picker.addSavedColor(
             'global'
           )
         );
 
         // Add text and apply the previously saved color.
+        await fixture.events.click(fixture.editor.sidebar.insertTab);
         await fixture.editor.library.textTab.click();
         await fixture.events.click(
           fixture.editor.library.text.preset('Paragraph')
@@ -172,11 +178,13 @@ describe('ColorPicker', () => {
           }
           expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
         });
+
+        await fixture.events.click(fixture.editor.sidebar.designTab);
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.textStyle.fontColor.button
+          fixture.editor.sidebar.designPanel.textStyle.fontColor.button
         );
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.textStyle.fontColor.picker.applySavedColor(
+          fixture.editor.sidebar.designPanel.textStyle.fontColor.picker.applySavedColor(
             '#c4c4c4'
           )
         );
@@ -191,16 +199,19 @@ describe('ColorPicker', () => {
         await fixture.events.click(
           fixture.editor.library.shapes.shape('Triangle')
         );
+
+        await fixture.events.click(fixture.editor.sidebar.designTab);
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.shapeStyle.backgroundColor.button
+          fixture.editor.sidebar.designPanel.shapeStyle.backgroundColor.button
         );
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.shapeStyle.backgroundColor.picker.addSavedColor(
+          fixture.editor.sidebar.designPanel.shapeStyle.backgroundColor.picker.addSavedColor(
             'local'
           )
         );
 
         // Add text and apply the previously saved color.
+        await fixture.events.click(fixture.editor.sidebar.insertTab);
         await fixture.editor.library.textTab.click();
         await fixture.events.click(
           fixture.editor.library.text.preset('Paragraph')
@@ -211,11 +222,13 @@ describe('ColorPicker', () => {
           }
           expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
         });
+
+        await fixture.events.click(fixture.editor.sidebar.designTab);
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.textStyle.fontColor.button
+          fixture.editor.sidebar.designPanel.textStyle.fontColor.button
         );
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.textStyle.fontColor.picker.applySavedColor(
+          fixture.editor.sidebar.designPanel.textStyle.fontColor.picker.applySavedColor(
             '#c4c4c4'
           )
         );
@@ -238,16 +251,17 @@ describe('ColorPicker', () => {
           expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
         });
         // add fill
+        await fixture.events.click(fixture.editor.sidebar.designTab);
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.textStyle.fill
+          fixture.editor.sidebar.designPanel.textStyle.fill
         );
 
         // save default text fill to local palette
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.textStyle.backgroundColor.button
+          fixture.editor.sidebar.designPanel.textStyle.backgroundColor.button
         );
         const picker =
-          fixture.editor.inspector.designPanel.textStyle.backgroundColor.picker;
+          fixture.editor.sidebar.designPanel.textStyle.backgroundColor.picker;
         await fixture.events.click(picker.addSavedColor('local'));
 
         // check if default text fill is saved
@@ -268,11 +282,13 @@ describe('ColorPicker', () => {
           }
           expect(fixture.editor.canvas.framesLayer.frames[1].node).toBeTruthy();
         });
+
+        await fixture.events.click(fixture.editor.sidebar.designTab);
         await fixture.events.click(
-          fixture.editor.inspector.designPanel.textStyle.fontColor.button
+          fixture.editor.sidebar.designPanel.textStyle.fontColor.button
         );
         const picker =
-          fixture.editor.inspector.designPanel.textStyle.fontColor.picker;
+          fixture.editor.sidebar.designPanel.textStyle.fontColor.picker;
         await fixture.events.click(picker.addSavedColor('global'));
         await fixture.events.click(picker.addSavedColor('local'));
 

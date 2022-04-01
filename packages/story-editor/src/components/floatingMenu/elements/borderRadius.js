@@ -20,6 +20,7 @@
 import { Icons } from '@googleforcreators/design-system';
 import { __ } from '@googleforcreators/i18n';
 import { canSupportMultiBorder } from '@googleforcreators/masks';
+import { trackEvent } from '@googleforcreators/tracking';
 
 /**
  * Internal dependencies
@@ -32,10 +33,11 @@ function BorderRadius() {
   // Note that "mask" never updates on an element,
   // so selecting it cannot cause re-renders
   // We need it to determine if radii are supported.
-  const { borderRadius = DEFAULT_BORDER_RADIUS, mask } = useProperties([
-    'borderRadius',
-    'mask',
-  ]);
+  const {
+    borderRadius = DEFAULT_BORDER_RADIUS,
+    mask,
+    type,
+  } = useProperties(['borderRadius', 'mask', 'type']);
   const updateSelectedElements = useStory(
     (state) => state.actions.updateSelectedElements
   );
@@ -43,12 +45,23 @@ function BorderRadius() {
   // Only multi-border elements support border radius
   const canHaveBorderRadius = canSupportMultiBorder({ mask });
 
+  // We only allow editing the current border radii, if all corners are identical
+  const hasUniformBorder =
+    borderRadius.topLeft === borderRadius.topRight &&
+    borderRadius.topLeft === borderRadius.bottomLeft &&
+    borderRadius.topLeft === borderRadius.bottomRight;
+
   // Render nothing if radii not supported or not locked
-  if (!canHaveBorderRadius || !borderRadius.locked) {
+  if (!canHaveBorderRadius || (!borderRadius.locked && !hasUniformBorder)) {
     return null;
   }
 
-  const handleChange = (value) =>
+  const handleChange = (value) => {
+    trackEvent('floating_menu', {
+      name: 'set_border_radius',
+      element: type,
+    });
+
     updateSelectedElements({
       properties: {
         borderRadius: {
@@ -60,6 +73,7 @@ function BorderRadius() {
         },
       },
     });
+  };
 
   return (
     <>

@@ -16,7 +16,7 @@
 /**
  * External dependencies
  */
-import { registerElementType } from '@googleforcreators/elements';
+import { registerElementTypes } from '@googleforcreators/elements';
 import { elementTypes } from '@googleforcreators/element-library';
 
 /**
@@ -84,7 +84,7 @@ const VIDEO_RESOURCE = {
 
 describe('getElementProperties', () => {
   beforeAll(() => {
-    elementTypes.forEach(registerElementType);
+    registerElementTypes(elementTypes);
   });
 
   it('should default x/y to (48, 0) if not provided', () => {

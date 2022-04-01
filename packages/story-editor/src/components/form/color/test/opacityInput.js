@@ -22,13 +22,13 @@ import {
   createSolid,
   getPreviewText as getPreviewTextMock,
 } from '@googleforcreators/patterns';
+import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
 import OpacityInput from '../opacityInput';
 import getPreviewOpacityMock from '../getPreviewOpacity';
-import { renderWithTheme } from '../../../../testUtils';
 
 jest.mock('../getPreviewOpacity', () => jest.fn());
 jest.mock('@googleforcreators/patterns', () => ({

@@ -42,7 +42,8 @@ describe('Video Accessibility Panel', () => {
     beforeEach(async () => {
       const mediaItem = fixture.editor.library.media.item(5);
       await fixture.events.mouse.clickOn(mediaItem, 20, 20); // item 5 is a video
-      vaPanel = fixture.editor.inspector.designPanel.videoAccessibility;
+      await fixture.events.click(fixture.editor.sidebar.designTab);
+      vaPanel = fixture.editor.sidebar.designPanel.videoAccessibility;
     });
 
     it('should allow user to edit and reset poster image using mouse', async () => {

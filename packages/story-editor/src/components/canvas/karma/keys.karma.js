@@ -85,7 +85,8 @@ describe('Canvas keys integration', () => {
   });
 
   it('should delete element from the design panel', async () => {
-    const bold = fixture.editor.inspector.designPanel.textStyle.bold.button;
+    await fixture.events.click(fixture.editor.sidebar.designTab);
+    const bold = fixture.editor.sidebar.designPanel.textStyle.bold.button;
     await fixture.events.focus(bold);
     expect(await getSelection()).toEqual([element1.id]);
 
@@ -105,6 +106,7 @@ describe('Canvas keys integration', () => {
   });
 
   it('should not be able to delete element from a dialog', async () => {
+    await fixture.events.click(fixture.editor.sidebar.designTab);
     const colorButton = fixture.querySelector(
       'button[aria-label="Text color"]'
     );
