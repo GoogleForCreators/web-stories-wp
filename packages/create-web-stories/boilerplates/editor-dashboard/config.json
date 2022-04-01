@@ -24,7 +24,7 @@
       "dest": "src/components"
     },
     {
-      "src": "src/constants.js",
+      "src": "src/constants/editor-dashboard.js",
       "dest": "src/constants.js"
     }
   ]

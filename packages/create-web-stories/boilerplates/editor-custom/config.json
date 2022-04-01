@@ -47,7 +47,7 @@
       "dest": "src/components"
     },
     {
-      "src": "src/constants.js",
+      "src": "src/constants/editor.js",
       "dest": "src/constants.js"
     },
     {
