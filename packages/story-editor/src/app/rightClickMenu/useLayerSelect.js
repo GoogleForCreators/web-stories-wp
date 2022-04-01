@@ -100,13 +100,15 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
         return null;
       }
       const box = getBox(element);
-      const corner = new SAT.Vector(
+      // Note that we place the box at the center coordinate. We do this for the angle
+      // to apply correctly. We correct for this offset with `setOffset`` later.
+      const center = new SAT.Vector(
         bgPolygon.pos.x + box.x + box.width / 2,
         bgPolygon.pos.y + elementYOffset + box.y + box.height / 2
       );
-      const offset = new SAT.Vector(-box.width / 2, -box.height / 2);
-      const elementBox = new SAT.Box(corner, box.width, box.height);
+      const elementBox = new SAT.Box(center, box.width, box.height);
       const polygon = elementBox.toPolygon();
+      const offset = new SAT.Vector(-box.width / 2, -box.height / 2);
       polygon.setOffset(offset);
       polygon.setAngle((rotationAngle * Math.PI) / 180);
       return { element, polygon };
