@@ -2,16 +2,13 @@
   "name": "@googleforcreators/create-web-stories",
   "description": "Scaffold Web Stories editor and dashboard",
   "private": false,
+  "version": "0.1.202203241635",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"
   },
-  "type": "module",
-  "version": "0.1.20220401080040",
   "license": "Apache-2.0",
-  "keywords": [
-    "web stories"
-  ],
+  "keywords": ["web stories"],
   "homepage": "https://github.com/GoogleForCreators/web-stories-wp/blob/main/packages/create-web-stories/README.md",
   "repository": {
     "type": "git",
@@ -21,18 +18,22 @@
   "bugs": {
     "url": "https://github.com/googleforcreators/web-stories-wp/issues"
   },
-  "bin": {
-    "create-web-stories": "./bin/index.js"
-  },
   "engines": {
     "node": ">= 12 || >= 14 || >= 16",
     "npm": ">= 7.3"
   },
+  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
+    "chalk": "^5.0.1",
     "commander": "^9.0.0",
     "fs-extra": "^10.0.1",
-    "prompts": "^2.4.2",
-    "chalk": "^5.0.1"
+    "prompts": "^2.4.2"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "bin": {
+    "create-web-stories": "./bin/index.js"
+   }
 }
