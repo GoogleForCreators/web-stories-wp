@@ -21,11 +21,7 @@ import PropTypes from 'prop-types';
 import { useCallback, useRef, useState } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { editorToDataX, editorToDataY } from '@googleforcreators/units';
-import {
-  useKeyDownEffect,
-  usePerformanceTracking,
-  TRACKING_EVENTS,
-} from '@googleforcreators/design-system';
+import { useKeyDownEffect } from '@googleforcreators/design-system';
 import {
   Moveable,
   InOverlay,
@@ -36,7 +32,7 @@ import { useTransform } from '@googleforcreators/transform';
 /**
  * Internal dependencies
  */
-import { ZOOM_SETTING } from '../../../../constants';
+import { ZOOM_SETTING, TRACKING_EVENTS } from '../../../../constants';
 import { useDropTargets } from '../../../dropTargets';
 import { useLayout } from '../../../../app/layout';
 import useInsertElement from '../../../canvas/useInsertElement';
@@ -46,6 +42,7 @@ import useSnapping from '../../../canvas/utils/useSnapping';
 import { useStory, useCanvas } from '../../../../app';
 import objectWithout from '../../../../utils/objectWithout';
 import { noop } from '../../../../utils/noop';
+import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
 
 const TargetBox = styled.div`
   position: absolute;
