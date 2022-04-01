@@ -29,12 +29,12 @@ import { Icons } from '@googleforcreators/design-system';
 import { trackEvent } from '@googleforcreators/tracking';
 import styled from 'styled-components';
 import { getDefinitionForType } from '@googleforcreators/elements';
+import { useUnits } from '@googleforcreators/units';
 
 /**
  * Internal dependencies
  */
 import useStory from '../story/useStory';
-import createPolygon from '../canvas/utils/createPolygon';
 import { useCanvas } from '../canvas';
 import { useConfig } from '../config';
 
@@ -57,6 +57,8 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
     })
   );
 
+  const getBox = useUnits(({ actions: { getBox } }) => getBox);
+
   useEffect(() => {
     // Close submenu if the menu itself also closes.
     if (!isMenuOpen) {
@@ -70,21 +72,53 @@ function useLayerSelect({ menuItemProps, menuPosition, isMenuOpen }) {
       return [];
     }
     const clickedPoint = new SAT.Vector(x, y);
-    const intersectingElements = currentPage.elements
-      .map((element) => {
-        const { id, rotationAngle } = element;
-        const node = nodesById[id];
-        if (!node) {
-          return null;
-        }
-        const { x: elX, y: elY, width, height } = node.getBoundingClientRect();
-        const elementP = createPolygon(rotationAngle, elX, elY, width, height);
-        return SAT.pointInPolygon(clickedPoint, elementP) ? element : null;
-      })
-      .filter((el) => el);
+    const bgElement = currentPage.elements.find(
+      ({ isBackground }) => isBackground
+    );
+    const bgNode = nodesById[bgElement.id];
+    const {
+      x: bgX,
+      y: bgY,
+      width: bgWidth,
+      height: bgHeight,
+    } = bgNode.getBoundingClientRect();
+    const bgPolygon = new SAT.Box(
+      new SAT.Vector(bgX, bgY),
+      bgWidth,
+      bgHeight
+    ).toPolygon();
+    // The background element is offset by a certain amount, so add that back in for
+    // other elements when resolving their position relative to it.
+    const elementYOffset = -getBox(bgElement).y;
+    const elementsWithPolygons = currentPage.elements.map((element) => {
+      if (element.isBackground) {
+        return { element, polygon: bgPolygon };
+      }
+      const { id, rotationAngle } = element;
+      const node = nodesById[id];
+      if (!node) {
+        return null;
+      }
+      const box = getBox(element);
+      const corner = new SAT.Vector(
+        bgPolygon.pos.x + box.x + box.width / 2,
+        bgPolygon.pos.y + elementYOffset + box.y + box.height / 2
+      );
+      const offset = new SAT.Vector(-box.width / 2, -box.height / 2);
+      const elementBox = new SAT.Box(corner, box.width, box.height);
+      const polygon = elementBox.toPolygon();
+      polygon.setOffset(offset);
+      polygon.setAngle((rotationAngle * Math.PI) / 180);
+      return { element, polygon };
+    });
+    const intersectingElements = elementsWithPolygons
+      .map(({ element, polygon }) =>
+        SAT.pointInPolygon(clickedPoint, polygon) ? element : null
+      )
+      .filter(Boolean);
     intersectingElements.reverse();
     return intersectingElements;
-  }, [currentPage, x, y, nodesById]);
+  }, [currentPage, getBox, x, y, nodesById]);
 
   const subMenuItems = useMemo(() => {
     if (!isMenuOpen || selectedElements.length === 0) {
