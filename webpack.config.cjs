@@ -320,7 +320,7 @@ const editorAndDashboard = {
         hot: true,
         allowedHosts: 'all',
         host: 'localhost',
-        port: 8080,
+        port: 'auto',
       }
     : undefined,
   entry: {
