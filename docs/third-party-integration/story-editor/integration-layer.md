@@ -162,49 +162,7 @@ You can also provide an external link in the description of the tip.
 ### `flags`
 
 - type: `Object`
-- description: Many experimental features can be enabled/disabled in the story editor. Below is a list of all feature flags. These features are unstable and susceptible to frequent changes.
-    - `enableSVG`
-        - type: `boolean`
-        - description: Enables SVG support in link icons.
-    - `customFonts`
-        - type: `boolean`
-        - description: Enables custom fonts in rich text elements.
-    - `enableExperimentalAnimationEffects`
-        - type: `boolean`
-        - description: Enables experimental animations effects.
-    - `showElementsTab`
-        - type: `boolean`
-        - description: Adds new custom element pane to elements library.
-    - `incrementalSearchDebounceMedia`
-        - type: `boolean`
-        - description: Enables debouncing while searching first party or third party media.
-    - `enablePostLockingTakeOver`
-        - type: `boolean`
-        - description: Lock in-progress stories from being edited by other authors.
-    - `enableUpdatedPublishStoryModal`
-        - type: `boolean`
-        - description: Enable new pre-publish confirmation modal.
-    - `enableHotlinking`
-        - type: `boolean`
-        - description: Enables hot-linking media using external URLs.
-    - `enableVideoTrim`
-        - type: `boolean`
-        - description: Enables functionality to trim videos.
-    - `enableThumbnailCaching`
-        - type: `boolean`
-        - description: Enable thumbnail caching.
-    - `enhancedPageBackgroundAudio`
-        - type: `boolean`
-        - description: Enable adding captions to background audio.
-    - `floatingMenu`
-        - type: `boolean`
-        - description: Enable the new floating design menu.
-    - `semanticHeadingTags`
-        - type: `boolean`
-        - description: Automatically use semantic heading tags for text elements.
-    - `libraryTextStyles`
-        - type: `boolean`
-        - description: Allow inserting/applying Saved Styles from Text Library.
+- description: Many experimental features can be enabled/disabled in the story editor. For a current list of existing flags, check out [`Experiments.php`](https://github.com/GoogleForCreators/web-stories-wp/blob/main/includes/Experiments.php).
 
 ### `generalSettingsLink`
 

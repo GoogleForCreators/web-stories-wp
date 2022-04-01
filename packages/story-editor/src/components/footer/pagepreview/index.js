@@ -29,10 +29,6 @@ import {
   useEffect,
 } from '@googleforcreators/react';
 import { TransformProvider } from '@googleforcreators/transform';
-import {
-  usePerformanceTracking,
-  TRACKING_EVENTS,
-} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -43,6 +39,8 @@ import {
   cancelIdleCallback,
 } from '../../../utils/idleCallback';
 import DisplayElement from '../../canvas/displayElement';
+import usePerformanceTracking from '../../../utils/usePerformanceTracking';
+import { TRACKING_EVENTS } from '../../../constants';
 
 const Page = styled.button`
   display: block;
