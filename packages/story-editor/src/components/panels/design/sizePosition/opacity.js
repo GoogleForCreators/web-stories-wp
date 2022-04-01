@@ -25,7 +25,8 @@ import { Icons, NumericInput } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import { getCommonValue, inputContainerStyleOverride } from '../../shared';
+import getCommonValue from '../../shared/getCommonValue';
+import { inputContainerStyleOverride } from '../../shared/styles';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 
 export const MIN_MAX = {

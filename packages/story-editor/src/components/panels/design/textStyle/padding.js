@@ -32,11 +32,8 @@ import { clamp } from '@googleforcreators/units';
  * Internal dependencies
  */
 import { Row as DefaultRow, usePresubmitHandler } from '../../../form';
-import {
-  focusStyle,
-  inputContainerStyleOverride,
-  useCommonObjectValue,
-} from '../../shared';
+import { focusStyle, inputContainerStyleOverride } from '../../shared/styles';
+import { useCommonObjectValue } from '../../shared';
 import { metricsForTextPadding } from '../../utils/metricsForTextPadding';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import { getHiddenPadding, removeHiddenPadding } from './utils';

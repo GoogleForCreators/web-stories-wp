@@ -29,7 +29,7 @@ import { SearchInput } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import { focusStyle } from '../../panels/shared';
+import { focusStyle } from '../../panels/shared/styles';
 
 const StyledSearchInput = styled(SearchInput)`
   input {

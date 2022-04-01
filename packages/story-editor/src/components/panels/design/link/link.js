@@ -44,11 +44,8 @@ import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
 import { Row, LinkInput, LinkIcon } from '../../../form';
 import { createLink } from '../../../elementLink';
 import { SimplePanel } from '../../panel';
-import {
-  inputContainerStyleOverride,
-  LinkRelations,
-  useCommonObjectValue,
-} from '../../shared';
+import { inputContainerStyleOverride } from '../../shared/styles';
+import { LinkRelations, useCommonObjectValue } from '../../shared';
 import { states, styles, useHighlights } from '../../../../app/highlights';
 import useCORSProxy from '../../../../utils/useCORSProxy';
 
