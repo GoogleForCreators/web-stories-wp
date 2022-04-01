@@ -23,7 +23,6 @@ import styled from 'styled-components';
 import { editorToDataX, editorToDataY } from '@googleforcreators/units';
 import {
   useKeyDownEffect,
-  usePerformanceTracking,
   TRACKING_EVENTS,
 } from '@googleforcreators/design-system';
 import {
@@ -46,6 +45,7 @@ import useSnapping from '../../../canvas/utils/useSnapping';
 import { useStory, useCanvas } from '../../../../app';
 import objectWithout from '../../../../utils/objectWithout';
 import { noop } from '../../../../utils/noop';
+import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
 
 const TargetBox = styled.div`
   position: absolute;

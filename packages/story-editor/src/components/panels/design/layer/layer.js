@@ -27,7 +27,6 @@ import {
   Icons,
   themeHelpers,
   Tooltip,
-  usePerformanceTracking,
 } from '@googleforcreators/design-system';
 import { useRef, memo } from '@googleforcreators/react';
 import { getDefinitionForType } from '@googleforcreators/elements';
@@ -39,6 +38,7 @@ import { LayerText } from '@googleforcreators/element-library';
 import StoryPropTypes from '../../../../types';
 import { useStory } from '../../../../app';
 import useCORSProxy from '../../../../utils/useCORSProxy';
+import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
 import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';
 

@@ -28,13 +28,13 @@ import {
   BUTTON_TYPES,
   BUTTON_SIZES,
   TRACKING_EVENTS,
-  usePerformanceTracking,
 } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
  */
 import { useConfig, useStory, useLayout } from '../../../app';
+import usePerformanceTracking from '../../../utils/usePerformanceTracking';
 
 const Wrapper = styled.div`
   display: flex;
