@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import Dialog from './components/dialog';
+export { default as Dialog } from './components/dialog';
 
 export { default as StoryEditor } from './storyEditor';
 
@@ -53,5 +53,3 @@ export {
   useHighlights,
 } from './app/highlights';
 export { ConfigProvider as EditorConfigProvider } from './app/config';
-
-export { Dialog };
