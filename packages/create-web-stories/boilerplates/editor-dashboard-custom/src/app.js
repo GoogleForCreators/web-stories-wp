@@ -8,8 +8,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 /**
  * Internal dependencies.
  */
-import StoryDashboard from './dashboard';
-import Editor from './story-editor';
+import StoryDashboard from './components/dashboard';
+import Editor from './components/story-editor';
 import Preview from './components/preview';
 
 class App extends React.Component {

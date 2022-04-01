@@ -120,6 +120,7 @@ function getBoilerplatePath(boilerplateIndex, type) {
 
 function scaffoldBoilerplatewithCRA(boilerplateIndex, projectName, isPrivate) {
   const boilerplatePath = getBoilerplatePath(boilerplateIndex, 'CRA');
+  const sharedPath = path.join(__dirname, '../shared');
 
   execSync(`npx create-react-app@latest ${projectName}`, {
     cwd: process.cwd(),
@@ -136,6 +137,12 @@ function scaffoldBoilerplatewithCRA(boilerplateIndex, projectName, isPrivate) {
     path.resolve(boilerplatePath, 'public'),
     path.resolve(projectPath, 'public')
   );
+
+  const { replacements } = getBoilerplateData(boilerplateIndex, 'CRA');
+
+  replacements.forEach(({ src, dest }) => {
+    fse.copySync(path.join(sharedPath, src), path.join(projectPath, dest));
+  });
 
   //Install boilerplate dependencies listed in meta
   installDependenciesFromMeta(boilerplateIndex, 'CRA', projectPath, isPrivate);

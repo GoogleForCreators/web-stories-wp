@@ -8,5 +8,27 @@
     "@googleforcreators/element-library",
     "react-router-dom"
   ],
-  "devDependencies": []
+  "devDependencies": [],
+  "replacements": [
+    {
+      "src": "public/favicon.ico",
+      "dest": "public/favicon.ico"
+    },
+    {
+      "src": "src/editor-api",
+      "dest": "src/api"
+    },
+    {
+      "src": "src/editor-components/",
+      "dest": "src/components"
+    },
+    {
+      "src": "src/constants.js",
+      "dest": "src/constants.js"
+    },
+    {
+      "src": "src/getDummyMedia.js",
+      "dest": "src/getDummyMedia.js"
+    }
+  ]
 }

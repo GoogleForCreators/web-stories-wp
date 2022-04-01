@@ -8,8 +8,8 @@ import { setAppElement } from '@googleforcreators/design-system';
 /**
  * Internal dependencies.
  */
-import {LOCAL_STORAGE_CONTENT_KEY} from './constants';
-import { fetchStories, updateStory, trashStory } from './api/dashboard/story';
+import {LOCAL_STORAGE_CONTENT_KEY} from '../constants';
+import { fetchStories, updateStory, trashStory } from '../api/dashboard/story';
 
 function CustomDashboard() {
   const content = JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_CONTENT_KEY)) || {};

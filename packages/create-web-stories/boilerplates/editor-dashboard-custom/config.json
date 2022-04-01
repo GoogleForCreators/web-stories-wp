@@ -38,6 +38,18 @@
     {
       "src": "src/index.js",
       "dest": "src/index.js"
+    },
+    {
+      "src": "src/editor-dashboard-api",
+      "dest": "src/api"
+    },
+    {
+      "src": "src/editor-dashboard-components",
+      "dest": "src/components"
+    },
+    {
+      "src": "src/constants.js",
+      "dest": "src/constants.js"
     }
   ]
 }

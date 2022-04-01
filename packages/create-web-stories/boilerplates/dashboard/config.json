@@ -9,12 +9,12 @@
   "devDependencies": [],
   "replacements": [
     {
-      "src": "src/dashboard.js",
-      "dest": "src/components/dashboard.js"
-    },
-    {
       "src": "public/favicon.ico",
       "dest": "public/favicon.ico"
+    },
+    {
+      "src": "src/dashboard.js",
+      "dest": "src/components/dashboard.js"
     }
   ]
 }
