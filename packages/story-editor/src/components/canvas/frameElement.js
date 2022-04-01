@@ -39,11 +39,7 @@ import {
   getElementMask,
   MaskTypes,
 } from '@googleforcreators/masks';
-import {
-  useKeyDownEffect,
-  usePerformanceTracking,
-  TRACKING_EVENTS,
-} from '@googleforcreators/design-system';
+import { useKeyDownEffect } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
