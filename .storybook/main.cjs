@@ -18,6 +18,7 @@
  */
 const path = require('path');
 const webpack = require('webpack');
+const CircularDependencyPlugin = require('circular-dependency-plugin');
 
 /**
  * Storybook Workaround: https://github.com/storybookjs/storybook/issues/14877#issuecomment-1000441696
@@ -115,6 +116,20 @@ module.exports = {
         WEB_STORIES_DISABLE_QUICK_TIPS: JSON.stringify(
           process.env.DISABLE_QUICK_TIPS
         ),
+      })
+    );
+
+    config.plugins.push(
+      new CircularDependencyPlugin({
+        // exclude detection of files based on a RegExp
+        exclude: /a\.js|node_modules/,
+        // add errors to webpack instead of warnings
+        failOnError: true,
+        // allow import cycles that include an asyncronous import,
+        // e.g. via import(/* webpackMode: "weak" */ 'file.js')
+        allowAsyncCycles: false,
+        // set the current working directory for displaying module paths
+        cwd: process.cwd(),
       })
     );
 
