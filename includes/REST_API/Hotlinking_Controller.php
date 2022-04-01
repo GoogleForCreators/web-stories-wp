@@ -220,6 +220,10 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 
 		$headers   = wp_remote_retrieve_headers( $response );
 		$mime_type = $headers['content-type'];
+		if ( $mime_type && false !== strpos( $mime_type, ';' ) ) {
+			$pieces    = explode( ';', $mime_type );
+			$mime_type = array_shift( $pieces );
+		}
 		$file_size = (int) $headers['content-length'];
 
 		/**
