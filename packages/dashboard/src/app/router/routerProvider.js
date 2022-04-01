@@ -34,6 +34,8 @@ function RouterProvider({ children, ...props }) {
   const [currentPath, setCurrentPath] = useState(
     history.current.location.pathname
   );
+  const [availableRoutes, setAvailableRoutes] = useState([]);
+  const [defaultRoute, setDefaultRoute] = useState();
 
   const parse = (search) => {
     const params = new URLSearchParams(search);
@@ -56,13 +58,17 @@ function RouterProvider({ children, ...props }) {
       state: {
         currentPath,
         queryParams,
+        availableRoutes,
+        defaultRoute,
       },
       actions: {
         push: history.current.push,
         replace: history.current.replace,
+        setAvailableRoutes,
+        setDefaultRoute,
       },
     }),
-    [currentPath, queryParams]
+    [availableRoutes, currentPath, defaultRoute, queryParams]
   );
 
   return (

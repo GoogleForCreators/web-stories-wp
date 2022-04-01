@@ -39,13 +39,15 @@ import useApi from '../../app/api/useApi';
 import { useConfig } from '../../app/config';
 
 const InterfaceSkeleton = ({ additionalRoutes }) => {
-  const {
-    state: {
-      currentPath,
-      queryParams: { id: templateId },
-    },
-    actions: { push },
-  } = useRouteHistory();
+  const { currentPath, templateId, availableRoutes } = useRouteHistory(
+    ({ state }) => ({
+      ...state,
+      templateId: state.queryParams.id,
+    })
+  );
+  const { push, setAvailableRoutes, setDefaultRoute } = useRouteHistory(
+    ({ actions }) => actions
+  );
 
   const {
     canViewDefaultTemplates,
@@ -71,6 +73,16 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
   const [isRedirectComplete, setIsRedirectComplete] = useState(
     !isFirstLoadOnMyStories.current
   );
+
+  // Only set the available routes & default route on initial mount
+  useEffect(() => {
+    if (availableRoutes.length > 0) {
+      return;
+    }
+    const additionalPaths = additionalRoutes?.map(({ path }) => path);
+    setAvailableRoutes([...Object.values(APP_ROUTES), ...additionalPaths]);
+    setDefaultRoute(APP_ROUTES.DASHBOARD);
+  }, [additionalRoutes, availableRoutes, setAvailableRoutes, setDefaultRoute]);
 
   // Direct user to templates on first load if they
   // have no stories created.
@@ -135,6 +147,7 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
         <PageContent>
           <Route
             exact
+            isDefault
             path={APP_ROUTES.DASHBOARD}
             component={<MyStoriesView />}
           />
