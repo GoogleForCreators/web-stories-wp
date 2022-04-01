@@ -27,7 +27,6 @@ import {
   lightMode,
   ThemeGlobals,
   ModalGlobalStyle,
-  // } from '../packages/design-system/src';
 } from '@googleforcreators/design-system';
 import { CropMoveableGlobalStyle } from '@googleforcreators/moveable';
 import {
@@ -36,13 +35,10 @@ import {
   ConfigProvider as DashboardConfigProvider,
   ApiProvider,
 } from '@googleforcreators/dashboard';
-// import {
-//   // theme,
-//   // GlobalStyle,
-//   // EditorConfigProvider,
-// } from '../packages/story-editor/src';
-// import { theme } from '../packages/story-editor/src';
-// import { theme } from '../packages/story-editor/src';
+import {
+  GlobalStyle,
+  EditorConfigProvider,
+} from '@googleforcreators/story-editor';
 
 // @todo: Find better way to mock these.
 const wp = {};
@@ -135,16 +131,15 @@ export const decorators = [
       );
     }
 
-    return null;
-    // return (
-    //   <ThemeProvider theme={theme}>
-    //     <EditorConfigProvider config={{ isRTL }}>
-    //       <GlobalStyle />
-    //       <CropMoveableGlobalStyle />
-    //       <ModalGlobalStyle />
-    //       {Story()}
-    //     </EditorConfigProvider>
-    //   </ThemeProvider>
-    // );
+    return (
+      <ThemeProvider theme={designSystemTheme}>
+        <EditorConfigProvider config={{ isRTL }}>
+          <GlobalStyle />
+          <CropMoveableGlobalStyle />
+          <ModalGlobalStyle />
+          {Story()}
+        </EditorConfigProvider>
+      </ThemeProvider>
+    );
   },
 ];
