@@ -21,10 +21,6 @@
       "dest": ".babelrc"
     },
     {
-      "src": "express.js",
-      "dest": "express.js"
-    },
-    {
       "src": "package.json",
       "dest": "package.json"
     },

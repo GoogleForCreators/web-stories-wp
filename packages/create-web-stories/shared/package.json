@@ -4,12 +4,9 @@
   "description": "Custom Web Stories editor and dashboard",
   "scripts": {
     "start": "webpack serve --config=webpack-configs/development.js",
-    "build": "webpack --config=webpack-configs/production.js",
-    "prod": "npm run build && node express.js"
+    "build": "webpack --config=webpack-configs/production.js"
   },
-  "dependencies": {
-    "express": "^4.17.3"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@babel/cli": "^7.17.6",
     "@babel/core": "^7.17.5",
