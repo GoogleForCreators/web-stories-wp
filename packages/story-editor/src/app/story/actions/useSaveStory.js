@@ -106,13 +106,42 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
           setIsFreshlyPublished(!isStoryAlreadyPublished && isStoryPublished);
         })
         .catch((err) => {
-          showSnackbar({
-            message: __('Failed to save the story', 'web-stories'),
-            dismissible: true,
-          });
+          let message = __('Failed to save the story', 'web-stories');
+          const status = err?.data?.status;
+          const error_400 = __(
+            'Client error bad request failed to save the story',
+            'web-stories'
+          );
+          const error_401 = __(
+            'Client error unauthorized failed to save the story',
+            'web-stories'
+          );
+          const error_500 = __(
+            'Server error failed to save the story',
+            'web-stories'
+          );
+
+          switch (status) {
+            case 400:
+              message = error_400;
+              break;
+            case 401:
+              message = error_401;
+              break;
+            case 500:
+              message = error_500;
+              break;
+            default:
+            // noop
+          }
+
           // eslint-disable-next-line no-console -- We want to surface this error.
           console.log(err);
           trackError('save_story', err.message);
+          showSnackbar({
+            message,
+            dismissible: true,
+          });
         })
         .finally(() => {
           setIsSaving(false);
