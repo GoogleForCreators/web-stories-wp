@@ -21,12 +21,14 @@ export const ELEMENT_TYPES = {
   VIDEO: 'video',
   GIF: 'gif',
   STICKER: 'sticker',
+  PRODUCT: 'product',
 };
 
 export const MEDIA_ELEMENT_TYPES = [
   ELEMENT_TYPES.IMAGE,
   ELEMENT_TYPES.VIDEO,
   ELEMENT_TYPES.GIF,
+  ELEMENT_TYPES.PRODUCT,
 ];
 
 export const MULTIPLE_VALUE = '((MULTIPLE))';

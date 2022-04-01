@@ -358,6 +358,16 @@ class Experiments extends Service_Base implements HasRequirements {
 				'description' => __( 'Enable recording from webcam/microphone', 'web-stories' ),
 				'group'       => 'editor',
 			],
+			/**
+			 * Issue: #10846
+			 * Creation date: 2022-03-28
+			 */
+			[
+				'name'        => 'shoppingIntegration',
+				'label'       => __( 'Shopping', 'web-stories' ),
+				'description' => __( 'Enable shopping integration in the editor', 'web-stories' ),
+				'group'       => 'general',
+			],
 		];
 	}
 

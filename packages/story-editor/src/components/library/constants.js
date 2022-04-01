@@ -28,6 +28,7 @@ import { ShapesPane, ShapesIcon } from './panes/shapes';
 import { TextPane, TextIcon } from './panes/text';
 import { ElementsPane, ElementsIcon } from './panes/elements';
 import { PageTemplatesPane, PageTemplatesIcon } from './panes/pageTemplates';
+import { ShoppingIcon, ShoppingPane } from './panes/shopping';
 
 export const MEDIA = {
   icon: MediaIcon,
@@ -62,7 +63,13 @@ export const ELEMS = {
 };
 export const PAGE_TEMPLATES = {
   icon: PageTemplatesIcon,
-  tooltip: __('Page templates', 'web-stories'),
+  tooltip: __('Page Templates', 'web-stories'),
   Pane: PageTemplatesPane,
   id: 'pageTemplates',
+};
+export const SHOPPING = {
+  icon: ShoppingIcon,
+  tooltip: __('Shopping', 'web-stories'),
+  Pane: ShoppingPane,
+  id: 'shopping',
 };

@@ -28,6 +28,7 @@ import * as shapeElement from './shape';
 import * as videoElement from './video';
 import * as gifElement from './gif';
 import * as stickerElement from './sticker';
+import * as productElement from './product';
 
 const elementTypes = [
   {
@@ -41,6 +42,11 @@ const elementTypes = [
   { type: 'video', name: __('Video', 'web-stories'), ...videoElement },
   { type: 'gif', name: __('GIF', 'web-stories'), ...gifElement },
   { type: 'sticker', name: __('Sticker', 'web-stories'), ...stickerElement },
+  {
+    type: 'product',
+    name: __('Product', 'web-stories'),
+    ...productElement,
+  },
 ];
 
 export default elementTypes;

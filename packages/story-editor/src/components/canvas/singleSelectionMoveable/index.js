@@ -222,6 +222,13 @@ const SingleSelectionMoveable = forwardRef(function SingleSelectionMoveable(
     isDragging,
   });
 
+  const isResizable =
+    actionsEnabled && !hideHandles && true !== selectedElement.lockDimensions;
+  const isRotatable =
+    actionsEnabled &&
+    !hideHandles &&
+    false !== selectedElement.supportsRotation;
+
   return (
     <Moveable
       {...props}
@@ -231,8 +238,8 @@ const SingleSelectionMoveable = forwardRef(function SingleSelectionMoveable(
       target={targetEl}
       edge
       draggable={actionsEnabled}
-      resizable={actionsEnabled && !hideHandles}
-      rotatable={actionsEnabled && !hideHandles}
+      resizable={isResizable}
+      rotatable={isRotatable}
       {...dragProps}
       {...resizeProps}
       {...rotateProps}

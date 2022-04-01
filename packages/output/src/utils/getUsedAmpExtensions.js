@@ -50,6 +50,11 @@ const getUsedAmpExtensions = (pages) => {
     src: 'https://cdn.ampproject.org/v0/amp-story-captions-0.1.js',
   };
 
+  const ampStoryShopping = {
+    name: 'amp-story-shopping',
+    src: 'https://cdn.ampproject.org/v0/amp-story-shopping-0.1.js',
+  };
+
   for (const { elements, backgroundAudio } of pages) {
     if (backgroundAudio?.resource?.src && backgroundAudio?.tracks?.length > 0) {
       extensions.push(ampVideo);
@@ -65,6 +70,9 @@ const getUsedAmpExtensions = (pages) => {
           break;
         case 'gif':
           extensions.push(ampVideo);
+          break;
+        case 'product':
+          extensions.push(ampStoryShopping);
           break;
         default:
           break;

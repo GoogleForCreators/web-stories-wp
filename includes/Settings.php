@@ -103,6 +103,16 @@ class Settings extends Service_Base {
 	public const SETTING_NAME_ARCHIVE_PAGE_ID = 'web_stories_archive_page_id';
 
 	/**
+	 * Shopify store URL, e.g. acme-store.myshopify.com.
+	 */
+	public const SETTING_NAME_SHOPIFY_HOST = 'web_stories_shopify_host';
+
+	/**
+	 * Shopify Storefront API access token.
+	 */
+	public const SETTING_NAME_SHOPIFY_ACCESS_TOKEN = 'web_stories_shopify_access_token';
+
+	/**
 	 * Register settings.
 	 *
 	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
@@ -262,6 +272,28 @@ class Settings extends Service_Base {
 				// WPGraphQL errors when encountering array or object types.
 				// See https://github.com/wp-graphql/wp-graphql/issues/2065.
 				'show_in_graphql' => false,
+			]
+		);
+
+		register_setting(
+			self::SETTING_GROUP,
+			self::SETTING_NAME_SHOPIFY_HOST,
+			[
+				'description'  => __( 'Shopify Host', 'web-stories' ),
+				'type'         => 'string',
+				'default'      => '',
+				'show_in_rest' => true,
+			]
+		);
+
+		register_setting(
+			self::SETTING_GROUP,
+			self::SETTING_NAME_SHOPIFY_ACCESS_TOKEN,
+			[
+				'description'  => __( 'Shopify API Access Token', 'web-stories' ),
+				'type'         => 'string',
+				'default'      => '',
+				'show_in_rest' => true,
 			]
 		);
 	}
