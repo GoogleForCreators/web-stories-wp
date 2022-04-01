@@ -18,7 +18,6 @@
  * External dependencies
  */
 import { screen } from '@testing-library/react';
-import { FlagsProvider } from 'flagged';
 import { renderWithTheme } from '@googleforcreators/test-utils';
 
 /**
@@ -33,11 +32,7 @@ function MediaUpload({ render }) {
   return render(open);
 }
 
-function arrange({
-  backgroundAudio,
-  hasUploadMediaAction = true,
-  enhancedPageBackgroundAudio = false,
-} = {}) {
+function arrange({ backgroundAudio, hasUploadMediaAction = true } = {}) {
   const updateStory = jest.fn();
 
   const configValue = {
@@ -70,17 +65,11 @@ function arrange({
   };
 
   return renderWithTheme(
-    <FlagsProvider
-      features={{
-        enhancedPageBackgroundAudio,
-      }}
-    >
-      <ConfigContext.Provider value={configValue}>
-        <StoryContext.Provider value={storyContextValue}>
-          <BackgroundAudioPanel />
-        </StoryContext.Provider>
-      </ConfigContext.Provider>
-    </FlagsProvider>
+    <ConfigContext.Provider value={configValue}>
+      <StoryContext.Provider value={storyContextValue}>
+        <BackgroundAudioPanel />
+      </StoryContext.Provider>
+    </ConfigContext.Provider>
   );
 }
 
@@ -149,7 +138,6 @@ describe('BackgroundAudioPanel', () => {
         },
         loop: true,
       },
-      enhancedPageBackgroundAudio: true,
     });
     expect(
       screen.getByRole('button', {
@@ -186,7 +174,6 @@ describe('BackgroundAudioPanel', () => {
         ],
         loop: true,
       },
-      enhancedPageBackgroundAudio: true,
     });
     const input = screen.getByRole('textbox', { name: 'Filename' });
     expect(input).toHaveValue('track.vtt');
@@ -203,7 +190,6 @@ describe('BackgroundAudioPanel', () => {
         tracks: [],
         loop: true,
       },
-      enhancedPageBackgroundAudio: true,
     });
     expect(
       screen.getByRole('button', { name: 'Upload audio captions' })
@@ -221,7 +207,6 @@ describe('BackgroundAudioPanel', () => {
         tracks: [],
         loop: true,
       },
-      enhancedPageBackgroundAudio: true,
       hasUploadMediaAction: false,
     });
     expect(
@@ -250,7 +235,6 @@ describe('BackgroundAudioPanel', () => {
         ],
         loop: true,
       },
-      enhancedPageBackgroundAudio: true,
       hasUploadMediaAction: false,
     });
     const input = screen.getByRole('textbox', { name: 'Filename' });

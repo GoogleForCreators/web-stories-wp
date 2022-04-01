@@ -60,8 +60,9 @@ const EditElement = memo(
 
     // Update the true global properties of the current element
     // This now only happens on unmount
-    const { updateElementById } = useStory((state) => ({
+    const { updateElementById, deleteSelectedElements } = useStory((state) => ({
       updateElementById: state.actions.updateElementById,
+      deleteSelectedElements: state.actions.deleteSelectedElements,
     }));
     const { isTrimMode, resource, setVideoNode } = useVideoTrim(
       ({ state: { isTrimMode, videoData }, actions: { setVideoNode } }) => ({
@@ -95,6 +96,7 @@ const EditElement = memo(
           resource={resource}
           setVideoNode={setVideoNode}
           updateElementById={updateElementById}
+          deleteSelectedElements={deleteSelectedElements}
           maybeEnqueueFontStyle={maybeEnqueueFontStyle}
           zIndexCanvas={Z_INDEX_CANVAS}
         />

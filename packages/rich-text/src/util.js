@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { SelectionState } from 'draft-js';
+import { EditorState, SelectionState } from 'draft-js';
 import { filterEditorState } from 'draftjs-filters';
 
 /**
@@ -62,6 +62,12 @@ function getStateFromCommmand(command, oldEditorState) {
 
     case 'uppercase':
       return uppercaseFormatter.setters.toggleUppercase(oldEditorState);
+
+    case 'selectall':
+      return EditorState.forceSelection(
+        oldEditorState,
+        getSelectionForAll(oldEditorState.getCurrentContent())
+      );
 
     default:
       return null;

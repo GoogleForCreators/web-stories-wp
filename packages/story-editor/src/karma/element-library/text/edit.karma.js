@@ -81,6 +81,23 @@ describe('TextEdit integration', () => {
       );
     });
 
+    it('should delete the element if content is empty', async () => {
+      expect(fixture.querySelector('[data-testid="textEditor"]')).toBeNull();
+      await fixture.events.focus(
+        fixture.editor.canvas.framesLayer.frames[1].node
+      );
+      await fixture.events.keyboard.press('Enter');
+      expect(fixture.querySelector('[data-testid="textEditor"]')).toBeDefined();
+      // Remove all text
+      await fixture.events.keyboard.press('Backspace');
+      // Exit edit mode using the Esc key
+      await fixture.events.keyboard.press('Esc');
+      // The element should be deleted.
+      const layerPanel = fixture.editor.footer.layerPanel;
+      await fixture.events.click(layerPanel.togglePanel);
+      expect(layerPanel.layers.length).toBe(1);
+    });
+
     describe('edit mode', () => {
       let editor;
       let editLayer;
@@ -148,6 +165,32 @@ describe('TextEdit integration', () => {
         expect(frame.querySelector('p').innerHTML).toEqual(
           '<span style="font-weight: 700">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>'
         );
+      });
+
+      it('should select all text and delete it', async () => {
+        await fixture.events.mouse.clickOn(frame, 30, 5); // enter the edit mode by clicking
+
+        // Needed because of https://github.com/puppeteer/puppeteer/issues/1313
+        if (navigator.userAgentData.platform === 'macOS') {
+          document.execCommand('selectAll'); // not the same as mod+a, but does work on macOS
+        } else {
+          await fixture.events.keyboard.shortcut('mod+a'); // doesn't work on macOS, works on Ubuntu
+        }
+        const text = '461';
+        await fixture.events.keyboard.type(text);
+
+        // Exit edit mode using the Esc key
+        await fixture.events.keyboard.press('Esc');
+
+        // The element is still selected and updated.
+        await waitFor(async () => {
+          const story = await fixture.renderHook(() => useStory());
+          if (!story.state.selectedElements.length) {
+            throw new Error('story not ready');
+          }
+
+          expect(story.state.selectedElements[0].content).toEqual(text);
+        });
       });
     });
 

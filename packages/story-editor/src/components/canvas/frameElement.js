@@ -39,10 +39,6 @@ import {
   getElementMask,
   MaskTypes,
 } from '@googleforcreators/masks';
-import {
-  usePerformanceTracking,
-  TRACKING_EVENTS,
-} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -56,6 +52,8 @@ import {
 } from '../../app';
 import WithLink from '../elementLink/frame';
 import useDoubleClick from '../../utils/useDoubleClick';
+import usePerformanceTracking from '../../utils/usePerformanceTracking';
+import { TRACKING_EVENTS } from '../../constants';
 
 // @todo: should the frame borders follow clip lines?
 
@@ -204,8 +202,19 @@ function FrameElement({ id }) {
     onClick: isMedia ? handleMediaClick(id) : null,
   };
 
+  const withMaskRef = useRef(null);
+
   usePerformanceTracking({
     node: maskDisabled ? elementRef.current : null,
+    eventData: {
+      ...TRACKING_EVENTS.SELECT_ELEMENT,
+      label: element.type,
+    },
+    eventType: 'pointerdown',
+  });
+
+  usePerformanceTracking({
+    node: withMaskRef.current,
     eventData: {
       ...TRACKING_EVENTS.SELECT_ELEMENT,
       label: element.type,
@@ -239,6 +248,7 @@ function FrameElement({ id }) {
         {...(maskDisabled ? eventHandlers : null)}
       >
         <WithMask
+          ref={withMaskRef}
           element={element}
           fill
           flip={flip}
