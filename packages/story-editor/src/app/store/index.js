@@ -17,4 +17,3 @@
  * Internal dependencies
  */
 import './addSlices';
-import './registerElementTypes';
