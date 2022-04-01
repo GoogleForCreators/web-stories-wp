@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen, within } from '@testing-library/react';
 import MockDate from 'mockdate';
 import { setAppElement } from '@googleforcreators/design-system';
 import { renderWithTheme } from '@googleforcreators/test-utils';
@@ -134,12 +134,12 @@ describe('PublishButton', () => {
 
     expect(showPriorityIssues).toHaveBeenCalledTimes(1);
 
-    const publishButtons = screen.queryAllByRole('button', {
+    const publishModal = screen.getByRole('dialog');
+
+    const publishModalButton = within(publishModal).getByRole('button', {
       name: 'Publish',
     });
-    // story details modal is open, now there is a second publish button.
-    expect(publishButtons).toHaveLength(2);
-    fireEvent.click(publishButtons[1]);
+    fireEvent.click(publishModalButton);
 
     expect(saveStory).toHaveBeenCalledWith({
       status: 'publish',
@@ -161,12 +161,12 @@ describe('PublishButton', () => {
     expect(publishButton).toBeEnabled();
     fireEvent.click(publishButton);
 
-    const publishButtons = screen.queryAllByRole('button', {
+    const publishModal = screen.getByRole('dialog');
+
+    const publishModalButton = within(publishModal).getByRole('button', {
       name: 'Submit for review',
     });
-    // story details modal is open, now there is a second publish button.
-    expect(publishButtons).toHaveLength(2);
-    fireEvent.click(publishButtons[1]);
+    fireEvent.click(publishModalButton);
 
     expect(saveStory).toHaveBeenCalledWith({
       status: 'pending',
@@ -194,12 +194,12 @@ describe('PublishButton', () => {
     const publishButton = screen.getByRole('button', { name: 'Publish' });
 
     fireEvent.click(publishButton);
-    const publishButtons = screen.queryAllByRole('button', {
+    const publishModal = screen.getByRole('dialog');
+
+    const publishModalButton = within(publishModal).getByRole('button', {
       name: 'Publish',
     });
-    // story details modal is open, now there is a second publish button.
-    expect(publishButtons).toHaveLength(2);
-    fireEvent.click(publishButtons[1]);
+    fireEvent.click(publishModalButton);
 
     expect(saveStory).toHaveBeenCalledTimes(1);
     expect(window.location.href).toContain('post=123&action=edit');

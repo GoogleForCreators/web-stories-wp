@@ -17,7 +17,7 @@
 /**
  * External dependencies
  */
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen, within } from '@testing-library/react';
 import MockDate from 'mockdate';
 import { setAppElement } from '@googleforcreators/design-system';
 import {
@@ -224,12 +224,13 @@ describe('Buttons', () => {
     fireEvent.click(scheduleButton);
     expect(saveStory).not.toHaveBeenCalled();
 
-    const scheduleButtons = screen.queryAllByRole('button', {
+    const publishModal = screen.getByRole('dialog');
+
+    const publishModalButton = within(publishModal).getByRole('button', {
       name: 'Schedule',
     });
-    // story details modal is open, now there is a second publish button.
-    expect(scheduleButtons).toHaveLength(2);
-    fireEvent.click(scheduleButtons[1]);
+
+    fireEvent.click(publishModalButton);
     expect(saveStory).toHaveBeenCalledTimes(1);
   });
 
