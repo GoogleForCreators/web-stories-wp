@@ -14,7 +14,7 @@ function Preview() {
 
     if ( content ) {
       document.open();
-      document.write( content );
+      document.write( content ); // lgtm [js/eval-like-call]
       document.close();
     }
   }, [] );
