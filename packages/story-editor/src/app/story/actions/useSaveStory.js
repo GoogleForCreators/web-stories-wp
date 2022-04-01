@@ -19,7 +19,7 @@
  */
 import { __ } from '@googleforcreators/i18n';
 import { useCallback, useState } from '@googleforcreators/react';
-import { getTimeTracker } from '@googleforcreators/tracking';
+import { getTimeTracker, trackError } from '@googleforcreators/tracking';
 import { useSnackbar } from '@googleforcreators/design-system';
 
 /**
@@ -105,11 +105,14 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
           );
           setIsFreshlyPublished(!isStoryAlreadyPublished && isStoryPublished);
         })
-        .catch(() => {
+        .catch((err) => {
           showSnackbar({
             message: __('Failed to save the story', 'web-stories'),
             dismissible: true,
           });
+          // eslint-disable-next-line no-console -- We want to surface this error.
+          console.log(err);
+          trackError('save_story', err.message);
         })
         .finally(() => {
           setIsSaving(false);
