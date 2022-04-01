@@ -26,6 +26,5 @@ export { default as objectWithout } from './objectWithout';
 export { default as getKeyboardMovement } from './getKeyboardMovement';
 export { default as PanelTypes } from './panelTypes';
 export { default as getTransformFlip } from './getTransformFlip';
-export * from './performanceTrackingEvents';
 export * from './constants';
 export * from './directions';

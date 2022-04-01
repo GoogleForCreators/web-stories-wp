@@ -21,10 +21,7 @@ import PropTypes from 'prop-types';
 import { useCallback, useRef, useState } from '@googleforcreators/react';
 import styled from 'styled-components';
 import { editorToDataX, editorToDataY } from '@googleforcreators/units';
-import {
-  useKeyDownEffect,
-  TRACKING_EVENTS,
-} from '@googleforcreators/design-system';
+import { useKeyDownEffect } from '@googleforcreators/design-system';
 import {
   Moveable,
   InOverlay,
@@ -35,7 +32,7 @@ import { useTransform } from '@googleforcreators/transform';
 /**
  * Internal dependencies
  */
-import { ZOOM_SETTING } from '../../../../constants';
+import { ZOOM_SETTING, TRACKING_EVENTS } from '../../../../constants';
 import { useDropTargets } from '../../../dropTargets';
 import { useLayout } from '../../../../app/layout';
 import useInsertElement from '../../../canvas/useInsertElement';

@@ -23,7 +23,6 @@ import { __ } from '@googleforcreators/i18n';
 import {
   Button,
   BUTTON_TYPES,
-  TRACKING_EVENTS,
   Icons,
   themeHelpers,
   Tooltip,
@@ -39,6 +38,7 @@ import StoryPropTypes from '../../../../types';
 import { useStory } from '../../../../app';
 import useCORSProxy from '../../../../utils/useCORSProxy';
 import usePerformanceTracking from '../../../../utils/usePerformanceTracking';
+import { TRACKING_EVENTS } from '../../../../constants';
 import useLayerSelection from './useLayerSelection';
 import { LAYER_HEIGHT } from './constants';
 
