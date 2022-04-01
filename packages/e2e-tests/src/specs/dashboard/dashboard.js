@@ -42,6 +42,27 @@ describe('Stories Dashboard', () => {
     await takeSnapshot(page, 'Stories Dashboard', { percyCSS });
   });
 
+  it('should be able to skip to main content of Dashboard', async () => {
+    await visitDashboard();
+
+    // If there are no existing stories, the app goes to the templates page instead.
+    // Account for both here, but then force-visit the dashboard.
+    await expect(page).toMatchElement('h2', {
+      text: /(Dashboard|Explore Templates)/,
+    });
+
+    // When navigating to Dashboard, immediately use keyboard to
+    // tab to WordPress shortcut of "Main Content"
+    page.keyboard.press('Tab');
+    page.keyboard.press('Enter');
+
+    await expect(page).toMatchElement('h2', {
+      text: /(Dashboard|Explore Templates)/,
+    });
+
+    await takeSnapshot(page, 'Stories Dashboard on Main Content', { percyCSS });
+  });
+
   it('should choose sort option for display', async () => {
     await visitDashboard();
     await expect(page).toClick('[aria-label="Dashboard"]', {
