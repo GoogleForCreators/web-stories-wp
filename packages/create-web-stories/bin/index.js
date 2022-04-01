@@ -31,11 +31,9 @@ import {
   scaffoldBoilerplateCustom,
   scaffoldBoilerplatewithCRA,
   log,
+  LOGO
 } from './common.js';
-import { DEFAULT_PROJECT_NAME } from './constants';
-import path from 'path';
-
-const LOGO = fse.readFileSync( path.join( __dirname, 'LOGO.txt' ) );
+import { DEFAULT_PROJECT_NAME } from './constants.js';
 
 program
   .option( '-p, --private', 'install from local registry' )

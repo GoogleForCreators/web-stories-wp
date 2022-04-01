@@ -25,10 +25,12 @@ import chalk from 'chalk';
 /**
  * Internal dependencies.
  */
-import { PRIVATE_REGISTRY_URL } from './constants';
+import { PRIVATE_REGISTRY_URL } from './constants.js';
 
 const __filename = fileURLToPath( import.meta.url );
 const __dirname = dirname( __filename );
+
+const LOGO = fse.readFileSync( path.join( __dirname, 'LOGO.txt' ) );
 
 const getBoilerplateDataList = () => {
   const boilerplateDir = path.join( __dirname, '../boilerplates' );
@@ -206,4 +208,5 @@ export {
   scaffoldBoilerplatewithCRA,
   scaffoldBoilerplateCustom,
   WELCOME_MESSAGE,
+  LOGO
 };
