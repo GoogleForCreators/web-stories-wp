@@ -153,9 +153,6 @@ describe('CUJ: Creator can view their stories in grid view', () => {
       const rename = utils.getByText(/^Rename/);
       await fixture.events.click(rename);
 
-      // add temp snapshot
-      await fixture.snapshot('Rename textbox');
-
       const input = fixture.screen.getByRole('textbox');
       const inputLength = input.value.length;
 
