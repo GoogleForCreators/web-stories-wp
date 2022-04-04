@@ -557,7 +557,9 @@ abstract class Renderer implements RenderingInterface, Iterator {
 		 */
 		$story = $this->current();
 
-		$poster_url = $story->get_poster_portrait();
+		$poster_url    = $story->get_poster_portrait();
+		$poster_srcset = $story->get_poster_srcset();
+		$poster_sizes  = $story->get_poster_sizes();
 
 		if ( ! $poster_url ) {
 			?>
@@ -578,8 +580,12 @@ abstract class Renderer implements RenderingInterface, Iterator {
 						alt="<?php echo esc_attr( $story->get_title() ); ?>"
 						width="<?php echo absint( $this->width ); ?>"
 						height="<?php echo absint( $this->height ); ?>"
-						srcset="<?php echo esc_attr( $story->get_poster_srcset() ); ?>"
-						sizes="<?php echo esc_attr( $story->get_poster_sizes() ); ?>"
+						<?php if ( ! empty( $poster_srcset ) ) { ?>
+							srcset="<?php echo esc_attr( $poster_srcset ); ?>"
+						<?php } ?>
+						<?php if ( ! empty( $poster_sizes ) ) { ?>
+							sizes="<?php echo esc_attr( $poster_sizes ); ?>"
+						<?php } ?>
 						loading="lazy"
 						decoding="async"
 					>
