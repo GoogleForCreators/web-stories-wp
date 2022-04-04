@@ -61,7 +61,7 @@ function EditLayerFocusManager({ children }) {
 
   return (
     <Context.Provider
-      value={{ enterFocusGroup, exitCurrentFocusGroup, actions, state }}
+      value={{ enterFocusGroup, exitCurrentFocusGroup, actions }}
     >
       {activeFocusGroup?.map(
         ([uuid, node]) =>
