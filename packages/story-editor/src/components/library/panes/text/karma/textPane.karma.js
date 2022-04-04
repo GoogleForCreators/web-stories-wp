@@ -26,7 +26,7 @@ import { stripHTML } from '@googleforcreators/dom';
  */
 import { Fixture } from '../../../../../karma';
 import { useStory } from '../../../../../app/story';
-import { DEFAULT_PRESET } from '../textPresets';
+import { PRESETS } from '../textPresets';
 
 const TIMEOUT_INTERVAL = 300000;
 
@@ -248,7 +248,8 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
             throw new Error('story not ready');
           }
           expect(stripHTML(element.content)).toEqual(content);
-          expect(element.y).toEqual(dataPixels(DEFAULT_PRESET.y));
+          const preset = PRESETS.find(({ title }) => name === title);
+          expect(element.y).toEqual(dataPixels(preset.element.y));
         });
         nextY = element.y;
         nextHeight = element.height;
