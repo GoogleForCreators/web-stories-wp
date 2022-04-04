@@ -26,7 +26,7 @@ import { stripHTML } from '@googleforcreators/dom';
  */
 import { Fixture } from '../../../../../karma';
 import { useStory } from '../../../../../app/story';
-import { PRESETS } from '../textPresets';
+import { DEFAULT_PRESET } from '../textPresets';
 
 const TIMEOUT_INTERVAL = 300000;
 
@@ -222,8 +222,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
 
     it('should ensure staggered presets fit on the page', async () => {
       const POSITION_MARGIN = dataFontEm(1);
-      const PARAGRAPH_TEXT =
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+      const PARAGRAPH_TEXT = 'Fill in some text.';
       let lastY;
       let lastHeight;
       let nextY;
@@ -249,8 +248,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
             throw new Error('story not ready');
           }
           expect(stripHTML(element.content)).toEqual(content);
-          const preset = PRESETS.find(({ title }) => name === title);
-          expect(element.y).toEqual(dataPixels(preset.element.y));
+          expect(element.y).toEqual(dataPixels(DEFAULT_PRESET.element.y));
         });
         nextY = element.y;
         nextHeight = element.height;
@@ -372,7 +370,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
 
       const [text1] = await getSelection();
       expect(text1.content).toEqual(
-        '<span style="color: #fff">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span>'
+        '<span style="color: #fff">Fill in some text.</span>'
       );
 
       // Select background for being able to insert another text.

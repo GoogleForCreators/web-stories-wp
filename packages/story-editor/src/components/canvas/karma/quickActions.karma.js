@@ -128,7 +128,9 @@ describe('Quick Actions integration', () => {
       );
       expect(fixture.editor.canvas.framesLayer.frames.length).toBe(2);
       expect(fixture.editor.library.text).not.toBeNull();
-      expect(document.activeElement).toEqual(fixture.editor.library.textTab);
+      expect(document.activeElement).toEqual(
+        fixture.editor.canvas.framesLayer.frames[1].node
+      );
     });
 
     it('should allow clicking multiple actions', async () => {

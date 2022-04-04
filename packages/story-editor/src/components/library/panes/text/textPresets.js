@@ -59,26 +59,8 @@ const DEFAULT_TEXT_PADDING = {
 
 const DEFAULT_TEXT_ALIGN = 'left';
 
-const DEFAULT_TEXT_PRESET = {
-  content: _x('Fill in some text', 'web-stories', 'web-stories'),
-  fontWeight: FONT_WEIGHT.NORMAL,
-  fontSize: dataFontEm(1.2),
-  lineHeight: 1.5,
-  x: DEFAULT_LEFT_MARGIN,
-  y: (PAGE_HEIGHT - dataFontEm(1.5)) / 2,
-  font: TEXT_ELEMENT_DEFAULT_FONT,
-  width: DEFAULT_WIDTH.DEFAULT,
-  textAlign: 'center',
-  borderRadius: DEFAULT_TEXT_BORDER_RADIUS,
-  padding: DEFAULT_TEXT_PADDING,
-};
-
 const DEFAULT_PRESET = {
-  content: _x(
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    'text preset content',
-    'web-stories'
-  ),
+  content: _x('Fill in some text.', 'text preset content', 'web-stories'),
   fontSize: dataFontEm(1.33),
   lineHeight: 1.2,
   x: DEFAULT_LEFT_MARGIN,
@@ -194,4 +176,4 @@ const PRESETS = [
   },
 ];
 
-export { DEFAULT_PRESET, PRESETS, DEFAULT_TEXT_PRESET };
+export { DEFAULT_PRESET, PRESETS };

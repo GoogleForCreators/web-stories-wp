@@ -31,7 +31,7 @@ const DEFAULT_FONT = {
   },
   fontWeight: 400,
   fontStyle: 'normal',
-  content: 'Fill in some text',
+  content: 'Fill in some text.',
 };
 
 const CUSTOM_FONT = {
@@ -42,7 +42,7 @@ const CUSTOM_FONT = {
   },
   fontWeight: 400,
   fontStyle: 'normal',
-  content: 'Fill in some text',
+  content: 'Fill in some text.',
 };
 
 /* eslint-disable testing-library/no-node-access */

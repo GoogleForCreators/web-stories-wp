@@ -36,7 +36,7 @@ import { useLayout } from '../../app';
 import { MediaPicker, useQuickActions, ACTIONS } from '../../app/highlights';
 import { ZOOM_SETTING } from '../../constants';
 import { Z_INDEX_CANVAS_SIDE_MENU } from '../../constants/zIndex';
-import { DEFAULT_TEXT_PRESET } from '../library/panes/text/textPresets';
+import { DEFAULT_PRESET } from '../library/panes/text/textPresets';
 import useInsertElement from './useInsertElement';
 import PageMenu from './pagemenu/pageMenu';
 
@@ -77,7 +77,7 @@ function PageSideMenu() {
   const insertElement = useInsertElement();
   const handleAddText = (evt) => {
     evt.stopPropagation();
-    insertElement('text', DEFAULT_TEXT_PRESET);
+    insertElement('text', DEFAULT_PRESET);
     trackEvent('library_text_quick_action');
   };
 
