@@ -19,9 +19,6 @@
  */
 import { ThemeProvider } from 'styled-components';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
-/**
- * Internal dependencies
- */
 import {
   theme as designSystemTheme,
   lightMode,
@@ -35,10 +32,14 @@ import {
   ConfigProvider as DashboardConfigProvider,
   ApiProvider,
 } from '@googleforcreators/dashboard';
-import {
-  GlobalStyle,
-  EditorConfigProvider,
-} from '@googleforcreators/story-editor';
+
+/**
+ * Internal dependencies
+ */
+// Disable reason: Fast refresh is finding circular imports at story editor's root from unrelated exports (like theme from the design system).
+// Prevented by importing the config provider directly.
+// eslint-disable-next-line import/no-relative-packages
+import EditorConfigProvider from '../packages/story-editor/src/app/config/configProvider';
 
 // @todo: Find better way to mock these.
 const wp = {};
@@ -134,7 +135,6 @@ export const decorators = [
     return (
       <ThemeProvider theme={designSystemTheme}>
         <EditorConfigProvider config={{ isRTL }}>
-          <GlobalStyle />
           <CropMoveableGlobalStyle />
           <ModalGlobalStyle />
           {Story()}
