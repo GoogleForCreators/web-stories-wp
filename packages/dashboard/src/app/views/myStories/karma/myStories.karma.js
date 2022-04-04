@@ -215,6 +215,29 @@ describe('CUJ: Creator can view their stories in grid view', () => {
     });
   });
 
+  describe('Creator should see locked story', () => {
+    let utils;
+    let moreOptionsButton;
+
+    beforeEach(async () => {
+      // get a locked story
+      const story = dashboardGridItems[1];
+      await fixture.events.hover(story);
+
+      utils = within(story);
+      moreOptionsButton = utils.getByRole('button', {
+        name: /^Context menu for/,
+      });
+
+      await fixture.events.click(moreOptionsButton);
+    });
+
+    it('should be locked and not Rename a story', () => {
+      const rename = utils.getByText(/^Rename/);
+      expect(rename).toBeDisabled();
+    });
+  });
+
   describe('Creator can filter their stories by status', () => {
     it('should switch to the Drafts Tab', async () => {
       const { stories } = await getStoriesState();
