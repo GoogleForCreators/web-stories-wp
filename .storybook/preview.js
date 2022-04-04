@@ -26,20 +26,20 @@ import {
   ModalGlobalStyle,
 } from '@googleforcreators/design-system';
 import { CropMoveableGlobalStyle } from '@googleforcreators/moveable';
-import {
-  DashboardGlobalStyle,
-  DashboardKeyboardOnlyOutline,
-  ConfigProvider as DashboardConfigProvider,
-  ApiProvider,
-} from '@googleforcreators/dashboard';
 
 /**
  * Internal dependencies
  */
-// Disable reason: Fast refresh is finding circular imports at story editor's root from unrelated exports (like theme from the design system).
-// Prevented by importing the config provider directly.
-// eslint-disable-next-line import/no-relative-packages
+// Disable reason:
+// Importing from the dashboard and story editor roots break fast refresh in storybook.
+// Prevented by importing the necessary providers and configs directly.
+/* eslint-disable import/no-relative-packages */
+import { GlobalStyle as DashboardGlobalStyle } from '../packages/dashboard/src/theme';
+import DashboardKeyboardOnlyOutline from '../packages/dashboard/src/utils/keyboardOnlyOutline';
+import DashboardConfigProvider from '../packages/dashboard/src/app/config/configProvider';
+import ApiProvider from '../packages/dashboard/src/app/api/apiProvider';
 import EditorConfigProvider from '../packages/story-editor/src/app/config/configProvider';
+/* eslint-enable import/no-relative-packages */
 
 // @todo: Find better way to mock these.
 const wp = {};
