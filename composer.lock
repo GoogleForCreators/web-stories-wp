@@ -404,16 +404,16 @@
         },
         {
             "name": "mcaskill/composer-exclude-files",
-            "version": "v2.0.0",
+            "version": "v2.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mcaskill/composer-plugin-exclude-files.git",
-                "reference": "2bf916ab1ec9959b3a58ba3652bad6ffedf0e10e"
+                "reference": "0d481db018d5849e87f87cc3145a2cbf0135e428"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mcaskill/composer-plugin-exclude-files/zipball/2bf916ab1ec9959b3a58ba3652bad6ffedf0e10e",
-                "reference": "2bf916ab1ec9959b3a58ba3652bad6ffedf0e10e",
+                "url": "https://api.github.com/repos/mcaskill/composer-plugin-exclude-files/zipball/0d481db018d5849e87f87cc3145a2cbf0135e428",
+                "reference": "0d481db018d5849e87f87cc3145a2cbf0135e428",
                 "shasum": ""
             },
             "require": {
@@ -422,12 +422,12 @@
             },
             "require-dev": {
                 "composer/composer": "^1.0 || ^2.0",
-                "symfony/phpunit-bridge": "^4.2 || ^5.0"
+                "symfony/phpunit-bridge": "^4.2 || ^5.0 || ^6.0"
             },
             "type": "composer-plugin",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.x-dev"
+                    "dev-main": "2.x-dev"
                 },
                 "class": "McAskill\\Composer\\ExcludeFilePlugin"
             },
@@ -449,9 +449,9 @@
             "description": "Exclude files from autoload_files.php",
             "support": {
                 "issues": "https://github.com/mcaskill/composer-plugin-exclude-files/issues",
-                "source": "https://github.com/mcaskill/composer-plugin-exclude-files/tree/v2.0.0"
+                "source": "https://github.com/mcaskill/composer-plugin-exclude-files/tree/v2.1.0"
             },
-            "time": "2020-09-25T22:01:23+00:00"
+            "time": "2022-04-01T04:35:29+00:00"
         },
         {
             "name": "sabberworm/php-css-parser",
