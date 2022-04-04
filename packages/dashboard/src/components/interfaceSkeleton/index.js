@@ -74,18 +74,6 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
     !isFirstLoadOnMyStories.current
   );
 
-  // Only set the available routes & default route on initial mount
-  useEffect(() => {
-    if (availableRoutes.length > 0) {
-      return;
-    }
-    const additionalPaths = additionalRoutes
-      ? additionalRoutes.map(({ path }) => path)
-      : [];
-    setAvailableRoutes([...Object.values(APP_ROUTES), ...additionalPaths]);
-    setDefaultRoute(APP_ROUTES.DASHBOARD);
-  }, [additionalRoutes, availableRoutes, setAvailableRoutes, setDefaultRoute]);
-
   // Direct user to templates on first load if they
   // have no stories created.
   useEffect(() => {
@@ -100,6 +88,23 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
       setIsRedirectComplete(true);
     });
   }, [addInitialFetchListener, push, currentPath, canViewDefaultTemplates]);
+
+  // Only set the available routes & default route on initial mount
+  useEffect(() => {
+    if (availableRoutes.length > 0) {
+      return;
+    }
+    const additionalPaths = additionalRoutes
+      ? additionalRoutes.map(({ path }) => path)
+      : [];
+    setAvailableRoutes([...Object.values(APP_ROUTES), ...additionalPaths]);
+    setDefaultRoute(APP_ROUTES.DASHBOARD);
+  }, [
+    additionalRoutes,
+    availableRoutes.length,
+    setAvailableRoutes,
+    setDefaultRoute,
+  ]);
 
   useEffect(() => {
     if (!isRedirectComplete) {
