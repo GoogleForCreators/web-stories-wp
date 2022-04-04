@@ -171,6 +171,22 @@ describe('CUJ: Creator can view their stories in grid view', () => {
       ).toBeTruthy();
     });
 
+    it('should be locked and not Rename a story', async () => {
+      // get a locked story
+      const story = dashboardGridItems[1];
+      await fixture.events.hover(story);
+
+      const testUtils = within(story);
+      moreOptionsButton = testUtils.getByRole('button', {
+        name: /^Context menu for/,
+      });
+
+      await fixture.events.click(moreOptionsButton);
+
+      const rename = testUtils.getByText(/^Rename/);
+      expect(rename).toBeDisabled();
+    });
+
     it('should Duplicate a story', async () => {
       const duplicate = utils.getByText(/^Duplicate/);
       await fixture.events.click(duplicate);
@@ -212,29 +228,6 @@ describe('CUJ: Creator can view their stories in grid view', () => {
       expect(fixture.screen.getAllByTestId(/^story-grid-item/).length).toEqual(
         dashboardGridItems.length
       );
-    });
-  });
-
-  describe('Creator should see locked story', () => {
-    let utils;
-    let moreOptionsButton;
-
-    beforeEach(async () => {
-      // get a locked story
-      const story = dashboardGridItems[1];
-      await fixture.events.hover(story);
-
-      utils = within(story);
-      moreOptionsButton = utils.getByRole('button', {
-        name: /^Context menu for/,
-      });
-
-      await fixture.events.click(moreOptionsButton);
-    });
-
-    it('should be locked and not Rename a story', () => {
-      const rename = utils.getByText(/^Rename/);
-      expect(rename).toBeDisabled();
     });
   });
 
