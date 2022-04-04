@@ -79,7 +79,9 @@ const InterfaceSkeleton = ({ additionalRoutes }) => {
     if (availableRoutes.length > 0) {
       return;
     }
-    const additionalPaths = additionalRoutes?.map(({ path }) => path);
+    const additionalPaths = additionalRoutes
+      ? additionalRoutes.map(({ path }) => path)
+      : [];
     setAvailableRoutes([...Object.values(APP_ROUTES), ...additionalPaths]);
     setDefaultRoute(APP_ROUTES.DASHBOARD);
   }, [additionalRoutes, availableRoutes, setAvailableRoutes, setDefaultRoute]);

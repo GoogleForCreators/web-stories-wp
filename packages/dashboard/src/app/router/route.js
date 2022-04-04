@@ -89,30 +89,25 @@ export function matchPath({
   // If there is and the current path fits 1 or less
   // of the available routes then render it as default
   if (isDefault) {
-    const availableRoutesPresentInCurrentPath = availableRoutes.filter(
-      (route) => currentPath.startsWith(route)
-    );
-    if (availableRoutesPresentInCurrentPath.length <= 1) {
+    const isValidDefaultRoute =
+      availableRoutes.filter((route) => currentPath.startsWith(route)).length <=
+      1;
+
+    if (isValidDefaultRoute) {
       return defaultRoute;
     }
   }
 
   const isExactMatch = currentPath === matchUrl;
-
   if (exact && !isExactMatch) {
     return null;
   }
-
   return matchUrl;
 }
 
 function Route({ component, path, exact = false, isDefault = false }) {
   const { availableRoutes, currentPath, defaultRoute } = useRouteHistory(
-    ({ state: { availableRoutes, currentPath, defaultRoute } }) => ({
-      availableRoutes,
-      currentPath,
-      defaultRoute,
-    })
+    ({ state }) => state
   );
 
   const match = matchPath({
