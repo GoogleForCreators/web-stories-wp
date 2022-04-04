@@ -61,9 +61,9 @@ function CanvasLayout({ header, footer }) {
   const boundingBoxTrackingRef = useCanvasBoundingBoxRef(
     CANVAS_BOUNDING_BOX_IDS.CANVAS_CONTAINER
   );
-  const { setCanvasContainer } = useCanvas((state) => ({
-    setCanvasContainer: state.actions.setCanvasContainer,
-  }));
+  const setCanvasContainer = useCanvas(
+    (state) => state.actions.setCanvasContainer
+  );
 
   const backgroundRef = useRef(null);
 
