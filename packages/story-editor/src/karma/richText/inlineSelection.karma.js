@@ -199,7 +199,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
         'letter-spacing: 1em',
         'text-transform: uppercase',
       ].join('; ');
-      const expected = `Fill i<span style="${firstCSS}">n</span><span style="${secondCSS}">so</span>me text.`;
+      const expected = `Fill i<span style="${firstCSS}">n</span> <span style="${secondCSS}">so</span>me text.`;
       expect(actual).toBe(expected);
     });
   });
