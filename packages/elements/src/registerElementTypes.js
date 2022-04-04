@@ -25,6 +25,6 @@ import { dispatch } from '@googleforcreators/data';
  */
 export default function registerElementTypes(elementTypes) {
   elementTypes.forEach((elementType) => {
-    dispatch('element').registerElementTypes(elementType);
+    dispatch('element')?.registerElementTypes(elementType);
   });
 }

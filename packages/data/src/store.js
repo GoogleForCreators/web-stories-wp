@@ -29,7 +29,7 @@ const { getState, subscribe, destroy } = store;
 const addSlice = (name, slice) => getState().addSlice(name, slice);
 const select = (sliceName) =>
   sliceName ? getState()[sliceName].state : getState();
-const dispatch = (sliceName) => getState()[sliceName].actions;
+const dispatch = (sliceName) => getState()[sliceName]?.actions;
 
 const useStore = create(store);
 const useSelect = (sliceName, callback, equalityFn = shallow) => {
