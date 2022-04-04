@@ -33,7 +33,7 @@ export const LOCAL_STORAGE_PREFIX = {
   DEFAULT_VIEW_PAGE_TEMPLATE_LAYOUT: 'web_stories_default_template_view',
   BACKGROUND_IS_SET_DIALOG_DISMISSED:
     'web_stories_background_is_set_dialog_dismissed',
-  CORS_WARNING_DIALOG_DISMISSED: 'web_stories_cors_warning_dialog_dismissed',
+  CORS_CHECK_DIALOG_DISMISSED: 'web_stories_cors_check_dialog_dismissed',
 };
 
 function getItemByKey(key) {

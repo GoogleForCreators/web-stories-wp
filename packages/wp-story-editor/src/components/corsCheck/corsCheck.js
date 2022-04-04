@@ -30,7 +30,7 @@ import { useFeature } from 'flagged';
  */
 import CorsCheckFailed from './corsCheckFailed';
 
-const storageKey = LOCAL_STORAGE_PREFIX.CORS_WARNING_DIALOG_DISMISSED;
+const storageKey = LOCAL_STORAGE_PREFIX.CORS_CHECK_DIALOG_DISMISSED;
 
 function CorsCheck() {
   const [showDialog, setShowDialog] = useState(false);

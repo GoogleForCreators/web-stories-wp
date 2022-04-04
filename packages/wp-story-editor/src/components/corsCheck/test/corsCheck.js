@@ -138,7 +138,7 @@ describe('corsCheck', () => {
 
     setup();
     expect(localStore.getItemByKey).toHaveBeenCalledWith(
-      LOCAL_STORAGE_PREFIX.CORS_WARNING_DIALOG_DISMISSED
+      LOCAL_STORAGE_PREFIX.CORS_CHECK_DIALOG_DISMISSED
     );
 
     const dialog = await screen.findByRole('dialog');
@@ -152,7 +152,7 @@ describe('corsCheck', () => {
 
     await waitFor(() =>
       expect(localStore.setItemByKey).toHaveBeenCalledWith(
-        LOCAL_STORAGE_PREFIX.CORS_WARNING_DIALOG_DISMISSED,
+        LOCAL_STORAGE_PREFIX.CORS_CHECK_DIALOG_DISMISSED,
         true
       )
     );
