@@ -17,12 +17,14 @@
 /**
  * External dependencies
  */
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen, within } from '@testing-library/react';
 import MockDate from 'mockdate';
 import { setAppElement } from '@googleforcreators/design-system';
 import {
   StoryContext,
   CheckpointContext,
+  ChecklistCountProvider,
+  ConfigContext,
 } from '@googleforcreators/story-editor';
 import { renderWithTheme } from '@googleforcreators/test-utils';
 
@@ -37,6 +39,7 @@ function arrange({
   storyState: extraStoryStateProps,
   meta: extraMetaProps,
   metaBoxes: extraMetaBoxesProps,
+  config: extraConfigProps,
 } = {}) {
   const saveStory = jest.fn();
   const autoSave = jest.fn();
@@ -50,6 +53,8 @@ function arrange({
       meta: { isSaving: false, isFreshlyPublished: false, ...extraMetaProps },
       story: {
         status: 'draft',
+        title: '',
+        excerpt: '',
         storyId: 123,
         date: null,
         editLink: 'http://localhost/wp-admin/post.php?post=123&action=edit',
@@ -70,21 +75,33 @@ function arrange({
       ...extraMetaBoxesProps,
     },
   };
+  const configValue = {
+    allowedMimeTypes: {},
+    capabilities: {},
+    metadata: {
+      publisher: 'publisher title',
+    },
+    ...extraConfigProps,
+  };
 
   renderWithTheme(
     <MetaBoxesContext.Provider value={metaBoxesValue}>
-      <StoryContext.Provider value={storyContextValue}>
-        <CheckpointContext.Provider
-          value={{
-            actions: {
-              showPriorityIssues: () => {},
-            },
-            state: { shouldReviewDialogBeSeen: false, checkpoint: 'all' },
-          }}
-        >
-          <Buttons />
-        </CheckpointContext.Provider>
-      </StoryContext.Provider>
+      <ConfigContext.Provider value={configValue}>
+        <StoryContext.Provider value={storyContextValue}>
+          <ChecklistCountProvider>
+            <CheckpointContext.Provider
+              value={{
+                actions: {
+                  showPriorityIssues: () => {},
+                },
+                state: { shouldReviewDialogBeSeen: false, checkpoint: 'all' },
+              }}
+            >
+              <Buttons />
+            </CheckpointContext.Provider>
+          </ChecklistCountProvider>
+        </StoryContext.Provider>
+      </ConfigContext.Provider>
     </MetaBoxesContext.Provider>
   );
   return {
@@ -205,6 +222,15 @@ describe('Buttons', () => {
     const scheduleButton = screen.getByRole('button', { name: 'Schedule' });
 
     fireEvent.click(scheduleButton);
+    expect(saveStory).not.toHaveBeenCalled();
+
+    const publishModal = screen.getByRole('dialog');
+
+    const publishModalButton = within(publishModal).getByRole('button', {
+      name: 'Schedule',
+    });
+
+    fireEvent.click(publishModalButton);
     expect(saveStory).toHaveBeenCalledTimes(1);
   });
 
