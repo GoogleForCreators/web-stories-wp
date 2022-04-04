@@ -116,6 +116,10 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
             'Client error unauthorized failed to save the story',
             'web-stories'
           );
+          const error_403 = __(
+            'Client error forbidden failed to save the story',
+            'web-stories'
+          );
           const error_500 = __(
             'Server error failed to save the story',
             'web-stories'
@@ -127,6 +131,9 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
               break;
             case 401:
               message = error_401;
+              break;
+            case 403:
+              message = error_403;
               break;
             case 500:
               message = error_500;
