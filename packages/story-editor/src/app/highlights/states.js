@@ -123,12 +123,12 @@ export const STATES = {
   [keys.MEDIA3P]: {
     focus: true,
     tab: INSERT,
-    section: PANE_IDS.MEDIA3P,
+    section: PANE_IDS.MEDIA_3P,
   },
   [keys.TEXT_SET]: {
     focus: true,
     tab: INSERT,
-    section: PANE_IDS.TEXT_SET,
+    section: PANE_IDS.TEXT,
   },
   [keys.PAGE_TEMPLATES]: {
     focus: true,
