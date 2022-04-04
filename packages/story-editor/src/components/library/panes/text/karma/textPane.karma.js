@@ -248,7 +248,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
             throw new Error('story not ready');
           }
           expect(stripHTML(element.content)).toEqual(content);
-          expect(element.y).toEqual(dataPixels(DEFAULT_PRESET.element.y));
+          expect(element.y).toEqual(dataPixels(DEFAULT_PRESET.y));
         });
         nextY = element.y;
         nextHeight = element.height;
