@@ -18,6 +18,7 @@
  * External dependencies
  */
 import { PLACEMENT } from '@googleforcreators/design-system';
+import { __ } from '@googleforcreators/i18n';
 import PropTypes from 'prop-types';
 
 /**
@@ -52,6 +53,7 @@ function FloatingColor(props) {
       allowsSavedColors
       allowsSavedColorDeletion={false}
       pickerHasEyedropper={!hasEyedropper}
+      containerLabelBase={__('Color input (floating menu)', 'web-stories')}
       {...props}
     />
   );
