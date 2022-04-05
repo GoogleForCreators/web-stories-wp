@@ -7,11 +7,15 @@ As seen in the [Getting Started](./getting-started.md) guide, a minimal story ed
 
 ```js
 import { StoryEditor, InterfaceSkeleton } from '@googleforcreators/story-editor';
+import { elementTypes } from '@googleforcreators/element-library';
+import { registerElementType } from '@googleforcreators/elements';
 
 const Editor = () => {
   const apiCallbacks = {
     saveStoryById: () => Promise.resolve({}),
   };
+
+  elementTypes.forEach(registerElementType);
 
   return (
     <StoryEditor config={{ apiCallbacks }} initialEdits={{ story: {} }}>
@@ -91,16 +95,6 @@ To configure the editor to your needs you can pass various config options to the
 
 You can also provide an external link in the description of the tip.
 
-### `allowedFileTypes`
-
-- type: `array`
-- description: An array of file extensions accepted by element library.
-- example :
-  
-  ```js
-  const allowedFileTypes = ['jpeg','mp4'];
-  ```
-
 ### `allowedMimeTypes` 
 
 - type: `Object`
@@ -109,67 +103,11 @@ You can also provide an external link in the description of the tip.
   
   ```js
   const allowedMimeTypes = {
-    image: [
-              "image/webp",
-              "image/png",
-          ],
-    "audio": [],
-    "video": []
+    audio: ['audio/mpeg', 'audio/aac', 'audio/wav', 'audio/ogg'],
+    image: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/webp'],
+    caption: ['text/vtt'],
+    vector: ['image/svg+xml']
   };
-  ```
-
-### `allowedAudioFileTypes`
-
-- type: `array`
-- description: An array of file extensions accepted in the design panel.
-- example :
-
-```js
-const allowedAudioFileTypes = ['aac', 'wav'];
-```
-
-### `allowedAudioMimeTypes`
-
-- type: `array`
-- description: An array of file mime-types accepted in the design panel.
-- example :
-  
-  ```js
-  const allowedAudioMimeTypes = ['audio/aac', 'audio/wav'];
-  ```
-
-### `allowedImageFileTypes`
-
-- type: `array`
-- description: An array of file extensions accepted in the design panel. Generates a message if incorrect file type is uploaded.
-- example :
-  
-  ```js
-  const allowedFileTypes = ['jpeg','png'];
-  ```
-
-### `allowedImageMimeTypes` 
-
-- type: `array`
-- description: An array of file mime types accepted in the design panel.
-- example :
-
-```js
-const allowedFileTypes = ['image/jpeg', 'image/png'];
-```
-
-### `allowedTranscodableMimeTypes` 
-
-- type: `array`
-- description: An array of mime types which can be transcoded.
-- example :
-  
-  ```js
-  const allowedTranscodableMimeTypes = [
-    "video/3gpp",
-      "video/3gpp2",
-      "video/MP2T",
-  ]
   ```
 
 ### `autoSaveInterval`
@@ -224,49 +162,7 @@ const allowedFileTypes = ['image/jpeg', 'image/png'];
 ### `flags`
 
 - type: `Object`
-- description: Many experimental features can be enabled/disabled in the story editor. Below is a list of all feature flags. These features are unstable and susceptible to frequent changes.
-    - `enableSVG`
-        - type: `boolean`
-        - description: Enables SVG support in link icons.
-    - `customFonts`
-        - type: `boolean`
-        - description: Enables custom fonts in rich text elements.
-    - `enableExperimentalAnimationEffects`
-        - type: `boolean`
-        - description: Enables experimental animations effects.
-    - `showElementsTab`
-        - type: `boolean`
-        - description: Adds new custom element pane to elements library.
-    - `incrementalSearchDebounceMedia`
-        - type: `boolean`
-        - description: Enables debouncing while searching first party or third party media.
-    - `enablePostLockingTakeOver`
-        - type: `boolean`
-        - description: Lock in-progress stories from being edited by other authors.
-    - `enableUpdatedPublishStoryModal`
-        - type: `boolean`
-        - description: Enable new pre-publish confirmation modal.
-    - `enableHotlinking`
-        - type: `boolean`
-        - description: Enables hot-linking media using external URLs.
-    - `enableVideoTrim`
-        - type: `boolean`
-        - description: Enables functionality to trim videos.
-    - `enableThumbnailCaching`
-        - type: `boolean`
-        - description: Enable thumbnail caching.
-    - `enhancedPageBackgroundAudio`
-        - type: `boolean`
-        - description: Enable adding captions to background audio.
-    - `floatingMenu`
-        - type: `boolean`
-        - description: Enable the new floating design menu.
-    - `semanticHeadingTags`
-        - type: `boolean`
-        - description: Automatically use semantic heading tags for text elements.
-    - `libraryTextStyles`
-        - type: `boolean`
-        - description: Allow inserting/applying Saved Styles from Text Library.
+- description: Many experimental features can be enabled/disabled in the story editor. For a current list of existing flags, check out [`Experiments.php`](https://github.com/GoogleForCreators/web-stories-wp/blob/main/includes/Experiments.php).
 
 ### `generalSettingsLink`
 
@@ -447,6 +343,8 @@ import {
   StoryEditor,
   InterfaceSkeleton,
 } from "@googleforcreators/story-editor";
+import { elementTypes } from '@googleforcreators/element-library';
+import { registerElementType } from '@googleforcreators/elements';
 
 const CustomHeader = () => (
   <div style={{ height: `100px`, width: "100%", backgroundColor: "red" }}>
@@ -458,6 +356,8 @@ const Editor = () => {
   const apiCallbacks = {
     saveStoryById: () => Promise.resolve({}),
   };
+
+  elementTypes.forEach(registerElementType);
 
   return (
     <div style={{ height: "100vh" }}>
@@ -482,6 +382,8 @@ import {
   StoryEditor,
   InterfaceSkeleton,
 } from "@googleforcreators/story-editor";
+import { elementTypes } from '@googleforcreators/element-library';
+import { registerElementType } from '@googleforcreators/elements';
 
 const CustomFooter = () => <div>{" Custom Help Center Footer "}</div>;
 
@@ -489,6 +391,8 @@ const Editor = () => {
   const apiCallbacks = {
     saveStoryById: () => Promise.resolve({}),
   };
+
+  elementTypes.forEach(registerElementType);
 
   return (
     <div style={{ height: "100vh" }}>
@@ -560,6 +464,9 @@ import {
   StoryMissingTitle,
   StoryTitleLength,
 } from "@googleforcreators/story-editor";
+import { elementTypes } from '@googleforcreators/element-library';
+import { registerElementType } from '@googleforcreators/elements';
+
 const Accessibility = () => (
   <>
     <PageBackgroundTextLowContrast />
@@ -585,6 +492,8 @@ const Editor = () => {
   const apiCallbacks = {
     saveStoryById: () => Promise.resolve({}),
   };
+
+  elementTypes.forEach(registerElementType);
 
   return (
     <StoryEditor config={{ apiCallbacks }} initialEdits={{ story:{} }}>
@@ -648,6 +557,8 @@ import {
   StoryEditor,
   InterfaceSkeleton,
 } from "@googleforcreators/story-editor";
+import { elementTypes } from '@googleforcreators/element-library';
+import { registerElementType } from '@googleforcreators/elements';
 import React, { useState } from "react";
 import { LessThan2PageCheck } from "./footer/checks";
 
@@ -661,6 +572,8 @@ const Editor = () => {
   const apiCallbacks = {
     saveStoryById: () => Promise.resolve({}),
   };
+
+  elementTypes.forEach(registerElementType);
 
   return (
     <StoryEditor config={{ apiCallbacks }} initialEdits={{ story:{} }}>
@@ -690,6 +603,8 @@ import {
 	StoryEditor,
 	InterfaceSkeleton,
 } from '@googleforcreators/story-editor';
+import { elementTypes } from '@googleforcreators/element-library';
+import { registerElementType } from '@googleforcreators/elements';
 
 const CustomDocumentPanel = ()=>(
 	<div>
@@ -700,8 +615,10 @@ const CustomDocumentPanel = ()=>(
 const Editor = () =>{
 
 	const apiCallbacks = {
-    saveStoryById: () => Promise.resolve({}),
-  };
+      saveStoryById: () => Promise.resolve({}),
+    };
+
+    elementTypes.forEach(registerElementType);
 
 	return (
     <StoryEditor config={{ apiCallbacks }} initialEdits={{ story }}>

@@ -44,6 +44,7 @@ import { v4 as uuidv4 } from 'uuid';
  */
 import Dialog from '../../../../../dialog';
 import useUploadWithPreview from '../../../../../canvas/useUploadWithPreview';
+import { ImageCapture } from './imageCapture';
 
 const Video = styled.video`
   width: 100%;
@@ -60,6 +61,7 @@ const VideoWrapper = styled.div`
 function Modal({ isOpen, onClose }) {
   const videoRef = useRef();
   const [file, setFile] = useState(null);
+  const [isImageCapture, setIsImageCapture] = useState(false);
   const [enableVideo, setEnableVideo] = useState(true);
   const [enableAudio, setEnableAudio] = useState(true);
 
@@ -95,12 +97,29 @@ function Modal({ isOpen, onClose }) {
     if (videoRef.current) {
       videoRef.current.srcObject = null;
     }
+
+    setIsImageCapture(false);
   }, [clearMediaBlob, clearMediaStream, onClose]);
+
+  const onImageCapture = (f) => {
+    setFile(f);
+    setIsImageCapture(true);
+  };
+
+  const onClearImageCapture = () => setIsImageCapture(false);
 
   const onInsert = useCallback(() => {
     uploadWithPreview([file]);
     onClose();
-  }, [file, uploadWithPreview, onClose]);
+
+    // handling cleanup for Image capture
+    // in this case we don't want onStop to override the file
+    if (status === 'recording') {
+      stopRecording();
+      setIsImageCapture(false);
+      setFile(null);
+    }
+  }, [file, uploadWithPreview, onClose, status, stopRecording]);
 
   useEffect(() => {
     if (videoRef.current && liveStream) {
@@ -123,7 +142,9 @@ function Modal({ isOpen, onClose }) {
       onPrimary={onInsert}
       primaryText={primaryText}
       secondaryText={__('Cancel', 'web-stories')}
-      primaryRest={{ disabled: status !== 'stopped' }}
+      primaryRest={{
+        disabled: status !== 'stopped' && isImageCapture === false,
+      }}
     >
       <Text>
         {__(
@@ -132,16 +153,27 @@ function Modal({ isOpen, onClose }) {
         )}
       </Text>
       <Text>{error ? `${status} ${error.message}` : status}</Text>
-      <VideoWrapper>
-        {mediaBlob && !liveStream && (
-          <>
-            {/* eslint-disable-next-line jsx-a11y/media-has-caption, styled-components-a11y/media-has-caption -- No captions for video being recorded. */}
-            <Video src={URL.createObjectURL(mediaBlob)} autoPlay controls />
-          </>
-        )}
-        {/* eslint-disable-next-line jsx-a11y/media-has-caption, styled-components-a11y/media-has-caption -- No captions for video being recorded. */}
-        {!mediaBlob && liveStream && <Video ref={videoRef} autoPlay />}
-      </VideoWrapper>
+      {!isImageCapture && (
+        <VideoWrapper>
+          {mediaBlob && !liveStream && (
+            <>
+              {/* eslint-disable-next-line jsx-a11y/media-has-caption, styled-components-a11y/media-has-caption -- No captions for video being recorded. */}
+              <Video src={URL.createObjectURL(mediaBlob)} autoPlay controls />
+            </>
+          )}
+          {/* eslint-disable-next-line jsx-a11y/media-has-caption, styled-components-a11y/media-has-caption -- No captions for video being recorded. */}
+          {!mediaBlob && liveStream && <Video ref={videoRef} autoPlay />}
+        </VideoWrapper>
+      )}
+
+      {isRecording && (
+        <ImageCapture
+          videoRef={videoRef}
+          onCapture={onImageCapture}
+          onClear={isImageCapture ? onClearImageCapture : null}
+        />
+      )}
+
       <Text
         as="label"
         htmlFor={videoToggleId}

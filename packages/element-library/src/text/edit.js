@@ -129,6 +129,7 @@ function TextEdit({
   editWrapper,
   onResize,
   updateElementById,
+  deleteSelectedElements,
   maybeEnqueueFontStyle,
 }) {
   const {
@@ -256,8 +257,15 @@ function TextEdit({
     }
   }, [editorToDataX, editorToDataY, setProperties]);
 
-  // Update content for element on unmount.
-  useUnmount(updateContent);
+  // Update content or delete the whole element (if empty) on unmount.
+  const handleUnmount = useCallback(() => {
+    if (contentRef.current) {
+      updateContent();
+    } else {
+      deleteSelectedElements();
+    }
+  }, [updateContent, deleteSelectedElements]);
+  useUnmount(handleUnmount);
 
   useEffect(() => {
     // If there are any moveable actions happening, let's update the content
@@ -426,6 +434,7 @@ TextEdit.propTypes = {
   onResize: PropTypes.func,
   editWrapper: PropTypes.object,
   updateElementById: PropTypes.func,
+  deleteSelectedElements: PropTypes.func,
   maybeEnqueueFontStyle: PropTypes.func,
 };
 

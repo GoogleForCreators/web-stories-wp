@@ -17,11 +17,7 @@
 /**
  * External dependencies
  */
-import {
-  fireEvent,
-  screen,
-  waitForElementToBeRemoved,
-} from '@testing-library/react';
+import { fireEvent, screen, within } from '@testing-library/react';
 import MockDate from 'mockdate';
 import { setAppElement } from '@googleforcreators/design-system';
 import { renderWithTheme } from '@googleforcreators/test-utils';
@@ -32,7 +28,11 @@ import { renderWithTheme } from '@googleforcreators/test-utils';
 import StoryContext from '../../../../app/story/context';
 import useIsUploadingToStory from '../../../../utils/useIsUploadingToStory';
 import ConfigContext from '../../../../app/config/context';
-import { CheckpointContext, PPC_CHECKPOINT_STATE } from '../../../checklist';
+import {
+  CheckpointContext,
+  ChecklistCountProvider,
+  PPC_CHECKPOINT_STATE,
+} from '../../../checklist';
 import PublishButton from '../publish';
 
 jest.mock('../../../../utils/useIsUploadingToStory');
@@ -47,7 +47,7 @@ function arrange({
   checklist: extraChecklistProps,
 } = {}) {
   const saveStory = jest.fn();
-  const onReviewDialogRequest = jest.fn();
+  const onPublishDialogChecklistRequest = jest.fn();
   const showPriorityIssues = jest.fn();
 
   useIsUploadingToStory.mockImplementation(() => extraMediaProps?.isUploading);
@@ -60,7 +60,7 @@ function arrange({
       meta: { isSaving: false, isFreshlyPublished: false, ...extraMetaProps },
       story: {
         title: 'Example Story',
-        status: 'draft',
+        excerpt: '',
         storyId: 123,
         date: null,
         editLink: 'http://localhost/wp-admin/post.php?post=123&action=edit',
@@ -75,25 +75,31 @@ function arrange({
     actions: { saveStory },
   };
   const configValue = {
+    allowedMimeTypes: {},
+    capabilities: {},
+    metadata: {
+      publisher: 'publisher title',
+    },
     ...extraConfigProps,
   };
   const prepublishChecklistContextValue = {
     state: {
-      shouldReviewDialogBeSeen: false,
-      checkpoint: PPC_CHECKPOINT_STATE.ALL,
+      checkpoint: PPC_CHECKPOINT_STATE.UNAVAILABLE,
       ...extraChecklistProps,
     },
     actions: {
-      onReviewDialogRequest,
       showPriorityIssues,
+      onPublishDialogChecklistRequest,
     },
   };
   renderWithTheme(
     <ConfigContext.Provider value={configValue}>
       <StoryContext.Provider value={storyContextValue}>
-        <CheckpointContext.Provider value={prepublishChecklistContextValue}>
-          <PublishButton {...extraButtonProps} />
-        </CheckpointContext.Provider>
+        <ChecklistCountProvider hasChecklist>
+          <CheckpointContext.Provider value={prepublishChecklistContextValue}>
+            <PublishButton {...extraButtonProps} />
+          </CheckpointContext.Provider>
+        </ChecklistCountProvider>
       </StoryContext.Provider>
     </ConfigContext.Provider>
   );
@@ -127,6 +133,14 @@ describe('PublishButton', () => {
     fireEvent.click(publishButton);
 
     expect(showPriorityIssues).toHaveBeenCalledTimes(1);
+
+    const publishModal = screen.getByRole('dialog');
+
+    const publishModalButton = within(publishModal).getByRole('button', {
+      name: 'Publish',
+    });
+    fireEvent.click(publishModalButton);
+
     expect(saveStory).toHaveBeenCalledWith({
       status: 'publish',
     });
@@ -147,6 +161,13 @@ describe('PublishButton', () => {
     expect(publishButton).toBeEnabled();
     fireEvent.click(publishButton);
 
+    const publishModal = screen.getByRole('dialog');
+
+    const publishModalButton = within(publishModal).getByRole('button', {
+      name: 'Submit for review',
+    });
+    fireEvent.click(publishModalButton);
+
     expect(saveStory).toHaveBeenCalledWith({
       status: 'pending',
     });
@@ -166,62 +187,6 @@ describe('PublishButton', () => {
     expect(publishButton).toBeDisabled();
   });
 
-  it('should display review dialog before publishing', async () => {
-    const { saveStory } = arrange({
-      checklist: { shouldReviewDialogBeSeen: true },
-    });
-
-    const publishButton = screen.getByRole('button', { name: 'Publish' });
-    fireEvent.click(publishButton);
-
-    expect(saveStory).not.toHaveBeenCalled();
-
-    const reviewButton = screen.queryByRole('button', {
-      name: 'Review Checklist',
-    });
-    expect(reviewButton).toBeInTheDocument();
-
-    const publishAnywayButton = screen.getByRole('button', {
-      name: 'Continue to publish',
-    });
-    fireEvent.click(publishAnywayButton);
-
-    expect(saveStory).toHaveBeenCalledWith({
-      status: 'publish',
-    });
-
-    await waitForElementToBeRemoved(() =>
-      screen.queryByRole('button', { name: 'Continue to publish' })
-    );
-  });
-
-  it('should not publish story if reviewing checklist errors', async () => {
-    const { saveStory } = arrange({
-      checklist: { shouldReviewDialogBeSeen: true },
-    });
-
-    const publishButton = screen.getByRole('button', { name: 'Publish' });
-    fireEvent.click(publishButton);
-
-    expect(saveStory).not.toHaveBeenCalled();
-
-    const publishAnywayButton = screen.queryByRole('button', {
-      name: 'Continue to publish',
-    });
-    expect(publishAnywayButton).toBeInTheDocument();
-
-    const reviewButton = screen.getByRole('button', {
-      name: 'Review Checklist',
-    });
-    fireEvent.click(reviewButton);
-
-    expect(saveStory).not.toHaveBeenCalled();
-
-    await waitForElementToBeRemoved(() =>
-      screen.queryByRole('button', { name: 'Review Checklist' })
-    );
-  });
-
   it('should update window location when publishing', () => {
     const { saveStory } = arrange({
       story: { title: 'Some title' },
@@ -229,6 +194,13 @@ describe('PublishButton', () => {
     const publishButton = screen.getByRole('button', { name: 'Publish' });
 
     fireEvent.click(publishButton);
+    const publishModal = screen.getByRole('dialog');
+
+    const publishModalButton = within(publishModal).getByRole('button', {
+      name: 'Publish',
+    });
+    fireEvent.click(publishModalButton);
+
     expect(saveStory).toHaveBeenCalledTimes(1);
     expect(window.location.href).toContain('post=123&action=edit');
   });

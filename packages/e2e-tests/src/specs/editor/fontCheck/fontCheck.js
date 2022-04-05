@@ -17,7 +17,6 @@
  * External dependencies
  */
 import {
-  withExperimentalFeatures,
   createNewStory,
   editStoryWithTitle,
   insertStoryTitle,
@@ -88,8 +87,6 @@ async function storyWithFontCheckDialog(title) {
 }
 
 describe('Font Check', () => {
-  withExperimentalFeatures(['customFonts', 'notifyDeletedFonts']);
-
   beforeAll(async () => {
     await visitSettings();
     await removeAllFonts();
