@@ -207,7 +207,7 @@ if ( boilerplateIndex === 'none' ) {
 
   switch ( Number(setupType) ) {
     case 0:
-      scaffoldBoilerplatewithCRA( Number(boilerplateIndex), projectName, isPrivate );
+      scaffoldBoilerplateWithCRA( Number(boilerplateIndex), projectName, isPrivate );
       break;
     case 1:
       scaffoldBoilerplateCustom( Number(boilerplateIndex), projectName, isPrivate );
