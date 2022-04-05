@@ -42,11 +42,11 @@ describe('Stories Dashboard', () => {
     await takeSnapshot(page, 'Stories Dashboard', { percyCSS });
   });
 
-  it('should be able to skip to main content of Dashboard', async () => {
+  it('should be able to skip to main content of Dashboard for keyboard navigation', async () => {
     await visitDashboard();
 
     // If there are no existing stories, the app goes to the templates page instead.
-    // Account for both here, but then force-visit the dashboard.
+    // Either is fine since we're testing keyboard navigation.
     await expect(page).toMatchElement('h2', {
       text: /(Dashboard|Explore Templates)/,
     });
@@ -54,13 +54,18 @@ describe('Stories Dashboard', () => {
     // When navigating to Dashboard, immediately use keyboard to
     // tab to WordPress shortcut of "Main Content"
     page.keyboard.press('Tab');
+    // Verify that Main Content skip link is present
+    await expect(page).toMatchElement('a', { text: 'Skip to main content' });
+    // Use the keyboard to select skip link while it is present (since it's now focused)
     page.keyboard.press('Enter');
-
+    // Make sure we see the dashboard
     await expect(page).toMatchElement('h2', {
-      text: /(Dashboard|Explore Templates)/,
+      text: /^Dashboard/,
     });
 
-    await takeSnapshot(page, 'Stories Dashboard on Main Content', { percyCSS });
+    await takeSnapshot(page, 'Stories Dashboard on Keyboard Navigation', {
+      percyCSS,
+    });
   });
 
   it('should choose sort option for display', async () => {
