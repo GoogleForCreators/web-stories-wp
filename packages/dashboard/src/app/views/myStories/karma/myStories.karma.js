@@ -171,7 +171,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
       ).toBeTruthy();
     });
 
-    it('should be locked and not Rename a story', async () => {
+    it('should not Rename a locked story', async () => {
       // get a locked story
       const story = dashboardGridItems[1];
       await fixture.events.hover(story);
