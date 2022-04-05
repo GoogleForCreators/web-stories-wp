@@ -368,6 +368,17 @@ class Experiments extends Service_Base implements HasRequirements {
 				'description' => __( 'Enable shopping integration in the editor', 'web-stories' ),
 				'group'       => 'general',
 			],
+			/**
+			 * Author: @spacedmonkey
+			 * Issue: #11081
+			 * Creation date: 2022-03-30
+			 */
+			[
+				'name'        => 'captionHotlinking',
+				'label'       => __( 'Caption hotlinking', 'web-stories' ),
+				'description' => __( 'Enable hotlinking of captions', 'web-stories' ),
+				'group'       => 'editor',
+			],
 		];
 	}
 

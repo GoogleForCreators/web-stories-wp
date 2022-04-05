@@ -57,7 +57,7 @@ function VideoDisplay({
     id,
     poster,
     resource,
-    tracks,
+    tracks = [],
     isBackground,
     scale,
     focalX,
@@ -89,6 +89,13 @@ function VideoDisplay({
   const muted = Boolean(resource?.isMuted);
 
   const url = getProxiedUrl(resource, resource?.src);
+  const tracksFormatted = tracks.map((track) => {
+    const src = getProxiedUrl(track, track?.track);
+    return {
+      ...track,
+      track: src,
+    };
+  });
 
   return (
     <MediaDisplay
@@ -126,7 +133,7 @@ function VideoDisplay({
         >
           {url && <source src={url} type={resource.mimeType} />}
           {/*Hides the track from the user. Displaying happens in MediaCaptionsLayer instead.*/}
-          <Captions tracks={tracks} kind="metadata" />
+          <Captions tracks={tracksFormatted} kind="metadata" />
         </Video>
       )}
     </MediaDisplay>

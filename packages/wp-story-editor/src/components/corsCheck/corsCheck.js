@@ -18,6 +18,10 @@
  */
 import { useEffect, useCallback, useState } from '@googleforcreators/react';
 import { useAPI } from '@googleforcreators/story-editor';
+import {
+  LOCAL_STORAGE_PREFIX,
+  localStore,
+} from '@googleforcreators/design-system';
 import { trackError } from '@googleforcreators/tracking';
 import { useFeature } from 'flagged';
 
@@ -26,16 +30,24 @@ import { useFeature } from 'flagged';
  */
 import CorsCheckFailed from './corsCheckFailed';
 
+const storageKey = LOCAL_STORAGE_PREFIX.CORS_CHECK_DIALOG_DISMISSED;
+
 function CorsCheck() {
   const [showDialog, setShowDialog] = useState(false);
-  const closeDialog = useCallback(() => setShowDialog(false), []);
   const {
     actions: { getMediaForCorsCheck },
   } = useAPI();
   const enableCORSCheck = useFeature('enableCORSCheck');
+
+  const closeDialog = useCallback(() => {
+    setShowDialog(false);
+    localStore.setItemByKey(storageKey, true);
+  }, []);
+
+  const isDialogDismissed = Boolean(localStore.getItemByKey(storageKey));
   useEffect(() => {
     (async () => {
-      if (!enableCORSCheck) {
+      if (!enableCORSCheck || isDialogDismissed) {
         return;
       }
       let mediaItems;
