@@ -21,7 +21,7 @@ import { useState } from 'react';
 /**
  * Takes an initialition function and returns a memoized result of
  * that function. This value is not subject to cache purging
- * and will only call your initialization funtion once.
+ * and will only call your initialization function once.
  *
  * ie
  * ```js
