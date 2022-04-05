@@ -18,12 +18,7 @@
  * External dependencies
  */
 import PropTypes from 'prop-types';
-import {
-  useCallback,
-  useEffect,
-  useState,
-  forwardRef,
-} from '@googleforcreators/react';
+import { useCallback, useEffect, forwardRef } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import styled from 'styled-components';
 import {
@@ -37,11 +32,9 @@ import {
   Row,
   SimplePanel,
   useStory,
-  useCheckpoint,
   useRefreshPostEditURL,
   useIsUploadingToStory,
 } from '@googleforcreators/story-editor';
-import { useFeature } from 'flagged';
 
 /**
  * Internal dependencies
@@ -117,19 +110,6 @@ function StatusPanel({
       title,
       storyId,
       visibility,
-    })
-  );
-
-  const isUpdatedPublishModalEnabled = useFeature(
-    'enableUpdatedPublishStoryModal'
-  );
-
-  const [showReviewDialog, setShowReviewDialog] = useState(false);
-  const closeReviewDialog = useCallback(() => setShowReviewDialog(false), []);
-
-  const { hasHighPriorityIssues } = useCheckpoint(
-    ({ state: { hasHighPriorityIssues } }) => ({
-      hasHighPriorityIssues,
     })
   );
 
