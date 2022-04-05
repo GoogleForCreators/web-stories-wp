@@ -36,6 +36,8 @@ import { StrictMode, render } from '@googleforcreators/react';
 import { updateSettings } from '@googleforcreators/date';
 import { initializeTracking } from '@googleforcreators/tracking';
 import { bindToCallbacks } from '@web-stories-wp/wp-utils';
+import { registerElementType } from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * WordPress dependencies
@@ -77,6 +79,8 @@ window.webStories.initializeStoryEditor = (id, config, initialEdits) => {
   updateSettings(config.locale);
 
   initializeTracking('Editor');
+
+  elementTypes.forEach(registerElementType);
 
   initialEdits.story = initialEdits.story
     ? transformStoryResponse(initialEdits.story)

@@ -312,19 +312,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'default'     => true,
 			],
 			/**
-			 * Author: @brittanyirl
-			 * Issue: #10115
-			 * Creation date: 2022-02-02
-			 */
-			[
-				'name'        => 'enableUpdatedPublishStoryModal',
-				'label'       => __( 'Updated Publish Story Modal', 'web-stories' ),
-				'description' => __( 'Enable new pre-publish confirmation modal', 'web-stories' ),
-				'group'       => 'editor',
-				'default'     => true,
-			],
-
-			/**
 			 * Author: @miina
 			 * Issue: #9880
 			 * Creation date: 2021-12-15
@@ -334,6 +321,7 @@ class Experiments extends Service_Base implements HasRequirements {
 				'label'       => __( 'Custom Fonts', 'web-stories' ),
 				'description' => __( 'Enable adding custom fonts', 'web-stories' ),
 				'group'       => 'general',
+				'default'     => true,
 			],
 			/**
 			 * Author: @spacedmonkey
@@ -358,17 +346,6 @@ class Experiments extends Service_Base implements HasRequirements {
 				'description' => __( 'Enable the new floating design menu', 'web-stories' ),
 				'group'       => 'editor',
 				'default'     => true,
-			],
-			/**
-			 * Author: @timarney
-			 * Issue: #10014
-			 * Creation date: 2022-03-03
-			 */
-			[
-				'name'        => 'notifyDeletedFonts',
-				'label'       => __( 'Deleted Fonts', 'web-stories' ),
-				'description' => __( 'Notify user about deleted fonts in story', 'web-stories' ),
-				'group'       => 'editor',
 			],
 			/**
 			 * Author: @swissspidy

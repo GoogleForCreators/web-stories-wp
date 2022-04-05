@@ -29,6 +29,7 @@
   "dependencies": {
     "@googleforcreators/date": "*",
     "@googleforcreators/design-system": "*",
+    "@googleforcreators/element-library": "*",
     "@googleforcreators/elements": "*",
     "@googleforcreators/i18n": "*",
     "@googleforcreators/media": "*",
@@ -41,7 +42,7 @@
     "@web-stories-wp/wp-utils": "*",
     "@wordpress/api-fetch": "^6.0.1",
     "@wordpress/dom-ready": "^3.3.1",
-    "flagged": "^2.0.1",
+    "flagged": "^2.0.3",
     "polished": "^4.1.4",
     "react-calendar": "^3.7.0",
     "styled-components": "^5.3.3"
