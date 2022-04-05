@@ -56,6 +56,8 @@ function TelemetryBannerTestContainer(props) {
   );
 }
 
+/* eslint-disable testing-library/no-await-sync-events -- See https://github.com/testing-library/eslint-plugin-testing-library/issues/567 */
+
 describe('TelemetryBanner', () => {
   it('should render visible with the checkbox unchecked', () => {
     renderWithProviders(<TelemetryBannerTestContainer />);
@@ -65,7 +67,7 @@ describe('TelemetryBanner', () => {
     expect(checkbox).not.toBeChecked();
   });
 
-  it('should change the checkbox to checked and update the header when clicked', () => {
+  it('should change the checkbox to checked and update the header when clicked', async () => {
     renderWithProviders(<TelemetryBannerTestContainer />);
 
     const checkbox = screen.getByRole('checkbox');
@@ -76,7 +78,7 @@ describe('TelemetryBanner', () => {
 
     expect(bannerHeader).toBeInTheDocument();
 
-    userEvent.click(checkbox);
+    await userEvent.click(checkbox);
 
     expect(checkbox).toBeChecked();
 
@@ -84,50 +86,52 @@ describe('TelemetryBanner', () => {
     expect(bannerHeader).toBeInTheDocument();
   });
 
-  it('should close and not be visible when the close icon is clicked', () => {
+  it('should close and not be visible when the close icon is clicked', async () => {
     renderWithProviders(<TelemetryBannerTestContainer />);
 
     const closeButton = screen.getByRole('button');
 
     expect(closeButton).toBeInTheDocument();
 
-    userEvent.click(closeButton);
+    await userEvent.click(closeButton);
 
     expect(closeButton).not.toBeInTheDocument();
   });
 
-  it('should not be able to be checked when disabled', () => {
+  it('should not be able to be checked when disabled', async () => {
     renderWithProviders(<TelemetryBannerTestContainer disabled />);
 
     const checkbox = screen.getByRole('checkbox');
 
     expect(checkbox).not.toBeChecked();
 
-    userEvent.click(checkbox);
+    await userEvent.click(checkbox);
 
     expect(checkbox).not.toBeChecked();
   });
 
-  it('should keep focus on the checkbox when checking/unchecking via', () => {
+  it('should keep focus on the checkbox when checking/unchecking via', async () => {
     renderWithProviders(<TelemetryBannerTestContainer />);
 
     const checkbox = screen.getByRole('checkbox');
 
     // Tab to Dismiss button
-    userEvent.tab();
+    await userEvent.tab();
 
     // Tab to checkbox
-    userEvent.tab();
+    await userEvent.tab();
 
     expect(checkbox).toHaveFocus();
 
     expect(checkbox).not.toBeChecked();
 
     // Check the checkbox via keyboard
-    userEvent.type(checkbox, '{space}');
+    await userEvent.type(checkbox, '{space}');
 
     expect(checkbox).toHaveFocus();
 
     expect(checkbox).toBeChecked();
   });
 });
+
+/* eslint-enable testing-library/no-await-sync-events */
