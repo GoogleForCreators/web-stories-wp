@@ -44,6 +44,11 @@ import { Layer, NavNextArea, NavPrevArea, PageArea } from './layout';
 import FrameElement from './frameElement';
 import Selection from './selection';
 import PageNav from './pagenav';
+import {
+  FOCUS_GROUPS,
+  useEditLayerFocusManager,
+  useFocusGroupRef,
+} from './editLayerFocusManager';
 
 const FramesPageArea = styled(PageArea)`
   pointer-events: initial;
@@ -132,7 +137,7 @@ FramesNavAndSelection.propTypes = {
   children: PropTypes.node,
 };
 
-function FrameElements() {
+function FrameElements(props) {
   // We are returning this directly because we want the elementIds array to be shallowly
   // compared between re-renders. This allows element properties to update without re-rendering
   // this top level component.
@@ -145,6 +150,8 @@ function FrameElements() {
       state.animationState
     )
   );
+
+  const focusGroupRef = useFocusGroupRef(FOCUS_GROUPS.EDIT_CANVAS);
 
   const onOpenMenu = useRightClickMenu((state) => state.onOpenMenu);
 
@@ -169,9 +176,10 @@ function FrameElements() {
         )}
         onContextMenu={onOpenMenu}
         onScroll={onScroll}
+        {...props}
       >
         {elementIds.map((id) => {
-          return <FrameElement key={id} id={id} />;
+          return <FrameElement key={id} id={id} ref={focusGroupRef} />;
         })}
         <DesignSpaceGuideline />
       </FramesPageArea>
@@ -180,10 +188,31 @@ function FrameElements() {
 }
 
 function FramesLayer() {
+  const canvasRef = useRef();
+  const enterFocusGroup = useEditLayerFocusManager(
+    ({ enterFocusGroup }) => enterFocusGroup
+  );
+
+  useKeyDownEffect(
+    canvasRef,
+    { key: ['enter'] },
+    () => {
+      enterFocusGroup({
+        groupId: FOCUS_GROUPS.EDIT_CANVAS,
+        cleanup: () => canvasRef.current?.focus(),
+      });
+    },
+    [enterFocusGroup]
+  );
+
   return (
     <FramesNavAndSelection>
-      {/* eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex -- Container used to separate elements from normal tab order. */}
-      <FocusContainer aria-label={FOCUS_CONTAINER_MESSAGE} tabIndex={0}>
+      <FocusContainer
+        ref={canvasRef}
+        aria-label={FOCUS_CONTAINER_MESSAGE}
+        // eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex -- Container used to separate elements from normal tab order.
+        tabIndex={0}
+      >
         <FrameElements />
       </FocusContainer>
     </FramesNavAndSelection>

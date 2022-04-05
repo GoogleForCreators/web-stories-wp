@@ -19,11 +19,13 @@
  */
 import styled from 'styled-components';
 import {
+  forwardRef,
   useCallback,
   useLayoutEffect,
   useRef,
   useState,
   memo,
+  useCombinedRefs,
 } from '@googleforcreators/react';
 import { useUnits } from '@googleforcreators/units';
 import { useTransformHandler } from '@googleforcreators/transform';
@@ -87,7 +89,7 @@ const EmptyFrame = styled.div`
 
 const NOOP = () => {};
 
-function FrameElement({ id }) {
+const FrameElement = forwardRef(function FrameElement({ id }, ref) {
   const [isTransforming, setIsTransforming] = useState(false);
 
   const {
@@ -121,6 +123,7 @@ function FrameElement({ id }) {
   const { type, flip } = element;
   const { Frame, isMaskable, Controls } = getDefinitionForType(type);
   const elementRef = useRef();
+  const combinedElementRef = useCombinedRefs(ref, elementRef);
   const [hovering, setHovering] = useState(false);
   const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
 
@@ -154,7 +157,7 @@ function FrameElement({ id }) {
 
   useLayoutEffect(() => {
     setNodeForElement(id, elementRef.current);
-  }, [id, setNodeForElement]);
+  }, [elementRef, id, setNodeForElement]);
   const box = getBox(element);
 
   useTransformHandler(id, (transform) => {
@@ -236,7 +239,7 @@ function FrameElement({ id }) {
         />
       )}
       <Wrapper
-        ref={elementRef}
+        ref={combinedElementRef}
         data-element-id={id}
         {...box}
         // eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex -- Needed for being able to focus on the selected element on canvas, e.g. for entering edit mode.
@@ -274,7 +277,7 @@ function FrameElement({ id }) {
       </Wrapper>
     </WithLink>
   );
-}
+});
 
 FrameElement.propTypes = {
   id: PropTypes.string.isRequired,

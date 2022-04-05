@@ -43,6 +43,7 @@ import CanvasUploadDropTarget from './canvasUploadDropTarget';
 import CanvasElementDropzone from './canvasElementDropzone';
 import EyedropperLayer from './eyedropperLayer';
 import EmptyStateLayer from './emptyStateLayer';
+import EditLayerFocusManager from './editLayerFocusManager';
 
 // data-fix-caret is for allowing caretRangeFromPoint to work in Safari.
 // See https://github.com/googleforcreators/web-stories-wp/issues/7745.
@@ -94,21 +95,23 @@ function CanvasLayout({ header, footer }) {
   // See also https://styled-components.com/docs/api#stylesheetmanager for general usage.
   return (
     <StyleSheetManager stylisPlugins={[]}>
-      <Background ref={setBackgroundRef} style={layoutParamsCss}>
-        <CanvasUploadDropTarget>
-          <CanvasElementDropzone>
-            <SelectionCanvas>
-              {hasDimensions && <DisplayLayer />}
-              {hasDimensions && <FramesLayer />}
-              <NavLayer header={header} footer={footer} />
-            </SelectionCanvas>
-            <EditLayer />
-            <EyedropperLayer />
-            <EmptyStateLayer />
-            {isFloatingMenuEnabled && <FloatingMenuLayer />}
-          </CanvasElementDropzone>
-        </CanvasUploadDropTarget>
-      </Background>
+      <EditLayerFocusManager>
+        <Background ref={setBackgroundRef} style={layoutParamsCss}>
+          <CanvasUploadDropTarget>
+            <CanvasElementDropzone>
+              <SelectionCanvas>
+                {hasDimensions && <DisplayLayer />}
+                {hasDimensions && <FramesLayer />}
+                <NavLayer header={header} footer={footer} />
+              </SelectionCanvas>
+              <EditLayer />
+              <EyedropperLayer />
+              <EmptyStateLayer />
+              {isFloatingMenuEnabled && <FloatingMenuLayer />}
+            </CanvasElementDropzone>
+          </CanvasUploadDropTarget>
+        </Background>
+      </EditLayerFocusManager>
     </StyleSheetManager>
   );
 }
