@@ -30,7 +30,7 @@ import { stripHTML } from '@googleforcreators/dom';
  */
 import { generatePresetStyle } from '../../utils/presetUtils';
 import { useStory } from '../../app/story';
-import { focusStyle } from '../panels/shared';
+import { focusStyle } from '../panels/shared/styles';
 
 const REMOVE_ICON_SIZE = 32;
 

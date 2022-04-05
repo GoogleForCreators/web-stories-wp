@@ -427,10 +427,6 @@ class Editor extends Service_Base implements HasRequirements {
 	 * @param int $story_id Post id of story.
 	 */
 	protected function setup_lock( int $story_id ): void {
-		if ( ! $this->experiments->is_experiment_enabled( 'enablePostLocking' ) ) {
-			return;
-		}
-
 		if ( ! $this->story_post_type->has_cap( 'edit_posts' ) ) {
 			return;
 		}

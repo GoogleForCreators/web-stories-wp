@@ -17,7 +17,7 @@
 /**
  * Internal dependencies
  */
-import Dialog from './components/dialog';
+export { default as Dialog } from './components/dialog';
 
 export { default as StoryEditor } from './storyEditor';
 
@@ -32,6 +32,7 @@ export * from './components/panels/panel';
 export * from './components/panels/shared';
 export * from './components/checklist';
 export { default as FontPicker } from './components/fontPicker';
+export { focusStyle } from './components/panels/shared/styles';
 export * from './components/checklistCard';
 export * from './app/currentUser';
 
@@ -53,5 +54,3 @@ export {
   useHighlights,
 } from './app/highlights';
 export { ConfigProvider as EditorConfigProvider } from './app/config';
-
-export { Dialog };

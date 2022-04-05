@@ -27,7 +27,10 @@ import { trackEvent } from '@googleforcreators/tracking';
 import { useStory } from '../../../app';
 import getUpdatedSizeAndPosition from '../../../utils/getUpdatedSizeAndPosition';
 import updateProperties from '../../design/updateProperties';
-import { focusStyle, inputContainerStyleOverride } from '../../panels/shared';
+import {
+  focusStyle,
+  inputContainerStyleOverride,
+} from '../../panels/shared/styles';
 import { MIN_MAX } from '../../panels/design/textStyle/font';
 // TODO: https://github.com/GoogleForCreators/web-stories-wp/issues/10799
 import { Input } from './shared';

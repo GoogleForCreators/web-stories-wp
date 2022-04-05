@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export * from './styles';
 export { default as FlipControls } from './flipControls';
 export { default as LinkRelations } from './linkRelations';
 export { default as getCommonValue } from './getCommonValue';

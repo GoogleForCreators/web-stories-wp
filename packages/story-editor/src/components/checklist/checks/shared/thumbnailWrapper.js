@@ -35,7 +35,7 @@ import { __ } from '@googleforcreators/i18n';
  */
 import { getVisibleThumbnails } from '../../utils';
 import { StyledOverflowThumbnail } from '../../../checklistCard/styles';
-import { MAX_THUMBNAILS_DISPLAYED } from '../../../checklistCard';
+import { MAX_THUMBNAILS_DISPLAYED } from '../../../checklistCard/constants';
 
 const Wrapper = styled.div`
   grid-area: thumbnail;
