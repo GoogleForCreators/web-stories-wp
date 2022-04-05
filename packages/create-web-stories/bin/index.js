@@ -51,14 +51,15 @@ program
 
 program.parse( process.argv );
 
-const isPrivate = program.opts().private;
-let projectName = program.opts().name;
-let setupType = program.opts().type;
-let boilerplateIndex = program.opts().boilerplate;
+let {
+  private: isPrivate,
+  name: projectName,
+  type: setupType,
+  boilerplate: boilerplateIndex
+} = program.opts();
 
 const userPrompts = [];
 const boilerplateDataList = getBoilerplateDataList();
-
 const foldersInCwd = fse.readdirSync( process.cwd() );
 
 // Prompt for project name if option does not have default value
@@ -66,7 +67,7 @@ if ( projectName === 'none' ) {
   userPrompts.push( {
     type: 'text',
     name: 'projectName',
-    message: 'Project Name (defaut : web-stories)',
+    message: `Project Name (default : ${ DEFAULT_PROJECT_NAME })`,
     validate: ( value ) => {
       if ( value.match( /[^a-z-]/g ) ) {
         return `Project name can only have small case characters and hyphen`;
@@ -89,7 +90,7 @@ if ( projectName === 'none' ) {
   process.exit( 1 );
 }
 
-//add propmt for setup type if option has default value
+// Prompt for setup type if option has default value.
 if ( setupType === 'none' ) {
   const choices = [
     {
@@ -101,6 +102,7 @@ if ( setupType === 'none' ) {
       value: 1,
     },
   ];
+
   userPrompts.push( {
     type: 'select',
     name: 'setupType',
@@ -108,17 +110,18 @@ if ( setupType === 'none' ) {
     choices,
   } );
 } else {
-  //validator, if value was passed as an argument
+  // Validate, if value was passed as an argument.
   if ( [ 1, 2 ].includes( setupType ) ) {
     log(
       `Invalid setup type passed. Argument value should be either 1 or 2`,
       'red',
     );
+
     process.exit( 1 );
   }
 }
 
-// Add prompt for what boilerplate to use if option has default value
+// Add prompt for what boilerplate to use if option has default value.
 if ( boilerplateIndex === 'none' ) {
   const craChoices = boilerplateDataList
     .filter( ( { type } ) => type === 'CRA' )
@@ -129,6 +132,7 @@ if ( boilerplateIndex === 'none' ) {
         value: ind,
       };
     } );
+
   const customChoices = boilerplateDataList
     .filter( ( { type } ) => type === 'custom' )
     .map( ( { displayName, description }, ind ) => {
@@ -138,6 +142,7 @@ if ( boilerplateIndex === 'none' ) {
         value: ind,
       };
     } );
+
   userPrompts.push( {
     type: 'select',
     name: 'boilerplateIndex',
@@ -162,6 +167,7 @@ if ( boilerplateIndex === 'none' ) {
       `Invalid boilerplate: boilerplate should have a value between 0 and ${ numBoilerplateCra.length })`,
       'red',
     );
+
     process.exit( 1 );
   }
 
@@ -190,10 +196,12 @@ if ( boilerplateIndex === 'none' ) {
         process.exit( 1 );
       },
     } );
+
     projectName = response.projectName || DEFAULT_PROJECT_NAME;
     setupType = response.setupType;
     boilerplateIndex = response.boilerplateIndex;
   }
+
   log( '\n\n' );
   log( 'Please wait, while we set things up....', 'green' );
 
@@ -201,11 +209,9 @@ if ( boilerplateIndex === 'none' ) {
     case 0:
       scaffoldBoilerplateWithCRA( boilerplateIndex, projectName, isPrivate );
       break;
-
     case 1:
       scaffoldBoilerplateCustom( boilerplateIndex, projectName, isPrivate );
       break;
-
     default:
       break;
   }
