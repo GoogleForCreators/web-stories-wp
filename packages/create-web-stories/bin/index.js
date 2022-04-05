@@ -190,7 +190,7 @@ if ( boilerplateIndex === 'none' ) {
   log( WELCOME_MESSAGE, 'cyan' );
   let response;
 
-  if ( userPrompts ) {
+  if ( userPrompts.length > 0 ) {
     response = await prompts( userPrompts, {
       onCancel: () => {
         process.exit( 1 );
@@ -205,12 +205,12 @@ if ( boilerplateIndex === 'none' ) {
   log( '\n\n' );
   log( 'Please wait, while we set things up....', 'green' );
 
-  switch ( setupType ) {
+  switch ( Number(setupType) ) {
     case 0:
-      scaffoldBoilerplateWithCRA( boilerplateIndex, projectName, isPrivate );
+      scaffoldBoilerplatewithCRA( Number(boilerplateIndex), projectName, isPrivate );
       break;
     case 1:
-      scaffoldBoilerplateCustom( boilerplateIndex, projectName, isPrivate );
+      scaffoldBoilerplateCustom( Number(boilerplateIndex), projectName, isPrivate );
       break;
     default:
       break;
