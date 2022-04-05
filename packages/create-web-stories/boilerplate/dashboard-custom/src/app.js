@@ -9,10 +9,8 @@ import { hot } from "react-hot-loader";
  */
 import StoryDashboard from "./dashboard";
 
-class App extends React.Component {
-  render() {
-    return <StoryDashboard />;
-  }
+function App() {
+  return <StoryDashboard />;
 }
 
 export default hot(module)(App);

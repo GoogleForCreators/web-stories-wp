@@ -8,11 +8,8 @@ import React from "react";
  */
 import StoryDashboard from "./components/dashboard";
 
-
-class App extends React.Component {
-  render() {
-    return <StoryDashboard />;
-  }
+function App() {
+  return <StoryDashboard />;
 }
 
 export default App;

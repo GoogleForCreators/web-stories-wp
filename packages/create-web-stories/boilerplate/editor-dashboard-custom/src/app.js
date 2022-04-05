@@ -12,20 +12,18 @@ import StoryDashboard from './components/dashboard';
 import Editor from './components/story-editor';
 import Preview from './components/preview';
 
-class App extends React.Component {
-  render() {
-    return (
-      <BrowserRouter>
-        <div className="app">
-          <Routes>
-            <Route exact path="/" element={<StoryDashboard />} />
-              <Route path="editor" element={<Editor />}/>
-            <Route path="preview" element={<Preview />} />
-          </Routes>
-        </div>
-      </BrowserRouter>
-    );
-  }
+function App() {
+  return (
+    <BrowserRouter>
+      <div className="app">
+        <Routes>
+          <Route exact path="/" element={<StoryDashboard />} />
+          <Route path="editor" element={<Editor />}/>
+          <Route path="preview" element={<Preview />} />
+        </Routes>
+      </div>
+    </BrowserRouter>
+  );
 }
 
 export default hot(module)(App);
