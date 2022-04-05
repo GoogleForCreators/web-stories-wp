@@ -31,14 +31,14 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	protected static $subscriber;
 	protected static $editor;
 
-	public const URL_INVALID        = 'https://https://invalid.commmm';
-	public const URL_404            = 'https://example.com/404/test.jpg';
-	public const URL_500            = 'https://example.com/500/test.jpg';
-	public const URL_SVG            = 'https://example.com/test.svg';
-	public const URL_VALID          = 'http://example.com/test.jpg';
-	public const URL_DOMAIN         = 'http://google.com';
-	public const URL_MALFORMED_MIME = 'https://example.com/test.png';
-	public const URL_PATH           = '/test.jpg';
+	public const URL_INVALID      = 'https://https://invalid.commmm';
+	public const URL_404          = 'https://example.com/404/test.jpg';
+	public const URL_500          = 'https://example.com/500/test.jpg';
+	public const URL_SVG          = 'https://example.com/test.svg';
+	public const URL_VALID        = 'http://example.com/test.jpg';
+	public const URL_DOMAIN       = 'http://google.com';
+	public const URL_WITH_CHARSET = 'https://example.com/test.png';
+	public const URL_PATH         = '/test.jpg';
 
 	public const REST_URL = '/web-stories/v1/hotlink/validate';
 
@@ -120,7 +120,7 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 			];
 		}
 
-		if ( self::URL_MALFORMED_MIME === $url ) {
+		if ( self::URL_WITH_CHARSET === $url ) {
 			return [
 				'headers'  => [
 					'content-type'   => 'image/png; charset=utf-8',
@@ -395,12 +395,12 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	 * @covers ::parse_url
 	 * @covers ::parse_url_permissions_check
 	 */
-	public function test_parse_url_malformed_mime_type(): void {
+	public function test_parse_url_with_charset_in_content_type_header(): void {
 		$this->controller->register();
 
 		wp_set_current_user( self::$editor );
 		$request = new WP_REST_Request( WP_REST_Server::READABLE, self::REST_URL );
-		$request->set_param( 'url', self::URL_MALFORMED_MIME );
+		$request->set_param( 'url', self::URL_WITH_CHARSET );
 		$response = rest_get_server()->dispatch( $request );
 		$data     = $response->get_data();
 		$this->assertEqualSets(
