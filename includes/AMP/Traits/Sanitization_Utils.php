@@ -245,7 +245,7 @@ trait Sanitization_Utils {
 				 *
 				 * @var DOMAttr $attr Attribute.
 				 */
-				$new_node->setAttribute( $attr->nodeName, $attr->nodeValue );
+				$new_node->setAttribute( $attr->nodeName, $attr->nodeValue ?? '' );
 			}
 		}
 

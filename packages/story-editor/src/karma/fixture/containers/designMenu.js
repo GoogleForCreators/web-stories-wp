@@ -50,7 +50,7 @@ export class DesignMenu extends Container {
 
   get borderColor() {
     const region = this.queryByRole('region', {
-      name: /Color input: Border color/,
+      name: 'Color input (floating menu): Border color',
     });
     if (!region) {
       return null;
@@ -87,7 +87,7 @@ export class DesignMenu extends Container {
 
   get fontColor() {
     const region = this.queryByRole('region', {
-      name: /Color input: Text color/,
+      name: 'Color input (floating menu): Text color',
     });
     if (!region) {
       return null;

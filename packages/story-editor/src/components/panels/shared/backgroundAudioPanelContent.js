@@ -139,7 +139,7 @@ function BackgroundAudioPanelContent({
   );
 
   const handleChangeTrack = useCallback(
-    ({ src = '', id }) => {
+    ({ src = '', id, needsProxy = false }) => {
       const newTracks = {
         track: src,
         trackId: id,
@@ -148,6 +148,7 @@ function BackgroundAudioPanelContent({
         kind: 'captions',
         srclang: '',
         label: '',
+        needsProxy,
       };
       updateTracks([...tracks, newTracks]);
     },
