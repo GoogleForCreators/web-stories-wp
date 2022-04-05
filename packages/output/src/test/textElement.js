@@ -23,8 +23,7 @@ import { renderToStaticMarkup } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { StoryAnimation } from '@googleforcreators/animation';
 import { BACKGROUND_TEXT_MODE } from '@googleforcreators/design-system';
-import { registerElementTypes } from '@googleforcreators/elements';
-import { elementTypes } from '@googleforcreators/element-library';
+import { setUpEditorStore } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
@@ -110,7 +109,7 @@ describe('Text Element output', () => {
       return config[feature];
     });
 
-    registerElementTypes(elementTypes);
+    setUpEditorStore();
   });
 
   it('should render text with color', () => {

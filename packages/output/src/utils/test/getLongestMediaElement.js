@@ -16,8 +16,7 @@
 /**
  * External dependencies
  */
-import { registerElementTypes } from '@googleforcreators/elements';
-import { elementTypes } from '@googleforcreators/element-library';
+import { setUpEditorStore } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
@@ -26,7 +25,7 @@ import getLongestMediaElement from '../getLongestMediaElement';
 
 describe('getLongestMediaElement', () => {
   beforeAll(() => {
-    registerElementTypes(elementTypes);
+    setUpEditorStore();
   });
 
   it('should return the media element with the longest duration', () => {

@@ -22,13 +22,12 @@ import { render } from '@testing-library/react';
 import { useFeature } from 'flagged';
 import { PAGE_WIDTH, PAGE_HEIGHT } from '@googleforcreators/units';
 import { MaskTypes } from '@googleforcreators/masks';
-import { registerElementTypes } from '@googleforcreators/elements';
-import { elementTypes } from '@googleforcreators/element-library';
 import {
   queryByAutoAdvanceAfter,
   getByAutoAdvanceAfter,
   queryById,
   getById,
+  setUpEditorStore,
 } from '@googleforcreators/test-utils';
 
 /**
@@ -50,7 +49,7 @@ describe('Page output', () => {
       return config[feature];
     });
 
-    registerElementTypes(elementTypes);
+    setUpEditorStore();
   });
 
   describe('aspect-ratio markup', () => {
