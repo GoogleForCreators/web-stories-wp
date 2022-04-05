@@ -36,7 +36,6 @@ describe('Publish Story Modal', () => {
 
   beforeEach(async () => {
     fixture = new Fixture();
-    fixture.setFlags({ enableUpdatedPublishStoryModal: true });
     await fixture.render();
 
     await openPublishModal();

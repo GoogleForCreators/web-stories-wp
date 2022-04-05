@@ -28,8 +28,6 @@ import {
 } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { trackEvent } from '@googleforcreators/tracking';
-import { useFeature } from 'flagged';
-
 /**
  * Internal dependencies
  */
@@ -43,10 +41,6 @@ import Context from './context';
 
 const SIDEBAR_TAB_IDS = new Set([INSERT, DOCUMENT, STYLE]);
 function SidebarProvider({ sidebarTabs, children }) {
-  const isUpdatedPublishModalEnabled = useFeature(
-    'enableUpdatedPublishStoryModal'
-  );
-
   const {
     actions: { getAuthors },
   } = useAPI();
@@ -179,7 +173,7 @@ function SidebarProvider({ sidebarTabs, children }) {
     });
   }
 
-  if (sidebarTabs?.publishModal && isUpdatedPublishModalEnabled) {
+  if (sidebarTabs?.publishModal) {
     state.data.modalSidebarTab = {
       id: PUBLISH_MODAL_DOCUMENT,
       ...sidebarTabs.publishModal,
