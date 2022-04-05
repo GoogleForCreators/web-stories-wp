@@ -18,11 +18,11 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
+import { setUpEditorStore } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
  */
-import { setUpEditorStore } from '@web-stories-wp/test-utils';
 import PageBackgroundPanel from '../pageBackground';
 import { renderPanel } from '../../../shared/test/_utils';
 import ConfigContext from '../../../../../app/config/context';

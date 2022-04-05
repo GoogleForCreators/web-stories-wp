@@ -21,18 +21,13 @@ import {
   createPage,
   duplicatePage,
   duplicateElement,
-  registerElementTypes,
   TEXT_ELEMENT_DEFAULT_FONT,
 } from '@googleforcreators/elements';
-
-/**
- * Internal dependencies
- */
-import elementTypes from '../elementTypes';
+import { setUpEditorStore } from '@googleforcreators/test-utils';
 
 describe('Element', () => {
   beforeAll(() => {
-    registerElementTypes(elementTypes);
+    setUpEditorStore();
   });
 
   describe('createNewElement', () => {
