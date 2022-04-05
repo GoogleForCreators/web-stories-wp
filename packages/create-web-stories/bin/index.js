@@ -29,7 +29,7 @@ import {
   WELCOME_MESSAGE,
   getBoilerplateDataList,
   scaffoldBoilerplateCustom,
-  scaffoldBoilerplatewithCRA,
+  scaffoldBoilerplateWithCRA,
   log,
   LOGO
 } from './common.js';
@@ -199,7 +199,7 @@ if ( boilerplateIndex === 'none' ) {
 
   switch ( setupType ) {
     case 0:
-      scaffoldBoilerplatewithCRA( boilerplateIndex, projectName, isPrivate );
+      scaffoldBoilerplateWithCRA( boilerplateIndex, projectName, isPrivate );
       break;
 
     case 1:

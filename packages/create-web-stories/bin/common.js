@@ -25,34 +25,48 @@ import chalk from 'chalk';
 /**
  * Internal dependencies.
  */
-import { PRIVATE_REGISTRY_URL } from './constants.js';
+import { PRIVATE_REGISTRY_URL, REACT_SUPPORTED_VERSION } from './constants.js';
 
 const __filename = fileURLToPath( import.meta.url );
 const __dirname = dirname( __filename );
+const wavingHand = String.fromCodePoint( 0x1f44b );
+const LOGO = fse.readFileSync( path.join( __dirname, 'text-art.txt' ) );
+const WELCOME_MESSAGE = `Hi! ${ wavingHand } Welcome to Web stories. Let us help you try our story creation suite`;
+const BOILERPLATE_DIR_PATH = `../boilerplate`;
+const SHARED_DIR_PATH = '../shared';
+const CONFIG_FILE = 'config.json';
 
-const LOGO = fse.readFileSync( path.join( __dirname, 'LOGO.txt' ) );
-
+/**
+ * Get boilerplate data list.
+ */
 const getBoilerplateDataList = () => {
-  const boilerplateDir = path.join( __dirname, '../boilerplates' );
+  const boilerplateDir = path.join( __dirname, BOILERPLATE_DIR_PATH );
   const boilerplateNames = fse.readdirSync( boilerplateDir );
 
   return boilerplateNames.map( ( name ) => {
     const metaPath = path.resolve(
       __dirname,
-      '../boilerplates',
+      BOILERPLATE_DIR_PATH,
       name,
-      'config.json',
+      CONFIG_FILE,
     );
+
     return JSON.parse( fse.readFileSync( metaPath ) );
   } );
 };
 
+/**
+ * Get boilerplate data.
+ */
 const getBoilerplateData = ( boilerplateIndex, boilerplateType ) => {
   return getBoilerplateDataList().filter(
     ( { type } ) => type === boilerplateType,
   )[ boilerplateIndex ];
 };
 
+/**
+ * Install dependencies from meta.
+ */
 function installDependenciesFromMeta(
   boilerplateIndex,
   setupType,
@@ -67,8 +81,7 @@ function installDependenciesFromMeta(
     log( `\nUsing registry at url \`${ PRIVATE_REGISTRY_URL }\`\n` );
   }
 
-  const dependencies = meta.dependencies;
-  const devDependencies = meta.devDependencies;
+  const { dependencies, devDependencies } = meta
 
   if ( dependencies ) {
     const dependencyInstallCommand =
@@ -92,8 +105,11 @@ function installDependenciesFromMeta(
   }
 }
 
+/**
+ * Get boilerplate path.
+ */
 function getBoilerplatePath( boilerplateIndex, type ) {
-  const boilerplateDir = path.join( __dirname, '../boilerplates' );
+  const boilerplateDir = path.join( __dirname, BOILERPLATE_DIR_PATH );
   const boilerplateDirNames = fse.readdirSync( boilerplateDir );
 
   let boilerplateDirName;
@@ -101,7 +117,7 @@ function getBoilerplatePath( boilerplateIndex, type ) {
   if ( type === 'CRA' ) {
     const boilerplateDirNamesCra = boilerplateDirNames.filter( ( name ) => {
       const meta = JSON.parse(
-        fse.readFileSync( path.resolve( boilerplateDir, name, 'config.json' ) ),
+        fse.readFileSync( path.resolve( boilerplateDir, name, CONFIG_FILE ) ),
       );
 
       return meta.type === 'CRA';
@@ -111,7 +127,7 @@ function getBoilerplatePath( boilerplateIndex, type ) {
   } else if ( type === 'custom' ) {
     const boilerplateDirNamesCustom = boilerplateDirNames.filter( ( name ) => {
       const meta = JSON.parse(
-        fse.readFileSync( path.resolve( boilerplateDir, name, 'config.json' ) ),
+        fse.readFileSync( path.resolve( boilerplateDir, name, CONFIG_FILE ) ),
       );
 
       return meta.type === 'custom';
@@ -119,19 +135,23 @@ function getBoilerplatePath( boilerplateIndex, type ) {
 
     boilerplateDirName = boilerplateDirNamesCustom[ boilerplateIndex ];
   }
+
   return path.join( boilerplateDir, boilerplateDirName );
 }
 
-function scaffoldBoilerplatewithCRA( boilerplateIndex, projectName, isPrivate ) {
+/**
+ * Scaffold boilerplate with CRA.
+ */
+function scaffoldBoilerplateWithCRA( boilerplateIndex, projectName, isPrivate ) {
   const boilerplatePath = getBoilerplatePath( boilerplateIndex, 'CRA' );
-  const sharedPath = path.join( __dirname, '../shared' );
+  const sharedPath = path.join( __dirname, SHARED_DIR_PATH );
 
   execSync( `npx create-react-app@latest ${ projectName }`, {
     cwd: process.cwd(),
   } );
 
   const projectPath = path.join( process.cwd(), projectName );
-  //Replace files
+
   replaceDir(
     path.resolve( boilerplatePath, 'src' ),
     path.resolve( projectPath, 'src' ),
@@ -148,40 +168,42 @@ function scaffoldBoilerplatewithCRA( boilerplateIndex, projectName, isPrivate ) 
     fse.copySync( path.join( sharedPath, src ), path.join( projectPath, dest ) );
   } );
 
-  //Install boilerplate dependencies listed in meta
+  // Install boilerplate dependencies listed in meta
   installDependenciesFromMeta( boilerplateIndex, 'CRA', projectPath, isPrivate );
 
-  //downgrade react and react-dom to supported version
-  execSync( 'npm i react@17.0.2 react-dom@17.0.2', {
+  // Downgrade react and react-dom to supported version.
+  execSync( `npm i react@${ REACT_SUPPORTED_VERSION } react-dom@${ REACT_SUPPORTED_VERSION }`, {
     cwd: projectPath,
   } );
 }
 
+/**
+ * Scaffold custom boilerplate.
+ */
 function scaffoldBoilerplateCustom( boilerplateIndex, projectName, isPrivate ) {
   const projectPath = path.join( process.cwd(), projectName );
-  const sharedPath = path.join( __dirname, '../shared' );
+  const sharedPath = path.join( __dirname, SHARED_DIR_PATH );
 
-  //copy files
   const boilerplatePath = path.join(
     getBoilerplatePath( boilerplateIndex, 'custom' ),
   );
 
   fse.copySync( boilerplatePath, projectPath );
-  fse.removeSync( path.join( projectPath, 'config.json' ) );
+  fse.removeSync( path.join( projectPath, CONFIG_FILE ) );
 
-  //Get files from shared according to mapping
+  // Get files from shared folder as per the mapping.
   const { replacements } = getBoilerplateData( boilerplateIndex, 'custom' );
 
   replacements.forEach( ( { src, dest } ) => {
     fse.copySync( path.join( sharedPath, src ), path.join( projectPath, dest ) );
   } );
 
-  //install main dependencies
+  // Install main dependencies.
   execSync( 'npm i', {
     cwd: path.join( process.cwd(), projectName ),
   } );
 
-  //Install boilerplate dependencies listed in meta
+  // Install boilerplate dependencies listed in meta.
   installDependenciesFromMeta(
     boilerplateIndex,
     'custom',
@@ -190,22 +212,26 @@ function scaffoldBoilerplateCustom( boilerplateIndex, projectName, isPrivate ) {
   );
 }
 
+/**
+ * Replace directory.
+ */
 function replaceDir( sourcePath, destinationPath ) {
   fse.removeSync( destinationPath );
   fse.copySync( path.join( sourcePath ), path.join( destinationPath ) );
 }
 
+/**
+ * Utility function for logging.
+ */
 function log( text, color ) {
   console.log( color ? chalk[ color ]( text ) : text );
 }
 
-const wavingHand = String.fromCodePoint( 0x1f44b );
-const WELCOME_MESSAGE = `Hi! ${ wavingHand } Welcome to Web stories. Let us help you try our story creation suite`;
 export {
   log,
   getBoilerplateDataList,
   replaceDir,
-  scaffoldBoilerplatewithCRA,
+  scaffoldBoilerplateWithCRA,
   scaffoldBoilerplateCustom,
   WELCOME_MESSAGE,
   LOGO
