@@ -30,11 +30,8 @@ import { clamp } from '@googleforcreators/units';
  */
 import { useFont } from '../../../../app/font';
 import { Row, usePresubmitHandler } from '../../../form';
-import {
-  focusStyle,
-  getCommonValue,
-  inputContainerStyleOverride,
-} from '../../shared';
+import { focusStyle, inputContainerStyleOverride } from '../../shared/styles';
+import { getCommonValue } from '../../shared';
 import StoryFontPicker from '../../../storyFontPicker';
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
 import useRichTextFormatting from './useRichTextFormatting';

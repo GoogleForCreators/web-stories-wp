@@ -30,7 +30,9 @@ import {
  * Internal dependencies
  */
 import { Color, Row } from '../../../form';
-import { useCommonColorValue, getCommonValue, focusStyle } from '../../shared';
+import { focusStyle } from '../../shared/styles';
+import useCommonColorValue from '../../shared/useCommonColorValue';
+import getCommonValue from '../../shared/getCommonValue';
 import { applyHiddenPadding, removeHiddenPadding } from './utils';
 
 const FillRow = styled(Row)`

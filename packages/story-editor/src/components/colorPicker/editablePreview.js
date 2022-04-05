@@ -43,7 +43,7 @@ const EditableInput = lazy(() =>
 /**
  * Internal dependencies
  */
-import { focusStyle } from '../panels/shared';
+import { focusStyle } from '../panels/shared/styles';
 
 const Preview = styled.button`
   margin: 0;
