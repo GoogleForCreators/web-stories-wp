@@ -171,6 +171,22 @@ describe('CUJ: Creator can view their stories in grid view', () => {
       ).toBeTruthy();
     });
 
+    it('should not Rename a locked story', async () => {
+      // get a locked story
+      const story = dashboardGridItems[1];
+      await fixture.events.hover(story);
+
+      const testUtils = within(story);
+      moreOptionsButton = testUtils.getByRole('button', {
+        name: /^Context menu for/,
+      });
+
+      await fixture.events.click(moreOptionsButton);
+
+      const rename = testUtils.getByText(/^Rename/);
+      expect(rename.hasAttribute('disabled')).toBe(true);
+    });
+
     it('should Duplicate a story', async () => {
       const duplicate = utils.getByText(/^Duplicate/);
       await fixture.events.click(duplicate);

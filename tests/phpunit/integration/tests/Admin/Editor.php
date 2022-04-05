@@ -258,22 +258,6 @@ class Editor extends DependencyInjectedTestCase {
 	/**
 	 * @covers ::setup_lock
 	 */
-	public function test_setup_lock_experiment_disabled(): void {
-		wp_set_current_user( self::$admin_id );
-
-		$this->experiments->method( 'get_experiment_statuses' )->willReturn( [] );
-		$this->experiments->method( 'is_experiment_enabled' )->willReturn( false );
-
-		$this->call_private_method( $this->instance, 'setup_lock', [ self::$story_id ] );
-
-		$value = get_post_meta( self::$story_id, '_edit_lock', true );
-
-		$this->assertEmpty( $value );
-	}
-
-	/**
-	 * @covers ::setup_lock
-	 */
 	public function test_setup_lock_subscriber(): void {
 		wp_set_current_user( self::$subscriber_id );
 

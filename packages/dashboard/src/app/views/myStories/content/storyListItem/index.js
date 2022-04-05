@@ -125,7 +125,11 @@ export const StoryListItem = ({
               {...(story.featuredMediaUrl
                 ? {
                     src: story.featuredMediaUrl,
-                    alt: formattedTitle,
+                    alt: sprintf(
+                      /* translators: %s: Story title. */
+                      __('%s Poster image', 'web-stories'),
+                      formattedTitle
+                    ),
                     as: 'img',
                     decoding: 'async',
                   }
