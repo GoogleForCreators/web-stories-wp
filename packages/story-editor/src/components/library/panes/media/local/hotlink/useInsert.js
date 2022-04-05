@@ -43,26 +43,7 @@ import { useConfig } from '../../../../../../app/config';
 import { useAPI } from '../../../../../../app/api';
 import useCORSProxy from '../../../../../../utils/useCORSProxy';
 import useDetectBaseColor from '../../../../../../app/media/utils/useDetectBaseColor';
-import { isValidUrlForHotlinking } from './utils';
-
-function getErrorMessage(code, description) {
-  switch (code) {
-    case 'rest_invalid_param':
-    case 'rest_invalid_url':
-      return __('Invalid link.', 'web-stories');
-    case 'rest_invalid_ext':
-      return sprintf(
-        /* translators: %s is the description with allowed file extensions. */
-        __('Invalid link. %s', 'web-stories'),
-        description
-      );
-    default:
-      return __(
-        'Media failed to load. Please ensure the link is valid and the site allows linking from external sites.',
-        'web-stories'
-      );
-  }
-}
+import { isValidUrlForHotlinking, getErrorMessage } from './utils';
 
 function useInsert({ link, setLink, setErrorMsg, onClose }) {
   const { insertElement } = useLibrary((state) => ({
