@@ -95,7 +95,7 @@
     "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^12.1.4",
     "@testing-library/react-hooks": "^7.0.2",
-    "@testing-library/user-event": "^13.5.0",
+    "@testing-library/user-event": "^14.0.4",
     "jest": "^27.5.1",
     "jest-axe": "^5.0.1",
     "jest-matcher-deep-close-to": "^3.0.2",
