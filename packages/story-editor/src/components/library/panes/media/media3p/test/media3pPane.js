@@ -19,9 +19,10 @@
  */
 import PropTypes from 'prop-types';
 import { fireEvent, screen } from '@testing-library/react';
-import { registerElementTypes } from '@googleforcreators/elements';
-import { elementTypes } from '@googleforcreators/element-library';
-import { renderWithTheme } from '@googleforcreators/test-utils';
+import {
+  renderWithTheme,
+  setUpEditorStore,
+} from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
@@ -157,7 +158,7 @@ describe('Media3pPane', () => {
   let useMediaResult;
 
   beforeAll(() => {
-    registerElementTypes(elementTypes);
+    setUpEditorStore();
 
     useConfig.mockImplementation(() => ({
       capabilities: {

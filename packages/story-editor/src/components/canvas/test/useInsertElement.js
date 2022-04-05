@@ -18,8 +18,7 @@
  * External dependencies
  */
 import { renderHook, act } from '@testing-library/react-hooks';
-import { registerElementTypes } from '@googleforcreators/elements';
-import { elementTypes } from '@googleforcreators/element-library';
+import { setUpEditorStore } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
@@ -81,7 +80,7 @@ describe('useInsertElement', () => {
       setZoomSetting,
     });
 
-    registerElementTypes(elementTypes);
+    setUpEditorStore();
   });
 
   it('should always invoke setZoomSetting with FIT', () => {

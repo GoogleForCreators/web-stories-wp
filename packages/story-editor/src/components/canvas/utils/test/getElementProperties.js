@@ -16,8 +16,7 @@
 /**
  * External dependencies
  */
-import { registerElementTypes } from '@googleforcreators/elements';
-import { elementTypes } from '@googleforcreators/element-library';
+import { setUpEditorStore } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
@@ -84,7 +83,7 @@ const VIDEO_RESOURCE = {
 
 describe('getElementProperties', () => {
   beforeAll(() => {
-    registerElementTypes(elementTypes);
+    setUpEditorStore();
   });
 
   it('should default x/y to (48, 0) if not provided', () => {

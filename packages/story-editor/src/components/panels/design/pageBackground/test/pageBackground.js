@@ -18,12 +18,11 @@
  * External dependencies
  */
 import { fireEvent, screen } from '@testing-library/react';
-import { registerElementTypes } from '@googleforcreators/elements';
-import { elementTypes } from '@googleforcreators/element-library';
 
 /**
  * Internal dependencies
  */
+import { setUpEditorStore } from '@web-stories-wp/test-utils';
 import PageBackgroundPanel from '../pageBackground';
 import { renderPanel } from '../../../shared/test/_utils';
 import ConfigContext from '../../../../../app/config/context';
@@ -99,7 +98,7 @@ function arrange(selectedElements) {
 
 describe('Panels/PageBackground', () => {
   beforeAll(() => {
-    registerElementTypes(elementTypes);
+    setUpEditorStore();
     localStorage.setItem(
       'web_stories_ui_panel_settings:pageBackground',
       JSON.stringify({ isCollapsed: false })

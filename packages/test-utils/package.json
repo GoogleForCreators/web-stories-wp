@@ -37,7 +37,10 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "@googleforcreators/data": "*",
     "@googleforcreators/design-system": "*",
+    "@googleforcreators/element-library": "*",
+    "@googleforcreators/elements": "*",
     "@testing-library/react": "^12.1.2",
     "prop-types": "^15.8.1",
     "styled-components": "^5.3.3"

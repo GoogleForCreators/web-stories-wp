@@ -18,8 +18,8 @@
  * External dependencies
  */
 import { createSolidFromString } from '@googleforcreators/patterns';
-import { createPage, registerElementTypes } from '@googleforcreators/elements';
-import { elementTypes } from '@googleforcreators/element-library';
+import { createPage } from '@googleforcreators/elements';
+import { setUpEditorStore } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
@@ -28,7 +28,7 @@ import isEmptyStory from '../isEmptyStory';
 
 describe('isEmptyStory', () => {
   beforeAll(() => {
-    registerElementTypes(elementTypes);
+    setUpEditorStore();
   });
 
   it('should count newly created story as empty', () => {

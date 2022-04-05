@@ -16,8 +16,7 @@
 /**
  * External dependencies
  */
-import { registerElementTypes } from '@googleforcreators/elements';
-import { elementTypes } from '@googleforcreators/element-library';
+import { setUpEditorStore } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
@@ -26,7 +25,7 @@ import getInsertedElementSize from '../getInsertedElementSize';
 
 describe('getInsertedElementSize', () => {
   beforeAll(() => {
-    registerElementTypes(elementTypes);
+    setUpEditorStore();
   });
 
   it('should return original size if set', () => {

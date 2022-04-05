@@ -19,8 +19,7 @@
  */
 import { render, fireEvent } from '@testing-library/react';
 import { createSolid } from '@googleforcreators/patterns';
-import { registerElementTypes } from '@googleforcreators/elements';
-import { elementTypes } from '@googleforcreators/element-library';
+import { setUpEditorStore } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
@@ -31,7 +30,7 @@ import { TestFrameElement } from './_utils';
 
 describe('FrameElement selection', () => {
   beforeAll(() => {
-    registerElementTypes(elementTypes);
+    setUpEditorStore();
   });
 
   let setSelectedElementsById;

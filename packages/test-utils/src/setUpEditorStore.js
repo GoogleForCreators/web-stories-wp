@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,10 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+/**
+ * External dependencies
+ */
+import {
+  registerElementTypes,
+  elementSlice,
+} from '@googleforcreators/elements';
+import { elementTypes } from '@googleforcreators/element-library';
+import { addSlice } from '@googleforcreators/data';
 
-export { default as firePointerEvent } from './firePointerEvent';
-export { default as renderWithTheme } from './renderWithTheme';
-export { default as setUpEditorStore } from './setUpEditorStore';
-export * from './queryByAriaLabel';
-export * from './queryByAutoAdvanceAfter';
-export * from './queryById';
+export default function setUpEditorStore() {
+  addSlice('element', elementSlice);
+  registerElementTypes(elementTypes);
+}

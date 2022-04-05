@@ -24,8 +24,7 @@ import PropTypes from 'prop-types';
 import { forwardRef } from '@googleforcreators/react';
 import { UnitsProvider } from '@googleforcreators/units';
 import { TransformProvider } from '@googleforcreators/transform';
-import { registerElementTypes } from '@googleforcreators/elements';
-import { elementTypes } from '@googleforcreators/element-library';
+import { setUpEditorStore } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
@@ -61,7 +60,7 @@ describe('multiSelectionMoveable', () => {
   let canvasContext;
 
   beforeAll(() => {
-    registerElementTypes(elementTypes);
+    setUpEditorStore();
   });
 
   beforeEach(() => {

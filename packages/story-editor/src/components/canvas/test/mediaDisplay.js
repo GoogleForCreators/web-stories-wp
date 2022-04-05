@@ -19,8 +19,7 @@
  */
 import { render, act } from '@testing-library/react';
 import { resourceList } from '@googleforcreators/media';
-import { registerElementTypes } from '@googleforcreators/elements';
-import { elementTypes } from '@googleforcreators/element-library';
+import { setUpEditorStore } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
@@ -36,7 +35,7 @@ describe('MediaDisplay', () => {
   let refs;
 
   beforeAll(() => {
-    registerElementTypes(elementTypes);
+    setUpEditorStore();
   });
 
   beforeEach(() => {

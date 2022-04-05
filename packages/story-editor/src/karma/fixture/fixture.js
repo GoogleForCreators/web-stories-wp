@@ -30,9 +30,8 @@ import { DATA_VERSION } from '@googleforcreators/migration';
 import {
   createPage,
   TEXT_ELEMENT_DEFAULT_FONT,
-  registerElementTypes,
 } from '@googleforcreators/elements';
-import { elementTypes } from '@googleforcreators/element-library';
+import { setUpEditorStore } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
@@ -220,7 +219,7 @@ export class Fixture {
       );
     });
 
-    registerElementTypes(elementTypes);
+    setUpEditorStore();
   }
 
   restore() {

@@ -24,10 +24,8 @@ import {
   MEDIA_DEFAULT_ATTRIBUTES,
   elementTypes,
 } from '@googleforcreators/element-library';
-import {
-  registerElementTypes,
-  TEXT_ELEMENT_DEFAULT_FONT,
-} from '@googleforcreators/elements';
+import { TEXT_ELEMENT_DEFAULT_FONT } from '@googleforcreators/elements';
+import { setUpEditorStore } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
@@ -39,7 +37,7 @@ const getDefinitionForType = (type) =>
 
 describe('copyPaste utils', () => {
   beforeAll(() => {
-    registerElementTypes(elementTypes);
+    setUpEditorStore();
   });
 
   const PAGE = {

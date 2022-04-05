@@ -19,8 +19,7 @@
  */
 import { render, fireEvent, act, screen } from '@testing-library/react';
 import { createSolid } from '@googleforcreators/patterns';
-import { registerElementTypes } from '@googleforcreators/elements';
-import { elementTypes } from '@googleforcreators/element-library';
+import { setUpEditorStore } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
@@ -38,7 +37,7 @@ describe('TextFrame: enter edit mode', () => {
   let editingElementContext;
 
   beforeAll(() => {
-    registerElementTypes(elementTypes);
+    setUpEditorStore();
   });
 
   beforeEach(() => {

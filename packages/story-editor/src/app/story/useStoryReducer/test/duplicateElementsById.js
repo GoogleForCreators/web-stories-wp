@@ -16,8 +16,7 @@
 /**
  * External dependencies
  */
-import { registerElementTypes } from '@googleforcreators/elements';
-import { elementTypes } from '@googleforcreators/element-library';
+import { setUpEditorStore } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
@@ -26,7 +25,7 @@ import { setupReducer } from './_utils';
 
 describe('duplicateElementsById', () => {
   beforeAll(() => {
-    registerElementTypes(elementTypes);
+    setUpEditorStore();
   });
 
   it('duplicates an element at index after specified element', () => {

@@ -20,8 +20,7 @@
 import { render, fireEvent } from '@testing-library/react';
 import { useRef } from '@googleforcreators/react';
 import { TransformContext } from '@googleforcreators/transform';
-import { registerElementTypes } from '@googleforcreators/elements';
-import { elementTypes } from '@googleforcreators/element-library';
+import { setUpEditorStore } from '@googleforcreators/test-utils';
 
 /**
  * Internal dependencies
@@ -38,7 +37,7 @@ const Canvas = () => {
 
 describe('useCanvasKeys', function () {
   beforeAll(() => {
-    registerElementTypes(elementTypes);
+    setUpEditorStore();
   });
 
   it('should select all elements and collect their IDs when mod+a is pressed.', () => {
