@@ -27,7 +27,10 @@ import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
 /**
  * Internal dependencies
  */
-import { useKeyDownEffect } from '@googleforcreators/design-system';
+import {
+  themeHelpers,
+  useKeyDownEffect,
+} from '@googleforcreators/design-system';
 import { DESIGN_SPACE_MARGIN, STABLE_ARRAY } from '../../constants';
 import {
   useStory,
@@ -46,6 +49,20 @@ const FramesPageArea = styled(PageArea)`
   pointer-events: initial;
 `;
 const marginRatio = 100 * (DESIGN_SPACE_MARGIN / PAGE_WIDTH);
+
+const FocusContainer = styled.div`
+  grid-row: 2 / 6;
+  grid-column: 1 / -1;
+  // show focus border
+  margin: 5px 5px 0 5px;
+
+  ${themeHelpers.focusableOutlineCSS};
+`;
+
+const FOCUS_CONTAINER_MESSAGE = __(
+  'To navigate into the page, press Enter. Press tab to move to the group or element.',
+  'web-stories'
+);
 
 const DesignSpaceGuidelineBorder = styled.div`
   border: 1px solid ${({ theme }) => theme.colors.border.negativePress};
@@ -165,7 +182,10 @@ function FrameElements() {
 function FramesLayer() {
   return (
     <FramesNavAndSelection>
-      <FrameElements />
+      {/* eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex -- Container used to separate elements from normal tab order. */}
+      <FocusContainer aria-label={FOCUS_CONTAINER_MESSAGE} tabIndex={0}>
+        <FrameElements />
+      </FocusContainer>
     </FramesNavAndSelection>
   );
 }
