@@ -37,9 +37,11 @@ use WP_REST_Response;
 use WP_REST_Server;
 
 /**
- * API endpoint to allow pinging url media assets.
+ * Hotlinking_Controller class.
  *
- * Class Hotlinking_Controller
+ * API endpoint for pinging and hotlinking media URLs.
+ *
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	public const PROXY_HEADERS_ALLOWLIST = [
@@ -162,6 +164,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 * Parses a URL to return some metadata for inserting external media.
 	 *
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
 	 *
 	 * @since 1.11.0
 	 *
