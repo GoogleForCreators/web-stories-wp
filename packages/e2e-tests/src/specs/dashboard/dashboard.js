@@ -62,6 +62,19 @@ describe('Stories Dashboard', () => {
     await expect(page).toMatchElement('h2', {
       text: /^Dashboard/,
     });
+    // Now let's make sure that the next focusable element is the link to create a new story
+    page.keyboard.press('Tab');
+
+    const activeElement = await page.evaluate(() => {
+      return {
+        text: document.activeElement.textContent,
+        element: document.activeElement.tagName.toLowerCase(),
+      };
+    });
+    await expect(activeElement).toMatchObject({
+      text: 'Create New Story',
+      element: 'a',
+    });
 
     await takeSnapshot(page, 'Stories Dashboard on Keyboard Navigation', {
       percyCSS,
