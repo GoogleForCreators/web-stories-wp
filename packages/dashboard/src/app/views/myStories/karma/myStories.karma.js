@@ -184,7 +184,7 @@ describe('CUJ: Creator can view their stories in grid view', () => {
       await fixture.events.click(moreOptionsButton);
 
       const rename = testUtils.getByText(/^Rename/);
-      expect(rename).toBeDisabled();
+      expect(rename.hasAttribute('disabled')).toBe(true);
     });
 
     it('should Duplicate a story', async () => {
