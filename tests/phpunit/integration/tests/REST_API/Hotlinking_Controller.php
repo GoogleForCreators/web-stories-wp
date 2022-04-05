@@ -31,13 +31,14 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 	protected static $subscriber;
 	protected static $editor;
 
-	public const URL_INVALID = 'https://https://invalid.commmm';
-	public const URL_404     = 'https://example.com/404/test.jpg';
-	public const URL_500     = 'https://example.com/500/test.jpg';
-	public const URL_SVG     = 'https://example.com/test.svg';
-	public const URL_VALID   = 'http://example.com/test.jpg';
-	public const URL_DOMAIN  = 'http://google.com';
-	public const URL_PATH    = '/test.jpg';
+	public const URL_INVALID      = 'https://https://invalid.commmm';
+	public const URL_404          = 'https://example.com/404/test.jpg';
+	public const URL_500          = 'https://example.com/500/test.jpg';
+	public const URL_SVG          = 'https://example.com/test.svg';
+	public const URL_VALID        = 'http://example.com/test.jpg';
+	public const URL_DOMAIN       = 'http://google.com';
+	public const URL_WITH_CHARSET = 'https://example.com/test.png';
+	public const URL_PATH         = '/test.jpg';
 
 	public const REST_URL = '/web-stories/v1/hotlink/validate';
 
@@ -114,6 +115,16 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 				'headers'  => [
 					'content-type'   => 'image/svg+xml',
 					'content-length' => 5000,
+				],
+				'response' => [ 'code' => 200 ],
+			];
+		}
+
+		if ( self::URL_WITH_CHARSET === $url ) {
+			return [
+				'headers'  => [
+					'content-type'   => 'image/png; charset=utf-8',
+					'content-length' => 1000,
 				],
 				'response' => [ 'code' => 200 ],
 			];
@@ -380,4 +391,45 @@ class Hotlinking_Controller extends DependencyInjectedRestTestCase {
 		$this->assertErrorResponse( 'rest_invalid_ext', $response, 400 );
 	}
 
+	/**
+	 * @covers ::parse_url
+	 * @covers ::parse_url_permissions_check
+	 */
+	public function test_parse_url_with_charset_in_content_type_header(): void {
+		$this->controller->register();
+
+		wp_set_current_user( self::$editor );
+		$request = new WP_REST_Request( WP_REST_Server::READABLE, self::REST_URL );
+		$request->set_param( 'url', self::URL_WITH_CHARSET );
+		$response = rest_get_server()->dispatch( $request );
+		$data     = $response->get_data();
+		$this->assertEqualSets(
+			[
+				'ext'       => 'png',
+				'file_name' => 'test.png',
+				'file_size' => 1000,
+				'mime_type' => 'image/png',
+				'type'      => 'image',
+			],
+			$data
+		);
+	}
+
+	/**
+	 * @covers ::get_allowed_mime_types
+	 */
+	public function test_get_allowed_mime_types(): void {
+		$story_post_type = $this->injector->make( \Google\Web_Stories\Story_Post_Type::class );
+		$types           = $this->injector->make( \Google\Web_Stories\Media\Types::class );
+		$experiments     = $this->createMock( \Google\Web_Stories\Experiments::class );
+		$experiments->method( 'is_experiment_enabled' )
+					->willReturn( true );
+		$controller = new \Google\Web_Stories\REST_API\Hotlinking_Controller( $story_post_type, $types, $experiments );
+		$mime_types = $this->call_private_method( $controller, 'get_allowed_mime_types' );
+		$this->assertArrayHasKey( 'audio', $mime_types );
+		$this->assertArrayHasKey( 'video', $mime_types );
+		$this->assertArrayHasKey( 'caption', $mime_types );
+		$this->assertArrayHasKey( 'video', $mime_types );
+		$this->assertSame( 'text/vtt', $mime_types['caption'][0] );
+	}
 }

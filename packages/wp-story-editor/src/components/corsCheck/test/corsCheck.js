@@ -19,9 +19,14 @@
 import {
   fireEvent,
   screen,
+  waitFor,
   waitForElementToBeRemoved,
 } from '@testing-library/react';
-import { setAppElement } from '@googleforcreators/design-system';
+import {
+  LOCAL_STORAGE_PREFIX,
+  localStore,
+  setAppElement,
+} from '@googleforcreators/design-system';
 import { APIContext } from '@googleforcreators/story-editor';
 import { FlagsProvider } from 'flagged';
 import { renderWithTheme } from '@googleforcreators/test-utils';
@@ -32,6 +37,15 @@ import { renderWithTheme } from '@googleforcreators/test-utils';
 import CorsCheck from '../corsCheck.js';
 
 const getMediaForCorsCheck = jest.fn();
+
+jest.mock('@googleforcreators/design-system', () => ({
+  __esModule: true,
+  ...jest.requireActual('@googleforcreators/design-system'),
+  localStore: {
+    setItemByKey: jest.fn(),
+    getItemByKey: jest.fn(() => false),
+  },
+}));
 
 function setup() {
   const apiData = {
@@ -123,6 +137,9 @@ describe('corsCheck', () => {
     fetchSpy.mockRejectedValue(() => new Error('request failed'));
 
     setup();
+    expect(localStore.getItemByKey).toHaveBeenCalledWith(
+      LOCAL_STORAGE_PREFIX.CORS_CHECK_DIALOG_DISMISSED
+    );
 
     const dialog = await screen.findByRole('dialog');
     expect(dialog).toBeInTheDocument();
@@ -132,5 +149,12 @@ describe('corsCheck', () => {
     fireEvent.click(dismiss);
 
     await waitForElementToBeRemoved(dialog);
+
+    await waitFor(() =>
+      expect(localStore.setItemByKey).toHaveBeenCalledWith(
+        LOCAL_STORAGE_PREFIX.CORS_CHECK_DIALOG_DISMISSED,
+        true
+      )
+    );
   });
 });

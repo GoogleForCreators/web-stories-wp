@@ -42,6 +42,7 @@ import { ResourcePropTypes } from '@googleforcreators/media';
  */
 import { Z_INDEX_STORY_DETAILS } from '../../constants/zIndex';
 import Tooltip from '../tooltip';
+import useCORSProxy from '../../utils/useCORSProxy';
 
 const StyledButton = styled(Button)`
   ${({ theme }) =>
@@ -81,6 +82,8 @@ function AudioPlayer({ title, src, mimeType, tracks = [], audioId, loop }) {
   const [isPlaying, setIsPlaying] = useState(false);
 
   const playerRef = useRef();
+
+  const { getProxiedUrl } = useCORSProxy();
 
   const handlePlayPause = useCallback(() => {
     const player = playerRef.current;
@@ -124,24 +127,34 @@ function AudioPlayer({ title, src, mimeType, tracks = [], audioId, loop }) {
     ? __('Pause', 'web-stories')
     : __('Play', 'web-stories');
 
+  const tracksFormatted = tracks.map((track) => {
+    const trackSrc = getProxiedUrl(track, track?.track);
+    return {
+      ...track,
+      track: trackSrc,
+    };
+  });
+
   return (
     <Wrapper>
       {/* eslint-disable-next-line jsx-a11y/media-has-caption, styled-components-a11y/media-has-caption -- No captions wanted/needed here. */}
       <Audio crossOrigin="anonymous" loop={loop} ref={playerRef} id={audioId}>
         <source src={src} type={mimeType} />
-        {tracks &&
-          tracks.map(({ srclang, label, track: trackSrc, id: key }, i) => (
-            <track
-              srcLang={srclang}
-              label={label}
-              // Hides the track from the user.
-              // Displaying happens in MediaCaptionsLayer instead.
-              kind="metadata"
-              src={trackSrc}
-              key={key}
-              default={i === 0}
-            />
-          ))}
+        {tracksFormatted &&
+          tracksFormatted.map(
+            ({ srclang, label, track: trackSrc, id: key }, i) => (
+              <track
+                srcLang={srclang}
+                label={label}
+                // Hides the track from the user.
+                // Displaying happens in MediaCaptionsLayer instead.
+                kind="metadata"
+                src={trackSrc}
+                key={key}
+                default={i === 0}
+              />
+            )
+          )}
       </Audio>
       <div>{title}</div>
       <Tooltip

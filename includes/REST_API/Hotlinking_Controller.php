@@ -26,6 +26,7 @@
 
 namespace Google\Web_Stories\REST_API;
 
+use Google\Web_Stories\Experiments;
 use Google\Web_Stories\Infrastructure\HasRequirements;
 use Google\Web_Stories\Media\Types;
 use Google\Web_Stories\Story_Post_Type;
@@ -36,9 +37,11 @@ use WP_REST_Response;
 use WP_REST_Server;
 
 /**
- * API endpoint to allow pinging url media assets.
+ * Hotlinking_Controller class.
  *
- * Class Hotlinking_Controller
+ * API endpoint for pinging and hotlinking media URLs.
+ *
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	public const PROXY_HEADERS_ALLOWLIST = [
@@ -63,6 +66,13 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	private $types;
 
 	/**
+	 * Experiments instance.
+	 *
+	 * @var Experiments Experiments instance.
+	 */
+	private $experiments;
+
+	/**
 	 * File pointer resource.
 	 *
 	 * @var resource
@@ -74,14 +84,16 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @param Story_Post_Type $story_post_type Story_Post_Type instance.
 	 * @param Types           $types Types instance.
+	 * @param Experiments     $experiments Experiments instance.
 	 * @return void
 	 */
-	public function __construct( Story_Post_Type $story_post_type, Types $types ) {
+	public function __construct( Story_Post_Type $story_post_type, Types $types, Experiments $experiments ) {
 		$this->story_post_type = $story_post_type;
 		$this->types           = $types;
 
-		$this->namespace = 'web-stories/v1';
-		$this->rest_base = 'hotlink';
+		$this->namespace   = 'web-stories/v1';
+		$this->rest_base   = 'hotlink';
+		$this->experiments = $experiments;
 	}
 
 	/**
@@ -152,6 +164,7 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 	 * Parses a URL to return some metadata for inserting external media.
 	 *
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
 	 *
 	 * @since 1.11.0
 	 *
@@ -210,6 +223,10 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 
 		$headers   = wp_remote_retrieve_headers( $response );
 		$mime_type = $headers['content-type'];
+		if ( $mime_type && false !== strpos( $mime_type, ';' ) ) {
+			$pieces    = explode( ';', $mime_type );
+			$mime_type = array_shift( $pieces );
+		}
 		$file_size = (int) $headers['content-length'];
 
 		/**
@@ -582,8 +599,9 @@ class Hotlinking_Controller extends REST_Controller implements HasRequirements {
 		$mime_type = $this->types->get_allowed_mime_types();
 		// TODO: Update once audio elements are supported.
 		$mime_type['audio'] = [];
-		// TODO(#10515): Add support hotlinking vtt files.
-		unset( $mime_type['caption'] );
+		if ( ! $this->experiments->is_experiment_enabled( 'captionHotlinking' ) ) {
+			unset( $mime_type['caption'] );
+		}
 		// Do not support hotlinking SVGs for security reasons.
 		unset( $mime_type['vector'] );
 

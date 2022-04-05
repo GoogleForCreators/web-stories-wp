@@ -33,6 +33,7 @@ import {
 /**
  * Internal dependencies
  */
+import { useFeature } from 'flagged';
 import { usePresubmitHandler } from '../../../form';
 import { SimplePanel } from '../../panel';
 import { getCommonValue } from '../../shared';
@@ -62,6 +63,7 @@ export const MIN_MAX = {
 function CaptionsPanel({ selectedElements, pushUpdate }) {
   const tracks = getCommonValue(selectedElements, 'tracks', []);
   const isIndeterminate = tracks === MULTIPLE_VALUE;
+  const enableCaptionHotlinking = useFeature('captionHotlinking');
 
   const {
     capabilities: { hasUploadMediaAction },
@@ -93,7 +95,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
   );
 
   const handleChangeTrack = useCallback(
-    ({ src = '', id }) => {
+    ({ src = '', id, needsProxy = false }) => {
       const newTracks = {
         track: src,
         trackId: id,
@@ -102,6 +104,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
         kind: 'captions',
         srclang: '',
         label: '',
+        needsProxy,
       };
 
       pushUpdate({ tracks: [...tracks, newTracks] }, true);
@@ -136,7 +139,7 @@ function CaptionsPanel({ selectedElements, pushUpdate }) {
     [resetHighlight, highlight?.focus, highlight?.showEffect]
   );
 
-  if (!hasUploadMediaAction && !tracks.length) {
+  if (!hasUploadMediaAction && !enableCaptionHotlinking && !tracks.length) {
     return null;
   }
 

@@ -58,6 +58,7 @@ ResourcePropTypes.trackResource = PropTypes.shape({
   kind: PropTypes.string,
   srclang: PropTypes.string,
   label: PropTypes.string,
+  needsProxy: PropTypes.bool,
 });
 
 ResourcePropTypes.videoResource = PropTypes.shape({
