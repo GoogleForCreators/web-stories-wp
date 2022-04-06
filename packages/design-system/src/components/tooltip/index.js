@@ -339,7 +339,7 @@ const TooltipPropTypes = {
   onPointerLeave: PropTypes.func,
   shortcut: PropTypes.string,
   title: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
-  forceAnchorRef: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+  forceAnchorRef: PropTypes.object,
   tooltipProps: PropTypes.object,
   className: PropTypes.string,
   isDelayed: PropTypes.bool,

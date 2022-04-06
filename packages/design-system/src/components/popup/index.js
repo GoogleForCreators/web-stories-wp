@@ -190,10 +190,8 @@ function Popup({
 
 Popup.propTypes = {
   isRTL: PropTypes.bool,
-  anchor: PropTypes.oneOfType([
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
-    PropTypes.func,
-  ]).isRequired,
+  anchor: PropTypes.shape({ current: PropTypes.instanceOf(Element) })
+    .isRequired,
   dock: PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
   children: PropTypes.node,
   renderContents: PropTypes.func,

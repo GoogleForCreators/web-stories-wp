@@ -92,7 +92,7 @@ function WithLink({ element, active, children, anchorRef }) {
 
 WithLink.propTypes = {
   element: StoryPropTypes.element.isRequired,
-  anchorRef: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+  anchorRef: PropTypes.object,
   active: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
 };
