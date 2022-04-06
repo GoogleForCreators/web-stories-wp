@@ -47,7 +47,6 @@ import PageNav from './pagenav';
 import {
   FOCUS_GROUPS,
   useEditLayerFocusManager,
-  useFocusGroupRef,
 } from './editLayerFocusManager';
 
 const FramesPageArea = styled(PageArea)`
@@ -56,10 +55,10 @@ const FramesPageArea = styled(PageArea)`
 const marginRatio = 100 * (DESIGN_SPACE_MARGIN / PAGE_WIDTH);
 
 const FocusContainer = styled.div`
-  grid-row: 2 / 6;
+  grid-row: 2 / 7;
   grid-column: 1 / -1;
-  // show focus border
-  margin: 5px 5px 0 5px;
+  // show focus border by adding margin
+  margin: 5px;
 
   ${themeHelpers.focusableOutlineCSS};
 `;
@@ -151,8 +150,6 @@ function FrameElements(props) {
     )
   );
 
-  const focusGroupRef = useFocusGroupRef(FOCUS_GROUPS.EDIT_CANVAS);
-
   const onOpenMenu = useRightClickMenu((state) => state.onOpenMenu);
 
   const { setScrollOffset } = useLayout(({ actions: { setScrollOffset } }) => ({
@@ -179,7 +176,7 @@ function FrameElements(props) {
         {...props}
       >
         {elementIds.map((id) => {
-          return <FrameElement key={id} id={id} ref={focusGroupRef} />;
+          return <FrameElement key={id} id={id} />;
         })}
         <DesignSpaceGuideline />
       </FramesPageArea>
@@ -212,9 +209,9 @@ function FramesLayer() {
         aria-label={FOCUS_CONTAINER_MESSAGE}
         // eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex -- Container used to separate elements from normal tab order.
         tabIndex={0}
-      >
-        <FrameElements />
-      </FocusContainer>
+      />
+      {/* Hide canvas from normal tab flow. Use focus group to focus canvas */}
+      <FrameElements tabIndex={-1} />
     </FramesNavAndSelection>
   );
 }

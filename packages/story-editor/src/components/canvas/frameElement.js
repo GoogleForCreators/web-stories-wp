@@ -19,7 +19,6 @@
  */
 import styled from 'styled-components';
 import {
-  forwardRef,
   useCallback,
   useLayoutEffect,
   useRef,
@@ -56,6 +55,7 @@ import WithLink from '../elementLink/frame';
 import useDoubleClick from '../../utils/useDoubleClick';
 import usePerformanceTracking from '../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../constants';
+import { FOCUS_GROUPS, useFocusGroupRef } from './editLayerFocusManager';
 
 // @todo: should the frame borders follow clip lines?
 
@@ -89,8 +89,9 @@ const EmptyFrame = styled.div`
 
 const NOOP = () => {};
 
-const FrameElement = forwardRef(function FrameElement({ id }, ref) {
+function FrameElement({ id }) {
   const [isTransforming, setIsTransforming] = useState(false);
+  const focusGroupRef = useFocusGroupRef(FOCUS_GROUPS.EDIT_CANVAS);
 
   const {
     setNodeForElement,
@@ -123,7 +124,7 @@ const FrameElement = forwardRef(function FrameElement({ id }, ref) {
   const { type, flip } = element;
   const { Frame, isMaskable, Controls } = getDefinitionForType(type);
   const elementRef = useRef();
-  const combinedElementRef = useCombinedRefs(ref, elementRef);
+  const combinedFocusGroupRef = useCombinedRefs(elementRef, focusGroupRef); // Only attach focus group ref to one element.
   const [hovering, setHovering] = useState(false);
   const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
 
@@ -239,7 +240,7 @@ const FrameElement = forwardRef(function FrameElement({ id }, ref) {
         />
       )}
       <Wrapper
-        ref={combinedElementRef}
+        ref={combinedFocusGroupRef}
         data-element-id={id}
         {...box}
         // eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex -- Needed for being able to focus on the selected element on canvas, e.g. for entering edit mode.
@@ -277,7 +278,7 @@ const FrameElement = forwardRef(function FrameElement({ id }, ref) {
       </Wrapper>
     </WithLink>
   );
-});
+}
 
 FrameElement.propTypes = {
   id: PropTypes.string.isRequired,
