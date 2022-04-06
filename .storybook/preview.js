@@ -17,9 +17,7 @@
 /**
  * External dependencies
  */
-import React from 'react';
 import { ThemeProvider } from 'styled-components';
-import { addDecorator, addParameters } from '@storybook/react';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import {
   theme as designSystemTheme,
@@ -27,18 +25,21 @@ import {
   ThemeGlobals,
   ModalGlobalStyle,
 } from '@googleforcreators/design-system';
-import {
-  theme,
-  GlobalStyle,
-  EditorConfigProvider,
-} from '@googleforcreators/story-editor';
 import { CropMoveableGlobalStyle } from '@googleforcreators/moveable';
-import {
-  DashboardGlobalStyle,
-  DashboardKeyboardOnlyOutline,
-  ConfigProvider as DashboardConfigProvider,
-  ApiProvider,
-} from '@googleforcreators/dashboard';
+
+/**
+ * Internal dependencies
+ */
+// Disable reason:
+// Importing from the dashboard and story editor roots break fast refresh in storybook.
+// Prevented by importing the necessary providers and configs directly.
+/* eslint-disable import/no-relative-packages */
+import { GlobalStyle as DashboardGlobalStyle } from '../packages/dashboard/src/theme';
+import DashboardKeyboardOnlyOutline from '../packages/dashboard/src/utils/keyboardOnlyOutline';
+import DashboardConfigProvider from '../packages/dashboard/src/app/config/configProvider';
+import ApiProvider from '../packages/dashboard/src/app/api/apiProvider';
+import EditorConfigProvider from '../packages/story-editor/src/app/config/configProvider';
+/* eslint-enable import/no-relative-packages */
 
 // @todo: Find better way to mock these.
 const wp = {};
@@ -55,7 +56,7 @@ window.wp.media = {
 
 const { ipad, ipad10p, ipad12p } = INITIAL_VIEWPORTS;
 
-addParameters({
+export const parameters = {
   a11y: {
     element: '#root',
     config: {},
@@ -76,68 +77,69 @@ addParameters({
       { name: 'Dark', value: 'rgba(0, 0, 0, 0.9)', default: true },
     ],
   },
-});
+};
 
-addDecorator((story, context) => {
-  const { id } = context;
-  // TODO(#10380): Replacement add-on for RTL feature
-  const isRTL = false;
+export const decorators = [
+  (Story, context) => {
+    const { id } = context;
+    // TODO(#10380): Replacement add-on for RTL feature
+    const isRTL = false;
 
-  const isDesignSystemStorybook = id.startsWith('designsystem');
-  const isDashboardStorybook = id.startsWith('dashboard');
+    const isDesignSystemStorybook = id.startsWith('designsystem');
+    const isDashboardStorybook = id.startsWith('dashboard');
 
-  if (isDashboardStorybook) {
-    return (
-      <ThemeProvider
-        theme={{
-          ...designSystemTheme,
-          colors: lightMode,
-        }}
-      >
-        <DashboardConfigProvider
-          config={{
-            api: { stories: 'stories' },
-            apiCallbacks: {
-              getUser: () => Promise.resolve({ id: 1 }),
-            },
-            editStoryURL: 'editStory',
-            isRTL,
-            styleConstants: {
-              topOffset: 0,
-            },
+    if (isDashboardStorybook) {
+      return (
+        <ThemeProvider
+          theme={{
+            ...designSystemTheme,
+            colors: lightMode,
           }}
         >
-          <ApiProvider>
-            <DashboardGlobalStyle />
-            <ModalGlobalStyle />
-            <DashboardKeyboardOnlyOutline />
-            {story()}
-          </ApiProvider>
-        </DashboardConfigProvider>
-      </ThemeProvider>
-    );
-  }
+          <DashboardConfigProvider
+            config={{
+              api: { stories: 'stories' },
+              apiCallbacks: {
+                getUser: () => Promise.resolve({ id: 1 }),
+              },
+              editStoryURL: 'editStory',
+              isRTL,
+              styleConstants: {
+                topOffset: 0,
+              },
+            }}
+          >
+            <ApiProvider>
+              <DashboardGlobalStyle />
+              <ModalGlobalStyle />
+              <DashboardKeyboardOnlyOutline />
+              {Story()}
+            </ApiProvider>
+          </DashboardConfigProvider>
+        </ThemeProvider>
+      );
+    }
 
-  if (isDesignSystemStorybook) {
-    // override darkMode colors
-    const dsTheme = { ...designSystemTheme, colors: lightMode };
+    if (isDesignSystemStorybook) {
+      // override darkMode colors
+      const dsTheme = { ...designSystemTheme, colors: lightMode };
+      return (
+        <ThemeProvider theme={dsTheme}>
+          <ThemeGlobals.Styles />
+          <ModalGlobalStyle />
+          {Story()}
+        </ThemeProvider>
+      );
+    }
+
     return (
-      <ThemeProvider theme={dsTheme}>
-        <ThemeGlobals.Styles />
-        <ModalGlobalStyle />
-        {story()}
+      <ThemeProvider theme={designSystemTheme}>
+        <EditorConfigProvider config={{ isRTL }}>
+          <CropMoveableGlobalStyle />
+          <ModalGlobalStyle />
+          {Story()}
+        </EditorConfigProvider>
       </ThemeProvider>
     );
-  }
-
-  return (
-    <ThemeProvider theme={theme}>
-      <EditorConfigProvider config={{ isRTL }}>
-        <GlobalStyle />
-        <CropMoveableGlobalStyle />
-        <ModalGlobalStyle />
-        {story()}
-      </EditorConfigProvider>
-    </ThemeProvider>
-  );
-});
+  },
+];

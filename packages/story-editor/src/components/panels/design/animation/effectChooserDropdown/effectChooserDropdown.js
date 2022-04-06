@@ -27,7 +27,7 @@ import { DropDown, PLACEMENT } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import { focusStyle } from '../../../shared';
+import { focusStyle } from '../../../shared/styles';
 import {
   backgroundEffectOptions,
   NO_ANIMATION,

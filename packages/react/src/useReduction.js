@@ -23,6 +23,22 @@
  */
 import { useReducer, useMemo } from './react';
 
+/**
+ * Takes initial state and an action object and returns a state tuple
+ *
+ * i.e.
+ * ```js
+ * const [state, actions] = useReduction({ count: 0, other: null }, {
+ *  increment: (state) => ({ ...state, count: state.count + 1 }),
+ *  decrement: (state) => ({ ...state, count: state.count - 1 }),
+ *  set: (state, action) => ({ ...state, ...action.payload }),
+ *});
+ * ```
+ *
+ * @param {any} initialState initial reducer state
+ * @param {{}} reducerMap map of reducer actions
+ * @return {[any, {}]} [state, actions] tuple
+ */
 export default function useReduction(initialState, reducerMap) {
   const [state, dispatch] = useReducer(makeReducer(reducerMap), initialState);
   const actions = useMemo(

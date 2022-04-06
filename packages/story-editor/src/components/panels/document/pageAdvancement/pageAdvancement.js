@@ -44,7 +44,7 @@ import {
 import { useStory } from '../../../../app/story';
 import { Row, Switch } from '../../../form';
 import { SimplePanel } from '../../panel';
-import { inputContainerStyleOverride } from '../../shared';
+import { inputContainerStyleOverride } from '../../shared/styles';
 
 const SwitchRow = styled.div`
   margin-bottom: 16px;

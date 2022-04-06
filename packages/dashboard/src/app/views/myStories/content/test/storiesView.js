@@ -285,9 +285,7 @@ describe('Dashboard <StoriesView />', function () {
           }}
         />,
         {
-          features: {
-            enablePostLocking: true,
-          },
+          features: {},
         },
         {}
       );

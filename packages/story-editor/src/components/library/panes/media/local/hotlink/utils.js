@@ -15,6 +15,11 @@
  */
 
 /**
+ * External dependencies
+ */
+import { __, sprintf } from '@googleforcreators/i18n';
+
+/**
  * Determine whether a URL is valid and acceptable for hotlinking.
  *
  * Validates that a URL has a valid path segment.
@@ -28,5 +33,24 @@ export function isValidUrlForHotlinking(url) {
     return urlObj.pathname !== '/';
   } catch {
     return false;
+  }
+}
+
+export function getErrorMessage(code, description) {
+  switch (code) {
+    case 'rest_invalid_param':
+    case 'rest_invalid_url':
+      return __('Invalid link.', 'web-stories');
+    case 'rest_invalid_ext':
+      return sprintf(
+        /* translators: %s is the description with allowed file extensions. */
+        __('Invalid link. %s', 'web-stories'),
+        description
+      );
+    default:
+      return __(
+        'Media failed to load. Please ensure the link is valid and the site allows linking from external sites.',
+        'web-stories'
+      );
   }
 }

@@ -23,7 +23,7 @@ import { Headline, THEME_CONSTANTS } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import { ThumbnailWrapper } from '../checklist/checks/shared';
+import ThumbnailWrapper from '../checklist/checks/shared/thumbnailWrapper';
 import { getGridVariant } from './helpers';
 import { CARD_TYPE } from './constants';
 import { Wrapper, Container, Title, Cta, Footer } from './styles';

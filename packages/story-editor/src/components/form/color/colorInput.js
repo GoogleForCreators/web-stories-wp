@@ -49,7 +49,10 @@ import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../constants';
 import ColorPicker from '../../colorPicker';
 import useSidebar from '../../sidebar/useSidebar';
 import DefaultTooltip from '../../tooltip';
-import { focusStyle, inputContainerStyleOverride } from '../../panels/shared';
+import {
+  focusStyle,
+  inputContainerStyleOverride,
+} from '../../panels/shared/styles';
 import { useCanvas, useConfig } from '../../../app';
 
 const Preview = styled.div`

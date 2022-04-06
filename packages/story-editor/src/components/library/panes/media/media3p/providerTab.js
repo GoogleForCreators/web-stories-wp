@@ -23,7 +23,7 @@ import { Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import { focusStyle } from '../../../../panels/shared';
+import { focusStyle } from '../../../../panels/shared/styles';
 
 const StyledText = styled(Text)`
   color: inherit;
