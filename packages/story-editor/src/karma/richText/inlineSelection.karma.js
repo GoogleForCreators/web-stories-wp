@@ -53,7 +53,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
     it('should apply inline formats correctly for both single style and multiple styles', async () => {
       let storyContext = await data.fixture.renderHook(() => useStory());
       expect(storyContext.state.selectedElements[0].content).toBe(
-        'Fill in some text.'
+        'Fill in some text'
       );
       await data.fixture.events.click(data.fixture.editor.sidebar.designTab);
       const {
@@ -463,7 +463,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
 
       // Expect text content to have style and content
       expect(getTextContent()).toBe(
-        '<span style="font-weight: 700">Fill in some extra text</span>.'
+        '<span style="font-weight: 700">Fill in some extra text</span>'
       );
 
       await data.fixture.snapshot('Pasting between text');
