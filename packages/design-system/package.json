@@ -52,7 +52,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@storybook/addon-essentials": "^6.4.13",
+    "@storybook/addon-essentials": "^6.4.20",
     "@testing-library/react": "^12.1.4",
     "@testing-library/react-hooks": "^7.0.2"
   }
