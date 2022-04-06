@@ -162,10 +162,11 @@ const plugins = [
 async function config(cliArgs) {
   const packages = [];
   const entries = [];
+  const ignoredPackaged = ['@googleforcreators/create-web-stories'];
 
   // Collect the list of packages
   await workspacesRun({ cwd: __dirname, orderByDeps: true }, (pkg) => {
-    if (!pkg.config.private) {
+    if (!pkg.config.private && !ignoredPackaged.includes(pkg.name)) {
       packages.push(pkg);
     }
   });
