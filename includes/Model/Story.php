@@ -109,21 +109,21 @@ class Story {
 	 *
 	 * @var string
 	 */
-	protected $poster_portrait;
+	protected $poster_portrait = '';
 
 	/**
 	 * Date for the story.
 	 *
 	 * @var string
 	 */
-	protected $date;
+	protected $date = '';
 
 	/**
 	 * Author of story.
 	 *
 	 * @var string
 	 */
-	protected $author;
+	protected $author = '';
 
 	/**
 	 * Story constructor.
@@ -212,7 +212,7 @@ class Story {
 	 * @since 1.18.0
 	 */
 	public function get_poster_sizes(): string {
-		return (string) $this->poster_sizes;
+		return $this->poster_sizes;
 	}
 
 	/**
@@ -221,7 +221,7 @@ class Story {
 	 * @since 1.18.0
 	 */
 	public function get_poster_srcset(): string {
-		return (string) $this->poster_srcset;
+		return $this->poster_srcset;
 	}
 
 	/**
@@ -230,14 +230,14 @@ class Story {
 	 * @since 1.0.0
 	 */
 	public function get_title(): string {
-		return (string) $this->title;
+		return $this->title;
 	}
 
 	/**
 	 * Getter for excerpt attribute.
 	 */
 	public function get_excerpt(): string {
-		return (string) $this->excerpt;
+		return $this->excerpt;
 	}
 
 	/**
@@ -246,7 +246,7 @@ class Story {
 	 * @since 1.0.0
 	 */
 	public function get_url(): string {
-		return (string) $this->url;
+		return $this->url;
 	}
 
 	/**
@@ -255,7 +255,7 @@ class Story {
 	 * @since 1.0.0
 	 */
 	public function get_markup(): string {
-		return (string) $this->markup;
+		return $this->markup;
 	}
 
 	/**
@@ -264,28 +264,28 @@ class Story {
 	 * @since 1.0.0
 	 */
 	public function get_poster_portrait(): string {
-		return (string) $this->poster_portrait;
+		return $this->poster_portrait;
 	}
 
 	/**
 	 * Get the story ID.
 	 */
 	public function get_id(): int {
-		return (int) $this->id;
+		return $this->id;
 	}
 
 	/**
 	 * Get author of the story.
 	 */
 	public function get_author(): string {
-		return (string) $this->author;
+		return $this->author;
 	}
 
 	/**
 	 * Date for the story.
 	 */
 	public function get_date(): string {
-		return (string) $this->date;
+		return $this->date;
 	}
 
 	/**
