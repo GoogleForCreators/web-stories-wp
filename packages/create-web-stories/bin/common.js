@@ -30,6 +30,7 @@ import { PRIVATE_REGISTRY_URL, REACT_SUPPORTED_VERSION } from './constants.js';
 const __filename = fileURLToPath( import.meta.url );
 const __dirname = dirname( __filename );
 const wavingHand = String.fromCodePoint( 0x1f44b );
+
 const LOGO = fse.readFileSync( path.join( __dirname, 'text-art.txt' ) );
 const WELCOME_MESSAGE = `Hi! ${ wavingHand } Welcome to Web stories. Let us help you try our story creation suite`;
 const BOILERPLATE_DIR_PATH = `../boilerplate`;
@@ -37,14 +38,14 @@ const SHARED_DIR_PATH = '../shared';
 const CONFIG_FILE = 'config.json';
 
 /**
- * Get boilerplate data list.
+ * Get boilerplate config.json data list.
  */
-const getBoilerplateDataList = () => {
+const getBoilerplateConfigList = () => {
   const boilerplateDir = path.join( __dirname, BOILERPLATE_DIR_PATH );
   const boilerplateDirNames = fse.readdirSync( boilerplateDir );
 
   return boilerplateDirNames.map( ( name ) => {
-    const configPath = path.resolve(
+    const configPath = path.join(
       __dirname,
       BOILERPLATE_DIR_PATH,
       name,
@@ -58,43 +59,33 @@ const getBoilerplateDataList = () => {
 /**
  * Get boilerplate data.
  */
-const getBoilerplateData = ( boilerplateName ) => {
-  return getBoilerplateDataList().filter( ( { name } ) => name === boilerplateName )[0];
+const getBoilerplateConfig = ( boilerplateName ) => {
+  return getBoilerplateConfigList().find( ( { name } ) => name === boilerplateName );
 };
 
 /**
  * Install dependencies from configuration.
  */
-function installDependenciesFromConfig(
-  boilerplateName,
-  projectPath,
-  isPrivate,
-) {
-  const config = getBoilerplateData( boilerplateName );
+function installDependenciesFromConfig( boilerplateName, projectPath, isPrivate ) {
+  const config = getBoilerplateConfig( boilerplateName );
+  const { dependencies, devDependencies } = config;
 
   if ( isPrivate ) {
     log( `\nUsing registry at url \`${ PRIVATE_REGISTRY_URL }\`\n` );
   }
 
-  const { dependencies, devDependencies } = config
+  const registry = isPrivate ? `--registry ${ PRIVATE_REGISTRY_URL } ` : '';
 
-  if ( dependencies ) {
-    const dependencyInstallCommand =
-      `npm ${ isPrivate ? `--registry ${ PRIVATE_REGISTRY_URL } ` : '' }i ` +
-      dependencies.join( ' ' );
-
-    execSync( dependencyInstallCommand, {
+  if ( dependencies && dependencies.length ) {
+    const command = `npm ${ registry }i ` + dependencies.join( ' ' );
+    execSync( command, {
       cwd: projectPath,
     } );
   }
 
-  if ( devDependencies ) {
-    const devDependencyInstallCommand =
-      `npm ${
-        isPrivate ? `--registry ${ PRIVATE_REGISTRY_URL } ` : ''
-      }i --save-dev` + devDependencies.join( ' ' );
-
-    execSync( devDependencyInstallCommand, {
+  if ( devDependencies && devDependencies.length ) {
+    const command = `npm ${ registry }i --save-dev` + devDependencies.join( ' ' );
+    execSync( command, {
       cwd: projectPath,
     } );
   }
@@ -106,15 +97,11 @@ function installDependenciesFromConfig(
 function getBoilerplatePath( boilerplateName ) {
   const boilerplateDir = path.join( __dirname, BOILERPLATE_DIR_PATH );
   const boilerplateDirNames = fse.readdirSync( boilerplateDir );
-  let boilerplateDirName;
 
-   boilerplateDirNames.forEach( ( dirName ) => {
+  const boilerplateDirName = boilerplateDirNames.find( ( dirName ) => {
     const configPath = path.join( boilerplateDir, dirName, CONFIG_FILE );
     const config = JSON.parse( fse.readFileSync( configPath ) );
-
-    if ( config.name === boilerplateName ) {
-    	boilerplateDirName = dirName;
-    }
+    return config.name === boilerplateName;
   } );
 
   return path.join( boilerplateDir, boilerplateDirName );
@@ -126,12 +113,11 @@ function getBoilerplatePath( boilerplateName ) {
 function scaffoldBoilerplateWithCRA( boilerplateName, projectName, isPrivate ) {
   const boilerplatePath = getBoilerplatePath( boilerplateName );
   const sharedPath = path.join( __dirname, SHARED_DIR_PATH );
+  const projectPath = path.join( process.cwd(), projectName );
 
   execSync( `npx create-react-app@latest ${ projectName }`, {
     cwd: process.cwd(),
   } );
-
-  const projectPath = path.join( process.cwd(), projectName );
 
   replaceDir(
     path.resolve( boilerplatePath, 'src' ),
@@ -143,7 +129,7 @@ function scaffoldBoilerplateWithCRA( boilerplateName, projectName, isPrivate ) {
     path.resolve( projectPath, 'public' ),
   );
 
-  const { replacements } = getBoilerplateData( boilerplateName );
+  const { replacements } = getBoilerplateConfig( boilerplateName );
 
   replacements.forEach( ( { src, dest } ) => {
     fse.copySync( path.join( sharedPath, src ), path.join( projectPath, dest ) );
@@ -152,7 +138,7 @@ function scaffoldBoilerplateWithCRA( boilerplateName, projectName, isPrivate ) {
   // Install boilerplate dependencies listed in meta
   installDependenciesFromConfig( boilerplateName, projectPath, isPrivate );
 
-  // Downgrade react and react-dom to supported version.
+  // Downgrade react and react-dom to the supported version.
   execSync( `npm i react@${ REACT_SUPPORTED_VERSION } react-dom@${ REACT_SUPPORTED_VERSION }`, {
     cwd: projectPath,
   } );
@@ -171,7 +157,7 @@ function scaffoldBoilerplateCustom( boilerplateName, projectName, isPrivate ) {
   fse.removeSync( path.join( projectPath, CONFIG_FILE ) );
 
   // Get files from shared folder as per the mapping.
-  const { replacements } = getBoilerplateData( boilerplateName );
+  const { replacements } = getBoilerplateConfig( boilerplateName );
 
   replacements.forEach( ( { src, dest } ) => {
     fse.copySync( path.join( sharedPath, src ), path.join( projectPath, dest ) );
@@ -214,11 +200,11 @@ function getBoilerplateName( boilerplate, setupType ) {
 
 export {
   log,
-  getBoilerplateDataList,
   replaceDir,
-  scaffoldBoilerplateWithCRA,
-  scaffoldBoilerplateCustom,
   getBoilerplateName,
+  getBoilerplateConfigList,
+  scaffoldBoilerplateCustom,
+  scaffoldBoilerplateWithCRA,
   WELCOME_MESSAGE,
   LOGO
 };

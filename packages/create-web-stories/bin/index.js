@@ -27,7 +27,7 @@ import fse from 'fs-extra';
  */
 import {
   WELCOME_MESSAGE,
-  getBoilerplateDataList,
+  getBoilerplateConfigList,
   scaffoldBoilerplateCustom,
   scaffoldBoilerplateWithCRA,
   getBoilerplateName,
@@ -64,7 +64,7 @@ let setupType = options.setupType;
 let boilerplateName = getBoilerplateName( options.boilerplate, setupType );
 
 const userPrompts = [];
-const boilerplateDataList = getBoilerplateDataList();
+const boilerplateDataList = getBoilerplateConfigList();
 const foldersInCwd = fse.readdirSync( process.cwd() );
 
 // Prompt for project name if option does not have default value
@@ -83,11 +83,7 @@ if ( projectName === 'none' ) {
       return true;
     },
   } );
-} else if (
-  projectName.match( /[^a-z-]/g ) ||
-  foldersInCwd.includes( projectName )
-) {
-  // Validate if value was passed as an argument
+} else if ( projectName.match( /[^a-z-]/g ) || foldersInCwd.includes( projectName ) ) {
   log(
     'Invalid project name: Project name can only have small case characters and hyphen',
     'red',
