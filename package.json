@@ -154,7 +154,7 @@
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-delete": "^2.0.0",
     "rollup-plugin-filesize": "^9.1.2",
-    "rollup-plugin-import-css": "^3.0.2",
+    "rollup-plugin-import-css": "^3.0.3",
     "rollup-plugin-license": "^2.6.1",
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-web-worker-loader": "^1.6.1",
