@@ -25,6 +25,8 @@ import { ContextMenuComponents } from '@googleforcreators/design-system';
 const Button = styled(ContextMenuComponents.MenuButton)`
   font-size: 14px;
   padding: 2px 12px;
+  font-weight: normal;
+  letter-spacing: normal;
 `;
 
 const TextButton = memo(function TextButton({ text, ...rest }) {
