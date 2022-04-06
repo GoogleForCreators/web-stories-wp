@@ -60,7 +60,15 @@ describe('Taxonomies Panel', () => {
   it('should have no aXe accessibility violations', async () => {
     await openTaxonomiesPanel();
     const { taxonomies } = fixture.editor.sidebar.documentPanel;
-    await expectAsync(taxonomies.node).toHaveNoViolations();
+    await expectAsync(taxonomies.node).toHaveNoViolations({
+      rules: {
+        // Disabled because of some false positives.
+        // See https://github.com/GoogleForCreators/web-stories-wp/issues/11071
+        'color-contrast': {
+          enabled: false,
+        },
+      },
+    });
   });
 
   describe('Categories', () => {
