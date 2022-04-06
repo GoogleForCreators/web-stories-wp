@@ -101,9 +101,7 @@ function PageAttachmentPanel() {
   const [displayWarning, setDisplayWarning] = useState(false);
   const [fetchingMetadata, setFetchingMetadata] = useState(false);
 
-  const { getLinksInAttachmentArea } = useElementsWithLinks();
-  const linksInAttachmentArea = getLinksInAttachmentArea();
-  const hasLinksInAttachmentArea = linksInAttachmentArea.length > 0;
+  const { hasLinksInAttachmentArea } = useElementsWithLinks();
 
   // Stop displaying guidelines when unmounting.
   useEffect(() => {
