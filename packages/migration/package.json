@@ -37,7 +37,7 @@
     "access": "public"
   },
   "dependencies": {
-    "polished": "^4.1.4",
+    "polished": "^4.2.2",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
