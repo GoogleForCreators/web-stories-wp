@@ -59,27 +59,24 @@ const getBoilerplateDataList = () => {
  * Get boilerplate data.
  */
 const getBoilerplateData = ( boilerplateName ) => {
-  return getBoilerplateDataList().filter( ( { name } ) => name === boilerplateName );
+  return getBoilerplateDataList().filter( ( { name } ) => name === boilerplateName )[0];
 };
 
 /**
- * Install dependencies from meta.
+ * Install dependencies from configuration.
  */
-function installDependenciesFromMeta(
-  boilerplateIndex,
-  setupType,
+function installDependenciesFromConfig(
+  boilerplateName,
   projectPath,
   isPrivate,
 ) {
-  const meta = getBoilerplateDataList().filter(
-    ( { type } ) => type === setupType,
-  )[ boilerplateIndex ];
+  const config = getBoilerplateData( boilerplateName );
 
   if ( isPrivate ) {
     log( `\nUsing registry at url \`${ PRIVATE_REGISTRY_URL }\`\n` );
   }
 
-  const { dependencies, devDependencies } = meta
+  const { dependencies, devDependencies } = config
 
   if ( dependencies ) {
     const dependencyInstallCommand =
@@ -112,7 +109,7 @@ function getBoilerplatePath( boilerplateName ) {
   let boilerplateDirName;
 
    boilerplateDirNames.forEach( ( dirName ) => {
-    const configPath = path.join( boilerplateDir, dirName );
+    const configPath = path.join( boilerplateDir, dirName, CONFIG_FILE );
     const config = JSON.parse( fse.readFileSync( configPath ) );
 
     if ( config.name === boilerplateName ) {
@@ -153,7 +150,7 @@ function scaffoldBoilerplateWithCRA( boilerplateName, projectName, isPrivate ) {
   } );
 
   // Install boilerplate dependencies listed in meta
-  installDependenciesFromMeta( boilerplateName, projectPath, isPrivate );
+  installDependenciesFromConfig( boilerplateName, projectPath, isPrivate );
 
   // Downgrade react and react-dom to supported version.
   execSync( `npm i react@${ REACT_SUPPORTED_VERSION } react-dom@${ REACT_SUPPORTED_VERSION }`, {
@@ -164,19 +161,17 @@ function scaffoldBoilerplateWithCRA( boilerplateName, projectName, isPrivate ) {
 /**
  * Scaffold custom boilerplate.
  */
-function scaffoldBoilerplateCustom( boilerplateIndex, projectName, isPrivate ) {
+function scaffoldBoilerplateCustom( boilerplateName, projectName, isPrivate ) {
   const projectPath = path.join( process.cwd(), projectName );
   const sharedPath = path.join( __dirname, SHARED_DIR_PATH );
 
-  const boilerplatePath = path.join(
-    getBoilerplatePath( boilerplateIndex, 'custom' ),
-  );
+  const boilerplatePath = getBoilerplatePath( boilerplateName );
 
   fse.copySync( boilerplatePath, projectPath );
   fse.removeSync( path.join( projectPath, CONFIG_FILE ) );
 
   // Get files from shared folder as per the mapping.
-  const { replacements } = getBoilerplateData( boilerplateIndex, 'custom' );
+  const { replacements } = getBoilerplateData( boilerplateName );
 
   replacements.forEach( ( { src, dest } ) => {
     fse.copySync( path.join( sharedPath, src ), path.join( projectPath, dest ) );
@@ -188,9 +183,8 @@ function scaffoldBoilerplateCustom( boilerplateIndex, projectName, isPrivate ) {
   } );
 
   // Install boilerplate dependencies listed in meta.
-  installDependenciesFromMeta(
-    boilerplateIndex,
-    'custom',
+  installDependenciesFromConfig(
+    boilerplateName,
     projectPath,
     isPrivate,
   );

@@ -174,10 +174,9 @@ if ( boilerplate === 'none' ) {
   log( LOGO, 'cyan' );
   log( '\n\n' );
   log( WELCOME_MESSAGE, 'cyan' );
-  let response;
 
   if ( userPrompts.length > 0 ) {
-    response = await prompts( userPrompts, {
+    const response = await prompts( userPrompts, {
       onCancel: () => {
         process.exit( 1 );
       },
