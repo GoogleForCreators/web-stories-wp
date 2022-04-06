@@ -36,6 +36,10 @@ import {
   elementWithRotation,
 } from '@googleforcreators/element-library';
 import { FrameWithMask as WithMask } from '@googleforcreators/masks';
+import {
+  useLiveRegion,
+  useKeyDownEffect,
+} from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -51,7 +55,11 @@ import WithLink from '../elementLink/frame';
 import useDoubleClick from '../../utils/useDoubleClick';
 import usePerformanceTracking from '../../utils/usePerformanceTracking';
 import { TRACKING_EVENTS } from '../../constants';
-import { FOCUS_GROUPS, useFocusGroupRef } from './editLayerFocusManager';
+import {
+  FOCUS_GROUPS,
+  useFocusGroupRef,
+  useEditLayerFocusManager,
+} from './editLayerFocusManager';
 
 // @todo: should the frame borders follow clip lines?
 
@@ -83,6 +91,9 @@ const EmptyFrame = styled.div`
 const NOOP = () => {};
 
 function FrameElement({ id }) {
+  const enterFocusGroup = useEditLayerFocusManager(
+    ({ enterFocusGroup }) => enterFocusGroup
+  );
   const [isTransforming, setIsTransforming] = useState(false);
   const focusGroupRef = useFocusGroupRef(FOCUS_GROUPS.ELEMENT_SELECTION);
 
@@ -213,6 +224,18 @@ function FrameElement({ id }) {
     },
     eventType: 'pointerdown',
   });
+
+  useKeyDownEffect(
+    elementRef,
+    { key: ['enter'] },
+    () => {
+      enterFocusGroup({
+        groupId: FOCUS_GROUPS.EDIT_ELEMENT,
+        cleanup: () => elementRef.current?.focus(),
+      });
+    },
+    [enterFocusGroup]
+  );
 
   return (
     <WithLink element={element} active={isLinkActive} anchorRef={elementRef}>

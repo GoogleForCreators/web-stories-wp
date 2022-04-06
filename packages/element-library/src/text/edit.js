@@ -25,6 +25,8 @@ import {
   useCallback,
   useMemo,
   useUnmount,
+  useCombinedRefs,
+  forwardRef,
 } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { generatePatternStyles } from '@googleforcreators/patterns';
@@ -125,15 +127,18 @@ const OutsideBorder = styled.div`
   overflow: hidden;
 `;
 
-function TextEdit({
-  element,
-  box: { x, y, height, rotationAngle },
-  editWrapper,
-  onResize,
-  updateElementById,
-  deleteSelectedElements,
-  maybeEnqueueFontStyle,
-}) {
+const TextEdit = forwardRef(function TextEdit(
+  {
+    element,
+    box: { x, y, height, rotationAngle },
+    editWrapper,
+    onResize,
+    updateElementById,
+    deleteSelectedElements,
+    maybeEnqueueFontStyle,
+  },
+  ref
+) {
   const {
     id,
     content,
@@ -397,7 +402,9 @@ function TextEdit({
     >
       {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions -- Needed here to ensure the editor keeps focus, e.g. after setting inline colour. */}
       <Wrapper
-        ref={wrapperRef}
+        tabIndex={-1}
+        ref={useCombinedRefs(wrapperRef, ref)}
+        onFocus={() => editorRef.current?.focus()}
         onClick={onClick}
         data-testid="textEditor"
         {...wrapperProps}
@@ -428,7 +435,7 @@ function TextEdit({
       </Wrapper>
     </OutsideBorder>
   );
-}
+});
 
 TextEdit.propTypes = {
   element: StoryPropTypes.elements.text.isRequired,

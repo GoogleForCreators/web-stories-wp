@@ -27,6 +27,10 @@ import { ContextMenu } from '@googleforcreators/design-system';
  * Internal dependencies
  */
 import { Z_INDEX_FLOATING_MENU } from '../../constants/zIndex';
+import {
+  useFocusGroupRef,
+  FOCUS_GROUPS,
+} from '../canvas/editLayerFocusManager';
 import { FloatingMenuProvider } from './context';
 import MenuSelector from './menus';
 
@@ -43,6 +47,7 @@ const FloatingMenu = memo(
     { selectionIdentifier, selectedElementType, handleDismiss, visuallyHidden },
     ref
   ) {
+    const focusGroupRef = useFocusGroupRef(FOCUS_GROUPS.EDIT_ELEMENT);
     useLayoutEffect(() => {
       const node = ref.current;
       const updateSize = () => {
@@ -72,7 +77,7 @@ const FloatingMenu = memo(
             isHorizontal
             isSecondary
             isAlwaysVisible
-            disableControlledTabNavigation
+            ref={focusGroupRef}
             aria-label={__(
               'Design options for selected element',
               'web-stories'
