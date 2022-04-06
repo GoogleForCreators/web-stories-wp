@@ -158,7 +158,7 @@ function FrameElement({ id }) {
 
   useLayoutEffect(() => {
     setNodeForElement(id, elementRef.current);
-  }, [elementRef, id, setNodeForElement]);
+  }, [id, setNodeForElement]);
   const box = getBox(element);
 
   useTransformHandler(id, (transform) => {
@@ -243,8 +243,7 @@ function FrameElement({ id }) {
         ref={combinedFocusGroupRef}
         data-element-id={id}
         {...box}
-        // eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex -- Needed for being able to focus on the selected element on canvas, e.g. for entering edit mode.
-        tabIndex={0}
+        tabIndex={-1}
         aria-labelledby={`layer-${id}`}
         hasMask={isMaskable}
         data-testid="frameElement"

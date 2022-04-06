@@ -56,7 +56,7 @@ const FramesPageArea = styled(PageArea)`
 const marginRatio = 100 * (DESIGN_SPACE_MARGIN / PAGE_WIDTH);
 
 const FocusContainer = styled.div`
-  grid-row: 2 / 7;
+  grid-row: 2 / -1;
   grid-column: 1 / -1;
   // show focus border by adding margin
   margin: 5px;
@@ -208,13 +208,14 @@ function FramesLayer() {
     <FramesNavAndSelection>
       <FocusContainer
         id={canvasId}
+        data-testid="canvas-focus-container"
         ref={canvasRef}
         aria-label={FOCUS_CONTAINER_MESSAGE}
         // eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex -- Container used to separate elements from normal tab order.
         tabIndex={0}
       />
       {/* Hide canvas from normal tab flow. Use focus group to focus canvas */}
-      <FrameElements tabIndex={-1} role="main" aria-labelledby={canvasId} />
+      <FrameElements role="main" aria-labelledby={canvasId} />
     </FramesNavAndSelection>
   );
 }

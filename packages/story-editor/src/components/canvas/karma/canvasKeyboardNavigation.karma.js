@@ -34,17 +34,44 @@ describe('Canvas - keyboard navigation', () => {
   });
 
   it('should not focus the canvas while tabbing through the editor', async () => {
-    // focus media pane
+    const focusContainer = fixture.screen.getByTestId('canvas-focus-container');
+
+    // start focused on media pane searchbar
     await fixture.events.focus(fixture.editor.library.media.searchBar);
 
     // tab until focus reaches the canvas container
-    expect(document.activeElement).not.toBe(
-      fixture.editor.library.media.searchBar
+    let count = 0;
+    while (count < 50) {
+      // eslint-disable-next-line no-await-in-loop -- need to await key press
+      await fixture.events.keyboard.press('tab');
+
+      if (document.activeElement === focusContainer) {
+        break;
+      }
+
+      count++;
+    }
+
+    if (count >= 50) {
+      throw new Error('Could not find focus container.');
+    }
+
+    // tab once more
+    await fixture.events.keyboard.press('tab');
+
+    // verify that prev page button is focused
+    expect(document.activeElement).toBe(
+      fixture.editor.canvas.framesLayer.prevPage
     );
   });
 
   // eslint-disable-next-line jasmine/no-disabled-tests -- not implemented yet
-  xit(
-    'should focus the canvas and elements in the canvas after entering into the canvas space'
-  );
+  xit('should focus the canvas and elements in the canvas after entering into the canvas space', async () => {
+    // start focused on media pane searchbar
+    // tab until focus reaches the canvas container
+    // enter into the canvas
+    // verify cyclicity
+    // exit canvas
+    // verify exit
+  });
 });
