@@ -26,13 +26,13 @@ import fse from 'fs-extra';
  * Internal dependencies
  */
 import {
+  LOGO,
   WELCOME_MESSAGE,
+  getBoilerplateName,
   getBoilerplateConfigList,
   scaffoldBoilerplateCustom,
   scaffoldBoilerplateWithCRA,
-  getBoilerplateName,
   log,
-  LOGO
 } from './common.js';
 import {
   DEFAULT_PROJECT_NAME,

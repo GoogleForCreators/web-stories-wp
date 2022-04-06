@@ -34,14 +34,26 @@ Go to any other folder outside the project and run
 npm --registry http://localhost:4873/ init @googleforcreators/web-stories
 ```
 
-Note that `npm init`  would install all dependencies from npm registry by default. If you want to install them from the local registry, you should  publish them and use the `--private` flag.
+
+
+#### Flags
+
+Note that `npm init`  would install all dependencies from npm registry by default. If you want to install them from the local registry, you should  publish them and use the `--private` flag. ( Be sure to bundle and locally publish packages first )
 
 Example:
 
 ```bash
-npm version --workspaces --no-git-tag-version "0.1.$(date -u +%Y%m%d%H%M)"
-npm --registry http://localhost:4873/ --workspaces publish
 npm --registry http://localhost:4873/ init @googleforcreators/web-stories -- --private
+```
+
+
+
+You can also skip all questionnaires by providing options in `--name`, `--setupType` and `--boilerplate` flags.
+
+Example:
+
+```bash
+npm --registry http://localhost:4873/ init -y @googleforcreators/web-stories -- --name custom-web-stories --setupType custom --boilerplate editor
 ```
 
 

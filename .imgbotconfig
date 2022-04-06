@@ -1,6 +1,5 @@
 {
   "ignoredFiles": [
-    "*.svg",
-    "**/packages/create-web-stories/shared/*"
+    "*.svg"
   ]
 }
