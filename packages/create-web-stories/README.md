@@ -39,6 +39,8 @@ Note that `npm init`  would install all dependencies from npm registry by defaul
 Example:
 
 ```bash
+npm version --workspaces --no-git-tag-version "0.1.$(date -u +%Y%m%d%H%M)"
+npm --registry http://localhost:4873/ --workspaces publish
 npm --registry http://localhost:4873/ init @googleforcreators/web-stories -- --private
 ```
 
