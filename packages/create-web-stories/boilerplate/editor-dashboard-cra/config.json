@@ -1,9 +1,11 @@
 {
+  "name": "editor-dashboard-CRA",
   "type": "CRA",
-  "displayName": "Editor",
-  "description": "See the story editor in action. It has capability to save a story in local storage and also serves preview",
+  "displayName": "Editor and Dashboard",
+  "description": "A Standalone project combining dashboard for story management and the editor for editing them.",
   "dependencies": [
     "@googleforcreators/story-editor",
+    "@googleforcreators/dashboard",
     "@googleforcreators/elements",
     "@googleforcreators/element-library",
     "react-router-dom"
@@ -15,20 +17,16 @@
       "dest": "public/favicon.ico"
     },
     {
-      "src": "src/editor-api",
+      "src": "src/editor-dashboard-api",
       "dest": "src/api"
     },
     {
-      "src": "src/editor-components/",
+      "src": "src/editor-dashboard-components",
       "dest": "src/components"
     },
     {
-      "src": "src/constants/editor.js",
+      "src": "src/constants/editor-dashboard.js",
       "dest": "src/constants.js"
-    },
-    {
-      "src": "src/getDummyMedia.js",
-      "dest": "src/getDummyMedia.js"
     }
   ]
 }

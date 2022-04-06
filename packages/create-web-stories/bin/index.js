@@ -30,16 +30,21 @@ import {
   getBoilerplateDataList,
   scaffoldBoilerplateCustom,
   scaffoldBoilerplateWithCRA,
+  getBoilerplateName,
   log,
   LOGO
 } from './common.js';
-import { DEFAULT_PROJECT_NAME } from './constants.js';
+import {
+  DEFAULT_PROJECT_NAME,
+  BOILERPLATE_NAMES,
+  SETUP_TYPES
+} from './constants.js';
 
 program
   .option( '-p, --private', 'install from local registry' )
   .option( '-n, --name <name>', 'project folder name', 'none' )
   .option(
-    '-t, --type <setup-type>',
+    '-t, --setupType <setup-type>',
     'type of setup to use for scaffolding the project, pass 0 for CRA or 1 for custom setup',
     'none',
   )
@@ -51,12 +56,12 @@ program
 
 program.parse( process.argv );
 
-let {
-  private: isPrivate,
-  name: projectName,
-  type: setupType,
-  boilerplate: boilerplateIndex
-} = program.opts();
+const options = program.opts();
+const isPrivate = Boolean( options.private );
+const boilerplate = options.boilerplate;
+let projectName = options.name;
+let setupType = options.setupType;
+let boilerplateName = getBoilerplateName( options.boilerplate, setupType );
 
 const userPrompts = [];
 const boilerplateDataList = getBoilerplateDataList();
@@ -95,11 +100,11 @@ if ( setupType === 'none' ) {
   const choices = [
     {
       title: 'Create React App',
-      value: 0,
+      value: SETUP_TYPES.CRA,
     },
     {
       title: 'Custom setup',
-      value: 1,
+      value: SETUP_TYPES.CUSTOM,
     },
   ];
 
@@ -109,78 +114,59 @@ if ( setupType === 'none' ) {
     message: 'Please select what kind for setup would you prefer:',
     choices,
   } );
-} else {
-  // Validate, if value was passed as an argument.
-  if ( [ 1, 2 ].includes( setupType ) ) {
-    log(
-      `Invalid setup type passed. Argument value should be either 1 or 2`,
-      'red',
-    );
+} else if ( ! Object.values( SETUP_TYPES ).includes( setupType ) ) { // Validate, if value was passed as an argument.
+  log(
+    `Invalid setup type passed. Argument value should be either ${ SETUP_TYPES.CRA } or ${ SETUP_TYPES.CUSTOM }`,
+    'red',
+  );
 
-    process.exit( 1 );
-  }
+  process.exit( 1 );
 }
 
 // Add prompt for what boilerplate to use if option has default value.
-if ( boilerplateIndex === 'none' ) {
+if ( boilerplate === 'none' ) {
   const craChoices = boilerplateDataList
-    .filter( ( { type } ) => type === 'CRA' )
-    .map( ( { displayName, description }, ind ) => {
+    .filter( ( { type } ) => type === SETUP_TYPES.CRA )
+    .map( ( { displayName, description, name } ) => {
       return {
         title: displayName,
         description,
-        value: ind,
+        value: name,
       };
     } );
 
   const customChoices = boilerplateDataList
-    .filter( ( { type } ) => type === 'custom' )
-    .map( ( { displayName, description }, ind ) => {
+    .filter( ( { type } ) => type === SETUP_TYPES.CUSTOM )
+    .map( ( { displayName, description, name } ) => {
       return {
         title: displayName,
         description,
-        value: ind,
+        value: name
       };
     } );
 
   userPrompts.push( {
     type: 'select',
-    name: 'boilerplateIndex',
+    name: 'boilerplate',
     message: 'Boilerplate Type:',
-    choices: ( prev ) => ( prev === 0 ? craChoices : customChoices ),
+    choices: ( previousResponse ) => {
+      switch ( previousResponse ) {
+        case SETUP_TYPES.CRA:
+          return craChoices;
+        case SETUP_TYPES.CUSTOM:
+          return customChoices
+      }
+    },
   } );
-} else {
-  // Validate, if value was passed as an argument.
-  const numBoilerplateCra = boilerplateDataList.filter(
-    ( { type } ) => type === 'CRA',
-  ).length;
+} else if ( ! Object.values( BOILERPLATE_NAMES ).includes( boilerplate ) ) {
+  const validBoilerplateNames = Object.values( BOILERPLATE_NAMES ).join( ', ' );
 
-  const numBoilerplateCustom = boilerplateDataList.filter(
-    ( { type } ) => type === 'custom',
-  ).length;
+  log(
+    `Invalid boilerplate: boilerplate names can only be one of these - ${ validBoilerplateNames }`,
+    'red',
+  );
 
-  if (
-    setupType === '0' &&
-    ( boilerplateIndex < 0 || boilerplateIndex > numBoilerplateCra )
-  ) {
-    log(
-      `Invalid boilerplate: boilerplate should have a value between 0 and ${ numBoilerplateCra.length })`,
-      'red',
-    );
-
-    process.exit( 1 );
-  }
-
-  if (
-    setupType === '1' &&
-    ( boilerplateIndex < 0 || boilerplateIndex > numBoilerplateCustom )
-  ) {
-    log(
-      `Invalid Type: boilerplate should have a value between 0 and ${ numBoilerplateCustom.length })`,
-      'red',
-    );
-    process.exit( 1 );
-  }
+  process.exit( 1 );
 }
 
 ( async () => {
@@ -199,18 +185,18 @@ if ( boilerplateIndex === 'none' ) {
 
     projectName = response.projectName || DEFAULT_PROJECT_NAME;
     setupType = response.setupType;
-    boilerplateIndex = response.boilerplateIndex;
+    boilerplateName = response.boilerplate;
   }
 
   log( '\n\n' );
   log( 'Please wait, while we set things up....', 'green' );
 
-  switch ( Number(setupType) ) {
-    case 0:
-      scaffoldBoilerplateWithCRA( Number(boilerplateIndex), projectName, isPrivate );
+  switch ( setupType ) {
+    case SETUP_TYPES.CRA:
+      scaffoldBoilerplateWithCRA( boilerplateName, projectName, isPrivate );
       break;
-    case 1:
-      scaffoldBoilerplateCustom( Number(boilerplateIndex), projectName, isPrivate );
+    case SETUP_TYPES.CUSTOM:
+      scaffoldBoilerplateCustom( boilerplateName, projectName, isPrivate );
       break;
     default:
       break;

@@ -1,4 +1,5 @@
 {
+  "name": "dashboard-CRA",
   "type": "CRA",
   "displayName": "Dashboard",
   "description": "See a simple dashboard in action. It uses hardcoded data to hydrate itself",

@@ -1,4 +1,5 @@
 {
+  "name": "editor-dashboard-custom",
   "type": "custom",
   "displayName": "Editor and Dashboard",
   "description": "A Standalone project combining dashboard for story management and the editor for editing them.",

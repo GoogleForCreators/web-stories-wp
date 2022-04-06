@@ -41,27 +41,25 @@ const CONFIG_FILE = 'config.json';
  */
 const getBoilerplateDataList = () => {
   const boilerplateDir = path.join( __dirname, BOILERPLATE_DIR_PATH );
-  const boilerplateNames = fse.readdirSync( boilerplateDir );
+  const boilerplateDirNames = fse.readdirSync( boilerplateDir );
 
-  return boilerplateNames.map( ( name ) => {
-    const metaPath = path.resolve(
+  return boilerplateDirNames.map( ( name ) => {
+    const configPath = path.resolve(
       __dirname,
       BOILERPLATE_DIR_PATH,
       name,
       CONFIG_FILE,
     );
 
-    return JSON.parse( fse.readFileSync( metaPath ) );
+    return JSON.parse( fse.readFileSync( configPath ) );
   } );
 };
 
 /**
  * Get boilerplate data.
  */
-const getBoilerplateData = ( boilerplateIndex, boilerplateType ) => {
-  return getBoilerplateDataList().filter(
-    ( { type } ) => type === boilerplateType,
-  )[ boilerplateIndex ];
+const getBoilerplateData = ( boilerplateName ) => {
+  return getBoilerplateDataList().filter( ( { name } ) => name === boilerplateName );
 };
 
 /**
@@ -108,33 +106,19 @@ function installDependenciesFromMeta(
 /**
  * Get boilerplate path.
  */
-function getBoilerplatePath( boilerplateIndex, type ) {
+function getBoilerplatePath( boilerplateName ) {
   const boilerplateDir = path.join( __dirname, BOILERPLATE_DIR_PATH );
   const boilerplateDirNames = fse.readdirSync( boilerplateDir );
-
   let boilerplateDirName;
 
-  if ( type === 'CRA' ) {
-    const boilerplateDirNamesCra = boilerplateDirNames.filter( ( name ) => {
-      const meta = JSON.parse(
-        fse.readFileSync( path.resolve( boilerplateDir, name, CONFIG_FILE ) ),
-      );
+   boilerplateDirNames.forEach( ( dirName ) => {
+    const configPath = path.join( boilerplateDir, dirName );
+    const config = JSON.parse( fse.readFileSync( configPath ) );
 
-      return meta.type === 'CRA';
-    } );
-
-    boilerplateDirName = boilerplateDirNamesCra[ boilerplateIndex ];
-  } else if ( type === 'custom' ) {
-    const boilerplateDirNamesCustom = boilerplateDirNames.filter( ( name ) => {
-      const meta = JSON.parse(
-        fse.readFileSync( path.resolve( boilerplateDir, name, CONFIG_FILE ) ),
-      );
-
-      return meta.type === 'custom';
-    } );
-
-    boilerplateDirName = boilerplateDirNamesCustom[ boilerplateIndex ];
-  }
+    if ( config.name === boilerplateName ) {
+    	boilerplateDirName = dirName;
+    }
+  } );
 
   return path.join( boilerplateDir, boilerplateDirName );
 }
@@ -142,8 +126,8 @@ function getBoilerplatePath( boilerplateIndex, type ) {
 /**
  * Scaffold boilerplate with CRA.
  */
-function scaffoldBoilerplateWithCRA( boilerplateIndex, projectName, isPrivate ) {
-  const boilerplatePath = getBoilerplatePath( boilerplateIndex, 'CRA' );
+function scaffoldBoilerplateWithCRA( boilerplateName, projectName, isPrivate ) {
+  const boilerplatePath = getBoilerplatePath( boilerplateName );
   const sharedPath = path.join( __dirname, SHARED_DIR_PATH );
 
   execSync( `npx create-react-app@latest ${ projectName }`, {
@@ -162,14 +146,14 @@ function scaffoldBoilerplateWithCRA( boilerplateIndex, projectName, isPrivate ) 
     path.resolve( projectPath, 'public' ),
   );
 
-  const { replacements } = getBoilerplateData( boilerplateIndex, 'CRA' );
+  const { replacements } = getBoilerplateData( boilerplateName );
 
   replacements.forEach( ( { src, dest } ) => {
     fse.copySync( path.join( sharedPath, src ), path.join( projectPath, dest ) );
   } );
 
   // Install boilerplate dependencies listed in meta
-  installDependenciesFromMeta( boilerplateIndex, 'CRA', projectPath, isPrivate );
+  installDependenciesFromMeta( boilerplateName, projectPath, isPrivate );
 
   // Downgrade react and react-dom to supported version.
   execSync( `npm i react@${ REACT_SUPPORTED_VERSION } react-dom@${ REACT_SUPPORTED_VERSION }`, {
@@ -227,12 +211,20 @@ function log( text, color ) {
   console.log( color ? chalk[ color ]( text ) : text );
 }
 
+/**
+ * Get boilerplate directory name.
+ */
+function getBoilerplateName( boilerplate, setupType ) {
+  return ( boilerplate && setupType ) ? `${ boilerplate }-${ setupType }` : 'none';
+}
+
 export {
   log,
   getBoilerplateDataList,
   replaceDir,
   scaffoldBoilerplateWithCRA,
   scaffoldBoilerplateCustom,
+  getBoilerplateName,
   WELCOME_MESSAGE,
   LOGO
 };

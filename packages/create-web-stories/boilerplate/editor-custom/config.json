@@ -1,4 +1,5 @@
 {
+  "name": "editor-custom",
   "type": "custom",
   "displayName": "Editor",
   "description": "See the story editor in action. It has capability to save a story in local storage and also serves preview",
