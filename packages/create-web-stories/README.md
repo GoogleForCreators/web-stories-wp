@@ -28,13 +28,13 @@ Publish the package locally
 npm --registry http://localhost:4873/ --workspace=@googleforcreators/create-web-stories publish
 ```
 
-Go a folder outside the project and run
+Go to any other folder outside the project and run
 
 ```bash
 npm --registry http://localhost:4873/ init @googleforcreators/web-stories
 ```
 
-Note that `npm init`  would install all dependencies from npm registry by default. If you want to install local packages, you should  publish them and use the `--private` flag.
+Note that `npm init`  would install all dependencies from npm registry by default. If you want to install them from the local registry, you should  publish them and use the `--private` flag.
 
 Example:
 
