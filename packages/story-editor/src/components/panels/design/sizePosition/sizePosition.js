@@ -43,12 +43,8 @@ import { getDefinitionForType } from '@googleforcreators/elements';
  */
 import { SimplePanel } from '../../panel';
 import FlipControls from '../../shared/flipControls';
-import {
-  focusStyle,
-  getCommonValue,
-  inputContainerStyleOverride,
-  useCommonObjectValue,
-} from '../../shared';
+import { focusStyle, inputContainerStyleOverride } from '../../shared/styles';
+import { getCommonValue, useCommonObjectValue } from '../../shared';
 import useStory from '../../../../app/story/useStory';
 import {
   MULTIPLE_VALUE,

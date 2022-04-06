@@ -50,7 +50,7 @@ import useRovingTabIndex from '../../../../utils/useRovingTabIndex';
 import { areAllType, getTextInlineStyles } from '../../../../utils/presetUtils';
 import objectWithout from '../../../../utils/objectWithout';
 import getUpdatedSizeAndPosition from '../../../../utils/getUpdatedSizeAndPosition';
-import { focusStyle } from '../../../panels/shared';
+import { focusStyle } from '../../../panels/shared/styles';
 
 // If text is selected, there's no `+` icon displayed and we display the focus style on the button directly.
 const Preview = styled.button`

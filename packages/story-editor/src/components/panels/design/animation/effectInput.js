@@ -34,7 +34,7 @@ import {
 /**
  * Internal dependencies
  */
-import { inputContainerStyleOverride } from '../../shared';
+import { inputContainerStyleOverride } from '../../shared/styles';
 import { DirectionRadioInput } from './directionRadioInput';
 import { INPUT_HEIGHT } from './constants';
 

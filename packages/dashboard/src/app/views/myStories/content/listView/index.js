@@ -21,7 +21,6 @@ import PropTypes from 'prop-types';
 import { useCallback, useMemo } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { Icons, Text, THEME_CONSTANTS } from '@googleforcreators/design-system';
-import { useFeatures } from 'flagged';
 /**
  * Internal dependencies
  */
@@ -73,7 +72,6 @@ export default function StoryListView({
   storySort,
   storyStatus,
 }) {
-  const { enablePostLocking } = useFeatures();
   const {
     userId,
     styleConstants: { topOffset },
@@ -107,22 +105,14 @@ export default function StoryListView({
         <StoryListItem
           key={`story-${story.id}`}
           story={story}
-          userId={enablePostLocking && userId}
+          userId={userId}
           renameStory={renameStory}
           storyStatus={storyStatus}
           storyMenu={storyMenu}
         />
       ))
     );
-  }, [
-    enablePostLocking,
-    hideStoryList,
-    renameStory,
-    stories,
-    storyStatus,
-    storyMenu,
-    userId,
-  ]);
+  }, [hideStoryList, renameStory, stories, storyStatus, storyMenu, userId]);
 
   return (
     <ListView data-testid="story-list-view">

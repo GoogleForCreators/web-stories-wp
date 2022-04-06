@@ -37,7 +37,7 @@ import {
 import useSidebar from '../../../sidebar/useSidebar';
 import panelContext from '../context';
 import { PANEL_COLLAPSED_THRESHOLD } from '../panel';
-import { focusStyle } from '../../shared';
+import { focusStyle } from '../../shared/styles';
 import DragHandle from './handle';
 
 // If the header is collapsed, we're leaving 8px less padding to apply that from the content.

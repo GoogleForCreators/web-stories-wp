@@ -84,7 +84,7 @@ const StoryDisplayContent = ({
 
   const { name, avatar } = lockUser;
 
-  const storyLockedTitle = isLocked && (
+  const storyLockedTitle = isLocked && avatar && (
     <LockedRow>
       <Tooltip
         position={TOOLTIP_PLACEMENT.BOTTOM_START}
@@ -97,16 +97,14 @@ const StoryDisplayContent = ({
           )
         }
       >
-        {avatar && (
-          <LockAvatar
-            src={avatar}
-            alt={name}
-            decoding="async"
-            height={24}
-            width={24}
-            data-test-id="lock-user-avatar"
-          />
-        )}
+        <LockAvatar
+          src={avatar}
+          alt={name}
+          decoding="async"
+          height={24}
+          width={24}
+          data-test-id="lock-user-avatar"
+        />
       </Tooltip>
     </LockedRow>
   );
