@@ -222,7 +222,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
 
     it('should ensure staggered presets fit on the page', async () => {
       const POSITION_MARGIN = dataFontEm(1);
-      const PARAGRAPH_TEXT = 'Fill in some text.';
+      const PARAGRAPH_TEXT = 'Fill in some text';
       let lastY;
       let lastHeight;
       let nextY;
@@ -371,7 +371,7 @@ describe('CUJ: Creator can Add and Write Text: Consecutive text presets', () => 
 
       const [text1] = await getSelection();
       expect(text1.content).toEqual(
-        '<span style="color: #fff">Fill in some text.</span>'
+        '<span style="color: #fff">Fill in some text</span>'
       );
 
       // Select background for being able to insert another text.

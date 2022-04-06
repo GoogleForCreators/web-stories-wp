@@ -82,7 +82,7 @@ describe('Library: Saved Styles', () => {
       expect(lastAdded.type).toBe('text');
       expect(lastAdded.fontSize).toBe(36);
       expect(lastAdded.content).toBe(
-        '<span style="font-weight: 700">Fill in some text.</span>'
+        '<span style="font-weight: 700">Fill in some text</span>'
       );
 
       // Select background for being able to insert another text.

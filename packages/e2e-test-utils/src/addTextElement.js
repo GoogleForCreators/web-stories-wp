@@ -20,6 +20,6 @@ export default async function addTextElement() {
   );
   await insertButton.click();
   await expect(page).toMatchElement('[data-testid="textFrame"]', {
-    text: 'Fill in some text.',
+    text: 'Fill in some text',
   });
 }

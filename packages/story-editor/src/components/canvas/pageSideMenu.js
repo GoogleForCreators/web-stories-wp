@@ -78,7 +78,9 @@ function PageSideMenu() {
   const handleAddText = (evt) => {
     evt.stopPropagation();
     insertElement('text', DEFAULT_PRESET);
-    trackEvent('library_text_quick_action');
+    trackEvent('quick_action', {
+      name: ACTIONS.INSERT_TEXT_QUICK_ACTION.trackingEventName,
+    });
   };
 
   return (

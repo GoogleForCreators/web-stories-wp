@@ -54,7 +54,7 @@ describe('copyPaste utils', () => {
       vertical: 0,
     },
     type: 'text',
-    content: 'Fill in some text.',
+    content: 'Fill in some text',
     x: 91,
     y: 23,
     basedOn: 'text',
@@ -239,7 +239,7 @@ describe('copyPaste utils', () => {
       addElementsToClipboard(PAGE, elements, [], evt);
 
       expect(setData).toHaveBeenCalledTimes(2);
-      expect(setData).toHaveBeenCalledWith('text/plain', 'Fill in some text.');
+      expect(setData).toHaveBeenCalledWith('text/plain', 'Fill in some text');
       expect(setData).toHaveBeenCalledWith('text/html', expect.any(String));
     });
 

@@ -60,7 +60,7 @@ const DEFAULT_TEXT_PADDING = {
 const DEFAULT_TEXT_ALIGN = 'left';
 
 const DEFAULT_PRESET = {
-  content: _x('Fill in some text.', 'text preset content', 'web-stories'),
+  content: _x('Fill in some text', 'text preset content', 'web-stories'),
   fontSize: dataFontEm(1.33),
   lineHeight: 1.2,
   x: DEFAULT_LEFT_MARGIN,

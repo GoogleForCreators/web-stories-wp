@@ -92,7 +92,7 @@ describe('Design Menu: Text Styles', () => {
 
       const element = await getSelectedElement();
       expect(element.content).toBe(
-        '<span style="color: #ff7096">Fill in some text.</span>'
+        '<span style="color: #ff7096">Fill in some text</span>'
       );
     });
 
@@ -108,7 +108,7 @@ describe('Design Menu: Text Styles', () => {
       await fixture.events.keyboard.type('30');
       await fixture.events.keyboard.press('tab');
 
-      // Select character 7 and 8 (the part "ip" in "Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
+      // Select character 6 and 7 (the part "in" in "Fill in some text")
       await setSelection(5, 7);
       await fixture.events.click(
         fixture.editor.canvas.designMenu.fontColor.button
@@ -137,7 +137,7 @@ describe('Design Menu: Text Styles', () => {
 
       const element = await getSelectedElement();
       expect(element.content).toBe(
-        'Fill <span style="color: #ff7096">in</span> some text.'
+        'Fill <span style="color: #ff7096">in</span> some text'
       );
 
       await fixture.snapshot('Mixed color value in the floating menu');
@@ -160,7 +160,7 @@ describe('Design Menu: Text Styles', () => {
 
       const formattedText = await getSelectedElement();
       expect(formattedText.content).toBe(
-        '<span style="font-weight: 700; font-style: italic; text-decoration: underline">Fill in some text.</span>'
+        '<span style="font-weight: 700; font-style: italic; text-decoration: underline">Fill in some text</span>'
       );
 
       // Uncheck all again.
@@ -175,7 +175,7 @@ describe('Design Menu: Text Styles', () => {
       expect(fixture.editor.canvas.designMenu.underline.checked).toBeFalse();
 
       const text = await getSelectedElement();
-      expect(text.content).toBe('Fill in some text.');
+      expect(text.content).toBe('Fill in some text');
     });
 
     it('should allow format a selection of a text from the design menu', async () => {
@@ -190,7 +190,7 @@ describe('Design Menu: Text Styles', () => {
       await fixture.events.keyboard.type('30');
       await fixture.events.keyboard.press('tab');
 
-      // Select character 7 and 8 (the part "ip" in "Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
+      // Select character 6 and 7 (the part "in" in "Fill in some text")
       await setSelection(5, 7);
 
       await fixture.events.click(fixture.editor.canvas.designMenu.bold.node);
@@ -212,7 +212,7 @@ describe('Design Menu: Text Styles', () => {
 
       const formattedText = await getSelectedElement();
       expect(formattedText.content).toBe(
-        'Fill <span style="font-weight: 700; font-style: italic; text-decoration: underline">in</span> some text.'
+        'Fill <span style="font-weight: 700; font-style: italic; text-decoration: underline">in</span> some text'
       );
 
       // Verify all toggles show false now since we have mixed values inside the text.

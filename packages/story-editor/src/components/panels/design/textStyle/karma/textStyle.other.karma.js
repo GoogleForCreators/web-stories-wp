@@ -199,7 +199,7 @@ describe('Text Style Panel', () => {
       await fixture.events.keyboard.type('4');
       await fixture.events.keyboard.press('tab');
 
-      const texts = await fixture.screen.findAllByText('Fill in some text.');
+      const texts = await fixture.screen.findAllByText('Fill in some text');
 
       // Display layer.
       const displayStyle = await waitFor(() =>

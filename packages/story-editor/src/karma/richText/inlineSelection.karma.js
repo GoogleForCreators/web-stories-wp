@@ -46,7 +46,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
   });
 
   it('should have the correct initial text and no formatting', () => {
-    expect(getTextContent()).toBe('Fill in some text.');
+    expect(getTextContent()).toBe('Fill in some text');
   });
 
   describe('CUJ: Creator Can Style Text: Apply B, Apply U, Apply I, Set text color, Set kerning', () => {
@@ -213,7 +213,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       // Enter edit-mode
       await data.fixture.events.keyboard.press('Enter');
 
-      // Select character 7 and 8 (the part "ip" in "Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
+      // Select character 6 and 7 (the part "in" in "Fill in some text")
       await setSelection(5, 7);
 
       // Check all styles are default
@@ -241,7 +241,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
         'font-style: italic',
         'text-decoration: underline',
       ].join('; ');
-      const expected = `Fill <span style="${firstCSS}">in</span> some text.`;
+      const expected = `Fill <span style="${firstCSS}">in</span> some text`;
       expect(actual).toBe(expected);
     });
 
@@ -252,7 +252,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       // Enter edit-mode
       await data.fixture.events.keyboard.press('Enter');
 
-      // Select character 7 and 8 (the part "ip" in "Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
+      // Select character 6 and 7 (the part "in" in "Fill in some text")
       await setSelection(5, 7);
 
       // Check style is default.
@@ -269,7 +269,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
 
       // Assume text content to match expectation
       const actual = getTextContent();
-      const expected = `Fill <span style="text-transform: uppercase">in</span> some text.`;
+      const expected = `Fill <span style="text-transform: uppercase">in</span> some text`;
       expect(actual).toBe(expected);
     });
   });
@@ -328,7 +328,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
 
         // Assume text content to now be formatting-free
         const actual = getTextContent();
-        const expected = `Fill in some text.`;
+        const expected = `Fill in some text`;
         expect(actual).toBe(expected);
       });
 
@@ -356,8 +356,8 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
         // Assume text content to be correctly formatted
         // NOTE: Sometimes returned HTML has two single-letter bold spans, sometimes they're joined into one:
         const actual = getTextContent();
-        const expectedDouble = `<span style="font-weight: 900">F</span><span style="font-weight: 700">i</span><span style="font-weight: 700">l</span>l in some text.`;
-        const expectedSingle = `<span style="font-weight: 900">F</span><span style="font-weight: 700">il</span>l in some text.`;
+        const expectedDouble = `<span style="font-weight: 900">F</span><span style="font-weight: 700">i</span><span style="font-weight: 700">l</span>l in some text`;
+        const expectedSingle = `<span style="font-weight: 900">F</span><span style="font-weight: 700">il</span>l in some text`;
         expect(actual).toBeOneOf([expectedDouble, expectedSingle]);
 
         await data.fixture.snapshot(
@@ -388,8 +388,8 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
 
         // NOTE: Sometimes returned HTML has two black spans, sometimes they're joined into one:
         const actual = getTextContent();
-        const expectedDouble = `<span style="font-weight: 900">Fi</span><span style="font-weight: 900">l</span>l in some text.`;
-        const expectedSingle = `<span style="font-weight: 900">Fil</span>l in some text.`;
+        const expectedDouble = `<span style="font-weight: 900">Fi</span><span style="font-weight: 900">l</span>l in some text`;
+        const expectedSingle = `<span style="font-weight: 900">Fil</span>l in some text`;
         expect(actual).toBeOneOf([expectedDouble, expectedSingle]);
 
         await data.fixture.snapshot('First three letters black, rest regular');
@@ -433,7 +433,7 @@ describe('CUJ: Creator can Add and Write Text: Select an individual word to edit
       );
 
       // Expect text content to be unchanged
-      expect(getTextContent()).toBe('Fill in some text.');
+      expect(getTextContent()).toBe('Fill in some text');
 
       // Expect line height to have changed
       const currentLineHeight = parseFloat(getDisplayTextStyles().lineHeight);

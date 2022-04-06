@@ -39,7 +39,7 @@ describe('Author User', () => {
     const editorPage = page;
     const previewPage = await previewStory(editorPage);
     await expect(previewPage).toMatchElement('p', {
-      text: 'Fill in some text.',
+      text: 'Fill in some text',
     });
 
     await editorPage.bringToFront();

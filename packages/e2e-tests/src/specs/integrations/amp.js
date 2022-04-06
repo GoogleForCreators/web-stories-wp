@@ -42,7 +42,7 @@ describe('AMP plugin integration', () => {
     const previewPage = await previewStory(editorPage);
     previewPage.bringToFront();
     await expect(previewPage).toMatchElement('p', {
-      text: 'Fill in some text.',
+      text: 'Fill in some text',
     });
 
     await expect(previewPage).toMatchElement('amp-analytics');

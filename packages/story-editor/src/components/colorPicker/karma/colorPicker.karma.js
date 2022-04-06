@@ -190,7 +190,7 @@ describe('ColorPicker', () => {
         );
         const [text] = await getSelection();
         expect(text.content).toEqual(
-          '<span style="color: #c4c4c4">Fill in some text.</span>'
+          '<span style="color: #c4c4c4">Fill in some text</span>'
         );
       });
 

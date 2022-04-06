@@ -82,7 +82,7 @@ const savedPageTemplate = {
       textAlign: 'center',
       padding: { vertical: 0, horizontal: 0, locked: true },
       type: 'text',
-      content: 'Fill in some text.',
+      content: 'Fill in some text',
       borderRadius: {
         locked: true,
         topLeft: 2,
