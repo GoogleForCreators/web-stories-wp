@@ -214,7 +214,6 @@ function FramesLayer() {
         // eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex -- Container used to separate elements from normal tab order.
         tabIndex={0}
       />
-      {/* Hide canvas from normal tab flow. Use focus group to focus canvas */}
       <FrameElements role="main" aria-labelledby={canvasId} />
     </FramesNavAndSelection>
   );
