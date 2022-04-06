@@ -30,7 +30,7 @@
     "@wordpress/element": "^4.0.0",
     "@wordpress/i18n": "^4.3.0",
     "flagged": "^2.0.3",
-    "polished": "^4.1.4",
+    "polished": "^4.2.2",
     "prop-types": "^15.8.1",
     "styled-components": "^5.3.3",
     "stylis-plugin-rtl": "^1.0.0"

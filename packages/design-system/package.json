@@ -44,7 +44,7 @@
     "big.js": "^6.1.1",
     "focus-visible": "^5.2.0",
     "mousetrap": "^1.6.5",
-    "polished": "^4.1.4",
+    "polished": "^4.2.2",
     "prop-types": "^15.8.1",
     "react-modal": "^3.14.4",
     "react-transition-group": "^4.4.2",
