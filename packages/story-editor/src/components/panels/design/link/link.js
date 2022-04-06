@@ -39,16 +39,13 @@ import {
  * Internal dependencies
  */
 import { MULTIPLE_VALUE, MULTIPLE_DISPLAY_VALUE } from '../../../../constants';
-import { useStory, useAPI, useCanvas } from '../../../../app';
+import { useAPI, useCanvas } from '../../../../app';
 import useElementsWithLinks from '../../../../utils/useElementsWithLinks';
 import { Row, LinkInput, LinkIcon } from '../../../form';
 import { createLink } from '../../../elementLink';
 import { SimplePanel } from '../../panel';
-import {
-  inputContainerStyleOverride,
-  LinkRelations,
-  useCommonObjectValue,
-} from '../../shared';
+import { inputContainerStyleOverride } from '../../shared/styles';
+import { LinkRelations, useCommonObjectValue } from '../../shared';
 import { states, styles, useHighlights } from '../../../../app/highlights';
 import useCORSProxy from '../../../../utils/useCORSProxy';
 
@@ -76,10 +73,6 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
       displayLinkGuidelines: state.state.displayLinkGuidelines,
     }));
 
-  const { currentPage } = useStory((state) => ({
-    currentPage: state.state.currentPage,
-  }));
-
   const { highlight, resetHighlight, cancelHighlight } = useHighlights(
     (state) => ({
       highlight: state[states.LINK],
@@ -88,10 +81,7 @@ function LinkPanel({ selectedElements, pushUpdateForObject }) {
     })
   );
 
-  const { getElementsInAttachmentArea } = useElementsWithLinks();
-  const hasElementsInAttachmentArea =
-    getElementsInAttachmentArea(selectedElements).length > 0 &&
-    currentPage?.pageAttachment?.url?.length > 0;
+  const { hasElementsInAttachmentArea } = useElementsWithLinks();
 
   const defaultLink = useMemo(() => createLink({ icon: null, desc: null }), []);
 

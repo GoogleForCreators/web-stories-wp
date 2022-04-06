@@ -27,7 +27,7 @@ import { NumericInput, Icons } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import { inputContainerStyleOverride } from '../../panels/shared';
+import { inputContainerStyleOverride } from '../../panels/shared/styles';
 import getPreviewOpacity from './getPreviewOpacity';
 
 const Input = styled(NumericInput)`

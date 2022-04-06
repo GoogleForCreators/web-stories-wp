@@ -106,12 +106,20 @@ function useSnapping({
     ? [...otherNodes, designSpaceGuideline]
     : [];
 
+  const snapDirections = {
+    left: true,
+    top: true,
+    right: true,
+    bottom: true,
+    center: true,
+    middle: true,
+  };
+
   return {
     snappable: canSnap,
-    snapHorizontal: canSnap,
-    snapVertical: canSnap,
-    snapCenter: canSnap,
     snapGap: canSnap,
+    snapDirections,
+    elementSnapDirections: snapDirections,
     isDisplaySnapDigit: false,
     onSnap: handleSnap,
     horizontalGuidelines,

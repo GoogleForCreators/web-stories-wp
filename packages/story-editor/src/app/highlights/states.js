@@ -17,12 +17,7 @@
  * Internal dependencies
  */
 import { INSERT, DOCUMENT, STYLE } from '../../components/sidebar';
-import {
-  MEDIA,
-  MEDIA3P,
-  TEXT as TEXT_SET,
-  PAGE_TEMPLATES,
-} from '../../components/library/constants';
+import { PANE_IDS } from '../../components/library/paneIds';
 
 /**
  * Highlight state object
@@ -123,22 +118,22 @@ export const STATES = {
   [keys.MEDIA]: {
     focus: true,
     tab: INSERT,
-    section: MEDIA.id,
+    section: PANE_IDS.MEDIA,
   },
   [keys.MEDIA3P]: {
     focus: true,
     tab: INSERT,
-    section: MEDIA3P.id,
+    section: PANE_IDS.MEDIA_3P,
   },
   [keys.TEXT_SET]: {
     focus: true,
     tab: INSERT,
-    section: TEXT_SET.id,
+    section: PANE_IDS.TEXT,
   },
   [keys.PAGE_TEMPLATES]: {
     focus: true,
     tab: INSERT,
-    section: PAGE_TEMPLATES.id,
+    section: PANE_IDS.PAGE_TEMPLATES,
   },
 };
 

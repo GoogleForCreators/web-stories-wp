@@ -31,7 +31,7 @@ import { useState } from '@googleforcreators/react';
 /**
  * Internal dependencies
  */
-import { focusStyle } from '../../../../../panels/shared';
+import { focusStyle } from '../../../../../panels/shared/styles';
 import Tooltip from '../../../../../tooltip';
 import Modal from './modal';
 

@@ -23,7 +23,7 @@ import { DropDown } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
  */
-import { focusStyle } from '../../panels/shared';
+import { focusStyle } from '../../panels/shared/styles';
 
 const Container = styled.div`
   position: relative;

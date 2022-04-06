@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Google LLC
+ * Copyright 2022 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,9 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export { default as FlipControls } from './flipControls';
-export { default as LinkRelations } from './linkRelations';
-export { default as getCommonValue } from './getCommonValue';
-export { default as getCommonObjectValue } from './getCommonObjectValue';
-export { default as useCommonColorValue } from './useCommonColorValue';
-export { default as useCommonObjectValue } from './useCommonObjectValue';
+
+export const PANE_IDS = {
+  MEDIA: 'media',
+  MEDIA_3P: 'media3p',
+  TEXT: 'text',
+  SHAPES: 'shapes',
+  ELEMENTS: 'elements',
+  PAGE_TEMPLATES: 'pageTemplates',
+};
