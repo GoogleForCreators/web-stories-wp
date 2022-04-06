@@ -104,6 +104,7 @@ describe('Canvas - keyboard navigation', () => {
     if (count >= 50) {
       throw new Error('Could not find focus container.');
     }
+
     // enter into the canvas
     await fixture.events.keyboard.press('Enter');
 
@@ -118,22 +119,28 @@ describe('Canvas - keyboard navigation', () => {
     expect(document.activeElement.getAttribute('data-element-id')).toBe(
       backgroundElement.id
     );
+
     // verify cyclicity
     await fixture.events.keyboard.press('tab');
+
     // TODO: check selected elements instead https://github.com/GoogleForCreators/web-stories-wp/issues/11000
     expect(document.activeElement.getAttribute('data-element-id')).not.toBe(
       backgroundElement.id
     );
+
     // tab through each added element
     await fixture.events.keyboard.press('tab');
     await fixture.events.keyboard.press('tab');
     await fixture.events.keyboard.press('tab');
+
     // should be back to first added element
     expect(document.activeElement.getAttribute('data-element-id')).toBe(
       backgroundElement.id
     );
+
     // exit canvas
     await fixture.events.keyboard.press('Escape');
+
     // verify exit
     expect(document.activeElement).toBe(focusContainer);
   });
