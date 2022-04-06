@@ -86,12 +86,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ampproject/amp-wp",
-                "reference": "70d639695ebc5a7bd143352a02104562a84e911a"
+                "reference": "bbdde23bbd5e4dfde5b33ee275222c85f53a5277"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/70d639695ebc5a7bd143352a02104562a84e911a",
-                "reference": "70d639695ebc5a7bd143352a02104562a84e911a",
+                "url": "https://api.github.com/repos/ampproject/amp-wp/zipball/bbdde23bbd5e4dfde5b33ee275222c85f53a5277",
+                "reference": "bbdde23bbd5e4dfde5b33ee275222c85f53a5277",
                 "shasum": ""
             },
             "require": {
@@ -194,7 +194,7 @@
             ],
             "description": "WordPress plugin for adding AMP support.",
             "homepage": "https://github.com/ampproject/amp-wp",
-            "time": "2022-04-06T01:14:26+00:00"
+            "time": "2022-04-06T20:55:11+00:00"
         },
         {
             "name": "civicrm/composer-downloads-plugin",
@@ -2706,12 +2706,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Roave/SecurityAdvisories.git",
-                "reference": "8de287d3e2b7504c77a6fe6725afed5ed54f77c7"
+                "reference": "44e64dc3426a056b16041e56619b96619564b28d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/8de287d3e2b7504c77a6fe6725afed5ed54f77c7",
-                "reference": "8de287d3e2b7504c77a6fe6725afed5ed54f77c7",
+                "url": "https://api.github.com/repos/Roave/SecurityAdvisories/zipball/44e64dc3426a056b16041e56619b96619564b28d",
+                "reference": "44e64dc3426a056b16041e56619b96619564b28d",
                 "shasum": ""
             },
             "conflict": {
@@ -2958,6 +2958,7 @@
                 "phpxmlrpc/extras": "<0.6.1",
                 "pimcore/data-hub": "<1.2.4",
                 "pimcore/pimcore": "<10.4",
+                "pocketmine/bedrock-protocol": "<8.0.2",
                 "pocketmine/pocketmine-mp": "<4.2.4",
                 "pressbooks/pressbooks": "<5.18",
                 "prestashop/autoupgrade": ">=4,<4.10.1",
@@ -3175,7 +3176,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-04-06T15:08:57+00:00"
+            "time": "2022-04-06T19:03:57+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
