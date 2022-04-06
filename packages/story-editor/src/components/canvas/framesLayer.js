@@ -19,10 +19,11 @@
  */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { memo, useRef, useCallback } from '@googleforcreators/react';
+import { memo, useRef, useCallback, useState } from '@googleforcreators/react';
 import { __ } from '@googleforcreators/i18n';
 import { PAGE_WIDTH } from '@googleforcreators/units';
 import { STORY_ANIMATION_STATE } from '@googleforcreators/animation';
+import { v4 as uuidv4 } from 'uuid';
 
 /**
  * Internal dependencies
@@ -185,6 +186,7 @@ function FrameElements(props) {
 }
 
 function FramesLayer() {
+  const canvasId = useState(uuidv4)[0];
   const canvasRef = useRef();
   const enterFocusGroup = useEditLayerFocusManager(
     ({ enterFocusGroup }) => enterFocusGroup
@@ -205,13 +207,14 @@ function FramesLayer() {
   return (
     <FramesNavAndSelection>
       <FocusContainer
+        id={canvasId}
         ref={canvasRef}
         aria-label={FOCUS_CONTAINER_MESSAGE}
         // eslint-disable-next-line styled-components-a11y/no-noninteractive-tabindex -- Container used to separate elements from normal tab order.
         tabIndex={0}
       />
       {/* Hide canvas from normal tab flow. Use focus group to focus canvas */}
-      <FrameElements tabIndex={-1} />
+      <FrameElements tabIndex={-1} role="main" aria-labelledby={canvasId} />
     </FramesNavAndSelection>
   );
 }

@@ -33,8 +33,15 @@ describe('Canvas - keyboard navigation', () => {
     fixture.restore();
   });
 
-  // eslint-disable-next-line jasmine/no-disabled-tests -- not implemented yet
-  xit('should not focus the canvas while tabbing through the editor');
+  it('should not focus the canvas while tabbing through the editor', async () => {
+    // focus media pane
+    await fixture.events.focus(fixture.editor.library.media.searchBar);
+
+    // tab until focus reaches the canvas container
+    expect(document.activeElement).not.toBe(
+      fixture.editor.library.media.searchBar
+    );
+  });
 
   // eslint-disable-next-line jasmine/no-disabled-tests -- not implemented yet
   xit(
