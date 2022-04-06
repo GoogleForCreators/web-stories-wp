@@ -129,7 +129,7 @@
     "jest-silent-reporter": "^0.5.0",
     "jest-styled-components": "^7.0.8",
     "karma": "^6.3.17",
-    "karma-chrome-launcher": "^3.1.0",
+    "karma-chrome-launcher": "^3.1.1",
     "karma-coverage-istanbul-reporter": "^3.0.3",
     "karma-jasmine": "^4.0.2",
     "karma-parallel": "^0.3.1",
