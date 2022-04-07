@@ -2,7 +2,7 @@
   "name": "@googleforcreators/create-web-stories",
   "description": "Scaffold Web Stories editor and dashboard",
   "private": false,
-  "version": "0.1.202204061501",
+  "version": "0.1.202203241635",
   "author": {
     "name": "Google",
     "url": "https://creators.google/"

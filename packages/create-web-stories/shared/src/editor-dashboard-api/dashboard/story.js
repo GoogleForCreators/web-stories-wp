@@ -6,17 +6,17 @@
  export const updateStory = (story) => {
    const storyData =
      JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_CONTENT_KEY)) || {};
- 
+
    const singleStoryData = storyData[story.id];
- 
+
    singleStoryData.title = story.title;
    storyData[singleStoryData.storyId] = singleStoryData;
- 
+
    window.localStorage.setItem(
      LOCAL_STORAGE_CONTENT_KEY,
      JSON.stringify(storyData),
    );
- 
+
    return Promise.resolve({
      id: Number(singleStoryData?.storyId),
      status: 'publish',
@@ -27,12 +27,11 @@
      capabilities: {
        hasEditAction: true,
      },
-     featuredMediaUrl:
-       'https://wp.stories.google/static/main/images/templates/food-and-stuff/page1_bg.jpg',
+     featuredMediaUrl: '',
      editStoryLink: '/editor?id=' + Number(singleStoryData?.storyId),
    });
  };
- 
+
  export const fetchStories = () => {
    const content =
      JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_CONTENT_KEY)) || {};
@@ -59,8 +58,7 @@
          hasEditAction: true,
          hasDeleteAction: true,
        },
-       featuredMediaUrl:
-         'https://wp.stories.google/static/main/images/templates/food-and-stuff/page1_bg.jpg',
+       featuredMediaUrl: '',
        editStoryLink: '/editor?id=' + Number(storyId),
      };
    });
@@ -70,16 +68,16 @@
    try {
      const storyData =
        JSON.parse(window.localStorage.getItem(LOCAL_STORAGE_CONTENT_KEY)) || {};
- 
+
      const newStoryData = {}
      const storyIdList = Object.keys(storyData);
-     
+
      storyIdList.forEach((storyId)=>{
-       if(storyId !== id ){
+       if( Number( storyId ) !== id ){
          newStoryData[id] = storyData[id]
        }
      })
-     
+
      window.localStorage.setItem(
        LOCAL_STORAGE_CONTENT_KEY,
        JSON.stringify(newStoryData),
@@ -89,4 +87,3 @@
      console.error('trash story', err);
    }
  };
- 

@@ -5,6 +5,10 @@ const { resolve } = require( 'path' );
 const HtmlWebpackPlugin = require( 'html-webpack-plugin' );
 
 module.exports = {
+  entry: [
+    '@babel/polyfill',
+    './index.js',
+  ],
   context: resolve( __dirname, '../src' ),
   resolve: {
     extensions: [ '.js', '.jsx' ],

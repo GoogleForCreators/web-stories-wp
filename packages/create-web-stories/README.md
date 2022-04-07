@@ -1,6 +1,6 @@
 # Create Web stories
 
-Scaffold a minimal story editor or dashboard.
+Scaffold a minimal story editor, dashboard or both.
 
 ## Usage
 

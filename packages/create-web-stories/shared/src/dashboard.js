@@ -18,8 +18,7 @@ const fetchStories = () => {
           name: "Author",
           id: 1,
         },
-        featuredMediaUrl:
-          "https://wp.stories.google/static/main/images/templates/food-and-stuff/page1_bg.jpg",
+        featuredMediaUrl: "",
       },
       2: {
         id: 2,
