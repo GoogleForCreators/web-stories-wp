@@ -27,15 +27,24 @@ import {
 /**
  * Internal dependencies
  */
+import { addAllowedErrorMessage } from '../../config/bootstrap';
 
 describe('Save story snackbar', () => {
+  let removeErrorMessage;
   let stopRequestInterception;
   let mockResponse;
 
   beforeAll(async () => {
+    removeErrorMessage = addAllowedErrorMessage(
+      'the server responded with a status of'
+    );
+
     await page.setRequestInterception(true);
     stopRequestInterception = addRequestInterception((request) => {
-      if (request.url().includes('_fields=status%2Cslug') && mockResponse) {
+      if (
+        request.url().includes('/web-stories/v1/web-story/') &&
+        mockResponse
+      ) {
         request.respond(mockResponse);
         return;
       }
@@ -44,6 +53,8 @@ describe('Save story snackbar', () => {
   });
 
   afterAll(async () => {
+    removeErrorMessage();
+
     await page.setRequestInterception(false);
     stopRequestInterception();
   });
