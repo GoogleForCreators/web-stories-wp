@@ -122,6 +122,13 @@ $story_query_params = [
 	),
 ];
 
+/*
+ * Ensure the global $post remains the same after API data is preloaded.
+ * Because API preloading can call the_content and other filters, plugins
+ * can unexpectedly modify $post.
+ */
+$backup_global_post = $post;
+
 if ( empty( $_GET['web-stories-demo'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	$preload_paths[] = $story_initial_path . build_query( $story_query_params );
 } else {
@@ -141,13 +148,6 @@ if ( empty( $_GET['web-stories-demo'] ) ) { // phpcs:ignore WordPress.Security.N
  * @param WP_Post  $post          Post being edited.
  */
 $preload_paths = apply_filters( 'web_stories_editor_preload_paths', $preload_paths, $post );
-
-/*
- * Ensure the global $post remains the same after API data is preloaded.
- * Because API preloading can call the_content and other filters, plugins
- * can unexpectedly modify $post.
- */
-$backup_global_post = $post;
 
 $preload_data = array_reduce(
 	$preload_paths,
