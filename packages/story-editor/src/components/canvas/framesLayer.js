@@ -55,6 +55,7 @@ const FramesPageArea = styled(PageArea)`
 const marginRatio = 100 * (DESIGN_SPACE_MARGIN / PAGE_WIDTH);
 
 const FocusContainer = styled.div`
+  // begin under header row
   grid-row: 2 / -1;
   grid-column: 1 / -1;
   // show focus border by adding margin
@@ -136,7 +137,7 @@ FramesNavAndSelection.propTypes = {
   children: PropTypes.node,
 };
 
-function FrameElements(props) {
+function FrameElements() {
   // We are returning this directly because we want the elementIds array to be shallowly
   // compared between re-renders. This allows element properties to update without re-rendering
   // this top level component.
@@ -173,7 +174,6 @@ function FrameElements(props) {
         )}
         onContextMenu={onOpenMenu}
         onScroll={onScroll}
-        {...props}
       >
         {elementIds.map((id) => {
           return <FrameElement key={id} id={id} />;

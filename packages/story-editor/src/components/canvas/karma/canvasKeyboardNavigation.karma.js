@@ -22,9 +22,11 @@ import { useStory } from '../../../app/story';
 
 describe('Canvas - keyboard navigation', () => {
   let fixture;
+  let focusContainer;
 
   beforeEach(async () => {
     fixture = new Fixture();
+    focusContainer = fixture.screen.getByTestId('canvas-focus-container');
 
     await fixture.render();
     await fixture.collapseHelpCenter();
@@ -34,10 +36,9 @@ describe('Canvas - keyboard navigation', () => {
     fixture.restore();
   });
 
-  it('should not focus the canvas while tabbing through the editor', async () => {
-    const focusContainer = fixture.screen.getByTestId('canvas-focus-container');
-
+  async function tabToCanvasFocusContainer() {
     // start focused on media pane searchbar
+    await fixture.editor.library.mediaTab.click();
     await fixture.events.focus(fixture.editor.library.media.searchBar);
 
     // tab until focus reaches the canvas container
@@ -56,6 +57,10 @@ describe('Canvas - keyboard navigation', () => {
     if (count >= 15) {
       throw new Error('Could not find focus container.');
     }
+  }
+
+  it('should not focus the canvas while tabbing through the editor', async () => {
+    await tabToCanvasFocusContainer();
 
     // tab once more
     await fixture.events.keyboard.press('tab');
@@ -82,28 +87,7 @@ describe('Canvas - keyboard navigation', () => {
       20
     );
 
-    // start focused on media pane searchbar
-    const focusContainer = fixture.screen.getByTestId('canvas-focus-container');
-
-    // start focused on media pane searchbar
-    await fixture.events.focus(fixture.editor.library.media.searchBar);
-
-    // tab until focus reaches the canvas container
-    let count = 0;
-    while (count < 15) {
-      // eslint-disable-next-line no-await-in-loop -- need to await key press
-      await fixture.events.keyboard.press('tab');
-
-      if (document.activeElement === focusContainer) {
-        break;
-      }
-
-      count++;
-    }
-
-    if (count >= 15) {
-      throw new Error('Could not find focus container.');
-    }
+    await tabToCanvasFocusContainer();
 
     // enter into the canvas
     await fixture.events.keyboard.press('Enter');
