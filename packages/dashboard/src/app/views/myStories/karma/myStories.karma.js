@@ -215,6 +215,23 @@ describe('CUJ: Creator can view their stories in grid view', () => {
       );
     });
 
+    it('should not delete a locked story', async () => {
+      // get a locked story
+      const story = dashboardGridItems[1];
+      await fixture.events.hover(story);
+
+      // open context menu
+      const testUtils = within(story);
+      moreOptionsButton = testUtils.getByRole('button', {
+        name: /^Context menu for/,
+      });
+      await fixture.events.click(moreOptionsButton);
+
+      // delete story
+      const deleteStory = testUtils.getByText(/^Delete/);
+      expect(deleteStory.hasAttribute('disabled')).toBe(true);
+    });
+
     it('should not Delete a story if Cancel is clicked in the confirmation modal', async () => {
       const deleteStory = utils.getByText(/^Delete/);
       await fixture.events.click(deleteStory);

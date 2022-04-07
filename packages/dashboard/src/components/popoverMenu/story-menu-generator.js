@@ -55,6 +55,9 @@ export const generateStoryMenu = ({ menuItems, story, isLocked }) => {
       case STORY_CONTEXT_MENU_ACTIONS.RENAME:
         extraProperties.disabled = isLocked;
         break;
+      case STORY_CONTEXT_MENU_ACTIONS.DELETE:
+        extraProperties.disabled = isLocked;
+        break;
       default:
         break;
     }
