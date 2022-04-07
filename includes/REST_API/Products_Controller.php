@@ -43,7 +43,7 @@ use WP_REST_Server;
  * @phpstan-type ShopifyGraphQLError array{message: string, extensions: array{code: string, requestId: string}}[]
  * @phpstan-type ShopifyGraphQLPriceRange array{minVariantPrice: array{amount: int, currencyCode: string}}
  * @phpstan-type ShopifyGraphQLProductImage array{url: string, altText: string}
- * @phpstan-type ShopifyGraphQLProduct array{id: string, title: string, vendor: string, description: string, onlineStoreUrl: string, images: array{edges: array{node: ShopifyGraphQLProductImage}[]}, priceRange: ShopifyGraphQLPriceRange}
+ * @phpstan-type ShopifyGraphQLProduct array{id: string, handle: string, title: string, vendor: string, description: string, onlineStoreUrl?: string, images: array{edges: array{node: ShopifyGraphQLProductImage}[]}, priceRange: ShopifyGraphQLPriceRange}
  * @phpstan-type ShopifyGraphQLResponse array{errors?: ShopifyGraphQLError, data: array{products: array{edges: array{node: ShopifyGraphQLProduct}[]}}}
  */
 class Products_Controller extends REST_Controller implements HasRequirements {
@@ -238,6 +238,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
     edges {
       node {
         id
+        handle
         title
         vendor
         description
@@ -302,6 +303,11 @@ QUERY;
 				];
 			}
 
+			// URL is null if the resource is currently not published to the Online Store sales channel,
+			// or if the shop is password-protected.
+			// In this case, we can fall back to a manually constructed product URL.
+			$product_url = $product['onlineStoreUrl'] ?? sprintf( 'https://%1$s/products/%2$s/', $host, $product['handle'] );
+
 			$results[] = [
 				'productId'            => $product['id'],
 				'productTitle'         => $product['title'],
@@ -312,7 +318,9 @@ QUERY;
 				'productPriceCurrency' => $product['priceRange']['minVariantPrice']['currencyCode'],
 				'productImages'        => $images,
 				'productDetails'       => $product['description'],
-				'productUrl'           => $product['onlineStoreUrl'],
+				// URL is null if the resource is currently not published to the Online Store sales channel,
+				// or if the shop is password-protected.
+				'productUrl'           => $product_url,
 			];
 		}
 
