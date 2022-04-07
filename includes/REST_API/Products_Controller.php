@@ -311,13 +311,6 @@ QUERY;
 				'productPrice'         => $product['priceRange']['minVariantPrice']['amount'],
 				'productPriceCurrency' => $product['priceRange']['minVariantPrice']['currencyCode'],
 				'productImages'        => $images,
-				// TODO: Remove once optional, or find way to actually populate.
-				// See https://github.com/ampproject/amphtml/pull/37474.
-				'aggregateRating'      => [
-					'ratingValue' => 0,
-					'reviewCount' => 0,
-					'reviewUrl'   => $product['onlineStoreUrl'],
-				],
 				'productDetails'       => $product['description'],
 				'productUrl'           => $product['onlineStoreUrl'],
 			];
