@@ -34,7 +34,6 @@ import {
 import useCORSProxy from '../../utils/useCORSProxy';
 import { useConfig, useStory, useFont } from '../../app';
 import useVideoTrim from '../videoTrim/useVideoTrim';
-import { FOCUS_GROUPS, useFocusGroupRef } from './editLayerFocusManager';
 
 const Z_INDEX_CANVAS = {
   FLOAT_PANEL: 11,
@@ -49,7 +48,6 @@ const Wrapper = styled.div`
 
 const EditElement = memo(
   forwardRef(function EditElement({ element, editWrapper, onResize }, ref) {
-    const focusGroupRef = useFocusGroupRef(FOCUS_GROUPS.EDIT_ELEMENT);
     const { id, type } = element;
     const { getBox } = useUnits((state) => ({
       getBox: state.actions.getBox,
@@ -86,7 +84,6 @@ const EditElement = memo(
     return (
       <Wrapper aria-labelledby={`layer-${id}`} {...box} ref={ref}>
         <Edit
-          ref={focusGroupRef}
           element={elementWithLocal}
           box={box}
           editWrapper={editWrapper}

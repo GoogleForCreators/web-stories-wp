@@ -25,8 +25,6 @@ import {
   useCallback,
   useMemo,
   useUnmount,
-  useCombinedRefs,
-  forwardRef,
 } from '@googleforcreators/react';
 import PropTypes from 'prop-types';
 import { generatePatternStyles } from '@googleforcreators/patterns';
@@ -75,9 +73,7 @@ import {
 const Wrapper = styled.div`
   ${elementFillContent}
   ${elementWithBackgroundColor}
-
   --faux-selection-color: inherit;
-
   span {
     box-decoration-break: clone;
   }
@@ -89,7 +85,6 @@ const Wrapper = styled.div`
 const TextBox = styled.div`
   ${elementWithFont}
   ${elementWithTextParagraphStyle}
-
   opacity: ${({ opacity }) =>
     typeof opacity !== 'undefined' ? opacity / 100 : null};
   position: absolute;
@@ -127,18 +122,15 @@ const OutsideBorder = styled.div`
   overflow: hidden;
 `;
 
-const TextEdit = forwardRef(function TextEdit(
-  {
-    element,
-    box: { x, y, height, rotationAngle },
-    editWrapper,
-    onResize,
-    updateElementById,
-    deleteSelectedElements,
-    maybeEnqueueFontStyle,
-  },
-  ref
-) {
+function TextEdit({
+  element,
+  box: { x, y, height, rotationAngle },
+  editWrapper,
+  onResize,
+  updateElementById,
+  deleteSelectedElements,
+  maybeEnqueueFontStyle,
+}) {
   const {
     id,
     content,
@@ -402,9 +394,7 @@ const TextEdit = forwardRef(function TextEdit(
     >
       {/* eslint-disable-next-line styled-components-a11y/click-events-have-key-events, styled-components-a11y/no-static-element-interactions -- Needed here to ensure the editor keeps focus, e.g. after setting inline colour. */}
       <Wrapper
-        tabIndex={-1}
-        ref={useCombinedRefs(wrapperRef, ref)}
-        onFocus={() => editorRef.current?.focus()}
+        ref={wrapperRef}
         onClick={onClick}
         data-testid="textEditor"
         {...wrapperProps}
@@ -435,7 +425,7 @@ const TextEdit = forwardRef(function TextEdit(
       </Wrapper>
     </OutsideBorder>
   );
-});
+}
 
 TextEdit.propTypes = {
   element: StoryPropTypes.elements.text.isRequired,

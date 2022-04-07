@@ -227,7 +227,7 @@ function FrameElement({ id }) {
 
   useKeyDownEffect(
     elementRef,
-    { key: ['enter'] },
+    { key: ['ctrl+alt+p'] },
     () => {
       enterFocusGroup({
         groupId: FOCUS_GROUPS.EDIT_ELEMENT,

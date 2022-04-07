@@ -114,6 +114,7 @@ const Menu = forwardRef(
       isSecondary = false,
       parentMenuRef,
       onCloseSubMenu = noop,
+      dismissOnEscape = true,
       ...props
     },
     ref
@@ -166,7 +167,7 @@ const Menu = forwardRef(
     const handleKeyboardNav = useCallback(
       (evt) => {
         const { key } = evt;
-        if (key === 'Escape') {
+        if (dismissOnEscape && key === 'Escape') {
           onDismiss(evt);
           return;
         }
@@ -228,6 +229,7 @@ const Menu = forwardRef(
         isHorizontal,
         onCloseSubMenu,
         parentMenuRef,
+        dismissOnEscape,
       ]
     );
 
@@ -291,6 +293,7 @@ export const MenuPropTypes = {
   isSecondary: PropTypes.bool,
   isRTL: PropTypes.bool,
   parentMenuRef: PropTypes.object,
+  dismissOnEscape: PropTypes.bool,
 };
 
 Menu.propTypes = MenuPropTypes;

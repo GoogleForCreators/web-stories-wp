@@ -79,6 +79,7 @@ const FloatingMenu = memo(
             isAlwaysVisible
             tabIndex={-1}
             ref={focusGroupRef}
+            dismissOnEscape={false}
             aria-label={__(
               'Design options for selected element',
               'web-stories'
