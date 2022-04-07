@@ -19,13 +19,21 @@
  */
 import PropTypes from 'prop-types';
 import { memo } from '@googleforcreators/react';
+import styled from 'styled-components';
 import { ContextMenuComponents } from '@googleforcreators/design-system';
+
+const Button = styled(ContextMenuComponents.MenuButton)`
+  font-size: 14px;
+  padding: 0 12px;
+  font-weight: normal;
+  letter-spacing: normal;
+`;
 
 const TextButton = memo(function TextButton({ text, ...rest }) {
   return (
-    <ContextMenuComponents.MenuButton forcePadding {...rest}>
+    <Button forcePadding {...rest}>
       {text}
-    </ContextMenuComponents.MenuButton>
+    </Button>
   );
 });
 
