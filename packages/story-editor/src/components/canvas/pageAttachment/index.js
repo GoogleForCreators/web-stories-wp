@@ -190,6 +190,8 @@ PageAttachment.propTypes = {
   pageAttachment: PropTypes.shape({
     url: PropTypes.string,
     ctaText: PropTypes.string,
+    icon: PropTypes.string,
+    theme: PropTypes.string,
   }),
 };
 

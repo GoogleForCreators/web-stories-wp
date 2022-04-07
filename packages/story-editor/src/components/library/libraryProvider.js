@@ -25,7 +25,7 @@ import {
   useState,
   useCallback,
 } from '@googleforcreators/react';
-import { useFeatures } from 'flagged';
+import { useFeature } from 'flagged';
 import { getTimeTracker, trackEvent } from '@googleforcreators/tracking';
 import { loadTextSets } from '@googleforcreators/text-sets';
 import { uniqueEntriesByKey } from '@googleforcreators/design-system';
@@ -44,10 +44,13 @@ import {
   PAGE_TEMPLATES,
   SHAPES,
   TEXT,
+  SHOPPING,
 } from './constants';
 
 const LIBRARY_TAB_IDS = new Set(
-  [ELEMS, MEDIA, MEDIA3P, PAGE_TEMPLATES, SHAPES, TEXT].map((tab) => tab.id)
+  [ELEMS, MEDIA, MEDIA3P, PAGE_TEMPLATES, SHAPES, TEXT, SHOPPING].map(
+    (tab) => tab.id
+  )
 );
 
 function LibraryProvider({ children }) {
@@ -55,6 +58,8 @@ function LibraryProvider({ children }) {
   const {
     actions: { getMedia, getCustomPageTemplates },
   } = useAPI();
+  const isShoppingEnabled = useFeature('shoppingIntegration');
+  const showElementsTab = useFeature('showElementsTab');
 
   const supportsCustomTemplates = Boolean(getCustomPageTemplates);
   const showPageTemplates = canViewDefaultTemplates || supportsCustomTemplates;
@@ -94,8 +99,6 @@ function LibraryProvider({ children }) {
     });
   }, []);
 
-  const { showElementsTab } = useFeatures();
-
   const tabs = useMemo(
     // Order here is important, as it denotes the actual visual order of elements.
     () =>
@@ -105,9 +108,16 @@ function LibraryProvider({ children }) {
         TEXT,
         SHAPES,
         showElementsTab && ELEMS,
+        isShoppingEnabled && SHOPPING,
         showPageTemplates && PAGE_TEMPLATES,
       ].filter(Boolean),
-    [showMedia3p, showElementsTab, showMedia, showPageTemplates]
+    [
+      showMedia3p,
+      showElementsTab,
+      showMedia,
+      showPageTemplates,
+      isShoppingEnabled,
+    ]
   );
 
   const [tab, setTab] = useState(tabs[0].id);
@@ -135,6 +145,7 @@ function LibraryProvider({ children }) {
   const shapesTabRef = useRef(null);
   const elementsTabRef = useRef(null);
   const pageTemplatesTabRef = useRef(null);
+  const shoppingRef = useRef(null);
 
   const tabRefs = useMemo(
     () => ({
@@ -144,6 +155,7 @@ function LibraryProvider({ children }) {
       [SHAPES.id]: shapesTabRef,
       [ELEMS.id]: elementsTabRef,
       [PAGE_TEMPLATES.id]: pageTemplatesTabRef,
+      [SHOPPING.id]: shoppingRef,
     }),
     []
   );

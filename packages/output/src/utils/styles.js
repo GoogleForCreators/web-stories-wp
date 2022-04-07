@@ -50,7 +50,7 @@ function CustomStyles() {
         __html:
           `
               h1, h2, h3 { font-weight: normal; }
-          
+
               amp-story-page {
                 background-color: ${pageBackgroundColor};
               }

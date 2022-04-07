@@ -36,7 +36,7 @@ function Outlink({ ctaText, url, icon, theme, rel = [] }) {
 
 Outlink.propTypes = {
   icon: PropTypes.string,
-  theme: PropTypes.string,
+  theme: PropTypes.oneOf(['light', 'dark']),
   url: PropTypes.string,
   rel: PropTypes.arrayOf(PropTypes.string),
   ctaText: PropTypes.string,

@@ -66,6 +66,7 @@ jest.mock('../../../story', () => ({
     TEXT: 'text',
     VIDEO: 'video',
     GIF: 'gif',
+    PRODUCT: 'product',
   },
 }));
 

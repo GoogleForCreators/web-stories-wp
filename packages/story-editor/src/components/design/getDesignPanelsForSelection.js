@@ -38,6 +38,7 @@ import {
   ElementAlignmentPanel,
   VideoOptionsPanel,
   PageBackgroundAudioPanel,
+  ProductPanel,
 } from '../panels/design';
 
 const ALL = Object.values(PanelTypes);
@@ -140,6 +141,9 @@ function getDesignPanelsForSelection(elements) {
           return { type, Panel: ImageAccessibilityPanel };
         case PanelTypes.ELEMENT_ALIGNMENT:
           return { type, Panel: ElementAlignmentPanel };
+        case PanelTypes.PRODUCT: {
+          return { type, Panel: ProductPanel };
+        }
         default:
           throw new Error(`Unknown panel: ${type}`);
       }
