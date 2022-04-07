@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { __ } from '@googleforcreators/i18n';
 import {
   useCallback,
   useLayoutEffect,
@@ -40,6 +41,7 @@ import {
   getElementMask,
   MaskTypes,
 } from '@googleforcreators/masks';
+import { useLiveRegion } from '@googleforcreators/design-system';
 
 /**
  * Internal dependencies
@@ -89,9 +91,14 @@ const EmptyFrame = styled.div`
 
 const NOOP = () => {};
 
+const FRAME_ELEMENT_MESSAGE = __(
+  'To exit the canvas area, press Escape. Press Tab to move to the next group or element.',
+  'web-stories'
+);
+
 function FrameElement({ id }) {
   const [isTransforming, setIsTransforming] = useState(false);
-  const focusGroupRef = useFocusGroupRef(FOCUS_GROUPS.EDIT_CANVAS);
+  const focusGroupRef = useFocusGroupRef(FOCUS_GROUPS.CANVAS);
 
   const {
     setNodeForElement,
@@ -127,6 +134,7 @@ function FrameElement({ id }) {
   const combinedFocusGroupRef = useCombinedRefs(elementRef, focusGroupRef); // Only attach focus group ref to one element.
   const [hovering, setHovering] = useState(false);
   const { isRTL, styleConstants: { topOffset } = {} } = useConfig();
+  const speak = useLiveRegion();
 
   const {
     draggingResource,
@@ -182,6 +190,16 @@ function FrameElement({ id }) {
   );
   const handleMediaClick = useDoubleClick(NOOP, handleMediaDoubleClick);
 
+  /**
+   * Announce keyboard options on element.
+   *
+   * Using a live region because an `aria-label` would remove
+   * any labels/content that would be read from children.
+   */
+  const handleFocus = useCallback(() => {
+    speak(FRAME_ELEMENT_MESSAGE);
+  }, [speak]);
+
   // For elements with no mask, handle events by the wrapper.
   const mask = getElementMask(element);
   const maskDisabled =
@@ -200,6 +218,8 @@ function FrameElement({ id }) {
       if (!isSelected) {
         handleSelectElement(id, evt);
       }
+
+      handleFocus(evt);
     },
     onPointerEnter,
     onPointerLeave,
@@ -244,10 +264,10 @@ function FrameElement({ id }) {
         data-element-id={id}
         {...box}
         tabIndex={-1}
-        aria-labelledby={`layer-${id}`}
         hasMask={isMaskable}
         data-testid="frameElement"
         maskDisabled={maskDisabled}
+        onFocus={handleFocus}
         {...(maskDisabled ? eventHandlers : null)}
       >
         <WithMask

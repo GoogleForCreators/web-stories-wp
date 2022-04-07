@@ -15,7 +15,7 @@
  */
 const FOCUS_GROUPS = {
   EDIT_ELEMENT: 'EDIT_ELEMENT',
-  EDIT_CANVAS: 'EDIT_CANVAS',
+  CANVAS: 'CANVAS',
 };
 
 export default FOCUS_GROUPS;

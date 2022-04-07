@@ -42,7 +42,7 @@ describe('Canvas - keyboard navigation', () => {
 
     // tab until focus reaches the canvas container
     let count = 0;
-    while (count < 50) {
+    while (count < 15) {
       // eslint-disable-next-line no-await-in-loop -- need to await key press
       await fixture.events.keyboard.press('tab');
 
@@ -53,7 +53,7 @@ describe('Canvas - keyboard navigation', () => {
       count++;
     }
 
-    if (count >= 50) {
+    if (count >= 15) {
       throw new Error('Could not find focus container.');
     }
 
@@ -90,7 +90,7 @@ describe('Canvas - keyboard navigation', () => {
 
     // tab until focus reaches the canvas container
     let count = 0;
-    while (count < 50) {
+    while (count < 15) {
       // eslint-disable-next-line no-await-in-loop -- need to await key press
       await fixture.events.keyboard.press('tab');
 
@@ -101,7 +101,7 @@ describe('Canvas - keyboard navigation', () => {
       count++;
     }
 
-    if (count >= 50) {
+    if (count >= 15) {
       throw new Error('Could not find focus container.');
     }
 
