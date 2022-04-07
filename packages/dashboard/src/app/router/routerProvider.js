@@ -36,6 +36,12 @@ function RouterProvider({ children, ...props }) {
   );
   const [availableRoutes, setAvailableRoutes] = useState([]);
   const [defaultRoute, setDefaultRoute] = useState();
+  const activeRoute = useMemo(() => {
+    const matchingRoutes = availableRoutes.filter((route) =>
+      currentPath.startsWith(route)
+    );
+    return matchingRoutes.length === 0 ? defaultRoute : currentPath;
+  }, [availableRoutes, currentPath, defaultRoute]);
 
   const parse = (search) => {
     const params = new URLSearchParams(search);
@@ -56,6 +62,7 @@ function RouterProvider({ children, ...props }) {
   const value = useMemo(
     () => ({
       state: {
+        activeRoute,
         currentPath,
         queryParams,
         availableRoutes,
@@ -68,7 +75,7 @@ function RouterProvider({ children, ...props }) {
         setDefaultRoute,
       },
     }),
-    [availableRoutes, currentPath, defaultRoute, queryParams]
+    [activeRoute, availableRoutes, currentPath, defaultRoute, queryParams]
   );
 
   return (
