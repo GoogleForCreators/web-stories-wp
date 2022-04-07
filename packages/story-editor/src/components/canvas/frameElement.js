@@ -18,6 +18,7 @@
  * External dependencies
  */
 import styled from 'styled-components';
+import { sprintf, __ } from '@googleforcreators/i18n';
 import {
   useCallback,
   useLayoutEffect,
@@ -37,8 +38,9 @@ import {
 } from '@googleforcreators/element-library';
 import { FrameWithMask as WithMask } from '@googleforcreators/masks';
 import {
-  useLiveRegion,
   useKeyDownEffect,
+  useLiveRegion,
+  prettifyShortcut,
 } from '@googleforcreators/design-system';
 
 /**
@@ -89,6 +91,16 @@ const EmptyFrame = styled.div`
 `;
 
 const NOOP = () => {};
+
+const FRAME_ELEMENT_MESSAGE = sprintf(
+  /* translators: 1: Ctrl Key 2: Alt Key */
+  __(
+    'To exit the canvas area, press Escape. Press Tab to move to the next group or element. To enter floating menu, press %1$s %2$s p.',
+    'web-stories'
+  ),
+  prettifyShortcut('ctrl'),
+  prettifyShortcut('alt')
+);
 
 function FrameElement({ id }) {
   const enterFocusGroup = useEditLayerFocusManager(
