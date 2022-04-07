@@ -38,7 +38,7 @@ use WP_REST_Server;
 /**
  * Class to access publisher logos via the REST API.
  *
- * @since 1.12.0
+ * @since 1.20.0
  *
  * @phpstan-type ShopifyGraphQLError array{message: string}[]
  * @phpstan-type ShopifyGraphQLPriceRange array{minVariantPrice: array{amount: int, currencyCode: string}}
@@ -385,7 +385,7 @@ QUERY;
 	/**
 	 * Retrieves the publisher logo's schema, conforming to JSON Schema.
 	 *
-	 * @since 1.12.0
+	 * @since 1.20.0
 	 *
 	 * @return array Item schema data.
 	 */
