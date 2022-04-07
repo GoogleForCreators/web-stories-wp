@@ -18,10 +18,19 @@ const elementSlice = (set) => ({
     elementTypes: {},
   },
   actions: {
-    registerElementTypes: (elementType) =>
-      set((data) => {
-        data.element.state.elementTypes[elementType.type] = elementType;
-      }),
+    registerElementType: (elementType) =>
+      set(({ element }) => ({
+        element: {
+          ...element,
+          state: {
+            ...element.state,
+            elementTypes: {
+              ...element.state.elementTypes,
+              [elementType.type]: elementType,
+            },
+          },
+        },
+      })),
   },
 });
 
