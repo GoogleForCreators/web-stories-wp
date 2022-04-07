@@ -196,35 +196,34 @@ function FrameElement({ id }) {
    * Using a live region because an `aria-label` would remove
    * any labels/content that would be read from children.
    */
-  const handleFocus = useCallback(() => {
-    speak(FRAME_ELEMENT_MESSAGE);
-  }, [speak]);
+  const handleFocus = useCallback(
+    (evt) => {
+      if (!isSelected) {
+        handleSelectElement(id, evt);
+      }
+      speak(FRAME_ELEMENT_MESSAGE);
+    },
+    [handleSelectElement, id, isSelected, speak]
+  );
+
+  const handleMouseDown = useCallback(
+    (evt) => {
+      if (isSelected) {
+        elementRef.current.focus({ preventScroll: true });
+      } else {
+        handleSelectElement(id, evt);
+      }
+      if (!isBackground) {
+        evt.stopPropagation();
+      }
+    },
+    [handleSelectElement, id, isBackground, isSelected]
+  );
 
   // For elements with no mask, handle events by the wrapper.
   const mask = getElementMask(element);
   const maskDisabled =
     !mask?.type || (isBackground && mask.type !== MaskTypes.RECTANGLE);
-  const eventHandlers = {
-    onMouseDown: (evt) => {
-      if (!isSelected) {
-        handleSelectElement(id, evt);
-      }
-      elementRef.current.focus({ preventScroll: true });
-      if (!isBackground) {
-        evt.stopPropagation();
-      }
-    },
-    onFocus: (evt) => {
-      if (!isSelected) {
-        handleSelectElement(id, evt);
-      }
-
-      handleFocus(evt);
-    },
-    onPointerEnter,
-    onPointerLeave,
-    onClick: isMedia ? handleMediaClick(id) : null,
-  };
 
   const withMaskRef = useRef(null);
 
@@ -264,18 +263,20 @@ function FrameElement({ id }) {
         data-element-id={id}
         {...box}
         tabIndex={-1}
+        role="presentation"
         hasMask={isMaskable}
         data-testid="frameElement"
-        maskDisabled={maskDisabled}
+        onMouseDown={handleMouseDown}
         onFocus={handleFocus}
-        {...(maskDisabled ? eventHandlers : null)}
+        onPointerEnter={onPointerEnter}
+        onPointerLeave={onPointerLeave}
+        onClick={isMedia ? handleMediaClick(id) : null}
       >
         <WithMask
           ref={withMaskRef}
           element={element}
           fill
           flip={flip}
-          eventHandlers={!maskDisabled ? eventHandlers : null}
           draggingResource={draggingResource}
           activeDropTargetId={activeDropTargetId}
           isDropSource={isDropSource}

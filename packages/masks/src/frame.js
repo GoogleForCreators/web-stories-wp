@@ -178,7 +178,6 @@ const WithMask = forwardRef(
       fill,
       style,
       children,
-      eventHandlers = null,
       flip,
       draggingResource,
       activeDropTargetId,
@@ -232,7 +231,6 @@ const WithMask = forwardRef(
           ...(!isBackground ? { clipPath: `url(#${maskId})` } : {}),
         }}
         {...rest}
-        {...eventHandlers}
         onPointerOver={() => setHover(true)}
         onPointerOut={() => setHover(false)}
       >
