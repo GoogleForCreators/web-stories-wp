@@ -38,7 +38,7 @@
   "sideEffects": false,
   "dependencies": {
     "@googleforcreators/i18n": "*",
-    "polished": "^4.1.4",
+    "polished": "^4.2.2",
     "prop-types": "^15.8.1"
   },
   "devDependencies": {}
