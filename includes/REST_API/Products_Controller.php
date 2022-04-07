@@ -104,7 +104,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 				[
 					'methods'             => WP_REST_Server::READABLE,
 					'callback'            => [ $this, 'get_items' ],
-					'permission_callback' => [ $this, 'permissions_check' ],
+					'permission_callback' => [ $this, 'get_items_permissions_check' ],
 					'args'                => $this->get_collection_params(),
 				],
 				'schema' => [ $this, 'get_public_item_schema' ],
@@ -119,7 +119,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
 	 */
-	public function permissions_check() {
+	public function get_items_permissions_check() {
 		if ( ! $this->story_post_type->has_cap( 'edit_posts' ) ) {
 			return new \WP_Error(
 				'rest_forbidden',
