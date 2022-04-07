@@ -341,7 +341,7 @@ QUERY;
 		/**
 		 * Products.
 		 *
-		 * @var array $products
+		 * @var \WC_Product[] $products
 		 */
 		$products = wc_get_products(
 			[
@@ -370,8 +370,8 @@ QUERY;
 				'productPriceCurrency' => get_woocommerce_currency(),
 				'productImages'        => $images,
 				'aggregateRating'      => [
-					'ratingValue' => (float) $product->get_average_rating(),
-					'reviewCount' => (int) $product->get_rating_count(),
+					'ratingValue' => $product->get_average_rating(),
+					'reviewCount' => $product->get_rating_count(),
 					'reviewUrl'   => $product->get_permalink(),
 				],
 				'productDetails'       => wp_strip_all_tags( $product->get_short_description() ),
