@@ -17,10 +17,11 @@
 /**
  * External dependencies
  */
-import { __ } from '@googleforcreators/i18n';
+import { __, _x, sprintf } from '@googleforcreators/i18n';
 import { useCallback, useState } from '@googleforcreators/react';
 import { getTimeTracker, trackError } from '@googleforcreators/tracking';
 import { useSnackbar } from '@googleforcreators/design-system';
+import { stripHTML } from '@googleforcreators/dom';
 
 /**
  * Internal dependencies
@@ -30,6 +31,13 @@ import { useConfig } from '../../config';
 import useRefreshPostEditURL from '../../../utils/useRefreshPostEditURL';
 import getStoryPropsToSave from '../utils/getStoryPropsToSave';
 import { useHistory } from '../../history';
+
+const HTTP_STATUS_DESCRIPTIONS = {
+  400: _x('Bad Request', 'HTTP status description', 'web-stories'),
+  401: _x('Unauthorized', 'HTTP status description', 'web-stories'),
+  403: _x('Forbidden', 'HTTP status description', 'web-stories'),
+  500: _x('Internal Server Error', 'HTTP status description', 'web-stories'),
+};
 
 /**
  * Custom hook to save story.
@@ -106,45 +114,43 @@ function useSaveStory({ storyId, pages, story, updateStory }) {
           setIsFreshlyPublished(!isStoryAlreadyPublished && isStoryPublished);
         })
         .catch((err) => {
+          const description = err.message ? stripHTML(err.message) : null;
           let message = __('Failed to save the story', 'web-stories');
-          const status = err?.data?.status;
-          const error_400 = __(
-            'Client error bad request failed to save the story',
-            'web-stories'
-          );
-          const error_401 = __(
-            'Client error unauthorized failed to save the story',
-            'web-stories'
-          );
-          const error_403 = __(
-            'Client error forbidden failed to save the story',
-            'web-stories'
-          );
-          const error_500 = __(
-            'Server error failed to save the story',
-            'web-stories'
-          );
 
-          switch (status) {
-            case 400:
-              message = error_400;
-              break;
-            case 401:
-              message = error_401;
-              break;
-            case 403:
-              message = error_403;
-              break;
-            case 500:
-              message = error_500;
-              break;
-            default:
-            // noop
+          if (description) {
+            message = sprintf(
+              /* translators: %s: error message */
+              __('Failed to save the story: %s', 'web-stories'),
+              description
+            );
+          }
+
+          if (
+            Object.prototype.hasOwnProperty.call(
+              HTTP_STATUS_DESCRIPTIONS,
+              err?.data?.status
+            )
+          ) {
+            if (description) {
+              message = sprintf(
+                /* translators: 1: error message. 2: status code */
+                __('Failed to save the story: %1$s (%2$s)', 'web-stories'),
+                description,
+                HTTP_STATUS_DESCRIPTIONS[err?.data?.status]
+              );
+            } else {
+              message = sprintf(
+                /* translators: %s: error message */
+                __('Failed to save the story: %s', 'web-stories'),
+                HTTP_STATUS_DESCRIPTIONS[err?.data?.status]
+              );
+            }
           }
 
           // eslint-disable-next-line no-console -- We want to surface this error.
-          console.log(err);
-          trackError('save_story', err.message);
+          console.log(__('Failed to save the story', 'web-stories'), err);
+          trackError('save_story', description);
+
           showSnackbar({
             message,
             dismissible: true,

@@ -93,7 +93,7 @@ describe('Save story snackbar', () => {
 
       await page.waitForSelector('[role="alert"]');
       await expect(page).toMatchElement('[role="alert"]', {
-        text: 'Server error failed to save the story',
+        text: 'Failed to save the story: There has been a critical error on this website (Internal Server Error)',
       });
     });
   });
