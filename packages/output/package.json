@@ -54,6 +54,6 @@
     "@googleforcreators/element-library": "*",
     "@googleforcreators/test-utils": "*",
     "@testing-library/react": "^12.1.2",
-    "flagged": "^2.0.1"
+    "flagged": "^2.0.3"
   }
 }

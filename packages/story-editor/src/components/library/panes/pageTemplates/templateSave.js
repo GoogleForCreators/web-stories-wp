@@ -35,7 +35,7 @@ import { DATA_VERSION } from '@googleforcreators/migration';
  */
 import { useAPI } from '../../../../app/api';
 import { useStory } from '../../../../app/story';
-import { focusStyle } from '../../../panels/shared';
+import { focusStyle } from '../../../panels/shared/styles';
 import isDefaultPage from '../../../../utils/isDefaultPage';
 import Icon from './images/illustration.svg';
 

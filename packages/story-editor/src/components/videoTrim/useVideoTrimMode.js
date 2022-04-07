@@ -17,12 +17,7 @@
 /**
  * External dependencies
  */
-import {
-  useCallback,
-  useMemo,
-  useState,
-  useEffect,
-} from '@googleforcreators/react';
+import { useCallback, useMemo, useState } from '@googleforcreators/react';
 import { trackEvent } from '@googleforcreators/tracking';
 import { getMsFromHMS } from '@googleforcreators/media';
 
@@ -93,12 +88,6 @@ function useVideoTrimMode() {
       setVideoData(defaultVideoData);
     }
   }, [getMediaById, selectedElement]);
-
-  useEffect(() => {
-    if (selectedElement?.resource?.trimData) {
-      getVideoData();
-    }
-  }, [selectedElement, getVideoData]);
 
   const toggleTrimMode = useCallback(() => {
     if (isEditing) {

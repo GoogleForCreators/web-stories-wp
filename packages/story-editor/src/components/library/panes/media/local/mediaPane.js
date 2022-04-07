@@ -51,7 +51,7 @@ import PaginatedMediaGallery from '../common/paginatedMediaGallery';
 import Flags from '../../../../../flags';
 import { PANE_PADDING } from '../../shared';
 import { LOCAL_MEDIA_TYPE_ALL } from '../../../../../app/media/local/types';
-import { focusStyle } from '../../../../panels/shared';
+import { focusStyle } from '../../../../panels/shared/styles';
 import Tooltip from '../../../../tooltip';
 import useOnMediaSelect from './useOnMediaSelect';
 import paneId from './paneId';

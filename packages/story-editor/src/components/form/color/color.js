@@ -38,7 +38,7 @@ import {
 import { MULTIPLE_VALUE } from '../../../constants';
 import useEyedropper from '../../eyedropper';
 import Tooltip from '../../tooltip';
-import { focusStyle } from '../../panels/shared';
+import { focusStyle } from '../../panels/shared/styles';
 import applyOpacityChange from './applyOpacityChange';
 import OpacityInput from './opacityInput';
 import ColorInput from './colorInput';
@@ -88,6 +88,8 @@ const EyeDropperButton = styled(Button).attrs({
   ${focusStyle};
 `;
 
+const DEFAULT_CONTAINER_LABEL_BASE = __('Color input', 'web-stories');
+
 const Color = forwardRef(function Color(
   {
     onChange,
@@ -96,6 +98,7 @@ const Color = forwardRef(function Color(
     allowsSavedColors = false,
     value = null,
     label = null,
+    containerLabelBase = DEFAULT_CONTAINER_LABEL_BASE,
     changedStyle = null,
     hasEyedropper = false,
     pickerHasEyedropper = true,
@@ -115,8 +118,9 @@ const Color = forwardRef(function Color(
   );
 
   const containerLabel = sprintf(
-    /* translators: %s: color input label name. */
-    __('Color input: %s', 'web-stories'),
+    /* translators: 1: the input section in the editor. 2: color input label name. */
+    __('%1$s: %2$s', 'web-stories'),
+    containerLabelBase,
     label
   );
 
@@ -211,6 +215,7 @@ Color.propTypes = {
   allowsGradient: PropTypes.bool,
   allowsOpacity: PropTypes.bool,
   allowsSavedColors: PropTypes.bool,
+  containerLabelBase: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   label: PropTypes.string.isRequired,
   changedStyle: PropTypes.string,

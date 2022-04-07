@@ -22,11 +22,6 @@ import { toUTCDate } from '@googleforcreators/date';
 // @todo Remove WordPress specific and unused fields.
 const formattedStoriesArray = [
   {
-    locked: true,
-    lockUser: {
-      name: 'batgirl',
-      id: 888877665,
-    },
     id: 167,
     status: 'publish',
     title: 'ORANGE SHAPES',
@@ -50,6 +45,38 @@ const formattedStoriesArray = [
     editStoryLink:
       'http://localhost:8899/wp-admin/post.php?action=edit&post=167',
     previewLink: 'http://localhost:8899/wp-admin/post.php?action=edit&post=167',
+  },
+  {
+    locked: true,
+    lockUser: {
+      name: 'batgirl',
+      id: 888877665,
+      avatar:
+        'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y&s=96',
+    },
+    id: 168,
+    status: 'publish',
+    title: 'PURPLE SHAPES',
+    modified: toUTCDate('2020-05-21T23:25:35.000Z'),
+    modifiedGmt: '2020-05-21T23:25:35.000Z',
+    created: toUTCDate('2020-05-21T23:25:35.000Z'),
+    createdGmt: '2020-05-21T23:25:35.000Z',
+    featuredMediaUrl: 'http://localhost:9876/__static__/featured-media-1.png',
+    tags: [],
+    categories: [],
+    author: {
+      name: 'Jango Fett',
+      id: 1,
+    },
+    bottomTargetAction:
+      'http://localhost:8899/wp-admin/post.php?action=edit&post=168',
+    capabilities: {
+      hasEditAction: true,
+      hasDeleteAction: true,
+    },
+    editStoryLink:
+      'http://localhost:8899/wp-admin/post.php?action=edit&post=168',
+    previewLink: 'http://localhost:8899/wp-admin/post.php?action=edit&post=168',
   },
   {
     id: 165,

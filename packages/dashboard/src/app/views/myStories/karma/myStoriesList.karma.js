@@ -120,10 +120,10 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
       // drop the header row using slice
       const rows = fixture.screen.getAllByRole('row').slice(1);
 
-      const utils = within(rows[1]);
+      const utils = within(rows[0]);
 
       const titleCell = utils.getByRole('heading', {
-        name: storiesSortedByModified[1].title,
+        name: storiesSortedByModified[0].title,
       });
 
       await fixture.events.hover(titleCell);
@@ -143,7 +143,7 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
       const inputLength = input.value.length;
 
       for (let iter = 0; iter < inputLength; iter++) {
-        // disable eslint to prevet overlapping .act calls
+        // disable eslint to prevent overlapping .act calls
         // eslint-disable-next-line no-await-in-loop
         await fixture.events.keyboard.press('Backspace');
       }
@@ -155,6 +155,34 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
       await fixture.snapshot('Rename story');
 
       expect(utils.getByText(/^A New Title$/)).toBeTruthy();
+    });
+
+    it('should not Rename a locked story', async () => {
+      const { stories, storiesOrderById } = await getStoriesState();
+
+      const storiesSortedByModified = storiesOrderById.map((id) => stories[id]);
+
+      await clickListView();
+
+      // drop the header row using slice
+      const rows = fixture.screen.getAllByRole('row').slice(1);
+
+      const utils = within(rows[1]);
+
+      const titleCell = utils.getByRole('heading', {
+        name: new RegExp(`^${storiesSortedByModified[1].title}`),
+      });
+
+      await fixture.events.hover(titleCell);
+
+      const moreOptionsButton = utils.getByRole('button', {
+        name: /^Context menu for/,
+      });
+
+      await fixture.events.click(moreOptionsButton);
+
+      const rename = utils.getByText(/^Rename/);
+      expect(rename.hasAttribute('disabled')).toBe(true);
     });
 
     it('should Duplicate a story', async () => {

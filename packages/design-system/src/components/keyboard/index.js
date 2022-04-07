@@ -25,6 +25,7 @@ import {
   useState,
   useContext,
   useBatchingCallback,
+  useCallback,
 } from '@googleforcreators/react';
 /**
  * Internal dependencies
@@ -181,6 +182,17 @@ export function useKeyUpEffect(
  */
 export function useIsKeyPressed(refOrNode, keyNameOrSpec, deps = undefined) {
   const [isKeyPressed, setIsKeyPressed] = useState(false);
+
+  const handleBlur = useCallback(() => {
+    setIsKeyPressed(false);
+  }, []);
+  useEffect(() => {
+    window.addEventListener('blur', handleBlur);
+    return function () {
+      window.removeEventListener('blur', handleBlur);
+    };
+  }, [handleBlur]);
+
   //eslint-disable-next-line react-hooks/exhaustive-deps -- Pass through provided deps.
   useKeyDownEffect(refOrNode, keyNameOrSpec, () => setIsKeyPressed(true), deps);
   //eslint-disable-next-line react-hooks/exhaustive-deps -- Pass through provided deps.

@@ -278,18 +278,6 @@ class Experiments extends Service_Base implements HasRequirements {
 			],
 			/**
 			 * Author: @spacedmonkey
-			 * Issue: #3126
-			 * Creation date: 2021-02-02
-			 */
-			[
-				'name'        => 'enablePostLocking',
-				'label'       => __( 'Story locking', 'web-stories' ),
-				'description' => __( 'Lock in-progress stories from being edited by other authors', 'web-stories' ),
-				'group'       => 'general',
-				'default'     => true,
-			],
-			/**
-			 * Author: @spacedmonkey
 			 * Issue: #10339
 			 * Creation date: 2022-02-02
 			 */
@@ -312,14 +300,26 @@ class Experiments extends Service_Base implements HasRequirements {
 				'default'     => true,
 			],
 			/**
-			 * Author: @brittanyirl
-			 * Issue: #10115
-			 * Creation date: 2022-02-02
+			 * Author: @miina
+			 * Issue: #9880
+			 * Creation date: 2021-12-15
 			 */
 			[
-				'name'        => 'enableUpdatedPublishStoryModal',
-				'label'       => __( 'Updated Publish Story Modal', 'web-stories' ),
-				'description' => __( 'Enable new pre-publish confirmation modal', 'web-stories' ),
+				'name'        => 'customFonts',
+				'label'       => __( 'Custom Fonts', 'web-stories' ),
+				'description' => __( 'Enable adding custom fonts', 'web-stories' ),
+				'group'       => 'general',
+				'default'     => true,
+			],
+			/**
+			 * Author: @spacedmonkey
+			 * Issue: #8821
+			 * Creation date: 2022-01-19
+			 */
+			[
+				'name'        => 'enhancedPageBackgroundAudio',
+				'label'       => __( 'Page Background Audio', 'web-stories' ),
+				'description' => __( 'Enable adding captions to background audio', 'web-stories' ),
 				'group'       => 'editor',
 				'default'     => true,
 			],
@@ -344,6 +344,17 @@ class Experiments extends Service_Base implements HasRequirements {
 				'name'        => 'mediaRecording',
 				'label'       => __( 'Media Recording', 'web-stories' ),
 				'description' => __( 'Enable recording from webcam/microphone', 'web-stories' ),
+				'group'       => 'editor',
+			],
+			/**
+			 * Author: @spacedmonkey
+			 * Issue: #11081
+			 * Creation date: 2022-03-30
+			 */
+			[
+				'name'        => 'captionHotlinking',
+				'label'       => __( 'Caption hotlinking', 'web-stories' ),
+				'description' => __( 'Enable hotlinking of captions', 'web-stories' ),
 				'group'       => 'editor',
 			],
 		];
