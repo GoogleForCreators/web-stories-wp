@@ -272,6 +272,32 @@ describe('CUJ: Creator can view their stories in list view: ', () => {
       expect(rows.length).toEqual(storiesSortedByModified.length - 1);
     });
 
+    it('should not Delete a locked story', async () => {
+      const { stories, storiesOrderById } = await getStoriesState();
+      const storiesSortedByModified = storiesOrderById.map((id) => stories[id]);
+
+      await clickListView();
+
+      // drop the header row using slice
+      const rows = fixture.screen.getAllByRole('row').slice(1);
+
+      const utils = within(rows[1]);
+      const titleCell = utils.getByRole('heading', {
+        name: new RegExp(`^${storiesSortedByModified[1].title}`),
+      });
+
+      await fixture.events.hover(titleCell);
+
+      const moreOptionsButton = utils.getByRole('button', {
+        name: /^Context menu for/,
+      });
+
+      await fixture.events.click(moreOptionsButton);
+
+      const deleteButton = utils.getByText(/^Delete/);
+      expect(deleteButton.hasAttribute('disabled')).toBe(true);
+    });
+
     it('should not Delete a story if Cancel is clicked in the confirmation modal', async () => {
       const { stories, storiesOrderById } = await getStoriesState();
       const storiesSortedByModified = storiesOrderById.map((id) => stories[id]);
