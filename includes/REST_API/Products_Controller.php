@@ -231,9 +231,10 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		$search_string = empty( $search_term ) ? '*' : '*' . $search_term . '*';
 
 		// TODO(#11154): Support different sortKeys.
+		// Maybe use "available_for_sale:true AND " query to only show items in stock.
 		$query = <<<QUERY
 {
-  products(first: 100, sortKey: CREATED_AT, query: "available_for_sale:true AND title:$search_string") {
+  products(first: 100, sortKey: CREATED_AT, query: "title:$search_string") {
     edges {
       node {
         id
