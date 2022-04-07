@@ -38,7 +38,7 @@ function ToggleBold() {
       Icon={Icons.LetterBBold}
       title={__('Toggle bold', 'web-stories')}
       onClick={toggle}
-      tabIndex="0"
+      tabIndex={-1}
     />
   );
 }

@@ -77,6 +77,7 @@ const FloatingMenu = memo(
             isHorizontal
             isSecondary
             isAlwaysVisible
+            tabIndex={-1}
             ref={focusGroupRef}
             aria-label={__(
               'Design options for selected element',

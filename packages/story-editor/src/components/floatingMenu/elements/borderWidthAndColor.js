@@ -122,6 +122,7 @@ function BorderWidthAndColor() {
   return (
     <Container>
       <Input
+        tabIndex={-1}
         suffix={<Icons.BorderBox />}
         value={border.left || 0}
         aria-label={__('Border width', 'web-stories')}
@@ -131,6 +132,7 @@ function BorderWidthAndColor() {
         <>
           <Dash />
           <Color
+            tabIndex={-1}
             label={__('Border color', 'web-stories')}
             value={border.color || BLACK}
             onChange={handleColorChange}

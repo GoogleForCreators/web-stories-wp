@@ -54,6 +54,7 @@ function TextColor() {
 
   return (
     <Color
+      tabIndex={-1}
       label={__('Text color', 'web-stories')}
       value={color}
       allowsSavedColors
