@@ -195,7 +195,7 @@ function FramesLayer() {
     { key: ['enter'] },
     () => {
       enterFocusGroup({
-        groupId: FOCUS_GROUPS.CANVAS,
+        groupId: FOCUS_GROUPS.ELEMENT_SELECTION,
         cleanup: () => canvasRef.current?.focus(),
       });
     },

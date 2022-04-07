@@ -98,7 +98,7 @@ const FRAME_ELEMENT_MESSAGE = __(
 
 function FrameElement({ id }) {
   const [isTransforming, setIsTransforming] = useState(false);
-  const focusGroupRef = useFocusGroupRef(FOCUS_GROUPS.CANVAS);
+  const focusGroupRef = useFocusGroupRef(FOCUS_GROUPS.ELEMENT_SELECTION);
 
   const {
     setNodeForElement,
