@@ -117,9 +117,10 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 	 *
 	 * @since 1.20.0
 	 *
+	 * @param WP_REST_Request $request Full details about the request.
 	 * @return true|WP_Error True if the request has read access, WP_Error object otherwise.
 	 */
-	public function get_items_permissions_check() {
+	public function get_items_permissions_check( $request ) {
 		if ( ! $this->story_post_type->has_cap( 'edit_posts' ) ) {
 			return new \WP_Error(
 				'rest_forbidden',
