@@ -32,6 +32,7 @@ const __dirname = dirname(__filename);
 const wavingHand = String.fromCodePoint(0x1f44b);
 
 const LOGO = fse.readFileSync(path.join(__dirname, 'text-art.txt'));
+const WELCOME_MESSAGE_SHORT = `Hi! ${ wavingHand } Welcome to Web stories.`;
 const WELCOME_MESSAGE = `Hi! ${wavingHand} Welcome to Web stories. Let us help you try our story creation suite`;
 const BOILERPLATE_DIR_PATH = `../boilerplate`;
 const SHARED_DIR_PATH = '../shared';
@@ -236,5 +237,6 @@ export {
   scaffoldBoilerplateCustom,
   scaffoldBoilerplateWithCRA,
   WELCOME_MESSAGE,
+  WELCOME_MESSAGE_SHORT,
   LOGO,
 };

@@ -25,6 +25,7 @@ import fse from 'fs-extra';
 import {
   LOGO,
   WELCOME_MESSAGE,
+  WELCOME_MESSAGE_SHORT,
   getBoilerplateName,
   getBoilerplateConfigList,
   scaffoldBoilerplateCustom,
@@ -167,12 +168,14 @@ if (boilerplate === 'none') {
 }
 
 (async () => {
+  const showPrompt = userPrompts.length > 0;
+
   log('\n\n');
   log(LOGO, 'cyan');
   log('\n\n');
-  log(WELCOME_MESSAGE, 'cyan');
+  log( showPrompt ? WELCOME_MESSAGE : WELCOME_MESSAGE_SHORT, 'cyan');
 
-  if (userPrompts.length > 0) {
+  if (showPrompt) {
     const response = await prompts(userPrompts, {
       onCancel: () => {
         process.exit(1);
