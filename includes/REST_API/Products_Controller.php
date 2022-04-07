@@ -40,7 +40,7 @@ use WP_REST_Server;
  *
  * @since 1.20.0
  *
- * @phpstan-type ShopifyGraphQLError array{message: string}[]
+ * @phpstan-type ShopifyGraphQLError array{message: string, extensions: array{code: string, requestId: string}}[]
  * @phpstan-type ShopifyGraphQLPriceRange array{minVariantPrice: array{amount: int, currencyCode: string}}
  * @phpstan-type ShopifyGraphQLProductImage array{url: string, altText: string}
  * @phpstan-type ShopifyGraphQLProduct array{id: string, title: string, vendor: string, description: string, onlineStoreUrl: string, images: array{edges: array{node: ShopifyGraphQLProductImage}[]}, priceRange: ShopifyGraphQLPriceRange}
