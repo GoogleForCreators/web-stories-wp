@@ -354,7 +354,15 @@ QUERY;
 		);
 
 		foreach ( $products as $product ) {
-			$images    = array_map(
+			$product_image_ids = $product->get_gallery_image_ids();
+
+			/*
+			 * Warm the object cache with post and meta information for all found
+			 * images to avoid making individual database calls.
+			 */
+			_prime_post_caches( $product_image_ids, false, true );
+
+			$images = array_map(
 				static function( $image_id ) {
 					$url = wp_get_attachment_url( $image_id );
 					$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
@@ -364,8 +372,9 @@ QUERY;
 						'alt' => $alt,
 					];
 				},
-				$product->get_gallery_image_ids()
+				$product_image_ids
 			);
+
 			$results[] = [
 				// amp-story-shopping requires non-numeric IDs.
 				'productId'            => 'wc-' . $product->get_id(),
