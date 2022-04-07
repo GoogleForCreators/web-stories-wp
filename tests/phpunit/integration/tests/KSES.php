@@ -474,6 +474,10 @@ class KSES extends DependencyInjectedTestCase {
 				'<amp-video autoplay="autoplay" poster="https://example.com/poster.png" artwork="https://example.com/poster.png" title="Some Video" alt="Some Video" layout="fill" id="foo" captions-id="foo-captions"><source type="video/mp4" src="https://example.com/video.mp4"></source></amp-video>',
 				'<amp-video autoplay="autoplay" poster="https://example.com/poster.png" artwork="https://example.com/poster.png" title="Some Video" alt="Some Video" layout="fill" id="foo" captions-id="foo-captions"><source type="video/mp4" src="https://example.com/video.mp4"></source></amp-video>',
 			],
+			'Shopping'                         => [
+				'<amp-story-shopping-tag data-product-id="lamp"></amp-story-shopping-tag><amp-story-shopping-attachment><script type="application/json">{}</script></amp-story-shopping-attachment>',
+				'<amp-story-shopping-tag data-product-id="lamp"></amp-story-shopping-tag><amp-story-shopping-attachment><script type="application/json">{}</script></amp-story-shopping-attachment>',
+			],
 		];
 	}
 }

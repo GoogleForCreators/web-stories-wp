@@ -504,34 +504,34 @@ class KSES extends Service_Base implements HasRequirements {
 		}
 
 		$story_components = [
-			'html'                      => [
+			'html'                          => [
 				'amp'  => true,
 				'lang' => true,
 			],
-			'head'                      => [],
-			'body'                      => [],
-			'meta'                      => [
+			'head'                          => [],
+			'body'                          => [],
+			'meta'                          => [
 				'name'    => true,
 				'content' => true,
 				'charset' => true,
 			],
-			'script'                    => [
+			'script'                        => [
 				'async'          => true,
 				'src'            => true,
 				'custom-element' => true,
 				'type'           => true,
 			],
-			'noscript'                  => [],
-			'link'                      => [
+			'noscript'                      => [],
+			'link'                          => [
 				'href' => true,
 				'rel'  => true,
 			],
-			'style'                     => [
+			'style'                         => [
 				'type'            => true,
 				'amp-boilerplate' => true,
 				'amp-custom'      => true,
 			],
-			'amp-story'                 => [
+			'amp-story'                     => [
 				'background-audio'     => true,
 				'live-story'           => true,
 				'live-story-disabled'  => true,
@@ -544,34 +544,42 @@ class KSES extends Service_Base implements HasRequirements {
 				'supports-landscape'   => true,
 				'title'                => true,
 			],
-			'amp-story-captions'        => [
+			'amp-story-captions'            => [
 				'height' => true,
 			],
-			'amp-story-page'            => [
+			'amp-story-shopping-attachment' => [
+				'theme' => true,
+				'src'   => true,
+			],
+			'amp-story-shopping-config'     => [
+				'src' => true,
+			],
+			'amp-story-shopping-tag'        => [],
+			'amp-story-page'                => [
 				'auto-advance-after' => true,
 				'background-audio'   => true,
 				'id'                 => true,
 			],
-			'amp-story-page-attachment' => [
+			'amp-story-page-attachment'     => [
 				'href'  => true,
 				'theme' => true,
 			],
-			'amp-story-page-outlink'    => [
+			'amp-story-page-outlink'        => [
 				'cta-image'          => true,
 				'theme'              => true,
 				'cta-accent-color'   => true,
 				'cta-accent-element' => true,
 			],
-			'amp-story-grid-layer'      => [
+			'amp-story-grid-layer'          => [
 				'aspect-ratio' => true,
 				'position'     => true,
 				'template'     => true,
 			],
-			'amp-story-cta-layer'       => [],
-			'amp-story-animation'       => [
+			'amp-story-cta-layer'           => [],
+			'amp-story-animation'           => [
 				'trigger' => true,
 			],
-			'amp-img'                   => [
+			'amp-img'                       => [
 				'alt'                       => true,
 				'attribution'               => true,
 				'data-amp-bind-alt'         => true,
@@ -590,7 +598,7 @@ class KSES extends Service_Base implements HasRequirements {
 				'src'                       => true,
 				'srcset'                    => true,
 			],
-			'amp-video'                 => [
+			'amp-video'                     => [
 				'album'                      => true,
 				'alt'                        => true,
 				'artist'                     => true,
@@ -630,11 +638,11 @@ class KSES extends Service_Base implements HasRequirements {
 				'rotate-to-fullscreen'       => true,
 				'src'                        => true,
 			],
-			'source'                    => [
+			'source'                        => [
 				'type' => true,
 				'src'  => true,
 			],
-			'img'                       => [
+			'img'                           => [
 				'alt'           => true,
 				'attribution'   => true,
 				'border'        => true,
@@ -651,37 +659,37 @@ class KSES extends Service_Base implements HasRequirements {
 				'srcwidth'      => true,
 				'width'         => true,
 			],
-			'svg'                       => [
+			'svg'                           => [
 				'width'   => true,
 				'height'  => true,
 				'viewbox' => true,
 				'fill'    => true,
 				'xmlns'   => true,
 			],
-			'clippath'                  => [
+			'clippath'                      => [
 				'transform'     => true,
 				'clippathunits' => true,
 				'path'          => true,
 			],
-			'defs'                      => [],
-			'feblend'                   => [
+			'defs'                          => [],
+			'feblend'                       => [
 				'in'     => true,
 				'in2'    => true,
 				'result' => true,
 			],
-			'fecolormatrix'             => [
+			'fecolormatrix'                 => [
 				'in'     => true,
 				'values' => true,
 			],
-			'feflood'                   => [
+			'feflood'                       => [
 				'flood-opacity' => true,
 				'result'        => true,
 			],
-			'fegaussianblur'            => [
+			'fegaussianblur'                => [
 				'stddeviation' => true,
 			],
-			'feoffset'                  => [],
-			'filter'                    => [
+			'feoffset'                      => [],
+			'filter'                        => [
 				'id'                          => true,
 				'x'                           => true,
 				'y'                           => true,
@@ -690,11 +698,11 @@ class KSES extends Service_Base implements HasRequirements {
 				'filterunits'                 => true,
 				'color-interpolation-filters' => true,
 			],
-			'g'                         => [
+			'g'                             => [
 				'filter'  => true,
 				'opacity' => true,
 			],
-			'path'                      => [
+			'path'                          => [
 				'd'         => true,
 				'fill-rule' => true,
 				'clip-rule' => true,

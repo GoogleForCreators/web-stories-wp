@@ -111,7 +111,7 @@ describe('getUsedAmpExtensions', () => {
     );
   });
 
-  it('should include the amp-stroy-captions script if there is a video with tracks', () => {
+  it('should include the amp-story-captions script if there is a video with tracks', () => {
     const pages = [
       {
         elements: [
@@ -146,7 +146,7 @@ describe('getUsedAmpExtensions', () => {
     );
   });
 
-  it('should include the amp-stroy-captions script if there is a background audio with tracks', () => {
+  it('should include the amp-story-captions script if there is a background audio with tracks', () => {
     const pages = [
       {
         backgroundAudio: {
@@ -179,6 +179,37 @@ describe('getUsedAmpExtensions', () => {
         {
           name: 'amp-story-captions',
           src: 'https://cdn.ampproject.org/v0/amp-story-captions-0.1.js',
+        },
+      ])
+    );
+  });
+
+  it('should include the amp-story-shopping script if there are products', () => {
+    const pages = [
+      {
+        elements: [
+          {
+            id: 'el1',
+            type: 'product',
+            x: 50,
+            y: 50,
+            width: 32,
+            height: 32,
+            rotationAngle: 0,
+            product: {},
+          },
+        ],
+      },
+    ];
+
+    const actual = getUsedAmpExtensions(pages);
+
+    expect(actual).toHaveLength(3);
+    expect(actual).toStrictEqual(
+      expect.arrayContaining([
+        {
+          name: 'amp-story-shopping',
+          src: 'https://cdn.ampproject.org/v0/amp-story-shopping-0.1.js',
         },
       ])
     );

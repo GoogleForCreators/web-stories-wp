@@ -39,6 +39,8 @@ const transformSettingResponse = (response) => ({
   videoCache: response.web_stories_video_cache,
   archive: response.web_stories_archive,
   archivePageId: response.web_stories_archive_page_id,
+  shopifyHost: response.web_stories_shopify_host,
+  shopifyAccessToken: response.web_stories_shopify_access_token,
 });
 
 /**
@@ -72,6 +74,8 @@ export function updateSettings(apiPath, queryParams) {
     videoCache,
     archive,
     archivePageId,
+    shopifyHost,
+    shopifyAccessToken,
   } = queryParams;
 
   const query = {};
@@ -110,6 +114,14 @@ export function updateSettings(apiPath, queryParams) {
 
   if (archivePageId !== undefined) {
     query.web_stories_archive_page_id = archivePageId;
+  }
+
+  if (shopifyHost !== undefined) {
+    query.web_stories_shopify_host = shopifyHost;
+  }
+
+  if (shopifyAccessToken !== undefined) {
+    query.web_stories_shopify_access_token = shopifyAccessToken;
   }
 
   const path = addQueryArgs(apiPath, query);

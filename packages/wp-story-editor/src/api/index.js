@@ -23,3 +23,4 @@ export * from './hotlinkInfo';
 export * from './proxy';
 export * from './taxonomy';
 export * from './fonts';
+export * from './shopping';
