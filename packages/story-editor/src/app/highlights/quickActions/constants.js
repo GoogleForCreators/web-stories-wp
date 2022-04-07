@@ -60,10 +60,6 @@ export const ACTIONS = {
     trackingEventName: 'insert_background_media',
     text: __('Insert background media', 'web-stories'),
   },
-  INSERT_TEXT_QUICK_ACTION: {
-    trackingEventName: 'library_text_quick_action',
-    text: __('Insert text quick action', 'web-stories'),
-  },
   INSERT_TEXT: {
     trackingEventName: 'insert_text',
     text: __('Insert text', 'web-stories'),
