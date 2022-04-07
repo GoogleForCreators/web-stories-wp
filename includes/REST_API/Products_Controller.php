@@ -184,7 +184,7 @@ class Products_Controller extends REST_Controller implements HasRequirements {
 		 * @param int $time Time to live (in seconds). Default is 1 day.
 		 * @param WP_REST_Request $request Full details about the request.
 		 */
-		$cache_ttl = apply_filters( 'web_stories_shopify_data_cache_ttl', DAY_IN_SECONDS, $request );
+		$cache_ttl = apply_filters( 'web_stories_shopify_data_cache_ttl', DAY_IN_SECONDS, $request ); // TODO: lower default TTL.
 		$cache_key = ! empty( $request['search'] ) ? 'web_stories_shopify_data_' . md5( $search_term ) : 'web_stories_shopify_data_default';
 
 		$data = get_transient( $cache_key );
