@@ -76,7 +76,7 @@ const ALLOWED_ERROR_MESSAGES_FIREFOX = [
   'Layout was forced before the page was fully loaded',
 
   // Firefox cookie warning.
-  'will be soon rejected because it has the “SameSite” attribute set to “None”',
+  'does not have a proper “SameSite” attribute value',
 
   // Firefox cookie warning.
   'has been rejected because it is already expired',
