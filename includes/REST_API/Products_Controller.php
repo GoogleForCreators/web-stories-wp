@@ -357,7 +357,12 @@ QUERY;
 			$images    = array_map(
 				static function( $image_id ) {
 					$url = wp_get_attachment_url( $image_id );
-					return [ 'url' => $url ];
+					$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+
+					return [
+						'url' => $url,
+						'alt' => $alt,
+					];
 				},
 				$product->get_gallery_image_ids()
 			);
