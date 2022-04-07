@@ -19,7 +19,7 @@
  */
 import styled from 'styled-components';
 import { useState, useRef } from '@googleforcreators/react';
-import { __ } from '@googleforcreators/i18n';
+import { __, sprintf } from '@googleforcreators/i18n';
 import { PLACEMENT } from '@googleforcreators/design-system';
 /**
  * Internal dependencies
@@ -62,6 +62,11 @@ function Layers() {
         notificationCount={layersLength}
         copy={__('Layers', 'web-stories')}
         onClick={() => setIsOpen((state) => !state)}
+        aria-label={sprintf(
+          /* translators: %d: number of layers */
+          __('Layers (%d)', 'web-stories'),
+          layersLength
+        )}
       />
     </>
   );
