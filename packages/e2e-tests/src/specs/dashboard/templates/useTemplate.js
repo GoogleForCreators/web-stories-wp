@@ -76,7 +76,7 @@ describe('Template', () => {
     );
 
     // Expand layers popup
-    await expect(page).toClick('button', { text: /^Layers/ });
+    await expect(page).toClick('button[aria-label^="Layers "]');
 
     // Select a text layer so 'Saved Colors' panel is present
     await expect(page).toClick('div[data-testid="layer-option"] button', {
@@ -87,7 +87,8 @@ describe('Template', () => {
     await expect(page).toClick('li[role="tab"]', { text: /^Style$/ });
 
     // Collapse layers popup to avoid aXe error about duplicative alt tags
-    await expect(page).toClick('button', { text: /^Layers/ });
+    await expect(page).toClick('button[aria-label^="Layers "]');
+
     // close floating menu
     await expect(page).toClick('button', { text: 'Dismiss menu' });
 
