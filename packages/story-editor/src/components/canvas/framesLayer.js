@@ -99,12 +99,6 @@ function DesignSpaceGuideline() {
 
 function FramesNavAndSelection({ children }) {
   const framesLayerRef = useRef(null);
-  // TODO: https://github.com/google/web-stories-wp/issues/10266
-  // refactor `useCanvasKeys`. This is the last hook causing extraneous re-renders in this component.
-  // - pulls most of state from useStory and only creates actions and attaches them to hot keys
-  // - extraneous re-renders in this component contribute only ~1ms to total re-render time,
-  //   so this is a high hanging fruit with little reward.
-  useCanvasKeys(framesLayerRef);
 
   const onOpenMenu = useRightClickMenu((state) => state.onOpenMenu);
 
@@ -189,6 +183,13 @@ function FramesLayer() {
   const enterFocusGroup = useEditLayerFocusManager(
     ({ enterFocusGroup }) => enterFocusGroup
   );
+
+  // TODO: https://github.com/google/web-stories-wp/issues/10266
+  // refactor `useCanvasKeys`. This is the last hook causing extraneous re-renders in this component.
+  // - pulls most of state from useStory and only creates actions and attaches them to hot keys
+  // - extraneous re-renders in this component contribute only ~1ms to total re-render time,
+  //   so this is a high hanging fruit with little reward.
+  useCanvasKeys(canvasRef);
 
   useKeyDownEffect(
     canvasRef,
