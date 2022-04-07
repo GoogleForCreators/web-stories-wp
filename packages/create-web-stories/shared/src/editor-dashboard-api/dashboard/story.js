@@ -74,7 +74,7 @@
 
      storyIdList.forEach((storyId)=>{
        if( Number( storyId ) !== id ){
-         newStoryData[id] = storyData[id]
+         newStoryData[storyId] = storyData[id]
        }
      })
 
