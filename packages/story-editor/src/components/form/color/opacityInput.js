@@ -39,7 +39,7 @@ const Input = styled(NumericInput)`
 
 const minimalInputContainerStyleOverride = css`
   ${inputContainerStyleOverride};
-  width: 70px;
+  width: 76px;
   padding-right: 6px;
 `;
 
@@ -64,8 +64,6 @@ function OpacityInput({ value, onChange, isInDesignMenu }) {
 
   useEffect(() => updateFromValue(), [updateFromValue, value]);
 
-  const unit = isInDesignMenu ? null : _x('%', 'Percentage', 'web-stories');
-
   const containerStyle = isInDesignMenu
     ? minimalInputContainerStyleOverride
     : inputContainerStyleOverride;
@@ -75,7 +73,7 @@ function OpacityInput({ value, onChange, isInDesignMenu }) {
       aria-label={__('Opacity', 'web-stories')}
       onChange={handleChange}
       value={inputValue}
-      unit={unit}
+      unit={_x('%', 'Percentage', 'web-stories')}
       suffix={<Icons.ColorDrop />}
       min={0}
       max={100}
