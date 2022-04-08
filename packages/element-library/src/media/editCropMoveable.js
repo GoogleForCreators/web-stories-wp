@@ -22,12 +22,7 @@ import { useEffect, useRef } from '@googleforcreators/react';
 import { useUnits, calcRotatedResizeOffset } from '@googleforcreators/units';
 import { getFocalFromOffset } from '@googleforcreators/media';
 import { Moveable } from '@googleforcreators/moveable';
-import { StoryPropTypes } from '@googleforcreators/elements';
-
-/**
- * Internal dependencies
- */
-import getTransformFlip from '../utils/getTransformFlip';
+import { StoryPropTypes, getTransformFlip } from '@googleforcreators/elements';
 
 function EditCropMoveable({
   setProperties,

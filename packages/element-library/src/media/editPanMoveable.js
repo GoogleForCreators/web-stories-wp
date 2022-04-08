@@ -25,12 +25,7 @@ import {
   getKeyboardMovement,
 } from '@googleforcreators/design-system';
 import { Moveable } from '@googleforcreators/moveable';
-import { StoryPropTypes } from '@googleforcreators/elements';
-
-/**
- * Internal dependencies
- */
-import getTransformFlip from '../utils/getTransformFlip';
+import { StoryPropTypes, getTransformFlip } from '@googleforcreators/elements';
 
 function EditPanMoveable({
   setProperties,

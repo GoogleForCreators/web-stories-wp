@@ -25,8 +25,7 @@ import {
   useState,
   forwardRef,
 } from '@googleforcreators/react';
-import { StoryPropTypes } from '@googleforcreators/elements';
-import { getTransformFlip } from '@googleforcreators/element-library';
+import { StoryPropTypes, getTransformFlip } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies

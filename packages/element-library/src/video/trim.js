@@ -22,14 +22,13 @@ import PropTypes from 'prop-types';
 import { useRef, useMemo, useCallback } from '@googleforcreators/react';
 import { getMediaSizePositionProps } from '@googleforcreators/media';
 import { CircularProgress } from '@googleforcreators/design-system';
-import { StoryPropTypes } from '@googleforcreators/elements';
+import { StoryPropTypes, getTransformFlip } from '@googleforcreators/elements';
 
 /**
  * Internal dependencies
  */
 import MediaDisplay from '../media/display';
 import { elementWithFlip } from '../shared';
-import getTransformFlip from '../utils/getTransformFlip';
 import PlayPauseButton from './playPauseButton';
 import { getBackgroundStyle, videoWithScale } from './util';
 import Captions from './captions';

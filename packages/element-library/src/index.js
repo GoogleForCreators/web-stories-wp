@@ -19,6 +19,5 @@ export * from './media';
 export * from './utils/textMeasurements';
 export * from './text/util';
 export * from './constants';
-export { default as getTransformFlip } from './utils/getTransformFlip';
 export { default as TextOutput, TextOutputWithUnits } from './text/output';
 export { default as elementTypes } from './elementTypes';
