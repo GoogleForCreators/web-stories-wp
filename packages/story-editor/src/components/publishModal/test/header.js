@@ -52,7 +52,7 @@ describe('publishModal/header', () => {
         <CheckpointContext.Provider
           value={{
             state: {
-              shouldReviewDialogBeSeen: true,
+              hasHighPriorityIssues: true,
               checkpoint: 'all',
             },
           }}

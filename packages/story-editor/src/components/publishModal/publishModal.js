@@ -46,7 +46,7 @@ function PublishModal({
   hasFutureDate,
 }) {
   const openChecklist = useCheckpoint(
-    ({ actions }) => actions.onPublishDialogChecklistRequest
+    ({ actions }) => actions.handleReviewChecklist
   );
 
   useEffect(() => {
